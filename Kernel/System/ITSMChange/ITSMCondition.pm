@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.25 2010-01-22 12:42:20 bes Exp $
+# $Id: ITSMCondition.pm,v 1.26 2010-01-27 14:12:11 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -408,8 +408,11 @@ sub ConditionList {
         my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
         my $ValidIDString = join ', ', @ValidIDs;
 
-        $SQL .= "AND valid_id IN ( $ValidIDString )";
+        $SQL .= "AND valid_id IN ( $ValidIDString ) ";
     }
+
+    # get sorted list
+    $SQL .= 'ORDER BY id ASC ';
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
@@ -784,6 +787,94 @@ sub ConditionMatchExecute {
     return 1;
 }
 
+=item ConditionMatchStateLock()
+
+    my $Success = $ConditionObject->ConditionMatchStateLock(
+        ObjectName => 'ITSMChange',
+        Selector   => 234,
+        StateID    => 123,
+        UserID     => 1,
+    );
+
+=cut
+
+sub ConditionMatchStateLock {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectName Selector StateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get id of object
+    my $ObjectID = $Self->ObjectLookup(
+        Name   => $Param{ObjectName},
+        UserID => $Param{UserID},
+    );
+    return if !$ObjectID;
+
+    # get id of operator;
+    my $OperatorName = 'lock';
+    my $OperatorID   = $Self->OperatorLookup(
+        Name   => $OperatorName,
+        UserID => $Param{UserID},
+    );
+    return if !$OperatorID;
+
+    # get conditions
+    my $Conditions = $Self->_ConditionListByObject(
+        ObjectName => $Param{ObjectName},
+        Selector   => $Param{Selector},
+        UserID     => $Param{UserID},
+    ) || [];
+    return if !@{$Conditions};
+
+    # get all actions affecting this object
+    my @ConditionsAffected;
+    CONDITIONID:
+    for my $ConditionID ( @{$Conditions} ) {
+        my $ConditionActions = $Self->ActionList(
+            ConditionID => $ConditionID,
+            UserID      => $Param{UserID},
+        ) || [];
+
+        # check actions
+        next CONDITIONID if !@{$ConditionActions};
+
+        # check for actions
+        ACTIONID:
+        for my $ActionID ( @{$ConditionActions} ) {
+
+            # get action
+            my $Action = $Self->ActionGet(
+                ActionID => $ActionID,
+                UserID   => $Param{UserID},
+            );
+
+            # check action
+            next ACTIONID if !$Action;
+
+            # store affected actions
+            if (
+                $Action->{ObjectID}      eq $ObjectID
+                && $Action->{OperatorID} eq $OperatorID
+                && $Action->{Selector}   eq $Param{Selector}
+                )
+            {
+                push @ConditionsAffected, $Action->{ConditionID};
+            }
+        }
+    }
+
+    return 1;
+}
+
 =item ConditionCompareValueFieldType()
 
 Returns the type of the compare value field as string, based on the given object id and attribute id.
@@ -852,6 +943,51 @@ sub ConditionCompareValueFieldType {
     return $FieldType;
 }
 
+sub _ConditionListByObject {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectName Selector UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get change id
+    my $ChangeID;
+
+    if ( $Param{ObjectName} eq 'ITSMChange' ) {
+        $ChangeID = $Param{Selector};
+    }
+    elsif ( $Param{ObjectName} eq 'ITSMWorkOrder' ) {
+
+        # get workorder
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Param{Selector},
+            UserID      => $Param{UserID},
+        );
+        return if !$WorkOrder;
+
+        # get change id
+        $ChangeID = $WorkOrder->{ChangeID};
+    }
+
+    # check change id
+    return if !$ChangeID;
+
+    # get conditions for this change
+    my $Conditions = $Self->ConditionList(
+        ChangeID => $ChangeID,
+        UserID   => $Param{UserID},
+    );
+
+    return $Conditions;
+}
+
 1;
 
 =back
@@ -868,6 +1004,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.26 $ $Date: 2010-01-27 14:12:11 $
 
 =cut
