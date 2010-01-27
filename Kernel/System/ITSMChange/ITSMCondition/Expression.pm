@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.22 2010-01-27 18:52:35 ub Exp $
+# $Id: Expression.pm,v 1.23 2010-01-27 22:33:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -38,7 +38,7 @@ Add a new condition expression.
         ObjectID     => 234,
         AttributeID  => 345,
         OperatorID   => 456,
-        Selector     => 1234',
+        Selector     => 1234,
         CompareValue => 'rejected',
         UserID       => 1,
     );
@@ -602,6 +602,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2010-01-27 18:52:35 $
+$Revision: 1.23 $ $Date: 2010-01-27 22:33:59 $
 
 =cut
