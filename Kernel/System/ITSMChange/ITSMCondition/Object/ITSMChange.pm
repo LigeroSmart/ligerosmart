@@ -1,8 +1,8 @@
 # --
-# Kernel/System/ITSMChange/ITSMCondition/Object/ITSMChange.pm - all itsm change operator functions
+# Kernel/System/ITSMChange/ITSMCondition/Object/ITSMChange.pm - all itsm change object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.1 2010-01-27 20:10:14 mae Exp $
+# $Id: ITSMChange.pm,v 1.2 2010-01-27 21:29:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,17 +15,17 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Kernel::System::ITSMChange;
 
 =head1 NAME
 
-Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange - condition itsm change operator lib
+Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange - condition itsm change object lib
 
 =head1 SYNOPSIS
 
-All ITSMChange operator functions for conditions in ITSMChangeManagement.
+All ITSMChange object functions for conditions in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
@@ -43,6 +43,7 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
+    use Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange;
 
     my $ConfigObject = Kernel::Config->new();
     my $EncodeObject = Kernel::System::Encode->new(
@@ -66,6 +67,14 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
+    );
+    my $ConditionObjectITSMChange = Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -92,7 +101,7 @@ sub new {
 
 Returns change data in an array reference.
 
-    my $ChangeDataRef = $ITSMChangeObject->DataGet(
+    my $ChangeDataRef = $ConditionObjectITSMChange->DataGet(
         Selector => 1234,
         UserID   => 2345,
     );
@@ -135,7 +144,7 @@ sub DataGet {
 
 Returns a list of available CompareValues for the given attribute id of a change object as hash reference.
 
-    my $CompareValueList = $ITSMChangeObject->CompareValueList(
+    my $CompareValueList = $ConditionObjectITSMChange->CompareValueList(
         AttributeName => 'PriorityID',
         UserID        => 1,
     );
@@ -198,7 +207,7 @@ sub CompareValueList {
 
 Returns a list of all selectors available for the given change object id and condition id as hash reference
 
-    my $SelectorList = $ITSMChangeObject->SelectorList(
+    my $SelectorList = $ConditionObjectITSMChange->SelectorList(
         ObjectID    => 1234,
         ConditionID => 5,
         UserID      => 1,
@@ -258,6 +267,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-01-27 20:10:14 $
+$Revision: 1.2 $ $Date: 2010-01-27 21:29:38 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
-# Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm - all itsm change operator functions
+# Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm - all itsm workorder object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.1 2010-01-27 20:10:14 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.2 2010-01-27 21:25:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,18 +15,18 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 =head1 NAME
 
-Kernel::System::ITSMChange::ITSMCondition::Object::ITSMChange - condition itsm change operator lib
+Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder - condition itsm workorder object lib
 
 =head1 SYNOPSIS
 
-All ITSMChange operator functions for conditions in ITSMChangeManagement.
+All ITSMWorkOrder object functions for conditions in ITSMChangeManagement.
 
 =head1 PUBLIC INTERFACE
 
@@ -44,6 +44,7 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
+    use Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder;
 
     my $ConfigObject = Kernel::Config->new();
     my $EncodeObject = Kernel::System::Encode->new(
@@ -67,6 +68,14 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
+    );
+    my $ConditionObjectITSMWorkOrder = Kernel::System::ITSMChange::ITSMCondition::Object::ITSMWorkOrder->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -92,9 +101,9 @@ sub new {
 
 =item DataGet()
 
-Returns workorders data in an array reference.
+Returns workorder data in an array reference.
 
-    my $ChangeDataRef = $ITSMChangeObject->DataGet(
+    my $WorkOrderDataRef = $ConditionObjectITSMWorkOrder->DataGet(
         Selector => 1234,
         UserID   => 2345,
     );
@@ -141,7 +150,7 @@ sub DataGet {
 
 Returns a list of available CompareValues for the given attribute id of a workorder object as hash reference.
 
-    my $CompareValueList = $WorkOrderObject->CompareValueList(
+    my $CompareValueList = $ConditionObjectITSMWorkOrder->CompareValueList(
         AttributeName => 'WorkOrderStateID',
         UserID        => 1,
     );
@@ -201,7 +210,7 @@ sub CompareValueList {
 
 Returns a list of all selectors available for the given workorder object id and condition id as hash reference
 
-    my $SelectorList = $WorkOrderObject->SelectorList(
+    my $SelectorList = $ConditionObjectITSMWorkOrder->SelectorList(
         ObjectID    => 1234,
         ConditionID => 5,
         UserID      => 1,
@@ -265,6 +274,12 @@ sub SelectorList {
 =begin Internal:
 
 =item _DataGetAll()
+
+    my $WorkOrderDataArrayRef = $ConditionObjectITSMWorkOrder->_DataGetAll(
+        ConditionID => 123,
+        UserID      => 1,
+    );
+
 =cut
 
 sub _DataGetAll {
@@ -328,6 +343,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-01-27 20:10:14 $
+$Revision: 1.2 $ $Date: 2010-01-27 21:25:13 $
 
 =cut
