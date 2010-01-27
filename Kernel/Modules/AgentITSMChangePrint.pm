@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.4 2010-01-22 14:43:33 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.5 2010-01-27 15:51:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,13 @@ package Kernel::Modules::AgentITSMChangePrint;
 use strict;
 use warnings;
 
+use List::Util qw(max);
+
 use Kernel::System::ITSMChange;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,15 +30,20 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
     # create additional objects
-    $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
-    $Self->{PDFObject}    = Kernel::System::PDF->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{PDFObject}          = Kernel::System::PDF->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -89,7 +96,7 @@ sub Run {
         );
     }
 
-    # generate pdf output
+    # generate PDF output
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
         my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
@@ -106,7 +113,8 @@ sub Run {
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
-        my $HeaderRight  = 'TODO';
+        my $HeaderRight
+            = $Self->{LayoutObject}->{LanguageObject}->Get('Change#') . $Change->{ChangeNumber};
         my $HeadlineLeft = $HeaderRight;
         my $Title        = $HeaderRight;
         if ( $Change->{ChangeTitle} ) {
@@ -130,31 +138,43 @@ sub Run {
         $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
         $Page{PageCount}  = 1;
 
-        # create new pdf document
+        # create new PDF document
         $Self->{PDFObject}->DocumentNew(
             Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
             Encode => $Self->{LayoutObject}->{UserCharset},
         );
 
-        # create first pdf page
+        # create first PDF page
         $Self->{PDFObject}->PageNew(
-            %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+            %Page,
+            FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
         );
         $Page{PageCount}++;
 
-        # return the pdf document
-        my $Filename = 'change_' . $Change->{ChangeNumber};
+        # output change infos
+        $Self->_PDFOutputChangeInfos(
+            PageData   => \%Page,
+            ChangeData => $Change,
+        );
+
+        # output ticket infos
+        $Self->_PDFOutputDescriptionAndJustification(
+            PageData   => \%Page,
+            ChangeData => $Change,
+        );
+
+        # TODO: output workorders
+
+        # return the PDF document
         my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
         );
-        $M = sprintf( '%02d', $M );
-        $D = sprintf( '%02d', $D );
-        $h = sprintf( '%02d', $h );
-        $m = sprintf( '%02d', $m );
+        my $Filename = sprintf 'change_%s_%02d-%02d-%02d_%02d-%02d.pdf',
+            $Change->{ChangeNumber}, $Y, $M, $D, $h, $m;
         my $PDFString = $Self->{PDFObject}->DocumentOutput();
         return $Self->{LayoutObject}->Attachment(
-            Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
-            ContentType => "application/pdf",
+            Filename    => $Filename,
+            ContentType => 'application/pdf',
             Content     => $PDFString,
             Type        => 'attachment',
         );
@@ -164,10 +184,9 @@ sub Run {
     else {
 
         # output header
-        my $Output = $Self->{LayoutObject}->Header(
-            Title => 'ChangePrint',
+        my $Output = $Self->{LayoutObject}->PrintHeader(
+            Value => $Change->{ChangeNumber},
         );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
 
         # start template output
         $Output .= $Self->{LayoutObject}->Output(
@@ -179,12 +198,308 @@ sub Run {
         );
 
         # add footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $Self->{LayoutObject}->PrintFooter();
 
         # return output
         return $Output;
     }
+}
 
+sub _PDFOutputChangeInfos {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(PageData ChangeData)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+    my %Change = %{ $Param{ChangeData} };
+    my %Page   = %{ $Param{PageData} };
+
+    # create left table
+    my @TableLeft = (
+        {
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Change State') . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Change{ChangeState} ),
+        },
+    );
+
+    # show optional rows
+    ATTRIBUTE:
+    for my $Attribute (qw(PlannedEffort AccountedTime)) {
+
+        # skip if row is switched off in SysConfig
+        next ATTRIBUTE if !$Self->{Config}->{$Attribute};
+
+        # show row
+        push @TableLeft,
+            {
+            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
+                . ':',
+            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Change{$Attribute} ),
+            };
+    }
+
+    # show CIP
+    for my $Attribute (qw(Category Impact Priority)) {
+
+        # show row
+        # TODO: think about translation
+        push @TableLeft,
+            {
+            Key => $Self->{LayoutObject}->{LanguageObject}->Get($Attribute) . ':',
+            Value => $Change{$Attribute} || '-',
+            };
+    }
+
+    # show ChangeManager and ChangeBuilder
+    for my $Attribute (qw(ChangeManager ChangeBuilder)) {
+
+        my $LongName = '-';
+        if ( $Change{ $Attribute . 'ID' } ) {
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $Change{ $Attribute . 'ID' },
+            );
+            if (%UserData) {
+                $LongName = sprintf '%s (%s %s)',
+                    @UserData{qw(UserLogin UserFirstname UserLastname)};
+            }
+            else {
+                $LongName = "ID=$Change{$Attribute}";
+            }
+        }
+
+        # show row
+        push @TableLeft,
+            {
+            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
+                . ':',
+            Value => $LongName,
+            };
+    }
+
+    # show CAB
+    for my $Attribute (qw(CABAgents CABCustomers)) {
+        my @LongNames;
+        if ( $Attribute eq 'CABAgents' && $Change{$Attribute} ) {
+            for my $CABAgent ( @{ $Change{$Attribute} } ) {
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $CABAgent,
+                    Cache  => 1,
+                );
+                if (%UserData) {
+                    push @LongNames, sprintf '%s (%s %s)',
+                        @UserData{qw(UserLogin UserFirstname UserLastname)};
+                }
+                else {
+                    push @LongNames, "ID=$Change{$Attribute}";
+                }
+            }
+        }
+        elsif ( $Attribute eq 'CABCustomers' && $Change{$Attribute} ) {
+            for my $CABCustomer ( @{ $Change{$Attribute} } ) {
+                my %UserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                    UserID => $CABCustomer,
+                    Cache  => 1,
+                );
+                if (%UserData) {
+                    push @LongNames, sprintf '%s (%s %s)',
+                        @UserData{qw(UserLogin UserFirstname UserLastname)};
+                }
+                else {
+                    push @LongNames, "ID=$Change{$Attribute}";
+                }
+            }
+        }
+
+        # show row
+        my $Value = join( "\n", @LongNames ) || '-';
+        push @TableLeft,
+            {
+            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
+                . ':',
+            Value => $Value,
+            };
+    }
+
+    # show attachments
+    {
+        my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+            ChangeID => $Change{ChangeID},
+        );
+
+        my @Values;
+
+        ATTACHMENT_ID:
+        for my $AttachmentID ( keys %Attachments ) {
+
+            # get info about file
+            my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+                FileID => $AttachmentID,
+            );
+
+            # check for attachment information
+            next ATTACHMENTID if !$AttachmentData;
+
+            push @Values, sprintf '%s %s',
+                $AttachmentData->{Filename},
+                $AttachmentData->{Filesize};
+        }
+
+        # show row
+        my $Value = join( "\n", @Values ) || '-';
+        push @TableLeft,
+            {
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Attachments') . ':',
+            Value => $Value,
+            };
+    }
+
+    # create right table
+    my @TableRight;
+    my @AdditionalAttributes;
+    if ( $Self->{Config}->{RequestedTime} ) {
+        push @AdditionalAttributes, 'RequestedTime';
+    }
+    for my $Attribute (
+        @AdditionalAttributes, qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
+        )
+    {
+
+        # show row
+        push @TableRight,
+            {
+            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
+                . ':',
+            Value => $Change{$Attribute} || '-',
+            };
+    }
+
+    # create and change time
+    {
+        push @TableRight,
+            {
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':',
+            Value => $Self->{LayoutObject}->Output(
+                Template => '$TimeLong{"$Data{"CreateTime"}"}',
+                Data     => \%Change,
+            ),
+            },
+            {
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Changed') . ':',
+            Value => $Self->{LayoutObject}->Output(
+                Template => '$TimeLong{"$Data{"ChangeTime"}"}',
+                Data     => \%Change,
+            ),
+            };
+    }
+
+    my %TableParam;
+    my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
+    for my $Row ( 0 .. $Rows - 1 ) {
+        $TableParam{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
+        $TableParam{CellData}[$Row][0]{Font}            = 'ProportionalBold';
+        $TableParam{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
+        $TableParam{CellData}[$Row][2]{Content}         = ' ';
+        $TableParam{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
+        $TableParam{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
+        $TableParam{CellData}[$Row][3]{Font}            = 'ProportionalBold';
+        $TableParam{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+    }
+
+    $TableParam{ColumnData}[0]{Width} = 80;
+    $TableParam{ColumnData}[1]{Width} = 170.5;
+    $TableParam{ColumnData}[2]{Width} = 4;
+    $TableParam{ColumnData}[3]{Width} = 80;
+    $TableParam{ColumnData}[4]{Width} = 170.5;
+
+    $TableParam{Type}                = 'Cut';
+    $TableParam{Border}              = 0;
+    $TableParam{FontSize}            = 6;
+    $TableParam{BackgroundColorEven} = '#AAAAAA';
+    $TableParam{BackgroundColorOdd}  = '#DDDDDD';
+    $TableParam{Padding}             = 1;
+    $TableParam{PaddingTop}          = 3;
+    $TableParam{PaddingBottom}       = 3;
+
+    # output table
+    for ( $Page{PageCount} .. $Page{MaxPages} ) {
+
+        # output table (or a fragment of it)
+        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+        # stop output or output next page
+        if ( $TableParam{State} ) {
+            last;
+        }
+        else {
+            $Self->{PDFObject}->PageNew(
+                %Page,
+                FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+            );
+            $Page{PageCount}++;
+        }
+    }
+
+    return 1;
+}
+
+sub _PDFOutputDescriptionAndJustification {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(PageData ChangeData)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    my %Page   = %{ $Param{PageData} };
+    my %Change = %{ $Param{ChangeData} };
+
+    # table params common to description and justification
+    my %TableParam = (
+        Type            => 'Cut',
+        Border          => 0,
+        Font            => 'Monospaced',
+        FontSize        => 7,
+        BackgroundColor => '#DDDDDD',
+        Padding         => 4,
+        PaddingTop      => 8,
+        PaddingBottom   => 8,
+    );
+
+    # output tables
+    my $Row = 0;
+    for my $Attribute (qw(Description Justification)) {
+
+        # The plain content will be displayed
+        $TableParam{CellData}[ $Row++ ][0]{Content} = $Attribute;
+        $TableParam{CellData}[ $Row++ ][0]{Content} = $Change{ $Attribute . 'Plain' } || ' ';
+    }
+    $TableParam{CellData}[ $Row++ ][0]{Content} = 'TODO: workorders';
+    for ( $Page{PageCount} .. $Page{MaxPages} ) {
+
+        # output table (or a fragment of it)
+        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+        # stop output or output next page
+        if ( $TableParam{State} ) {
+            last;
+        }
+        else {
+            $Self->{PDFObject}->PageNew(
+                %Page,
+                FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+            );
+            $Page{PageCount}++;
+        }
+    }
+
+    return 1;
 }
 
 1;

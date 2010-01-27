@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.19 2010-01-22 10:35:35 bes Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.20 2010-01-27 15:51:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -30,6 +30,19 @@ sub Data {
 
     # Change menu
     $Lang->{'ITSM Change'} = 'Change';
+
+    # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
+    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Accounted Time';
+    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Actual Start';
+    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Actual End';
+    $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
+    $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Customers';
+    $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
+    $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
+    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Planned Effort';
+    $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Planned Start';
+    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Planned End';
+    $Lang->{'ChangeAttribute::RequestedTime'}    = 'Requested Time';
 
     # Change history
     $Lang->{'ChangeHistory::ChangeAdd'}              = 'New Change (ID=%s)';

@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.21 2010-01-26 11:39:50 bes Exp $
+# $Id: ITSMChange.dtl,v 1.22 2010-01-27 15:51:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -140,19 +140,19 @@
                     </td>
                 </tr>
                 <tr class="searchactive">
-                    <td class="contentkey">$Text{"Planned Start:"}</td>
+                    <td class="contentkey">$Text{"ChangeAttribute::PlannedStartTime:"}</td>
                     <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
                 </tr>
                 <tr class="searchpassive">
-                    <td class="contentkey">$Text{"Planned End:"}</td>
+                    <td class="contentkey">$Text{"ChangeAttribute::PlannedEndTime:"}</td>
                     <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
                 </tr>
                 <tr class="searchactive">
-                    <td class="contentkey">$Text{"Actual Start:"}</td>
+                    <td class="contentkey">$Text{"ChangeAttribute::ActualStartTime"}:</td>
                     <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
                 </tr>
                 <tr class="searchpassive">
-                    <td class="contentkey">$Text{"Actual End:"}</td>
+                    <td class="contentkey">$Text{"ChangeAttribute::ActualEndTime"}:</td>
                     <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
                 </tr>
                 <tr class="contenthead">

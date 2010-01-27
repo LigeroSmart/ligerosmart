@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.28 2010-01-25 09:29:48 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.29 2010-01-27 15:51:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -236,8 +236,8 @@ document.observe( "dom:loaded", function() {
                         <td class="contentbody">$Data{"ChangeStateSelectionString"}</td>
                     </tr>
                     <tr>
-                        <td class="contenthead">$Text{"Change Manager"}</td>
-                        <td class="contenthead">$Text{"Change Builder"}</td>
+                        <td class="contenthead">$Text{"ChangeAttribute::ChangerManager"}</td>
+                        <td class="contenthead">$Text{"ChangeAttribute::ChangeBuilder"}</td>
                     </tr>
                     <tr>
                         <td class="contentbody">$Data{"ChangeManagerSelectionString"}</td>

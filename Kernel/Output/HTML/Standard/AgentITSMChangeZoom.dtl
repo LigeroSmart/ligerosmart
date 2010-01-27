@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.40 2010-01-26 11:37:25 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.41 2010-01-27 15:51:50 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -140,52 +140,52 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Planned Start"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::PlannedStartTime"}:</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyPlannedStartTime -->
                         <div title="-">-</div>
 <!-- dtl:block:EmptyPlannedStartTime -->
 <!-- dtl:block:PlannedStartTime -->
-                        <div title="$QData{"Planned Start"}">
+                        <div title="$QData{"PlannedStartTime"}">
                             $TimeLong{"$Data{"PlannedStartTime"}"}
                         </div>
 <!-- dtl:block:PlannedStartTime -->
                     </td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Planned End"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::PlannedEndTime"}:</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyPlannedEndTime -->
                         <div title="-">-</div>
 <!-- dtl:block:EmptyPlannedEndTime -->
 <!-- dtl:block:PlannedEndTime -->
-                        <div title="$QData{"Planned End"}">
+                        <div title="$QData{"PlannedEndTime"}">
                             $TimeLong{"$Data{"PlannedEndTime"}"}
                         </div>
 <!-- dtl:block:PlannedEndTime -->
                     </td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Actual Start"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::ActualStartTime"}:</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyActualStartTime -->
                         <div title="-">-</div>
 <!-- dtl:block:EmptyActualStartTime -->
 <!-- dtl:block:ActualStartTime -->
-                        <div title="$QData{"Actual Start"}">
+                        <div title="$QData{"ActualStartTime"}">
                             $TimeLong{"$Data{"ActualStartTime"}"}
                         </div>
 <!-- dtl:block:ActualStartTime -->
                     </td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Actual End"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::ActualEndTime"}:</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyActualEndTime -->
                         <div title="-">-</div>
 <!-- dtl:block:EmptyActualEndTime -->
 <!-- dtl:block:ActualEndTime -->
-                        <div title="$QData{"Actual End"}">
+                        <div title="$QData{"ActualEndTime"}">
                             $TimeLong{"$Data{"ActualEndTime"}"}
                         </div>
 <!-- dtl:block:ActualEndTime -->
@@ -218,7 +218,7 @@
                 </tr>
 <!-- dtl:block:ShowPlannedEffort -->
                 <tr>
-                    <td><b>$Text{"Planned Effort"}: </b></td>
+                    <td><b>$Text{"ChangeAttribute::PlannedEffort"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyPlannedEffort -->
                         <div title="-">
@@ -226,7 +226,7 @@
                         </div>
 <!-- dtl:block:EmptyPlannedEffort -->
 <!-- dtl:block:PlannedEffort -->
-                        <div title="$QData{"Planned Effort"}">
+                        <div title="$QData{"PlannedEffort"}">
                             $QData{"PlannedEffort"}
                         </div>
 <!-- dtl:block:PlannedEffort -->
@@ -235,7 +235,7 @@
 <!-- dtl:block:ShowPlannedEffort -->
 <!-- dtl:block:ShowAccountedTime -->
                 <tr>
-                    <td><b>$Text{"Accounted Time"}: </b></td>
+                    <td><b>$Text{"ChangeAttribute::AccountedTime"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyAccountedTime -->
                         <div title="-">
@@ -243,7 +243,7 @@
                         </div>
 <!-- dtl:block:EmptyAccountedTime -->
 <!-- dtl:block:AccountedTime -->
-                        <div title="$QData{"Accounted Time"}">
+                        <div title="$QData{"AccountedTime"}">
                             $QData{"AccountedTime"}
                         </div>
 <!-- dtl:block:AccountedTime -->
@@ -301,7 +301,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Change Manager:"}</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::ChangerManager:"}</td>
                     <td class="mainvalue">
 <!-- dtl:block:EmptyChangeManager -->
                         <div title="-">-</div>
@@ -317,7 +317,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td class="mainkey">$Text{"Change Builder:"}</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::ChangeBuilder:"}</td>
                     <td class="mainvalue">
                         <div title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
                             $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
