@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.19 2010-01-26 10:04:41 mae Exp $
+# $Id: Operator.pm,v 1.20 2010-01-27 14:52:50 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -590,8 +590,7 @@ sub _OperatorActionExecute {
 
     # map for operator action
     my %OperatorAction = (
-        'set'  => '_OperatorSet',
-        'lock' => '_OperatorLock',
+        'set' => '_OperatorSet',
     );
 
     # get operator name
@@ -1176,8 +1175,6 @@ sub _OperatorSetITSMWorkOrder {
     );
 }
 
-# TODO: add 'lock' operator
-
 1;
 
 =back
@@ -1194,6 +1191,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-01-26 10:04:41 $
+$Revision: 1.20 $ $Date: 2010-01-27 14:52:50 $
 
 =cut
