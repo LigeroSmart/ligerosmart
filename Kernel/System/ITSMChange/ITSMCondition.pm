@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.27 2010-01-27 14:14:37 mae Exp $
+# $Id: ITSMCondition.pm,v 1.28 2010-01-27 17:50:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -860,8 +860,9 @@ sub ConditionMatchStateLock {
             # check action
             next ACTIONID if !$Action;
 
+            # TODO Delete debug output later!
             use Data::Dumper;
-            print STDERR Dumper( 'ACTION', $Action, $StateID );
+            print STDERR Dumper( 'ACTION', $Action, $Param{StateID} );
 
             # store only affected actions
             if (
@@ -1008,6 +1009,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-01-27 14:14:37 $
+$Revision: 1.28 $ $Date: 2010-01-27 17:50:59 $
 
 =cut
