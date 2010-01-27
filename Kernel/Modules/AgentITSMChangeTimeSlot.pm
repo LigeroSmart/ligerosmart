@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.23 2010-01-18 15:30:55 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.24 2010-01-27 22:57:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -293,10 +293,15 @@ sub Run {
         SelectedID => $GetParam{MoveTimeType},
         Ajax       => {
             Update => [
-                qw(MoveTimeMinute MoveTimeHour MoveTimeDay MoveTimeMonth MoveTimeYear),
+                'MoveTimeMinute',
+                'MoveTimeHour',
+                'MoveTimeDay',
+                'MoveTimeMonth',
+                'MoveTimeYear',
             ],
             Depend => [
-                qw(ChangeID MoveTimeType),
+                'ChangeID',
+                'MoveTimeType',
             ],
             Subaction => 'AJAXUpdate',
         },
