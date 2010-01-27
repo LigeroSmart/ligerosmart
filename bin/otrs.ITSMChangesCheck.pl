@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check pending tickets
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.1 2010-01-26 15:55:31 reb Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.2 2010-01-27 14:52:13 reb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Date::Pcalc qw(Day_of_Week Day_of_Week_Abbreviation);
 use Kernel::Config;
@@ -41,9 +41,36 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 use Kernel::System::DB;
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
-use base 'Kernel::System::Event';
+{
+
+    package OTRSMockObject;
+
+    use base 'Kernel::System::EventHandler';
+
+    sub new {
+        my ( $Class, %Objects ) = @_;
+
+        my $Self = bless {}, $Class;
+
+        for my $Object ( keys %Objects ) {
+            $Self->{$Object} = $Objects{$Object};
+        }
+
+        # init of event handler
+        $Self->EventHandlerInit(
+            Config     => 'ITSMChangeCronjob::EventModule',
+            BaseObject => 'ChangeObject',
+            Objects    => {
+                %{$Self},
+            },
+        );
+
+        return $Self;
+    }
+}
 
 # common objects
 my %CommonObject;
@@ -60,10 +87,18 @@ $CommonObject{ChangeObject}    = Kernel::System::ITSMChange->new(%CommonObject);
 $CommonObject{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%CommonObject);
 $CommonObject{HistoryObject}   = Kernel::System::ITSMChange::History->new(%CommonObject);
 
+my $MockedObject = OTRSMockObject->new(%CommonObject);
+
 # check args
 my $Command = shift || '--help';
 print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
 print "Copyright (C) 2003-2010 OTRS AG, http://otrs.com/\n";
+
+# if sysconfig option is disabled -> exit
+my $SysConfig = $CommonObject{ConfigObject}->Get('ITSMChange::TimeReachedNotifications');
+if ( !$SysConfig->{Frequency} ) {
+    exit(0);
+}
 
 # do change/workorder reminder notification jobs
 
@@ -78,6 +113,7 @@ for my $Type (qw(StartTime EndTime)) {
     # get changes with PlannedStartTime older than now
     my $PlannedChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
         "Planned${Type}OlderDate" => $Now,
+        UserID                    => 1,
     ) || [];
 
     CHANGEID:
@@ -92,23 +128,32 @@ for my $Type (qw(StartTime EndTime)) {
         # skip change if there is already an actualXXXtime set or notification was sent
         next CHANGEID if $Change->{"Actual$Type"};
 
-        my $LastNotificationSentDate = NotificationSent($ChangeID);
+        my $LastNotificationSentDate = ChangeNotificationSent(
+            ChangeID => $ChangeID,
+            Type     => "Planned${Type}",
+        );
 
         next CHANGEID if SentWithinPeriod($LastNotificationSentDate);
 
+        $CommonObject{LogObject}->Log(
+            Priority => 'error',
+            Message  => "$ChangeID => Planned$Type ( " . $Change->{"Planned$Type"} . ")",
+        );
+
         # trigger ChangePlannedStartTimeReachedPost-Event
-        $Self->EventHandler(
+        $MockedObject->EventHandler(
             Event => "ChangePlanned${Type}ReachedPost",
             Data  => {
                 ChangeID => $ChangeID,
             },
-            UserID => $Param{UserID},
+            UserID => 1,
         );
     }
 
     # get changes with actualxxxtime
     my $ActualChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
         "Actual${Type}OlderDate" => $Now,
+        UserID                   => 1,
     ) || [];
 
     CHANGEID:
@@ -120,45 +165,83 @@ for my $Type (qw(StartTime EndTime)) {
             UserID   => 1,
         );
 
-        my $LastNotificationSentDate = NotificationSent($ChangeID);
+        my $LastNotificationSentDate = ChangeNotificationSent(
+            ChangeID => $ChangeID,
+            Type     => "Actual${Type}",
+        );
 
         next CHANGEID if $LastNotificationSentDate;
 
-        # trigger ChangePlannedStartTimeReachedPost-Event
-        $Self->EventHandler(
-            Event => "ChangePlanned${Type}ReachedPost",
+        $CommonObject{LogObject}->Log(
+            Priority => 'error',
+            Message  => "$ChangeID => Actual$Type ( " . $Change->{"Actual$Type"} . ")",
+        );
+
+        # trigger Event
+        $MockedObject->EventHandler(
+            Event => "ChangeActual${Type}ReachedPost",
             Data  => {
                 ChangeID => $ChangeID,
             },
-            UserID => $Param{UserID},
+            UserID => 1,
         );
     }
 }
 
 # check if a notification was already sent for the given change
-sub NotificationSent {
-    my ($ChangeID) = @_;
+sub ChangeNotificationSent {
+    my (%Param) = @_;
 
+    # check needed stuff
+    for my $Needed (qw(ChangeID Type)) {
+        return if !$Param{$Needed};
+    }
+
+    # get history entries
     my $History = $CommonObject{HistoryObject}->ChangeHistoryGet(
-        ChangeID => $ChangeID,
+        ChangeID => $Param{ChangeID},
         UserID   => 1,
     );
 
-    for my $HistoryEntry ( @{$History} ) {
+    # search for notifications sent earlier
+    for my $HistoryEntry ( reverse @{$History} ) {
         if (
-            $HistoryEntry->{HistoryType}   eq 'ChangePlannedStartTimeReached'
+            $HistoryEntry->{HistoryType}   eq 'Change' . $Param{Type} . 'Reached'
             && $HistoryEntry->{ContentNew} eq 'Notification Sent'
             )
         {
-            return 1;
+            return $HistoryEntry->{CreateTime};
         }
     }
 
-    return 0;
+    return;
 }
 
 sub SentWithinPeriod {
-    return 0;
+    my ($LastNotificationSentDate) = @_;
+
+    return if !$LastNotificationSentDate;
+
+    # get SysConfig option
+    my $Config = $CommonObject{ConfigObject}->Get('ITSMChange::TimeReachedNotifications');
+
+    # if notifications should be sent only once
+    return 1 if $Config->{Frequency} eq 'once';
+
+    # get epoche seconds of send time
+    my $SentEpoche = $CommonObject{TimeObject}->TimeStamp2SystemTime(
+        String => $LastNotificationSentDate,
+    );
+
+    # calc diff
+    my $EpocheSinceSent = $SystemTime - $SentEpoche;
+    my $HoursSinceSent  = int( $EpocheSinceSent / 60 * 60 );
+
+    if ( $HoursSinceSent >= $Config->{Hours} ) {
+        return;
+    }
+
+    return 1;
 }
 
 exit(0);
