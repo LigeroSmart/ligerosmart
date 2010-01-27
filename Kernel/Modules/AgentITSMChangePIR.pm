@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangePIR.pm - the OTRS::ITSM::ChangeManagement PIR overview module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePIR.pm,v 1.6 2009-12-21 10:03:53 bes Exp $
+# $Id: AgentITSMChangePIR.pm,v 1.7 2010-01-27 10:01:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -255,7 +255,9 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName  => 'Overview: PIR',
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('PIR'),
+
         TitleValue => $Self->{Filter},
 
         Env      => $Self,

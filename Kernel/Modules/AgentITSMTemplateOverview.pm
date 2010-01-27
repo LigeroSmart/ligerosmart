@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.11 2010-01-22 12:42:20 bes Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.12 2010-01-27 10:01:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -199,19 +199,20 @@ sub Run {
     }
 
     # show the list
-    my $LinkPage =
-        'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+    my $LinkPage = 'Filter='
+        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
         . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
         . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
         . ';';
-    my $LinkSort =
-        'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+    my $LinkSort = 'Filter='
+        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
         . ';';
-    my $LinkFilter =
-        'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+    my $LinkFilter = 'SortBy='
+        . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
         . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
         . ';';
     $Output .= $Self->{LayoutObject}->ITSMTemplateListShow(
+
         TemplateIDs => $IDsRef,
         Total       => scalar @{$IDsRef},
 
@@ -219,7 +220,9 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName  => 'Overview: Template',
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('Template'),
+
         TitleValue => $Filters{ $Self->{Filter} }->{Name},
 
         Env      => $Self,

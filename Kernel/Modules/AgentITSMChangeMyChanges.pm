@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeMyChanges.pm - the OTRS::ITSM::ChangeManagement MyChanges overview module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeMyChanges.pm,v 1.3 2009-12-01 16:48:56 ub Exp $
+# $Id: AgentITSMChangeMyChanges.pm,v 1.4 2010-01-27 10:01:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -230,7 +230,9 @@ sub Run {
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
 
-        TitleName  => 'Overview: My Changes',
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('My Changes'),
+
         TitleValue => $Self->{Filter},
 
         Env      => $Self,
