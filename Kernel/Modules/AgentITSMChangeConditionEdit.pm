@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.8 2010-01-27 18:18:16 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.9 2010-01-27 23:12:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,7 +52,9 @@ sub Run {
     # store needed parameters in %GetParam
     my %GetParam;
     for my $ParamName (
-        qw(ChangeID ConditionID Name Comment ExpressionConjunction ValidID Save AddAction AddExpression NewExpression)
+        qw(
+        ChangeID ConditionID Name Comment ExpressionConjunction ValidID
+        Save AddAction AddExpression NewExpression NewAction)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -100,6 +102,12 @@ sub Run {
 
     # get valid list
     my %ValidList = $Self->{ValidObject}->ValidList();
+
+    # get all expression ids for the given condition id
+    my $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
+        ConditionID => $GetParam{ConditionID},
+        UserID      => $Self->{UserID},
+    );
 
     # ------------------------------------------------------------ #
     # condition save (also add expression / add action)
@@ -152,6 +160,85 @@ sub Run {
             }
         }
 
+        # save all existing expression fields
+        for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+
+            # to store expression field data
+            my %ExpressionData;
+
+            # get expression fields
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+                $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
+                    Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                );
+            }
+
+            # update the expression
+            my $Success = $Self->{ConditionObject}->ExpressionUpdate(
+                ExpressionID => $ExpressionID,
+                ObjectID     => $ExpressionData{ObjectID},
+                AttributeID  => $ExpressionData{AttributeID},
+                OperatorID   => $ExpressionData{OperatorID},
+                Selector     => $ExpressionData{Selector},
+                CompareValue => $ExpressionData{CompareValue},
+                UserID       => $Self->{UserID},
+            );
+
+            # check error
+            if ( !$Success ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Could not update ExpressionID $ExpressionID!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+        }
+
+        # get new expression fields
+        my %NewExpressionData;
+        for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+            $NewExpressionData{$Field} = $Self->{ParamObject}->GetParam(
+                Param => 'ExpressionID::NEW::' . $Field,
+            );
+        }
+
+   # check if new expression is complete (all required fields are filled, CompareValue can be empty)
+        my $NewFieldsOk = 1;
+        FIELD:
+        for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
+
+            # new expression is not complete
+            if ( !$NewExpressionData{$Field} ) {
+                $NewFieldsOk = 0;
+                last FIELD;
+            }
+        }
+
+        # add new expression
+        if ($NewFieldsOk) {
+
+            # add new expression
+            my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+                ConditionID  => $GetParam{ConditionID},
+                ObjectID     => $NewExpressionData{ObjectID},
+                AttributeID  => $NewExpressionData{AttributeID},
+                OperatorID   => $NewExpressionData{OperatorID},
+                Selector     => $NewExpressionData{Selector},
+                CompareValue => $NewExpressionData{CompareValue},
+                UserID       => $Self->{UserID},
+            );
+
+            # check error
+            if ( !$ExpressionID ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Could not add new Expression!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+        }
+
+        # TODO
+        # save all action fields
+
         # if just the save button was pressed, redirect to condition overview
         if ( $GetParam{Save} ) {
             return $Self->{LayoutObject}->Redirect(
@@ -173,12 +260,6 @@ sub Run {
         elsif ( $GetParam{AddAction} ) {
 
         }
-
-        # get all expression ids for the given condition id
-        my $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
-            ConditionID => $GetParam{ConditionID},
-            UserID      => $Self->{UserID},
-        );
 
         # check if an expression should be deleted
         for my $ExpressionID ( @{$ExpressionIDsRef} ) {
@@ -214,10 +295,24 @@ sub Run {
         );
     }
 
+    # handle AJAXUpdate
+    elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
+
+        # TODO add Ajax handling here...
+
+        # return json
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $JSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
     # ------------------------------------------------------------ #
     # condition edit view
     # ------------------------------------------------------------ #
-    if ( !$Self->{Subaction} ) {
+    elsif ( !$Self->{Subaction} ) {
 
         my %ConditionData;
 
@@ -248,6 +343,7 @@ sub Run {
             # show existing expressions
             $Self->_ExpressionOverview(
                 %ConditionData,
+                ExpressionIDs => $ExpressionIDsRef,
                 NewExpression => $GetParam{NewExpression},
             );
 
@@ -290,16 +386,10 @@ sub Run {
 sub _ExpressionOverview {
     my ( $Self, %Param ) = @_;
 
-    # get existing expressions
-    my $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Self->{UserID},
-    );
+    return if !$Param{ExpressionIDs};
+    return if ref $Param{ExpressionIDs} ne 'ARRAY';
 
-    return if !$ExpressionIDsRef;
-    return if ref $ExpressionIDsRef ne 'ARRAY';
-
-    my @ExpressionIDs = @{$ExpressionIDsRef};
+    my @ExpressionIDs = @{ $Param{ExpressionIDs} };
 
     # also show a new empty expression line
     if ( $Param{NewExpression} ) {
@@ -307,8 +397,6 @@ sub _ExpressionOverview {
     }
 
     return if !@ExpressionIDs;
-
-    my %Data;
 
     EXPRESSIONID:
     for my $ExpressionID ( sort { $a cmp $b } @ExpressionIDs ) {
@@ -337,7 +425,7 @@ sub _ExpressionOverview {
         $Self->{LayoutObject}->Block(
             Name => 'ExpressionOverviewRow',
             Data => {
-                ExpressionID => $ExpressionID,
+                %{$ExpressionData},
             },
         );
 
@@ -467,7 +555,7 @@ sub _ShowCompareValueField {
         }
 
         # get the field type
-        my $FieldType = $Self->{ConditionObject}->ConditionCompareValueFieldType(
+        $FieldType = $Self->{ConditionObject}->ConditionCompareValueFieldType(
             ObjectID    => $Param{ObjectID},
             AttributeID => $Param{AttributeID},
             UserID      => $Self->{UserID},
