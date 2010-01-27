@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.37 2010-01-27 15:39:08 ub Exp $
+# $Id: Template.pm,v 1.38 2010-01-27 22:26:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -1321,12 +1321,8 @@ sub _ITSMChangeSerialize {
 
     # keep only wanted attributes
     my $CleanChange;
-    for my $Attribute
-        (
-        qw(ChangeID ChangeNumber ChangeStateID ChangeTitle Description DescriptionPlain
-        Justification JustificationPlain ChangeManagerID ChangeBuilderID CategoryID
-        ImpactID PriorityID CABAgents CABCustomers RequestedTime CreateTime CreateBy
-        ChangeTime ChangeBy PlannedStartTime PlannedEndTime)
+    for my $Attribute (
+        qw(ChangeID ChangeNumber ChangeStateID ChangeTitle Description DescriptionPlain Justification JustificationPlain ChangeManagerID ChangeBuilderID CategoryID ImpactID PriorityID CABAgents CABCustomers RequestedTime CreateTime CreateBy ChangeTime ChangeBy PlannedStartTime PlannedEndTime)
         )
     {
         $CleanChange->{$Attribute} = $Change->{$Attribute};
@@ -1476,10 +1472,7 @@ sub _ITSMWorkOrderSerialize {
     # keep just wanted attributes
     my $CleanWorkOrder;
     for my $Attribute (
-        qw(WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain
-        Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID PlannedStartTime
-        PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort
-        CreateTime CreateBy ChangeTime ChangeBy)
+        qw(WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort CreateTime CreateBy ChangeTime ChangeBy)
         )
     {
         $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
@@ -2331,6 +2324,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2010-01-27 15:39:08 $
+$Revision: 1.38 $ $Date: 2010-01-27 22:26:33 $
 
 =cut
