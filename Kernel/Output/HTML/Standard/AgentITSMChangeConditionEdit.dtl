@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.4 2010-01-27 12:39:26 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.5 2010-01-27 18:14:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,14 +101,14 @@
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
                                     <td align="left" width="10%" class="contentvalue">
-                                        <input type="text" name="ExpressionID$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
+                                        <input type="text" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
                                     </td>
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                     <td align="left" width="10%" class="contentvalue">$Data{"CompareValueOptionString"}</td>
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                     <td width="10">
-                                        <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpression$QData{"ExpressionID"}">
+                                        <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpressionID::$QData{"ExpressionID"}">
                                     </td>
                                     <td align="left" width="10%" class="contentvalue">&nbsp;</td>
                                 </tr>
