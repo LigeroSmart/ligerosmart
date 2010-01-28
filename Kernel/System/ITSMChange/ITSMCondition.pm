@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.29 2010-01-27 20:10:13 mae Exp $
+# $Id: ITSMCondition.pm,v 1.30 2010-01-28 11:08:32 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -171,7 +171,14 @@ sub ConditionAdd {
         return;
     }
 
-    # TODO: execute ConditionAddPre Event
+    # trigger ConditionAddPre-Event
+    $Self->EventHandler(
+        Event => 'ConditionAddPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # add new condition to database
     return if !$Self->{DBObject}->Do(
@@ -209,7 +216,15 @@ sub ConditionAdd {
         return;
     }
 
-    # TODO: execute ConditionAddPost Event
+    # trigger ConditionAddPost-Event
+    $Self->EventHandler(
+        Event => 'ConditionAddPost',
+        Data  => {
+            %Param,
+            ConditionID => $ConditionID,
+        },
+        UserID => $Param{UserID},
+    );
 
     return $ConditionID;
 }
@@ -243,7 +258,20 @@ sub ConditionUpdate {
         }
     }
 
-    # TODO: execute ConditionUpdatePre Event
+    # trigger ConditionUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'ConditionUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get current condition data for event handler
+    my $ConditionData = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
 
     # map update attributes to column names
     my %Attribute = (
@@ -282,7 +310,15 @@ sub ConditionUpdate {
         Bind => \@Bind,
     );
 
-    # TODO: execute ConditionUpdatePost Event
+    # trigger ConditionUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'ConditionUpdatePost',
+        Data  => {
+            %Param,
+            OldConditionData => $ConditionData,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -450,9 +486,14 @@ sub ConditionDelete {
         }
     }
 
-    # TODO: execute ConditionDeletePre Event
-    # TODO it may be neccessary to get the ChangeID from ConditionGet()
-    # so that the history entry will be written to the correct change
+    # trigger ConditionDeletePre-Event
+    $Self->EventHandler(
+        Event => 'ConditionDeletePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # delete all expressions for this condition id
     my $Success = $Self->ExpressionDeleteAll(
@@ -477,7 +518,14 @@ sub ConditionDelete {
         Bind => [ \$Param{ConditionID} ],
     );
 
-    # TODO: execute ConditionDeletePost Event
+    # trigger ConditionDeletePost-Event
+    $Self->EventHandler(
+        Event => 'ConditionDeletePost',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -515,7 +563,14 @@ sub ConditionDeleteAll {
         UserID   => $Param{UserID},
     );
 
-    # TODO: execute ConditionDeleteAllPre Event
+    # trigger ConditionDeleteAllPre-Event
+    $Self->EventHandler(
+        Event => 'ConditionDeleteAllPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     for my $ConditionID ( @{$ConditionIDsRef} ) {
 
@@ -536,9 +591,16 @@ sub ConditionDeleteAll {
         return if !$Success;
     }
 
-    # TODO: execute ConditionDeleteAllPost Event
+    # trigger ConditionDeleteAllPost-Event
     # this must be myabe done before deleting the conditions from the database,
     # because of possible foreign key constraints in the change_history table
+    $Self->EventHandler(
+        Event => 'ConditionDeleteAllPost',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # delete conditions from database
     return if !$Self->{DBObject}->Do(
@@ -1146,6 +1208,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2010-01-27 20:10:13 $
+$Revision: 1.30 $ $Date: 2010-01-28 11:08:32 $
 
 =cut
