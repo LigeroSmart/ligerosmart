@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.8 2010-01-28 15:55:33 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.9 2010-01-28 21:58:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,8 +60,8 @@ $Include{"AJAX"}
                                             <tr>
                                                 <td class="contentkey">$Text{"Matching"}: </td>
                                                 <td class="contentvalue">
-                                                    <input name="ExpressionConjunction" type="radio" value="any" checked="checked" /> Any expression
-                                                    <input name="ExpressionConjunction" type="radio" value="all"/> All expressions
+                                                    <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"}/> Any expression
+                                                    <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"}/> All expressions
                                                 </td>
                                             </tr>
                                             <tr>
@@ -104,7 +104,7 @@ $Include{"AJAX"}
                                     <td align="left" width="10%" class="contentvalue">
                                         <div id="ExpressionID::$QData{"ExpressionID"}::CompareValue::Div">
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
-                                            <input type="text" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
+                                            <input type="text" id="ExpressionID::$QData{"ExpressionID"}::CompareValue" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                             $Data{"CompareValueOptionString"}
