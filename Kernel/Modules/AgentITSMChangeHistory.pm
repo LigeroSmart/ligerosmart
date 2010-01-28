@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.39 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.40 2010-01-28 15:44:42 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,9 +18,10 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,6 +42,7 @@ sub new {
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
     $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
+    $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -125,7 +127,15 @@ sub Run {
 
         # determine what should be shown
         my $HistoryType = $HistoryEntry->{HistoryType};
-        if ( $HistoryType =~ m{ \A (?: Change | ChangeCAB | WorkOrder ) Update \z }xms ) {
+        if (
+            $HistoryType =~ m{
+                \A
+                (?: (?: Change | ChangeCAB | WorkOrder ) Update )
+                | (?: (?: Condition ) (?: Add | Update ) )
+                \z
+            }xms
+            )
+        {
 
             # The displayed fieldname might be changed in the following loop
             my $DisplayedFieldname = $HistoryEntry->{Fieldname};
@@ -146,6 +156,7 @@ sub Run {
                                 | ChangeState
                                 | WorkOrderState | WorkOrderType
                                 | WorkOrderAgent | ChangeBuilder | ChangeManager
+                                | Valid
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
                         }xms
@@ -191,6 +202,11 @@ sub Run {
                                 $Value = $Self->{ChangeObject}->ChangeCIPLookup(
                                     ID   => $HistoryEntry->{$ContentNewOrOld},
                                     Type => $Type,
+                                );
+                            }
+                            elsif ( $Type eq 'Valid' ) {
+                                $Value = $Self->{ValidObject}->ValidLookup(
+                                    ValidID => $HistoryEntry->{$ContentNewOrOld},
                                 );
                             }
                             else {
@@ -302,6 +318,11 @@ sub Run {
             if ( $HistoryEntry->{WorkOrderID} ) {
                 $HistoryEntryType .= 'WithWorkOrderID';
                 $Data{Content} = '"' . $HistoryEntry->{WorkOrderID} . '", ' . $Data{Content};
+            }
+
+            # handle condition add with id
+            if ( $HistoryEntryType eq 'ConditionAdd' && !$HistoryEntry->{Fieldname} ) {
+                $HistoryEntryType .= 'ID';
             }
 
             # show 'nice' output with variable substitution
