@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.11 2010-01-27 23:14:41 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.12 2010-01-28 03:02:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,7 +54,7 @@ sub Run {
     for my $ParamName (
         qw(
         ChangeID ConditionID Name Comment ExpressionConjunction ValidID
-        Save AddAction AddExpression NewExpression NewAction)
+        Save AddAction AddExpression NewExpression NewAction ElementChanged)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -64,7 +64,7 @@ sub Run {
     for my $Needed (qw(ChangeID ConditionID)) {
         if ( !$GetParam{$Needed} ) {
             $Self->{LayoutObject}->ErrorScreen(
-                Message => 'No $Needed is given!',
+                Message => "No $Needed is given!",
                 Comment => 'Please contact the admin.',
             );
             return;
@@ -163,68 +163,83 @@ sub Run {
         # save all existing expression fields
         for my $ExpressionID ( @{$ExpressionIDsRef} ) {
 
-            # to store expression field data
-            my %ExpressionData;
-
             # get expression fields
+            my %ExpressionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
                 $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
                     Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
                 );
             }
 
-            # update the expression
-            my $Success = $Self->{ConditionObject}->ExpressionUpdate(
-                ExpressionID => $ExpressionID,
-                ObjectID     => $ExpressionData{ObjectID},
-                AttributeID  => $ExpressionData{AttributeID},
-                OperatorID   => $ExpressionData{OperatorID},
-                Selector     => $ExpressionData{Selector},
-                CompareValue => $ExpressionData{CompareValue},
-                UserID       => $Self->{UserID},
-            );
+            # check if existing expression is complete
+            # (all required fields must be filled, CompareValue can be empty)
+            my $FieldsOk = 1;
+            FIELD:
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
 
-            # check error
-            if ( !$Success ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Could not update ExpressionID $ExpressionID!",
-                    Comment => 'Please contact the admin.',
+                # new expression is not complete
+                if ( !$ExpressionData{$Field} ) {
+                    $FieldsOk = 0;
+                    last FIELD;
+                }
+            }
+
+            # update existing expression only if all fields are complete
+            if ($FieldsOk) {
+
+                # update the expression
+                my $Success = $Self->{ConditionObject}->ExpressionUpdate(
+                    ExpressionID => $ExpressionID,
+                    ObjectID     => $ExpressionData{ObjectID},
+                    AttributeID  => $ExpressionData{AttributeID},
+                    OperatorID   => $ExpressionData{OperatorID},
+                    Selector     => $ExpressionData{Selector},
+                    CompareValue => $ExpressionData{CompareValue} || '',
+                    UserID       => $Self->{UserID},
                 );
+
+                # check error
+                if ( !$Success ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not update ExpressionID $ExpressionID!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
             }
         }
 
         # get new expression fields
-        my %NewExpressionData;
+        my %ExpressionData;
         for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
-            $NewExpressionData{$Field} = $Self->{ParamObject}->GetParam(
+            $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
                 Param => 'ExpressionID::NEW::' . $Field,
             );
         }
 
         # check if new expression is complete
-        # (all required fields are filled, CompareValue can be empty)
-        my $NewFieldsOk = 1;
+        # (all required fields must be filled, CompareValue can be empty)
+        my $FieldsOk = 1;
         FIELD:
         for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
 
             # new expression is not complete
-            if ( !$NewExpressionData{$Field} ) {
-                $NewFieldsOk = 0;
+            if ( !$ExpressionData{$Field} ) {
+                $FieldsOk = 0;
                 last FIELD;
             }
         }
 
         # add new expression
-        if ($NewFieldsOk) {
+        if ($FieldsOk) {
 
             # add new expression
             my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
                 ConditionID  => $GetParam{ConditionID},
-                ObjectID     => $NewExpressionData{ObjectID},
-                AttributeID  => $NewExpressionData{AttributeID},
-                OperatorID   => $NewExpressionData{OperatorID},
-                Selector     => $NewExpressionData{Selector},
-                CompareValue => $NewExpressionData{CompareValue},
+                ObjectID     => $ExpressionData{ObjectID},
+                AttributeID  => $ExpressionData{AttributeID},
+                OperatorID   => $ExpressionData{OperatorID},
+                Selector     => $ExpressionData{Selector},
+                CompareValue => $ExpressionData{CompareValue} || '',
                 UserID       => $Self->{UserID},
             );
 
@@ -299,7 +314,133 @@ sub Run {
     # handle AJAXUpdate
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
-        # TODO add Ajax handling here...
+        # get expression id
+        my $ExpressionID;
+        if ( $GetParam{ElementChanged} =~ m{ \A ExpressionID :: ( \d+ | NEW ) }xms ) {
+            $ExpressionID = $1;
+        }
+
+        # get expression fields
+        for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+            $GetParam{$Field} = $Self->{ParamObject}->GetParam(
+                Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+            );
+        }
+
+        # get object selection list
+        my $ObjectList = $Self->_GetObjectSelection();
+
+        # get selector selection list
+        my $SelectorList = $Self->_GetSelectorSelection(
+            ObjectID    => $GetParam{ObjectID},
+            ConditionID => $GetParam{ConditionID},
+        );
+
+        # get attribute selection list
+        my $AttributeList = $Self->_GetAttributeSelection(
+            ObjectID => $GetParam{ObjectID},
+            Selector => $GetParam{Selector},
+        );
+
+        # get operator selection list
+        my $OperatorList = $Self->_GetOperatorSelection(
+            ObjectID    => $GetParam{ObjectID},
+            AttributeID => $GetParam{AttributeID},
+        );
+
+        # add an empty selector selection if no list is available or nothing is selected
+        my $PossibleNoneSelector = 0;
+        if (
+            !$SelectorList
+            || !ref $SelectorList eq 'HASH'
+            || !%{$SelectorList}
+            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+            )
+        {
+            $PossibleNoneSelector = 1;
+        }
+
+        # add an empty attribute selection if no list is available or nothing is selected
+        my $PossibleNoneAttributeID = 0;
+        if (
+            !$AttributeList
+            || !ref $AttributeList eq 'HASH'
+            || !%{$AttributeList}
+            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
+            )
+        {
+            $PossibleNoneAttributeID = 1;
+        }
+
+        # add an empty operator selection if no list is available or nothing is selected
+        my $PossibleNoneOperatorID = 0;
+        if (
+            !$OperatorList
+            || !ref $OperatorList eq 'HASH'
+            || !%{$OperatorList}
+            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
+            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID'
+            )
+        {
+            $PossibleNoneOperatorID = 1;
+        }
+
+        # delete all following lists, but do not delete the directly following list
+        if ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID' ) {
+            $AttributeList = {};
+            $OperatorList  = {};
+
+            #            $CompareValueList = {};
+        }
+        elsif ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector' ) {
+            $OperatorList = {};
+
+            #            $CompareValueList = {};
+        }
+        elsif ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID' ) {
+
+            #            $CompareValueList = {};
+        }
+
+        # build json
+        my $JSON = $Self->{LayoutObject}->BuildJSON(
+            [
+                {
+                    Name         => 'ExpressionID::' . $ExpressionID . '::ObjectID',
+                    Data         => $ObjectList,
+                    SelectedID   => $GetParam{ObjectID},
+                    PossibleNone => 0,
+                    Translation  => 1,
+                    Max          => 100,
+                },
+                {
+                    Name         => 'ExpressionID::' . $ExpressionID . '::Selector',
+                    Data         => $SelectorList,
+                    SelectedID   => $PossibleNoneSelector ? '' : $GetParam{Selector},
+                    PossibleNone => $PossibleNoneSelector,
+                    Translation  => 1,
+                    Max          => 100,
+                },
+                {
+                    Name         => 'ExpressionID::' . $ExpressionID . '::AttributeID',
+                    Data         => $AttributeList,
+                    SelectedID   => $PossibleNoneAttributeID ? '' : $GetParam{AttributeID},
+                    PossibleNone => $PossibleNoneAttributeID,
+                    Translation  => 1,
+                    Max          => 100,
+                },
+                {
+                    Name         => 'ExpressionID::' . $ExpressionID . '::OperatorID',
+                    Data         => $OperatorList,
+                    SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
+                    PossibleNone => $PossibleNoneOperatorID,
+                    Translation  => 1,
+                    Max          => 100,
+                },
+            ],
+        );
 
         # return json
         return $Self->{LayoutObject}->Attachment(
@@ -464,7 +605,45 @@ sub _ShowObjectSelection {
     my ( $Self, %Param ) = @_;
 
     # get object selection list
-    my $ObjectOptionString = $Self->_GetObjectSelection(%Param);
+    my $ObjectList = $Self->_GetObjectSelection(%Param);
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$ObjectList
+        || !ref $ObjectList eq 'HASH'
+        || !%{$ObjectList}
+        || !$Param{ObjectID}
+        )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate ObjectOptionString
+    my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $ObjectList,
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+        SelectedID   => $Param{ObjectID},
+        PossibleNone => $PossibleNone,
+        Ajax         => {
+            Update => [
+                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
+            ],
+            Depend => [
+                'ChangeID',
+                'ConditionID',
+                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # remove AJAX-Loading images in selection field to avoid jitter effect
+    $ObjectOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # output object selection
     $Self->{LayoutObject}->Block(
@@ -482,7 +661,45 @@ sub _ShowSelectorSelection {
     my ( $Self, %Param ) = @_;
 
     # get selector selection list
-    my $SelectorOptionString = $Self->_GetSelectorSelection(%Param);
+    my $SelectorList = $Self->_GetSelectorSelection(%Param);
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$SelectorList
+        || !ref $SelectorList eq 'HASH'
+        || !%{$SelectorList}
+        || !$Param{Selector}
+        )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate SelectorOptionString
+    my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $SelectorList,
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+        SelectedID   => $Param{Selector},
+        PossibleNone => $PossibleNone,
+        Ajax         => {
+            Update => [
+                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
+            ],
+            Depend => [
+                'ChangeID',
+                'ConditionID',
+                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # remove AJAX-Loading images in selection field to avoid jitter effect
+    $SelectorOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # output selector selection
     $Self->{LayoutObject}->Block(
@@ -500,7 +717,45 @@ sub _ShowAttributeSelection {
     my ( $Self, %Param ) = @_;
 
     # get attribute selection list
-    my $AttributeOptionString = $Self->_GetAttributeSelection(%Param);
+    my $AttributeList = $Self->_GetAttributeSelection(%Param);
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$AttributeList
+        || !ref $AttributeList eq 'HASH'
+        || !%{$AttributeList}
+        || !$Param{AttributeID}
+        )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate AttributeOptionString
+    my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $AttributeList,
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+        SelectedID   => $Param{AttributeID},
+        PossibleNone => $PossibleNone,
+        Ajax         => {
+            Update => [
+                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
+            ],
+            Depend => [
+                'ChangeID',
+                'ConditionID',
+                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # remove AJAX-Loading images in date selection fields to avoid jitter effect
+    $AttributeOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # output attribute selection
     $Self->{LayoutObject}->Block(
@@ -518,7 +773,45 @@ sub _ShowOperatorSelection {
     my ( $Self, %Param ) = @_;
 
     # get operator selection list
-    my $OperatorOptionString = $Self->_GetOperatorSelection(%Param);
+    my $OperatorList = $Self->_GetOperatorSelection(%Param);
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$OperatorList
+        || !ref $OperatorList eq 'HASH'
+        || !%{$OperatorList}
+        || !$Param{OperatorID}
+        )
+    {
+        $PossibleNone = 1;
+    }
+
+    # generate OperatorOptionString
+    my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
+        Data         => $OperatorList,
+        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+        SelectedID   => $Param{OperatorID},
+        PossibleNone => $PossibleNone,
+        Ajax         => {
+            Update => [
+                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
+            ],
+            Depend => [
+                'ChangeID',
+                'ConditionID',
+                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+            ],
+            Subaction => 'AJAXUpdate',
+        },
+    );
+
+    # remove AJAX-Loading images in selection field to avoid jitter effect
+    $OperatorOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     # output operator selection
     $Self->{LayoutObject}->Block(
@@ -620,7 +913,7 @@ sub _ShowCompareValueField {
     return 1;
 }
 
-# get object dropdown field
+# get object dropdown field data
 sub _GetObjectSelection {
     my ( $Self, %Param ) = @_;
 
@@ -629,24 +922,10 @@ sub _GetObjectSelection {
         UserID => $Self->{UserID},
     );
 
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if ( !$ObjectList || !ref $ObjectList eq 'HASH' || !%{$ObjectList} || !$Param{ObjectID} ) {
-        $PossibleNone = 1;
-    }
-
-    # generate ObjectOptionString
-    my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
-        Data         => $ObjectList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
-        SelectedID   => $Param{ObjectID},
-        PossibleNone => $PossibleNone,
-    );
-
-    return $ObjectOptionString;
+    return $ObjectList;
 }
 
-# get selector dropdown field
+# get selector dropdown field data
 sub _GetSelectorSelection {
     my ( $Self, %Param ) = @_;
 
@@ -663,25 +942,10 @@ sub _GetSelectorSelection {
         );
     }
 
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if ( !$SelectorList || !ref $SelectorList eq 'HASH' || !%{$SelectorList} || !$Param{Selector} )
-    {
-        $PossibleNone = 1;
-    }
-
-    # generate SelectorOptionString
-    my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
-        Data         => $SelectorList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::Selector',
-        SelectedID   => $Param{Selector},
-        PossibleNone => $PossibleNone,
-    );
-
-    return $SelectorOptionString;
+    return $SelectorList;
 }
 
-# get attribute selection list
+# get attribute selection list data
 sub _GetAttributeSelection {
     my ( $Self, %Param ) = @_;
 
@@ -727,24 +991,10 @@ sub _GetAttributeSelection {
         }
     }
 
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if ( !%Attributes || !$Param{AttributeID} ) {
-        $PossibleNone = 1;
-    }
-
-    # generate AttributeOptionString
-    my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
-        Data         => \%Attributes,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
-        SelectedID   => $Param{AttributeID},
-        PossibleNone => $PossibleNone,
-    );
-
-    return $AttributeOptionString;
+    return \%Attributes;
 }
 
-# get operator list
+# get operator list data
 sub _GetOperatorSelection {
     my ( $Self, %Param ) = @_;
 
@@ -810,21 +1060,7 @@ sub _GetOperatorSelection {
         }
     }
 
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if ( !%Operators || !$Param{OperatorID} ) {
-        $PossibleNone = 1;
-    }
-
-    # generate OperatorOptionString
-    my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
-        Data         => \%Operators,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
-        SelectedID   => $Param{OperatorID},
-        PossibleNone => $PossibleNone,
-    );
-
-    return $OperatorOptionString;
+    return \%Operators;
 }
 
 # get compare value list
@@ -864,6 +1100,9 @@ sub _GetCompareValueSelection {
         SelectedID   => $Param{CompareValue},
         PossibleNone => $PossibleNone,
     );
+
+    # remove AJAX-Loading images in selection field to avoid jitter effect
+    $CompareValueOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     return $CompareValueOptionString;
 }
