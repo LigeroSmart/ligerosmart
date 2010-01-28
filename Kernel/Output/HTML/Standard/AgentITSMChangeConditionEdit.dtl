@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.7 2010-01-28 02:55:53 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.8 2010-01-28 15:55:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,14 +101,16 @@ $Include{"AJAX"}
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
                                     <td align="left" width="10%" class="contentvalue">$Data{"OperatorOptionString"}</td>
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
-<!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
                                     <td align="left" width="10%" class="contentvalue">
-                                        <input type="text" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
-                                    </td>
+                                        <div id="ExpressionID::$QData{"ExpressionID"}::CompareValue::Div">
+<!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
+                                            <input type="text" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"CompareValueOptionString"}</td>
+                                            $Data{"CompareValueOptionString"}
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
+                                        </div>
+                                    </td>
                                     <td width="10">
                                         <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpressionID::$QData{"ExpressionID"}">
                                     </td>
