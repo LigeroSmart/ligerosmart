@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.30 2010-01-28 11:08:32 mae Exp $
+# $Id: ITSMCondition.pm,v 1.31 2010-01-28 11:20:46 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -591,22 +591,20 @@ sub ConditionDeleteAll {
         return if !$Success;
     }
 
+    # delete conditions from database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'DELETE FROM change_condition '
+            . 'WHERE change_id = ?',
+        Bind => [ \$Param{ChangeID} ],
+    );
+
     # trigger ConditionDeleteAllPost-Event
-    # this must be myabe done before deleting the conditions from the database,
-    # because of possible foreign key constraints in the change_history table
     $Self->EventHandler(
         Event => 'ConditionDeleteAllPost',
         Data  => {
             %Param,
         },
         UserID => $Param{UserID},
-    );
-
-    # delete conditions from database
-    return if !$Self->{DBObject}->Do(
-        SQL => 'DELETE FROM change_condition '
-            . 'WHERE change_id = ?',
-        Bind => [ \$Param{ChangeID} ],
     );
 
     return 1;
@@ -1208,6 +1206,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2010-01-28 11:08:32 $
+$Revision: 1.31 $ $Date: 2010-01-28 11:20:46 $
 
 =cut
