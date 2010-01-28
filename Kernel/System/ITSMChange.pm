@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.227 2010-01-27 20:10:13 mae Exp $
+# $Id: ITSMChange.pm,v 1.228 2010-01-28 10:27:08 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.227 $) [1];
+$VERSION = qw($Revision: 1.228 $) [1];
 
 =head1 NAME
 
@@ -1982,14 +1982,29 @@ sub ChangePossibleStatesGet {
             UserID   => $Param{UserID},
         );
 
-        # get the possible next state ids
-        my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
-            StateID => $Change->{ChangeStateID},
-            Class   => 'ITSM::ChangeManagement::Change::State',
+        # check for state lock
+        my $StateLock;
+        $StateLock = $Self->{ConditionObject}->ConditionMatchStateLock(
+            ObjectName => 'ITSMChange',
+            Selector   => $Param{ChangeID},
+            UserID     => $Param{UserID},
         );
 
-        # add current change state id to list
-        my @NextStateIDs = sort ( @{$NextStateIDsRef}, $Change->{ChangeStateID} );
+        # set als default state current state
+        my @NextStateIDs = qw( $Change->{ChangeStateID} );
+
+        # get possible next states if no state lock
+        if ( !$StateLock ) {
+
+            # get the possible next state ids
+            my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+                StateID => $Change->{ChangeStateID},
+                Class   => 'ITSM::ChangeManagement::Change::State',
+            );
+
+            # add current change state id to list
+            @NextStateIDs = sort ( @{$NextStateIDsRef}, $Change->{ChangeStateID} );
+        }
 
         # assemble the array of hash refs with only possible next states
         STATEID:
@@ -3066,6 +3081,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.227 $ $Date: 2010-01-27 20:10:13 $
+$Revision: 1.228 $ $Date: 2010-01-28 10:27:08 $
 
 =cut
