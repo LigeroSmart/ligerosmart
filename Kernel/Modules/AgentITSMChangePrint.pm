@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.11 2010-01-28 13:59:22 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.12 2010-01-28 14:16:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -460,7 +460,7 @@ sub _PDFOutputChangeInfo {
         }
 
         # remember the value
-        $ComplicatedValue{$Attribute} = join( "\n", @LongNames ) || '-';
+        $ComplicatedValue{ $Attribute . 'Long' } = join( "\n", @LongNames ) || '-';
     }
 
     # value for attachments
@@ -536,19 +536,19 @@ sub _PDFOutputChangeInfo {
             ValueIsUser => 1,
         },
         {
-            Key   => 'CAB Agents',
-            Value => $ComplicatedValue{CABAgents},
-            Table => \@TableLeft,
+            Attribute => 'CABAgentsLong',
+            Key       => 'CAB Agents',
+            Table     => \@TableLeft,
         },
         {
-            Key   => 'CAB Customers',
-            Value => $ComplicatedValue{CABCustomers},
-            Table => \@TableLeft,
+            Attribute => 'CABCustomersLong',
+            Key       => 'CAB Customers',
+            Table     => \@TableLeft,
         },
         {
-            Key   => 'Attachments',
-            Value => $ComplicatedValue{Attachments},
-            Table => \@TableLeft,
+            Attribute => 'Attachments',
+            Key       => 'Attachments',
+            Table     => \@TableLeft,
         },
         {
             Attribute   => 'RequestedTime',
@@ -595,7 +595,7 @@ sub _PDFOutputChangeInfo {
         # fill @TableLeft and @TableRight
         $Self->_PrepareAndAddInfoRow(
             RowSpec           => $RowSpec,
-            Data              => $Change,
+            Data              => { %{$Change}, %ComplicatedValue },
             TranslationPrefix => 'ChangeAttribute::',
         );
     }
@@ -742,9 +742,9 @@ sub _PDFOutputWorkOrderInfo {
             Key        => 'ChangeAttribute::AccountedTime',
         },
         {
-            Key   => 'Attachments',
-            Value => $ComplicatedValue{Attachments},
-            Table => \@TableLeft,
+            Attribute => 'Attachments',
+            Key       => 'Attachments',
+            Table     => \@TableLeft,
         },
         {
             Attribute   => 'PlannedStartTime',
@@ -790,7 +790,7 @@ sub _PDFOutputWorkOrderInfo {
         # the workorder data overrides the change data
         $Self->_PrepareAndAddInfoRow(
             RowSpec           => $RowSpec,
-            Data              => { %{$Change}, %{$WorkOrder} },
+            Data              => { %{$Change}, %{$WorkOrder}, %ComplicatedValue },
             TranslationPrefix => 'WorkOrderAttribute::',
         );
     }
