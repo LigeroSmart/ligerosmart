@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.168 2010-01-28 12:29:46 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.169 2010-01-28 12:40:38 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2290,7 +2290,7 @@
         <Description Lang="en">Order default in the Change Schedule overview.</Description>
         <Description Lang="de">Standard Reihenfolge der Changes in der Change Schedule-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -2302,7 +2302,7 @@
         <Description Lang="en">Required privilege to view list of Change Schedule.</Description>
         <Description Lang="de">Benötigtes Recht zum Einsehen der Change Schedule Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
@@ -2311,7 +2311,7 @@
         <Description Lang="en">Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.</Description>
         <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change Schedule-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -2338,7 +2338,7 @@
         <Description Lang="en">Change sort by default in the Change Schedule overview.</Description>
         <Description Lang="de">Standard Sortierung der Changes in der Change Schedule-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>
