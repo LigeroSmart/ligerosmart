@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.14 2010-01-28 15:29:47 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.15 2010-01-28 15:58:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -231,44 +231,50 @@ sub Run {
 
         if ($PrintChange) {
 
-            # output change content infos
-            $Self->_PDFOutputDescriptionAndJustification(
-                Page   => \%Page,
-                Change => $Change,
-            );
-
-            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} || [] } ) {
-
-                # get workorder information
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-                    WorkOrderID => $WorkOrderID,
-                    UserID      => $Self->{UserID},
-                );
-
-                # check error
-                if ( !$WorkOrder ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "WorkOrder '$WorkOrderID' not found in database!",
-                        Comment => 'Please contact the admin.',
-                    );
-                }
-
-                $Self->_PDFOutputWorkOrderInfo(
-                    Page      => \%Page,
-                    Change    => $Change,
-                    WorkOrder => $WorkOrder,
+            # output change description and justification
+            # The plain content will be displayed
+            for my $Attribute (qw(Description Justification)) {
+                $Self->_PDFOutputBody(
+                    Page  => \%Page,
+                    Title => $Attribute,
+                    Body  => $Change->{ $Attribute . 'Plain' },
                 );
             }
         }
 
-        if ($PrintWorkOrder) {
+        # output the workorders
+        my @WorkOrderIDs = $PrintChange ? @{ $Change->{WorkOrderIDs} || [] } : ($WorkOrderID);
+        for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} || [] } ) {
+
+            # get workorder information
+            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                WorkOrderID => $WorkOrderID,
+                UserID      => $Self->{UserID},
+            );
+
+            # check error
+            if ( !$WorkOrder ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "WorkOrder '$WorkOrderID' not found in database!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
 
             $Self->_PDFOutputWorkOrderInfo(
-                Page           => \%Page,
-                Change         => $Change,
-                WorkOrder      => $WorkOrder,
-                PrintWorkOrder => 1,
+                Page      => \%Page,
+                Change    => $Change,
+                WorkOrder => $WorkOrder,
             );
+
+            # output workorder instruction and report
+            # The plain content will be displayed
+            for my $Attribute (qw(Instruction Report)) {
+                $Self->_PDFOutputBody(
+                    Page  => \%Page,
+                    Title => $Attribute,
+                    Body  => $WorkOrder->{ $Attribute . 'Plain' },
+                );
+            }
         }
 
         # return the PDF document
@@ -842,7 +848,42 @@ sub _PDFOutputDescriptionAndJustification {
         $Table{CellData}[ $Row++ ][0]{Content} = $Attribute;
         $Table{CellData}[ $Row++ ][0]{Content} = $Change->{ $Attribute . 'Plain' } || ' ';
     }
-    $Table{CellData}[ $Row++ ][0]{Content} = 'TODO: workorders';
+
+    # output table
+    $Self->_PDFOutputTable( Page => $Page, Table => \%Table );
+
+    return 1;
+}
+
+sub _PDFOutputBody {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(Page)) {
+        if ( !defined( $Param{$Attribute} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Attribute!" );
+            return;
+        }
+    }
+
+    my $Page = $Param{Page};
+
+    # table params common to printing a body of text, like a description
+    my %Table = (
+        Type            => 'Cut',
+        Border          => 0,
+        Font            => 'Monospaced',
+        FontSize        => 7,
+        BackgroundColor => '#DDDDDD',
+        Padding         => 4,
+        PaddingTop      => 8,
+        PaddingBottom   => 8,
+    );
+
+    # output tables
+    my $Row = 0;
+    $Table{CellData}[ $Row++ ][0]{Content} = $Param{Title} || '';
+    $Table{CellData}[ $Row++ ][0]{Content} = $Param{Body}  || '';
 
     # output table
     $Self->_PDFOutputTable( Page => $Page, Table => \%Table );
