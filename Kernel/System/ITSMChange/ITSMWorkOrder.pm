@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.85 2010-01-27 20:10:13 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.86 2010-01-28 09:14:18 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.85 $) [1];
+$VERSION = qw($Revision: 1.86 $) [1];
 
 =head1 NAME
 
@@ -1585,21 +1585,18 @@ sub WorkOrderPossibleStatesGet {
         );
 
         # check for state lock
-        my $StateLock = $Self->{ConditionObject}->ConditionMatchStateLock(
+        my $StateLock;
+        $StateLock = $Self->{ConditionObject}->ConditionMatchStateLock(
             ObjectName => 'ITSMWorkOrder',
             Selector   => $Param{WorkOrderID},
             UserID     => $Param{UserID},
         );
 
+        # set als default state current state
+        my @NextStateIDs = qw( $WorkOrder->{WorkOrderStateID} );
+
         # get possible next states
-        my @NextStateIDs;
-
-        if ($StateLock) {
-
-            # set current only current state
-            @NextStateIDs = @{ $WorkOrder->{WorkOrderStateID} };
-        }
-        else {
+        if ( !$StateLock ) {
 
             # get the possible next state ids
             my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
@@ -1608,7 +1605,7 @@ sub WorkOrderPossibleStatesGet {
             );
 
             # add current workorder state id to list
-            my @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
+            @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
         }
 
         # assemble the array of hash refs with only possible next states
@@ -2727,6 +2724,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.85 $ $Date: 2010-01-27 20:10:13 $
+$Revision: 1.86 $ $Date: 2010-01-28 09:14:18 $
 
 =cut
