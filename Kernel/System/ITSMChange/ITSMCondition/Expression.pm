@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.24 2010-01-27 22:39:01 ub Exp $
+# $Id: Expression.pm,v 1.25 2010-01-28 11:52:45 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -68,7 +68,14 @@ sub ExpressionAdd {
         return;
     }
 
-    # TODO: execute ExpressionAddPre Event
+    # trigger ExpressionAddPre-Event
+    $Self->EventHandler(
+        Event => 'ExpressionAddPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # add new expression name to database
     return if !$Self->{DBObject}->Do(
@@ -109,7 +116,15 @@ sub ExpressionAdd {
         return;
     }
 
-    # TODO: execute ExpressionAddPost Event
+    # trigger ExpressionAddPost-Event
+    $Self->EventHandler(
+        Event => 'ExpressionAddPost',
+        Data  => {
+            %Param,
+            ExpressionID => $ExpressionID,
+        },
+        UserID => $Param{UserID},
+    );
 
     return $ExpressionID;
 }
@@ -144,7 +159,20 @@ sub ExpressionUpdate {
         }
     }
 
-    # TODO: execute ExpressionUpdatePre Event
+    # trigger ExpressionUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'ExpressionUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get current expression data for event handler
+    my $ExpressionData = $Self->ExpressionGet(
+        ExpressionID => $Param{ExpressionID},
+        UserID       => $Param{UserID},
+    );
 
     # map update attributes to column names
     my %Attribute = (
@@ -184,7 +212,15 @@ sub ExpressionUpdate {
         Bind => \@Bind,
     );
 
-    # TODO: execute ExpressionUpdatePost Event
+    # trigger ExpressionUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'ExpressionUpdatePost',
+        Data  => {
+            %Param,
+            OldExpressionData => $ExpressionData,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -360,11 +396,29 @@ sub ExpressionDeleteAll {
         }
     }
 
+    # trigger ExpressionDeleteAllPre-Event
+    $Self->EventHandler(
+        Event => 'ExpressionDeleteAllPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
     # delete condition expressions from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_expression '
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
+    );
+
+    # trigger ExpressionDeleteAllPost-Event
+    $Self->EventHandler(
+        Event => 'ExpressionDeleteAllPost',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -602,6 +656,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-27 22:39:01 $
+$Revision: 1.25 $ $Date: 2010-01-28 11:52:45 $
 
 =cut
