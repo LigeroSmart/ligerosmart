@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.10 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.11 2010-01-28 13:59:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -422,7 +422,7 @@ sub _PDFOutputChangeInfo {
     # both tables have two colums: Key and Value
     my ( @TableLeft, @TableRight );
 
-    # Determine the complicated values
+    # determine values that can't be determined in _PrepareAndAddInfoRow()
     my %ComplicatedValue;
 
     # Values for CAB
@@ -672,6 +672,37 @@ sub _PDFOutputWorkOrderInfo {
     # both tables have two colums: Key and Value
     my ( @TableLeft, @TableRight );
 
+    # determine values that can't be determined in _PrepareAndAddInfoRow()
+    my %ComplicatedValue;
+
+    # value for attachments
+    {
+        my %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+            WorkOrderID => $WorkOrder->{WorkOrderID},
+        );
+
+        my @Values;
+
+        ATTACHMENT_ID:
+        for my $AttachmentID ( keys %Attachments ) {
+
+            # get info about file
+            my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+                FileID => $AttachmentID,
+            );
+
+            # check for attachment information
+            next ATTACHMENTID if !$AttachmentData;
+
+            push @Values, sprintf '%s %s',
+                $AttachmentData->{Filename},
+                $AttachmentData->{Filesize};
+        }
+
+        # show row
+        $ComplicatedValue{Attachments} = join( "\n", @Values ) || '-';
+    }
+
     my @RowSpec = (
         {
             Attribute => 'ChangeTitle',
@@ -709,6 +740,11 @@ sub _PDFOutputWorkOrderInfo {
             IsOptional => 1,
             Table      => \@TableLeft,
             Key        => 'ChangeAttribute::AccountedTime',
+        },
+        {
+            Key   => 'Attachments',
+            Value => $ComplicatedValue{Attachments},
+            Table => \@TableLeft,
         },
         {
             Attribute   => 'PlannedStartTime',
