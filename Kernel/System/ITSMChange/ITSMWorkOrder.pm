@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.87 2010-01-28 09:22:30 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.88 2010-01-28 10:28:00 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.87 $) [1];
+$VERSION = qw($Revision: 1.88 $) [1];
 
 =head1 NAME
 
@@ -1595,7 +1595,7 @@ sub WorkOrderPossibleStatesGet {
         # set als default state current state
         my @NextStateIDs = qw( $WorkOrder->{WorkOrderStateID} );
 
-        # get possible next states if have no state lock
+        # get possible next states if no state lock
         if ( !$StateLock ) {
 
             # get the possible next state ids
@@ -2724,6 +2724,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.87 $ $Date: 2010-01-28 09:22:30 $
+$Revision: 1.88 $ $Date: 2010-01-28 10:28:00 $
 
 =cut
