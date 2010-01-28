@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.22 2010-01-27 15:51:50 bes Exp $
+# $Id: ITSMChange.dtl,v 1.23 2010-01-28 13:24:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -113,19 +113,19 @@
                     <td colspan="2">$Text{"Workorder Information"}</td>
                 </tr>
                 <tr class="searchactive">
-                    <td class="contentkey">$Text{"Title:"}</td>
+                    <td class="contentkey">$Text{"Title"}:</td>
                     <td class="contentvalue">$QData{"WorkOrderTitle","40"}</td>
                 </tr>
                 <tr class="searchpassive">
-                    <td class="contentkey">$Text{"State:"}</td>
+                    <td class="contentkey">$Text{"State"}:</td>
                     <td class="contentvalue">$Text{"$QData{"WorkOrderState"}"}</td>
                 </tr>
                 <tr class="searchactive">
-                    <td class="contentkey">$Text{"Type:"}</td>
+                    <td class="contentkey">$Text{"Type"}:</td>
                     <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
                 </tr>
                 <tr class="searchpassive">
-                    <td class="contentkey">$Text{"Workorder Agent:"}</td>
+                    <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderAgent"}:</td>
                     <td class="contentvalue">
 <!-- dtl:block:EmptyWorkOrderAgent -->
                         <div title="-">
@@ -140,11 +140,11 @@
                     </td>
                 </tr>
                 <tr class="searchactive">
-                    <td class="contentkey">$Text{"ChangeAttribute::PlannedStartTime:"}</td>
+                    <td class="contentkey">$Text{"ChangeAttribute::PlannedStartTime"}:</td>
                     <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
                 </tr>
                 <tr class="searchpassive">
-                    <td class="contentkey">$Text{"ChangeAttribute::PlannedEndTime:"}</td>
+                    <td class="contentkey">$Text{"ChangeAttribute::PlannedEndTime"}:</td>
                     <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
                 </tr>
                 <tr class="searchactive">

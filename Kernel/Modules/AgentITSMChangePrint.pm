@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.8 2010-01-28 11:39:32 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.9 2010-01-28 13:24:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -220,10 +220,11 @@ sub Run {
         );
         $Page{PageCount}++;
 
-        # output change infos in both cases
+        # output change infos in both cases,
+        # %Page will be changed
         $Self->_PDFOutputChangeInfo(
-            PageData       => \%Page,
-            ChangeData     => $Change,
+            Page           => \%Page,
+            Change         => $Change,
             PrintWorkOrder => $PrintWorkOrder,
         );
 
@@ -231,21 +232,42 @@ sub Run {
 
             # output change content infos
             $Self->_PDFOutputDescriptionAndJustification(
-                PageData   => \%Page,
-                ChangeData => $Change,
+                Page   => \%Page,
+                Change => $Change,
             );
 
-            # TODO: output workorders
+            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} || [] } ) {
+
+                # get workorder information
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $WorkOrderID,
+                    UserID      => $Self->{UserID},
+                );
+
+                # check error
+                if ( !$WorkOrder ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "WorkOrder $WorkOrderID not found in database!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
+
+                $Self->_PDFOutputWorkOrderInfo(
+                    Page      => \%Page,
+                    Change    => $Change,
+                    WorkOrder => $WorkOrder,
+                );
+            }
         }
 
         if ($PrintWorkOrder) {
 
-            # $Self->_PDFOutputWorkOrderInfo(
-            #     PageData       => \%Page,
-            #     ChangeData     => $Change,
-            #     WorkOrderData  => $WorkOrder,
-            #     PrintWorkOrder => $PrintWorkOrder,
-            # );
+            $Self->_PDFOutputWorkOrderInfo(
+                Page           => \%Page,
+                Change         => $Change,
+                WorkOrder      => $WorkOrder,
+                PrintWorkOrder => 1,
+            );
         }
 
         # return the PDF document
@@ -297,12 +319,13 @@ sub Run {
     return $Output;
 }
 
-# emit information about a change
-sub _PDFOutputChangeInfo {
+# a helper for preparing a table row for PDF generation
+sub _PrepareAndAddInfoRow {
+
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(PageData ChangeData PrintWorkOrder)) {
+    for my $Argument (qw(RowSpec Data TranslationPrefix)) {
         if ( !defined( $Param{$Argument} ) ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -311,11 +334,162 @@ sub _PDFOutputChangeInfo {
             return;
         }
     }
-    my %Change = %{ $Param{ChangeData} };
-    my %Page   = %{ $Param{PageData} };
 
-    # fill the two tables on top
+    my ( $RowSpec, $Data, $TranslationPrefix ) = @Param{qw(RowSpec Data TranslationPrefix)};
+
+    # short name, just for convenience
+    my $Attribute = $RowSpec->{Attribute};
+
+    # skip if row is switched off in SysConfig
+    return if $RowSpec->{IsOptional} && !$Self->{Config}->{$Attribute};
+
+    # keys are always translatable
+    my $Key = $RowSpec->{Key} || "$TranslationPrefix$Attribute";
+    $Key = $Self->{LayoutObject}->{LanguageObject}->Get($Key);
+
+    # determine the value
+    my $Value;
+    if ( $RowSpec->{ValueIsTime} ) {
+
+        # format the time value
+        $Value = $Self->{LayoutObject}->Output(
+            Template => qq(\$TimeLong{"\$Data{"$Attribute"}"}),
+            Data     => $Data,
+        );
+    }
+    elsif ( $RowSpec->{ValueIsUser} ) {
+
+        # format the user id
+        if ( $Data->{ $Attribute . 'ID' } ) {
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $Data->{ $Attribute . 'ID' },
+            );
+            if (%UserData) {
+                $Value = sprintf '%s (%s %s)',
+                    $UserData{UserLogin},
+                    $UserData{UserFirstname},
+                    $UserData{UserLastname};
+            }
+            else {
+                $Value = "ID=$Data->{$Attribute}";
+            }
+        }
+    }
+
+    # The value was explicitly passed
+    elsif ( $RowSpec->{Value} ) {
+        $Value = $RowSpec->{Value};
+    }
+
+    # take value from $Data
+    else {
+        $Value = $Data->{$Attribute};
+    }
+
+    # translate the value
+    if ( $Value && $RowSpec->{ValueIsTranslatable} ) {
+        $Value = $Self->{LayoutObject}->{LanguageObject}->Get($Value),
+    }
+
+    # add separator between key and value
+    $Key .= ':';
+
+    # show row
+    push @{ $RowSpec->{Table} },
+        { Key => $Key, Value => $Value, };
+
+    return;
+}
+
+# emit information about a change
+sub _PDFOutputChangeInfo {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Page Change PrintWorkOrder)) {
+        if ( !defined( $Param{$Argument} ) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+            return;
+        }
+    }
+
+    my ( $Page, $Change ) = @Param{qw(Page Change)};
+
+    # fill the two tables on top,
+    # both tables have two colums: Key and Value
     my ( @TableLeft, @TableRight );
+
+    # Determine the complicated values
+    my %ComplicatedValue;
+
+    # Values for CAB
+    for my $Attribute (qw(CABAgents CABCustomers)) {
+        my @LongNames;
+        if ( $Attribute eq 'CABAgents' && $Change->{$Attribute} ) {
+            for my $CABAgent ( @{ $Change->{$Attribute} } ) {
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $CABAgent,
+                    Cache  => 1,
+                );
+                if (%UserData) {
+                    push @LongNames, sprintf '%s (%s %s)',
+                        @UserData{qw(UserLogin UserFirstname UserLastname)};
+                }
+                else {
+                    push @LongNames, "ID=$Change->{$Attribute}";
+                }
+            }
+        }
+        elsif ( $Attribute eq 'CABCustomers' && $Change->{$Attribute} ) {
+            for my $CABCustomer ( @{ $Change->{$Attribute} } ) {
+                my %UserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                    UserID => $CABCustomer,
+                    Cache  => 1,
+                );
+                if (%UserData) {
+                    push @LongNames, sprintf '%s (%s %s)',
+                        @UserData{qw(UserLogin UserFirstname UserLastname)};
+                }
+                else {
+                    push @LongNames, "ID=$Change->{$Attribute}";
+                }
+            }
+        }
+
+        # remember the value
+        $ComplicatedValue{$Attribute} = join( "\n", @LongNames ) || '-';
+    }
+
+    # value for attachments
+    {
+        my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+            ChangeID => $Change->{ChangeID},
+        );
+
+        my @Values;
+
+        ATTACHMENT_ID:
+        for my $AttachmentID ( keys %Attachments ) {
+
+            # get info about file
+            my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+                FileID => $AttachmentID,
+            );
+
+            # check for attachment information
+            next ATTACHMENTID if !$AttachmentData;
+
+            push @Values, sprintf '%s %s',
+                $AttachmentData->{Filename},
+                $AttachmentData->{Filesize};
+        }
+
+        # show row
+        $ComplicatedValue{Attachments} = join( "\n", @Values ) || '-';
+    }
 
     my @RowSpec = (
         {
@@ -362,6 +536,21 @@ sub _PDFOutputChangeInfo {
             ValueIsUser => 1,
         },
         {
+            Key   => 'CAB Agents',
+            Value => $ComplicatedValue{CABAgents},
+            Table => \@TableLeft,
+        },
+        {
+            Key   => 'CAB Customers',
+            Value => $ComplicatedValue{CABCustomers},
+            Table => \@TableLeft,
+        },
+        {
+            Key   => 'Attachments',
+            Value => $ComplicatedValue{Attachments},
+            Table => \@TableLeft,
+        },
+        {
             Attribute   => 'RequestedTime',
             IsOptional  => 1,
             Table       => \@TableRight,
@@ -401,141 +590,14 @@ sub _PDFOutputChangeInfo {
         },
     );
 
-    my $Translation = $Self->{LayoutObject}->{LanguageObject};
-
     for my $RowSpec (@RowSpec) {
 
-        my $Attribute = $RowSpec->{Attribute};
-
-        # skip if row is switched off in SysConfig
-        next ROW_SPEC if $RowSpec->{IsOptional} && !$Self->{Config}->{$Attribute};
-
-        # keys are always translatable
-        my $Key = $Translation->Get( $RowSpec->{Key} || "ChangeAttribute::$Attribute" );
-
-        # translate the value of the attribute
-        my $Value;
-        if ( $RowSpec->{ValueIsTime} ) {
-
-            # format the time value
-            $Value = $Self->{LayoutObject}->Output(
-                Template => qq(\$TimeLong{"\$Data{"$Attribute"}"}),
-                Data     => \%Change,
-            );
-        }
-        elsif ( $RowSpec->{ValueIsUser} ) {
-
-            # format the user id
-            if ( $Change{ $Attribute . 'ID' } ) {
-                my %UserData = $Self->{UserObject}->GetUserData(
-                    UserID => $Change{ $Attribute . 'ID' },
-                );
-                if (%UserData) {
-                    $Value = sprintf '%s (%s %s)',
-                        $UserData{UserLogin},
-                        $UserData{UserFirstname},
-                        $UserData{UserLastname};
-                }
-                else {
-                    $Value = "ID=$Change{$Attribute}";
-                }
-            }
-        }
-        else {
-            $Value = $RowSpec->{Value} || $Change{$Attribute};
-        }
-
-        # translate the value
-        if ( $Value && $RowSpec->{ValueIsTranslatable} ) {
-            $Value = $Translation->Get($Value),
-        }
-
-        # show row
-        push @{ $RowSpec->{Table} },
-            {
-            Key   => $Key . ':',
-            Value => $Value,
-            };
-    }
-
-    # additional rows in the left table
-    # TODO: use the loop above and generate value with subrefs
-
-    # show CAB
-    for my $Attribute (qw(CABAgents CABCustomers)) {
-        my @LongNames;
-        if ( $Attribute eq 'CABAgents' && $Change{$Attribute} ) {
-            for my $CABAgent ( @{ $Change{$Attribute} } ) {
-                my %UserData = $Self->{UserObject}->GetUserData(
-                    UserID => $CABAgent,
-                    Cache  => 1,
-                );
-                if (%UserData) {
-                    push @LongNames, sprintf '%s (%s %s)',
-                        @UserData{qw(UserLogin UserFirstname UserLastname)};
-                }
-                else {
-                    push @LongNames, "ID=$Change{$Attribute}";
-                }
-            }
-        }
-        elsif ( $Attribute eq 'CABCustomers' && $Change{$Attribute} ) {
-            for my $CABCustomer ( @{ $Change{$Attribute} } ) {
-                my %UserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                    UserID => $CABCustomer,
-                    Cache  => 1,
-                );
-                if (%UserData) {
-                    push @LongNames, sprintf '%s (%s %s)',
-                        @UserData{qw(UserLogin UserFirstname UserLastname)};
-                }
-                else {
-                    push @LongNames, "ID=$Change{$Attribute}";
-                }
-            }
-        }
-
-        # show row
-        my $Value = join( "\n", @LongNames ) || '-';
-        push @TableLeft,
-            {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
-                . ':',
-            Value => $Value,
-            };
-    }
-
-    # show attachments
-    {
-        my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
-            ChangeID => $Change{ChangeID},
+        # fill @TableLeft and @TableRight
+        $Self->_PrepareAndAddInfoRow(
+            RowSpec           => $RowSpec,
+            Data              => $Change,
+            TranslationPrefix => 'ChangeAttribute::',
         );
-
-        my @Values;
-
-        ATTACHMENT_ID:
-        for my $AttachmentID ( keys %Attachments ) {
-
-            # get info about file
-            my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-                FileID => $AttachmentID,
-            );
-
-            # check for attachment information
-            next ATTACHMENTID if !$AttachmentData;
-
-            push @Values, sprintf '%s %s',
-                $AttachmentData->{Filename},
-                $AttachmentData->{Filesize};
-        }
-
-        # show row
-        my $Value = join( "\n", @Values ) || '-';
-        push @TableLeft,
-            {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Attachments') . ':',
-            Value => $Value,
-            };
     }
 
     my %TableParam;
@@ -567,7 +629,7 @@ sub _PDFOutputChangeInfo {
     $TableParam{PaddingBottom}       = 3;
 
     # output table
-    for ( $Page{PageCount} .. $Page{MaxPages} ) {
+    for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
 
         # output table (or a fragment of it)
         %TableParam = $Self->{PDFObject}->Table( %TableParam, );
@@ -578,10 +640,169 @@ sub _PDFOutputChangeInfo {
         }
         else {
             $Self->{PDFObject}->PageNew(
-                %Page,
-                FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                %{$Page},
+                FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
             );
-            $Page{PageCount}++;
+            $Page->{PageCount}++;
+        }
+    }
+
+    return 1;
+}
+
+# emit information about a workorder
+sub _PDFOutputWorkOrderInfo {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Page Change WorkOrder)) {
+        if ( !defined( $Param{$Argument} ) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+            return;
+        }
+    }
+
+    my ( $Page, $WorkOrder, $Change ) = @Param{qw(Page WorkOrder Change)};
+    my $PrintWorkOrder = $Param{PrintWorkOrder} || 0;
+
+    # fill the two tables on top,
+    # both tables have two colums: Key and Value
+    my ( @TableLeft, @TableRight );
+
+    my @RowSpec = (
+        {
+            Attribute => 'ChangeTitle',
+            Table     => \@TableLeft,
+            Key       => 'ChangeAttribute::ChangeTitle',
+        },
+        {
+            Attribute => 'ChangeNumber',
+            Table     => \@TableLeft,
+            Key       => 'ChangeAttribute::ChangeNumber',
+        },
+        {
+            Attribute           => 'WorkOrderState',
+            Table               => \@TableLeft,
+            ValueIsTranslatable => 1,
+        },
+        {
+            Attribute           => 'WorkOrderType',
+            Table               => \@TableLeft,
+            ValueIsTranslatable => 1,
+        },
+        {
+            Attribute   => 'WorkOrderAgent',
+            Table       => \@TableLeft,
+            ValueIsUser => 1,
+        },
+        {
+            Attribute  => 'PlannedEffort',
+            IsOptional => 1,
+            Table      => \@TableLeft,
+            Key        => 'ChangeAttribute::PlannedEffort',
+        },
+        {
+            Attribute  => 'AccountedTime',
+            IsOptional => 1,
+            Table      => \@TableLeft,
+            Key        => 'ChangeAttribute::AccountedTime',
+        },
+        {
+            Attribute   => 'PlannedStartTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+            Key         => 'ChangeAttribute::PlannedStartTime',
+        },
+        {
+            Attribute   => 'PlannedEndTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+            Key         => 'ChangeAttribute::PlannedEndTime',
+        },
+        {
+            Attribute   => 'ActualStartTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+            Key         => 'ChangeAttribute::ActualStartTime',
+        },
+        {
+            Attribute   => 'ActualEndTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+            Key         => 'ChangeAttribute::ActualEndTime',
+        },
+        {
+            Attribute   => 'CreateTime',
+            Key         => 'Created',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'ChangeTime',
+            Key         => 'Changed',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+    );
+
+    for my $RowSpec (@RowSpec) {
+
+        # fill @TableLeft and @TableRight
+        # the workorder data overrides the change data
+        $Self->_PrepareAndAddInfoRow(
+            RowSpec           => $RowSpec,
+            Data              => { %{$Change}, %{$WorkOrder} },
+            TranslationPrefix => 'WorkOrderAttribute::',
+        );
+    }
+
+    my %TableParam;
+    my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
+    for my $Row ( 0 .. $Rows - 1 ) {
+        $TableParam{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
+        $TableParam{CellData}[$Row][0]{Font}            = 'ProportionalBold';
+        $TableParam{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
+        $TableParam{CellData}[$Row][2]{Content}         = ' ';
+        $TableParam{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
+        $TableParam{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
+        $TableParam{CellData}[$Row][3]{Font}            = 'ProportionalBold';
+        $TableParam{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+    }
+
+    $TableParam{ColumnData}[0]{Width} = 80;
+    $TableParam{ColumnData}[1]{Width} = 170.5;
+    $TableParam{ColumnData}[2]{Width} = 4;
+    $TableParam{ColumnData}[3]{Width} = 80;
+    $TableParam{ColumnData}[4]{Width} = 170.5;
+
+    $TableParam{Type}                = 'Cut';
+    $TableParam{Border}              = 0;
+    $TableParam{FontSize}            = 6;
+    $TableParam{BackgroundColorEven} = '#AAAAAA';
+    $TableParam{BackgroundColorOdd}  = '#DDDDDD';
+    $TableParam{Padding}             = 1;
+    $TableParam{PaddingTop}          = 3;
+    $TableParam{PaddingBottom}       = 3;
+
+    # output table
+    for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
+
+        # output table (or a fragment of it)
+        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+        # stop output or output next page
+        if ( $TableParam{State} ) {
+            last;
+        }
+        else {
+            $Self->{PDFObject}->PageNew(
+                %{$Page},
+                FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
+            );
+            $Page->{PageCount}++;
         }
     }
 
@@ -592,15 +813,14 @@ sub _PDFOutputDescriptionAndJustification {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(PageData ChangeData)) {
+    for (qw(Page Change)) {
         if ( !defined( $Param{$_} ) ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    my %Page   = %{ $Param{PageData} };
-    my %Change = %{ $Param{ChangeData} };
+    my ( $Page, $Change ) = @Param{qw(Page Change)};
 
     # table params common to description and justification
     my %TableParam = (
@@ -620,10 +840,10 @@ sub _PDFOutputDescriptionAndJustification {
 
         # The plain content will be displayed
         $TableParam{CellData}[ $Row++ ][0]{Content} = $Attribute;
-        $TableParam{CellData}[ $Row++ ][0]{Content} = $Change{ $Attribute . 'Plain' } || ' ';
+        $TableParam{CellData}[ $Row++ ][0]{Content} = $Change->{ $Attribute . 'Plain' } || ' ';
     }
     $TableParam{CellData}[ $Row++ ][0]{Content} = 'TODO: workorders';
-    for ( $Page{PageCount} .. $Page{MaxPages} ) {
+    for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
 
         # output table (or a fragment of it)
         %TableParam = $Self->{PDFObject}->Table( %TableParam, );
@@ -634,10 +854,10 @@ sub _PDFOutputDescriptionAndJustification {
         }
         else {
             $Self->{PDFObject}->PageNew(
-                %Page,
-                FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                %{$Page},
+                FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
             );
-            $Page{PageCount}++;
+            $Page->{PageCount}++;
         }
     }
 

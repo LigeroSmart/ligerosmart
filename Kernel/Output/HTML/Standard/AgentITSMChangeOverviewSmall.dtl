@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.18 2010-01-28 11:35:11 bes Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.19 2010-01-28 13:24:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,13 +39,13 @@
                     </th>
 <!-- dtl:block:RecordWorkOrderTitleHeader -->
 <!-- dtl:block:RecordChangeTitleHeader -->
-                    <th>$Text{"Change Title"}<br/>
+                    <th>$Text{"ChangeAttribute::ChangeTitle"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeTitle&OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordChangeTitleHeader -->
 <!-- dtl:block:RecordWorkOrderAgentHeader -->
-                    <th>$Text{"Workorder Agent"}<br/>
+                    <th>$Text{"WorkOrderAttribute::WorkOrderAgent"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderAgentID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderAgentID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
@@ -72,13 +72,13 @@
                     </th>
 <!-- dtl:block:RecordChangeStateHeader -->
 <!-- dtl:block:RecordWorkOrderStateHeader -->
-                    <th>$Text{"Workorder State"}<br/>
+                    <th>$Text{"WorkOrderAttribute::WorkOrderState"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderStateID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderStateID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordWorkOrderStateHeader -->
 <!-- dtl:block:RecordWorkOrderTypeHeader -->
-                    <th>$Text{"Workorder Type"}<br/>
+                    <th>$Text{"WorkOrderAttribute::WorkOrderType"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderTypeID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=WorkOrderTypeID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
