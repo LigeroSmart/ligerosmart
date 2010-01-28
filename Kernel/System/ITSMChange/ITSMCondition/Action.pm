@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Action.pm,v 1.5 2010-01-27 14:51:50 mae Exp $
+# $Id: Action.pm,v 1.6 2010-01-28 11:39:47 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -69,7 +69,14 @@ sub ActionAdd {
         return;
     }
 
-    # TODO: execute ActionAddPre Event
+    # trigger ActionAddPre-Event
+    $Self->EventHandler(
+        Event => 'ActionAddPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
 
     # get default action number if not given
     my $ActionNumber = delete $Param{ActionNumber};
@@ -120,7 +127,15 @@ sub ActionAdd {
         return;
     }
 
-    # TODO: execute ActionAddPost Event
+    # trigger ActionAddPost-Event
+    $Self->EventHandler(
+        Event => 'ActionAddPost',
+        Data  => {
+            %Param,
+            ActionID => $ActionID,
+        },
+        UserID => $Param{UserID},
+    );
 
     return $ActionID;
 }
@@ -156,7 +171,20 @@ sub ActionUpdate {
         }
     }
 
-    # TODO: execute ActionUpdatePre Event
+    # trigger ActionUpdatePre-Event
+    $Self->EventHandler(
+        Event => 'ActionUpdatePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
+    # get current action data for event handler
+    my $ActionData = $Self->ActionGet(
+        ActionID => $Param{ActionID},
+        UserID   => $Param{UserID},
+    );
 
     # map update attributes to column names
     my %Attribute = (
@@ -197,7 +225,15 @@ sub ActionUpdate {
         Bind => \@Bind,
     );
 
-    # TODO: execute ActionUpdatePost Event
+    # trigger ActionUpdatePost-Event
+    $Self->EventHandler(
+        Event => 'ActionUpdatePost',
+        Data  => {
+            %Param,
+            OldActionData => $ActionData,
+        },
+        UserID => $Param{UserID},
+    );
 
     return 1;
 }
@@ -341,11 +377,29 @@ sub ActionDelete {
         }
     }
 
+    # trigger ActionDeletePre-Event
+    $Self->EventHandler(
+        Event => 'ActionDeletePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
     # delete condition action from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_action '
             . 'WHERE id = ?',
         Bind => [ \$Param{ActionID} ],
+    );
+
+    # trigger ActionDeletePost-Event
+    $Self->EventHandler(
+        Event => 'ActionDeletePost',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -376,11 +430,29 @@ sub ActionDeleteAll {
         }
     }
 
+    # trigger ActionDeleteAllPre-Event
+    $Self->EventHandler(
+        Event => 'ActionDeleteAllPre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
     # delete condition actions from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_action '
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
+    );
+
+    # trigger ActionDeleteAllPost-Event
+    $Self->EventHandler(
+        Event => 'ActionDeleteAllPost',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -433,6 +505,15 @@ sub ActionExecute {
     my $OmitAction = 'lock';
     return if $ActionData->{Operator}->{Name} eq $OmitAction;
 
+    # trigger ActionExecutePre-Event
+    $Self->EventHandler(
+        Event => 'ActionExecutePre',
+        Data  => {
+            %Param,
+        },
+        UserID => $Param{UserID},
+    );
+
     # get object name
     my $ObjectName = $ActionData->{Object}->{Name};
 
@@ -482,15 +563,30 @@ sub ActionExecute {
         }
     }
 
-    # return result of the actions execution
-    my $Result = $Self->OperatorExecute(
+    # define operator values
+    my %OperatorExecute = (
         OperatorName => $ActionData->{Operator}->{Name},
         ObjectData   => $ActionObjectData,
         ObjectName   => $ObjectName,
         Selector     => $Action->{Selector},
         Attribute    => $AttributeType,
         ActionValue  => $Action->{ActionValue},
-        UserID       => $Param{UserID},
+    );
+
+    # return result of the actions execution
+    my $Result = $Self->OperatorExecute(
+        %OperatorExecute,
+        UserID => $Param{UserID},
+    );
+
+    # trigger ActionExecutePost-Event
+    $Self->EventHandler(
+        Event => 'ActionExecutePost',
+        Data  => {
+            %Param,
+            %OperatorExecute,
+        },
+        UserID => $Param{UserID},
     );
 
     # return result of the actions execution
@@ -627,6 +723,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-01-27 14:51:50 $
+$Revision: 1.6 $ $Date: 2010-01-28 11:39:47 $
 
 =cut
