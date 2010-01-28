@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.35 2010-01-28 15:54:36 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.36 2010-01-28 15:57:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -1193,7 +1193,7 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelÃ¶gelöscht',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
             'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
         ],
         [
@@ -1713,6 +1713,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2010-01-28 15:54:36 $
+$Revision: 1.36 $ $Date: 2010-01-28 15:57:04 $
 
 =cut
