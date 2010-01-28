@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.33 2010-01-26 15:16:17 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.34 2010-01-28 11:58:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -884,6 +884,105 @@ sub _AddNotifications {
                 'ChangeBuilder', 'ChangeInitiators',
             ],
         },
+        {
+            Name       => 'planned start time of change reached',
+            Attribute  => '',
+            Event      => 'ChangePlannedStartTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change has reached the planned start time',
+            Rule       => '',
+            Recipients => [
+                'ChangeBuilder', 'ChangeManager',
+            ],
+        },
+        {
+            Name       => 'planned end time of change reached',
+            Attribute  => '',
+            Event      => 'ChangePlannedEndTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change has reached the planned end time',
+            Rule       => '',
+            Recipients => [
+                'ChangeBuilder', 'ChangeManager',
+            ],
+        },
+        {
+            Name       => 'actual start time of change reached',
+            Attribute  => '',
+            Event      => 'ChangeActualStartTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change has reached the actual start time',
+            Rule       => '',
+            Recipients => [
+                'ChangeBuilder', 'ChangeManager',
+            ],
+        },
+        {
+            Name       => 'actual end time of change reached',
+            Attribute  => '',
+            Event      => 'ChangeActualEndTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change has reached the actual end time',
+            Rule       => '',
+            Recipients => [
+                'ChangeBuilder', 'ChangeManager',
+            ],
+        },
+        {
+            Name       => 'requested time of change reached',
+            Attribute  => '',
+            Event      => 'ChangeRequestedTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a change has reached the requested time',
+            Rule       => '',
+            Recipients => [
+                'ChangeBuilder', 'ChangeManager',
+            ],
+        },
+        {
+            Name       => 'planned start time of workorder reached',
+            Attribute  => '',
+            Event      => 'WorkOrderPlannedStartTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a workorder has reached the planned start time',
+            Rule       => '',
+            Recipients => [
+                'WorkOrderAgent',
+            ],
+        },
+        {
+            Name       => 'planned end time of workorder reached',
+            Attribute  => '',
+            Event      => 'WorkOrderPlannedEndTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a workorder has reached the planned end time',
+            Rule       => '',
+            Recipients => [
+                'WorkOrderAgent',
+            ],
+        },
+        {
+            Name       => 'actual start time of workorder reached',
+            Attribute  => '',
+            Event      => 'WorkOrderActualStartTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a workorder has reached the actual start time',
+            Rule       => '',
+            Recipients => [
+                'WorkOrderAgent',
+            ],
+        },
+        {
+            Name       => 'actual end time of workorder reached',
+            Attribute  => '',
+            Event      => 'WorkOrderActualEndTimeReached',
+            ValidID    => 1,
+            Comment    => 'inform recipients that a workorder has reached the actual end time',
+            Rule       => '',
+            Recipients => [
+                'WorkOrderAgent',
+            ],
+        },
     );
 
     # cache for lookup results
@@ -1183,6 +1282,132 @@ sub _AddSystemNotifications {
             'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
                 . $BasicWorkOrderInfoEn,
         ],
+        [
+            'Agent::Change::ChangePlannedStartTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned start time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
+                . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangePlannedStartTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned start time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
+                . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangePlannedEndTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned end time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned end time.'
+                . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangePlannedEndTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Endzeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.'
+                . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeActualStartTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Actual start time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its actual start time.'
+                . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeActualStartTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Change begonnen.',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde begonnen.'
+                . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeActualEndTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned start time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
+                . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeActualEndTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Change fertiggestellt.',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde fertiggestellt.'
+                . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::Change::ChangeRequestedTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Requested time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its requested time.'
+                . $BasicChangeInfoEn,
+        ],
+        [
+            'Agent::Change::ChangeRequestedTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.'
+                . $BasicChangeInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned start time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned start time.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Startzeit erreicht.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned end time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned end time.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Endzeit erreicht.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderActualStartTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual start time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual start time.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderActualStartTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] WorkOrder begonnen.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.'
+                . $BasicWorkOrderInfoDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual end time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual end time.'
+                . $BasicWorkOrderInfoEn,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderActualEndTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] WorkOrder abgeschlossen.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.'
+                . $BasicWorkOrderInfoDe,
+        ],
     );
 
     my @CustomerNotifications = (
@@ -1437,6 +1662,11 @@ sub _DeleteSystemNotifications {
         'Change::ChangeAttachmentAdd',
         'Change::ChangeAttachmentDelete',
         'Change::ChangeDelete',
+        'Change::ChangePlannedStartTimeReached',
+        'Change::ChangePlannedEndTimeReached',
+        'Change::ChangeActualStartTimeReached',
+        'Change::ChangeActualEndTimeReached',
+        'Change::ChangeRequestedTimeReached',
         'WorkOrder::WorkOrderAdd',
         'WorkOrder::WorkOrderUpdate',
         'WorkOrder::WorkOrderLinkAdd',
@@ -1444,6 +1674,10 @@ sub _DeleteSystemNotifications {
         'WorkOrder::WorkOrderAttachmentAdd',
         'WorkOrder::WorkOrderAttachmentDelete',
         'WorkOrder::WorkOrderDelete',
+        'WorkOrder::WorkOrderPlannedStartTimeReached',
+        'WorkOrder::WorkOrderPlannedEndTimeReached',
+        'WorkOrder::WorkOrderActualStartTimeReached',
+        'WorkOrder::WorkOrderActualEndTimeReached',
     );
 
     # delete the entries
@@ -1479,6 +1713,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2010-01-26 15:16:17 $
+$Revision: 1.34 $ $Date: 2010-01-28 11:58:24 $
 
 =cut
