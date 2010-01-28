@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.12 2010-01-28 14:16:09 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.13 2010-01-28 14:49:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -375,14 +375,9 @@ sub _PrepareAndAddInfoRow {
             }
         }
     }
-
-    # The value was explicitly passed
-    elsif ( $RowSpec->{Value} ) {
-        $Value = $RowSpec->{Value};
-    }
-
-    # take value from $Data
     else {
+
+        # take value from the passed in data
         $Value = $Data->{$Attribute};
     }
 
