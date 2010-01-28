@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.6 2010-01-28 10:00:53 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.7 2010-01-28 10:19:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -161,13 +161,12 @@ sub Run {
     # generate PDF output
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-        my $Url       = ' ';
-        if ( $ENV{REQUEST_URI} ) {
-            $Url = $Self->{ConfigObject}->Get('HttpType') . '://'
-                . $Self->{ConfigObject}->Get('FQDN')
-                . $ENV{REQUEST_URI};
-        }
+        my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+        my $Url
+            = $Self->{ConfigObject}->Get('HttpType') . '://'
+            . $Self->{ConfigObject}->Get('FQDN')
+            . $Self->{LayoutObject}->{Baselink}
+            . $Self->{RequestedURL};
         my %Page;
 
         # get maximum number of pages
