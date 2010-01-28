@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.35 2010-01-28 15:48:23 mae Exp $
+# $Id: HistoryAdd.pm,v 1.36 2010-01-28 20:18:59 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -328,11 +328,7 @@ sub Run {
     }
 
     # handle condition events
-    elsif (
-        $Event eq 'ConditionAdd'
-        || $Event eq 'ConditionUpdate'
-        )
-    {
+    elsif ( $Event eq 'ConditionAdd' ) {
 
         # create history for id
         $Self->{HistoryObject}->HistoryAdd(
@@ -358,6 +354,43 @@ sub Run {
                 HistoryType => $Event,
                 Fieldname   => $ConditionField,
                 ContentNew  => $Param{Data}->{$ConditionField},
+                UserID      => $Param{UserID},
+            );
+        }
+    }
+
+    # handle condition update events
+    elsif ( $Event eq 'ConditionUpdate' ) {
+
+        # get old data
+        my $OldData = $Param{Data}->{OldConditionData};
+
+        # create history for all condition fields
+        my @ConditionStatic = qw( ConditionID UserID ChangeID OldConditionData );
+        CONDITIONFIELD:
+        for my $ConditionField ( keys %{ $Param{Data} } ) {
+
+            # check for static fields
+            next CONDITIONFIELD if grep { $_ eq $ConditionField } @ConditionStatic;
+
+            # do not add empty fields to history
+            next CONDITIONFIELD if !$Param{Data}->{$ConditionField};
+
+            # check if field has changed
+            my $FieldHasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{$ConditionField},
+                Old => $OldData->{$ConditionField},
+            );
+
+            # create history only for changed fields
+            next CONDITIONFIELD if !$FieldHasChanged;
+
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $OldData->{ChangeID},
+                HistoryType => $Event,
+                Fieldname   => $ConditionField,
+                ContentNew  => $Param{Data}->{$ConditionField},
+                ContentOld  => $OldData->{$ConditionField},
                 UserID      => $Param{UserID},
             );
         }
@@ -567,6 +600,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2010-01-28 15:48:23 $
+$Revision: 1.36 $ $Date: 2010-01-28 20:18:59 $
 
 =cut
