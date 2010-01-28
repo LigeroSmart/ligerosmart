@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.13 2010-01-28 14:49:47 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.14 2010-01-28 15:29:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -174,6 +174,7 @@ sub Run {
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
+
         my $HeaderRight = $PrintChange
             ?
             $Self->{LayoutObject}->{LanguageObject}->Get('Change#') . $Change->{ChangeNumber}
@@ -595,52 +596,36 @@ sub _PDFOutputChangeInfo {
         );
     }
 
-    my %TableParam;
+    my %Table;
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
     for my $Row ( 0 .. $Rows - 1 ) {
-        $TableParam{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
-        $TableParam{CellData}[$Row][0]{Font}            = 'ProportionalBold';
-        $TableParam{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
-        $TableParam{CellData}[$Row][2]{Content}         = ' ';
-        $TableParam{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
-        $TableParam{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
-        $TableParam{CellData}[$Row][3]{Font}            = 'ProportionalBold';
-        $TableParam{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+        $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
+        $Table{CellData}[$Row][0]{Font}            = 'ProportionalBold';
+        $Table{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
+        $Table{CellData}[$Row][2]{Content}         = ' ';
+        $Table{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
+        $Table{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
+        $Table{CellData}[$Row][3]{Font}            = 'ProportionalBold';
+        $Table{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
     }
 
-    $TableParam{ColumnData}[0]{Width} = 80;
-    $TableParam{ColumnData}[1]{Width} = 170.5;
-    $TableParam{ColumnData}[2]{Width} = 4;
-    $TableParam{ColumnData}[3]{Width} = 80;
-    $TableParam{ColumnData}[4]{Width} = 170.5;
+    $Table{ColumnData}[0]{Width} = 80;
+    $Table{ColumnData}[1]{Width} = 170.5;
+    $Table{ColumnData}[2]{Width} = 4;
+    $Table{ColumnData}[3]{Width} = 80;
+    $Table{ColumnData}[4]{Width} = 170.5;
 
-    $TableParam{Type}                = 'Cut';
-    $TableParam{Border}              = 0;
-    $TableParam{FontSize}            = 6;
-    $TableParam{BackgroundColorEven} = '#AAAAAA';
-    $TableParam{BackgroundColorOdd}  = '#DDDDDD';
-    $TableParam{Padding}             = 1;
-    $TableParam{PaddingTop}          = 3;
-    $TableParam{PaddingBottom}       = 3;
+    $Table{Type}                = 'Cut';
+    $Table{Border}              = 0;
+    $Table{FontSize}            = 6;
+    $Table{BackgroundColorEven} = '#AAAAAA';
+    $Table{BackgroundColorOdd}  = '#DDDDDD';
+    $Table{Padding}             = 1;
+    $Table{PaddingTop}          = 3;
+    $Table{PaddingBottom}       = 3;
 
     # output table
-    for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
-
-        # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
-
-        # stop output or output next page
-        if ( $TableParam{State} ) {
-            last;
-        }
-        else {
-            $Self->{PDFObject}->PageNew(
-                %{$Page},
-                FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
-            );
-            $Page->{PageCount}++;
-        }
-    }
+    $Self->_PDFOutputTable( Page => $Page, Table => \%Table );
 
     return 1;
 }
@@ -790,52 +775,36 @@ sub _PDFOutputWorkOrderInfo {
         );
     }
 
-    my %TableParam;
+    my %Table;
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
     for my $Row ( 0 .. $Rows - 1 ) {
-        $TableParam{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
-        $TableParam{CellData}[$Row][0]{Font}            = 'ProportionalBold';
-        $TableParam{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
-        $TableParam{CellData}[$Row][2]{Content}         = ' ';
-        $TableParam{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
-        $TableParam{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
-        $TableParam{CellData}[$Row][3]{Font}            = 'ProportionalBold';
-        $TableParam{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+        $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
+        $Table{CellData}[$Row][0]{Font}            = 'ProportionalBold';
+        $Table{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
+        $Table{CellData}[$Row][2]{Content}         = ' ';
+        $Table{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
+        $Table{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
+        $Table{CellData}[$Row][3]{Font}            = 'ProportionalBold';
+        $Table{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
     }
 
-    $TableParam{ColumnData}[0]{Width} = 80;
-    $TableParam{ColumnData}[1]{Width} = 170.5;
-    $TableParam{ColumnData}[2]{Width} = 4;
-    $TableParam{ColumnData}[3]{Width} = 80;
-    $TableParam{ColumnData}[4]{Width} = 170.5;
+    $Table{ColumnData}[0]{Width} = 80;
+    $Table{ColumnData}[1]{Width} = 170.5;
+    $Table{ColumnData}[2]{Width} = 4;
+    $Table{ColumnData}[3]{Width} = 80;
+    $Table{ColumnData}[4]{Width} = 170.5;
 
-    $TableParam{Type}                = 'Cut';
-    $TableParam{Border}              = 0;
-    $TableParam{FontSize}            = 6;
-    $TableParam{BackgroundColorEven} = '#AAAAAA';
-    $TableParam{BackgroundColorOdd}  = '#DDDDDD';
-    $TableParam{Padding}             = 1;
-    $TableParam{PaddingTop}          = 3;
-    $TableParam{PaddingBottom}       = 3;
+    $Table{Type}                = 'Cut';
+    $Table{Border}              = 0;
+    $Table{FontSize}            = 6;
+    $Table{BackgroundColorEven} = '#AAAAAA';
+    $Table{BackgroundColorOdd}  = '#DDDDDD';
+    $Table{Padding}             = 1;
+    $Table{PaddingTop}          = 3;
+    $Table{PaddingBottom}       = 3;
 
     # output table
-    for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
-
-        # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
-
-        # stop output or output next page
-        if ( $TableParam{State} ) {
-            last;
-        }
-        else {
-            $Self->{PDFObject}->PageNew(
-                %{$Page},
-                FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
-            );
-            $Page->{PageCount}++;
-        }
-    }
+    $Self->_PDFOutputTable( Page => $Page, Table => \%Table );
 
     return 1;
 }
@@ -854,7 +823,7 @@ sub _PDFOutputDescriptionAndJustification {
     my ( $Page, $Change ) = @Param{qw(Page Change)};
 
     # table params common to description and justification
-    my %TableParam = (
+    my %Table = (
         Type            => 'Cut',
         Border          => 0,
         Font            => 'Monospaced',
@@ -870,23 +839,43 @@ sub _PDFOutputDescriptionAndJustification {
     for my $Attribute (qw(Description Justification)) {
 
         # The plain content will be displayed
-        $TableParam{CellData}[ $Row++ ][0]{Content} = $Attribute;
-        $TableParam{CellData}[ $Row++ ][0]{Content} = $Change->{ $Attribute . 'Plain' } || ' ';
+        $Table{CellData}[ $Row++ ][0]{Content} = $Attribute;
+        $Table{CellData}[ $Row++ ][0]{Content} = $Change->{ $Attribute . 'Plain' } || ' ';
     }
-    $TableParam{CellData}[ $Row++ ][0]{Content} = 'TODO: workorders';
+    $Table{CellData}[ $Row++ ][0]{Content} = 'TODO: workorders';
+
+    # output table
+    $Self->_PDFOutputTable( Page => $Page, Table => \%Table );
+
+    return 1;
+}
+
+sub _PDFOutputTable {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Page Table)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    my ( $Page, $Table ) = @Param{qw(Page Table)};
+
     for ( $Page->{PageCount} .. $Page->{MaxPages} ) {
 
         # output table (or a fragment of it)
-        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+        %{$Table} = $Self->{PDFObject}->Table( %{$Table} );
 
         # stop output or output next page
-        if ( $TableParam{State} ) {
+        if ( $Table->{State} ) {
             last;
         }
         else {
             $Self->{PDFObject}->PageNew(
                 %{$Page},
-                FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
+                FooterRight => join( ' ', $Page->{PageText}, $Page->{PageCount} ),
             );
             $Page->{PageCount}++;
         }
