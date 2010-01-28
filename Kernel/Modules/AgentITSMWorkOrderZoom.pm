@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.36 2010-01-13 03:23:40 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.37 2010-01-28 13:45:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,7 +84,7 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "WorkOrder $WorkOrderID not found in database!",
+            Message => "WorkOrder '$WorkOrderID' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }

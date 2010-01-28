@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.15 2010-01-28 12:32:01 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.16 2010-01-28 13:45:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,7 +95,7 @@ sub Run {
     # check if change exists
     if ( !$ChangeData ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Change $GetParam{ChangeID} not found in database!",
+            Message => "Change '$GetParam{ChangeID}' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }

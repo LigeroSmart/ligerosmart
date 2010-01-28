@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateDelete.pm - the OTRS::ITSM::ChangeManagement template delete module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMTemplateDelete.pm,v 1.1 2010-01-20 17:38:06 bes Exp $
+# $Id: AgentITSMTemplateDelete.pm,v 1.2 2010-01-28 13:45:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,7 +81,7 @@ sub Run {
     # check error
     if ( !$Template ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Template $TemplateID not found in database!",
+            Message => "Template '$TemplateID' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }

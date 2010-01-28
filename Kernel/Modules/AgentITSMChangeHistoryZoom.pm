@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeHistoryZoom.pm - the OTRS::ITSM::ChangeManagement change history zoom module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.pm,v 1.5 2009-11-26 11:53:27 ub Exp $
+# $Id: AgentITSMChangeHistoryZoom.pm,v 1.6 2010-01-28 13:45:35 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -70,7 +70,7 @@ sub Run {
 
     if ( !$HistoryEntry ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "HistoryEntry $HistoryEntryID not found in database!",
+            Message => "HistoryEntry '$HistoryEntryID' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
@@ -99,7 +99,7 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => 'Change ' . $HistoryEntry->{ChangeID} . ' not found in database!',
+            Message => "Change '$HistoryEntry->{ChangeID}' not found in database!",
             Comment => 'Please contact the admin.',
         );
     }
