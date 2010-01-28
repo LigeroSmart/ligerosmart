@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.14 2010-01-28 03:18:04 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.15 2010-01-28 12:32:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -311,7 +311,9 @@ sub Run {
         );
     }
 
+    # ------------------------------------------------------------ #
     # handle AJAXUpdate
+    # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
         # to store the JSON output
@@ -840,6 +842,11 @@ sub _ShowOperatorSelection {
         },
     );
 
+    # TODO: Do not use otrs Ajax functions here,
+    # because it can be necessary to update a text field (or date, or something else)
+    # which is not possible with the otrs Ajax lib, which can only update selections (dropdowns)
+    # generate OperatorOptionString
+
     # remove AJAX-Loading images in selection field to avoid jitter effect
     $OperatorOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
@@ -856,6 +863,60 @@ sub _ShowOperatorSelection {
 
 # show compare value field
 sub _ShowCompareValueField {
+    my ( $Self, %Param ) = @_;
+
+    # get compare value field type
+    my $FieldType = $Self->_GetCompareValueFieldType(%Param);
+
+    # compare value is a text field
+    if ( $FieldType eq 'Text' ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ExpressionOverviewRowElementCompareValueText',
+            Data => {
+                %Param,
+            },
+        );
+    }
+
+    # compare value is a selection field
+    elsif ( $FieldType eq 'Selection' ) {
+
+        # get compare value selection list
+        my $CompareValueOptionString = $Self->_GetCompareValueSelection(%Param);
+
+        # output selection
+        $Self->{LayoutObject}->Block(
+            Name => 'ExpressionOverviewRowElementCompareValueSelection',
+            Data => {
+                CompareValueOptionString => $CompareValueOptionString,
+            },
+        );
+    }
+
+    # compare value is a date field
+    elsif ( $FieldType eq 'Date' ) {
+
+        # TODO : Implement date selection later!
+    }
+
+    # compare value is an autocomplete field
+    elsif ( $FieldType eq 'Autocomplete' ) {
+
+        # TODO : Implement autocomplete selection later!
+    }
+
+    # error if field type is unknown
+    else {
+
+        # TODO : Error message
+        return;
+    }
+
+    return 1;
+}
+
+# get compare value field type
+sub _GetCompareValueFieldType {
     my ( $Self, %Param ) = @_;
 
     # set default field type
@@ -888,59 +949,16 @@ sub _ShowCompareValueField {
         return if !$FieldType;
     }
 
-    # TODO: Build date selection based on type: Date.
-    # Temporarily display Dates as text.
+    # Workaround for not yet implemented field types
+    # TODO: implement these field types
     if ( $FieldType eq 'Date' ) {
         $FieldType = 'Text';
     }
-
-    # compare value is a text field
-    if ( $FieldType eq 'Text' ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ExpressionOverviewRowElementCompareValueText',
-            Data => {
-                %Param,
-            },
-        );
-    }
-
-    # compare value is a selection field
-    elsif ( $FieldType eq 'Selection' ) {
-
-        # get compare value selection list
-        my $CompareValueOptionString = $Self->_GetCompareValueSelection(
-            %Param,
-        );
-
-        # output selection
-        $Self->{LayoutObject}->Block(
-            Name => 'ExpressionOverviewRowElementCompareValueSelection',
-            Data => {
-                CompareValueOptionString => $CompareValueOptionString,
-            },
-        );
-    }
-
-    # compare value is a date field
-    elsif ( $FieldType eq 'Date' ) {
-
-        # TODO : Implement date selection later!
-    }
-
-    # compare value is an autocomplete field
     elsif ( $FieldType eq 'Autocomplete' ) {
-
-        # TODO : Implement autocomplete selection later!
+        $FieldType = 'Selection'
     }
 
-    # error if field type is unknown
-    else {
-
-        # TODO : Error message
-        return;
-    }
-
-    return 1;
+    return $FieldType;
 }
 
 # get object dropdown field data
@@ -1103,10 +1121,24 @@ sub _GetCompareValueSelection {
     # if an operator is set
     if ( $Param{OperatorID} ) {
 
+        # lookup attribute name
+        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+            AttributeID => $Param{AttributeID},
+        );
+
+        # check error
+        if ( !$AttributeName ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "AttributeID $Param{AttributeID} does not exist!",
+            );
+            return;
+        }
+
         # get compare value list
         $CompareValueList = $Self->{ConditionObject}->ObjectCompareValueList(
             ObjectID      => $Param{ObjectID},
-            AttributeName => $Param{AttributeName},
+            AttributeName => $AttributeName,
             UserID        => $Self->{UserID},
         );
     }
