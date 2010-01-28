@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.34 2010-01-27 14:53:04 reb Exp $
+# $Id: HistoryAdd.pm,v 1.35 2010-01-28 15:48:23 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,10 +16,11 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -97,6 +98,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
 
     return $Self;
@@ -159,7 +161,7 @@ sub Run {
     ( my $Event = $Param{Event} ) =~ s{ Post \z }{}xms;
 
     # distinguish between Change and WorkOrder events, based on naming convention
-    my ($Type) = $Event =~ m{ \A (Change|WorkOrder) }xms;
+    my ($Type) = $Event =~ m{ \A (Change | WorkOrder | Condition) }xms;
     if ( !$Type ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -182,80 +184,12 @@ sub Run {
     }
     elsif ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
 
-        # get old data, either from change or workorder
-        my $OldData  = $Param{Data}->{"Old${Type}Data"};
-        my $ChangeID = $OldData->{ChangeID};               # works for change and workorder events
-
-        FIELD:
-        for my $Field ( keys %{ $Param{Data} } ) {
-
-            # do not track special fields 'OldChangeData' or 'OldWorkOrderData'
-            next FIELD if $Field eq "Old${Type}Data";
-
-            # we do not track the user id
-            next FIELD if $Field eq 'UserID';
-
-            # we do not the "plain" columns, only the non-plain columns
-            next FIELD if $Field eq 'JustificationPlain';    # change
-            next FIELD if $Field eq 'DescriptionPlain';      # change
-            next FIELD if $Field eq 'ReportPlain';           # workorder
-            next FIELD if $Field eq 'InstructionPlain';      # workorder
-
-            # The history of CAB updates is not tracked here,
-            # but in the handler for ChangeCABUpdate.
-            next FIELD if $Field eq 'CABAgents';             # change
-            next FIELD if $Field eq 'CABCustomers';          # change
-
-            # special handling for accounted time
-            if ( $Type eq 'WorkOrder' && $Field eq 'AccountedTime' ) {
-
-                # we do not track if accounted time was empty
-                next FIELD if !$Param{Data}->{$Field};
-
-                # if accounted time is not empty, we always track the history
-
-                # get workorder data
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-                    WorkOrderID => $Param{Data}->{WorkOrderID},
-                    UserID      => $Param{UserID},
-                );
-
-                # save history if accounted time has changed
-                $Self->{HistoryObject}->HistoryAdd(
-                    ChangeID    => $ChangeID,
-                    WorkOrderID => $Param{Data}->{WorkOrderID},
-                    HistoryType => $Event,
-                    Fieldname   => $Field,
-                    ContentNew  => $WorkOrder->{$Field},
-                    ContentOld  => $OldData->{$Field},
-                    UserID      => $Param{UserID},
-                );
-
-                next FIELD;
-            }
-
-            # check if field has changed
-            my $FieldHasChanged = $Self->_HasFieldChanged(
-                New => $Param{Data}->{$Field},
-                Old => $OldData->{$Field},
-            );
-
-            # save history if field changed
-            if ($FieldHasChanged) {
-
-                my $Success = $Self->{HistoryObject}->HistoryAdd(
-                    ChangeID    => $ChangeID,
-                    WorkOrderID => $Param{Data}->{WorkOrderID},
-                    HistoryType => $Event,
-                    Fieldname   => $Field,
-                    ContentNew  => $Param{Data}->{$Field},
-                    ContentOld  => $OldData->{$Field},
-                    UserID      => $Param{UserID},
-                );
-
-                next FIELD if !$Success;
-            }
-        }
+        # create history for ChangeUpdate or WorkOrderUpdate
+        $Self->_ChangeOrWorkOrderUpdate(
+            %Param,
+            Event => $Event,
+            Type  => $Type,
+        );
     }
     elsif ( $Event eq 'WorkOrderDelete' ) {
 
@@ -393,6 +327,60 @@ sub Run {
         );
     }
 
+    # handle condition events
+    elsif (
+        $Event eq 'ConditionAdd'
+        || $Event eq 'ConditionUpdate'
+        )
+    {
+
+        # create history for id
+        $Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ConditionID},
+            UserID      => $Param{UserID},
+        );
+
+        # create history for all condition fields
+        my @ConditionStatic = qw( ConditionID UserID ChangeID);
+        CONDITIONFIELD:
+        for my $ConditionField ( keys %{ $Param{Data} } ) {
+
+            # check for static fields
+            next CONDITIONFIELD if grep { $_ eq $ConditionField } @ConditionStatic;
+
+            # do not add empty fields to history
+            next CONDITIONFIELD if !$Param{Data}->{$ConditionField};
+
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $Param{Data}->{ChangeID},
+                HistoryType => $Event,
+                Fieldname   => $ConditionField,
+                ContentNew  => $Param{Data}->{$ConditionField},
+                UserID      => $Param{UserID},
+            );
+        }
+    }
+
+    # handle condition delete events
+    elsif (
+        $Event eq 'ConditionDelete'
+        || $Event eq 'ConditionDeleteAll'
+        )
+    {
+
+        # get old data
+        my $OldData = $Param{Data}->{OldConditionData};
+
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $OldData->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $OldData->{ConditionID},
+            UserID      => $Param{UserID},
+        );
+    }
+
     # error
     else {
 
@@ -465,6 +453,102 @@ sub _HasFieldChanged {
     return 0;
 }
 
+=item _ChangeOrWorkOrderUpdate()
+
+Creates history entries for 'ChangeUpdate' and
+'WorkOrderUpdate' events.
+
+    $ITSMChangeEvent->_ChangeOrWorkOrderUpdate(
+        Data  => '',
+        Event => '',
+        Type  => '',
+    );
+
+=cut
+
+sub _ChangeOrWorkOrderUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # extract params
+    my $Event = $Param{Event};
+    my $Type  = $Param{Type};
+
+    # get old data, either from change or workorder
+    my $OldData  = $Param{Data}->{"Old${Type}Data"};
+    my $ChangeID = $OldData->{ChangeID};               # works for change and workorder events
+
+    FIELD:
+    for my $Field ( keys %{ $Param{Data} } ) {
+
+        # do not track special fields 'OldChangeData' or 'OldWorkOrderData'
+        next FIELD if $Field eq "Old${Type}Data";
+
+        # we do not track the user id
+        next FIELD if $Field eq 'UserID';
+
+        # we do not the "plain" columns, only the non-plain columns
+        next FIELD if $Field eq 'JustificationPlain';    # change
+        next FIELD if $Field eq 'DescriptionPlain';      # change
+        next FIELD if $Field eq 'ReportPlain';           # workorder
+        next FIELD if $Field eq 'InstructionPlain';      # workorder
+
+        # The history of CAB updates is not tracked here,
+        # but in the handler for ChangeCABUpdate.
+        next FIELD if $Field eq 'CABAgents';             # change
+        next FIELD if $Field eq 'CABCustomers';          # change
+
+        # special handling for accounted time
+        if ( $Type eq 'WorkOrder' && $Field eq 'AccountedTime' ) {
+
+            # we do not track if accounted time was empty
+            next FIELD if !$Param{Data}->{$Field};
+
+            # if accounted time is not empty, we always track the history
+
+            # get workorder data
+            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                WorkOrderID => $Param{Data}->{WorkOrderID},
+                UserID      => $Param{UserID},
+            );
+
+            # save history if accounted time has changed
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $ChangeID,
+                WorkOrderID => $Param{Data}->{WorkOrderID},
+                HistoryType => $Event,
+                Fieldname   => $Field,
+                ContentNew  => $WorkOrder->{$Field},
+                ContentOld  => $OldData->{$Field},
+                UserID      => $Param{UserID},
+            );
+
+            next FIELD;
+        }
+
+        # check if field has changed
+        my $FieldHasChanged = $Self->_HasFieldChanged(
+            New => $Param{Data}->{$Field},
+            Old => $OldData->{$Field},
+        );
+
+        # save history if field changed
+        if ($FieldHasChanged) {
+
+            my $Success = $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $ChangeID,
+                WorkOrderID => $Param{Data}->{WorkOrderID},
+                HistoryType => $Event,
+                Fieldname   => $Field,
+                ContentNew  => $Param{Data}->{$Field},
+                ContentOld  => $OldData->{$Field},
+                UserID      => $Param{UserID},
+            );
+
+            next FIELD if !$Success;
+        }
+    }
+}
+
 1;
 
 =end Internal:
@@ -483,6 +567,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2010-01-27 14:53:04 $
+$Revision: 1.35 $ $Date: 2010-01-28 15:48:23 $
 
 =cut
