@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.17 2010-01-28 17:01:27 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.18 2010-01-28 17:15:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -177,6 +177,11 @@ sub Run {
             $Page{MaxPages} = 100;
         }
 
+        # the link types are needed for showing the linked objects
+        my %LinkTypeList = $Self->{LinkObject}->TypeList(
+            UserID => $Self->{UserID},
+        );
+
         my $HeaderRight = $PrintChange
             ?
             $Self->{LayoutObject}->{LanguageObject}->Get('Change#') . $Change->{ChangeNumber}
@@ -242,12 +247,82 @@ sub Run {
                     Body  => $Change->{ $Attribute . 'Plain' },
                 );
             }
-        }
 
-        # get link type list
-        my %LinkTypeList = $Self->{LinkObject}->TypeList(
-            UserID => $Self->{UserID},
-        );
+            # get linked objects which are directly linked with this change object
+            my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+                Object => 'ITSMChange',
+                Key    => $ChangeID,
+                State  => 'Valid',
+                UserID => $Self->{UserID},
+            );
+
+            # get the combined linked objects from all workorders of this change
+            my $LinkListWithDataCombinedWorkOrders = {};
+            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+
+                # get linked objects of this workorder
+                my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                    Object => 'ITSMWorkOrder',
+                    Key    => $WorkOrderID,
+                    State  => 'Valid',
+                    UserID => $Self->{UserID},
+                );
+
+                OBJECT:
+                for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+
+                    # only show linked services and config items of workorder
+                    if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' ) {
+                        next OBJECT;
+                    }
+
+                    LINKTYPE:
+                    for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+
+                        DIRECTION:
+                        for my $Direction (
+                            keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                            )
+                        {
+                            ID:
+                            for my $ID (
+                                keys %{
+                                    $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
+                                }
+                                )
+                            {
+
+                                # combine the linked object data from all workorders
+                                $LinkListWithDataCombinedWorkOrders->{$Object}->{$LinkType}
+                                    ->{$Direction}->{$ID}
+                                    = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                    ->{$Direction}->{$ID};
+                            }
+                        }
+                    }
+                }
+            }
+
+            # add combined linked objects from workorder to linked objects from change object
+            $LinkListWithData = {
+                %{$LinkListWithData},
+                %{$LinkListWithDataCombinedWorkOrders},
+            };
+
+            # get the link data
+            if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
+                my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+                    LinkListWithData => $LinkListWithData,
+                    ViewMode         => 'SimpleRaw',
+                );
+
+                $Self->_PDFOutputLinkedObjects(
+                    PageData     => \%Page,
+                    LinkData     => \%LinkData,
+                    LinkTypeList => \%LinkTypeList,
+                );
+            }
+        }
 
         # output either a single workorder or all workorders of a change
         my @WorkOrderIDs = $PrintChange
@@ -296,9 +371,8 @@ sub Run {
             );
 
             # get the link data
-            my %LinkData;
             if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
-                %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+                my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
                     LinkListWithData => $LinkListWithData,
                     ViewMode         => 'SimpleRaw',
                 );
@@ -1026,6 +1100,7 @@ sub _PDFOutputLinkedObjects {
     return 1;
 }
 
+# output a table, accross several pages if neccessary
 sub _PDFOutputTable {
     my ( $Self, %Param ) = @_;
 
