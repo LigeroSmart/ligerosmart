@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.18 2010-01-28 17:15:58 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.19 2010-01-28 17:59:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -317,11 +317,46 @@ sub Run {
                 );
 
                 $Self->_PDFOutputLinkedObjects(
-                    PageData     => \%Page,
+                    Page         => \%Page,
                     LinkData     => \%LinkData,
                     LinkTypeList => \%LinkTypeList,
                 );
             }
+
+            # output an overview over workorders
+            my @WorkOrderOverview;
+            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+
+                # get workorder info
+                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                    WorkOrderID => $WorkOrderID,
+                    UserID      => $Self->{UserID},
+                );
+
+                # check error
+                if ( !$WorkOrder ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "WorkOrder '$WorkOrderID' not found in database!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
+
+                push @WorkOrderOverview,
+                    [
+                    $WorkOrder->{WorkOrderNumber},
+                    $WorkOrder->{WorkOrderTitle},
+                    $WorkOrder->{WorkOrderState},
+                    $WorkOrder->{PlannedStartTime},
+                    $WorkOrder->{PlannedEndTime},
+                    $WorkOrder->{ActualStartTime},
+                    $WorkOrder->{ActualEndTime},
+                    ];
+            }
+
+            $Self->_PDFOutputWorkOrderOverview(
+                Page              => \%Page,
+                WorkOrderOverview => \@WorkOrderOverview,
+            );
         }
 
         # output either a single workorder or all workorders of a change
@@ -378,7 +413,7 @@ sub Run {
                 );
 
                 $Self->_PDFOutputLinkedObjects(
-                    PageData     => \%Page,
+                    Pag          => \%Page,
                     LinkData     => \%LinkData,
                     LinkTypeList => \%LinkTypeList,
                 );
@@ -929,49 +964,6 @@ sub _PDFOutputWorkOrderInfo {
     return 1;
 }
 
-sub _PDFOutputDescriptionAndJustification {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for (qw(Page Change)) {
-        if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-
-    my ( $Page, $Change ) = @Param{qw(Page Change)};
-
-    # table params common to description and justification
-    my %Table = (
-        Type            => 'Cut',
-        Border          => 0,
-        Font            => 'Monospaced',
-        FontSize        => 7,
-        BackgroundColor => '#DDDDDD',
-        Padding         => 4,
-        PaddingTop      => 8,
-        PaddingBottom   => 8,
-    );
-
-    # output tables
-    my $Row = 0;
-    for my $Attribute (qw(Description Justification)) {
-
-        # The plain content will be displayed
-        $Table{CellData}[ $Row++ ][0]{Content} = $Attribute;
-        $Table{CellData}[ $Row++ ][0]{Content} = $Change->{ $Attribute . 'Plain' } || ' ';
-    }
-
-    # output table
-    $Self->_PDFOutputTable(
-        Page  => $Page,
-        Table => \%Table,
-    );
-
-    return 1;
-}
-
 # output a body of text, such as a change description
 sub _PDFOutputBody {
     my ( $Self, %Param ) = @_;
@@ -1012,19 +1004,87 @@ sub _PDFOutputBody {
     return 1;
 }
 
-# output info about a linked object
-sub _PDFOutputLinkedObjects {
+# output overview over workorders
+sub _PDFOutputWorkOrderOverview {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(PageData LinkData LinkTypeList)) {
+    for (qw(Page WorkOrderOverview)) {
         if ( !defined( $Param{$_} ) ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    my %Page     = %{ $Param{PageData} };
+    my %Page = %{ $Param{Page} };
+    my %Table;
+    my $Row = 0;
+
+    for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
+        $Table{CellData}[ $Row++ ] = [ map { { Content => $_ } } @{$WorkOrder} ];
+    }
+
+    $Table{ColumnData}[0]{Width} = 10;
+    $Table{ColumnData}[1]{Width} = 40;
+    $Table{ColumnData}[2]{Width} = 40;
+    $Table{ColumnData}[3]{Width} = 40;
+    $Table{ColumnData}[4]{Width} = 40;
+    $Table{ColumnData}[5]{Width} = 40;
+    $Table{ColumnData}[6]{Width} = 40;
+
+    # set new position
+    $Self->{PDFObject}->PositionSet(
+        Move => 'relativ',
+        Y    => -15,
+    );
+
+    # output headline
+    $Self->{PDFObject}->Text(
+        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Workorders'),
+        Height   => 7,
+        Type     => 'Cut',
+        Font     => 'ProportionalBoldItalic',
+        FontSize => 7,
+        Color    => '#666666',
+    );
+
+    # set new position
+    $Self->{PDFObject}->PositionSet(
+        Move => 'relativ',
+        Y    => -4,
+    );
+
+    # table params
+    $Table{Type}            = 'Cut';
+    $Table{Border}          = 0;
+    $Table{FontSize}        = 6;
+    $Table{BackgroundColor} = '#DDDDDD';
+    $Table{Padding}         = 1;
+    $Table{PaddingTop}      = 3;
+    $Table{PaddingBottom}   = 3;
+
+    # output table
+    $Self->_PDFOutputTable(
+        Page  => \%Page,
+        Table => \%Table,
+    );
+
+    return 1;
+}
+
+# output info about a linked object
+sub _PDFOutputLinkedObjects {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw(Page LinkData LinkTypeList)) {
+        if ( !defined( $Param{$_} ) ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return;
+        }
+    }
+
+    my %Page     = %{ $Param{Page} };
     my %TypeList = %{ $Param{LinkTypeList} };
     my %Table;
     my $Row = 0;
