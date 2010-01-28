@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.49 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.50 2010-01-28 15:51:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -455,8 +455,8 @@ sub Run {
     # build drop-down with time types
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => [
-            { Key => 'PlannedStartTime', Value => 'Planned start time' },
-            { Key => 'PlannedEndTime',   Value => 'Planned end time' },
+            { Key => 'PlannedStartTime', Value => 'Planned Start Time' },
+            { Key => 'PlannedEndTime',   Value => 'Planned End Time' },
         ],
         Name => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
