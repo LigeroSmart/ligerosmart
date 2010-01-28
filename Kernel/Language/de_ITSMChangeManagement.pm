@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.26 2010-01-28 11:35:11 bes Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.27 2010-01-28 11:52:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -41,7 +41,7 @@ sub Data {
     $Lang->{'ITSM Change'} = 'Change';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
-    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Gebuchte Zeit';
+    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
     $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
     $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
     $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
@@ -49,9 +49,9 @@ sub Data {
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
     $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
     $Lang->{'ChangeAttribute::ChangeState'}      = 'Change State';
-    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Veranschlagter Aufwand';
-    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Geplantes Ende';
+    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Geplanter Start';
+    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Geplantes Ende';
     $Lang->{'ChangeAttribute::RequestedTime'}    = 'Wunschtermin';
 
     # Change history
@@ -109,8 +109,8 @@ sub Data {
     $Lang->{'approval'}  = 'Genehmigung';
     $Lang->{'decision'}  = 'Entscheidung';
     $Lang->{'workorder'} = 'Arbeitsanweisung';
-    $Lang->{'backout'}   = 'Alternative Arbeitsanweisung';
-    $Lang->{'pir'}       = 'PIR (nachgelagerte QS)';
+    $Lang->{'backout'}   = 'Backout Plan';
+    $Lang->{'pir'}       = 'PIR (Post Implementation Review)';
 
     # Template types
     $Lang->{'TemplateType::ITSMChange'}      = 'Change';
