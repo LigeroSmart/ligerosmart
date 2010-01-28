@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.5 2010-01-27 15:51:50 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.6 2010-01-28 10:00:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,10 +17,11 @@ use warnings;
 use List::Util qw(max);
 
 use Kernel::System::ITSMChange;
+use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,6 +42,7 @@ sub new {
 
     # create additional objects
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
     $Self->{PDFObject}          = Kernel::System::PDF->new(%Param);
@@ -54,32 +56,86 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # get needed change id
-    my $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
+    # Find out whether a change or a workorder should be printed.
+    # A workorder is to be printed when the WorkOrderID is passed.
+    # Otherwise a change should be printed
+    my $WorkOrderID = $Self->{ParamObject}->GetParam( Param => 'WorkOrderID' );
+    my $PrintWorkOrder = $WorkOrderID ? 1 : 0;
+    my $PrintChange    = !$WorkOrderID;
+    my $WorkOrder      = {};
+    my $ChangeID;
 
-    # check needed stuff
-    if ( !$ChangeID ) {
+    if ($PrintWorkOrder) {
 
-        # error page
-        return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Can't generate PDF, as no ChangeID is given!",
-            Comment => 'Please contact the admin.',
+        # check permission on the workorder
+        my $Access = $Self->{WorkOrderObject}->Permission(
+            Type        => $Self->{Config}->{Permission},
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Self->{UserID},
         );
+
+        # error screen
+        if ( !$Access ) {
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => "You need $Self->{Config}->{Permission} permissions!",
+                WithHeader => 'yes',
+            );
+        }
+
+        # get workorder information
+        $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Self->{UserID},
+        );
+
+        # check error
+        if ( !$WorkOrder ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "WorkOrder $WorkOrderID not found in database!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        # infer the change id from the workorder
+        $ChangeID = $WorkOrder->{ChangeID};
+
+        if ( !$ChangeID ) {
+
+            # error page
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Can't generate PDF, as the workorder is not attached to a change!",
+                Comment => 'Please contact the admin.',
+            );
+        }
     }
+    else {
 
-    # check permissions
-    my $Access = $Self->{ChangeObject}->Permission(
-        Type     => $Self->{Config}->{Permission},
-        ChangeID => $ChangeID,
-        UserID   => $Self->{UserID},
-    );
+        # the change id is required, as we have no workorder id
+        $ChangeID = $Self->{ParamObject}->GetParam( Param => 'ChangeID' );
 
-    # error screen
-    if ( !$Access ) {
-        return $Self->{LayoutObject}->NoPermission(
-            Message    => "You need $Self->{Config}->{Permission} permissions!",
-            WithHeader => 'yes',
+        if ( !$ChangeID ) {
+
+            # error page
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Can't generate PDF, as no ChangeID is given!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        # check permission on the change
+        my $Access = $Self->{ChangeObject}->Permission(
+            Type     => $Self->{Config}->{Permission},
+            ChangeID => $ChangeID,
+            UserID   => $Self->{UserID},
         );
+
+        # error screen
+        if ( !$Access ) {
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => "You need $Self->{Config}->{Permission} permissions!",
+                WithHeader => 'yes',
+            );
+        }
     }
 
     # get change information
@@ -87,6 +143,12 @@ sub Run {
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
+
+    my $FullWorkOrderNumber = $PrintWorkOrder
+        ?
+        join( '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber} )
+        :
+        '';
 
     # check error
     if ( !$Change ) {
@@ -113,13 +175,21 @@ sub Run {
         if ( !$Page{MaxPages} || $Page{MaxPages} < 1 || $Page{MaxPages} > 1000 ) {
             $Page{MaxPages} = 100;
         }
-        my $HeaderRight
-            = $Self->{LayoutObject}->{LanguageObject}->Get('Change#') . $Change->{ChangeNumber};
+        my $HeaderRight = $PrintChange
+            ?
+            $Self->{LayoutObject}->{LanguageObject}->Get('Change#') . $Change->{ChangeNumber}
+            :
+            $Self->{LayoutObject}->{LanguageObject}->Get('WorkOrderNumber#') . $FullWorkOrderNumber;
         my $HeadlineLeft = $HeaderRight;
         my $Title        = $HeaderRight;
-        if ( $Change->{ChangeTitle} ) {
+
+        if ( $PrintChange && $Change->{ChangeTitle} ) {
             $HeadlineLeft = $Change->{ChangeTitle};
             $Title .= ' / ' . $Change->{ChangeTitle};
+        }
+        elsif ( $PrintWorkOrder && $WorkOrder->{WorkOrderTitle} ) {
+            $HeadlineLeft = $WorkOrder->{WorkOrderTitle};
+            $Title .= ' / ' . $WorkOrder->{WorkOrderTitle};
         }
 
         $Page{MarginTop}    = 30;
@@ -151,27 +221,40 @@ sub Run {
         );
         $Page{PageCount}++;
 
-        # output change infos
-        $Self->_PDFOutputChangeInfos(
-            PageData   => \%Page,
-            ChangeData => $Change,
-        );
+        if ($PrintChange) {
 
-        # output ticket infos
-        $Self->_PDFOutputDescriptionAndJustification(
-            PageData   => \%Page,
-            ChangeData => $Change,
-        );
+            # output change infos
+            $Self->_PDFOutputChangeInfos(
+                PageData   => \%Page,
+                ChangeData => $Change,
+            );
 
-        # TODO: output workorders
+            # output change content infos
+            $Self->_PDFOutputDescriptionAndJustification(
+                PageData   => \%Page,
+                ChangeData => $Change,
+            );
+
+            # TODO: output workorders
+        }
 
         # return the PDF document
         my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
         );
-        my $Filename = sprintf 'change_%s_%02d-%02d-%02d_%02d-%02d.pdf',
-            $Change->{ChangeNumber}, $Y, $M, $D, $h, $m;
+        my $Filename = $PrintChange
+            ?
+            sprintf(
+            'change_%s_%02d-%02d-%02d_%02d-%02d.pdf',
+            $Change->{ChangeNumber}, $Y, $M, $D, $h, $m
+            )
+            :
+            sprintf(
+            'workorder_%s-%s_%02d-%02d-%02d_%02d-%02d.pdf',
+            $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber}, $Y, $M, $D, $h, $m
+            );
         my $PDFString = $Self->{PDFObject}->DocumentOutput();
+
         return $Self->{LayoutObject}->Attachment(
             Filename    => $Filename,
             ContentType => 'application/pdf',
@@ -180,29 +263,28 @@ sub Run {
         );
     }
 
-    # generate html output
-    else {
+    # alternatively generate html output
 
-        # output header
-        my $Output = $Self->{LayoutObject}->PrintHeader(
-            Value => $Change->{ChangeNumber},
-        );
+    # output header
+    my $Output = $Self->{LayoutObject}->PrintHeader(
+        Value => 'AgentITSMChangePrint',
+    );
 
-        # start template output
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentITSMChangePrint',
-            Data         => {
-                %Param,
-                %{$Change},
-            },
-        );
+    # start template output
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMChangePrint',
+        Data         => {
+            %Param,
+            %{$Change},
+            %{$WorkOrder},
+        },
+    );
 
-        # add footer
-        $Output .= $Self->{LayoutObject}->PrintFooter();
+    # add footer
+    $Output .= $Self->{LayoutObject}->PrintFooter();
 
-        # return output
-        return $Output;
-    }
+    # return output
+    return $Output;
 }
 
 sub _PDFOutputChangeInfos {

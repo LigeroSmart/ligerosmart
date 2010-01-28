@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.166 2010-01-27 15:51:50 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.167 2010-01-28 10:00:53 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -571,20 +571,6 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderPrint" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderPrint object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderPrint-Objekts im Agenteninterface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Workorder Print</Description>
-                <Title>Print</Title>
-                <NavBarName>ITSM Change</NavBarName>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMWorkOrderReport" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMWorkOrderReport object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMWorkOrderReport-Objekts im Agenteninterface.</Description>
@@ -944,8 +930,8 @@
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
                 <Item Key="Name">Print</Item>
                 <Item Key="Description">Print the workorder</Item>
-                <Item Key="Action">AgentITSMWorkOrderPrint</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderPrint;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Action">AgentITSMChangePrint</Item>
+                <Item Key="Link">Action=AgentITSMChangePrint;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -3177,15 +3163,6 @@
         <Description Lang="de">Benötigtes Recht zum Betrachten der Historiendetails einer Workorder.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewWorkOrderHistoryZoom</SubGroup>
-        <Setting>
-            <String Regex="^(rw|ro)$">ro</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Frontend::AgentITSMWorkOrderPrint###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to print a workorder.</Description>
-        <Description Lang="de">Benötigtes Recht zum Drucken einer Workorder.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewWorkOrderPrint</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
