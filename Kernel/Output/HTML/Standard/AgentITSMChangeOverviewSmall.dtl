@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.17 2010-01-27 17:46:48 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.18 2010-01-28 11:35:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@
                     <th style="text-align:center;">$Text{"Workorders"}</th>
 <!-- dtl:block:RecordWorkOrderCountHeader -->
 <!-- dtl:block:RecordChangeStateHeader -->
-                    <th>$Text{"Change State"}<br/>
+                    <th>$Text{"ChangeAttribute::ChangeState"}<br/>
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeStateID&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                     <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=ChangeStateID&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
