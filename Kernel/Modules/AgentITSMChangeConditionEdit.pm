@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.12 2010-01-28 03:02:25 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.13 2010-01-28 03:15:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -314,133 +314,160 @@ sub Run {
     # handle AJAXUpdate
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
-        # get expression id
-        my $ExpressionID;
+        # any expression field was changed
         if ( $GetParam{ElementChanged} =~ m{ \A ExpressionID :: ( \d+ | NEW ) }xms ) {
-            $ExpressionID = $1;
-        }
 
-        # get expression fields
-        for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
-            $GetParam{$Field} = $Self->{ParamObject}->GetParam(
-                Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+            # get expression id
+            my $ExpressionID = $1;
+
+            # get expression fields
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+                $GetParam{$Field} = $Self->{ParamObject}->GetParam(
+                    Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                );
+            }
+
+            # get object selection list
+            my $ObjectList = $Self->_GetObjectSelection();
+
+            # get selector selection list
+            my $SelectorList = $Self->_GetSelectorSelection(
+                ObjectID    => $GetParam{ObjectID},
+                ConditionID => $GetParam{ConditionID},
+            );
+
+            # get attribute selection list
+            my $AttributeList = $Self->_GetAttributeSelection(
+                ObjectID => $GetParam{ObjectID},
+                Selector => $GetParam{Selector},
+            );
+
+            # get operator selection list
+            my $OperatorList = $Self->_GetOperatorSelection(
+                ObjectID    => $GetParam{ObjectID},
+                AttributeID => $GetParam{AttributeID},
+            );
+
+            # add an empty selector selection if no list is available or nothing is selected
+            my $PossibleNoneSelector = 0;
+            if (
+                !$SelectorList
+                || !ref $SelectorList eq 'HASH'
+                || !%{$SelectorList}
+                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+                )
+            {
+                $PossibleNoneSelector = 1;
+            }
+
+            # add an empty attribute selection if no list is available or nothing is selected
+            my $PossibleNoneAttributeID = 0;
+            if (
+                !$AttributeList
+                || !ref $AttributeList eq 'HASH'
+                || !%{$AttributeList}
+                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
+                )
+            {
+                $PossibleNoneAttributeID = 1;
+            }
+
+            # add an empty operator selection if no list is available or nothing is selected
+            my $PossibleNoneOperatorID = 0;
+            if (
+                !$OperatorList
+                || !ref $OperatorList eq 'HASH'
+                || !%{$OperatorList}
+                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
+                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID'
+                )
+            {
+                $PossibleNoneOperatorID = 1;
+            }
+
+            # delete all following lists, but do not delete the directly following list
+            if ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID' ) {
+                $AttributeList = {};
+                $OperatorList  = {};
+
+                #            $CompareValueList = {};
+            }
+            elsif ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector' ) {
+                $OperatorList = {};
+
+                #            $CompareValueList = {};
+            }
+            elsif (
+                $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID'
+                )
+            {
+
+                #            $CompareValueList = {};
+            }
+
+            # build json
+            my $JSON = $Self->{LayoutObject}->BuildJSON(
+                [
+                    {
+                        Name         => 'ExpressionID::' . $ExpressionID . '::ObjectID',
+                        Data         => $ObjectList,
+                        SelectedID   => $GetParam{ObjectID},
+                        PossibleNone => 0,
+                        Translation  => 1,
+                        Max          => 100,
+                    },
+                    {
+                        Name         => 'ExpressionID::' . $ExpressionID . '::Selector',
+                        Data         => $SelectorList,
+                        SelectedID   => $PossibleNoneSelector ? '' : $GetParam{Selector},
+                        PossibleNone => $PossibleNoneSelector,
+                        Translation  => 1,
+                        Max          => 100,
+                    },
+                    {
+                        Name         => 'ExpressionID::' . $ExpressionID . '::AttributeID',
+                        Data         => $AttributeList,
+                        SelectedID   => $PossibleNoneAttributeID ? '' : $GetParam{AttributeID},
+                        PossibleNone => $PossibleNoneAttributeID,
+                        Translation  => 1,
+                        Max          => 100,
+                    },
+                    {
+                        Name         => 'ExpressionID::' . $ExpressionID . '::OperatorID',
+                        Data         => $OperatorList,
+                        SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
+                        PossibleNone => $PossibleNoneOperatorID,
+                        Translation  => 1,
+                        Max          => 100,
+                    },
+                ],
             );
         }
 
-        # get object selection list
-        my $ObjectList = $Self->_GetObjectSelection();
+        # any action field was changed
+        elsif ( $GetParam{ElementChanged} =~ m{ \A ActionID :: ( \d+ | NEW ) }xms ) {
 
-        # get selector selection list
-        my $SelectorList = $Self->_GetSelectorSelection(
-            ObjectID    => $GetParam{ObjectID},
-            ConditionID => $GetParam{ConditionID},
-        );
+            # get action id
+            my $ActionID = $1;
 
-        # get attribute selection list
-        my $AttributeList = $Self->_GetAttributeSelection(
-            ObjectID => $GetParam{ObjectID},
-            Selector => $GetParam{Selector},
-        );
+            # TODO Add AJAX stuff for actions here...
 
-        # get operator selection list
-        my $OperatorList = $Self->_GetOperatorSelection(
-            ObjectID    => $GetParam{ObjectID},
-            AttributeID => $GetParam{AttributeID},
-        );
+            my $JSON = $Self->{LayoutObject}->BuildJSON(
+                [
 
-        # add an empty selector selection if no list is available or nothing is selected
-        my $PossibleNoneSelector = 0;
-        if (
-            !$SelectorList
-            || !ref $SelectorList eq 'HASH'
-            || !%{$SelectorList}
-            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
-            )
-        {
-            $PossibleNoneSelector = 1;
+                   #                    {
+                   #                        Name         => 'ActionID::' . $ActionID . '::ObjectID',
+                   #                        Data         => $ObjectList,
+                   #                        SelectedID   => $GetParam{ObjectID},
+                   #                        PossibleNone => 0,
+                   #                        Translation  => 1,
+                   #                        Max          => 100,
+                   #                    },
+                ],
+            );
         }
-
-        # add an empty attribute selection if no list is available or nothing is selected
-        my $PossibleNoneAttributeID = 0;
-        if (
-            !$AttributeList
-            || !ref $AttributeList eq 'HASH'
-            || !%{$AttributeList}
-            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
-            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
-            )
-        {
-            $PossibleNoneAttributeID = 1;
-        }
-
-        # add an empty operator selection if no list is available or nothing is selected
-        my $PossibleNoneOperatorID = 0;
-        if (
-            !$OperatorList
-            || !ref $OperatorList eq 'HASH'
-            || !%{$OperatorList}
-            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
-            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
-            || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID'
-            )
-        {
-            $PossibleNoneOperatorID = 1;
-        }
-
-        # delete all following lists, but do not delete the directly following list
-        if ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID' ) {
-            $AttributeList = {};
-            $OperatorList  = {};
-
-            #            $CompareValueList = {};
-        }
-        elsif ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector' ) {
-            $OperatorList = {};
-
-            #            $CompareValueList = {};
-        }
-        elsif ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID' ) {
-
-            #            $CompareValueList = {};
-        }
-
-        # build json
-        my $JSON = $Self->{LayoutObject}->BuildJSON(
-            [
-                {
-                    Name         => 'ExpressionID::' . $ExpressionID . '::ObjectID',
-                    Data         => $ObjectList,
-                    SelectedID   => $GetParam{ObjectID},
-                    PossibleNone => 0,
-                    Translation  => 1,
-                    Max          => 100,
-                },
-                {
-                    Name         => 'ExpressionID::' . $ExpressionID . '::Selector',
-                    Data         => $SelectorList,
-                    SelectedID   => $PossibleNoneSelector ? '' : $GetParam{Selector},
-                    PossibleNone => $PossibleNoneSelector,
-                    Translation  => 1,
-                    Max          => 100,
-                },
-                {
-                    Name         => 'ExpressionID::' . $ExpressionID . '::AttributeID',
-                    Data         => $AttributeList,
-                    SelectedID   => $PossibleNoneAttributeID ? '' : $GetParam{AttributeID},
-                    PossibleNone => $PossibleNoneAttributeID,
-                    Translation  => 1,
-                    Max          => 100,
-                },
-                {
-                    Name         => 'ExpressionID::' . $ExpressionID . '::OperatorID',
-                    Data         => $OperatorList,
-                    SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
-                    PossibleNone => $PossibleNoneOperatorID,
-                    Translation  => 1,
-                    Max          => 100,
-                },
-            ],
-        );
 
         # return json
         return $Self->{LayoutObject}->Attachment(
