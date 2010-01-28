@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.171 2010-01-28 13:34:13 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.172 2010-01-28 15:07:50 mae Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1342,6 +1342,19 @@
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
                 <Item Key="Event">(ChangePlannedStartTimeReachedPost|ChangePlannedEndTimeReachedPost|ChangeActualStartTimeRea     chedPost|ChangeActualEndTimeReachedPost|ChangeRequestedTimeReachedPost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMCondition::EventModule###01-HistoryAdd" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module updates the history of conditions.</Description>
+        <Description Lang="de">ITSM Event Modul aktualisiert die Historie von Conditions.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
+                <Item Key="Event">(ConditionAddPost|ConditionUpdatePost|ConditionDeletePost|ConditionDeleteAllPost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
