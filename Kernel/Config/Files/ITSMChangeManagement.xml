@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.167 2010-01-28 10:00:53 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.168 2010-01-28 12:29:46 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -192,9 +192,9 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeFSC" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeFSC object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeFSC-Objekts im Agenteninterface.</Description>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeSchedule" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeSchedule object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeSchedule-Objekts im Agenteninterface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -202,12 +202,12 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Forward schedule of changes. Overview over approved changes.</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ChangeFSC</Title>
+                <Title>Change Schedule</Title>
                 <NavBar>
-                    <Description>FSC (Forward Schedule Of Changes)</Description>
-                    <Name>FSC</Name>
+                    <Description>Change Schedule</Description>
+                    <Name>Change Schedule</Name>
                     <Image>overview.png</Image>
-                    <Link>Action=AgentITSMChangeFSC</Link>
+                    <Link>Action=AgentITSMChangeSchedule</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>ITSM Change</NavBar>
@@ -2275,22 +2275,22 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Filter::ChangeStates" Required="1" Valid="1">
-        <Description Lang="en">Defines the change states that will be used as filters in the FSC overview.</Description>
-        <Description Lang="de">Definiert die Change-States die als Filter in der FSC-Übersicht verwendet werden.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the Change Schedule overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der Change Schedule-Übersicht verwendet werden.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewChangeScheduleOverview</SubGroup>
         <Setting>
             <Array>
                 <Item>approved</Item>
             </Array>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Order::Default" Required="1" Valid="1">
-        <Description Lang="en">Order default in the FSC overview.</Description>
-        <Description Lang="de">Standard Reihenfolge der Changes in der FSC-Übersicht.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the Change Schedule overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der Change Schedule-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="Up">
                 <Item Key="Down">Down</Item>
@@ -2298,20 +2298,20 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required privilege to view list of FSC.</Description>
-        <Description Lang="de">Benötigtes Recht zum Einsehen der FSC Liste.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of Change Schedule.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Change Schedule Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">ro</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###ShowColumns" Required="1" Valid="1">
-        <Description Lang="en">Defines the shown columns in the FSC overview. This option has no effect on the position of the column.</Description>
-        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der FSC-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the Change Schedule overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change Schedule-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateSignal">1</Item>
@@ -2334,11 +2334,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeFSC###SortBy::Default" Required="1" Valid="1">
-        <Description Lang="en">Change sort by default in the FSC overview.</Description>
-        <Description Lang="de">Standard Sortierung der Changes in der FSC-Übersicht.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the Change Schedule overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der Change Schedule-Übersicht.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ViewFSCOverview</SubGroup>
+        <SubGroup>Frontend::Agent::ViewScheduleOverview</SubGroup>
         <Setting>
             <Option SelectedID="PlannedStartTime">
                 <Item Key="ChangeNumber">ChangeNumber</Item>

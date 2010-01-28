@@ -1,15 +1,15 @@
 # --
-# Kernel/Modules/AgentITSMChangeFSC.pm - the OTRS::ITSM::ChangeManagement change FSC overview module
+# Kernel/Modules/AgentITSMChangeSchedule.pm - the OTRS::ITSM::ChangeManagement change schedule overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeFSC.pm,v 1.4 2010-01-27 10:01:03 ub Exp $
+# $Id: AgentITSMChangeSchedule.pm,v 1.1 2010-01-28 12:30:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Modules::AgentITSMChangeFSC;
+package Kernel::Modules::AgentITSMChangeSchedule;
 
 use strict;
 use warnings;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -229,7 +229,7 @@ sub Run {
         FilterLink => $LinkFilter,
 
         TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('FSC'),
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('Change Schedule'),
 
         TitleValue => $Self->{Filter},
 
