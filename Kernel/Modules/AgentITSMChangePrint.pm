@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.7 2010-01-28 10:19:12 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.8 2010-01-28 11:39:32 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::PDF;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -220,13 +220,14 @@ sub Run {
         );
         $Page{PageCount}++;
 
-        if ($PrintChange) {
+        # output change infos in both cases
+        $Self->_PDFOutputChangeInfo(
+            PageData       => \%Page,
+            ChangeData     => $Change,
+            PrintWorkOrder => $PrintWorkOrder,
+        );
 
-            # output change infos
-            $Self->_PDFOutputChangeInfos(
-                PageData   => \%Page,
-                ChangeData => $Change,
-            );
+        if ($PrintChange) {
 
             # output change content infos
             $Self->_PDFOutputDescriptionAndJustification(
@@ -235,6 +236,16 @@ sub Run {
             );
 
             # TODO: output workorders
+        }
+
+        if ($PrintWorkOrder) {
+
+            # $Self->_PDFOutputWorkOrderInfo(
+            #     PageData       => \%Page,
+            #     ChangeData     => $Change,
+            #     WorkOrderData  => $WorkOrder,
+            #     PrintWorkOrder => $PrintWorkOrder,
+            # );
         }
 
         # return the PDF document
@@ -286,80 +297,169 @@ sub Run {
     return $Output;
 }
 
-sub _PDFOutputChangeInfos {
+# emit information about a change
+sub _PDFOutputChangeInfo {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(PageData ChangeData)) {
-        if ( !defined( $Param{$_} ) ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(PageData ChangeData PrintWorkOrder)) {
+        if ( !defined( $Param{$Argument} ) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
             return;
         }
     }
     my %Change = %{ $Param{ChangeData} };
     my %Page   = %{ $Param{PageData} };
 
-    # create left table
-    my @TableLeft = (
+    # fill the two tables on top
+    my ( @TableLeft, @TableRight );
+
+    my @RowSpec = (
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Change State') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Change{ChangeState} ),
+            Attribute           => 'ChangeState',
+            Table               => \@TableLeft,
+            ValueIsTranslatable => 1,
+        },
+        {
+            Attribute  => 'PlannedEffort',
+            IsOptional => 1,
+            Table      => \@TableLeft,
+        },
+        {
+            Attribute  => 'AccountedTime',
+            IsOptional => 1,
+            Table      => \@TableLeft,
+        },
+        {
+            Attribute           => 'Category',
+            Key                 => 'Category',
+            Table               => \@TableLeft,
+            ValueIsTranslatable => 1,
+        },
+        {
+            Attribute           => 'Impact',
+            Key                 => 'Impact',
+            Table               => \@TableLeft,
+            ValueIsTranslatable => 1,
+        },
+        {
+            Attribute           => 'Priority',
+            Key                 => 'Priority',
+            Table               => \@TableLeft,
+            ValueIsTranslatable => 1,
+        },
+        {
+            Attribute   => 'ChangeManager',
+            Table       => \@TableLeft,
+            ValueIsUser => 1,
+        },
+        {
+            Attribute   => 'ChangeBuilder',
+            Table       => \@TableLeft,
+            ValueIsUser => 1,
+        },
+        {
+            Attribute   => 'RequestedTime',
+            IsOptional  => 1,
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'PlannedStartTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'PlannedEndTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'ActualStartTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'ActualEndTime',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'CreateTime',
+            Key         => 'Created',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
+        },
+        {
+            Attribute   => 'ChangeTime',
+            Key         => 'Changed',
+            Table       => \@TableRight,
+            ValueIsTime => 1,
         },
     );
 
-    # show optional rows
-    ATTRIBUTE:
-    for my $Attribute (qw(PlannedEffort AccountedTime)) {
+    my $Translation = $Self->{LayoutObject}->{LanguageObject};
+
+    for my $RowSpec (@RowSpec) {
+
+        my $Attribute = $RowSpec->{Attribute};
 
         # skip if row is switched off in SysConfig
-        next ATTRIBUTE if !$Self->{Config}->{$Attribute};
+        next ROW_SPEC if $RowSpec->{IsOptional} && !$Self->{Config}->{$Attribute};
 
-        # show row
-        push @TableLeft,
-            {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
-                . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Change{$Attribute} ),
-            };
-    }
+        # keys are always translatable
+        my $Key = $Translation->Get( $RowSpec->{Key} || "ChangeAttribute::$Attribute" );
 
-    # show CIP
-    for my $Attribute (qw(Category Impact Priority)) {
+        # translate the value of the attribute
+        my $Value;
+        if ( $RowSpec->{ValueIsTime} ) {
 
-        # show row
-        # TODO: think about translation
-        push @TableLeft,
-            {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get($Attribute) . ':',
-            Value => $Change{$Attribute} || '-',
-            };
-    }
-
-    # show ChangeManager and ChangeBuilder
-    for my $Attribute (qw(ChangeManager ChangeBuilder)) {
-
-        my $LongName = '-';
-        if ( $Change{ $Attribute . 'ID' } ) {
-            my %UserData = $Self->{UserObject}->GetUserData(
-                UserID => $Change{ $Attribute . 'ID' },
+            # format the time value
+            $Value = $Self->{LayoutObject}->Output(
+                Template => qq(\$TimeLong{"\$Data{"$Attribute"}"}),
+                Data     => \%Change,
             );
-            if (%UserData) {
-                $LongName = sprintf '%s (%s %s)',
-                    @UserData{qw(UserLogin UserFirstname UserLastname)};
+        }
+        elsif ( $RowSpec->{ValueIsUser} ) {
+
+            # format the user id
+            if ( $Change{ $Attribute . 'ID' } ) {
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $Change{ $Attribute . 'ID' },
+                );
+                if (%UserData) {
+                    $Value = sprintf '%s (%s %s)',
+                        $UserData{UserLogin},
+                        $UserData{UserFirstname},
+                        $UserData{UserLastname};
+                }
+                else {
+                    $Value = "ID=$Change{$Attribute}";
+                }
             }
-            else {
-                $LongName = "ID=$Change{$Attribute}";
-            }
+        }
+        else {
+            $Value = $RowSpec->{Value} || $Change{$Attribute};
+        }
+
+        # translate the value
+        if ( $Value && $RowSpec->{ValueIsTranslatable} ) {
+            $Value = $Translation->Get($Value),
         }
 
         # show row
-        push @TableLeft,
+        push @{ $RowSpec->{Table} },
             {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
-                . ':',
-            Value => $LongName,
+            Key   => $Key . ':',
+            Value => $Value,
             };
     }
+
+    # additional rows in the left table
+    # TODO: use the loop above and generate value with subrefs
 
     # show CAB
     for my $Attribute (qw(CABAgents CABCustomers)) {
@@ -435,45 +535,6 @@ sub _PDFOutputChangeInfos {
             {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Attachments') . ':',
             Value => $Value,
-            };
-    }
-
-    # create right table
-    my @TableRight;
-    my @AdditionalAttributes;
-    if ( $Self->{Config}->{RequestedTime} ) {
-        push @AdditionalAttributes, 'RequestedTime';
-    }
-    for my $Attribute (
-        @AdditionalAttributes, qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
-        )
-    {
-
-        # show row
-        push @TableRight,
-            {
-            Key => $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute")
-                . ':',
-            Value => $Change{$Attribute} || '-',
-            };
-    }
-
-    # create and change time
-    {
-        push @TableRight,
-            {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Created') . ':',
-            Value => $Self->{LayoutObject}->Output(
-                Template => '$TimeLong{"$Data{"CreateTime"}"}',
-                Data     => \%Change,
-            ),
-            },
-            {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Changed') . ':',
-            Value => $Self->{LayoutObject}->Output(
-                Template => '$TimeLong{"$Data{"ChangeTime"}"}',
-                Data     => \%Change,
-            ),
             };
     }
 
