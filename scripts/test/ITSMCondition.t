@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.56 2010-01-27 20:10:14 mae Exp $
+# $Id: ITSMCondition.t,v 1.57 2010-01-28 09:36:18 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1910,17 +1910,6 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
     }
 }
 
-# check for expression delete
-for my $ExpressionID (@ExpressionIDs) {
-    $Self->True(
-        $Self->{ConditionObject}->ExpressionDelete(
-            UserID       => 1,
-            ExpressionID => $ExpressionID,
-        ),
-        'Test ' . $TestCount++ . " - ExpressionDelete -> ExpressionID: $ExpressionID",
-    );
-}
-
 #-------------------------
 # condition expression tests
 #-------------------------
@@ -2194,6 +2183,29 @@ $Self->False(
     'Test ' . $TestCount++ . " - ConditionMatchStateLock",
 );
 
+# check for expression delete
+for my $ExpressionID (@ExpressionIDs) {
+    $Self->True(
+        $Self->{ConditionObject}->ExpressionDelete(
+            UserID       => 1,
+            ExpressionID => $ExpressionID,
+        ),
+        'Test ' . $TestCount++ . " - ExpressionDelete -> ExpressionID: $ExpressionID",
+    );
+
+    # double check if expression is really deleted
+    my $ExpressionData = $Self->{ConditionObject}->ExpressionGet(
+        ExpressionID => $ExpressionID,
+        UserID       => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $ExpressionData->{ExpressionID},
+        'Test' . $TestCount++ . ': ExpressionDelete() - double check',
+    );
+}
+
 # check for action delete
 for my $ActionID (@ActionIDs) {
     $Self->True(
@@ -2202,6 +2214,18 @@ for my $ActionID (@ActionIDs) {
             ActionID => $ActionID,
         ),
         'Test ' . $TestCount++ . " - ActionDelete -> ActionID: $ActionID",
+    );
+
+    # double check if action is really deleted
+    my $ActionData = $Self->{ConditionObject}->ActionGet(
+        ActionID => $ActionID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $ActionData->{ActionID},
+        'Test' . $TestCount++ . ': ActionDelete() - double check',
     );
 }
 
@@ -2217,6 +2241,18 @@ for my $ConditionID (@ConditionIDs) {
         $DeleteSuccess,
         'Test ' . $TestCount++ . " - ConditionDelete -> ConditionID: $ConditionID",
     );
+
+    # double check if condition is really deleted
+    my $ConditionData = $Self->{ConditionObject}->ConditionGet(
+        ConditionID => $ConditionID,
+        UserID      => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $ConditionData->{ConditionID},
+        'Test' . $TestCount++ . ': ConditionDelete() - double check',
+    );
 }
 
 # delete created changes
@@ -2227,6 +2263,18 @@ for my $ChangeID (@ChangeIDs) {
             UserID   => 1,
         ),
         'Test ' . $TestCount++ . " - ChangeDelete -> ChangeID: $ChangeID",
+    );
+
+    # double check if change is really deleted
+    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    $Self->Is(
+        undef,
+        $ChangeData->{ChangeID},
+        'Test' . $TestCount++ . ': ChangeDelete() - double check',
     );
 }
 
