@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.21 2010-01-29 17:38:12 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.22 2010-01-29 18:16:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -285,7 +285,6 @@ sub Run {
             }
         }
 
-        # TODO
         # add new action
         if ($FieldsOk) {
 
@@ -338,6 +337,8 @@ sub Run {
 
         # check if an expression should be deleted
         for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+
+            # check if the delete button of this expression was pressed
             if ( $Self->{ParamObject}->GetParam( Param => 'DeleteExpressionID::' . $ExpressionID ) )
             {
 
@@ -366,7 +367,29 @@ sub Run {
         # check if an action should be deleted
         for my $ActionID ( @{$ActionIDsRef} ) {
 
-            # TODO
+            # check if the delete button of this action was pressed
+            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteActionID::' . $ActionID ) ) {
+
+                # delete the action
+                my $Success = $Self->{ConditionObject}->ActionDelete(
+                    ActionID => $ActionID,
+                    UserID   => $Self->{UserID},
+                );
+
+                # check error
+                if ( !$Success ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not delete ActionID $ActionID!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
+
+                # show the edit view again
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                        . "ConditionID=$GetParam{ConditionID}",
+                );
+            }
         }
 
         # show the edit view again
@@ -504,28 +527,28 @@ sub Run {
             );
         }
 
-        # any action field was changed
-        elsif ( $GetParam{ElementChanged} =~ m{ \A ActionID :: ( \d+ | NEW ) }xms ) {
-
-            # get action id
-            my $ActionID = $1;
-
-            # TODO Add AJAX stuff for actions here...
-
-            $JSON = $Self->{LayoutObject}->BuildJSON(
-                [
-
-                   #                    {
-                   #                        Name         => 'ActionID::' . $ActionID . '::ObjectID',
-                   #                        Data         => $ObjectList,
-                   #                        SelectedID   => $GetParam{ObjectID},
-                   #                        PossibleNone => 0,
-                   #                        Translation  => 1,
-                   #                        Max          => 100,
-                   #                    },
-                ],
-            );
-        }
+#        # any action field was changed
+#        elsif ( $GetParam{ElementChanged} =~ m{ \A ActionID :: ( \d+ | NEW ) }xms ) {
+#
+#            # get action id
+#            my $ActionID = $1;
+#
+#            # TODO Add AJAX stuff for actions here...
+#
+#            $JSON = $Self->{LayoutObject}->BuildJSON(
+#                [
+#
+#                   #                    {
+#                   #                        Name         => 'ActionID::' . $ActionID . '::ObjectID',
+#                   #                        Data         => $ObjectList,
+#                   #                        SelectedID   => $GetParam{ObjectID},
+#                   #                        PossibleNone => 0,
+#                   #                        Translation  => 1,
+#                   #                        Max          => 100,
+#                   #                    },
+#                ],
+#            );
+#        }
 
         # return json
         return $Self->{LayoutObject}->Attachment(
@@ -852,29 +875,29 @@ sub _ActionOverview {
             %{$ActionData},
         );
 
-        #        # show selecor selection
-        #        $Self->_ShowSelectorSelection(
-        #            %Param,
-        #            %{$ActionData},
-        #        );
-        #
-        #        # show attribute selection
-        #        $Self->_ShowAttributeSelection(
-        #            %Param,
-        #            %{$ActionData},
-        #        );
-        #
-        #        # show operator selection
-        #        $Self->_ShowOperatorSelection(
-        #            %Param,
-        #            %{$ActionData},
-        #        );
+        # show selecor selection
+        $Self->_ShowSelectorSelection(
+            %Param,
+            %{$ActionData},
+        );
 
-        #        # show compare value field
-        #        $Self->_ShowCompareValueField(
-        #            %Param,
-        #            %{$ActionData},
-        #        );
+        # show attribute selection
+        $Self->_ShowAttributeSelection(
+            %Param,
+            %{$ActionData},
+        );
+
+        # show operator selection
+        $Self->_ShowOperatorSelection(
+            %Param,
+            %{$ActionData},
+        );
+
+        # show compare value field
+        $Self->_ShowCompareValueField(
+            %Param,
+            %{$ActionData},
+        );
     }
 
     return 1;
@@ -1385,7 +1408,7 @@ sub _GetCompareValueFieldType {
     }
 
     # Workaround for not yet implemented field types
-    # TODO: implement these field types
+    # TODO: implement these field types later!
     if ( $FieldType eq 'Date' ) {
         $FieldType = 'Text';
     }
