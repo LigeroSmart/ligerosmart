@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.166 2010-01-22 12:42:20 bes Exp $
+# $Id: ITSMChange.t,v 1.167 2010-01-29 18:33:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5759,8 +5759,13 @@ for my $ChangeID ( keys %TestedChangeID ) {
         UserID   => 1,
     );
 
-    $Self->Is(
-        undef,
+    #    $Self->Is(
+    #        undef,
+    #        $ChangeData->{ChangeID},
+    #        "Test $TestCount: ChangeDelete() - double check",
+    #    );
+
+    $Self->False(
         $ChangeData->{ChangeID},
         "Test $TestCount: ChangeDelete() - double check",
     );
