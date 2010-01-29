@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.24 2010-01-29 19:37:31 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.25 2010-01-29 21:31:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -333,11 +333,11 @@ sub Run {
             # add new action
             my $ActionID = $Self->{ConditionObject}->ActionAdd(
                 ConditionID => $GetParam{ConditionID},
-                ObjectID    => $ExpressionData{ObjectID},
-                AttributeID => $ExpressionData{AttributeID},
-                OperatorID  => $ExpressionData{OperatorID},
-                Selector    => $ExpressionData{Selector},
-                ActionValue => $ExpressionData{ActionValue} || '',
+                ObjectID    => $ActionData{ObjectID},
+                AttributeID => $ActionData{AttributeID},
+                OperatorID  => $ActionData{OperatorID},
+                Selector    => $ActionData{Selector},
+                ActionValue => $ActionData{ActionValue} || '',
                 UserID      => $Self->{UserID},
             );
 
@@ -488,12 +488,14 @@ sub Run {
             my $AttributeList = $Self->_GetAttributeSelection(
                 ObjectID => $GetParam{ObjectID},
                 Selector => $GetParam{Selector},
+                $IDName  => $ID,
             );
 
             # get operator selection list
             my $OperatorList = $Self->_GetOperatorSelection(
                 ObjectID    => $GetParam{ObjectID},
                 AttributeID => $GetParam{AttributeID},
+                $IDName     => $ID,
             );
 
             # add an empty selector selection if no list is available or nothing is selected
@@ -649,7 +651,7 @@ sub Run {
                     $PossibleNone = 1;
                 }
 
-                # generate CompareValueOptionString
+                # generate ValueOptionString
                 $HTMLString = $Self->{LayoutObject}->BuildSelection(
                     Data         => $CompareValueList,
                     Name         => $IDName . '::' . $ID . '::' . $ValueFieldName,
@@ -1109,21 +1111,6 @@ sub _ShowSelectorSelection {
 sub _ShowAttributeSelection {
     my ( $Self, %Param ) = @_;
 
-    # get attribute selection list
-    my $AttributeList = $Self->_GetAttributeSelection(%Param);
-
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if (
-        !$AttributeList
-        || !ref $AttributeList eq 'HASH'
-        || !%{$AttributeList}
-        || !$Param{AttributeID}
-        )
-    {
-        $PossibleNone = 1;
-    }
-
     # name of the div that should be updated
     my $UpdateDivName;
 
@@ -1149,7 +1136,26 @@ sub _ShowAttributeSelection {
         $UpdateDivName  = "ActionID::$Param{ActionID}::ActionValue::Div";
         $IDName         = 'ActionID';
         $BlockName      = 'ActionOverviewRowElementAttribute';
-        $ValueFieldName = 'CompareValue';
+        $ValueFieldName = 'ActionValue';
+    }
+
+    # get attribute selection list
+    my $AttributeList = $Self->_GetAttributeSelection(
+        ObjectID => $Param{ObjectID},
+        Selector => $Param{Selector},
+        $IDName  => $Param{$IDName},
+    );
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$AttributeList
+        || !ref $AttributeList eq 'HASH'
+        || !%{$AttributeList}
+        || !$Param{AttributeID}
+        )
+    {
+        $PossibleNone = 1;
     }
 
     # build OnChange string
@@ -1231,21 +1237,6 @@ sub _ShowAttributeSelection {
 sub _ShowOperatorSelection {
     my ( $Self, %Param ) = @_;
 
-    # get operator selection list
-    my $OperatorList = $Self->_GetOperatorSelection(%Param);
-
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if (
-        !$OperatorList
-        || !ref $OperatorList eq 'HASH'
-        || !%{$OperatorList}
-        || !$Param{OperatorID}
-        )
-    {
-        $PossibleNone = 1;
-    }
-
     # id name of the involved element ( 'ExpressionID' or 'ActionID' )
     my $IDName;
 
@@ -1262,6 +1253,25 @@ sub _ShowOperatorSelection {
     elsif ( $Param{ActionID} ) {
         $IDName    = 'ActionID';
         $BlockName = 'ActionOverviewRowElementOperator';
+    }
+
+    # get operator selection list
+    my $OperatorList = $Self->_GetOperatorSelection(
+        ObjectID    => $Param{ObjectID},
+        AttributeID => $Param{AttributeID},
+        $IDName     => $Param{$IDName},
+    );
+
+    # add an empty selection if no list is available or nothing is selected
+    my $PossibleNone = 0;
+    if (
+        !$OperatorList
+        || !ref $OperatorList eq 'HASH'
+        || !%{$OperatorList}
+        || !$Param{OperatorID}
+        )
+    {
+        $PossibleNone = 1;
     }
 
     # generate OperatorOptionString
@@ -1362,8 +1372,8 @@ sub _ShowCompareValueField {
             $PossibleNone = 1;
         }
 
-        # generate CompareValueOptionString
-        my $CompareValueOptionString = $Self->{LayoutObject}->BuildSelection(
+        # generate ValueOptionString
+        my $ValueOptionString = $Self->{LayoutObject}->BuildSelection(
             Data         => $CompareValueList,
             Name         => $IDName . '::' . $Param{$IDName} . '::' . $ValueFieldName,
             SelectedID   => $Param{$ValueFieldName},
@@ -1371,14 +1381,14 @@ sub _ShowCompareValueField {
         );
 
         # remove AJAX-Loading images in selection field to avoid jitter effect
-        $CompareValueOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+        $ValueOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
         # output selection
         $Self->{LayoutObject}->Block(
             Name => $BlockNameSelection,
             Data => {
                 %Param,
-                CompareValueOptionString => $CompareValueOptionString,
+                ValueOptionString => $ValueOptionString,
             },
         );
     }
@@ -1513,8 +1523,19 @@ sub _GetAttributeSelection {
         }
 
         # get object attribute mapping from sysconfig
-        my $ObjectAttributeMapping
-            = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Object::Attribute' );
+        my $ObjectAttributeMapping;
+
+        # get mapping config for expressions or actions
+        if ( $Param{ExpressionID} ) {
+            $ObjectAttributeMapping = $Self->{ConfigObject}->Get(
+                $ObjectName . '::Mapping::Expression::Object::Attribute',
+            );
+        }
+        elsif ( $Param{ActionID} ) {
+            $ObjectAttributeMapping = $Self->{ConfigObject}->Get(
+                $ObjectName . '::Mapping::Action::Object::Attribute',
+            );
+        }
 
         # get the valid attributes for the given object
         ATTRIBUTEID:
@@ -1576,8 +1597,18 @@ sub _GetOperatorSelection {
         );
 
         # get attribute operator mapping from sysconfig
-        my $MappingConfig
-            = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' );
+        my $MappingConfig;
+
+        # get mapping config for expressions or actions
+        if ( $Param{ExpressionID} ) {
+            $MappingConfig = $Self->{ConfigObject}
+                ->Get( $ObjectName . '::Mapping::Expression::Attribute::Operator' );
+        }
+        elsif ( $Param{ActionID} ) {
+            $MappingConfig = $Self->{ConfigObject}
+                ->Get( $ObjectName . '::Mapping::Action::Attribute::Operator' );
+        }
+
         my $AttributeOperatorMapping;
         if ($MappingConfig) {
             $AttributeOperatorMapping = $MappingConfig->{$AttributeName} || {};
