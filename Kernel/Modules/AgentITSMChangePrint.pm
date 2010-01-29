@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.21 2010-01-29 12:08:58 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.22 2010-01-29 12:39:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,8 +47,11 @@ sub new {
     $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);    # undef, when there is no PDF-Support
-                                                              #$Self->{PDFObject}          = undef;
+
+    # when there is no PDF-Support, $Self->{PDFObject} will be undefined
+    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);
+
+    #$Self->{PDFObject}          = undef;  # TODO: remove line when devel is finished
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -186,15 +189,15 @@ sub Run {
         WorkOrder      => $WorkOrder,
     );
 
+    # output change info, even when a workorder is printed
+    $Output .= $Self->_OutputChangeInfo(
+        Change         => $Change,
+        PrintWorkOrder => $PrintWorkOrder,
+    );
+
     # generate PDF output
     if ( $Self->{PDFObject} ) {
         my $Page = $Self->{Page};
-
-        # output change infos in both cases,
-        $Self->_PDFOutputChangeInfo(
-            Change         => $Change,
-            PrintWorkOrder => $PrintWorkOrder,
-        );
 
         # the link types are needed for showing the linked objects
         my %LinkTypeList = $Self->{LinkObject}->TypeList(
@@ -614,7 +617,7 @@ sub _PrepareAndAddInfoRow {
 }
 
 # emit information about a change
-sub _PDFOutputChangeInfo {
+sub _OutputChangeInfo {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -628,8 +631,9 @@ sub _PDFOutputChangeInfo {
         }
     }
 
-    my ($Change) = @Param{qw(Page Change)};
-    my $Page = $Self->{Page};
+    # just for having shorter names
+    my $Change = $Param{Change};
+    my $Page   = $Self->{Page};
 
     # fill the two tables on top,
     # both tables have two colums: Key and Value
@@ -813,40 +817,65 @@ sub _PDFOutputChangeInfo {
         );
     }
 
-    my %Table;
+    # number of rows in the change info table
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
-    for my $Row ( 0 .. $Rows - 1 ) {
-        $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
-        $Table{CellData}[$Row][0]{Font}            = 'ProportionalBold';
-        $Table{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
-        $Table{CellData}[$Row][2]{Content}         = ' ';
-        $Table{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
-        $Table{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
-        $Table{CellData}[$Row][3]{Font}            = 'ProportionalBold';
-        $Table{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+
+    if ( $Self->{PDFObject} ) {
+
+        my %Table;
+        for my $Row ( 0 .. $Rows - 1 ) {
+            $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
+            $Table{CellData}[$Row][0]{Font}            = 'ProportionalBold';
+            $Table{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
+            $Table{CellData}[$Row][2]{Content}         = ' ';
+            $Table{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
+            $Table{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
+            $Table{CellData}[$Row][3]{Font}            = 'ProportionalBold';
+            $Table{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+        }
+
+        $Table{ColumnData}[0]{Width} = 80;
+        $Table{ColumnData}[1]{Width} = 170.5;
+        $Table{ColumnData}[2]{Width} = 4;
+        $Table{ColumnData}[3]{Width} = 80;
+        $Table{ColumnData}[4]{Width} = 170.5;
+
+        $Table{Type}                = 'Cut';
+        $Table{Border}              = 0;
+        $Table{FontSize}            = 6;
+        $Table{BackgroundColorEven} = '#AAAAAA';
+        $Table{BackgroundColorOdd}  = '#DDDDDD';
+        $Table{Padding}             = 1;
+        $Table{PaddingTop}          = 3;
+        $Table{PaddingBottom}       = 3;
+
+        # output table
+        $Self->_PDFOutputTable(
+            Table => \%Table,
+        );
+
+        return '';
     }
+    else {
 
-    $Table{ColumnData}[0]{Width} = 80;
-    $Table{ColumnData}[1]{Width} = 170.5;
-    $Table{ColumnData}[2]{Width} = 4;
-    $Table{ColumnData}[3]{Width} = 80;
-    $Table{ColumnData}[4]{Width} = 170.5;
+        # show left table
+        for my $Row (@TableLeft) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeInfoLeft',
+                Data => $Row,
+            );
+        }
 
-    $Table{Type}                = 'Cut';
-    $Table{Border}              = 0;
-    $Table{FontSize}            = 6;
-    $Table{BackgroundColorEven} = '#AAAAAA';
-    $Table{BackgroundColorOdd}  = '#DDDDDD';
-    $Table{Padding}             = 1;
-    $Table{PaddingTop}          = 3;
-    $Table{PaddingBottom}       = 3;
+        # show right table
+        for my $Row (@TableRight) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeInfoRight',
+                Data => $Row,
+            );
+        }
 
-    # output table
-    $Self->_PDFOutputTable(
-        Table => \%Table,
-    );
-
-    return 1;
+        return '';
+    }
 }
 
 # emit information about a workorder
