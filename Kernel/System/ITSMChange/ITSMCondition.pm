@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.33 2010-01-29 03:42:43 ub Exp $
+# $Id: ITSMCondition.pm,v 1.34 2010-01-29 13:33:36 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 =head1 NAME
 
@@ -610,6 +610,7 @@ sub ConditionDeleteAll {
         Event => 'ConditionDeleteAllPost',
         Data  => {
             %Param,
+            ChangeID => $Param{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -1215,6 +1216,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.33 $ $Date: 2010-01-29 03:42:43 $
+$Revision: 1.34 $ $Date: 2010-01-29 13:33:36 $
 
 =cut
