@@ -2,7 +2,7 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.6 2010-01-29 14:21:29 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.7 2010-01-29 15:43:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@
 </table>
 <!-- dtl:block:Headline -->
 
+<!-- dtl:block:Change -->
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
     <tr>
         <td class="contentkey">
@@ -67,7 +68,6 @@
 <!-- dtl:block:ChangeLongText -->
 </table>
 
-
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
 <!-- dtl:block:ChangeLinkedObjects -->
     <tr>
@@ -77,16 +77,16 @@
                 <tr>
                     <td width="50%" valign="top">
                         <table border="0" cellspacing="3" cellpadding="0" width="100%">
-<!-- dtl:block:LinkType -->
+<!-- dtl:block:ChangeLinkType -->
                             <tr valign="top">
                                 <td class="contentkey" width="20%">$Text{"$Data{"LinkTypeName"}"}:</td>
                                 <td class="contentvalue">
-<!-- dtl:block:LinkTypeRow -->
+<!-- dtl:block:ChangeLinkTypeRow -->
                                     $QData{"LinkStrg"}<br>
-<!-- dtl:block:LinkTypeRow -->
+<!-- dtl:block:ChangeLinkTypeRow -->
                                 </td>
                             </tr>
-<!-- dtl:block:LinkType -->
+<!-- dtl:block:ChangeLinkType -->
                         </table>
                     </td>
                 </tr>
@@ -124,3 +124,85 @@
     </tr>
 <!-- dtl:block:WorkOrderOverview -->
 </table>
+<!-- dtl:block:Change -->
+
+<!-- dtl:block:WorkOrders -->
+<!-- dtl:block:WorkOrder -->
+<table border="0" cellspacing="1" cellpadding="10" width="100%">
+    <tr>
+        <td class="contentkey">
+            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td width="50%" valign="top">
+                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                            <colgroup>
+                                <col width="40%"/>
+                                <col width="60%"/>
+                            </colgroup>
+<!-- dtl:block:WorkOrderInfoLeft -->
+                            <tr>
+                                <td class="contentkey">$QData{"Key"}:</td>
+                                <td class="contentvalue" >$QData{"Value"}</td>
+                            </tr>
+<!-- dtl:block:WorkOrderInfoLeft -->
+                        </table>
+                    </td>
+                    <td width="50%" valign="top">
+                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                            <colgroup>
+                                <col width="40%"/>
+                                <col width="60%"/>
+                            </colgroup>
+<!-- dtl:block:WorkOrderInfoRight -->
+                            <tr>
+                                <td class="contentkey">$QData{"Key"}:</td>
+                                <td class="contentvalue" >$QData{"Value"}</td>
+                            </tr>
+<!-- dtl:block:WorkOrderInfoRight -->
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table border="0" cellspacing="3" cellpadding="0" width="100%">
+    <tr>
+        <td class="contentkey">Workorder: $QData{"Title"}</td>
+    </tr>
+<!-- dtl:block:WorkOrderLongText -->
+    <tr>
+        <td class="contentkey">$QData{"Title"}:</td>
+    </tr>
+    <tr>
+        <td> <pre>$QData{"LongText"}</pre></td>
+    </tr>
+<!-- dtl:block:WorkOrderLongText -->
+<!-- dtl:block:WorkOrderLinkedObjects -->
+    <tr>
+        <td class="contentkey">
+            $Text{"Linked-Object"}:
+            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td width="50%" valign="top">
+                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
+<!-- dtl:block:WorkOrderLinkType -->
+                            <tr valign="top">
+                                <td class="contentkey" width="20%">$Text{"$Data{"LinkTypeName"}"}:</td>
+                                <td class="contentvalue">
+<!-- dtl:block:WorkOrderLinkTypeRow -->
+                                    $QData{"LinkStrg"}<br>
+<!-- dtl:block:WorkOrderLinkTypeRow -->
+                                </td>
+                            </tr>
+<!-- dtl:block:WorkOrderLinkType -->
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+<!-- dtl:block:WorkOrderLinkedObjects -->
+</table>
+<!-- dtl:block:WorkOrder -->
+<!-- dtl:block:WorkOrders -->

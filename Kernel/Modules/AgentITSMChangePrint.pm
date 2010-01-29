@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.25 2010-01-29 14:21:30 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.26 2010-01-29 15:43:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -189,6 +189,11 @@ sub Run {
         WorkOrder      => $WorkOrder,
     );
 
+    # the following output is change specific
+    if ( !$Self->{PDFObject} ) {
+        $Self->{LayoutObject}->Block( Name => 'Change' );
+    }
+
     # output change info, even when a workorder is printed
     $Output .= $Self->_OutputChangeInfo(
         Change         => $Change,
@@ -332,7 +337,16 @@ sub Run {
         @{ $Change->{WorkOrderIDs} || [] }
         :
         ($WorkOrderID);
+
+    if ( !$Self->{PDFObject} ) {
+        $Self->{LayoutObject}->Block( Name => 'WorkOrders' );
+    }
+
     for my $WorkOrderID (@WorkOrderIDs) {
+
+        if ( !$Self->{PDFObject} ) {
+            $Self->{LayoutObject}->Block( Name => 'WorkOrder' );
+        }
 
         # get workorder info
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -348,7 +362,7 @@ sub Run {
             );
         }
 
-        $Self->_PDFOutputWorkOrderInfo(
+        $Self->_OutputWorkOrderInfo(
             Change    => $Change,
             WorkOrder => $WorkOrder,
         );
@@ -357,8 +371,8 @@ sub Run {
         # The plain content will be displayed
         for my $Attribute (qw(Instruction Report)) {
             $Self->_OutputLongText(
-                PrintChange    => $PrintChange,
-                PrintWorkOrder => $PrintWorkOrder,
+                PrintChange    => 0,
+                PrintWorkOrder => 1,
                 Title          => $Attribute,
                 LongText       => $WorkOrder->{ $Attribute . 'Plain' },
             );
@@ -380,8 +394,8 @@ sub Run {
             );
 
             $Self->_OutputLinkedObjects(
-                PrintChange    => $PrintChange,
-                PrintWorkOrder => $PrintWorkOrder,
+                PrintChange    => 0,
+                PrintWorkOrder => 1,
                 LinkData       => \%LinkData,
                 LinkTypeList   => \%LinkTypeList,
             );
@@ -390,9 +404,8 @@ sub Run {
 
     # generate PDF output
     if ( $Self->{PDFObject} ) {
-        my $Page = $Self->{Page};
 
-        # return the PDF document
+        # generate a filename
         my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
         );
@@ -407,6 +420,8 @@ sub Run {
             'workorder_%s-%s_%02d-%02d-%02d_%02d-%02d.pdf',
             $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber}, $Y, $M, $D, $h, $m
             );
+
+        # return the PDF document
         my $PDFString = $Self->{PDFObject}->DocumentOutput();
 
         return $Self->{LayoutObject}->Attachment(
@@ -890,7 +905,7 @@ sub _OutputChangeInfo {
 }
 
 # emit information about a workorder
-sub _PDFOutputWorkOrderInfo {
+sub _OutputWorkOrderInfo {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -904,10 +919,8 @@ sub _PDFOutputWorkOrderInfo {
         }
     }
 
-    return 1 if !$Self->{PDFObject};
-
     my ( $WorkOrder, $Change ) = @Param{qw(WorkOrder Change)};
-    my $Page = $Self->{Page};
+
     my $PrintWorkOrder = $Param{PrintWorkOrder} || 0;
 
     # fill the two tables on top,
@@ -1037,40 +1050,63 @@ sub _PDFOutputWorkOrderInfo {
         );
     }
 
-    my %Table;
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
-    for my $Row ( 0 .. $Rows - 1 ) {
-        $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
-        $Table{CellData}[$Row][0]{Font}            = 'ProportionalBold';
-        $Table{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
-        $Table{CellData}[$Row][2]{Content}         = ' ';
-        $Table{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
-        $Table{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
-        $Table{CellData}[$Row][3]{Font}            = 'ProportionalBold';
-        $Table{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+
+    if ( $Self->{PDFObjec} ) {
+        my %Table;
+        for my $Row ( 0 .. $Rows - 1 ) {
+            $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
+            $Table{CellData}[$Row][0]{Font}            = 'ProportionalBold';
+            $Table{CellData}[$Row][1]{Content}         = $TableLeft[$Row]->{Value};
+            $Table{CellData}[$Row][2]{Content}         = ' ';
+            $Table{CellData}[$Row][2]{BackgroundColor} = '#FFFFFF';
+            $Table{CellData}[$Row][3]{Content}         = $TableRight[$Row]->{Key};
+            $Table{CellData}[$Row][3]{Font}            = 'ProportionalBold';
+            $Table{CellData}[$Row][4]{Content}         = $TableRight[$Row]->{Value};
+        }
+
+        $Table{ColumnData}[0]{Width} = 80;
+        $Table{ColumnData}[1]{Width} = 170.5;
+        $Table{ColumnData}[2]{Width} = 4;
+        $Table{ColumnData}[3]{Width} = 80;
+        $Table{ColumnData}[4]{Width} = 170.5;
+
+        $Table{Type}                = 'Cut';
+        $Table{Border}              = 0;
+        $Table{FontSize}            = 6;
+        $Table{BackgroundColorEven} = '#AAAAAA';
+        $Table{BackgroundColorOdd}  = '#DDDDDD';
+        $Table{Padding}             = 1;
+        $Table{PaddingTop}          = 3;
+        $Table{PaddingBottom}       = 3;
+
+        # output table
+        $Self->_PDFOutputTable(
+            Table => \%Table,
+        );
+
+        return '';
     }
+    else {
 
-    $Table{ColumnData}[0]{Width} = 80;
-    $Table{ColumnData}[1]{Width} = 170.5;
-    $Table{ColumnData}[2]{Width} = 4;
-    $Table{ColumnData}[3]{Width} = 80;
-    $Table{ColumnData}[4]{Width} = 170.5;
+        # show left table
+        for my $Row (@TableLeft) {
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderInfoLeft',
+                Data => $Row,
+            );
+        }
 
-    $Table{Type}                = 'Cut';
-    $Table{Border}              = 0;
-    $Table{FontSize}            = 6;
-    $Table{BackgroundColorEven} = '#AAAAAA';
-    $Table{BackgroundColorOdd}  = '#DDDDDD';
-    $Table{Padding}             = 1;
-    $Table{PaddingTop}          = 3;
-    $Table{PaddingBottom}       = 3;
+        # show right table
+        for my $Row (@TableRight) {
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderInfoRight',
+                Data => $Row,
+            );
+        }
 
-    # output table
-    $Self->_PDFOutputTable(
-        Table => \%Table,
-    );
-
-    return 1;
+        return '';
+    }
 }
 
 # output a body of text, such as a change description
@@ -1089,8 +1125,6 @@ sub _OutputLongText {
     }
 
     if ( $Self->{PDFObject} ) {
-
-        my $Page = $Self->{Page};
 
         # table params common to printing a body of text, like a description
         my %Table = (
@@ -1304,11 +1338,11 @@ sub _OutputLinkedObjects {
     else {
 
         # determine the location in the page
-        my $BlockName = $Param{PrintChange} ? 'ChangeLinkedObjects' : 'WorkOrderLinkedObjects';
+        my $BlockPrefix = $Param{PrintChange} ? 'Change' : 'WorkOrder';
 
         # output link data
         $Self->{LayoutObject}->Block(
-            Name => $BlockName,
+            Name => $BlockPrefix . 'LinkedObjects',
         );
 
         for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %{ $Param{LinkData} } ) {
@@ -1319,7 +1353,7 @@ sub _OutputLinkedObjects {
 
             # output link type data
             $Self->{LayoutObject}->Block(
-                Name => 'LinkType',
+                Name => $BlockPrefix . 'LinkType',
                 Data => {
                     LinkTypeName => $LinkTypeName,
                 },
@@ -1334,7 +1368,7 @@ sub _OutputLinkedObjects {
 
                     # output link type data
                     $Self->{LayoutObject}->Block(
-                        Name => 'LinkTypeRow',
+                        Name => $BlockPrefix . 'LinkTypeRow',
                         Data => {
                             LinkStrg => $Item->{Title},
                         },
