@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.167 2010-01-29 18:33:03 ub Exp $
+# $Id: ITSMChange.t,v 1.168 2010-01-29 19:51:39 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5690,7 +5690,10 @@ for my $TestFile (@TestFileList) {
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
-    $Self->True( $DeleteOk, "Attachment $FileCount: attachment deleted" );
+    $Self->True(
+        $DeleteOk,
+        "Attachment $FileCount: attachment deleted",
+    );
 
     my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
         ChangeID => $AttachmentTestChangeID,
@@ -5745,12 +5748,13 @@ $Self->{ConfigObject}->Set(
 
 # delete the test changes
 for my $ChangeID ( keys %TestedChangeID ) {
+    my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
     $Self->True(
-        $Self->{ChangeObject}->ChangeDelete(
-            ChangeID => $ChangeID,
-            UserID   => 1,
-        ),
-        "Test $TestCount: ChangeDelete()",
+        $DeleteOk,
+        "Test $TestCount: ChangeDelete()"
     );
 
     # double check if change is really deleted
