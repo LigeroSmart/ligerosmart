@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.19 2010-01-29 17:19:58 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.20 2010-01-29 17:22:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -577,8 +577,6 @@ sub Run {
 
                 # get compare value selection list
                 my $CompareValueList = $Self->_GetCompareValueSelection(
-
-                    #ExpressionID => $ExpressionID,
                     %GetParam,
                 );
 
