@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.25 2010-01-29 21:31:29 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.26 2010-01-29 21:48:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -482,6 +482,7 @@ sub Run {
             my $SelectorList = $Self->_GetSelectorSelection(
                 ObjectID    => $GetParam{ObjectID},
                 ConditionID => $GetParam{ConditionID},
+                $IDName     => $ID,
             );
 
             # get attribute selection list
@@ -1484,9 +1485,11 @@ sub _GetSelectorSelection {
 
         # get selector list
         $SelectorList = $Self->{ConditionObject}->ObjectSelectorList(
-            ObjectID    => $Param{ObjectID},
-            ConditionID => $Param{ConditionID},
-            UserID      => $Self->{UserID},
+            ObjectID     => $Param{ObjectID},
+            ConditionID  => $Param{ConditionID},
+            ExpressionID => $Param{ExpressionID},
+            ActionID     => $Param{ActionID},
+            UserID       => $Self->{UserID},
         );
     }
 
