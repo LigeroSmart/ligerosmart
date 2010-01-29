@@ -2,22 +2,23 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.7 2010-01-29 15:43:13 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.8 2010-01-29 17:46:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!-- dtl:block:Headline -->
+<!-- dtl:block:Change -->
+
+<!-- dtl:block:ChangeHeadline -->
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
     <tr>
         <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} / $QData{"Title"}</td>
     </tr>
 </table>
-<!-- dtl:block:Headline -->
+<!-- dtl:block:ChangeHeadline -->
 
-<!-- dtl:block:Change -->
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
     <tr>
         <td class="contentkey">
@@ -128,6 +129,15 @@
 
 <!-- dtl:block:WorkOrders -->
 <!-- dtl:block:WorkOrder -->
+
+<!-- dtl:block:WorkOrderHeadline -->
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+    <tr>
+        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} / $QData{"Title"}</td>
+    </tr>
+</table>
+<!-- dtl:block:WorkOrderHeadline -->
+
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
     <tr>
         <td class="contentkey">

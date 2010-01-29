@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.27 2010-01-29 16:00:28 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.28 2010-01-29 17:46:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -180,45 +180,59 @@ sub Run {
         $Page->{MarginLeft}   = 40;
     }
 
-    # output the header
+    # the second item in the page title is the area in the product 'ITSM Change Management'
+    my $HeaderArea = $PrintChange ? 'ITSM Change' : 'ITSM Workorder';
+    $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Get($HeaderArea);
+
+    # the last item in the page title is either the change number of the full workorder number
+    my $HeaderValue = $PrintChange
+        ?
+        $Change->{ChangeNumber}
+        :
+        join( '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber} );
+
+    # start the document
     # $Output receives generated HTML in the non-PDF case
-    my $Output = $Self->_OutputHeader(
-        PrintChange    => $PrintChange,
-        PrintWorkOrder => $PrintWorkOrder,
-        Change         => $Change,
-        WorkOrder      => $WorkOrder,
+    my $Output = $Self->_StartDocument(
+        HeaderArea  => $HeaderArea,
+        HeaderValue => $HeaderValue,
     );
-
-    # the following output is change specific
-    if ( !$Self->{PDFObject} ) {
-        $Self->{LayoutObject}->Block( Name => 'Change' );
-    }
-
-    # output change info, even when a workorder is printed
-    $Output .= $Self->_OutputChangeInfo(
-        Change         => $Change,
-        PrintWorkOrder => $PrintWorkOrder,
-    );
-
-    # output change description and justification
-    # the plain content will be displayed
-    if ($PrintChange) {
-        for my $Attribute (qw(Description Justification)) {
-            $Self->_OutputLongText(
-                PrintChange    => $PrintChange,
-                PrintWorkOrder => $PrintWorkOrder,
-                Title          => $Attribute,
-                LongText       => $Change->{ $Attribute . 'Plain' },
-            );
-        }
-    }
 
     # the link types are needed for showing the linked objects
     my %LinkTypeList = $Self->{LinkObject}->TypeList(
         UserID => $Self->{UserID},
     );
 
+    # print the change specific stuff
     if ($PrintChange) {
+
+        # start the first page
+        if ( !$Self->{PDFObject} ) {
+            $Self->{LayoutObject}->Block( Name => 'Change' );
+        }
+        $Output .= $Self->_OutputHeadline(
+            HeaderArea     => $HeaderArea,
+            HeaderValue    => $HeaderValue,
+            Title          => $Change->{ChangeTitle} || 'unknown change title',
+            TemplatePrefix => 'Change',
+        );
+
+        # output change info
+        $Output .= $Self->_OutputChangeInfo(
+            Change         => $Change,
+            PrintWorkOrder => $PrintWorkOrder,
+        );
+
+        # output change description and justification
+        # the plain content will be displayed
+        for my $Attribute (qw(Description Justification)) {
+            $Output .= $Self->_OutputLongText(
+                PrintChange    => $PrintChange,
+                PrintWorkOrder => $PrintWorkOrder,
+                Title          => $Attribute,
+                LongText       => $Change->{ $Attribute . 'Plain' },
+            );
+        }
 
         # get linked objects which are directly linked with this change object
         my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
@@ -288,7 +302,7 @@ sub Run {
                 ViewMode         => 'SimpleRaw',
             );
 
-            $Self->_OutputLinkedObjects(
+            $Output .= $Self->_OutputLinkedObjects(
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
                 LinkData       => \%LinkData,
@@ -326,7 +340,7 @@ sub Run {
                 ];
         }
 
-        $Self->_OutputWorkOrderOverview(
+        $Output .= $Self->_OutputWorkOrderOverview(
             WorkOrderOverview => \@WorkOrderOverview,
         );
     }
@@ -344,10 +358,6 @@ sub Run {
 
     for my $WorkOrderID (@WorkOrderIDs) {
 
-        if ( !$Self->{PDFObject} ) {
-            $Self->{LayoutObject}->Block( Name => 'WorkOrder' );
-        }
-
         # get workorder info
         my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
             WorkOrderID => $WorkOrderID,
@@ -362,7 +372,20 @@ sub Run {
             );
         }
 
-        $Self->_OutputWorkOrderInfo(
+        # start a new page for every workorder
+        my $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Get('ITSM Workorder');
+        my $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber};
+        if ( !$Self->{PDFObject} ) {
+            $Self->{LayoutObject}->Block( Name => 'WorkOrder' );
+        }
+        $Output .= $Self->_OutputHeadline(
+            HeaderArea     => $HeaderArea,
+            HeaderValue    => $HeaderValue,
+            Title          => $WorkOrder->{WorkOrderTitle} || 'unknown workorder title',
+            TemplatePrefix => 'WorkOrder',
+        );
+
+        $Output .= $Self->_OutputWorkOrderInfo(
             Change    => $Change,
             WorkOrder => $WorkOrder,
         );
@@ -370,7 +393,7 @@ sub Run {
         # output workorder instruction and report
         # The plain content will be displayed
         for my $Attribute (qw(Instruction Report)) {
-            $Self->_OutputLongText(
+            $Output .= $Self->_OutputLongText(
                 PrintChange    => 0,
                 PrintWorkOrder => 1,
                 Title          => $Attribute,
@@ -393,7 +416,7 @@ sub Run {
                 ViewMode         => 'SimpleRaw',
             );
 
-            $Self->_OutputLinkedObjects(
+            $Output .= $Self->_OutputLinkedObjects(
                 PrintChange    => 0,
                 PrintWorkOrder => 1,
                 LinkData       => \%LinkData,
@@ -453,12 +476,12 @@ sub Run {
     }
 }
 
-# output the header
-sub _OutputHeader {
+# start the document
+sub _StartDocument {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(PrintChange PrintWorkOrder Change WorkOrder)) {
+    for my $Argument (qw(HeaderArea HeaderValue)) {
         if ( !defined( $Param{$Argument} ) ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -468,19 +491,45 @@ sub _OutputHeader {
         }
     }
 
-    my ( $Change, $WorkOrder ) = @Param{qw(Change WorkOrder)};
+    if ( $Self->{PDFObject} ) {
 
-    # the second item in the page title is the area in the product 'ITSM Change Management'
-    my $HeaderArea = $Param{PrintChange} ? 'ITSM Change' : 'ITSM Workorder';
-    $HeaderArea = $Self->{LayoutObject}->{LanguageObject}->Get($HeaderArea);
+        # Title of the PDF-Document, or the HTML-Page
+        my $Product = $Self->{ConfigObject}->Get('Product');
+        my $Title = sprintf '%s: %s#%s', $Product, $Param{HeaderArea}, $Param{HeaderValue};
 
-    # the last item in the page title is either the change number of the full workorder number
-    my $HeaderValue = '';
-    if ( $Param{PrintChange} ) {
-        $HeaderValue = $Change->{ChangeNumber};
+        # create new PDF document
+        $Self->{PDFObject}->DocumentNew(
+            Title  => $Title,
+            Encode => $Self->{LayoutObject}->{UserCharset},
+        );
+
+        return '';
     }
     else {
-        $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber};
+
+        # output header
+        my $Output = $Self->{LayoutObject}->PrintHeader(
+            Area  => $Param{HeaderArea},
+            Value => $Param{HeaderValue},
+        );
+
+        return $Output;
+    }
+}
+
+# output the headline, create a new page
+sub _OutputHeadline {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(HeaderArea HeaderValue Title TemplatePrefix)) {
+        if ( !defined( $Param{$Argument} ) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+            return;
+        }
     }
 
     if ( $Self->{PDFObject} ) {
@@ -492,25 +541,10 @@ sub _OutputHeader {
             . $Self->{LayoutObject}->{Baselink}
             . $Self->{RequestedURL};
 
-        # assemble the headers
-        my $HeaderRight = $HeaderArea;
-        $HeaderRight .= '#' . $HeaderValue;    # add change number or full workorder number
-        my $HeadlineLeft = $HeaderRight;
-        my $Title        = $HeaderRight;
-
-        if ( $Param{PrintChange} && $Change->{ChangeTitle} ) {
-            $HeadlineLeft = $Change->{ChangeTitle};
-            $Title .= ' / ' . $Change->{ChangeTitle};
-        }
-        elsif ( $Param{PrintWorkOrder} && $WorkOrder->{WorkOrderTitle} ) {
-            $HeadlineLeft = $WorkOrder->{WorkOrderTitle};
-            $Title .= ' / ' . $WorkOrder->{WorkOrderTitle};
-        }
-
         # page headers and footer
         my $Page = $Self->{Page};
-        $Page->{HeaderRight}  = $HeaderRight;
-        $Page->{HeadlineLeft} = $HeadlineLeft;
+        $Page->{HeaderRight} = sprintf '%s#%s', $Param{HeaderArea}, $Param{HeaderValue};
+        $Page->{HeadlineLeft} = $Param{Title};
         $Page->{HeadlineRight}
             = $PrintedBy . ' '
             . $Self->{UserFirstname} . ' '
@@ -521,13 +555,7 @@ sub _OutputHeader {
         $Page->{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
         $Page->{PageCount}  = 1;
 
-        # create new PDF document
-        $Self->{PDFObject}->DocumentNew(
-            Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
-            Encode => $Self->{LayoutObject}->{UserCharset},
-        );
-
-        # create first PDF page
+        # create new PDF page
         $Self->{PDFObject}->PageNew(
             %{$Page},
             FooterRight => $Page->{PageText} . ' ' . $Page->{PageCount},
@@ -538,31 +566,17 @@ sub _OutputHeader {
     }
     else {
 
-        # output header
-        my $Output = $Self->{LayoutObject}->PrintHeader(
-            Area  => $HeaderArea,
-            Value => $HeaderValue,
-        );
-
-        my $Title = '';
-        if ( $Param{PrintChange} && $Change->{ChangeTitle} ) {
-            $Title = $Change->{ChangeTitle};
-        }
-        elsif ( $Param{PrintWorkOrder} && $WorkOrder->{WorkOrderTitle} ) {
-            $Title = $WorkOrder->{WorkOrderTitle};
-        }
-
         # headline in the user visible HTML output
         $Self->{LayoutObject}->Block(
-            Name => 'Headline',
+            Name => $Param{TemplatePrefix} . 'Headline',
             Data => {
-                HeaderArea  => $HeaderArea,
-                HeaderValue => $HeaderValue,
-                Title       => $Title,
+                HeaderArea  => $Param{HeaderArea},
+                HeaderValue => $Param{HeaderValue},
+                Title       => $Param{Title},
             },
         );
 
-        return $Output;
+        return '';
     }
 }
 
