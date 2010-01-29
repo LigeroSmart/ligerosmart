@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.176 2010-01-29 21:32:46 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.177 2010-01-29 23:50:47 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1377,18 +1377,6 @@
         <SubGroup>Core::ITSMChange</SubGroup>
         <Setting>
             <String Regex="">&lt;OTRS_CONFIG_Home&gt;/var/log/ITSMChangeCounter.log</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::SendNotifications" Required="1" Valid="1">
-        <Description Lang="en">Whether notifications should be sent.</Description>
-        <Description Lang="de">Wenn Benachrichtigungen versendet werden sollen.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
@@ -3850,11 +3838,23 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::SendNotifications" Required="1" Valid="1">
+        <Description Lang="en">Whether notifications should be sent.</Description>
+        <Description Lang="de">Wenn Benachrichtigungen versendet werden sollen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::Notifications</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::TimeReachedNotifications###Frequency" Required="0" Valid="1">
         <Description Lang="en">Configure how often the notifications are sent when planned start time or other time values have reached/passed.</Description>
         <Description Lang="de">Konfiguration wie häufig Benachrichtungen verschickt werden wenn die geplante Startzeit oder andere Zeiten erreicht wurden bzw. schon vorbei sind.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Notifications</SubGroup>
         <Setting>
             <Option SelectedID="once">
                 <Item Key="once">once</Item>
@@ -3866,7 +3866,7 @@
         <Description Lang="en">If frequency is 'regularly', you can configure how often the notications are sent (every xx hours).</Description>
         <Description Lang="de">Wenn die Häufigkeit auf "regularly" eingestellt ist, können Sie hier einstellen, nach wievielen Stunden eine erneute Erinnerung verschickt werden soll.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Notifications</SubGroup>
         <Setting>
             <String Regex="^\d+$">1</String>
         </Setting>
