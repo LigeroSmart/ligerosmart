@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.23 2010-01-29 13:04:09 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.24 2010-01-29 13:55:25 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -208,133 +208,92 @@ sub Run {
         }
     }
 
-    # generate PDF output
-    if ( $Self->{PDFObject} ) {
-        my $Page = $Self->{Page};
+    # the link types are needed for showing the linked objects
+    my %LinkTypeList = $Self->{LinkObject}->TypeList(
+        UserID => $Self->{UserID},
+    );
 
-        # the link types are needed for showing the linked objects
-        my %LinkTypeList = $Self->{LinkObject}->TypeList(
+    if ($PrintChange) {
+
+        # get linked objects which are directly linked with this change object
+        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+            Object => 'ITSMChange',
+            Key    => $ChangeID,
+            State  => 'Valid',
             UserID => $Self->{UserID},
         );
 
-        if ($PrintChange) {
+        # get the combined linked objects from all workorders of this change
+        my $LinkListWithDataCombinedWorkOrders = {};
+        for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
 
-            # get linked objects which are directly linked with this change object
-            my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-                Object => 'ITSMChange',
-                Key    => $ChangeID,
+            # get linked objects of this workorder
+            my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                Object => 'ITSMWorkOrder',
+                Key    => $WorkOrderID,
                 State  => 'Valid',
                 UserID => $Self->{UserID},
             );
 
-            # get the combined linked objects from all workorders of this change
-            my $LinkListWithDataCombinedWorkOrders = {};
-            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
+            OBJECT:
+            for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
 
-                # get linked objects of this workorder
-                my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
-                    Object => 'ITSMWorkOrder',
-                    Key    => $WorkOrderID,
-                    State  => 'Valid',
-                    UserID => $Self->{UserID},
-                );
+                # only show linked services and config items of workorder
+                if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' ) {
+                    next OBJECT;
+                }
 
-                OBJECT:
-                for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+                LINKTYPE:
+                for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
 
-                    # only show linked services and config items of workorder
-                    if ( $Object ne 'Service' && $Object ne 'ITSMConfigItem' ) {
-                        next OBJECT;
-                    }
-
-                    LINKTYPE:
-                    for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
-
-                        DIRECTION:
-                        for my $Direction (
-                            keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                    DIRECTION:
+                    for my $Direction (
+                        keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                        )
+                    {
+                        ID:
+                        for my $ID (
+                            keys %{
+                                $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
+                            }
                             )
                         {
-                            ID:
-                            for my $ID (
-                                keys %{
-                                    $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
-                                }
-                                )
-                            {
 
-                                # combine the linked object data from all workorders
-                                $LinkListWithDataCombinedWorkOrders->{$Object}->{$LinkType}
-                                    ->{$Direction}->{$ID}
-                                    = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                    ->{$Direction}->{$ID};
-                            }
+                            # combine the linked object data from all workorders
+                            $LinkListWithDataCombinedWorkOrders->{$Object}->{$LinkType}
+                                ->{$Direction}->{$ID}
+                                = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                ->{$Direction}->{$ID};
                         }
                     }
                 }
             }
+        }
 
-            # add combined linked objects from workorder to linked objects from change object
-            $LinkListWithData = {
-                %{$LinkListWithData},
-                %{$LinkListWithDataCombinedWorkOrders},
-            };
+        # add combined linked objects from workorder to linked objects from change object
+        $LinkListWithData = {
+            %{$LinkListWithData},
+            %{$LinkListWithDataCombinedWorkOrders},
+        };
 
-            # get the link data
-            if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
-                my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
-                    LinkListWithData => $LinkListWithData,
-                    ViewMode         => 'SimpleRaw',
-                );
+        # get the link data
+        if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
+            my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+                LinkListWithData => $LinkListWithData,
+                ViewMode         => 'SimpleRaw',
+            );
 
-                $Self->_PDFOutputLinkedObjects(
-                    LinkData     => \%LinkData,
-                    LinkTypeList => \%LinkTypeList,
-                );
-            }
-
-            # output an overview over workorders
-            my @WorkOrderOverview;
-            for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-
-                # get workorder info
-                my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-                    WorkOrderID => $WorkOrderID,
-                    UserID      => $Self->{UserID},
-                );
-
-                # check error
-                if ( !$WorkOrder ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "WorkOrder '$WorkOrderID' not found in database!",
-                        Comment => 'Please contact the admin.',
-                    );
-                }
-
-                push @WorkOrderOverview,
-                    [
-                    $WorkOrder->{WorkOrderNumber},
-                    $WorkOrder->{WorkOrderTitle},
-                    $WorkOrder->{WorkOrderState},
-                    $WorkOrder->{PlannedStartTime},
-                    $WorkOrder->{PlannedEndTime},
-                    $WorkOrder->{ActualStartTime},
-                    $WorkOrder->{ActualEndTime},
-                    ];
-            }
-
-            $Self->_PDFOutputWorkOrderOverview(
-                WorkOrderOverview => \@WorkOrderOverview,
+            $Self->_PDFOutputLinkedObjects(
+                PrintChange    => $PrintChange,
+                PrintWorkOrder => $PrintWorkOrder,
+                LinkData       => \%LinkData,
+                LinkTypeList   => \%LinkTypeList,
             );
         }
 
-        # output either a single workorder or all workorders of a change
-        my @WorkOrderIDs = $PrintChange
-            ?
-            @{ $Change->{WorkOrderIDs} || [] }
-            :
-            ($WorkOrderID);
-        for my $WorkOrderID (@WorkOrderIDs) {
+        # output an overview over workorders
+        my @WorkOrderOverview;
+        for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
 
             # get workorder info
             my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
@@ -350,43 +309,88 @@ sub Run {
                 );
             }
 
-            $Self->_PDFOutputWorkOrderInfo(
-                Change    => $Change,
-                WorkOrder => $WorkOrder,
-            );
-
-            # output workorder instruction and report
-            # The plain content will be displayed
-            for my $Attribute (qw(Instruction Report)) {
-                $Self->_OutputLongText(
-                    PrintChange    => $PrintChange,
-                    PrintWorkOrder => $PrintWorkOrder,
-                    Title          => $Attribute,
-                    LongText       => $WorkOrder->{ $Attribute . 'Plain' },
-                );
-            }
-
-            # get linked objects
-            my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-                Object => 'ITSMWorkOrder',
-                Key    => $WorkOrderID,
-                State  => 'Valid',
-                UserID => $Self->{UserID},
-            );
-
-            # get the link data
-            if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
-                my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
-                    LinkListWithData => $LinkListWithData,
-                    ViewMode         => 'SimpleRaw',
-                );
-
-                $Self->_PDFOutputLinkedObjects(
-                    LinkData     => \%LinkData,
-                    LinkTypeList => \%LinkTypeList,
-                );
-            }
+            push @WorkOrderOverview,
+                [
+                $WorkOrder->{WorkOrderNumber},
+                $WorkOrder->{WorkOrderTitle},
+                $WorkOrder->{WorkOrderState},
+                $WorkOrder->{PlannedStartTime},
+                $WorkOrder->{PlannedEndTime},
+                $WorkOrder->{ActualStartTime},
+                $WorkOrder->{ActualEndTime},
+                ];
         }
+
+        $Self->_PDFOutputWorkOrderOverview(
+            WorkOrderOverview => \@WorkOrderOverview,
+        );
+    }
+
+    # output either a single workorder or all workorders of a change
+    my @WorkOrderIDs = $PrintChange
+        ?
+        @{ $Change->{WorkOrderIDs} || [] }
+        :
+        ($WorkOrderID);
+    for my $WorkOrderID (@WorkOrderIDs) {
+
+        # get workorder info
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => $Self->{UserID},
+        );
+
+        # check error
+        if ( !$WorkOrder ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "WorkOrder '$WorkOrderID' not found in database!",
+                Comment => 'Please contact the admin.',
+            );
+        }
+
+        $Self->_PDFOutputWorkOrderInfo(
+            Change    => $Change,
+            WorkOrder => $WorkOrder,
+        );
+
+        # output workorder instruction and report
+        # The plain content will be displayed
+        for my $Attribute (qw(Instruction Report)) {
+            $Self->_OutputLongText(
+                PrintChange    => $PrintChange,
+                PrintWorkOrder => $PrintWorkOrder,
+                Title          => $Attribute,
+                LongText       => $WorkOrder->{ $Attribute . 'Plain' },
+            );
+        }
+
+        # get linked objects
+        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+            Object => 'ITSMWorkOrder',
+            Key    => $WorkOrderID,
+            State  => 'Valid',
+            UserID => $Self->{UserID},
+        );
+
+        # get the link data
+        if ( $LinkListWithData && ref $LinkListWithData eq 'HASH' && %{$LinkListWithData} ) {
+            my %LinkData = $Self->{LayoutObject}->LinkObjectTableCreate(
+                LinkListWithData => $LinkListWithData,
+                ViewMode         => 'SimpleRaw',
+            );
+
+            $Self->_PDFOutputLinkedObjects(
+                PrintChange    => $PrintChange,
+                PrintWorkOrder => $PrintWorkOrder,
+                LinkData       => \%LinkData,
+                LinkTypeList   => \%LinkTypeList,
+            );
+        }
+    }
+
+    # generate PDF output
+    if ( $Self->{PDFObject} ) {
+        my $Page = $Self->{Page};
 
         # return the PDF document
         my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
@@ -412,24 +416,26 @@ sub Run {
             Type        => 'attachment',
         );
     }
+    else {
 
-    # generate html output when there is no PDF-support
+        # generate html output when there is no PDF-support
 
-    # start template output
-    $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentITSMChangePrint',
-        Data         => {
-            %Param,
-            %{$Change},
-            %{$WorkOrder},
-        },
-    );
+        # start template output
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentITSMChangePrint',
+            Data         => {
+                %Param,
+                %{$Change},
+                %{$WorkOrder},
+            },
+        );
 
-    # add footer
-    $Output .= $Self->{LayoutObject}->PrintFooter();
+        # add footer
+        $Output .= $Self->{LayoutObject}->PrintFooter();
 
-    # return output
-    return $Output;
+        # return output
+        return $Output;
+    }
 }
 
 # output the header
@@ -898,6 +904,8 @@ sub _PDFOutputWorkOrderInfo {
         }
     }
 
+    return 1 if !$Self->{PDFObject};
+
     my ( $WorkOrder, $Change ) = @Param{qw(WorkOrder Change)};
     my $Page = $Self->{Page};
     my $PrintWorkOrder = $Param{PrintWorkOrder} || 0;
@@ -1110,9 +1118,9 @@ sub _OutputLongText {
     }
     else {
 
-        my $TemplateName = $Param{PrintChange} ? 'ChangeLongText' : 'WorkOrderLongText';
+        my $BlockName = $Param{PrintChange} ? 'ChangeLongText' : 'WorkOrderLongText';
         $Self->{LayoutObject}->Block(
-            Name => $TemplateName,
+            Name => $BlockName,
             Data => \%Param,
         );
 
@@ -1132,57 +1140,59 @@ sub _PDFOutputWorkOrderOverview {
         }
     }
 
-    my %Page = %{ $Self->{Page} };
-    my %Table;
-    my $Row = 0;
+    if ( $Self->{PDFObject} ) {
+        my %Page = %{ $Self->{Page} };
+        my %Table;
+        my $Row = 0;
 
-    for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
-        $Table{CellData}[ $Row++ ] = [ map { { Content => $_ } } @{$WorkOrder} ];
+        for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
+            $Table{CellData}[ $Row++ ] = [ map { { Content => $_ } } @{$WorkOrder} ];
+        }
+
+        $Table{ColumnData}[0]{Width} = 10;
+        $Table{ColumnData}[1]{Width} = 40;
+        $Table{ColumnData}[2]{Width} = 40;
+        $Table{ColumnData}[3]{Width} = 40;
+        $Table{ColumnData}[4]{Width} = 40;
+        $Table{ColumnData}[5]{Width} = 40;
+        $Table{ColumnData}[6]{Width} = 40;
+
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -15,
+        );
+
+        # output headline
+        $Self->{PDFObject}->Text(
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Workorders'),
+            Height   => 7,
+            Type     => 'Cut',
+            Font     => 'ProportionalBoldItalic',
+            FontSize => 7,
+            Color    => '#666666',
+        );
+
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
+        );
+
+        # table params
+        $Table{Type}            = 'Cut';
+        $Table{Border}          = 0;
+        $Table{FontSize}        = 6;
+        $Table{BackgroundColor} = '#DDDDDD';
+        $Table{Padding}         = 1;
+        $Table{PaddingTop}      = 3;
+        $Table{PaddingBottom}   = 3;
+
+        # output table
+        $Self->_PDFOutputTable(
+            Table => \%Table,
+        );
     }
-
-    $Table{ColumnData}[0]{Width} = 10;
-    $Table{ColumnData}[1]{Width} = 40;
-    $Table{ColumnData}[2]{Width} = 40;
-    $Table{ColumnData}[3]{Width} = 40;
-    $Table{ColumnData}[4]{Width} = 40;
-    $Table{ColumnData}[5]{Width} = 40;
-    $Table{ColumnData}[6]{Width} = 40;
-
-    # set new position
-    $Self->{PDFObject}->PositionSet(
-        Move => 'relativ',
-        Y    => -15,
-    );
-
-    # output headline
-    $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Workorders'),
-        Height   => 7,
-        Type     => 'Cut',
-        Font     => 'ProportionalBoldItalic',
-        FontSize => 7,
-        Color    => '#666666',
-    );
-
-    # set new position
-    $Self->{PDFObject}->PositionSet(
-        Move => 'relativ',
-        Y    => -4,
-    );
-
-    # table params
-    $Table{Type}            = 'Cut';
-    $Table{Border}          = 0;
-    $Table{FontSize}        = 6;
-    $Table{BackgroundColor} = '#DDDDDD';
-    $Table{Padding}         = 1;
-    $Table{PaddingTop}      = 3;
-    $Table{PaddingBottom}   = 3;
-
-    # output table
-    $Self->_PDFOutputTable(
-        Table => \%Table,
-    );
 
     return 1;
 }
@@ -1192,84 +1202,129 @@ sub _PDFOutputLinkedObjects {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(LinkData LinkTypeList)) {
+    for (qw(PrintChange PrintWorkOrder LinkData LinkTypeList)) {
         if ( !defined( $Param{$_} ) ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
 
-    my %Page     = %{ $Self->{Page} };
     my %TypeList = %{ $Param{LinkTypeList} };
-    my %Table;
-    my $Row = 0;
+    if ( $Self->{PDFObject} ) {
 
-    for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %{ $Param{LinkData} } ) {
+        my %Table;
+        my $Row = 0;
+        for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %{ $Param{LinkData} } ) {
 
-        # investigate link type name
-        my @LinkData = split q{::}, $LinkTypeLinkDirection;
-        my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
-        $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Get($LinkTypeName);
+            # investigate link type name
+            my @LinkData = split q{::}, $LinkTypeLinkDirection;
+            my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
+            $LinkTypeName = $Self->{LayoutObject}->{LanguageObject}->Get($LinkTypeName);
 
-        # define headline
-        $Table{CellData}[$Row][0]{Content} = $LinkTypeName . ':';
-        $Table{CellData}[$Row][0]{Font}    = 'ProportionalBold';
-        $Table{CellData}[$Row][1]{Content} = '';
+            # define headline
+            $Table{CellData}[$Row][0]{Content} = $LinkTypeName . ':';
+            $Table{CellData}[$Row][0]{Font}    = 'ProportionalBold';
+            $Table{CellData}[$Row][1]{Content} = '';
 
-        # extract object list
-        my $ObjectList = $Param{LinkData}->{$LinkTypeLinkDirection};
+            # extract object list
+            my $ObjectList = $Param{LinkData}->{$LinkTypeLinkDirection};
 
-        for my $Object ( sort { lc $a cmp lc $b } keys %{$ObjectList} ) {
+            for my $Object ( sort { lc $a cmp lc $b } keys %{$ObjectList} ) {
 
-            for my $Item ( @{ $ObjectList->{$Object} } ) {
+                for my $Item ( @{ $ObjectList->{$Object} } ) {
 
-                $Table{CellData}[$Row][0]{Content} ||= '';
-                $Table{CellData}[$Row][1]{Content} = $Item->{Title} || '';
-            }
-            continue {
-                $Row++;
+                    $Table{CellData}[$Row][0]{Content} ||= '';
+                    $Table{CellData}[$Row][1]{Content} = $Item->{Title} || '';
+                }
+                continue {
+                    $Row++;
+                }
             }
         }
+
+        $Table{ColumnData}[0]{Width} = 80;
+        $Table{ColumnData}[1]{Width} = 431;
+
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -15,
+        );
+
+        # output headline
+        $Self->{PDFObject}->Text(
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Linked Objects'),
+            Height   => 7,
+            Type     => 'Cut',
+            Font     => 'ProportionalBoldItalic',
+            FontSize => 7,
+            Color    => '#666666',
+        );
+
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
+        );
+
+        # table params
+        $Table{Type}            = 'Cut';
+        $Table{Border}          = 0;
+        $Table{FontSize}        = 6;
+        $Table{BackgroundColor} = '#DDDDDD';
+        $Table{Padding}         = 1;
+        $Table{PaddingTop}      = 3;
+        $Table{PaddingBottom}   = 3;
+
+        # output table
+        $Self->_PDFOutputTable(
+            Table => \%Table,
+        );
     }
+    else {
 
-    $Table{ColumnData}[0]{Width} = 80;
-    $Table{ColumnData}[1]{Width} = 431;
+        # determine the location in the page
+        my $BlockName = $Param{PrintChange} ? 'ChangeLinkedObjects' : 'WorkOrderLinkedObjects';
 
-    # set new position
-    $Self->{PDFObject}->PositionSet(
-        Move => 'relativ',
-        Y    => -15,
-    );
+        # output link data
+        $Self->{LayoutObject}->Block(
+            Name => $BlockName,
+        );
 
-    # output headline
-    $Self->{PDFObject}->Text(
-        Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Linked Objects'),
-        Height   => 7,
-        Type     => 'Cut',
-        Font     => 'ProportionalBoldItalic',
-        FontSize => 7,
-        Color    => '#666666',
-    );
+        for my $LinkTypeLinkDirection ( sort { lc $a cmp lc $b } keys %{ $Param{LinkData} } ) {
 
-    # set new position
-    $Self->{PDFObject}->PositionSet(
-        Move => 'relativ',
-        Y    => -4,
-    );
+            # investigate link type name
+            my @LinkData = split q{::}, $LinkTypeLinkDirection;
+            my $LinkTypeName = $TypeList{ $LinkData[0] }->{ $LinkData[1] . 'Name' };
 
-    # table params
-    $Table{Type}            = 'Cut';
-    $Table{Border}          = 0;
-    $Table{FontSize}        = 6;
-    $Table{BackgroundColor} = '#DDDDDD';
-    $Table{Padding}         = 1;
-    $Table{PaddingTop}      = 3;
-    $Table{PaddingBottom}   = 3;
+            # output link type data
+            $Self->{LayoutObject}->Block(
+                Name => 'LinkType',
+                Data => {
+                    LinkTypeName => $LinkTypeName,
+                },
+            );
 
-    # output table
-    $Self->_PDFOutputTable(
-        Table => \%Table,
-    );
+            # extract object list
+            my $ObjectList = $Param{LinkData}->{$LinkTypeLinkDirection};
+
+            for my $Object ( sort { lc $a cmp lc $b } keys %{$ObjectList} ) {
+
+                for my $Item ( @{ $ObjectList->{$Object} } ) {
+
+                    # output link type data
+                    $Self->{LayoutObject}->Block(
+                        Name => 'LinkTypeRow',
+                        Data => {
+                            LinkStrg => $Item->{Title},
+                        },
+                    );
+                }
+            }
+        }
+
+        return '';
+    }
 
     return 1;
 }
