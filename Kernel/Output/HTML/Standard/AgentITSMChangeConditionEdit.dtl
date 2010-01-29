@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.11 2010-01-29 16:53:36 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.12 2010-01-29 21:32:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -107,7 +107,7 @@ $Include{"AJAX"}
                                             <input type="text" id="ExpressionID::$QData{"ExpressionID"}::CompareValue" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
-                                            $Data{"CompareValueOptionString"}
+                                            $Data{"ValueOptionString"}
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                         </div>
                                     </td>
@@ -135,7 +135,6 @@ $Include{"AJAX"}
                         <td class="contentkey">Actions</td>
                     </tr>
 
-
                     <tr class="contentbody">
                         <td>
                             <table width="100%" border="0" cellpadding="3" cellspacing="0">
@@ -160,7 +159,7 @@ $Include{"AJAX"}
                                             <input type="text" id="ActionID::$QData{"ActionID"}::ActionValue" name="ActionID::$QData{"ActionID"}::ActionValue" value="$QData{"ActionValue"}" size="30" maxlength="250">
 <!-- dtl:block:ActionOverviewRowElementActionValueText -->
 <!-- dtl:block:ActionOverviewRowElementActionValueSelection -->
-                                            $Data{"ActionValueOptionString"}
+                                            $Data{"ValueOptionString"}
 <!-- dtl:block:ActionOverviewRowElementActionValueSelection -->
                                         </div>
                                     </td>
