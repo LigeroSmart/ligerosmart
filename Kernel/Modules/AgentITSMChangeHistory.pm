@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.40 2010-01-28 15:44:42 mae Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.41 2010-01-29 13:34:41 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -131,7 +131,7 @@ sub Run {
             $HistoryType =~ m{
                 \A
                 (?: (?: Change | ChangeCAB | WorkOrder ) Update )
-                | (?: (?: Condition ) (?: Add | Update ) )
+                | (?: (?: Condition ) (?: Add | Update | DeleteAll ) )
                 \z
             }xms
             )
@@ -149,7 +149,10 @@ sub Run {
 
                     # for the ID fields, we replace ID with its textual value
                     if (
-                        my ($Type) = $HistoryEntry->{Fieldname} =~ m{
+                        $HistoryEntry->{Fieldname}
+                        && (
+                            my ($Type)
+                            = $HistoryEntry->{Fieldname} =~ m{
                             \A          # string start
                             (           # start capture of $Type
                                 Category | Impact | Priority
@@ -160,6 +163,7 @@ sub Run {
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
                         }xms
+                        )
                         )
                     {
                         if ( $HistoryEntry->{$ContentNewOrOld} ) {
