@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.9 2010-01-28 21:58:50 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.10 2010-01-29 03:44:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -111,10 +111,15 @@ $Include{"AJAX"}
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                         </div>
                                     </td>
-                                    <td width="10">
+                                    <td align="left" width="10%" class="contentvalue">
+                                        &nbsp;
+                                    </td>
+                                    <td width="10%">
                                         <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpressionID::$QData{"ExpressionID"}">
                                     </td>
-                                    <td align="left" width="10%" class="contentvalue">&nbsp;</td>
+                                    <td align="left" width="10%" class="contentvalue">
+                                        &nbsp;
+                                    </td>
                                 </tr>
 <!-- dtl:block:ExpressionOverviewRow -->
                             </table>
