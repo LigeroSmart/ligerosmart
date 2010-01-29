@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.22 2010-01-29 18:16:46 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.23 2010-01-29 19:20:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -407,16 +407,29 @@ sub Run {
         # to store the JSON output
         my $JSON;
 
-        # any expression field was changed
-        if ( $GetParam{ElementChanged} =~ m{ \A ExpressionID :: ( \d+ | NEW ) }xms ) {
+        # expression or action field was changed
+        if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) :: ( \d+ | NEW ) }xms )
+        {
 
-            # get expression id
-            my $ExpressionID = $1;
+            # get id name of the involved element ( 'ExpressionID' or 'ActionID' )
+            my $IDName = $1;
 
-            # get expression fields
-            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+            # get id of the involved element
+            my $ID = $2;
+
+            # get value field name
+            my $ValueFieldName;
+            if ( $IDName eq 'ExpressionID' ) {
+                $ValueFieldName = 'CompareValue';
+            }
+            elsif ( $IDName eq 'ActionID' ) {
+                $ValueFieldName = 'ActionValue';
+            }
+
+            # get expression or action fields
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue ActionValue)) {
                 $GetParam{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                    Param => $IDName . '::' . $ID . '::' . $Field,
                 );
             }
 
@@ -447,7 +460,7 @@ sub Run {
                 !$SelectorList
                 || !ref $SelectorList eq 'HASH'
                 || !%{$SelectorList}
-                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
+                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID'
                 )
             {
                 $PossibleNoneSelector = 1;
@@ -459,8 +472,8 @@ sub Run {
                 !$AttributeList
                 || !ref $AttributeList eq 'HASH'
                 || !%{$AttributeList}
-                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
-                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
+                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID'
+                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::Selector'
                 )
             {
                 $PossibleNoneAttributeID = 1;
@@ -472,16 +485,16 @@ sub Run {
                 !$OperatorList
                 || !ref $OperatorList eq 'HASH'
                 || !%{$OperatorList}
-                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID'
-                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector'
-                || $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID'
+                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID'
+                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::Selector'
+                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::AttributeID'
                 )
             {
                 $PossibleNoneOperatorID = 1;
             }
 
             # if object was changed, reset the attribute and operator list
-            if ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID' ) {
+            if ( $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID' ) {
                 $AttributeList = {};
                 $OperatorList  = {};
             }
@@ -490,7 +503,7 @@ sub Run {
             $JSON = $Self->{LayoutObject}->BuildJSON(
                 [
                     {
-                        Name         => 'ExpressionID::' . $ExpressionID . '::ObjectID',
+                        Name         => $IDName . '::' . $ID . '::ObjectID',
                         Data         => $ObjectList,
                         SelectedID   => $GetParam{ObjectID},
                         PossibleNone => 0,
@@ -498,7 +511,7 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name         => 'ExpressionID::' . $ExpressionID . '::Selector',
+                        Name         => $IDName . '::' . $ID . '::Selector',
                         Data         => $SelectorList,
                         SelectedID   => $PossibleNoneSelector ? '' : $GetParam{Selector},
                         PossibleNone => $PossibleNoneSelector,
@@ -506,7 +519,7 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name         => 'ExpressionID::' . $ExpressionID . '::AttributeID',
+                        Name         => $IDName . '::' . $ID . '::AttributeID',
                         Data         => $AttributeList,
                         SelectedID   => $GetParam{AttributeID} || '',
                         PossibleNone => $PossibleNoneAttributeID,
@@ -514,7 +527,7 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name => 'ExpressionID::' . $ExpressionID . '::OperatorID',
+                        Name => $IDName . '::' . $ID . '::OperatorID',
                         Data => $OperatorList,
 
                         #SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
@@ -526,29 +539,6 @@ sub Run {
                 ],
             );
         }
-
-#        # any action field was changed
-#        elsif ( $GetParam{ElementChanged} =~ m{ \A ActionID :: ( \d+ | NEW ) }xms ) {
-#
-#            # get action id
-#            my $ActionID = $1;
-#
-#            # TODO Add AJAX stuff for actions here...
-#
-#            $JSON = $Self->{LayoutObject}->BuildJSON(
-#                [
-#
-#                   #                    {
-#                   #                        Name         => 'ActionID::' . $ActionID . '::ObjectID',
-#                   #                        Data         => $ObjectList,
-#                   #                        SelectedID   => $GetParam{ObjectID},
-#                   #                        PossibleNone => 0,
-#                   #                        Translation  => 1,
-#                   #                        Max          => 100,
-#                   #                    },
-#                ],
-#            );
-#        }
 
         # return json
         return $Self->{LayoutObject}->Attachment(
