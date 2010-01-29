@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.173 2010-01-29 11:17:16 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.174 2010-01-29 13:19:03 mae Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -462,7 +462,7 @@
                 <NavBar>
                     <Description>Template Overview</Description>
                     <Name>Template</Name>
-                    <Image>overview.png</Image>
+                    <Image>itsm_change_template.png</Image>
                     <Link>Action=AgentITSMTemplateOverview</Link>
                     <Type></Type>
                     <Block></Block>
