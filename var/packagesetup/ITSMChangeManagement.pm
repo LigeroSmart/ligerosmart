@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.37 2010-01-28 15:58:36 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.38 2010-01-29 13:16:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -1615,6 +1615,114 @@ sub _AddSystemNotifications {
             'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
                 . $BasicWorkOrderInfoEn,
         ],
+        [
+            'Customer::Change::ChangePlannedStartTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
+        ],
+        [
+            'Customer::Change::ChangePlannedStartTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
+        ],
+        [
+            'Customer::Change::ChangePlannedEndTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned End Time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned end time.',
+        ],
+        [
+            'Customer::Change::ChangePlannedEndTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Endzeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.',
+        ],
+        [
+            'Customer::Change::ChangeActualStartTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Actual Start Time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its actual start time.',
+        ],
+        [
+            'Customer::Change::ChangeActualStartTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Change begonnen.',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde begonnen.',
+        ],
+        [
+            'Customer::Change::ChangeActualEndTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
+        ],
+        [
+            'Customer::Change::ChangeActualEndTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Change fertiggestellt.',
+            'Change #<OTRS_CHANGE_ChangeNumber> wurde fertiggestellt.',
+        ],
+        [
+            'Customer::Change::ChangeRequestedTimeReached',
+            'en',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Requested time reached.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has reached its requested time.',
+        ],
+        [
+            'Customer::Change::ChangeRequestedTimeReached',
+            'de',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned start time.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Startzeit erreicht.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderPlannedEndTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned end time.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderPlannedEndTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Endzeit erreicht.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderActualStartTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual Start Time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual start time.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderActualStartTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder begonnen.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
+            'en',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual end time reached.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual end time.',
+        ],
+        [
+            'Customer::WorkOrder::WorkOrderActualEndTimeReached',
+            'de',
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder abgeschlossen.',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.',
+        ],
     );
 
     # insert the entries
@@ -1713,6 +1821,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2010-01-28 15:58:36 $
+$Revision: 1.38 $ $Date: 2010-01-29 13:16:09 $
 
 =cut
