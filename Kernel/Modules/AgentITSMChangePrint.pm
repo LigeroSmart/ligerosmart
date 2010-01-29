@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.24 2010-01-29 13:55:25 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.25 2010-01-29 14:21:30 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -283,7 +283,7 @@ sub Run {
                 ViewMode         => 'SimpleRaw',
             );
 
-            $Self->_PDFOutputLinkedObjects(
+            $Self->_OutputLinkedObjects(
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
                 LinkData       => \%LinkData,
@@ -321,7 +321,7 @@ sub Run {
                 ];
         }
 
-        $Self->_PDFOutputWorkOrderOverview(
+        $Self->_OutputWorkOrderOverview(
             WorkOrderOverview => \@WorkOrderOverview,
         );
     }
@@ -379,7 +379,7 @@ sub Run {
                 ViewMode         => 'SimpleRaw',
             );
 
-            $Self->_PDFOutputLinkedObjects(
+            $Self->_OutputLinkedObjects(
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
                 LinkData       => \%LinkData,
@@ -1129,7 +1129,7 @@ sub _OutputLongText {
 }
 
 # output overview over workorders
-sub _PDFOutputWorkOrderOverview {
+sub _OutputWorkOrderOverview {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1141,7 +1141,6 @@ sub _PDFOutputWorkOrderOverview {
     }
 
     if ( $Self->{PDFObject} ) {
-        my %Page = %{ $Self->{Page} };
         my %Table;
         my $Row = 0;
 
@@ -1193,12 +1192,33 @@ sub _PDFOutputWorkOrderOverview {
             Table => \%Table,
         );
     }
+    else {
+
+        # output workorder overview
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderOverview',
+        );
+
+        # output all rows
+        for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
+            my %Data;
+            @Data{
+                qw( WorkOrderNumber WorkOrderTitle WorkOrderState PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime )
+                } = @{$WorkOrder};
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderRow',
+                Data => \%Data,
+            );
+        }
+
+        return '';
+    }
 
     return 1;
 }
 
-# output info about a linked object
-sub _PDFOutputLinkedObjects {
+# output info about linked objects of a change or a workorder
+sub _OutputLinkedObjects {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff

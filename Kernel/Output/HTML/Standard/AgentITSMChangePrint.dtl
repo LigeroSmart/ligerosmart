@@ -2,7 +2,7 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.5 2010-01-29 13:55:26 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.6 2010-01-29 14:21:29 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -68,8 +68,8 @@
 </table>
 
 
-<!-- dtl:block:ChangeLinkedObjects -->
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
+<!-- dtl:block:ChangeLinkedObjects -->
     <tr>
         <td class="contentkey">
             $Text{"Linked-Object"}:
@@ -93,5 +93,34 @@
             </table>
         </td>
     </tr>
-</table>
 <!-- dtl:block:ChangeLinkedObjects -->
+<!-- dtl:block:WorkOrderOverview -->
+    <tr>
+        <td class="contentkey">
+            $Text{"ITSM Workorder"} $Text{"Overview"}:
+            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td class="contentkey">#</td>
+                    <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderTitle"}</td>
+                    <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderState"}</td>
+                    <td class="contentkey">$Text{"Planned Start Time"}</td>
+                    <td class="contentkey">$Text{"Planned End Time"}</td>
+                    <td class="contentkey">$Text{"Actual Start Time"}</td>
+                    <td class="contentkey">$Text{"Actual End Time"}</td>
+                </tr>
+<!-- dtl:block:WorkOrderRow -->
+                <tr>
+                    <td class="contentkey">$QData{"WorkOrderNumber"}</td>
+                    <td class="contentkey">$QData{"WorkOrderTitle"}</td>
+                    <td class="contentkey">$QData{"WorkOrderState"}</td>
+                    <td class="contentkey">$QData{"PlannedStartTime"}</td>
+                    <td class="contentkey">$QData{"PlannedEndTime"}</td>
+                    <td class="contentkey">$QData{"ActualStartTime"}</td>
+                    <td class="contentkey">$QData{"ActualEndTim"}</td>
+                </tr>
+<!-- dtl:block:WorkOrderRow -->
+            </table>
+        </td>
+    </tr>
+<!-- dtl:block:WorkOrderOverview -->
+</table>
