@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.41 2010-01-29 13:34:41 mae Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.42 2010-01-29 13:42:47 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -147,12 +147,11 @@ sub Run {
                 }
                 else {
 
+                    $HistoryEntry->{Fieldname} ||= '';
+
                     # for the ID fields, we replace ID with its textual value
                     if (
-                        $HistoryEntry->{Fieldname}
-                        && (
-                            my ($Type)
-                            = $HistoryEntry->{Fieldname} =~ m{
+                        my ($Type) = $HistoryEntry->{Fieldname} =~ m{
                             \A          # string start
                             (           # start capture of $Type
                                 Category | Impact | Priority
@@ -163,7 +162,6 @@ sub Run {
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
                         }xms
-                        )
                         )
                     {
                         if ( $HistoryEntry->{$ContentNewOrOld} ) {
@@ -280,7 +278,7 @@ sub Run {
             }
 
             # set description
-            $Data{Content} = join '%%', $DisplayedFieldname, $ContentNew, $ContentOld;
+            $Data{Content} = join '%%', $DisplayedFieldname || '', $ContentNew, $ContentOld;
         }
         else {
             $Data{Content} = $HistoryEntry->{ContentNew};
