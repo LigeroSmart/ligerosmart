@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.32 2010-01-28 15:42:07 mae Exp $
+# $Id: ITSMCondition.pm,v 1.33 2010-01-29 03:42:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -1003,7 +1003,9 @@ sub ConditionCompareValueFieldType {
     }
 
     # lookup attribute name
-    my $AttributeName = $Self->AttributeLookup( AttributeID => $Param{AttributeID} );
+    my $AttributeName = $Self->AttributeLookup(
+        AttributeID => $Param{AttributeID},
+    );
 
     # check error
     if ( !$AttributeName ) {
@@ -1020,8 +1022,8 @@ sub ConditionCompareValueFieldType {
     # check error
     return if !$Config;
 
-    # get the field type for the given attribute
-    my $FieldType = $Config->{$AttributeName} || '';
+    # get the field type for the given attribute or return the default field type 'Selection'
+    my $FieldType = $Config->{$AttributeName} || 'Selection';
 
     return $FieldType;
 }
@@ -1213,6 +1215,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2010-01-28 15:42:07 $
+$Revision: 1.33 $ $Date: 2010-01-29 03:42:43 $
 
 =cut
