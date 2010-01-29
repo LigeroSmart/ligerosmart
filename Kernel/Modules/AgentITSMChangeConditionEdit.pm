@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.18 2010-01-29 16:54:37 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.19 2010-01-29 17:19:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -544,41 +544,28 @@ sub Run {
         # to store the HTML string which is returned to the browser
         my $HTMLString;
 
-        #        # id name of the involved element
-        #        # will be either 'ExpressionID' or 'ActionID'
-        #        my $IDName;
-        #
-        #        # block names for the output layout block
-        #        my $BlockNameText;
-        #        my $BlockNameSelection;
-        #        my $ValueFieldName;
-        #
-        #        # for expression elements
-        #        if ( $Param{ExpressionID} ) {
-        #            $IDName             = 'ExpressionID';
-        #            $BlockNameText      = 'ExpressionOverviewRowElementCompareValueText';
-        #            $BlockNameSelection = 'ExpressionOverviewRowElementCompareValueSelection';
-        #            $ValueFieldName     = 'CompareValue';
-        #        }
-        #
-        #        # for action elements
-        #        elsif ( $Param{ActionID} ) {
-        #            $IDName             = 'ActionID';
-        #            $BlockNameText      = 'ActionOverviewRowElementActionValueText';
-        #            $BlockNameSelection = 'ActionOverviewRowElementActionValueSelection';
-        #            $ValueFieldName     = 'ActionValue';
-        #        }
+        # expression or action field was changed
+        if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) :: ( \d+ | NEW ) }xms )
+        {
 
-        # an expression field was changed
-        if ( $GetParam{ElementChanged} =~ m{ \A ExpressionID :: ( \d+ | NEW ) }xms ) {
+            # get id name and id of the involved element
+            # will be either 'ExpressionID' or 'ActionID'
+            my $IDName = $1;
+            my $ID     = $2;
 
-            # get expression id
-            my $ExpressionID = $1;
+            # get value field name
+            my $ValueFieldName;
+            if ( $IDName eq 'ExpressionID' ) {
+                $ValueFieldName = 'CompareValue';
+            }
+            elsif ( $IDName eq 'ActionID' ) {
+                $ValueFieldName = 'ActionValue';
+            }
 
-            # get expression fields
-            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+            # get expression or action fields
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue ActionValue)) {
                 $GetParam{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                    Param => $IDName . '::' . $ID . '::' . $Field,
                 );
             }
 
@@ -599,7 +586,7 @@ sub Run {
                 my $PossibleNone = 0;
                 if (
                     $Param{PossibleNone}
-                    || !$Param{CompareValue}
+                    || !$Param{$ValueFieldName}
                     || !$CompareValueList
                     || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
                     || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
@@ -611,8 +598,8 @@ sub Run {
                 # generate CompareValueOptionString
                 $HTMLString = $Self->{LayoutObject}->BuildSelection(
                     Data         => $CompareValueList,
-                    Name         => 'ExpressionID::' . $ExpressionID . '::CompareValue',
-                    SelectedID   => $GetParam{CompareValue},
+                    Name         => $IDName . '::' . $ID . '::' . $ValueFieldName,
+                    SelectedID   => $GetParam{$ValueFieldName},
                     PossibleNone => $PossibleNone,
                 );
 
@@ -626,8 +613,8 @@ sub Run {
                 # build an empty input field
                 $HTMLString = ''
                     . '<input type="text" '
-                    . 'id="ExpressionID::' . $ExpressionID . '::CompareValue" '
-                    . 'name="ExpressionID::' . $ExpressionID . '::CompareValue" '
+                    . 'id="' . $IDName . '::' . $ID . '::' . $ValueFieldName . '" '
+                    . 'name="' . $IDName . '::' . $ID . '::' . $ValueFieldName . '" '
                     . 'value="" size="30" maxlength="250">';
             }
         }
