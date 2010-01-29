@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.5 2010-01-29 13:14:52 reb Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.6 2010-01-29 15:20:35 reb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 use Date::Pcalc qw(Day_of_Week Day_of_Week_Abbreviation);
 use Kernel::Config;
@@ -134,11 +134,6 @@ for my $Type (qw(StartTime EndTime)) {
         );
 
         next CHANGEID if SentWithinPeriod($LastNotificationSentDate);
-
-        $CommonObject{LogObject}->Log(
-            Priority => 'error',
-            Message  => "$ChangeID => Planned$Type ( " . $Change->{"Planned$Type"} . ")",
-        );
 
         # trigger ChangePlannedStartTimeReachedPost-Event
         $MockedObject->EventHandler(
