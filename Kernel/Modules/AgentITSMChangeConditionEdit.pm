@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.16 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.17 2010-01-29 03:45:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,7 +54,8 @@ sub Run {
     for my $ParamName (
         qw(
         ChangeID ConditionID Name Comment ExpressionConjunction ValidID
-        Save AddAction AddExpression NewExpression NewAction ElementChanged)
+        Save AddAction AddExpression NewExpression NewAction
+        ElementChanged UpdateDivName)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -109,9 +110,9 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
-    # ------------------------------------------------------------ #
-    # condition save (also add expression / add action)
-    # ------------------------------------------------------------ #
+    # ---------------------------------------------------------------- #
+    # condition save (also add/delete expression and add/delete action)
+    # ---------------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # if this is a new condition
@@ -275,6 +276,7 @@ sub Run {
         # if action add button was pressed
         elsif ( $GetParam{AddAction} ) {
 
+            # TODO ....
         }
 
         # check if an expression should be deleted
@@ -312,7 +314,7 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # handle AJAXUpdate
+    # handle AJAXUpdate (change the content of dropdownlists)
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
@@ -392,24 +394,10 @@ sub Run {
                 $PossibleNoneOperatorID = 1;
             }
 
-            # delete all following lists, but do not delete the directly following list
+            # if object was changed, reset the attribute and operator list
             if ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::ObjectID' ) {
                 $AttributeList = {};
                 $OperatorList  = {};
-
-                #            $CompareValueList = {};
-            }
-            elsif ( $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::Selector' ) {
-                $OperatorList = {};
-
-                #            $CompareValueList = {};
-            }
-            elsif (
-                $GetParam{ElementChanged} eq 'ExpressionID::' . $ExpressionID . '::AttributeID'
-                )
-            {
-
-                #            $CompareValueList = {};
             }
 
             # build json
@@ -434,7 +422,7 @@ sub Run {
                     {
                         Name         => 'ExpressionID::' . $ExpressionID . '::AttributeID',
                         Data         => $AttributeList,
-                        SelectedID   => $PossibleNoneAttributeID ? '' : $GetParam{AttributeID},
+                        SelectedID   => $GetParam{AttributeID} || '',
                         PossibleNone => $PossibleNoneAttributeID,
                         Translation  => 1,
                         Max          => 100,
@@ -483,6 +471,86 @@ sub Run {
         );
     }
 
+    # ------------------------------------------------------------------------------------- #
+    # handle AJAXUpdate (replace the field type, e.g. replace a text field with a selection
+    # ------------------------------------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'AJAXContentUpdate' ) {
+
+        # to store the HTML string which is returned to the browser
+        my $HTMLString;
+
+        # an expression field was changed
+        if ( $GetParam{ElementChanged} =~ m{ \A ExpressionID :: ( \d+ | NEW ) }xms ) {
+
+            # get expression id
+            my $ExpressionID = $1;
+
+            # get expression fields
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+                $GetParam{$Field} = $Self->{ParamObject}->GetParam(
+                    Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                );
+            }
+
+            # get compare value field type
+            my $FieldType = $Self->_GetCompareValueFieldType(%GetParam);
+
+            # build CompareValue selection
+            if ( $FieldType eq 'Selection' ) {
+
+                # get compare value selection list
+                my $CompareValueList = $Self->_GetCompareValueSelection(
+                    ExpressionID => $ExpressionID,
+                    %GetParam,
+                );
+
+                # add an empty selection if no list is available or nothing is selected
+                my $PossibleNone = 0;
+                if (
+                    $Param{PossibleNone}
+                    || !$Param{CompareValue}
+                    || !$CompareValueList
+                    || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
+                    || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
+                    )
+                {
+                    $PossibleNone = 1;
+                }
+
+                # generate CompareValueOptionString
+                $HTMLString = $Self->{LayoutObject}->BuildSelection(
+                    Data         => $CompareValueList,
+                    Name         => 'ExpressionID::' . $ExpressionID . '::CompareValue',
+                    SelectedID   => $GetParam{CompareValue},
+                    PossibleNone => $PossibleNone,
+                );
+
+                # remove AJAX-Loading images in selection field to avoid jitter effect
+                $HTMLString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+            }
+
+            # build text input field
+            elsif ( $FieldType eq 'Text' ) {
+
+                # build an empty input field
+                $HTMLString = ''
+                    . '<input type="text" '
+                    . 'id="ExpressionID::' . $ExpressionID . '::CompareValue" '
+                    . 'name="ExpressionID::' . $ExpressionID . '::CompareValue" '
+                    . 'value="" size="30" maxlength="250">';
+            }
+        }
+
+        # return HTML
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/html',
+            Charset     => $Self->{LayoutObject}->{UserCharset},
+            Content     => $HTMLString,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
     # ------------------------------------------------------------ #
     # condition edit view
     # ------------------------------------------------------------ #
@@ -516,6 +584,7 @@ sub Run {
 
             # show existing expressions
             $Self->_ExpressionOverview(
+                %{$ChangeData},
                 %ConditionData,
                 ExpressionIDs => $ExpressionIDsRef,
                 NewExpression => $GetParam{NewExpression},
@@ -527,6 +596,19 @@ sub Run {
             #    %ConditionData,
             #);
 
+        }
+
+        # get expression conjunction from condition
+        if ( !$GetParam{ExpressionConjunction} ) {
+            $GetParam{ExpressionConjunction} = $ConditionData{ExpressionConjunction} || '';
+        }
+
+        # set radio buttons for expression conjunction
+        if ( $GetParam{ExpressionConjunction} eq 'all' ) {
+            $ConditionData{allselected} = 'checked="checked"';
+        }
+        else {
+            $ConditionData{anyselected} = 'checked="checked"';
         }
 
         # output header
@@ -599,32 +681,38 @@ sub _ExpressionOverview {
         $Self->{LayoutObject}->Block(
             Name => 'ExpressionOverviewRow',
             Data => {
+                %Param,
                 %{$ExpressionData},
             },
         );
 
         # show object selection
         $Self->_ShowObjectSelection(
+            %Param,
             %{$ExpressionData},
         );
 
         # show selecor selection
         $Self->_ShowSelectorSelection(
+            %Param,
             %{$ExpressionData},
         );
 
         # show attribute selection
         $Self->_ShowAttributeSelection(
+            %Param,
             %{$ExpressionData},
         );
 
         # show operator selection
         $Self->_ShowOperatorSelection(
+            %Param,
             %{$ExpressionData},
         );
 
         # show compare value field
         $Self->_ShowCompareValueField(
+            %Param,
             %{$ExpressionData},
         );
     }
@@ -651,27 +739,43 @@ sub _ShowObjectSelection {
         $PossibleNone = 1;
     }
 
+    # the name of the div that should be updated
+    my $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+
+    # build OnChange string
+    my $OnChangeString = ''
+        . "AJAXContentUpdate('$UpdateDivName', '"
+        . '$Env{"Baselink"}'
+        . "Action=$Self->{Action}"
+        . '&Subaction=AJAXContentUpdate'
+        . "&UpdateDivName=$UpdateDivName"
+        . '&ChangeID=$QData{"ChangeID"}'
+        . '&ConditionID=$QData{"ConditionID"}'
+        . "&ExpressionID::$Param{ExpressionID}::ObjectID=' + "
+        . "document.getElementById('ExpressionID::$Param{ExpressionID}::ObjectID').value + '"
+        . "&ElementChanged=ExpressionID::$Param{ExpressionID}::ObjectID"
+        . "'); "
+        . "AJAXUpdate('AJAXUpdate', 'ExpressionID::$Param{ExpressionID}::ObjectID', "
+        . "[ "
+        . "'ChangeID', "
+        . "'ConditionID', "
+        . "'ExpressionID::$Param{ExpressionID}::ObjectID', "
+        . "], "
+        . "[ "
+        . "'ExpressionID::$Param{ExpressionID}::ObjectID', "
+        . "'ExpressionID::$Param{ExpressionID}::Selector', "
+        . "'ExpressionID::$Param{ExpressionID}::AttributeID', "
+        . "'ExpressionID::$Param{ExpressionID}::OperatorID', "
+        . "]); "
+        . 'return false;';
+
     # generate ObjectOptionString
     my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $ObjectList,
         Name         => 'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
         SelectedID   => $Param{ObjectID},
         PossibleNone => $PossibleNone,
-        Ajax         => {
-            Update => [
-                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
-                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
-                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
-                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
-                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
-            ],
-            Depend => [
-                'ChangeID',
-                'ConditionID',
-                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
+        OnChange     => $OnChangeString,
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
@@ -681,6 +785,7 @@ sub _ShowObjectSelection {
     $Self->{LayoutObject}->Block(
         Name => 'ExpressionOverviewRowElementObject',
         Data => {
+            %Param,
             ObjectOptionString => $ObjectOptionString,
         },
     );
@@ -718,7 +823,6 @@ sub _ShowSelectorSelection {
                 'ExpressionID::' . $Param{ExpressionID} . '::Selector',
                 'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
                 'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
-                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
             ],
             Depend => [
                 'ChangeID',
@@ -737,6 +841,7 @@ sub _ShowSelectorSelection {
     $Self->{LayoutObject}->Block(
         Name => 'ExpressionOverviewRowElementSelector',
         Data => {
+            %Param,
             SelectorOptionString => $SelectorOptionString,
         },
     );
@@ -763,27 +868,51 @@ sub _ShowAttributeSelection {
         $PossibleNone = 1;
     }
 
+    # the name of the div that should be updated
+    my $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+
+    # build OnChange string
+    my $OnChangeString = ''
+        . "AJAXContentUpdate('$UpdateDivName', '"
+        . '$Env{"Baselink"}'
+        . "Action=$Self->{Action}"
+        . '&Subaction=AJAXContentUpdate'
+        . "&UpdateDivName=$UpdateDivName"
+        . '&ChangeID=$QData{"ChangeID"}'
+        . '&ConditionID=$QData{"ConditionID"}'
+        . "&ExpressionID::$Param{ExpressionID}::ObjectID=' + "
+        . "document.getElementById('ExpressionID::$Param{ExpressionID}::ObjectID').value + '"
+        . "&ExpressionID::$Param{ExpressionID}::Selector=' + "
+        . "document.getElementById('ExpressionID::$Param{ExpressionID}::Selector').value + '"
+        . "&ExpressionID::$Param{ExpressionID}::AttributeID=' "
+        . "+ document.getElementById('ExpressionID::$Param{ExpressionID}::AttributeID').value + '"
+        . "&ExpressionID::$Param{ExpressionID}::OperatorID=' + "
+        . "document.getElementById('ExpressionID::$Param{ExpressionID}::OperatorID').value + '"
+        . "&ExpressionID::$Param{ExpressionID}::CompareValue=' + "
+        . "document.getElementById('ExpressionID::$Param{ExpressionID}::CompareValue').value + '"
+        . "&ElementChanged=ExpressionID::$Param{ExpressionID}::AttributeID"
+        . "'); "
+        . "AJAXUpdate('AJAXUpdate', 'ExpressionID::$Param{ExpressionID}::AttributeID', "
+        . "[ "
+        . "'ChangeID', "
+        . "'ConditionID', "
+        . "'ExpressionID::$Param{ExpressionID}::ObjectID', "
+        . "'ExpressionID::$Param{ExpressionID}::Selector', "
+        . "'ExpressionID::$Param{ExpressionID}::AttributeID' "
+        . "], "
+        . "[ "
+        . "'ExpressionID::$Param{ExpressionID}::AttributeID', "
+        . "'ExpressionID::$Param{ExpressionID}::OperatorID', "
+        . "]); "
+        . 'return false;';
+
     # generate AttributeOptionString
     my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $AttributeList,
         Name         => 'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
         SelectedID   => $Param{AttributeID},
         PossibleNone => $PossibleNone,
-        Ajax         => {
-            Update => [
-                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
-                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
-                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
-            ],
-            Depend => [
-                'ChangeID',
-                'ConditionID',
-                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
-                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
-                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
+        OnChange     => $OnChangeString,
     );
 
     # remove AJAX-Loading images in date selection fields to avoid jitter effect
@@ -793,6 +922,7 @@ sub _ShowAttributeSelection {
     $Self->{LayoutObject}->Block(
         Name => 'ExpressionOverviewRowElementAttribute',
         Data => {
+            %Param,
             AttributeOptionString => $AttributeOptionString,
         },
     );
@@ -828,7 +958,6 @@ sub _ShowOperatorSelection {
         Ajax         => {
             Update => [
                 'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
-                'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
             ],
             Depend => [
                 'ChangeID',
@@ -842,11 +971,6 @@ sub _ShowOperatorSelection {
         },
     );
 
-    # TODO: Do not use otrs Ajax functions here,
-    # because it can be necessary to update a text field (or date, or something else)
-    # which is not possible with the otrs Ajax lib, which can only update selections (dropdowns)
-    # generate OperatorOptionString
-
     # remove AJAX-Loading images in selection field to avoid jitter effect
     $OperatorOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
@@ -854,6 +978,7 @@ sub _ShowOperatorSelection {
     $Self->{LayoutObject}->Block(
         Name => 'ExpressionOverviewRowElementOperator',
         Data => {
+            %Param,
             OperatorOptionString => $OperatorOptionString,
         },
     );
@@ -882,12 +1007,37 @@ sub _ShowCompareValueField {
     elsif ( $FieldType eq 'Selection' ) {
 
         # get compare value selection list
-        my $CompareValueOptionString = $Self->_GetCompareValueSelection(%Param);
+        my $CompareValueList = $Self->_GetCompareValueSelection(%Param);
+
+        # add an empty selection if no list is available or nothing is selected
+        my $PossibleNone = 0;
+        if (
+            $Param{PossibleNone}
+            || !$Param{CompareValue}
+            || !$CompareValueList
+            || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
+            || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
+            )
+        {
+            $PossibleNone = 1;
+        }
+
+        # generate CompareValueOptionString
+        my $CompareValueOptionString = $Self->{LayoutObject}->BuildSelection(
+            Data         => $CompareValueList,
+            Name         => 'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
+            SelectedID   => $Param{CompareValue},
+            PossibleNone => $PossibleNone,
+        );
+
+        # remove AJAX-Loading images in selection field to avoid jitter effect
+        $CompareValueOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
         # output selection
         $Self->{LayoutObject}->Block(
             Name => 'ExpressionOverviewRowElementCompareValueSelection',
             Data => {
+                %Param,
                 CompareValueOptionString => $CompareValueOptionString,
             },
         );
@@ -922,16 +1072,16 @@ sub _GetCompareValueFieldType {
     # set default field type
     my $FieldType = 'Selection';
 
-    # if an operator is set
-    if ( $Param{OperatorID} ) {
+    # if an attribute is set
+    if ( $Param{AttributeID} ) {
 
         # lookup attribute name
-        $Param{AttributeName} = $Self->{ConditionObject}->AttributeLookup(
+        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
             AttributeID => $Param{AttributeID},
         );
 
         # check error
-        if ( !$Param{AttributeName} ) {
+        if ( !$AttributeName ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "AttributeID $Param{AttributeID} does not exist!",
@@ -1118,8 +1268,8 @@ sub _GetCompareValueSelection {
     # to store the compare value list
     my $CompareValueList = {};
 
-    # if an operator is set
-    if ( $Param{OperatorID} ) {
+    # if an attribute is set
+    if ( $Param{AttributeID} ) {
 
         # lookup attribute name
         my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
@@ -1143,30 +1293,7 @@ sub _GetCompareValueSelection {
         );
     }
 
-    # add an empty selection if no list is available or nothing is selected
-    my $PossibleNone = 0;
-    if (
-        !$Param{CompareValue}
-        || !$CompareValueList
-        || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
-        || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
-        )
-    {
-        $PossibleNone = 1;
-    }
-
-    # generate CompareValueOptionString
-    my $CompareValueOptionString = $Self->{LayoutObject}->BuildSelection(
-        Data         => $CompareValueList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
-        SelectedID   => $Param{CompareValue},
-        PossibleNone => $PossibleNone,
-    );
-
-    # remove AJAX-Loading images in selection field to avoid jitter effect
-    $CompareValueOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
-
-    return $CompareValueOptionString;
+    return $CompareValueList;
 }
 
 1;
