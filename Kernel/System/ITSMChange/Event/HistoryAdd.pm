@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.36 2010-01-28 20:18:59 mae Exp $
+# $Id: HistoryAdd.pm,v 1.37 2010-01-29 13:14:52 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -318,11 +318,13 @@ sub Run {
 
     # handle xxxTimeReached events
     elsif ( $Event =~ m{ TimeReached \z }xms ) {
+        my $ID = $Param{Data}->{WorkOrderID} || $Param{Data}->{ChangeID};
+
         return if !$Self->{HistoryObject}->HistoryAdd(
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
-            ContentNew  => 'Notification Sent',
+            ContentNew  => $ID . '%%Notification Sent',
             UserID      => $Param{UserID},
         );
     }
@@ -600,6 +602,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2010-01-28 20:18:59 $
+$Revision: 1.37 $ $Date: 2010-01-29 13:14:52 $
 
 =cut
