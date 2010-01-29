@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.20 2010-01-29 17:22:27 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.21 2010-01-29 17:38:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -548,10 +548,11 @@ sub Run {
         if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) :: ( \d+ | NEW ) }xms )
         {
 
-            # get id name and id of the involved element
-            # will be either 'ExpressionID' or 'ActionID'
+            # get id name of the involved element ( 'ExpressionID' or 'ActionID' )
             my $IDName = $1;
-            my $ID     = $2;
+
+            # get id of the involved element
+            my $ID = $2;
 
             # get value field name
             my $ValueFieldName;
@@ -901,8 +902,7 @@ sub _ShowObjectSelection {
     # name of the div that should be updated
     my $UpdateDivName;
 
-    # id name of the involved element,
-    # will be either 'ExpressionID' or 'ActionID'
+    # id name of the involved element ( 'ExpressionID' or 'ActionID' )
     my $IDName;
 
     # block name for the output layout block
@@ -995,8 +995,7 @@ sub _ShowSelectorSelection {
         $PossibleNone = 1;
     }
 
-    # id name of the involved element
-    # will be either 'ExpressionID' or 'ActionID'
+    # id name of the involved element ( 'ExpressionID' or 'ActionID' )
     my $IDName;
 
     # block name for the output layout block
@@ -1073,25 +1072,29 @@ sub _ShowAttributeSelection {
     # name of the div that should be updated
     my $UpdateDivName;
 
-    # id name of the involved element,
-    # will be either 'ExpressionID' or 'ActionID'
+    # id name of the involved element ( 'ExpressionID' or 'ActionID' )
     my $IDName;
 
     # block name for the output layout block
     my $BlockName;
 
+    # name of the value field ( CompareValue or ActionValue )
+    my $ValueFieldName;
+
     # for expression elements
     if ( $Param{ExpressionID} ) {
-        $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
-        $IDName        = 'ExpressionID';
-        $BlockName     = 'ExpressionOverviewRowElementAttribute';
+        $UpdateDivName  = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+        $IDName         = 'ExpressionID';
+        $BlockName      = 'ExpressionOverviewRowElementAttribute';
+        $ValueFieldName = 'CompareValue';
     }
 
     # for action elements
     elsif ( $Param{ActionID} ) {
-        $UpdateDivName = "ActionID::$Param{ActionID}::ActionValue::Div";
-        $IDName        = 'ActionID';
-        $BlockName     = 'ActionOverviewRowElementAttribute';
+        $UpdateDivName  = "ActionID::$Param{ActionID}::ActionValue::Div";
+        $IDName         = 'ActionID';
+        $BlockName      = 'ActionOverviewRowElementAttribute';
+        $ValueFieldName = 'CompareValue';
     }
 
     # build OnChange string
@@ -1122,11 +1125,11 @@ sub _ShowAttributeSelection {
         . $Param{$IDName}
         . "::OperatorID').value + '"
 
-        . "&" . $IDName . "::" . $Param{$IDName} . "::CompareValue=' + "
+        . "&" . $IDName . "::" . $Param{$IDName} . "::" . $ValueFieldName . "=' + "
         . "document.getElementById('"
         . $IDName . "::"
         . $Param{$IDName}
-        . "::CompareValue').value + '"
+        . "::" . $ValueFieldName . "').value + '"
 
         . "&ElementChanged=" . $IDName . "::" . $Param{$IDName} . "::AttributeID"
         . "'); "
@@ -1188,8 +1191,7 @@ sub _ShowOperatorSelection {
         $PossibleNone = 1;
     }
 
-    # id name of the involved element
-    # will be either 'ExpressionID' or 'ActionID'
+    # id name of the involved element ( 'ExpressionID' or 'ActionID' )
     my $IDName;
 
     # block name for the output layout block
@@ -1251,13 +1253,13 @@ sub _ShowCompareValueField {
     # get compare value field type
     my $FieldType = $Self->_GetCompareValueFieldType(%Param);
 
-    # id name of the involved element
-    # will be either 'ExpressionID' or 'ActionID'
+    # id name of the involved element ( 'ExpressionID' or 'ActionID' )
     my $IDName;
 
     # block names for the output layout block
     my $BlockNameText;
     my $BlockNameSelection;
+
     my $ValueFieldName;
 
     # for expression elements
@@ -1519,11 +1521,11 @@ sub _GetOperatorSelection {
         );
 
         # get attribute operator mapping from sysconfig
+        my $MappingConfig
+            = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' );
         my $AttributeOperatorMapping;
-        if ( $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' ) ) {
-            $AttributeOperatorMapping
-                = $Self->{ConfigObject}->Get( $ObjectName . '::Mapping::Attribute::Operator' )
-                ->{$AttributeName} || {};
+        if ($MappingConfig) {
+            $AttributeOperatorMapping = $MappingConfig->{$AttributeName} || {};
         }
 
         # get allowed operators for the given attribute
