@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.26 2010-01-29 10:28:51 bes Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.27 2010-01-29 13:36:35 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -83,10 +83,11 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Deleted Attachment from WorkOrder: %s';
 
     # condition history
-    $Lang->{'ChangeHistory::ConditionAdd'}    = '%s: %s';
-    $Lang->{'ChangeHistory::ConditionAddID'}  = 'New Condition (ID=%s)';
-    $Lang->{'ChangeHistory::ConditionUpdate'} = '%s: New: %s -> Old: %s';
-    $Lang->{'ChangeHistory::ConditionDelete'} = 'Condition (ID=%s) deleted';
+    $Lang->{'ChangeHistory::ConditionAdd'}       = '%s: %s';
+    $Lang->{'ChangeHistory::ConditionAddID'}     = 'New Condition (ID=%s)';
+    $Lang->{'ChangeHistory::ConditionUpdate'}    = '%s: New: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ConditionDelete'}    = 'Condition (ID=%s) deleted';
+    $Lang->{'ChangeHistory::ConditionDeleteAll'} = 'All conditions deleted';
 
     # change states
     $Lang->{'requested'}        = 'Requested';
