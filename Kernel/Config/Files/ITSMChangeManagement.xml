@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.175 2010-01-29 20:51:17 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.176 2010-01-29 21:32:46 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1428,6 +1428,7 @@
             <String Regex="">3 normal</String>
         </Setting>
     </ConfigItem>
+
     <ConfigItem Name="ITSMChange::Attribute::CompareValue::FieldType" Required="1" Valid="1">
         <Description Lang="en">Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.</Description>
         <Description Lang="de">Definiert den Feld-Typ für CompareValue Felder für Change-Attribute in AgentITSMChangeConditionEdit. Gültige Werte sind Selection, Text und Date. Wenn kein Typ definiert ist, dann wird das feld nicht angezeigt.</Description>
@@ -1452,11 +1453,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Object::Attribute" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Object::Attribute" Required="1" Valid="1">
         <Description Lang="en">Defines the object attributes that are selectable for change objects in in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Objekt-Attribute die für Change-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="ChangeStateID">1</Item>
@@ -1476,11 +1477,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ChangeStateID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeStateID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeStateID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1498,11 +1499,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ChangeTitle" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeTitle" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeTitle in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1520,11 +1521,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###CategoryID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###CategoryID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut CategoryID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1542,11 +1543,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ImpactID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ImpactID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ImpactID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1564,11 +1565,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###PriorityID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###PriorityID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PriorityID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1586,11 +1587,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ChangeManagerID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeManagerID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeManagerID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1608,11 +1609,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ChangeBuilderID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ChangeBuilderID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeBuilderID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1630,11 +1631,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###RequestedTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###RequestedTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut RequestedTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1652,11 +1653,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1674,11 +1675,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1696,11 +1697,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ActualStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1718,11 +1719,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ActualEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1740,11 +1741,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEffort in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1762,11 +1763,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Mapping::Attribute::Operator###AccountedTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMChange::Mapping::Expression::Attribute::Operator###AccountedTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut AccountedTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMChange</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMChange</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1781,6 +1782,185 @@
                 <Item Key="not contains">0</Item>
                 <Item Key="begins with">0</Item>
                 <Item Key="ends with">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Object::Attribute" Required="1" Valid="1">
+        <Description Lang="en">Defines the object attributes that are selectable for change objects in in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Objekt-Attribute die für Change-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateID">1</Item>
+                <Item Key="ChangeTitle">0</Item>
+                <Item Key="CategoryID">1</Item>
+                <Item Key="ImpactID">1</Item>
+                <Item Key="PriorityID">1</Item>
+                <Item Key="ChangeManagerID">0</Item>
+                <Item Key="ChangeBuilderID">0</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">0</Item>
+                <Item Key="PlannedEndTime">0</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="PlannedEffort">0</Item>
+                <Item Key="AccountedTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeStateID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ChangeStateID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeStateID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+                <Item Key="lock">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeTitle" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ChangeTitle in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeTitle in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###CategoryID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute CategoryID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut CategoryID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ImpactID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ImpactID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ImpactID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###PriorityID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PriorityID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PriorityID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeManagerID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ChangeManagerID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeManagerID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ChangeBuilderID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ChangeBuilderID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ChangeBuilderID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###RequestedTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute RequestedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut RequestedTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ActualStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ActualEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEffort in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Mapping::Action::Attribute::Operator###AccountedTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut AccountedTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMChange</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1806,11 +1986,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Object::Attribute" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Object::Attribute" Required="1" Valid="1">
         <Description Lang="en">Defines the object attributes that are selectable for workorder objects in in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Objekt-Attribute die für Workorder-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="WorkOrderNumber">1</Item>
@@ -1827,11 +2007,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###WorkOrderNumber" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderNumber" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderNumber in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1849,11 +2029,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###WorkOrderStateID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderStateID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderStateID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1871,11 +2051,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###WorkOrderTypeID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderTypeID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderTypeID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1893,11 +2073,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###WorkOrderTitle" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderTitle" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderTitle in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1915,11 +2095,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###WorkOrderAgentID" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###WorkOrderAgentID" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderAgentID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1937,11 +2117,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1959,11 +2139,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -1981,11 +2161,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ActualStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -2003,11 +2183,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut ActualEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -2025,11 +2205,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEffort in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -2047,11 +2227,11 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::Mapping::Attribute::Operator###AccountedTime" Required="1" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Expression::Attribute::Operator###AccountedTime" Required="1" Valid="1">
         <Description Lang="en">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
         <Description Lang="de">Definiert die Operatoren die für das Attribut AccountedTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
         <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMCondition::ITSMWorkOrder</SubGroup>
+        <SubGroup>Core::ITSMCondition::Expression::ITSMWorkOrder</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="is">1</Item>
@@ -2069,7 +2249,149 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Object::Attribute" Required="1" Valid="1">
+        <Description Lang="en">Defines the object attributes that are selectable for workorder objects in in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Objekt-Attribute die für Workorder-Objekte in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="WorkOrderNumber">0</Item>
+                <Item Key="WorkOrderStateID">1</Item>
+                <Item Key="WorkOrderTypeID">0</Item>
+                <Item Key="WorkOrderTitle">0</Item>
+                <Item Key="WorkOrderAgentID">0</Item>
+                <Item Key="PlannedStartTime">0</Item>
+                <Item Key="PlannedEndTime">0</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="PlannedEffort">0</Item>
+                <Item Key="AccountedTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderNumber" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderNumber in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderNumber in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderStateID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderStateID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderStateID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+                <Item Key="lock">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderTypeID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderTypeID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderTypeID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderTitle" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderTitle in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderTitle in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###WorkOrderAgentID" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute WorkOrderAgentID in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut WorkOrderAgentID in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###PlannedStartTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PlannedStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###PlannedEndTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###ActualStartTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ActualStartTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ActualStartTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###ActualEndTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute ActualEndTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut ActualEndTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###PlannedEffort" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute PlannedEffort in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut PlannedEffort in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Mapping::Action::Attribute::Operator###AccountedTime" Required="1" Valid="1">
+        <Description Lang="en">Defines the operators that are selectable for the attribute AccountedTime in AgentITSMChangeConditionEdit.</Description>
+        <Description Lang="de">Definiert die Operatoren die für das Attribut AccountedTime in AgentITSMChangeConditionEdit ausgewählt werden können.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Action::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="set">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
         <Description Lang="en">Define the signal for workorder states.</Description>
         <Description Lang="de">Definieren eines Signals für einen Workorder-Status.</Description>
