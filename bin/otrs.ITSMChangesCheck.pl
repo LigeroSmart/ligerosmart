@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.3 2010-01-27 23:57:17 ub Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.4 2010-01-29 11:17:45 reb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 use Date::Pcalc qw(Day_of_Week Day_of_Week_Abbreviation);
 use Kernel::Config;
@@ -156,7 +156,7 @@ for my $Type (qw(StartTime EndTime)) {
         UserID                   => 1,
     ) || [];
 
-    CHANGEID:
+    ACTUALCHANGEID:
     for my $ChangeID ( @{$ActualChangeIDs} ) {
 
         # get change data
@@ -170,18 +170,118 @@ for my $Type (qw(StartTime EndTime)) {
             Type     => "Actual${Type}",
         );
 
-        next CHANGEID if $LastNotificationSentDate;
-
-        $CommonObject{LogObject}->Log(
-            Priority => 'error',
-            Message  => "$ChangeID => Actual$Type ( " . $Change->{"Actual$Type"} . ")",
-        );
+        next ACTUALCHANGEID if $LastNotificationSentDate;
 
         # trigger Event
         $MockedObject->EventHandler(
             Event => "ChangeActual${Type}ReachedPost",
             Data  => {
                 ChangeID => $ChangeID,
+            },
+            UserID => 1,
+        );
+    }
+}
+
+# get changes with actualxxxtime
+my $RequestedTimeChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
+    "RequestedTimeOlderDate" => $Now,
+    UserID                   => 1,
+) || [];
+
+CHANGEID:
+for my $ChangeID ( @{$RequestedTimeChangeIDs} ) {
+
+    # get change data
+    my $Change = $CommonObject{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    my $LastNotificationSentDate = ChangeNotificationSent(
+        ChangeID => $ChangeID,
+        Type     => "RequestedTime",
+    );
+
+    next CHANGEID if $LastNotificationSentDate;
+
+    # trigger Event
+    $MockedObject->EventHandler(
+        Event => "ChangeRequestedTimeReachedPost",
+        Data  => {
+            ChangeID => $ChangeID,
+        },
+        UserID => 1,
+    );
+}
+
+# notifications for workorders' plannedXXXtime events
+for my $Type (qw(StartTime EndTime)) {
+
+    # get workorders with PlannedStartTime older than now
+    my $PlannedWorkOrderIDs = $CommonObject{WorkOrderObject}->WorkOrderSearch(
+        "Planned${Type}OlderDate" => $Now,
+        UserID                    => 1,
+    ) || [];
+
+    WORKORDERID:
+    for my $WorkOrderID ( @{$PlannedWorkOrderIDs} ) {
+
+        # get workorder data
+        my $WorkOrder = $CommonObject{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => 1,
+        );
+
+        # skip workorder if there is already an actualXXXtime set or notification was sent
+        next WORKORDERID if $WorkOrder->{"Actual$Type"};
+
+        my $LastNotificationSentDate = WorkOrderNotificationSent(
+            WorkOrderID => $WorkOrderID,
+            Type        => "Planned${Type}",
+        );
+
+        next WORKORDERID if SentWithinPeriod($LastNotificationSentDate);
+
+        # trigger WorkOrderPlannedStartTimeReachedPost-Event
+        $MockedObject->EventHandler(
+            Event => "WorkOrderPlanned${Type}ReachedPost",
+            Data  => {
+                WorkOrderID => $WorkOrderID,
+                ChangeID    => $WorkOrder->{ChangeID},
+            },
+            UserID => 1,
+        );
+    }
+
+    # get workorders with actualxxxtime
+    my $ActualWorkOrderIDs = $CommonObject{WorkOrderObject}->WorkOrderSearch(
+        "Actual${Type}OlderDate" => $Now,
+        UserID                   => 1,
+    ) || [];
+
+    WORKORDERID:
+    for my $WorkOrderID ( @{$ActualWorkOrderIDs} ) {
+
+        # get workorder data
+        my $WorkOrder = $CommonObject{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $WorkOrderID,
+            UserID      => 1,
+        );
+
+        my $LastNotificationSentDate = WorkOrderNotificationSent(
+            WorkOrderID => $WorkOrderID,
+            Type        => "Actual${Type}",
+        );
+
+        next WORKORDERID if $LastNotificationSentDate;
+
+        # trigger Event
+        $MockedObject->EventHandler(
+            Event => "WorkOrderActual${Type}ReachedPost",
+            Data  => {
+                WorkOrderID => $WorkOrderID,
+                ChangeID    => $WorkOrder->{ChangeID},
             },
             UserID => 1,
         );
@@ -207,6 +307,35 @@ sub ChangeNotificationSent {
     for my $HistoryEntry ( reverse @{$History} ) {
         if (
             $HistoryEntry->{HistoryType}   eq 'Change' . $Param{Type} . 'Reached'
+            && $HistoryEntry->{ContentNew} eq 'Notification Sent'
+            )
+        {
+            return $HistoryEntry->{CreateTime};
+        }
+    }
+
+    return;
+}
+
+# check if a notification was already sent for the given workorder
+sub WorkOrderNotificationSent {
+    my (%Param) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(WorkOrderID Type)) {
+        return if !$Param{$Needed};
+    }
+
+    # get history entries
+    my $History = $CommonObject{HistoryObject}->WorkOrderHistoryGet(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => 1,
+    );
+
+    # search for notifications sent earlier
+    for my $HistoryEntry ( reverse @{$History} ) {
+        if (
+            $HistoryEntry->{HistoryType}   eq 'WorkOrder' . $Param{Type} . 'Reached'
             && $HistoryEntry->{ContentNew} eq 'Notification Sent'
             )
         {
