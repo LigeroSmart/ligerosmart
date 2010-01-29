@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.23 2010-01-29 19:20:32 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.24 2010-01-29 19:37:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -258,10 +258,52 @@ sub Run {
             }
         }
 
-        # TODO
         # save all existing action fields
         for my $ActionID ( @{$ActionIDsRef} ) {
 
+            # get action fields
+            my %ActionData;
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
+                $ActionData{$Field} = $Self->{ParamObject}->GetParam(
+                    Param => 'ActionID::' . $ActionID . '::' . $Field,
+                );
+            }
+
+            # check if existing action is complete
+            # (all required fields must be filled, ActionValue can be empty)
+            my $FieldsOk = 1;
+            FIELD:
+            for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
+
+                # new action is not complete
+                if ( !$ActionData{$Field} ) {
+                    $FieldsOk = 0;
+                    last FIELD;
+                }
+            }
+
+            # update existing action only if all fields are complete
+            if ($FieldsOk) {
+
+                # update the action
+                my $Success = $Self->{ConditionObject}->ActionUpdate(
+                    ActionID    => $ActionID,
+                    ObjectID    => $ActionData{ObjectID},
+                    AttributeID => $ActionData{AttributeID},
+                    OperatorID  => $ActionData{OperatorID},
+                    Selector    => $ActionData{Selector},
+                    ActionValue => $ActionData{ActionValue} || '',
+                    UserID      => $Self->{UserID},
+                );
+
+                # check error
+                if ( !$Success ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not update ActionID $ActionID!",
+                        Comment => 'Please contact the admin.',
+                    );
+                }
+            }
         }
 
         # get new action fields
