@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.22 2010-01-29 12:39:17 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.23 2010-01-29 13:04:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -195,6 +195,19 @@ sub Run {
         PrintWorkOrder => $PrintWorkOrder,
     );
 
+    # output change description and justification
+    # the plain content will be displayed
+    if ($PrintChange) {
+        for my $Attribute (qw(Description Justification)) {
+            $Self->_OutputLongText(
+                PrintChange    => $PrintChange,
+                PrintWorkOrder => $PrintWorkOrder,
+                Title          => $Attribute,
+                LongText       => $Change->{ $Attribute . 'Plain' },
+            );
+        }
+    }
+
     # generate PDF output
     if ( $Self->{PDFObject} ) {
         my $Page = $Self->{Page};
@@ -205,15 +218,6 @@ sub Run {
         );
 
         if ($PrintChange) {
-
-            # output change description and justification
-            # the plain content will be displayed
-            for my $Attribute (qw(Description Justification)) {
-                $Self->_PDFOutputBody(
-                    Title => $Attribute,
-                    Body  => $Change->{ $Attribute . 'Plain' },
-                );
-            }
 
             # get linked objects which are directly linked with this change object
             my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
@@ -354,9 +358,11 @@ sub Run {
             # output workorder instruction and report
             # The plain content will be displayed
             for my $Attribute (qw(Instruction Report)) {
-                $Self->_PDFOutputBody(
-                    Title => $Attribute,
-                    Body  => $WorkOrder->{ $Attribute . 'Plain' },
+                $Self->_OutputLongText(
+                    PrintChange    => $PrintChange,
+                    PrintWorkOrder => $PrintWorkOrder,
+                    Title          => $Attribute,
+                    LongText       => $WorkOrder->{ $Attribute . 'Plain' },
                 );
             }
 
@@ -633,7 +639,6 @@ sub _OutputChangeInfo {
 
     # just for having shorter names
     my $Change = $Param{Change};
-    my $Page   = $Self->{Page};
 
     # fill the two tables on top,
     # both tables have two colums: Key and Value
@@ -1061,34 +1066,58 @@ sub _PDFOutputWorkOrderInfo {
 }
 
 # output a body of text, such as a change description
-sub _PDFOutputBody {
+sub _OutputLongText {
     my ( $Self, %Param ) = @_;
 
-    my $Page = $Self->{Page};
+    # check needed stuff
+    for my $Argument (qw(PrintChange PrintWorkOrder Title LongText)) {
+        if ( !defined( $Param{$Argument} ) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $_!",
+            );
+            return;
+        }
+    }
 
-    # table params common to printing a body of text, like a description
-    my %Table = (
-        Type            => 'Cut',
-        Border          => 0,
-        Font            => 'Monospaced',
-        FontSize        => 7,
-        BackgroundColor => '#DDDDDD',
-        Padding         => 4,
-        PaddingTop      => 8,
-        PaddingBottom   => 8,
-    );
+    if ( $Self->{PDFObject} ) {
 
-    # output tables
-    my $Row = 0;
-    $Table{CellData}[ $Row++ ][0]{Content} = $Param{Title} || '';
-    $Table{CellData}[ $Row++ ][0]{Content} = $Param{Body}  || '';
+        my $Page = $Self->{Page};
 
-    # output table
-    $Self->_PDFOutputTable(
-        Table => \%Table,
-    );
+        # table params common to printing a body of text, like a description
+        my %Table = (
+            Type            => 'Cut',
+            Border          => 0,
+            Font            => 'Monospaced',
+            FontSize        => 7,
+            BackgroundColor => '#DDDDDD',
+            Padding         => 4,
+            PaddingTop      => 8,
+            PaddingBottom   => 8,
+        );
 
-    return 1;
+        # output tables
+        my $Row = 0;
+        $Table{CellData}[ $Row++ ][0]{Content} = $Param{Title}    || '';
+        $Table{CellData}[ $Row++ ][0]{Content} = $Param{LongText} || '';
+
+        # output table
+        $Self->_PDFOutputTable(
+            Table => \%Table,
+        );
+
+        return '';
+    }
+    else {
+
+        my $TemplateName = $Param{PrintChange} ? 'ChangeLongText' : 'WorkOrderLongText';
+        $Self->{LayoutObject}->Block(
+            Name => $TemplateName,
+            Data => \%Param,
+        );
+
+        return '';
+    }
 }
 
 # output overview over workorders

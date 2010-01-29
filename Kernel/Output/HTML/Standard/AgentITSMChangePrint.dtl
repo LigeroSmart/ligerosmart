@@ -2,7 +2,7 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.3 2010-01-29 12:39:17 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.4 2010-01-29 13:04:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,4 +54,15 @@
             </table>
         </td>
     </tr>
+</table>
+
+<table border="0" cellspacing="3" cellpadding="0" width="100%">
+<!-- dtl:block:ChangeLongText -->
+    <tr>
+        <td class="contentkey">$QData{"Title"}:</td>
+    </tr>
+    <tr>
+        <td> <pre>$QData{"LongText"}</pre></td>
+    </tr>
+<!-- dtl:block:ChangeLongText -->
 </table>
