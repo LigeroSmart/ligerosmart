@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.17 2010-01-29 03:45:11 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.18 2010-01-29 16:54:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,8 +54,7 @@ sub Run {
     for my $ParamName (
         qw(
         ChangeID ConditionID Name Comment ExpressionConjunction ValidID
-        Save AddAction AddExpression NewExpression NewAction
-        ElementChanged UpdateDivName)
+        Save AddAction AddExpression NewExpression NewAction ElementChanged UpdateDivName)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -110,12 +109,18 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
+    # get all action ids for the given condition id
+    my $ActionIDsRef = $Self->{ConditionObject}->ActionList(
+        ConditionID => $GetParam{ConditionID},
+        UserID      => $Self->{UserID},
+    );
+
     # ---------------------------------------------------------------- #
     # condition save (also add/delete expression and add/delete action)
     # ---------------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # if this is a new condition
+        # add a new condition
         if ( $GetParam{ConditionID} eq 'NEW' ) {
 
             # create a new condition
@@ -254,16 +259,64 @@ sub Run {
         }
 
         # TODO
-        # save all action fields
+        # save all existing action fields
+        for my $ActionID ( @{$ActionIDsRef} ) {
 
-        # if just the save button was pressed, redirect to condition overview
+        }
+
+        # get new action fields
+        my %ActionData;
+        for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
+            $ActionData{$Field} = $Self->{ParamObject}->GetParam(
+                Param => 'ActionID::NEW::' . $Field,
+            );
+        }
+
+        # check if new action is complete
+        # (all required fields must be filled, ActionValue can be empty)
+        $FieldsOk = 1;
+        FIELD:
+        for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
+
+            # new action is not complete
+            if ( !$ActionData{$Field} ) {
+                $FieldsOk = 0;
+                last FIELD;
+            }
+        }
+
+        # TODO
+        # add new action
+        if ($FieldsOk) {
+
+            # add new action
+            my $ActionID = $Self->{ConditionObject}->ActionAdd(
+                ConditionID => $GetParam{ConditionID},
+                ObjectID    => $ExpressionData{ObjectID},
+                AttributeID => $ExpressionData{AttributeID},
+                OperatorID  => $ExpressionData{OperatorID},
+                Selector    => $ExpressionData{Selector},
+                ActionValue => $ExpressionData{ActionValue} || '',
+                UserID      => $Self->{UserID},
+            );
+
+            # check error
+            if ( !$ActionID ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Could not add new Action!",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+        }
+
+        # just the save button was pressed, redirect to condition overview
         if ( $GetParam{Save} ) {
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMChangeCondition;ChangeID=$GetParam{ChangeID}",
             );
         }
 
-        # if expression add button was pressed
+        # expression add button was pressed
         elsif ( $GetParam{AddExpression} ) {
 
             # show the edit view again, but now with a new empty expression line
@@ -273,10 +326,14 @@ sub Run {
             );
         }
 
-        # if action add button was pressed
+        # action add button was pressed
         elsif ( $GetParam{AddAction} ) {
 
-            # TODO ....
+            # show the edit view again, but now with a new empty action line
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                    . "ConditionID=$GetParam{ConditionID};NewAction=1",
+            );
         }
 
         # check if an expression should be deleted
@@ -304,6 +361,12 @@ sub Run {
                         . "ConditionID=$GetParam{ConditionID}",
                 );
             }
+        }
+
+        # check if an action should be deleted
+        for my $ActionID ( @{$ActionIDsRef} ) {
+
+            # TODO
         }
 
         # show the edit view again
@@ -428,9 +491,11 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name         => 'ExpressionID::' . $ExpressionID . '::OperatorID',
-                        Data         => $OperatorList,
-                        SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
+                        Name => 'ExpressionID::' . $ExpressionID . '::OperatorID',
+                        Data => $OperatorList,
+
+                        #SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
+                        SelectedID => $GetParam{OperatorID} || '',
                         PossibleNone => $PossibleNoneOperatorID,
                         Translation  => 1,
                         Max          => 100,
@@ -479,6 +544,31 @@ sub Run {
         # to store the HTML string which is returned to the browser
         my $HTMLString;
 
+        #        # id name of the involved element
+        #        # will be either 'ExpressionID' or 'ActionID'
+        #        my $IDName;
+        #
+        #        # block names for the output layout block
+        #        my $BlockNameText;
+        #        my $BlockNameSelection;
+        #        my $ValueFieldName;
+        #
+        #        # for expression elements
+        #        if ( $Param{ExpressionID} ) {
+        #            $IDName             = 'ExpressionID';
+        #            $BlockNameText      = 'ExpressionOverviewRowElementCompareValueText';
+        #            $BlockNameSelection = 'ExpressionOverviewRowElementCompareValueSelection';
+        #            $ValueFieldName     = 'CompareValue';
+        #        }
+        #
+        #        # for action elements
+        #        elsif ( $Param{ActionID} ) {
+        #            $IDName             = 'ActionID';
+        #            $BlockNameText      = 'ActionOverviewRowElementActionValueText';
+        #            $BlockNameSelection = 'ActionOverviewRowElementActionValueSelection';
+        #            $ValueFieldName     = 'ActionValue';
+        #        }
+
         # an expression field was changed
         if ( $GetParam{ElementChanged} =~ m{ \A ExpressionID :: ( \d+ | NEW ) }xms ) {
 
@@ -500,7 +590,8 @@ sub Run {
 
                 # get compare value selection list
                 my $CompareValueList = $Self->_GetCompareValueSelection(
-                    ExpressionID => $ExpressionID,
+
+                    #ExpressionID => $ExpressionID,
                     %GetParam,
                 );
 
@@ -590,12 +681,13 @@ sub Run {
                 NewExpression => $GetParam{NewExpression},
             );
 
-            # TODO
             # show existing actions
-            #$Self->_ShowActionOverview(
-            #    %ConditionData,
-            #);
-
+            $Self->_ActionOverview(
+                %{$ChangeData},
+                %ConditionData,
+                ActionIDs => $ActionIDsRef,
+                NewAction => $GetParam{NewAction},
+            );
         }
 
         # get expression conjunction from condition
@@ -720,6 +812,88 @@ sub _ExpressionOverview {
     return 1;
 }
 
+# show existing actions
+sub _ActionOverview {
+    my ( $Self, %Param ) = @_;
+
+    return if !$Param{ActionIDs};
+    return if ref $Param{ActionIDs} ne 'ARRAY';
+
+    my @ActionIDs = @{ $Param{ActionIDs} };
+
+    # also show a new empty action line
+    if ( $Param{NewAction} ) {
+        push @ActionIDs, 'NEW';
+    }
+
+    return if !@ActionIDs;
+
+    ActionID:
+    for my $ActionID ( sort { $a cmp $b } @ActionIDs ) {
+
+        # to store the date of an action
+        my $ActionData = {};
+
+        # set action id to 'NEW' for further function calls
+        if ( $ActionID eq 'NEW' ) {
+            $ActionData->{ActionID} = $ActionID;
+        }
+
+        # get data for an existing action
+        else {
+
+            # get condition data
+            $ActionData = $Self->{ConditionObject}->ActionGet(
+                ActionID => $ActionID,
+                UserID   => $Self->{UserID},
+            );
+
+            next ActionID if !$ActionData;
+        }
+
+        # output overview row
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionOverviewRow',
+            Data => {
+                %Param,
+                %{$ActionData},
+            },
+        );
+
+        # show object selection
+        $Self->_ShowObjectSelection(
+            %Param,
+            %{$ActionData},
+        );
+
+        #        # show selecor selection
+        #        $Self->_ShowSelectorSelection(
+        #            %Param,
+        #            %{$ActionData},
+        #        );
+        #
+        #        # show attribute selection
+        #        $Self->_ShowAttributeSelection(
+        #            %Param,
+        #            %{$ActionData},
+        #        );
+        #
+        #        # show operator selection
+        #        $Self->_ShowOperatorSelection(
+        #            %Param,
+        #            %{$ActionData},
+        #        );
+
+        #        # show compare value field
+        #        $Self->_ShowCompareValueField(
+        #            %Param,
+        #            %{$ActionData},
+        #        );
+    }
+
+    return 1;
+}
+
 # show object dropdown field
 sub _ShowObjectSelection {
     my ( $Self, %Param ) = @_;
@@ -739,8 +913,29 @@ sub _ShowObjectSelection {
         $PossibleNone = 1;
     }
 
-    # the name of the div that should be updated
-    my $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+    # name of the div that should be updated
+    my $UpdateDivName;
+
+    # id name of the involved element,
+    # will be either 'ExpressionID' or 'ActionID'
+    my $IDName;
+
+    # block name for the output layout block
+    my $BlockName;
+
+    # for expression elements
+    if ( $Param{ExpressionID} ) {
+        $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+        $IDName        = 'ExpressionID';
+        $BlockName     = 'ExpressionOverviewRowElementObject';
+    }
+
+    # for action elements
+    elsif ( $Param{ActionID} ) {
+        $UpdateDivName = "ActionID::$Param{ActionID}::ActionValue::Div";
+        $IDName        = 'ActionID';
+        $BlockName     = 'ActionOverviewRowElementObject';
+    }
 
     # build OnChange string
     my $OnChangeString = ''
@@ -751,28 +946,31 @@ sub _ShowObjectSelection {
         . "&UpdateDivName=$UpdateDivName"
         . '&ChangeID=$QData{"ChangeID"}'
         . '&ConditionID=$QData{"ConditionID"}'
-        . "&ExpressionID::$Param{ExpressionID}::ObjectID=' + "
-        . "document.getElementById('ExpressionID::$Param{ExpressionID}::ObjectID').value + '"
-        . "&ElementChanged=ExpressionID::$Param{ExpressionID}::ObjectID"
+
+        . "&" . $IDName . "::" . $Param{$IDName} . "::ObjectID=' + "
+        . "document.getElementById('" . $IDName . "::" . $Param{$IDName} . "::ObjectID').value + '"
+
+        . "&ElementChanged=" . $IDName . "::" . $Param{$IDName} . "::ObjectID"
         . "'); "
-        . "AJAXUpdate('AJAXUpdate', 'ExpressionID::$Param{ExpressionID}::ObjectID', "
+
+        . "AJAXUpdate('AJAXUpdate', '" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
         . "[ "
         . "'ChangeID', "
         . "'ConditionID', "
-        . "'ExpressionID::$Param{ExpressionID}::ObjectID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
         . "], "
         . "[ "
-        . "'ExpressionID::$Param{ExpressionID}::ObjectID', "
-        . "'ExpressionID::$Param{ExpressionID}::Selector', "
-        . "'ExpressionID::$Param{ExpressionID}::AttributeID', "
-        . "'ExpressionID::$Param{ExpressionID}::OperatorID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::Selector', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::AttributeID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::OperatorID', "
         . "]); "
         . 'return false;';
 
     # generate ObjectOptionString
     my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $ObjectList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
+        Name         => $IDName . '::' . $Param{$IDName} . '::ObjectID',
         SelectedID   => $Param{ObjectID},
         PossibleNone => $PossibleNone,
         OnChange     => $OnChangeString,
@@ -783,7 +981,7 @@ sub _ShowObjectSelection {
 
     # output object selection
     $Self->{LayoutObject}->Block(
-        Name => 'ExpressionOverviewRowElementObject',
+        Name => $BlockName,
         Data => {
             %Param,
             ObjectOptionString => $ObjectOptionString,
@@ -812,23 +1010,42 @@ sub _ShowSelectorSelection {
         $PossibleNone = 1;
     }
 
+    # id name of the involved element
+    # will be either 'ExpressionID' or 'ActionID'
+    my $IDName;
+
+    # block name for the output layout block
+    my $BlockName;
+
+    # for expression elements
+    if ( $Param{ExpressionID} ) {
+        $IDName    = 'ExpressionID';
+        $BlockName = 'ExpressionOverviewRowElementSelector';
+    }
+
+    # for action elements
+    elsif ( $Param{ActionID} ) {
+        $IDName    = 'ActionID';
+        $BlockName = 'ActionOverviewRowElementSelector';
+    }
+
     # generate SelectorOptionString
     my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $SelectorList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+        Name         => $IDName . '::' . $Param{$IDName} . '::Selector',
         SelectedID   => $Param{Selector},
         PossibleNone => $PossibleNone,
         Ajax         => {
             Update => [
-                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
-                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
-                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                $IDName . '::' . $Param{$IDName} . '::Selector',
+                $IDName . '::' . $Param{$IDName} . '::AttributeID',
+                $IDName . '::' . $Param{$IDName} . '::OperatorID',
             ],
             Depend => [
                 'ChangeID',
                 'ConditionID',
-                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
-                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
+                $IDName . '::' . $Param{$IDName} . '::ObjectID',
+                $IDName . '::' . $Param{$IDName} . '::Selector',
             ],
             Subaction => 'AJAXUpdate',
         },
@@ -839,7 +1056,7 @@ sub _ShowSelectorSelection {
 
     # output selector selection
     $Self->{LayoutObject}->Block(
-        Name => 'ExpressionOverviewRowElementSelector',
+        Name => $BlockName,
         Data => {
             %Param,
             SelectorOptionString => $SelectorOptionString,
@@ -868,8 +1085,29 @@ sub _ShowAttributeSelection {
         $PossibleNone = 1;
     }
 
-    # the name of the div that should be updated
-    my $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+    # name of the div that should be updated
+    my $UpdateDivName;
+
+    # id name of the involved element,
+    # will be either 'ExpressionID' or 'ActionID'
+    my $IDName;
+
+    # block name for the output layout block
+    my $BlockName;
+
+    # for expression elements
+    if ( $Param{ExpressionID} ) {
+        $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+        $IDName        = 'ExpressionID';
+        $BlockName     = 'ExpressionOverviewRowElementAttribute';
+    }
+
+    # for action elements
+    elsif ( $Param{ActionID} ) {
+        $UpdateDivName = "ActionID::$Param{ActionID}::ActionValue::Div";
+        $IDName        = 'ActionID';
+        $BlockName     = 'ActionOverviewRowElementAttribute';
+    }
 
     # build OnChange string
     my $OnChangeString = ''
@@ -880,36 +1118,52 @@ sub _ShowAttributeSelection {
         . "&UpdateDivName=$UpdateDivName"
         . '&ChangeID=$QData{"ChangeID"}'
         . '&ConditionID=$QData{"ConditionID"}'
-        . "&ExpressionID::$Param{ExpressionID}::ObjectID=' + "
-        . "document.getElementById('ExpressionID::$Param{ExpressionID}::ObjectID').value + '"
-        . "&ExpressionID::$Param{ExpressionID}::Selector=' + "
-        . "document.getElementById('ExpressionID::$Param{ExpressionID}::Selector').value + '"
-        . "&ExpressionID::$Param{ExpressionID}::AttributeID=' "
-        . "+ document.getElementById('ExpressionID::$Param{ExpressionID}::AttributeID').value + '"
-        . "&ExpressionID::$Param{ExpressionID}::OperatorID=' + "
-        . "document.getElementById('ExpressionID::$Param{ExpressionID}::OperatorID').value + '"
-        . "&ExpressionID::$Param{ExpressionID}::CompareValue=' + "
-        . "document.getElementById('ExpressionID::$Param{ExpressionID}::CompareValue').value + '"
-        . "&ElementChanged=ExpressionID::$Param{ExpressionID}::AttributeID"
+
+        . "&" . $IDName . "::" . $Param{$IDName} . "::ObjectID=' + "
+        . "document.getElementById('" . $IDName . "::" . $Param{$IDName} . "::ObjectID').value + '"
+
+        . "&" . $IDName . "::" . $Param{$IDName} . "::Selector=' + "
+        . "document.getElementById('" . $IDName . "::" . $Param{$IDName} . "::Selector').value + '"
+
+        . "&" . $IDName . "::" . $Param{$IDName} . "::AttributeID=' "
+        . "+ document.getElementById('"
+        . $IDName . "::"
+        . $Param{$IDName}
+        . "::AttributeID').value + '"
+
+        . "&" . $IDName . "::" . $Param{$IDName} . "::OperatorID=' + "
+        . "document.getElementById('"
+        . $IDName . "::"
+        . $Param{$IDName}
+        . "::OperatorID').value + '"
+
+        . "&" . $IDName . "::" . $Param{$IDName} . "::CompareValue=' + "
+        . "document.getElementById('"
+        . $IDName . "::"
+        . $Param{$IDName}
+        . "::CompareValue').value + '"
+
+        . "&ElementChanged=" . $IDName . "::" . $Param{$IDName} . "::AttributeID"
         . "'); "
-        . "AJAXUpdate('AJAXUpdate', 'ExpressionID::$Param{ExpressionID}::AttributeID', "
+
+        . "AJAXUpdate('AJAXUpdate', '" . $IDName . "::" . $Param{$IDName} . "::AttributeID', "
         . "[ "
         . "'ChangeID', "
         . "'ConditionID', "
-        . "'ExpressionID::$Param{ExpressionID}::ObjectID', "
-        . "'ExpressionID::$Param{ExpressionID}::Selector', "
-        . "'ExpressionID::$Param{ExpressionID}::AttributeID' "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::Selector', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::AttributeID' "
         . "], "
         . "[ "
-        . "'ExpressionID::$Param{ExpressionID}::AttributeID', "
-        . "'ExpressionID::$Param{ExpressionID}::OperatorID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::AttributeID', "
+        . "'" . $IDName . "::" . $Param{$IDName} . "::OperatorID', "
         . "]); "
         . 'return false;';
 
     # generate AttributeOptionString
     my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $AttributeList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
+        Name         => $IDName . '::' . $Param{$IDName} . '::AttributeID',
         SelectedID   => $Param{AttributeID},
         PossibleNone => $PossibleNone,
         OnChange     => $OnChangeString,
@@ -920,7 +1174,7 @@ sub _ShowAttributeSelection {
 
     # output attribute selection
     $Self->{LayoutObject}->Block(
-        Name => 'ExpressionOverviewRowElementAttribute',
+        Name => $BlockName,
         Data => {
             %Param,
             AttributeOptionString => $AttributeOptionString,
@@ -949,23 +1203,42 @@ sub _ShowOperatorSelection {
         $PossibleNone = 1;
     }
 
+    # id name of the involved element
+    # will be either 'ExpressionID' or 'ActionID'
+    my $IDName;
+
+    # block name for the output layout block
+    my $BlockName;
+
+    # for expression elements
+    if ( $Param{ExpressionID} ) {
+        $IDName    = 'ExpressionID';
+        $BlockName = 'ExpressionOverviewRowElementOperator';
+    }
+
+    # for action elements
+    elsif ( $Param{ActionID} ) {
+        $IDName    = 'ActionID';
+        $BlockName = 'ActionOverviewRowElementOperator';
+    }
+
     # generate OperatorOptionString
     my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $OperatorList,
-        Name         => 'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+        Name         => $IDName . '::' . $Param{$IDName} . '::OperatorID',
         SelectedID   => $Param{OperatorID},
         PossibleNone => $PossibleNone,
         Ajax         => {
             Update => [
-                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                $IDName . '::' . $Param{$IDName} . '::OperatorID',
             ],
             Depend => [
                 'ChangeID',
                 'ConditionID',
-                'ExpressionID::' . $Param{ExpressionID} . '::ObjectID',
-                'ExpressionID::' . $Param{ExpressionID} . '::Selector',
-                'ExpressionID::' . $Param{ExpressionID} . '::AttributeID',
-                'ExpressionID::' . $Param{ExpressionID} . '::OperatorID',
+                $IDName . '::' . $Param{$IDName} . '::ObjectID',
+                $IDName . '::' . $Param{$IDName} . '::Selector',
+                $IDName . '::' . $Param{$IDName} . '::AttributeID',
+                $IDName . '::' . $Param{$IDName} . '::OperatorID',
             ],
             Subaction => 'AJAXUpdate',
         },
@@ -976,7 +1249,7 @@ sub _ShowOperatorSelection {
 
     # output operator selection
     $Self->{LayoutObject}->Block(
-        Name => 'ExpressionOverviewRowElementOperator',
+        Name => $BlockName,
         Data => {
             %Param,
             OperatorOptionString => $OperatorOptionString,
@@ -993,10 +1266,35 @@ sub _ShowCompareValueField {
     # get compare value field type
     my $FieldType = $Self->_GetCompareValueFieldType(%Param);
 
+    # id name of the involved element
+    # will be either 'ExpressionID' or 'ActionID'
+    my $IDName;
+
+    # block names for the output layout block
+    my $BlockNameText;
+    my $BlockNameSelection;
+    my $ValueFieldName;
+
+    # for expression elements
+    if ( $Param{ExpressionID} ) {
+        $IDName             = 'ExpressionID';
+        $BlockNameText      = 'ExpressionOverviewRowElementCompareValueText';
+        $BlockNameSelection = 'ExpressionOverviewRowElementCompareValueSelection';
+        $ValueFieldName     = 'CompareValue';
+    }
+
+    # for action elements
+    elsif ( $Param{ActionID} ) {
+        $IDName             = 'ActionID';
+        $BlockNameText      = 'ActionOverviewRowElementActionValueText';
+        $BlockNameSelection = 'ActionOverviewRowElementActionValueSelection';
+        $ValueFieldName     = 'ActionValue';
+    }
+
     # compare value is a text field
     if ( $FieldType eq 'Text' ) {
         $Self->{LayoutObject}->Block(
-            Name => 'ExpressionOverviewRowElementCompareValueText',
+            Name => $BlockNameText,
             Data => {
                 %Param,
             },
@@ -1013,7 +1311,7 @@ sub _ShowCompareValueField {
         my $PossibleNone = 0;
         if (
             $Param{PossibleNone}
-            || !$Param{CompareValue}
+            || !$Param{$ValueFieldName}
             || !$CompareValueList
             || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
             || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
@@ -1025,8 +1323,8 @@ sub _ShowCompareValueField {
         # generate CompareValueOptionString
         my $CompareValueOptionString = $Self->{LayoutObject}->BuildSelection(
             Data         => $CompareValueList,
-            Name         => 'ExpressionID::' . $Param{ExpressionID} . '::CompareValue',
-            SelectedID   => $Param{CompareValue},
+            Name         => $IDName . '::' . $Param{$IDName} . '::' . $ValueFieldName,
+            SelectedID   => $Param{$ValueFieldName},
             PossibleNone => $PossibleNone,
         );
 
@@ -1035,7 +1333,7 @@ sub _ShowCompareValueField {
 
         # output selection
         $Self->{LayoutObject}->Block(
-            Name => 'ExpressionOverviewRowElementCompareValueSelection',
+            Name => $BlockNameSelection,
             Data => {
                 %Param,
                 CompareValueOptionString => $CompareValueOptionString,
