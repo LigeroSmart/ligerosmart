@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.19 2010-01-28 17:59:32 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.20 2010-01-29 10:28:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -146,12 +146,6 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    my $FullWorkOrderNumber = $PrintWorkOrder
-        ?
-        join( '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber} )
-        :
-        '';
-
     # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
@@ -160,7 +154,20 @@ sub Run {
         );
     }
 
+    # the last item in the page title is either the change number of the full workorder number
+    my $HeaderValue = '';
+    if ($PrintChange) {
+        $HeaderValue = $Change->{ChangeNumber};
+    }
+    else {
+        $HeaderValue = join '-', $Change->{ChangeNumber}, $WorkOrder->{WorkOrderNumber};
+    }
+
+    # the second item in the page title is the area in the product 'ITSM Change Management'
+    my $HeaderArea = $PrintChange ? 'ITSM Change' : 'ITSM Workorder';
+
     # generate PDF output
+    #if ( 0 ) {
     if ( $Self->{PDFObject} ) {
         my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
         my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
@@ -182,11 +189,9 @@ sub Run {
             UserID => $Self->{UserID},
         );
 
-        my $HeaderRight = $PrintChange
-            ?
-            $Self->{LayoutObject}->{LanguageObject}->Get('Change#') . $Change->{ChangeNumber}
-            :
-            $Self->{LayoutObject}->{LanguageObject}->Get('WorkOrderNumber#') . $FullWorkOrderNumber;
+        # assemble the headers
+        my $HeaderRight = $Self->{LayoutObject}->{LanguageObject}->Get($HeaderArea);
+        $HeaderRight .= $HeaderValue;    # add change number or full workorder number
         my $HeadlineLeft = $HeaderRight;
         my $Title        = $HeaderRight;
 
@@ -199,10 +204,13 @@ sub Run {
             $Title .= ' / ' . $WorkOrder->{WorkOrderTitle};
         }
 
+        # page layout settings
         $Page{MarginTop}    = 30;
         $Page{MarginRight}  = 40;
         $Page{MarginBottom} = 40;
         $Page{MarginLeft}   = 40;
+
+        # page headers and footer
         $Page{HeaderRight}  = $HeaderRight;
         $Page{HeadlineLeft} = $HeadlineLeft;
         $Page{HeadlineRight}
@@ -449,7 +457,8 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->PrintHeader(
-        Value => 'AgentITSMChangePrint',
+        Area  => $HeaderArea,
+        Value => $HeaderValue,
     );
 
     # start template output
