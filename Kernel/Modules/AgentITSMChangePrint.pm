@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.26 2010-01-29 15:43:12 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.27 2010-01-29 16:00:28 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1052,7 +1052,7 @@ sub _OutputWorkOrderInfo {
 
     my $Rows = max( scalar(@TableLeft), scalar(@TableRight) );
 
-    if ( $Self->{PDFObjec} ) {
+    if ( $Self->{PDFObject} ) {
         my %Table;
         for my $Row ( 0 .. $Rows - 1 ) {
             $Table{CellData}[$Row][0]{Content}         = $TableLeft[$Row]->{Key};
