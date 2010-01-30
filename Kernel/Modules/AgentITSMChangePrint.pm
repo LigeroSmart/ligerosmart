@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.29 2010-01-30 17:51:12 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.30 2010-01-30 18:13:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1140,7 +1140,30 @@ sub _OutputLongText {
 
     if ( $Self->{PDFObject} ) {
 
-        # table params common to printing a body of text, like a description
+        # some vertical whitespace
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -15,
+        );
+
+        # output headline for the section
+        $Self->{PDFObject}->Text(
+            Text     => $Param{Title},
+            Height   => 7,
+            Type     => 'Cut',
+            Font     => 'ProportionalBoldItalic',
+            FontSize => 7,
+            Color    => '#666666',
+        );
+
+        # vertical whitespace after title
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
+        );
+
+        # table params common to printing a body of text,
+        # actually a table is a bit of overkill for a single text,
         my %Table = (
             Type            => 'Cut',
             Border          => 0,
@@ -1153,9 +1176,7 @@ sub _OutputLongText {
         );
 
         # output tables
-        my $Row = 0;
-        $Table{CellData}[ $Row++ ][0]{Content} = $Param{Title}    || '';
-        $Table{CellData}[ $Row++ ][0]{Content} = $Param{LongText} || '';
+        $Table{CellData}[0][0]{Content} = $Param{LongText} || '';
 
         # output table
         $Self->_PDFOutputTable(
@@ -1210,6 +1231,12 @@ sub _OutputWorkOrderOverview {
             Color    => '#666666',
         );
 
+        # vertical whitespace after title
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
+        );
+
         # output the overview table only if there is at least a single workorder,
         # printing an empty table might create havoc
         if ( @{ $Param{WorkOrderOverview} } ) {
@@ -1225,12 +1252,6 @@ sub _OutputWorkOrderOverview {
             $Table{ColumnData}[4]{Width} = 40;
             $Table{ColumnData}[5]{Width} = 40;
             $Table{ColumnData}[6]{Width} = 40;
-
-            # set new position
-            $Self->{PDFObject}->PositionSet(
-                Move => 'relativ',
-                Y    => -4,
-            );
 
             # table params
             $Table{Type}            = 'Cut';
