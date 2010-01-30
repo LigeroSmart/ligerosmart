@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.178 2010-01-30 01:10:53 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.179 2010-01-30 17:18:07 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -782,6 +782,7 @@
                 <Item Key="Description">Print the change</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="LinkParam">target="print_change"</Item>
             </Hash>
         </Setting>
     </ConfigItem>
