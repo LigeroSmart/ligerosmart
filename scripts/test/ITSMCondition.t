@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.57 2010-01-28 09:36:18 mae Exp $
+# $Id: ITSMCondition.t,v 1.58 2010-01-30 10:31:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1793,6 +1793,18 @@ for my $ConditionID (@ConditionIDs) {
 # test for matching
 for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
 
+    my $ExpressionID = $ExpressionIDs[$ExpressionCounter];
+
+    # group related tests
+    $TestCount++;
+
+    # print info about the match test:
+    $Self->True(
+        1,
+        "Match test $TestCount: "
+            . "ExpressionCounter => $ExpressionCounter, ExpressionID => $ExpressionID",
+    );
+
     # get object value for attributes
     my $ObjectName
         = $ExpressionTests[$ExpressionCounter]->{SourceData}->{ExpressionAdd}->{ObjectID}
@@ -1833,52 +1845,44 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
         # test without given changed attributes
         $Self->True(
             $Self->{ConditionObject}->ExpressionMatch(
-                ExpressionID => $ExpressionIDs[$ExpressionCounter],
+                ExpressionID => $ExpressionID,
                 UserID       => 1,
                 )
                 || 0,
-            'Test '
-                . $TestCount++
-                . " - ExpressionMatch return true -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
+            "Test $TestCount - ExpressionMatch return true, without changed attributes",
         );
 
         # test with given changed attributes
         $Self->True(
             $Self->{ConditionObject}->ExpressionMatch(
-                ExpressionID      => $ExpressionIDs[$ExpressionCounter],
+                ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName => [$AttributeName] },
                 UserID            => 1,
                 )
                 || 0,
-            'Test '
-                . $TestCount++
-                . " - ExpressionMatch return true -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
+            "Test $TestCount - ExpressionMatch return true, with changed attributes",
         );
 
         # test with wrong given object type of changed attributes
         $Self->False(
             $Self->{ConditionObject}->ExpressionMatch(
-                ExpressionID      => $ExpressionIDs[$ExpressionCounter],
+                ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName . 'UT' . int rand 1_000 => [$AttributeName] },
                 UserID            => 1,
                 )
                 || 0,
-            'Test '
-                . $TestCount++
-                . " - ExpressionMatch return true -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
+            "Test $TestCount - ExpressionMatch return false, wrong object type",
         );
 
         # test with wrong given attribute type of changed attributes
         $Self->False(
             $Self->{ConditionObject}->ExpressionMatch(
-                ExpressionID      => $ExpressionIDs[$ExpressionCounter],
+                ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName => [ $AttributeName . 'UT' . int rand 1_000 ] },
                 UserID            => 1,
                 )
                 || 0,
-            'Test '
-                . $TestCount++
-                . " - ExpressionMatch return true -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
+            "Test $TestCount - ExpressionMatch return false, wrong attribute type",
         );
     }
     else {
@@ -1886,26 +1890,22 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
         # test without given changed attributes
         $Self->False(
             $Self->{ConditionObject}->ExpressionMatch(
-                ExpressionID => $ExpressionIDs[$ExpressionCounter],
+                ExpressionID => $ExpressionID,
                 UserID       => 1,
                 )
                 || 0,
-            'Test '
-                . $TestCount++
-                . " - ExpressionMatch return false -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
+            "Test $TestCount - ExpressionMatch return false, without changed attributes",
         );
 
         # test with given changed attributes
         $Self->False(
             $Self->{ConditionObject}->ExpressionMatch(
-                ExpressionID      => $ExpressionIDs[$ExpressionCounter],
+                ExpressionID      => $ExpressionID,
                 AttributesChanged => { $ObjectName => [$AttributeName] },
                 UserID            => 1,
                 )
                 || 0,
-            'Test '
-                . $TestCount++
-                . " - ExpressionMatch return true -> ExpressionID: $ExpressionIDs[$ExpressionCounter]",
+            "Test $TestCount - ExpressionMatch return false, with changed attributes",
         );
     }
 }
