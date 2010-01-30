@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMChange.pm - all itsm change operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.2 2010-01-30 17:53:40 ub Exp $
+# $Id: ITSMChange.pm,v 1.3 2010-01-30 20:03:52 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -88,11 +88,11 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=item Set()
 
 Updates a change with the given data.
 
-    my $Success = $ITSMChangeOperator->Run(
+    my $Success = $ITSMChangeOperator->Set(
         Selector    => 1234,
         Attribute   => 'ChangeStateID',
         ActionValue => 2345,
@@ -101,7 +101,7 @@ Updates a change with the given data.
 
 =cut
 
-sub Run {
+sub Set {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -153,6 +153,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-30 17:53:40 $
+$Revision: 1.3 $ $Date: 2010-01-30 20:03:52 $
 
 =cut
