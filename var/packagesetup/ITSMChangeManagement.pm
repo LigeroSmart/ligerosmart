@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.38 2010-01-29 13:16:09 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.39 2010-01-30 16:47:22 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -1117,8 +1117,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeCABDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.' . $BasicChangeInfoEn,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB geloescht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABDelete',
@@ -1129,8 +1129,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeLinkAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknüpft',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit verknüpftem RfC.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknuepft',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit verknuepftem RfC.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeLinkAdd',
@@ -1153,8 +1153,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] geloescht',
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde geloescht.',
         ],
         [
             'Agent::Change::ChangeDelete',
@@ -1193,8 +1193,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geloescht',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde geloescht.',
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
@@ -1205,8 +1205,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknüpft',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknüpft.'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknuepft',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1220,7 +1220,7 @@ sub _AddSystemNotifications {
             'Agent::WorkOrder::WorkOrderLinkDelete',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknüpft.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1245,8 +1245,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeAttachmentDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang geloescht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem Anhang.' . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeAttachmentDelete',
@@ -1271,8 +1271,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang geloescht',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit geloeschtem Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1292,8 +1292,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangePlannedStartTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Startzeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> has die geplante Startzeit erreicht.'
                 . $BasicChangeInfoDe,
         ],
         [
@@ -1348,8 +1348,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeRequestedTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.'
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewuenschte Fertigstellungszeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewuenschte Fertigstellungszeit erreicht.'
                 . $BasicChangeInfoDe,
         ],
         [
@@ -1439,7 +1439,7 @@ sub _AddSystemNotifications {
             'Customer::Change::ChangeCABUpdate',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit aktualisierten CAB.' . $BasicChangeInfoEn,
+            'Change #<OTRS_CHANGE_ChangeNumber> mit aktualisiertem CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABUpdate',
@@ -1450,8 +1450,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeCABDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.' . $BasicChangeInfoEn,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB geloescht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem CAB.' . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABDelete',
@@ -1462,8 +1462,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeLinkAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknÃ¼pft',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit verknÃ¼pftem RfC.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknueft',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit verknueftem RfC.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeLinkAdd',
@@ -1486,8 +1486,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] gelöscht',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] geloescht',
+            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde geloescht.',
         ],
         [
             'Customer::Change::ChangeDelete',
@@ -1526,8 +1526,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geloescht',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde geloescht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
@@ -1538,8 +1538,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknüpft',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknüpft.'
+            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknuepft',
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1553,7 +1553,7 @@ sub _AddSystemNotifications {
             'Customer::WorkOrder::WorkOrderLinkDelete',
             'de',
             '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknüpft.'
+            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1578,8 +1578,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeAttachmentDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.' . $BasicChangeInfoDe,
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang geloescht',
+            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem Anhang.' . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeAttachmentDelete',
@@ -1604,8 +1604,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
+            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang geloescht',
+            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit geloeschtem Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
@@ -1672,8 +1672,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeRequestedTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.',
+            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewuenschte Fertigstellungszeit erreicht.',
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewuenschte Fertigstellungszeit erreicht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
@@ -1735,6 +1735,7 @@ sub _AddSystemNotifications {
         }
 
         # do the insertion
+        # TODO: check whether notification already exists
         $Self->{DBObject}->Do(
             SQL => 'INSERT INTO notifications (notification_type, notification_language, '
                 . 'subject, text, notification_charset, content_type, '
@@ -1821,6 +1822,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2010-01-29 13:16:09 $
+$Revision: 1.39 $ $Date: 2010-01-30 16:47:22 $
 
 =cut
