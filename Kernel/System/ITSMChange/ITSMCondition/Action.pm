@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Action.pm,v 1.6 2010-01-28 11:39:47 mae Exp $
+# $Id: Action.pm,v 1.7 2010-01-30 17:07:09 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -502,8 +502,8 @@ sub ActionExecute {
     return if !$ActionData;
 
     # do not execute 'lock' actions, they are passive!
-    my $OmitAction = 'lock';
-    return if $ActionData->{Operator}->{Name} eq $OmitAction;
+    my @OmitActions = qw( lock );
+    return 0 if grep { $ActionData->{Operator}->{Name} eq $_ } @OmitActions;
 
     # trigger ActionExecutePre-Event
     $Self->EventHandler(
@@ -723,6 +723,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-01-28 11:39:47 $
+$Revision: 1.7 $ $Date: 2010-01-30 17:07:09 $
 
 =cut
