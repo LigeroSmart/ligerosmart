@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Operator.pm,v 1.22 2010-01-30 17:03:43 mae Exp $
+# $Id: Operator.pm,v 1.23 2010-01-30 20:03:04 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -349,6 +349,7 @@ Returns true or false (1/undef) if given values are equal.
         ObjectData   => [ $WorkOrderData1, $WorkOrderData2 ],
         CompareValue => 'SomeValue',                           # or ActionValue
         ObjectName   => 'ITSMWorkOrder',                       # needed for ActionValue
+        ActionID     => 1234,                                  # needed for ActionValue
         ActionValue  => 'SomeValue',                           # or CompareValue
         UserID       => 1234,
     );
@@ -408,6 +409,7 @@ sub OperatorExecute {
             ObjectName  => $Param{ObjectName},
             Selector    => $Param{Selector},
             Attribute   => $Param{Attribute},
+            ActionID    => $Param{ActionID},
             ActionValue => $Param{ActionValue},
             UserID      => $Param{UserID},
         );
@@ -556,6 +558,7 @@ executed successfully.
         ObjectName  => 'ITSMChange',
         Selector    => '1234'
         Attribute   => 'ChangeStateID',
+        ActionID    => 2345,
         ActionValue => '13',
         UserID      => 1234,
     );
@@ -566,7 +569,7 @@ sub _OperatorActionExecute {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Operator ObjectName Selector Attribute ActionValue UserID)) {
+    for my $Argument (qw(Operator ObjectName Selector Attribute ActionID ActionValue UserID)) {
         if ( !exists $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -622,6 +625,7 @@ sub _OperatorActionExecute {
         ObjectName  => $Param{ObjectName},
         Selector    => $Param{Selector},
         Attribute   => $Param{Attribute},
+        ActionID    => $Param{ActionID},
         ActionValue => $Param{ActionValue},
         UserID      => $Param{UserID},
     );
@@ -1039,6 +1043,7 @@ Returns the success of setting a new value.
         ObjectName  => 'ITSMChange',
         Selector    => '1234'
         Attribute   => 'ChangeStateID',
+        ActionID    => 'ChangeStateID',
         ActionValue => '13',
         UserID      => 1234,
     );
@@ -1049,7 +1054,7 @@ sub _OperatorSet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(Operator ObjectName Selector Attribute ActionValue UserID)) {
+    for my $Argument (qw(Operator ObjectName Selector Attribute ActionID ActionValue UserID)) {
         if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1069,7 +1074,7 @@ sub _OperatorSet {
     return if !$BackendObject;
 
     # define default functions for backend
-    my $Sub = 'Run';
+    my $Sub = 'Set';
 
     # check for available function
     if ( !$BackendObject->can($Sub) ) {
@@ -1080,15 +1085,67 @@ sub _OperatorSet {
         return;
     }
 
-    # execute extracted action
-    my $Result = $BackendObject->$Sub(
-        Operator    => $Param{Operator},
-        ObjectName  => $Param{ObjectName},
-        Selector    => $Param{Selector},
-        Attribute   => $Param{Attribute},
-        ActionValue => $Param{ActionValue},
-        UserID      => $Param{UserID},
-    );
+    # result value
+    my $Result;
+
+    # execute extracted action with selector 'all'
+    if ( $Param{Selector} eq 'all' ) {
+
+        # define 'all' function for backend
+        $Sub = 'SetAll';
+
+        # check for available function
+        if ( !$BackendObject->can($Sub) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "No function '$Sub' available for backend '$OperatorName'!",
+            );
+            return;
+        }
+
+        # get action
+        my $Action = $Self->ActionGet(
+            ActionID => $Param{ActionID},
+            UserID   => $Param{UserID},
+        );
+
+        # check action
+        return if !$Action;
+
+        # get objects for 'all'
+        my $ActionObjects = $Self->ObjectDataGet(
+            ConditionID => $Action->{ConditionID},
+            ObjectName  => $Param{ObjectName},
+            Selector    => $Param{Selector},
+            UserID      => $Param{UserID},
+        );
+
+        # check objects
+        return 1 if !$ActionObjects;
+        return if ref $ActionObjects ne 'ARRAY';
+
+        # execute actions for all objects
+        $Result = $BackendObject->$Sub(
+            Operator    => $Param{Operator},
+            ObjectName  => $Param{ObjectName},
+            Objects     => $ActionObjects,
+            Attribute   => $Param{Attribute},
+            ActionValue => $Param{ActionValue},
+            UserID      => $Param{UserID},
+        );
+    }
+    else {
+
+        # execute extracted action with single selector
+        $Result = $BackendObject->$Sub(
+            Operator    => $Param{Operator},
+            ObjectName  => $Param{ObjectName},
+            Selector    => $Param{Selector},
+            Attribute   => $Param{Attribute},
+            ActionValue => $Param{ActionValue},
+            UserID      => $Param{UserID},
+        );
+    }
 
     return $Result;
 }
@@ -1162,6 +1219,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2010-01-30 17:03:43 $
+$Revision: 1.23 $ $Date: 2010-01-30 20:03:04 $
 
 =cut
