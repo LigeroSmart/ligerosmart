@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object/ITSMChange.pm - all itsm change object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.3 2010-01-27 21:56:28 ub Exp $
+# $Id: ITSMChange.pm,v 1.4 2010-01-30 03:46:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,9 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
+use Kernel::System::User;
 use Kernel::System::ITSMChange;
 
 =head1 NAME
@@ -92,6 +93,7 @@ sub new {
     }
 
     # create additional objects
+    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;
@@ -199,6 +201,20 @@ sub CompareValueList {
             UserID => $Param{UserID},
         );
     }
+    elsif (
+        $Param{AttributeName} eq 'ChangeBuilderID'
+        || $Param{AttributeName} eq 'ChangeManagerID'
+        )
+    {
+
+        # get a complete list of users
+        my %Users = $Self->{UserObject}->UserList(
+            Type  => 'Long',
+            Valid => 1,
+        );
+
+        $CompareValueList = \%Users;
+    }
 
     return $CompareValueList;
 }
@@ -257,6 +273,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-01-27 21:56:28 $
+$Revision: 1.4 $ $Date: 2010-01-30 03:46:51 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm - all itsm workorder object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.4 2010-01-29 21:48:05 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.5 2010-01-30 03:46:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,9 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
+use Kernel::System::User;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
@@ -93,6 +94,7 @@ sub new {
     }
 
     # create additional objects
+    $Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
@@ -201,6 +203,16 @@ sub CompareValueList {
         $CompareValueList = $Self->{WorkOrderObject}->WorkOrderTypeList(
             UserID => $Param{UserID},
         );
+    }
+    elsif ( $Param{AttributeName} eq 'WorkOrderAgentID' ) {
+
+        # get a complete list of users
+        my %Users = $Self->{UserObject}->UserList(
+            Type  => 'Long',
+            Valid => 1,
+        );
+
+        $CompareValueList = \%Users;
     }
 
     return $CompareValueList;
@@ -338,6 +350,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-01-29 21:48:05 $
+$Revision: 1.5 $ $Date: 2010-01-30 03:46:52 $
 
 =cut
