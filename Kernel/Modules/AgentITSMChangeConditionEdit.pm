@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.26 2010-01-29 21:48:05 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.27 2010-01-30 11:03:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -115,69 +115,126 @@ sub Run {
         UserID      => $Self->{UserID},
     );
 
+    # Remember the reason why saving was not attempted.
+    # These entries are the names of the dtl validation error blocks.
+    my @ValidationErrors;
+
     # ---------------------------------------------------------------- #
     # condition save (also add/delete expression and add/delete action)
     # ---------------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # add a new condition
-        if ( $GetParam{ConditionID} eq 'NEW' ) {
-
-            # create a new condition
-            $GetParam{ConditionID} = $Self->{ConditionObject}->ConditionAdd(
-                ChangeID              => $GetParam{ChangeID},
-                Name                  => $GetParam{Name},
-                ExpressionConjunction => $GetParam{ExpressionConjunction},
-                Comment               => $GetParam{Comment},
-                ValidID               => $GetParam{ValidID},
-                UserID                => $Self->{UserID},
-            );
-
-            # check error
-            if ( !$GetParam{ConditionID} ) {
-                $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Could not create new condition!',
-                    Comment => 'Please contact the admin.',
-                );
-                return;
-            }
+        # update only if ConditionName is given
+        if ( !$GetParam{Name} ) {
+            push @ValidationErrors, 'InvalidName';
         }
 
-        # update an existing condition
-        else {
+        # if all passed data is valid
+        if ( !@ValidationErrors ) {
 
-            # update the condition
-            my $Success = $Self->{ConditionObject}->ConditionUpdate(
-                ConditionID           => $GetParam{ConditionID},
-                Name                  => $GetParam{Name},
-                ExpressionConjunction => $GetParam{ExpressionConjunction},
-                Comment               => $GetParam{Comment},
-                ValidID               => $GetParam{ValidID},
-                UserID                => $Self->{UserID},
-            );
+            # add a new condition
+            if ( $GetParam{ConditionID} eq 'NEW' ) {
 
-            # check error
-            if ( !$Success ) {
-                $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Could not update ConditionID $GetParam{ConditionID}!",
-                    Comment => 'Please contact the admin.',
+                # create a new condition
+                $GetParam{ConditionID} = $Self->{ConditionObject}->ConditionAdd(
+                    ChangeID              => $GetParam{ChangeID},
+                    Name                  => $GetParam{Name},
+                    ExpressionConjunction => $GetParam{ExpressionConjunction},
+                    Comment               => $GetParam{Comment},
+                    ValidID               => $GetParam{ValidID},
+                    UserID                => $Self->{UserID},
                 );
-                return;
+
+                # check error
+                if ( !$GetParam{ConditionID} ) {
+                    $Self->{LayoutObject}->ErrorScreen(
+                        Message => 'Could not create new condition!',
+                        Comment => 'Please contact the admin.',
+                    );
+                    return;
+                }
             }
-        }
 
-        # save all existing expression fields
-        for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+            # update an existing condition
+            else {
 
-            # get expression fields
+                # update the condition
+                my $Success = $Self->{ConditionObject}->ConditionUpdate(
+                    ConditionID           => $GetParam{ConditionID},
+                    Name                  => $GetParam{Name},
+                    ExpressionConjunction => $GetParam{ExpressionConjunction},
+                    Comment               => $GetParam{Comment},
+                    ValidID               => $GetParam{ValidID},
+                    UserID                => $Self->{UserID},
+                );
+
+                # check error
+                if ( !$Success ) {
+                    $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not update ConditionID $GetParam{ConditionID}!",
+                        Comment => 'Please contact the admin.',
+                    );
+                    return;
+                }
+            }
+
+            # save all existing expression fields
+            for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+
+                # get expression fields
+                my %ExpressionData;
+                for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
+                    $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
+                        Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                    );
+                }
+
+                # check if existing expression is complete
+                # (all required fields must be filled, CompareValue can be empty)
+                my $FieldsOk = 1;
+                FIELD:
+                for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
+
+                    # new expression is not complete
+                    if ( !$ExpressionData{$Field} ) {
+                        $FieldsOk = 0;
+                        last FIELD;
+                    }
+                }
+
+                # update existing expression only if all fields are complete
+                if ($FieldsOk) {
+
+                    # update the expression
+                    my $Success = $Self->{ConditionObject}->ExpressionUpdate(
+                        ExpressionID => $ExpressionID,
+                        ObjectID     => $ExpressionData{ObjectID},
+                        AttributeID  => $ExpressionData{AttributeID},
+                        OperatorID   => $ExpressionData{OperatorID},
+                        Selector     => $ExpressionData{Selector},
+                        CompareValue => $ExpressionData{CompareValue} || '',
+                        UserID       => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        return $Self->{LayoutObject}->ErrorScreen(
+                            Message => "Could not update ExpressionID $ExpressionID!",
+                            Comment => 'Please contact the admin.',
+                        );
+                    }
+                }
+            }
+
+            # get new expression fields
             my %ExpressionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
                 $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                    Param => 'ExpressionID::NEW::' . $Field,
                 );
             }
 
-            # check if existing expression is complete
+            # check if new expression is complete
             # (all required fields must be filled, CompareValue can be empty)
             my $FieldsOk = 1;
             FIELD:
@@ -190,12 +247,12 @@ sub Run {
                 }
             }
 
-            # update existing expression only if all fields are complete
+            # add new expression
             if ($FieldsOk) {
 
-                # update the expression
-                my $Success = $Self->{ConditionObject}->ExpressionUpdate(
-                    ExpressionID => $ExpressionID,
+                # add new expression
+                my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+                    ConditionID  => $GetParam{ConditionID},
                     ObjectID     => $ExpressionData{ObjectID},
                     AttributeID  => $ExpressionData{AttributeID},
                     OperatorID   => $ExpressionData{OperatorID},
@@ -205,73 +262,73 @@ sub Run {
                 );
 
                 # check error
-                if ( !$Success ) {
+                if ( !$ExpressionID ) {
                     return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "Could not update ExpressionID $ExpressionID!",
+                        Message => "Could not add new Expression!",
                         Comment => 'Please contact the admin.',
                     );
                 }
             }
-        }
 
-        # get new expression fields
-        my %ExpressionData;
-        for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
-            $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
-                Param => 'ExpressionID::NEW::' . $Field,
-            );
-        }
+            # save all existing action fields
+            for my $ActionID ( @{$ActionIDsRef} ) {
 
-        # check if new expression is complete
-        # (all required fields must be filled, CompareValue can be empty)
-        my $FieldsOk = 1;
-        FIELD:
-        for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
+                # get action fields
+                my %ActionData;
+                for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
+                    $ActionData{$Field} = $Self->{ParamObject}->GetParam(
+                        Param => 'ActionID::' . $ActionID . '::' . $Field,
+                    );
+                }
 
-            # new expression is not complete
-            if ( !$ExpressionData{$Field} ) {
-                $FieldsOk = 0;
-                last FIELD;
+                # check if existing action is complete
+                # (all required fields must be filled, ActionValue can be empty)
+                my $FieldsOk = 1;
+                FIELD:
+                for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
+
+                    # new action is not complete
+                    if ( !$ActionData{$Field} ) {
+                        $FieldsOk = 0;
+                        last FIELD;
+                    }
+                }
+
+                # update existing action only if all fields are complete
+                if ($FieldsOk) {
+
+                    # update the action
+                    my $Success = $Self->{ConditionObject}->ActionUpdate(
+                        ActionID    => $ActionID,
+                        ObjectID    => $ActionData{ObjectID},
+                        AttributeID => $ActionData{AttributeID},
+                        OperatorID  => $ActionData{OperatorID},
+                        Selector    => $ActionData{Selector},
+                        ActionValue => $ActionData{ActionValue} || '',
+                        UserID      => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        return $Self->{LayoutObject}->ErrorScreen(
+                            Message => "Could not update ActionID $ActionID!",
+                            Comment => 'Please contact the admin.',
+                        );
+                    }
+                }
             }
-        }
 
-        # add new expression
-        if ($FieldsOk) {
-
-            # add new expression
-            my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
-                ConditionID  => $GetParam{ConditionID},
-                ObjectID     => $ExpressionData{ObjectID},
-                AttributeID  => $ExpressionData{AttributeID},
-                OperatorID   => $ExpressionData{OperatorID},
-                Selector     => $ExpressionData{Selector},
-                CompareValue => $ExpressionData{CompareValue} || '',
-                UserID       => $Self->{UserID},
-            );
-
-            # check error
-            if ( !$ExpressionID ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Could not add new Expression!",
-                    Comment => 'Please contact the admin.',
-                );
-            }
-        }
-
-        # save all existing action fields
-        for my $ActionID ( @{$ActionIDsRef} ) {
-
-            # get action fields
+            # get new action fields
             my %ActionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
                 $ActionData{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => 'ActionID::' . $ActionID . '::' . $Field,
+                    Param => 'ActionID::NEW::' . $Field,
                 );
             }
 
-            # check if existing action is complete
+            # check if new action is complete
             # (all required fields must be filled, ActionValue can be empty)
-            my $FieldsOk = 1;
+            $FieldsOk = 1;
             FIELD:
             for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
 
@@ -282,12 +339,12 @@ sub Run {
                 }
             }
 
-            # update existing action only if all fields are complete
+            # add new action
             if ($FieldsOk) {
 
-                # update the action
-                my $Success = $Self->{ConditionObject}->ActionUpdate(
-                    ActionID    => $ActionID,
+                # add new action
+                my $ActionID = $Self->{ConditionObject}->ActionAdd(
+                    ConditionID => $GetParam{ConditionID},
                     ObjectID    => $ActionData{ObjectID},
                     AttributeID => $ActionData{AttributeID},
                     OperatorID  => $ActionData{OperatorID},
@@ -297,148 +354,107 @@ sub Run {
                 );
 
                 # check error
-                if ( !$Success ) {
+                if ( !$ActionID ) {
                     return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "Could not update ActionID $ActionID!",
+                        Message => "Could not add new Action!",
                         Comment => 'Please contact the admin.',
                     );
                 }
             }
-        }
 
-        # get new action fields
-        my %ActionData;
-        for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
-            $ActionData{$Field} = $Self->{ParamObject}->GetParam(
-                Param => 'ActionID::NEW::' . $Field,
-            );
-        }
-
-        # check if new action is complete
-        # (all required fields must be filled, ActionValue can be empty)
-        $FieldsOk = 1;
-        FIELD:
-        for my $Field (qw(ObjectID Selector AttributeID OperatorID)) {
-
-            # new action is not complete
-            if ( !$ActionData{$Field} ) {
-                $FieldsOk = 0;
-                last FIELD;
-            }
-        }
-
-        # add new action
-        if ($FieldsOk) {
-
-            # add new action
-            my $ActionID = $Self->{ConditionObject}->ActionAdd(
-                ConditionID => $GetParam{ConditionID},
-                ObjectID    => $ActionData{ObjectID},
-                AttributeID => $ActionData{AttributeID},
-                OperatorID  => $ActionData{OperatorID},
-                Selector    => $ActionData{Selector},
-                ActionValue => $ActionData{ActionValue} || '',
-                UserID      => $Self->{UserID},
-            );
-
-            # check error
-            if ( !$ActionID ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Could not add new Action!",
-                    Comment => 'Please contact the admin.',
+            # just the save button was pressed, redirect to condition overview
+            if ( $GetParam{Save} ) {
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeCondition;ChangeID=$GetParam{ChangeID}",
                 );
             }
-        }
 
-        # just the save button was pressed, redirect to condition overview
-        if ( $GetParam{Save} ) {
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeCondition;ChangeID=$GetParam{ChangeID}",
-            );
-        }
+            # expression add button was pressed
+            elsif ( $GetParam{AddExpression} ) {
 
-        # expression add button was pressed
-        elsif ( $GetParam{AddExpression} ) {
-
-            # show the edit view again, but now with a new empty expression line
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                    . "ConditionID=$GetParam{ConditionID};NewExpression=1",
-            );
-        }
-
-        # action add button was pressed
-        elsif ( $GetParam{AddAction} ) {
-
-            # show the edit view again, but now with a new empty action line
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                    . "ConditionID=$GetParam{ConditionID};NewAction=1",
-            );
-        }
-
-        # check if an expression should be deleted
-        for my $ExpressionID ( @{$ExpressionIDsRef} ) {
-
-            # check if the delete button of this expression was pressed
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteExpressionID::' . $ExpressionID ) )
-            {
-
-                # delete the expression
-                my $Success = $Self->{ConditionObject}->ExpressionDelete(
-                    ExpressionID => $ExpressionID,
-                    UserID       => $Self->{UserID},
-                );
-
-                # check error
-                if ( !$Success ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "Could not delete ExpressionID $ExpressionID!",
-                        Comment => 'Please contact the admin.',
-                    );
-                }
-
-                # show the edit view again
+                # show the edit view again, but now with a new empty expression line
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                        . "ConditionID=$GetParam{ConditionID}",
+                        . "ConditionID=$GetParam{ConditionID};NewExpression=1",
                 );
             }
-        }
 
-        # check if an action should be deleted
-        for my $ActionID ( @{$ActionIDsRef} ) {
+            # action add button was pressed
+            elsif ( $GetParam{AddAction} ) {
 
-            # check if the delete button of this action was pressed
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteActionID::' . $ActionID ) ) {
-
-                # delete the action
-                my $Success = $Self->{ConditionObject}->ActionDelete(
-                    ActionID => $ActionID,
-                    UserID   => $Self->{UserID},
-                );
-
-                # check error
-                if ( !$Success ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => "Could not delete ActionID $ActionID!",
-                        Comment => 'Please contact the admin.',
-                    );
-                }
-
-                # show the edit view again
+                # show the edit view again, but now with a new empty action line
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                        . "ConditionID=$GetParam{ConditionID}",
+                        . "ConditionID=$GetParam{ConditionID};NewAction=1",
                 );
             }
-        }
 
-        # show the edit view again
-        return $Self->{LayoutObject}->Redirect(
-            OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                . "ConditionID=$GetParam{ConditionID}",
-        );
+            # check if an expression should be deleted
+            for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+
+                # check if the delete button of this expression was pressed
+                if (
+                    $Self->{ParamObject}
+                    ->GetParam( Param => 'DeleteExpressionID::' . $ExpressionID )
+                    )
+                {
+
+                    # delete the expression
+                    my $Success = $Self->{ConditionObject}->ExpressionDelete(
+                        ExpressionID => $ExpressionID,
+                        UserID       => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        return $Self->{LayoutObject}->ErrorScreen(
+                            Message => "Could not delete ExpressionID $ExpressionID!",
+                            Comment => 'Please contact the admin.',
+                        );
+                    }
+
+                    # show the edit view again
+                    return $Self->{LayoutObject}->Redirect(
+                        OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                            . "ConditionID=$GetParam{ConditionID}",
+                    );
+                }
+            }
+
+            # check if an action should be deleted
+            for my $ActionID ( @{$ActionIDsRef} ) {
+
+                # check if the delete button of this action was pressed
+                if ( $Self->{ParamObject}->GetParam( Param => 'DeleteActionID::' . $ActionID ) ) {
+
+                    # delete the action
+                    my $Success = $Self->{ConditionObject}->ActionDelete(
+                        ActionID => $ActionID,
+                        UserID   => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        return $Self->{LayoutObject}->ErrorScreen(
+                            Message => "Could not delete ActionID $ActionID!",
+                            Comment => 'Please contact the admin.',
+                        );
+                    }
+
+                    # show the edit view again
+                    return $Self->{LayoutObject}->Redirect(
+                        OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                            . "ConditionID=$GetParam{ConditionID}",
+                    );
+                }
+            }
+
+            # show the edit view again
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                    . "ConditionID=$GetParam{ConditionID}",
+            );
+        }
     }
 
     # ------------------------------------------------------------ #
@@ -689,89 +705,92 @@ sub Run {
     # ------------------------------------------------------------ #
     # condition edit view
     # ------------------------------------------------------------ #
-    elsif ( !$Self->{Subaction} ) {
 
-        my %ConditionData;
+    my %ConditionData;
 
-        # get ConditionID
-        $ConditionData{ConditionID} = $GetParam{ConditionID};
+    # get ConditionID
+    $ConditionData{ConditionID} = $GetParam{ConditionID};
 
-        # if this is an existing condition
-        if ( $ConditionData{ConditionID} ne 'NEW' ) {
+    # if this is an existing condition
+    if ( $ConditionData{ConditionID} ne 'NEW' ) {
 
-            # get condition data
-            my $Condition = $Self->{ConditionObject}->ConditionGet(
-                ConditionID => $ConditionData{ConditionID},
-                UserID      => $Self->{UserID},
-            );
-
-            # check if the condition belongs to the given change
-            if ( $Condition->{ChangeID} ne $GetParam{ChangeID} ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "ConditionID $ConditionData{ConditionID} belongs to "
-                        . " ChangeID $Condition->{ChangeID} and not to the given $GetParam{ChangeID}!",
-                    Comment => 'Please contact the admin.',
-                );
-            }
-
-            # add data from condition
-            %ConditionData = ( %ConditionData, %{$Condition} );
-
-            # show existing expressions
-            $Self->_ExpressionOverview(
-                %{$ChangeData},
-                %ConditionData,
-                ExpressionIDs => $ExpressionIDsRef,
-                NewExpression => $GetParam{NewExpression},
-            );
-
-            # show existing actions
-            $Self->_ActionOverview(
-                %{$ChangeData},
-                %ConditionData,
-                ActionIDs => $ActionIDsRef,
-                NewAction => $GetParam{NewAction},
-            );
-        }
-
-        # get expression conjunction from condition
-        if ( !$GetParam{ExpressionConjunction} ) {
-            $GetParam{ExpressionConjunction} = $ConditionData{ExpressionConjunction} || '';
-        }
-
-        # set radio buttons for expression conjunction
-        if ( $GetParam{ExpressionConjunction} eq 'all' ) {
-            $ConditionData{allselected} = 'checked="checked"';
-        }
-        else {
-            $ConditionData{anyselected} = 'checked="checked"';
-        }
-
-        # output header
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-
-        # generate ValidOptionString
-        $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%ValidList,
-            Name       => 'ValidID',
-            SelectedID => $ConditionData{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
-            Sort       => 'NumericKey',
+        # get condition data
+        my $Condition = $Self->{ConditionObject}->ConditionGet(
+            ConditionID => $ConditionData{ConditionID},
+            UserID      => $Self->{UserID},
         );
 
-        # generate output
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentITSMChangeConditionEdit',
-            Data         => {
-                %Param,
-                %{$ChangeData},
-                %ConditionData,
-            },
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
+        # check if the condition belongs to the given change
+        if ( $Condition->{ChangeID} ne $GetParam{ChangeID} ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "ConditionID $ConditionData{ConditionID} belongs to "
+                    . " ChangeID $Condition->{ChangeID} and not to the given $GetParam{ChangeID}!",
+                Comment => 'Please contact the admin.',
+            );
+        }
 
-        return $Output;
+        # add data from condition
+        %ConditionData = ( %ConditionData, %{$Condition} );
+
+        # show existing expressions
+        $Self->_ExpressionOverview(
+            %{$ChangeData},
+            %ConditionData,
+            ExpressionIDs => $ExpressionIDsRef,
+            NewExpression => $GetParam{NewExpression},
+        );
+
+        # show existing actions
+        $Self->_ActionOverview(
+            %{$ChangeData},
+            %ConditionData,
+            ActionIDs => $ActionIDsRef,
+            NewAction => $GetParam{NewAction},
+        );
     }
+
+    # get expression conjunction from condition
+    if ( !$GetParam{ExpressionConjunction} ) {
+        $GetParam{ExpressionConjunction} = $ConditionData{ExpressionConjunction} || '';
+    }
+
+    # set radio buttons for expression conjunction
+    if ( $GetParam{ExpressionConjunction} eq 'all' ) {
+        $ConditionData{allselected} = 'checked="checked"';
+    }
+    else {
+        $ConditionData{anyselected} = 'checked="checked"';
+    }
+
+    # output header
+    my $Output = $Self->{LayoutObject}->Header();
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    # generate ValidOptionString
+    $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%ValidList,
+        Name       => 'ValidID',
+        SelectedID => $ConditionData{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        Sort       => 'NumericKey',
+    );
+
+    # add the validation error messages
+    for my $BlockName (@ValidationErrors) {
+        $Self->{LayoutObject}->Block( Name => $BlockName );
+    }
+
+    # generate output
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMChangeConditionEdit',
+        Data         => {
+            %Param,
+            %{$ChangeData},
+            %ConditionData,
+        },
+    );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
 }
 
 # show existing expressions
