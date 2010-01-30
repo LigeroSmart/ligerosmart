@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMChange.pm - all itsm change operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.3 2010-01-30 20:03:52 mae Exp $
+# $Id: ITSMChange.pm,v 1.4 2010-01-30 20:12:44 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -43,6 +43,7 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
+    use Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange;
 
     my $ConfigObject = Kernel::Config->new();
     my $EncodeObject = Kernel::System::Encode->new(
@@ -66,6 +67,14 @@ create an object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
+    );
+    my $ConditionOperatorITSMChange = Kernel::System::ITSMChange::ITSMCondition::Operator::ITSMChange->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
+        DBObject     => $DBObject,
     );
 
 =cut
@@ -153,6 +162,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-01-30 20:03:52 $
+$Revision: 1.4 $ $Date: 2010-01-30 20:12:44 $
 
 =cut
