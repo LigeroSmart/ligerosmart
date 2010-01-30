@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.89 2010-01-30 00:26:46 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.90 2010-01-30 01:12:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,14 +19,14 @@ use Kernel::System::LinkObject;
 use Kernel::System::User;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange::ITSMStateMachine;
+use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
-use Kernel::System::ITSMChange::ITSMCondition;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.89 $) [1];
+$VERSION = qw($Revision: 1.90 $) [1];
 
 =head1 NAME
 
@@ -109,9 +109,9 @@ sub new {
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
     $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
-    $Self->{ConditionObject}      = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -2724,6 +2724,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.89 $ $Date: 2010-01-30 00:26:46 $
+$Revision: 1.90 $ $Date: 2010-01-30 01:12:17 $
 
 =cut
