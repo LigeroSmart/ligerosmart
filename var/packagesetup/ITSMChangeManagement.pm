@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.39 2010-01-30 16:47:22 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.40 2010-01-30 22:38:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -599,10 +599,11 @@ sub _StateMachineDefaultSet {
     # define ChangeState transitions
     my %ChangeStateTransitions = (
         0 => ['requested'],
-        'requested' => [ 'rejected', 'retracted', 'pending approval' ],
-        'pending approval' => [ 'retracted', 'approved' ],
-        'approved'         => [ 'retracted', 'in progress' ],
-        'in progress'      => [ 'retracted', 'failed', 'successful', 'canceled' ],
+        'requested' => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
+        'pending approval' => [ 'rejected', 'retracted', 'approved' ],
+        'approved'    => [ 'retracted',   'in progress' ],
+        'in progress' => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
+        'pending pir' => [ 'failed',      'successful' ],
         'rejected'   => [0],
         'retracted'  => [0],
         'failed'     => [0],
@@ -1822,6 +1823,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2010-01-30 16:47:22 $
+$Revision: 1.40 $ $Date: 2010-01-30 22:38:01 $
 
 =cut

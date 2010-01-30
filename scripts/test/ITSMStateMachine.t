@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.8 2010-01-30 20:45:39 ub Exp $
+# $Id: ITSMStateMachine.t,v 1.9 2010-01-30 22:38:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -86,10 +86,11 @@ my %ChangeStateID2Name = reverse %Name2ChangeStateID;
 # default ChangeState Transitions
 my %DefaultChangeStateTransitions = (
     0 => ['requested'],
-    'requested' => [ 'rejected', 'retracted', 'pending approval' ],
-    'pending approval' => [ 'retracted', 'approved' ],
-    'approved'         => [ 'retracted', 'in progress' ],
-    'in progress'      => [ 'retracted', 'failed', 'successful', 'canceled' ],
+    'requested' => [ 'rejected', 'retracted', 'pending approval', 'in progress' ],
+    'pending approval' => [ 'rejected', 'retracted', 'approved' ],
+    'approved'    => [ 'retracted',   'in progress' ],
+    'in progress' => [ 'pending pir', 'retracted', 'failed', 'successful', 'canceled' ],
+    'pending pir' => [ 'failed',      'successful' ],
     'rejected'   => [0],
     'retracted'  => [0],
     'failed'     => [0],
@@ -131,18 +132,22 @@ my %DefaultWorkOrderStateTransitions = (
 
 {
 
-    # get end states
+    # get next end states for 'approved'
     my $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
         StateID => $Name2ChangeStateID{approved},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
     my %NextEndStateLookup = map { $_ => 1 } @{$NextEndStateIDsRef};
+
+    # 'retracted' is a next end state
     $Self->True(
         $NextEndStateLookup{ $Name2ChangeStateID{retracted} },
         'Test '
             . $TestCount++
             . ": StateTransitionGetEndStates() - Get the next end states.",
     );
+
+    # 'in progress' is not a next end state
     $Self->False(
         $NextEndStateLookup{ $Name2ChangeStateID{'in progress'} },
         'Test '
@@ -150,24 +155,32 @@ my %DefaultWorkOrderStateTransitions = (
             . ": StateTransitionGetEndStates() - Get the next end states.",
     );
 
-    # get end states
+    # ---------------------------------------------------------------------------------- #
+
+    # get next end states for 'requested'
     $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
         StateID => $Name2ChangeStateID{requested},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
     %NextEndStateLookup = map { $_ => 1 } @{$NextEndStateIDsRef};
+
+    # 'rejected' is a next end state
     $Self->True(
         $NextEndStateLookup{ $Name2ChangeStateID{rejected} },
         'Test '
             . $TestCount++
             . ": StateTransitionGetEndStates() - Get the next end states.",
     );
+
+    # 'retracted' is a next end state
     $Self->True(
         $NextEndStateLookup{ $Name2ChangeStateID{retracted} },
         'Test '
             . $TestCount++
             . ": StateTransitionGetEndStates() - Get the next end states.",
     );
+
+    # 'pending approval' is not a next end state
     $Self->False(
         $NextEndStateLookup{ $Name2ChangeStateID{'pending approval'} },
         'Test '
@@ -175,18 +188,29 @@ my %DefaultWorkOrderStateTransitions = (
             . ": StateTransitionGetEndStates() - Get the next end states.",
     );
 
-    # get end states
+    # 'in progress' is not a next end state
+    $Self->False(
+        $NextEndStateLookup{ $Name2ChangeStateID{'in progress'} },
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+
+    # ---------------------------------------------------------------------------------- #
+
+    # get next end states for 'retracted'
     $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
         StateID => $Name2ChangeStateID{retracted},
         Class   => 'ITSM::ChangeManagement::Change::State',
     );
+
+    # 'retracted' has no next end states, because it is an end state itself
     $Self->False(
         scalar @{$NextEndStateIDsRef},
         'Test '
             . $TestCount++
             . ": StateTransitionGetEndStates() - Get the next end states.",
     );
-
 }
 
 # ------------------------------------------------------------ #
