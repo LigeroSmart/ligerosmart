@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.27 2010-01-30 11:03:00 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.28 2010-01-30 12:55:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -651,9 +651,7 @@ sub Run {
             if ( $FieldType eq 'Selection' ) {
 
                 # get compare value selection list
-                my $CompareValueList = $Self->_GetCompareValueSelection(
-                    %GetParam,
-                );
+                my $CompareValueList = $Self->_GetCompareValueSelection(%GetParam);
 
                 # add an empty selection if no list is available or nothing is selected
                 my $PossibleNone = 0;
@@ -689,6 +687,11 @@ sub Run {
                     . 'id="' . $IDName . '::' . $ID . '::' . $ValueFieldName . '" '
                     . 'name="' . $IDName . '::' . $ID . '::' . $ValueFieldName . '" '
                     . 'value="" size="30" maxlength="250">';
+            }
+
+            # show error for unknown field type
+            else {
+                $HTMLString = "<span><b>Error: Unknown field type '$FieldType'!</b></span>";
             }
         }
 
@@ -1425,11 +1428,16 @@ sub _ShowCompareValueField {
         # TODO : Implement autocomplete selection later!
     }
 
-    # error if field type is unknown
+    # show empty block if field type is unknown
     else {
 
-        # TODO : Error message
-        return;
+        # output empty block
+        $Self->{LayoutObject}->Block(
+            Name => $BlockNameSelection,
+            Data => {
+                %Param,
+            },
+        );
     }
 
     return 1;
