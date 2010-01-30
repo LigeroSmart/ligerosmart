@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.34 2010-01-29 13:33:36 mae Exp $
+# $Id: ITSMCondition.pm,v 1.35 2010-01-30 00:27:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -881,6 +881,8 @@ sub ConditionMatchStateLock {
         Name   => $Param{ObjectName},
         UserID => $Param{UserID},
     );
+
+    # check error
     return if !$ObjectID;
 
     # get id of operator;
@@ -889,6 +891,8 @@ sub ConditionMatchStateLock {
         Name   => $OperatorName,
         UserID => $Param{UserID},
     );
+
+    # check error
     return if !$OperatorID;
 
     # get conditions
@@ -897,23 +901,27 @@ sub ConditionMatchStateLock {
         Selector   => $Param{Selector},
         UserID     => $Param{UserID},
     ) || [];
+
+    # check error
     return if !@{$Conditions};
 
     # get all actions affecting this object
     my @AffectedConditionIDs;
     CONDITIONID:
     for my $ConditionID ( @{$Conditions} ) {
-        my $ConditionActions = $Self->ActionList(
+
+        # get actions for this condition
+        my $ActionIDsRef = $Self->ActionList(
             ConditionID => $ConditionID,
             UserID      => $Param{UserID},
         ) || [];
 
         # check actions
-        next CONDITIONID if !@{$ConditionActions};
+        next CONDITIONID if !@{$ActionIDsRef};
 
         # check for actions
         ACTIONID:
-        for my $ActionID ( @{$ConditionActions} ) {
+        for my $ActionID ( @{$ActionIDsRef} ) {
 
             # get action
             my $Action = $Self->ActionGet(
@@ -944,7 +952,11 @@ sub ConditionMatchStateLock {
     AFFECTEDCONDITIONID:
     for my $AffectedConditionID (@AffectedConditionIDs) {
 
-        # get condition
+# TODO: Does the function _ConditionMatch() do the right thing here?
+# Shouldn't we try to match against an action? _ConditionMatch() internally matches only expressions?
+# Or am I missing something here? (Udo)
+
+        # get condition match
         my $ConditionMatch = $Self->_ConditionMatch(
             ConditionID => $AffectedConditionID,
             UserID      => $Param{UserID},
@@ -1146,7 +1158,7 @@ return a list of all conditions ids of a given object.
     my $ConditionIDsRef = $ConditionObject->_ConditionListByObject(
         ObjectName => 'ITSMChange'
         Selector   => 123,
-        UserID   => 1,
+        UserID     => 1,
     );
 
 =cut
@@ -1216,6 +1228,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2010-01-29 13:33:36 $
+$Revision: 1.35 $ $Date: 2010-01-30 00:27:45 $
 
 =cut
