@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.154 2010-01-30 16:43:17 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.155 2010-01-30 16:48:51 mae Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -451,10 +451,6 @@
         <TableCreate Name="condition_object">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Index Name="condition_object_id_name">
-                <IndexColumn Name="id"/>
-                <IndexColumn Name="name"/>
-            </Index>
             <Unique Name="condition_object_name">
                 <UniqueColumn Name="name"/>
             </Unique>
@@ -462,10 +458,6 @@
         <TableCreate Name="condition_attribute">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Index Name="condition_attribute_id_name">
-                <IndexColumn Name="id"/>
-                <IndexColumn Name="name"/>
-            </Index>
             <Unique Name="condition_attribute_name">
                 <UniqueColumn Name="name"/>
             </Unique>
@@ -473,10 +465,6 @@
         <TableCreate Name="condition_operator">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="SMALLINT"/>
             <Column Name="name" Required="true" Size="250" Type="VARCHAR"/>
-            <Index Name="condition_operator_id_name">
-                <IndexColumn Name="id"/>
-                <IndexColumn Name="name"/>
-            </Index>
             <Unique Name="condition_operator_name">
                 <UniqueColumn Name="name"/>
             </Unique>
