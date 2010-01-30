@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.38 2010-01-30 16:50:30 ub Exp $
+# $Id: ITSMCondition.pm,v 1.39 2010-01-30 17:09:22 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -839,7 +839,12 @@ sub ConditionMatchExecute {
         );
 
         # check error
-        if ( !$Success ) {
+        # do not print error message if '0' is returned
+        if (
+            !defined $Success
+            || defined && $Success ne '1'
+            )
+        {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "ActionID '$ActionID' could not be executed successfully "
@@ -1250,6 +1255,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2010-01-30 16:50:30 $
+$Revision: 1.39 $ $Date: 2010-01-30 17:09:22 $
 
 =cut
