@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Condition.pm - a event module to match conditions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Condition.pm,v 1.3 2010-01-13 11:13:06 ub Exp $
+# $Id: Condition.pm,v 1.4 2010-01-30 03:18:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -152,7 +152,7 @@ sub Run {
         $ChangeID = $Param{Data}->{ChangeID};
 
         # set the object
-        $Object = 'ITMSChange';
+        $Object = 'ITSMChange';
     }
 
     # handle workorder events
@@ -168,7 +168,7 @@ sub Run {
         $ChangeID = $WorkOrder->{ChangeID};
 
         # set the object
-        $Object = 'ITMSWorkOrder';
+        $Object = 'ITSMWorkOrder';
     }
 
     # TODO: Add event for cron job, i.e. TimeEvent if the PlannedStartTime is reached
@@ -368,6 +368,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-01-13 11:13:06 $
+$Revision: 1.4 $ $Date: 2010-01-30 03:18:05 $
 
 =cut
