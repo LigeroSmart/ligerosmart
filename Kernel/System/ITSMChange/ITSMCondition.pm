@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.35 2010-01-30 00:27:45 ub Exp $
+# $Id: ITSMCondition.pm,v 1.36 2010-01-30 01:15:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -1187,15 +1187,36 @@ sub _ConditionListByObject {
     }
     elsif ( $Param{ObjectName} eq 'ITSMWorkOrder' ) {
 
-        # get workorder
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $Param{Selector},
-            UserID      => $Param{UserID},
+        # get object backend
+        my $BackendObject = $Self->_ObjectLoadBackend(
+            Type => 'ITSMWorkOrder',
         );
+
+        # check for error
+        return if !$BackendObject;
+
+        # define default functions for backend
+        my $Sub = 'DataGet';
+
+        # check for available function
+        if ( !$BackendObject->can($Sub) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "No function '$Sub' available for backend '$Param{ObjectName}'!",
+            );
+            return;
+        }
+
+        # execute the subroutine
+        my $WorkOrder = $BackendObject->$Sub(
+            Selector => $Param{Selector},
+            UserID   => $Param{UserID},
+        ) || {};
+
         return if !$WorkOrder;
 
         # get change id
-        $ChangeID = $WorkOrder->{ChangeID};
+        $ChangeID = $WorkOrder->[0]->{ChangeID};
     }
 
     # check change id
@@ -1228,6 +1249,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2010-01-30 00:27:45 $
+$Revision: 1.36 $ $Date: 2010-01-30 01:15:19 $
 
 =cut
