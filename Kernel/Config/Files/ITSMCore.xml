@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.28 2010-01-30 09:58:49 reb Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.29 2010-01-30 11:44:42 reb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -424,7 +424,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="VirtualFS::Backend" Required="0" Valid="1">
-        <Description Lang="en">Configure module used as backend for virtualfs.</Description>
+        <Description Lang="en">Configure module used as backend for VirtualFS.</Description>
         <Description Lang="de">Konfiguration für das Backend-Modul des VirtualFS.</Description>
         <Group>ITSM Core</Group>
         <SubGroup>Core::ITSMCore</SubGroup>
