@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.41 2010-01-29 11:38:22 reb Exp $
+# $Id: Template.pm,v 1.42 2010-01-30 18:25:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -1224,6 +1224,7 @@ sub _CreateTemplateElements {
         ConditionAdd  => '_ConditionAdd',
         AttachmentAdd => '_AttachmentAdd',
         ExpressionAdd => '_ExpressionAdd',
+        ActionAdd     => '_ActionAdd',
         LinkAdd       => '_LinkAdd',
     );
 
@@ -1616,7 +1617,6 @@ sub _CABSerialize {
     my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
 
     return $SerializedData;
-
 }
 
 =item _ConditionSerialize()
@@ -1687,6 +1687,22 @@ sub _ConditionSerialize {
         );
 
         push @{ $OriginalData->{Children} }, { ExpressionAdd => $Expression };
+    }
+
+    # get actions
+    my $Actions = $Self->{ConditionObject}->ActionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    ) || [];
+
+    # add each action to condition data
+    for my $ActionID ( @{$Actions} ) {
+        my $Action = $Self->{ConditionObject}->ActionGet(
+            ActionID => $ActionID,
+            UserID   => $Param{UserID},
+        );
+
+        push @{ $OriginalData->{Children} }, { ActionAdd => $Action };
     }
 
     if ( $Param{Return} eq 'HASH' ) {
@@ -2048,7 +2064,7 @@ sub _ExpressionAdd {
         }
     }
 
-    # add condition
+    # add expression
     my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
         %Data,
         UserID => $Param{UserID},
@@ -2059,6 +2075,76 @@ sub _ExpressionAdd {
         ChangeID     => $Param{ChangeID},
         ExpressionID => $ExpressionID,
     );
+
+    return %Info;
+}
+
+=item _ActionAdd()
+
+Creates new actions for a condition based on the given template. It
+returns a hash of information (change id it was created for, id is
+the action id)
+
+    my %Info = $TemplateObject->_ActionAdd(
+        Data => {
+            # ... Params for ActionAdd
+        },
+        ChangeID => 1,
+        UserID   => 1,
+    );
+
+=cut
+
+sub _ActionAdd {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(UserID ChangeID Data ConditionID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my %Data = %{ $Param{Data} };
+
+    # delete attributes that are not needed
+    delete $Data{ActionID};
+
+    # replace old ids with new ids
+    $Data{ConditionID} = $Param{ConditionID};
+
+    # replace old id only if it is an ID
+    if ( $Data{Selector} =~ m{ \A \d+ \z }xms ) {
+        my $Object = $Self->{ConditionObject}->ObjectGet(
+            ObjectID => $Data{ObjectID},
+            UserID   => $Param{UserID},
+        );
+
+        if ( $Object->{Name} eq 'ITSMChange' ) {
+            $Data{Selector} = $Param{ChangeID};
+        }
+        elsif ( $Object->{Name} eq 'ITSMWorkOrder' ) {
+            $Data{Selector} = $Param{OldWorkOrderIDs}->{ $Data{Selector} };
+        }
+    }
+
+    # add action
+    my $ActionID = $Self->{ConditionObject}->ActionAdd(
+        %Data,
+        UserID => $Param{UserID},
+    );
+
+    my %Info = (
+        ID       => $ActionID,
+        ChangeID => $Param{ChangeID},
+        ActionID => $ActionID,
+    );
+
+    return %Info;
 }
 
 =item _AttachmentAdd()
@@ -2332,6 +2418,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2010-01-29 11:38:22 $
+$Revision: 1.42 $ $Date: 2010-01-30 18:25:56 $
 
 =cut
