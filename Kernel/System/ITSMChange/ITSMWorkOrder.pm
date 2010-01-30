@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.92 2010-01-30 15:47:10 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.93 2010-01-30 20:54:26 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.92 $) [1];
+$VERSION = qw($Revision: 1.93 $) [1];
 
 =head1 NAME
 
@@ -1592,9 +1592,12 @@ sub WorkOrderPossibleStatesGet {
             UserID     => $Param{UserID},
         );
 
-        # set as default state current state
-        my @NextStateIDs;
-        push @NextStateIDs, $WorkOrder->{WorkOrderStateID};
+        # set as default state current state and all possible end states
+        my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+            StateID => $WorkOrder->{WorkOrderStateID},
+            Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+        ) || [];
+        my @NextStateIDs = sort ( @{$EndStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
 
         # get possible next states if no state lock
         if ( !$StateLock ) {
@@ -1603,7 +1606,7 @@ sub WorkOrderPossibleStatesGet {
             my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
                 StateID => $WorkOrder->{WorkOrderStateID},
                 Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-            );
+            ) || [];
 
             # add current workorder state id to list
             @NextStateIDs = sort ( @{$NextStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
@@ -2725,6 +2728,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.92 $ $Date: 2010-01-30 15:47:10 $
+$Revision: 1.93 $ $Date: 2010-01-30 20:54:26 $
 
 =cut

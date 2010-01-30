@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.231 2010-01-30 15:47:10 mae Exp $
+# $Id: ITSMChange.pm,v 1.232 2010-01-30 20:54:26 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.231 $) [1];
+$VERSION = qw($Revision: 1.232 $) [1];
 
 =head1 NAME
 
@@ -1991,9 +1991,12 @@ sub ChangePossibleStatesGet {
             UserID     => $Param{UserID},
         );
 
-        # set als default state current state
-        my @NextStateIDs;
-        push @NextStateIDs, $Change->{ChangeStateID};
+        # set as default state current state and all possible end states
+        my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+            StateID => $Change->{ChangeStateID},
+            Class   => 'ITSM::ChangeManagement::Change::State',
+        ) || [];
+        my @NextStateIDs = sort ( @{$EndStateIDsRef}, $Change->{ChangeStateID} );
 
         # get possible next states if no state lock
         if ( !$StateLock ) {
@@ -2002,7 +2005,7 @@ sub ChangePossibleStatesGet {
             my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
                 StateID => $Change->{ChangeStateID},
                 Class   => 'ITSM::ChangeManagement::Change::State',
-            );
+            ) || [];
 
             # add current change state id to list
             @NextStateIDs = sort ( @{$NextStateIDsRef}, $Change->{ChangeStateID} );
@@ -3073,6 +3076,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.231 $ $Date: 2010-01-30 15:47:10 $
+$Revision: 1.232 $ $Date: 2010-01-30 20:54:26 $
 
 =cut
