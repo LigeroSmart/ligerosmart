@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.13 2010-01-29 21:37:23 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.14 2010-01-30 01:50:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -88,7 +88,7 @@ $Include{"AJAX"}
                             <table width="100%" border="0" cellpadding="3" cellspacing="0">
 <!-- dtl:block:ExpressionOverviewRow -->
                                 <tr class="contentbody">
-                                    <td align="left" width="10%" class="contentvalue">&nbsp;</td>
+#                                    <td align="left" width="10%" class="contentvalue">&nbsp;</td>
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
                                     <td align="left" width="10%" class="contentvalue">$Data{"ObjectOptionString"}</td>
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
@@ -111,9 +111,9 @@ $Include{"AJAX"}
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                         </div>
                                     </td>
-                                    <td align="left" width="10%" class="contentvalue">
-                                        &nbsp;
-                                    </td>
+#                                    <td align="left" width="10%" class="contentvalue">
+#                                        &nbsp;
+#                                    </td>
                                     <td width="10%" align="right">
                                         <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpressionID::$QData{"ExpressionID"}">
                                     </td>
@@ -163,10 +163,10 @@ $Include{"AJAX"}
 <!-- dtl:block:ActionOverviewRowElementActionValueSelection -->
                                         </div>
                                     </td>
-                                    <td align="left" width="10%" class="contentvalue">
-                                        &nbsp;
-                                    </td>
-                                    <td width="100%" align="right">
+#                                    <td align="left" width="10%" class="contentvalue">
+#                                        &nbsp;
+#                                    </td>
+                                    <td width="10%" align="right">
                                         <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteActionID::$QData{"ActionID"}">
                                     </td>
                                     <td align="left" width="10%" class="contentvalue">
@@ -177,14 +177,12 @@ $Include{"AJAX"}
                             </table>
                         </td>
                     </tr>
-
                     <tr class="contentbody">
                         <td align="right">
                             $Text{"Add new action"}.&nbsp;&nbsp;
                             <input class="button" type="submit" value="$Text{"Add"}" name="AddAction">
                         </td>
                     </tr>
-
                     <tr class="contentfooter">
                         <td align="right">
                             <input class="button" type="submit" value="$Text{"Save"}" name="Save">
