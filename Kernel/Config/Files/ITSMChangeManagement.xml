@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.177 2010-01-29 23:50:47 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.178 2010-01-30 01:10:53 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -3365,7 +3365,6 @@
                 <Item>ITSMChange</Item>
                 <Item>ITSMWorkOrder</Item>
                 <Item>CAB</Item>
-                <Item>ITSMCondition</Item>
             </Array>
         </Setting>
     </ConfigItem>
