@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.58 2010-01-30 10:31:41 bes Exp $
+# $Id: ITSMCondition.t,v 1.59 2010-01-30 11:17:34 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -110,6 +110,10 @@ for my $ObjectMethod (@ObjectMethods) {
 #------------------------
 # make some preparations
 #------------------------
+
+# keep track of a time before objects were added,
+# for comparisons in expression match tests
+my $SystemTimeBeforeAdding = $Self->{TimeObject}->SystemTime() - 1;
 
 # create new change
 my @ChangeIDs;
@@ -1231,7 +1235,7 @@ my @ExpressionTests = (
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
                 CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
-                    SystemTime => ( $Self->{TimeObject}->SystemTime() - 10 ),
+                    SystemTime => $SystemTimeBeforeAdding,
                 ),
                 UserID => 1,
             },
@@ -1261,7 +1265,7 @@ my @ExpressionTests = (
                 ConditionID  => $ConditionIDs[2],
                 Selector     => $WorkOrderIDs[0],
                 CompareValue => $Self->{TimeObject}->SystemTime2TimeStamp(
-                    SystemTime => ( $Self->{TimeObject}->SystemTime() - 10 ),
+                    SystemTime => $SystemTimeBeforeAdding,
                 ),
                 UserID => 1,
             },
