@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm - all itsm workorder operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.2 2010-01-30 17:54:26 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.3 2010-01-30 20:04:37 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
@@ -88,11 +88,11 @@ sub new {
     return $Self;
 }
 
-=item Run()
+=item Set()
 
 Updates a workorder with the given data.
 
-    my $Success = $ITSMWorkOrderOperator->Run(
+    my $Success = $ITSMWorkOrderOperator->Set(
         Selector    => 1234,
         Attribute   => 'WorkOrderStateID',
         ActionValue => 2345,
@@ -101,7 +101,7 @@ Updates a workorder with the given data.
 
 =cut
 
-sub Run {
+sub Set {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -137,6 +137,58 @@ sub Run {
     );
 }
 
+=item SetAll()
+
+Updates a set of workorders with the given data.
+
+    my $Success = $ITSMWorkOrderOperator->SetAll(
+        Objects     => [ {...}, {...}, ],  # data of ITSMWorkOrders
+        Attribute   => 'WorkOrderStateID',
+        ActionValue => 2345,
+        UserID      => 1234,
+    );
+
+=cut
+
+sub SetAll {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Objects Attribute ActionValue UserID)) {
+        if ( !exists $Param{$Argument} || !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check objects
+    return if ref $Param{Objects} ne 'ARRAY';
+
+    #return 1 if !@{ $Param{Objects} };
+
+    # update each workorder object
+    WORKORDEROBJECT:
+    for my $WorkOrderObject ( @{ $Param{Objects} } ) {
+
+        # check workorder object
+        next WORKORDEROBJECT if !$WorkOrderObject;
+        next WORKORDEROBJECT if ref $WorkOrderObject ne 'HASH';
+
+        # update workorder object
+        $Self->Set(
+            Selector    => $WorkOrderObject->{WorkOrderID},
+            Attribute   => $Param{Attribute},
+            ActionValue => $Param{ActionValue},
+            UserID      => $Param{UserID},
+        );
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -153,6 +205,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-30 17:54:26 $
+$Revision: 1.3 $ $Date: 2010-01-30 20:04:37 $
 
 =cut
