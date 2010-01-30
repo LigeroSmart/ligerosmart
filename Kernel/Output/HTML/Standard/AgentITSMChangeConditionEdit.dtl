@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.15 2010-01-30 11:08:40 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.16 2010-01-30 13:00:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -129,10 +129,7 @@ function submit_compose() {
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                         </div>
                                     </td>
-#                                    <td align="left" width="10%" class="contentvalue">
-#                                        &nbsp;
-#                                    </td>
-                                    <td width="10%" align="right">
+                                    <td width="100%" align="right">
                                         <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpressionID::$QData{"ExpressionID"}" onclick="return submit_compose();">
                                     </td>
                                     <td align="left" width="10%" class="contentvalue">
@@ -152,13 +149,11 @@ function submit_compose() {
                     <tr class="contenthead">
                         <td class="contentkey">Actions</td>
                     </tr>
-
                     <tr class="contentbody">
                         <td>
                             <table width="100%" border="0" cellpadding="3" cellspacing="0">
 <!-- dtl:block:ActionOverviewRow -->
                                 <tr class="contentbody">
-#                                    <td align="left" width="10%" class="contentvalue">&nbsp;</td>
 <!-- dtl:block:ActionOverviewRowElementObject -->
                                     <td align="left" width="10%" class="contentvalue">$Data{"ObjectOptionString"}</td>
 <!-- dtl:block:ActionOverviewRowElementObject -->
@@ -181,10 +176,7 @@ function submit_compose() {
 <!-- dtl:block:ActionOverviewRowElementActionValueSelection -->
                                         </div>
                                     </td>
-#                                    <td align="left" width="10%" class="contentvalue">
-#                                        &nbsp;
-#                                    </td>
-                                    <td width="10%" align="right">
+                                    <td width="100%" align="right">
                                         <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteActionID::$QData{"ActionID"}" onclick="return submit_compose();">
                                     </td>
                                     <td align="left" width="10%" class="contentvalue">
