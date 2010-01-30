@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.38 2010-01-29 13:32:34 mae Exp $
+# $Id: HistoryAdd.pm,v 1.39 2010-01-30 21:50:59 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -161,7 +161,7 @@ sub Run {
     ( my $Event = $Param{Event} ) =~ s{ Post \z }{}xms;
 
     # distinguish between Change and WorkOrder events, based on naming convention
-    my ($Type) = $Event =~ m{ \A (Change | WorkOrder | Condition) }xms;
+    my ($Type) = $Event =~ m{ \A ( Change | WorkOrder | Condition | Expression ) }xms;
     if ( !$Type ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -490,6 +490,75 @@ sub Run {
         );
     }
 
+    # handle expression events
+    elsif ( $Event eq 'ExpressionAdd' ) {
+
+        # create history for id
+        $Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ExpressionID},
+            UserID      => $Param{UserID},
+        );
+
+        # create history for all expression fields
+        my @ExpressionStatic = qw( ExpressionID UserID ChangeID);
+        EXPRESSIONFIELD:
+        for my $ExpressionField ( keys %{ $Param{Data} } ) {
+
+            # check for static fields
+            next EXPRESSIONFIELD if grep { $_ eq $ExpressionField } @ExpressionStatic;
+
+            # do not add empty fields to history
+            next EXPRESSIONFIELD if !$Param{Data}->{$ExpressionField};
+
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $Param{Data}->{ChangeID},
+                HistoryType => $Event,
+                Fieldname   => $ExpressionField,
+                ContentNew  => $Param{Data}->{$ExpressionField},
+                UserID      => $Param{UserID},
+            );
+        }
+    }
+
+    # handle condition update events
+    elsif ( $Event eq 'ExpressionUpdate' ) {
+
+        # get old data
+        my $OldData = $Param{Data}->{OldExpressionData};
+
+        # create history for all expression fields
+        my @ExpressionStatic = qw( ExpressionID UserID ChangeID OldExpressionData );
+        EXPRESSIONFIELD:
+        for my $ExpressionField ( keys %{ $Param{Data} } ) {
+
+            # check for static fields
+            next EXPRESSIONFIELD if grep { $_ eq $ExpressionField } @ExpressionStatic;
+
+            # do not add empty fields to history
+            next EXPRESSIONFIELD if !$Param{Data}->{$ExpressionField};
+
+            # check if field has changed
+            my $FieldHasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{$ExpressionField},
+                Old => $OldData->{$ExpressionField},
+            );
+
+            # create history only for changed fields
+            next EXPRESSIONFIELD if !$FieldHasChanged;
+
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $Param{Data}->{ChangeID},
+                HistoryType => $Event,
+                Fieldname   => $ExpressionField,
+                ContentNew  => $Param{Data}->{$ExpressionField},
+                ContentOld  => $OldData->{$ExpressionField},
+                UserID      => $Param{UserID},
+            );
+        }
+    }
+
     # error
     else {
 
@@ -580,6 +649,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2010-01-29 13:32:34 $
+$Revision: 1.39 $ $Date: 2010-01-30 21:50:59 $
 
 =cut

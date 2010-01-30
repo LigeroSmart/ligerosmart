@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.42 2010-01-29 13:42:47 mae Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.43 2010-01-30 21:50:59 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,12 +16,13 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,6 +41,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Param);
     $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
     $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
@@ -131,7 +133,7 @@ sub Run {
             $HistoryType =~ m{
                 \A
                 (?: (?: Change | ChangeCAB | WorkOrder ) Update )
-                | (?: (?: Condition ) (?: Add | Update | DeleteAll ) )
+                | (?: (?: Condition | Expression ) (?: Add | Update | DeleteAll ) )
                 \z
             }xms
             )
@@ -159,6 +161,7 @@ sub Run {
                                 | WorkOrderState | WorkOrderType
                                 | WorkOrderAgent | ChangeBuilder | ChangeManager
                                 | Valid
+                                | Object | Attribute | Operator
                             )           # end capture of $Type
                             ID          # processing only for the 'ID' fields
                         }xms
@@ -209,6 +212,24 @@ sub Run {
                             elsif ( $Type eq 'Valid' ) {
                                 $Value = $Self->{ValidObject}->ValidLookup(
                                     ValidID => $HistoryEntry->{$ContentNewOrOld},
+                                );
+                            }
+                            elsif ( $Type eq 'Object' ) {
+                                $Value = $Self->{ConditionObject}->ObjectLookup(
+                                    ObjectID => $HistoryEntry->{$ContentNewOrOld},
+                                    UserID   => $Self->{UserID},
+                                );
+                            }
+                            elsif ( $Type eq 'Attribute' ) {
+                                $Value = $Self->{ConditionObject}->AttributeLookup(
+                                    AttributeID => $HistoryEntry->{$ContentNewOrOld},
+                                    UserID      => $Self->{UserID},
+                                );
+                            }
+                            elsif ( $Type eq 'Operator' ) {
+                                $Value = $Self->{ConditionObject}->OperatorLookup(
+                                    OperatorID => $HistoryEntry->{$ContentNewOrOld},
+                                    UserID     => $Self->{UserID},
                                 );
                             }
                             else {
@@ -324,6 +345,11 @@ sub Run {
 
             # handle condition add with id
             if ( $HistoryEntryType eq 'ConditionAdd' && !$HistoryEntry->{Fieldname} ) {
+                $HistoryEntryType .= 'ID';
+            }
+
+            # handle expression add with id
+            if ( $HistoryEntryType eq 'ExpressionAdd' && !$HistoryEntry->{Fieldname} ) {
                 $HistoryEntryType .= 'ID';
             }
 

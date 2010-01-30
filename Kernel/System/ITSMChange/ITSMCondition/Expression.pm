@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.25 2010-01-28 11:52:45 mae Exp $
+# $Id: Expression.pm,v 1.26 2010-01-30 21:50:59 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -68,11 +68,21 @@ sub ExpressionAdd {
         return;
     }
 
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ExpressionAddPre-Event
     $Self->EventHandler(
         Event => 'ExpressionAddPre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -121,6 +131,7 @@ sub ExpressionAdd {
         Event => 'ExpressionAddPost',
         Data  => {
             %Param,
+            ChangeID     => $Condition->{ChangeID},
             ExpressionID => $ExpressionID,
         },
         UserID => $Param{UserID},
@@ -159,11 +170,30 @@ sub ExpressionUpdate {
         }
     }
 
+    # get expression
+    my $Expression = $Self->ExpressionGet(
+        ExpressionID => $Param{ExpressionID},
+        UserID       => $Param{UserID},
+    );
+
+    # check expression
+    return if !$Expression;
+
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Expression->{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ExpressionUpdatePre-Event
     $Self->EventHandler(
         Event => 'ExpressionUpdatePre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -217,6 +247,7 @@ sub ExpressionUpdate {
         Event => 'ExpressionUpdatePost',
         Data  => {
             %Param,
+            ChangeID          => $Condition->{ChangeID},
             OldExpressionData => $ExpressionData,
         },
         UserID => $Param{UserID},
@@ -656,6 +687,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-01-28 11:52:45 $
+$Revision: 1.26 $ $Date: 2010-01-30 21:50:59 $
 
 =cut

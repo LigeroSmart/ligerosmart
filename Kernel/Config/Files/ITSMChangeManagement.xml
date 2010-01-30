@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.179 2010-01-30 17:18:07 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.180 2010-01-30 21:50:59 mae Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1355,7 +1355,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
-                <Item Key="Event">(ConditionAddPost|ConditionUpdatePost|ConditionDeletePost|ConditionDeleteAllPost)</Item>
+                <Item Key="Event">(ConditionAddPost|ConditionUpdatePost|ConditionDeletePost|ConditionDeleteAllPost|ExpressionAddPost|ExpressionUpdatePost|ExpressionDeletePost|ExpressionDeleteAllPost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
