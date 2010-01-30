@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.pm,v 1.10 2010-01-20 00:15:04 ub Exp $
+# $Id: ITSMStateMachine.pm,v 1.11 2010-01-30 20:45:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -484,6 +484,114 @@ sub StateTransitionGet {
     return \@NextStateIDs;
 }
 
+=item StateTransitionGetEndStates()
+
+Get a state transition for a given state id, but only show the possible next end states.
+Returns an array reference of the next end state ids.
+
+    my $NextStateIDsRef = $StateMachineObject->StateTransitionGetEndStates(
+        StateID => 1,                                       # id within the given class, or 0 to indicate the start state
+        Class   => 'ITSM::ChangeManagement::Change::State', # the name of a general catalog class
+    );
+
+=cut
+
+sub StateTransitionGetEndStates {
+    my ( $Self, %Param ) = @_;
+
+    # check if StateID are given (they can be 0)
+    for my $Argument (qw(StateID)) {
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check that class is given
+    if ( !$Param{Class} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Class!',
+        );
+        return;
+    }
+
+    # check if StateID belongs to the given class, but only if state id is not a start state (=0)
+    if ( $Param{StateID} ) {
+
+        # get class of given StateID
+        my $DataRef = $Self->{GeneralCatalogObject}->ItemGet(
+            ItemID => $Param{StateID},
+        );
+
+        # check if StateID belongs to given class
+        if ( !$DataRef || !%{$DataRef} || $DataRef->{Class} ne $Param{Class} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "StateID $Param{StateID} is not in the class '$Param{Class}'!",
+            );
+            return;
+        }
+    }
+
+    # find all state ids and next_state ids which belong to the given class
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT DISTINCT s.next_state_id '
+            . 'FROM change_state_machine s '
+            . 'LEFT OUTER JOIN general_catalog g '
+            . 'ON ( (s.state_id = g.id ) OR (s.next_state_id = g.id) ) '
+            . 'WHERE s.state_id = ? AND g.general_catalog_class = ?',
+        Bind => [ \$Param{StateID}, \$Param{Class} ],
+    );
+
+    my @NextStateIDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @NextStateIDs, $Row[0];
+    }
+
+    # if the start state was requested and more than one start state was found
+    if ( !$Param{StateID} ) {
+
+        if ( !@NextStateIDs ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Can not get initial state for '$Param{Class}' "
+                    . "No initial state was found!",
+            );
+            return;
+        }
+        if ( scalar @NextStateIDs > 1 ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Can not get initial state for '$Param{Class}' "
+                    . "More than one initial state was found!",
+            );
+            return;
+        }
+    }
+
+    # build next state ids string
+    my $NextStateIDsString = join ', ', @NextStateIDs;
+
+    # find all next state ids which are end states
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT DISTINCT s.state_id '
+            . 'FROM change_state_machine s '
+            . "WHERE s.state_id IN ( $NextStateIDsString ) "
+            . 'AND s.next_state_id = 0',
+    );
+
+    my @NextEndStateIDs;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @NextEndStateIDs, $Row[0];
+    }
+
+    return \@NextEndStateIDs;
+}
+
 =item StateTransitionList()
 
 Return a state transition list hash-array reference.
@@ -863,6 +971,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-20 00:15:04 $
+$Revision: 1.11 $ $Date: 2010-01-30 20:45:17 $
 
 =cut

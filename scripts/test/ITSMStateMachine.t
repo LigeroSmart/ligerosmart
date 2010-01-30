@@ -2,7 +2,7 @@
 # ITSMStateMachine.t - StateMachine tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMStateMachine.t,v 1.7 2010-01-12 13:51:24 ub Exp $
+# $Id: ITSMStateMachine.t,v 1.8 2010-01-30 20:45:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -52,6 +52,7 @@ $Self->Is(
         StateTransitionDelete
         StateTransitionDeleteAll
         StateTransitionGet
+        StateTransitionGetEndStates
         StateTransitionList
         StateTransitionUpdate
     );
@@ -123,6 +124,70 @@ my %DefaultWorkOrderStateTransitions = (
     'canceled'    => [0],
     'closed'      => [0],
 );
+
+# ------------------------------------------------------------ #
+# state transistion get end states tests
+# ------------------------------------------------------------ #
+
+{
+
+    # get end states
+    my $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+        StateID => $Name2ChangeStateID{approved},
+        Class   => 'ITSM::ChangeManagement::Change::State',
+    );
+    my %NextEndStateLookup = map { $_ => 1 } @{$NextEndStateIDsRef};
+    $Self->True(
+        $NextEndStateLookup{ $Name2ChangeStateID{retracted} },
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+    $Self->False(
+        $NextEndStateLookup{ $Name2ChangeStateID{'in progress'} },
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+
+    # get end states
+    $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+        StateID => $Name2ChangeStateID{requested},
+        Class   => 'ITSM::ChangeManagement::Change::State',
+    );
+    %NextEndStateLookup = map { $_ => 1 } @{$NextEndStateIDsRef};
+    $Self->True(
+        $NextEndStateLookup{ $Name2ChangeStateID{rejected} },
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+    $Self->True(
+        $NextEndStateLookup{ $Name2ChangeStateID{retracted} },
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+    $Self->False(
+        $NextEndStateLookup{ $Name2ChangeStateID{'pending approval'} },
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+
+    # get end states
+    $NextEndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+        StateID => $Name2ChangeStateID{retracted},
+        Class   => 'ITSM::ChangeManagement::Change::State',
+    );
+    $Self->False(
+        scalar @{$NextEndStateIDsRef},
+        'Test '
+            . $TestCount++
+            . ": StateTransitionGetEndStates() - Get the next end states.",
+    );
+
+}
 
 # ------------------------------------------------------------ #
 # state transistion add, update and delete tests
