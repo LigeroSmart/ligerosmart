@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.40 2010-01-30 17:17:59 mae Exp $
+# $Id: ITSMCondition.pm,v 1.41 2010-01-30 20:00:31 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -939,9 +939,12 @@ sub ConditionMatchStateLock {
 
             # store only affected actions
             if (
-                $Action->{ObjectID}       eq $ObjectID
-                && $Action->{OperatorID}  eq $OperatorID
-                && $Action->{Selector}    eq $Param{Selector}
+                $Action->{ObjectID} eq $ObjectID
+                && $Action->{OperatorID} eq $OperatorID
+                && (
+                    $Action->{Selector} eq $Param{Selector}
+                    || $Action->{Selector} eq 'all'
+                )
                 && $Action->{ActionValue} eq $Param{StateID}
                 )
             {
@@ -1128,7 +1131,7 @@ sub _ConditionMatch {
             ExpressionID      => $ExpressionID,
             AttributesChanged => $AttributesChanged,
             UserID            => $Param{UserID},
-        );
+        ) || 0;
 
         # set ConditionMatch true if ExpressionMatch is true and 'any' is requested
         if ( $ConditionData->{ExpressionConjunction} eq 'any' && $ExpressionMatch ) {
@@ -1255,6 +1258,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2010-01-30 17:17:59 $
+$Revision: 1.41 $ $Date: 2010-01-30 20:00:31 $
 
 =cut
