@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.28 2010-01-29 17:46:34 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.29 2010-01-30 17:51:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1192,27 +1192,17 @@ sub _OutputWorkOrderOverview {
         my %Table;
         my $Row = 0;
 
-        for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
-            $Table{CellData}[ $Row++ ] = [ map { { Content => $_ } } @{$WorkOrder} ];
-        }
-
-        $Table{ColumnData}[0]{Width} = 10;
-        $Table{ColumnData}[1]{Width} = 40;
-        $Table{ColumnData}[2]{Width} = 40;
-        $Table{ColumnData}[3]{Width} = 40;
-        $Table{ColumnData}[4]{Width} = 40;
-        $Table{ColumnData}[5]{Width} = 40;
-        $Table{ColumnData}[6]{Width} = 40;
-
         # set new position
         $Self->{PDFObject}->PositionSet(
             Move => 'relativ',
             Y    => -15,
         );
 
-        # output headline
+        # output headline for the section
+        my $SectionTitle = $Self->{LayoutObject}->{LanguageObject}->Get('Workorders');
+        $SectionTitle .= ' (' . scalar @{ $Param{WorkOrderOverview} } . ')';
         $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Workorders'),
+            Text     => $SectionTitle,
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',
@@ -1220,25 +1210,42 @@ sub _OutputWorkOrderOverview {
             Color    => '#666666',
         );
 
-        # set new position
-        $Self->{PDFObject}->PositionSet(
-            Move => 'relativ',
-            Y    => -4,
-        );
+        # output the overview table only if there is at least a single workorder,
+        # printing an empty table might create havoc
+        if ( @{ $Param{WorkOrderOverview} } ) {
 
-        # table params
-        $Table{Type}            = 'Cut';
-        $Table{Border}          = 0;
-        $Table{FontSize}        = 6;
-        $Table{BackgroundColor} = '#DDDDDD';
-        $Table{Padding}         = 1;
-        $Table{PaddingTop}      = 3;
-        $Table{PaddingBottom}   = 3;
+            for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
+                $Table{CellData}[ $Row++ ] = [ map { { Content => $_ } } @{$WorkOrder} ];
+            }
 
-        # output table
-        $Self->_PDFOutputTable(
-            Table => \%Table,
-        );
+            $Table{ColumnData}[0]{Width} = 10;
+            $Table{ColumnData}[1]{Width} = 40;
+            $Table{ColumnData}[2]{Width} = 40;
+            $Table{ColumnData}[3]{Width} = 40;
+            $Table{ColumnData}[4]{Width} = 40;
+            $Table{ColumnData}[5]{Width} = 40;
+            $Table{ColumnData}[6]{Width} = 40;
+
+            # set new position
+            $Self->{PDFObject}->PositionSet(
+                Move => 'relativ',
+                Y    => -4,
+            );
+
+            # table params
+            $Table{Type}            = 'Cut';
+            $Table{Border}          = 0;
+            $Table{FontSize}        = 6;
+            $Table{BackgroundColor} = '#DDDDDD';
+            $Table{Padding}         = 1;
+            $Table{PaddingTop}      = 3;
+            $Table{PaddingBottom}   = 3;
+
+            # output table
+            $Self->_PDFOutputTable(
+                Table => \%Table,
+            );
+        }
     }
     else {
 
