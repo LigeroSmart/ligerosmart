@@ -2,7 +2,7 @@
 # ITSMCondition.t - Condition tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.t,v 1.59 2010-01-30 11:17:34 bes Exp $
+# $Id: ITSMCondition.t,v 1.60 2010-01-30 11:19:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1843,7 +1843,7 @@ for my $ExpressionCounter ( 0 .. ( scalar @ExpressionIDs - 1 ) ) {
             ->{AttributeLookup}->{Name};
     }
 
-    # test on successfull result
+    # test on successful result
     if ( $ExpressionTests[$ExpressionCounter]->{MatchSuccess} ) {
 
         # test without given changed attributes
