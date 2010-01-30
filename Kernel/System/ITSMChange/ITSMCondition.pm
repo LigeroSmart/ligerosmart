@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.37 2010-01-30 16:32:46 ub Exp $
+# $Id: ITSMCondition.pm,v 1.38 2010-01-30 16:50:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -941,6 +941,9 @@ sub ConditionMatchStateLock {
                 )
             {
                 push @AffectedConditionIDs, $Action->{ConditionID};
+
+                # found a condition with an affected action
+                # so we can move on to the next condition
                 next CONDITIONID;
             }
         }
@@ -953,15 +956,12 @@ sub ConditionMatchStateLock {
     AFFECTEDCONDITIONID:
     for my $AffectedConditionID (@AffectedConditionIDs) {
 
-# TODO: Does the function _ConditionMatch() do the right thing here?
-# Shouldn't we try to match against an action? _ConditionMatch() internally matches only expressions?
-# Or am I missing something here? (Udo)
-
         # get condition match
         my $ConditionMatch = $Self->_ConditionMatch(
             ConditionID => $AffectedConditionID,
             UserID      => $Param{UserID},
         );
+
         next AFFECTEDCONDITIONID if !$ConditionMatch;
 
         # condition matched successfully
@@ -1250,6 +1250,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2010-01-30 16:32:46 $
+$Revision: 1.38 $ $Date: 2010-01-30 16:50:30 $
 
 =cut
