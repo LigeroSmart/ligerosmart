@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.36 2010-01-30 01:15:19 ub Exp $
+# $Id: ITSMCondition.pm,v 1.37 2010-01-30 16:32:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -941,6 +941,7 @@ sub ConditionMatchStateLock {
                 )
             {
                 push @AffectedConditionIDs, $Action->{ConditionID};
+                next CONDITIONID;
             }
         }
     }
@@ -1249,6 +1250,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2010-01-30 01:15:19 $
+$Revision: 1.37 $ $Date: 2010-01-30 16:32:46 $
 
 =cut
