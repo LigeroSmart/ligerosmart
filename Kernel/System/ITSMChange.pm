@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.230 2010-01-30 01:17:36 ub Exp $
+# $Id: ITSMChange.pm,v 1.231 2010-01-30 15:47:10 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.230 $) [1];
+$VERSION = qw($Revision: 1.231 $) [1];
 
 =head1 NAME
 
@@ -1992,7 +1992,8 @@ sub ChangePossibleStatesGet {
         );
 
         # set als default state current state
-        my @NextStateIDs = qw( $Change->{ChangeStateID} );
+        my @NextStateIDs;
+        push @NextStateIDs, $Change->{ChangeStateID};
 
         # get possible next states if no state lock
         if ( !$StateLock ) {
@@ -3072,6 +3073,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.230 $ $Date: 2010-01-30 01:17:36 $
+$Revision: 1.231 $ $Date: 2010-01-30 15:47:10 $
 
 =cut
