@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.45 2010-01-28 13:34:23 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.46 2010-01-31 10:08:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -87,13 +87,18 @@
                         </div>
                     </td>
                     <td class="contentvalue">
-                        <table width="100%">
+                        <table>
+                            <colgroup>
+                                <col width="250">
+                                <col width="16">
+                                <col width="100">
+                                <col>
+                            </colgroup>
 <!-- dtl:block:AttachmentRow -->
                             <tr>
-                                <td width="250">$QData{"Filename"}</td>
-                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};ChangeID=$QData{"ChangeID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
-                                <td width="100">$QData{"Filesize"}</td>
-                                <td width="*">&nbsp;</td>
+                                <td>$Data{"Filename"}</td>
+                                <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};ChangeID=$QData{"ChangeID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                <td>$Data{"Filesize"}</td>
                             </tr>
 <!-- dtl:block:AttachmentRow -->
                         </table>

@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.30 2010-01-28 13:34:23 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.31 2010-01-31 10:08:49 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -105,12 +105,18 @@
                         </div>
                     </td>
                     <td class="contentvalue">
-                        <table width="100%">
+                        <table>
+                            <colgroup>
+                                <col width="250">
+                                <col width="16">
+                                <col width="100">
+                                <col>
+                            </colgroup>
 <!-- dtl:block:AttachmentRow -->
                             <tr>
                                 <td>$Data{"Filename"}</td>
-                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};WorkOrderID=$QData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
-                                <td width="100%">$Data{"Filesize"}</td>
+                                <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};WorkOrderID=$QData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                <td>$Data{"Filesize"}</td>
                             </tr>
 <!-- dtl:block:AttachmentRow -->
                         </table>
