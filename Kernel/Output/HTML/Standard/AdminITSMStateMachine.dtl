@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.20 2010-01-20 08:30:37 ub Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.21 2010-01-31 20:41:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -189,7 +189,7 @@
 <!-- dtl:block:StateTransitionDelete -->
             <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td class="contenthead">$Text{"Delete a"} $Text{"$QData{"ClassShortName"}"} $Text{"state transition"}</td>
+                    <td class="contenthead">$Text{"Delete a"} $QData{"ClassShortName"} $Text{"state transition"}</td>
                 </tr>
                 <tr>
                     <td class="contentbody">
