@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.185 2010-01-31 12:51:19 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.186 2010-01-31 14:37:31 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -192,31 +192,6 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeSchedule" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentITSMChangeSchedule object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeSchedule-Objekts im Agenteninterface.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <GroupRo>itsm-change</GroupRo>
-                <Description>Forward schedule of changes. Overview over approved changes.</Description>
-                <NavBarName>ITSM Change</NavBarName>
-                <Title>Change Schedule</Title>
-                <NavBar>
-                    <Description>Change Schedule</Description>
-                    <Name>Change Schedule</Name>
-                    <Image>overview.png</Image>
-                    <Link>Action=AgentITSMChangeSchedule</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>ITSM Change</NavBar>
-                    <AccessKey></AccessKey>
-                    <Prio>200</Prio>
-                </NavBar>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeHistory" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangeHistory object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeHistory-Objekts im Agenteninterface.</Description>
@@ -352,6 +327,56 @@
                 <Description>Change Print</Description>
                 <Title>Print</Title>
                 <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+        <ConfigItem Name="Frontend::Module###AgentITSMChangePSA" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangePSA object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePSA-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>PSA (Projected Service Availability) of changes. Overview over approved changes and their services.</Description>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>PSA</Title>
+                <NavBar>
+                    <Description>PSA (Projected Service Availability)</Description>
+                    <Name>PSA</Name>
+                    <Image>overview.png</Image>
+                    <Link>Action=AgentITSMChangePSA</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>ITSM Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>250</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeSchedule" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the AgentITSMChangeSchedule object in the agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration des AgentITSMChangeSchedule-Objekts im Agenteninterface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change</GroupRo>
+                <Description>Forward schedule of changes. Overview over approved changes.</Description>
+                <NavBarName>ITSM Change</NavBarName>
+                <Title>Change Schedule</Title>
+                <NavBar>
+                    <Description>Change Schedule</Description>
+                    <Name>Schedule</Name>
+                    <Image>overview.png</Image>
+                    <Link>Action=AgentITSMChangeSchedule</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>ITSM Change</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>200</Prio>
+                </NavBar>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -2478,6 +2503,7 @@
                 <Item>rejected</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
+                <Item>pending pir</Item>
                 <Item>successful</Item>
                 <Item>failed</Item>
                 <Item>canceled</Item>
@@ -2637,6 +2663,91 @@
             </Option>
         </Setting>
     </ConfigItem>
+
+
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePSA###Filter::ChangeStates" Required="1" Valid="1">
+        <Description Lang="en">Defines the change states that will be used as filters in the Change PSA overview.</Description>
+        <Description Lang="de">Definiert die Change-States die als Filter in der Change PSA-Übersicht verwendet werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangePSAOverview</SubGroup>
+        <Setting>
+            <Array>
+                <Item>approved</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePSA###Order::Default" Required="1" Valid="1">
+        <Description Lang="en">Order default in the Change PSA overview.</Description>
+        <Description Lang="de">Standard Reihenfolge der Changes in der Change PSA-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangePSAOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="Up">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePSA###Permission" Required="1" Valid="1">
+        <Description Lang="en">Required privilege to view list of Change PSA.</Description>
+        <Description Lang="de">Benötigtes Recht zum Einsehen der Change PSA-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangePSAOverview</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">ro</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePSA###ShowColumns" Required="1" Valid="1">
+        <Description Lang="en">Defines the shown columns in the Change PSA overview. This option has no effect on the position of the column.</Description>
+        <Description Lang="de">Definiert die angezeigten Tabellenspalten in der Change PSA-Übersicht. Diese Option hat keinen Effekt auf die Position der Spalten.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangePSAOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeStateSignal">1</Item>
+                <Item Key="ChangeNumber">1</Item>
+                <Item Key="ChangeTitle">1</Item>
+                <Item Key="ChangeBuilder">0</Item>
+                <Item Key="ChangeManager">0</Item>
+                <Item Key="WorkOrderCount">0</Item>
+                <Item Key="ChangeState">1</Item>
+                <Item Key="Category">0</Item>
+                <Item Key="Impact">0</Item>
+                <Item Key="Priority">1</Item>
+                <Item Key="Services">1</Item>
+                <Item Key="RequestedTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">0</Item>
+                <Item Key="ActualEndTime">0</Item>
+                <Item Key="CreateTime">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangePSA###SortBy::Default" Required="1" Valid="1">
+        <Description Lang="en">Change sort by default in the Change PSA overview.</Description>
+        <Description Lang="de">Standard Sortierung der Changes in der Change PSA-Übersicht.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangePSAOverview</SubGroup>
+        <Setting>
+            <Option SelectedID="PlannedStartTime">
+                <Item Key="ChangeNumber">ChangeNumber</Item>
+                <Item Key="ChangeTitle">ChangeTitle</Item>
+                <Item Key="ChangeStateID">ChangeState</Item>
+                <Item Key="CategoryID">Category</Item>
+                <Item Key="ImpactID">Impact</Item>
+                <Item Key="PriorityID">Priority</Item>
+                <Item Key="RequestedTime">RequestedTime</Item>
+                <Item Key="PlannedStartTime">PlannedStartTime</Item>
+                <Item Key="PlannedEndTime">PlannedEndTime</Item>
+                <Item Key="ActualStartTime">ActualStartTime</Item>
+                <Item Key="ActualEndTime">ActualEndTime</Item>
+                <Item Key="Priority">Priority</Item>
+                <Item Key="CreateTime">CreateTime</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
         <Description Lang="en">Defines the change states that will be used as filters in the Change Schedule overview.</Description>
         <Description Lang="de">Definiert die Change-States die als Filter in der Change Schedule-Übersicht verwendet werden.</Description>
@@ -2757,6 +2868,7 @@
                 <Item>pending approval</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
+                <Item>pending pir</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -2842,6 +2954,7 @@
                 <Item>pending approval</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
+                <Item>pending pir</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -2927,6 +3040,7 @@
                 <Item>pending approval</Item>
                 <Item>approved</Item>
                 <Item>in progress</Item>
+                <Item>pending pir</Item>
             </Array>
         </Setting>
     </ConfigItem>
