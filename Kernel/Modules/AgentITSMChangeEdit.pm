@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.43 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.44 2010-01-31 05:22:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -166,8 +166,8 @@ sub Run {
                 $GetParam{RequestedTimeYear}
                 && $GetParam{RequestedTimeMonth}
                 && $GetParam{RequestedTimeDay}
-                && $GetParam{RequestedTimeHour}
-                && $GetParam{RequestedTimeMinute}
+                && defined $GetParam{RequestedTimeHour}
+                && defined $GetParam{RequestedTimeMinute}
                 )
             {
 
