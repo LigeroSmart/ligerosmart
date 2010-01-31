@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.42 2010-01-31 13:28:07 mae Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.43 2010-01-31 18:16:57 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,8 +40,17 @@ sub Data {
     # Change menu
     $Lang->{'ITSM Change'}    = 'Change';
     $Lang->{'ITSM Workorder'} = 'Workorder';
+    $Lang->{'Involved Persons'} = 'Beteiligte Personen';
+    $Lang->{'Add Workorder'} = 'Workorder hinzufügen';
+    $Lang->{'Move Time Slot'} = 'Verschiebe Timeslot';
+    $Lang->{'Print the change'} = 'Diesen Change drucken';
+    $Lang->{'Edit the change'} = 'Diesen Change bearbeiten';
+    $Lang->{'Change involved persons of the change'} = 'Bearbeite beteiligte Personen dieses Changes';
+    $Lang->{'Add a workorder to the change'} = 'Füge eine Workorder zu diesem Change hinzu';
+    $Lang->{'Edit the conditions of the change'} = 'Bearbeite die Conditions dieses Changes';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
+    $Lang->{'Justification'}                     = 'Begründung';
     $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
     $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
     $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
@@ -173,6 +182,19 @@ sub Data {
 
     # Overviews
     $Lang->{'Change Schedule'} = 'Change Schedule';
+
+    # Workorder delete
+    $Lang->{'Do you really want to delete this workorder?'} = 'Möchten Sie diese Workorder wirklich löschen?';
+    $Lang->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Sie können diese Workorder nicht löschen. Sie wird in mindestens einer Condition verwendet!';
+    $Lang->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Condition(s)';
+
+    # Condition Overview
+    $Lang->{'Conditions and Actions'} = 'Conditions und Actions';
+    $Lang->{'Add new condition and action pair'} = 'Füge ein neues Condition und Action Paar hinzu';
+
+    # Condition Edit
+    $Lang->{'Add new expression'} = 'Füge eine neue Expression hinzu';
+    $Lang->{'Add new action'} = 'Füge eine neue Action hinzu';
 
     return 1;
 }
