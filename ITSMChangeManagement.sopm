@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.162 2010-01-31 12:50:30 mae Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.163 2010-01-31 14:35:41 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -26,7 +26,6 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCondition.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeConditionEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeEdit.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSchedule.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistory.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistoryZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeInvolvedPersons.pm"/>
@@ -36,6 +35,8 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeMyWorkOrders.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangePIR.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangePrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangePSA.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSchedule.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeTimeSlot.pm"/>
