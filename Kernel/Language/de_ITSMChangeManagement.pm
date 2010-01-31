@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.38 2010-01-30 21:50:59 mae Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.39 2010-01-31 00:12:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -50,7 +50,7 @@ sub Data {
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
     $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
     $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Nummer';
-    $Lang->{'ChangeAttribute::ChangeState'}      = 'Change State';
+    $Lang->{'ChangeAttribute::ChangeState'}      = 'Change Status';
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Titel';
     $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Geplanter Start';
