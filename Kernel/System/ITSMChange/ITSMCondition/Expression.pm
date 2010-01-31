@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.27 2010-01-31 11:32:53 mae Exp $
+# $Id: Expression.pm,v 1.28 2010-01-31 13:23:05 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -198,9 +198,6 @@ sub ExpressionUpdate {
         UserID => $Param{UserID},
     );
 
-    # get current expression data for event handler
-    my $ExpressionData = $Expression;
-
     # map update attributes to column names
     my %Attribute = (
         ObjectID     => 'object_id',
@@ -245,7 +242,7 @@ sub ExpressionUpdate {
         Data  => {
             %Param,
             ChangeID          => $Condition->{ChangeID},
-            OldExpressionData => $ExpressionData,
+            OldExpressionData => $Expression,
         },
         UserID => $Param{UserID},
     );
@@ -476,7 +473,8 @@ sub ExpressionDeleteAll {
         Event => 'ExpressionDeleteAllPre',
         Data  => {
             %Param,
-            ChangeID => $Condition->{ChangeID},
+            ChangeID    => $Condition->{ChangeID},
+            ConditionID => $Param{ConditionID},
         },
         UserID => $Param{UserID},
     );
@@ -493,7 +491,8 @@ sub ExpressionDeleteAll {
         Event => 'ExpressionDeleteAllPost',
         Data  => {
             %Param,
-            ChangeID => $Condition->{ChangeID},
+            ChangeID    => $Condition->{ChangeID},
+            ConditionID => $Param{ConditionID},
         },
         UserID => $Param{UserID},
     );
@@ -733,6 +732,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-01-31 11:32:53 $
+$Revision: 1.28 $ $Date: 2010-01-31 13:23:05 $
 
 =cut

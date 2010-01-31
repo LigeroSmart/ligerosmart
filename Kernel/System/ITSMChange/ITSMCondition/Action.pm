@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Action.pm,v 1.8 2010-01-30 20:01:33 mae Exp $
+# $Id: Action.pm,v 1.9 2010-01-31 13:22:40 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -69,11 +69,21 @@ sub ActionAdd {
         return;
     }
 
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ActionAddPre-Event
     $Self->EventHandler(
         Event => 'ActionAddPre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -132,6 +142,7 @@ sub ActionAdd {
         Event => 'ActionAddPost',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
             ActionID => $ActionID,
         },
         UserID => $Param{UserID},
@@ -171,19 +182,32 @@ sub ActionUpdate {
         }
     }
 
+    # get action
+    my $Action = $Self->ActionGet(
+        ActionID => $Param{ActionID},
+        UserID   => $Param{UserID},
+    );
+
+    # check action
+    return if !$Action;
+
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Action->{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ActionUpdatePre-Event
     $Self->EventHandler(
         Event => 'ActionUpdatePre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
-    );
-
-    # get current action data for event handler
-    my $ActionData = $Self->ActionGet(
-        ActionID => $Param{ActionID},
-        UserID   => $Param{UserID},
     );
 
     # map update attributes to column names
@@ -230,7 +254,8 @@ sub ActionUpdate {
         Event => 'ActionUpdatePost',
         Data  => {
             %Param,
-            OldActionData => $ActionData,
+            ChangeID      => $Condition->{ChangeID},
+            OldActionData => $Action,
         },
         UserID => $Param{UserID},
     );
@@ -377,11 +402,30 @@ sub ActionDelete {
         }
     }
 
+    # get action
+    my $Action = $Self->ActionGet(
+        ActionID => $Param{ActionID},
+        UserID   => $Param{UserID},
+    );
+
+    # check action
+    return if !$Action;
+
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Action->{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ActionDeletePre-Event
     $Self->EventHandler(
         Event => 'ActionDeletePre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -398,6 +442,7 @@ sub ActionDelete {
         Event => 'ActionDeletePost',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -430,11 +475,22 @@ sub ActionDeleteAll {
         }
     }
 
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ActionDeleteAllPre-Event
     $Self->EventHandler(
         Event => 'ActionDeleteAllPre',
         Data  => {
             %Param,
+            ChangeID    => $Condition->{ChangeID},
+            ConditionID => $Param{ConditionID},
         },
         UserID => $Param{UserID},
     );
@@ -451,6 +507,8 @@ sub ActionDeleteAll {
         Event => 'ActionDeleteAllPost',
         Data  => {
             %Param,
+            ChangeID    => $Condition->{ChangeID},
+            ConditionID => $Param{ConditionID},
         },
         UserID => $Param{UserID},
     );
@@ -492,6 +550,15 @@ sub ActionExecute {
     # check action content
     return if !$Action;
 
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Action->{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # get action attributes
     my $ActionData = $Self->_ActionExecuteInit(
         Action => $Action,
@@ -510,6 +577,7 @@ sub ActionExecute {
         Event => 'ActionExecutePre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -580,12 +648,17 @@ sub ActionExecute {
         UserID => $Param{UserID},
     );
 
+    # get nice action result
+    my $ActionResult = ($Result) ? 'successfully' : 'unsuccessfully';
+
     # trigger ActionExecutePost-Event
     $Self->EventHandler(
         Event => 'ActionExecutePost',
         Data  => {
             %Param,
             %OperatorExecute,
+            ChangeID     => $Condition->{ChangeID},
+            ActionResult => $ActionResult,
         },
         UserID => $Param{UserID},
     );
@@ -724,6 +797,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-01-30 20:01:33 $
+$Revision: 1.9 $ $Date: 2010-01-31 13:22:40 $
 
 =cut
