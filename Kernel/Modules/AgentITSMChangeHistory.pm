@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.43 2010-01-30 21:50:59 mae Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.44 2010-01-31 13:24:49 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,7 +133,7 @@ sub Run {
             $HistoryType =~ m{
                 \A
                 (?: (?: Change | ChangeCAB | WorkOrder ) Update )
-                | (?: (?: Condition | Expression ) (?: Add | Update | DeleteAll ) )
+                | (?: (?: Condition | Expression | Action ) (?: Add | Update | Delete | DeleteAll | Execute ) )
                 \z
             }xms
             )
@@ -351,6 +351,30 @@ sub Run {
             # handle expression add with id
             if ( $HistoryEntryType eq 'ExpressionAdd' && !$HistoryEntry->{Fieldname} ) {
                 $HistoryEntryType .= 'ID';
+            }
+
+            # handle action add with id
+            if ( $HistoryEntryType eq 'ActionAdd' && !$HistoryEntry->{Fieldname} ) {
+                $HistoryEntryType .= 'ID';
+            }
+
+            # handle action add with id
+            if ( $HistoryEntryType eq 'ActionExecute' ) {
+
+                # get content elements
+                my @ActionExecuteData = split /,/, $Data{Content};
+
+                # extract result
+                my $ActionExecuteResult
+                    = ( $ActionExecuteData[1] =~ m{ ( unsuccessfully | successfully ) }xms )[0];
+
+                # translate result
+                $ActionExecuteData[1] = ' "' . $Self->{LayoutObject}->{LanguageObject}->Get(
+                    $ActionExecuteResult,
+                ) . '"';
+
+                # create content for translation
+                $Data{Content} = join ',', @ActionExecuteData;
             }
 
             # show 'nice' output with variable substitution
