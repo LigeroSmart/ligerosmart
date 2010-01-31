@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.25 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.26 2010-01-31 16:09:45 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -123,8 +123,8 @@ sub Run {
                     $GetParam{ $TimeType . 'Year' }
                     && $GetParam{ $TimeType . 'Month' }
                     && $GetParam{ $TimeType . 'Day' }
-                    && $GetParam{ $TimeType . 'Hour' }
-                    && $GetParam{ $TimeType . 'Minute' }
+                    && defined $GetParam{ $TimeType . 'Hour' }
+                    && defined $GetParam{ $TimeType . 'Minute' }
                     )
                 {
 
