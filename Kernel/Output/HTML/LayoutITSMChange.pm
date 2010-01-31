@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.36 2010-01-23 19:45:05 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.37 2010-01-31 15:31:05 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =over 4
 
@@ -121,6 +121,17 @@ sub ITSMChangeBuildWorkOrderGraph {
             = ( $Time{PlannedEndTime} > $Time{ActualEndTime} )
             ? $Time{PlannedEndTime}
             : $Time{ActualEndTime};
+    }
+
+    # check for real end of end time for scale and graph items
+    # only if ActualStartTime is set
+    if (
+        $Time{ActualStartTime}
+        && !$Time{ActualEndTime}
+        && ( $Time{EndTime} < $Self->{TimeObject}->SystemTime() )
+        )
+    {
+        $Time{EndTime} = $Self->{TimeObject}->SystemTime();
     }
 
     # calculate ticks for change
