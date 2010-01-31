@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.43 2010-01-31 17:33:33 mae Exp $
+# $Id: ITSMCondition.pm,v 1.44 2010-01-31 17:38:30 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -1103,6 +1103,15 @@ sub ConditionListByObjectType {
             ) || []
     } @{$ChangeConditions};
 
+    # get object id of object type
+    my $ObjectID = $Self->ObjectLookup(
+        Name   => $Param{ObjectType},
+        UserID => $Param{UserID},
+    );
+
+    # check object id
+    return if !$ObjectID;
+
     # get only affected unique condition id
     my @AffectedConditionIDs;
     CONDITIONID:
@@ -1121,20 +1130,11 @@ sub ConditionListByObjectType {
             # check expression
             next EXPRESSIONID if !$Expression;
 
-            # check for selector, may we do not need to do much lookups
+            # check for selector
             next EXPRESSIONID if $Expression->{Selector} ne $Param{Selector};
 
-            # get object type
-            my $ObjectType = $Self->ObjectLookup(
-                ObjectID => $Expression->{ObjectID},
-                UserID   => $Param{UserID},
-            );
-
-            # check object
-            next EXPRESSIONID if !$ObjectType;
-
-            # check for workorder type
-            next EXPRESSIONID if $ObjectType ne $Param{ObjectType};
+            # check for object type
+            next EXPRESSIONID if $Expression->{ObjectID} ne $ObjectID;
 
             # check if this conditions is already on stack
             if ( !grep { $_ eq $ConditionID } @AffectedConditionIDs ) {
@@ -1164,20 +1164,11 @@ sub ConditionListByObjectType {
             # check expression
             next ACTIONID if !$Action;
 
-            # check for selector, may we do not need to do much lookups
+            # check for selector
             next ACTIONID if $Action->{Selector} ne $Param{Selector};
 
-            # get object type
-            my $ObjectType = $Self->ObjectLookup(
-                ObjectID => $Action->{ObjectID},
-                UserID   => $Param{UserID},
-            );
-
-            # check object
-            next ACTIONID if !$ObjectType;
-
-            # check for workorder type
-            next ACTIONID if $ObjectType ne $Param{ObjectType};
+            # check for object type
+            next EXPRESSIONID if $Action->{ObjectID} ne $ObjectID;
 
             # check if this conditions is already on stack
             if ( !grep { $_ eq $ConditionID } @AffectedConditionIDs ) {
@@ -1402,6 +1393,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2010-01-31 17:33:33 $
+$Revision: 1.44 $ $Date: 2010-01-31 17:38:30 $
 
 =cut
