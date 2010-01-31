@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.181 2010-01-31 00:58:32 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.182 2010-01-31 02:29:37 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1282,7 +1282,20 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::EventModule###02-Notification" Required="0" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::EventModule###02-WorkOrderActualTimesSet" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module to set the actual start and end times of workorders.</Description>
+        <Description Lang="de">ITSM Event Modul, das die ActualStart und ActualEnd Zeiten von Workorders setzt.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc</Item>
+                <Item Key="Event">WorkOrderUpdatePost</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::EventModule###03-Notification" Required="0" Valid="1">
         <Description Lang="en">ITSM event module that sends notifications.</Description>
         <Description Lang="de">ITSM Event Modul zum Sender von Benachrichtigungen.</Description>
         <Group>ITSM Change Management</Group>
@@ -1295,7 +1308,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::EventModule###03-Condition" Required="0" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::EventModule###04-Condition" Required="0" Valid="1">
         <Description Lang="en">ITSM event module that matches conditions and executes actions.</Description>
         <Description Lang="de">ITSM Event Modul zum Überprüfen von Conditions und zum Ausführen von Actions.</Description>
         <Group>ITSM Change Management</Group>
@@ -1308,7 +1321,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::EventModule###04-HistoryAdd" Required="0" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::EventModule###05-HistoryAdd" Required="0" Valid="1">
         <Description Lang="en">ITSM event module updates the history of workorders.</Description>
         <Description Lang="de">ITSM Event Modul aktualisiert die Historie von Workorders.</Description>
         <Group>ITSM Change Management</Group>
