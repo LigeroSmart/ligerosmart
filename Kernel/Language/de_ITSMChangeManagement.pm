@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.44 2010-01-31 20:15:18 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.45 2010-01-31 21:08:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -197,7 +197,9 @@ sub Data {
 
     # Condition Edit
     $Lang->{'Add new expression'} = 'Füge eine neue Expression hinzu';
-    $Lang->{'Add new action'} = 'Füge eine neue Action hinzu';
+    $Lang->{'Add new action'}     = 'Füge eine neue Action hinzu';
+    $Lang->{'Any expression'}     = 'Beliebige Expression';
+    $Lang->{'All expressions'}    = 'Alle Expressions';
 
     return 1;
 }

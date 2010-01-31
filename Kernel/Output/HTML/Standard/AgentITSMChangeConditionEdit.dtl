@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.16 2010-01-30 13:00:45 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.17 2010-01-31 21:08:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,8 +78,8 @@ function submit_compose() {
                                             <tr>
                                                 <td class="contentkey">$Text{"Matching"}: </td>
                                                 <td class="contentvalue">
-                                                    <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"}/> Any expression
-                                                    <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"}/> All expressions
+                                                    <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"}/> $Text{"Any expression"}
+                                                    <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"}/> $Text{"All expressions"}
                                                 </td>
                                             </tr>
                                             <tr>
