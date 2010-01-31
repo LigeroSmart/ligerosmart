@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.33 2010-01-31 11:32:52 mae Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.34 2010-01-31 13:28:07 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -85,16 +85,26 @@ sub Data {
     # condition history
     $Lang->{'ChangeHistory::ConditionAdd'}       = '%s: %s';
     $Lang->{'ChangeHistory::ConditionAddID'}     = 'New Condition (ID=%s)';
-    $Lang->{'ChangeHistory::ConditionUpdate'}    = '%s: New: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ConditionUpdate'}    = '%s (Condition ID=%s): New: %s -> Old: %s';
     $Lang->{'ChangeHistory::ConditionDelete'}    = 'Condition (ID=%s) deleted';
-    $Lang->{'ChangeHistory::ConditionDeleteAll'} = 'All conditions deleted';
+    $Lang->{'ChangeHistory::ConditionDeleteAll'} = 'All Conditions of Change (ID=%s) deleted';
 
     # expression history
     $Lang->{'ChangeHistory::ExpressionAdd'}       = '%s: %s';
     $Lang->{'ChangeHistory::ExpressionAddID'}     = 'New Expression (ID=%s)';
-    $Lang->{'ChangeHistory::ExpressionUpdate'}    = '%s: New: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ExpressionUpdate'}    = '%s (Expression ID=%s): New: %s -> Old: %s';
     $Lang->{'ChangeHistory::ExpressionDelete'}    = 'Expression (ID=%s) deleted';
-    $Lang->{'ChangeHistory::ExpressionDeleteAll'} = 'All expressions deleted';
+    $Lang->{'ChangeHistory::ExpressionDeleteAll'} = 'All Expressions of Condition (ID=%s) deleted';
+
+    # action history
+    $Lang->{'ChangeHistory::ActionAdd'}       = '%s: %s';
+    $Lang->{'ChangeHistory::ActionAddID'}     = 'New Action (ID=%s)';
+    $Lang->{'ChangeHistory::ActionUpdate'}    = '%s (Action ID=%s): New: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ActionDelete'}    = 'Action (ID=%s) deleted';
+    $Lang->{'ChangeHistory::ActionDeleteAll'} = 'All Actions of Condition (ID=%s) deleted';
+    $Lang->{'ChangeHistory::ActionExecute'}   = 'Action (ID=%s) executed: %s';
+    $Lang->{'ActionExecute::successfully'}    = 'Successfully';
+    $Lang->{'ActionExecute::unsuccessfully'}  = 'Unsuccessfully';
 
     # history for time events
     $Lang->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Change (ID=%s) reached planned start time.';
