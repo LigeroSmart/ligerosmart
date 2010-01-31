@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: TicketITSMService.xml,v 1.8 2009-10-09 16:55:00 ub Exp $</CVS>
-    <CVS>$OldId: Ticket.xml,v 1.270.2.5 2009/09/29 11:47:48 martin Exp $</CVS>
+    <CVS>$Id: TicketITSMService.xml,v 1.9 2010-01-31 17:50:51 ub Exp $</CVS>
+    <CVS>$OldId: Ticket.xml,v 1.270.2.6 2009/12/09 10:38:29 mb Exp $</CVS>
     <ConfigItem Name="Ticket::Service" Required="1" Valid="1">
         <Description Lang="en">If ticket service/SLA feature is enabled, you can define ticket services and SLAs for tickets (e. g. email, desktop, network, ...).</Description>
         <Description Lang="de">Wenn das Ticket-Service/SLA Feature aktiviert ist, können Ticket Services und SLAs pro Ticket gesetzt werden (z. B. Email, Arbeitsplatz, Netzwerk, ...).</Description>
