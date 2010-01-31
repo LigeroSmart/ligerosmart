@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.8 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.9 2010-01-31 17:30:54 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,6 +41,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
@@ -134,6 +136,49 @@ sub Run {
         Title => 'Delete',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    # get affected condition ids
+    my $AffectedConditionIDs = $Self->{ConditionObject}->ConditionListByObjectType(
+        ObjectType => 'ITSMWorkOrder',
+        Selector   => $WorkOrder->{WorkOrderID},
+        ChangeID   => $WorkOrder->{ChangeID},
+        UserID     => $Self->{UserID},
+    ) || [];
+
+    # display list of affected conditions
+    if ( @{$AffectedConditionIDs} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderInCondition',
+            Data => {},
+        );
+
+        CONDITIONID:
+        for my $ConditionID ( @{$AffectedConditionIDs} ) {
+
+            # get condition
+            my $Condition = $Self->{ConditionObject}->ConditionGet(
+                ConditionID => $ConditionID,
+                UserID      => $Self->{UserID},
+            );
+
+            # check condition
+            next CONDITIONID if !$Condition;
+
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderInConditionRow',
+                Data => {
+                    %{$Condition},
+                    %Param,
+                },
+            );
+        }
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'NoWorkOrderInCondition',
+            Data => {},
+        );
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(

@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.13 2010-01-26 14:53:22 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.14 2010-01-31 17:30:54 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,10 +26,11 @@
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
+            <table border="0" width="550" align="center" cellspacing="0" cellpadding="4">
                 <tr>
                     <td class="contenthead">$Text{"Delete"} $Text{"Workorder#"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</td>
                 </tr>
+<!-- dtl:block:NoWorkOrderInCondition -->
                 <tr class="contentbody">
                     <td class="contentbody">
                         <table border="0" width="100%" cellspacing="0" cellpadding="3">
@@ -78,6 +79,49 @@
                         </table>
                     </td>
                 </tr>
+<!-- dtl:block:NoWorkOrderInCondition -->
+<!-- dtl:block:WorkOrderInCondition -->
+                <tr class="contentbody">
+                    <td class="contentbody">
+                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
+                            <colgroup>
+                                <col width="130">
+                                <col>
+                            </colgroup>
+                            <tr>
+                                <td colspan="2" class="contentkey">$Text{"You can not delete this Workorder. It is used in at least one Condition!"}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr class="contenthead">
+                                <td colspan="2" class="contenthead">$Text{"This Workorder is used in the following Condition(s)"}:</td>
+                            </tr>
+<!-- dtl:block:WorkOrderInConditionRow -->
+                            <tr>
+                                <td class="contentkey">$Text{"Condition Name"}:</td>
+                                <td class="contentvalue">
+                                    <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}">
+                                    $QData{"Name"}
+                                    </a>
+                                </td>
+                            </tr>
+<!-- dtl:block:WorkOrderInConditionRow -->
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contentfooter">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="1">
+                            <tr>
+                                <td class="contentfooter">&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+<!-- dtl:block:WorkOrderInCondition -->
+
             </table>
         </td>
     </tr>
