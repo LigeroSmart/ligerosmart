@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.40 2010-01-31 11:32:52 mae Exp $
+# $Id: HistoryAdd.pm,v 1.41 2010-01-31 13:24:04 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -161,7 +161,7 @@ sub Run {
     ( my $Event = $Param{Event} ) =~ s{ Post \z }{}xms;
 
     # distinguish between Change and WorkOrder events, based on naming convention
-    my ($Type) = $Event =~ m{ \A ( Change | WorkOrder | Condition | Expression ) }xms;
+    my ($Type) = $Event =~ m{ \A ( Change | WorkOrder | Condition | Expression | Action ) }xms;
     if ( !$Type ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -461,6 +461,8 @@ sub Run {
                 Fieldname   => $ConditionField,
                 ContentNew  => $Param{Data}->{$ConditionField},
                 ContentOld  => $OldData->{$ConditionField},
+                ContentNew  => $Param{Data}->{ConditionID} . '%%' . $Param{Data}->{$ConditionField},
+                ContentOld  => $Param{Data}->{ConditionID} . '%%' . $OldData->{$ConditionField},
                 UserID      => $Param{UserID},
             );
         }
@@ -486,6 +488,7 @@ sub Run {
         return if !$Self->{HistoryObject}->HistoryAdd(
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ChangeID},
             UserID      => $Param{UserID},
         );
     }
@@ -522,7 +525,7 @@ sub Run {
         }
     }
 
-    # handle condition update events
+    # handle expression update events
     elsif ( $Event eq 'ExpressionUpdate' ) {
 
         # get old data
@@ -552,9 +555,10 @@ sub Run {
                 ChangeID    => $Param{Data}->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ExpressionField,
-                ContentNew  => $Param{Data}->{$ExpressionField},
-                ContentOld  => $OldData->{$ExpressionField},
-                UserID      => $Param{UserID},
+                ContentNew  => $Param{Data}->{ExpressionID} . '%%'
+                    . $Param{Data}->{$ExpressionField},
+                ContentOld => $Param{Data}->{ExpressionID} . '%%' . $OldData->{$ExpressionField},
+                UserID     => $Param{UserID},
             );
         }
     }
@@ -576,6 +580,109 @@ sub Run {
         return if !$Self->{HistoryObject}->HistoryAdd(
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ConditionID},
+            UserID      => $Param{UserID},
+        );
+    }
+
+    # handle action events
+    elsif ( $Event eq 'ActionAdd' ) {
+
+        # create history for id
+        $Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ActionID},
+            UserID      => $Param{UserID},
+        );
+
+        # create history for all action fields
+        my @ActionStatic = qw( ActionID UserID ChangeID);
+        ACTIONFIELD:
+        for my $ActionField ( keys %{ $Param{Data} } ) {
+
+            # check for static fields
+            next ACTIONFIELD if grep { $_ eq $ActionField } @ActionStatic;
+
+            # do not add empty fields to history
+            next ACTIONFIELD if !$Param{Data}->{$ActionField};
+
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $Param{Data}->{ChangeID},
+                HistoryType => $Event,
+                Fieldname   => $ActionField,
+                ContentNew  => $Param{Data}->{$ActionField},
+                UserID      => $Param{UserID},
+            );
+        }
+    }
+
+    # handle action update events
+    elsif ( $Event eq 'ActionUpdate' ) {
+
+        # get old data
+        my $OldData = $Param{Data}->{OldActionData};
+
+        # create history for all expression fields
+        my @ActionStatic = qw( ActionID UserID ChangeID OldActionData );
+        ACTIONFIELD:
+        for my $ActionField ( keys %{ $Param{Data} } ) {
+
+            # check for static fields
+            next ACTIONFIELD if grep { $_ eq $ActionField } @ActionStatic;
+
+            # do not add empty fields to history
+            next ACTIONFIELD if !$Param{Data}->{$ActionField};
+
+            # check if field has changed
+            my $FieldHasChanged = $Self->_HasFieldChanged(
+                New => $Param{Data}->{$ActionField},
+                Old => $OldData->{$ActionField},
+            );
+
+            # create history only for changed fields
+            next ACTIONFIELD if !$FieldHasChanged;
+
+            $Self->{HistoryObject}->HistoryAdd(
+                ChangeID    => $Param{Data}->{ChangeID},
+                HistoryType => $Event,
+                Fieldname   => $ActionField,
+                ContentNew  => $Param{Data}->{ActionID} . '%%' . $Param{Data}->{$ActionField},
+                ContentOld  => $Param{Data}->{ActionID} . '%%' . $OldData->{$ActionField},
+                UserID      => $Param{UserID},
+            );
+        }
+    }
+
+    # handle action delete events
+    elsif ( $Event eq 'ActionDelete' ) {
+
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ActionID},
+            UserID      => $Param{UserID},
+        );
+    }
+
+    # handle delete all actions events
+    elsif ( $Event eq 'ActionDeleteAll' ) {
+
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ConditionID},
+            UserID      => $Param{UserID},
+        );
+    }
+
+    # handle action execute events
+    elsif ( $Event eq 'ActionExecute' ) {
+
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ActionID} . '%%' . $Param{Data}->{ActionResult},
             UserID      => $Param{UserID},
         );
     }
@@ -670,6 +777,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2010-01-31 11:32:52 $
+$Revision: 1.41 $ $Date: 2010-01-31 13:24:04 $
 
 =cut
