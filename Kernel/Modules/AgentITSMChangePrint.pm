@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.31 2010-01-31 11:00:36 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.32 2010-01-31 11:03:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1236,6 +1236,8 @@ sub _OutputWorkOrderOverview {
             Move => 'relativ',
             Y    => -4,
         );
+
+        # TODO: add table header
 
         # output the overview table only if there is at least a single workorder,
         # printing an empty table might create havoc
