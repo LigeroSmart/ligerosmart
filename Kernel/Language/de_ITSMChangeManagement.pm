@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.43 2010-01-31 18:16:57 mae Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.44 2010-01-31 20:15:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -160,8 +160,11 @@ sub Data {
     $Lang->{'canceled'}    = 'Canceled';
 
     # CIP matrix
-    $Lang->{'Category'}                         = 'Kategorie';
-    $Lang->{'Category <-> Impact <-> Priority'} = 'Kategorie <-> Auswirkung <-> Priorität';
+    $Lang->{'Category'} = 'Kategorie';
+
+    # Admin Interface
+    $Lang->{'Category <-> Impact <-> Priority'}      = 'Kategorie <-> Auswirkung <-> Priorität';
+    $Lang->{'Notification (ITSM Change Management)'} = 'Benachrichtigung (ITSM Change Management)';
 
     # workorder types
     $Lang->{'approval'}  = 'Genehmigung';
