@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Expression.pm,v 1.26 2010-01-30 21:50:59 mae Exp $
+# $Id: Expression.pm,v 1.27 2010-01-31 11:32:53 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -199,10 +199,7 @@ sub ExpressionUpdate {
     );
 
     # get current expression data for event handler
-    my $ExpressionData = $Self->ExpressionGet(
-        ExpressionID => $Param{ExpressionID},
-        UserID       => $Param{UserID},
-    );
+    my $ExpressionData = $Expression;
 
     # map update attributes to column names
     my %Attribute = (
@@ -392,11 +389,49 @@ sub ExpressionDelete {
         }
     }
 
+    # get expression
+    my $Expression = $Self->ExpressionGet(
+        ExpressionID => $Param{ExpressionID},
+        UserID       => $Param{UserID},
+    );
+
+    # check expression
+    return if !$Expression;
+
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Expression->{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
+    # trigger ExpressionDeletePre-Event
+    $Self->EventHandler(
+        Event => 'ExpressionDeletePre',
+        Data  => {
+            %Param,
+            ChangeID => $Condition->{ChangeID},
+        },
+        UserID => $Param{UserID},
+    );
+
     # delete condition expression from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_expression '
             . 'WHERE id = ?',
         Bind => [ \$Param{ExpressionID} ],
+    );
+
+    # trigger ExpressionDeletePost-Event
+    $Self->EventHandler(
+        Event => 'ExpressionDeletePost',
+        Data  => {
+            %Param,
+            ChangeID => $Condition->{ChangeID},
+        },
+        UserID => $Param{UserID},
     );
 
     return 1;
@@ -427,11 +462,21 @@ sub ExpressionDeleteAll {
         }
     }
 
+    # get condition for event handler
+    my $Condition = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$Condition;
+
     # trigger ExpressionDeleteAllPre-Event
     $Self->EventHandler(
         Event => 'ExpressionDeleteAllPre',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -448,6 +493,7 @@ sub ExpressionDeleteAll {
         Event => 'ExpressionDeleteAllPost',
         Data  => {
             %Param,
+            ChangeID => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -687,6 +733,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-01-30 21:50:59 $
+$Revision: 1.27 $ $Date: 2010-01-31 11:32:53 $
 
 =cut

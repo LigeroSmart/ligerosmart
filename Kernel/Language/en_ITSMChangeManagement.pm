@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.32 2010-01-31 00:19:03 ub Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.33 2010-01-31 11:32:52 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -93,6 +93,8 @@ sub Data {
     $Lang->{'ChangeHistory::ExpressionAdd'}       = '%s: %s';
     $Lang->{'ChangeHistory::ExpressionAddID'}     = 'New Expression (ID=%s)';
     $Lang->{'ChangeHistory::ExpressionUpdate'}    = '%s: New: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ExpressionDelete'}    = 'Expression (ID=%s) deleted';
+    $Lang->{'ChangeHistory::ExpressionDeleteAll'} = 'All expressions deleted';
 
     # history for time events
     $Lang->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Change (ID=%s) reached planned start time.';

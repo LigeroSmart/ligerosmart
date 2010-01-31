@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.39 2010-01-30 21:50:59 mae Exp $
+# $Id: HistoryAdd.pm,v 1.40 2010-01-31 11:32:52 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -559,6 +559,27 @@ sub Run {
         }
     }
 
+    # handle expression delete events
+    elsif ( $Event eq 'ExpressionDelete' ) {
+
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            ContentNew  => $Param{Data}->{ExpressionID},
+            UserID      => $Param{UserID},
+        );
+    }
+
+    # handle delete all expressions events
+    elsif ( $Event eq 'ExpressionDeleteAll' ) {
+
+        return if !$Self->{HistoryObject}->HistoryAdd(
+            ChangeID    => $Param{Data}->{ChangeID},
+            HistoryType => $Event,
+            UserID      => $Param{UserID},
+        );
+    }
+
     # error
     else {
 
@@ -649,6 +670,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2010-01-30 21:50:59 $
+$Revision: 1.40 $ $Date: 2010-01-31 11:32:52 $
 
 =cut
