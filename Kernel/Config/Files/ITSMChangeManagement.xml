@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.182 2010-01-31 02:29:37 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.183 2010-01-31 09:50:59 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1289,7 +1289,7 @@
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderNumberCalc</Item>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderActualTimesSet</Item>
                 <Item Key="Event">WorkOrderUpdatePost</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
