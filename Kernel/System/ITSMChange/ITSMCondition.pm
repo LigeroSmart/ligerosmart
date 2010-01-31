@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.42 2010-01-31 00:19:46 ub Exp $
+# $Id: ITSMCondition.pm,v 1.43 2010-01-31 17:33:33 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -1050,6 +1050,150 @@ sub ConditionCompareValueFieldType {
     return $FieldType;
 }
 
+=item ConditionListByObjectType()
+
+Return a list of all conditions ids of a given change id as array reference.
+Only the ids of af condition are returned where object type and identifier are matching.
+
+    my $ConditionIDsRef = $ConditionObject->ConditionListByObjectType(
+        ObjectType => 'ITSMWorkOrder'
+        Selector   => 1234,
+        ChangeID   => 5,
+        UserID     => 1,
+    );
+
+=cut
+
+sub ConditionListByObjectType {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ObjectType Selector ChangeID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get conditions of change
+    my $ChangeConditions = $Self->ConditionList(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
+    # check conditions
+    return if !$ChangeConditions;
+
+    # get expressions of conditions
+    my %ConditionExpression = map {
+        $_ => $Self->ExpressionList(
+            ConditionID => $_,
+            UserID      => $Param{UserID},
+            ) || []
+    } @{$ChangeConditions};
+
+    # get actions of conditions
+    my %ConditionAction = map {
+        $_ => $Self->ActionList(
+            ConditionID => $_,
+            UserID      => $Param{UserID},
+            ) || []
+    } @{$ChangeConditions};
+
+    # get only affected unique condition id
+    my @AffectedConditionIDs;
+    CONDITIONID:
+    for my $ConditionID ( keys %ConditionExpression ) {
+
+        # check expression for this workorder
+        EXPRESSIONID:
+        for my $ExpressionID ( @{ $ConditionExpression{$ConditionID} } ) {
+
+            # get expression
+            my $Expression = $Self->ExpressionGet(
+                ExpressionID => $ExpressionID,
+                UserID       => $Param{UserID},
+            );
+
+            # check expression
+            next EXPRESSIONID if !$Expression;
+
+            # check for selector, may we do not need to do much lookups
+            next EXPRESSIONID if $Expression->{Selector} ne $Param{Selector};
+
+            # get object type
+            my $ObjectType = $Self->ObjectLookup(
+                ObjectID => $Expression->{ObjectID},
+                UserID   => $Param{UserID},
+            );
+
+            # check object
+            next EXPRESSIONID if !$ObjectType;
+
+            # check for workorder type
+            next EXPRESSIONID if $ObjectType ne $Param{ObjectType};
+
+            # check if this conditions is already on stack
+            if ( !grep { $_ eq $ConditionID } @AffectedConditionIDs ) {
+
+                # this expression is valid
+                push @AffectedConditionIDs, $ConditionID;
+
+                # jump to next condition
+                next CONDITIONID;
+            }
+        }
+    }
+
+    CONDITIONID:
+    for my $ConditionID ( keys %ConditionAction ) {
+
+        # check action for this workorder
+        ACTIONID:
+        for my $ActionID ( @{ $ConditionAction{$ConditionID} } ) {
+
+            # get action
+            my $Action = $Self->ActionGet(
+                ActionID => $ActionID,
+                UserID   => $Param{UserID},
+            );
+
+            # check expression
+            next ACTIONID if !$Action;
+
+            # check for selector, may we do not need to do much lookups
+            next ACTIONID if $Action->{Selector} ne $Param{Selector};
+
+            # get object type
+            my $ObjectType = $Self->ObjectLookup(
+                ObjectID => $Action->{ObjectID},
+                UserID   => $Param{UserID},
+            );
+
+            # check object
+            next ACTIONID if !$ObjectType;
+
+            # check for workorder type
+            next ACTIONID if $ObjectType ne $Param{ObjectType};
+
+            # check if this conditions is already on stack
+            if ( !grep { $_ eq $ConditionID } @AffectedConditionIDs ) {
+
+                # this expression is valid
+                push @AffectedConditionIDs, $ConditionID;
+
+                # jump to next condition
+                next CONDITIONID;
+            }
+        }
+    }
+
+    return \@AffectedConditionIDs;
+}
+
 =begin Internal:
 
 =item _ConditionMatch()
@@ -1258,6 +1402,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2010-01-31 00:19:46 $
+$Revision: 1.43 $ $Date: 2010-01-31 17:33:33 $
 
 =cut
