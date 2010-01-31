@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.30 2010-01-30 18:13:34 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.31 2010-01-31 11:00:36 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -679,7 +679,7 @@ sub _OutputChangeInfo {
     # both tables have two colums: Key and Value
     my ( @TableLeft, @TableRight );
 
-    # determine values that can't be determined in _PrepareAndAddInfoRow()
+    # determine values that can't easily be determined in _PrepareAndAddInfoRow()
     my %ComplicatedValue;
 
     # Values for CAB
@@ -696,22 +696,22 @@ sub _OutputChangeInfo {
                         @UserData{qw(UserLogin UserFirstname UserLastname)};
                 }
                 else {
-                    push @LongNames, "ID=$Change->{$Attribute}";
+                    push @LongNames, "ID=$CABAgent";
                 }
             }
         }
         elsif ( $Attribute eq 'CABCustomers' && $Change->{$Attribute} ) {
             for my $CABCustomer ( @{ $Change->{$Attribute} } ) {
                 my %UserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                    UserID => $CABCustomer,
-                    Cache  => 1,
+                    User  => $CABCustomer,
+                    Cache => 1,
                 );
                 if (%UserData) {
                     push @LongNames, sprintf '%s (%s %s)',
                         @UserData{qw(UserLogin UserFirstname UserLastname)};
                 }
                 else {
-                    push @LongNames, "ID=$Change->{$Attribute}";
+                    push @LongNames, "ID=$CABCustomer";
                 }
             }
         }
