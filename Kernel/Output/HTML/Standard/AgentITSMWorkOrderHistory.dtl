@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderHistory.dtl - provides HTML form for AgentITSMWorkOrderHistory
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderHistory.dtl,v 1.7 2010-01-25 09:29:48 bes Exp $
+# $Id: AgentITSMWorkOrderHistory.dtl,v 1.8 2010-01-31 00:26:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -61,7 +61,7 @@
                     <td>
                         <div title="$QData{"Content"}">$QData{"Content","100"}</div>
                     </td>
-                    <td>
+                    <td align="center">
 <!-- dtl:block:HistoryZoomDash -->
                         -
 <!-- dtl:block:HistoryZoomDash -->
@@ -69,7 +69,7 @@
                         <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderHistoryZoom&HistoryEntryID=$Data{"HistoryEntryID"}" onmouseover="window.status='$JSText{"More Info"}'; return true;" onmouseout="window.status='';">x</a>
 <!-- dtl:block:HistoryZoom -->
                     </td>
-                    <td>
+                    <td align="center">
 <!-- dtl:block:Dash -->
                         -
 <!-- dtl:block:Dash -->
