@@ -1,9 +1,9 @@
 # --
-# Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm - WorkOrderActualTimesSet
+# Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm - to set actual workorder times
 # event module for ITSMWorkOrder
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: WorkOrderActualTimesSet.pm,v 1.1 2010-01-31 09:30:05 bes Exp $
+# $Id: WorkOrderActualTimesSet.pm,v 1.2 2010-01-31 11:29:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,10 @@ package Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderActualTimesSe
 use strict;
 use warnings;
 
+use Kernel::System::ITSMChange::ITSMStateMachine;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -25,7 +27,7 @@ event module for ITSMWorkOrder
 
 =head1 SYNOPSIS
 
-Event handler module for settin the actual times.
+Event handler module for setting the actual start and end time in WorkOrders.
 
 =head1 PUBLIC INTERFACE
 
@@ -75,7 +77,7 @@ create an object
         TimeObject   => $TimeObject,
         MainObject   => $MainObject,
     );
-    my $TimesSetObject = Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderActualTimesSet->new(
+    my $WorkOrderActualTimesSetObject = Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderActualTimesSet->new(
         ConfigObject    => $ConfigObject,
         EncodeObject    => $EncodeObject,
         LogObject       => $LogObject,
@@ -102,16 +104,19 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    # create additional objects
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+
     return $Self;
 }
 
 =item Run()
 
-The C<Run()> method recalculates the workorder numbers for the given workorder
-and it's siblings.
-This is triggered by the C<WorkOrderUpdate> and C<WorkOrderDelete> events.
-This isn't triggered by C<WorkOrderAdd> events as C<WorkOrderAdd()> sets the
-correct workorder number by itself.
+The C<Run()> method sets the actual start and end time of a workorder if it is not yet set.
+The actual start time is set if a configurable workorder state is reached, the actual end time is set
+if the workorder reaches any end state.
+
+This is triggered by the C<WorkOrderUpdate> event.
 
 The methods returns 1 on success, C<undef> otherwise.
 
@@ -121,7 +126,7 @@ The methods returns 1 on success, C<undef> otherwise.
             WorkOrderID => 123,
         },
         Config => {
-            Event       => '(WorkOrderUpdatePost|WorkOrderDeletePost)',
+            Event       => 'WorkOrderUpdatePost',
             Module      => 'Kernel::System::ITSMChange::ITSMWorkOrder::Event::WorkOrderActualTimesSet',
             Transaction => '0',
         },
@@ -144,17 +149,108 @@ sub Run {
         }
     }
 
-    # TODO: put actual code here
+    # handle WorkOrderUpdate event
+    if ( $Param{Event} eq 'WorkOrderUpdatePost' ) {
+
+        # get WorkOrder
+        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+            WorkOrderID => $Param{Data}->{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+
+        # check error
+        return if !$WorkOrder;
+
+        # get actual start time from workorder
+        my $ActualStartTime = $WorkOrder->{ActualStartTime};
+
+        # get configured workorder states when to set actual start time
+        my $ConfiguredWorkOrderStartStates
+            = $Self->{ConfigObject}->Get('ITSMWorkOrder::ActualStartTimeSet::States');
+
+        # convert into hash for easier lookup
+        my %ActualStartTimeSetStates = map { $_ => 1 } @{$ConfiguredWorkOrderStartStates};
+
+        # get current time stamp
+        my $CurrentTimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+
+        # check if ActualStartTime is empty,
+        # and WorkOrderState is in an ActualStartTimeSetState
+        if ( !$ActualStartTime && $ActualStartTimeSetStates{ $WorkOrder->{WorkOrderState} } ) {
+
+            # set the actual start time
+            my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                WorkOrderID     => $Param{Data}->{WorkOrderID},
+                ActualStartTime => $CurrentTimeStamp,
+                UserID          => $Param{UserID},
+            );
+
+            # check error
+            if ( !$Success ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message =>
+                        "Could not set ActualStartTime for WorkOrderID '$Param{Data}->{WorkOrderID}'!",
+                );
+                return;
+            }
+
+            # remember the just set actual start time
+            $ActualStartTime = $CurrentTimeStamp;
+        }
+
+        # check if the ActualEndTime is empty
+        # and the current workorder state is an end state
+        if ( !$WorkOrder->{ActualEndTime} ) {
+
+            # get the possible next state ids
+            my $NextStateIDsRef = $Self->{StateMachineObject}->StateTransitionGet(
+                StateID => $WorkOrder->{WorkOrderStateID},
+                Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+            ) || [];
+
+            # if there is only one next state, which is also 0,
+            # which means that this is an end state
+            if ( ( scalar @{$NextStateIDsRef} == 1 ) && ( !$NextStateIDsRef->[0] ) ) {
+
+                # set the actual end time,
+                # and if the actual start time was not set, set it also
+                my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                    WorkOrderID     => $Param{Data}->{WorkOrderID},
+                    ActualStartTime => $ActualStartTime || $CurrentTimeStamp,
+                    ActualEndTime   => $CurrentTimeStamp,
+                    UserID          => $Param{UserID},
+                );
+
+                # check error
+                if ( !$Success ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message =>
+                            "Could not set ActualStartTime for WorkOrderID '$Param{Data}->{WorkOrderID}'!",
+                    );
+                    return;
+                }
+            }
+        }
+    }
+
+    # error
+    else {
+
+        # an unknown event
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "$Param{Event} is an unknown event for this eventhandler!",
+        );
+
+        return;
+    }
+
     return 1;
 }
 
-=begin Internal:
-
-=cut
-
 1;
-
-=end Internal:
 
 =back
 
@@ -170,6 +266,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-01-31 09:30:05 $
+$Revision: 1.2 $ $Date: 2010-01-31 11:29:43 $
 
 =cut

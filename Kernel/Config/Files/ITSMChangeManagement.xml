@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.183 2010-01-31 09:50:59 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.184 2010-01-31 11:29:43 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -2418,6 +2418,17 @@
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
             <String Regex="">workorder</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::ActualStartTimeSet::States" Required="1" Valid="1">
+        <Description Lang="en">A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.</Description>
+        <Description Lang="de">Eine Liste von Workorder-States bei denen die ActualStartTime einer Workorder gesetzt wird, wenn diese vorher nicht gesetzt war.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Array>
+                <Item>in progress</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::TakePermission::List" Required="1" Valid="1">
