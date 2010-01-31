@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.42 2010-01-30 18:25:56 ub Exp $
+# $Id: Template.pm,v 1.43 2010-01-31 13:31:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -1154,7 +1154,12 @@ sub TemplateDeSerialize {
     my $TemplateContent = $Template->{Content};
     my $TemplateData;
 
-    eval "\$TemplateData = $TemplateContent; 1;" or return;
+    if ( $Self->{EncodeObject}->EncodeInternalUsed() ) {
+        eval "use utf8; \$TemplateData = $TemplateContent; 1;" or return;
+    }
+    else {
+        eval "\$TemplateData = $TemplateContent; 1;" or return;
+    }
 
     return if !$TemplateData;
     return if ref $TemplateData ne 'HASH';
@@ -2418,6 +2423,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2010-01-30 18:25:56 $
+$Revision: 1.43 $ $Date: 2010-01-31 13:31:10 $
 
 =cut
