@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.14 2010-01-31 17:30:54 mae Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.15 2010-01-31 18:16:13 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -119,9 +119,10 @@
                         </table>
                     </td>
                 </tr>
-
 <!-- dtl:block:WorkOrderInCondition -->
-
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
             </table>
         </td>
     </tr>
