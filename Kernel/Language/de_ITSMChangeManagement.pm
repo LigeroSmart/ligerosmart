@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.45 2010-01-31 21:08:03 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.46 2010-02-01 08:44:48 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,30 +24,67 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'A change must have a title!'}        = 'Ein Change benötigt einen Titel!';
-    $Lang->{'A workorder must have a title!'}     = 'Eine Workorder benötigt einen Titel!';
-    $Lang->{'Add Change'}                         = 'Change hinzufügen';
-    $Lang->{'New time'}                           = 'Neuer Zeitpunkt';
-    $Lang->{'The planned start time is invalid!'} = 'Der geplante Startzeitpunk ist ungültig!';
-    $Lang->{'The planned end time is invalid!'}   = 'Der geplante Endzeitpunkt ist ungültig!';
+    $Lang->{'A change must have a title!'}          = 'Ein Change benötigt einen Titel!';
+    $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
+    $Lang->{'Add Change'}                           = 'Change hinzufügen';
+    $Lang->{'New time'}                             = 'Neuer Zeitpunkt';
+    $Lang->{'The planned start time is invalid!'}   = 'Der geplante Startzeitpunk ist ungültig!';
+    $Lang->{'The planned end time is invalid!'}     = 'Der geplante Endzeitpunkt ist ungültig!';
     $Lang->{'The planned start time must be before the planned end time!'}
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
-    $Lang->{'Time type'}                          = 'Art des Zeitpunktes';
-    $Lang->{'Requested (by customer) Date'}       = 'Wunschtermin (des Kunden)';
-    $Lang->{'Imperative::Save'}                   = 'Speichere';
-    $Lang->{'as Template'}                        = 'als Vorlage';
+    $Lang->{'Time type'}                            = 'Art des Zeitpunktes';
+    $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
+    $Lang->{'Imperative::Save'}                     = 'Speichere';
+    $Lang->{'as Template'}                          = 'als Vorlage';
+    $Lang->{'My Changes'}                           = 'Meine Changes';
+    $Lang->{'My Workorders'}                        = 'Meine Workorders';
+    $Lang->{'PIR (Post Implementation Review)'}     = 'PIR (Nachgelagerte Qualitätskontrolle)';
+    $Lang->{'PSA (Projected Service Availability)'} = 'Prognostizierte Service-Verfügbarkeit';
+    $Lang->{'My CABs'}                              = 'Meine CABs';
+    $Lang->{'Change Overview'}                      = 'Change Übersicht';
+    $Lang->{'Template Overview'}                    = 'Template Übersicht';
+    $Lang->{'Search Changes'}                       = 'Suche Changes';
+    $Lang->{'The requested time is invalid!'}       = 'Die angegebene Zeit ist nicht valide!';
 
     # Change menu
-    $Lang->{'ITSM Change'}    = 'Change';
-    $Lang->{'ITSM Workorder'} = 'Workorder';
-    $Lang->{'Involved Persons'} = 'Beteiligte Personen';
-    $Lang->{'Add Workorder'} = 'Workorder hinzufügen';
-    $Lang->{'Move Time Slot'} = 'Verschiebe Timeslot';
-    $Lang->{'Print the change'} = 'Diesen Change drucken';
-    $Lang->{'Edit the change'} = 'Diesen Change bearbeiten';
+    $Lang->{'ITSM Change'}                           = 'Change';
+    $Lang->{'ITSM Workorder'}                        = 'Workorder';
+    $Lang->{'ITSM Schedule'}                         = 'Schedule';
+    $Lang->{'Involved Persons'}                      = 'Beteiligte Personen';
+    $Lang->{'Add Workorder'}                         = 'Workorder hinzufügen';
+    $Lang->{'Move Time Slot'}                        = 'Verschiebe Timeslot';
+    $Lang->{'Print the change'}                      = 'Diesen Change drucken';
+    $Lang->{'Edit the change'}                       = 'Diesen Change bearbeiten';
     $Lang->{'Change involved persons of the change'} = 'Bearbeite beteiligte Personen dieses Changes';
-    $Lang->{'Add a workorder to the change'} = 'Füge eine Workorder zu diesem Change hinzu';
-    $Lang->{'Edit the conditions of the change'} = 'Bearbeite die Conditions dieses Changes';
+    $Lang->{'Add a workorder to the change'}         = 'Füge eine Workorder zu diesem Change hinzu';
+    $Lang->{'Edit the conditions of the change'}     = 'Bearbeite die Conditions dieses Changes';
+    $Lang->{'Link another object to the change'}     = 'Verknüpfe ein anderes Objekt mit diesem Change';
+    $Lang->{'Save change as a template'}             = 'Speichere diesen Change als Template';
+    $Lang->{'Move all workorders in time'}           = 'Verschiebe alle Workorders in um eine neue zeitliche Differenz';
+    $Lang->{'Current CAB'}                           = 'Aktuelles CAB';
+    $Lang->{'Add to CAB'}                            = 'Zum CAB hinzufügen';
+    $Lang->{'Add CAB Template'}                      = 'Inhalt eines CAB-Templates hinzufügen';
+    $Lang->{'Add Workorder to'}                      = 'Workorder hinzugefügen zu';
+    $Lang->{'Select Workorder Template'}             = 'Workorder-Template auswählen';
+    $Lang->{'The planned time is invalid!'}          = 'Der geplante Zeitraum ist nicht valide!';
+
+    # Workorder menu
+    $Lang->{'Save workorder as a template'}         = 'Speichere diese Workorder als Template';
+    $Lang->{'Link another object to the workorder'} = 'Verknüpfe ein anderes Objekt mit dieser Workorder';
+    $Lang->{'Delete Workorder'}                     = 'Diese Workorder löschen';
+    $Lang->{'Edit the workorder'}                   = 'Diese Workorder bearbeiten';
+    $Lang->{'Print the workorder'}                  = 'Diese Workorder drucken';
+    $Lang->{'Set the agent for the workorder'}      = 'Bestimme einen Bearbeiter (Agent) für diese Workorder';
+    $Lang->{'Report'}                               = 'Bericht';
+    $Lang->{'WorkOrderAgent'}                       = 'Workorder Agent';
+    $Lang->{'Instruction'}                          = 'Anweisung';
+    $Lang->{'Accounted Time'}                       = 'Erfasster Aufwand';
+    $Lang->{'Planned Effort'}                       = 'Geplanter Aufwand';
+    $Lang->{'Planned Start Time'}                   = 'Geplanter Startzeitpunkt';
+    $Lang->{'Planned End Time'}                     = 'Geplanter Endzeitpunkt';
+
+    # Template menu
+    $Lang->{'A template must have a name!'} = 'Ein Template muss einen Namen besitzen!';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
     $Lang->{'Justification'}                     = 'Begründung';
@@ -174,10 +211,10 @@ sub Data {
     $Lang->{'pir'}       = 'PIR (Post Implementation Review)';
 
     # Template types
-    $Lang->{'TemplateType::ITSMChange'}      = 'Change';
-    $Lang->{'TemplateType::ITSMWorkOrder'}   = 'Workorder';
-    $Lang->{'TemplateType::CAB'}             = 'CAB';
-    $Lang->{'TemplateType::ITSMCondition'}   = 'Condition';
+    $Lang->{'TemplateType::ITSMChange'}    = 'Change';
+    $Lang->{'TemplateType::ITSMWorkOrder'} = 'Workorder';
+    $Lang->{'TemplateType::CAB'}           = 'CAB';
+    $Lang->{'TemplateType::ITSMCondition'} = 'Condition';
 
     # objects that can be used in condition expressions and actions
     $Lang->{'ITSMChange'}    = 'Change';
@@ -192,14 +229,16 @@ sub Data {
     $Lang->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Condition(s)';
 
     # Condition Overview
-    $Lang->{'Conditions and Actions'} = 'Conditions und Actions';
+    $Lang->{'Conditions and Actions'}            = 'Conditions und Actions';
     $Lang->{'Add new condition and action pair'} = 'Füge ein neues Condition und Action Paar hinzu';
 
     # Condition Edit
-    $Lang->{'Add new expression'} = 'Füge eine neue Expression hinzu';
-    $Lang->{'Add new action'}     = 'Füge eine neue Action hinzu';
-    $Lang->{'Any expression'}     = 'Beliebige Expression';
-    $Lang->{'All expressions'}    = 'Alle Expressions';
+    $Lang->{'A condition must have a name!'} = 'Eine Condition benötigt einen Namen!';
+    $Lang->{'Condition Edit'}                = 'Condition bearbeiten';
+    $Lang->{'Add new expression'}            = 'Füge eine neue Expression hinzu';
+    $Lang->{'Add new action'}                = 'Füge eine neue Action hinzu';
+    $Lang->{'Any expression'}                = 'Beliebige Expression';
+    $Lang->{'All expressions'}               = 'Alle Expressions';
 
     return 1;
 }
