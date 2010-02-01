@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.93 2010-01-30 20:54:26 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.94 2010-02-01 09:35:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.93 $) [1];
+$VERSION = qw($Revision: 1.94 $) [1];
 
 =head1 NAME
 
@@ -2700,16 +2700,6 @@ sub _CheckTimestamps {
     return 1;
 }
 
-sub DESTROY {
-    my $Self = shift;
-
-    # TODO (ub: this must be commented out until further investigation!)
-    #    # execute all transaction events
-    #    $Self->EventHandlerTransaction();
-
-    return 1;
-}
-
 1;
 
 =end Internal:
@@ -2728,6 +2718,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.93 $ $Date: 2010-01-30 20:54:26 $
+$Revision: 1.94 $ $Date: 2010-02-01 09:35:32 $
 
 =cut
