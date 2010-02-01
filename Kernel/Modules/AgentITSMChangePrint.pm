@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.34 2010-02-01 10:43:13 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.35 2010-02-01 10:51:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1220,9 +1220,11 @@ sub _OutputWorkOrderOverview {
         );
 
         # output headline for the section
-        my $Translation  = $Self->{LayoutObject}->{LanguageObject};
-        my $SectionTitle = $Translation->Get('Workorders');
-        $SectionTitle .= ' (' . scalar @{ $Param{WorkOrderOverview} } . ')';
+        my $Translation = $Self->{LayoutObject}->{LanguageObject};
+        my $SectionTitle =
+            $Translation->Get('ITSM Workorder')
+            . ' ' . $Translation->Get('Overview')
+            . ' (' . scalar @{ $Param{WorkOrderOverview} } . ')';
         $Self->{PDFObject}->Text(
             Text     => $SectionTitle,
             Height   => 7,
