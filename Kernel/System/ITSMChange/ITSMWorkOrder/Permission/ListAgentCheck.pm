@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm - grant permission when the agent is in a list
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ListAgentCheck.pm,v 1.2 2010-01-26 17:33:53 ub Exp $
+# $Id: ListAgentCheck.pm,v 1.3 2010-02-01 09:27:06 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -190,7 +190,7 @@ sub Run {
     # deny access, when the name can not be looked up
     return if !$WorkOrderAgent;
 
-    # TODO: take list of special agents from the sysconfig
+    # take list of special agents from the sysconfig
     my $AgentList = $Self->{ConfigObject}->Get('ITSMWorkOrder::TakePermission::List');
 
     # allow access, when the workorder agent is in the list
@@ -212,7 +212,7 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Id: ListAgentCheck.pm,v 1.2 2010-01-26 17:33:53 ub Exp $
+$Id: ListAgentCheck.pm,v 1.3 2010-02-01 09:27:06 bes Exp $
 
 =cut
 
