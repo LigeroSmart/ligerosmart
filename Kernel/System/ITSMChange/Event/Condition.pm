@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Condition.pm - a event module to match conditions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Condition.pm,v 1.4 2010-01-30 03:18:05 ub Exp $
+# $Id: Condition.pm,v 1.5 2010-02-01 17:36:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -171,8 +171,7 @@ sub Run {
         $Object = 'ITSMWorkOrder';
     }
 
-    # TODO: Add event for cron job, i.e. TimeEvent if the PlannedStartTime is reached
-
+    # show error for unknown events
     else {
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -202,7 +201,7 @@ sub Run {
         return 1;
     }
 
-    # in case of an update event, store the updated attributes
+    # in case of an update event or a time reached event, store the updated attributes
     my @AttributesChanged;
     if ( $Param{Event} eq 'ChangeUpdatePost' ) {
 
@@ -271,6 +270,16 @@ sub Run {
             # remember changed field name
             push @AttributesChanged, $Field;
         }
+    }
+
+    # all kind of change and workorder time reached events
+    elsif ( $Param{Event} =~ m{ \A (?: Change | WorkOrder ) ( .+ Time ) ReachedPost \z }xms ) {
+
+        # get the name of the reached time field
+        my $Field = $1;
+
+        # remember changed field name
+        push @AttributesChanged, $Field;
     }
 
     # match all conditions for this change and execute all actions
@@ -368,6 +377,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-01-30 03:18:05 $
+$Revision: 1.5 $ $Date: 2010-02-01 17:36:21 $
 
 =cut
