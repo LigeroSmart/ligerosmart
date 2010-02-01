@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.40 2010-01-30 22:38:01 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.41 2010-02-01 12:18:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -1294,7 +1294,7 @@ sub _AddSystemNotifications {
             'Agent::Change::ChangePlannedStartTimeReached',
             'de',
             '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Startzeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has die geplante Startzeit erreicht.'
+            'Change #<OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.'
                 . $BasicChangeInfoDe,
         ],
         [
@@ -1823,6 +1823,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2010-01-30 22:38:01 $
+$Revision: 1.41 $ $Date: 2010-02-01 12:18:38 $
 
 =cut
