@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.31 2010-01-31 10:08:49 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.32 2010-02-01 09:47:37 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -143,8 +143,20 @@
                 <tr>
                     <td><b>$Text{"WorkOrderAttribute::WorkOrderState"}: </b></td>
                     <td>
-                        $Text{"$Data{"WorkOrderState"}"}
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div title="$Text{"$QData{"WorkOrderState"}"}">
+                                            $Text{"$Data{"WorkOrderState"}"}&nbsp;&nbsp;
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
                 <tr>
