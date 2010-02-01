@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.47 2010-02-01 10:30:41 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.48 2010-02-01 10:43:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -100,15 +100,20 @@ sub Data {
     $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Nummer';
     $Lang->{'ChangeAttribute::ChangeState'}      = 'Change Status';
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Titel';
+    $Lang->{'ChangeAttribute::Description'}      = 'Beschreibung';
+    $Lang->{'ChangeAttribute::Justification'}    = 'Begründung';
     $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Geplanter Start';
     $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Geplantes Ende';
     $Lang->{'ChangeAttribute::RequestedTime'}    = 'Wunschtermin';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
+    $Lang->{'WorkOrderAttribute::Instruction'}     = 'Anweisung';
+    $Lang->{'WorkOrderAttribute::Report'}          = 'Bericht';
     $Lang->{'WorkOrderAttribute::WorkOrderAgent'}  = 'Workorder Agent';
     $Lang->{'WorkOrderAttribute::WorkOrderNumber'} = 'Workorder Nummer';
     $Lang->{'WorkOrderAttribute::WorkOrderState'}  = 'Workorder Status';
+    $Lang->{'WorkOrderAttribute::WorkOrderTitle'}  = 'Workorder Titel';
     $Lang->{'WorkOrderAttribute::WorkOrderType'}   = 'Workorder Typ';
 
     # Change history
@@ -241,6 +246,9 @@ sub Data {
     $Lang->{'Add new action'}                = 'Füge eine neue Action hinzu';
     $Lang->{'Any expression'}                = 'Beliebige Expression';
     $Lang->{'All expressions'}               = 'Alle Expressions';
+
+    # AgentITSMChangePrint
+    $Lang->{'Linked Objects'} = 'Verknüpfte Objecte';
 
     return 1;
 }

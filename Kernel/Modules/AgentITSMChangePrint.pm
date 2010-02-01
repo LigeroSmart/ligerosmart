@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.33 2010-02-01 08:59:20 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.34 2010-02-01 10:43:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -229,8 +229,9 @@ sub Run {
             $Output .= $Self->_OutputLongText(
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
-                Title          => $Attribute,
-                LongText       => $Change->{ $Attribute . 'Plain' },
+                Title =>
+                    $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute"),
+                LongText => $Change->{ $Attribute . 'Plain' },
             );
         }
 
@@ -396,8 +397,9 @@ sub Run {
             $Output .= $Self->_OutputLongText(
                 PrintChange    => 0,
                 PrintWorkOrder => 1,
-                Title          => $Attribute,
-                LongText       => $WorkOrder->{ $Attribute . 'Plain' },
+                Title =>
+                    $Self->{LayoutObject}->{LanguageObject}->Get("WorkOrderAttribute::$Attribute"),
+                LongText => $WorkOrder->{ $Attribute . 'Plain' },
             );
         }
 
@@ -1248,10 +1250,22 @@ sub _OutputWorkOrderOverview {
                 { Font => 'ProportionalBold', Content => '#', },
                 { Font => 'ProportionalBold', Content => $Translation->Get('Title'), },
                 { Font => 'ProportionalBold', Content => $Translation->Get('State'), },
-                { Font => 'ProportionalBold', Content => $Translation->Get('Planned Start Time'), },
-                { Font => 'ProportionalBold', Content => $Translation->Get('Planned End Time'), },
-                { Font => 'ProportionalBold', Content => $Translation->Get('Actual Start Time'), },
-                { Font => 'ProportionalBold', Content => $Translation->Get('Actual End Time'), },
+                {
+                    Font    => 'ProportionalBold',
+                    Content => $Translation->Get('ChangeAttribute::PlannedStartTime'),
+                },
+                {
+                    Font    => 'ProportionalBold',
+                    Content => $Translation->Get('ChangeAttribute::PlannedEndTime'),
+                },
+                {
+                    Font    => 'ProportionalBold',
+                    Content => $Translation->Get('ChangeAttribute::ActualStartTime'),
+                },
+                {
+                    Font    => 'ProportionalBold',
+                    Content => $Translation->Get('ChangeAttribute::ActualEndTime'),
+                },
             ];
 
             for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {

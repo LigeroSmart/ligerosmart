@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.36 2010-02-01 08:44:48 mae Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.37 2010-02-01 10:43:13 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -50,15 +50,20 @@ sub Data {
     $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Number';
     $Lang->{'ChangeAttribute::ChangeState'}      = 'Change State';
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Title';
+    $Lang->{'ChangeAttribute::Description'}      = 'Description';
+    $Lang->{'ChangeAttribute::Justification'}    = 'Justification';
     $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Planned Effort';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Planned Start';
     $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Planned End';
     $Lang->{'ChangeAttribute::RequestedTime'}    = 'Requested Time';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
+    $Lang->{'WorkOrderAttribute::Instruction'}     = 'Instruction';
+    $Lang->{'WorkOrderAttribute::Report'}          = 'Report';
     $Lang->{'WorkOrderAttribute::WorkOrderAgent'}  = 'Workorder Agent';
     $Lang->{'WorkOrderAttribute::WorkOrderNumber'} = 'Workorder Number';
     $Lang->{'WorkOrderAttribute::WorkOrderState'}  = 'Workorder State';
+    $Lang->{'WorkOrderAttribute::WorkOrderTitle'}  = 'Workorder Title';
     $Lang->{'WorkOrderAttribute::WorkOrderType'}   = 'Workorder Type';
 
     # Change history
