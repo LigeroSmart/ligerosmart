@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.25 2010-01-30 01:26:15 ub Exp $
+# $Id: Notification.pm,v 1.26 2010-02-01 17:32:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -147,8 +147,11 @@ sub Run {
         }
     }
 
-    # in notification event handling we use the event name without the trailing 'Post'.
-    ( my $Event = $Param{Event} ) =~ s{ Post \z }{}xms;
+    # do not modify the original event, because we need this unmodified in later event modules
+    my $Event = $Param{Event};
+
+    # in history event handling we use Event name without the trailing 'Post'
+    $Event =~ s{ Post \z }{}xms;
 
     # distinguish between Change and WorkOrder events, based on naming convention
     my ($Type) = $Event =~ m{ \A (Change|WorkOrder) }xms;
@@ -540,6 +543,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-01-30 01:26:15 $
+$Revision: 1.26 $ $Date: 2010-02-01 17:32:52 $
 
 =cut

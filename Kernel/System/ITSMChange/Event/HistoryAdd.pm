@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.41 2010-01-31 13:24:04 mae Exp $
+# $Id: HistoryAdd.pm,v 1.42 2010-02-01 17:32:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -157,8 +157,11 @@ sub Run {
         }
     }
 
+    # do not modify the original event, because we need this unmodified in later event modules
+    my $Event = $Param{Event};
+
     # in history event handling we use Event name without the trailing 'Post'
-    ( my $Event = $Param{Event} ) =~ s{ Post \z }{}xms;
+    $Event =~ s{ Post \z }{}xms;
 
     # distinguish between Change and WorkOrder events, based on naming convention
     my ($Type) = $Event =~ m{ \A ( Change | WorkOrder | Condition | Expression | Action ) }xms;
@@ -777,6 +780,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2010-01-31 13:24:04 $
+$Revision: 1.42 $ $Date: 2010-02-01 17:32:52 $
 
 =cut
