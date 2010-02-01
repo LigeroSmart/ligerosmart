@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm - all itsm workorder object functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.7 2010-01-30 18:14:17 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.8 2010-02-01 11:06:51 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 use Kernel::System::User;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -268,11 +268,11 @@ sub SelectorList {
     }
 
     # add 'all' selector (for expressions and actions)
-    $SelectorList{'all'} = 'all';
+    $SelectorList{'all'} = 'ITSMCondition::Selector::all';
 
     # add 'any' selector only for expressions
     if ( $Param{ExpressionID} ) {
-        $SelectorList{'any'} = 'any';
+        $SelectorList{'any'} = 'ITSMCondition::Selector::any';
     }
 
     return \%SelectorList;
@@ -350,6 +350,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-01-30 18:14:17 $
+$Revision: 1.8 $ $Date: 2010-02-01 11:06:51 $
 
 =cut
