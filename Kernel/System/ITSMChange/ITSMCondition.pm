@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.44 2010-01-31 17:38:30 mae Exp $
+# $Id: ITSMCondition.pm,v 1.45 2010-02-01 09:40:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -642,33 +642,6 @@ sub ConditionMatchExecuteAll {
                 Message  => "Need $Argument!",
             );
             return;
-        }
-    }
-
-    # TODO: Delete this later!
-    $Self->{Debug} = 0;
-
-    # TODO: Delete this later!
-    # debug output
-    if ( $Self->{Debug} ) {
-
-        if ( $Param{AttributesChanged} ) {
-
-            my ($Object) = keys %{ $Param{AttributesChanged} };
-
-            # list of changed attributes
-            my $DebugString = "\n\nDebug Information:\n"
-                . "Object: $Object\n"
-                . "AttributesChanged: "
-                . ( join ', ', @{ $Param{AttributesChanged}->{$Object} } )
-                . "\n\n";
-
-            print STDERR $DebugString;
-
-            $Self->{LogObject}->Log(
-                Priority => 'debug',
-                Message  => "$DebugString",
-            );
         }
     }
 
@@ -1393,6 +1366,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2010-01-31 17:38:30 $
+$Revision: 1.45 $ $Date: 2010-02-01 09:40:53 $
 
 =cut
