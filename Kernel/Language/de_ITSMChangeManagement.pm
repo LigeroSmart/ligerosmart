@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.46 2010-02-01 08:44:48 mae Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.47 2010-02-01 10:30:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -26,7 +26,8 @@ sub Data {
 
     $Lang->{'A change must have a title!'}          = 'Ein Change benötigt einen Titel!';
     $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
-    $Lang->{'Add Change'}                           = 'Change hinzufügen';
+    $Lang->{'Create Change'}                        = 'Change erstellen';
+    $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
     $Lang->{'New time'}                             = 'Neuer Zeitpunkt';
     $Lang->{'The planned start time is invalid!'}   = 'Der geplante Startzeitpunk ist ungültig!';
     $Lang->{'The planned end time is invalid!'}     = 'Der geplante Endzeitpunkt ist ungültig!';
@@ -66,6 +67,7 @@ sub Data {
     $Lang->{'Add CAB Template'}                      = 'Inhalt eines CAB-Templates hinzufügen';
     $Lang->{'Add Workorder to'}                      = 'Workorder hinzugefügen zu';
     $Lang->{'Select Workorder Template'}             = 'Workorder-Template auswählen';
+    $Lang->{'Select Change Template'}                = 'Change-Template auswählen';
     $Lang->{'The planned time is invalid!'}          = 'Der geplante Zeitraum ist nicht valide!';
 
     # Workorder menu
