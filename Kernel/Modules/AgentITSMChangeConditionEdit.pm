@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.28 2010-01-30 12:55:05 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.29 2010-02-01 17:31:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -588,13 +588,11 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name => $IDName . '::' . $ID . '::OperatorID',
-                        Data => $OperatorList,
-
-                        #SelectedID   => $PossibleNoneOperatorID ? '' : $GetParam{OperatorID},
-                        SelectedID => $GetParam{OperatorID} || '',
+                        Name         => $IDName . '::' . $ID . '::OperatorID',
+                        Data         => $OperatorList,
+                        SelectedID   => $GetParam{OperatorID} || '',
                         PossibleNone => $PossibleNoneOperatorID,
-                        Translation  => 1,
+                        Translation  => 0,
                         Max          => 100,
                     },
                 ],
@@ -1303,6 +1301,7 @@ sub _ShowOperatorSelection {
         Name         => $IDName . '::' . $Param{$IDName} . '::OperatorID',
         SelectedID   => $Param{OperatorID},
         PossibleNone => $PossibleNone,
+        Translation  => 0,
         Ajax         => {
             Update => [
                 $IDName . '::' . $Param{$IDName} . '::OperatorID',
