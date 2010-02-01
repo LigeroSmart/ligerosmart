@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.32 2010-01-31 11:03:13 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.33 2010-02-01 08:59:20 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1210,17 +1210,16 @@ sub _OutputWorkOrderOverview {
     }
 
     if ( $Self->{PDFObject} ) {
-        my %Table;
-        my $Row = 0;
 
-        # set new position
+        # vertical whitespace before section headline
         $Self->{PDFObject}->PositionSet(
             Move => 'relativ',
             Y    => -15,
         );
 
         # output headline for the section
-        my $SectionTitle = $Self->{LayoutObject}->{LanguageObject}->Get('Workorders');
+        my $Translation  = $Self->{LayoutObject}->{LanguageObject};
+        my $SectionTitle = $Translation->Get('Workorders');
         $SectionTitle .= ' (' . scalar @{ $Param{WorkOrderOverview} } . ')';
         $Self->{PDFObject}->Text(
             Text     => $SectionTitle,
@@ -1231,25 +1230,37 @@ sub _OutputWorkOrderOverview {
             Color    => '#666666',
         );
 
-        # vertical whitespace after title
+        # vertical whitespace after section headline
         $Self->{PDFObject}->PositionSet(
             Move => 'relativ',
             Y    => -4,
         );
 
-        # TODO: add table header
-
         # output the overview table only if there is at least a single workorder,
         # printing an empty table might create havoc
         if ( @{ $Param{WorkOrderOverview} } ) {
+
+            my %Table;
+            my $Row = 0;
+
+            # add table header
+            $Table{CellData}[ $Row++ ] = [
+                { Font => 'ProportionalBold', Content => '#', },
+                { Font => 'ProportionalBold', Content => $Translation->Get('Title'), },
+                { Font => 'ProportionalBold', Content => $Translation->Get('State'), },
+                { Font => 'ProportionalBold', Content => $Translation->Get('Planned Start Time'), },
+                { Font => 'ProportionalBold', Content => $Translation->Get('Planned End Time'), },
+                { Font => 'ProportionalBold', Content => $Translation->Get('Actual Start Time'), },
+                { Font => 'ProportionalBold', Content => $Translation->Get('Actual End Time'), },
+            ];
 
             for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
                 $Table{CellData}[ $Row++ ] = [ map { { Content => $_ } } @{$WorkOrder} ];
             }
 
-            $Table{ColumnData}[0]{Width} = 10;
-            $Table{ColumnData}[1]{Width} = 40;
-            $Table{ColumnData}[2]{Width} = 40;
+            $Table{ColumnData}[0]{Width} = 2;
+            $Table{ColumnData}[1]{Width} = 58;
+            $Table{ColumnData}[2]{Width} = 30;
             $Table{ColumnData}[3]{Width} = 40;
             $Table{ColumnData}[4]{Width} = 40;
             $Table{ColumnData}[5]{Width} = 40;
