@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.51 2010-02-01 13:16:47 mae Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.52 2010-02-02 22:12:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,24 +28,24 @@ sub Data {
     $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
     $Lang->{'Create Change'}                        = 'Change erstellen';
     $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
-    $Lang->{'New time'}                             = 'Neuer Zeitpunkt';
-    $Lang->{'The planned start time is invalid!'}   = 'Der geplante Startzeitpunk ist ungültig!';
-    $Lang->{'The planned end time is invalid!'}     = 'Der geplante Endzeitpunkt ist ungültig!';
+    $Lang->{'The planned start time is invalid!'}   = 'Die geplante Startzeit ist ungültig!';
+    $Lang->{'The planned end time is invalid!'}     = 'Die geplante Endzeit ist ungültig!';
     $Lang->{'The planned start time must be before the planned end time!'}
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
-    $Lang->{'Time type'}                            = 'Art des Zeitpunktes';
+    $Lang->{'The requested time is invalid!'}       = 'Die angegebene Zeit ist ungültig!';
+    $Lang->{'New time'}                             = 'Neue Zeit';
+    $Lang->{'Time type'}                            = 'Zeit-Typ';
     $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
     $Lang->{'Imperative::Save'}                     = 'Speichere';
     $Lang->{'as Template'}                          = 'als Vorlage';
     $Lang->{'My Changes'}                           = 'Meine Changes';
     $Lang->{'My Workorders'}                        = 'Meine Workorders';
-    $Lang->{'PIR (Post Implementation Review)'}     = 'PIR (Nachgelagerte Qualitätskontrolle)';
-    $Lang->{'PSA (Projected Service Availability)'} = 'Prognostizierte Service-Verfügbarkeit';
+    $Lang->{'PIR (Post Implementation Review)'}     = 'PIR (Post Implementation Review)';
+    $Lang->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability)';
     $Lang->{'My CABs'}                              = 'Meine CABs';
     $Lang->{'Change Overview'}                      = 'Change Übersicht';
     $Lang->{'Template Overview'}                    = 'Template Übersicht';
     $Lang->{'Search Changes'}                       = 'Suche Changes';
-    $Lang->{'The requested time is invalid!'}       = 'Die angegebene Zeit ist nicht valide!';
 
     # Change menu
     $Lang->{'ITSM Change'}                           = 'Change';
@@ -61,14 +61,14 @@ sub Data {
     $Lang->{'Edit the conditions of the change'}     = 'Bearbeite die Conditions dieses Changes';
     $Lang->{'Link another object to the change'}     = 'Verknüpfe ein anderes Objekt mit diesem Change';
     $Lang->{'Save change as a template'}             = 'Speichere diesen Change als Template';
-    $Lang->{'Move all workorders in time'}           = 'Verschiebe alle Workorders in um eine neue zeitliche Differenz';
+    $Lang->{'Move all workorders in time'}           = 'Verschiebe alle Workorders um eine neue zeitliche Differenz';
     $Lang->{'Current CAB'}                           = 'Aktuelles CAB';
     $Lang->{'Add to CAB'}                            = 'Zum CAB hinzufügen';
-    $Lang->{'Add CAB Template'}                      = 'Inhalt eines CAB-Templates hinzufügen';
-    $Lang->{'Add Workorder to'}                      = 'Workorder hinzugefügen zu';
+    $Lang->{'Add CAB Template'}                      = 'Ein CAB-Template hinzufügen';
+    $Lang->{'Add Workorder to'}                      = 'Workorder hinzufügen zu';
     $Lang->{'Select Workorder Template'}             = 'Workorder-Template auswählen';
     $Lang->{'Select Change Template'}                = 'Change-Template auswählen';
-    $Lang->{'The planned time is invalid!'}          = 'Der geplante Zeitraum ist nicht valide!';
+    $Lang->{'The planned time is invalid!'}          = 'Der geplante Zeitraum ist ungültig!';
 
     # Workorder menu
     $Lang->{'Save workorder as a template'}         = 'Speichere diese Workorder als Template';
@@ -76,23 +76,20 @@ sub Data {
     $Lang->{'Delete Workorder'}                     = 'Diese Workorder löschen';
     $Lang->{'Edit the workorder'}                   = 'Diese Workorder bearbeiten';
     $Lang->{'Print the workorder'}                  = 'Diese Workorder drucken';
-    $Lang->{'Set the agent for the workorder'}      = 'Bestimme einen Bearbeiter (Agent) für diese Workorder';
+    $Lang->{'Set the agent for the workorder'}      = 'Einen Agenten für diese Workorder auswählen';
     $Lang->{'Report'}                               = 'Bericht';
     $Lang->{'WorkOrderAgent'}                       = 'Workorder Agent';
     $Lang->{'Instruction'}                          = 'Anweisung';
     $Lang->{'Accounted Time'}                       = 'Erfasster Aufwand';
     $Lang->{'Planned Effort'}                       = 'Geplanter Aufwand';
-    $Lang->{'Planned Start Time'}                   = 'Geplanter Startzeitpunkt';
-    $Lang->{'Planned End Time'}                     = 'Geplanter Endzeitpunkt';
+    $Lang->{'Planned Start Time'}                   = 'Geplante Startzeit';
+    $Lang->{'Planned End Time'}                     = 'Geplante Endzeit';
 
     # Template menu
-    $Lang->{'A template must have a name!'} = 'Ein Template muss einen Namen besitzen!';
+    $Lang->{'A template must have a name!'} = 'Ein Template benötigt einen Namen!';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
     $Lang->{'Justification'}                     = 'Begründung';
-    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
-    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
-    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
     $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
     $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Customers';
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
@@ -102,19 +99,28 @@ sub Data {
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Titel';
     $Lang->{'ChangeAttribute::Description'}      = 'Beschreibung';
     $Lang->{'ChangeAttribute::Justification'}    = 'Begründung';
-    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Geplanter Start';
     $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Geplantes Ende';
+    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
+    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
     $Lang->{'ChangeAttribute::RequestedTime'}    = 'Wunschtermin';
+    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
+    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
-    $Lang->{'WorkOrderAttribute::Instruction'}     = 'Anweisung';
-    $Lang->{'WorkOrderAttribute::Report'}          = 'Bericht';
-    $Lang->{'WorkOrderAttribute::WorkOrderAgent'}  = 'Workorder Agent';
-    $Lang->{'WorkOrderAttribute::WorkOrderNumber'} = 'Workorder Nummer';
-    $Lang->{'WorkOrderAttribute::WorkOrderState'}  = 'Workorder Status';
-    $Lang->{'WorkOrderAttribute::WorkOrderTitle'}  = 'Workorder Titel';
-    $Lang->{'WorkOrderAttribute::WorkOrderType'}   = 'Workorder Typ';
+    $Lang->{'WorkOrderAttribute::Instruction'}      = 'Anweisung';
+    $Lang->{'WorkOrderAttribute::Report'}           = 'Bericht';
+    $Lang->{'WorkOrderAttribute::WorkOrderAgent'}   = 'Workorder Agent';
+    $Lang->{'WorkOrderAttribute::WorkOrderNumber'}  = 'Workorder Nummer';
+    $Lang->{'WorkOrderAttribute::WorkOrderState'}   = 'Workorder Status';
+    $Lang->{'WorkOrderAttribute::WorkOrderTitle'}   = 'Workorder Titel';
+    $Lang->{'WorkOrderAttribute::WorkOrderType'}    = 'Workorder Typ';
+    $Lang->{'WorkOrderAttribute::PlannedStartTime'} = 'Geplanter Start';
+    $Lang->{'WorkOrderAttribute::PlannedEndTime'}   = 'Geplantes Ende';
+    $Lang->{'WorkOrderAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
+    $Lang->{'WorkOrderAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
+    $Lang->{'WorkOrderAttribute::AccountedTime'}    = 'Benötigte Zeit';
+    $Lang->{'WorkOrderAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
 
     # Change history
     $Lang->{'ChangeHistory::ChangeAdd'}              = 'Neuer Change (ID=%s)';

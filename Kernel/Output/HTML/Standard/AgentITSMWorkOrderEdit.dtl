@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.39 2010-02-02 11:05:58 bes Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.40 2010-02-02 22:12:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -130,7 +130,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"Planned end time"}:
+                                        $Text{"Planned End Time"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PlannedEndTimeString"}
