@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.7 2010-01-29 15:26:21 reb Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.8 2010-02-02 09:16:41 reb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,9 +31,8 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
-use Date::Pcalc qw(Day_of_Week Day_of_Week_Abbreviation);
 use Kernel::Config;
 use Kernel::System::Encode;
 use Kernel::System::Time;
