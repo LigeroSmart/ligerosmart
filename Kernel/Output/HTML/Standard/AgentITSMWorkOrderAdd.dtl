@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.44 2010-02-01 08:44:15 mae Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.45 2010-02-02 11:05:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -70,7 +70,7 @@ function submit_compose() {
     </tr>
     <tr>
         <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
 

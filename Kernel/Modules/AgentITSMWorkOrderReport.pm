@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.26 2010-01-31 16:09:45 reb Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.27 2010-02-02 11:05:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -187,7 +187,7 @@ sub Run {
 
                 # redirect to zoom mask
                 return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrder->{WorkOrderID}",
+                    OP => $Self->{LastWorkOrderView},
                 );
             }
             else {

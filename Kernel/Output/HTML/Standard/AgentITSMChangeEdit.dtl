@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.42 2010-01-30 12:03:51 ub Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.43 2010-02-02 11:05:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,7 +47,7 @@ function submit_compose() {
     </tr>
     <tr>
         <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastScreenView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
 

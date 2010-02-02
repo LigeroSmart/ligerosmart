@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.44 2010-01-31 05:22:03 reb Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.45 2010-02-02 11:05:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -225,7 +225,7 @@ sub Run {
 
                 # redirect to zoom mask
                 return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+                    OP => $Self->{LastChangeView},
                 );
             }
             else {

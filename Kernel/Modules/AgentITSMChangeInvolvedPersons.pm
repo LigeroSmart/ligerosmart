@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.35 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.36 2010-02-02 11:05:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -192,7 +192,7 @@ sub Run {
                     ChangeID   => $ChangeID,
                 );
 
-                # redirect to zoom mask, when adding was successful
+                # redirect to involved person, when adding was successful
                 return $Self->{LayoutObject}->Redirect(
                     OP => "Action=AgentITSMChangeInvolvedPersons&ChangeID=$ChangeID",
                 );
@@ -265,7 +265,7 @@ sub Run {
 
                 # redirect to change zoom mask
                 return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
+                    OP => $Self->{LastChangeView},
                 );
             }
             else {
