@@ -2,7 +2,7 @@
 # ITSMTemplate.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMTemplate.t,v 1.2 2010-02-02 12:56:26 reb Exp $
+# $Id: ITSMTemplate.t,v 1.3 2010-02-02 13:24:29 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -189,33 +189,39 @@ my %ChangeDefinitions = (
             1,
         ],
     },
+    TargetChange => {
+        ChangeTitle     => 'Target Change - Title - ' . $UniqueSignature,
+        Description     => 'Target Change - Description - ' . $UniqueSignature,
+        Justification   => 'Target Change - Justification - ' . $UniqueSignature,
+        ChangeManagerID => 1,
+        ChangeBuilderID => 1,
+        CABAgents       => [
+            1,
+        ],
+    },
 );
 
 # create change that should act as the base for the template test
 my %CreatedChangeID;
-$CreatedChangeID{BaseChange} = $Self->{ChangeObject}->ChangeAdd(
-    %{ $ChangeDefinitions{BaseChange} },
-    UserID => 1,
-);
 
-# create change for unicode tests
-$CreatedChangeID{UnicodeChange} = $Self->{ChangeObject}->ChangeAdd(
-    %{ $ChangeDefinitions{UnicodeChange} },
-    UserID => 1,
-);
+for my $ChangeName ( keys %ChangeDefinitions ) {
+    $CreatedChangeID{$ChangeName} = $Self->{ChangeObject}->ChangeAdd(
+        %{ $ChangeDefinitions{$ChangeName} },
+        UserID => 1,
+    );
 
-# create change for the workorder, cab and condition templates
-$CreatedChangeID{ContainerChange} = $Self->{ChangeObject}->ChangeAdd(
-    %{ $ChangeDefinitions{ContainerChange} },
-    UserID => 1,
-);
+    $Self->True(
+        $CreatedChangeID{$ChangeName},
+        "Test $TestCount: ChangeAdd() - $CreatedChangeID{$ChangeName} created ($ChangeName)",
+    );
+}
 
 for my $ChangeName ( keys %CreatedChangeID ) {
     my $ChangeID = $CreatedChangeID{$ChangeName};
 
     $Self->True(
         $ChangeID,
-        "Test $TestCount: ChangeAdd() - $ChangeID created",
+        "Test $TestCount: ChangeAdd() - $ChangeID created ($ChangeName)",
     );
 
     my $Change = $Self->{ChangeObject}->ChangeGet(
@@ -261,7 +267,7 @@ my %WorkOrderDefinitions = (
         ChangeID       => $CreatedChangeID{ContainerChange},
         WorkOrderTitle => 'Workorder title with unicode chars \x{167}\x{b6}\x{20ac} - '
             . $UniqueSignature,
-        }
+    },
 );
 
 my %CreatedWorkOrderID;
@@ -451,6 +457,68 @@ for my $ChangeTemplateName ( keys %CreatedChangeID ) {
     }
 
     push @ChangeIDs, $ChangeID;
+
+    $TestCount++;
+}
+
+WORKORDERTEMPLATENAME:
+for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
+
+    # get template id
+    my $TemplateID = $TestedTemplateID{$WorkOrderTemplateName};
+
+    next WORKORDERTEMPLATENAME if !$TemplateID;
+
+    # deserialize template
+    my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
+        TemplateID => $TemplateID,
+        ChangeID   => $CreatedChangeID{TargetChange},
+        UserID     => 1,
+    );
+
+    # check change id
+    $Self->True(
+        $WorkOrderID,
+        "Test $TestCount: Create workorder based on template (TemplateID: $TemplateID)",
+    );
+
+    # get change data
+    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+        WorkOrderID => $WorkOrderID,
+        UserID      => 1,
+    );
+
+    # check change attributes
+    REQUESTEDATTRIBUTE:
+    for my $RequestedAttribute ( keys %{ $WorkOrderDefinitions{$WorkOrderTemplateName} } ) {
+
+        next REQUESTEDATTRIBUTE if $RequestedAttribute eq 'ChangeID';
+
+        # turn off all pretty print
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Useqq  = 1;
+
+        # dump the attribute from ChangeGet()
+        my $WorkOrderAttribute = Data::Dumper::Dumper( $WorkOrder->{$RequestedAttribute} );
+
+        # dump the reference attribute
+        my $ReferenceAttribute
+            = Data::Dumper::Dumper(
+            $WorkOrderDefinitions{$WorkOrderTemplateName}->{$RequestedAttribute}
+            );
+
+        $Self->Is(
+            $WorkOrderAttribute,
+            $ReferenceAttribute,
+            "Test $TestCount: |- $RequestedAttribute (WorkOrder: $WorkOrderID)",
+        );
+    }
+
+    $Self->Is(
+        $WorkOrder->{ChangeID},
+        $CreatedChangeID{TargetChange},
+        "Test $TestCount: |- ChangeID (WorkOrder: $WorkOrderID)",
+    );
 
     $TestCount++;
 }
