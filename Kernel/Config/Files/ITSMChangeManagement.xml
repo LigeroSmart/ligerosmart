@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.192 2010-02-01 17:41:26 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.193 2010-02-02 23:22:50 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1508,11 +1508,11 @@
                 <Item Key="PriorityID">1</Item>
                 <Item Key="ChangeManagerID">1</Item>
                 <Item Key="ChangeBuilderID">1</Item>
-                <Item Key="RequestedTime">0</Item>
-                <Item Key="PlannedStartTime">0</Item>
-                <Item Key="PlannedEndTime">0</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
+                <Item Key="RequestedTime">1</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">1</Item>
+                <Item Key="ActualEndTime">1</Item>
                 <Item Key="PlannedEffort">1</Item>
                 <Item Key="AccountedTime">1</Item>
             </Hash>
@@ -1838,7 +1838,7 @@
                 <Item Key="CategoryID">1</Item>
                 <Item Key="ImpactID">1</Item>
                 <Item Key="PriorityID">1</Item>
-                <Item Key="ChangeManagerID">0</Item>
+                <Item Key="ChangeManagerID">1</Item>
                 <Item Key="ChangeBuilderID">0</Item>
                 <Item Key="RequestedTime">0</Item>
                 <Item Key="PlannedStartTime">0</Item>
@@ -2039,10 +2039,10 @@
                 <Item Key="WorkOrderTypeID">1</Item>
                 <Item Key="WorkOrderTitle">1</Item>
                 <Item Key="WorkOrderAgentID">1</Item>
-                <Item Key="PlannedStartTime">0</Item>
-                <Item Key="PlannedEndTime">0</Item>
-                <Item Key="ActualStartTime">0</Item>
-                <Item Key="ActualEndTime">0</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">1</Item>
+                <Item Key="ActualEndTime">1</Item>
                 <Item Key="PlannedEffort">1</Item>
                 <Item Key="AccountedTime">1</Item>
             </Hash>
@@ -2301,7 +2301,7 @@
                 <Item Key="WorkOrderStateID">1</Item>
                 <Item Key="WorkOrderTypeID">0</Item>
                 <Item Key="WorkOrderTitle">0</Item>
-                <Item Key="WorkOrderAgentID">0</Item>
+                <Item Key="WorkOrderAgentID">1</Item>
                 <Item Key="PlannedStartTime">0</Item>
                 <Item Key="PlannedEndTime">0</Item>
                 <Item Key="ActualStartTime">0</Item>
