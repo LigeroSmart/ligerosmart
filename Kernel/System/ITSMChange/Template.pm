@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.44 2010-02-01 09:34:38 ub Exp $
+# $Id: Template.pm,v 1.45 2010-02-02 13:32:51 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,11 +21,12 @@ use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Kernel::System::VirtualFS;
 use Data::Dumper;
+use Encode;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =head1 NAME
 
@@ -1785,6 +1786,15 @@ sub _ChangeAdd {
     # _CheckChangeParams throws an error otherwise
     for my $Parameter ( keys %Data ) {
         delete $Data{$Parameter} if !defined $Data{$Parameter};
+
+        if (
+            $Data{$Parameter}
+            && $Self->{EncodeObject}->EncodeInternalUsed()
+            && !ref $Data{$Parameter}
+            )
+        {
+            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+        }
     }
 
     # add the change
@@ -1846,6 +1856,15 @@ sub _WorkOrderAdd {
     # _CheckWorkOrderParams throws an error otherwise
     for my $Parameter ( keys %Data ) {
         delete $Data{$Parameter} if !defined $Data{$Parameter};
+
+        if (
+            $Data{$Parameter}
+            && $Self->{EncodeObject}->EncodeInternalUsed()
+            && !ref $Data{$Parameter}
+            )
+        {
+            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+        }
     }
 
     # xxx(?:Start|End)Times are empty strings on WorkOrderGet when
@@ -1995,6 +2014,17 @@ sub _ConditionAdd {
     # delete attributes
     delete $Data{ConditionID};
 
+    for my $Parameter ( keys %Data ) {
+        if (
+            $Data{$Parameter}
+            && $Self->{EncodeObject}->EncodeInternalUsed()
+            && !ref $Data{$Parameter}
+            )
+        {
+            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+        }
+    }
+
     # add condition
     my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
         %Data,
@@ -2064,6 +2094,18 @@ sub _ExpressionAdd {
         }
     }
 
+    # ensure that data is utf-8 encoded if needed
+    for my $Parameter ( keys %Data ) {
+        if (
+            $Data{$Parameter}
+            && $Self->{EncodeObject}->EncodeInternalUsed()
+            && !ref $Data{$Parameter}
+            )
+        {
+            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+        }
+    }
+
     # add expression
     my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
         %Data,
@@ -2129,6 +2171,18 @@ sub _ActionAdd {
         }
         elsif ( $Object->{Name} eq 'ITSMWorkOrder' ) {
             $Data{Selector} = $Param{OldWorkOrderIDs}->{ $Data{Selector} };
+        }
+    }
+
+    # encode parameters
+    for my $Parameter ( keys %Data ) {
+        if (
+            $Data{$Parameter}
+            && $Self->{EncodeObject}->EncodeInternalUsed()
+            && !ref $Data{$Parameter}
+            )
+        {
+            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
         }
     }
 
@@ -2418,6 +2472,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2010-02-01 09:34:38 $
+$Revision: 1.45 $ $Date: 2010-02-02 13:32:51 $
 
 =cut
