@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.9 2010-01-31 17:30:54 mae Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.10 2010-02-02 14:51:42 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -176,7 +176,7 @@ sub Run {
     else {
         $Self->{LayoutObject}->Block(
             Name => 'NoWorkOrderInCondition',
-            Data => {},
+            Data => $WorkOrder,
         );
     }
 
