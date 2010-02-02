@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm - all itsm workorder operator functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.4 2010-01-30 20:12:44 mae Exp $
+# $Id: ITSMWorkOrder.pm,v 1.5 2010-02-02 23:21:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
@@ -134,6 +134,9 @@ sub Set {
     return if !$WorkOrder;
     return if ref $WorkOrder ne 'HASH';
 
+    # set workorder attribute to empty string if it is not true
+    $WorkOrder->{ $Param{Attribute} } ||= '';
+
     # do not update the attribute if it already has this value
     # ( this will prevent infinite event looping! )
     return 1 if $WorkOrder->{ $Param{Attribute} } eq $Param{ActionValue};
@@ -214,6 +217,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-01-30 20:12:44 $
+$Revision: 1.5 $ $Date: 2010-02-02 23:21:03 $
 
 =cut
