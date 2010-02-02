@@ -2,7 +2,7 @@
 # ITSMTemplate.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMTemplate.t,v 1.1 2010-02-02 11:59:41 reb Exp $
+# $Id: ITSMTemplate.t,v 1.2 2010-02-02 12:56:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,6 +23,12 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
+
+# ---------------------------------------------------------------------------- #
+# Note for developers:
+# Please note that the keys in %ChangeDefinitions (resp. WorkOrderDefinitions )
+# have to be identical with the key names in %TemplateDefinitions
+# ---------------------------------------------------------------------------- #
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -187,7 +193,7 @@ my %ChangeDefinitions = (
 
 # create change that should act as the base for the template test
 my %CreatedChangeID;
-$CreatedChangeID{BaseChangeID} = $Self->{ChangeObject}->ChangeAdd(
+$CreatedChangeID{BaseChange} = $Self->{ChangeObject}->ChangeAdd(
     %{ $ChangeDefinitions{BaseChange} },
     UserID => 1,
 );
@@ -260,6 +266,8 @@ my %WorkOrderDefinitions = (
 
 my %CreatedWorkOrderID;
 for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
+
+    # add workorder
     $CreatedWorkOrderID{$WorkOrderName} = $Self->{WorkOrderObject}->WorkOrderAdd(
         %{ $WorkOrderDefinitions{$WorkOrderName} },
         UserID => 1,
@@ -267,6 +275,7 @@ for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
 
     my $WorkOrderID = $CreatedWorkOrderID{$WorkOrderName};
 
+    # get workorder
     my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
@@ -291,6 +300,8 @@ for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
             $ReferenceAttribute,
             "Test $TestCount: |- $RequestedAttribute (WorkOrderID: $WorkOrderID)",
         );
+
+        $TestCount++;
     }
 }
 
@@ -304,11 +315,39 @@ my %TestedTemplateStrings;
 
 my %TemplateDefinitions = (
     BaseChange => {
-        Name         => 'Base Change Template - ' . $UniqueSignature,
-        TemplateType => 'ITSMChange',
-        ValidID      => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
-        ChangeID     => $CreatedChangeID{BaseChange},
-        UserID       => 1,
+        Name     => 'Base Change Template - ' . $UniqueSignature,
+        Type     => 'ITSMChange',
+        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ChangeID => $CreatedChangeID{BaseChange},
+        UserID   => 1,
+    },
+    UnicodeChange => {
+        Name     => 'Unicode Change Template - ' . $UniqueSignature,
+        Type     => 'ITSMChange',
+        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ChangeID => $CreatedChangeID{UnicodeChange},
+        UserID   => 1,
+    },
+    ASCIIWorkOrder => {
+        Name        => 'Ascii WorkOrder Template - ' . $UniqueSignature,
+        Type        => 'ITSMWorkOrder',
+        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        WorkOrderID => $CreatedWorkOrderID{ASCIIWorkOrder},
+        UserID      => 1,
+    },
+    UmlautsWorkOrder => {
+        Name        => 'Umlauts WorkOrder Template - ' . $UniqueSignature,
+        Type        => 'ITSMWorkOrder',
+        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        WorkOrderID => $CreatedWorkOrderID{UmlautsWorkOrder},
+        UserID      => 1,
+    },
+    UnicodeWorkOrder => {
+        Name        => 'Unicode WorkOrder Template - ' . $UniqueSignature,
+        Type        => 'ITSMWorkOrder',
+        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        WorkOrderID => $CreatedWorkOrderID{UnicodeWorkOrder},
+        UserID      => 1,
     },
 );
 
@@ -318,15 +357,103 @@ for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
     $TemplateDefinitions{$TemplateDefinitionName}->{Content} =
         $Self->{TemplateObject}->TemplateSerialize(
         %{ $TemplateDefinitions{$TemplateDefinitionName} },
+        TemplateType => $TemplateDefinitions{$TemplateDefinitionName}->{Type},
         );
 
+    # check serialization
+    $Self->True(
+        $TemplateDefinitions{$TemplateDefinitionName}->{Content},
+        "Test $TestCount: TemplateSerialize for $TemplateDefinitionName",
+    );
+
+    # add template
     $TestedTemplateID{$TemplateDefinitionName} = $Self->{TemplateObject}->TemplateAdd(
         %{ $TemplateDefinitions{$TemplateDefinitionName} },
+        TemplateType => $TemplateDefinitions{$TemplateDefinitionName}->{Type},
     );
+
+    my $TemplateID = $TestedTemplateID{$TemplateDefinitionName};
+
+    # check template ID
+    $Self->True(
+        $TemplateID,
+        "Test $TestCount: |- TemplateAdd for $TemplateDefinitionName",
+    );
+
+    # get created template
+    my $Template = $Self->{TemplateObject}->TemplateGet(
+        TemplateID => $TemplateID,
+        UserID     => 1,
+    );
+
+    # check template attributes name, type and content
+    for my $Attribute (qw(Name Type Content)) {
+        $Self->Is(
+            $Template->{$Attribute},
+            $TemplateDefinitions{$TemplateDefinitionName}->{$Attribute},
+            "Test $TestCount: |- $Attribute (TemplateID: $TemplateID)",
+        );
+    }
+
+    $TestCount++;
 }
 
 # create objects based on templates
-my @CreatedChangeID;
+my @ChangeIDs;
+
+CHANGETEMPLATENAME:
+for my $ChangeTemplateName ( keys %CreatedChangeID ) {
+
+    # get template id
+    my $TemplateID = $TestedTemplateID{$ChangeTemplateName};
+
+    next CHANGETEMPLATENAME if !$TemplateID;
+
+    # deserialize template
+    my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
+        TemplateID => $TemplateID,
+        UserID     => 1,
+    );
+
+    # check change id
+    $Self->True(
+        $ChangeID,
+        "Test $TestCount: Create change based on template (TemplateID: $TemplateID)",
+    );
+
+    # get change data
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    # check change attributes
+    for my $RequestedAttribute ( keys %{ $ChangeDefinitions{$ChangeTemplateName} } ) {
+
+        # turn off all pretty print
+        local $Data::Dumper::Indent = 0;
+        local $Data::Dumper::Useqq  = 1;
+
+        # dump the attribute from ChangeGet()
+        my $ChangeAttribute = Data::Dumper::Dumper( $Change->{$RequestedAttribute} );
+
+        # dump the reference attribute
+        my $ReferenceAttribute
+            = Data::Dumper::Dumper(
+            $ChangeDefinitions{$ChangeTemplateName}->{$RequestedAttribute}
+            );
+
+        $Self->Is(
+            $ChangeAttribute,
+            $ReferenceAttribute,
+            "Test $TestCount: |- $RequestedAttribute (ChangeID: $ChangeID)",
+        );
+    }
+
+    push @ChangeIDs, $ChangeID;
+
+    $TestCount++;
+}
 
 # ------------------------------------------------------------ #
 # clean the system
@@ -361,7 +488,7 @@ continue {
 }
 
 # delete the test changes
-for my $ChangeID ( @CreatedChangeID, values %CreatedChangeID ) {
+for my $ChangeID ( @ChangeIDs, values %CreatedChangeID ) {
     my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,
