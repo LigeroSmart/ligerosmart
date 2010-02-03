@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.22 2010-01-31 20:57:55 ub Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.23 2010-02-03 13:13:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@
     </colgroup>
     <tr>
         <td colspan="2" class="mainhead">
-            $Env{"Box0"}$Text{"Admin State Machine"}$Env{"Box1"}
+            $Env{"Box0"} $Text{"Admin State Machine"} $Env{"Box1"}
         </td>
     </tr>
     <tr>

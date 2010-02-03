@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.32 2010-01-28 13:24:44 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.33 2010-02-03 13:13:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -94,7 +94,7 @@ document.observe( "dom:loaded", function() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            $Env{"Box0"}$Text{"Search: Change"}$Env{"Box1"}
+            $Env{"Box0"} $Text{"Search: Change"} $Env{"Box1"}
         </td>
     </tr>
     <tr>

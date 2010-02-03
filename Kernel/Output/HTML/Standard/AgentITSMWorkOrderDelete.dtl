@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.17 2010-02-03 12:43:33 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.18 2010-02-03 13:13:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,8 +12,8 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"}$Text{"Delete"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}$Env{"Box1"} - $QData{"WorkOrderTitle"}">
-                $Env{"Box0"}$Text{"Delete"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}$Env{"Box1"} - $QData{"WorkOrderTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Delete"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} - $QData{"WorkOrderTitle"}">
+                $Env{"Box0"} $Text{"Delete"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} - $QData{"WorkOrderTitle","70"}
             </div>
         </td>
     </tr>

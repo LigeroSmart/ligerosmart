@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.45 2010-01-27 09:50:51 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.46 2010-02-03 13:13:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,8 +60,8 @@ function submit_compose() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"}$Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}">
-                $Env{"Box0"}$Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}
+            <div title="$Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}">
+                $Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}
             </div>
         </td>
     </tr>

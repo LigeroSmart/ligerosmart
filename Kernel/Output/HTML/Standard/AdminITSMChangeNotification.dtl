@@ -2,7 +2,7 @@
 # AdminITSMChangeNotification.dtl - provides HTML form for AdminState
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeNotification.dtl,v 1.6 2010-01-07 12:14:50 ub Exp $
+# $Id: AdminITSMChangeNotification.dtl,v 1.7 2010-02-03 13:13:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td colspan="2" class="mainhead">
-            $Env{"Box0"}$Text{"ITSM ChangeManagement Notification Management"}$Env{"Box1"}
+            $Env{"Box0"} $Text{"ITSM ChangeManagement Notification Management"} $Env{"Box1"}
         </td>
     </tr>
     <tr>

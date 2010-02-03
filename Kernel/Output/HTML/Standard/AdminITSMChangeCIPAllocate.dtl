@@ -2,7 +2,7 @@
 # AdminITSMChangeCIPAllocate.dtl - provides HTML form for AdminITSMChangeCIPAllocate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.6 2010-01-31 17:03:39 ub Exp $
+# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.7 2010-02-03 13:13:16 bes Exp $
 # $OldId: AdminITSMCIPAllocate.dtl,v 1.8 2010/01/31 17:00:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -17,7 +17,7 @@
 # ITSM Change Management
 # ---
 #            $Env{"Box0"}$Text{"Criticality <-> Impact <-> Priority"}$Env{"Box1"}
-            $Env{"Box0"}$Text{"Category <-> Impact <-> Priority"}$Env{"Box1"}
+            $Env{"Box0"} $Text{"Category <-> Impact <-> Priority"} $Env{"Box1"}
 # ---
         </td>
     </tr>
