@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.193 2010-02-02 23:22:50 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.194 2010-02-03 00:00:51 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -619,7 +619,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Take Workorder</Description>
-                <Title>Take</Title>
+                <Title>Take Workorder</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -984,7 +984,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithTakePermission</Item>
-                <Item Key="Name">Take</Item>
+                <Item Key="Name">Take Workorder</Item>
                 <Item Key="Description">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>

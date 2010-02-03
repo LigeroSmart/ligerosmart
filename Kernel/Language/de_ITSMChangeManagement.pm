@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.52 2010-02-02 22:12:02 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.53 2010-02-03 00:00:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -240,6 +240,13 @@ sub Data {
     $Lang->{'Do you really want to delete this workorder?'} = 'Möchten Sie diese Workorder wirklich löschen?';
     $Lang->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Sie können diese Workorder nicht löschen. Sie wird in mindestens einer Condition verwendet!';
     $Lang->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Condition(s)';
+
+    # take workorder
+    $Lang->{'Imperative::Take Workorder'}                 = 'Übernehmen von Workorder';
+    $Lang->{'Take Workorder'}                             = 'Workorder übernehmen';
+    $Lang->{'Take the workorder'}                         = 'Diese Workorder übernehmen';
+    $Lang->{'Current Agent'}                              = 'Aktueller Agent';
+    $Lang->{'Do you really want to take this workorder?'} = 'Wollen sie diese Workorder wirklich übernehmen?';
 
     # Condition Overview
     $Lang->{'Conditions and Actions'}            = 'Conditions und Actions';
