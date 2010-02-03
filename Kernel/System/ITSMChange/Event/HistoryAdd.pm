@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.43 2010-02-03 11:04:33 bes Exp $
+# $Id: HistoryAdd.pm,v 1.44 2010-02-03 11:09:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,13 +14,11 @@ package Kernel::System::ITSMChange::Event::HistoryAdd;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
-use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -96,9 +94,7 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{HistoryObject}   = Kernel::System::ITSMChange::History->new( %{$Self} );
 
     return $Self;
@@ -772,6 +768,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2010-02-03 11:04:33 $
+$Revision: 1.44 $ $Date: 2010-02-03 11:09:14 $
 
 =cut
