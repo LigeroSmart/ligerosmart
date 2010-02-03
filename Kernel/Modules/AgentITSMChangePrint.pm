@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.36 2010-02-03 17:26:58 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.37 2010-02-03 17:29:02 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -974,7 +974,7 @@ sub _OutputWorkOrderInfo {
 
     # allow wrapping of long words in the change title
     ( $ComplicatedValue{WrappableChangeTitle} = $Change->{ChangeTitle} )
-        =~ s{ ( \S{25} ) }{$1\n}xmsg;
+        =~ s{ ( \S{25} ) }{$1 }xmsg;
 
     my @RowSpec = (
         {
