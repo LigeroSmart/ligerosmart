@@ -2,7 +2,7 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.8 2010-01-29 17:46:34 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.9 2010-02-03 12:16:03 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@
 <!-- dtl:block:ChangeHeadline -->
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
     <tr>
-        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} / $QData{"Title"}</td>
+        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} - $QData{"Title"}</td>
     </tr>
 </table>
 <!-- dtl:block:ChangeHeadline -->
