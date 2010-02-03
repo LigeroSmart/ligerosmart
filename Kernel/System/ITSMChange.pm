@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.232 2010-01-30 20:54:26 mae Exp $
+# $Id: ITSMChange.pm,v 1.233 2010-02-03 09:50:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.232 $) [1];
+$VERSION = qw($Revision: 1.233 $) [1];
 
 =head1 NAME
 
@@ -2181,18 +2181,22 @@ sub ChangeCIPLookup {
 
 Returns whether the agent C<UserID> has permissions of the type C<Type>
 on the change C<ChangeID>. The parameters are passed on to
-the permission modules that were registered under B<ITSMWorkOrder::Permission>.
+the permission modules that were registered in the permission registry.
+The standard permission registry is B<ITSMChange::Permission>, but
+that can be overridden with the parameter C<PermissionRegistry>.
 
 The optional option C<LogNo> turns off logging when access was denied.
 This is useful when the method is used for checking whether a link or an action should be shown.
 
     my $Access = $ChangeObject->Permission(
-        UserID      => 123,
-        Type        => 'ro',   # 'ro' and 'rw' are supported
-        ChangeID    => 3333,   # optional, do not pass for 'ChangeAdd'
-        Cached      => 0,      # optional with default 1,
-                               # passing the value 0 is useful in test scripts
-        LogNo       => 1,      # optional, turns off logging when access is denied
+        UserID             => 123,
+        Type               => 'ro',   # 'ro' and 'rw' are supported
+        ChangeID           => 3333,   # optional, do not pass for 'ChangeAdd'
+        PermissionRegistry => 'ITSMChange::Permission',
+                                      # optional with default 'ITSMChange::Permission'
+        Cached             => 0,      # optional with default 1,
+                                      # passing the value 0 is useful in test scripts
+        LogNo              => 1,      # optional, turns off logging when access is denied
     );
 
 =cut
@@ -2215,9 +2219,12 @@ sub Permission {
     # E.g. for ChangeAdd() or ChangeSearch().
     $Param{ChangeID} ||= '';
 
+    # the place where the permission modules are registerd can be overridden by a parameter
+    my $Registry = $Param{PermissionRegistry} || 'ITSMChange::Permission';
+
     # run the relevant permission modules
-    if ( ref $Self->{ConfigObject}->Get('ITSMChange::Permission') eq 'HASH' ) {
-        my %Modules = %{ $Self->{ConfigObject}->Get('ITSMChange::Permission') };
+    if ( ref $Self->{ConfigObject}->Get($Registry) eq 'HASH' ) {
+        my %Modules = %{ $Self->{ConfigObject}->Get($Registry) };
         for my $Module ( sort keys %Modules ) {
 
             # log try of load module
@@ -3076,6 +3083,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.232 $ $Date: 2010-01-30 20:54:26 $
+$Revision: 1.233 $ $Date: 2010-02-03 09:50:33 $
 
 =cut
