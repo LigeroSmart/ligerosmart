@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Condition.pm - a event module to match conditions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Condition.pm,v 1.5 2010-02-01 17:36:21 ub Exp $
+# $Id: Condition.pm,v 1.6 2010-02-03 11:04:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,20 +14,19 @@ package Kernel::System::ITSMChange::Event::Condition;
 use strict;
 use warnings;
 
-use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
-Kernel::System::ITSMChange::Event::Condition - ITSM change management condition lib
+Kernel::System::ITSMChange::Event::Condition - ITSM change management condition event lib
 
 =head1 SYNOPSIS
 
-Event handler module for condition matching for changes and workords
+Event handler module for condition matching for changes and workorders.
 
 =head1 PUBLIC INTERFACE
 
@@ -68,7 +67,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $ConditionEventObject = Kernel::System::ITSMChange::Event::Condition->new(
+    my $EventObject = Kernel::System::ITSMChange::Event::Condition->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -95,7 +94,6 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
@@ -109,7 +107,7 @@ defined for the current change.
 
 It returns 1 on success, C<undef> otherwise.
 
-    my $Success = $ConditionEventObject->Run(
+    my $Success = $EventObject->Run(
         Event => 'ChangeUpdatePost',
         Data => {
             ChangeID    => 123,
@@ -178,27 +176,6 @@ sub Run {
             Message  => "Can not handle event '$Param{Event}'!"
         );
         return;
-    }
-
-    # handle deletion of a change
-    if ( $Param{Event} eq 'ChangeDeletePost' ) {
-
-        # delete all conditions (and expressions and actions) for this change id
-        my $Success = $Self->{ConditionObject}->ConditionDeleteAll(
-            ChangeID => $ChangeID,
-            UserID   => $Param{UserID},
-        );
-
-        # handle error
-        if ( !$Success ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "ConditionDeleteAll failed for ChangeID '$ChangeID'!"
-            );
-            return;
-        }
-
-        return 1;
     }
 
     # in case of an update event or a time reached event, store the updated attributes
@@ -377,6 +354,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-02-01 17:36:21 $
+$Revision: 1.6 $ $Date: 2010-02-03 11:04:33 $
 
 =cut

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.194 2010-02-03 00:00:51 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.195 2010-02-03 11:04:33 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1276,7 +1276,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
-                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeDeletePost)</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
@@ -1289,7 +1289,33 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
-                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###90-ConditionDelete" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module that cleans up conditions.</Description>
+        <Description Lang="de">ITSM Event Modul zum Aufräumen von Conditions.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::ConditionDelete</Item>
+                <Item Key="Event">(ChangeDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###91-HistoryDelete" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module deletes the history of changes.</Description>
+        <Description Lang="de">ITSM Event Modul löscht die Historie von Changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryDelete</Item>
+                <Item Key="Event">(ChangeDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>

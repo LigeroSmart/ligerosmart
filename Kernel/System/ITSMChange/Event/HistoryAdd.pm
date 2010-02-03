@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: HistoryAdd.pm,v 1.42 2010-02-01 17:32:52 ub Exp $
+# $Id: HistoryAdd.pm,v 1.43 2010-02-03 11:04:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -69,7 +69,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $HistoryAddObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
+    my $EventObject = Kernel::System::ITSMChange::Event::HistoryAdd->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -111,14 +111,14 @@ the given change or workorder.
 
 It returns 1 on success, C<undef> otherwise.
 
-    my $Success = $HistoryAddObject->Run(
+    my $Success = $EventObject->Run(
         Event => 'ChangeUpdatePost',
         Data => {
             ChangeID       => 123,
             ChangeTitle    => 'test',
         },
         Config => {
-            Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost)',
+            Event       => '(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost)',
             Module      => 'Kernel::System::ITSMChange::Event::HistoryAdd',
             Transaction => '0',
         },
@@ -127,7 +127,7 @@ It returns 1 on success, C<undef> otherwise.
 
 For workorder events the C<WorkOrderID> is expected.
 
-    my $Success = $HistorAddObject->Run(
+    my $Success = $EventObject->Run(
         Event => 'WorkOrderUpdatePost',
         Data => {
             WorkOrderID    => 456,
@@ -289,14 +289,6 @@ sub Run {
             HistoryType => $Event,
             ContentNew  => $OldData->{WorkOrderID},
             UserID      => $Param{UserID},
-        );
-    }
-    elsif ( $Event eq 'ChangeDelete' ) {
-
-        # delete history of change
-        return if !$Self->{HistoryObject}->ChangeHistoryDelete(
-            ChangeID => $Param{Data}->{ChangeID},
-            UserID   => $Param{UserID},
         );
     }
 
@@ -780,6 +772,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2010-02-01 17:32:52 $
+$Revision: 1.43 $ $Date: 2010-02-03 11:04:33 $
 
 =cut
