@@ -2,7 +2,7 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.10 2010-02-03 15:27:47 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.11 2010-02-03 17:26:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,45 +14,39 @@
 <!-- dtl:block:ChangeHeadline -->
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
     <tr>
-        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} - $QData{"Title"}</td>
+        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} - $QData{"Title","30"}</td>
     </tr>
 </table>
 <!-- dtl:block:ChangeHeadline -->
 
-<table border="0" cellspacing="1" cellpadding="10" width="100%">
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
-        <td class="contentkey">
-            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+        <td width="50%" valign="top">
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                <colgroup>
+                    <col width="40%"/>
+                    <col width="60%"/>
+                </colgroup>
+<!-- dtl:block:ChangeInfoLeft -->
                 <tr>
-                    <td width="50%" valign="top">
-                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
-                            <colgroup>
-                                <col width="40%"/>
-                                <col width="60%"/>
-                            </colgroup>
-<!-- dtl:block:ChangeInfoLeft -->
-                            <tr>
-                                <td class="contentkey">$QData{"Key"}:</td>
-                                <td class="contentvalue" >$QData{"Value"}</td>
-                            </tr>
-<!-- dtl:block:ChangeInfoLeft -->
-                        </table>
-                    </td>
-                    <td width="50%" valign="top">
-                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
-                            <colgroup>
-                                <col width="40%"/>
-                                <col width="60%"/>
-                            </colgroup>
-<!-- dtl:block:ChangeInfoRight -->
-                            <tr>
-                                <td class="contentkey">$QData{"Key"}:</td>
-                                <td class="contentvalue" >$QData{"Value"}</td>
-                            </tr>
-<!-- dtl:block:ChangeInfoRight -->
-                        </table>
-                    </td>
+                    <td class="contentkey">$QData{"Key"}:</td>
+                    <td class="contentvalue" >$QData{"Value"}</td>
                 </tr>
+<!-- dtl:block:ChangeInfoLeft -->
+            </table>
+        </td>
+        <td width="50%" valign="top">
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                <colgroup>
+                    <col width="40%"/>
+                    <col width="60%"/>
+                </colgroup>
+<!-- dtl:block:ChangeInfoRight -->
+                <tr>
+                    <td class="contentkey">$QData{"Key"}:</td>
+                    <td class="contentvalue" >$QData{"Value"}</td>
+                </tr>
+<!-- dtl:block:ChangeInfoRight -->
             </table>
         </td>
     </tr>
@@ -100,6 +94,10 @@
         <td class="contentkey">
             $Text{"ITSM Workorder"} $Text{"Overview"}:
             <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <colgroup>
+                    <col width="16">
+                    <col width="240">
+                </colgroup>
                 <tr>
                     <td class="contentkey">#</td>
                     <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderTitle"}</td>
@@ -112,7 +110,7 @@
 <!-- dtl:block:WorkOrderRow -->
                 <tr>
                     <td class="contentkey">$QData{"WorkOrderNumber"}</td>
-                    <td class="contentkey">$QData{"WorkOrderTitle"}</td>
+                    <td class="contentkey">$QData{"WrappedWorkOrderTitle"}</td>
                     <td class="contentkey">$QData{"WorkOrderState"}</td>
                     <td class="contentkey">$QData{"PlannedStartTime"}</td>
                     <td class="contentkey">$QData{"PlannedEndTime"}</td>
@@ -133,49 +131,44 @@
 <!-- dtl:block:WorkOrderHeadline -->
 <table border="0" cellspacing="1" cellpadding="0" width="100%">
     <tr>
-        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} / $QData{"Title"}</td>
+        <td class="mainhead">$QData{"HeaderArea"}#: $QData{"HeaderValue"} / $QData{"Title","30"}</td>
     </tr>
 </table>
 <!-- dtl:block:WorkOrderHeadline -->
 
-<table border="0" cellspacing="1" cellpadding="10" width="100%">
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tr>
-        <td class="contentkey">
-            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+        <td width="50%" valign="top">
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                <colgroup>
+                    <col width="40%"/>
+                    <col width="60%"/>
+                </colgroup>
+<!-- dtl:block:WorkOrderInfoLeft -->
                 <tr>
-                    <td width="50%" valign="top">
-                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
-                            <colgroup>
-                                <col width="40%"/>
-                                <col width="60%"/>
-                            </colgroup>
-<!-- dtl:block:WorkOrderInfoLeft -->
-                            <tr>
-                                <td class="contentkey">$QData{"Key"}:</td>
-                                <td class="contentvalue" >$QData{"Value"}</td>
-                            </tr>
-<!-- dtl:block:WorkOrderInfoLeft -->
-                        </table>
-                    </td>
-                    <td width="50%" valign="top">
-                        <table border="0" cellspacing="3" cellpadding="0" width="100%">
-                            <colgroup>
-                                <col width="40%"/>
-                                <col width="60%"/>
-                            </colgroup>
-<!-- dtl:block:WorkOrderInfoRight -->
-                            <tr>
-                                <td class="contentkey">$QData{"Key"}:</td>
-                                <td class="contentvalue" >$QData{"Value"}</td>
-                            </tr>
-<!-- dtl:block:WorkOrderInfoRight -->
-                        </table>
-                    </td>
+                    <td class="contentkey">$QData{"Key"}:</td>
+                    <td class="contentvalue" >$QData{"Value"}</td>
                 </tr>
+<!-- dtl:block:WorkOrderInfoLeft -->
+            </table>
+        </td>
+        <td width="50%" valign="top">
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                <colgroup>
+                    <col width="40%"/>
+                    <col width="60%"/>
+                </colgroup>
+<!-- dtl:block:WorkOrderInfoRight -->
+                <tr>
+                    <td class="contentkey">$QData{"Key"}:</td>
+                    <td class="contentvalue" >$QData{"Value"}</td>
+                </tr>
+<!-- dtl:block:WorkOrderInfoRight -->
             </table>
         </td>
     </tr>
 </table>
+
 <table border="0" cellspacing="3" cellpadding="0" width="100%">
     <tr>
         <td class="contentkey">Workorder: $QData{"Title"}</td>

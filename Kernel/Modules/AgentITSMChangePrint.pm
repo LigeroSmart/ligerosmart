@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.35 2010-02-01 10:51:58 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.36 2010-02-03 17:26:58 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,9 +49,7 @@ sub new {
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
 
     # when there is no PDF-Support, $Self->{PDFObject} will be undefined
-    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);
-
-    #$Self->{PDFObject}          = undef;  # TODO: remove line when devel is finished
+    $Self->{PDFObject} = 0;    #Kernel::System::PDF->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -974,9 +972,13 @@ sub _OutputWorkOrderInfo {
         $ComplicatedValue{Attachments} = join( "\n", @Values ) || '-';
     }
 
+    # allow wrapping of long words in the change title
+    ( $ComplicatedValue{WrappableChangeTitle} = $Change->{ChangeTitle} )
+        =~ s{ ( \S{25} ) }{$1\n}xmsg;
+
     my @RowSpec = (
         {
-            Attribute => 'ChangeTitle',
+            Attribute => 'WrappableChangeTitle',
             Table     => \@TableLeft,
             Key       => 'ChangeAttribute::ChangeTitle',
         },
@@ -1275,8 +1277,8 @@ sub _OutputWorkOrderOverview {
             }
 
             $Table{ColumnData}[0]{Width} = 2;
-            $Table{ColumnData}[1]{Width} = 58;
-            $Table{ColumnData}[2]{Width} = 30;
+            $Table{ColumnData}[1]{Width} = 63;
+            $Table{ColumnData}[2]{Width} = 25;
             $Table{ColumnData}[3]{Width} = 40;
             $Table{ColumnData}[4]{Width} = 40;
             $Table{ColumnData}[5]{Width} = 40;
@@ -1308,8 +1310,10 @@ sub _OutputWorkOrderOverview {
         for my $WorkOrder ( @{ $Param{WorkOrderOverview} } ) {
             my %Data;
             @Data{
-                qw( WorkOrderNumber WorkOrderTitle WorkOrderState PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime )
+                qw( WorkOrderNumber WorkOrderTitle WorkOrderState
+                    PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime )
                 } = @{$WorkOrder};
+
             $Self->{LayoutObject}->Block(
                 Name => 'WorkOrderRow',
                 Data => \%Data,
