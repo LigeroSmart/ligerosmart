@@ -2,7 +2,7 @@
 # AgentITSMChangePrint.dtl - provides HTML print view
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.9 2010-02-03 12:16:03 bes Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.10 2010-02-03 15:27:47 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -73,7 +73,7 @@
 <!-- dtl:block:ChangeLinkedObjects -->
     <tr>
         <td class="contentkey">
-            $Text{"Linked-Object"}:
+            $Text{"Linked Objects"}:
             <table border="0" cellspacing="0" cellpadding="0" width="100%">
                 <tr>
                     <td width="50%" valign="top">
