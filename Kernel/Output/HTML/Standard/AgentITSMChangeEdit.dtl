@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.45 2010-02-03 13:13:17 bes Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.46 2010-02-03 13:21:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,8 +40,8 @@ function submit_compose() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} - $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} - $QData{"ChangeTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
+                $Env{"Box0"} $Text{"Edit"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
             </div>
         </td>
     </tr>

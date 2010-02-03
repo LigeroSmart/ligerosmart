@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.21 2010-02-03 13:13:17 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.22 2010-02-03 13:21:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,8 +47,8 @@ document.observe( "dom:loaded", function() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAttribute::WorkOrderAgent"} $Text{"of"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} - $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAttribute::WorkOrderAgent"} $Text{"of"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} - $QData{"WorkOrderTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAttribute::WorkOrderAgent"} $Text{"of"} $Text{"WorkOrder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
+                $Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAttribute::WorkOrderAgent"} $Text{"of"} $Text{"Workorder#"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
             </div>
         </td>
     </tr>

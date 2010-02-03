@@ -2,7 +2,7 @@
 # AgentITSMChangeHistoryZoom.dtl - provides HTML form for AgentITSMChangeHistoryZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.14 2010-02-03 13:13:17 bes Exp $
+# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.15 2010-02-03 13:21:44 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,8 +24,8 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} - $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} - $QData{"ChangeTitle","70"}
+            <div title="$Env{"Box0"} $Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
+                $Env{"Box0"} $Text{"History of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
             </div>
         </td>
     </tr>
