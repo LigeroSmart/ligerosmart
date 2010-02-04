@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.35 2010-02-03 13:42:12 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.36 2010-02-04 12:04:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         <span style="font-weight:bold;">
-                        $Text{"Change#"} $QData{"ChangeNumber"}
+                        $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}
                         <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeZoom&amp;ChangeID=$LQData{"ChangeID"}">
                         $QData{"ChangeTitle","70"}
                         </a>

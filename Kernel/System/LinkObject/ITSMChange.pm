@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/ITSMChange.pm - to link change objects
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.5 2009-12-17 08:53:55 ub Exp $
+# $Id: ITSMChange.pm,v 1.6 2010-02-04 12:04:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -151,7 +151,8 @@ sub ObjectDescriptionGet {
     return if !%{$ChangeData};
 
     # define description text
-    my $DescriptionText = "Change# $ChangeData->{ChangeNumber}";
+    my $ChangeHook      = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+    my $DescriptionText = "$ChangeHook $ChangeData->{ChangeNumber}";
 
     # create description
     %Description = (

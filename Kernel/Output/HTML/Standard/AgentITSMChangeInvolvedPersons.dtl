@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.31 2010-02-03 13:21:44 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.32 2010-02-04 12:04:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -70,8 +70,8 @@ document.observe( "dom:loaded", function() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
+                $Env{"Box0"} $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
             </div>
         </td>
     </tr>

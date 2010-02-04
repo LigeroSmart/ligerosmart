@@ -2,7 +2,7 @@
 # AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.dtl,v 1.9 2010-02-03 13:21:44 bes Exp $
+# $Id: AgentITSMChangeCondition.dtl,v 1.10 2010-02-04 12:04:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,8 +12,8 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Overview"}: $Text{"Conditions and Actions"} : $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Overview"}: $Text{"Conditions and Actions"} : $Text{"Change#"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Overview"}: $Text{"Conditions and Actions"} : $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
+                $Env{"Box0"} $Text{"Overview"}: $Text{"Conditions and Actions"} : $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
             </div>
         </td>
     </tr>

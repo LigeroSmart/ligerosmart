@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.195 2010-02-03 11:04:33 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.196 2010-02-04 12:04:55 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1457,6 +1457,15 @@
             <String Regex="">&lt;OTRS_CONFIG_Home&gt;/var/log/ITSMChangeCounter.log</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::Hook" Required="1" Valid="1">
+        <Description Lang="en">The identifier for a change, e.g. Change#, MyChange#. The default is Change#.</Description>
+        <Description Lang="de">Change-Identifikator, z. B. Change#, MeinChange#. Als Standard wird Change# verwendet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <String Regex="">Change#</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
         <Description Lang="en">Define the signal for each ITSMChange state.</Description>
         <Description Lang="de">Definieren eines Signals für einen ITSMChange-Status.</Description>
@@ -2457,6 +2466,15 @@
             <Hash>
                 <Item Key="set">1</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::Hook" Required="1" Valid="1">
+        <Description Lang="en">The identifier for a change, e.g. Workorder#, MyWorkorder#. The default is Workorder#.</Description>
+        <Description Lang="de">Workorder-Identifikator, z. B. Workorder#, MeineWorkorder#. Als Standard wird Workorder# verwendet.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <String Regex="">Workorder#</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">

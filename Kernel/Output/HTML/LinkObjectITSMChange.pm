@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.6 2009-12-17 08:44:05 ub Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.7 2010-02-04 12:04:56 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -67,6 +67,9 @@ sub new {
         Object   => 'ITSMChange',
         Realname => 'Change',
     };
+
+    # get config
+    $Self->{ChangeHook} = $Self->{ConfigObject}->Get('ITSMChange::Hook');
 
     return $Self;
 }
@@ -249,7 +252,7 @@ sub TableCreateComplex {
                 Width   => 20,
             },
             {
-                Content => 'Change#',
+                Content => $Self->{ChangeHook},
                 Width   => 200,
             },
             {
@@ -349,11 +352,10 @@ sub TableCreateSimple {
                 my %Item = (
                     Type    => 'Link',
                     Content => 'CH:' . $Change->{ChangeNumber},
-                    Title   => 'Change# '
-                        . $Change->{ChangeNumber}
-                        . ': ' . $Change->{ChangeTitle},
-                    Link => '$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID='
-                        . $ChangeID,
+                    Title =>
+                        "$Self->{ChangeHook} $Change->{ChangeNumber}: $Change->{ChangeTitle}",
+                    Link =>
+                        '$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=' . $ChangeID,
                     MaxLength => 20,
                 );
 
@@ -485,7 +487,7 @@ sub SearchOptionList {
     my @SearchOptionList = (
         {
             Key  => 'ChangeNumber',
-            Name => 'Change#',
+            Name => $Self->{ChangeHook},
             Type => 'Text',
         },
         {
@@ -548,6 +550,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2009-12-17 08:44:05 $
+$Revision: 1.7 $ $Date: 2010-02-04 12:04:56 $
 
 =cut
