@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.41 2010-02-01 12:18:38 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.42 2010-02-04 13:14:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -1082,331 +1082,347 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] neu erstellt',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neu erstellt',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde neu erstellt.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeAdd',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] added',
-            'Change #<OTRS_CHANGE_ChangeNumber> was added.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] added',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was added.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeUpdate',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] aktualisiert',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeUpdate',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] updated',
-            'Change #<OTRS_CHANGE_ChangeNumber> was updated.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABUpdate',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit aktualisierten CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit aktualisiertem CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABUpdate',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB updated',
-            'Change #<OTRS_CHANGE_ChangeNumber> with updated CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB updated',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with updated CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB geloescht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB geloescht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit geloeschtem CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeCABDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB deleted',
-            'Change #<OTRS_CHANGE_ChangeNumber> with deleted CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB deleted',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with deleted CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeLinkAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknuepft',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit verknuepftem RfC.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC verknuepft',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit verknuepftem RfC.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeLinkAdd',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC linked',
-            'Change #<OTRS_CHANGE_ChangeNumber> with linked RfC.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC linked',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with linked RfC.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeLinkDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC entfernt',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit entferntem RfC.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC entfernt',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit entferntem RfC.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeLinkDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC unlinked',
-            'Change #<OTRS_CHANGE_ChangeNumber> with unlinked RfC.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC unlinked',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with unlinked RfC.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] geloescht',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde geloescht.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geloescht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde geloescht.',
         ],
         [
             'Agent::Change::ChangeDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] deleted',
-            'Change #<OTRS_CHANGE_ChangeNumber> was deleted.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] deleted',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was deleted.',
         ],
         [
             'Agent::WorkOrder::WorkOrderAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderAdd',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] added',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was added.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] added',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was added.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderUpdate',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderUpdate',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geloescht',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde geloescht.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geloescht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde geloescht.',
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] deleted',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] deleted',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted.',
         ],
         [
             'Agent::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknuepft',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknuepft.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknuepft',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderLinkAdd',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket linked',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was linked to a ticket.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket linked',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was linked to a ticket.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderLinkDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknuepft.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderLinkDelete',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket removed',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> in no linker linked to a ticket.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket removed',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> in no linker linked to a ticket.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::Change::ChangeAttachmentAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] neuer Anhang',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat einen neuen Anhang.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neuer Anhang',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat einen neuen Anhang.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeAttachmentAdd',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] new attachment.',
-            'Change #<OTRS_CHANGE_ChangeNumber> with new attachment.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] new attachment.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with new attachment.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeAttachmentDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang geloescht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem Anhang.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Anhang geloescht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit geloeschtem Anhang.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeAttachmentDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] attachment deleted.',
-            'Change #<OTRS_CHANGE_ChangeNumber> with deleted attachment.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] attachment deleted.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with deleted attachment.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderAttachmentAdd',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Anhang',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Anhang.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Anhang',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderAttachmentAdd',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new attachment.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with new attachment.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new attachment.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with new attachment.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang geloescht',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit geloeschtem Anhang.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang geloescht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit geloeschtem Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderAttachmentDelete',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment deleted.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment deleted.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::Change::ChangePlannedStartTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
                 . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangePlannedStartTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Startzeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Geplante Startzeit erreicht.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Startzeit erreicht.'
                 . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangePlannedEndTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned End Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned end time.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned End Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned end time.'
                 . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangePlannedEndTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Endzeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Geplante Endzeit erreicht.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.'
                 . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeActualStartTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Actual Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its actual start time.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actual Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its actual start time.'
                 . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeActualStartTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Change begonnen.',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde begonnen.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Change begonnen.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde begonnen.'
                 . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeActualEndTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned start time.'
                 . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeActualEndTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Change fertiggestellt.',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde fertiggestellt.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Change fertiggestellt.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde fertiggestellt.'
                 . $BasicChangeInfoDe,
         ],
         [
             'Agent::Change::ChangeRequestedTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Requested time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its requested time.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Requested time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.'
                 . $BasicChangeInfoEn,
         ],
         [
             'Agent::Change::ChangeRequestedTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewuenschte Fertigstellungszeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewuenschte Fertigstellungszeit erreicht.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewuenschte Fertigstellungszeit erreicht.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewuenschte Fertigstellungszeit erreicht.'
                 . $BasicChangeInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned start time.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned start time.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Startzeit erreicht.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Startzeit erreicht.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned end time.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned end time.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Endzeit erreicht.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Endzeit erreicht.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderActualStartTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual Start Time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual start time.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual Start Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual start time.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderActualStartTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder begonnen.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder begonnen.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual end time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual end time.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual end time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual end time.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Agent::WorkOrder::WorkOrderActualEndTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder abgeschlossen.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder abgeschlossen.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.'
                 . $BasicWorkOrderInfoDe,
         ],
     );
@@ -1415,314 +1431,330 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] neu erstellt',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde neu erstellt.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neu erstellt',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde neu erstellt.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeAdd',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] added',
-            'Change #<OTRS_CHANGE_ChangeNumber> was added.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] added',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was added.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeUpdate',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] aktualisiert',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde aktualisiert.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] aktualisiert',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde aktualisiert.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeUpdate',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] updated',
-            'Change #<OTRS_CHANGE_ChangeNumber> was updated.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] updated',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was updated.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABUpdate',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit aktualisiertem CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB aktualisiert',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit aktualisiertem CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABUpdate',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB updated',
-            'Change #<OTRS_CHANGE_ChangeNumber> with updated CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB updated',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with updated CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB geloescht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB geloescht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit geloeschtem CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeCABDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] CAB deleted',
-            'Change #<OTRS_CHANGE_ChangeNumber> with deleted CAB.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB deleted',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with deleted CAB.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeLinkAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC verknueft',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit verknueftem RfC.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC verknueft',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit verknueftem RfC.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeLinkAdd',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC linked',
-            'Change #<OTRS_CHANGE_ChangeNumber> with linked RfC.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC linked',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with linked RfC.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeLinkDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC entfernt',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit entferntem RfC.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC entfernt',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit entferntem RfC.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeLinkDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] RfC unlinked',
-            'Change #<OTRS_CHANGE_ChangeNumber> with unlinked RfC.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] RfC unlinked',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with unlinked RfC.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] geloescht',
-            'Der Change #<OTRS_CHANGE_ChangeNumber> wurde geloescht.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] geloescht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde geloescht.',
         ],
         [
             'Customer::Change::ChangeDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] deleted',
-            'Change #<OTRS_CHANGE_ChangeNumber> was deleted.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] deleted',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> was deleted.',
         ],
         [
             'Customer::WorkOrder::WorkOrderAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neu erstellt',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde neu erstellt.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderAdd',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] added',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was added.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] added',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was added.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Customer::WorkOrder::WorkOrderUpdate',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] aktualisiert',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde aktualisiert.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderUpdate',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] updated',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was updated.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geloescht',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde geloescht.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geloescht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde geloescht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] deleted',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] deleted',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was deleted.',
         ],
         [
             'Customer::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknuepft',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknuepft.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket verknuepft',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem Ticket verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderLinkAdd',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket linked',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was linked to a ticket.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket linked',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> was linked to a ticket.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderLinkDelete',
             'de',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
-            'Die Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknuepft.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket entfernt',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem Ticket nicht mehr verknuepft.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderLinkDelete',
             'en',
-            '[Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket removed',
-            'The Workorder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> in no linker linked to a ticket.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Ticket removed',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> in no linker linked to a ticket.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::Change::ChangeAttachmentAdd',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] neuer Anhang',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat einen neuen Anhang.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] neuer Anhang',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat einen neuen Anhang.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeAttachmentAdd',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] new attachment.',
-            'Change #<OTRS_CHANGE_ChangeNumber> with new attachment.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] new attachment.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with new attachment.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::Change::ChangeAttachmentDelete',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Anhang geloescht',
-            'Change #<OTRS_CHANGE_ChangeNumber> mit geloeschtem Anhang.' . $BasicChangeInfoDe,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Anhang geloescht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit geloeschtem Anhang.'
+                . $BasicChangeInfoDe,
         ],
         [
             'Customer::Change::ChangeAttachmentDelete',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] attachment deleted.',
-            'Change #<OTRS_CHANGE_ChangeNumber> with deleted attachment.' . $BasicChangeInfoEn,
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] attachment deleted.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> with deleted attachment.'
+                . $BasicChangeInfoEn,
         ],
         [
             'Customer::WorkOrder::WorkOrderAttachmentAdd',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Anhang',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Anhang.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] neuer Anhang',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat einen neuen Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderAttachmentAdd',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new attachment.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with new attachment.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] new attachment.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with new attachment.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Customer::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang geloescht',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit geloeschtem Anhang.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang geloescht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit geloeschtem Anhang.'
                 . $BasicWorkOrderInfoDe,
         ],
         [
             'Customer::WorkOrder::WorkOrderAttachmentDelete',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment deleted.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] attachment deleted.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> with deleted attachment.'
                 . $BasicWorkOrderInfoEn,
         ],
         [
             'Customer::Change::ChangePlannedStartTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
         ],
         [
             'Customer::Change::ChangePlannedStartTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
         ],
         [
             'Customer::Change::ChangePlannedEndTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned End Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned end time.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned End Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned end time.',
         ],
         [
             'Customer::Change::ChangePlannedEndTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Geplante Endzeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Geplante Endzeit erreicht.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die geplante Endzeit erreicht.',
         ],
         [
             'Customer::Change::ChangeActualStartTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Actual Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its actual start time.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Actual Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its actual start time.',
         ],
         [
             'Customer::Change::ChangeActualStartTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Change begonnen.',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde begonnen.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Change begonnen.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde begonnen.',
         ],
         [
             'Customer::Change::ChangeActualEndTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its planned start time.',
         ],
         [
             'Customer::Change::ChangeActualEndTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Change fertiggestellt.',
-            'Change #<OTRS_CHANGE_ChangeNumber> wurde fertiggestellt.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Change fertiggestellt.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde fertiggestellt.',
         ],
         [
             'Customer::Change::ChangeRequestedTimeReached',
             'en',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Requested time reached.',
-            'Change #<OTRS_CHANGE_ChangeNumber> has reached its requested time.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Requested time reached.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> has reached its requested time.',
         ],
         [
             'Customer::Change::ChangeRequestedTimeReached',
             'de',
-            '[Change #<OTRS_CHANGE_ChangeNumber>] Gewuenschte Fertigstellungszeit erreicht.',
-            'Change #<OTRS_CHANGE_ChangeNumber> hat die gewuenschte Fertigstellungszeit erreicht.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewuenschte Fertigstellungszeit erreicht.',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewuenschte Fertigstellungszeit erreicht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned start time.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned start time.',
         ],
         [
             'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Startzeit erreicht.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Startzeit erreicht.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Startzeit erreicht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderPlannedEndTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned end time.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the planned end time.',
         ],
         [
             'Customer::WorkOrder::WorkOrderPlannedEndTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Endzeit erreicht.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Geplante Endzeit erreicht.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderActualStartTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual Start Time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual start time.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual Start Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual start time.',
         ],
         [
             'Customer::WorkOrder::WorkOrderActualStartTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder begonnen.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder begonnen.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.',
         ],
         [
             'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
             'en',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual end time reached.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual end time.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual end time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the actual end time.',
         ],
         [
             'Customer::WorkOrder::WorkOrderActualEndTimeReached',
             'de',
-            '[WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder abgeschlossen.',
-            'WorkOrder #<OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Workorder abgeschlossen.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde abgeschlossen.',
         ],
     );
 
@@ -1823,6 +1855,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2010-02-01 12:18:38 $
+$Revision: 1.42 $ $Date: 2010-02-04 13:14:12 $
 
 =cut
