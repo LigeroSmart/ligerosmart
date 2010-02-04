@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.45 2010-02-02 13:32:51 reb Exp $
+# $Id: Template.pm,v 1.46 2010-02-04 08:51:14 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,12 +21,11 @@ use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Kernel::System::VirtualFS;
 use Data::Dumper;
-use Encode;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =head1 NAME
 
@@ -1793,7 +1792,7 @@ sub _ChangeAdd {
             && !ref $Data{$Parameter}
             )
         {
-            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+            utf8::upgrade( $Data{$Parameter} );
         }
     }
 
@@ -1863,7 +1862,7 @@ sub _WorkOrderAdd {
             && !ref $Data{$Parameter}
             )
         {
-            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+            utf8::upgrade( $Data{$Parameter} );
         }
     }
 
@@ -2021,7 +2020,7 @@ sub _ConditionAdd {
             && !ref $Data{$Parameter}
             )
         {
-            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+            utf8::upgrade( $Data{$Parameter} );
         }
     }
 
@@ -2102,7 +2101,7 @@ sub _ExpressionAdd {
             && !ref $Data{$Parameter}
             )
         {
-            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+            utf8::upgrade( $Data{$Parameter} );
         }
     }
 
@@ -2182,7 +2181,7 @@ sub _ActionAdd {
             && !ref $Data{$Parameter}
             )
         {
-            $Data{$Parameter} = encode( 'utf-8', $Data{$Parameter} );
+            utf8::upgrade( $Data{$Parameter} );
         }
     }
 
@@ -2472,6 +2471,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2010-02-02 13:32:51 $
+$Revision: 1.46 $ $Date: 2010-02-04 08:51:14 $
 
 =cut
