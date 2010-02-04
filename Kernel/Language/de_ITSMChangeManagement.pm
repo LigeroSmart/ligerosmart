@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.53 2010-02-03 00:00:52 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.54 2010-02-04 13:41:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -261,6 +261,9 @@ sub Data {
     $Lang->{'All expressions'}               = 'Alle Expressions';
     $Lang->{'ITSMCondition::Selector::any'}  = 'beliebige';
     $Lang->{'ITSMCondition::Selector::all'}  = 'alle';
+
+    # Change Zoom
+    $Lang->{'Change Initiator(s)'} = 'Change Initiator(s)';
 
     # AgentITSMChangePrint
     $Lang->{'Linked Objects'} = 'Verknüpfte Objekte';
