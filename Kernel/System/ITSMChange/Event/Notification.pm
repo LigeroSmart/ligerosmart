@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.26 2010-02-01 17:32:52 ub Exp $
+# $Id: Notification.pm,v 1.27 2010-02-04 17:01:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -365,14 +365,23 @@ sub _AgentAndCustomerIDsGet {
                 Message  => "The param 'WorkOrderID' is required for WorkOrder events!",
             );
         }
+        elsif ( $Param{Event} eq 'WorkOrderDelete' ) {
 
-        # get ChangeID from the WorkOrder
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $Param{WorkOrderID},
-            UserID      => $Param{UserID},
-        );
-        $Param{ChangeID} = $WorkOrder->{ChangeID};
-        $WorkOrderAgentID = $WorkOrder->{WorkOrderAgentID};
+            # the workorder is already deleted, so we look at the OldData
+            $Param{ChangeID} = $Param{OldData}->{ChangeID};
+            $WorkOrderAgentID = $Param{OldData}->{WorkOrderAgentID};
+        }
+        else {
+
+            # get ChangeID and WorkOrderAgentID from the WorkOrder,
+            # the WorkOrderAgent might have been recently updated
+            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                WorkOrderID => $Param{WorkOrderID},
+                UserID      => $Param{UserID},
+            );
+            $Param{ChangeID} = $WorkOrder->{ChangeID};
+            $WorkOrderAgentID = $WorkOrder->{WorkOrderAgentID};
+        }
     }
 
     # these arrays will be returned
@@ -543,6 +552,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-02-01 17:32:52 $
+$Revision: 1.27 $ $Date: 2010-02-04 17:01:09 $
 
 =cut

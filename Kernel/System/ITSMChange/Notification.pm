@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.34 2010-01-25 09:30:35 reb Exp $
+# $Id: Notification.pm,v 1.35 2010-02-04 17:01:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 =head1 NAME
 
@@ -180,11 +180,21 @@ sub NotificationSend {
     # start with workorder, as the change id might be taken from the workorder
     if ( $Param{Data}->{WorkOrderID} ) {
 
-        $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $Param{Data}->{WorkOrderID},
-            UserID      => $Param{UserID},
-            LogNo       => 1,
-        );
+        if ( $Param{Event} eq 'WorkOrderDelete' ) {
+
+            # the workorder is already deleted,
+            # so we display the old data
+            $WorkOrder = $Param{Data}->{OldWorkOrderData};
+        }
+        else {
+
+            # get fresh data
+            $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+                WorkOrderID => $Param{Data}->{WorkOrderID},
+                UserID      => $Param{UserID},
+                LogNo       => 1,
+            );
+        }
 
         # The event 'WorkOrderAdd' is a special case, as the workorder
         # is not completely initialized yet. So also take
@@ -198,6 +208,8 @@ sub NotificationSend {
         }
 
         if ( $WorkOrder->{WorkOrderAgentID} ) {
+
+            # get user data for the workorder agent
             $Param{Data}->{WorkOrderAgent} = {
                 $Self->{UserObject}->GetUserData(
                     UserID => $WorkOrder->{WorkOrderAgentID},
@@ -1239,6 +1251,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.34 $ $Date: 2010-01-25 09:30:35 $
+$Revision: 1.35 $ $Date: 2010-02-04 17:01:09 $
 
 =cut
