@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeCondition.pm - the OTRS::ITSM::ChangeManagement condition overview module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeCondition.pm,v 1.4 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMChangeCondition.pm,v 1.5 2010-02-04 23:56:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -151,7 +151,7 @@ sub Run {
     }
 
     my $CssClass = '';
-    for my $ConditionID ( sort { $a cmp $b } @{$ConditionIDsRef} ) {
+    for my $ConditionID ( @{$ConditionIDsRef} ) {
 
         # set output object
         $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
