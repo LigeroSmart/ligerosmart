@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.19 2010-02-03 13:26:50 bes Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.20 2010-02-04 11:46:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -139,6 +139,8 @@ function submit_compose() {
                                     </td>
                                 </tr>
 <!-- dtl:block:ExpressionOverviewRow -->
+<!-- empty row, for having a valid HTML table in the absence of expressions -->
+                                <tr><td colspan="9"></td></tr>
                             </table>
                         </td>
                     </tr>
@@ -186,6 +188,8 @@ function submit_compose() {
                                     </td>
                                 </tr>
 <!-- dtl:block:ActionOverviewRow -->
+<!-- empty row, for having a valid HTML table in the absence of actions -->
+                                <tr><td colspan="7"></td></tr>
                             </table>
                         </td>
                     </tr>
