@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.37 2010-02-03 17:29:02 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.38 2010-02-04 09:30:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,7 +49,7 @@ sub new {
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
 
     # when there is no PDF-Support, $Self->{PDFObject} will be undefined
-    $Self->{PDFObject} = 0;    #Kernel::System::PDF->new(%Param);
+    $Self->{PDFObject} = Kernel::System::PDF->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
