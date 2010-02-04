@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.19 2010-02-04 12:04:56 bes Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.20 2010-02-04 12:28:24 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -69,7 +69,8 @@ sub new {
     };
 
     # get config
-    $Self->{ChangeHook} = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+    $Self->{ChangeHook}    = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+    $Self->{WorkOrderHook} = $Self->{ConfigObject}->Get('ITSMWorkOrder::Hook');
 
     return $Self;
 }
@@ -273,7 +274,7 @@ sub TableCreateComplex {
                 Width   => 20,
             },
             {
-                Content => 'Workorder#',
+                Content => $Self->{WorkOrderHook},
                 Width   => 200,
             },
             {
@@ -311,13 +312,13 @@ Return
                 {
                     Type    => 'Link',
                     Content => 'WO:2009100112354321-1',
-                    Title   => 'Change# 2009101610005402 - WorkOrder# 1: The WorkOrder Title',
+                    Title   => 'Change# 2009101610005402 - Workorder# 1: The WorkOrder Title',
                     Css     => 'style="text-decoration: line-through"',
                 },
                 {
                     Type    => 'Link',
                     Content => 'WO:2009100112354321-6',
-                    Title   => 'Change# 2009101610007634 - WorkOrder# 6: The WorkOrder Title',
+                    Title   => 'Change# 2009101610007634 - Workorder# 6: The WorkOrder Title',
                 },
             ],
         },
@@ -326,7 +327,7 @@ Return
                 {
                     Type    => 'Link',
                     Content => 'WO:2009100112354321-3',
-                    Title   => 'Change# 20091016100044331 - WorkOrder# 3: The WorkOrder Title',
+                    Title   => 'Change# 20091016100044331 - Workorder# 3: The WorkOrder Title',
                 },
             ],
         },
@@ -380,7 +381,7 @@ sub TableCreateSimple {
                     Content => 'WO:' . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
                         . $WorkOrder->{WorkOrderNumber},
                     Title => $Self->{ChangeHook} . $WorkOrder->{ChangeData}->{ChangeNumber} . '-'
-                        . 'Workorder# '
+                        . $Self->{WorkOrderHook}
                         . $WorkOrder->{WorkOrderNumber} . ': '
                         . $WorkOrder->{WorkOrderTitle},
                     Link => '$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID='
@@ -532,7 +533,7 @@ sub SearchOptionList {
         },
         {
             Key  => 'WorkOrderNumber',
-            Name => 'Workorder#',
+            Name => $Self->{WorkOrderHook},
             Type => 'Text',
         },
         {
@@ -590,6 +591,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-02-04 12:04:56 $
+$Revision: 1.20 $ $Date: 2010-02-04 12:28:24 $
 
 =cut
