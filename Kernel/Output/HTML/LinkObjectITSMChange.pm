@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.7 2010-02-04 12:04:56 bes Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.8 2010-02-04 12:37:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -97,7 +97,7 @@ Return
                 Width   => 200,
             },
             {
-                Content => 'ChangeState',
+                Content => 'Change State',
                 Width   => 100,
             },
             {
@@ -256,11 +256,11 @@ sub TableCreateComplex {
                 Width   => 200,
             },
             {
-                Content => 'Change Title',
+                Content => 'ChangeAttribute::ChangeTitle',
                 Width   => 200,
             },
             {
-                Content => 'ChangeState',
+                Content => 'ChangeAttribute::ChangeState',
                 Width   => 100,
             },
             {
@@ -440,8 +440,11 @@ sub SelectableObjectList {
     # object select list
     my @ObjectSelectList = (
         {
-            Key      => $Self->{ObjectData}->{Object},
-            Value    => $Self->{ObjectData}->{Realname},
+            Key => $Self->{ObjectData}->{Object},
+
+            # also use the object here and not the real name, for translation issues
+            Value => $Self->{ObjectData}->{Object},
+
             Selected => $Selected,
         },
     );
@@ -492,12 +495,12 @@ sub SearchOptionList {
         },
         {
             Key  => 'ChangeTitle',
-            Name => 'Change Title',
+            Name => 'ChangeAttribute::ChangeTitle',
             Type => 'Text',
         },
         {
             Key  => 'WorkOrderTitle',
-            Name => 'Workorder Title',
+            Name => 'WorkOrderAttribute::WorkOrderTitle',
             Type => 'Text',
         },
     );
@@ -550,6 +553,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-02-04 12:04:56 $
+$Revision: 1.8 $ $Date: 2010-02-04 12:37:00 $
 
 =cut
