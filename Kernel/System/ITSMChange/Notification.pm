@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.36 2010-02-05 12:14:14 bes Exp $
+# $Id: Notification.pm,v 1.37 2010-02-05 18:13:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -73,7 +73,6 @@ create a notification object
     );
     my $TimeObject = Kernel::System::Time->new(
         ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $NotificationObject = Kernel::System::ITSMChange::Notification->new(
@@ -668,7 +667,7 @@ returns
 =cut
 
 sub NotificationRuleList {
-    my ($Self) = @_;
+    my $Self = shift;
 
     # do sql query,
     # sort in a userfriendly fashion
@@ -834,7 +833,7 @@ returns
 =cut
 
 sub RecipientList {
-    my ($Self) = @_;
+    my $Self = shift;
 
     # do SQL query
     return if !$Self->{DBObject}->Prepare(
@@ -1315,6 +1314,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2010-02-05 12:14:14 $
+$Revision: 1.37 $ $Date: 2010-02-05 18:13:51 $
 
 =cut

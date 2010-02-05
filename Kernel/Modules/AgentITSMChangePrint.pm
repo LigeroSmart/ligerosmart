@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.38 2010-02-04 09:30:46 bes Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.39 2010-02-05 18:13:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -280,8 +280,8 @@ sub Run {
                             # combine the linked object data from all workorders
                             $LinkListWithDataCombinedWorkOrders->{$Object}->{$LinkType}
                                 ->{$Direction}->{$ID}
-                                = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                ->{$Direction}->{$ID};
+                                = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}->{$Direction}
+                                ->{$ID};
                         }
                     }
                 }

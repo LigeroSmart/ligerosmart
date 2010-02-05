@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.29 2010-02-01 17:31:21 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.30 2010-02-05 18:13:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -394,8 +394,9 @@ sub Run {
 
                 # check if the delete button of this expression was pressed
                 if (
-                    $Self->{ParamObject}
-                    ->GetParam( Param => 'DeleteExpressionID::' . $ExpressionID )
+                    $Self->{ParamObject}->GetParam(
+                        Param => 'DeleteExpressionID::' . $ExpressionID
+                    )
                     )
                 {
 
@@ -1630,12 +1631,14 @@ sub _GetOperatorSelection {
 
         # get mapping config for expressions or actions
         if ( $Param{ExpressionID} ) {
-            $MappingConfig = $Self->{ConfigObject}
-                ->Get( $ObjectName . '::Mapping::Expression::Attribute::Operator' );
+            $MappingConfig = $Self->{ConfigObject}->Get(
+                $ObjectName . '::Mapping::Expression::Attribute::Operator'
+            );
         }
         elsif ( $Param{ActionID} ) {
-            $MappingConfig = $Self->{ConfigObject}
-                ->Get( $ObjectName . '::Mapping::Action::Attribute::Operator' );
+            $MappingConfig = $Self->{ConfigObject}->Get(
+                $ObjectName . '::Mapping::Action::Attribute::Operator'
+            );
         }
 
         my $AttributeOperatorMapping;
