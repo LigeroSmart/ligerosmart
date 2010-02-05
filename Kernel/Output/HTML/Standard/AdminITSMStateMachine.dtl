@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.24 2010-02-05 16:08:10 ub Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.25 2010-02-05 16:19:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -126,7 +126,7 @@
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Add a new"} $QData{"ClassShortName"} $Text{"state transition"}
+                            $Text{"Add a new state transition for"} $QData{"Class"}:
                         </td>
                     </tr>
                     <tr>
@@ -161,7 +161,7 @@
                 <table width="100%" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Edit a"} $QData{"ClassShortName"} $Text{"state transition"}
+                            $Text{"Edit a state transition for"} $QData{"Class"}:
                         </td>
                     </tr>
                     <tr>

@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.56 2010-02-05 16:19:43 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.57 2010-02-05 16:23:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -217,11 +217,12 @@ sub Data {
     $Lang->{'Notification (ITSM Change Management)'} = 'Benachrichtigung (ITSM Change Management)';
 
     # Admin StateMachine
-    $Lang->{'Add a state transition'}              = 'Hinzufügen eines Status-Übergangs';
-    $Lang->{'Add a new state transition for'}      = 'Hinzufügen eines neuen Status-Übergangs für';
-    $Lang->{'Edit a state transition for'}         = 'Bearbeiten eines Status-Übergangs für';
-    $Lang->{'Overview over state transitions for'} = 'Übersicht über Status-Übergänge für';
-    $Lang->{'Object Name'}                         = 'Objekt Name';
+    $Lang->{'Add a state transition'}               = 'Hinzufügen eines Status-Übergangs';
+    $Lang->{'Add a new state transition for'}       = 'Hinzufügen eines neuen Status-Übergangs für';
+    $Lang->{'Edit a state transition for'}          = 'Bearbeiten eines Status-Übergangs für';
+    $Lang->{'Overview over state transitions for'}  = 'Übersicht über Status-Übergänge für';
+    $Lang->{'Object Name'}                          = 'Objekt Name';
+    $Lang->{'Please select first a catalog class!'} = 'Bitte wählen Sie zuerst eine Katalog Klasse aus!';
 
     # workorder types
     $Lang->{'approval'}  = 'Genehmigung';
