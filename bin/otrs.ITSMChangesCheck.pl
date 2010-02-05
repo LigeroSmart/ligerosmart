@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.8 2010-02-02 09:16:41 reb Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.9 2010-02-05 17:46:41 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 use Kernel::Config;
 use Kernel::System::Encode;
@@ -341,7 +341,7 @@ sub WorkOrderNotificationSent {
 }
 
 sub SentWithinPeriod {
-    my ($LastNotificationSentDate) = @_;
+    my $LastNotificationSentDate = shift;
 
     return if !$LastNotificationSentDate;
 
