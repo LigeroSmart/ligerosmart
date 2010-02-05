@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.51 2010-02-02 11:05:58 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.52 2010-02-05 18:35:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -94,8 +94,8 @@ sub Run {
 
             # remove whitespace on the start and end
             if ( $GetParam{$ParamName} ) {
-                $GetParam{$ParamName} =~ s/\s+$//;
-                $GetParam{$ParamName} =~ s/^\s+//;
+                $GetParam{$ParamName} =~ s{ \A \s+ }{}xms;
+                $GetParam{$ParamName} =~ s{ \s+ \z }{}xms;
             }
         }
 
@@ -134,8 +134,8 @@ sub Run {
 
                 # remove white space on the start and end
                 if ($ParamVal) {
-                    $ParamVal =~ s/\s+$//;
-                    $ParamVal =~ s/^\s+//;
+                    $ParamVal =~ s{ \A \s+ }{}xms;
+                    $ParamVal =~ s{ \s+ \z }{}xms;
                 }
 
                 # store in %GetParam
