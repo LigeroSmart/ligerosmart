@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.30 2010-02-05 18:13:51 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.31 2010-02-05 19:15:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -674,7 +674,9 @@ sub Run {
                 );
 
                 # remove AJAX-Loading images in selection field to avoid jitter effect
-                $HTMLString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+                $HTMLString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+                    HTMLString => $HTMLString,
+                );
             }
 
             # build text input field
@@ -1041,7 +1043,9 @@ sub _ShowObjectSelection {
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
-    $ObjectOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+    $ObjectOptionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+        HTMLString => $ObjectOptionString,
+    );
 
     # output object selection
     $Self->{LayoutObject}->Block(
@@ -1115,7 +1119,9 @@ sub _ShowSelectorSelection {
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
-    $SelectorOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+    $SelectorOptionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+        HTMLString => $SelectorOptionString,
+    );
 
     # output selector selection
     $Self->{LayoutObject}->Block(
@@ -1241,7 +1247,9 @@ sub _ShowAttributeSelection {
     );
 
     # remove AJAX-Loading images in date selection fields to avoid jitter effect
-    $AttributeOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+    $AttributeOptionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+        HTMLString => $AttributeOptionString,
+    );
 
     # output attribute selection
     $Self->{LayoutObject}->Block(
@@ -1320,7 +1328,9 @@ sub _ShowOperatorSelection {
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
-    $OperatorOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+    $OperatorOptionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+        HTMLString => $OperatorOptionString,
+    );
 
     # output operator selection
     $Self->{LayoutObject}->Block(
@@ -1404,7 +1414,9 @@ sub _ShowCompareValueField {
         );
 
         # remove AJAX-Loading images in selection field to avoid jitter effect
-        $ValueOptionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+        $ValueOptionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+            HTMLString => $ValueOptionString,
+        );
 
         # output selection
         $Self->{LayoutObject}->Block(

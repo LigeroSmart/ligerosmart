@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.55 2010-02-02 11:05:58 bes Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.56 2010-02-05 19:15:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -622,7 +622,9 @@ sub Run {
     );
 
     # remove AJAX-Loading images in date selection fields to avoid jitter effect
-    $MoveTimeSelectionString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
+    $MoveTimeSelectionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
+        HTMLString => $MoveTimeSelectionString,
+    );
 
     # show block with template dropdown
     $Self->{LayoutObject}->Block(
