@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.37 2010-02-05 18:13:51 ub Exp $
+# $Id: Notification.pm,v 1.38 2010-02-05 18:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -1079,9 +1079,8 @@ sub _NotificationReplaceMacros {
         $Text =~ s{ $Tag .+? $End}{-}gxmsi;
     }
 
+    # replace <OTRS_LINK_... tags
     {
-
-        # replace <OTRS_LINK_... tags
         my $Tag      = $Start . 'OTRS_LINK_';
         my %LinkData = %{ $Param{Link} };
 
@@ -1314,6 +1313,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2010-02-05 18:13:51 $
+$Revision: 1.38 $ $Date: 2010-02-05 18:32:25 $
 
 =cut
