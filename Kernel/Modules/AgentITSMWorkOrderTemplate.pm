@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderTemplate.pm,v 1.8 2010-02-04 15:43:27 bes Exp $
+# $Id: AgentITSMWorkOrderTemplate.pm,v 1.9 2010-02-05 08:54:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,10 +86,10 @@ sub Run {
     }
 
     # check permissions
-    my $Access = $Self->{WorkOrderObject}->Permission(
-        Type        => $Self->{Config}->{Permission},
-        WorkOrderID => $WorkOrderID,
-        UserID      => $Self->{UserID},
+    my $Access = $Self->{ChangeObject}->Permission(
+        Type     => $Self->{Config}->{Permission},
+        ChangeID => $WorkOrder->{ChangeID},
+        UserID   => $Self->{UserID},
     );
 
     # error screen

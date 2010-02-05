@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.198 2010-02-04 15:43:27 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.199 2010-02-05 08:54:37 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1043,7 +1043,7 @@
         <SubGroup>Frontend::Agent::ITSMWorkOrder::MenuModule</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
+                <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
                 <Item Key="Name">Template</Item>
                 <Item Key="Description">Save workorder as a template</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
