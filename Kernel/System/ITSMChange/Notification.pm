@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.35 2010-02-04 17:01:09 bes Exp $
+# $Id: Notification.pm,v 1.36 2010-02-05 12:14:14 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -130,7 +130,7 @@ Send the notification to customers and/or agents.
         CustomerIDs => [ 1, 2, 3, ],
         Type        => 'Change',          # Change|WorkOrder
         Event       => 'ChangeUpdate',
-        Data        => { %ChangeData },   # Change|WorkOrder data
+        Data        => { %ChangeData },   # Change|WorkOrder|Link data
         UserID      => 123,
     );
 
@@ -149,6 +149,9 @@ sub NotificationSend {
             return;
         }
     }
+
+    # for convenience
+    my $Event = $Param{Event};
 
     # need at least AgentIDs or CustomerIDs
     if ( !$Param{AgentIDs} && !$Param{CustomerIDs} ) {
@@ -176,11 +179,12 @@ sub NotificationSend {
     # we need to get the items for replacements
     my $Change    = {};
     my $WorkOrder = {};
+    my $Link      = {};
 
     # start with workorder, as the change id might be taken from the workorder
     if ( $Param{Data}->{WorkOrderID} ) {
 
-        if ( $Param{Event} eq 'WorkOrderDelete' ) {
+        if ( $Event eq 'WorkOrderDelete' ) {
 
             # the workorder is already deleted,
             # so we display the old data
@@ -201,7 +205,7 @@ sub NotificationSend {
         # the params for WorkOrderAdd() into account.
         # WorkOrderGet() must still be called, as it provides translation
         # for some IDs that were set in WorkOrderAdd().
-        if ( $Param{Event} eq 'WorkOrderAdd' ) {
+        if ( $Event eq 'WorkOrderAdd' ) {
             for my $Attribute ( keys %{$WorkOrder} ) {
                 $WorkOrder->{$Attribute} ||= $Param{Data}->{$Attribute};
             }
@@ -236,7 +240,7 @@ sub NotificationSend {
         # the params for ChangeAdd() into account.
         # ChangeGet() must still be called, as it provides translation
         # for some IDs that were set in ChangeAdd().
-        if ( $Param{Event} eq 'ChangeAdd' ) {
+        if ( $Event eq 'ChangeAdd' ) {
             for my $Attribute ( keys %{$Change} ) {
                 $Change->{$Attribute} ||= $Param{Data}->{$Attribute};
             }
@@ -257,6 +261,16 @@ sub NotificationSend {
                     )
             };
         }
+    }
+
+    # for link events there is some info about the link
+    if ( $Event =~ m{ \A (?: Change | WorkOrder ) Link (?: Add | Delete ) }xms ) {
+        $Link = {
+            SourceObject => $Param{Data}->{SourceOject},
+            State        => $Param{Data}->{State},
+            Type         => $Param{Data}->{Type},
+            Object       => $Param{Data}->{Object},
+        };
     }
 
     my %AgentsSent;
@@ -293,6 +307,7 @@ sub NotificationSend {
             UserID    => $Param{UserID},
             Change    => $Change,
             WorkOrder => $WorkOrder,
+            Link      => $Link,
             Data      => $Param{Data},
         );
 
@@ -303,6 +318,7 @@ sub NotificationSend {
             UserID    => $Param{UserID},
             Change    => $Change,
             WorkOrder => $WorkOrder,
+            Link      => $Link,
             Data      => $Param{Data},
         );
 
@@ -366,6 +382,7 @@ sub NotificationSend {
             UserID    => $Param{UserID},
             Change    => $Change,
             WorkOrder => $WorkOrder,
+            Link      => $Link,
             Data      => $Param{Data},
         );
 
@@ -376,6 +393,7 @@ sub NotificationSend {
             UserID    => $Param{UserID},
             Change    => $Change,
             WorkOrder => $WorkOrder,
+            Link      => $Link,
             Data      => $Param{Data},
         );
 
@@ -925,6 +943,7 @@ This method replaces all the <OTRS_xxxx> macros in notification text.
         },
         Change    => $Change,
         WorkOrder => $WorkOrder,
+        Link      => $Link,
         UserID    => 1,
     );
 
@@ -934,7 +953,7 @@ sub _NotificationReplaceMacros {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(Type Text Data UserID Change WorkOrder)) {
+    for my $Needed (qw(Type Text Data UserID Change WorkOrder Link)) {
         if ( !defined $Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1008,60 +1027,92 @@ sub _NotificationReplaceMacros {
     $Text =~ s{ $Tag2 .+? $End}{-}xmsgi;
 
     # replace <OTRS_CHANGE_... tags
-    $Tag = $Start . 'OTRS_CHANGE_';
-    my %ChangeData = %{ $Param{Change} };
+    {
+        my $Tag        = $Start . 'OTRS_CHANGE_';
+        my %ChangeData = %{ $Param{Change} };
 
-    # html quoting of content
-    if ( $Param{RichText} ) {
+        # html quoting of content
+        if ( $Param{RichText} ) {
+            KEY:
+            for my $Key ( keys %ChangeData ) {
+                next KEY if !$ChangeData{$Key};
+                $ChangeData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $ChangeData{$Key},
+                );
+            }
+        }
+
+        # replace it
         KEY:
         for my $Key ( keys %ChangeData ) {
-            next KEY if !$ChangeData{$Key};
-            $ChangeData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $ChangeData{$Key},
-            );
+            next KEY if !defined $ChangeData{$Key};
+            $Text =~ s{ $Tag $Key $End }{$ChangeData{$Key}}gxmsi;
         }
-    }
 
-    # replace it
-    KEY:
-    for my $Key ( keys %ChangeData ) {
-        next KEY if !defined $ChangeData{$Key};
-        $Text =~ s{ $Tag $Key $End }{$ChangeData{$Key}}gxmsi;
+        # cleanup
+        $Text =~ s{ $Tag .+? $End}{-}gxmsi;
     }
-
-    # cleanup
-    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
 
     # replace <OTRS_WORKORDER_... tags
-    $Tag = $Start . 'OTRS_WORKORDER_';
-    my %WorkOrderData = %{ $Param{WorkOrder} };
+    {
+        my $Tag           = $Start . 'OTRS_WORKORDER_';
+        my %WorkOrderData = %{ $Param{WorkOrder} };
 
-    # html quoting of content
-    if ( $Param{RichText} ) {
+        # html quoting of content
+        if ( $Param{RichText} ) {
+            KEY:
+            for my $Key ( keys %WorkOrderData ) {
+                next KEY if !$WorkOrderData{$Key};
+                $WorkOrderData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $WorkOrderData{$Key},
+                );
+            }
+        }
+
+        # replace it
         KEY:
         for my $Key ( keys %WorkOrderData ) {
-            next KEY if !$WorkOrderData{$Key};
-            $WorkOrderData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
-                String => $WorkOrderData{$Key},
-            );
+            next KEY if !defined $WorkOrderData{$Key};
+            $Text =~ s{ $Tag $Key $End }{$WorkOrderData{$Key}}gxmsi;
         }
+
+        # cleanup
+        $Text =~ s{ $Tag .+? $End}{-}gxmsi;
     }
 
-    # replace it
-    KEY:
-    for my $Key ( keys %WorkOrderData ) {
-        next KEY if !defined $WorkOrderData{$Key};
-        $Text =~ s{ $Tag $Key $End }{$WorkOrderData{$Key}}gxmsi;
-    }
+    {
 
-    # cleanup
-    $Text =~ s{ $Tag .+? $End}{-}gxmsi;
+        # replace <OTRS_LINK_... tags
+        my $Tag      = $Start . 'OTRS_LINK_';
+        my %LinkData = %{ $Param{Link} };
+
+        # html quoting of content
+        if ( $Param{RichText} ) {
+            KEY:
+            for my $Key ( keys %LinkData ) {
+                next KEY if !$LinkData{$Key};
+                $LinkData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $LinkData{$Key},
+                );
+            }
+        }
+
+        # replace it
+        KEY:
+        for my $Key ( keys %LinkData ) {
+            next KEY if !defined $LinkData{$Key};
+            $Text =~ s{ $Tag $Key $End }{$LinkData{$Key}}gxmsi;
+        }
+
+        # cleanup
+        $Text =~ s{ $Tag .+? $End}{-}gxmsi;
+    }
 
     # replace extended <OTRS_CHANGE_... tags
     my %InfoHash = %{ $Param{Data} };
 
     for my $Object (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
-        $Tag = $Start . uc 'OTRS_' . $Object . '_';
+        my $Tag = $Start . uc 'OTRS_' . $Object . '_';
 
         if ( exists $InfoHash{$Object} && ref $InfoHash{$Object} eq 'HASH' ) {
 
@@ -1070,7 +1121,7 @@ sub _NotificationReplaceMacros {
 
                 KEY:
                 for my $Key ( keys %{ $InfoHash{$Object} } ) {
-                    next KEY if !$WorkOrderData{$Key};
+                    next KEY if !$InfoHash{$Object}->{$Key};
                     $InfoHash{$Object}->{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                         String => $InfoHash{$Object}->{$Key},
                     );
@@ -1239,6 +1290,19 @@ with the subsequent values for xxx:
     PlannedEffort
         This is the effort planned for the single workorder.
 
+=head3 C<OTRS_LINK_xxx>
+
+with the subsequent values for xxx:
+
+    Object
+        Object of the link
+    SourceObject
+        SourceObject of the link
+    State
+        State of the link
+    Type
+        Type of the link
+
 =head1 TERMS AND CONDITIONS
 
 This software is part of the OTRS project (http://otrs.org/).
@@ -1251,6 +1315,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2010-02-04 17:01:09 $
+$Revision: 1.36 $ $Date: 2010-02-05 12:14:14 $
 
 =cut
