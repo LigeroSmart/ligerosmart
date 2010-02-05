@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Action.pm,v 1.9 2010-01-31 13:22:40 mae Exp $
+# $Id: Action.pm,v 1.10 2010-02-05 17:57:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -91,7 +91,7 @@ sub ActionAdd {
     # get default action number if not given
     my $ActionNumber = delete $Param{ActionNumber};
     if ( !$ActionNumber ) {
-        $ActionNumber = $Self->_GetActionNumber(%Param);
+        $ActionNumber = $Self->_CreateNewActionNumber(%Param);
     }
 
     # add new action name to database
@@ -735,19 +735,19 @@ sub _ActionExecuteInit {
     return \%ActionData;
 }
 
-=item _GetActionNumber()
+=item _CreateNewActionNumber()
 
-Get a new unused action number for the given condition.
+Create a new unused action number for the given condition.
 The highest current action number for the given condition is
 looked up and incremented by one.
 
-    my $ActionNumber = $ConditionObject->_GetActionNumber(
+    my $ActionNumber = $ConditionObject->_CreateNewActionNumber(
         ConditionID => 123,
     );
 
 =cut
 
-sub _GetActionNumber {
+sub _CreateNewActionNumber {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -797,6 +797,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-01-31 13:22:40 $
+$Revision: 1.10 $ $Date: 2010-02-05 17:57:44 $
 
 =cut
