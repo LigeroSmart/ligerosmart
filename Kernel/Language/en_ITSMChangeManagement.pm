@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.40 2010-02-03 00:00:52 ub Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.41 2010-02-06 12:45:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,30 +24,34 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{''} = '';
-
+    # misc
     $Lang->{'Imperative::Save'} = 'Save';
 
+    # ITSM ChangeManagement icons
     $Lang->{'My Changes'}    = 'My Changes';
     $Lang->{'My Workorders'} = 'My Workorders';
 
     # Change menu
-    $Lang->{'ITSM Change'}    = 'Change';
-    $Lang->{'ITSM Workorder'} = 'Workorder';
-    $Lang->{'ITSM Schedule'}  = 'Schedule';
+    $Lang->{'ITSM Change'}                           = 'Change';
+    $Lang->{'ITSM Workorder'}                        = 'Workorder';
+    $Lang->{'ITSM Schedule'}                         = 'Schedule';
 
     # Workorder menu
     $Lang->{'WorkOrderAgent'} = 'Workorder Agent';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
+    $Lang->{'ChangeAttribute::CABAgent'}         = 'CAB Agent';
     $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
+    $Lang->{'ChangeAttribute::CABCustomer'}      = 'CAB Customer';
     $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Customers';
+    $Lang->{'ChangeAttribute::Category'}         = 'Category';
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
     $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
     $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Number';
     $Lang->{'ChangeAttribute::ChangeState'}      = 'Change State';
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Title';
     $Lang->{'ChangeAttribute::Description'}      = 'Description';
+    $Lang->{'ChangeAttribute::Impact'}           = 'Impact';
     $Lang->{'ChangeAttribute::Justification'}    = 'Justification';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Planned Start';
     $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Planned End';
@@ -56,6 +60,7 @@ sub Data {
     $Lang->{'ChangeAttribute::RequestedTime'}    = 'Requested Time';
     $Lang->{'ChangeAttribute::AccountedTime'}    = 'Accounted Time';
     $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Planned Effort';
+    $Lang->{'ChangeAttribute::Priority'}         = 'Priority';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
     $Lang->{'WorkOrderAttribute::Instruction'}      = 'Instruction';

@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.27 2010-02-04 12:28:24 bes Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.28 2010-02-06 12:45:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -75,7 +75,7 @@ function submit_compose() {
                 <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"Report"}</td>
+                        <td class="contenthead">$Text{"WorkOrderAttribute::Report"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -85,7 +85,7 @@ function submit_compose() {
                                     <col>
                                 </colgroup>
                                 <tr>
-                                    <td class="contentkey">$Text{"Report"}:</td>
+                                    <td class="contentkey">$Text{"WorkOrderAttribute::Report"}:</td>
 
                                     <td class="contentvalue">
                                         <div>

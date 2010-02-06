@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.50 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.51 2010-02-06 12:45:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -71,8 +71,8 @@
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"Justification"}">
-                            $Text{"Justification"}:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div title="$Text{"ChangeAttribute::Justification"}">
+                            $Text{"ChangeAttribute::Justification"}:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                     <td class="contentvalue">
@@ -262,7 +262,7 @@
                 </tr>
 <!-- dtl:block:Category -->
                 <tr valign="top">
-                    <td class="mainkey">$Text{"Category"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::Category"}:</td>
                     <td class="mainvalue">
                         <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
                     </td>
@@ -270,7 +270,7 @@
 <!-- dtl:block:Category -->
 <!-- dtl:block:Impact -->
                 <tr valign="top">
-                    <td class="mainkey">$Text{"Impact"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::Impact"}:</td>
                     <td class="mainvalue">
                         <div title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</div>
                     </td>
@@ -278,7 +278,7 @@
 <!-- dtl:block:Impact -->
 <!-- dtl:block:Priority -->
                 <tr valign="top">
-                    <td class="mainkey">$Text{"Priority"}:</td>
+                    <td class="mainkey">$Text{"ChangeAttribute::Priority"}:</td>
                     <td class="mainvalue">
                         <div title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</div>
                     </td>

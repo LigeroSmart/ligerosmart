@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.49 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.50 2010-02-06 12:45:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -167,7 +167,7 @@ function submit_compose() {
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"Instruction"}:
+                                        $Text{"WorkOrderAttribute::Instruction"}:
                                     </td>
                                     <td class="contentvalue">
                                         <div>

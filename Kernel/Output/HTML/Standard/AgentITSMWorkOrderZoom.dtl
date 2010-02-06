@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.38 2010-02-04 12:28:24 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.39 2010-02-06 12:45:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,8 +78,8 @@
                 </colgroup>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"Instruction"}">
-                            $Text{"Instruction"}:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div title="$Text{"WorkOrderAttribute::Instruction"}">
+                            $Text{"WorkOrderAttribute::Instruction"}:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                     <td class="contentvalue">
@@ -89,8 +89,8 @@
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"Report"}">
-                            $Text{"Report"}:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div title="$Text{"WorkOrderAttribute::Report"}">
+                            $Text{"WorkOrderAttribute::Report"}:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                     <td class="contentvalue">

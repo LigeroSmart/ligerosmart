@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.57 2010-02-05 16:23:28 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.58 2010-02-06 12:45:54 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,6 +24,7 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
+    # misc
     $Lang->{'A change must have a title!'}          = 'Ein Change benötigt einen Titel!';
     $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
     $Lang->{'Create Change'}                        = 'Change erstellen';
@@ -38,6 +39,9 @@ sub Data {
     $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
     $Lang->{'Imperative::Save'}                     = 'Speichere';
     $Lang->{'as Template'}                          = 'als Vorlage';
+    $Lang->{'e.g.'}                                 = 'z. B.';
+
+    # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Meine Changes';
     $Lang->{'My Workorders'}                        = 'Meine Workorders';
     $Lang->{'PIR (Post Implementation Review)'}     = 'PIR (Post Implementation Review)';
@@ -89,15 +93,18 @@ sub Data {
     $Lang->{'A template must have a name!'} = 'Ein Template benötigt einen Namen!';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
-    $Lang->{'Justification'}                     = 'Begründung';
+    $Lang->{'ChangeAttribute::CABAgent'}         = 'CAB Agent';
     $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
+    $Lang->{'ChangeAttribute::CABCustomer'}      = 'CAB Customer';
     $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Customers';
+    $Lang->{'ChangeAttribute::Category'}         = 'Kategorie';
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
     $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
     $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Nummer';
     $Lang->{'ChangeAttribute::ChangeState'}      = 'Change Status';
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Titel';
     $Lang->{'ChangeAttribute::Description'}      = 'Beschreibung';
+    $Lang->{'ChangeAttribute::Impact'}           = 'Auswirkung';
     $Lang->{'ChangeAttribute::Justification'}    = 'Begründung';
     $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Geplanter Start';
     $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Geplantes Ende';
@@ -106,6 +113,7 @@ sub Data {
     $Lang->{'ChangeAttribute::RequestedTime'}    = 'Wunschtermin';
     $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
     $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
+    $Lang->{'ChangeAttribute::Priority'}         = 'Priorität';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
     $Lang->{'WorkOrderAttribute::Instruction'}      = 'Anweisung';
@@ -209,9 +217,6 @@ sub Data {
     $Lang->{'closed'}      = 'Closed';
     $Lang->{'canceled'}    = 'Canceled';
 
-    # CIP matrix
-    $Lang->{'Category'} = 'Kategorie';
-
     # Admin Interface
     $Lang->{'Category <-> Impact <-> Priority'}      = 'Kategorie <-> Auswirkung <-> Priorität';
     $Lang->{'Notification (ITSM Change Management)'} = 'Benachrichtigung (ITSM Change Management)';
@@ -275,6 +280,8 @@ sub Data {
 
     # AgentITSMChangePrint
     $Lang->{'Linked Objects'} = 'Verknüpfte Objekte';
+    $Lang->{'Full-Text Search in Change and Workorder'} =
+        'Volltextsuche in Change and Workorder';
 
     return 1;
 }
