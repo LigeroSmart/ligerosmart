@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Notification.pm,v 1.38 2010-02-05 18:32:25 ub Exp $
+# $Id: Notification.pm,v 1.39 2010-02-08 14:16:05 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -265,7 +265,8 @@ sub NotificationSend {
     # for link events there is some info about the link
     if ( $Event =~ m{ \A (?: Change | WorkOrder ) Link (?: Add | Delete ) }xms ) {
         $Link = {
-            SourceObject => $Param{Data}->{SourceOject},
+            SourceObject => $Param{Data}->{SourceObject},
+            TargetObject => $Param{Data}->{TargetObject},
             State        => $Param{Data}->{State},
             Type         => $Param{Data}->{Type},
             Object       => $Param{Data}->{Object},
@@ -1293,9 +1294,11 @@ with the subsequent values for xxx:
 with the subsequent values for xxx:
 
     Object
-        Object of the link
+        other object of the link
     SourceObject
-        SourceObject of the link
+        other object of the link, when the other object is the source
+    TargetObject
+        other object of the link, when the other object ist the target
     State
         State of the link
     Type
@@ -1313,6 +1316,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2010-02-05 18:32:25 $
+$Revision: 1.39 $ $Date: 2010-02-08 14:16:05 $
 
 =cut
