@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.23 2010-01-28 13:24:44 bes Exp $
+# $Id: ITSMChange.dtl,v 1.24 2010-02-08 18:26:38 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,194 +12,305 @@
 <!-- dtl:block:WorkOrderGraph -->
 <style type="text/css" media="screen">
     img.wo_status      { margin-top:2px; }
-    td.change_title    { text-align:center; }
     img.change_title   { margin-top: 5px; margin-bottom: 5px; }
-    td.wo_status       { text-align: center; }
-    td.wo_nr           { text-align: left; }
-    td.wo              { height: 5px; font-size: 1pt; }
-    span.WorkOrderInfoContainer { position:relative; }
-    .WorkOrderInformation   {
-        position:absolute; top:2px; left:0px; display:none; border:1px solid black;
-        background-color: #FFFFFF; margin:2px; padding:4px; z-index:10;
-        }
-    span.WorkOrderInfoContainer:hover > span.WorkOrderInformation { display:block; }
-    td.inactive        { opacity:.5; }
 
-    td.time_containter { font-size:0.1pt; }
+    div.workordergraph_main {
+        margin-right: 5px;
+        padding: 1px;
+    }
+    div.workordergraph {
+        position: relative;
+        height: 1%; /* hasLayout fix */
+    }
+    div.lines_main {
+        position:absolute;
+        width: 100%;
+        height: 100%;
+    }
+    div.lines_scale {
+        margin-left: 62px;
+        padding-left: 62px;
+        height: 100%;
+        position: relative;
+    }
+    div.scale_hor {
+        background-color: lightgrey;
+        height: 100%;
+        width: 1px;
+        font-size: 1pt;
+        position: absolute;
+        z-index: 1;
+    }
+
 /* <!-- dtl:block:CSSWorkOrderType --> */
-    td.$QData{"WorkOrderTypeName"} { background-color:$QData{"WorkOrderTypeColor"}; }
+    span.$QData{"WorkOrderTypeName"} { background-color:$QData{"WorkOrderTypeColor"}; }
 /* <!-- dtl:block:CSSWorkOrderType --> */
 
 /* <!-- dtl:block:CSSTimeLine --> */
-    div#time_line_cont  { position:relative; display:block; }
-    div#time_line       {
-                          background-color:$QData{"TimeLineColor"};
-                          width:$QData{"TimeLineWidth"};
-                          height:$QData{"TimeLineHeight"}px;
-                          z-index:1;
-                          position:absolute;
-                          top:2px;
-                          left:$QData{"TimeLineLeft"}%;
-                        }
+    div.timeline {
+        background-color: $QData{"TimeLineColor"};
+        left:             $QData{"TimeLineLeft"}%;
+        height:           100%;
+        width:            $QData{"TimeLineWidth"}px;
+        font-size:        1pt;
+        position:         absolute;
+        z-index:          2;
+    }
+
 /* <!-- dtl:block:CSSTimeLine --> */
 
-    div#scale          { border-bottom:1px solid #000000; margin:5px 0px 0px 0px; padding:0px; }
-    div#scale table    { margin:0px; padding:0px; border-spacing:0px; border-collapse: collapse; }
-    td.scale_line      { height: 5px; font-size: 4pt; width: 20%; text-align: center; }
-    td#scale_first     { text-align:left; width:10%;}
-    td#scale_last      { text-align:right; width:10%;}
-    td.scale_line span { width:2px; border-left:1px solid black; }
-    td#scale_last span { border-left: 0px hidden black; border-right:1px solid black;}
-    td.scale_label     { width:20%; text-align:center; font-size:8pt; vertical-align:top; }
-    td#label_first     { width:10%; text-align:left; }
-    td#label_last      { width:10%; text-align:right; }
+    div.label {
+        width: 60px;
+        margin-right: 2px;
+        float: left;
+        text-align: center;
+        position: relative;
+    }
+
+    div.workorder {
+        margin-left: 62px;
+    }
+
+    div.workorder a {
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        padding-top: 3px;
+    }
+
+    div.workorder a span {
+        display: block;
+        height: 5px;
+        font-size: 1pt;
+        position: relative;
+        margin-bottom: 2px;
+        z-index: 3;
+    }
+
+    div.workorder_information_container { position:relative; }
+    div.workorder_information {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        display: none;
+        z-index:10;
+    }
+    div.workorder_information table {
+        border: 1px solid black;
+        background-color: #FFFFFF;
+        margin:2px;
+        padding:4px;
+    }
+
+    div.workorder a:hover + div div.workorder_information {display: block; }
+
+    span.inactive {
+        filter: alpha(opacity = 50);
+        opacity: 0.5;
+    }
+
+    div.scale {
+        border-top: 1px solid lightgrey;
+        padding-top: 5px;
+        position: relative;
+        width: 100%;
+    }
+    div.scale_entry {
+        position: absolute;
+        top: 3px;
+        text-align: center;
+        font-size: 8pt;
+        width: 10%;
+    }
+    div.scale_entry_tail {
+        text-align: left;
+    }
+    div.scale_entry_trail {
+        text-align: right;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    div.scale_0 {
+        left: 0%;
+    }
+    div.scale_15 {
+        left: 15%;
+    }
+    div.scale_20 {
+        left: 20%;
+    }
+    div.scale_35 {
+        left: 35%;
+    }
+    div.scale_40 {
+        left: 40%;
+    }
+    div.scale_55 {
+        left: 55%;
+    }
+    div.scale_60 {
+        left: 60%;
+    }
+    div.scale_75 {
+        left: 75%;
+    }
+    div.scale_80 {
+        left: 80%;
+    }
+    div.scale_90 {
+        left: 90%;
+    }
+    div.scale_100 {
+        left: 99.9%;
+    }
+
 </style>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-    <colgroup>
-        <col width="25">
-        <col width="50">
-        <col width="*">
-        <col width="10">
-    </colgroup>
-    <tr>
-        <td class="time_containter">&nbsp;</td>
-        <td class="time_containter">&nbsp;</td>
-        <td class="time_containter">
+
+<!--[if IE]>
+    <style type="text/css">
+        div.lines_main {
+            position:absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+        div.lines_scale {
+            margin-left: 62px;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        span.inactive {
+            filter: alpha(opacity = 50);
+        }
+    </style>
+<![endif]-->
+<!--[if IE 6]>
+    <style type="text/css">
+        /* clear filter property */
+        span.inactive {
+            filter:
+        }
+    </style>
+<![endif]-->
+
+<div class="workordergraph_main">
+
+    <div class="workordergraph">
+
+        <div class="lines_main">
+            <div class="lines_scale">
 <!-- dtl:block:TimeLine -->
-            <div id="time_line_cont">
-                <div id="time_line">&nbsp;</div>
+                <div class="timeline">&nbsp;</div>
+<!-- dtl:block:TimeLine -->
+                <div class="scale_hor scale_0">&nbsp;</div>
+                <div class="scale_hor scale_20">&nbsp;</div>
+                <div class="scale_hor scale_40">&nbsp;</div>
+                <div class="scale_hor scale_60">&nbsp;</div>
+                <div class="scale_hor scale_80">&nbsp;</div>
+                <div class="scale_hor scale_100">&nbsp;</div>
             </div>
-<!-- dtl:block:TimeLine -->
-        </td>
-        <td class="time_containter">&nbsp;</td>
-    </tr>
+        </div>
+
 <!-- dtl:block:WorkOrderItem -->
-    <tr>
-        <td class="wo_status">
+        <div class="label" title="$QData{"WorkOrderLabel"}">
             <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
-        </td>
-        <td class="wo_nr">
-            <div title="$QData{"WorkOrderLabel"}">
-                <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMWorkOrderZoom&amp;WorkOrderID=$LQData{"WorkOrderID"}">
-                |--> $QData{"WorkOrderNumber"}.
-                </a>
-            </div>
-        </td>
-        <td>
-<!-- dtl:block:WorkOrderItemGraph -->
-            <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMWorkOrderZoom&amp;WorkOrderID=$LQData{"WorkOrderID"}">
-            <span class="WorkOrderInfoContainer">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td class="wo" width="$QData{"PlannedPadding"}%"></td>
-                    <td class="wo $QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" width="$QData{"PlannedTicks"}%">&nbsp;</td>
-                    <td class="wo" width="$QData{"PlannedTrailing"}%"></td>
-                </tr>
-            </table>
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top:1px">
-                <tr>
-                    <td class="wo" width="$QData{"ActualPadding"}%"></td>
-                    <td class="wo $QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" width="$QData{"ActualTicks"}%">&nbsp;</td>
-                    <td class="wo" width="$QData{"ActualTrailing"}%"></td>
-                </tr>
-            </table>
-            <span class="WorkOrderInformation">
-            <table width="400" cellpadding="3" cellspacing="0">
-                <colgroup>
-                    <col width="130">
-                    <col width="270">
-                </colgroup>
-                <tr class="contenthead">
-                    <td colspan="2">$Text{"Workorder Information"}</td>
-                </tr>
-                <tr class="searchactive">
-                    <td class="contentkey">$Text{"Title"}:</td>
-                    <td class="contentvalue">$QData{"WorkOrderTitle","40"}</td>
-                </tr>
-                <tr class="searchpassive">
-                    <td class="contentkey">$Text{"State"}:</td>
-                    <td class="contentvalue">$Text{"$QData{"WorkOrderState"}"}</td>
-                </tr>
-                <tr class="searchactive">
-                    <td class="contentkey">$Text{"Type"}:</td>
-                    <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
-                </tr>
-                <tr class="searchpassive">
-                    <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderAgent"}:</td>
-                    <td class="contentvalue">
-<!-- dtl:block:EmptyWorkOrderAgent -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyWorkOrderAgent -->
-<!-- dtl:block:WorkOrderAgent -->
-                        <div title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
-                            $QData{"WorkOrderAgentUserLogin","20"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","20"})
-                        </div>
-<!-- dtl:block:WorkOrderAgent -->
-                    </td>
-                </tr>
-                <tr class="searchactive">
-                    <td class="contentkey">$Text{"ChangeAttribute::PlannedStartTime"}:</td>
-                    <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
-                </tr>
-                <tr class="searchpassive">
-                    <td class="contentkey">$Text{"ChangeAttribute::PlannedEndTime"}:</td>
-                    <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
-                </tr>
-                <tr class="searchactive">
-                    <td class="contentkey">$Text{"ChangeAttribute::ActualStartTime"}:</td>
-                    <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
-                </tr>
-                <tr class="searchpassive">
-                    <td class="contentkey">$Text{"ChangeAttribute::ActualEndTime"}:</td>
-                    <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
-                </tr>
-                <tr class="contenthead">
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-            </table>
-            </span>
-            </span>
+            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
+            |--> $QData{"WorkOrderNumber"}.
             </a>
+        </div>
 <!-- dtl:block:WorkOrderItemGraph -->
-        </td>
-        <td></td>
-    </tr>
-<!-- dtl:block:WorkOrderItem -->
-<!-- dtl:block:Scale -->
-    <tr>
-        <td colspan="2">&nbsp;</td>
-        <td>
-            <div id="scale">
-                <table  border="0" cellpadding="0" cellspacing="0" width="100%">
-                    <tr>
-                        <td class="scale_line" id="scale_first"><span>&nbsp;</span></td>
-                        <td class="scale_line"><span>&nbsp;</span></td>
-                        <td class="scale_line"><span>&nbsp;</span></td>
-                        <td class="scale_line"><span>&nbsp;</span></td>
-                        <td class="scale_line"><span>&nbsp;</span></td>
-                        <td class="scale_line" id="scale_last"><span>&nbsp;</span></td>
-                    </tr>
-                </table>
+        <div class="workorder">
+            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
+            <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="width:$Data{"PlannedTicks"}%; margin-left: $QData{"PlannedPadding"}%; margin-right: $QData{"PlannedTrailing"}%;display:block;">
+            &nbsp;
+            </span>
+            <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="width:$Data{"ActualTicks"}%; margin-left: $QData{"ActualPadding"}%; margin-right: $QData{"ActualTrailing"}%;">&nbsp;</span>
+            </a>
+            <div class="workorder_information_container">
+                <div class="workorder_information">
+
+                    <table width="400" cellpadding="3" cellspacing="0">
+                        <colgroup>
+                            <col width="130">
+                            <col width="270">
+                        </colgroup>
+                        <tr class="contenthead">
+                            <td colspan="2">$Text{"Workorder Information"}</td>
+                        </tr>
+                        <tr class="searchactive">
+                            <td class="contentkey">$Text{"Title"}:</td>
+                            <td class="contentvalue">$QData{"WorkOrderTitle","40"}</td>
+                        </tr>
+                        <tr class="searchpassive">
+                            <td class="contentkey">$Text{"State"}:</td>
+                            <td class="contentvalue">$Text{"$QData{"WorkOrderState"}"}</td>
+                        </tr>
+                        <tr class="searchactive">
+                            <td class="contentkey">$Text{"Type"}:</td>
+                            <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
+                        </tr>
+                        <tr class="searchpassive">
+                            <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderAgent"}:</td>
+                            <td class="contentvalue">
+<!-- dtl:block:EmptyWorkOrderAgent -->
+                                <div title="-">
+                                    -
+                                </div>
+<!-- dtl:block:EmptyWorkOrderAgent -->
+<!-- dtl:block:WorkOrderAgent -->
+                                <div title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
+                                    $QData{"WorkOrderAgentUserLogin","20"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","20"})
+                                </div>
+<!-- dtl:block:WorkOrderAgent -->
+                            </td>
+                        </tr>
+                        <tr class="searchactive">
+                            <td class="contentkey">$Text{"ChangeAttribute::PlannedStartTime"}:</td>
+                            <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
+                        </tr>
+                        <tr class="searchpassive">
+                            <td class="contentkey">$Text{"ChangeAttribute::PlannedEndTime"}:</td>
+                            <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
+                        </tr>
+                        <tr class="searchactive">
+                            <td class="contentkey">$Text{"ChangeAttribute::ActualStartTime"}:</td>
+                            <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
+                        </tr>
+                        <tr class="searchpassive">
+                            <td class="contentkey">$Text{"ChangeAttribute::ActualEndTime"}:</td>
+                            <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
+                        </tr>
+                        <tr class="contenthead">
+                            <td colspan="2">&nbsp;</td>
+                        </tr>
+                    </table>
+                    <br />
+
+                </div>
             </div>
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td class="scale_label" id="label_first">
-                        $TimeLong{"$Data{"StartTime"}"}
-                    </td>
-<!-- dtl:block:ScaleLabel -->
-                    <td class="scale_label">
-                        $TimeLong{"$Data{"ScaleLabel"}"}
-                    </td>
-<!-- dtl:block:ScaleLabel -->
-                    <td class="scale_label" id="label_last">
-                        $TimeLong{"$Data{"EndTime"}"}
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+        </div>
+<!-- dtl:block:WorkOrderItemGraph -->
+        <div class="clear"></div>
+<!-- dtl:block:WorkOrderItem -->
+        <div style="height: 5px;">&nbsp;</div>
+    </div>
+
 <!-- dtl:block:Scale -->
-</table>
+    <div style="padding-left: 62px;">
+        <div class="scale">
+            <div class="scale_entry scale_0 scale_entry_tail">$TimeLong{"$Data{"EndTime"}"}</div>
+<!-- dtl:block:ScaleLabel -->
+            <div class="scale_entry $Data{"ScaleClass"}">$TimeLong{"$Data{"ScaleLabel"}"}</div>
+<!-- dtl:block:ScaleLabel -->
+            <div class="scale_entry scale_90 scale_entry_trail">$TimeLong{"$Data{"EndTime"}"}</div>
+        </div>
+    </div>
+    <div style="height: 30px;">&nbsp;</div>
+<!-- dtl:block:Scale -->
+</div>
 <!-- dtl:block:WorkOrderGraph -->

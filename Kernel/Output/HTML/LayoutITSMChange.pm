@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.38 2010-02-05 19:15:35 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.39 2010-02-08 18:26:38 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =over 4
 
@@ -739,10 +739,10 @@ sub _ITSMChangeGetChangeScale {
     my %ScaleName = (
         StartTime => $Param{StartTime},
         EndTime   => $Param{EndTime},
-        Scale20   => ( $Param{StartTime} + 20 * $Param{Ticks} ),
-        Scale40   => ( $Param{StartTime} + 40 * $Param{Ticks} ),
-        Scale60   => ( $Param{StartTime} + 60 * $Param{Ticks} ),
-        Scale80   => ( $Param{StartTime} + 80 * $Param{Ticks} ),
+        scale_15  => ( $Param{StartTime} + 20 * $Param{Ticks} ),
+        scale_35  => ( $Param{StartTime} + 40 * $Param{Ticks} ),
+        scale_55  => ( $Param{StartTime} + 60 * $Param{Ticks} ),
+        scale_75  => ( $Param{StartTime} + 80 * $Param{Ticks} ),
     );
 
     # translate timestamps in date format
@@ -774,6 +774,7 @@ sub _ITSMChangeGetChangeScale {
             Name => 'ScaleLabel',
             Data => {
                 ScaleLabel => $ScaleName{$Interval},
+                ScaleClass => $Interval,
             },
         );
     }
@@ -971,7 +972,17 @@ sub _ITSMChangeGetTimeLine {
     # calculate percent of timeline
     my $RelativeEnd   = $Param{EndTime} - $Param{StartTime};
     my $RelativeStart = $CurrentTime - $Param{StartTime};
-    $TimeLine{TimeLineLeft} = int( ( $RelativeStart / $RelativeEnd ) * 100 );
+
+    # get timeline indent with 1 digit after decimal point
+    $TimeLine{TimeLineLeft} = sprintf( "%.1f", ( $RelativeStart / $RelativeEnd ) * 100 );
+
+    # verify percent values
+    if ( $TimeLine{TimeLineLeft} <= 0 ) {
+        $TimeLine{TimeLineLeft} = 0;
+    }
+    if ( $TimeLine{TimeLineLeft} >= 100 ) {
+        $TimeLine{TimeLineLeft} = 100;
+    }
 
     return \%TimeLine;
 }
