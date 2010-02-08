@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.31 2010-02-05 19:15:34 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.32 2010-02-08 12:29:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1586,9 +1586,19 @@ sub _GetAttributeSelection {
             $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
         }
 
-        # remove 'ID' at the end of the attribute name for nicer display
+        # get attribute prefix from object name
+        my $AttributePrefix = '';
+        if ( $ObjectName =~ m{ \A ITSM ( .+ ) }xms ) {
+            $AttributePrefix = $1 . 'Attribute::';
+        }
+
         for my $Attribute ( values %Attributes ) {
+
+            # remove 'ID' at the end of the attribute name for nicer display
             $Attribute =~ s{ ID \z }{}xms;
+
+            # add prefix needed for translation of attributes
+            $Attribute = $AttributePrefix . $Attribute;
         }
     }
 
