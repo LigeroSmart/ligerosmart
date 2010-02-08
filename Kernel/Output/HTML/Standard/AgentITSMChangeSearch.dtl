@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.35 2010-02-06 12:45:54 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.36 2010-02-08 10:32:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -209,11 +209,11 @@ document.observe( "dom:loaded", function() {
                                     <td class="contentvalue"><input type="text" name="Justification" size="30" value="$QData{"Justification"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{WorkOrderAttribute::Instruction"}</td>
+                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"WorkOrderAttribute::Instruction"}</td>
                                     <td class="contentvalue"><input type="text" name="WorkOrderInstruction" size="30" value="$QData{"WorkOrderInstruction"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{WorkOrderAttribute::Report"}</td>
+                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"WorkOrderAttribute::Report"}</td>
                                     <td class="contentvalue"><input type="text" name="WorkOrderReport" size="30" value="$QData{"WorkOrderReport"}"/></td>
                                 </tr>
                             </table>
@@ -266,19 +266,19 @@ document.observe( "dom:loaded", function() {
                     <tr>
                         <td colspan="2" class="contentbody">
                             <input type="radio" id="$QData{"Prefix"}TimeSearchType::None" name="$QData{"Prefix"}TimeSearchType" value="" $Data{"TimeSearchType::None"}/>
-                            $Text{"No $QData{"TitleLc"} settings."}
+                            $Text{"No XXX settings", "$QData{"Title"}"}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
                             <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimePoint" name="$QData{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
-                            $Text{"$QData{"TitleUcFirst"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
+                            $Text{"$QData{"Title"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
                             <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimeSlot" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
-                            $Text{"$QData{"TitleUcFirst"} between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
+                            $Text{"$QData{"Title"}"} $Text{"between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
 <!-- dtl:block:InvalidTimeSlot -->
                             <br />
                             <font color="red" size="-2">$Text{"Input invalid"}</font>

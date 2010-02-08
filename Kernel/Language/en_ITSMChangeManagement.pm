@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.41 2010-02-06 12:45:54 bes Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.42 2010-02-08 10:32:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -39,43 +39,53 @@ sub Data {
     # Workorder menu
     $Lang->{'WorkOrderAgent'} = 'Workorder Agent';
 
+    # Template menu
+
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
+    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Accounted Time';
+    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Actual End';
+    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Actual Start';
     $Lang->{'ChangeAttribute::CABAgent'}         = 'CAB Agent';
     $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
     $Lang->{'ChangeAttribute::CABCustomer'}      = 'CAB Customer';
     $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Customers';
     $Lang->{'ChangeAttribute::Category'}         = 'Category';
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
+    $Lang->{'ChangeAttribute::ChangeBy'}         = 'Changed by';
     $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
     $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Number';
+    $Lang->{'ChangeAttribute::ChangeTime'}       = 'Changed';
     $Lang->{'ChangeAttribute::ChangeState'}      = 'Change State';
     $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Title';
+    $Lang->{'ChangeAttribute::CreateBy'}         = 'Created by';
+    $Lang->{'ChangeAttribute::CreateTime'}       = 'Created';
     $Lang->{'ChangeAttribute::Description'}      = 'Description';
     $Lang->{'ChangeAttribute::Impact'}           = 'Impact';
     $Lang->{'ChangeAttribute::Justification'}    = 'Justification';
-    $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Planned Start';
-    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Planned End';
-    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Actual Start';
-    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Actual End';
-    $Lang->{'ChangeAttribute::RequestedTime'}    = 'Requested Time';
-    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Accounted Time';
     $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Planned Effort';
+    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Planned End';
+    $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Planned Start';
     $Lang->{'ChangeAttribute::Priority'}         = 'Priority';
+    $Lang->{'ChangeAttribute::RequestedTime'}    = 'Requested Time';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
+    $Lang->{'WorkOrderAttribute::AccountedTime'}    = 'Accounted Time';
+    $Lang->{'WorkOrderAttribute::ActualEndTime'}    = 'Actual End';
+    $Lang->{'WorkOrderAttribute::ActualStartTime'}  = 'Actual Start';
+    $Lang->{'WorkOrderAttribute::ChangeBy'}         = 'Changed by';
+    $Lang->{'WorkOrderAttribute::ChangeTime'}       = 'Changed';
+    $Lang->{'WorkOrderAttribute::CreateBy'}         = 'Created by';
+    $Lang->{'WorkOrderAttribute::CreateTime'}       = 'Created';
     $Lang->{'WorkOrderAttribute::Instruction'}      = 'Instruction';
+    $Lang->{'WorkOrderAttribute::PlannedEffort'}    = 'Planned Effort';
+    $Lang->{'WorkOrderAttribute::PlannedEndTime'}   = 'Planned End';
+    $Lang->{'WorkOrderAttribute::PlannedStartTime'} = 'Planned Start';
     $Lang->{'WorkOrderAttribute::Report'}           = 'Report';
     $Lang->{'WorkOrderAttribute::WorkOrderAgent'}   = 'Workorder Agent';
     $Lang->{'WorkOrderAttribute::WorkOrderNumber'}  = 'Workorder Number';
     $Lang->{'WorkOrderAttribute::WorkOrderState'}   = 'Workorder State';
     $Lang->{'WorkOrderAttribute::WorkOrderTitle'}   = 'Workorder Title';
     $Lang->{'WorkOrderAttribute::WorkOrderType'}    = 'Workorder Type';
-    $Lang->{'WorkOrderAttribute::PlannedStartTime'} = 'Planned Start';
-    $Lang->{'WorkOrderAttribute::PlannedEndTime'}   = 'Planned End';
-    $Lang->{'WorkOrderAttribute::ActualStartTime'}  = 'Actual Start';
-    $Lang->{'WorkOrderAttribute::ActualEndTime'}    = 'Actual End';
-    $Lang->{'WorkOrderAttribute::AccountedTime'}    = 'Accounted Time';
-    $Lang->{'WorkOrderAttribute::PlannedEffort'}    = 'Planned Effort';
 
     # Change history
     $Lang->{'ChangeHistory::ChangeAdd'}              = 'New Change (ID=%s)';
@@ -181,12 +191,25 @@ sub Data {
     $Lang->{'ITSMChange'}    = 'Change';
     $Lang->{'ITSMWorkOrder'} = 'Workorder';
 
+    # Overviews
+
+    # Workorder delete
+
     # take workorder
     $Lang->{'Imperative::Take Workorder'} = 'Take Workorder';
+
+    # Condition Overview
 
     # Condition Edit
     $Lang->{'ITSMCondition::Selector::any'}  = 'any';
     $Lang->{'ITSMCondition::Selector::all'}  = 'all';
+
+    # Change Zoom
+
+    # AgentITSMChangePrint
+
+    # AgentITSMChangeSearch
+    $Lang->{'No XXX settings'} = q{No '%s' settings};
 
     return 1;
 }

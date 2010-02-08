@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.52 2010-02-05 18:35:14 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.53 2010-02-08 10:32:41 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -603,12 +603,12 @@ sub _MaskForm {
     # setup for the time search fields
     my @TimeTypes = (
         { Prefix => 'Requested',    Title => 'Requested (by customer) Date', },
-        { Prefix => 'PlannedStart', Title => 'Planned  Start Time', },
-        { Prefix => 'PlannedEnd',   Title => 'Planned End Time', },
-        { Prefix => 'ActualStart',  Title => 'Actual Start Time', },
-        { Prefix => 'ActualEnd',    Title => 'Actual End Time', },
-        { Prefix => 'Create',       Title => 'Create Time', },
-        { Prefix => 'Change',       Title => 'Change Time', },
+        { Prefix => 'PlannedStart', Title => 'ChangeAttribute::PlannedStartTime', },
+        { Prefix => 'PlannedEnd',   Title => 'ChangeAttribute::PlannedEndTime', },
+        { Prefix => 'ActualStart',  Title => 'ChangeAttribute::ActualStartTime', },
+        { Prefix => 'ActualEnd',    Title => 'ChangeAttribute::ActualEndTime', },
+        { Prefix => 'Create',       Title => 'ChangeAttribute::CreateTime', },
+        { Prefix => 'Change',       Title => 'ChangeAttribute::ChangeTime', },
     );
 
     TIMETYPE:
@@ -620,11 +620,10 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
+        my $Title             = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
         my %TimeSelectionData = (
-            Prefix       => $Prefix,
-            Title        => $TimeType->{Title},
-            TitleLc      => lc( $TimeType->{Title} ),
-            TitleUcFirst => ucfirst( lc $TimeType->{Title} ),
+            Prefix => $Prefix,
+            Title  => $Title,
         );
 
         # set radio button for time search types
