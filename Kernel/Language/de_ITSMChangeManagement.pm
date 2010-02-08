@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.68 2010-02-08 13:35:17 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.69 2010-02-08 14:50:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.68 $) [1];
+$VERSION = qw($Revision: 1.69 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -63,7 +63,7 @@ sub Data {
     $Lang->{'Edit the change'}                       = 'Diesen Change bearbeiten';
     $Lang->{'Change involved persons of the change'} = 'Bearbeite beteiligte Personen dieses Changes';
     $Lang->{'Add a workorder to the change'}         = 'Füge eine Workorder zu diesem Change hinzu';
-    $Lang->{'Edit the conditions of the change'}     = 'Bearbeite die Conditions dieses Changes';
+    $Lang->{'Edit the conditions of the change'}     = 'Bearbeite die Bedingungen dieses Changes';
     $Lang->{'Link another object to the change'}     = 'Verknüpfe ein anderes Objekt mit diesem Change';
     $Lang->{'Save change as a template'}             = 'Speichere diesen Change als Template';
     $Lang->{'Move all workorders in time'}           = 'Verschiebe alle Workorders um eine neue zeitliche Differenz';
@@ -162,25 +162,25 @@ sub Data {
 
     # condition history
     $Lang->{'ChangeHistory::ConditionAdd'}       = '%s: %s';
-    $Lang->{'ChangeHistory::ConditionAddID'}     = 'Neue Condition (ID=%s)';
-    $Lang->{'ChangeHistory::ConditionUpdate'}    = '%s (Condition ID=%s): Neu: %s -> Old: %s';
-    $Lang->{'ChangeHistory::ConditionDelete'}    = 'Condition (ID=%s) gelöscht';
-    $Lang->{'ChangeHistory::ConditionDeleteAll'} = 'Alle Conditions von Change (ID=%s) gelöscht';
+    $Lang->{'ChangeHistory::ConditionAddID'}     = 'Neue Bedingung (ID=%s)';
+    $Lang->{'ChangeHistory::ConditionUpdate'}    = '%s (Bedingung ID=%s): Neu: %s -> Old: %s';
+    $Lang->{'ChangeHistory::ConditionDelete'}    = 'Bedingung (ID=%s) gelöscht';
+    $Lang->{'ChangeHistory::ConditionDeleteAll'} = 'Alle Bedingungen von Change (ID=%s) gelöscht';
 
     # expression history
     $Lang->{'ChangeHistory::ExpressionAdd'}       = '%s: %s';
     $Lang->{'ChangeHistory::ExpressionAddID'}     = 'Neue Expression (ID=%s)';
     $Lang->{'ChangeHistory::ExpressionUpdate'}    = '%s (Expression ID=%s): Neu: %s -> Old: %s';
     $Lang->{'ChangeHistory::ExpressionDelete'}    = 'Expression (ID=%s) gelöscht';
-    $Lang->{'ChangeHistory::ExpressionDeleteAll'} = 'Alle Expressions von Condition (ID=%s) gelöscht';
+    $Lang->{'ChangeHistory::ExpressionDeleteAll'} = 'Alle logischen Ausdrücke von Bedingung (ID=%s) gelöscht';
 
     # action history
     $Lang->{'ChangeHistory::ActionAdd'}       = '%s: %s';
     $Lang->{'ChangeHistory::ActionAddID'}     = 'Neue Action (ID=%s)';
     $Lang->{'ChangeHistory::ActionUpdate'}    = '%s (Action ID=%s): Neu: %s -> Old: %s';
     $Lang->{'ChangeHistory::ActionDelete'}    = 'Action (ID=%s) gelöscht';
-    $Lang->{'ChangeHistory::ActionDeleteAll'} = 'Alle Actions von Condition (ID=%s) gelöscht';
-    $Lang->{'ChangeHistory::ActionExecute'}   = 'Action (ID=%s) ausgeführt: %s';
+    $Lang->{'ChangeHistory::ActionDeleteAll'} = 'Alle Aktionen von Bedingung (ID=%s) gelöscht';
+    $Lang->{'ChangeHistory::ActionExecute'}   = 'Aktion (ID=%s) ausgeführt: %s';
     $Lang->{'ActionExecute::successfully'}    = 'erfolgreich';
     $Lang->{'ActionExecute::unsuccessfully'}  = 'nicht erfolgreich';
 
@@ -242,7 +242,7 @@ sub Data {
     $Lang->{'TemplateType::ITSMChange'}    = 'Change';
     $Lang->{'TemplateType::ITSMWorkOrder'} = 'Workorder';
     $Lang->{'TemplateType::CAB'}           = 'CAB';
-    $Lang->{'TemplateType::ITSMCondition'} = 'Condition';
+    $Lang->{'TemplateType::ITSMCondition'} = 'Bedingung';
 
     # objects that can be used in condition expressions and actions
     $Lang->{'ITSMChange'}    = 'Change';
@@ -253,27 +253,32 @@ sub Data {
 
     # Workorder delete
     $Lang->{'Do you really want to delete this workorder?'} = 'Möchten Sie diese Workorder wirklich löschen?';
-    $Lang->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Sie können diese Workorder nicht löschen. Sie wird in mindestens einer Condition verwendet!';
-    $Lang->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Condition(s)';
+    $Lang->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Sie können diese Workorder nicht löschen. Sie wird in mindestens einer Bedingung verwendet!';
+    $Lang->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Bedingung(en)';
 
-    # take workorder
+    # Take workorder
     $Lang->{'Imperative::Take Workorder'}                 = 'Übernehmen von Workorder';
     $Lang->{'Take Workorder'}                             = 'Workorder übernehmen';
     $Lang->{'Take the workorder'}                         = 'Diese Workorder übernehmen';
     $Lang->{'Current Agent'}                              = 'Aktueller Agent';
     $Lang->{'Do you really want to take this workorder?'} = 'Wollen sie diese Workorder wirklich übernehmen?';
 
-    # Condition Overview
-    $Lang->{'Conditions and Actions'}            = 'Conditions und Actions';
-    $Lang->{'Add new condition and action pair'} = 'Füge ein neues Condition und Action Paar hinzu';
-
-    # Condition Edit
-    $Lang->{'A condition must have a name!'}            = 'Eine Condition benötigt einen Namen!';
-    $Lang->{'Condition Edit'}                           = 'Condition bearbeiten';
-    $Lang->{'Add new expression'}                       = 'Füge eine neue Expression hinzu';
-    $Lang->{'Add new action'}                           = 'Füge eine neue Action hinzu';
-    $Lang->{'Any expression'}                           = 'Beliebige Expression';
-    $Lang->{'All expressions'}                          = 'Alle Expressions';
+    # Condition Overview and Edit
+    $Lang->{'Condition'}                                = 'Bedingung';
+    $Lang->{'Conditions'}                               = 'Bedingungen';
+    $Lang->{'Expression'}                               = 'Logischer Ausdruck';
+    $Lang->{'Expressions'}                              = 'Logische Ausdrücke';
+    $Lang->{'Action'}                                   = 'Aktion';
+    $Lang->{'Actions'}                                  = 'Aktionen';
+    $Lang->{'Matching'}                                 = 'Übereinstimmung';
+    $Lang->{'Conditions and Actions'}                   = 'Bedingungen und Aktionen';
+    $Lang->{'Add new condition and action pair'}        = 'Füge ein neues Bedingungs- und Aktions-Paar hinzu';
+    $Lang->{'A condition must have a name!'}            = 'Eine Bedingung benötigt einen Namen!';
+    $Lang->{'Condition Edit'}                           = 'Bedingung bearbeiten';
+    $Lang->{'Add new expression'}                       = 'Füge einen neuen logischen Ausdruck hinzu';
+    $Lang->{'Add new action'}                           = 'Füge eine neue Aktion hinzu';
+    $Lang->{'Any expression'}                           = 'Beliebiger logischer Ausdruck';
+    $Lang->{'All expressions'}                          = 'Alle logischen Ausdrücke';
     $Lang->{'ITSMCondition::Selector::any'}             = 'beliebige';
     $Lang->{'ITSMCondition::Selector::all'}             = 'alle';
     $Lang->{'ITSMCondition::Operator::is'}              = 'ist';
