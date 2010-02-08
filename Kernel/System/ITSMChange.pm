@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.pm,v 1.233 2010-02-03 09:50:33 bes Exp $
+# $Id: ITSMChange.pm,v 1.234 2010-02-08 12:36:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.233 $) [1];
+$VERSION = qw($Revision: 1.234 $) [1];
 
 =head1 NAME
 
@@ -520,7 +520,7 @@ The returned hash reference contains the following elements:
     $Change{Impact}
     $Change{PriorityID}
     $Change{Priority}
-    $Change{WorkOrderIDs}           # array reference with WorkOrderIDs
+    $Change{WorkOrderIDs}           # array reference with WorkOrderIDs, sorted by WorkOrderNumber
     $Change{WorkOrderCount}         # number of workorders
     $Change{CABAgents}              # array reference with CAB Agent UserIDs
     $Change{CABCustomers}           # array reference with CAB CustomerUserIDs
@@ -3083,6 +3083,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.233 $ $Date: 2010-02-03 09:50:33 $
+$Revision: 1.234 $ $Date: 2010-02-08 12:36:51 $
 
 =cut

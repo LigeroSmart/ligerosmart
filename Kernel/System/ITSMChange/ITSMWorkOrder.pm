@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.95 2010-02-03 09:50:33 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.96 2010-02-08 12:36:51 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.95 $) [1];
+$VERSION = qw($Revision: 1.96 $) [1];
 
 =head1 NAME
 
@@ -723,7 +723,8 @@ sub WorkOrderGet {
 
 =item WorkOrderList()
 
-return a list of all workorder ids of the given change as array reference
+Return a list of all workorder ids of the given change as array reference.
+The workorder ids are ordered by workorder number.
 
     my $WorkOrderIDsRef = $WorkOrderObject->WorkOrderList(
         ChangeID => 5,
@@ -748,14 +749,17 @@ sub WorkOrderList {
 
     # get workorder ids
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT id FROM change_workorder WHERE change_id = ?',
+        SQL =>
+            'SELECT id FROM change_workorder '
+            . 'WHERE change_id = ? '
+            . 'ORDER BY workorder_number, id',
         Bind => [ \$Param{ChangeID} ],
     );
 
     # fetch the result
     my @WorkOrderIDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @WorkOrderIDs, $Row[0];
+    while ( my ($ID) = $Self->{DBObject}->FetchrowArray() ) {
+        push @WorkOrderIDs, $ID;
     }
 
     return \@WorkOrderIDs;
@@ -2718,6 +2722,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.95 $ $Date: 2010-02-03 09:50:33 $
+$Revision: 1.96 $ $Date: 2010-02-08 12:36:51 $
 
 =cut
