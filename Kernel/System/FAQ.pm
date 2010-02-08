@@ -2,11 +2,11 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.78 2010-02-08 19:34:44 mb Exp $
+# $Id: FAQ.pm,v 1.79 2010-02-08 20:26:10 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::FAQ;
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.78 $) [1];
+$VERSION = qw($Revision: 1.79 $) [1];
 
 =head1 NAME
 
@@ -46,23 +46,24 @@ All faq functions. E. g. to add faqs or to get faqs.
 create a faq object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
     use Kernel::System::FAQ;
 
     my $ConfigObject = Kernel::Config->new();
-    my $LogObject    = Kernel::System::Log->new(
+    my $EncodeObject = Kernel::System::Encode->new(
         ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
-    }
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
     );
     my $FAQObject = Kernel::System::FAQ->new(
         ConfigObject => $ConfigObject,
@@ -84,7 +85,7 @@ sub new {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
     $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
-    $Self->{CacheObject}         = Kernel::System::Cache->new( %{ $Self } );
+    $Self->{CacheObject}         = Kernel::System::Cache->new( %{$Self} );
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
@@ -198,7 +199,7 @@ sub FAQGet {
     if ( !$Data{Number} ) {
         my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
         $Self->{DBObject}->Do(
-            SQL  => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+            SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
             Bind => [ \$Number, \$Data{ItemID}, ],
         );
         $Data{Number} = $Number;
@@ -231,7 +232,7 @@ sub ItemVoteDataGet {
 
     # check cache
     my $CacheKey = 'ItemVoteDataGet::' . $Param{ItemID};
-    my $Cache = $Self->{CacheObject}->Get(
+    my $Cache    = $Self->{CacheObject}->Get(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
@@ -330,13 +331,13 @@ sub FAQAdd {
             \$Param{Field4},     \$Param{Field5},    \$Param{Field6},
             \$Param{FreeKey1},   \$Param{FreeText1}, \$Param{FreeKey2},   \$Param{FreeText2},
             \$Param{FreeKey3},   \$Param{FreeText3}, \$Param{FreeKey4},   \$Param{FreeText4},
-            \$Self->{UserID},    \$Self->{UserID},
-        ]
+            \$Self->{UserID}, \$Self->{UserID},
+            ]
     );
 
     # get id
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT id FROM faq_item WHERE f_name = ? AND f_language_id = ? AND f_subject = ?',
+        SQL => 'SELECT id FROM faq_item WHERE f_name = ? AND f_language_id = ? AND f_subject = ?',
         Bind => [ \$Param{Name}, \$Param{LanguageID}, \$Param{Title}, ],
     );
     my $ID;
@@ -347,7 +348,7 @@ sub FAQAdd {
     # update number
     my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $ID;
     return if !$Self->{DBObject}->Do(
-        SQL  => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+        SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
         Bind => [ \$Number, \$ID, ],
     );
 
@@ -368,7 +369,8 @@ sub FAQAdd {
             StateID    => $Param{StateID},
         );
         if ( !$Ok ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Could not create approval ticket!" );
+            $Self->{LogObject}
+                ->Log( Priority => 'error', Message => "Could not create approval ticket!" );
         }
     }
 
@@ -425,7 +427,7 @@ sub FAQUpdate {
             \$Param{Field3},   \$Param{Field4},     \$Param{Field5},   \$Param{Field6},
             \$Param{FreeKey1}, \$Param{FreeText1},  \$Param{FreeKey2}, \$Param{FreeText2},
             \$Param{FreeKey3}, \$Param{FreeText3},  \$Param{FreeKey4}, \$Param{FreeText4},
-            \$Self->{UserID},  \$Param{ItemID},
+            \$Self->{UserID}, \$Param{ItemID},
         ],
     );
 
@@ -499,8 +501,8 @@ sub AttachmentAdd {
             ' created, created_by, changed, changed_by) VALUES ' .
             ' (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{ItemID},  \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
-            \$Param{Content}, \$Param{Inline},   \$Self->{UserID}, \$Self->{UserID},
+            \$Param{ItemID}, \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
+            \$Param{Content}, \$Param{Inline}, \$Self->{UserID}, \$Self->{UserID},
         ],
     );
 }
@@ -530,7 +532,7 @@ sub AttachmentGet {
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT filename, content_type, content_size, content '
             . 'FROM faq_attachment WHERE id = ? AND faq_id = ? ORDER BY created',
-        Bind => [ \$Param{FileID},  \$Param{ItemID} ],
+        Bind => [ \$Param{FileID}, \$Param{ItemID} ],
         Encode => [ 1, 1, 1, 0 ],
         Limit => 1,
     );
@@ -605,7 +607,7 @@ sub AttachmentIndex {
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, filename, content_type, content_size, inlineattachment FROM '
             . 'faq_attachment WHERE faq_id = ? ORDER BY created',
-        Bind => [ \$Param{ItemID} ],
+        Bind  => [ \$Param{ItemID} ],
         Limit => 100,
     );
     my @Index = ();
@@ -625,7 +627,7 @@ sub AttachmentIndex {
 
         # human readable file size
         my $FileSizeRaw = $Filesize;
-        if ( $Filesize ) {
+        if ($Filesize) {
             if ( $Filesize > ( 1024 * 1024 ) ) {
                 $Filesize = sprintf "%.1f MBytes", ( $Filesize / ( 1024 * 1024 ) );
             }
@@ -1110,7 +1112,7 @@ sub CategoryList {
 
     # sql
     my $SQL = 'SELECT id, parent_id, name FROM faq_category ';
-    if ( $Valid ) {
+    if ($Valid) {
         $SQL .= 'WHERE valid_id = 1';
     }
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
@@ -1239,7 +1241,7 @@ sub CategoryGet {
 
     # check cache
     my $CacheKey = 'CategoryGet::' . $Param{CategoryID};
-    my $Cache = $Self->{CacheObject}->Get(
+    my $Cache    = $Self->{CacheObject}->Get(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
@@ -1247,7 +1249,7 @@ sub CategoryGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = ?',
+        SQL  => 'SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = ?',
         Bind => [ \$Param{CategoryID} ],
     );
     my %Data;
@@ -1295,9 +1297,10 @@ sub CategorySubCategoryIDList {
         }
     }
 
-    my $Categories =  {};
+    my $Categories = {};
 
     if ( $Param{Mode} && $Param{Mode} eq 'Agent' ) {
+
         # get agents categories
         $Categories = $Self->GetUserCategories(
             UserID => $Param{UserID},
@@ -1305,6 +1308,7 @@ sub CategorySubCategoryIDList {
         );
     }
     elsif ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
+
         # get customer categories
         $Categories = $Self->GetCustomerCategories(
             CustomerUser => $Param{CustomerUser},
@@ -1312,16 +1316,17 @@ sub CategorySubCategoryIDList {
         );
     }
     else {
+
         # get all categories
         $Categories = $Self->CategoryList(
             Valid => 1,
         );
     }
 
-    my @SubCategoryIDs = ();
+    my @SubCategoryIDs     = ();
     my @TempSubCategoryIDs = keys %{ $Categories->{ $Param{ParentID} } };
     SUBCATEGORYID:
-    while ( @TempSubCategoryIDs ) {
+    while (@TempSubCategoryIDs) {
 
         # get next subcategory id
         my $SubCategoryID = shift @TempSubCategoryIDs;
@@ -1330,10 +1335,10 @@ sub CategorySubCategoryIDList {
         push @SubCategoryIDs, $SubCategoryID;
 
         # check if subcategory has own subcategories
-        next SUBCATEGORYID if !$Categories->{ $SubCategoryID };
+        next SUBCATEGORYID if !$Categories->{$SubCategoryID};
 
         # add new subcategories
-        push @TempSubCategoryIDs, keys %{ $Categories->{ $SubCategoryID } };
+        push @TempSubCategoryIDs, keys %{ $Categories->{$SubCategoryID} };
     }
 
     # sort subcategories numerically
@@ -1610,7 +1615,7 @@ sub StateUpdate {
 
     # sql
     return $Self->{DBObject}->Do(
-        SQL  => 'UPDATE faq_state SET name = ?, type_id = ?, WHERE id = ?',
+        SQL => 'UPDATE faq_state SET name = ?, type_id = ?, WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{TypeID}, \$Param{ID} ],
     );
 }
@@ -1638,7 +1643,7 @@ sub StateAdd {
     }
 
     return $Self->{DBObject}->Do(
-        SQL  => 'INSERT INTO faq_state (name, type_id) VALUES ( ?, ? )',
+        SQL => 'INSERT INTO faq_state (name, type_id) VALUES ( ?, ? )',
         Bind => [ \$Param{Name}, \$Param{TypeID}, ],
     );
 }
@@ -1791,7 +1796,7 @@ sub LanguageUpdate {
 
     # sql
     return $Self->{DBObject}->Do(
-        SQL  => 'UPDATE faq_language SET name = ? WHERE id = ?',
+        SQL => 'UPDATE faq_language SET name = ? WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{Name} ],
     );
 }
@@ -1942,20 +1947,36 @@ sub FAQSearch {
         my @SearchFields = ( 'i.f_number', 'i.f_subject', 'i.f_keywords' );
         if ( $Param{Interface} eq 'internal' ) {
             for my $Number ( 1 .. 6 ) {
-                if ($Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ||
-                $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'internal') {
-                push @SearchFields, "i.f_field$Number";
+                if (
+                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ||
+                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'internal' ||
+                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'external'
+                    )
+                {
+                    push @SearchFields, "i.f_field$Number";
                 }
-            }        }
+            }
+        }
+        elsif ( $Param{Interface} eq 'external' ) {
+            for my $Number ( 1 .. 6 ) {
+                if (
+                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ||
+                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'external'
+                    )
+                {
+                    push @SearchFields, "i.f_field$Number";
+                }
+            }
+        }
         else {
             for my $Number ( 1 .. 6 ) {
-                if ($Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public') {
-                push @SearchFields, "i.f_field$Number";
+                if ( $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ) {
+                    push @SearchFields, "i.f_field$Number";
                 }
             }
         }
         $Ext .= $Self->{DBObject}->QueryCondition(
-            Key => \@SearchFields,
+            Key          => \@SearchFields,
             Value        => $Param{What},
             SearchPrefix => '*',
             SearchSuffix => '*',
@@ -2028,7 +2049,7 @@ sub FAQSearch {
         $Param{Keyword} = "\%$Param{Keyword}\%";
         $Param{Keyword} =~ s/\*/%/g;
         $Param{Keyword} =~ s/%%/%/g;
-        $Param{Keyword} = $Self->{DBObject}->Quote($Param{Keyword}, 'Like');
+        $Param{Keyword} = $Self->{DBObject}->Quote( $Param{Keyword}, 'Like' );
 
         if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
             $Ext .= " i.f_keywords LIKE '" . $Param{Keyword} . "'";
@@ -2162,7 +2183,7 @@ sub GetCategoryTree {
 
     # sql
     my $SQL = 'SELECT id, parent_id, name FROM faq_category';
-    if ( $Valid ) {
+    if ($Valid) {
         $SQL .= ' WHERE valid_id = 1';
     }
     return if !$Self->{DBObject}->Prepare(
@@ -2180,7 +2201,7 @@ sub GetCategoryTree {
     for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
 
         # get subcategories and names for this parent id
-        while( my ($CategoryID, $CategoryName) = each( %{ $CategoryMap{$ParentID} } ) ) {
+        while ( my ( $CategoryID, $CategoryName ) = each( %{ $CategoryMap{$ParentID} } ) ) {
 
             # prepend parents category name
             if ( $CategoryTree->{$ParentID} ) {
@@ -2366,7 +2387,7 @@ sub _UserCategories {
         my %SubCategories = ();
 
         CATEGORYID:
-        for my $CategoryID ( keys %{ $Param{Categories}->{ $ParentID } } ) {
+        for my $CategoryID ( keys %{ $Param{Categories}->{$ParentID} } ) {
 
             # check category groups
             next CATEGORYID if !defined $Param{CategoryGroups}->{$CategoryID};
@@ -2388,7 +2409,7 @@ sub _UserCategories {
                 last GROUPID;
             }
         }
-        $UserCategories{ $ParentID } = \%SubCategories;
+        $UserCategories{$ParentID} = \%SubCategories;
     }
     return \%UserCategories;
 }
@@ -2584,8 +2605,8 @@ sub CustomerCategorySearch {
         Type         => 'ro',
     );
 
-    my %Category = %{ $Categories->{ $Param{ParentID} } };
-    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
+    my %Category           = %{ $Categories->{ $Param{ParentID} } };
+    my @CategoryIDs        = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
     my @AllowedCategoryIDs = ();
 
     my %Articles = ();
@@ -2598,24 +2619,24 @@ sub CustomerCategorySearch {
     else {
 
         my $SQL;
-        $SQL  = 'SELECT faq_item.id, faq_item.category_id ';
+        $SQL = 'SELECT faq_item.id, faq_item.category_id ';
         $SQL .= 'FROM faq_item, faq_state_type ';
         $SQL .= 'WHERE faq_state_type.id = faq_item.state_id ';
         $SQL .= "AND faq_state_type.name != 'internal' ";
         $SQL .= 'AND approved = 1';
 
         return if !$Self->{DBObject}->Prepare(
-            SQL   => $SQL,
+            SQL => $SQL,
         );
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $Articles{$Row[1]}++;
+            $Articles{ $Row[1] }++;
         }
 
         # cache
         $Self->{Cache}->{$CacheKey} = \%Articles;
     }
 
-    for my $CategoryID ( @CategoryIDs ) {
+    for my $CategoryID (@CategoryIDs) {
 
         # get all subcategory ids for this category
         my $SubCategoryIDs = $Self->CategorySubCategoryIDList(
@@ -2625,11 +2646,11 @@ sub CustomerCategorySearch {
         );
 
         # add this category id
-        my @IDs = ( $CategoryID, @{ $SubCategoryIDs } );
+        my @IDs = ( $CategoryID, @{$SubCategoryIDs} );
 
         # check if category contains articles with state external or public
         ID:
-        for my $ID ( @IDs ) {
+        for my $ID (@IDs) {
             next ID if !$Articles{$ID};
             push @AllowedCategoryIDs, $CategoryID;
             last ID;
@@ -2663,11 +2684,11 @@ sub PublicCategorySearch {
 
     return [] if !$CategoryListCategories->{ $Param{ParentID} };
 
-    my %Category = %{ $CategoryListCategories->{ $Param{ParentID} } };
-    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
+    my %Category           = %{ $CategoryListCategories->{ $Param{ParentID} } };
+    my @CategoryIDs        = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
     my @AllowedCategoryIDs = ();
 
-    for my $CategoryID ( @CategoryIDs ) {
+    for my $CategoryID (@CategoryIDs) {
 
         # get all subcategory ids for this category
         my $SubCategoryIDs = $Self->CategorySubCategoryIDList(
@@ -2677,19 +2698,19 @@ sub PublicCategorySearch {
         );
 
         # add this category id
-        my @IDs = ( $CategoryID, @{ $SubCategoryIDs } );
+        my @IDs = ( $CategoryID, @{$SubCategoryIDs} );
 
         # check if category contains articles with state public
         my $FoundArticle = 0;
         my $SQL;
-        $SQL  = 'SELECT faq_item.id FROM faq_item, faq_state_type ';
+        $SQL = 'SELECT faq_item.id FROM faq_item, faq_state_type ';
         $SQL .= 'WHERE faq_item.category_id = ? ';
         $SQL .= 'AND faq_state_type.id = faq_item.state_id ';
         $SQL .= "AND faq_state_type.name = 'public' ";
         $SQL .= 'AND approved = 1';
 
         ID:
-        for my $ID ( @IDs ) {
+        for my $ID (@IDs) {
             return if !$Self->{DBObject}->Prepare(
                 SQL   => $SQL,
                 Bind  => [ \$ID ],
@@ -2702,7 +2723,7 @@ sub PublicCategorySearch {
         }
 
         # an article was found
-        if ( $FoundArticle ) {
+        if ($FoundArticle) {
             push @AllowedCategoryIDs, $CategoryID;
         }
     }
@@ -2756,7 +2777,7 @@ sub FAQLogAdd {
         SQL => 'SELECT id FROM faq_log '
             . 'WHERE item_id = ? AND ip = ? '
             . 'AND user_agent = ? AND created >= ? ',
-        Bind  => [ \$Param{ItemID}, \$IP, \$UserAgent, \$TimeStamp ],
+        Bind => [ \$Param{ItemID}, \$IP, \$UserAgent, \$TimeStamp ],
         Limit => 1,
     );
 
@@ -2904,7 +2925,8 @@ sub FAQApprovalUpdate {
             StateID    => $Data{StateID},
         );
         if ( !$Ok ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Could not create approval ticket!" );
+            $Self->{LogObject}
+                ->Log( Priority => 'error', Message => "Could not create approval ticket!" );
         }
     }
 
@@ -2952,7 +2974,7 @@ sub FAQApprovalTicketCreate {
         UserID   => 1,
     );
 
-    if ( $TicketID ) {
+    if ($TicketID) {
 
         # get UserName
         my $UserName = $Self->{UserObject}->UserName(
@@ -2975,15 +2997,16 @@ sub FAQApprovalTicketCreate {
 
         # create article
         my $ArticleID = $Self->{TicketObject}->ArticleCreate(
-            TicketID       => $TicketID,
-            ArticleType    => 'note-internal',
-            SenderType     => 'system',
-            Subject        => $Subject,
-            Body           => $Body,
-            ContentType    => "text/plain; charset=$Self->{ConfigObject}->Get('DefaultCharset')",
-            UserID         => 1,
-            HistoryType    => 'AddNote',
-            HistoryComment => $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment},
+            TicketID    => $TicketID,
+            ArticleType => 'note-internal',
+            SenderType  => 'system',
+            Subject     => $Subject,
+            Body        => $Body,
+            ContentType => "text/plain; charset=$Self->{ConfigObject}->Get('DefaultCharset')",
+            UserID      => 1,
+            HistoryType => 'AddNote',
+            HistoryComment =>
+                $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment},
         );
         return 1;
     }
@@ -3028,7 +3051,7 @@ sub FAQPictureUploadAdd {
     return 1 if !@AttachmentData;
 
     ATTACHMENT:
-    for my $Attachment ( @AttachmentData ) {
+    for my $Attachment (@AttachmentData) {
 
         # store picture as attachment of faq article
         my $Ok = $Self->AttachmentAdd(
@@ -3054,7 +3077,7 @@ sub FAQPictureUploadAdd {
 
     # rewrite url to picture if it was successfully stored
     ATTACHMENT:
-    for my $Attachment ( @AttachmentIndex ) {
+    for my $Attachment (@AttachmentIndex) {
 
         # picture url in upload cache
         my $Search = "Action=PictureUploadFAQ .+ FormID=$Param{FormID} .+ "
@@ -3066,7 +3089,7 @@ sub FAQPictureUploadAdd {
 
         # rewrite picture urls
         FIELD:
-        for my $Number ( 1..6 ) {
+        for my $Number ( 1 .. 6 ) {
             next FIELD if !$Param{"Field$Number"};
 
             # remove newlines
@@ -3105,13 +3128,13 @@ sub FAQPictureUploadAdd {
 This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
-the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.78 $ $Date: 2010-02-08 19:34:44 $
+$Revision: 1.79 $ $Date: 2010-02-08 20:26:10 $
 
 =cut
