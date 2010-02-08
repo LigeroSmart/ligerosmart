@@ -2,7 +2,7 @@
 # ITSMTemplate.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMTemplate.t,v 1.3 2010-02-02 13:24:29 reb Exp $
+# $Id: ITSMTemplate.t,v 1.4 2010-02-08 16:42:09 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -312,6 +312,94 @@ for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
 }
 
 # add conditions
+my %ConditionDefinitions = (
+    SimpleCondition => {
+        ConditionAdd => {
+            ChangeID              => $CreatedChangeID{BaseChange},
+            Name                  => 'Simple Condition - ' . $UniqueSignature,
+            ExpressionConjunction => 'all',
+            ValidID               => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+            UserID                => 1,
+        },
+        ExpressionAdd => {
+            ObjectID => {
+                ObjectLookup => {
+                    Name => 'ITSMChange',
+                },
+            },
+            AttributeID => {
+                AttributeLookup => {
+                    Name => 'ChangeTitle',
+                },
+            },
+            OperatorID => {
+                OperatorLookup => {
+                    Name => 'is',
+                },
+            },
+
+            # static fields
+            #ConditionID  => ..., # This is filled by following code
+            Selector     => $CreatedChangeID{BaseChange},
+            CompareValue => 'DummyCompareValue1',
+            UserID       => 1,
+        },
+        ActionAdd => {
+            ObjectID => {
+                ObjectLookup => {
+                    Name   => 'ITSMChange',
+                    UserID => 1,
+                },
+            },
+            AttributeID => {
+                AttributeLookup => {
+                    Name   => 'ChangeTitle',
+                    UserID => 1,
+                },
+            },
+            OperatorID => {
+                OperatorLookup => {
+                    Name   => 'set',
+                    UserID => 1,
+                },
+            },
+
+            # static fields
+            #ConditionID  => ..., # This is filled by following code
+            Selector    => $CreatedChangeID{BaseChange},
+            ActionValue => 'New Change Title' . $UniqueSignature . int rand 1_000,
+            UserID      => 1,
+            }
+    },
+);
+
+my %CreatedConditionID;
+
+CONDITIONNAME:
+for my $ConditionName ( keys %ConditionDefinitions ) {
+    my $ConditionData = $ConditionDefinitions{$ConditionName}->{ConditionAdd};
+    my $ConditionID   = $Self->{ConditionObject}->ConditionAdd(
+        %{$ConditionData},
+    );
+
+    $Self->True(
+        $ConditionID,
+        "Test $TestCount: Add Condition $ConditionName",
+    );
+
+    next CONDITIONNAME if !$ConditionID;
+
+    $CreatedConditionID{$ConditionName} = $ConditionID;
+
+    my $ExpressionData = $ConditionDefinitions{$ConditionName}->{ExpressionAdd};
+    my $ExpressionID = _ExpressionAdd( $ExpressionData, $ConditionID );
+
+    my $ActionData = $ConditionDefinitions{$ConditionName}->{ActionAdd};
+    my $ActionID = _ActionAdd( $ActionData, $ConditionID );
+}
+continue {
+    $TestCount++;
+}
 
 # ------------------------------- #
 # create templates
@@ -355,6 +443,20 @@ my %TemplateDefinitions = (
         WorkOrderID => $CreatedWorkOrderID{UnicodeWorkOrder},
         UserID      => 1,
     },
+    CustomerAgentCAB => {
+        Name     => 'Customer and Agent CAB Template - ' . $UniqueSignature,
+        Type     => 'CAB',
+        ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ChangeID => $CreatedChangeID{BaseChange},
+        UserID   => 1,
+    },
+    SimpleCondition => {
+        Name        => 'Simple Condition Template - ' . $UniqueSignature,
+        Type        => 'ITSMCondition',
+        ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        ConditionID => $CreatedConditionID{SimpleCondition},
+        UserID      => 1,
+        }
 );
 
 for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
@@ -523,6 +625,40 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
     $TestCount++;
 }
 
+CONDITIONTEMPLATENAME:
+for my $ConditionTemplateName ( keys %CreatedConditionID ) {
+
+    # get template id
+    my $TemplateID = $TestedTemplateID{$ConditionTemplateName};
+
+    next CONDITIONTEMPLATENAME if !$TemplateID;
+
+    # deserialize template
+    my $ConditionID = $Self->{TemplateObject}->TemplateDeSerialize(
+        TemplateID => $TemplateID,
+        ChangeID   => $CreatedChangeID{TargetChange},
+        UserID     => 1,
+    );
+
+    # check change id
+    $Self->True(
+        $ConditionID,
+        "Test $TestCount: Create condition based on template (TemplateID: $TemplateID)",
+    );
+
+    $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# test
+# ------------------------------------------------------------ #
+
+# test TemplateList()
+
+# test TemplateUpdate()
+
+# test TemplateSearch()
+
 # ------------------------------------------------------------ #
 # clean the system
 # ------------------------------------------------------------ #
@@ -579,6 +715,158 @@ for my $ChangeID ( @ChangeIDs, values %CreatedChangeID ) {
 }
 continue {
     $TestCount++;
+}
+
+sub _ActionAdd {
+    my ( $ActionData, $ConditionID ) = @_;
+
+    return if !$ActionData;
+    return if ref $ActionData ne 'HASH';
+
+    # hash for adding
+    my %ActionAdd;
+
+    # set static fields
+    my @StaticFields = qw( Selector ActionValue UserID ConditionID );
+
+    STATICFIELD:
+    for my $StaticField (@StaticFields) {
+
+        # ommit static field if it is not set
+        next STATICFIELD if !exists $ActionData->{$StaticField};
+        next STATICFIELD if !defined $ActionData->{$StaticField};
+
+        # safe data
+        $ActionAdd{$StaticField} = $ActionData->{$StaticField};
+    }
+
+    # get all fields for ActionAdd
+    for my $ActionAddValue ( keys %{$ActionData} ) {
+
+        # ommit static fields
+        next if grep { $_ eq $ActionAddValue } @StaticFields;
+
+        # get values for fields
+        for my $FieldValue ( keys %{ $ActionData->{$ActionAddValue} } ) {
+
+            # store gathered information in hash for adding
+            $ActionAdd{$ActionAddValue}
+                = $Self->{ConditionObject}->$FieldValue(
+                %{ $ActionData->{$ActionAddValue}->{$FieldValue} },
+                );
+        }
+    }
+
+    # add action
+    my $ActionID = $Self->{ConditionObject}->ActionAdd(
+        %ActionAdd,
+        ConditionID => $ConditionID,
+    ) || 0;
+
+    $Self->True(
+        $ActionID,
+        'Test ' . $TestCount++ . " - ActionAdd -> $ActionID",
+    );
+
+    # check for ActionID
+    return if !$ActionID;
+
+    # check the added action
+    my $ActionGet = $Self->{ConditionObject}->ActionGet(
+        ActionID => $ActionID,
+        UserID   => $ActionAdd{UserID},
+    );
+    $Self->True(
+        $ActionGet,
+        'Test ' . $TestCount++ . ' - ActionAdd(): ActionGet',
+    );
+
+    # delete UserID, it is not returned
+    delete $ActionAdd{UserID};
+
+    # test values
+    for my $TestValue ( keys %ActionAdd ) {
+        $Self->Is(
+            $ActionGet->{$TestValue},
+            $ActionAdd{$TestValue},
+            'Test ' . $TestCount++ . " - ActionAdd(): ActionGet -> $TestValue",
+        );
+    }
+
+    return $ActionID;
+}
+
+sub _ExpressionAdd {
+    my ( $ExpressionData, $ConditionID ) = @_;
+    my %ExpressionAddSourceData = %{$ExpressionData};
+
+    my %ExpressionAddData;
+
+    # set static fields
+    my @StaticFields = qw( Selector CompareValue UserID ConditionID );
+
+    STATICFIELD:
+    for my $StaticField (@StaticFields) {
+
+        # ommit static field if it is not set
+        next STATICFIELD if !exists $ExpressionAddSourceData{$StaticField}
+                || !defined $ExpressionAddSourceData{$StaticField};
+
+        # safe data
+        $ExpressionAddData{$StaticField} = $ExpressionAddSourceData{$StaticField};
+    }
+
+    # get all fields for ExpressionAdd
+    for my $ExpressionAddValue ( keys %ExpressionAddSourceData ) {
+
+        # ommit static fields
+        next if grep { $_ eq $ExpressionAddValue } @StaticFields;
+
+        # get values for fields
+        for my $FieldValue ( keys %{ $ExpressionAddSourceData{$ExpressionAddValue} } ) {
+
+            # store gathered information in hash for adding
+            $ExpressionAddData{$ExpressionAddValue} =
+                $Self->{ConditionObject}->$FieldValue(
+                %{ $ExpressionAddSourceData{$ExpressionAddValue}->{$FieldValue} },
+                );
+        }
+    }
+
+    # add expression
+    my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+        %ExpressionAddData,
+        ConditionID => $ConditionID,
+    ) || 0;
+
+    $Self->True(
+        $ExpressionID,
+        'Test ' . $TestCount++ . " - $ExpressionID",
+    );
+
+    next CREATEDATA if !$ExpressionID;
+
+    # check the added expression
+    my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
+        ExpressionID => $ExpressionID,
+        UserID       => $ExpressionAddData{UserID},
+    );
+    $Self->True(
+        $ExpressionGetData,
+        'Test ' . $TestCount++ . ' - ExpressionAdd(): ExpressionGet',
+    );
+
+    # test values
+    delete $ExpressionAddData{UserID};
+    for my $TestValue ( keys %ExpressionAddData ) {
+        $Self->Is(
+            $ExpressionGetData->{$TestValue},
+            $ExpressionAddData{$TestValue},
+            'Test ' . $TestCount++ . " - ExpressionAdd(): ExpressionGet -> $TestValue",
+        );
+    }
+
+    return $ExpressionID;
 }
 
 1;
