@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.44 2010-02-08 11:30:12 bes Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.45 2010-02-08 12:40:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -32,13 +32,9 @@ sub Data {
     $Lang->{'My Workorders'} = 'My Workorders';
 
     # Change menu
-    $Lang->{'ITSM Change'}                           = 'Change';
-    $Lang->{'ITSM Workorder'}                        = 'Workorder';
-    $Lang->{'ITSM Schedule'}                         = 'Schedule';
-
-    # Workorder menu
-
-    # Template menu
+    $Lang->{'ITSM Change'}    = 'Change';
+    $Lang->{'ITSM Workorder'} = 'Workorder';
+    $Lang->{'ITSM Schedule'}  = 'Schedule';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
     $Lang->{'ChangeAttribute::AccountedTime'}    = 'Accounted Time';
@@ -173,9 +169,6 @@ sub Data {
     $Lang->{'closed'}      = 'Closed';
     $Lang->{'canceled'}    = 'Canceled';
 
-    # Admin Interface
-
-    # Admin StateMachine
     # workorder types
     $Lang->{'approval'}  = 'Approval';
     $Lang->{'decision'}  = 'Decision';
@@ -193,25 +186,15 @@ sub Data {
     $Lang->{'ITSMChange'}    = 'Change';
     $Lang->{'ITSMWorkOrder'} = 'Workorder';
 
-    # Overviews
-
-    # Workorder delete
-
-    # take workorder
+    # Take workorder
     $Lang->{'Imperative::Take Workorder'} = 'Take Workorder';
-
-    # Condition Overview
 
     # Condition Edit
     $Lang->{'ITSMCondition::Selector::any'}  = 'any';
     $Lang->{'ITSMCondition::Selector::all'}  = 'all';
 
-    # Change Zoom
-
-    # AgentITSMChangePrint
-
     # AgentITSMChangeSearch
-    $Lang->{'No XXX settings'} = q{No '%s' settings};
+    $Lang->{'No XXX settings'} = "No '%s' settings";
 
     return 1;
 }
