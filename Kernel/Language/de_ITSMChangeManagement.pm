@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.64 2010-02-08 11:30:12 bes Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.65 2010-02-08 11:45:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -91,8 +91,8 @@ sub Data {
     $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
     $Lang->{'ChangeAttribute::CABAgent'}         = 'CAB Agent';
     $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
-    $Lang->{'ChangeAttribute::CABCustomer'}      = 'CAB Customer';
-    $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Customers';
+    $Lang->{'ChangeAttribute::CABCustomer'}      = 'CAB Kunde';
+    $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Kunden';
     $Lang->{'ChangeAttribute::Category'}         = 'Kategorie';
     $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
     $Lang->{'ChangeAttribute::ChangeBy'}         = 'Geändert von';
