@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.24 2010-02-08 18:26:38 mae Exp $
+# $Id: ITSMChange.dtl,v 1.25 2010-02-08 19:42:02 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -303,7 +303,7 @@
 <!-- dtl:block:Scale -->
     <div style="padding-left: 62px;">
         <div class="scale">
-            <div class="scale_entry scale_0 scale_entry_tail">$TimeLong{"$Data{"EndTime"}"}</div>
+            <div class="scale_entry scale_0 scale_entry_tail">$TimeLong{"$Data{"StartTime"}"}</div>
 <!-- dtl:block:ScaleLabel -->
             <div class="scale_entry $Data{"ScaleClass"}">$TimeLong{"$Data{"ScaleLabel"}"}</div>
 <!-- dtl:block:ScaleLabel -->
