@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.43 2010-02-08 11:00:36 bes Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.44 2010-02-08 11:30:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -139,15 +139,15 @@ sub Data {
     $Lang->{'ActionExecute::unsuccessfully'}  = 'Unsuccessfully';
 
     # history for time events
-    $Lang->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Change (ID=%s) reached planned start time.';
-    $Lang->{'ChangeHistory::ChangePlannedEndTimeReached'}   = 'Change (ID=%s) reached planned end time.';
-    $Lang->{'ChangeHistory::ChangeActualStartTimeReached'}  = 'Change (ID=%s) reached actual start time.';
-    $Lang->{'ChangeHistory::ChangeActualEndTimeReached'}    = 'Change (ID=%s) reached actual end time.';
-    $Lang->{'ChangeHistory::ChangeRequestedTimeReached'}    = 'Change (ID=%s) reached requested time.';
-    $Lang->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Workorder (ID=%s) reached planned start time.';
-    $Lang->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'}   = 'Workorder (ID=%s) reached planned end time.';
-    $Lang->{'WorkOrderHistory::WorkOrderActualStartTimeReached'}  = 'Workorder (ID=%s) reached actual start time.';
-    $Lang->{'WorkOrderHistory::WorkOrderActualEndTimeReached'}    = 'Workorder (ID=%s) reached actual end time.';
+    $Lang->{'ChangeHistory::ChangePlannedStartTimeReached'}                      = 'Change (ID=%s) reached planned start time.';
+    $Lang->{'ChangeHistory::ChangePlannedEndTimeReached'}                        = 'Change (ID=%s) reached planned end time.';
+    $Lang->{'ChangeHistory::ChangeActualStartTimeReached'}                       = 'Change (ID=%s) reached actual start time.';
+    $Lang->{'ChangeHistory::ChangeActualEndTimeReached'}                         = 'Change (ID=%s) reached actual end time.';
+    $Lang->{'ChangeHistory::ChangeRequestedTimeReached'}                         = 'Change (ID=%s) reached requested time.';
+    $Lang->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'}                = 'Workorder (ID=%s) reached planned start time.';
+    $Lang->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'}                  = 'Workorder (ID=%s) reached planned end time.';
+    $Lang->{'WorkOrderHistory::WorkOrderActualStartTimeReached'}                 = 'Workorder (ID=%s) reached actual start time.';
+    $Lang->{'WorkOrderHistory::WorkOrderActualEndTimeReached'}                   = 'Workorder (ID=%s) reached actual end time.';
     $Lang->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} = 'Workorder (ID=%s) reached planned start time.';
     $Lang->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'}   = 'Workorder (ID=%s) reached planned end time.';
     $Lang->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'}  = 'Workorder (ID=%s) reached actual start time.';
@@ -173,6 +173,9 @@ sub Data {
     $Lang->{'closed'}      = 'Closed';
     $Lang->{'canceled'}    = 'Canceled';
 
+    # Admin Interface
+
+    # Admin StateMachine
     # workorder types
     $Lang->{'approval'}  = 'Approval';
     $Lang->{'decision'}  = 'Decision';
