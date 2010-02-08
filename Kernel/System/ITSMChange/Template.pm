@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.47 2010-02-04 09:32:41 reb Exp $
+# $Id: Template.pm,v 1.48 2010-02-08 17:57:12 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -76,7 +76,7 @@ create an object
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
-    my $ConditionObject = Kernel::System::ITSMChange::Template->new(
+    my $TemplateObject = Kernel::System::ITSMChange::Template->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
@@ -1102,17 +1102,15 @@ sub TemplateSerialize {
     }
 
     # what types of templates are supported and what subroutines do the serialization
-    my %Types2Subroutines = (
-        ITSMChange    => '_ITSMChangeSerialize',
-        ITSMWorkOrder => '_ITSMWorkOrderSerialize',
-        ITSMCondition => '_ConditionSerialize',
-        CAB           => '_CABSerialize',
+    my $BackendObject = $Self->_TemplateLoadBackend(
+        Type => $TemplateType,
     );
 
-    return if !exists $Types2Subroutines{$TemplateType};
+    return if !$BackendObject;
 
-    my $Sub            = $Types2Subroutines{$TemplateType};
-    my $SerializedData = $Self->$Sub(%Param);
+    my $SerializedData = $BackendObject->Serialize(
+        %Param,
+    );
 
     return $SerializedData;
 }
@@ -1217,27 +1215,41 @@ sub _CreateTemplateElements {
     $Children ||= [];
 
     # dispatch table
-    my %Method2Subroutine = (
-        ChangeAdd     => '_ChangeAdd',
-        WorkOrderAdd  => '_WorkOrderAdd',
-        CABAdd        => '_CABAdd',
-        ConditionAdd  => '_ConditionAdd',
-        AttachmentAdd => '_AttachmentAdd',
-        ExpressionAdd => '_ExpressionAdd',
-        ActionAdd     => '_ActionAdd',
-        LinkAdd       => '_LinkAdd',
+    my %Method2Object = (
+        ChangeAdd     => 'ITSMChange',
+        WorkOrderAdd  => 'ITSMWorkOrder',
+        CABAdd        => 'CAB',
+        ConditionAdd  => 'ITSMCondition',
+        AttachmentAdd => 'Parent',
+        ExpressionAdd => 'Parent',
+        ActionAdd     => 'Parent',
+        LinkAdd       => 'Parent',
     );
 
     # get action
     my ( $Method, $Data ) = each %{ $Param{Template} };
-    my $Sub = $Method2Subroutine{$Method};
+    my $Type = $Method2Object{$Method};
+    my $BackendObject;
 
-    return if !$Sub;
+    if ( $Type eq 'Parent' ) {
+        $BackendObject = $Self->_TemplateLoadBackend(
+            Type => $Param{Parent},
+        );
+    }
+    else {
+        $BackendObject = $Self->_TemplateLoadBackend(
+            Type => $Type,
+        );
+    }
+
+    return if !$BackendObject;
 
     # create parent element
-    my %ParentReturn = $Self->$Sub(
+    my %ParentReturn = $BackendObject->DeSerialize(
         %Param,
-        Data => $Data,
+        Data   => $Data,
+        Type   => $Type,
+        Method => $Method,
     );
 
     my %SiblingsInfo;
@@ -1249,6 +1261,8 @@ sub _CreateTemplateElements {
             %SiblingsInfo,
             %ParentReturn,
             Template => $Child,
+            Parent   => $Type,
+            Method   => $Method,
         );
 
         # save info for next sibling
@@ -1258,1164 +1272,6 @@ sub _CreateTemplateElements {
     }
 
     return %ParentReturn;
-}
-
-=item _ITSMChangeSerialize()
-
-Serialize a change. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The change actions
-are "wrapped" within an arrayreference...
-
-    my $TemplateString = $TemplateObject->_ITSMChangeSerialize(
-        ChangeID => 1,
-        UserID   => 1,
-        Return   => 'HASH', # (optional) HASH|STRING default 'STRING'
-    );
-
-returns
-
-    '{ChangeAdd => {Title => 'title', ...}}, {WorkOrderAdd => { ChangeID => 123, ... }}'
-
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
-is returned
-
-    {
-        ChangeAdd => { ... },
-        Children  => [
-            {
-                WorkOrderAdd => { ... },
-                Children     => [ ... ],
-            },
-            {
-                WorkOrderAdd => { ... },
-                Children     => [ ... ],
-            },
-        ],
-    }
-
-=cut
-
-sub _ITSMChangeSerialize {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # set default value for 'Return'
-    $Param{Return} ||= 'STRING';
-
-    # get change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    return if !$Change;
-
-    # keep only wanted attributes
-    my $CleanChange;
-    for my $Attribute (
-        qw(
-        ChangeID ChangeNumber ChangeStateID ChangeTitle Description DescriptionPlain
-        Justification JustificationPlain ChangeManagerID ChangeBuilderID
-        CategoryID ImpactID PriorityID CABAgents CABCustomers RequestedTime
-        CreateTime CreateBy ChangeTime ChangeBy PlannedStartTime PlannedEndTime)
-        )
-    {
-        $CleanChange->{$Attribute} = $Change->{$Attribute};
-    }
-
-    my $OriginalData = { ChangeAdd => $CleanChange };
-
-    # get attachments
-    my %ChangeAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
-        ChangeID => $Change->{ChangeID},
-    );
-    for my $FileID ( keys %ChangeAttachments ) {
-
-        # save attachments to this template
-        push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
-    }
-
-    # get workorders
-    WORKORDERID:
-    for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
-        my $WorkOrder = $Self->_ITSMWorkOrderSerialize(
-            WorkOrderID => $WorkOrderID,
-            UserID      => $Param{UserID},
-            Return      => 'HASH',
-        );
-
-        next WORKORDERID if !$WorkOrder;
-
-        push @{ $OriginalData->{Children} }, $WorkOrder;
-    }
-
-    # get condition list for the change
-    my $ConditionList = $Self->{ConditionObject}->ConditionList(
-        ChangeID => $Param{ChangeID},
-        Valid    => 0,
-        UserID   => $Param{UserID},
-    ) || [];
-
-    # get each condition
-    CONDITIONID:
-    for my $ConditionID ( @{$ConditionList} ) {
-        my $Condition = $Self->_ConditionSerialize(
-            ConditionID => $ConditionID,
-            UserID      => $Param{UserID},
-            Return      => 'HASH',
-        );
-
-        next CONDITIONID if !$Condition;
-
-        push @{ $OriginalData->{Children} }, $Condition;
-    }
-
-    # get links to other object
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'ITSMChange',
-        Key    => $Change->{ChangeID},
-        State  => 'Valid',
-        UserID => $Param{UserID},
-    );
-
-    for my $TargetObject ( keys %{$LinkListWithData} ) {
-        for my $Type ( keys %{ $LinkListWithData->{$TargetObject} } ) {
-            for my $Key ( keys %{ $LinkListWithData->{$TargetObject}->{$Type} } ) {
-                for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{$Key} } ) {
-                    my $LinkInfo = {
-                        SourceObject => 'ITSMChange',
-                        SourceKey    => $Change->{ChangeID},
-                        TargetObject => $TargetObject,
-                        TargetKey    => $TargetID,
-                        Type         => $Type,
-                        State        => 'Valid',
-                        UserID       => $Param{UserID},
-                    };
-                    push @{ $OriginalData->{Children} }, { LinkAdd => $LinkInfo };
-                }
-            }
-        }
-    }
-
-    if ( $Param{Return} eq 'HASH' ) {
-        return $OriginalData;
-    }
-
-    # no indentation (saves space)
-    local $Data::Dumper::Indent = 0;
-
-    # do not use cross-referencing
-    local $Data::Dumper::Deepcopy = 1;
-
-    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
-
-    return $SerializedData;
-}
-
-=item _ITSMWorkOrderSerialize()
-
-Serialize a workorder. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The workorder actions
-are "wrapped" within a hashreference...
-
-    my $TemplateString = $TemplateObject->_ITSMWorkOrderSerialize(
-        WorkOrderID => 1,
-        UserID      => 1,
-        Return      => 'HASH', # (optional) HASH|STRING default 'STRING'
-    );
-
-returns
-
-    '{WorkOrderAdd => { ChangeID => 123, ... }}'
-
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
-is returned
-
-    {
-        WorkOrderAdd => { ... },
-        Children     => [ ... ],
-    }
-
-=cut
-
-sub _ITSMWorkOrderSerialize {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID WorkOrderID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # set default value for 'Return'
-    $Param{Return} ||= 'STRING';
-
-    # get workorder
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-        WorkOrderID => $Param{WorkOrderID},
-        UserID      => $Param{UserID},
-    );
-
-    return if !$WorkOrder;
-
-    # keep just wanted attributes
-    my $CleanWorkOrder;
-    for my $Attribute (
-        qw(
-        WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain
-        Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID
-        PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort
-        CreateTime CreateBy ChangeTime ChangeBy)
-        )
-    {
-        $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
-    }
-
-    # templates have to be an array reference;
-    my $OriginalData = { WorkOrderAdd => $CleanWorkOrder };
-
-    # get attachments
-    my %WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-        WorkOrderID => $WorkOrder->{WorkOrderID},
-    );
-
-    for my $FileID ( keys %WorkOrderAttachments ) {
-
-        # save attachments to this template
-        push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
-    }
-
-    # get links to other object
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'ITSMWorkOrder',
-        Key    => $WorkOrder->{WorkOrderID},
-        State  => 'Valid',
-        UserID => $Param{UserID},
-    );
-
-    for my $TargetObject ( keys %{$LinkListWithData} ) {
-        for my $Type ( keys %{ $LinkListWithData->{$TargetObject} } ) {
-            for my $Key ( keys %{ $LinkListWithData->{$TargetObject}->{$Type} } ) {
-                for my $TargetID ( keys %{ $LinkListWithData->{$TargetObject}->{$Type}->{$Key} } ) {
-                    my $LinkInfo = {
-                        SourceObject => 'ITSMWorkOrder',
-                        SourceKey    => $WorkOrder->{WorkOrderID},
-                        TargetObject => $TargetObject,
-                        TargetKey    => $TargetID,
-                        Type         => $Type,
-                        State        => 'Valid',
-                        UserID       => $Param{UserID},
-                    };
-                    push @{ $OriginalData->{Children} }, { LinkAdd => $LinkInfo };
-                }
-            }
-        }
-    }
-
-    if ( $Param{Return} eq 'HASH' ) {
-        return $OriginalData;
-    }
-
-    # no indentation (saves space)
-    local $Data::Dumper::Indent = 0;
-
-    # do not use cross-referencing
-    local $Data::Dumper::Deepcopy = 1;
-
-    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
-
-    return $SerializedData;
-}
-
-=item _CABSerialize()
-
-Serialize the CAB of a change. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The CAB actions
-are "wrapped" within a hashreference...
-
-    my $TemplateString = $TemplateObject->_CABSerialize(
-        ChangeID => 1,
-        UserID   => 1,
-        Return   => 'HASH', # (optional) HASH|STRING default 'STRING'
-    );
-
-returns
-
-    '{CABAdd => { CABCustomers => [ 'mm@localhost' ], ... }}'
-
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
-is returned
-
-    {
-        CABAdd   => { ... },
-        Children => [ ... ],
-    }
-
-=cut
-
-sub _CABSerialize {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # set default value for 'Return'
-    $Param{Return} ||= 'STRING';
-
-    # get CAB of the change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    return if !$Change;
-
-    # templates have to be an array reference;
-    my $OriginalData = {
-        CABAdd => {
-            CABCustomers => $Change->{CABCustomers},
-            CABAgents    => $Change->{CABAgents},
-        },
-    };
-
-    if ( $Param{Return} eq 'HASH' ) {
-        return $OriginalData;
-    }
-
-    # no indentation (saves space)
-    local $Data::Dumper::Indent = 0;
-
-    # do not use cross-referencing
-    local $Data::Dumper::Deepcopy = 1;
-
-    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
-
-    return $SerializedData;
-}
-
-=item _ConditionSerialize()
-
-Serialize a condition. This is done with Data::Dumper. It returns
-a serialized string of the datastructure. The condition actions
-are "wrapped" within a hashreference...
-
-    my $TemplateString = $TemplateObject->_ConditionSerialize(
-        ConditionID => 1,
-        UserID      => 1,
-        Return      => 'HASH', # (optional) HASH|STRING default 'STRING'
-    );
-
-returns
-
-    '{ConditionAdd => { ... }}'
-
-If parameter C<Return> is set to C<HASH>, the Perl datastructure
-is returned
-
-    {
-        ConditionAdd => { ... },
-        Children     => [ ... ],
-    }
-
-=cut
-
-sub _ConditionSerialize {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ConditionID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # set default value for 'Return'
-    $Param{Return} ||= 'STRING';
-
-    # get condition
-    my $Condition = $Self->{ConditionObject}->ConditionGet(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
-    );
-
-    return if !$Condition;
-
-    # templates have to be an array reference;
-    my $OriginalData = { ConditionAdd => $Condition };
-
-    # get expressions
-    my $Expressions = $Self->{ConditionObject}->ExpressionList(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
-    ) || [];
-
-    # add each expression to condition data
-    for my $ExpressionID ( @{$Expressions} ) {
-        my $Expression = $Self->{ConditionObject}->ExpressionGet(
-            ExpressionID => $ExpressionID,
-            UserID       => $Param{UserID},
-        );
-
-        push @{ $OriginalData->{Children} }, { ExpressionAdd => $Expression };
-    }
-
-    # get actions
-    my $Actions = $Self->{ConditionObject}->ActionList(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
-    ) || [];
-
-    # add each action to condition data
-    for my $ActionID ( @{$Actions} ) {
-        my $Action = $Self->{ConditionObject}->ActionGet(
-            ActionID => $ActionID,
-            UserID   => $Param{UserID},
-        );
-
-        push @{ $OriginalData->{Children} }, { ActionAdd => $Action };
-    }
-
-    if ( $Param{Return} eq 'HASH' ) {
-        return $OriginalData;
-    }
-
-    # no indentation (saves space)
-    local $Data::Dumper::Indent = 0;
-
-    # do not use cross-referencing
-    local $Data::Dumper::Deepcopy = 1;
-
-    # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
-
-    return $SerializedData;
-}
-
-=item _ChangeAdd()
-
-Creates a new change based on a template. It returns a hash with additional
-info like ChangeID.
-
-    my %Return = $TemplateObject->_ChangeAdd(
-        Data => {
-            ChangeTitle => 'test',
-        },
-        # other change attributes
-        ChangeID => 0,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _ChangeAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID Data)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # make a local copy
-    my %Data = %{ $Param{Data} };
-
-    # we need the old change id for expressions
-    my $OldChangeID = $Data{ChangeID};
-
-    # these attributes are generated automatically, so don't pass them to ChangeAdd()
-    delete @Data{qw(ChangeID ChangeNumber CreateTime CreateBy ChangeTime ChangeBy)};
-    delete @Data{qw(DescriptionPlain JustificationPlain)};
-
-    # if user set a new time, calculate difference
-    my $Difference;
-    if ( $Param{NewTimeInEpoche} ) {
-        my $OldTime = $Data{ $Param{MoveTimeType} };
-
-        if ($OldTime) {
-            $Difference = $Self->_GetTimeDifference(
-                CurrentTime     => $OldTime,
-                NewTimeInEpoche => $Param{NewTimeInEpoche},
-            );
-        }
-    }
-
-    # PlannedXXXTime was saved just for "move time" purposes
-    delete $Data{PlannedEndTime};
-    delete $Data{PlannedStartTime};
-
-    # RequestedTime should not be set
-    delete $Data{RequestedTime};
-
-    # delete all parameters whose values are 'undef'
-    # _CheckChangeParams throws an error otherwise
-    for my $Parameter ( keys %Data ) {
-        delete $Data{$Parameter} if !defined $Data{$Parameter};
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
-    # add the change
-    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
-        %Data,
-        UserID => $Param{UserID},
-    );
-
-    my %Info = (
-        ID             => $ChangeID,
-        ChangeID       => $ChangeID,
-        TimeDifference => $Difference,
-        OldChangeID    => $OldChangeID,
-    );
-
-    return %Info;
-}
-
-=item _WorkOrderAdd()
-
-Creates a new workorder based on a template. It returns the
-change id it was created for and the new workorder id.
-
-    my ( $ChangeID, $WorkOrderID ) = $TemplateObject->_WorkOrderAdd(
-        Data => {
-            WorkOrderTitle => 'test',
-        },
-        ChangeID       => 1,
-        UserID         => 1,
-    );
-
-=cut
-
-sub _WorkOrderAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID Data)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # make a local copy
-    my %Data = %{ $Param{Data} };
-
-    # we need the old change id for expressions
-    my $OldWorkOrderID = $Data{WorkOrderID};
-
-    # these attributes are generated automatically, so don't pass them to WorkOrderAdd()
-    delete @Data{qw(WorkOrderID WorkOrderNumber CreateTime CreateBy ChangeTime ChangeBy)};
-    delete @Data{qw(InstructionPlain ReportPlain)};
-
-    # delete all parameters whose values are 'undef'
-    # _CheckWorkOrderParams throws an error otherwise
-    for my $Parameter ( keys %Data ) {
-        delete $Data{$Parameter} if !defined $Data{$Parameter};
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
-    # xxx(?:Start|End)Times are empty strings on WorkOrderGet when
-    # no time value is set. This confuses _CheckTimestamps. Thus
-    # delete these parameters.
-    for my $Prefix (qw(Actual Planned)) {
-        for my $Suffix (qw(Start End)) {
-            if ( $Data{"$Prefix${Suffix}Time"} eq '' ) {
-                delete $Data{"$Prefix${Suffix}Time"};
-            }
-        }
-    }
-
-    # move time slot for workorder if
-    my $Difference = $Param{TimeDifference};
-    if ( $Difference || $Param{NewTimeInEpoche} ) {
-
-        # calc new values for start and end time
-        for my $Suffix (qw(Start End)) {
-            if ( $Data{"Planned${Suffix}Time"} ) {
-
-                # get difference if not already calculated
-                if ( !$Difference && $Param{NewTimeInEpoche} ) {
-                    $Difference = $Self->_GetTimeDifference(
-                        CurrentTime     => $Data{"Planned${Suffix}Time"},
-                        NewTimeInEpoche => $Param{NewTimeInEpoche},
-                    );
-                }
-
-                # get new value
-                $Data{"Planned${Suffix}Time"} = $Self->_MoveTime(
-                    CurrentTime => $Data{"Planned${Suffix}Time"},
-                    Difference  => $Difference,
-                );
-            }
-        }
-
-    }
-
-    # override the change id from the template
-    my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
-        %Data,
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    # we need a mapping "old id" to "new id" for the conditions
-    my $OldIDs2NewIDs = {
-        %{ $Param{OldWorkOrderIDs} || {} },
-        $OldWorkOrderID => $WorkOrderID,
-    };
-
-    my %Info = (
-        ID              => $WorkOrderID,
-        WorkOrderID     => $WorkOrderID,
-        ChangeID        => $Param{ChangeID},
-        OldWorkOrderIDs => $OldIDs2NewIDs,
-    );
-
-    return %Info;
-}
-
-=item _CABAdd()
-
-Updates the CAB of a change based on the given CAB template. It
-returns the change id the cab is for.
-
-    my $ChangeID = $TemplateObject->_CABAdd(
-        Data => {
-            CABCustomers => [ 'mm@localhost' ],
-            CABAgents    => [ 1, 2 ],
-        },
-        ChangeID => 1,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _CABAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID Data)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get current CAB of change
-    my $Change = $Self->{ChangeObject}->ChangeGet(
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    # a CAB add is actually a CAB update on a change
-    return if !$Self->{ChangeObject}->ChangeCABUpdate(
-        ChangeID     => $Param{ChangeID},
-        CABCustomers => [ @{ $Param{Data}->{CABCustomers} }, @{ $Change->{CABCustomers} } ],
-        CABAgents    => [ @{ $Param{Data}->{CABAgents} }, @{ $Change->{CABAgents} } ],
-        UserID       => $Param{UserID},
-    );
-
-    my %Info = (
-        ID       => $Param{ChangeID},
-        ChangeID => $Param{ChangeID},
-    );
-
-    return %Info;
-}
-
-=item _ConditionAdd()
-
-Creates new conditions for a change based on the given template. It
-returns a hash of information (change id it was created for, id is
-the condition id)
-
-    my %Info = $TemplateObject->_ConditionAdd(
-        Data => {
-            # ... Params for ConditionAdd
-        },
-        ChangeID => 1,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _ConditionAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID Data)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my %Data = %{ $Param{Data} };
-
-    # delete attributes
-    delete $Data{ConditionID};
-
-    for my $Parameter ( keys %Data ) {
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
-    # add condition
-    my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
-        %Data,
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    );
-
-    my %Info = (
-        ID          => $ConditionID,
-        ChangeID    => $Param{ChangeID},
-        ConditionID => $ConditionID,
-    );
-
-    return %Info;
-}
-
-=item _ExpressionAdd()
-
-Creates new expressions for a condition based on the given template. It
-returns a hash of information (change id it was created for, id is
-the expression id)
-
-    my %Info = $TemplateObject->_ExpressionAdd(
-        Data => {
-            # ... Params for ExpressionAdd
-        },
-        ChangeID => 1,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _ExpressionAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID Data ConditionID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my %Data = %{ $Param{Data} };
-
-    # delete attributes that are not needed
-    delete $Data{ExpressionID};
-
-    # replace old ids with new ids
-    $Data{ConditionID} = $Param{ConditionID};
-
-    # replace old id only if it is an ID
-    if ( $Data{Selector} =~ m{ \A \d+ \z }xms ) {
-        my $Object = $Self->{ConditionObject}->ObjectGet(
-            ObjectID => $Data{ObjectID},
-            UserID   => $Param{UserID},
-        );
-
-        if ( $Object->{Name} eq 'ITSMChange' ) {
-            $Data{Selector} = $Param{ChangeID};
-        }
-        elsif ( $Object->{Name} eq 'ITSMWorkOrder' ) {
-            $Data{Selector} = $Param{OldWorkOrderIDs}->{ $Data{Selector} };
-        }
-    }
-
-    # ensure that data is utf-8 encoded if needed
-    for my $Parameter ( keys %Data ) {
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
-    # add expression
-    my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
-        %Data,
-        UserID => $Param{UserID},
-    );
-
-    my %Info = (
-        ID           => $ExpressionID,
-        ChangeID     => $Param{ChangeID},
-        ExpressionID => $ExpressionID,
-    );
-
-    return %Info;
-}
-
-=item _ActionAdd()
-
-Creates new actions for a condition based on the given template. It
-returns a hash of information (change id it was created for, id is
-the action id)
-
-    my %Info = $TemplateObject->_ActionAdd(
-        Data => {
-            # ... Params for ActionAdd
-        },
-        ChangeID => 1,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _ActionAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID Data ConditionID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my %Data = %{ $Param{Data} };
-
-    # delete attributes that are not needed
-    delete $Data{ActionID};
-
-    # replace old ids with new ids
-    $Data{ConditionID} = $Param{ConditionID};
-
-    # replace old id only if it is an ID
-    if ( $Data{Selector} =~ m{ \A \d+ \z }xms ) {
-        my $Object = $Self->{ConditionObject}->ObjectGet(
-            ObjectID => $Data{ObjectID},
-            UserID   => $Param{UserID},
-        );
-
-        if ( $Object->{Name} eq 'ITSMChange' ) {
-            $Data{Selector} = $Param{ChangeID};
-        }
-        elsif ( $Object->{Name} eq 'ITSMWorkOrder' ) {
-            $Data{Selector} = $Param{OldWorkOrderIDs}->{ $Data{Selector} };
-        }
-    }
-
-    # encode parameters
-    for my $Parameter ( keys %Data ) {
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
-    # add action
-    my $ActionID = $Self->{ConditionObject}->ActionAdd(
-        %Data,
-        UserID => $Param{UserID},
-    );
-
-    my %Info = (
-        ID       => $ActionID,
-        ChangeID => $Param{ChangeID},
-        ActionID => $ActionID,
-    );
-
-    return %Info;
-}
-
-=item _AttachmentAdd()
-
-Creates new attachments for a change or a workorder based on the given template. It
-returns a hash of information (with just one key - "Success")
-
-    my %Info = $TemplateObject->_AttachmentAdd(
-        Data => {
-            # ... Params for AttachmentAdd
-        },
-        ChangeID => 1,
-        UserID   => 1,
-    );
-
-=cut
-
-sub _AttachmentAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID ChangeID Data)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my $Success;
-
-    # if this is a workorder attachment
-    if ( $Param{WorkOrderID} ) {
-        my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            FileID => $Param{Data}->{FileID},
-        );
-
-        $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
-            %{$Attachment},
-            ChangeID    => $Param{ChangeID},
-            WorkOrderID => $Param{WorkOrderID},
-            UserID      => $Param{UserID},
-        );
-    }
-
-    # if it is a change attachment
-    else {
-        my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
-            FileID => $Param{Data}->{FileID},
-        );
-
-        $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
-            %{$Attachment},
-            ChangeID => $Param{ChangeID},
-            UserID   => $Param{UserID},
-        );
-    }
-
-    my %Info = (
-        Success => $Success,
-    );
-
-    return %Info;
-}
-
-=item _LinkAdd()
-
-Creates new links for a change or a workorder based on the given template. It
-returns a hash of information (with just one key - "Success")
-
-    my %Info = $TemplateObject->_LinkAdd(
-        Data => {
-            # ... Params for LinkAdd
-        },
-        ChangeID    => 1,
-        WorkOrderID => 123, # optional
-        UserID      => 1,
-    );
-
-=cut
-
-sub _LinkAdd {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(UserID Data)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my $SourceKey;
-
-    if ( $Param{Data}->{SourceObject} eq 'ITSMChange' ) {
-        $SourceKey = $Param{ChangeID};
-    }
-    elsif ( $Param{Data}->{SourceObject} eq 'ITSMWorkOrder' ) {
-        $SourceKey = $Param{WorkOrderID};
-    }
-
-    if ( !$SourceKey ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need WorkOrderID or ChangeID!',
-        );
-        return;
-    }
-
-    my $Success = $Self->{LinkObject}->LinkAdd(
-        %{ $Param{Data} },
-        SourceKey => $SourceKey,
-        UserID    => $Param{UserID},
-    );
-
-    my %Info = (
-        Success => $Success,
-    );
-
-    return %Info;
-}
-
-=item _GetTimeDifference()
-
-If a new planned start/end time was given, the difference is needed
-to move all time values
-
-    my $DiffInSeconds = $TemplateObject->_GetTimeDifference(
-        CurrentTime     => '2010-01-12 00:00:00',
-        NewTimeInEpoche => 1234567890,
-    );
-
-=cut
-
-sub _GetTimeDifference {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(CurrentTime NewTimeInEpoche)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get current time as timestamp
-    my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-        String => $Param{CurrentTime},
-    );
-
-    my $DiffSeconds = $Param{NewTimeInEpoche} - $CurrentSystemTime;
-
-    return $DiffSeconds;
-}
-
-=item _MoveTime()
-
-This method returns the new value for a time column based on the
-difference.
-
-    my $TimeValue = $TemplateObject->_MoveTime(
-        CurrentTime => '2010-01-12 00:00:00',
-        Difference  => 135,                     # in seconds
-    );
-
-=cut
-
-sub _MoveTime {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(CurrentTime Difference)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get current time as timestamp
-    my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-        String => $Param{CurrentTime},
-    );
-
-    # get planned time as timestamp
-    my $NewTime = $Self->{TimeObject}->SystemTime2TimeStamp(
-        SystemTime => $CurrentSystemTime + $Param{Difference},
-    );
-
-    return $NewTime;
 }
 
 =item _CheckTemplateTypeIDs()
@@ -2471,6 +1327,57 @@ sub _CheckTemplateTypeIDs {
     return 1;
 }
 
+=item _TemplateLoadBackend()
+
+Returns a newly loaded backend object
+
+    my $BackendObject = $TemplateObject->_TemplateLoadBackend(
+        Type => 'ITSMChange',
+    );
+
+=cut
+
+sub _TemplateLoadBackend {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{Type} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Type!',
+        );
+        return;
+    }
+
+    # define backend module name
+    my $ModuleName = 'Kernel::System::ITSMChange::Template::' . $Param{Type};
+
+    # load the backend module
+    if ( !$Self->{MainObject}->Require($ModuleName) ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't load template backend module $Param{Type}!"
+        );
+        return;
+    }
+
+    # create new instance
+    my $BackendObject = $ModuleName->new(
+        %{$Self},
+        %Param,
+    );
+
+    # check for backend object
+    if ( !$BackendObject ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't create a new instance of template backend module $Param{Type}!",
+        );
+        return;
+    }
+
+    return $BackendObject;
+}
+
 1;
 
 =end Internal:
@@ -2489,6 +1396,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2010-02-04 09:32:41 $
+$Revision: 1.48 $ $Date: 2010-02-08 17:57:12 $
 
 =cut
