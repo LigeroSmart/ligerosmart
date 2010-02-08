@@ -2,7 +2,7 @@
 # Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.45 2010-02-08 12:40:54 ub Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.46 2010-02-08 13:35:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -190,8 +190,22 @@ sub Data {
     $Lang->{'Imperative::Take Workorder'} = 'Take Workorder';
 
     # Condition Edit
-    $Lang->{'ITSMCondition::Selector::any'}  = 'any';
-    $Lang->{'ITSMCondition::Selector::all'}  = 'all';
+    $Lang->{'ITSMCondition::Selector::any'}             = 'any';
+    $Lang->{'ITSMCondition::Selector::all'}             = 'all';
+    $Lang->{'ITSMCondition::Operator::is'}              = 'is';
+    $Lang->{'ITSMCondition::Operator::is not'}          = 'is not';
+    $Lang->{'ITSMCondition::Operator::is empty'}        = 'is empty';
+    $Lang->{'ITSMCondition::Operator::is not empty'}    = 'is not empty';
+    $Lang->{'ITSMCondition::Operator::is greater than'} = 'is greater than';
+    $Lang->{'ITSMCondition::Operator::is less than'}    = 'is less than';
+    $Lang->{'ITSMCondition::Operator::is before'}       = 'is before';
+    $Lang->{'ITSMCondition::Operator::is after'}        = 'is after';
+    $Lang->{'ITSMCondition::Operator::contains'}        = 'contains';
+    $Lang->{'ITSMCondition::Operator::not contains'}    = 'does not contain';
+    $Lang->{'ITSMCondition::Operator::begins with'}     = 'begins with';
+    $Lang->{'ITSMCondition::Operator::ends with'}       = 'ends with';
+    $Lang->{'ITSMCondition::Operator::set'}             = 'set';
+    $Lang->{'ITSMCondition::Operator::lock'}            = 'lock';
 
     # AgentITSMChangeSearch
     $Lang->{'No XXX settings'} = "No '%s' settings";

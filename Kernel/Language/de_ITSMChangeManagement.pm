@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.67 2010-02-08 12:40:54 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.68 2010-02-08 13:35:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -268,14 +268,28 @@ sub Data {
     $Lang->{'Add new condition and action pair'} = 'Füge ein neues Condition und Action Paar hinzu';
 
     # Condition Edit
-    $Lang->{'A condition must have a name!'} = 'Eine Condition benötigt einen Namen!';
-    $Lang->{'Condition Edit'}                = 'Condition bearbeiten';
-    $Lang->{'Add new expression'}            = 'Füge eine neue Expression hinzu';
-    $Lang->{'Add new action'}                = 'Füge eine neue Action hinzu';
-    $Lang->{'Any expression'}                = 'Beliebige Expression';
-    $Lang->{'All expressions'}               = 'Alle Expressions';
-    $Lang->{'ITSMCondition::Selector::any'}  = 'beliebige';
-    $Lang->{'ITSMCondition::Selector::all'}  = 'alle';
+    $Lang->{'A condition must have a name!'}            = 'Eine Condition benötigt einen Namen!';
+    $Lang->{'Condition Edit'}                           = 'Condition bearbeiten';
+    $Lang->{'Add new expression'}                       = 'Füge eine neue Expression hinzu';
+    $Lang->{'Add new action'}                           = 'Füge eine neue Action hinzu';
+    $Lang->{'Any expression'}                           = 'Beliebige Expression';
+    $Lang->{'All expressions'}                          = 'Alle Expressions';
+    $Lang->{'ITSMCondition::Selector::any'}             = 'beliebige';
+    $Lang->{'ITSMCondition::Selector::all'}             = 'alle';
+    $Lang->{'ITSMCondition::Operator::is'}              = 'ist';
+    $Lang->{'ITSMCondition::Operator::is not'}          = 'ist nicht';
+    $Lang->{'ITSMCondition::Operator::is empty'}        = 'ist leer';
+    $Lang->{'ITSMCondition::Operator::is not empty'}    = 'ist nicht leer';
+    $Lang->{'ITSMCondition::Operator::is greater than'} = 'ist grösser als';
+    $Lang->{'ITSMCondition::Operator::is less than'}    = 'ist kleiner als';
+    $Lang->{'ITSMCondition::Operator::is before'}       = 'ist vor';
+    $Lang->{'ITSMCondition::Operator::is after'}        = 'ist nach';
+    $Lang->{'ITSMCondition::Operator::contains'}        = 'enthält';
+    $Lang->{'ITSMCondition::Operator::not contains'}    = 'enthält nicht';
+    $Lang->{'ITSMCondition::Operator::begins with'}     = 'beginnt mit';
+    $Lang->{'ITSMCondition::Operator::ends with'}       = 'endet mit';
+    $Lang->{'ITSMCondition::Operator::set'}             = 'setze';
+    $Lang->{'ITSMCondition::Operator::lock'}            = 'sperre';
 
     # Change Zoom
     $Lang->{'Change Initiator(s)'} = 'Change Initiator(s)';

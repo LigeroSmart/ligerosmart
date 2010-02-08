@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.32 2010-02-08 12:29:13 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.33 2010-02-08 13:35:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -593,7 +593,7 @@ sub Run {
                         Data         => $OperatorList,
                         SelectedID   => $GetParam{OperatorID} || '',
                         PossibleNone => $PossibleNoneOperatorID,
-                        Translation  => 0,
+                        Translation  => 1,
                         Max          => 100,
                     },
                 ],
@@ -671,6 +671,7 @@ sub Run {
                     Name         => $IDName . '::' . $ID . '::' . $ValueFieldName,
                     SelectedID   => $GetParam{$ValueFieldName},
                     PossibleNone => $PossibleNone,
+                    Translation  => 1,
                 );
 
                 # remove AJAX-Loading images in selection field to avoid jitter effect
@@ -772,10 +773,11 @@ sub Run {
 
     # generate ValidOptionString
     $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
-        Data       => \%ValidList,
-        Name       => 'ValidID',
-        SelectedID => $ConditionData{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
-        Sort       => 'NumericKey',
+        Data        => \%ValidList,
+        Name        => 'ValidID',
+        SelectedID  => $ConditionData{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
+        Sort        => 'NumericKey',
+        Translation => 1,
     );
 
     # add the validation error messages
@@ -1039,6 +1041,7 @@ sub _ShowObjectSelection {
         Name         => $IDName . '::' . $Param{$IDName} . '::ObjectID',
         SelectedID   => $Param{ObjectID},
         PossibleNone => $PossibleNone,
+        Translation  => 1,
         OnChange     => $OnChangeString,
     );
 
@@ -1102,6 +1105,7 @@ sub _ShowSelectorSelection {
         Name         => $IDName . '::' . $Param{$IDName} . '::Selector',
         SelectedID   => $Param{Selector},
         PossibleNone => $PossibleNone,
+        Translation  => 1,
         Ajax         => {
             Update => [
                 $IDName . '::' . $Param{$IDName} . '::Selector',
@@ -1243,6 +1247,7 @@ sub _ShowAttributeSelection {
         Name         => $IDName . '::' . $Param{$IDName} . '::AttributeID',
         SelectedID   => $Param{AttributeID},
         PossibleNone => $PossibleNone,
+        Translation  => 1,
         OnChange     => $OnChangeString,
     );
 
@@ -1310,7 +1315,7 @@ sub _ShowOperatorSelection {
         Name         => $IDName . '::' . $Param{$IDName} . '::OperatorID',
         SelectedID   => $Param{OperatorID},
         PossibleNone => $PossibleNone,
-        Translation  => 0,
+        Translation  => 1,
         Ajax         => {
             Update => [
                 $IDName . '::' . $Param{$IDName} . '::OperatorID',
@@ -1411,6 +1416,7 @@ sub _ShowCompareValueField {
             Name         => $IDName . '::' . $Param{$IDName} . '::' . $ValueFieldName,
             SelectedID   => $Param{$ValueFieldName},
             PossibleNone => $PossibleNone,
+            Translation  => 1,
         );
 
         # remove AJAX-Loading images in selection field to avoid jitter effect
@@ -1678,8 +1684,8 @@ sub _GetOperatorSelection {
             # check if operator is allowed for this attribute
             next OPERATORID if !$AttributeOperatorMapping->{$OperatorName};
 
-            # remember the operator
-            $Operators{$OperatorID} = $OperatorName;
+            # remember the operator and add prefix for translation
+            $Operators{$OperatorID} = 'ITSMCondition::Operator::' . $OperatorName;
         }
     }
 
