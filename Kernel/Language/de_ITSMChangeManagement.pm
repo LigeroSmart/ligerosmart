@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.69 2010-02-08 14:50:18 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.70 2010-02-08 15:07:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.69 $) [1];
+$VERSION = qw($Revision: 1.70 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -27,6 +27,8 @@ sub Data {
     # misc
     $Lang->{'A change must have a title!'}          = 'Ein Change benötigt einen Titel!';
     $Lang->{'as Template'}                          = 'als Vorlage';
+    $Lang->{'Template Name'}                        = 'Vorlagen-Name';
+    $Lang->{'Templates'}                            = 'Vorlagen';
     $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
     $Lang->{'Clear'}                                = 'Lösche';
     $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
@@ -41,6 +43,8 @@ sub Data {
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
     $Lang->{'The requested time is invalid!'}       = 'Die angegebene Zeit ist ungültig!';
     $Lang->{'Time type'}                            = 'Zeit-Typ';
+    $Lang->{'Do you really want to delete this template?'}
+        = 'Möchten Sie diese Vorlage wirklich löschen?';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Meine Changes';
@@ -49,7 +53,7 @@ sub Data {
     $Lang->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability)';
     $Lang->{'My CABs'}                              = 'Meine CABs';
     $Lang->{'Change Overview'}                      = 'Change Übersicht';
-    $Lang->{'Template Overview'}                    = 'Template Übersicht';
+    $Lang->{'Template Overview'}                    = 'Vorlagen-Übersicht';
     $Lang->{'Search Changes'}                       = 'Suche Changes';
 
     # Change menu
@@ -58,6 +62,7 @@ sub Data {
     $Lang->{'ITSM Schedule'}                         = 'Schedule';
     $Lang->{'Involved Persons'}                      = 'Beteiligte Personen';
     $Lang->{'Add Workorder'}                         = 'Workorder hinzufügen';
+    $Lang->{'Template'}                              = 'Vorlage';
     $Lang->{'Move Time Slot'}                        = 'Verschiebe Timeslot';
     $Lang->{'Print the change'}                      = 'Diesen Change drucken';
     $Lang->{'Edit the change'}                       = 'Diesen Change bearbeiten';
@@ -65,18 +70,18 @@ sub Data {
     $Lang->{'Add a workorder to the change'}         = 'Füge eine Workorder zu diesem Change hinzu';
     $Lang->{'Edit the conditions of the change'}     = 'Bearbeite die Bedingungen dieses Changes';
     $Lang->{'Link another object to the change'}     = 'Verknüpfe ein anderes Objekt mit diesem Change';
-    $Lang->{'Save change as a template'}             = 'Speichere diesen Change als Template';
+    $Lang->{'Save change as a template'}             = 'Speichere diesen Change als Vorlage';
     $Lang->{'Move all workorders in time'}           = 'Verschiebe alle Workorders um eine neue zeitliche Differenz';
     $Lang->{'Current CAB'}                           = 'Aktuelles CAB';
     $Lang->{'Add to CAB'}                            = 'Zum CAB hinzufügen';
-    $Lang->{'Add CAB Template'}                      = 'Ein CAB-Template hinzufügen';
+    $Lang->{'Add CAB Template'}                      = 'Eine CAB-Vorlage hinzufügen';
     $Lang->{'Add Workorder to'}                      = 'Workorder hinzufügen zu';
-    $Lang->{'Select Workorder Template'}             = 'Workorder-Template auswählen';
-    $Lang->{'Select Change Template'}                = 'Change-Template auswählen';
+    $Lang->{'Select Workorder Template'}             = 'Workorder-Vorlage auswählen';
+    $Lang->{'Select Change Template'}                = 'Change-Vorlage auswählen';
     $Lang->{'The planned time is invalid!'}          = 'Der geplante Zeitraum ist ungültig!';
 
     # Workorder menu
-    $Lang->{'Save workorder as a template'}         = 'Speichere diese Workorder als Template';
+    $Lang->{'Save workorder as a template'}         = 'Speichere diese Workorder als Vorlage';
     $Lang->{'Link another object to the workorder'} = 'Verknüpfe ein anderes Objekt mit dieser Workorder';
     $Lang->{'Delete Workorder'}                     = 'Diese Workorder löschen';
     $Lang->{'Edit the workorder'}                   = 'Diese Workorder bearbeiten';
@@ -84,7 +89,7 @@ sub Data {
     $Lang->{'Set the agent for the workorder'}      = 'Einen Agenten für diese Workorder auswählen';
 
     # Template menu
-    $Lang->{'A template must have a name!'} = 'Ein Template benötigt einen Namen!';
+    $Lang->{'A template must have a name!'} = 'Eine Vorlage benötigt einen Namen!';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
     $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
