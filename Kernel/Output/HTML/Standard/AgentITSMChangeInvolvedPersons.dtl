@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.32 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.33 2010-02-08 12:09:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -140,7 +140,7 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:TakeChangeManager -->
 <!-- dtl:block:SearchUserButton1 -->
                                         <input class="button" type="submit" name="ExpandManager1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear User"}" onclick="javascript:clear_field1(); return false;"/>
+                                        <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field1(); return false;"/>
 <!-- dtl:block:SearchUserButton1 -->
                                     </td>
                                 </tr>
@@ -169,7 +169,7 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:TakeChangeBuilder -->
 <!-- dtl:block:SearchUserButton2 -->
                                         <input class="button" type="submit" name="ExpandBuilder1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear User"}" onclick="javascript:clear_field2(); return false;"/>
+                                        <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field2(); return false;"/>
 <!-- dtl:block:SearchUserButton2 -->
                                     </td>
                                 </tr>
@@ -227,7 +227,7 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:TakeCABMember -->
 <!-- dtl:block:SearchCABMemberButton -->
                                         <input class="button" type="submit" name="ExpandCABMember1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearCABMember" value="$Text{"Clear User"}" onclick="javascript:clear_field3(); return false;"/>
+                                        <input class="button" type="submit" name="ClearCABMember" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field3(); return false;"/>
 <!-- dtl:block:SearchCABMemberButton -->
                                     </td>
                                     <td class="contentvalue">

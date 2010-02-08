@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.65 2010-02-08 11:45:09 bes Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.66 2010-02-08 12:09:09 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -26,20 +26,21 @@ sub Data {
 
     # misc
     $Lang->{'A change must have a title!'}          = 'Ein Change benötigt einen Titel!';
+    $Lang->{'as Template'}                          = 'als Vorlage';
     $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
-    $Lang->{'Create Change'}                        = 'Change erstellen';
+    $Lang->{'Clear'}                                = 'Lösche';
     $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
-    $Lang->{'The planned start time is invalid!'}   = 'Die geplante Startzeit ist ungültig!';
+    $Lang->{'Create Change'}                        = 'Change erstellen';
+    $Lang->{'e.g.'}                                 = 'z. B.';
+    $Lang->{'Imperative::Save'}                     = 'Speichere';
+    $Lang->{'New time'}                             = 'Neue Zeit';
+    $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
     $Lang->{'The planned end time is invalid!'}     = 'Die geplante Endzeit ist ungültig!';
+    $Lang->{'The planned start time is invalid!'}   = 'Die geplante Startzeit ist ungültig!';
     $Lang->{'The planned start time must be before the planned end time!'}
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
     $Lang->{'The requested time is invalid!'}       = 'Die angegebene Zeit ist ungültig!';
-    $Lang->{'New time'}                             = 'Neue Zeit';
     $Lang->{'Time type'}                            = 'Zeit-Typ';
-    $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
-    $Lang->{'Imperative::Save'}                     = 'Speichere';
-    $Lang->{'as Template'}                          = 'als Vorlage';
-    $Lang->{'e.g.'}                                 = 'z. B.';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Meine Changes';
