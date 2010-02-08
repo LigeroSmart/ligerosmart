@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.40 2010-02-08 10:32:41 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.41 2010-02-08 11:21:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -188,7 +188,7 @@
                         </div>
 <!-- dtl:block:EmptyPlannedStartTime -->
 <!-- dtl:block:PlannedStartTime -->
-                        <div title="$QData{"WorkOrderAttribute::PlannedStartTime"}">
+                        <div title="$QData{"PlannedStartTime"}">
                             $TimeLong{"$Data{"PlannedStartTime"}"}
                         </div>
 <!-- dtl:block:PlannedStartTime -->
@@ -203,7 +203,7 @@
                         </div>
 <!-- dtl:block:EmptyPlannedEndTime -->
 <!-- dtl:block:PlannedEndTime -->
-                        <div title="$QData{"WorkOrderAttribute::PlannedEndTime"}">
+                        <div title="$QData{"PlannedEndTime"}">
                             $TimeLong{"$Data{"PlannedEndTime"}"}
                         </div>
 <!-- dtl:block:PlannedEndTime -->
@@ -218,7 +218,7 @@
                         </div>
 <!-- dtl:block:EmptyActualStartTime -->
 <!-- dtl:block:ActualStartTime -->
-                        <div title="$QData{"WorkOrderAttribute::ActualStartTime"}">
+                        <div title="$QData{"ActualStartTime"}">
                             $TimeLong{"$Data{"ActualStartTime"}"}
                         </div>
 <!-- dtl:block:ActualStartTime -->
@@ -233,7 +233,7 @@
                         </div>
 <!-- dtl:block:EmptyActualEndTime -->
 <!-- dtl:block:ActualEndTime -->
-                        <div title="$QData{"WorkOrderAttribute::ActualEnd"}">
+                        <div title="$QData{"ActualEndTime"}">
                             $TimeLong{"$Data{"ActualEndTime"}"}
                         </div>
 <!-- dtl:block:ActualEndTime -->
@@ -252,7 +252,7 @@
                         </div>
 <!-- dtl:block:EmptyPlannedEffort -->
 <!-- dtl:block:PlannedEffort -->
-                        <div title="$QData{"Planned Effort"}">
+                        <div title="$QData{"PlannedEffort"}">
                             $QData{"PlannedEffort"}
                         </div>
 <!-- dtl:block:PlannedEffort -->
@@ -269,7 +269,7 @@
                         </div>
 <!-- dtl:block:EmptyAccountedTime -->
 <!-- dtl:block:AccountedTime -->
-                        <div title="$QData{"Accounted Time"}">
+                        <div title="$QData{"AccountedTime"}">
                             $QData{"AccountedTime"}
                         </div>
 <!-- dtl:block:AccountedTime -->
@@ -317,7 +317,11 @@
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Created"}:</td>
-                    <td class="mainvalue">$TimeLong{"$Data{"CreateTime"}"}</td>
+                    <td class="mainvalue">
+                        <div title="$QData{"CreateTime"}">
+                            $TimeLong{"$Data{"CreateTime"}"}
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Created by"}:</td>
@@ -332,7 +336,11 @@
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Last changed"}:</td>
-                    <td class="mainvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
+                    <td class="mainvalue">
+                        <div title="$QData{"ChangeTime"}">
+                            $TimeLong{"$Data{"ChangeTime"}"}
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Last changed by"}:</td>
