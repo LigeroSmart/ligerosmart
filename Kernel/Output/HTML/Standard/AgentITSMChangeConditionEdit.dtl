@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.21 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.22 2010-02-08 14:51:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,7 +101,7 @@ function submit_compose() {
                         </td>
                     </tr>
                     <tr class="contenthead">
-                        <td class="contentkey">Expressions</td>
+                        <td class="contentkey">$Text{"Expressions"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -151,7 +151,7 @@ function submit_compose() {
                         </td>
                     </tr>
                     <tr class="contenthead">
-                        <td class="contentkey">Actions</td>
+                        <td class="contentkey">$Text{"Actions"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
