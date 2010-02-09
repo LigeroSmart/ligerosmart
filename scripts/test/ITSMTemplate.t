@@ -2,7 +2,7 @@
 # ITSMTemplate.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMTemplate.t,v 1.4 2010-02-08 16:42:09 reb Exp $
+# $Id: ITSMTemplate.t,v 1.5 2010-02-09 14:08:26 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,6 +18,7 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
+use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -36,11 +37,12 @@ use Kernel::System::Valid;
 my $TestCount = 1;
 
 # create common objects
-$Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
-$Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-$Self->{TemplateObject}  = Kernel::System::ITSMChange::Template->new( %{$Self} );
-$Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+$Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
+$Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+$Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
+$Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+$Self->{TemplateObject}     = Kernel::System::ITSMChange::Template->new( %{$Self} );
+$Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
@@ -52,6 +54,40 @@ $Self->Is(
     'Kernel::System::ITSMChange::Template',
     "Test " . $TestCount++ . ' - class of template object',
 );
+
+# ------------------------------------------------------------ #
+# create needed users and customer users
+# ------------------------------------------------------------ #
+my @CustomerUserIDs;    # a list of existing and valid customer user ids, a list of strings
+
+# disable email checks to create new user
+my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses');
+if ( !defined $CheckEmailAddressesOrg ) {
+    $CheckEmailAddressesOrg = 1;
+}
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => 0,
+);
+
+for my $Counter ( 1 .. 3 ) {
+
+    # create new customers for the tests
+    my $CustomerUserID = $Self->{CustomerUserObject}->CustomerUserAdd(
+        Source         => 'CustomerUser',
+        UserFirstname  => 'ITSMChangeCustomer' . $Counter,
+        UserLastname   => 'UnitTestCustomer',
+        UserCustomerID => 'UCT' . $Counter . int rand 1_000_000,
+        UserLogin      => 'UnitTest-ITSMTemplate-Customer-' . $Counter . int rand 1_000_000,
+        UserEmail      => 'UnitTest-ITSMTemplate-Customer-'
+            . $Counter
+            . int( rand 1_000_000 )
+            . '@localhost',
+        ValidID => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
+        UserID => 1,
+    );
+    push @CustomerUserIDs, $CustomerUserID;
+}
 
 # ------------------------------------------------------------ #
 # test Template API
@@ -165,6 +201,9 @@ my %ChangeDefinitions = (
         ChangeBuilderID => 1,
         CABAgents       => [
             1,
+        ],
+        CABCustomers => [
+            @CustomerUserIDs,
         ],
     },
     UnicodeChange => {
@@ -443,7 +482,7 @@ my %TemplateDefinitions = (
         WorkOrderID => $CreatedWorkOrderID{UnicodeWorkOrder},
         UserID      => 1,
     },
-    CustomerAgentCAB => {
+    CABCustomerAgent => {
         Name     => 'Customer and Agent CAB Template - ' . $UniqueSignature,
         Type     => 'CAB',
         ValidID  => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
@@ -456,7 +495,7 @@ my %TemplateDefinitions = (
         ValidID     => $Self->{ValidObject}->ValidLookup( Valid => 'valid' ),
         ConditionID => $CreatedConditionID{SimpleCondition},
         UserID      => 1,
-        }
+    },
 );
 
 for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
@@ -649,19 +688,160 @@ for my $ConditionTemplateName ( keys %CreatedConditionID ) {
     $TestCount++;
 }
 
+# get names of CAB templates
+my @CABTemplateNames = grep { $TemplateDefinitions{$_}->{Type} eq 'CAB' } keys %TestedTemplateID;
+
+CABTEMPLATENAME:
+for my $CABTemplateName (@CABTemplateNames) {
+
+    # get template id
+    my $TemplateID = $TestedTemplateID{$CABTemplateName};
+
+    next CABTEMPLATENAME if !$TemplateID;
+
+    # deserialize template
+    my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
+        TemplateID => $TemplateID,
+        UserID     => 1,
+        ChangeID   => $CreatedChangeID{TargetChange},
+    );
+
+    # check change id
+    $Self->True(
+        $ChangeID,
+        "Test $TestCount: Create CAB based on template (TemplateID: $TemplateID)",
+    );
+
+    # get change data
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    # get original change
+    my $OrigChange = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $CreatedChangeID{BaseChange},
+        UserID   => 1,
+    );
+
+    # turn off all pretty print
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Useqq  = 1;
+
+    # dump the attribute from ChangeGet()
+    my $ChangeAttribute = Data::Dumper::Dumper(
+        [ $Change->{CABAgents}, $Change->{CABCustomers}, ]
+    );
+
+    # dump the reference attribute
+    my $ReferenceAttribute = Data::Dumper::Dumper(
+        [ $OrigChange->{CABAgents}, $OrigChange->{CABCustomers}, ]
+    );
+
+    $Self->Is(
+        $ChangeAttribute,
+        $ReferenceAttribute,
+        "Test $TestCount: |- CAB from template (ChangeID: $ChangeID)",
+    );
+
+    $TestCount++;
+}
+
 # ------------------------------------------------------------ #
 # test
 # ------------------------------------------------------------ #
 
 # test TemplateList()
+my $ChangeTemplateList = $Self->{TemplateObject}->TemplateList(
+    TemplateType => 'ITSMChange',
+    UserID       => 1,
+);
 
-# test TemplateUpdate()
+my @ChangeTemplateNames = grep {
+    $TemplateDefinitions{$_}->{Type} eq 'ITSMChange'
+} keys %TestedTemplateID;
+
+for my $ChangeTemplateName (@ChangeTemplateNames) {
+    my $TemplateID = $TestedTemplateID{$ChangeTemplateName};
+
+    $Self->True(
+        exists $ChangeTemplateList->{$TemplateID},
+        "Test $TestCount: |- Check ChangeTemplate $TemplateID in TemplateList",
+    );
+
+    $TestCount++;
+}
+
+my @WorkOrderTemplateNames = grep {
+    $TemplateDefinitions{$_}->{Type} eq 'ITSMWorkOrder'
+} keys %TestedTemplateID;
+
+my $WorkOrderTemplateList = $Self->{TemplateObject}->TemplateList(
+    TemplateType => 'ITSMWorkOrder',
+    UserID       => 1,
+);
+
+for my $WorkOrderTemplateName (@WorkOrderTemplateNames) {
+    my $TemplateID = $TestedTemplateID{$WorkOrderTemplateName};
+
+    $Self->True(
+        exists $WorkOrderTemplateList->{$TemplateID},
+        "Test $TestCount: |- Check WorkOrderTemplate $TemplateID in TemplateList",
+    );
+
+    $TestCount++;
+}
+
+my @ConditionTemplateNames = grep {
+    $TemplateDefinitions{$_}->{Type} eq 'ITSMCondition'
+} keys %TestedTemplateID;
+
+my $ConditionTemplateList = $Self->{TemplateObject}->TemplateList(
+    TemplateType => 'ITSMCondition',
+    UserID       => 1,
+);
+
+for my $ConditionTemplateName (@ConditionTemplateNames) {
+    my $TemplateID = $TestedTemplateID{$ConditionTemplateName};
+
+    $Self->True(
+        exists $ConditionTemplateList->{$TemplateID},
+        "Test $TestCount: |- Check ConditionTemplate $TemplateID in TemplateList",
+    );
+
+    $TestCount++;
+}
+
+my $CABTemplateList = $Self->{TemplateObject}->TemplateList(
+    TemplateType => 'CAB',
+    UserID       => 1,
+);
+
+for my $CABTemplateName (@CABTemplateNames) {
+    my $TemplateID = $TestedTemplateID{$CABTemplateName};
+
+    $Self->True(
+        exists $CABTemplateList->{$TemplateID},
+        "Test $TestCount: |- Check CABTemplate $TemplateID in TemplateList",
+    );
+
+    $TestCount++;
+}
 
 # test TemplateSearch()
+
+# test TemplateUpdate()
+my %NewValues;
 
 # ------------------------------------------------------------ #
 # clean the system
 # ------------------------------------------------------------ #
+
+# restore original email check param
+$Self->{ConfigObject}->Set(
+    Key   => 'CheckEmailAddresses',
+    Value => $CheckEmailAddressesOrg,
+);
 
 # delete the test templates
 for my $TemplateName ( keys %TestedTemplateID ) {
