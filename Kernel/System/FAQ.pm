@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.79 2010-02-08 20:26:10 mb Exp $
+# $Id: FAQ.pm,v 1.80 2010-02-09 16:01:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.79 $) [1];
+$VERSION = qw($Revision: 1.80 $) [1];
 
 =head1 NAME
 
@@ -1975,9 +1975,16 @@ sub FAQSearch {
                 }
             }
         }
+
+        # do not modify the original What parameter
+        my $What = $Param{What};
+
+        # replace spaces with + to improve fulltext search
+        $What =~ s{ \s+ }{\+}xms;
+
         $Ext .= $Self->{DBObject}->QueryCondition(
             Key          => \@SearchFields,
-            Value        => $Param{What},
+            Value        => $What,
             SearchPrefix => '*',
             SearchSuffix => '*',
         ) . ' ';
@@ -3135,6 +3142,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.79 $ $Date: 2010-02-08 20:26:10 $
+$Revision: 1.80 $ $Date: 2010-02-09 16:01:26 $
 
 =cut
