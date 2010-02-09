@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.80 2010-02-09 16:01:26 ub Exp $
+# $Id: FAQ.pm,v 1.81 2010-02-09 16:07:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.80 $) [1];
+$VERSION = qw($Revision: 1.81 $) [1];
 
 =head1 NAME
 
@@ -1046,14 +1046,6 @@ get the system history
 sub HistoryGet {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for (qw()) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-
     # query
     my $SQL = 'SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number FROM' .
         ' faq_item i, faq_state s, faq_history h, faq_category c WHERE' .
@@ -1091,14 +1083,6 @@ get the category list as hash
 
 sub CategoryList {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for (qw()) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return {};
-        }
-    }
 
     my $Valid = 0;
     if ( defined $Param{Valid} ) {
@@ -1755,14 +1739,6 @@ get the language list as hash
 sub LanguageList {
     my ( $Self, %Param ) = @_;
 
-    # check needed stuff
-    for (qw()) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
-
     # sql
     return if !$Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_language' );
     my %List;
@@ -1922,14 +1898,6 @@ search in articles
 
 sub FAQSearch {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for (qw()) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
-    }
 
     # set default
     if ( !$Param{Interface} ) {
@@ -3142,6 +3110,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.80 $ $Date: 2010-02-09 16:01:26 $
+$Revision: 1.81 $ $Date: 2010-02-09 16:07:57 $
 
 =cut
