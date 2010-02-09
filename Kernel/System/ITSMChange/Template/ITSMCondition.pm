@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMCondition.pm - all template functions for conditions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMCondition.pm,v 1.1 2010-02-08 17:57:13 reb Exp $
+# $Id: ITSMCondition.pm,v 1.2 2010-02-09 15:24:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -200,7 +200,7 @@ sub Serialize {
     local $Data::Dumper::Deepcopy = 1;
 
     # serialize the data (do not use $VAR1, but $TemplateData for Dumper output)
-    my $SerializedData = Data::Dumper->Dump( [$OriginalData], ['TemplateData'] );
+    my $SerializedData = $Self->{MainObject}->Dump( $OriginalData, 'binary' );
 
     return $SerializedData;
 }
@@ -291,21 +291,6 @@ sub _ConditionAdd {
     # delete attributes
     delete $Data{ConditionID};
 
-    for my $Parameter ( keys %Data ) {
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
     # add condition
     my $ConditionID = $Self->{ConditionObject}->ConditionAdd(
         %Data,
@@ -372,22 +357,6 @@ sub _ExpressionAdd {
         }
         elsif ( $Object->{Name} eq 'ITSMWorkOrder' ) {
             $Data{Selector} = $Param{OldWorkOrderIDs}->{ $Data{Selector} };
-        }
-    }
-
-    # ensure that data is utf-8 encoded if needed
-    for my $Parameter ( keys %Data ) {
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
         }
     }
 
@@ -459,22 +428,6 @@ sub _ActionAdd {
         }
     }
 
-    # encode parameters
-    for my $Parameter ( keys %Data ) {
-
-        # for defined parameters ensure that the data is in utf-8
-        # if system is in utf-8. References shouldn't be upgraded
-        # to avoid stringification
-        if (
-            $Data{$Parameter}
-            && $Self->{EncodeObject}->EncodeInternalUsed()
-            && !ref $Data{$Parameter}
-            )
-        {
-            utf8::upgrade( $Data{$Parameter} );
-        }
-    }
-
     # add action
     my $ActionID = $Self->{ConditionObject}->ActionAdd(
         %Data,
@@ -508,6 +461,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-02-08 17:57:13 $
+$Revision: 1.2 $ $Date: 2010-02-09 15:24:44 $
 
 =cut

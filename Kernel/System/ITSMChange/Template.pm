@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.48 2010-02-08 17:57:12 reb Exp $
+# $Id: Template.pm,v 1.49 2010-02-09 15:24:44 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 =head1 NAME
 
@@ -1150,17 +1150,17 @@ sub TemplateDeSerialize {
 
     # get the Perl datastructure
     my $TemplateContent = $Template->{Content};
-    my $TemplateData;
+    my $VAR1;
 
-    eval "\$TemplateData = $TemplateContent; 1;" or return;
+    eval "\$VAR1 = $TemplateContent; 1;" or return;
 
-    return if !$TemplateData;
-    return if ref $TemplateData ne 'HASH';
+    return if !$VAR1;
+    return if ref $VAR1 ne 'HASH';
 
     # create entities defined by the template
     my %Info = $Self->_CreateTemplateElements(
         %Param,
-        Template => $TemplateData,
+        Template => $VAR1,
     );
 
     return $Info{ID};
@@ -1396,6 +1396,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2010-02-08 17:57:12 $
+$Revision: 1.49 $ $Date: 2010-02-09 15:24:44 $
 
 =cut
