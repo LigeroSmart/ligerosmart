@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.70 2010-02-08 15:07:56 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.71 2010-02-10 16:59:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
+$VERSION = qw($Revision: 1.71 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -43,8 +43,9 @@ sub Data {
         = 'Der geplante Start muss vor dem geplanten Ende liegen!';
     $Lang->{'The requested time is invalid!'}       = 'Die angegebene Zeit ist ungültig!';
     $Lang->{'Time type'}                            = 'Zeit-Typ';
-    $Lang->{'Do you really want to delete this template?'}
-        = 'Möchten Sie diese Vorlage wirklich löschen?';
+    $Lang->{'Do you really want to delete this template?'} = 'Möchten Sie diese Vorlage wirklich löschen?';
+    $Lang->{'Change Advisory Board'}                = 'Change Advisory Board';
+    $Lang->{'CAB'}                                  = 'CAB';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Meine Changes';
@@ -81,6 +82,7 @@ sub Data {
     $Lang->{'The planned time is invalid!'}          = 'Der geplante Zeitraum ist ungültig!';
 
     # Workorder menu
+    $Lang->{'Workorder'}                            = 'Workorder';
     $Lang->{'Save workorder as a template'}         = 'Speichere diese Workorder als Vorlage';
     $Lang->{'Link another object to the workorder'} = 'Verknüpfe ein anderes Objekt mit dieser Workorder';
     $Lang->{'Delete Workorder'}                     = 'Diese Workorder löschen';
