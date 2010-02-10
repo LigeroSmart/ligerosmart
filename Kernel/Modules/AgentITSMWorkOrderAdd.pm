@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.53 2010-02-08 10:32:41 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.54 2010-02-10 09:47:05 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,7 +107,7 @@ sub Run {
         PlannedEffort
         SaveAttachment FileID
         MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
-        MoveTimeMinute MoveTimeUsed TemplateID
+        MoveTimeMinute TemplateID
         )
         )
     {
@@ -317,50 +317,47 @@ sub Run {
 
         my $NewTime;
 
-        if ( $GetParam{MoveTimeUsed} ) {
+        # check validity of the time type
+        my $MoveTimeType = $GetParam{MoveTimeType};
+        if (
+            !defined $MoveTimeType
+            || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
+            )
+        {
+            push @ValidationErrors, 'InvalidTimeType';
+        }
 
-            # check validity of the time type
-            my $MoveTimeType = $GetParam{MoveTimeType};
-            if (
-                !defined $MoveTimeType
-                || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
-                )
-            {
-                push @ValidationErrors, 'InvalidTimeType';
-            }
+        # check the completeness of the time parameter list,
+        # only hour and minute are allowed to be '0'
+        if (
+            !$GetParam{MoveTimeYear}
+            || !$GetParam{MoveTimeMonth}
+            || !$GetParam{MoveTimeDay}
+            || !defined $GetParam{MoveTimeHour}
+            || !defined $GetParam{MoveTimeMinute}
+            )
+        {
+            push @ValidationErrors, 'InvalidMoveTime';
+        }
 
-            # check the completeness of the time parameter list,
-            # only hour and minute are allowed to be '0'
-            if (
-                !$GetParam{MoveTimeYear}
-                || !$GetParam{MoveTimeMonth}
-                || !$GetParam{MoveTimeDay}
-                || !defined $GetParam{MoveTimeHour}
-                || !defined $GetParam{MoveTimeMinute}
-                )
-            {
+        # get the system time from the input, if it can't be determined we have a validation error
+        if ( !@ValidationErrors ) {
+
+            # format as timestamp
+            my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
+                $GetParam{MoveTimeYear},
+                $GetParam{MoveTimeMonth},
+                $GetParam{MoveTimeDay},
+                $GetParam{MoveTimeHour},
+                $GetParam{MoveTimeMinute};
+
+            # sanity check of the assembled timestamp
+            $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                String => $PlannedTime,
+            );
+
+            if ( !$NewTime ) {
                 push @ValidationErrors, 'InvalidMoveTime';
-            }
-
-          # get the system time from the input, if it can't be determined we have a validation error
-            if ( !@ValidationErrors ) {
-
-                # format as timestamp
-                my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
-                    $GetParam{MoveTimeYear},
-                    $GetParam{MoveTimeMonth},
-                    $GetParam{MoveTimeDay},
-                    $GetParam{MoveTimeHour},
-                    $GetParam{MoveTimeMinute};
-
-                # sanity check of the assembled timestamp
-                $NewTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                    String => $PlannedTime,
-                );
-
-                if ( !$NewTime ) {
-                    push @ValidationErrors, 'InvalidMoveTime';
-                }
             }
         }
 
@@ -468,9 +465,8 @@ sub Run {
     # add selection for the time
     my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
-        Format           => 'DateInputFormatLong',
-        Prefix           => 'MoveTime',
-        MoveTimeOptional => 1,
+        Format => 'DateInputFormatLong',
+        Prefix => 'MoveTime',
         %TimePeriod,
     );
 
