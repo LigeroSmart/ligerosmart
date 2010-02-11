@@ -1,9 +1,9 @@
 # --
 # Kernel/Output/HTML/TicketOverviewPreview.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.1 2009-07-08 17:50:29 ub Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.14 2009/04/23 13:47:27 mh Exp $
+# $Id: TicketOverviewPreview.pm,v 1.2 2010-02-11 22:17:36 ub Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.14.2.1 2010/02/01 00:57:38 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -109,6 +109,7 @@ sub Run {
                 TicketID => $TicketID,
                 Counter  => $CounterOnSite,
                 Bulk     => $BulkFeature,
+                Config   => $Param{Config},
             );
             $CounterOnSite++;
             if ( !$Param{Output} ) {
@@ -237,7 +238,11 @@ sub _Show {
 
     # customer info
     my %CustomerData = ();
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoQueue') ) {
+    if (
+        $Param{Config}->{CustomerInfo}
+        || $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoQueue')
+        )
+    {
         if ( $Article{CustomerUserID} ) {
             %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
                 User => $Article{CustomerUserID},
@@ -274,20 +279,6 @@ sub _Show {
 
     # create human age
     $Article{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Article{Age}, Space => ' ' );
-
-    # customer info string
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoQueue') ) {
-        $Param{CustomerTable} = $Self->{LayoutObject}->AgentCustomerViewTable(
-            Data   => \%CustomerData,
-            Ticket => \%Article,
-            Type   => 'Lite',
-            Max    => $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoQueueMaxSize'),
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CustomerTable',
-            Data => \%Param,
-        );
-    }
 
     # check if just a only html email
     my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType(
@@ -438,6 +429,25 @@ sub _Show {
                 },
             );
         }
+    }
+
+    # customer info string
+    if (
+        $Param{Config}->{CustomerInfo}
+        || $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoQueue')
+        )
+    {
+        $Param{CustomerTable} = $Self->{LayoutObject}->AgentCustomerViewTable(
+            Data   => \%CustomerData,
+            Ticket => \%Article,
+            Type   => 'Lite',
+            Max    => $Param{Config}->{CustomerInfoMaxSize}
+                || $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoQueueMaxSize'),
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerTable',
+            Data => \%Param,
+        );
     }
 
     # create output
