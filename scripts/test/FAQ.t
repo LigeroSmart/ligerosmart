@@ -1,12 +1,12 @@
 # --
 # FAQ.t - FAQ tests
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.9 2008-10-21 14:51:54 ub Exp $
+# $Id: FAQ.t,v 1.10 2010-02-11 16:22:55 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use Kernel::System::FAQ;
@@ -74,7 +74,7 @@ my $FAQUpdate = $Self->{FAQObject}->FAQUpdate(
     Title      => 'Some Text2',
     Keywords   => 'some keywords2',
     Field1     => 'Problem...2',
-    Field2     => 'Solution...2',
+    Field2     => 'Solution found...2',
     FreeKey1   => 'Software2',
     FreeText1  => 'Apache 3.4.22',
     FreeKey2   => 'OS2',
@@ -96,7 +96,7 @@ my $FAQUpdate = $Self->{FAQObject}->FAQUpdate(
     LanguageID => 2,
     Keywords   => 'some keywords2',
     Field1     => 'Problem...2',
-    Field2     => 'Solution...2',
+    Field2     => 'Solution found...2',
     FreeKey1   => 'Software2',
     FreeText1  => 'Apache 3.4.22',
     FreeKey2   => 'OS2',
@@ -147,8 +147,8 @@ my $FAQID2 = $Self->{FAQObject}->FAQAdd(
     StateID    => 1,
     LanguageID => 1,
     Keywords   => '',
-    Field1     => 'Problem1...',
-    Field2     => 'Solution1...',
+    Field1     => 'Problem Description 1...',
+    Field2     => 'Solution not found1...',
     FreeKey1   => 'Software1',
     FreeText1  => 'Apache 3.4.2',
     FreeKey2   => 'OS',
@@ -279,6 +279,64 @@ $Self->True(
     "FAQSearch() - $FAQID2",
 );
 
+@FAQIDs = $Self->{FAQObject}->FAQSearch(
+    Number => '*',
+    Title  => '',
+    What   => 'solution found',
+    States => [ 'public', 'internal' ],
+    Order  => 'Created',
+    Sort   => 'ASC',
+    Limit  => 150,
+);
+
+$FAQSearchFound  = 0;
+$FAQSearchFound2 = 0;
+for my $FAQIDSearch (@FAQIDs) {
+    if ( $FAQIDSearch eq $FAQID ) {
+        $FAQSearchFound = 1;
+    }
+    if ( $FAQIDSearch eq $FAQID2 ) {
+        $FAQSearchFound2 = 1;
+    }
+}
+$Self->True(
+    $FAQSearchFound,
+    "FAQSearch () literal text - $FAQID",
+);
+$Self->False(
+    $FAQSearchFound2,
+    "FAQSearch() literal text - $FAQID2",
+);
+
+@FAQIDs = $Self->{FAQObject}->FAQSearch(
+    Number => '*',
+    Title  => '',
+    What   => 'solution+found',
+    States => [ 'public', 'internal' ],
+    Order  => 'Created',
+    Sort   => 'ASC',
+    Limit  => 150,
+);
+
+$FAQSearchFound  = 0;
+$FAQSearchFound2 = 0;
+for my $FAQIDSearch (@FAQIDs) {
+    if ( $FAQIDSearch eq $FAQID ) {
+        $FAQSearchFound = 1;
+    }
+    if ( $FAQIDSearch eq $FAQID2 ) {
+        $FAQSearchFound2 = 1;
+    }
+}
+$Self->True(
+    $FAQSearchFound,
+    "FAQSearch() AND - $FAQID",
+);
+$Self->True(
+    $FAQSearchFound2,
+    "FAQSearch() AND - $FAQID2",
+);
+
 my @VoteIDs = @{
     $Self->{FAQObject}->VoteSearch(
         ItemID => $FAQID,
@@ -331,7 +389,7 @@ my $Top10IDsRef = $Self->{FAQObject}->FAQTop10Get(
     Limit     => 10,
 );
 $Self->True(
-    scalar @{ $Top10IDsRef },
+    scalar @{$Top10IDsRef},
     "FAQTop10Get()",
 );
 
