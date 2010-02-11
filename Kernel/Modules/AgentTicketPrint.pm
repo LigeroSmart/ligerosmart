@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.4 2009-08-28 11:37:31 mh Exp $
-# $OldId: AgentTicketPrint.pm,v 1.64 2009/08/27 16:00:23 martin Exp $
+# $Id: AgentTicketPrint.pm,v 1.5 2010-02-11 22:16:10 ub Exp $
+# $OldId: AgentTicketPrint.pm,v 1.64.2.1 2010/02/03 13:09:03 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1030,10 +1030,14 @@ sub _PDFOutputArticles {
             $Attachments .= $File{Filename} . ' (' . $File{Filesize} . ")\n";
         }
 
+        $Article{'Accounted time'} = $Self->{TicketObject}->ArticleAccountedTimeGet(
+            ArticleID => $Article{ArticleID},
+        );
+
         # generate article info table
         my %TableParam1;
         my $Row = 0;
-        for (qw(From To Cc Subject)) {
+        for ( 'From', 'To', 'Cc', 'Accounted time', 'Subject', ) {
             if ( $Article{$_} ) {
                 $TableParam1{CellData}[$Row][0]{Content}
                     = $Self->{LayoutObject}->{LanguageObject}->Get($_) . ':';
