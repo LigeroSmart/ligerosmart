@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.25 2010-02-08 19:42:02 mae Exp $
+# $Id: ITSMChange.dtl,v 1.26 2010-02-11 16:43:47 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -43,7 +43,7 @@
     }
 
 /* <!-- dtl:block:CSSWorkOrderType --> */
-    span.$QData{"WorkOrderTypeName"} { background-color:$QData{"WorkOrderTypeColor"}; }
+    span.$QData{"WorkOrderTypeName"} { background-color: $QData{"WorkOrderTypeColor"}; }
 /* <!-- dtl:block:CSSWorkOrderType --> */
 
 /* <!-- dtl:block:CSSTimeLine --> */
@@ -73,28 +73,42 @@
 
     div.workorder a {
         text-decoration: none;
-        text-align: center;
         display: block;
         padding-top: 3px;
     }
 
     div.workorder a span {
         display: block;
+        width: 100%;
         height: 5px;
-        font-size: 1pt;
+        margin: 1px auto 2px;
         position: relative;
-        margin-bottom: 2px;
-        z-index: 3;
     }
 
-    div.workorder_information_container { position:relative; }
+    div.workorder a span span {
+        display: block;
+        height: 5px;
+        position: absolute;
+        top: 0px;
+        font-size: 3pt;
+        z-index: 3;
+        cursor: pointer;
+    }
+
+    div.workorder_information_container {
+        height: 3px;
+        position:relative;
+        z-index: 4;
+    }
+
     div.workorder_information {
         position: absolute;
         top: 2px;
         left: 2px;
         display: none;
-        z-index:10;
+        z-index: 5;
     }
+
     div.workorder_information table {
         border: 1px solid black;
         background-color: #FFFFFF;
@@ -102,7 +116,9 @@
         padding:4px;
     }
 
-    div.workorder a:hover + div div.workorder_information {display: block; }
+    div#workordergraph div a:hover + div div {
+        display: block;
+    }
 
     span.inactive {
         filter: alpha(opacity = 50);
@@ -200,7 +216,7 @@
 
 <div class="workordergraph_main">
 
-    <div class="workordergraph">
+    <div class="workordergraph" id="workordergraph">
 
         <div class="lines_main">
             <div class="lines_scale">
@@ -225,15 +241,16 @@
         </div>
 <!-- dtl:block:WorkOrderItemGraph -->
         <div class="workorder">
-            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
-            <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="width:$Data{"PlannedTicks"}%; margin-left: $QData{"PlannedPadding"}%; margin-right: $QData{"PlannedTrailing"}%;display:block;">
-            &nbsp;
+            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" class="wodetail">
+            <span>
+            <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="left: $QData{"PlannedPadding"}%; width: $QData{"PlannedTicks"}%">&nbsp;</span>
             </span>
-            <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="width:$Data{"ActualTicks"}%; margin-left: $QData{"ActualPadding"}%; margin-right: $QData{"ActualTrailing"}%;">&nbsp;</span>
+            <span style="margin-; margin-right: $QData{"ActualTrailing"}%;">
+            <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="left: $QData{"ActualPadding"}%; width: $QData{"ActualTicks"}%">&nbsp;</span>
+            </span>
             </a>
             <div class="workorder_information_container">
                 <div class="workorder_information">
-
                     <table width="400" cellpadding="3" cellspacing="0">
                         <colgroup>
                             <col width="130">

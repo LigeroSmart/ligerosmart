@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LayoutITSMChange.pm,v 1.39 2010-02-08 18:26:38 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.40 2010-02-11 16:43:47 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,10 @@ package Kernel::Output::HTML::LayoutITSMChange;
 use strict;
 use warnings;
 
-use POSIX qw(ceil);
-
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =over 4
 
@@ -715,7 +713,7 @@ sub _ITSMChangeGetChangeTicks {
     return if $Ticks <= 0;
 
     # get seconds per percent and round down
-    $Ticks = ceil( $Ticks / 100 );
+    $Ticks = sprintf( "%.f", $Ticks / 100 );
 
     return $Ticks;
 }
@@ -852,31 +850,27 @@ sub _ITSMChangeGetWorkOrderGraph {
     for my $TimeType (qw( Planned Actual )) {
 
         # get values for padding span
-        $TickValue{"${TimeType}Padding"} = ceil(
+        my $StartPadding = sprintf(
+            "%.1f",
             ( $Time{"${TimeType}StartTime"} - $Param{StartTime} ) / $Param{Ticks}
         );
+        $StartPadding = ( $StartPadding <= 0 )   ? 0    : $StartPadding;
+        $StartPadding = ( $StartPadding >= 100 ) ? 99.9 : $StartPadding;
+        $TickValue{"${TimeType}Padding"} = $StartPadding;
+
+        # get values for trailing span
+        my $EndTrailing
+            = sprintf( "%.1f", ( $Param{EndTime} - $Time{"${TimeType}EndTime"} ) / $Param{Ticks} );
+        $EndTrailing = ( $EndTrailing <= 0 )   ? 0    : $EndTrailing;
+        $EndTrailing = ( $EndTrailing >= 100 ) ? 99.9 : $EndTrailing;
+        $TickValue{"${TimeType}Trailing"} = $EndTrailing;
 
         # get values for display span
-        $TickValue{"${TimeType}Ticks"} = int(
-            ( $Time{"${TimeType}EndTime"} - $Time{"${TimeType}StartTime"} ) / $Param{Ticks}
-        ) || 1;
-
-        # get at least 1 percent for display span
-        # if padding would gain 100 percent
-        $TickValue{"${TimeType}Padding"}
-            = ( $TickValue{"${TimeType}Ticks"} == 1 && $TickValue{"${TimeType}Padding"} == 100 )
-            ? 99
-            : $TickValue{"${TimeType}Padding"};
-
-        # get trailing space
-        $TickValue{"${TimeType}Trailing"}
-            = 100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Ticks"} );
-
-        # correct math
-        if ( $TickValue{"${TimeType}Trailing"} == -1 ) {
-            $TickValue{"${TimeType}Trailing"} = 0;
-            $TickValue{"${TimeType}Ticks"} -= 1;
-        }
+        my $TimeTicks
+            = 100 - ( $TickValue{"${TimeType}Padding"} + $TickValue{"${TimeType}Trailing"} );
+        $TimeTicks = ( $TimeTicks <= 0 )   ? 0.1  : $TimeTicks;
+        $TimeTicks = ( $TimeTicks >= 100 ) ? 99.9 : $TimeTicks;
+        $TickValue{"${TimeType}Ticks"} = sprintf( "%.1f", $TimeTicks );
     }
 
     # set workorder as inactive if it is not started jet
@@ -910,7 +904,7 @@ sub _ITSMChangeGetWorkOrderGraph {
         },
     );
 
-    # check the least thing: UserLogin
+    # check the last thing: UserLogin
     if ( $WorkOrderInformation{WorkOrderAgentUserLogin} ) {
         $Self->Block(
             Name => 'WorkOrderAgent',
@@ -981,7 +975,7 @@ sub _ITSMChangeGetTimeLine {
         $TimeLine{TimeLineLeft} = 0;
     }
     if ( $TimeLine{TimeLineLeft} >= 100 ) {
-        $TimeLine{TimeLineLeft} = 100;
+        $TimeLine{TimeLineLeft} = 99.9;
     }
 
     return \%TimeLine;
