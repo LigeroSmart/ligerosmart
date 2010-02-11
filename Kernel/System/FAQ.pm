@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.81 2010-02-09 16:07:57 ub Exp $
+# $Id: FAQ.pm,v 1.82 2010-02-11 16:36:10 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.81 $) [1];
+$VERSION = qw($Revision: 1.82 $) [1];
 
 =head1 NAME
 
@@ -1521,6 +1521,67 @@ sub CategoryCount {
     return $Count;
 }
 
+=item KeywordList()
+
+get a list of keywords as a hash, with their count as the value:
+
+    my %Keywords = %{$FAQObject->KeywordList(
+        Valid => 1,
+    )};
+
+Returns:
+
+    %Keywords = (
+          'macosx'   => 8,
+          'ubuntu'   => 1,
+          'outlook'  => 2,
+          'windows'  => 3,
+          'exchange' => 1,
+    );
+
+=cut
+
+sub KeywordList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for (qw()) {
+        if ( !$Param{$_} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+            return {};
+        }
+    }
+
+    my $Valid = 0;
+    if ( defined $Param{Valid} ) {
+        $Valid = $Param{Valid};
+    }
+
+    # check cache
+    if ( $Self->{Cache}->{KeywordList}->{$Valid} ) {
+        return $Self->{Cache}->{KeywordList}->{$Valid};
+    }
+
+    # sql
+    my $SQL = 'SELECT f_keywords FROM faq_item ';
+    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    my %Data;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        for my $Keyword (split(/,/,lc($Row[0]))) {
+        # remove leading/tailing spaces
+        $Keyword =~ s/^\s+//g;
+        $Keyword =~ s/\s+$//g;
+
+        $Data{$Keyword}++;
+        }
+    }
+
+    # cache
+#    $Self->{Cache}->{CategoryList}->{$Valid} = \%Data;
+
+    return %Data;
+}
+
 =item StateTypeList()
 
 get the state type list as hash
@@ -1944,15 +2005,9 @@ sub FAQSearch {
             }
         }
 
-        # do not modify the original What parameter
-        my $What = $Param{What};
-
-        # replace spaces with + to improve fulltext search
-        $What =~ s{ \s+ }{\+}xms;
-
         $Ext .= $Self->{DBObject}->QueryCondition(
             Key          => \@SearchFields,
-            Value        => $What,
+            Value        => $Param{What},
             SearchPrefix => '*',
             SearchSuffix => '*',
         ) . ' ';
@@ -3098,6 +3153,7 @@ sub FAQPictureUploadAdd {
 1;
 
 =back
+
 =head1 TERMS AND CONDITIONS
 
 This software is part of the OTRS project (http://otrs.org/).
@@ -3110,6 +3166,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.81 $ $Date: 2010-02-09 16:07:57 $
+$Revision: 1.82 $ $Date: 2010-02-11 16:36:10 $
 
 =cut
