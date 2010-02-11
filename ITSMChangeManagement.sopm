@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.168 2010-02-11 21:05:48 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.169 2010-02-11 21:19:13 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1792,8 +1792,7 @@
         &lt;br&gt;
         You are about to upgrade the OTRS package ITSMChangeManagement.&lt;br&gt;
         &lt;br&gt;
-        &lt;br&gt;
-        Attention:&lt;br&gt;
+        &lt;b&gt;Attention:&lt;/b&gt;&lt;br&gt;
         Due to several bugfixes it is necessary that all notification texts will be replaced automatically.
         Changes, that have been made to the notifications, will be lost!
         &lt;br&gt;
@@ -1836,8 +1835,7 @@
         &lt;br&gt;
         Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu aktualisieren.&lt;br&gt;
         &lt;br&gt;
-        &lt;br&gt;
-        Achtung:&lt;br&gt;
+        &lt;b&gt;Achtung:&lt;/b&gt;&lt;br&gt;
         Aufgrund zahlreicher Bugfixes werden die Benachrichtigungstexte neu installiert.
         Evtl. von Ihnen durchgeführte Änderungen an den Benachrichtigungstexten gehen dabei verloren!
         &lt;br&gt;
