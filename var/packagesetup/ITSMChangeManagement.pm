@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.46 2010-02-05 12:14:15 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.47 2010-02-11 21:04:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,6 +25,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
+use Kernel::System::ITSMChange::Template;
 use Kernel::System::LinkObject;
 use Kernel::System::State;
 use Kernel::System::Stats;
@@ -33,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =head1 NAME
 
@@ -159,6 +160,7 @@ sub new {
     $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
     $Self->{NotificationObject}   = Kernel::System::ITSMChange::Notification->new( %{$Self} );
+    $Self->{TemplateObject}       = Kernel::System::ITSMChange::Template->new( %{$Self} );
     $Self->{StatsObject}          = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -278,11 +280,45 @@ sub CodeUpgrade {
         FilePrefix => $Self->{FilePrefix},
     );
 
-    # set default CIP matrix
+    # set default CIP matrix (this is only done if no matrix exists)
     $Self->_CIPDefaultMatrixSet();
 
-    # set default StateMachine settings
-    $Self->_StateMachineDefaultSet();
+    return 1;
+}
+
+=item CodeUpgradeFromBeta1()
+
+This function is only excuted if the installed module version is smaller than 1.3.92 (beta2).
+
+There have been many changes in the sytem notification texts
+from 1.3.91 (beta1) to 1.3.92 (beta2) so we need to delete
+the old notifications and add the new ones.
+Also the template structure changed from (beta1) to 1.3.92 (beta2),
+so the old templates must be deleted.
+
+    my $Result = $CodeObject->CodeUpgradeFromBeta1();
+
+=cut
+
+sub CodeUpgradeFromBeta1 {
+    my ( $Self, %Param ) = @_;
+
+    # install stats
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
+
+    # set default CIP matrix (this is only done if no matrix exists)
+    $Self->_CIPDefaultMatrixSet();
+
+    # delete system notifications
+    $Self->_DeleteSystemNotifications();
+
+    # add system notifications
+    $Self->_AddSystemNotifications();
+
+    # delete all templates
+    $Self->_DeleteTemplates();
 
     return 1;
 }
@@ -1849,6 +1885,36 @@ sub _AddSystemNotifications {
     return 1;
 }
 
+=item _DeleteTemplates()
+
+deletes all templates
+
+    my $Result = $CodeObject->_DeleteTemplates();
+
+=cut
+
+sub _DeleteTemplates {
+    my ( $Self, %Param ) = @_;
+
+    # get all templates, also invalid ones
+    my $Templates = $Self->{TemplateObject}->TemplateList(
+        Valid  => 0,
+        UserID => 1,
+    );
+
+    # delete all templates
+    for my $TemplateID ( keys %{$Templates} ) {
+
+        my $Success = $Self->{TemplateObject}->TemplateDelete(
+            TemplateID => $TemplateID,
+            UserID     => 1,
+        );
+
+    }
+
+    return 1;
+}
+
 =item _DeleteSystemNotifications()
 
 Deletes the Change:: and WorkOrder:: notifications from systems notification table.
@@ -1922,6 +1988,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2010-02-05 12:14:15 $
+$Revision: 1.47 $ $Date: 2010-02-11 21:04:29 $
 
 =cut

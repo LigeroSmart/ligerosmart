@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.167 2010-02-10 17:04:36 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.168 2010-02-11 21:05:48 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
-    <PackageRequired Version="1.3.91">ITSMCore</PackageRequired>
+    <PackageRequired Version="1.3.92">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -1603,6 +1603,41 @@
         }
 
     </CodeUpgrade>
+    <CodeUpgrade Type="post" Version="1.3.92">
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromBeta1';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUpgrade>
     <CodeUninstall Type="pre">
 
         # define function name
@@ -1674,7 +1709,7 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -1692,7 +1727,7 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -1742,7 +1777,33 @@
         &lt;br&gt;
         &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en" Version="1.3.92">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS package ITSMChangeManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Attention:&lt;br&gt;
+        Due to several bugfixes it is necessary that all notification texts will be replaced automatically.
+        Changes, that have been made to the notifications, will be lost!
+        &lt;br&gt;
+        Also due to necessary changes to the internal structure of the template system, existing templates
+        are not compatible to this version, and will be removed automatically!
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -1760,7 +1821,33 @@
         &lt;br&gt;
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.91&lt;/li&gt;
+        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de" Version="1.3.92">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu aktualisieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Achtung:&lt;br&gt;
+        Aufgrund zahlreicher Bugfixes werden die Benachrichtigungstexte neu installiert.
+        Evtl. von Ihnen durchgeführte Änderungen an den Benachrichtigungstexten gehen dabei verloren!
+        &lt;br&gt;
+        Durch notwendige Änderungen an der internen Template-Struktur sind evtl. bereits vorhandene Templates
+        nicht mehr kompatibel zu dieser Version, und werden deswegen automatisch entfernt!
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
