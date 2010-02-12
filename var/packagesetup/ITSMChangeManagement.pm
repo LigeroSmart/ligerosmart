@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.47 2010-02-11 21:04:29 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.48 2010-02-12 13:51:21 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -1961,7 +1961,7 @@ sub _DeleteSystemNotifications {
         # there are notification for agents and customers
         $Self->{DBObject}->Do(
             SQL => 'DELETE FROM notifications '
-                . 'WHERE notification_language IN ("en", "de" ) '
+                . "WHERE notification_language IN ('en', 'de' ) "
                 . 'AND ( notification_type = ? OR notification_type = ? )',
             Bind => [ \"Agent::${Type}", \"Customer::${Type}", ],
         );
@@ -1988,6 +1988,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2010-02-11 21:04:29 $
+$Revision: 1.48 $ $Date: 2010-02-12 13:51:21 $
 
 =cut
