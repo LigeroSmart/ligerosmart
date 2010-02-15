@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # otrs.NagiosCheck.pl - OTRS Nagios checker
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.NagiosCheck.pl,v 1.7 2009-07-21 20:57:34 martin Exp $
+# $Id: otrs.NagiosCheck.pl,v 1.8 2010-02-15 18:16:06 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -25,7 +25,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 use File::Basename;
 use FindBin qw($RealBin);
@@ -36,7 +36,8 @@ use Getopt::Std;
 my %opts;
 getopt( 'c', \%opts );
 if ( $opts{h} ) {
-    print "Usage: $FindBin::Script [-N (runs as Nagioschecker)] [-v (verbose)] [-c /path/to/config_file]\n";
+    print
+        "Usage: $FindBin::Script [-N (runs as Nagioschecker)] [-v (verbose)] [-c /path/to/config_file]\n";
     print "\n";
     exit;
 }
@@ -52,7 +53,7 @@ elsif ( !-e $opts{c} ) {
 
 # read config file
 my %Config;
-open (my $IN, '<', $opts{c} ) || die "ERROR: Can't open $opts{c}: $!\n";
+open( my $IN, '<', $opts{c} ) || die "ERROR: Can't open $opts{c}: $!\n";
 my $Content = '';
 while (<$IN>) {
     $Content .= $_;
@@ -74,7 +75,10 @@ use Kernel::System::Ticket;
 my %CommonObject = ();
 $CommonObject{ConfigObject} = Kernel::Config->new(%CommonObject);
 $CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{LogObject}    = Kernel::System::Log->new( %CommonObject, LogPrefix => 'otrs.NagiosCheck' );
+$CommonObject{LogObject}    = Kernel::System::Log->new(
+    %CommonObject,
+    LogPrefix => 'otrs.NagiosCheck'
+);
 $CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
 $CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
 $CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
@@ -113,7 +117,7 @@ my %Map = (
 for my $Type ( keys %Map ) {
     if ( defined $Config{$Type} ) {
         print STDERR "NOTICE: Typo in config name, use $Map{$Type} instead of $Type\n";
-        $Config{$Map{$Type}} = $Config{$Type};
+        $Config{ $Map{$Type} } = $Config{$Type};
         delete $Config{$Type};
     }
 }
@@ -123,11 +127,13 @@ for my $Type (qw(crit_treshold warn_treshold)) {
     if ( defined $Config{ 'min_' . $Type } ) {
         if ( $Config{ 'min_' . $Type } >= $TicketCount ) {
             if ( $Type =~ /^crit_/ ) {
-                print "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+                print
+                    "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
                 exit 2;
             }
             elsif ( $Type =~ /^warn_/ ) {
-                print "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+                print
+                    "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
                 exit 1;
             }
         }
@@ -135,11 +141,13 @@ for my $Type (qw(crit_treshold warn_treshold)) {
     if ( defined $Config{ 'max_' . $Type } ) {
         if ( $Config{ 'max_' . $Type } <= $TicketCount ) {
             if ( $Type =~ /^crit_/ ) {
-                print "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+                print
+                    "$Config{checkname} CRITICAL $Config{CRIT_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
                 exit 2;
             }
             elsif ( $Type =~ /^warn_/ ) {
-                print "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+                print
+                    "$Config{checkname} WARNING $Config{WARN_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
                 exit 1;
             }
         }
@@ -147,5 +155,6 @@ for my $Type (qw(crit_treshold warn_treshold)) {
 }
 
 # return ok
-print "$Config{checkname} OK $Config{OK_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
+print
+    "$Config{checkname} OK $Config{OK_TXT} $TicketCount|tickets=$TicketCount;$Config{min_warn_treshold}:$Config{max_warn_treshold};$Config{min_crit_treshold}:$Config{max_crit_treshold}\n";
 exit 0;

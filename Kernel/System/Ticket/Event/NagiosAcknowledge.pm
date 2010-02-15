@@ -1,12 +1,12 @@
 # --
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.8 2008-10-09 21:58:30 jb Exp $
+# $Id: NagiosAcknowledge.pm,v 1.9 2010-02-15 18:16:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Ticket::Event::NagiosAcknowledge;
@@ -16,7 +16,7 @@ use warnings;
 use LWP::UserAgent;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,8 +34,8 @@ sub new {
     }
 
     # get correct FreeFields
-    $Self->{Fhost} = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::FreeField::Host' );
-    $Self->{Fservice} = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::FreeField::Service' );
+    $Self->{Fhost}    = $Self->{ConfigObject}->Get('Nagios::Acknowledge::FreeField::Host');
+    $Self->{Fservice} = $Self->{ConfigObject}->Get('Nagios::Acknowledge::FreeField::Service');
 
     return $Self;
 }
@@ -57,7 +57,7 @@ sub Run {
 
     # check if it's a Nagios related ticket
     my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
-    if ( !$Ticket{$Self->{Fhost}} ) {
+    if ( !$Ticket{ $Self->{Fhost} } ) {
         $Self->{LogObject}->Log( Priority => 'debug', Message => "No Nagios Ticket!" );
         return 1;
     }
@@ -67,8 +67,8 @@ sub Run {
 
     # agent lookup
     my %User = $Self->{UserObject}->GetUserData(
-        UserID   => $Param{UserID},
-        Cached => 1, # not required -> 0|1 (default 0)
+        UserID => $Param{UserID},
+        Cached => 1,                # not required -> 0|1 (default 0)
     );
 
     my $Return;
@@ -92,7 +92,7 @@ sub Run {
         return 1;
     }
 
-    if ( $Return ) {
+    if ($Return) {
         $Self->{TicketObject}->HistoryAdd(
             TicketID     => $Param{TicketID},
             HistoryType  => 'Misc',
@@ -126,13 +126,13 @@ sub _Pipe {
     my %User   = %{ $Param{User} };
 
     # send acknowledge to nagios
-    my $CMD = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::CMD' );
+    my $CMD = $Self->{ConfigObject}->Get('Nagios::Acknowledge::NamedPipe::CMD');
     my $Data;
-    if ( $Ticket{$Self->{Fservice}} !~ /^host$/i) {
-        $Data = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::Service' );
+    if ( $Ticket{ $Self->{Fservice} } !~ /^host$/i ) {
+        $Data = $Self->{ConfigObject}->Get('Nagios::Acknowledge::NamedPipe::Service');
     }
     else {
-        $Data = $Self->{ConfigObject}->Get( 'Nagios::Acknowledge::NamedPipe::Host' );
+        $Data = $Self->{ConfigObject}->Get('Nagios::Acknowledge::NamedPipe::Host');
     }
 
     # replace ticket tags
@@ -142,7 +142,7 @@ sub _Pipe {
         # strip not allowd chars
         $Ticket{$Key} =~ s/'//g;
         $Ticket{$Key} =~ s/;//g;
-        $Data =~ s/<$Key>/$Ticket{$Key}/g;
+        $Data         =~ s/<$Key>/$Ticket{$Key}/g;
     }
 
     # replace config tags
@@ -164,8 +164,8 @@ sub _Pipe {
     # replace OUTPUTSTRING
     $CMD =~ s/<OUTPUTSTRING>/$Data/g;
 
-#print STDOUT "$CMD\n";
-    system ( $CMD );
+    #print STDOUT "$CMD\n";
+    system($CMD );
 
     return 1;
 }
@@ -187,7 +187,7 @@ sub _HTTP {
     my $User = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::User');
     my $Pw   = $Self->{ConfigObject}->Get('Nagios::Acknowledge::HTTP::Password');
 
-    if ( $Ticket{$Self->{Fservice}} !~ /^host$/i) {
+    if ( $Ticket{ $Self->{Fservice} } !~ /^host$/i ) {
         $URL =~ s/<CMD_TYP>/34/g;
     }
     else {
@@ -199,6 +199,7 @@ sub _HTTP {
 
     # replace time stamp
     $URL =~ s/<SERVICE_NAME>/$Ticket{$Self->{Fservice}}/g;
+
     # replace ticket tags
 
     for my $Key ( keys %Ticket ) {
@@ -207,14 +208,14 @@ sub _HTTP {
         # strip not allowd chars
         $Ticket{$Key} =~ s/'//g;
         $Ticket{$Key} =~ s/;//g;
-        $URL =~ s/<$Key>/$Ticket{$Key}/g;
+        $URL          =~ s/<$Key>/$Ticket{$Key}/g;
     }
 
     # replace config tags
     $URL =~ s{<CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
 
     my $UserAgent = LWP::UserAgent->new();
-    $UserAgent->timeout( 15 );
+    $UserAgent->timeout(15);
 
     my $Request = HTTP::Request->new( GET => $URL );
     $Request->authorization_basic( $User, $Pw );
@@ -226,7 +227,8 @@ sub _HTTP {
         );
         return;
     }
-#    return $Response->content();
+
+    #    return $Response->content();
 
     return 1;
 }

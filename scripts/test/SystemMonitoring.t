@@ -1,20 +1,20 @@
 # --
 # SystemMonitoring.t - SystemMonitoring tests
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.t,v 1.1 2008-09-08 22:47:16 martin Exp $
+# $Id: SystemMonitoring.t,v 1.2 2010-02-15 18:16:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use Kernel::System::Ticket;
 use Kernel::System::PostMaster;
 
 my $FileArray = $Self->{MainObject}->FileRead(
-    Location  => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring1.box',
-    Result    => 'ARRAY', # optional - SCALAR|ARRAY
+    Location => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring1.box',
+    Result => 'ARRAY',    # optional - SCALAR|ARRAY
 );
 
 my $PostMasterObject = Kernel::System::PostMaster->new(
@@ -34,7 +34,7 @@ $Self->True(
 );
 
 my $TicketObject = Kernel::System::Ticket->new( %{$Self} );
-my %Ticket = $TicketObject->TicketGet(
+my %Ticket       = $TicketObject->TicketGet(
     TicketID => $Return[1],
 );
 
@@ -56,8 +56,8 @@ $Self->Is(
 );
 
 $FileArray = $Self->{MainObject}->FileRead(
-    Location  => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring2.box',
-    Result    => 'ARRAY', # optional - SCALAR|ARRAY
+    Location => $Self->{ConfigObject}->Get('Home') . '/scripts/test/sample/SystemMonitoring2.box',
+    Result => 'ARRAY',    # optional - SCALAR|ARRAY
 );
 
 $PostMasterObject = Kernel::System::PostMaster->new(
@@ -77,7 +77,7 @@ $Self->True(
 );
 
 $TicketObject = Kernel::System::Ticket->new( %{$Self} );
-%Ticket = $TicketObject->TicketGet(
+%Ticket       = $TicketObject->TicketGet(
     TicketID => $Return[1],
 );
 $Self->Is(
