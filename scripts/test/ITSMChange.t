@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.168 2010-01-29 19:51:39 bes Exp $
+# $Id: ITSMChange.t,v 1.169 2010-02-16 11:26:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5747,6 +5747,7 @@ $Self->{ConfigObject}->Set(
 );
 
 # delete the test changes
+my $DeleteTestCount = 1;
 for my $ChangeID ( keys %TestedChangeID ) {
     my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
         ChangeID => $ChangeID,
@@ -5754,28 +5755,23 @@ for my $ChangeID ( keys %TestedChangeID ) {
     );
     $Self->True(
         $DeleteOk,
-        "Test $TestCount: ChangeDelete()"
+        "DeleteTest $DeleteTestCount - ChangeDelete() (ChangeID=$ChangeID)"
     );
 
     # double check if change is really deleted
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
+        Cache    => 0,
     );
-
-    #    $Self->Is(
-    #        undef,
-    #        $ChangeData->{ChangeID},
-    #        "Test $TestCount: ChangeDelete() - double check",
-    #    );
 
     $Self->False(
         $ChangeData->{ChangeID},
-        "Test $TestCount: ChangeDelete() - double check",
+        "DeleteTest $DeleteTestCount - double check (ChangeID=$ChangeID)"
     );
 }
 continue {
-    $TestCount++;
+    $DeleteTestCount++;
 }
 
 =over 4

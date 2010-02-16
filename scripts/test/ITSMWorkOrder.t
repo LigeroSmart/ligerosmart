@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.117 2010-01-18 09:45:20 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.118 2010-02-16 11:26:11 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4314,15 +4314,15 @@ $Self->{ConfigObject}->Set(
 );
 
 # delete the test workorders
+my $DeleteTestCount = 1;
 for my $WorkOrderID ( @{ $IDsToDelete{WorkOrder} }, keys %TestedWorkOrderID ) {
     my $Success = $Self->{WorkOrderObject}->WorkOrderDelete(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
-
     $Self->True(
         $Success,
-        "Test " . $TestCount++ . ": WorkOrderDelete()",
+        "DeleteTest $DeleteTestCount - WorkOrderDelete() (WorkOrderID=$WorkOrderID)",
     );
 
     # double check WorkOrder it is really deleted
@@ -4335,7 +4335,11 @@ for my $WorkOrderID ( @{ $IDsToDelete{WorkOrder} }, keys %TestedWorkOrderID ) {
         undef,
         $WorkOrderData->{WorkOrderID},
         "Test $TestCount: WorkOrderDelete() - double check",
+        "DeleteTest $DeleteTestCount - double check (WorkOrderID=$WorkOrderID)",
     );
+}
+continue {
+    $DeleteTestCount++;
 }
 
 for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
@@ -4346,7 +4350,7 @@ for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
 
     $Self->True(
         $Success,
-        "Test $TestCount: ChangeDelete()",
+        "DeleteTest $DeleteTestCount - ChangeDelete() (ChangeID=$ChangeID)",
     );
 
     # double check if change is really deleted
@@ -4358,10 +4362,13 @@ for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
     $Self->Is(
         undef,
         $ChangeData->{ChangeID},
-        "Test $TestCount: ChangeDelete() - double check",
+        "DeleteTest $DeleteTestCount - double check (ChangeID=$ChangeID)",
     );
 
     $TestCount++;
+}
+continue {
+    $DeleteTestCount++;
 }
 
 # set SendNotifications to it's original value
