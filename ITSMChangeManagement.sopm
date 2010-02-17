@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.169 2010-02-11 21:19:13 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.170 2010-02-17 11:19:35 bes Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1638,6 +1638,41 @@
         }
 
     </CodeUpgrade>
+    <CodeUpgrade Type="post" Version="1.3.93">
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromBeta2';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+
+        # load the module
+        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
+                    $Self-&gt;{LogObject}-&gt;Log(
+                        Priority =&gt; 'error',
+                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self-&gt;{LogObject}-&gt;Log(
+                    Priority =&gt; 'error',
+                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    </CodeUpgrade>
     <CodeUninstall Type="pre">
 
         # define function name
@@ -1809,6 +1844,38 @@
         &lt;br&gt;
 
     </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en" Version="1.3.93">
+
+        &lt;br&gt;
+        &lt;b&gt;WELCOME&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        You are about to upgrade the OTRS package ITSMChangeManagement.&lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;Attention:&lt;/b&gt;&lt;br&gt;
+        In the installation and upgrade process for 1.3.92 (Beta 2) there has been an error in
+        the creation of the notification messages. The English message for 'WorkOrderActualEndTimeReached'
+        ended up in the slot of the English message for 'WorkOrderPlannedStartTimeReached'.
+        This applies to the messages for the agent and for the customer.
+        The German messages have been set up correctly.
+
+        This means that after the update to Beta3, all manual changes to the messages
+        'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
+        'Agent::WorkOrder::WorkOrderActualEndTimeReached',
+        'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
+        'Customer::WorkOrder::WorkOrderActualEndTimeReached',
+        will be lost.
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.3.93&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
 
         &lt;br&gt;
@@ -1846,6 +1913,38 @@
         &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
         &lt;ul&gt;
         &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en" Version="1.3.93">
+
+        &lt;br&gt;
+        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu aktualisieren.&lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;Attention:&lt;/b&gt;&lt;br&gt;
+        Im Installations- und Upgrade Prozess für 1.3.92 (Beta 2) gab es einen Fehler
+        bei der Erstellung Benachrichtigungen. Die englische Nachricht für 'WorkOrderActualEndTimeReached'
+        überschrieb die englische Nachricht für 'WorkOrderPlannedStartTimeReached'.
+        Dies trifft auf die Nachrichten für die Agenten und für die Kunden zu.
+        Die deutschen Nachrichten wurden korrekt erzeugt.
+
+        Das bedeutet das nach der Aktualisierung auf Beta 3 alle Änderungen der Nachrichten für
+        'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
+        'Agent::WorkOrder::WorkOrderActualEndTimeReached',
+        'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
+        'Customer::WorkOrder::WorkOrderActualEndTimeReached',
+        verloren gehen.
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;ITSMCore 1.3.93&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
