@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.172 2010-02-17 14:06:52 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.173 2010-02-17 17:08:21 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1814,7 +1814,7 @@
         Due to several bugfixes it is necessary that all notification texts will be replaced automatically.
         Changes, that have been made to the notification texts, will be lost!
         &lt;br&gt;
-        Also, if you are upgrading from 1.3.91 (Beta 1) or an earlier version, all existing templates will be deleted.
+        Also, if you are upgrading from 1.3.91 (Beta 1) all existing templates will be deleted.
         This is because the internal structure of the template system had to changed prior to 1.3.92 (Beta 2).
         &lt;br&gt;
         &lt;br&gt;
@@ -1839,7 +1839,7 @@
         Aufgrund zahlreicher Bugfixes werden die Benachrichtigungstexte neu installiert.
         Evtl. von Ihnen durchgeführte Änderungen an den Benachrichtigungstexten gehen dabei verloren!
         &lt;br&gt;
-        Wenn Sie ausgehend von 1.3.91 (Beta 1), oder eine früheren Version, aktualisieren werden die erstellten Vorlagen
+        Wenn Sie ausgehend von 1.3.91 (Beta 1) aktualisieren werden die erstellten Vorlagen
         gelöscht. Dies ist notwendig, weil die interne Struktur der Vorlagen zur Version 1.3.92 geändert wurde.
         &lt;br&gt;
         &lt;br&gt;
