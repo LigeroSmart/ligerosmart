@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.50 2010-02-17 12:57:07 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.51 2010-02-17 14:06:52 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -290,9 +290,6 @@ sub CodeUpgrade {
 
 This function is only excuted if the installed module version is smaller than 1.3.92 (beta2).
 
-There have been many changes in the sytem notification texts
-from 1.3.91 (beta1) to 1.3.92 (beta2) so we need to delete
-the old notifications and add the new ones.
 Also the template structure changed from (beta1) to 1.3.92 (beta2),
 so the old templates must be deleted.
 
@@ -311,12 +308,6 @@ sub CodeUpgradeFromBeta1 {
     # set default CIP matrix (this is only done if no matrix exists)
     $Self->_CIPDefaultMatrixSet();
 
-    # delete system notifications
-    $Self->_DeleteSystemNotifications();
-
-    # add system notifications
-    $Self->_AddSystemNotifications();
-
     # delete all templates
     $Self->_DeleteTemplates();
 
@@ -327,123 +318,25 @@ sub CodeUpgradeFromBeta1 {
 
 This function is only excuted if the installed module version is smaller than 1.3.93 (beta3).
 
-In the installation and upgrade process for 1.3.92 (Beta 2) there has been an error in
+There have been many changes in the sytem notification texts
+from 1.3.91 (beta1) to 1.3.92 (beta2) so we need to delete
+the old notifications and add the new ones.
+
+Furthermore, in the installation and upgrade process for 1.3.92 (Beta 2) there has been an error in
 the creation of the notification messages. The English message for 'WorkOrderActualEndTimeReached'
 ended up in the slot of the English message for 'WorkOrderPlannedStartTimeReached'.
-This applies to the messages for the agent and for the customer.
-The German messages have been set up correctly.
-
-This means that after the update to Beta3, all manual changes to the messages
-'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
-'Agent::WorkOrder::WorkOrderActualEndTimeReached',
-'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
-'Customer::WorkOrder::WorkOrderActualEndTimeReached',
-will be lost.
-
-The function can be safely executed after C<CodeUpgradeFromBeta1()>, as the same texts will be inserted.
+This is rectified by reinserting the notifications for upgrades from Beta 2 or earlier.
 
 =cut
 
 sub CodeUpgradeFromBeta2 {
     my ( $Self, %Param ) = @_;
 
-    # delete the broken notifications
-    $Self->{DBObject}->Do(
-        SQL => 'DELETE FROM notifications '
-            . "WHERE notification_language = 'en' "
-            . "AND notification_type IN ( "
-            . "    'Agent::WorkOrder::WorkOrderPlannedStartTimeReached', "
-            . "    'Agent::WorkOrder::WorkOrderActualEndTimeReached', "
-            . "    'Customer::WorkOrder::WorkOrderPlannedStartTimeReached', "
-            . "    'Customer::WorkOrder::WorkOrderActualEndTimeReached' ) ",
-    );
+    # delete system notifications
+    $Self->_DeleteSystemNotifications();
 
-    # add the notifications
-    my $WorkOrderInfoAgentEn = "\n"
-        . "\n"
-        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
-        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
-        . "\n"
-        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
-        . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
-        . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
-        . "\n"
-        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom&WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
-        . "\n"
-        . "Your OTRS Notification Master\n";
-
-    my $WorkOrderInfoCustomerEn = "\n"
-        . "\n"
-        . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
-        . "Current change state: <OTRS_CHANGE_ChangeState>\n"
-        . "\n"
-        . "Workorder title: <OTRS_WORKORDER_WorkOrderTitle>\n"
-        . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
-        . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
-        . "\n"
-        . "Your OTRS Notification Master\n";
-
-    my @Notifications = (
-        [
-            'Agent::WorkOrder::WorkOrderActualEndTimeReached',
-            'en',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual End Time reached',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Actual End Time.'
-                . $WorkOrderInfoAgentEn,
-        ],
-        [
-            'Customer::WorkOrder::WorkOrderActualEndTimeReached',
-            'en',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Actual End Time reached',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Actual End Time.'
-                . $WorkOrderInfoCustomerEn,
-        ],
-        [
-            'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
-            'en',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.'
-                . $WorkOrderInfoAgentEn,
-        ],
-        [
-            'Customer::WorkOrder::WorkOrderPlannedStartTimeReached',
-            'en',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned Start Time reached',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned Start Time.'
-                . $WorkOrderInfoCustomerEn,
-        ],
-    );
-
-    # When UTF-8 is enabled, the notification texts are stored as UTF-8
-    my $EncodeInternalUsed = $Self->{EncodeObject}->EncodeInternalUsed();
-    my $NotificationCharset = $EncodeInternalUsed ? 'utf-8' : 'iso-8859-1';
-
-    # insert the entries
-    for my $Notification (@Notifications) {
-        my @Binds;
-
-        for my $Value ( @{$Notification} ) {
-
-            # Ensure that the strings are utf-8 if the system is in utf-8,
-            # otherwise leave it in latin-1
-            if ($EncodeInternalUsed) {
-                utf8::upgrade($Value);
-            }
-
-            # Bind requires scalar references
-            push @Binds, \$Value;
-        }
-
-        # do the insertion
-        $Self->{DBObject}->Do(
-            SQL => 'INSERT INTO notifications (notification_type, notification_language, '
-                . 'subject, text, notification_charset, content_type, '
-                . 'create_time, create_by, change_time, change_by) '
-                . 'VALUES( ?, ?, ?, ?, ?, \'text/plain\', '
-                . 'current_timestamp, 1, current_timestamp, 1 )',
-            Bind => [ @Binds, \$NotificationCharset ],
-        );
-    }
+    # add system notifications
+    $Self->_AddSystemNotifications();
 
     return 1;
 }
@@ -2163,6 +2056,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2010-02-17 12:57:07 $
+$Revision: 1.51 $ $Date: 2010-02-17 14:06:52 $
 
 =cut
