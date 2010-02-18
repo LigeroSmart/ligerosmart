@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.53 2010-02-18 11:41:16 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.54 2010-02-18 11:48:19 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 =head1 NAME
 
@@ -300,15 +300,7 @@ so the old templates must be deleted.
 sub CodeUpgradeFromBeta1 {
     my ( $Self, %Param ) = @_;
 
-    # install stats
-    $Self->{StatsObject}->StatsInstall(
-        FilePrefix => $Self->{FilePrefix},
-    );
-
-    # set default CIP matrix (this is only done if no matrix exists)
-    $Self->_CIPDefaultMatrixSet();
-
-    # delete all templates
+    # Delete all templates, as the template structure has changed prior to Beta 1.
     $Self->_DeleteTemplates();
 
     return 1;
@@ -2056,6 +2048,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2010-02-18 11:41:16 $
+$Revision: 1.54 $ $Date: 2010-02-18 11:48:19 $
 
 =cut
