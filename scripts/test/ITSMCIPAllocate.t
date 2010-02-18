@@ -1,8 +1,8 @@
 # --
 # ITSMCIPAllocate.t - criticality, impact priority tests
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCIPAllocate.t,v 1.8 2009-05-18 09:48:57 mh Exp $
+# $Id: ITSMCIPAllocate.t,v 1.9 2010-02-18 14:33:36 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,6 +62,27 @@ if ($HashOK) {
 
 # check HashOK
 $Self->True( $HashOK, 'AllocateList()' );
+
+# call PriorityAllocationGet() for one Criticality/Impact pair
+if ($HashOK) {
+
+    my ($ImpactID) = keys %{$AllocateData2};
+
+    if ( $AllocateData2->{$ImpactID} ) {
+        my ($CriticalityID) = keys %{ $AllocateData2->{$ImpactID} };
+
+        my $ExpectedPriorityID = $AllocateData2->{$ImpactID}->{$CriticalityID};
+        my $PriorityID         = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+            CriticalityID => $CriticalityID,
+            ImpactID      => $ImpactID,
+        );
+        $Self->Is(
+            $PriorityID,
+            $ExpectedPriorityID,
+            'PriorityAllocationGet()',
+        );
+    }
+}
 
 # update the allocation hash (not all needed arguments given)
 my $Success1 = $Self->{CIPAllocateObject}->AllocateUpdate(
