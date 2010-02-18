@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.169 2010-02-16 11:26:11 bes Exp $
+# $Id: ITSMChange.t,v 1.170 2010-02-18 15:15:45 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5641,7 +5641,7 @@ for my $TestFile (@TestFileList) {
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
-    $Self->True( $AddOk, "Attachment  $FileCount: attachment added" );
+    $Self->True( $AddOk, "Attachment $FileCount: attachment added" );
 
     my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
         ChangeID => $AttachmentTestChangeID,
@@ -5675,6 +5675,14 @@ for my $TestFile (@TestFileList) {
             "Attachment $FileCount: $Attr from ChangeAttachmentGet",
         );
     }
+
+    my $AttachmentExists = $Self->{ChangeObject}->ChangeAttachmentExists(
+        Filename => $TestFile->{Filename},
+        ChangeID => $AttachmentTestChangeID,
+        UserID   => 1,
+    );
+    $Self->True( $AttachmentExists, "Attachment $FileCount: attachment exists" );
+
 }
 continue {
     $FileCount++;
@@ -5705,6 +5713,13 @@ for my $TestFile (@TestFileList) {
         2 - $FileCount,
         "Attachment $FileCount: number of attachments after deletion",
     );
+
+    my $AttachmentExists = $Self->{ChangeObject}->ChangeAttachmentExists(
+        Filename => $TestFile->{Filename},
+        ChangeID => $AttachmentTestChangeID,
+        UserID   => 1,
+    );
+    $Self->False( $AttachmentExists, "Attachment $FileCount: attachment is gone" );
 }
 continue {
     $FileCount++;
