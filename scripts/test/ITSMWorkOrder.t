@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.118 2010-02-16 11:26:11 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.119 2010-02-18 15:39:08 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4210,7 +4210,7 @@ for my $TestFile (@TestFileList) {
         ChangeID    => $ChangeIDForAttachmentTest,
         UserID      => 1,
     );
-    $Self->True( $AddOk, "Attachment  $FileCount: attachment added" );
+    $Self->True( $AddOk, "Attachment $FileCount: attachment added" );
 
     my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrderIDForAttachmentTest,
@@ -4244,6 +4244,15 @@ for my $TestFile (@TestFileList) {
             "Attachment $FileCount: $Attr from WorkOrderAttachmentGet",
         );
     }
+
+    my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
+        Filename    => $TestFile->{Filename},
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        ChangeID    => $ChangeIDForAttachmentTest,
+        UserID      => 1,
+    );
+    $Self->True( $AttachmentExists, "Attachment $FileCount: attachment exists" );
+
 }
 continue {
     $FileCount++;
@@ -4260,7 +4269,10 @@ for my $TestFile (@TestFileList) {
         ChangeID    => $ChangeIDForAttachmentTest,
         UserID      => 1,
     );
-    $Self->True( $DeleteOk, "Attachment $FileCount: attachment deleted" );
+    $Self->True(
+        $DeleteOk,
+        "Attachment $FileCount: attachment deleted",
+    );
 
     my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrderIDForAttachmentTest,
@@ -4272,6 +4284,14 @@ for my $TestFile (@TestFileList) {
         2 - $FileCount,
         "Attachment $FileCount: number of attachments after deletion",
     );
+
+    my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
+        Filename    => $TestFile->{Filename},
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        ChangeID    => $ChangeIDForAttachmentTest,
+        UserID      => 1,
+    );
+    $Self->False( $AttachmentExists, "Attachment $FileCount: attachment is gone" );
 }
 continue {
     $FileCount++;
@@ -4342,14 +4362,14 @@ continue {
     $DeleteTestCount++;
 }
 
+# delete the test changes
 for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
-    my $Success = $Self->{ChangeObject}->ChangeDelete(
+    my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
-
     $Self->True(
-        $Success,
+        $DeleteOk,
         "DeleteTest $DeleteTestCount - ChangeDelete() (ChangeID=$ChangeID)",
     );
 
@@ -4357,15 +4377,13 @@ for my $ChangeID ( @{ $IDsToDelete{Change} }, keys %TestedChangeID ) {
     my $ChangeData = $Self->{ChangeObject}->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
+        Cache    => 0,
     );
 
-    $Self->Is(
-        undef,
+    $Self->False(
         $ChangeData->{ChangeID},
         "DeleteTest $DeleteTestCount - double check (ChangeID=$ChangeID)",
     );
-
-    $TestCount++;
 }
 continue {
     $DeleteTestCount++;
