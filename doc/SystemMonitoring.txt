@@ -3,7 +3,7 @@ NAME
     Monitoring Interface
 
 SYNOPSIS
-    This module implemets a basic interface to System Monitoring Suites. It
+    This module implements a basic interface to System Monitoring Suites. It
     works by receiving email messages sent by the Monitoring Suite. New
     tickets are created in case of component failures. Once a ticket has
     been opened messages regarding the effected component are attached to
@@ -43,7 +43,7 @@ CONFIGURATION OPTIONS
         Default: 'OK|UP'
 
     * "CloseActionState"
-        New status for ticket when service recoveres. This can be either
+        New status for ticket when service recovers. This can be either
         "OLD" in which case the old status stays, or the name of the new
         status. Please note, that this state needs to be configured in your
         OTRS installation as valid state. If the state you set here does not
@@ -100,7 +100,7 @@ CONFIGURATION OPTIONS
 CONTROL FLOW
     The following diagram illustrates how mails are handled by this module
     and in which cases they trigger which action. Pretty much all checks are
-    configable using the regular expressions given by the parameters listed
+    configurable using the regular expressions given by the parameters listed
     above.
 
      Mail matches 'FromAddress'?
@@ -127,7 +127,6 @@ CONTROL FLOW
                                       'CloseActionState'
 
     Besides of a few additional sanity checks this is how the
-    SystemMonitoring modul treats incoming mails. By changing the regular
+    SystemMonitoring module treats incoming mails. By changing the regular
     expressions it should be possible to adopt it to different monitoring
     systems.
-
