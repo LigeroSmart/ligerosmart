@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.50 2010-02-11 19:52:15 ub Exp $
+# $Id: Template.pm,v 1.51 2010-02-19 08:36:23 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -168,7 +168,7 @@ sub TemplateAdd {
         }
     }
 
-    # check if a template with this name already exists
+    # check whether a template with this name and type already exists
     return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT id FROM change_template WHERE name = ? AND type_id = ?',
         Bind  => [ \$Param{Name}, \$Param{TemplateTypeID} ],
@@ -185,7 +185,8 @@ sub TemplateAdd {
     if ($TemplateID) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "A template with the name $Param{Name} already exists.!",
+            Message =>
+                "A template with the name '$Param{Name}' and the type '$Param{TemplateTypeID}' already exists!",
         );
         return;
     }
@@ -213,8 +214,8 @@ sub TemplateAdd {
 
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id FROM change_template WHERE name = ?',
-        Bind  => [ \$Param{Name} ],
+        SQL   => 'SELECT id FROM change_template WHERE name = ? AND type_id = ?',
+        Bind  => [ \$Param{Name}, \$Param{TemplateTypeID} ],
         Limit => 1,
     );
 
@@ -1396,6 +1397,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2010-02-11 19:52:15 $
+$Revision: 1.51 $ $Date: 2010-02-19 08:36:23 $
 
 =cut
