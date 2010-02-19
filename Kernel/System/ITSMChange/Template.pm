@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: Template.pm,v 1.51 2010-02-19 08:36:23 bes Exp $
+# $Id: Template.pm,v 1.52 2010-02-19 08:50:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 =head1 NAME
 
@@ -235,7 +235,7 @@ sub TemplateAdd {
 
     # trigger TemplateAddPost-Event
     $Self->EventHandler(
-        Event => 'TemplateUpdatePre',
+        Event => 'TemplateAddPost',
         Data  => {
             %Param,
             TemplateID => $TemplateID,
@@ -1397,6 +1397,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.51 $ $Date: 2010-02-19 08:36:23 $
+$Revision: 1.52 $ $Date: 2010-02-19 08:50:55 $
 
 =cut
