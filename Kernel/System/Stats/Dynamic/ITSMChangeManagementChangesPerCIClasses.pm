@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.9 2010-01-22 12:42:20 bes Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.10 2010-02-19 08:54:59 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -75,6 +75,12 @@ sub GetObjectAttributes {
         Class => 'ITSM::Core::IncidentState',
     );
 
+    # get current time to fix bug#4870
+    my $Now       = $Self->{TimeObject}->SystemTime();
+    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+        SystemTime => $Now,
+    );
+
     my @ObjectAttributes = (
         {
             Name             => 'ConfigItem Classes',
@@ -113,6 +119,7 @@ sub GetObjectAttributes {
             Element          => 'TimePeriod',
             TimePeriodFormat => 'DateInputFormat',    # 'DateInputFormatLong',
             Block            => 'Time',
+            TimeStop         => $TimeStamp,
             Values           => {
                 TimeStart => 'CreateTimeNewerDate',
                 TimeStop  => 'CreateTimeOlderDate',

@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementChangesIncidents.pm,v 1.5 2010-01-25 12:36:47 reb Exp $
+# $Id: ITSMChangeManagementChangesIncidents.pm,v 1.6 2010-02-19 08:54:59 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,6 +57,12 @@ sub GetObjectAttributes {
     my %Objects = $Self->{TypeObject}->TypeList( Valid => 1 );
     $Objects{'-1'} = 'Changes';
 
+    # get current time to fix bug#4870
+    my $Now       = $Self->{TimeObject}->SystemTime();
+    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+        SystemTime => $Now,
+    );
+
     my @ObjectAttributes = (
         {
             Name             => 'Objects',
@@ -76,6 +82,7 @@ sub GetObjectAttributes {
             Element          => 'TimePeriod',
             TimePeriodFormat => 'DateInputFormat',    # 'DateInputFormatLong',
             Block            => 'Time',
+            TimeStop         => $TimeStamp,
             Values           => {
                 TimeStart => 'CreateTimeNewerDate',
                 TimeStop  => 'CreateTimeOlderDate',

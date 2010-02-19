@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.175 2010-02-18 11:41:16 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.176 2010-02-19 08:54:59 reb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -153,6 +153,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMChange.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/ITSMWorkOrder.pm"/>
+        <File Permission="644" Location="Kernel/System/Stats.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesIncidents.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm"/>
