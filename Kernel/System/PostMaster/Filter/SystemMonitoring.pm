@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.9 2010-02-19 21:59:50 ub Exp $
+# $Id: SystemMonitoring.pm,v 1.10 2010-02-20 00:58:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,8 +14,10 @@ package Kernel::System::PostMaster::Filter::SystemMonitoring;
 use strict;
 use warnings;
 
+use Kernel::System::LinkObject;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,8 +29,33 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # get needed objects
-    for my $Object (qw(ConfigObject LogObject TicketObject TimeObject)) {
+    for my $Object (
+        qw(DBObject ConfigObject LogObject MainObject EncodeObject TicketObject TimeObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
+    }
+
+    # create additional objects
+    $Self->{LinkObject} = Kernel::System::LinkObject->new( %{$Self} );
+
+    # check if CI incident state should be set automatically
+    # this requires the ITSMConfigurationManagement module to be installed
+    if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
+
+        # require the general catalog module
+        if ( $Self->{MainObject}->Require('Kernel::System::GeneralCatalog') ) {
+
+            # create general catalog object
+            $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+        }
+
+        # require the config item module
+        if ( $Self->{MainObject}->Require('Kernel::System::ITSMConfigItem') ) {
+
+            # create config item object
+            $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
+        }
     }
 
     # Default Settings
@@ -169,19 +196,44 @@ sub Run {
                 );
                 $Param{GetParam}->{'X-OTRS-State-PendingTime'} = $TimeStamp;
             }
+
+            # set log message
             $LogMessage = 'Recovered' . $LogMessage;
+
+            # if the CI incident state should be set
+            if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
+
+                # set the CI incident state to 'Operational'
+                $Self->_SetIncidentState(
+                    Name          => $Self->{Host},
+                    IncidentState => 'Operational',
+                );
+            }
         }
         else {
 
             # Attach note to existing ticket
             $LogMessage = 'New Notice' . $LogMessage;
         }
+
+        # link ticket with CI, this is only possible if the ticket already exists,
+        # e.g. in a subsequent email request, because we need a ticket id
+        if ( $Self->{ConfigObject}->Get('SystemMonitoring::LinkTicketWithCI') ) {
+
+            # link ticket with CI
+            $Self->_LinkTicketWithCI(
+                Name     => $Self->{Host},
+                TicketID => $TicketID,
+            );
+        }
+
     }
     elsif ( $Self->{State} =~ /$Self->{Config}->{NewTicketRegExp}/ ) {
 
         # Create Ticket Condition -> Create new Ticket and record Host and Service
         for (qw(Host Service)) {
 
+            # get the freetext number from config
             my $TicketFreeTextNumber = $Self->{Config}->{ 'FreeText' . $_ };
 
             $Param{GetParam}->{ 'X-OTRS-TicketKey' . $TicketFreeTextNumber }   = $_;
@@ -197,7 +249,18 @@ sub Run {
         $Param{GetParam}->{'X-OTRS-SenderType'}  = $Self->{Config}->{SenderType};
         $Param{GetParam}->{'X-OTRS-ArticleType'} = $Self->{Config}->{ArticleType};
 
+        # set log message
         $LogMessage = 'New Ticket' . $LogMessage;
+
+        # if the CI incident state should be set
+        if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
+
+            # set the CI incident state to 'Incident'
+            $Self->_SetIncidentState(
+                Name          => $Self->{Host},
+                IncidentState => 'Incident',
+            );
+        }
     }
     else {
 
@@ -218,4 +281,177 @@ sub Run {
     return 1;
 }
 
+sub _SetIncidentState {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Name IncidentState )) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check configitem object
+    return if !$Self->{ConfigItemObject};
+
+    # search configitem
+    my $ConfigItemIDs = $Self->{ConfigItemObject}->ConfigItemSearchExtended(
+        Name => $Param{Name},
+    );
+
+    # if no config item with this name was found
+    if ( !$ConfigItemIDs || ref $ConfigItemIDs ne 'ARRAY' || !@{$ConfigItemIDs} ) {
+
+        # log error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not find any CI with the name '$Param{Name}'. ",
+        );
+        return;
+    }
+
+    # if more than one config item with this name was found
+    if ( scalar @{$ConfigItemIDs} > 1 ) {
+
+        # log error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can not set incident state for CI with the name '$Param{Name}'. "
+                . "More than one CI with this name was found!",
+        );
+        return;
+    }
+
+    # we only found one config item
+    my $ConfigItemID = shift @{$ConfigItemIDs};
+
+    # get config item
+    my $ConfigItem = $Self->{ConfigItemObject}->ConfigItemGet(
+        ConfigItemID => $ConfigItemID,
+    );
+
+    # get latest version data of config item
+    my $Version = $Self->{ConfigItemObject}->VersionGet(
+        ConfigItemID => $ConfigItemID,
+    );
+
+    return if !$Version;
+    return if ref $Version ne 'HASH';
+
+    # get incident state list
+    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::IncidentState',
+    );
+
+    return if !$InciStateList;
+    return if ref $InciStateList ne 'HASH';
+
+    # reverse the incident state list
+    my %ReverseInciStateList = reverse %{$InciStateList};
+
+    # check if incident state is valid
+    if ( !$ReverseInciStateList{ $Param{IncidentState} } ) {
+
+        # log error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Invalid incident state '$Param{IncidentState}'!",
+        );
+        return;
+    }
+
+    # add a new version with the new incident state
+    my $VersionID = $Self->{ConfigItemObject}->VersionAdd(
+        %{$Version},
+        InciStateID => $ReverseInciStateList{ $Param{IncidentState} },
+        UserID      => 1,
+    );
+
+    return $VersionID;
+}
+
+sub _LinkTicketWithCI {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Name TicketID )) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check configitem object
+    return if !$Self->{ConfigItemObject};
+
+    # search configitem
+    my $ConfigItemIDs = $Self->{ConfigItemObject}->ConfigItemSearchExtended(
+        Name => $Param{Name},
+    );
+
+    # if no config item with this name was found
+    if ( !$ConfigItemIDs || ref $ConfigItemIDs ne 'ARRAY' || !@{$ConfigItemIDs} ) {
+
+        # log error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not find any CI with the name '$Param{Name}'. ",
+        );
+        return;
+    }
+
+    # if more than one config item with this name was found
+    if ( scalar @{$ConfigItemIDs} > 1 ) {
+
+        # log error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can not set incident state for CI with the name '$Param{Name}'. "
+                . "More than one CI with this name was found!",
+        );
+        return;
+    }
+
+    # we only found one config item
+    my $ConfigItemID = shift @{$ConfigItemIDs};
+
+    # link the ticket with the CI
+    my $LinkResult = $Self->{LinkObject}->LinkAdd(
+        SourceObject => 'Ticket',
+        SourceKey    => $Param{TicketID},
+        TargetObject => 'ITSMConfigItem',
+        TargetKey    => $ConfigItemID,
+        Type         => 'RelevantTo',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+    return $LinkResult;
+}
+
 1;
+
+=back
+
+=head1 TERMS AND CONDITIONS
+
+This software is part of the OTRS project (http://otrs.org/).
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+
+=cut
+
+=head1 VERSION
+
+$Revision: 1.10 $ $Date: 2010-02-20 00:58:05 $
+
+=cut

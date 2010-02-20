@@ -14,6 +14,18 @@ SYNOPSIS
     mails concerning this particular combination will be attached to the
     ticket until it's closed.
 
+    If the OTRS::ITSM Configuration Management module is installed and
+    the configuration option "SystemMonitoring::SetIncidentState" is set
+    to "Yes", a CI is with the given host name is searched in the CI database.
+    If exactly one CI with this name was found, the current incident state is set
+    automatically according to the incoming mail (Incident / Operational).
+
+    If the OTRS::ITSM Configuration Management module is installed and
+    the configuration option "SystemMonitoring::LinkTicketWithCI" is set
+    to "Yes", a CI is linked automatically with the system monitoring
+    incident ticket. This is only possible if a subsequent system monitoring
+    email arrives!
+
 CONFIGURATION OPTIONS
     To allow flexible integration between OTRS and a System Monitoring Suite
     the following configuration options are available. The default values
