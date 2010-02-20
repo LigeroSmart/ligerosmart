@@ -16,7 +16,7 @@ SYNOPSIS
 
     If the OTRS::ITSM Configuration Management module is installed and
     the configuration option "SystemMonitoring::SetIncidentState" is set
-    to "Yes", a CI is with the given host name is searched in the CI database.
+    to "Yes", a CI with the given host name is searched in the CI database.
     If exactly one CI with this name was found, the current incident state is set
     automatically according to the incoming mail (Incident / Operational).
 
