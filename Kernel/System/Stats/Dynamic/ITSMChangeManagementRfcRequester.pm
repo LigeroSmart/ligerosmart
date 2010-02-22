@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementRfcRequester.pm - all advice functions
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagementRfcRequester.pm,v 1.4 2010-02-19 08:54:59 reb Exp $
+# $Id: ITSMChangeManagementRfcRequester.pm,v 1.5 2010-02-22 10:09:10 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Ticket;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -109,10 +109,9 @@ sub GetObjectAttributes {
     }
 
     # get current time to fix bug#4870
-    my $Now       = $Self->{TimeObject}->SystemTime();
-    my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-        SystemTime => $Now,
-    );
+    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my ($Date) = split /\s+/, $TimeStamp;
+    my $Today = sprintf "%s 23:59:59", $Date;
 
     my @ObjectAttributes = (
         {
@@ -133,7 +132,7 @@ sub GetObjectAttributes {
             Element          => 'TimePeriod',
             TimePeriodFormat => 'DateInputFormat',    # 'DateInputFormatLong',
             Block            => 'Time',
-            TimeStop         => $TimeStamp,
+            TimeStop         => $Today,
             Values           => {
                 TimeStart => 'TicketCreateTimeNewerDate',
                 TimeStop  => 'TicketCreateTimeOlderDate',
