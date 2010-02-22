@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ImportExport.pm - all import and export functions
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.35 2009-10-09 10:25:24 ub Exp $
+# $Id: ImportExport.pm,v 1.36 2010-02-22 18:10:38 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 =head1 NAME
 
@@ -1986,6 +1986,17 @@ export function
         UserID     => 1,
     );
 
+returns something like
+
+    $ResultRef = {
+        Success   => 2,
+        Failed    => 0,
+        DestinationContent => [
+            [ 'Attr_1a', 'Attr_1b', 'Attr_1c', ],
+            [ 'Attr_2a', 'Attr_2b', 'Attr_3c', ],
+        ],
+    };
+
 =cut
 
 sub Export {
@@ -2037,10 +2048,11 @@ sub Export {
         UserID     => $Param{UserID},
     );
 
-    my %Result;
-    $Result{Success}            = 0;
-    $Result{Failed}             = 0;
-    $Result{DestinationContent} = [];
+    my %Result = (
+        Success            => 0,
+        Failed             => 0,
+        DestinationContent => [],
+    );
 
     EXPORTDATAROW:
     for my $ExportDataRow ( @{$ExportData} ) {
@@ -2139,9 +2151,14 @@ sub Import {
 
     return if !$ImportData;
 
-    my %Result;
-    $Result{Success} = 0;
-    $Result{Failed}  = 0;
+    # Number of successfully and not successfully imported rows
+    my %Result = (
+        Success => 0,
+        Failed  => 0,
+        Created => 0,
+        Changed => 0,
+        Skipped => 0,
+    );
 
     my $LineCount = 0;
     IMPORTDATAROW:
@@ -2149,19 +2166,20 @@ sub Import {
 
         $LineCount++;
 
-        # import one row
-        my $Success = $ObjectBackend->ImportDataSave(
+        # import one row,
+        my ( $ID, $RetCode ) = $ObjectBackend->ImportDataSave(
             TemplateID    => $Param{TemplateID},
             ImportDataRow => $ImportDataRow,
             UserID        => $Param{UserID},
         );
 
-        if ( !$Success ) {
+        if ( !$ID ) {
             $Result{Failed}++;
-            next IMPORTDATAROW;
         }
-
-        $Result{Success}++;
+        else {
+            $Result{$RetCode}++;
+            $Result{Success}++;
+        }
     }
 
     # log result
@@ -2172,6 +2190,19 @@ sub Import {
     $Self->{LogObject}->Log(
         Priority => 'notice',
         Message  => "Import of $Result{Success} records ($TemplateData->{Object}): success!",
+    );
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message =>
+            "Import of $Result{Created} records ($TemplateData->{Object}): new item created!",
+    );
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => "Import of $Result{Changed} records ($TemplateData->{Object}): item changed!",
+    );
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => "Import of $Result{Skipped} records ($TemplateData->{Object}): item skipped!",
     );
     $Self->{LogObject}->Log(
         Priority => 'notice',
@@ -2246,6 +2277,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.35 $ $Date: 2009-10-09 10:25:24 $
+$Revision: 1.36 $ $Date: 2010-02-22 18:10:38 $
 
 =cut

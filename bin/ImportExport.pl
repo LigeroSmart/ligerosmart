@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # ImportExport.pl - import/export script
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.11 2009-09-23 14:30:27 ub Exp $
+# $Id: ImportExport.pl,v 1.12 2010-02-22 18:10:38 bes Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -38,7 +38,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 # get options
 my %Opts;
@@ -47,7 +47,7 @@ getopts( 'hn:a:i:o:', \%Opts );
 if ( $Opts{h} ) {
 
     print STDOUT "ImportExport.pl <Revision $VERSION> - an import/export tool\n";
-    print STDOUT "Copyright (C) 2001-2009 OTRS AG, http://otrs.org/\n";
+    print STDOUT "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
     print STDOUT "\n";
     print STDOUT "usage:ImportExport.pl -n <TemplateNumber> -a import|export ";
     print STDOUT "[-i <SourceFile>] [-o <DestinationFile>]\n";
@@ -131,13 +131,17 @@ if ( lc $Opts{a} eq 'import' ) {
         UserID        => 1,
     );
 
-    die "\nError occurred. Import impossible! See Syslog for details.\n" if !defined $Result;
+    die "\nError occurred. Import impossible! See the OTRS log for details.\n" if !defined $Result;
 
-    print STDOUT "\n";
-    print STDOUT "Success: $Result->{Success}\n";
-    print STDOUT "Failed : $Result->{Failed}\n";
-    print STDOUT "\n";
-    print STDOUT "Import complete.\n";
+    print STDOUT
+        "\n",
+        "Success : $Result->{Success}\n",
+        "Failed  : $Result->{Failed}\n",
+        "Created : $Result->{Created}\n",
+        "Changed : $Result->{Changed}\n",
+        "Skipped : $Result->{Skipped}\n",
+        "\n",
+        "Import complete.\n";
 }
 elsif ( lc $Opts{a} eq 'export' ) {
 
@@ -151,10 +155,11 @@ elsif ( lc $Opts{a} eq 'export' ) {
 
     die "\nError occurred. Export impossible! See Syslog for details.\n" if !defined $Result;
 
-    print STDOUT "\n";
-    print STDOUT "Success: $Result->{Success}\n";
-    print STDOUT "Failed : $Result->{Failed}\n";
-    print STDOUT "\n";
+    print STDOUT
+        "\n",
+        "Success: $Result->{Success}\n",
+        "Failed : $Result->{Failed}\n",
+        "\n";
 
     if ( $Opts{o} ) {
 
@@ -190,6 +195,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2009-09-23 14:30:27 $
+$Revision: 1.12 $ $Date: 2010-02-22 18:10:38 $
 
 =cut
