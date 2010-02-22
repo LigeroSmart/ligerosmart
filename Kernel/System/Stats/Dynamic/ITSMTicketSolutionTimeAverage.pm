@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm - stats functions for the solution time average
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTicketSolutionTimeAverage.pm,v 1.4 2009-08-18 22:32:57 mh Exp $
+# $Id: ITSMTicketSolutionTimeAverage.pm,v 1.5 2010-02-22 10:07:40 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,6 +80,11 @@ sub GetObjectAttributes {
     my %PriorityList = $Self->{PriorityObject}->PriorityList(
         UserID => 1,
     );
+
+    # get current time to fix bug#3830
+    my $TimeStamp = $Self->{TimeObject}->CurrentTimestamp();
+    my ($Date) = split /\s+/, $TimeStamp;
+    my $Today = sprintf "%s 23:59:59", $Date;
 
     my @ObjectAttributes = (
         {
@@ -202,6 +207,7 @@ sub GetObjectAttributes {
             Element          => 'CreateTime',
             TimePeriodFormat => 'DateInputFormat',    # 'DateInputFormatLong',
             Block            => 'Time',
+            TimeStop         => $Today,
             Values           => {
                 TimeStart => 'TicketCreateTimeNewerDate',
                 TimeStop  => 'TicketCreateTimeOlderDate',
