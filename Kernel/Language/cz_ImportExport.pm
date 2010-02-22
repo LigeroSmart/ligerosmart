@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/cz_ImportExport.pm - the czech translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ImportExport.pm,v 1.7 2009-05-18 09:42:52 mh Exp $
+# $Id: cz_ImportExport.pm,v 1.8 2010-02-22 12:06:28 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,27 +25,27 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Import/Export'}              = '';
-    $Lang->{'Import/Export Management'}   = '';
-    $Lang->{'Add mapping template'}       = '';
-    $Lang->{'Start Import'}               = '';
-    $Lang->{'Start Export'}               = '';
-    $Lang->{'Step'}                       = '';
-    $Lang->{'Edit common information'}    = '';
-    $Lang->{'Edit object information'}    = '';
-    $Lang->{'Edit format information'}    = '';
-    $Lang->{'Edit mapping information'}   = '';
-    $Lang->{'Edit search information'}    = '';
-    $Lang->{'Import information'}         = '';
-    $Lang->{'Column'}                     = '';
-    $Lang->{'Restrict export per search'} = '';
-    $Lang->{'Source File'}                = '';
-    $Lang->{'Column Seperator'}           = '';
-    $Lang->{'Tabulator (TAB)'}            = '';
-    $Lang->{'Semicolon (;)'}              = '';
-    $Lang->{'Colon (:)'}                  = '';
-    $Lang->{'Dot (.)'}                    = '';
-    $Lang->{'Charset'}                    = '';
+    $Lang->{'Import/Export'}              = 'Import/Export';
+    $Lang->{'Import/Export Management'}   = 'Import/Export Správa';
+    $Lang->{'Add mapping template'}       = 'Nová ¹ablona zobrazení';
+    $Lang->{'Start Import'}               = 'Zahájit Import';
+    $Lang->{'Start Export'}               = 'Zahájit Export';
+    $Lang->{'Step'}                       = 'Krok';
+    $Lang->{'Edit common information'}    = 'Editace obecnıch informací';
+    $Lang->{'Edit object information'}    = 'Editace informací o objektu';
+    $Lang->{'Edit format information'}    = 'Editace formátu';
+    $Lang->{'Edit mapping information'}   = 'Editace mapování';
+    $Lang->{'Edit search information'}    = 'Editace vyhledávání';
+    $Lang->{'Import information'}         = 'Informace o Importu';
+    $Lang->{'Column'}                     = 'Sloupec';
+    $Lang->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
+    $Lang->{'Source File'}                = 'Zdrojovı Soubor';
+    $Lang->{'Column Seperator'}           = 'Oddìlovaè Sloupcù';
+    $Lang->{'Tabulator (TAB)'}            = 'Tabulátor (TAB)';
+    $Lang->{'Semicolon (;)'}              = 'Støedník (;)';
+    $Lang->{'Colon (:)'}                  = 'Dvojteèka (:)';
+    $Lang->{'Dot (.)'}                    = 'Teèka (.)';
+    $Lang->{'Charset'}                    = 'Znaková sada';
 
     return 1;
 }
