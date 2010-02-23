@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.36 2010-02-22 18:10:38 bes Exp $
+# $Id: ImportExport.pm,v 1.37 2010-02-23 10:35:40 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 =head1 NAME
 
@@ -2153,20 +2153,16 @@ sub Import {
 
     # Number of successfully and not successfully imported rows
     my %Result = (
+        Object  => $TemplateData->{Object},
         Success => 0,
         Failed  => 0,
-        Created => 0,
-        Changed => 0,
-        Skipped => 0,
+        RetCode => {},
+        All     => 0,
     );
-
-    my $LineCount = 0;
     IMPORTDATAROW:
     for my $ImportDataRow ( @{$ImportData} ) {
 
-        $LineCount++;
-
-        # import one row,
+        # import a single row
         my ( $ID, $RetCode ) = $ObjectBackend->ImportDataSave(
             TemplateID    => $Param{TemplateID},
             ImportDataRow => $ImportDataRow,
@@ -2177,37 +2173,35 @@ sub Import {
             $Result{Failed}++;
         }
         else {
-            $Result{$RetCode}++;
+            $Result{RetCode}->{$RetCode}++;
             $Result{Success}++;
         }
+    }
+    continue {
+        $Result{All}++;
     }
 
     # log result
     $Self->{LogObject}->Log(
         Priority => 'notice',
-        Message  => "Import of $Result{Failed} records ($TemplateData->{Object}): failed!",
-    );
-    $Self->{LogObject}->Log(
-        Priority => 'notice',
-        Message  => "Import of $Result{Success} records ($TemplateData->{Object}): success!",
-    );
-    $Self->{LogObject}->Log(
-        Priority => 'notice',
         Message =>
-            "Import of $Result{Created} records ($TemplateData->{Object}): new item created!",
+            "Import of $Result{All} $Result{Object} records: "
+            . "$Result{Failed} failed, $Result{Success} succeeded",
     );
-    $Self->{LogObject}->Log(
-        Priority => 'notice',
-        Message  => "Import of $Result{Changed} records ($TemplateData->{Object}): item changed!",
-    );
-    $Self->{LogObject}->Log(
-        Priority => 'notice',
-        Message  => "Import of $Result{Skipped} records ($TemplateData->{Object}): item skipped!",
-    );
-    $Self->{LogObject}->Log(
-        Priority => 'notice',
-        Message  => "Last processed line number of import file: $LineCount",
-    );
+    for my $RetCode ( sort keys %{ $Result{RetCode} } ) {
+        my $Count = $Result{RetCode}->{$RetCode} || 0;
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message =>
+                "Import of $Result{All} $Result{Object} records: $Count $RetCode",
+        );
+    }
+    if ( $Result{Failed} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'notice',
+            Message  => "Last processed line number of import file: $Result{All}",
+        );
+    }
 
     return \%Result;
 }
@@ -2277,6 +2271,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2010-02-22 18:10:38 $
+$Revision: 1.37 $ $Date: 2010-02-23 10:35:40 $
 
 =cut
