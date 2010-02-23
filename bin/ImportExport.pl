@@ -3,7 +3,7 @@
 # ImportExport.pl - import/export script
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.13 2010-02-23 10:35:40 bes Exp $
+# $Id: ImportExport.pl,v 1.14 2010-02-23 12:08:46 bes Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -38,7 +38,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 # get options
 my %Opts;
@@ -136,16 +136,16 @@ if ( lc $Opts{a} eq 'import' ) {
     # Print result
     print STDOUT "\n";
     print STDOUT
-        "Import of $Result->{All} $Result->{Object} records: "
+        "Import of $Result->{Counter} $Result->{Object} records: "
         . "$Result->{Failed} failed, $Result->{Success} succeeded\n";
     for my $RetCode ( sort keys %{ $Result->{RetCode} } ) {
         my $Count = $Result->{RetCode}->{$RetCode} || 0;
         print STDOUT
-            "Import of $Result->{All} $Result->{Object} records: $Count $RetCode\n",
+            "Import of $Result->{Counter} $Result->{Object} records: $Count $RetCode\n",
     }
     if ( $Result->{Failed} ) {
         print STDOUT
-            "Last processed line number of import file: $Result->{All}\n";
+            "Last processed line number of import file: $Result->{Counter}\n";
     }
 }
 elsif ( lc $Opts{a} eq 'export' ) {
@@ -200,6 +200,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-02-23 10:35:40 $
+$Revision: 1.14 $ $Date: 2010-02-23 12:08:46 $
 
 =cut

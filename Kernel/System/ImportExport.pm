@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.37 2010-02-23 10:35:40 bes Exp $
+# $Id: ImportExport.pm,v 1.38 2010-02-23 12:08:46 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 =head1 NAME
 
@@ -2157,15 +2157,18 @@ sub Import {
         Success => 0,
         Failed  => 0,
         RetCode => {},
-        All     => 0,
+        Counter => 0,
     );
     IMPORTDATAROW:
     for my $ImportDataRow ( @{$ImportData} ) {
+
+        $Result{Counter}++;
 
         # import a single row
         my ( $ID, $RetCode ) = $ObjectBackend->ImportDataSave(
             TemplateID    => $Param{TemplateID},
             ImportDataRow => $ImportDataRow,
+            Counter       => $Result{Counter},
             UserID        => $Param{UserID},
         );
 
@@ -2177,15 +2180,12 @@ sub Import {
             $Result{Success}++;
         }
     }
-    continue {
-        $Result{All}++;
-    }
 
     # log result
     $Self->{LogObject}->Log(
         Priority => 'notice',
         Message =>
-            "Import of $Result{All} $Result{Object} records: "
+            "Import of $Result{Counter} $Result{Object} records: "
             . "$Result{Failed} failed, $Result{Success} succeeded",
     );
     for my $RetCode ( sort keys %{ $Result{RetCode} } ) {
@@ -2193,13 +2193,13 @@ sub Import {
         $Self->{LogObject}->Log(
             Priority => 'notice',
             Message =>
-                "Import of $Result{All} $Result{Object} records: $Count $RetCode",
+                "Import of $Result{Counter} $Result{Object} records: $Count $RetCode",
         );
     }
     if ( $Result{Failed} ) {
         $Self->{LogObject}->Log(
             Priority => 'notice',
-            Message  => "Last processed line number of import file: $Result{All}",
+            Message  => "Last processed line number of import file: $Result{Counter}",
         );
     }
 
@@ -2271,6 +2271,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2010-02-23 10:35:40 $
+$Revision: 1.38 $ $Date: 2010-02-23 12:08:46 $
 
 =cut
