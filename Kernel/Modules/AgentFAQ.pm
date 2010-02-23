@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQ.pm - faq module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.33 2009-09-01 17:25:11 ub Exp $
+# $Id: AgentFAQ.pm,v 1.34 2010-02-23 18:39:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -592,6 +592,12 @@ sub Run {
             Selected            => $Self->{UserLanguage},
         );
 
+        # find out the category id of the last viewed category
+        my $CategoryID;
+        if ( $ENV{'HTTP_REFERER'} =~ m{ CategoryID = ( \d+ ) }xms ) {
+            $CategoryID = $1;
+        }
+
         my $Categories = $Self->{FAQObject}->GetUserCategories(
             UserID => $Self->{UserID},
             Type   => 'rw'
@@ -600,6 +606,7 @@ sub Run {
             CategoryList        => $Categories,
             Name                => 'CategoryID',
             LanguageTranslation => 0,
+            SelectedID          => $CategoryID || '',
         );
 
         $Frontend{StateOption} = $Self->{LayoutObject}->OptionStrgHashRef(
