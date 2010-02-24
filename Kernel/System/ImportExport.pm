@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.38 2010-02-23 12:08:46 bes Exp $
+# $Id: ImportExport.pm,v 1.39 2010-02-24 09:46:33 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 =head1 NAME
 
@@ -579,7 +579,6 @@ sub ObjectAttributesGet {
 
     # get an attribute list of the object
     my $Attributes = $Backend->ObjectAttributesGet(
-        %Param,
         UserID => $Param{UserID},
     );
 
@@ -817,7 +816,6 @@ sub FormatAttributesGet {
 
     # get an attribute list of the format
     my $Attributes = $Backend->FormatAttributesGet(
-        %Param,
         UserID => $Param{UserID},
     );
 
@@ -1392,8 +1390,8 @@ sub MappingObjectAttributesGet {
 
     # get an attribute list of the object
     my $Attributes = $Backend->MappingObjectAttributesGet(
-        %Param,
-        UserID => $Param{UserID},
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
     );
 
     return $Attributes;
@@ -1603,7 +1601,6 @@ sub MappingFormatAttributesGet {
 
     # get an attribute list of the format
     my $Attributes = $Backend->MappingFormatAttributesGet(
-        %Param,
         UserID => $Param{UserID},
     );
 
@@ -1814,8 +1811,8 @@ sub SearchAttributesGet {
 
     # get an search attribute list of an object
     my $Attributes = $Backend->SearchAttributesGet(
-        %Param,
-        UserID => $Param{UserID},
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
     );
 
     return $Attributes;
@@ -2210,9 +2207,11 @@ sub Import {
 
 to load a import/export backend module
 
-    $HashRef = $ImportExportObject->_LoadBackend(
+    my $Backend = $ImportExportObject->_LoadBackend(
         Module => 'Kernel::System::ImportExport::ObjectBackend::Ticket',
     );
+
+An instance of the loaded backend module is returned.
 
 =cut
 
@@ -2271,6 +2270,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2010-02-23 12:08:46 $
+$Revision: 1.39 $ $Date: 2010-02-24 09:46:33 $
 
 =cut
