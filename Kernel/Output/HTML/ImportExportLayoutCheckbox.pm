@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ImportExportLayoutCheckbox.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutCheckbox.pm,v 1.4 2009-05-18 09:42:52 mh Exp $
+# $Id: ImportExportLayoutCheckbox.pm,v 1.5 2010-02-24 12:56:37 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -23,7 +23,7 @@ Kernel::Output::HTML::ImportExportLayoutCheckbox - layout backend module
 
 =head1 SYNOPSIS
 
-All layout functions for checkbox elements
+All layout functions for checkbox elements in import/export.
 
 =over 4
 
@@ -71,21 +71,18 @@ sub FormInputCreate {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Item!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Item!',
+        );
         return;
     }
 
     $Param{Prefix} ||= '';
 
-    my $String = "<input type=\"checkbox\" name=\"$Param{Prefix}$Param{Item}->{Key}\" ";
+    my $Checked = $Param{Value} ? 'checked="checked"' : '';
 
-    if ( $Param{Value} ) {
-        $String .= "checked ";
-    }
-
-    $String .= "> ";
-
-    return $String;
+    return qq{<input type="checkbox" name="$Param{Prefix}$Param{Item}->{Key}" $Checked>};
 }
 
 =item FormDataGet()
@@ -104,7 +101,10 @@ sub FormDataGet {
 
     # check needed stuff
     if ( !$Param{Item} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need Item!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Item!',
+        );
         return;
     }
 
@@ -134,6 +134,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2009-05-18 09:42:52 $
+$Revision: 1.5 $ $Date: 2010-02-24 12:56:37 $
 
 =cut
