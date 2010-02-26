@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.34 2010-02-23 08:46:10 bes Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.35 2010-02-26 12:39:20 bes Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -61,48 +61,48 @@
         <File Permission="644" Location="var/stats/ITSMStats-406-ITSMChangeManagement.xml"/>
         <File Permission="644" Location="var/packagesetup/ITSMServiceLevelManagement.pm"/>
     </Filelist>
-    <CodeInstall Type="post">
+    <CodeInstall Type="post"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeInstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
-    </CodeInstall>
-    <CodeUpgrade Type="post">
+    ]]></CodeInstall>
+    <CodeUpgrade Type="post"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUpgrade';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # The code module has just recently been copied to it's location in the file system.
         # In a persistent Perl environment an old version of the module might still be loaded,
@@ -116,224 +116,224 @@
         delete $INC{$CodeModulePath};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
-    </CodeUpgrade>
-    <CodeReinstall Type="post">
+    ]]></CodeUpgrade>
+    <CodeReinstall Type="post"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeReinstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
-    </CodeReinstall>
-    <CodeUninstall Type="pre">
+    ]]></CodeReinstall>
+    <CodeUninstall Type="pre"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUninstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
-    </CodeUninstall>
-    <IntroInstall Type="pre" Title="Install Information" Lang="en">
+    ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;WELCOME&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        You are about to install the OTRS package ITSMServiceLevelManagement.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to install the OTRS package ITSMServiceLevelManagement.<br>
+        <br>
+        <br>
+        <b>REQUIRED OTRS PACKAGES</b>
+        <ul>
+        <li>ITSMCore 1.3.92</li>
+        </ul>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu installieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu installieren.<br>
+        <br>
+        <br>
+        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <ul>
+        <li>ITSMCore 1.3.92</li>
+        </ul>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;NOTICE&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>NOTICE</b>
+        <br>
+        <br>
         The statistics that were installed by this package will be available in the menu item 'Stats'.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="de">
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;HINWEIS&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>HINWEIS</b>
+        <br>
+        <br>
         Im Menü-Punkt 'Statistik' sind die von diesem Paket installierten Statistiken verfügbar.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;WELCOME&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        You are about to upgrade the OTRS package ITSMServiceLevelManagement.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package ITSMServiceLevelManagement.<br>
+        <br>
+        <br>
+        <b>REQUIRED OTRS PACKAGES</b>
+        <ul>
+        <li>ITSMCore 1.3.92</li>
+        </ul>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUpgrade>
-    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu aktualisieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;ITSMCore 1.3.92&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu aktualisieren.<br>
+        <br>
+        <br>
+        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <ul>
+        <li>ITSMCore 1.3.92</li>
+        </ul>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUpgrade>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ATTENTION&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
         The statistics that are associated with this package, will no longer be available if the package is uninstalled.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ACHTUNG&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
         Nach der Deinstallation sind die von diesem Paket installierten Statistiken nicht mehr verfügbar.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
+    ]]></IntroUninstall>
 </otrs_package>
