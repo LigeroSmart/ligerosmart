@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.71 2010-02-10 16:59:59 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.72 2010-02-26 07:57:03 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.71 $) [1];
+$VERSION = qw($Revision: 1.72 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -148,6 +148,7 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeCABDelete'}        = 'CAB gelöscht %s';
     $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'Neuer Anhang: %s';
     $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Anhang gelöscht: %s';
+    $Lang->{'ChangeHistory::ChangeNotificationSent'} = 'Benachrichtigung an %s geschickt (Event: %s)';
 
     # workorder history
     $Lang->{'WorkOrderHistory::WorkOrderAdd'}              = 'Neue Workorder (ID=%s)';
@@ -157,6 +158,7 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderDelete'}           = 'Workorder (ID=%s) gelöscht';
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentAdd'}    = 'Neuer Anhang für Workorder: %s';
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentDelete'} = 'Anhang von Workorder gelöscht: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'Benachrichtigung an %s geschickt (Event: %s)';
 
     # long workorder history
     $Lang->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'}              = 'Neue Workorder (ID=%s)';
@@ -166,6 +168,7 @@ sub Data {
     $Lang->{'WorkOrderHistory::WorkOrderDeleteWithWorkOrderID'}           = 'Workorder (ID=%s) gelöscht';
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID'}    = '(ID=%s) Neuer Anhang für Workorder: %s';
     $Lang->{'WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID'} = '(ID=%s) Anhang von Workorder gelöscht: %s';
+    $Lang->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '(ID=%s) Benachrichtigung an %s geschickt (Event: %s)';
 
     # condition history
     $Lang->{'ChangeHistory::ConditionAdd'}       = '%s: %s';
