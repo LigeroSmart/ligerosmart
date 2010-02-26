@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.57 2010-02-26 11:11:36 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.58 2010-02-26 11:16:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -1492,32 +1492,32 @@ sub _AddSystemNotifications {
 
         [
             'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
-            'en',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.'
-                . $WorkOrderInfoAgentEn,
-        ],
-        [
-            'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
             'de',
             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Endzeit erreicht',
             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> hat die geplante Endzeit erreicht.'
                 . $WorkOrderInfoAgentDe,
         ],
-
         [
-            'Agent::WorkOrder::WorkOrderActualStartTimeReached',
+            'Agent::WorkOrder::WorkOrderPlannedEndTimeReached',
             'en',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] started',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Planned End Time reached.',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has reached the Planned End Time.'
                 . $WorkOrderInfoAgentEn,
         ],
+
         [
             'Agent::WorkOrder::WorkOrderActualStartTimeReached',
             'de',
             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] begonnen',
             '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde begonnen.'
                 . $WorkOrderInfoAgentDe,
+        ],
+        [
+            'Agent::WorkOrder::WorkOrderActualStartTimeReached',
+            'en',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] started',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> has started.'
+                . $WorkOrderInfoAgentEn,
         ],
 
         [
@@ -2049,6 +2049,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2010-02-26 11:11:36 $
+$Revision: 1.58 $ $Date: 2010-02-26 11:16:17 $
 
 =cut
