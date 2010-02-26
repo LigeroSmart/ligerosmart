@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.37 2009-10-14 20:48:47 ub Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.38 2010-02-26 12:15:59 bes Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -147,32 +147,32 @@
         <TableDrop Name="imexport_mapping_format"/>
         <TableDrop Name="imexport_search"/>
     </DatabaseUninstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ATTENTION&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
         If you uninstall this package, all database tables that were created during installation will be deleted.
         All data from these tables will be irrevocably lost!
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ACHTUNG&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
         Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
+    ]]></IntroUninstall>
 </otrs_package>
