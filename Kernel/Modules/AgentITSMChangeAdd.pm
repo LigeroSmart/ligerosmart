@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.58 2010-02-10 09:47:05 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.59 2010-03-09 12:11:24 reb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -497,6 +497,41 @@ sub Run {
                 );
             }
 
+            # if the change add mask was called from the ticket zoom
+            if ( $GetParam{TicketID} ) {
+
+                # link ticket with newly created change
+                my $LinkSuccess = $Self->{LinkObject}->LinkAdd(
+                    SourceObject => 'Ticket',
+                    SourceKey    => $GetParam{TicketID},
+                    TargetObject => 'ITSMChange',
+                    TargetKey    => $ChangeID,
+                    Type         => 'Normal',
+                    State        => 'Valid',
+                    UserID       => $Self->{UserID},
+                );
+
+                # link could not be added
+                if ( !$LinkSuccess ) {
+
+                    # set error message
+                    my $Message = "Change with ChangeID $ChangeID was successfully added, "
+                        . "but a link to Ticket with TicketID $GetParam{TicketID} could not be created!";
+
+                    # log error
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => $Message,
+                    );
+
+                    # show error message
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => $Message,
+                        Comment => 'Please contact the admin.',
+                    );
+                }
+            }
+
             # redirect to zoom mask, when adding was successful
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMChangeZoom&ChangeID=$ChangeID",
@@ -626,6 +661,7 @@ sub Run {
     $Self->{LayoutObject}->Block(
         Name => 'ChangeTemplate',
         Data => {
+            %GetParam,
             TemplateSelectionString     => $TemplateSelectionString,
             MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
             MoveTimeSelectionString     => $MoveTimeSelectionString,
