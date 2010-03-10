@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.32 2009-07-14 08:56:47 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.33 2010-03-10 19:49:38 mb Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Default</SubGroup>
+        <SubGroup>Core</SubGroup>
         <Setting>
             <String>FAQ</String>
         </Setting>
@@ -14,7 +14,7 @@
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Core::Default</SubGroup>
+        <SubGroup>Core</SubGroup>
         <Setting>
             <String>default comment</String>
         </Setting>
@@ -643,7 +643,7 @@ Your OTRS Notification Master
     <ConfigItem Name="Frontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
         <Description Lang="en">Module to generate html OpenSearch profile for short faq search.</Description>
         <Description Lang="de">Modul zum Generieren des HTML "OpenSearch" Profils zur FAQ-Suche über das Browser-Suchfeld.</Description>
-        <Group>Framework</Group>
+        <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ModuleMetaHead</SubGroup>
         <Setting>
             <Hash>
