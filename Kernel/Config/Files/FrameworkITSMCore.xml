@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.40 2010-03-01 13:00:44 ub Exp $</CVS>
-    <CVS>$OldId: Framework.xml,v 1.242.2.5 2010/02/26 21:46:27 martin Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.41 2010-03-15 11:55:24 ub Exp $</CVS>
+    <CVS>$OldId: Framework.xml,v 1.242.2.6 2010/03/09 09:37:46 dz Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.</Description>
         <Description Lang="de">Im WebFrontend angezeigter Name der Software.</Description>
