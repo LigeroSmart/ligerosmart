@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.5 2009-05-18 09:48:35 mh Exp $
+# $Id: AgentITSMService.pm,v 1.6 2010-03-18 15:06:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,27 +78,22 @@ sub Run {
         # output row
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
 
+            # calculate level space
+            my @Fragment   = split '::', $Service{Name};
+            my $Level      = scalar @Fragment - 1;
+            my $LevelSpace = '&nbsp;&nbsp;&nbsp;&nbsp;' x $Level;
+
             # output overview row
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewRow',
                 Data => {
                     %Service,
+                    LevelSpace    => $LevelSpace,
                     Name          => $Service{NameShort},
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
                     CssClass      => $CssClass,
                 },
             );
-
-            my @Fragment = split '::', $Service{Name};
-            pop @Fragment;
-
-            for (@Fragment) {
-
-                # output overview row space
-                $Self->{LayoutObject}->Block(
-                    Name => 'OverviewRowSpace',
-                );
-            }
         }
         else {
 
