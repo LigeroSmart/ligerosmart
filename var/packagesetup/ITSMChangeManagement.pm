@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.58 2010-02-26 11:16:17 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.59 2010-03-19 10:13:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =head1 NAME
 
@@ -1071,6 +1071,8 @@ sub _AddNotifications {
 =item _AddSystemNotifications()
 
 Adds the Change:: and WorkOrder:: notifications to systems notification table.
+There is no check whether a notification already exists.
+so usually _DeleteSystemNotifications should be called before.
 
     my $Success = $PackageSetup->_AddSystemNotifications();
 
@@ -1932,7 +1934,6 @@ sub _AddSystemNotifications {
         }
 
         # do the insertion
-        # TODO: check whether notification already exists
         $Self->{DBObject}->Do(
             SQL => 'INSERT INTO notifications (notification_type, notification_language, '
                 . 'subject, text, notification_charset, content_type, '
@@ -2049,6 +2050,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2010-02-26 11:16:17 $
+$Revision: 1.59 $ $Date: 2010-03-19 10:13:16 $
 
 =cut

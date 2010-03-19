@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm - Menu with check whether there are workorders
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.6 2009-12-30 13:49:23 bes Exp $
+# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.7 2010-03-19 10:13:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
-# TODO: decide whether this module can be removed. As of 2009-12-30 it is unused.
+# As of 2010-03-19 this module is unused.
+# But it is kept in the distribution, as it provides useful functionality for future use.
 
 sub new {
     my ( $Type, %Param ) = @_;

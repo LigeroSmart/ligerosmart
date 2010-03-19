@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMWorkOrder.t,v 1.119 2010-02-18 15:39:08 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.120 2010-03-19 10:13:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4110,13 +4110,7 @@ my $WorkOrderIDForPossibleStatesTest = $Self->{WorkOrderObject}->WorkOrderAdd(
     WorkOrderState => 'accepted',
 );
 
-# TODO: define what state ids should be possible
-# At the moment WorkOrderPossibleStatesGet() should return a list of all states.
-# So all state ids should be possible.
-# This has to be adapted when WorkOrderPossibleStatesGet() changes its behaviour.
-my @PossibleStateIDsReference = @SortedWorkOrderStateIDs;
-
-# get possible states
+# When no WorkOrderID is given WorkOrderPossibleStatesGet() returns a list of all states.
 my $PossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
 
     #    WorkOrderID => $WorkOrderIDForPossibleStatesTest,
@@ -4124,6 +4118,7 @@ my $PossibleStates = $Self->{WorkOrderObject}->WorkOrderPossibleStatesGet(
 ) || {};
 
 # do the checks
+my @PossibleStateIDsReference = @SortedWorkOrderStateIDs;
 for my $PossibleStateID (@PossibleStateIDsReference) {
     my ( $FirstHashRef, $SecondHashRef )
         = grep { $_->{Key} == $PossibleStateID } @{$PossibleStates};
@@ -4154,6 +4149,8 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
 # these objects should be deleted
 push @{ $IDsToDelete{Change} },    $ChangeIDForPossibleStatesTest;
 push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForPossibleStatesTest;
+
+# TODO: add tests for WorkOrderPossibleStatesGet() with a WorkOrderID as argument
 
 # ------------------------------------------------------------ #
 # testing support for attachments

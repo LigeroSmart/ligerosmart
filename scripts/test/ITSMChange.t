@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.t,v 1.171 2010-02-18 15:40:29 bes Exp $
+# $Id: ITSMChange.t,v 1.172 2010-03-19 10:13:16 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5367,13 +5367,7 @@ continue {
 
 my ($PossibleStatesTestChangeID) = @{ $Label2ChangeIDs{PossibleStatesTest} };
 
-# TODO: define what state ids should be possible
-# At the moment ChangePossibleStatesGet() should return a list of all states.
-# So all state ids should be possible.
-# This has to be adapted when ChangePossibleStatesGet() changes its behaviour.
-my @PossibleStateIDsReference = @SortedChangeStateIDs;
-
-# get possible states
+# When no ChangeID is given ChangePossibleStatesGet() returns a list of all states.
 my $PossibleStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
 
     #    ChangeID => $PossibleStatesTestChangeID,
@@ -5381,6 +5375,7 @@ my $PossibleStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
 ) || {};
 
 # do the checks
+my @PossibleStateIDsReference = @SortedChangeStateIDs;
 for my $PossibleStateID (@PossibleStateIDsReference) {
     my ( $FirstHashRef, $SecondHashRef )
         = grep { $_->{Key} == $PossibleStateID } @{$PossibleStates};
@@ -5406,6 +5401,8 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
         "Check that the state id $PossibleStateID is returned only once.",
     );
 }
+
+# TODO: add tests for ChangePossibleStatesGet() with a ChangeID as argument
 
 # ------------------------------------------------------------ #
 # CIP allocate tests
