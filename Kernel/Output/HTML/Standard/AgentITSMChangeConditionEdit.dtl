@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.22 2010-02-08 14:51:21 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.23 2010-03-22 15:55:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,6 +49,7 @@ function submit_compose() {
                 <input type="hidden" name="Subaction" value="Save"/>
                 <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}"/>
                 <input type="hidden" name="ConditionID" value="$QData{"ConditionID"}"/>
+                <input class="button" type="submit" style="display:none" value="$Text{"Save"}" name="Save" onclick="return submit_compose();">
                 <br/>
                 <table border="0" width="800" cellspacing="0" cellpadding="4">
                     <tr class="contenthead">
@@ -108,7 +109,6 @@ function submit_compose() {
                             <table width="100%" border="0" cellpadding="3" cellspacing="0">
 <!-- dtl:block:ExpressionOverviewRow -->
                                 <tr class="contentbody">
-#                                    <td align="left" width="10%" class="contentvalue">&nbsp;</td>
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
                                     <td align="left" width="10%" class="contentvalue">$Data{"ObjectOptionString"}</td>
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
