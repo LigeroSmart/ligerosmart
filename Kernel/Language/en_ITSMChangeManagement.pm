@@ -1,8 +1,8 @@
 # --
-# Kernel/Language/en_ITSMChangeManagement.pm - the english translation of ITSMChangeManagement
+# Kernel/Language/en_ITSMChangeManagement.pm - the english (US) translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.48 2010-02-26 07:57:03 reb Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.49 2010-03-24 16:00:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub Data {
     my $Self = shift;
