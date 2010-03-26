@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Service.pm - all service function
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.13 2009-10-07 13:27:32 reb Exp $
+# $Id: Service.pm,v 1.14 2010-03-26 14:51:37 ub Exp $
 # $OldId: Service.pm,v 1.39 2009/08/27 19:27:31 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -288,7 +288,7 @@ sub ServiceGet {
 
     # create short name and parentid
     $ServiceData{NameShort} = $ServiceData{Name};
-    if ( $ServiceData{Name} =~ /^(.*)::(.+?)$/ ) {
+    if ( $ServiceData{Name} =~ m{ \A (.*) :: (.+?) \z }xms ) {
         $ServiceData{NameShort} = $2;
 
         # lookup parent
@@ -357,7 +357,7 @@ sub ServiceGet {
         }
     }
 
-    # investigate the state of alle child services
+    # investigate the state of all child services
     if ( $ServiceData{CurInciStateType} eq 'operational' ) {
 
         # create the valid string
@@ -370,11 +370,8 @@ sub ServiceGet {
         # get list of all valid childs
         $Self->{DBObject}->Prepare(
             SQL => "SELECT id, name FROM service "
-                . "WHERE name LIKE '"
-                . $Name
-                . "::%' AND valid_id IN ("
-                . $ValidIDString
-                . ")",
+                . "WHERE name LIKE '" . $Name . "::%' "
+                . "AND valid_id IN (" . $ValidIDString . ")",
         );
 
         # find length of childs prefix
@@ -410,7 +407,7 @@ sub ServiceGet {
     }
 
     # define default incident states
-    my %DefaultInciStats = (
+    my %DefaultInciStates = (
         operational => 'Operational',
         warning     => 'Warning',
         incident    => 'Incident',
@@ -426,7 +423,7 @@ sub ServiceGet {
 
     my %ReverseInciStateList = reverse %{ $InciStateList };
     $ServiceData{CurInciStateID}
-        = $ReverseInciStateList{ $DefaultInciStats{ $ServiceData{CurInciStateType} } };
+        = $ReverseInciStateList{ $DefaultInciStates{ $ServiceData{CurInciStateType} } };
 
     # fallback if the default incident state is deactivated
     if ( !$ServiceData{CurInciStateID} ) {
@@ -578,7 +575,7 @@ sub ServiceAdd {
     }
 
     # check service name
-    if ( $Param{Name} =~ /::/ ) {
+    if ( $Param{Name} =~ m{ :: }xms ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't add service! Invalid Service name '$Param{Name}'!",
@@ -710,7 +707,7 @@ sub ServiceUpdate {
     }
 
     # check service name
-    if ( $Param{Name} =~ /::/ ) {
+    if ( $Param{Name} =~ m{ :: }xms ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't update service! Invalid Service name '$Param{Name}'!",
@@ -741,7 +738,7 @@ sub ServiceUpdate {
         }
 
         # check, if selected parent was a child of this service
-        if ( $Param{FullName} =~ /^(\Q$OldServiceName\E)::/ ) {
+        if ( $Param{FullName} =~ m{ \A ( \Q $OldServiceName \E ) :: }xms ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => 'Can\'t update service! Invalid parent was selected.'
@@ -810,7 +807,7 @@ sub ServiceUpdate {
 
     # update childs
     for my $Child (@Childs) {
-        $Child->{Name} =~ s/^(\Q$OldServiceName\E)::/$Param{FullName}::/;
+        $Child->{Name} =~ s{ \A ( \Q $OldServiceName \E ) :: }{$Param{FullName}::}xms;
         $Self->{DBObject}->Do(
             SQL => 'UPDATE service SET name = ? WHERE id = ?',
             Bind => [ \$Child->{Name}, \$Child->{ServiceID} ],
@@ -1154,6 +1151,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2009-10-07 13:27:32 $
+$Revision: 1.14 $ $Date: 2010-03-26 14:51:37 $
 
 =cut
