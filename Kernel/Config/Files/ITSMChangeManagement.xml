@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.203 2010-02-26 07:57:03 reb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.204 2010-03-29 07:04:55 bes Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -330,7 +330,7 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-        <ConfigItem Name="Frontend::Module###AgentITSMChangePSA" Required="0" Valid="1">
+    <ConfigItem Name="Frontend::Module###AgentITSMChangePSA" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AgentITSMChangePSA object in the agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration des AgentITSMChangePSA-Objekts im Agenteninterface.</Description>
         <Group>ITSM Change Management</Group>
