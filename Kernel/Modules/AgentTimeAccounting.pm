@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.37 2009-07-13 13:44:02 tt Exp $
+# $Id: AgentTimeAccounting.pm,v 1.38 2010-03-31 12:59:54 tt Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -221,12 +221,13 @@ sub Run {
 
                 # create a valid period
                 my $Period = $Param{Period};
-                if ( $Period =~ /^(\d+),(\d+)/) {
+                if ( $Period =~ /^(\d+),(\d+)/ ) {
                     $Period = $1 . "." . $2;
                 }
+
                 #allow format hh:mm
-                elsif( $Param{Period} =~ /^(\d+):(\d+)/) {
-                    $Period = $1 + $2/60;
+                elsif ( $Param{Period} =~ /^(\d+):(\d+)/ ) {
+                    $Period = $1 + $2 / 60;
                 }
 
                 my %WorkingUnit = (
@@ -1282,9 +1283,11 @@ sub Run {
 
         # fill up the calendar list
         my $CalendarListRef = { 0 => 'Default' };
-        for my $Calendar ( 1 .. 9 ) {
-            my $CalendarName = "TimeZone::Calendar${Calendar}Name";
-            $CalendarListRef->{$Calendar} = $Self->{ConfigObject}->Get($CalendarName);
+        my $CalendarIndex = 1;
+        while ( $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $CalendarIndex . "Name" ) ) {
+            $CalendarListRef->{$CalendarIndex}
+                = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $CalendarIndex . "Name" );
+            $CalendarIndex++;
         }
 
         USERID:
@@ -1672,8 +1675,8 @@ sub Run {
 
         # build output
         my $Output .= $Self->{LayoutObject}->Header( Title => 'Reporting' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Output .= $Self->{LayoutObject}->Output(
+        $Output    .= $Self->{LayoutObject}->NavigationBar();
+        $Output    .= $Self->{LayoutObject}->Output(
             Data => { %Param, %Frontend },
             TemplateFile => 'AgentTimeAccountingReporting'
         );
@@ -1759,7 +1762,7 @@ sub Run {
                 Data => { Action => $Action{$ActionID}, },
             );
             for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
-                $TotalHours     += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
+                $TotalHours += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
                 $Total{$UserID} += $ProjectTime{$ActionID}{$UserID}{Hours} || 0;
                 $Self->{LayoutObject}->Block(
                     Name => 'User',
