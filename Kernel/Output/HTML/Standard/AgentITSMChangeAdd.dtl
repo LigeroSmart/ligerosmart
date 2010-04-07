@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.48 2010-03-09 12:11:24 reb Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.49 2010-04-07 09:45:48 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,9 @@ $Include{"AJAX"}
 
 function submit_template() {
 
+    // the Subaction depends on which button was clicked
+    document.compose.Subaction.value = 'CreateFromTemplate';
+
     // check the planned time
     if ( document.template.MoveTimeUsed.checked && !CheckTime( 'MoveTime' ) ) {
         alert('$JSText{"The planned time is invalid!"}');
@@ -28,6 +31,9 @@ function submit_template() {
 }
 
 function submit_compose() {
+
+    // the Subaction depends on which button was clicked
+    document.compose.Subaction.value = 'Save';
 
     // check the title, all whitespace counts as empty
     if (document.compose.ChangeTitle.value.match(/^\s*$/)) {
@@ -57,28 +63,29 @@ function submit_compose() {
 //-->
 </script>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}">
-                $Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a class="menuitem" href="$Env{"Baselink"}Action=AgentITSMChange" onclick="javascript:history.back(); return false;">$Text{"Back"}</a>
-        </td>
-    </tr>
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+    <input type="hidden" name="Action"     value="$Env{"Action"}">
+    <input type="hidden" name="TicketID"   value="$QData{"TicketID"}">
+    <input type="hidden" name="Subaction"  value="">
+    <input type="hidden" name="FormID"     value="$QData{"FormID"}">
+    <table border="0" width="100%" cellspacing="0" cellpadding="3">
+        <tr>
+            <td class="mainhead">
+                <div title="$Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}">
+                    $Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="menu">
+                <a class="menuitem" href="$Env{"Baselink"}Action=AgentITSMChange" onclick="javascript:history.back(); return false;">$Text{"Back"}</a>
+            </td>
+        </tr>
 
 <!-- dtl:block:ChangeTemplate -->
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" name="template">
-                <input type="hidden" name="TicketID"  value="$QData{"TicketID"}">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="CreateFromTemplate">
+        <tr>
+            <td class="mainbody">
+                <br />
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"Select Change Template"}</td>
@@ -128,24 +135,17 @@ function submit_compose() {
                     <tr>
                         <td class="contentfooter">
                             <input class="button" id="submitTemplate" accesskey="t" type="submit" name="SubmitTemplate" value="$Text{"Create"}" onclick="return submit_template();"/>
-
                         </td>
                     </tr>
                 </table>
-            </form>
-            <br>
-        </td>
-    </tr>
+                <br />
+            </td>
+        </tr>
 <!-- dtl:block:ChangeTemplate -->
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action"     value="$Env{"Action"}">
-                <input type="hidden" name="TicketID"   value="$QData{"TicketID"}">
-                <input type="hidden" name="Subaction"  value="Save">
-                <input type="hidden" name="FormID"     value="$QData{"FormID"}">
+        <tr>
+            <td class="mainbody">
+                <br />
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">$Text{"ITSM Change"}</td>
@@ -286,8 +286,8 @@ $Include{"RichTextEditorITSM"}
                         </td>
                     </tr>
                 </table>
-            </form>
-            <br>
-        </td>
-    </tr>
-</table>
+                <br />
+            </td>
+        </tr>
+    </table>
+</form>
