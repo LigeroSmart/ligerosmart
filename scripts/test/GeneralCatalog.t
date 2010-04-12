@@ -1,8 +1,8 @@
 # --
 # GeneralCatalog.t - general catalog tests
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.19 2009-10-07 13:16:23 reb Exp $
+# $Id: GeneralCatalog.t,v 1.20 2010-04-12 13:04:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -65,6 +65,19 @@ for my $Counter ( 1 .. 3 ) {
 
     push @ClassRand, int rand 1_000_000;
 }
+
+# store original general catalog permission preferences setting
+my $GeneralCatalogPreferencesPermissionsOrg;
+if ( $Self->{ConfigObject}->Get('GeneralCatalogPreferences') ) {
+    $GeneralCatalogPreferencesPermissionsOrg
+        = $Self->{ConfigObject}->Get('GeneralCatalogPreferences')->{Permissions};
+}
+
+# enable general catalog permission preferences setting with a dummy true value
+$Self->{ConfigObject}->Set(
+    Key   => 'GeneralCatalogPreferences###Permissions',
+    Value => 1,
+);
 
 # ------------------------------------------------------------ #
 # define general tests
@@ -840,5 +853,15 @@ for my $Class (@ExistingClasses) {
 
     $TestCount++;
 }
+
+# ------------------------------------------------------------ #
+# cleanup
+# ------------------------------------------------------------ #
+
+# restore original general catalog permission preferences setting
+$Self->{ConfigObject}->Set(
+    Key   => 'GeneralCatalogPreferences###Permissions',
+    Value => $GeneralCatalogPreferencesPermissionsOrg,
+);
 
 1;
