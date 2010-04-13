@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.27 2009-10-09 10:25:58 ub Exp $
+# $Id: CSV.pm,v 1.28 2010-04-13 12:18:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -91,12 +91,13 @@ sub new {
         return;
     }
 
-    # define available seperators
-    $Self->{AvailableSeperators} = {
+    # define available separators
+    $Self->{AvailableSeparators} = {
         Tabulator => "\t",
         Semicolon => ';',
         Colon     => ':',
         Dot       => '.',
+        Comma     => ',',
     };
 
     return $Self;
@@ -123,8 +124,8 @@ sub FormatAttributesGet {
 
     my $Attributes = [
         {
-            Key   => 'ColumnSeperator',
-            Name  => 'Column Seperator',
+            Key   => 'ColumnSeparator',
+            Name  => 'Column Separator',
             Input => {
                 Type => 'Selection',
                 Data => {
@@ -132,6 +133,7 @@ sub FormatAttributesGet {
                     Semicolon => 'Semicolon (;)',
                     Colon     => 'Colon (:)',
                     Dot       => 'Dot (.)',
+                    Comma     => 'Comma (,)',
                 },
                 Required     => 1,
                 Translation  => 1,
@@ -255,16 +257,16 @@ sub ImportDataGet {
         return;
     }
 
-    # get charset
-    $FormatData->{ColumnSeperator} ||= '';
-    my $Seperator = $Self->{AvailableSeperators}->{ $FormatData->{ColumnSeperator} } || '';
+    # get separator
+    $FormatData->{ColumnSeparator} ||= '';
+    my $Separator = $Self->{AvailableSeparators}->{ $FormatData->{ColumnSeparator} } || '';
 
-    # check the seperator
-    if ( !$Seperator ) {
+    # check the separator
+    if ( !$Separator ) {
 
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid seperator found for the template id $Param{TemplateID}",
+            Message  => "No valid separator found for the template id $Param{TemplateID}",
         );
         return;
     }
@@ -274,7 +276,7 @@ sub ImportDataGet {
         {
             quote_char          => '"',
             escape_char         => '"',
-            sep_char            => $Seperator,
+            sep_char            => $Separator,
             eol                 => '',
             always_quote        => 1,
             binary              => 1,
@@ -395,15 +397,15 @@ sub ExportDataSave {
     }
 
     # get charset
-    $FormatData->{ColumnSeperator} ||= '';
-    my $Seperator = $Self->{AvailableSeperators}->{ $FormatData->{ColumnSeperator} } || '';
+    $FormatData->{ColumnSeparator} ||= '';
+    my $Separator = $Self->{AvailableSeparators}->{ $FormatData->{ColumnSeparator} } || '';
 
-    # check the seperator
-    if ( !$Seperator ) {
+    # check the separator
+    if ( !$Separator ) {
 
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No valid seperator found for the template id $Param{TemplateID}",
+            Message  => "No valid separator found for the template id $Param{TemplateID}",
         );
         return;
     }
@@ -413,7 +415,7 @@ sub ExportDataSave {
         {
             quote_char          => '"',
             escape_char         => '"',
-            sep_char            => $Seperator,
+            sep_char            => $Separator,
             eol                 => '',
             always_quote        => 1,
             binary              => 1,
@@ -462,6 +464,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2009-10-09 10:25:58 $
+$Revision: 1.28 $ $Date: 2010-04-13 12:18:28 $
 
 =cut
