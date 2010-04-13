@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.14 2010-03-26 14:51:37 ub Exp $
-# $OldId: Service.pm,v 1.39 2009/08/27 19:27:31 mb Exp $
+# $Id: Service.pm,v 1.15 2010-04-13 17:40:20 ub Exp $
+# $OldId: Service.pm,v 1.39.2.1 2010/04/13 17:31:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -288,7 +288,7 @@ sub ServiceGet {
 
     # create short name and parentid
     $ServiceData{NameShort} = $ServiceData{Name};
-    if ( $ServiceData{Name} =~ m{ \A (.*) :: (.+?) \z }xms ) {
+    if ( $ServiceData{Name} =~ /^(.*)::(.+?)$/ ) {
         $ServiceData{NameShort} = $2;
 
         # lookup parent
@@ -297,6 +297,11 @@ sub ServiceGet {
         );
         $ServiceData{ParentID} = $ServiceID;
     }
+
+    # get service preferences
+    my %Preferences = $Self->ServicePreferencesGet(
+        ServiceID => $Param{ServiceID},
+    );
 # ---
 # ITSM
 # ---
@@ -313,7 +318,7 @@ sub ServiceGet {
     );
     $ServiceData{Criticality} = $CriticalityList->{ $ServiceData{CriticalityID} } || '';
 
-    # set default incident type
+    # set default incident state type
     $ServiceData{CurInciStateType} = 'operational';
 
     # get ITSM module directory
@@ -322,38 +327,59 @@ sub ServiceGet {
     # check if ITSMConfigurationManagement package is installed
     if ( -e $ConfigItemModule ) {
 
-        # get the incident link type
-        my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
+        # check if a preference setting for CurInciStateTypeFromCIs exists
+        if ( $Preferences{CurInciStateTypeFromCIs} ) {
 
-        # find all linked config items
-        my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
-            Object1   => 'Service',
-            Key1      => $ServiceData{ServiceID},
-            Object2   => 'ITSMConfigItem',
-            State     => 'Valid',
-            Type      => $LinkType,
-            UserID    => $Param{UserID},
-        );
+            # set default incident state type from service preferences 'CurInciStateTypeFromCIs'
+            $ServiceData{CurInciStateType} = $Preferences{CurInciStateTypeFromCIs};
+        }
 
-        # investigate the current incident state of each config item
-        CONFIGITEMID:
-        for my $ConfigItemID ( keys %LinkedConfigItemIDs ) {
+        # set the preferences setting for CurInciStateTypeFromCIs
+        else {
 
-            # extract config item data
-            my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};
+            # get the incident link type
+            my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
 
-            next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
-            next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
+            # find all linked config items
+            my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
+                Object1   => 'Service',
+                Key1      => $Param{ServiceID},
+                Object2   => 'ITSMConfigItem',
+                State     => 'Valid',
+                Type      => $LinkType,
+                UserID    => 1,
+            );
 
-            if ( $ConfigItemData->{CurInciStateType} eq 'warning' ) {
-                $ServiceData{CurInciStateType} = 'warning';
-                next CONFIGITEMID;
+            # investigate the current incident state of each config item
+            CONFIGITEMID:
+            for my $ConfigItemID ( keys %LinkedConfigItemIDs ) {
+
+                # extract config item data
+                my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};
+
+                next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
+                next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
+
+                # check if service must be set to 'warning'
+                if ( $ConfigItemData->{CurInciStateType} eq 'warning' ) {
+                    $ServiceData{CurInciStateType} = 'warning';
+                    next CONFIGITEMID;
+                }
+
+                # check if service must be set to 'incident'
+                if ( $ConfigItemData->{CurInciStateType} eq 'incident' ) {
+                    $ServiceData{CurInciStateType} = 'incident';
+                    last CONFIGITEMID;
+                }
             }
 
-            if ( $ConfigItemData->{CurInciStateType} eq 'incident' ) {
-                $ServiceData{CurInciStateType} = 'incident';
-                last CONFIGITEMID;
-            }
+            # update the current incident state type from CIs of the service
+            $Self->ServicePreferencesSet(
+                ServiceID => $Param{ServiceID},
+                Key       => 'CurInciStateTypeFromCIs',
+                Value     => $ServiceData{CurInciStateType},
+                UserID    => 1,
+            );
         }
     }
 
@@ -439,11 +465,6 @@ sub ServiceGet {
     $ServiceData{CurInciState}     = $InciState->{Name};
     $ServiceData{CurInciStateType} = $InciState->{Functionality};
 # ---
-
-    # get service preferences
-    my %Preferences = $Self->ServicePreferencesGet(
-        ServiceID => $Param{ServiceID},
-    );
 
     # merge hash
     if (%Preferences) {
@@ -575,7 +596,7 @@ sub ServiceAdd {
     }
 
     # check service name
-    if ( $Param{Name} =~ m{ :: }xms ) {
+    if ( $Param{Name} =~ /::/ ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't add service! Invalid Service name '$Param{Name}'!",
@@ -707,7 +728,7 @@ sub ServiceUpdate {
     }
 
     # check service name
-    if ( $Param{Name} =~ m{ :: }xms ) {
+    if ( $Param{Name} =~ /::/ ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't update service! Invalid Service name '$Param{Name}'!",
@@ -738,7 +759,7 @@ sub ServiceUpdate {
         }
 
         # check, if selected parent was a child of this service
-        if ( $Param{FullName} =~ m{ \A ( \Q $OldServiceName \E ) :: }xms ) {
+        if ( $Param{FullName} =~ /^(\Q$OldServiceName\E)::/ ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => 'Can\'t update service! Invalid parent was selected.'
@@ -807,7 +828,7 @@ sub ServiceUpdate {
 
     # update childs
     for my $Child (@Childs) {
-        $Child->{Name} =~ s{ \A ( \Q $OldServiceName \E ) :: }{$Param{FullName}::}xms;
+        $Child->{Name} =~ s/^(\Q$OldServiceName\E)::/$Param{FullName}::/;
         $Self->{DBObject}->Do(
             SQL => 'UPDATE service SET name = ? WHERE id = ?',
             Bind => [ \$Child->{Name}, \$Child->{ServiceID} ],
@@ -1101,7 +1122,7 @@ sub CustomerUserServiceMemberAdd {
 
 =item ServicePreferencesSet()
 
-set queue preferences
+set service preferences
 
     $ServiceObject->ServicePreferencesSet(
         ServiceID => 123,
@@ -1120,7 +1141,7 @@ sub ServicePreferencesSet {
 
 =item ServicePreferencesGet()
 
-get queue preferences
+get service preferences
 
     my %Preferences = $ServiceObject->ServicePreferencesGet(
         ServiceID => 123,
@@ -1151,6 +1172,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-03-26 14:51:37 $
+$Revision: 1.15 $ $Date: 2010-04-13 17:40:20 $
 
 =cut
