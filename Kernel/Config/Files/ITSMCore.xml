@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.29 2010-01-30 11:44:42 reb Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.30 2010-04-13 12:28:28 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -390,7 +390,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ITSM::Frontend::TextArea" Required="1" Valid="1">
         <Description Lang="en">Width of ITSM textareas.</Description>
         <Description Lang="de">Anzahl der Zeichen pro Zeile in ITSM TextAreas.</Description>
