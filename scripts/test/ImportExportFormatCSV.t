@@ -1,8 +1,8 @@
 # --
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.9 2009-10-09 10:28:14 ub Exp $
+# $Id: ImportExportFormatCSV.t,v 1.10 2010-04-13 17:22:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,8 +83,8 @@ $Self->True(
 # define the reference hash
 my $FormatAttributesGet1Reference = [
     {
-        Key   => 'ColumnSeperator',
-        Name  => 'Column Seperator',
+        Key   => 'ColumnSeparator',
+        Name  => 'Column Separator',
         Input => {
             Type => 'Selection',
             Data => {
@@ -92,6 +92,7 @@ my $FormatAttributesGet1Reference = [
                 Semicolon => 'Semicolon (;)',
                 Colon     => 'Colon (:)',
                 Dot       => 'Dot (.)',
+                Comma     => 'Comma (,)',
             },
             Required     => 1,
             Translation  => 1,
@@ -288,7 +289,7 @@ my $ImportDataTests = [
         },
     },
 
-    # no column seperator and charset are given (check return false)
+    # no column Separator and charset are given (check return false)
     {
         SourceImportData => {
             ImportDataGet => {
@@ -299,7 +300,7 @@ my $ImportDataTests = [
         },
     },
 
-    # no column seperator is given (check return false)
+    # no column Separator is given (check return false)
     {
         SourceImportData => {
             FormatData => {
@@ -317,7 +318,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Dummy',
+                ColumnSeparator => 'Dummy',
             },
             ImportDataGet => {
                 TemplateID    => $TemplateIDs[2],
@@ -327,11 +328,11 @@ my $ImportDataTests = [
         },
     },
 
-    # invalid column seperator is given (check return false)
+    # invalid column Separator is given (check return false)
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Dummy',
+                ColumnSeparator => 'Dummy',
                 Charset         => 'UTF-8',
             },
             ImportDataGet => {
@@ -346,7 +347,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             ImportDataGet => {
@@ -362,7 +363,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             ImportDataGet => {
@@ -380,7 +381,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-MSExcel-Semicolon.csv',
@@ -397,11 +398,11 @@ my $ImportDataTests = [
         ],
     },
 
-    # all required values are given, but Tabulator is used as seperator (check the parsed content)
+    # all required values are given, but Tabulator is used as Separator (check the parsed content)
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-MSExcel-Semicolon.csv',
@@ -422,7 +423,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-MSExcel-Tabulator.csv',
@@ -439,11 +440,11 @@ my $ImportDataTests = [
         ],
     },
 
-    # all required values are given, but Semicolon is used as seperator (check the parsed content)
+    # all required values are given, but Semicolon is used as Separator (check the parsed content)
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-MSExcel-Tabulator.csv',
@@ -464,7 +465,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-OpenOffice-Semicolon.csv',
@@ -485,7 +486,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-OpenOffice-Tabulator.csv',
@@ -506,7 +507,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV001-OpenOffice-Colon.csv',
@@ -527,7 +528,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV002-MSExcel-Semicolon.csv',
@@ -547,7 +548,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV002-MSExcel-Tabulator.csv',
@@ -567,7 +568,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV002-OpenOffice-Semicolon.csv',
@@ -587,7 +588,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV002-OpenOffice-Tabulator.csv',
@@ -607,7 +608,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV002-OpenOffice-Colon.csv',
@@ -627,7 +628,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV003-MSExcel-Semicolon.csv',
@@ -648,7 +649,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV003-MSExcel-Tabulator.csv',
@@ -669,7 +670,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV003-OpenOffice-Semicolon.csv',
@@ -690,7 +691,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV003-OpenOffice-Tabulator.csv',
@@ -711,7 +712,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV003-OpenOffice-Colon.csv',
@@ -732,7 +733,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV004-MSExcel-Semicolon.csv',
@@ -752,7 +753,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV004-MSExcel-Tabulator.csv',
@@ -772,7 +773,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV004-OpenOffice-Semicolon.csv',
@@ -792,7 +793,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV004-OpenOffice-Tabulator.csv',
@@ -812,7 +813,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV004-OpenOffice-Colon.csv',
@@ -832,7 +833,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV005-MSExcel-Semicolon.csv',
@@ -852,7 +853,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV005-MSExcel-Tabulator.csv',
@@ -872,7 +873,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV005-OpenOffice-Semicolon.csv',
@@ -892,7 +893,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV005-OpenOffice-Tabulator.csv',
@@ -912,7 +913,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV005-OpenOffice-Colon.csv',
@@ -932,7 +933,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             SourceFile    => 'ImportExportFormatCSV006-OpenOffice-Semicolon.csv',
@@ -952,7 +953,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'UTF-8',
             },
             SourceFile    => 'ImportExportFormatCSV006-OpenOffice-Tabulator.csv',
@@ -972,7 +973,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'UTF-8',
             },
             SourceFile    => 'ImportExportFormatCSV006-OpenOffice-Colon.csv',
@@ -992,7 +993,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV007-OpenOffice-Semicolon.csv',
@@ -1013,7 +1014,7 @@ my $ImportDataTests = [
     {
         SourceImportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             SourceFile    => 'ImportExportFormatCSV008-OpenOffice-Semicolon.csv',
@@ -1247,7 +1248,7 @@ my $ExportDataTests = [
         },
     },
 
-    # no column seperator and charset are given (check return false)
+    # no column Separator and charset are given (check return false)
     {
         SourceExportData => {
             ExportDataSave => {
@@ -1258,7 +1259,7 @@ my $ExportDataTests = [
         },
     },
 
-    # no column seperator is given (check return false)
+    # no column Separator is given (check return false)
     {
         SourceExportData => {
             FormatData => {
@@ -1276,7 +1277,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dummy',
+                ColumnSeparator => 'Dummy',
             },
             ExportDataSave => {
                 TemplateID    => $TemplateIDs[21],
@@ -1286,11 +1287,11 @@ my $ExportDataTests = [
         },
     },
 
-    # invalid column seperator is given (check return false)
+    # invalid column Separator is given (check return false)
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dummy',
+                ColumnSeparator => 'Dummy',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1305,7 +1306,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1321,7 +1322,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1337,7 +1338,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1353,7 +1354,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1369,7 +1370,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1385,7 +1386,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1401,7 +1402,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1417,7 +1418,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1433,7 +1434,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1449,7 +1450,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1465,7 +1466,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1481,7 +1482,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1497,7 +1498,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1513,7 +1514,23 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Comma',
+                Charset         => 'ISO-8859-1',
+            },
+            ExportDataSave => {
+                TemplateID    => $TemplateIDs[23],
+                ExportDataRow => [ 'Row1-Col1', 'Row1-Col2', 'Row1-Col3' ],
+                UserID        => 1,
+            },
+        },
+        ReferenceDestinationContent => '"Row1-Col1","Row1-Col2","Row1-Col3"',
+    },
+
+    # all required values are given (check the parsed content)
+    {
+        SourceExportData => {
+            FormatData => {
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1529,7 +1546,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1545,7 +1562,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1561,7 +1578,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1577,7 +1594,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1594,7 +1611,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1610,7 +1627,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1626,7 +1643,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1642,7 +1659,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1659,7 +1676,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1675,7 +1692,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1691,7 +1708,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1713,7 +1730,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1741,7 +1758,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1763,7 +1780,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'ISO-8859-1',
             },
             ExportDataSave => {
@@ -1785,7 +1802,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Semicolon',
+                ColumnSeparator => 'Semicolon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1801,7 +1818,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Tabulator',
+                ColumnSeparator => 'Tabulator',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1817,7 +1834,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Colon',
+                ColumnSeparator => 'Colon',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
@@ -1833,7 +1850,7 @@ my $ExportDataTests = [
     {
         SourceExportData => {
             FormatData => {
-                ColumnSeperator => 'Dot',
+                ColumnSeparator => 'Dot',
                 Charset         => 'UTF-8',
             },
             ExportDataSave => {
