@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.82 2010-02-11 16:36:10 mb Exp $
+# $Id: FAQ.pm,v 1.83 2010-04-14 09:29:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.82 $) [1];
+$VERSION = qw($Revision: 1.83 $) [1];
 
 =head1 NAME
 
@@ -3034,7 +3034,7 @@ sub FAQApprovalTicketCreate {
             Body        => $Body,
             ContentType => "text/plain; charset=$Self->{ConfigObject}->Get('DefaultCharset')",
             UserID      => 1,
-            HistoryType => 'AddNote',
+            HistoryType => 'SystemRequest',
             HistoryComment =>
                 $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment},
         );
@@ -3166,6 +3166,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.82 $ $Date: 2010-02-11 16:36:10 $
+$Revision: 1.83 $ $Date: 2010-04-14 09:29:12 $
 
 =cut
