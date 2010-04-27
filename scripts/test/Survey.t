@@ -1,8 +1,8 @@
 # --
 # Survey.t - Survey tests
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.12 2009-04-15 10:49:04 mh Exp $
+# $Id: Survey.t,v 1.13 2010-04-27 13:02:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,13 +15,17 @@ use utf8;
 
 use vars qw($Self);
 
-use Kernel::System::User;
+use Kernel::System::CustomerUser;
+use Kernel::System::Email;
 use Kernel::System::Survey;
 use Kernel::System::Ticket;
+use Kernel::System::User;
 
-$Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-$Self->{TicketObject} = Kernel::System::Ticket->new( %{$Self} );
-$Self->{SurveyObject} = Kernel::System::Survey->new( %{$Self} );
+$Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
+$Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
+$Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
+$Self->{TicketObject}       = Kernel::System::Ticket->new( %{$Self} );
+$Self->{SurveyObject}       = Kernel::System::Survey->new( %{$Self} );
 
 # save original sendmail config
 my $SendmailModule = $Self->{ConfigObject}->Get('SendmailModule');

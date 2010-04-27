@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.31 2010-02-22 11:55:12 mb Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.32 2010-04-27 13:02:14 mh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
-    <Framework>2.1.x</Framework>
-    <Framework>2.2.x</Framework>
-    <Framework>2.3.x</Framework>
     <Framework>2.4.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
@@ -35,7 +32,7 @@
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/survey.png"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
     </Filelist>
-    <DatabaseInstall>
+    <DatabaseInstall Type="post">
         <TableCreate Name="survey">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="surveynumber" Required="false" Size="50" Type="VARCHAR"/>
@@ -125,7 +122,7 @@
             </Index>
         </TableCreate>
     </DatabaseInstall>
-    <DatabaseUpgrade>
+    <DatabaseUpgrade Type="post">
         <TableAlter Name="survey_question" Version="1.0.14">
             <ColumnChange NameOld="type" NameNew="question_type" Required="true" Size="50" Type="VARCHAR"/>
         </TableAlter>
@@ -139,7 +136,7 @@
             <Column Name="queue_id" Required="true" Type="INTEGER"/>
         </TableCreate>
     </DatabaseUpgrade>
-    <DatabaseUninstall>
+    <DatabaseUninstall Type="pre">
         <TableDrop Name="survey"/>
         <TableDrop Name="survey_queue"/>
         <TableDrop Name="survey_answer"/>
@@ -147,4 +144,108 @@
         <TableDrop Name="survey_request"/>
         <TableDrop Name="survey_vote"/>
     </DatabaseUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to install the OTRS package Survey.<br>
+        <br>
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket Survey zu installieren.<br>
+        <br>
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package Survey.<br>
+        <br>
+        <br>
+        </b>ATTENTION</b>
+        <br>
+        <br>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket Survey zu aktualisieren.<br>
+        <br>
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
+        If you uninstall this package, all database tables that were created during installation will be deleted.
+        All data from these tables will be irrevocably lost!
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Alle darin enthaltenen Daten gehen unwiderruflich verloren!
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
 </otrs_package>

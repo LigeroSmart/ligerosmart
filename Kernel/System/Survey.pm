@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.47 2010-04-27 13:02:14 mh Exp $
+# $Id: Survey.pm,v 1.48 2010-04-27 13:05:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Email;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -41,6 +41,7 @@ All survey functions. E. g. to add survey or and functions.
 create an object
 
     use Kernel::Config;
+    use Kernel::System::Encode;
     use Kernel::System::Log;
     use Kernel::System::Time;
     use Kernel::System::DB;
@@ -49,25 +50,35 @@ create an object
     use Kernel::System::Survey;
 
     my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
     my $LogObject = Kernel::System::Log->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
     );
     my $TimeObject = Kernel::System::Time->new(
         ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
     );
     my $MainObject = Kernel::System::Main->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         MainObject   => $MainObject,
     );
     my $UserObject = Kernel::System::User->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
+        MainObject   => $MainObject,
+        TimeObject   => $TimeObject,
         DBObject     => $DBObject,
+        EncodeObject => $EncodeObject,
     );
     my $SurveyObject = Kernel::System::Survey->new(
         ConfigObject => $ConfigObject,
@@ -2201,6 +2212,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2010-04-27 13:02:14 $
+$Revision: 1.48 $ $Date: 2010-04-27 13:05:42 $
 
 =cut
