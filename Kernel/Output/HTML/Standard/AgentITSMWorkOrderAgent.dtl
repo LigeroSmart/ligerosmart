@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.24 2010-02-08 12:09:09 bes Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.25 2010-04-27 20:45:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,8 +47,8 @@ document.observe( "dom:loaded", function() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAttribute::WorkOrderAgent"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAttribute::WorkOrderAgent"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAgent"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
+                $Env{"Box0"} $Text{"Edit"} $Text{"WorkOrderAgent"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
             </div>
         </td>
     </tr>
@@ -69,7 +69,7 @@ document.observe( "dom:loaded", function() {
                 <input type="hidden" name="UserSearchGroups" value="itsm-change">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"WorkOrderAttribute::WorkOrderAgent"}</td>
+                        <td class="contenthead">$Text{"WorkOrderAgent"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>
@@ -80,7 +80,7 @@ document.observe( "dom:loaded", function() {
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrderAttribute::WorkOrderAgent"}:
+                                        $Text{"WorkOrderAgent"}:
                                     </td>
                                     <td class="contentvalue">
 <!-- dtl:block:UserSearchAutoCompleteDivStart -->

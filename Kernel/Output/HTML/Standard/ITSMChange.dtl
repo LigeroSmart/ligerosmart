@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: ITSMChange.dtl,v 1.26 2010-02-11 16:43:47 mae Exp $
+# $Id: ITSMChange.dtl,v 1.27 2010-04-27 20:45:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -236,18 +236,18 @@
         <div class="label" title="$QData{"WorkOrderLabel"}">
             <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
             <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
-            |--> $QData{"WorkOrderNumber"}.
+                |--> $QData{"WorkOrderNumber"}.
             </a>
         </div>
 <!-- dtl:block:WorkOrderItemGraph -->
         <div class="workorder">
             <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" class="wodetail">
-            <span>
-            <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="left: $QData{"PlannedPadding"}%; width: $QData{"PlannedTicks"}%">&nbsp;</span>
-            </span>
-            <span style="margin-; margin-right: $QData{"ActualTrailing"}%;">
-            <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="left: $QData{"ActualPadding"}%; width: $QData{"ActualTicks"}%">&nbsp;</span>
-            </span>
+                <span>
+                    <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="left: $QData{"PlannedPadding"}%; width: $QData{"PlannedTicks"}%">&nbsp;</span>
+                </span>
+                <span style="margin-; margin-right: $QData{"ActualTrailing"}%;">
+                    <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="left: $QData{"ActualPadding"}%; width: $QData{"ActualTicks"}%">&nbsp;</span>
+                </span>
             </a>
             <div class="workorder_information_container">
                 <div class="workorder_information">
@@ -272,7 +272,7 @@
                             <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
                         </tr>
                         <tr class="searchpassive">
-                            <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderAgent"}:</td>
+                            <td class="contentkey">$Text{"WorkOrderAgent"}:</td>
                             <td class="contentvalue">
 <!-- dtl:block:EmptyWorkOrderAgent -->
                                 <div title="-">
@@ -287,19 +287,19 @@
                             </td>
                         </tr>
                         <tr class="searchactive">
-                            <td class="contentkey">$Text{"ChangeAttribute::PlannedStartTime"}:</td>
+                            <td class="contentkey">$Text{"PlannedStartTime"}:</td>
                             <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
                         </tr>
                         <tr class="searchpassive">
-                            <td class="contentkey">$Text{"ChangeAttribute::PlannedEndTime"}:</td>
+                            <td class="contentkey">$Text{"PlannedEndTime"}:</td>
                             <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
                         </tr>
                         <tr class="searchactive">
-                            <td class="contentkey">$Text{"ChangeAttribute::ActualStartTime"}:</td>
+                            <td class="contentkey">$Text{"ActualStartTime"}:</td>
                             <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
                         </tr>
                         <tr class="searchpassive">
-                            <td class="contentkey">$Text{"ChangeAttribute::ActualEndTime"}:</td>
+                            <td class="contentkey">$Text{"ActualEndTime"}:</td>
                             <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
                         </tr>
                         <tr class="contenthead">

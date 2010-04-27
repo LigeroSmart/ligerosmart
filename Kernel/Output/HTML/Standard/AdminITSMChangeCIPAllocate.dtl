@@ -2,7 +2,7 @@
 # AdminITSMChangeCIPAllocate.dtl - provides HTML form for AdminITSMChangeCIPAllocate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.9 2010-02-26 16:21:24 bes Exp $
+# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.10 2010-04-27 20:39:02 ub Exp $
 # $OldId: AdminITSMCIPAllocate.dtl,v 1.8 2010/01/31 17:00:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -30,12 +30,7 @@
                 <table width="800" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-# ---
-# ITSM Change Management
-# ---
-#                            $Text{"Priority"} $Text{"allocation"}:
-                            $Text{"ChangeAttribute::Priority"} $Text{"allocation"}:
-# ---
+                            $Text{"Priority"} $Text{"allocation"}:
                         </td>
                     </tr>
                     <tr>

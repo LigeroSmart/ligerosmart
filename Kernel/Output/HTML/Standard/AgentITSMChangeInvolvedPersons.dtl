@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.33 2010-02-08 12:09:09 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.34 2010-04-27 20:39:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -117,7 +117,7 @@ document.observe( "dom:loaded", function() {
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"ChangeAttribute::ChangeManager"}:
+                                        $Text{"ChangeManager"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">
@@ -146,7 +146,7 @@ document.observe( "dom:loaded", function() {
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"ChangeAttribute::ChangeBuilder"}:
+                                        $Text{"ChangeBuilder"}:
                                         <font color="red" title="$Text{"Required"}">*</font>
                                     </td>
                                     <td class="contentvalue">

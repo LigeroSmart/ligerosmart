@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.59 2010-03-09 12:11:24 reb Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.60 2010-04-27 20:33:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -634,8 +634,8 @@ sub Run {
     # build drop-down with time types
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => [
-            { Key => 'PlannedStartTime', Value => 'ChangeAttribute::PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'ChangeAttribute::PlannedEndTime' },
+            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
+            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
         ],
         Name => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',

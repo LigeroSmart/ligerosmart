@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.39 2010-02-05 18:13:51 ub Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.40 2010-04-27 20:36:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -228,7 +228,7 @@ sub Run {
                 PrintChange    => $PrintChange,
                 PrintWorkOrder => $PrintWorkOrder,
                 Title =>
-                    $Self->{LayoutObject}->{LanguageObject}->Get("ChangeAttribute::$Attribute"),
+                    $Self->{LayoutObject}->{LanguageObject}->Get($Attribute),
                 LongText => $Change->{ $Attribute . 'Plain' },
             );
         }
@@ -396,7 +396,7 @@ sub Run {
                 PrintChange    => 0,
                 PrintWorkOrder => 1,
                 Title =>
-                    $Self->{LayoutObject}->{LanguageObject}->Get("WorkOrderAttribute::$Attribute"),
+                    $Self->{LayoutObject}->{LanguageObject}->Get($Attribute),
                 LongText => $WorkOrder->{ $Attribute . 'Plain' },
             );
         }
@@ -586,7 +586,7 @@ sub _PrepareAndAddInfoRow {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(RowSpec Data TranslationPrefix)) {
+    for my $Argument (qw(RowSpec Data)) {
         if ( !defined( $Param{$Argument} ) ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -596,7 +596,7 @@ sub _PrepareAndAddInfoRow {
         }
     }
 
-    my ( $RowSpec, $Data, $TranslationPrefix ) = @Param{qw(RowSpec Data TranslationPrefix)};
+    my ( $RowSpec, $Data ) = @Param{qw(RowSpec Data)};
 
     # short name, just for convenience
     my $Attribute = $RowSpec->{Attribute};
@@ -605,7 +605,7 @@ sub _PrepareAndAddInfoRow {
     return if $RowSpec->{IsOptional} && !$Self->{Config}->{$Attribute};
 
     # keys are always translatable
-    my $Key = $RowSpec->{Key} || "$TranslationPrefix$Attribute";
+    my $Key = $RowSpec->{Key} || $Attribute;
     $Key = $Self->{LayoutObject}->{LanguageObject}->Get($Key);
 
     # determine the value
@@ -851,9 +851,8 @@ sub _OutputChangeInfo {
 
         # fill @TableLeft and @TableRight
         $Self->_PrepareAndAddInfoRow(
-            RowSpec           => $RowSpec,
-            Data              => { %{$Change}, %ComplicatedValue },
-            TranslationPrefix => 'ChangeAttribute::',
+            RowSpec => $RowSpec,
+            Data => { %{$Change}, %ComplicatedValue },
         );
     }
 
@@ -980,12 +979,12 @@ sub _OutputWorkOrderInfo {
         {
             Attribute => 'WrappableChangeTitle',
             Table     => \@TableLeft,
-            Key       => 'ChangeAttribute::ChangeTitle',
+            Key       => 'ChangeTitle',
         },
         {
             Attribute => 'ChangeNumber',
             Table     => \@TableLeft,
-            Key       => 'ChangeAttribute::ChangeNumber',
+            Key       => 'ChangeNumber',
         },
         {
             Attribute           => 'WorkOrderState',
@@ -1006,13 +1005,13 @@ sub _OutputWorkOrderInfo {
             Attribute  => 'PlannedEffort',
             IsOptional => 1,
             Table      => \@TableLeft,
-            Key        => 'ChangeAttribute::PlannedEffort',
+            Key        => 'PlannedEffort',
         },
         {
             Attribute  => 'AccountedTime',
             IsOptional => 1,
             Table      => \@TableLeft,
-            Key        => 'ChangeAttribute::AccountedTime',
+            Key        => 'AccountedTime',
         },
         {
             Attribute => 'Attachments',
@@ -1023,25 +1022,25 @@ sub _OutputWorkOrderInfo {
             Attribute   => 'PlannedStartTime',
             Table       => \@TableRight,
             ValueIsTime => 1,
-            Key         => 'ChangeAttribute::PlannedStartTime',
+            Key         => 'PlannedStartTime',
         },
         {
             Attribute   => 'PlannedEndTime',
             Table       => \@TableRight,
             ValueIsTime => 1,
-            Key         => 'ChangeAttribute::PlannedEndTime',
+            Key         => 'PlannedEndTime',
         },
         {
             Attribute   => 'ActualStartTime',
             Table       => \@TableRight,
             ValueIsTime => 1,
-            Key         => 'ChangeAttribute::ActualStartTime',
+            Key         => 'ActualStartTime',
         },
         {
             Attribute   => 'ActualEndTime',
             Table       => \@TableRight,
             ValueIsTime => 1,
-            Key         => 'ChangeAttribute::ActualEndTime',
+            Key         => 'ActualEndTime',
         },
         {
             Attribute   => 'CreateTime',
@@ -1062,9 +1061,8 @@ sub _OutputWorkOrderInfo {
         # fill @TableLeft and @TableRight
         # the workorder data overrides the change data
         $Self->_PrepareAndAddInfoRow(
-            RowSpec           => $RowSpec,
-            Data              => { %{$Change}, %{$WorkOrder}, %ComplicatedValue },
-            TranslationPrefix => 'WorkOrderAttribute::',
+            RowSpec => $RowSpec,
+            Data => { %{$Change}, %{$WorkOrder}, %ComplicatedValue },
         );
     }
 
@@ -1256,19 +1254,19 @@ sub _OutputWorkOrderOverview {
                 { Font => 'ProportionalBold', Content => $Translation->Get('State'), },
                 {
                     Font    => 'ProportionalBold',
-                    Content => $Translation->Get('ChangeAttribute::PlannedStartTime'),
+                    Content => $Translation->Get('PlannedStartTime'),
                 },
                 {
                     Font    => 'ProportionalBold',
-                    Content => $Translation->Get('ChangeAttribute::PlannedEndTime'),
+                    Content => $Translation->Get('PlannedEndTime'),
                 },
                 {
                     Font    => 'ProportionalBold',
-                    Content => $Translation->Get('ChangeAttribute::ActualStartTime'),
+                    Content => $Translation->Get('ActualStartTime'),
                 },
                 {
                     Font    => 'ProportionalBold',
-                    Content => $Translation->Get('ChangeAttribute::ActualEndTime'),
+                    Content => $Translation->Get('ActualEndTime'),
                 },
             ];
 

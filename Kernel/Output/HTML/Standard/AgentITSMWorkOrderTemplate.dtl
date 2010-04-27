@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderTemplate.dtl - provides HTML form for AgentITSMWorkOrderTemplate
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderTemplate.dtl,v 1.10 2010-02-04 12:28:24 bes Exp $
+# $Id: AgentITSMWorkOrderTemplate.dtl,v 1.11 2010-04-27 20:45:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,8 +31,8 @@ function submit_compose() {
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Imperative::Save"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Text{"as Template"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Imperative::Save"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Text{"as Template"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Save "}$Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Text{"as Template"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
+                $Env{"Box0"} $Text{"Save "}$Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Text{"as Template"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
             </div>
         </td>
     </tr>
@@ -51,7 +51,7 @@ function submit_compose() {
                 <input type="hidden" name="WorkOrderID"  value="$QData{"WorkOrderID"}">
                 <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
                     <tr>
-                        <td class="contenthead">$Text{"Imperative::Save"} $Text{"Workorder"} $Text{"as Template"}</td>
+                        <td class="contenthead">$Text{"Save Workorder"} $Text{"as Template"}</td>
                     </tr>
                     <tr class="contentbody">
                         <td>

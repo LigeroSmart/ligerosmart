@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.30 2010-02-08 10:32:41 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.31 2010-04-27 20:36:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -286,8 +286,8 @@ sub Run {
     # build drop-down with time types
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => [
-            { Key => 'PlannedStartTime', Value => 'ChangeAttribute::PlannedStartTime' },
-            { Key => 'PlannedEndTime',   Value => 'ChangeAttribute::PlannedEndTime' },
+            { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
+            { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
         ],
         Name       => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType},

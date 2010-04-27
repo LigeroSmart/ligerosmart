@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AdminITSMChangeCIPAllocate.pm,v 1.5 2010-03-01 12:43:20 ub Exp $
+# $Id: AdminITSMChangeCIPAllocate.pm,v 1.6 2010-04-27 20:33:50 ub Exp $
 # $OldId: AdminITSMCIPAllocate.pm,v 1.11 2009/05/18 09:48:35 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -187,12 +187,7 @@ sub Run {
             keys %{ $ObjectOption{ImpactList} }
             )
         {
-# ---
-# ITSM Change Management
-# ---
-#            $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'Impact';
-            $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'ChangeAttribute::Impact';
-# ---
+            $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'Impact';
             $AllocateMatrix->[$Counter1]->[0]->{ImpactKey}    = $Impact;
             $AllocateMatrix->[$Counter1]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$Impact};
             $AllocateMatrix->[$Counter1]->[0]->{Class}        = 'Description';
@@ -223,7 +218,7 @@ sub Run {
             keys %{ $ObjectOption{CategoryList} }
             )
         {
-            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}  = 'ChangeAttribute::Category';
+            $AllocateMatrix->[0]->[$Counter2]->{ObjectType}  = 'Category';
             $AllocateMatrix->[0]->[$Counter2]->{CategoryKey} = $Category;
             $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
                 = $ObjectOption{CategoryList}{$Category};

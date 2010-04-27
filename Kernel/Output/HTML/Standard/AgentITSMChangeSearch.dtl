@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.37 2010-02-08 12:09:09 bes Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.38 2010-04-27 20:42:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -128,15 +128,15 @@ document.observe( "dom:loaded", function() {
                                     <td class="contentvalue"><input type="text" name="ChangeNumber" size="30" value="$QData{"ChangeNumber"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ChangeAttribute::ChangeTitle"}</td>
+                                    <td class="contentkey">$Text{"ChangeTitle"}</td>
                                     <td class="contentvalue"><input type="text" name="ChangeTitle" size="30" value="$QData{"ChangeTitle"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"WorkOrderAttribute::WorkOrderTitle"}</td>
+                                    <td class="contentkey">$Text{"WorkOrderTitle"}</td>
                                     <td class="contentvalue"><input type="text" name="WorkOrderTitle" size="30" value="$QData{"WorkOrderTitle"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ChangeAttribute::CABAgent"} ($Text{"e.g."} 234231)</td>
+                                    <td class="contentkey">$Text{"CABAgent"} ($Text{"e.g."} 234231)</td>
                                     <td class="contentvalue">
 <!-- dtl:block:CABAgentSearchAutoCompleteDivStart1 -->
                                         <div id="myAutoComplete1" class="myAutoComplete">
@@ -162,7 +162,7 @@ document.observe( "dom:loaded", function() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ChangeAttribute::CABCustomer"} ($Text{"e.g."} US4231)</td>
+                                    <td class="contentkey">$Text{"CABCustomer"} ($Text{"e.g."} US4231)</td>
                                     <td class="contentvalue">
 <!-- dtl:block:CABCustomerSearchAutoCompleteDivStart-->
                                         <div id="myAutoComplete" class="myAutoComplete">
@@ -201,27 +201,27 @@ document.observe( "dom:loaded", function() {
                                     <col width="50%">
                                 </colgroup>
                                 <tr>
-                                    <td class="contentkey">$Text{"ITSM Change"} $Text{"ChangeAttribute::Description"}</td>
+                                    <td class="contentkey">$Text{"ITSM Change"} $Text{"Description"}</td>
                                     <td class="contentvalue"><input type="text" name="Description" size="30" value="$QData{"Description"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ITSM Change"} $Text{"ChangeAttribute::Justification"}</td>
+                                    <td class="contentkey">$Text{"ITSM Change"} $Text{"Justification"}</td>
                                     <td class="contentvalue"><input type="text" name="Justification" size="30" value="$QData{"Justification"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"WorkOrderAttribute::Instruction"}</td>
+                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"Instruction"}</td>
                                     <td class="contentvalue"><input type="text" name="WorkOrderInstruction" size="30" value="$QData{"WorkOrderInstruction"}"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"WorkOrderAttribute::Report"}</td>
+                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"Report"}</td>
                                     <td class="contentvalue"><input type="text" name="WorkOrderReport" size="30" value="$QData{"WorkOrderReport"}"/></td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr>
-                        <td class="contenthead">$Text{"ITSM Change"} $Text{"ChangeAttribute::Priority"}</td>
-                        <td class="contenthead">$Text{"ITSM Change"} $Text{"ChangeAttribute::Impact"}</td>
+                        <td class="contenthead">$Text{"ITSM Change"} $Text{"Priority"}</td>
+                        <td class="contenthead">$Text{"ITSM Change"} $Text{"Impact"}</td>
                     </tr>
                     <tr>
                         <td class="contentbody">$Data{"ChangePrioritySelectionString"}</td>
@@ -229,15 +229,15 @@ document.observe( "dom:loaded", function() {
                     </tr>
                     <tr>
                         <td class="contenthead">$Text{"Change Category"}</td>
-                        <td class="contenthead">$Text{"ChangeAttribute::ChangeState"}</td>
+                        <td class="contenthead">$Text{"ChangeState"}</td>
                     </tr>
                     <tr>
                         <td class="contentbody">$Data{"ChangeCategorySelectionString"}</td>
                         <td class="contentbody">$Data{"ChangeStateSelectionString"}</td>
                     </tr>
                     <tr>
-                        <td class="contenthead">$Text{"ChangeAttribute::ChangeManager"}</td>
-                        <td class="contenthead">$Text{"ChangeAttribute::ChangeBuilder"}</td>
+                        <td class="contenthead">$Text{"ChangeManager"}</td>
+                        <td class="contenthead">$Text{"ChangeBuilder"}</td>
                     </tr>
                     <tr>
                         <td class="contentbody">$Data{"ChangeManagerSelectionString"}</td>
@@ -252,8 +252,8 @@ document.observe( "dom:loaded", function() {
                         <td class="contentbody">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="contenthead">$Text{"WorkOrderAttribute::WorkOrderState"}</td>
-                        <td class="contenthead">$Text{"WorkOrderAttribute::WorkOrderAgent"}</td>
+                        <td class="contenthead">$Text{"WorkOrderState"}</td>
+                        <td class="contenthead">$Text{"WorkOrderAgent"}</td>
                     </tr>
                     <tr>
                         <td class="contentbody">$Data{"WorkOrderStateSelectionString"}</td>

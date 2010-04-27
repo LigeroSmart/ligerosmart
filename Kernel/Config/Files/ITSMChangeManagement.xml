@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.204 2010-03-29 07:04:55 bes Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.205 2010-04-27 20:30:45 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -368,7 +368,7 @@
                 <Title>Change Schedule</Title>
                 <NavBar>
                     <Description>Change Schedule</Description>
-                    <Name>ITSM Schedule</Name>
+                    <Name>Schedule</Name>
                     <Image>overview.png</Image>
                     <Link>Action=AgentITSMChangeSchedule</Link>
                     <Type></Type>
@@ -606,7 +606,7 @@
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Workorder Report</Description>
-                <Title>WorkOrderAttribute::Report</Title>
+                <Title>Report</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
         </Setting>
@@ -1000,7 +1000,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuWithPermissionFromChange</Item>
-                <Item Key="Name">WorkOrderAttribute::WorkOrderAgent</Item>
+                <Item Key="Name">WorkOrderAgent</Item>
                 <Item Key="Description">Set the agent for the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAgent&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
@@ -1015,8 +1015,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::ITSMWorkOrderMenuGeneric</Item>
-                <Item Key="Name">WorkOrderAttribute::Report</Item>
-                <Item Key="Description">WorkOrderAttribute::Report</Item>
+                <Item Key="Name">Report</Item>
+                <Item Key="Description">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderReport&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
             </Hash>

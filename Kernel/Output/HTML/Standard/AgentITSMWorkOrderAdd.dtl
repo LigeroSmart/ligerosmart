@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.51 2010-02-08 10:32:41 bes Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.52 2010-04-27 20:42:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -167,7 +167,7 @@ function submit_compose() {
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrderAttribute::Instruction"}:
+                                        $Text{"Instruction"}:
                                     </td>
                                     <td class="contentvalue">
                                         <div>
@@ -183,7 +183,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrderAttribute::WorkOrderType"}:
+                                        $Text{"WorkOrderType"}:
                                     </td>
                                     <td class="contentvalue">
 <!-- dtl:block:WorkOrderType -->
@@ -200,7 +200,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrderAttribute::PlannedStartTime"}:
+                                        $Text{"PlannedStartTime"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PlannedStartTimeString"}
@@ -212,7 +212,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"WorkOrderAttribute::PlannedEndTime"}:
+                                        $Text{"PlannedEndTime"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PlannedEndTimeString"}
@@ -224,7 +224,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
 <!-- dtl:block:ShowPlannedEffort -->
                                 <tr>
-                                    <td class="contentkey">$Text{"WorkOrderAttribute::PlannedEffort"}:</td>
+                                    <td class="contentkey">$Text{"PlannedEffort"}:</td>
 
                                     <td class="contentvalue">
                                         <div>

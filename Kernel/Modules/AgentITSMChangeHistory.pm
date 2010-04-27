@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.45 2010-01-31 13:28:07 mae Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.46 2010-04-27 20:33:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -358,7 +358,7 @@ sub Run {
                 $HistoryEntryType .= 'ID';
             }
 
-            # handle action add with id
+            # handle action execute
             if ( $HistoryEntryType eq 'ActionExecute' ) {
 
                 # get content elements

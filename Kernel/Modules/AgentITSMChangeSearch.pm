@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.53 2010-02-08 10:32:41 bes Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.54 2010-04-27 20:36:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -603,12 +603,12 @@ sub _MaskForm {
     # setup for the time search fields
     my @TimeTypes = (
         { Prefix => 'Requested',    Title => 'Requested (by customer) Date', },
-        { Prefix => 'PlannedStart', Title => 'ChangeAttribute::PlannedStartTime', },
-        { Prefix => 'PlannedEnd',   Title => 'ChangeAttribute::PlannedEndTime', },
-        { Prefix => 'ActualStart',  Title => 'ChangeAttribute::ActualStartTime', },
-        { Prefix => 'ActualEnd',    Title => 'ChangeAttribute::ActualEndTime', },
-        { Prefix => 'Create',       Title => 'ChangeAttribute::CreateTime', },
-        { Prefix => 'Change',       Title => 'ChangeAttribute::ChangeTime', },
+        { Prefix => 'PlannedStart', Title => 'PlannedStartTime', },
+        { Prefix => 'PlannedEnd',   Title => 'PlannedEndTime', },
+        { Prefix => 'ActualStart',  Title => 'ActualStartTime', },
+        { Prefix => 'ActualEnd',    Title => 'ActualEndTime', },
+        { Prefix => 'Create',       Title => 'CreateTime', },
+        { Prefix => 'Change',       Title => 'ChangeTime', },
     );
 
     TIMETYPE:

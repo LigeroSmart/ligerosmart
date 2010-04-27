@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.21 2010-02-04 12:40:56 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.22 2010-04-27 20:39:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -278,15 +278,15 @@ sub TableCreateComplex {
                 Width   => 200,
             },
             {
-                Content => 'WorkOrderAttribute::WorkOrderTitle',
+                Content => 'WorkOrderTitle',
                 Width   => 200,
             },
             {
-                Content => 'ChangeAttribute::ChangeTitle',
+                Content => 'ChangeTitle',
                 Width   => 200,
             },
             {
-                Content => 'WorkOrderAttribute::WorkOrderState',
+                Content => 'WorkOrderState',
                 Width   => 100,
             },
             {
@@ -528,7 +528,7 @@ sub SearchOptionList {
         },
         {
             Key  => 'ChangeTitle',
-            Name => 'ChangeAttribute::ChangeTitle',
+            Name => 'ChangeTitle',
             Type => 'Text',
         },
         {
@@ -538,7 +538,7 @@ sub SearchOptionList {
         },
         {
             Key  => 'WorkOrderTitle',
-            Name => 'WorkOrderAttribute::WorkOrderTitle',
+            Name => 'WorkOrderTitle',
             Type => 'Text',
         },
     );
@@ -591,6 +591,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2010-02-04 12:40:56 $
+$Revision: 1.22 $ $Date: 2010-04-27 20:39:02 $
 
 =cut

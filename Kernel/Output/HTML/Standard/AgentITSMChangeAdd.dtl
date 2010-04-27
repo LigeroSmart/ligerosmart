@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.49 2010-04-07 09:45:48 bes Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.50 2010-04-27 20:39:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -183,7 +183,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"ChangeAttribute::Justification"}:
+                                        $Text{"Justification"}:
                                     </td>
                                     <td class="contentvalue">
                                         <div>
@@ -196,7 +196,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"ChangeAttribute::Category"}:
+                                        $Text{"Category"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"CategorySelectionString"}
@@ -208,7 +208,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"ChangeAttribute::Impact"}:
+                                        $Text{"Impact"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"ImpactSelectionString"}
@@ -220,7 +220,7 @@ $Include{"RichTextEditorITSM"}
                                 </tr>
                                 <tr>
                                     <td class="contentkey">
-                                        $Text{"ChangeAttribute::Priority"}:
+                                        $Text{"Priority"}:
                                     </td>
                                     <td class="contentvalue">
                                         $Data{"PrioritySelectionString"}

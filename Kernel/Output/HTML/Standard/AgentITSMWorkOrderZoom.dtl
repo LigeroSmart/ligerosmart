@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.41 2010-02-08 11:21:10 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.42 2010-04-27 20:45:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,10 +51,10 @@
                     </td>
                     <td>
                         <span style="font-weight:bold;">
-                        $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}
-                        <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeZoom&amp;ChangeID=$LQData{"ChangeID"}">
-                        $QData{"ChangeTitle","70"}
-                        </a>
+                            $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}
+                            <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeZoom&amp;ChangeID=$LQData{"ChangeID"}">
+                                $QData{"ChangeTitle","70"}
+                            </a>
                         </span>
                     </td>
                 </tr>
@@ -64,8 +64,8 @@
                     </td>
                     <td>
                         <span style="font-weight:bold; font-size:10px; font-style:italic;">
-                        $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
-                        <span style="color:#557799;">$QData{"WorkOrderTitle","70"}</span>
+                            $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
+                            <span style="color:#557799;">$QData{"WorkOrderTitle","70"}</span>
                         </span>
                     </td>
                 </tr>
@@ -78,8 +78,8 @@
                 </colgroup>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"WorkOrderAttribute::Instruction"}">
-                            $Text{"WorkOrderAttribute::Instruction"}:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div title="$Text{"Instruction"}">
+                            $Text{"Instruction"}:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                     <td class="contentvalue">
@@ -89,8 +89,8 @@
                 <tr><td colspan="2">&nbsp;</td></tr>
                 <tr>
                     <td class="contentkey">
-                        <div title="$Text{"WorkOrderAttribute::Report"}">
-                            $Text{"WorkOrderAttribute::Report"}:&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div title="$Text{"Report"}">
+                            $Text{"Report"}:&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                     </td>
                     <td class="contentvalue">
@@ -143,7 +143,7 @@
 <!-- dtl:block:Meta -->
             <table border="0" cellspacing="1" cellpadding="0" width="100%">
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::WorkOrderState"}: </b></td>
+                    <td><b>$Text{"WorkOrderState"}: </b></td>
                     <td>
                         <table border="0" cellpadding="0" cellspacing="0">
                             <tbody>
@@ -162,7 +162,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::WorkOrderType"}: </b></td>
+                    <td><b>$Text{"WorkOrderType"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyWorkOrderType -->
                         <div title="-">
@@ -180,7 +180,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::PlannedStartTime"}: </b></td>
+                    <td><b>$Text{"PlannedStartTime"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyPlannedStartTime -->
                         <div title="-">
@@ -195,7 +195,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::PlannedEndTime"}: </b></td>
+                    <td><b>$Text{"PlannedEndTime"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyPlannedEndTime -->
                         <div title="-">
@@ -210,7 +210,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::ActualStartTime"}: </b></td>
+                    <td><b>$Text{"ActualStartTime"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyActualStartTime -->
                         <div title="-">
@@ -225,7 +225,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::ActualEndTime"}: </b></td>
+                    <td><b>$Text{"ActualEndTime"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyActualEndTime -->
                         <div title="-">
@@ -244,7 +244,7 @@
                 </tr>
 <!-- dtl:block:ShowPlannedEffort -->
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::PlannedEffort"}: </b></td>
+                    <td><b>$Text{"PlannedEffort"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyPlannedEffort -->
                         <div title="-">
@@ -261,7 +261,7 @@
 <!-- dtl:block:ShowPlannedEffort -->
 <!-- dtl:block:ShowAccountedTime -->
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::AccountedTime"}: </b></td>
+                    <td><b>$Text{"AccountedTime"}: </b></td>
                     <td>
 <!-- dtl:block:EmptyAccountedTime -->
                         <div title="-">
@@ -298,7 +298,7 @@
                     <td colspan="2">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td><b>$Text{"WorkOrderAttribute::WorkOrderAgent"}:</b></td>
+                    <td><b>$Text{"WorkOrderAgent"}:</b></td>
                     <td>
 <!-- dtl:block:EmptyWorkOrderAgent -->
                         <div title="-">
