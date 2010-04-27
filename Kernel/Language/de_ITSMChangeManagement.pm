@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.72 2010-02-26 07:57:03 reb Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.73 2010-04-27 20:29:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.72 $) [1];
+$VERSION = qw($Revision: 1.73 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -34,7 +34,14 @@ sub Data {
     $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
     $Lang->{'Create Change'}                        = 'Change erstellen';
     $Lang->{'e.g.'}                                 = 'z. B.';
-    $Lang->{'Imperative::Save'}                     = 'Speichere';
+
+    # workaraound for the imparative of the word 'save' (the space is important!)
+    $Lang->{'Save '}                                = 'Speichere ';
+
+    $Lang->{'Save CAB'}                             = 'Speichere CAB';
+    $Lang->{'Save Change CAB'}                      = 'Speichere Change CAB';
+    $Lang->{'Save Change'}                          = 'Speichere Change';
+    $Lang->{'Save Workorder'}                       = 'Speichere Workorder';
     $Lang->{'New time'}                             = 'Neue Zeit';
     $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
     $Lang->{'The planned end time is invalid!'}     = 'Die geplante Endzeit ist ungültig!';
@@ -60,7 +67,7 @@ sub Data {
     # Change menu
     $Lang->{'ITSM Change'}                           = 'Change';
     $Lang->{'ITSM Workorder'}                        = 'Workorder';
-    $Lang->{'ITSM Schedule'}                         = 'Schedule';
+    $Lang->{'Schedule'}                              = 'Schedule';
     $Lang->{'Involved Persons'}                      = 'Beteiligte Personen';
     $Lang->{'Add Workorder'}                         = 'Workorder hinzufügen';
     $Lang->{'Template'}                              = 'Vorlage';
@@ -94,50 +101,40 @@ sub Data {
     $Lang->{'A template must have a name!'} = 'Eine Vorlage benötigt einen Namen!';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
-    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Benötigte Zeit';
-    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
-    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
-    $Lang->{'ChangeAttribute::CABAgent'}         = 'CAB Agent';
-    $Lang->{'ChangeAttribute::CABAgents'}        = 'CAB Agents';
-    $Lang->{'ChangeAttribute::CABCustomer'}      = 'CAB Kunde';
-    $Lang->{'ChangeAttribute::CABCustomers'}     = 'CAB Kunden';
-    $Lang->{'ChangeAttribute::Category'}         = 'Kategorie';
-    $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Change Builder';
-    $Lang->{'ChangeAttribute::ChangeBy'}         = 'Geändert von';
-    $Lang->{'ChangeAttribute::ChangeManager'}    = 'Change Manager';
-    $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Change Nummer';
-    $Lang->{'ChangeAttribute::ChangeTime'}       = 'Geändert';
-    $Lang->{'ChangeAttribute::ChangeState'}      = 'Change Status';
-    $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Change Titel';
-    $Lang->{'ChangeAttribute::CreateBy'}         = 'Erstellt von';
-    $Lang->{'ChangeAttribute::CreateTime'}       = 'Erstellt';
-    $Lang->{'ChangeAttribute::Description'}      = 'Beschreibung';
-    $Lang->{'ChangeAttribute::Impact'}           = 'Auswirkung';
-    $Lang->{'ChangeAttribute::Justification'}    = 'Begründung';
-    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
-    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Geplantes Ende';
-    $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Geplanter Start';
-    $Lang->{'ChangeAttribute::Priority'}         = 'Priorität';
-    $Lang->{'ChangeAttribute::RequestedTime'}    = 'Wunschtermin';
+    $Lang->{'AccountedTime'}    = 'Benötigte Zeit';
+    $Lang->{'ActualEndTime'}    = 'Tatsächliches Ende';
+    $Lang->{'ActualStartTime'}  = 'Tatsächlicher Start';
+    $Lang->{'CABAgent'}         = 'CAB Agent';
+    $Lang->{'CABAgents'}        = 'CAB Agents';
+    $Lang->{'CABCustomer'}      = 'CAB Kunde';
+    $Lang->{'CABCustomers'}     = 'CAB Kunden';
+    $Lang->{'Category'}         = 'Kategorie';
+    $Lang->{'ChangeBuilder'}    = 'Change Builder';
+    $Lang->{'ChangeBy'}         = 'Geändert von';
+    $Lang->{'ChangeManager'}    = 'Change Manager';
+    $Lang->{'ChangeNumber'}     = 'Change Nummer';
+    $Lang->{'ChangeTime'}       = 'Geändert';
+    $Lang->{'ChangeState'}      = 'Change Status';
+    $Lang->{'ChangeTitle'}      = 'Change Titel';
+    $Lang->{'CreateBy'}         = 'Erstellt von';
+    $Lang->{'CreateTime'}       = 'Erstellt';
+    $Lang->{'Description'}      = 'Beschreibung';
+    $Lang->{'Impact'}           = 'Auswirkung';
+    $Lang->{'Justification'}    = 'Begründung';
+    $Lang->{'PlannedEffort'}    = 'Geplanter Aufwand';
+    $Lang->{'PlannedEndTime'}   = 'Geplantes Ende';
+    $Lang->{'PlannedStartTime'} = 'Geplanter Start';
+    $Lang->{'Priority'}         = 'Priorität';
+    $Lang->{'RequestedTime'}    = 'Wunschtermin';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
-    $Lang->{'WorkOrderAttribute::AccountedTime'}    = 'Benötigte Zeit';
-    $Lang->{'WorkOrderAttribute::ActualEndTime'}    = 'Tatsächliches Ende';
-    $Lang->{'WorkOrderAttribute::ActualStartTime'}  = 'Tatsächlicher Start';
-    $Lang->{'WorkOrderAttribute::ChangeBy'}         = 'Geändert von';
-    $Lang->{'WorkOrderAttribute::ChangeTime'}       = 'Geändert von';
-    $Lang->{'WorkOrderAttribute::CreateBy'}         = 'Erstellt von';
-    $Lang->{'WorkOrderAttribute::CreateTime'}       = 'Erstellt';
-    $Lang->{'WorkOrderAttribute::Instruction'}      = 'Anweisung';
-    $Lang->{'WorkOrderAttribute::PlannedEffort'}    = 'Geplanter Aufwand';
-    $Lang->{'WorkOrderAttribute::PlannedEndTime'}   = 'Geplantes Ende';
-    $Lang->{'WorkOrderAttribute::PlannedStartTime'} = 'Geplanter Start';
-    $Lang->{'WorkOrderAttribute::Report'}           = 'Bericht';
-    $Lang->{'WorkOrderAttribute::WorkOrderAgent'}   = 'Workorder Agent';
-    $Lang->{'WorkOrderAttribute::WorkOrderNumber'}  = 'Workorder Nummer';
-    $Lang->{'WorkOrderAttribute::WorkOrderState'}   = 'Workorder Status';
-    $Lang->{'WorkOrderAttribute::WorkOrderTitle'}   = 'Workorder Titel';
-    $Lang->{'WorkOrderAttribute::WorkOrderType'}    = 'Workorder Typ';
+    $Lang->{'Instruction'}      = 'Anweisung';
+    $Lang->{'Report'}           = 'Bericht';
+    $Lang->{'WorkOrderAgent'}   = 'Workorder Agent';
+    $Lang->{'WorkOrderNumber'}  = 'Workorder Nummer';
+    $Lang->{'WorkOrderState'}   = 'Workorder Status';
+    $Lang->{'WorkOrderTitle'}   = 'Workorder Titel';
+    $Lang->{'WorkOrderType'}    = 'Workorder Typ';
 
     # Change history
     $Lang->{'ChangeHistory::ChangeAdd'}              = 'Neuer Change (ID=%s)';
@@ -248,15 +245,10 @@ sub Data {
     $Lang->{'backout'}   = 'Backout Plan';
     $Lang->{'pir'}       = 'PIR (Post Implementation Review)';
 
-    # Template types
-    $Lang->{'TemplateType::ITSMChange'}    = 'Change';
-    $Lang->{'TemplateType::ITSMWorkOrder'} = 'Workorder';
-    $Lang->{'TemplateType::CAB'}           = 'CAB';
-    $Lang->{'TemplateType::ITSMCondition'} = 'Bedingung';
-
     # objects that can be used in condition expressions and actions
     $Lang->{'ITSMChange'}    = 'Change';
     $Lang->{'ITSMWorkOrder'} = 'Workorder';
+    $Lang->{'ITSMCondition'} = 'Bedingung';
 
     # Overviews
     $Lang->{'Change Schedule'} = 'Change Schedule';
@@ -289,22 +281,22 @@ sub Data {
     $Lang->{'Add new action'}                           = 'Füge eine neue Aktion hinzu';
     $Lang->{'Any expression'}                           = 'Beliebiger logischer Ausdruck';
     $Lang->{'All expressions'}                          = 'Alle logischen Ausdrücke';
-    $Lang->{'ITSMCondition::Selector::any'}             = 'beliebige';
-    $Lang->{'ITSMCondition::Selector::all'}             = 'alle';
-    $Lang->{'ITSMCondition::Operator::is'}              = 'ist';
-    $Lang->{'ITSMCondition::Operator::is not'}          = 'ist nicht';
-    $Lang->{'ITSMCondition::Operator::is empty'}        = 'ist leer';
-    $Lang->{'ITSMCondition::Operator::is not empty'}    = 'ist nicht leer';
-    $Lang->{'ITSMCondition::Operator::is greater than'} = 'ist grösser als';
-    $Lang->{'ITSMCondition::Operator::is less than'}    = 'ist kleiner als';
-    $Lang->{'ITSMCondition::Operator::is before'}       = 'ist vor';
-    $Lang->{'ITSMCondition::Operator::is after'}        = 'ist nach';
-    $Lang->{'ITSMCondition::Operator::contains'}        = 'enthält';
-    $Lang->{'ITSMCondition::Operator::not contains'}    = 'enthält nicht';
-    $Lang->{'ITSMCondition::Operator::begins with'}     = 'beginnt mit';
-    $Lang->{'ITSMCondition::Operator::ends with'}       = 'endet mit';
-    $Lang->{'ITSMCondition::Operator::set'}             = 'setze';
-    $Lang->{'ITSMCondition::Operator::lock'}            = 'sperre';
+    $Lang->{'any'}                                      = 'beliebige';
+    $Lang->{'all'}                                      = 'alle';
+    $Lang->{'is'}                                       = 'ist';
+    $Lang->{'is not'}                                   = 'ist nicht';
+    $Lang->{'is empty'}                                 = 'ist leer';
+    $Lang->{'is not empty'}                             = 'ist nicht leer';
+    $Lang->{'is greater than'}                          = 'ist grösser als';
+    $Lang->{'is less than'}                             = 'ist kleiner als';
+    $Lang->{'is before'}                                = 'ist vor';
+    $Lang->{'is after'}                                 = 'ist nach';
+    $Lang->{'contains'}                                 = 'enthält';
+    $Lang->{'not contains'}                             = 'enthält nicht';
+    $Lang->{'begins with'}                              = 'beginnt mit';
+    $Lang->{'ends with'}                                = 'endet mit';
+    $Lang->{'set'}                                      = 'setze';
+    $Lang->{'lock'}                                     = 'sperre';
 
     # Change Zoom
     $Lang->{'Change Initiator(s)'} = 'Change Initiator(s)';
@@ -312,7 +304,7 @@ sub Data {
     # AgentITSMChangePrint
     $Lang->{'Linked Objects'} = 'Verknüpfte Objekte';
     $Lang->{'Full-Text Search in Change and Workorder'} =
-        'Volltextsuche in Change and Workorder';
+        'Volltextsuche in Change und Workorder';
 
     # AgentITSMChangeSearch
     $Lang->{'No XXX settings'} = "Keine '%s' Auswahl";

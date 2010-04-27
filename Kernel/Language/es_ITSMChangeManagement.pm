@@ -3,7 +3,7 @@
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.2 2010-04-27 20:17:39 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.3 2010-04-27 20:29:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -36,7 +36,7 @@ sub Data {
     $Lang->{'Create Change'}                        = 'Crear un Cambio';
     $Lang->{'e.g.'}                                 = 'ej.';
 
-    # workaraound for the imparative of the word 'save' (the space is imporatant!)
+    # workaraound for the imparative of the word 'save' (the space is important!)
     $Lang->{'Save '}                                = 'Guardar ';
 
     $Lang->{'Save CAB'}                             = 'Guardar CAB';
