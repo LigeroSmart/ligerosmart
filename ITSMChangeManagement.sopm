@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.187 2010-04-27 20:19:15 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.188 2010-04-27 22:23:07 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
-    <PackageRequired Version="2.0.1">ITSMCore</PackageRequired>
+    <PackageRequired Version="2.0.2">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -1789,7 +1789,7 @@
         <br>
         <b>REQUIRED OTRS PACKAGES</b>
         <ul>
-        <li>ITSMCore 2.0.1</li>
+        <li>ITSMCore 2.0.2</li>
         </ul>
         <br>
         ((enjoy))<br>
@@ -1807,7 +1807,7 @@
         <br>
         <b>BENÖTIGTE OTRS-PAKETE</b>
         <ul>
-        <li>ITSMCore 2.0.1</li>
+        <li>ITSMCore 2.0.2</li>
         </ul>
         <br>
         ((enjoy))<br>
@@ -1866,7 +1866,7 @@
         <br>
         <b>REQUIRED OTRS PACKAGES</b>
         <ul>
-        <li>ITSMCore 2.0.1</li>
+        <li>ITSMCore 2.0.2</li>
         </ul>
         <br>
         ((enjoy))<br>
@@ -1892,7 +1892,7 @@
         <br>
         <b>BENÖTIGTE OTRS-PAKETE</b>
         <ul>
-        <li>ITSMCore 2.0.1</li>
+        <li>ITSMCore 2.0.2</li>
         </ul>
         <br>
         ((enjoy))<br>
