@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.43 2010-03-22 10:21:27 ub Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.44 2010-04-27 22:21:10 ub Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.242.2.6 2010/03/09 09:37:46 dz Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.</Description>
@@ -8,7 +8,7 @@
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 2.0.1</String>
+            <String Regex="">OTRS::ITSM 2.0.2</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -25,7 +25,7 @@
     </ConfigItem>
     <ConfigItem Name="Package::RepositoryList" Required="0" Valid="1">
         <Description Lang="en">List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&amp;File=" and Content="Some Name").</Description>
-        <Description Lang="de">Liste der zur Verfügung stehenden Online-Quellen (es koennen z. B. auch andere Installationen als Online-Quellen verwendet werden mit der Verwendung von Key="http://example.com/otrs/public.pl?Action=PublicRepository&amp;File=" and Content="Ein Name").</Description>
+        <Description Lang="de">Liste der zur Verfï¿½gung stehenden Online-Quellen (es koennen z. B. auch andere Installationen als Online-Quellen verwendet werden mit der Verwendung von Key="http://example.com/otrs/public.pl?Action=PublicRepository&amp;File=" and Content="Ein Name").</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Package</SubGroup>
         <Setting>
