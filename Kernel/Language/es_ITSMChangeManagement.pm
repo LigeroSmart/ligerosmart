@@ -3,7 +3,7 @@
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.1 2010-02-10 17:03:17 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.2 2010-04-27 20:17:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -35,7 +35,14 @@ sub Data {
     $Lang->{'Create a change from this ticket!'}    = 'Crear un cambio a partir de este ticket!';
     $Lang->{'Create Change'}                        = 'Crear un Cambio';
     $Lang->{'e.g.'}                                 = 'ej.';
-    $Lang->{'Imperative::Save'}                     = 'Guardar';
+
+    # workaraound for the imparative of the word 'save' (the space is imporatant!)
+    $Lang->{'Save '}                                = 'Guardar ';
+
+    $Lang->{'Save CAB'}                             = 'Guardar CAB';
+    $Lang->{'Save Change CAB'}                      = 'Guardar Change CAB';
+    $Lang->{'Save Change'}                          = 'Guardar Change';
+    $Lang->{'Save Workorder'}                       = 'Guardar Workorder';
     $Lang->{'New time'}                             = 'Nuevo intervalo de tiempo';
     $Lang->{'Requested (by customer) Date'}         = 'Fecha solicitada (por el cliente)';
     $Lang->{'The planned end time is invalid!'}     = 'La fecha de finalización planeada es inválida!';
@@ -45,7 +52,7 @@ sub Data {
     $Lang->{'Time type'}                            = 'Tipo de fecha';
     $Lang->{'Do you really want to delete this template?'} = 'Realmente desea eliminar esta plantilla?';
     $Lang->{'Change Advisory Board'}                = 'Comités de Cambio';
-    $Lang->{'CAB'}                                  = 'XXCAB';
+    $Lang->{'CAB'}                                  = 'CAB';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Mis Cambios';
@@ -60,7 +67,7 @@ sub Data {
     # Change menu
     $Lang->{'ITSM Change'}                           = 'Cambio';
     $Lang->{'ITSM Workorder'}                        = 'Orden de Trabajo';
-    $Lang->{'ITSM Schedule'}                         = 'Agenda';
+    $Lang->{'Schedule'}                              = 'Agenda';
     $Lang->{'Involved Persons'}                      = 'Personas Involucradas';
     $Lang->{'Add Workorder'}                         = 'Adicionar Orden de Trabajo';
     $Lang->{'Template'}                              = 'Plantilla';
@@ -94,50 +101,40 @@ sub Data {
     $Lang->{'A template must have a name!'} = 'Toda plantilla debe tener un nombre!';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
-    $Lang->{'ChangeAttribute::AccountedTime'}    = 'Tiempo Contabilizado';
-    $Lang->{'ChangeAttribute::ActualEndTime'}    = 'Finalización Real';
-    $Lang->{'ChangeAttribute::ActualStartTime'}  = 'Inicio Real';
-    $Lang->{'ChangeAttribute::CABAgent'}         = 'Agente del CAB';
-    $Lang->{'ChangeAttribute::CABAgents'}        = 'Agentes del CAB';
-    $Lang->{'ChangeAttribute::CABCustomer'}      = 'Cliente del CAB';
-    $Lang->{'ChangeAttribute::CABCustomers'}     = 'Clientes del CAB';
-    $Lang->{'ChangeAttribute::Category'}         = 'Categoria';
-    $Lang->{'ChangeAttribute::ChangeBuilder'}    = 'Constructor del Cambio';
-    $Lang->{'ChangeAttribute::ChangeBy'}         = 'Modificado por';
-    $Lang->{'ChangeAttribute::ChangeManager'}    = 'Administrador del Cambio';
-    $Lang->{'ChangeAttribute::ChangeNumber'}     = 'Numero del Cambio';
-    $Lang->{'ChangeAttribute::ChangeTime'}       = 'Fecha del Cambio';
-    $Lang->{'ChangeAttribute::ChangeState'}      = 'Estado del Cambio';
-    $Lang->{'ChangeAttribute::ChangeTitle'}      = 'Titulo del Cambio';
-    $Lang->{'ChangeAttribute::CreateBy'}         = 'Creado por';
-    $Lang->{'ChangeAttribute::CreateTime'}       = 'Fecha de Creación';
-    $Lang->{'ChangeAttribute::Description'}      = 'Descripción';
-    $Lang->{'ChangeAttribute::Impact'}           = 'Impacto';
-    $Lang->{'ChangeAttribute::Justification'}    = 'Justificación';
-    $Lang->{'ChangeAttribute::PlannedEffort'}    = 'Esfuerzo Planeado';
-    $Lang->{'ChangeAttribute::PlannedEndTime'}   = 'Finalización Planeada';
-    $Lang->{'ChangeAttribute::PlannedStartTime'} = 'Inicio Planeado';
-    $Lang->{'ChangeAttribute::Priority'}         = 'Prioridad';
-    $Lang->{'ChangeAttribute::RequestedTime'}    = 'Fecha Solicitada';
+    $Lang->{'AccountedTime'}    = 'Tiempo Contabilizado';
+    $Lang->{'ActualEndTime'}    = 'Finalización Real';
+    $Lang->{'ActualStartTime'}  = 'Inicio Real';
+    $Lang->{'CABAgent'}         = 'Agente del CAB';
+    $Lang->{'CABAgents'}        = 'Agentes del CAB';
+    $Lang->{'CABCustomer'}      = 'Cliente del CAB';
+    $Lang->{'CABCustomers'}     = 'Clientes del CAB';
+    $Lang->{'Category'}         = 'Categoria';
+    $Lang->{'ChangeBuilder'}    = 'Constructor del Cambio';
+    $Lang->{'ChangeBy'}         = 'Modificado por';
+    $Lang->{'ChangeManager'}    = 'Administrador del Cambio';
+    $Lang->{'ChangeNumber'}     = 'Numero del Cambio';
+    $Lang->{'ChangeTime'}       = 'Fecha del Cambio';
+    $Lang->{'ChangeState'}      = 'Estado del Cambio';
+    $Lang->{'ChangeTitle'}      = 'Titulo del Cambio';
+    $Lang->{'CreateBy'}         = 'Creado por';
+    $Lang->{'CreateTime'}       = 'Fecha de Creación';
+    $Lang->{'Description'}      = 'Descripción';
+    $Lang->{'Impact'}           = 'Impacto';
+    $Lang->{'Justification'}    = 'Justificación';
+    $Lang->{'PlannedEffort'}    = 'Esfuerzo Planeado';
+    $Lang->{'PlannedEndTime'}   = 'Finalización Planeada';
+    $Lang->{'PlannedStartTime'} = 'Inicio Planeado';
+    $Lang->{'Priority'}         = 'Prioridad';
+    $Lang->{'RequestedTime'}    = 'Fecha Solicitada';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
-    $Lang->{'WorkOrderAttribute::AccountedTime'}    = 'Tiempo Contabilizado';
-    $Lang->{'WorkOrderAttribute::ActualEndTime'}    = 'Finalización Real';
-    $Lang->{'WorkOrderAttribute::ActualStartTime'}  = 'Inicio Real';
-    $Lang->{'WorkOrderAttribute::ChangeBy'}         = 'Modificada por';
-    $Lang->{'WorkOrderAttribute::ChangeTime'}       = 'Fecha de la modificación';
-    $Lang->{'WorkOrderAttribute::CreateBy'}         = 'Creada por';
-    $Lang->{'WorkOrderAttribute::CreateTime'}       = 'Fecha de Creación';
-    $Lang->{'WorkOrderAttribute::Instruction'}      = 'Instrucción';
-    $Lang->{'WorkOrderAttribute::PlannedEffort'}    = 'Esfuerzo Planeado';
-    $Lang->{'WorkOrderAttribute::PlannedEndTime'}   = 'Finalización Planeada';
-    $Lang->{'WorkOrderAttribute::PlannedStartTime'} = 'Inicio Planeado';
-    $Lang->{'WorkOrderAttribute::Report'}           = 'Reporte';
-    $Lang->{'WorkOrderAttribute::WorkOrderAgent'}   = 'Agente de la Orden de Trabajo';
-    $Lang->{'WorkOrderAttribute::WorkOrderNumber'}  = 'Número de la Orden de Trabajo';
-    $Lang->{'WorkOrderAttribute::WorkOrderState'}   = 'Estado de la Orden de Trabajo';
-    $Lang->{'WorkOrderAttribute::WorkOrderTitle'}   = 'Título de la Orden de Trabajo';
-    $Lang->{'WorkOrderAttribute::WorkOrderType'}    = 'Tipo de Orden de Trabajo';
+    $Lang->{'Instruction'}      = 'Instrucción';
+    $Lang->{'Report'}           = 'Reporte';
+    $Lang->{'WorkOrderAgent'}   = 'Agente de la Orden de Trabajo';
+    $Lang->{'WorkOrderNumber'}  = 'Número de la Orden de Trabajo';
+    $Lang->{'WorkOrderState'}   = 'Estado de la Orden de Trabajo';
+    $Lang->{'WorkOrderTitle'}   = 'Título de la Orden de Trabajo';
+    $Lang->{'WorkOrderType'}    = 'Tipo de Orden de Trabajo';
 
     # Change history
     $Lang->{'ChangeHistory::ChangeAdd'}              = 'Nuevo Cambio (ID=%s)';
@@ -148,6 +145,7 @@ sub Data {
     $Lang->{'ChangeHistory::ChangeCABDelete'}        = 'Comité de Cambios Eliminado %s';
     $Lang->{'ChangeHistory::ChangeAttachmentAdd'}    = 'Nuevo Adjunto: %s';
     $Lang->{'ChangeHistory::ChangeAttachmentDelete'} = 'Borrar Adjunto %s';
+    $Lang->{'ChangeHistory::ChangeNotificationSent'} = 'Notificación enviada a %s (Evento: %s)';
 
     # workorder history
     $Lang->{'WorkOrderHistory::WorkOrderAdd'}              = 'Nueva Orden de Trabajo (ID=%s)';
@@ -245,15 +243,10 @@ sub Data {
     $Lang->{'backout'}   = 'Plan de Vuelta Atrás';
     $Lang->{'pir'}       = 'Revisión Post-Implementación';
 
-    # Template types
-    $Lang->{'TemplateType::ITSMChange'}    = 'Cambio';
-    $Lang->{'TemplateType::ITSMWorkOrder'} = 'Orden de Trabajo';
-    $Lang->{'TemplateType::CAB'}           = 'Comité de Aprobación de Cambios';
-    $Lang->{'TemplateType::ITSMCondition'} = 'Condición';
-
     # objects that can be used in condition expressions and actions
     $Lang->{'ITSMChange'}    = 'Cambio';
     $Lang->{'ITSMWorkOrder'} = 'Orden de Trabajo';
+    $Lang->{'ITSMCondition'} = 'Condición';
 
     # Overviews
     $Lang->{'Change Schedule'} = 'Cambiar Programación';
@@ -286,22 +279,22 @@ sub Data {
     $Lang->{'Add new action'}                           = 'Adicionar nueva acción';
     $Lang->{'Any expression'}                           = 'Cualquier expresión';
     $Lang->{'All expressions'}                          = 'Todas las expresiones';
-    $Lang->{'ITSMCondition::Selector::any'}             = 'Cualquiera';
-    $Lang->{'ITSMCondition::Selector::all'}             = 'Todo';
-    $Lang->{'ITSMCondition::Operator::is'}              = 'es';
-    $Lang->{'ITSMCondition::Operator::is not'}          = 'no es';
-    $Lang->{'ITSMCondition::Operator::is empty'}        = 'está vacía';
-    $Lang->{'ITSMCondition::Operator::is not empty'}    = 'no está vacía';
-    $Lang->{'ITSMCondition::Operator::is greater than'} = 'es más grande que';
-    $Lang->{'ITSMCondition::Operator::is less than'}    = 'es menor que';
-    $Lang->{'ITSMCondition::Operator::is before'}       = 'está antes';
-    $Lang->{'ITSMCondition::Operator::is after'}        = 'está después';
-    $Lang->{'ITSMCondition::Operator::contains'}        = 'contiene';
-    $Lang->{'ITSMCondition::Operator::not contains'}    = 'no contiene';
-    $Lang->{'ITSMCondition::Operator::begins with'}     = 'comienza con';
-    $Lang->{'ITSMCondition::Operator::ends with'}       = 'finaliza con';
-    $Lang->{'ITSMCondition::Operator::set'}             = 'configurada';
-    $Lang->{'ITSMCondition::Operator::lock'}            = 'bloqueada';
+    $Lang->{'any'}                                         = 'Cualquiera';
+    $Lang->{'all'}                                         = 'Todo';
+    $Lang->{'is'}                                          = 'es';
+    $Lang->{'is not'}                                      = 'no es';
+    $Lang->{'is empty'}                                    = 'está vacía';
+    $Lang->{'is not empty'}                                = 'no está vacía';
+    $Lang->{'is greater than'}                             = 'es más grande que';
+    $Lang->{'is less than'}                                = 'es menor que';
+    $Lang->{'is before'}                                   = 'está antes';
+    $Lang->{'is after'}                                    = 'está después';
+    $Lang->{'contains'}                                    = 'contiene';
+    $Lang->{'not contains'}                                = 'no contiene';
+    $Lang->{'begins with'}                                 = 'comienza con';
+    $Lang->{'ends with'}                                   = 'finaliza con';
+    $Lang->{'set'}                                         = 'configurada';
+    $Lang->{'lock'}                                        = 'bloqueada';
 
     # Change Zoom
     $Lang->{'Change Initiator(s)'} = 'Iniciador(es) del cambios';
