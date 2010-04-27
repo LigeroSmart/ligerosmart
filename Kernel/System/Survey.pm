@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Survey.pm - all survey funtions
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.46 2009-04-02 16:22:19 mh Exp $
+# $Id: Survey.pm,v 1.47 2010-04-27 13:02:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,11 +17,10 @@ use warnings;
 use Digest::MD5;
 use Kernel::System::CustomerUser;
 use Kernel::System::Email;
-use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =head1 NAME
 
@@ -89,12 +88,14 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject TimeObject DBObject MainObject UserObject)) {
+    for my $Object (
+        qw(ConfigObject LogObject TimeObject DBObject MainObject EncodeObject UserObject TicketObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{SendmailObject}     = Kernel::System::Email->new(%Param);
-    $Self->{TicketObject}       = Kernel::System::Ticket->new(%Param);
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
+    $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
+    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
 
     return $Self;
 }
@@ -111,12 +112,14 @@ sub SurveyList {
     my ( $Self, %Param ) = @_;
 
     # get survey list
-    $Self->{DBObject}->Prepare( SQL => 'SELECT id FROM survey ORDER BY create_time DESC' );
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM survey ORDER BY create_time DESC',
+    );
 
     # fetch the results
     my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
+        push @List, $Row[0];
     }
 
     return @List;
@@ -139,7 +142,7 @@ sub SurveyGet {
     if ( !$Param{SurveyID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need SurveyID!'
+            Message  => 'Need SurveyID!',
         );
         return;
     }
@@ -232,7 +235,7 @@ sub SurveyStatusSet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -275,7 +278,7 @@ sub SurveyStatusSet {
         $Self->{DBObject}->Prepare(
             SQL => "SELECT id FROM survey_question"
                 . " WHERE survey_id = $Param{SurveyID} AND "
-                . "(question_type = 'Radio' OR question_type = 'Checkbox')"
+                . "(question_type = 'Radio' OR question_type = 'Checkbox')",
         );
 
         # fetch the result
@@ -309,7 +312,7 @@ sub SurveyStatusSet {
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Master' ) {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
-                    . "WHERE id = $Param{SurveyID}"
+                    . "WHERE id = $Param{SurveyID}",
             );
             return 'StatusSet';
         }
@@ -319,10 +322,10 @@ sub SurveyStatusSet {
         # set status Master
         if ( $Param{NewStatus} eq 'Master' ) {
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'"
+                SQL => "UPDATE survey SET status = 'Valid' WHERE status = 'Master'",
             );
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}"
+                SQL => "UPDATE survey SET status = 'Master' WHERE id = $Param{SurveyID}",
             );
             return 'StatusSet';
         }
@@ -330,7 +333,7 @@ sub SurveyStatusSet {
         # set status Invalid
         elsif ( $Param{NewStatus} eq 'Invalid' ) {
             $Self->{DBObject}->Do(
-                SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}"
+                SQL => "UPDATE survey SET status = 'Invalid' WHERE id = $Param{SurveyID}",
             );
             return 'StatusSet';
         }
@@ -341,7 +344,7 @@ sub SurveyStatusSet {
         if ( $Param{NewStatus} eq 'Valid' || $Param{NewStatus} eq 'Invalid' ) {
             $Self->{DBObject}->Do(
                 SQL => "UPDATE survey SET status = '$Param{NewStatus}' "
-                    . "WHERE id = $Param{SurveyID}"
+                    . "WHERE id = $Param{SurveyID}",
             );
             return 'StatusSet';
         }
@@ -380,7 +383,7 @@ sub SurveySave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -423,7 +426,7 @@ sub SurveySave {
             . "notification_body = '$Param{NotificationBody}', "
             . "change_time = current_timestamp, "
             . "change_by = $Param{UserID} "
-            . "WHERE id = $Param{SurveyID}"
+            . "WHERE id = $Param{SurveyID}",
     );
 
     # insert new survey-queue relations
@@ -498,7 +501,7 @@ sub SurveyNew {
             . "current_timestamp, "
             . "$Param{UserID}, "
             . "current_timestamp, "
-            . "$Param{UserID})"
+            . "$Param{UserID})",
     );
 
     # get the id of the survey
@@ -554,7 +557,7 @@ sub QuestionList {
     if ( !$Param{SurveyID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need SurveyID!'
+            Message  => 'Need SurveyID!',
         );
         return;
     }
@@ -565,7 +568,7 @@ sub QuestionList {
     # get all questions of a survey
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, survey_id, question, question_type "
-            . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position"
+            . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position",
     );
 
     # fetch the result
@@ -576,7 +579,8 @@ sub QuestionList {
         $Data{SurveyID}   = $Row[1];
         $Data{Question}   = $Row[2];
         $Data{Type}       = $Row[3];
-        push( @List, \%Data );
+
+        push @List, \%Data;
     }
 
     return @List;
@@ -603,7 +607,7 @@ sub QuestionAdd {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -629,7 +633,7 @@ sub QuestionAdd {
             . "current_timestamp, "
             . "$Param{UserID}, "
             . "current_timestamp, "
-            . "$Param{UserID})"
+            . "$Param{UserID})",
     );
 }
 
@@ -652,7 +656,7 @@ sub QuestionDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -665,14 +669,14 @@ sub QuestionDelete {
 
     # delete all answers of a question
     $Self->{DBObject}->Do(
-        SQL => "DELETE FROM survey_answer WHERE question_id = $Param{QuestionID}"
+        SQL => "DELETE FROM survey_answer WHERE question_id = $Param{QuestionID}",
     );
 
     # delete the question
     return $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_question WHERE "
             . "id = $Param{QuestionID} AND "
-            . "survey_id = $Param{SurveyID}"
+            . "survey_id = $Param{SurveyID}",
     );
 }
 
@@ -704,19 +708,21 @@ sub QuestionSort {
     # get all question of a survey (sorted by position)
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM survey_question"
-            . " WHERE survey_id = $Param{SurveyID} ORDER BY position"
+            . " WHERE survey_id = $Param{SurveyID} ORDER BY position",
     );
 
     my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
+        push @List, $Row[0];
     }
 
     my $Counter = 1;
     for my $QuestionID (@List) {
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_question SET position = $Counter WHERE id = $QuestionID"
+            SQL => "UPDATE survey_question SET position = $Counter WHERE id = $QuestionID",
         );
+    }
+    continue {
         $Counter++;
     }
 
@@ -742,7 +748,7 @@ sub QuestionUp {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -789,14 +795,14 @@ sub QuestionUp {
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET "
             . "position = $Position "
-            . "WHERE id = $QuestionIDDown"
+            . "WHERE id = $QuestionIDDown",
     );
 
     # update position
     return $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET "
             . "position = $PositionUp "
-            . "WHERE id = $Param{QuestionID}"
+            . "WHERE id = $Param{QuestionID}",
     );
 }
 
@@ -819,7 +825,7 @@ sub QuestionDown {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -866,14 +872,14 @@ sub QuestionDown {
     $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET "
             . "position = $Position "
-            . "WHERE id = $QuestionIDUp"
+            . "WHERE id = $QuestionIDUp",
     );
 
     # update position
     return $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET "
             . "position = $PositionDown "
-            . "WHERE id = $Param{QuestionID}"
+            . "WHERE id = $Param{QuestionID}",
     );
 }
 
@@ -894,7 +900,7 @@ sub QuestionGet {
     if ( !$Param{QuestionID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need QuestionID!'
+            Message  => 'Need QuestionID!',
         );
         return;
     }
@@ -948,7 +954,7 @@ sub QuestionSave {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -968,8 +974,8 @@ sub QuestionSave {
             . "question = '$Param{Question}', "
             . "change_time = current_timestamp, "
             . "change_by = $Param{UserID} "
-            . "WHERE id = $Param{QuestionID} ",
-        "AND survey_id = $Param{SurveyID}",
+            . "WHERE id = $Param{QuestionID} "
+            . "AND survey_id = $Param{SurveyID}",
     );
 }
 
@@ -990,7 +996,7 @@ sub QuestionCount {
     if ( !$Param{SurveyID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need SurveyID!'
+            Message  => 'Need SurveyID!',
         );
         return;
     }
@@ -1030,7 +1036,7 @@ sub AnswerList {
     if ( !$Param{QuestionID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need QuestionID!'
+            Message  => 'Need QuestionID!',
         );
         return;
     }
@@ -1041,7 +1047,7 @@ sub AnswerList {
     # get answer list
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, question_id, answer "
-            . " FROM survey_answer WHERE question_id = $Param{QuestionID} ORDER BY position"
+            . " FROM survey_answer WHERE question_id = $Param{QuestionID} ORDER BY position",
     );
 
     # fetcht the result
@@ -1051,7 +1057,8 @@ sub AnswerList {
         $Data{AnswerID}   = $Row[0];
         $Data{QuestionID} = $Row[1];
         $Data{Answer}     = $Row[2];
-        push( @List, \%Data );
+
+        push @List, \%Data;
     }
 
     return @List;
@@ -1077,7 +1084,7 @@ sub AnswerAdd {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1102,7 +1109,7 @@ sub AnswerAdd {
             . "current_timestamp, "
             . "$Param{UserID}, "
             . "current_timestamp, "
-            . "$Param{UserID})"
+            . "$Param{UserID})",
     );
 }
 
@@ -1125,7 +1132,7 @@ sub AnswerDelete {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1139,7 +1146,7 @@ sub AnswerDelete {
     # delete answer
     return $Self->{DBObject}->Do(
         SQL => "DELETE FROM survey_answer WHERE "
-            . "id = $Param{AnswerID} AND question_id = $Param{QuestionID}"
+            . "id = $Param{AnswerID} AND question_id = $Param{QuestionID}",
     );
 }
 
@@ -1160,7 +1167,7 @@ sub AnswerSort {
     if ( !$Param{QuestionID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need QuestionID!'
+            Message  => 'Need QuestionID!',
         );
         return;
     }
@@ -1171,13 +1178,13 @@ sub AnswerSort {
     # get answer list
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id FROM survey_answer"
-            . " WHERE question_id = $Param{QuestionID} ORDER BY position"
+            . " WHERE question_id = $Param{QuestionID} ORDER BY position",
     );
 
     # fetch the result
     my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push( @List, $Row[0] );
+        push @List, $Row[0];
     }
 
     my $Counter = 1;
@@ -1185,8 +1192,10 @@ sub AnswerSort {
 
         # update position
         $Self->{DBObject}->Do(
-            SQL => "UPDATE survey_answer SET position = $Counter WHERE id = $AnswerID"
+            SQL => "UPDATE survey_answer SET position = $Counter WHERE id = $AnswerID",
         );
+    }
+    continue {
         $Counter++;
     }
 
@@ -1212,7 +1221,7 @@ sub AnswerUp {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1257,14 +1266,14 @@ sub AnswerUp {
 
     # update position
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDDown"
+        SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDDown",
     );
 
     # update position
     return $Self->{DBObject}->Do(
         SQL => "UPDATE survey_answer SET "
             . "position = $PositionUp "
-            . "WHERE id = $Param{AnswerID}"
+            . "WHERE id = $Param{AnswerID}",
     );
 }
 
@@ -1287,7 +1296,7 @@ sub AnswerDown {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1332,14 +1341,14 @@ sub AnswerDown {
 
     # update position
     $Self->{DBObject}->Do(
-        SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDUp"
+        SQL => "UPDATE survey_answer SET position = $Position WHERE id = $AnswerIDUp",
     );
 
     # update position
     return $Self->{DBObject}->Do(
         SQL => "UPDATE survey_answer SET "
             . "position = $PositionDown "
-            . "WHERE id = $Param{AnswerID}"
+            . "WHERE id = $Param{AnswerID}",
     );
 }
 
@@ -1360,7 +1369,7 @@ sub AnswerGet {
     if ( !$Param{AnswerID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need QuestionID!'
+            Message  => 'Need QuestionID!',
         );
         return;
     }
@@ -1413,7 +1422,7 @@ sub AnswerSave {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1435,8 +1444,8 @@ sub AnswerSave {
             . "answer = '$Param{Answer}', "
             . "change_time = current_timestamp, "
             . "change_by = $Param{UserID} "
-            . "WHERE id = $Param{AnswerID} ",
-        "AND question_id = $Param{QuestionID}",
+            . "WHERE id = $Param{AnswerID} "
+            . "AND question_id = $Param{QuestionID}",
     );
 }
 
@@ -1457,7 +1466,7 @@ sub AnswerCount {
     if ( !$Param{QuestionID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need QuestionID!'
+            Message  => 'Need QuestionID!',
         );
         return;
     }
@@ -1497,7 +1506,7 @@ sub VoteList {
     if ( !$Param{SurveyID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need SurveyID!'
+            Message  => 'Need SurveyID!',
         );
         return;
     }
@@ -1509,7 +1518,7 @@ sub VoteList {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, ticket_id, send_time, vote_time "
             . "FROM survey_request WHERE survey_id = $Param{SurveyID} "
-            . "AND valid_id = 0 ORDER BY vote_time DESC"
+            . "AND valid_id = 0 ORDER BY vote_time DESC",
     );
 
     # fetch the result
@@ -1520,7 +1529,8 @@ sub VoteList {
         $Data{TicketID}  = $Row[1];
         $Data{SendTime}  = $Row[2];
         $Data{VoteTime}  = $Row[3];
-        push( @List, \%Data );
+
+        push @List, \%Data;
     }
 
     return @List;
@@ -1545,7 +1555,7 @@ sub VoteGet {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1569,7 +1579,8 @@ sub VoteGet {
         my %Data;
         $Data{RequestID} = $Row[0];
         $Data{VoteValue} = $Row[1] || '-';
-        push( @List, \%Data );
+
+        push @List, \%Data;
     }
 
     return @List;
@@ -1594,7 +1605,7 @@ sub CountVote {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1639,7 +1650,7 @@ sub CountRequest {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1693,7 +1704,7 @@ sub ElementExists {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -1744,7 +1755,7 @@ sub RequestSend {
     if ( !$Param{TicketID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need TicketID!'
+            Message  => 'Need TicketID!',
         );
         return;
     }
@@ -1777,7 +1788,10 @@ sub RequestSend {
     my $Body    = $Survey{NotificationBody};
 
     # ticket data
-    my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
+    my %Ticket = $Self->{TicketObject}->TicketGet(
+        TicketID => $Param{TicketID},
+    );
+
     for my $Data ( keys %Ticket ) {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
@@ -1912,12 +1926,12 @@ sub RequestSend {
 
     # send survey
     return $Self->{SendmailObject}->Send(
-        From    => $Survey{NotificationSender},
-        To      => $To,
-        Subject => $Subject,
-        Type    => 'text/plain',
-        Charset => $Self->{ConfigObject}->Get('DefaultCharset'),
-        Body    => $Body,
+        From     => $Survey{NotificationSender},
+        To       => $To,
+        Subject  => $Subject,
+        MimeType => 'text/plain',
+        Charset  => $Self->{ConfigObject}->Get('DefaultCharset'),
+        Body     => $Body,
     );
 }
 
@@ -1938,7 +1952,7 @@ sub PublicSurveyGet {
     if ( !defined $Param{PublicSurveyKey} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need SurveyID!'
+            Message  => 'Need SurveyID!',
         );
         return;
     }
@@ -2000,7 +2014,7 @@ sub PublicAnswerSave {
         if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Need $Argument!"
+                Message  => "Need $Argument!",
             );
             return;
         }
@@ -2033,7 +2047,7 @@ sub PublicAnswerSave {
             . "$RequestID, "
             . "$Param{QuestionID}, "
             . "'$Param{VoteValue}', "
-            . "current_timestamp)"
+            . "current_timestamp)",
     );
 }
 
@@ -2082,7 +2096,7 @@ sub PublicSurveyInvalidSet {
         SQL => "UPDATE survey_request SET "
             . "valid_id = 0, "
             . "vote_time = current_timestamp "
-            . "WHERE id = $RequestID"
+            . "WHERE id = $RequestID",
     );
 }
 
@@ -2148,7 +2162,10 @@ sub SurveyQueueGet {
 
     # check needed stuff
     if ( !$Param{SurveyID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need SurveyID!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need SurveyID!',
+        );
         return;
     }
 
@@ -2184,6 +2201,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2009-04-02 16:22:19 $
+$Revision: 1.47 $ $Date: 2010-04-27 13:02:14 $
 
 =cut
