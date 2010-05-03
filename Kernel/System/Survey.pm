@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.48 2010-04-27 13:05:42 mh Exp $
+# $Id: Survey.pm,v 1.49 2010-05-03 13:22:59 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,10 +17,11 @@ use warnings;
 use Digest::MD5;
 use Kernel::System::CustomerUser;
 use Kernel::System::Email;
+use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 =head1 NAME
 
@@ -100,13 +101,16 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject LogObject TimeObject DBObject MainObject EncodeObject UserObject TicketObject)
+        qw(ConfigObject LogObject TimeObject DBObject MainObject EncodeObject UserObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
-    $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
+
+    $Self->{SendmailObject} = $Param{SendmailObject} || Kernel::System::Email->new( %{$Self} );
+    $Self->{CustomerUserObject} = $Param{CustomerUserObject}
+        || Kernel::System::CustomerUser->new( %{$Self} );
+    $Self->{TicketObject} = $Param{TicketObject} || Kernel::System::Ticket->new( %{$Self} );
 
     return $Self;
 }
@@ -2212,6 +2216,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2010-04-27 13:05:42 $
+$Revision: 1.49 $ $Date: 2010-05-03 13:22:59 $
 
 =cut
