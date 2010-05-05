@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.73 2009-12-30 12:50:56 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.74 2010-05-05 11:26:41 mb Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -253,30 +253,30 @@
         my $FunctionName = 'CodeInstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
@@ -288,30 +288,30 @@
         my $FunctionName = 'CodeUpgrade';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
@@ -323,30 +323,30 @@
         my $FunctionName = 'CodeUpgradeSpecial';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
@@ -358,30 +358,30 @@
         my $FunctionName = 'CodeReinstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
@@ -393,179 +393,163 @@
         my $FunctionName = 'CodeUninstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
     </CodeUninstall>
-    <IntroInstall Type="pre" Title="Install Information" Lang="en">
-
-        &lt;br&gt;
-        &lt;b&gt;WELCOME&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        You are about to install the OTRS package FAQ.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;ATTENTION&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroInstall>
-    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
-
-        &lt;br&gt;
-        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Paket FAQ zu installieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;ACHTUNG&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="en">
-
-        &lt;br&gt;
-        &lt;b&gt;NOTICE&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+        <br/>
+        <b>WELCOME</b>
+        <br/>
+        <br/>
+        You are about to install the OTRS package FAQ.<br/>
+        <br/>
+        <br/>
+        <b>ATTENTION</b>
+        <br/>
+        <br/>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
+        <br/>
+        <b>WILLKOMMEN</b>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket FAQ zu installieren.<br/>
+        <br/>
+        <br/>
+        <b>ACHTUNG</b>
+        <br/>
+        <br/>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+        <br/>
+        <b>NOTICE</b>
+        <br/>
+        <br/>
         In order to grant users access to the faq menu, you need to add them as member to the group 'faq'.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         The menu items that were added by this package will be visible after you log-in to the system again.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         To create new FAQ article you need to create categories and define the permission who can access categories.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         If you are using the FAQ approval feature, you need to create a group and and to define a queue.
         You will find further information in the sysconfig in FAQ -> Core::Approval.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="de">
-
-        &lt;br&gt;
-        &lt;b&gt;HINWEIS&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
+        <br/>
+        <b>HINWEIS</b>
+        <br/>
+        <br/>
         Um Benutzern Zugriff auf das FAQ-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'faq' sein.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         Um FAQ Artikel erstellen zu können müssen zuerst Kategorien erstellt und die Berechtigungs-Gruppen dieser Kategorien definiert werden.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         Wenn Sie das FAQ-Freigabe-Feature verwenden möchten, müssen Sie eine Gruppe dafür anlegen und eine Queue definieren.
         Weitere Informationen finden Sie in der Sysconfig unter FAQ -> Core::Approval.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroInstall>
-    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en">
-
-        &lt;br&gt;
-        &lt;b&gt;WELCOME&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        You are about to upgrade the OTRS package FAQ.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroUpgrade>
-    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de">
-
-        &lt;br&gt;
-        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Paket FAQ zu aktualisieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroUpgrade>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
-
-        &lt;br&gt;
-        &lt;b&gt;ATTENTION&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+        <br/>
+        <b>WELCOME</b>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package FAQ.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+        <br/>
+        <b>WILLKOMMEN</b>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket FAQ zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+        <br/>
+        <b>ATTENTION</b>
+        <br/>
+        <br/>
         If you uninstall this package, all database tables that were created during installation will be deleted.
         All data from these tables will be irrevocably lost!
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         The groups 'faq' and 'faq_admin' that were created during package installation will be deactivated.
         You can activate these groups again in the admin area.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroUninstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
-
-        &lt;br&gt;
-        &lt;b&gt;ACHTUNG&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
+        <br/>
+        <b>ACHTUNG</b>
+        <br/>
+        <br/>
         Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
-        &lt;br&gt;
-        &lt;br&gt;
+        <br/>
+        <br/>
         Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
         Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-
-    </IntroUninstall>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
 </otrs_package>
