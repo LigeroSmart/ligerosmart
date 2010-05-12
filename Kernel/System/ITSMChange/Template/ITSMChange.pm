@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.2 2010-02-09 15:24:44 reb Exp $
+# $Id: ITSMChange.pm,v 1.3 2010-05-12 13:38:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -393,6 +393,9 @@ sub _ChangeAdd {
         delete $Data{$Parameter} if !defined $Data{$Parameter};
     }
 
+    # replace the ChangeBuilderID from the saved template with the current user id
+    $Data{ChangeBuilderID} = $Param{UserID};
+
     # add the change
     my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
         %Data,
@@ -569,6 +572,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-02-09 15:24:44 $
+$Revision: 1.3 $ $Date: 2010-05-12 13:38:34 $
 
 =cut
