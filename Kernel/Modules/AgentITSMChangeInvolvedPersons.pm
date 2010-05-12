@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.36 2010-02-02 11:05:58 bes Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.37 2010-05-12 16:23:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -646,7 +646,7 @@ sub _IsNewCABMemberOk {
     my $MemberType = $Param{CABMemberType};
 
     # current members
-    my $CurrentMembers = $Param{Change}->{$MemberType};
+    my @CurrentMembers;
 
     # an agent is requested to be added
     if ( $MemberType eq 'CABAgents' ) {
@@ -655,6 +655,22 @@ sub _IsNewCABMemberOk {
         );
 
         if (%User) {
+
+            # check current users
+            USERID:
+            for my $UserID ( @{ $Param{Change}->{$MemberType} } ) {
+
+                # get user data
+                my %UserData = $Self->{UserObject}->GetUserData(
+                    UserID => $UserID,
+                    Valid  => 1,
+                );
+
+                # remove invalid users from CAB
+                next USERID if !$UserData{UserID};
+
+                push @CurrentMembers, $UserID;
+            }
 
             # Compare input value with user data.
             # Look for exact match at beginning,
@@ -668,7 +684,7 @@ sub _IsNewCABMemberOk {
 
                 # save member infos
                 %MemberInfo = (
-                    $MemberType => [ @{$CurrentMembers}, $User{UserID} ],
+                    $MemberType => [ @CurrentMembers, $User{UserID} ],
                 );
             }
         }
@@ -676,6 +692,22 @@ sub _IsNewCABMemberOk {
 
     # an customer is requested to be added
     else {
+
+        # check current customer users
+        CUSTOMERUSER:
+        for my $CustomerUser ( @{ $Param{Change}->{$MemberType} } ) {
+
+            # get customer user data
+            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User  => $CustomerUser,
+                Valid => 1,
+            );
+
+            # remove invalid customer users from CAB
+            next CUSTOMERUSER if !%CustomerUserData;
+
+            push @CurrentMembers, $CustomerUser;
+        }
 
         # For the sanity check we use the same function as we use for Autocompletion
         # and customer user expansion
@@ -696,7 +728,7 @@ sub _IsNewCABMemberOk {
 
                 # save member infos
                 %MemberInfo = (
-                    $MemberType => [ @{$CurrentMembers}, $Param{CABMemberID} ],
+                    $MemberType => [ @CurrentMembers, $Param{CABMemberID} ],
                 );
             }
         }
