@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange.pm - all change functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.234 2010-02-08 12:36:51 bes Exp $
+# $Id: ITSMChange.pm,v 1.235 2010-05-12 13:33:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::VirtualFS;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.234 $) [1];
+$VERSION = qw($Revision: 1.235 $) [1];
 
 =head1 NAME
 
@@ -243,6 +243,9 @@ sub ChangeAdd {
         );
     }
 
+    # if no change builder id was given, take the user id
+    my $ChangeBuilderID = $Param{ChangeBuilderID} || $Param{UserID};
+
     # add change to database
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO change_item '
@@ -251,7 +254,7 @@ sub ChangeAdd {
             . 'create_time, create_by, change_time, change_by) '
             . 'VALUES (?, ?, ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$ChangeNumber, \$ChangeStateID, \$Param{UserID},
+            \$ChangeNumber, \$ChangeStateID, \$ChangeBuilderID,
             \$CategoryID,   \$ImpactID,      \$PriorityID,
             \$Param{UserID}, \$Param{UserID},
         ],
@@ -3083,6 +3086,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.234 $ $Date: 2010-02-08 12:36:51 $
+$Revision: 1.235 $ $Date: 2010-05-12 13:33:45 $
 
 =cut
