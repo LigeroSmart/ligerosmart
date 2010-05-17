@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.39 2010-03-01 09:45:14 mb Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.40 2010-05-17 16:19:45 ub Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -67,6 +67,7 @@
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV006-OpenOffice-Tabulator.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV007-OpenOffice-Semicolon.csv"/>
         <File Permission="644" Location="scripts/test/sample/ImportExportFormatCSV008-OpenOffice-Semicolon.csv"/>
+        <File Permission="644" Location="var/packagesetup/ImportExport.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="imexport_template">
@@ -148,6 +149,52 @@
         <TableDrop Name="imexport_mapping_format"/>
         <TableDrop Name="imexport_search"/>
     </DatabaseUninstall>
+    <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromBefore_2_0_3';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # The code module has just recently been copied to it's location in the file system.
+        # In a persistent Perl environment an old version of the module might still be loaded,
+        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
+        # So we need to make sure that the new version is being loaded.
+        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
+        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
+        my $CodeModulePath = $CodeModule;
+        $CodeModulePath =~ s/::/\//g;
+        $CodeModulePath .= '.pm';
+        delete $INC{$CodeModulePath};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br>
