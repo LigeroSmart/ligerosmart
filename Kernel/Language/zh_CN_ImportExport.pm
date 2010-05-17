@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/zh_CN_ImportExport.pm - the Chinese simple translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_ImportExport.pm,v 1.2 2009-10-14 20:48:47 ub Exp $
+# $Id: zh_CN_ImportExport.pm,v 1.3 2010-05-17 13:49:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -39,7 +39,7 @@ sub Data {
     $Lang->{'Column'}                     = '列';
     $Lang->{'Restrict export per search'} = '限制导出每个搜寻';
     $Lang->{'Source File'}                = '源文件';
-    $Lang->{'Column Seperator'}           = '列分隔符';
+    $Lang->{'Column Separator'}           = '列分隔符';
     $Lang->{'Tabulator (TAB)'}            = '制表键 (TAB)';
     $Lang->{'Semicolon (;)'}              = '分号 (;)';
     $Lang->{'Colon (:)'}                  = '冒号 (:)';

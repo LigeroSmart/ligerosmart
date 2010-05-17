@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/fa_ImportExport.pm - the persian (farsi) translation of fa_ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2003-2009 Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_ImportExport.pm,v 1.1 2009-07-20 10:46:08 ub Exp $
+# $Id: fa_ImportExport.pm,v 1.2 2010-05-17 13:49:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,7 +40,7 @@ sub Data {
     $Lang->{'Column'}                     = 'ستون';
     $Lang->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
     $Lang->{'Source File'}                = 'فایل منبع';
-    $Lang->{'Column Seperator'}           = 'جداکننده ستون‌ها';
+    $Lang->{'Column Separator'}           = 'جداکننده ستون‌ها';
     $Lang->{'Tabulator (TAB)'}            = 'جدول ساز (TAB)';
     $Lang->{'Semicolon (;)'}              = 'سمی کالن (;)';
     $Lang->{'Colon (:)'}                  = 'دونقطه (:)';

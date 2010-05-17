@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ImportExport.pm - the Dutch translation of ImportExport
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_ImportExport.pm,v 1.2 2009-07-20 13:55:50 ub Exp $
+# $Id: nl_ImportExport.pm,v 1.3 2010-05-17 13:49:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -39,7 +39,7 @@ sub Data {
     $Lang->{'Column'}                     = 'Kolom';
     $Lang->{'Restrict export per search'} = 'Beperk export tot zoekopdracht';
     $Lang->{'Source File'}                = 'Bronbestand';
-    $Lang->{'Column Seperator'}           = 'Kolomscheidingsteken';
+    $Lang->{'Column Separator'}           = 'Kolomscheidingsteken';
     $Lang->{'Tabulator (TAB)'}            = 'Tab';
     $Lang->{'Semicolon (;)'}              = 'Puntkomma (;)';
     $Lang->{'Colon (:)'}                  = 'Dubbele punt (:)';

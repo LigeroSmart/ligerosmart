@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Cristiano Korndörfer, http://www.dorfer.com.br/
 # --
-# $Id: pt_BR_ImportExport.pm,v 1.1 2010-03-01 09:45:14 mb Exp $
+# $Id: pt_BR_ImportExport.pm,v 1.2 2010-05-17 13:49:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,7 +40,7 @@ sub Data {
     $Lang->{'Column'}                     = 'Coluna';
     $Lang->{'Restrict export per search'} = 'Restringir exportação por pesquisa';
     $Lang->{'Source File'}                = 'Arquivo de Origem';
-    $Lang->{'Column Seperator'}           = 'Separador de Colunas';
+    $Lang->{'Column Separator'}           = 'Separador de Colunas';
     $Lang->{'Tabulator (TAB)'}            = 'Tabulação (TAB)';
     $Lang->{'Semicolon (;)'}              = 'Ponto e Vírgula (;)';
     $Lang->{'Colon (:)'}                  = 'Dois Pontos (:)';

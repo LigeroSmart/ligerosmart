@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/es_ImportExport.pm - the spanish translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ImportExport.pm,v 1.5 2009-05-18 09:42:52 mh Exp $
+# $Id: es_ImportExport.pm,v 1.6 2010-05-17 13:49:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,7 +40,7 @@ sub Data {
     $Lang->{'Column'}                     = 'Columna';
     $Lang->{'Restrict export per search'} = 'Restringir exportación por consulta';
     $Lang->{'Source File'}                = 'Archivo origen';
-    $Lang->{'Column Seperator'}           = 'Separador de Columna';
+    $Lang->{'Column Separator'}           = 'Separador de Columna';
     $Lang->{'Tabulator (TAB)'}            = 'Tabulador (TAB)';
     $Lang->{'Semicolon (;)'}              = 'Punto y Coma (;)';
     $Lang->{'Colon (:)'}                  = 'Dos puntos (:)';

@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/ct_ImportExport.pm - the catalan translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Sistemes OTIC (ibsalut) - Antonio Linde
 # --
-# $Id: ct_ImportExport.pm,v 1.3 2009-05-18 09:42:52 mh Exp $
+# $Id: ct_ImportExport.pm,v 1.4 2010-05-17 13:49:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,7 +40,7 @@ sub Data {
     $Lang->{'Column'}                     = 'Columna';
     $Lang->{'Restrict export per search'} = 'Restringir exportació per recerca';
     $Lang->{'Source File'}                = 'Fitxer font';
-    $Lang->{'Column Seperator'}           = 'Separador de columna';
+    $Lang->{'Column Separator'}           = 'Separador de columna';
     $Lang->{'Tabulator (TAB)'}            = 'Tabulador (TAB)';
     $Lang->{'Semicolon (;)'}              = 'Punt i coma (;)';
     $Lang->{'Colon (:)'}                  = 'Dos punts (:)';

@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/bg_ImportExport.pm - the bulgarian translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: bg_ImportExport.pm,v 1.8 2009-05-18 09:42:52 mh Exp $
+# $Id: bg_ImportExport.pm,v 1.9 2010-05-17 13:49:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,7 +40,7 @@ sub Data {
     $Lang->{'Column'}                     = '';
     $Lang->{'Restrict export per search'} = '';
     $Lang->{'Source File'}                = '';
-    $Lang->{'Column Seperator'}           = '';
+    $Lang->{'Column Separator'}           = '';
     $Lang->{'Tabulator (TAB)'}            = '';
     $Lang->{'Semicolon (;)'}              = '';
     $Lang->{'Colon (:)'}                  = '';

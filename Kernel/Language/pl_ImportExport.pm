@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/pl_ImportExport.pm - the polish translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Maciej Loszajc
 # --
-# $Id: pl_ImportExport.pm,v 1.4 2009-05-18 09:42:52 mh Exp $
+# $Id: pl_ImportExport.pm,v 1.5 2010-05-17 13:49:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -40,7 +40,7 @@ sub Data {
     $Lang->{'Column'}                     = 'Kolumna';
     $Lang->{'Restrict export per search'} = '';
     $Lang->{'Source File'}                = 'Plik Yród3owy';
-    $Lang->{'Column Seperator'}           = 'Separator kolumny';
+    $Lang->{'Column Separator'}           = 'Separator kolumny';
     $Lang->{'Tabulator (TAB)'}            = 'Tabulator (TAB)';
     $Lang->{'Semicolon (;)'}              = 'Orednik (;)';
     $Lang->{'Colon (:)'}                  = 'Dwukropek (:)';

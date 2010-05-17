@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.19 2009-07-21 00:59:42 ub Exp $
+# $Id: de_ImportExport.pm,v 1.20 2010-05-17 13:49:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -39,7 +39,7 @@ sub Data {
     $Lang->{'Column'}                     = 'Spalte';
     $Lang->{'Restrict export per search'} = 'Export per Suche einschränken';
     $Lang->{'Source File'}                = 'Quell-Datei';
-    $Lang->{'Column Seperator'}           = 'Spaltentrenner';
+    $Lang->{'Column Separator'}           = 'Spaltentrenner';
     $Lang->{'Tabulator (TAB)'}            = 'Tabulator (TAB)';
     $Lang->{'Semicolon (;)'}              = 'Semicolon (;)';
     $Lang->{'Colon (:)'}                  = 'Doppelpunkt (:)';
