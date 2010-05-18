@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/en_ITSMChangeManagement.pm - the english (US) translation of ITSMChangeManagement
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: en_ITSMChangeManagement.pm,v 1.50 2010-04-27 20:16:49 ub Exp $
+# $Id: en_ITSMChangeManagement.pm,v 1.51 2010-05-18 15:02:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -184,7 +184,6 @@ sub Data {
     # Workorder delete
 
     # Take workorder
-    $Lang->{'Imperative::Take Workorder'} = 'Take Workorder';
 
     # Condition Overview and Edit
     $Lang->{'not contains'} = 'does not contain';

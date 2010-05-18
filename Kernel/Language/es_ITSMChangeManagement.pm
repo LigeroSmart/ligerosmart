@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.5 2010-05-18 13:56:24 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.6 2010-05-18 15:02:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -251,7 +251,6 @@ sub Data {
     $Lang->{'This Workorder is used in the following Condition(s)'} = 'Esta orden de trabajo es usada en las siguiente(s) condicion(es)';
 
     # Take workorder
-    $Lang->{'Imperative::Take Workorder'}                 = 'Tomar Orden de Trabajo';
     $Lang->{'Take Workorder'}                             = 'Tomar Orden de Trabajo';
     $Lang->{'Take the workorder'}                         = 'Tomar La Orden de Trabajo';
     $Lang->{'Current Agent'}                              = 'Agente actual';

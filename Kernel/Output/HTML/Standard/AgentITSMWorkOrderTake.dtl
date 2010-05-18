@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderTake.dtl - provides HTML form for AgentITSMWorkOrderTake
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderTake.dtl,v 1.6 2010-02-03 13:21:44 bes Exp $
+# $Id: AgentITSMWorkOrderTake.dtl,v 1.7 2010-05-18 15:02:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,8 +12,8 @@
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
         <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Imperative::Take Workorder"}#: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Imperative::Take Workorder"}#: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
+            <div title="$Env{"Box0"} $Text{"Take Workorder"} : $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
+                $Env{"Box0"} $Text{"Take Workorder"} : $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
             </div>
         </td>
     </tr>
@@ -26,9 +26,9 @@
     <tr>
         <td class="mainbody">
             <br>
-            <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
+            <table border="0" width="400" align="center" cellspacing="0" cellpadding="4">
                 <tr>
-                    <td class="contenthead">$Text{"Imperative::Take Workorder"}# $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</td>
+                    <td class="contenthead">$Text{"Take Workorder"} : $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</td>
                 </tr>
                 <tr class="contentbody">
                     <td class="contentbody">

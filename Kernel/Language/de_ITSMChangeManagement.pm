@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.74 2010-05-18 13:54:31 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.75 2010-05-18 15:02:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -253,7 +253,6 @@ sub Data {
     $Lang->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Bedingung(en)';
 
     # Take workorder
-    $Lang->{'Imperative::Take Workorder'}                 = 'Übernehmen von Workorder';
     $Lang->{'Take Workorder'}                             = 'Workorder übernehmen';
     $Lang->{'Take the workorder'}                         = 'Diese Workorder übernehmen';
     $Lang->{'Current Agent'}                              = 'Aktueller Agent';
