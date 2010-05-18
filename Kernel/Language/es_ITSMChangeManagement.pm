@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.4 2010-05-18 13:54:31 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.5 2010-05-18 13:56:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -273,22 +273,22 @@ sub Data {
     $Lang->{'Add new action'}                           = 'Adicionar nueva acción';
     $Lang->{'Any expression'}                           = 'Cualquier expresión';
     $Lang->{'All expressions'}                          = 'Todas las expresiones';
-    $Lang->{'any'}                                         = 'Cualquiera';
-    $Lang->{'all'}                                         = 'Todo';
-    $Lang->{'is'}                                          = 'es';
-    $Lang->{'is not'}                                      = 'no es';
-    $Lang->{'is empty'}                                    = 'está vacía';
-    $Lang->{'is not empty'}                                = 'no está vacía';
-    $Lang->{'is greater than'}                             = 'es más grande que';
-    $Lang->{'is less than'}                                = 'es menor que';
-    $Lang->{'is before'}                                   = 'está antes';
-    $Lang->{'is after'}                                    = 'está después';
-    $Lang->{'contains'}                                    = 'contiene';
-    $Lang->{'not contains'}                                = 'no contiene';
-    $Lang->{'begins with'}                                 = 'comienza con';
-    $Lang->{'ends with'}                                   = 'finaliza con';
-    $Lang->{'set'}                                         = 'configurada';
-    $Lang->{'lock'}                                        = 'bloqueada';
+    $Lang->{'any'}                                      = 'Cualquiera';
+    $Lang->{'all'}                                      = 'Todo';
+    $Lang->{'is'}                                       = 'es';
+    $Lang->{'is not'}                                   = 'no es';
+    $Lang->{'is empty'}                                 = 'está vacía';
+    $Lang->{'is not empty'}                             = 'no está vacía';
+    $Lang->{'is greater than'}                          = 'es más grande que';
+    $Lang->{'is less than'}                             = 'es menor que';
+    $Lang->{'is before'}                                = 'está antes';
+    $Lang->{'is after'}                                 = 'está después';
+    $Lang->{'contains'}                                 = 'contiene';
+    $Lang->{'not contains'}                             = 'no contiene';
+    $Lang->{'begins with'}                              = 'comienza con';
+    $Lang->{'ends with'}                                = 'finaliza con';
+    $Lang->{'set'}                                      = 'configurada';
+    $Lang->{'lock'}                                     = 'bloqueada';
 
     # Change Zoom
     $Lang->{'Change Initiator(s)'} = 'Iniciador(es) del cambios';
