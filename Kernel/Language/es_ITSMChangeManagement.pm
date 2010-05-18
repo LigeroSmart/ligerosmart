@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/es_ITSMChangeManagement.pm - the spanish translation of ITSMChangeManagement
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.3 2010-04-27 20:29:14 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.4 2010-05-18 13:54:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -27,7 +27,6 @@ sub Data {
 
     # misc
     $Lang->{'A change must have a title!'}          = 'Cada cambio debe tener un título';
-    $Lang->{'as Template'}                          = 'como Plantilla';
     $Lang->{'Template Name'}                        = 'Nombre de la plantilla';
     $Lang->{'Templates'}                            = 'Plantillas';
     $Lang->{'A workorder must have a title!'}       = 'Cada Orden de Trabajo debe tener un título';
@@ -35,14 +34,9 @@ sub Data {
     $Lang->{'Create a change from this ticket!'}    = 'Crear un cambio a partir de este ticket!';
     $Lang->{'Create Change'}                        = 'Crear un Cambio';
     $Lang->{'e.g.'}                                 = 'ej.';
-
-    # workaraound for the imparative of the word 'save' (the space is important!)
-    $Lang->{'Save '}                                = 'Guardar ';
-
-    $Lang->{'Save CAB'}                             = 'Guardar CAB';
-    $Lang->{'Save Change CAB'}                      = 'Guardar Change CAB';
-    $Lang->{'Save Change'}                          = 'Guardar Change';
-    $Lang->{'Save Workorder'}                       = 'Guardar Workorder';
+    $Lang->{'Save Change as template'}              = 'Guardar Change como Plantilla';
+    $Lang->{'Save Workorder as template'}           = 'Guardar Workorder como Plantilla';
+    $Lang->{'Save Change CAB as template'}          = 'Guardar Change CAB como Plantilla';
     $Lang->{'New time'}                             = 'Nuevo intervalo de tiempo';
     $Lang->{'Requested (by customer) Date'}         = 'Fecha solicitada (por el cliente)';
     $Lang->{'The planned end time is invalid!'}     = 'La fecha de finalización planeada es inválida!';

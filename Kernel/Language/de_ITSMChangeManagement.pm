@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.73 2010-04-27 20:29:14 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.74 2010-05-18 13:54:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -26,7 +26,6 @@ sub Data {
 
     # misc
     $Lang->{'A change must have a title!'}          = 'Ein Change benötigt einen Titel!';
-    $Lang->{'as Template'}                          = 'als Vorlage';
     $Lang->{'Template Name'}                        = 'Vorlagen-Name';
     $Lang->{'Templates'}                            = 'Vorlagen';
     $Lang->{'A workorder must have a title!'}       = 'Eine Workorder benötigt einen Titel!';
@@ -34,14 +33,9 @@ sub Data {
     $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
     $Lang->{'Create Change'}                        = 'Change erstellen';
     $Lang->{'e.g.'}                                 = 'z. B.';
-
-    # workaraound for the imparative of the word 'save' (the space is important!)
-    $Lang->{'Save '}                                = 'Speichere ';
-
-    $Lang->{'Save CAB'}                             = 'Speichere CAB';
-    $Lang->{'Save Change CAB'}                      = 'Speichere Change CAB';
-    $Lang->{'Save Change'}                          = 'Speichere Change';
-    $Lang->{'Save Workorder'}                       = 'Speichere Workorder';
+    $Lang->{'Save Change as template'}              = 'Speichere Change als Vorlage';
+    $Lang->{'Save Workorder as template'}           = 'Speichere Workorder als Vorlage';
+    $Lang->{'Save Change CAB as template'}          = 'Speichere Change CAB als Vorlage';
     $Lang->{'New time'}                             = 'Neue Zeit';
     $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
     $Lang->{'The planned end time is invalid!'}     = 'Die geplante Endzeit ist ungültig!';
