@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.205 2010-04-27 20:30:45 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.206 2010-05-18 14:05:55 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -3990,7 +3990,7 @@
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::TakePermission###10-EmptyAgent" Required="0" Valid="0">
         <Description Lang="en">Module to check whether no workorder agent is set.</Description>
-        <Description Lang="de">Modul zum Überprüfen ob es keinen Agenten für den Workorder gibt.</Description>
+        <Description Lang="de">Modul zum Überprüfen ob es keinen Agenten für die Workorder gibt.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
