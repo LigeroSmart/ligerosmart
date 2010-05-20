@@ -1,9 +1,9 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm - to set actual workorder times
 # event module for ITSMWorkOrder
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: WorkOrderActualTimesSet.pm,v 1.2 2010-01-31 11:29:43 ub Exp $
+# $Id: WorkOrderActualTimesSet.pm,v 1.3 2010-05-20 13:51:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -213,12 +213,26 @@ sub Run {
             # which means that this is an end state
             if ( ( scalar @{$NextStateIDsRef} == 1 ) && ( !$NextStateIDsRef->[0] ) ) {
 
+                # if no actual start time is set, use the current time
+                if ( !$ActualStartTime ) {
+                    $ActualStartTime = $CurrentTimeStamp;
+                }
+
+                # increase the current time stamp by one second to avoid the case that
+                # actual start and end times are the same
+                my $CurrentSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+                    String => $CurrentTimeStamp,
+                );
+                my $ActualEndTime = $Self->{TimeObject}->SystemTime2TimeStamp(
+                    SystemTime => $CurrentSystemTime + 1,
+                );
+
                 # set the actual end time,
                 # and if the actual start time was not set, set it also
                 my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
                     WorkOrderID     => $Param{Data}->{WorkOrderID},
-                    ActualStartTime => $ActualStartTime || $CurrentTimeStamp,
-                    ActualEndTime   => $CurrentTimeStamp,
+                    ActualStartTime => $ActualStartTime,
+                    ActualEndTime   => $ActualEndTime,
                     UserID          => $Param{UserID},
                 );
 
@@ -266,6 +280,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-01-31 11:29:43 $
+$Revision: 1.3 $ $Date: 2010-05-20 13:51:40 $
 
 =cut
