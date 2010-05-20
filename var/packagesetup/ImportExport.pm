@@ -2,7 +2,7 @@
 # ImportExport.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.2 2010-05-20 19:03:12 ub Exp $
+# $Id: ImportExport.pm,v 1.3 2010-05-20 19:24:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -148,6 +148,8 @@ sub CodeUpgrade {
 
 =item CodeUpgradeFromBefore_2_0_3()
 
+This function is only executed if the installed module version is smaller than 2.0.3.
+
     my $Result = $CodeObject->CodeUpgradeFromBefore_2_0_3();
 
 =cut
@@ -214,6 +216,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-05-20 19:03:12 $
+$Revision: 1.3 $ $Date: 2010-05-20 19:24:00 $
 
 =cut
