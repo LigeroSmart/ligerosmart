@@ -1,8 +1,8 @@
 # --
 # ITSMChange.t - change tests
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.172 2010-03-19 10:13:16 bes Exp $
+# $Id: ITSMChange.t,v 1.173 2010-05-21 12:02:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -293,11 +293,39 @@ my @DefaultHistoryTypes = qw(
     ChangeCABDelete
     ChangeLinkAdd
     ChangeLinkDelete
+    ChangeAttachmentAdd
+    ChangeAttachmentDelete
     WorkOrderAdd
     WorkOrderUpdate
     WorkOrderDelete
     WorkOrderLinkAdd
     WorkOrderLinkDelete
+    WorkOrderAttachmentAdd
+    WorkOrderAttachmentDelete
+    ChangePlannedStartTimeReached
+    ChangePlannedEndTimeReached
+    ChangeActualStartTimeReached
+    ChangeActualEndTimeReached
+    WorkOrderPlannedStartTimeReached
+    WorkOrderPlannedEndTimeReached
+    WorkOrderActualStartTimeReached
+    WorkOrderActualEndTimeReached
+    ChangeRequestedTimeReached
+    ConditionAdd
+    ConditionUpdate
+    ConditionDelete
+    ConditionDeleteAll
+    ExpressionAdd
+    ExpressionUpdate
+    ExpressionDelete
+    ExpressionDeleteAll
+    ActionAdd
+    ActionUpdate
+    ActionDelete
+    ActionDeleteAll
+    ActionExecute
+    ChangeNotificationSent
+    WorkOrderNotificationSent
 );
 
 # investigate the default history types
