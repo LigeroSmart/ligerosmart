@@ -1,9 +1,9 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderNumberCalc.pm - WorkOrderNumberCalc
 # event module for ITSMWorkOrder
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.13 2010-02-03 09:36:13 bes Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.14 2010-05-21 18:53:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -144,34 +144,18 @@ sub Run {
         }
     }
 
-    # handle WorkOrderUpdate events
-    if ( $Param{Event} eq 'WorkOrderUpdatePost' ) {
+    # check if recalculation of workorder numbers is needed
+    return 1 if $Param{Data}->{NoNumberCalc};
 
-        # get WorkOrder, especially the ChangeID
-        my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-            WorkOrderID => $Param{Data}->{WorkOrderID},
-            UserID      => $Param{UserID},
-        );
-
-        return if !$WorkOrder;
+    # handle WorkOrderUpdate and WorkOrderDeletePost events
+    if ( $Param{Event} =~ m{ \A ( WorkOrderUpdatePost | WorkOrderDeletePost ) \z }xms ) {
 
         # recalculate WorkOrder numbers
-        return if !$Self->_WorkOrderNumberCalc(
-            ChangeID => $WorkOrder->{ChangeID},
-            UserID   => $Param{UserID},
-        );
-
-    }
-
-    # handle WorkOrderDelete events
-    elsif ( $Param{Event} eq 'WorkOrderDeletePost' ) {
-
-        # recalculate WorkOrder numbers
+        # the ChangeID is in the OldWorkOrderData so we do not need to make a WorkOrderGet() here
         return if !$Self->_WorkOrderNumberCalc(
             ChangeID => $Param{OldWorkOrderData}->{ChangeID},
             UserID   => $Param{UserID},
         );
-
     }
 
     # error
@@ -246,6 +230,9 @@ sub _WorkOrderNumberCalc {
     # counter - used as WorkOrderNumber
     my $Counter = 0;
 
+    # to store the WorkOrderIDs and their new WorkOrderNumbers
+    my %NewWorkOrderNumber;
+
     # set new WorkOrderNumber
     WORKORDERID:
     for my $WorkOrderID ( @{$SortedWorkOrderIDs} ) {
@@ -262,9 +249,18 @@ sub _WorkOrderNumberCalc {
         # update only when Number changed - to avoid infinit loops
         next WORKORDERID if $Counter == $WorkOrder->{WorkOrderNumber};
 
+        # store the new WorkOrderNumber for this WorkOrderID
+        $NewWorkOrderNumber{$WorkOrderID} = $Counter;
+    }
+
+    # update the workorders that need a new WorkOrderNumber
+    for my $WorkOrderID ( keys %NewWorkOrderNumber ) {
+
+        # update each workorder, prevent recalculation of the WorkOrderNumber again
         my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID     => $WorkOrderID,
-            WorkOrderNumber => $Counter,
+            WorkOrderNumber => $NewWorkOrderNumber{$WorkOrderID},
+            NoNumberCalc    => 1,
             UserID          => $Param{UserID},
         );
     }
@@ -290,6 +286,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-02-03 09:36:13 $
+$Revision: 1.14 $ $Date: 2010-05-21 18:53:17 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.96 2010-02-08 12:36:51 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.97 2010-05-21 18:53:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::HTMLUtils;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.96 $) [1];
+$VERSION = qw($Revision: 1.97 $) [1];
 
 =head1 NAME
 
@@ -377,6 +377,7 @@ Another exception is the WorkOrderAgentID. Pass undef for removing the workorder
         ActualEndTime    => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
         PlannedEffort    => 123,                                       # (optional)
         AccountedTime    => 13,                                        # (optional) the value is added to the value in the database
+        NoNumberCalc     => 1,                                         # (optional) default 0, if 1 it prevents a recalculation of the workorder numbers
         UserID           => 1,
     );
 
@@ -2722,6 +2723,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.96 $ $Date: 2010-02-08 12:36:51 $
+$Revision: 1.97 $ $Date: 2010-05-21 18:53:17 $
 
 =cut
