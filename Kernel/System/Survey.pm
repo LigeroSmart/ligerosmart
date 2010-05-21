@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.49 2010-05-03 13:22:59 mh Exp $
+# $Id: Survey.pm,v 1.50 2010-05-21 12:49:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,11 +17,12 @@ use warnings;
 use Digest::MD5;
 use Kernel::System::CustomerUser;
 use Kernel::System::Email;
+use Kernel::System::HTMLUtils;
 use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =head1 NAME
 
@@ -107,6 +108,8 @@ sub new {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    $Self->{HTMLUtilsObject} = $Param{HTMLUtilsObject}
+        || Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{SendmailObject} = $Param{SendmailObject} || Kernel::System::Email->new( %{$Self} );
     $Self->{CustomerUserObject} = $Param{CustomerUserObject}
         || Kernel::System::CustomerUser->new( %{$Self} );
@@ -1802,6 +1805,9 @@ sub RequestSend {
     my $Subject = $Survey{NotificationSubject};
     my $Body    = $Survey{NotificationBody};
 
+    # fix new lines
+    $Body =~ s/(\n\r|\r\r\n|\r\n)/\n/g;
+
     # ticket data
     my %Ticket = $Self->{TicketObject}->TicketGet(
         TicketID => $Param{TicketID},
@@ -1841,7 +1847,7 @@ sub RequestSend {
     $Body    =~ s/<OTRS_CONFIG_.+?>/-/gi;
 
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
-    my %CustomerUser = ();
+    my %CustomerUser;
     if ( $Ticket{CustomerUserID} ) {
         %CustomerUser = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User => $Ticket{CustomerUserID},
@@ -1890,9 +1896,8 @@ sub RequestSend {
 
     # check if not survey should be send
     my $SendNoSurveyRegExp = $Self->{ConfigObject}->Get('Survey::SendNoSurveyRegExp');
-    if ( $SendNoSurveyRegExp && $To =~ /$SendNoSurveyRegExp/i ) {
-        return;
-    }
+
+    return if $SendNoSurveyRegExp && $To =~ /$SendNoSurveyRegExp/i;
 
     # quote
     $To = $Self->{DBObject}->Quote($To);
@@ -1939,13 +1944,32 @@ sub RequestSend {
         Name         => "Sent customer survey to '$To'.",
     );
 
+    # get charset
+    my $Charset = $Self->{ConfigObject}->Get('DefaultCharset') || 'uft-8';
+
+    # convert body to html
+    $Body = $Self->{HTMLUtilsObject}->ToHTML(
+        String => $Body,
+    );
+
+    # prepare html links
+    $Self->{HTMLUtilsObject}->LinkQuote(
+        String => \$Body,
+    );
+
+    # complete html document
+    $Body = $Self->{HTMLUtilsObject}->DocumentComplete(
+        String  => $Body,
+        Charset => $Charset,
+    );
+
     # send survey
     return $Self->{SendmailObject}->Send(
         From     => $Survey{NotificationSender},
         To       => $To,
         Subject  => $Subject,
-        MimeType => 'text/plain',
-        Charset  => $Self->{ConfigObject}->Get('DefaultCharset'),
+        MimeType => 'text/html',
+        Charset  => $Charset,
         Body     => $Body,
     );
 }
@@ -2216,6 +2240,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2010-05-03 13:22:59 $
+$Revision: 1.50 $ $Date: 2010-05-21 12:49:51 $
 
 =cut
