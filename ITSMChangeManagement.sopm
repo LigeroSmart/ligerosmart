@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.188 2010-04-27 22:23:07 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.189 2010-05-21 10:22:10 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1643,6 +1643,41 @@
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "Could not call method new() on $CodeModule.pm.",
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="2.0.3"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromLowerThan_2_0_3';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }

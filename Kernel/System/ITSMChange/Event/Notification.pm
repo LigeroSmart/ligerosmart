@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.27 2010-02-04 17:01:09 bes Exp $
+# $Id: Notification.pm,v 1.28 2010-05-21 10:22:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -154,11 +154,17 @@ sub Run {
     $Event =~ s{ Post \z }{}xms;
 
     # distinguish between Change and WorkOrder events, based on naming convention
-    my ($Type) = $Event =~ m{ \A (Change|WorkOrder) }xms;
-    if ( !$Type ) {
+    my $Type;
+    if ( $Event =~ m{ \A (Change|ActionExecute) }xms ) {
+        $Type = 'Change';
+    }
+    elsif ( $Event =~ m{ \A WorkOrder }xms ) {
+        $Type = 'WorkOrder';
+    }
+    else {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Could not determine the object type for the event '$Event'!"
+            Message  => "Could not determine the object type for the event '$Event'!",
         );
         return;
     }
@@ -168,7 +174,7 @@ sub Run {
     if ( !$EventID ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Encountered unknown event '$Event'!"
+            Message  => "Encountered unknown event '$Event'!",
         );
         return;
     }
@@ -179,7 +185,7 @@ sub Run {
     if ( !$NotificationRuleIDs ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Could not get notification rules for the event '$Event'!"
+            Message  => "Could not get notification rules for the event '$Event'!",
         );
         return;
     }
@@ -552,6 +558,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-02-04 17:01:09 $
+$Revision: 1.28 $ $Date: 2010-05-21 10:22:12 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # ITSMChangeManagement.pm - code to excecute during package installation
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.59 2010-03-19 10:13:16 bes Exp $
+# $Id: ITSMChangeManagement.pm,v 1.60 2010-05-21 10:22:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 =head1 NAME
 
@@ -287,9 +287,29 @@ sub CodeUpgrade {
     return 1;
 }
 
+=item CodeUpgradeFromLowerThan_2_0_3()
+
+This function is only executed if the installed module version is smaller than 2.0.3.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_0_3();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_2_0_3 {
+    my ( $Self, %Param ) = @_;
+
+    # add new notifications that were added in version 2.0.3
+    $Self->_AddNotificationsNewIn_2_0_3();
+
+    # add new system notifications that were added in version 2.0.3
+    $Self->_AddSystemNotificationsNewIn_2_0_3();
+
+    return 1;
+}
+
 =item CodeUpgradeFromBeta1()
 
-This function is only excuted if the installed module version is smaller than 1.3.92 (beta2).
+This function is only executed if the installed module version is smaller than 1.3.92 (beta2).
 
 Also the template structure changed from (beta1) to 1.3.92 (beta2),
 so the old templates must be deleted.
@@ -309,7 +329,7 @@ sub CodeUpgradeFromBeta1 {
 
 =item CodeUpgradeFromBeta2()
 
-This function is only excuted if the installed module version is smaller than 1.3.93 (beta3).
+This function is only executed if the installed module version is smaller than 1.3.93 (beta3).
 
 There have been many changes in the sytem notification texts
 from 1.3.91 (beta1) to 1.3.92 (beta2) so we need to delete
@@ -1031,6 +1051,100 @@ sub _AddNotifications {
                 'WorkOrderAgent',
             ],
         },
+        {
+            Name       => 'action execution successfully',
+            Attribute  => 'ActionResult',
+            Event      => 'ActionExecute',
+            ValidID    => 1,
+            Comment    => 'inform recipients that an action was executed successfully',
+            Rule       => 'successfully',
+            Recipients => [
+                'ChangeBuilder',
+            ],
+        },
+        {
+            Name       => 'action execution unsuccessfully',
+            Attribute  => 'ActionResult',
+            Event      => 'ActionExecute',
+            ValidID    => 1,
+            Comment    => 'inform recipients that an action was executed unsuccessfully',
+            Rule       => 'unsuccessfully',
+            Recipients => [
+                'ChangeBuilder',
+            ],
+        },
+    );
+
+    # cache for lookup results
+    my %HistoryTypes;
+
+    # add notifications
+    NOTIFICATION:
+    for my $Notification (@Notifications) {
+
+        # find recipients
+        my @RecipientIDs;
+        for my $Recipient ( @{ $Notification->{Recipients} } ) {
+            my $RecipientID = $Self->{NotificationObject}->RecipientLookup(
+                Name => $Recipient,
+            );
+
+            if ($RecipientID) {
+                push @RecipientIDs, $RecipientID;
+            }
+        }
+
+        # get event id
+        my $EventID =
+            $HistoryTypes{ $Notification->{Event} }
+            || $Self->{HistoryObject}->HistoryTypeLookup( HistoryType => $Notification->{Event} );
+
+        # insert notification
+        my $RuleID = $Self->{NotificationObject}->NotificationRuleAdd(
+            %{$Notification},
+            EventID      => $EventID,
+            RecipientIDs => \@RecipientIDs,
+        );
+    }
+
+    return 1;
+}
+
+=item _AddNotificationsNewIn_2_0_3()
+
+Add ChangeManagement specific notifications that were added in version 2.0.3.
+
+    my $Success = $SetupObject->_AddNotificationsNewIn_2_0_3;
+
+=cut
+
+sub _AddNotificationsNewIn_2_0_3 {
+    my ($Self) = @_;
+
+    # define notifications and recipients
+    my @Notifications = (
+        {
+            Name       => 'action execution successfully',
+            Attribute  => 'ActionResult',
+            Event      => 'ActionExecute',
+            ValidID    => 1,
+            Comment    => 'inform recipients that an action was executed successfully',
+            Rule       => 'successfully',
+            Recipients => [
+                'ChangeBuilder',
+            ],
+        },
+        {
+            Name       => 'action execution unsuccessfully',
+            Attribute  => 'ActionResult',
+            Event      => 'ActionExecute',
+            ValidID    => 1,
+            Comment    => 'inform recipients that an action was executed unsuccessfully',
+            Rule       => 'unsuccessfully',
+            Recipients => [
+                'ChangeBuilder',
+            ],
+        },
     );
 
     # cache for lookup results
@@ -1084,6 +1198,7 @@ sub _AddSystemNotifications {
     # Set up some standard texts for English and German, Change and WorkOrder, agent and customer
     # The customer texts provide no link.
 
+    # Change info for agents (en)
     my $ChangeInfoAgentEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1093,6 +1208,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Your OTRS Notification Master\n";
 
+    # Change info for Customers (en)
     my $ChangeInfoCustomerEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1100,6 +1216,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Your OTRS Notification Master\n";
 
+    # Change info for agents (de)
     my $ChangeInfoAgentDe = "\n"
         . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1109,6 +1226,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
+    # Change info for Customers (de)
     my $ChangeInfoCustomerDe = "\n"
         . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1116,6 +1234,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
+    # Workorder info for agents (en)
     my $WorkOrderInfoAgentEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1129,6 +1248,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Your OTRS Notification Master\n";
 
+    # Workorder info for customers (en)
     my $WorkOrderInfoCustomerEn = "\n"
         . "\n"
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1140,6 +1260,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Your OTRS Notification Master\n";
 
+    # Workorder info for agents (de)
     my $WorkOrderInfoAgentDe = "\n"
         . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1153,6 +1274,7 @@ sub _AddSystemNotifications {
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
+    # Workorder info for customers (de)
     my $WorkOrderInfoCustomerDe = "\n"
         . "\n"
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1164,8 +1286,9 @@ sub _AddSystemNotifications {
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
-    # define notifications
+    # define agent notifications
     my @AgentNotifications = (
+
         [
             'Agent::Change::ChangeAdd',
             'de',
@@ -1478,6 +1601,47 @@ sub _AddSystemNotifications {
         ],
 
         [
+            'Agent::Change::ActionExecute',
+            'de',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
+                . "\n"
+                . "\n"
+                . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+                . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+                . "\n"
+                . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
+                . "\n"
+                . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
+                . "\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "\n"
+                . "Ihr OTRS Notification Master\n",
+        ],
+        [
+            'Agent::Change::ActionExecute',
+            'en',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.'
+                . "\n"
+                . "\n"
+                . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+                . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+                . "\n"
+                . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                . "Condition name: <OTRS_CONDITION_ConditionName>\n"
+                . "\n"
+                . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                . "Action execution: <OTRS_CONDITION_ActionResult>\n"
+                . "\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "\n"
+                . "Your OTRS Notification Master\n",
+        ],
+
+        [
             'Agent::WorkOrder::WorkOrderPlannedStartTimeReached',
             'de',
             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] geplante Startzeit erreicht',
@@ -1539,7 +1703,9 @@ sub _AddSystemNotifications {
 
     );
 
+    # define customer notifications
     my @CustomerNotifications = (
+
         [
             'Customer::Change::ChangeAdd',
             'de',
@@ -1947,6 +2113,95 @@ sub _AddSystemNotifications {
     return 1;
 }
 
+=item _AddSystemNotificationsNewIn_2_0_3()
+
+Adds the new notifications to systems notification table that were added in version 2.0.3.
+
+    my $Success = $PackageSetup->_AddSystemNotificationsNewIn_2_0_3();
+
+=cut
+
+sub _AddSystemNotificationsNewIn_2_0_3 {
+    my ($Self) = @_;
+
+    # define agent notifications
+    my @AgentNotifications = (
+        [
+            'Agent::Change::ActionExecute',
+            'de',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
+                . "\n"
+                . "\n"
+                . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
+                . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
+                . "\n"
+                . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
+                . "\n"
+                . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
+                . "\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "\n"
+                . "Ihr OTRS Notification Master\n",
+        ],
+        [
+            'Agent::Change::ActionExecute',
+            'en',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Action execution <OTRS_CONDITION_ActionResult>',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Action execution <OTRS_CONDITION_ActionResult>.'
+                . "\n"
+                . "\n"
+                . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
+                . "Current change state: <OTRS_CHANGE_ChangeState>\n"
+                . "\n"
+                . "Condition ID: <OTRS_CONDITION_ConditionID>\n"
+                . "Condition name: <OTRS_CONDITION_ConditionName>\n"
+                . "\n"
+                . "Action ID: <OTRS_CONDITION_ActionID>\n"
+                . "Action execution: <OTRS_CONDITION_ActionResult>\n"
+                . "\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "\n"
+                . "Your OTRS Notification Master\n",
+        ],
+    );
+
+    # When UTF-8 is enabled, the notification texts are stored as UTF-8
+    my $EncodeInternalUsed = $Self->{EncodeObject}->EncodeInternalUsed();
+    my $NotificationCharset = $EncodeInternalUsed ? 'utf-8' : 'iso-8859-1';
+
+    # insert the entries
+    for my $Notification (@AgentNotifications) {
+        my @Binds;
+
+        for my $Value ( @{$Notification} ) {
+
+            # Ensure that the strings are utf-8 if the system is in utf-8,
+            # otherwise leave it in latin-1
+            if ($EncodeInternalUsed) {
+                utf8::upgrade($Value);
+            }
+
+            # Bind requires scalar references
+            push @Binds, \$Value;
+        }
+
+        # do the insertion
+        $Self->{DBObject}->Do(
+            SQL => 'INSERT INTO notifications (notification_type, notification_language, '
+                . 'subject, text, notification_charset, content_type, '
+                . 'create_time, create_by, change_time, change_by) '
+                . 'VALUES( ?, ?, ?, ?, ?, \'text/plain\', '
+                . 'current_timestamp, 1, current_timestamp, 1 )',
+            Bind => [ @Binds, \$NotificationCharset ],
+        );
+    }
+
+    return 1;
+}
+
 =item _DeleteTemplates()
 
 deletes all templates
@@ -1989,32 +2244,33 @@ sub _DeleteSystemNotifications {
     my ($Self) = @_;
 
     # define the notification types to be deleted
-    my @NotificationTypes = (
-        'Change::ChangeAdd',
-        'Change::ChangeUpdate',
-        'Change::ChangeCABUpdate',
-        'Change::ChangeCABDelete',
-        'Change::ChangeLinkAdd',
-        'Change::ChangeLinkDelete',
-        'Change::ChangeAttachmentAdd',
-        'Change::ChangeAttachmentDelete',
-        'Change::ChangeDelete',
-        'Change::ChangePlannedStartTimeReached',
-        'Change::ChangePlannedEndTimeReached',
-        'Change::ChangeActualStartTimeReached',
-        'Change::ChangeActualEndTimeReached',
-        'Change::ChangeRequestedTimeReached',
-        'WorkOrder::WorkOrderAdd',
-        'WorkOrder::WorkOrderUpdate',
-        'WorkOrder::WorkOrderLinkAdd',
-        'WorkOrder::WorkOrderLinkDelete',
-        'WorkOrder::WorkOrderAttachmentAdd',
-        'WorkOrder::WorkOrderAttachmentDelete',
-        'WorkOrder::WorkOrderDelete',
-        'WorkOrder::WorkOrderPlannedStartTimeReached',
-        'WorkOrder::WorkOrderPlannedEndTimeReached',
-        'WorkOrder::WorkOrderActualStartTimeReached',
-        'WorkOrder::WorkOrderActualEndTimeReached',
+    my @NotificationTypes = qw(
+        Change::ChangeAdd
+        Change::ChangeUpdate
+        Change::ChangeCABUpdate
+        Change::ChangeCABDelete
+        Change::ChangeLinkAdd
+        Change::ChangeLinkDelete
+        Change::ChangeAttachmentAdd
+        Change::ChangeAttachmentDelete
+        Change::ChangeDelete
+        Change::ChangePlannedStartTimeReached
+        Change::ChangePlannedEndTimeReached
+        Change::ChangeActualStartTimeReached
+        Change::ChangeActualEndTimeReached
+        Change::ChangeRequestedTimeReached
+        Change::ActionExecute
+        WorkOrder::WorkOrderAdd
+        WorkOrder::WorkOrderUpdate
+        WorkOrder::WorkOrderLinkAdd
+        WorkOrder::WorkOrderLinkDelete
+        WorkOrder::WorkOrderAttachmentAdd
+        WorkOrder::WorkOrderAttachmentDelete
+        WorkOrder::WorkOrderDelete
+        WorkOrder::WorkOrderPlannedStartTimeReached
+        WorkOrder::WorkOrderPlannedEndTimeReached
+        WorkOrder::WorkOrderActualStartTimeReached
+        WorkOrder::WorkOrderActualEndTimeReached
     );
 
     # delete the entries
@@ -2050,6 +2306,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2010-03-19 10:13:16 $
+$Revision: 1.60 $ $Date: 2010-05-21 10:22:12 $
 
 =cut

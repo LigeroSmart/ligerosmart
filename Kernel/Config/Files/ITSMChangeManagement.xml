@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.206 2010-05-18 14:05:55 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.207 2010-05-21 10:22:11 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1447,6 +1447,19 @@
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
                 <Item Key="Event">(ConditionAddPost|ConditionUpdatePost|ConditionDeletePost|ConditionDeleteAllPost|ExpressionAddPost|ExpressionUpdatePost|ExpressionDeletePost|ExpressionDeleteAllPost|ActionAddPost|ActionUpdatePost|ActionDeletePost|ActionDeleteAllPost|ActionExecutePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMCondition::EventModule###02-Notification" Required="0" Valid="1">
+        <Description Lang="en">ITSM event module that sends notifications.</Description>
+        <Description Lang="de">ITSM Event Modul zum Senden von Benachrichtigungen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMCondition::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
+                <Item Key="Event">(ActionExecutePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>

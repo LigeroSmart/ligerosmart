@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Action.pm,v 1.10 2010-02-05 17:57:44 ub Exp $
+# $Id: Action.pm,v 1.11 2010-05-21 10:22:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -577,7 +577,9 @@ sub ActionExecute {
         Event => 'ActionExecutePre',
         Data  => {
             %Param,
-            ChangeID => $Condition->{ChangeID},
+            %{$Condition},
+            ConditionName => $Condition->{Name},
+            ChangeID      => $Condition->{ChangeID},
         },
         UserID => $Param{UserID},
     );
@@ -656,6 +658,8 @@ sub ActionExecute {
         Event => 'ActionExecutePost',
         Data  => {
             %Param,
+            %{$Condition},
+            ConditionName => $Condition->{Name},
             %OperatorExecute,
             ChangeID     => $Condition->{ChangeID},
             ActionResult => $ActionResult,
@@ -797,6 +801,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-02-05 17:57:44 $
+$Revision: 1.11 $ $Date: 2010-05-21 10:22:12 $
 
 =cut

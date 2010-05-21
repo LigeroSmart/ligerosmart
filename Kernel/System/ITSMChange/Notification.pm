@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.40 2010-02-26 07:57:03 reb Exp $
+# $Id: Notification.pm,v 1.41 2010-05-21 10:22:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -358,8 +358,16 @@ sub NotificationSend {
             Loop     => 1,
         );
 
+        # get the event type
+        my $Type;
+        if ( $Event =~ m{ \A (Change|ActionExecute) }xms ) {
+            $Type = 'Change';
+        }
+        elsif ( $Event =~ m{ \A WorkOrder }xms ) {
+            $Type = 'WorkOrder';
+        }
+
         # trigger NotificationSent-Event
-        my ($Type) = $Event =~ m{ (WorkOrder|Change) }xms;
         $Self->EventHandler(
             Event => $Type . 'NotificationSentPost',
             Data  => {
@@ -1117,6 +1125,33 @@ sub _NotificationReplaceMacros {
         $Text =~ s{ $Tag .+? $End}{-}gxmsi;
     }
 
+    # replace <OTRS_CONDITION... tags
+    {
+        my $Tag  = $Start . 'OTRS_CONDITION_';
+        my %Data = %{ $Param{Data} };
+
+        # html quoting of content
+        if ( $Param{RichText} ) {
+            KEY:
+            for my $Key ( keys %Data ) {
+                next KEY if !$Data{$Key};
+                $Data{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
+                    String => $Data{$Key},
+                );
+            }
+        }
+
+        # replace it
+        KEY:
+        for my $Key ( keys %Data ) {
+            next KEY if !defined $Data{$Key};
+            $Text =~ s{ $Tag $Key $End }{$Data{$Key}}gxmsi;
+        }
+
+        # cleanup
+        $Text =~ s{ $Tag .+? $End}{-}gxmsi;
+    }
+
     # replace <OTRS_LINK_... tags
     {
         my $Tag      = $Start . 'OTRS_LINK_';
@@ -1353,6 +1388,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2010-02-26 07:57:03 $
+$Revision: 1.41 $ $Date: 2010-05-21 10:22:12 $
 
 =cut
