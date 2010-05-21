@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.173 2010-05-21 12:02:53 ub Exp $
+# $Id: ITSMChange.t,v 1.174 2010-05-21 12:52:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -193,8 +193,10 @@ my @DefaultChangeStates = (
     'rejected',
     'approved',
     'in progress',
+    'pending pir',
     'successful',
     'failed',
+    'canceled',
     'retracted',
 );
 
