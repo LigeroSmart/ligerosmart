@@ -1,8 +1,8 @@
 # --
 # RichTextEditor.dtl - provides Rich Text Editor
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: RichTextEditorFAQ.dtl,v 1.4 2009-10-12 12:23:06 mb Exp $
+# $Id: RichTextEditorFAQ.dtl,v 1.5 2010-05-24 18:48:39 mb Exp $
 # $OldId: RichTextEditor.dtl,v 1.19 2009/07/26 10:18:31 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,8 @@ function RichTextEditorFAQCreate ( FieldName ) {
     oFCKeditor.Config["ForcePasteAsPlainText"] = false;
     oFCKeditor.Config["EditorAreaStyles"]      = 'body { $Config{"Frontend::RichText::DefaultCSS"} }';
     oFCKeditor.Config["AutoDetectLanguage"]    = false;
-    oFCKeditor.Config["DefaultLanguage"]       = '$Env{"UserLanguage"}';
+    # Fix for bug#5383 - language strings such as pt_BR should be reformatted as pt-br:
+    oFCKeditor.Config["DefaultLanguage"]          = String('$Env{"UserLanguage"}').toLowerCase().replace("_", "-");
     oFCKeditor.Config["ImageUploadURL"]        = "$Env{"Baselink"}";
     oFCKeditor.Config["FirefoxSpellChecker"]   = true;
     oFCKeditor.Config["BrowserContextMenu"]    = true;
