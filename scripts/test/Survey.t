@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.13 2010-04-27 13:02:14 mh Exp $
+# $Id: Survey.t,v 1.14 2010-05-25 10:47:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -337,9 +337,37 @@ for my $Test (@Tests) {
             "$Test->{Name} Test special characters in email subject",
         );
 
+        # define mail body
+        my $Mailbody1 = "This is a multi-part message in MIME format...
+
+------------=_MESSAGEID
+Content-Type: text/plain; charset=\"utf-8\"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Dear customer... =C3=A4=C3=B6=C3=BC=
+
+------------=_MESSAGEID
+Content-Type: text/html; charset=\"utf-8\"
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D\"Content-Type\" content=3D\"text/html; charset=
+=3Dutf-8\"/></head><body style=3D\"font-family:Geneva,Helvetica,Arial,sans-se=
+rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
+
+------------=_MESSAGEID--
+";
+
+        # copy mail body
+        my $Mailbody2 = ${$BodyRef};
+
+        # prepare mail body
+        $Mailbody2 =~ s{ \d{10} - \d{4} - \d }{MESSAGEID}xmsg;
+
         $Self->Is(
-            ${$BodyRef},
-            "Dear customer... =C3=A4=C3=B6=C3=BC=\n",
+            $Mailbody2,
+            $Mailbody1,
             "$Test->{Name} Test special characters in email body",
         );
     }
