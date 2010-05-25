@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.207 2010-05-21 10:22:11 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.208 2010-05-25 13:47:51 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -753,7 +753,7 @@
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::MenuModule###317-ITSMChangeAdd" Required="0" Valid="1">
         <Description Lang="en">Module to show a link to create a change from this ticket. The ticket will be automatically linked with the new change.</Description>
-        <Description Lang="de">Mit diesem Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erstellt werden kann. das Ticket wird automatisch mit dem neu erstellten Change verlinkt.</Description>
+        <Description Lang="de">Mit diesem Modul wird ein Link im Menü der Ticketansicht angezeigt, mit dem ein Change erstellt werden kann. Das Ticket wird automatisch mit dem neu erstellten Change verlinkt.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
@@ -1472,6 +1472,19 @@
         <Setting>
             <Array>
                 <Item>RfC</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::RestrictTicketTypes::Groups" Required="1" Valid="1">
+        <Description Lang="en">Only users of these groups have the permission to use the ticket types as defined in "ITSMChange::AddChangeLinkTicketTypes" if the feature "Ticket::Acl::Module###200-Ticket::Acl::Module" is enabled.</Description>
+        <Description Lang="de">Nur die Mitglieder dieser Gruppen haben die Erlaubnis die Ticket-Typen zu verwenden, die in "ITSMChange::AddChangeLinkTicketTypes" definiert sind, wenn das Feature "Ticket::Acl::Module###200-Ticket::Acl::Module" aktiviert ist.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Array>
+                <Item>itsm-change</Item>
+                <Item>itsm-change-builder</Item>
+                <Item>itsm-change-manager</Item>
             </Array>
         </Setting>
     </ConfigItem>
@@ -4028,8 +4041,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="1">
-        <Description Lang="en">This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups 'itsm-change', 'itsm-change-builder' or 'itsm-change-manager'.</Description>
-        <Description Lang="de">Dieses ACL Modul schränkt die Verwendung der Ticket-Typen, die in der Sysconfig-Option 'ITSMChange::AddChangeLinkTicketTypes' definiert sind, auf Benutzer ein die Mitglied in einer der Gruppen 'itsm-change', 'itsm-change-builder' oder 'itsm-change-manager' sind.</Description>
+        <Description Lang="en">This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups".</Description>
+        <Description Lang="de">Dieses ACL Modul schränkt die Verwendung der Ticket-Typen, die in der Sysconfig-Option 'ITSMChange::AddChangeLinkTicketTypes' definiert sind, auf Benutzer ein die Mitglied in einer der in "ITSMChange::RestrictTicketTypes::Groups" definerten Gruppen sind.</Description>
         <Group>Ticket</Group>
         <SubGroup>Core::TicketACL</SubGroup>
         <Setting>

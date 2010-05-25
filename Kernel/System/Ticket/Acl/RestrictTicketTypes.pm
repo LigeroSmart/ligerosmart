@@ -2,9 +2,9 @@
 # Kernel/System/Ticket/Acl/RestrictTicketTypes.pm - acl module
 # - restrict the usage of the ticket types as defined in
 # - sysconfig option 'ITSMChange::AddChangeLinkTicketTypes' to certain groups -
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: RestrictTicketTypes.pm,v 1.5 2009-11-19 16:42:35 mae Exp $
+# $Id: RestrictTicketTypes.pm,v 1.6 2010-05-25 13:47:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,8 +89,16 @@ sub Run {
         Cached => 1,
     );
 
+    # get and check the list of groups who are allowed to use the AddChangeLinkTicketTypes
+    my $RestrictTicketTypesGroups
+        = $Self->{ConfigObject}->Get('ITSMChange::RestrictTicketTypes::Groups');
+
+    return 1 if !$RestrictTicketTypesGroups;
+    return 1 if ref $RestrictTicketTypesGroups ne 'ARRAY';
+    return 1 if !@{$RestrictTicketTypesGroups};
+
     # check if the user is in one of these groups
-    for my $Group (qw(itsm-change itsm-change-builder itsm-change-manager)) {
+    for my $Group ( @{$RestrictTicketTypesGroups} ) {
 
         # get the group id
         my $GroupID = $Self->{GroupObject}->GroupLookup(
