@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PictureUploadFAQ.pm - get picture uploads for FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PictureUploadFAQ.pm,v 1.2 2009-07-21 22:53:02 ub Exp $
+# $Id: PictureUploadFAQ.pm,v 1.3 2010-05-26 15:23:09 ub Exp $
 # $OldId: PictureUpload.pm,v 1.3 2009/07/19 21:47:15 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use URI::Escape;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -64,33 +64,37 @@ sub Run {
 
 ";
 
+    # return if no form id exists
     if ( !$Self->{FormID} ) {
         $Output .= "window.parent.OnUploadCompleted(404,\"\",\"\",\"\") ;</script>";
         return $Output;
     }
 
-    if ( $Self->{ParamObject}->GetParam( Param => 'ContentID' ) ) {
-        my $ContentID = $Self->{ParamObject}->GetParam( Param => 'ContentID' ) || '';
+    # deliver file form for display inline content
+    my $ContentID = $Self->{ParamObject}->GetParam( Param => 'ContentID' );
+    if ($ContentID) {
 
         # return image inline
-        my @AttachmentData
-            = $Self->{UploadCachObject}->FormIDGetAllFilesData( FormID => $Self->{FormID} );
-        ATTACHMENTDATA:
-        for my $TmpAttachment (@AttachmentData) {
-            next ATTACHMENTDATA if $TmpAttachment->{ContentID} ne $ContentID;
+        my @AttachmentData = $Self->{UploadCachObject}->FormIDGetAllFilesData(
+            FormID => $Self->{FormID},
+        );
+        for my $Attachment (@AttachmentData) {
+            next if !$Attachment->{ContentID};
+            next if $Attachment->{ContentID} ne $ContentID;
             return $Self->{LayoutObject}->Attachment(
                 Type => 'inline',
-                %{$TmpAttachment},
+                %{$Attachment},
             );
         }
     }
 
-    # upload new picture
+    # get uploaded file
     my %File = $Self->{ParamObject}->GetUploadAll(
         Param  => 'NewFile',
         Source => 'string',
     );
 
+    # return error if no file is there
     if ( !%File ) {
         $Output .= "window.parent.OnUploadCompleted(404,\"-\",\"-\",\"\") ;</script>";
         return $Output;
@@ -107,11 +111,13 @@ sub Run {
     }
 # ---
 
+    # return error if file is not possible to show inline
     if ( $File{Filename} !~ /\.(png|gif|jpg|jpeg)$/i ) {
         $Output .= "window.parent.OnUploadCompleted(202,\"-\",\"-\",\"\") ;</script>";
         return $Output;
     }
 
+    # check if name already exists
     my @AttachmentMeta = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID}
     );
@@ -136,6 +142,8 @@ sub Run {
             last NEWNAME;
         }
     }
+
+    # add uploaded file to upload cache
     $Self->{UploadCachObject}->FormIDAddFile(
         FormID      => $Self->{FormID},
         Filename    => $TmpFilename,
@@ -143,20 +151,23 @@ sub Run {
         ContentType => $File{ContentType} . '; name="' . $TmpFilename . '"',
         Disposition => 'inline',
     );
-    my $ContentID = '';
+
+    # get new content id
+    my $ContentIDNew = '';
     @AttachmentMeta = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
         FormID => $Self->{FormID}
     );
     CONTENTID:
     for my $TmpAttachment (@AttachmentMeta) {
         next CONTENTID if $TmpFilename ne $TmpAttachment->{Filename};
-        $ContentID = $TmpAttachment->{ContentID};
+        $ContentIDNew = $TmpAttachment->{ContentID};
         last CONTENTID;
     }
 
-    my $SessionID = '';
+    # serve new content id to rte
+    my $Session = '';
     if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
-        $SessionID = "&" . $Self->{SessionName} . "=" . $Self->{SessionID};
+        $Session = "&" . $Self->{SessionName} . "=" . $Self->{SessionID};
     }
     my $URL = $Self->{LayoutObject}->{Baselink}
 # ---
@@ -168,14 +179,14 @@ sub Run {
         . "&FormID="
         . $Self->{FormID}
         . "&ContentID="
-        . $ContentID
+        . $ContentIDNew
 # ---
 # FAQ
 # ---
         . "&Filename="
         . $TmpFilename
 # ---
-        . $SessionID;
+        . $Session;
     $Output .= "window.parent.OnUploadCompleted(0,\"$URL\",\"$URL\",\"\") ;</script>";
 
     return $Output;
