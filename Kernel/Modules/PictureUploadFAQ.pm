@@ -2,8 +2,8 @@
 # Kernel/Modules/PictureUploadFAQ.pm - get picture uploads for FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PictureUploadFAQ.pm,v 1.3 2010-05-26 15:23:09 ub Exp $
-# $OldId: PictureUpload.pm,v 1.3 2009/07/19 21:47:15 martin Exp $
+# $Id: PictureUploadFAQ.pm,v 1.4 2010-05-26 15:24:39 ub Exp $
+# $OldId: PictureUpload.pm,v 1.3.2.1 2010/01/26 20:39:50 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use URI::Escape;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
