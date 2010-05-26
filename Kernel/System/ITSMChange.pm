@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.235 2010-05-12 13:33:45 ub Exp $
+# $Id: ITSMChange.pm,v 1.236 2010-05-26 22:53:15 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,11 +25,12 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::HTMLUtils;
 use Kernel::System::VirtualFS;
+use Kernel::System::CacheInternal;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.235 $) [1];
+$VERSION = qw($Revision: 1.236 $) [1];
 
 =head1 NAME
 
@@ -128,6 +129,13 @@ sub new {
         Objects    => {
             %{$Self},
         },
+    );
+
+    # Create CahceInternal object...
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %Param,
+        Type => 'ITSMChangeManagement',
+        TTL  => 60 * 60 * 3,
     );
 
     return $Self;
@@ -266,6 +274,9 @@ sub ChangeAdd {
     );
 
     return if !$ChangeID;
+
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $ChangeID );
 
     # trigger ChangeAddPost-Event
     # (yes, we want do do this before the ChangeUpdate!)
@@ -478,6 +489,9 @@ sub ChangeUpdate {
         Bind => \@Bind,
     );
 
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
+
     # trigger ChangeUpdatePost-Event
     $Self->EventHandler(
         Event => 'ChangeUpdatePost',
@@ -555,42 +569,59 @@ sub ChangeGet {
         }
     }
 
-    # get data from database
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, change_number, title, '
-            . 'description, description_plain, '
-            . 'justification, justification_plain, '
-            . 'change_state_id, change_manager_id, change_builder_id, '
-            . 'category_id, impact_id, priority_id, '
-            . 'create_time, create_by, change_time, change_by, '
-            . 'requested_time '
-            . 'FROM change_item '
-            . 'WHERE id = ? ',
-        Bind  => [ \$Param{ChangeID} ],
-        Limit => 1,
-    );
+    # check cache
+    my $CacheKey = 'ChangeGet::ID::' . $Param{ChangeID};
+    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
 
-    # fetch the result
     my %ChangeData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ChangeData{ChangeID}           = $Row[0];
-        $ChangeData{ChangeNumber}       = $Row[1];
-        $ChangeData{ChangeTitle}        = defined( $Row[2] ) ? $Row[2] : '';
-        $ChangeData{Description}        = defined( $Row[3] ) ? $Row[3] : '';
-        $ChangeData{DescriptionPlain}   = defined( $Row[4] ) ? $Row[4] : '';
-        $ChangeData{Justification}      = defined( $Row[5] ) ? $Row[5] : '';
-        $ChangeData{JustificationPlain} = defined( $Row[6] ) ? $Row[6] : '';
-        $ChangeData{ChangeStateID}      = $Row[7];
-        $ChangeData{ChangeManagerID}    = $Row[8];
-        $ChangeData{ChangeBuilderID}    = $Row[9];
-        $ChangeData{CategoryID}         = $Row[10];
-        $ChangeData{ImpactID}           = $Row[11];
-        $ChangeData{PriorityID}         = $Row[12];
-        $ChangeData{CreateTime}         = $Row[13];
-        $ChangeData{CreateBy}           = $Row[14];
-        $ChangeData{ChangeTime}         = $Row[15];
-        $ChangeData{ChangeBy}           = $Row[16];
-        $ChangeData{RequestedTime}      = $Row[17];
+
+    if ($Cache) {
+        %ChangeData = %{$Cache};
+    }
+    else {
+
+        # get data from database
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id, change_number, title, '
+                . 'description, description_plain, '
+                . 'justification, justification_plain, '
+                . 'change_state_id, change_manager_id, change_builder_id, '
+                . 'category_id, impact_id, priority_id, '
+                . 'create_time, create_by, change_time, change_by, '
+                . 'requested_time '
+                . 'FROM change_item '
+                . 'WHERE id = ? ',
+            Bind  => [ \$Param{ChangeID} ],
+            Limit => 1,
+        );
+
+        # fetch the result
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $ChangeData{ChangeID}           = $Row[0];
+            $ChangeData{ChangeNumber}       = $Row[1];
+            $ChangeData{ChangeTitle}        = defined( $Row[2] ) ? $Row[2] : '';
+            $ChangeData{Description}        = defined( $Row[3] ) ? $Row[3] : '';
+            $ChangeData{DescriptionPlain}   = defined( $Row[4] ) ? $Row[4] : '';
+            $ChangeData{Justification}      = defined( $Row[5] ) ? $Row[5] : '';
+            $ChangeData{JustificationPlain} = defined( $Row[6] ) ? $Row[6] : '';
+            $ChangeData{ChangeStateID}      = $Row[7];
+            $ChangeData{ChangeManagerID}    = $Row[8];
+            $ChangeData{ChangeBuilderID}    = $Row[9];
+            $ChangeData{CategoryID}         = $Row[10];
+            $ChangeData{ImpactID}           = $Row[11];
+            $ChangeData{PriorityID}         = $Row[12];
+            $ChangeData{CreateTime}         = $Row[13];
+            $ChangeData{CreateBy}           = $Row[14];
+            $ChangeData{ChangeTime}         = $Row[15];
+            $ChangeData{ChangeBy}           = $Row[16];
+            $ChangeData{RequestedTime}      = $Row[17];
+        }
+
+        # set cache
+        $Self->{CacheInternalObject}->Set(
+            Key   => $CacheKey,
+            Value => \%ChangeData,
+        );
     }
 
     # check error
@@ -1844,6 +1875,9 @@ sub ChangeDelete {
         UserID   => $Param{UserID},
     );
 
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'ChnageGet::ID::' . $Param{ChangeID} );
+
     # trigger ChangeDeletePost-Event
     # this must be done before deleting the change from the database,
     # because of a foreign key constraint in the change_history table
@@ -3086,6 +3120,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.235 $ $Date: 2010-05-12 13:33:45 $
+$Revision: 1.236 $ $Date: 2010-05-26 22:53:15 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.97 2010-05-21 18:53:17 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.98 2010-05-26 22:53:15 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,11 +22,12 @@ use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
+use Kernel::System::CacheInternal;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.97 $) [1];
+$VERSION = qw($Revision: 1.98 $) [1];
 
 =head1 NAME
 
@@ -120,6 +121,13 @@ sub new {
         Objects    => {
             %{$Self},
         },
+    );
+
+    # Create CahceInternal object...
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %Param,
+        Type => 'ITSMChangeManagement',
+        TTL  => 60 * 60 * 3,
     );
 
     return $Self;
@@ -314,6 +322,9 @@ sub WorkOrderAdd {
         );
         return;
     }
+
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $WorkOrderID );
 
     # trigger WorkOrderAddPost-Event
     # (yes, we want do do this before the WorkOrderUpdate!)
@@ -568,6 +579,9 @@ sub WorkOrderUpdate {
         Bind => \@Bind,
     );
 
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID} );
+
     # trigger WorkOrderUpdatePost-Event
     $Self->EventHandler(
         Event => 'WorkOrderUpdatePost',
@@ -636,46 +650,67 @@ sub WorkOrderGet {
         }
     }
 
-    # get data from database
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, change_id, workorder_number, title, '
-            . 'instruction, instruction_plain, '
-            . 'report, report_plain, '
-            . 'workorder_state_id, workorder_type_id, workorder_agent_id, '
-            . 'planned_start_time, planned_end_time, actual_start_time, actual_end_time, '
-            . 'create_time, create_by, '
-            . 'change_time, change_by, '
-            . 'planned_effort, accounted_time '
-            . 'FROM change_workorder '
-            . 'WHERE id = ?',
-        Bind  => [ \$Param{WorkOrderID} ],
-        Limit => 1,
-    );
-
-    # fetch the result
     my %WorkOrderData;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $WorkOrderData{WorkOrderID}      = $Row[0];
-        $WorkOrderData{ChangeID}         = $Row[1];
-        $WorkOrderData{WorkOrderNumber}  = $Row[2];
-        $WorkOrderData{WorkOrderTitle}   = defined $Row[3] ? $Row[3] : '';
-        $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
-        $WorkOrderData{InstructionPlain} = defined $Row[5] ? $Row[5] : '';
-        $WorkOrderData{Report}           = defined $Row[6] ? $Row[6] : '';
-        $WorkOrderData{ReportPlain}      = defined $Row[7] ? $Row[7] : '';
-        $WorkOrderData{WorkOrderStateID} = $Row[8];
-        $WorkOrderData{WorkOrderTypeID}  = $Row[9];
-        $WorkOrderData{WorkOrderAgentID} = $Row[10];
-        $WorkOrderData{PlannedStartTime} = $Row[11];
-        $WorkOrderData{PlannedEndTime}   = $Row[12];
-        $WorkOrderData{ActualStartTime}  = $Row[13];
-        $WorkOrderData{ActualEndTime}    = $Row[14];
-        $WorkOrderData{CreateTime}       = $Row[15];
-        $WorkOrderData{CreateBy}         = $Row[16];
-        $WorkOrderData{ChangeTime}       = $Row[17];
-        $WorkOrderData{ChangeBy}         = $Row[18];
-        $WorkOrderData{PlannedEffort}    = $Row[19];
-        $WorkOrderData{AccountedTime}    = $Row[20];
+
+    # check cache
+    my $CacheKey = 'WorkOrderGet::ID::' . $Param{WorkOrderID};
+    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+
+    if ($Cache) {
+
+        #get data from cache
+        %WorkOrderData = %{$Cache};
+    }
+
+    else {
+
+        # get data from database
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id, change_id, workorder_number, title, '
+                . 'instruction, instruction_plain, '
+                . 'report, report_plain, '
+                . 'workorder_state_id, workorder_type_id, workorder_agent_id, '
+                . 'planned_start_time, planned_end_time, actual_start_time, actual_end_time, '
+                . 'create_time, create_by, '
+                . 'change_time, change_by, '
+                . 'planned_effort, accounted_time '
+                . 'FROM change_workorder '
+                . 'WHERE id = ?',
+            Bind  => [ \$Param{WorkOrderID} ],
+            Limit => 1,
+        );
+
+        # fetch the result
+        #my %WorkOrderData;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $WorkOrderData{WorkOrderID}      = $Row[0];
+            $WorkOrderData{ChangeID}         = $Row[1];
+            $WorkOrderData{WorkOrderNumber}  = $Row[2];
+            $WorkOrderData{WorkOrderTitle}   = defined $Row[3] ? $Row[3] : '';
+            $WorkOrderData{Instruction}      = defined $Row[4] ? $Row[4] : '';
+            $WorkOrderData{InstructionPlain} = defined $Row[5] ? $Row[5] : '';
+            $WorkOrderData{Report}           = defined $Row[6] ? $Row[6] : '';
+            $WorkOrderData{ReportPlain}      = defined $Row[7] ? $Row[7] : '';
+            $WorkOrderData{WorkOrderStateID} = $Row[8];
+            $WorkOrderData{WorkOrderTypeID}  = $Row[9];
+            $WorkOrderData{WorkOrderAgentID} = $Row[10];
+            $WorkOrderData{PlannedStartTime} = $Row[11];
+            $WorkOrderData{PlannedEndTime}   = $Row[12];
+            $WorkOrderData{ActualStartTime}  = $Row[13];
+            $WorkOrderData{ActualEndTime}    = $Row[14];
+            $WorkOrderData{CreateTime}       = $Row[15];
+            $WorkOrderData{CreateBy}         = $Row[16];
+            $WorkOrderData{ChangeTime}       = $Row[17];
+            $WorkOrderData{ChangeBy}         = $Row[18];
+            $WorkOrderData{PlannedEffort}    = $Row[19];
+            $WorkOrderData{AccountedTime}    = $Row[20];
+        }
+
+        # set cache
+        $Self->{CacheInternalObject}->Set(
+            Key   => $CacheKey,
+            Value => \%WorkOrderData,
+        );
     }
 
     # check error
@@ -1332,6 +1367,9 @@ sub WorkOrderDelete {
         SQL  => 'DELETE FROM change_workorder WHERE id = ? ',
         Bind => [ \$Param{WorkOrderID} ],
     );
+
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID} );
 
     # trigger WorkOrderDeletePost-Event
     $Self->EventHandler(
@@ -2723,6 +2761,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.97 $ $Date: 2010-05-21 18:53:17 $
+$Revision: 1.98 $ $Date: 2010-05-26 22:53:15 $
 
 =cut
