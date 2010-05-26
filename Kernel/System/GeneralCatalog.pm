@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.48 2010-01-20 13:56:38 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.49 2010-05-26 22:51:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::Valid;
 use Kernel::System::CheckItem;
+use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 =head1 NAME
 
@@ -94,6 +95,13 @@ sub new {
     if ( $Self->{MainObject}->Require($GeneratorModule) ) {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
     }
+
+    # Create CahceInternal object...
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %Param,
+        Type => 'GeneralCatalog',
+        TTL  => 60 * 60 * 3,
+    );
 
     return $Self;
 }
@@ -183,10 +191,12 @@ sub ClassRename {
     }
 
     # reset cache
-    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassOld} };
-    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassNew} };
-    delete $Self->{Cache}->{ItemGet}->{ItemID};
-    delete $Self->{Cache}->{ItemList};
+    #    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassOld} };
+    #    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassNew} };
+    #    delete $Self->{Cache}->{ItemGet}->{ItemID};
+    #    delete $Self->{Cache}->{ItemList};
+
+    $Self->{CacheInternalObject}->CleanUp();
 
     # rename general catalog class
     return $Self->{DBObject}->Do(
@@ -251,9 +261,11 @@ sub ItemList {
 
             push @PreferencesBind, \$Key, map { \$_ } @{ $Param{Preferences}->{$Key} };
 
-            # add functionality list to cache key
-            $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
-            $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
+ # add functionality list to cache key
+ #            $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
+ #            $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
+            $PreferencesCacheKey = '::' . $PreferencesCacheKey . '::' if $PreferencesCacheKey;
+            $PreferencesCacheKey .= join q{::}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
         }
 
         $PreferencesWhere = ' AND ' . join ' AND ', @Wheres;
@@ -270,11 +282,16 @@ sub ItemList {
     }
 
     # create cache key
-    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
+    #    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
+    my $CacheKey
+        = 'ItemGet::ItemList::' . $Param{Class} . '::' . $Param{Valid} . $PreferencesCacheKey;
 
     # check if result is already cached
-    return $Self->{Cache}->{ItemList}->{$CacheKey}
-        if $Self->{Cache}->{ItemList}->{$CacheKey};
+    #    return $Self->{Cache}->{ItemList}->{$CacheKey}
+    #        if $Self->{Cache}->{ItemList}->{$CacheKey};
+
+    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    return $Cache if $Cache;
 
     # ask database
     $Self->{DBObject}->Prepare(
@@ -298,7 +315,12 @@ sub ItemList {
     }
 
     # cache the result
-    $Self->{Cache}->{ItemList}->{$CacheKey} = \%Data;
+    #$Self->{Cache}->{ItemList}->{$CacheKey} = \%Data;
+
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \%Data,
+    );
 
     return \%Data;
 }
@@ -352,8 +374,12 @@ sub ItemGet {
     if ( $Param{Class} && $Param{Name} ) {
 
         # check if result is already cached
-        return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
-            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
+        #        return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
+        #            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
+
+        my $CacheKey = "ItemGet::Class::$Param{Class}::{ $Param{Name}";
+        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+        return $Cache if $Cache;
 
         # add class and name to sql string
         $SQL .= 'general_catalog_class = ? AND name = ?';
@@ -362,8 +388,12 @@ sub ItemGet {
     else {
 
         # check if result is already cached
-        return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
-            if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+        #        return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
+        #            if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+
+        my $CacheKey = 'ItemGet::ItemID::' . $Param{ItemID};
+        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+        return $Cache if $Cache;
 
         # add item id to sql string
         $SQL .= 'id = ?';
@@ -409,8 +439,17 @@ sub ItemGet {
     }
 
     # cache the result
-    $Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
-    $Self->{Cache}->{ItemGet}->{ItemID}->{ $ItemData{ItemID} } = \%ItemData;
+    #$Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
+    #$Self->{Cache}->{ItemGet}->{ItemID}->{ $ItemData{ItemID} } = \%ItemData;
+
+    $Self->{CacheInternalObject}->Set(
+        Key   => "ItemGet::Class::$ItemData{Class}::$ItemData{Name}",
+        Value => \%ItemData,
+    );
+    $Self->{CacheInternalObject}->Set(
+        Key   => "ItemGet::ItemID::$ItemData{ItemID}",
+        Value => \%ItemData,
+    );
 
     return \%ItemData;
 }
@@ -490,7 +529,9 @@ sub ItemAdd {
     }
 
     # reset cache
-    delete $Self->{Cache}->{ItemList};
+    #delete $Self->{Cache}->{ItemList};
+
+    $Self->{CacheInternalObject}->CleanUp();
 
     # insert new item
     return if !$Self->{DBObject}->Do(
@@ -618,10 +659,12 @@ sub ItemUpdate {
         return;
     }
 
-    # reset cache
-    delete $Self->{Cache}->{ItemGet}->{Class}->{$Class}->{ $Param{Name} };
-    delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
-    delete $Self->{Cache}->{ItemList};
+    #    # reset cache
+    #    delete $Self->{Cache}->{ItemGet}->{Class}->{$Class}->{ $Param{Name} };
+    #    delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
+    #    delete $Self->{Cache}->{ItemList};
+
+    $Self->{CacheInternalObject}->CleanUp();
 
     return $Self->{DBObject}->Do(
         SQL => 'UPDATE general_catalog SET '
@@ -686,6 +729,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2010-01-20 13:56:38 $
+$Revision: 1.49 $ $Date: 2010-05-26 22:51:03 $
 
 =cut
