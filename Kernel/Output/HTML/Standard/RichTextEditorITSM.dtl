@@ -2,7 +2,7 @@
 # RichTextEditorITSM.dtl - provides Rich Text Editor
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: RichTextEditorITSM.dtl,v 1.3 2010-05-26 13:04:24 ub Exp $
+# $Id: RichTextEditorITSM.dtl,v 1.4 2010-05-26 17:08:32 ub Exp $
 # $OldId: RichTextEditor.dtl,v 1.20.2.11 2010/05/26 12:46:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -15,13 +15,25 @@
 
 <script type="text/javascript">
 // update body with current rich text content
-function RichTextUpdateLinkedField() {
-    FCKeditorAPI.GetInstance('RichText').UpdateLinkedField();
+# ---
+# ITSM
+# ---
+#function RichTextUpdateLinkedField() {
+#    FCKeditorAPI.GetInstance('RichText').UpdateLinkedField();
+function RichTextUpdateLinkedField( Fieldname ) {
+    FCKeditorAPI.GetInstance( Fieldname ).UpdateLinkedField();
+# ---
 }
 
 // set focus to rich text editor
-function RichTextFocus() {
-    FCKeditorAPI.GetInstance('RichText').Focus();
+# ---
+# ITSM
+# ---
+#function RichTextFocus() {
+#    FCKeditorAPI.GetInstance('RichText').Focus();
+function RichTextFocus( Fieldname ) {
+    FCKeditorAPI.GetInstance( Fieldname ).Focus();
+# ---
 }
 
 // cleanup real body
