@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.34 2010-04-27 20:39:02 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.35 2010-05-28 17:53:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,15 @@ $Include{"AgentITSMUserSearch"}
 $Include{"AgentITSMCABMemberSearch"}
 
 <style type="text/css">
-.myAutoComplete {
-    width:          32em;    /* set width here or else widget will expand to fit its container */
-    padding-bottom: 0.5em;
-}
+    .myAutoComplete {
+        width:          32em;    /* set width here or else widget will expand to fit its container */
+        padding-bottom: 0.5em;
+    }
+
+     /* needed for stacked instances for ie & sf z-index bug of absolute inside relative els */
+     #myAutoComplete1 { z-index:9001; }
+     #myAutoComplete2 { z-index:9000; }
+
 </style>
 
 <script language="JavaScript" type="text/javascript">
