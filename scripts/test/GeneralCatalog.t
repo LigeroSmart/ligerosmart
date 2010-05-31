@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.21 2010-05-31 15:11:30 cr Exp $
+# $Id: GeneralCatalog.t,v 1.22 2010-05-31 15:37:58 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -457,8 +457,8 @@ for my $Item ( @{$ItemData} ) {
         # check item data after creation of item
         for my $ItemAttribute ( keys %{ $Item->{AddGet} } ) {
             $Self->Is(
-                $ItemGet->{$ItemAttribute} || '',
-                $Item->{AddGet}->{$ItemAttribute} || '',
+                $ItemGet->{$ItemAttribute},
+                $Item->{AddGet}->{$ItemAttribute},
                 "Test $TestCount: ItemGet() - Using ItemID and UserID - $ItemAttribute ",
             );
         }
@@ -472,8 +472,8 @@ for my $Item ( @{$ItemData} ) {
         # check item data after creation of item
         for my $ItemAttribute ( keys %{ $Item->{AddGet} } ) {
             $Self->Is(
-                $ItemGet->{$ItemAttribute} || '',
-                $Item->{AddGet}->{$ItemAttribute} || '',
+                $ItemGet->{$ItemAttribute},
+                $Item->{AddGet}->{$ItemAttribute},
                 "Test $TestCount: ItemGet() - Using Class and Name - $ItemAttribute ",
             );
         }
@@ -518,8 +518,8 @@ for my $Item ( @{$ItemData} ) {
         # check item data after update
         for my $ItemAttribute ( keys %{ $Item->{UpdateGet} } ) {
             $Self->Is(
-                $ItemGet2->{$ItemAttribute} || '',
-                $Item->{UpdateGet}->{$ItemAttribute} || '',
+                $ItemGet2->{$ItemAttribute},
+                $Item->{UpdateGet}->{$ItemAttribute},
                 "Test $TestCount: ItemGet() - $ItemAttribute",
             );
         }
