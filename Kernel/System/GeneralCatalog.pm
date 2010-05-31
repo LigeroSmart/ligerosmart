@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.49 2010-05-26 22:51:03 cr Exp $
+# $Id: GeneralCatalog.pm,v 1.50 2010-05-31 15:14:48 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =head1 NAME
 
@@ -96,7 +96,7 @@ sub new {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
     }
 
-    # Create CahceInternal object...
+    # Create CacheInternal object...
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
         %Param,
         Type => 'GeneralCatalog',
@@ -128,6 +128,13 @@ sub ClassList {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @ClassList, $Row[0];
     }
+
+    #Cache the result...
+    my $CacheKey = "ClassList";
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \@ClassList,
+    );
 
     return \@ClassList;
 }
@@ -264,8 +271,8 @@ sub ItemList {
  # add functionality list to cache key
  #            $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
  #            $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
-            $PreferencesCacheKey = '::' . $PreferencesCacheKey . '::' if $PreferencesCacheKey;
-            $PreferencesCacheKey .= join q{::}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
+            $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
+            $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
         }
 
         $PreferencesWhere = ' AND ' . join ' AND ', @Wheres;
@@ -284,7 +291,7 @@ sub ItemList {
     # create cache key
     #    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
     my $CacheKey
-        = 'ItemGet::ItemList::' . $Param{Class} . '::' . $Param{Valid} . $PreferencesCacheKey;
+        = 'ItemList::' . $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
 
     # check if result is already cached
     #    return $Self->{Cache}->{ItemList}->{$CacheKey}
@@ -377,7 +384,7 @@ sub ItemGet {
         #        return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
         #            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
 
-        my $CacheKey = "ItemGet::Class::$Param{Class}::{ $Param{Name}";
+        my $CacheKey = "ItemGet::Class::$Param{Class}::$Param{Name}";
         my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
         return $Cache if $Cache;
 
@@ -694,6 +701,9 @@ set GeneralCatalog preferences
 sub GeneralCatalogPreferencesSet {
     my $Self = shift;
 
+    #Delete Cache...
+    $Self->{CacheInternalObject}->CleanUp();
+
     return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(@_);
 }
 
@@ -729,6 +739,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2010-05-26 22:51:03 $
+$Revision: 1.50 $ $Date: 2010-05-31 15:14:48 $
 
 =cut
