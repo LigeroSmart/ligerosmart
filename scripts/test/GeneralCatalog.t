@@ -2,7 +2,7 @@
 # GeneralCatalog.t - general catalog tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.20 2010-04-12 13:04:58 ub Exp $
+# $Id: GeneralCatalog.t,v 1.21 2010-05-31 15:11:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -448,7 +448,7 @@ for my $Item ( @{$ItemData} ) {
             );
         }
 
-        # get item data to check the values after creation of item
+        # get item data to check the values after creation of item using ItemId and UserID
         my $ItemGet = $Self->{GeneralCatalogObject}->ItemGet(
             ItemID => $ItemID,
             UserID => $Item->{Add}->{UserID},
@@ -459,7 +459,22 @@ for my $Item ( @{$ItemData} ) {
             $Self->Is(
                 $ItemGet->{$ItemAttribute} || '',
                 $Item->{AddGet}->{$ItemAttribute} || '',
-                "Test $TestCount: ItemGet() - $ItemAttribute",
+                "Test $TestCount: ItemGet() - Using ItemID and UserID - $ItemAttribute ",
+            );
+        }
+
+        # get item data to check the values after creation of item using Class and Name
+        my $ItemGet = $Self->{GeneralCatalogObject}->ItemGet(
+            Class => $Item->{AddGet}->{Class},
+            Name  => $Item->{AddGet}->{Name},
+        );
+
+        # check item data after creation of item
+        for my $ItemAttribute ( keys %{ $Item->{AddGet} } ) {
+            $Self->Is(
+                $ItemGet->{$ItemAttribute} || '',
+                $Item->{AddGet}->{$ItemAttribute} || '',
+                "Test $TestCount: ItemGet() - Using Class and Name - $ItemAttribute ",
             );
         }
     }
@@ -644,6 +659,65 @@ for my $Class (@ExistingClasses) {
 
 # ------------------------------------------------------------ #
 # Preferences test 1
+# ------------------------------------------------------------ #
+for my $Class (@ExistingClasses) {
+
+    my $ItemID = $Self->{GeneralCatalogObject}->ItemAdd(
+        Class   => $Class,
+        Name    => 'Item Preferences',
+        ValidID => 1,
+        UserID  => 1,
+    );
+
+    $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+        ItemID => $ItemID,
+        Key    => 'UnitTestPref',
+        Value  => '1',
+    );
+
+    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+        Class       => $Class,
+        Preferences => {
+            UnitTestPref => 1,
+        },
+    );
+
+    $Self->Is(
+        $ItemList->{$ItemID},
+        'Item Preferences',
+        "Test $TestCount: ItemList() - Class $Class Preferences match",
+    );
+
+    $Self->{GeneralCatalogObject}->GeneralCatalogPreferencesSet(
+        ItemID => $ItemID,
+        Key    => 'UnitTestPref',
+        Value  => '2',
+    );
+
+    $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+        Class       => $Class,
+        Preferences => {
+            UnitTestPref => 1,
+        },
+    );
+
+    $Self->False(
+        $ItemList,
+        "Test $TestCount: ItemList() - Class $Class Preferences not match after PreferencesSet Change"
+    );
+
+    $Self->{GeneralCatalogObject}->ItemUpdate(
+        ItemID  => $ItemID,
+        Name    => 'Item Preferences',
+        ValidID => 2,
+        UserID  => 1,
+    );
+
+    $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# Preferences test 2
 # ------------------------------------------------------------ #
 
 =pod
