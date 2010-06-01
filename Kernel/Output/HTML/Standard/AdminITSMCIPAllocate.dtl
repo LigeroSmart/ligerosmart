@@ -2,7 +2,7 @@
 # AdminITSMCIPAllocate.dtl - provides HTML form for AdminITSMCIPAllocate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.dtl,v 1.8 2010-01-31 17:00:58 ub Exp $
+# $Id: AdminITSMCIPAllocate.dtl,v 1.9 2010-06-01 16:04:35 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@
                 <table width="800" cellspacing="0" cellpadding="4">
                     <tr>
                         <td class="contenthead">
-                            $Text{"Priority"} $Text{"allocation"}:
+                            $Text{"Priority allocation"}:
                         </td>
                     </tr>
                     <tr>
@@ -36,10 +36,10 @@
                                     <td>
                                         <table border="0" cellspacing="0" cellpadding="0" width="100%">
                                             <tr>
-                                                <td class="contentkey" align="center">$Text{"$QData{"ObjectType"}"}</td>
+                                                <td class="contentkey" align="center">$Text{"$Data{"ObjectType"}"}</td>
                                             </tr>
                                             <tr>
-                                                <td class="contentvalue" align="center">$Text{"$QData{"ObjectOption"}"}</td>
+                                                <td class="contentvalue" align="center">$Text{"$Data{"ObjectOption"}"}</td>
                                             </tr>
                                         </table>
                                     </td>
