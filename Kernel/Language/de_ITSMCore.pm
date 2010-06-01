@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.16 2010-01-20 11:48:42 ub Exp $
+# $Id: de_ITSMCore.pm,v 1.17 2010-06-01 19:25:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,6 +28,7 @@ sub Data {
     $Lang->{'Impact'}                              = 'Auswirkung';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Kritikalität <-> Auswirkung <-> Priorität';
     $Lang->{'allocation'}                          = 'zuordnen';
+    $Lang->{'Priority allocation'}                 = 'Priorität zuordnen';
     $Lang->{'Relevant to'}                         = 'Relevant für';
     $Lang->{'Includes'}                            = 'Beinhaltet';
     $Lang->{'Part of'}                             = 'Teil von';

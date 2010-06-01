@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMCore.pm - the Dutch translation of ITSMCore
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_ITSMCore.pm,v 1.2 2010-01-20 11:47:27 ub Exp $
+# $Id: nl_ITSMCore.pm,v 1.3 2010-06-01 19:25:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,6 +28,7 @@ sub Data {
     $Lang->{'Impact'}                              = 'Impact';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Urgentie <-> Impact <-> Prioriteit';
     $Lang->{'allocation'}                          = 'toekennen';
+    $Lang->{'Priority allocation'}                 = 'Prioriteit toekennen';
     $Lang->{'Relevant to'}                         = 'Van belang voor';
     $Lang->{'Includes'}                            = 'Bevat';
     $Lang->{'Part of'}                             = 'Onderdeel van';

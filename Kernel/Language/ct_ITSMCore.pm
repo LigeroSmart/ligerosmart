@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Sistemes OTIC (ibsalut) - Antonio Linde
 # --
-# $Id: ct_ITSMCore.pm,v 1.4 2010-01-20 11:48:12 ub Exp $
+# $Id: ct_ITSMCore.pm,v 1.5 2010-06-01 19:25:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -29,6 +29,7 @@ sub Data {
     $Lang->{'Impact'}                              = 'Impacte';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Estat crític <-> Impacte <-> Prioritat';
     $Lang->{'allocation'}                          = 'assignar';
+    $Lang->{'Priority allocation'}                 = '';
     $Lang->{'Relevant to'}                         = 'Relevant per';
     $Lang->{'Includes'}                            = 'Inclou';
     $Lang->{'Part of'}                             = 'Part de';

@@ -4,7 +4,7 @@
 # Copyright (C) 2007-2008 Milen Koutev
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ITSMCore.pm,v 1.15 2010-02-22 12:12:45 mb Exp $
+# $Id: cz_ITSMCore.pm,v 1.16 2010-06-01 19:25:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -29,6 +29,7 @@ sub Data {
     $Lang->{'Criticality'}                         = 'Kritiènost';
     $Lang->{'Impact'}                              = 'Vliv';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Kritiènost<->Vliv<->Priorita';
+    $Lang->{'Priority allocation'}                 = '';
     $Lang->{'allocation'}                          = 'pøidìlit';
     $Lang->{'Relevant to'}                         = 'Relevantní k';
     $Lang->{'Includes'}                            = 'Zahrnuje';

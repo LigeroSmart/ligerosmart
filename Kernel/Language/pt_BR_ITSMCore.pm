@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Cristiano Korndörfer, http://www.dorfer.com.br/
 # --
-# $Id: pt_BR_ITSMCore.pm,v 1.1 2010-03-01 09:50:45 mb Exp $
+# $Id: pt_BR_ITSMCore.pm,v 1.2 2010-06-01 19:25:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -29,6 +29,7 @@ sub Data {
     $Lang->{'Impact'}                              = 'Impacto';
     $Lang->{'Criticality <-> Impact <-> Priority'} = 'Criticalidade <-> Impacto <-> Prioridade';
     $Lang->{'allocate'}                            = 'Alocar';
+    $Lang->{'Priority allocation'}                 = 'Alocar prioridade';
     $Lang->{'Relevant to'}                         = 'Relevante a';
     $Lang->{'Includes'}                            = 'Inclui';
     $Lang->{'Part of'}                             = 'Parte de';
