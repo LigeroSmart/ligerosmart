@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.24 2009-07-12 17:42:14 tt Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.25 2010-06-02 15:56:22 mh Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -25,134 +25,134 @@
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
     </Filelist>
-    <DatabaseInstall>
+    <DatabaseInstall Type="post">
         <TableCreate Name="time_accounting_action">
-            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="action"            Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
+            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="action" Required="false" Type="VARCHAR" Size="250"/>
+            <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
         </TableCreate>
         <TableCreate Name="time_accounting_project">
-            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="project"           Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="description"       Required="false" Type="VARCHAR" Size="500"/>
-            <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
+            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="project" Required="false" Type="VARCHAR" Size="250"/>
+            <Column Name="description" Required="false" Type="VARCHAR" Size="500"/>
+            <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
         </TableCreate>
         <TableCreate Name="time_accounting_table">
-            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id"           Required="true"  Type="INTEGER"/>
-            <Column Name="project_id"        Required="true"  Type="BIGINT"/>
-            <Column Name="action_id"         Required="true"  Type="BIGINT"/>
-            <Column Name="remark"            Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="time_start"        Required="true"  Type="DATE"/>
-            <Column Name="time_end"          Required="true"  Type="DATE"/>
-            <Column Name="period"            Required="false" Type="DECIMAL" Size="10,3"/>
-            <Column Name="created"           Required="true"  Type="DATE"/>
+            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id" Required="true"  Type="INTEGER"/>
+            <Column Name="project_id" Required="true"  Type="BIGINT"/>
+            <Column Name="action_id" Required="true"  Type="BIGINT"/>
+            <Column Name="remark" Required="false" Type="VARCHAR" Size="250"/>
+            <Column Name="time_start" Required="true"  Type="DATE"/>
+            <Column Name="time_end" Required="true"  Type="DATE"/>
+            <Column Name="period" Required="false" Type="DECIMAL" Size="10,3"/>
+            <Column Name="created" Required="true"  Type="DATE"/>
             <Index Name="time_accounting_table_user_id">
                 <IndexColumn Name="user_id"/>
             </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user_period">
-            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id"           Required="true"  Type="INTEGER"/>
+            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id" Required="true"  Type="INTEGER"/>
             <Column Name="preference_period" Required="true"  Type="INTEGER"/>
-            <Column Name="date_start"        Required="true"  Type="DATE"/>
-            <Column Name="date_end"          Required="true"  Type="DATE"/>
-            <Column Name="weekly_hours"      Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="leave_days"        Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="overtime"          Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="status"            Required="true"  Type="VARCHAR" Size="15"/>
+            <Column Name="date_start" Required="true"  Type="DATE"/>
+            <Column Name="date_end" Required="true"  Type="DATE"/>
+            <Column Name="weekly_hours" Required="false" Type="DECIMAL" Size="10,2"/>
+            <Column Name="leave_days" Required="false" Type="DECIMAL" Size="10,2"/>
+            <Column Name="overtime" Required="false" Type="DECIMAL" Size="10,2"/>
+            <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
         </TableCreate>
         <TableCreate Name="time_accounting_user">
-            <Column Name="id"                Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id"           Required="true"  Type="INTEGER"/>
-            <Column Name="description"       Required="true"  Type="VARCHAR" Size="1020"/>
-            <Column Name="show_overtime"     Required="false" Type="INTEGER"/>
-            <Column Name="create_project"    Required="false" Type="INTEGER"/>
-            <Column Name="calendar"          Required="false" Type="INTEGER"/>
+            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id" Required="true"  Type="INTEGER"/>
+            <Column Name="description" Required="true"  Type="VARCHAR" Size="1020"/>
+            <Column Name="show_overtime" Required="false" Type="INTEGER"/>
+            <Column Name="create_project" Required="false" Type="INTEGER"/>
+            <Column Name="calendar" Required="false" Type="INTEGER"/>
         </TableCreate>
     </DatabaseInstall>
-    <DatabaseUninstall>
+    <DatabaseUpgrade Type="post">
+        <TableAlter Name="time_accounting_user" Version="1.2.2">
+            <ColumnAdd Name="calendar" Required="false" Type="INTEGER"/>
+        </TableAlter>
+    </DatabaseUpgrade>
+    <DatabaseUninstall Type="pre">
         <TableDrop Name="time_accounting_action"/>
         <TableDrop Name="time_accounting_project"/>
         <TableDrop Name="time_accounting_table"/>
         <TableDrop Name="time_accounting_user"/>
         <TableDrop Name="time_accounting_user_period"/>
     </DatabaseUninstall>
-    <DatabaseUpgrade>
-        <TableAlter Name="time_accounting_user" Version="1.2.2">
-            <ColumnAdd Name="calendar" Required="false" Type="INTEGER"/>
-        </TableAlter>
-    </DatabaseUpgrade>
-    <CodeInstall Type="post">
+    <CodeInstall Type="post"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeInstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
-    </CodeInstall>
-    <CodeUninstall Type="pre">
+    ]]></CodeInstall>
+    <CodeUninstall Type="pre"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUninstall';
 
         # create the package name
-        my $CodeModule = 'var::packagesetup::' . $Param{Structure}-&gt;{Name}-&gt;{Content};
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
 
         # load the module
-        if ( $Self-&gt;{MainObject}-&gt;Require($CodeModule) ) {
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
 
             # create new instance
-            my $CodeObject = $CodeModule-&gt;new( %{$Self} );
+            my $CodeObject = $CodeModule->new( %{$Self} );
 
             if ($CodeObject) {
 
                 # start methode
-                if ( !$CodeObject-&gt;$FunctionName(%{$Self}) ) {
-                    $Self-&gt;{LogObject}-&gt;Log(
-                        Priority =&gt; 'error',
-                        Message  =&gt; "Could not call method $FunctionName() on $CodeModule.pm."
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
                     );
                 }
             }
 
             # error handling
             else {
-                $Self-&gt;{LogObject}-&gt;Log(
-                    Priority =&gt; 'error',
-                    Message  =&gt; "Could not call method new() on $CodeModule.pm."
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
                 );
             }
         }
 
-    </CodeUninstall>
+    ]]></CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en">
 
         &lt;br&gt;
@@ -262,5 +262,4 @@
         &lt;br&gt;
 
     </IntroUninstall>
-
 </otrs_package>

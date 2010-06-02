@@ -1,8 +1,8 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.36 2009-07-13 13:43:01 tt Exp $
+# $Id: TimeAccounting.pm,v 1.37 2010-06-02 15:56:22 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -187,7 +187,7 @@ sub UserReporting {
         if ( !$Param{$_} && $_ ne 'Day' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message => "UserReporting: Need $_!"
+                Message  => "UserReporting: Need $_!"
             );
             return;
         }
@@ -939,9 +939,9 @@ sub WorkingUnitsGet {
 
     $Param{UserID} ||= $Self->{UserID};
 
-    my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
-    my $DateStart = $Date." 00:00:00";
-    my $DateStop = $Date." 23:59:59";
+    my $Date      = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
+    my $DateStart = $Date . " 00:00:00";
+    my $DateStop  = $Date . " 23:59:59";
 
     $Self->{DBObject}->Prepare(
         SQL => "SELECT user_id, project_id, action_id, remark, time_start, time_end,"
@@ -1040,7 +1040,7 @@ sub WorkingUnitsInsert {
     if ( !$Self->WorkingUnitsDelete(%Param) ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => 'Can\'t delete Working Units!'
+            Message  => 'Can\'t delete Working Units!'
         );
         return;
     }
@@ -1385,6 +1385,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.36 $ $Date: 2009-07-13 13:43:01 $
+$Revision: 1.37 $ $Date: 2010-06-02 15:56:22 $
 
 =cut
