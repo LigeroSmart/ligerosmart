@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.14 2010-05-25 10:47:44 mh Exp $
+# $Id: Survey.t,v 1.15 2010-06-02 15:40:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -363,7 +363,7 @@ rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
         my $Mailbody2 = ${$BodyRef};
 
         # prepare mail body
-        $Mailbody2 =~ s{ \d{10} - \d{4} - \d }{MESSAGEID}xmsg;
+        $Mailbody2 =~ s{ \d{8,12} - \d{3,6} - \d{1,3} }{MESSAGEID}xmsg;
 
         $Self->Is(
             $Mailbody2,
