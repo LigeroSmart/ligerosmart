@@ -1,8 +1,8 @@
 # --
 # ITSMWorkOrder.t - workorder tests
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.120 2010-03-19 10:13:16 bes Exp $
+# $Id: ITSMWorkOrder.t,v 1.121 2010-06-04 23:40:17 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1708,7 +1708,7 @@ for my $Test (@WorkOrderTests) {
 
         # add the workorder
         $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
-            %{ $SourceData->{WorkOrderAdd} }
+            %{ $SourceData->{WorkOrderAdd} },
         );
 
         # remember current WorkOrderID
@@ -1752,6 +1752,8 @@ for my $Test (@WorkOrderTests) {
         my $WorkOrderUpdateSuccess = $Self->{WorkOrderObject}->WorkOrderUpdate(
             WorkOrderID => $WorkOrderID,
             %{ $SourceData->{WorkOrderUpdate} },
+            PlannedEffort => int rand 100,
+            AccountedTime => int rand 100,
         );
 
         if (
@@ -1887,6 +1889,39 @@ for my $ChangeID ( sort keys %WorkOrderIDForChangeID ) {
         scalar keys %{ $WorkOrderIDForChangeID{$ChangeID} },
         'Test ' . $TestCount++ . ": ChangeGet() - number of workorders for a change.",
     );
+
+    # Set errorts test...
+    my $EffortsFormWorkOrderObject = $Self->{WorkOrderObject}->WorkOrderChangeEffortsGet(
+        UserID   => 1,
+        ChangeID => $ChangeID,
+    );
+
+    for my $EffortKey ( sort keys %{$EffortsFormWorkOrderObject} ) {
+        $Self->Is(
+            $Change->{$EffortKey},
+            %{$EffortsFormWorkOrderObject}->{$EffortKey},
+            'Test '
+                . $TestCount++
+                . ": WorkOrderChangeEffortsGet() and ChangeGet() - $EffortKey match",
+        );
+    }
+
+    # Set time test...
+    my $TimeFormWorkOrderObject = $Self->{WorkOrderObject}->WorkOrderChangeTimeGet(
+        UserID   => 1,
+        ChangeID => $ChangeID,
+    );
+
+    for my $TimeKey ( sort keys %{$TimeFormWorkOrderObject} ) {
+        $Self->Is(
+            $Change->{$TimeKey},
+            %{$TimeFormWorkOrderObject}->{$TimeKey},
+            'Test '
+                . $TestCount++
+                . ": WorkOrderChangeTimeGet() and ChangeGet() - $TimeKey match",
+        );
+    }
+
 }
 
 # count all tests that are required to and planned for fail
@@ -4149,8 +4184,6 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
 # these objects should be deleted
 push @{ $IDsToDelete{Change} },    $ChangeIDForPossibleStatesTest;
 push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForPossibleStatesTest;
-
-# TODO: add tests for WorkOrderPossibleStatesGet() with a WorkOrderID as argument
 
 # ------------------------------------------------------------ #
 # testing support for attachments
