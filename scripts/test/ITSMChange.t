@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.174 2010-05-21 12:52:18 ub Exp $
+# $Id: ITSMChange.t,v 1.175 2010-06-08 17:06:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,6 +27,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
+use Kernel::System::CacheInternal;
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -43,6 +44,13 @@ $Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
+
+# Create CacheInternal object...
+$Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+    %{$Self},
+    Type => 'ITSMChangeManagement',
+    TTL  => 60 * 60 * 3,
+);
 
 # test if change object was created successfully
 $Self->True(
@@ -5877,6 +5885,13 @@ sub SetTimes {
         SQL  => $SQL,
         Bind => \@Bind,
     );
+
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeList',
+    );
+
     return 1;
 }
 
