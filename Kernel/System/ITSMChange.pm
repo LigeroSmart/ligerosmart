@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.237 2010-06-08 02:57:56 cr Exp $
+# $Id: ITSMChange.pm,v 1.238 2010-06-08 17:08:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.237 $) [1];
+$VERSION = qw($Revision: 1.238 $) [1];
 
 =head1 NAME
 
@@ -133,7 +133,7 @@ sub new {
 
     # Create CacheInternal object...
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %Param,
+        %{$Self},
         Type => 'ITSMChangeManagement',
         TTL  => 60 * 60 * 3,
     );
@@ -3222,6 +3222,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.237 $ $Date: 2010-06-08 02:57:56 $
+$Revision: 1.238 $ $Date: 2010-06-08 17:08:01 $
 
 =cut

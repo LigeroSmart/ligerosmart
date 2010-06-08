@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.101 2010-06-08 03:13:20 cr Exp $
+# $Id: ITSMWorkOrder.pm,v 1.102 2010-06-08 17:11:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.101 $) [1];
+$VERSION = qw($Revision: 1.102 $) [1];
 
 =head1 NAME
 
@@ -123,9 +123,9 @@ sub new {
         },
     );
 
-    # Create CahceInternal object...
+    # Create CacheInternal object...
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %Param,
+        %{$Self},
         Type => 'ITSMChangeManagement',
         TTL  => 60 * 60 * 3,
     );
@@ -2850,6 +2850,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.101 $ $Date: 2010-06-08 03:13:20 $
+$Revision: 1.102 $ $Date: 2010-06-08 17:11:14 $
 
 =cut
