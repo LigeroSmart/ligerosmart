@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.99 2010-06-04 23:36:01 cr Exp $
+# $Id: ITSMWorkOrder.pm,v 1.100 2010-06-08 03:02:58 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.99 $) [1];
+$VERSION = qw($Revision: 1.100 $) [1];
 
 =head1 NAME
 
@@ -324,13 +324,16 @@ sub WorkOrderAdd {
     }
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $WorkOrderID );
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderList::ChangeID::' . $Param{ChangeID} );
+    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $WorkOrderID, );
+    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderList::ChangeID::' . $Param{ChangeID}, );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $Param{ChangeID}
+        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $Param{ChangeID},
     );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $Param{ChangeID}
+        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $Param{ChangeID},
+    );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeGet::ID::' . $Param{ChangeID},
     );
 
     # trigger WorkOrderAddPost-Event
@@ -589,10 +592,13 @@ sub WorkOrderUpdate {
     # Delete cache...
     $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID} );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID}
+        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID},
     );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID}
+        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID},
+    );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeGet::ID::' . $WorkOrderData->{ChangeID},
     );
 
     # trigger WorkOrderUpdatePost-Event
@@ -1403,15 +1409,18 @@ sub WorkOrderDelete {
     );
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID} );
+    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID}, );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderList::ChangeID::' . $WorkOrderData->{ChangeID}
+        Key => 'WorkOrderList::ChangeID::' . $WorkOrderData->{ChangeID},
     );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID}
+        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID},
     );
     $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID}
+        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID},
+    );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeGet::ID::' . $WorkOrderData->{ChangeID},
     );
 
     # trigger WorkOrderDeletePost-Event
@@ -2841,6 +2850,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.99 $ $Date: 2010-06-04 23:36:01 $
+$Revision: 1.100 $ $Date: 2010-06-08 03:02:58 $
 
 =cut
