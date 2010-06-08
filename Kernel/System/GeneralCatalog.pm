@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.50 2010-05-31 15:14:48 cr Exp $
+# $Id: GeneralCatalog.pm,v 1.51 2010-06-08 17:09:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -98,7 +98,7 @@ sub new {
 
     # Create CacheInternal object...
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %Param,
+        %{$Self},
         Type => 'GeneralCatalog',
         TTL  => 60 * 60 * 3,
     );
@@ -739,6 +739,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2010-05-31 15:14:48 $
+$Revision: 1.51 $ $Date: 2010-06-08 17:09:02 $
 
 =cut
