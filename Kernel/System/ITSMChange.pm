@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.236 2010-05-26 22:53:15 cr Exp $
+# $Id: ITSMChange.pm,v 1.237 2010-06-08 02:57:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.236 $) [1];
+$VERSION = qw($Revision: 1.237 $) [1];
 
 =head1 NAME
 
@@ -131,7 +131,7 @@ sub new {
         },
     );
 
-    # Create CahceInternal object...
+    # Create CacheInternal object...
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
         %Param,
         Type => 'ITSMChangeManagement',
@@ -276,7 +276,12 @@ sub ChangeAdd {
     return if !$ChangeID;
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $ChangeID );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $ChangeID, );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeList' );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $ChangeID, );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeLookup::ChangeNumber::' . $ChangeNumber,
+    );
 
     # trigger ChangeAddPost-Event
     # (yes, we want do do this before the ChangeUpdate!)
@@ -490,7 +495,14 @@ sub ChangeUpdate {
     );
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeList',
+    );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
+    );
 
     # trigger ChangeUpdatePost-Event
     $Self->EventHandler(
@@ -829,6 +841,9 @@ sub ChangeCABUpdate {
         }
     }
 
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID}, );
+
     # trigger ChangeCABUpdatePost-Event
     $Self->EventHandler(
         Event => 'ChangeCABUpdatePost',
@@ -881,43 +896,61 @@ sub ChangeCABGet {
         CABCustomers => [],
     );
 
-    # get data
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, change_id, user_id, customer_user_id '
-            . 'FROM change_cab WHERE change_id = ?',
-        Bind => [ \$Param{ChangeID} ],
-    );
+    # check cache
+    my $CacheKey = 'ChangeCABGet::ID::' . $Param{ChangeID};
+    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
 
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        my $CABID          = $Row[0];
-        my $ChangeID       = $Row[1];
-        my $UserID         = $Row[2];
-        my $CustomerUserID = $Row[3];
+    if ($Cache) {
 
-        # error check if both columns are filled
-        if ( $UserID && $CustomerUserID ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message =>
-                    "CAB table entry with ID $CABID contains UserID and CustomerUserID! "
-                    . 'Only one at a time is allowed!',
-            );
-            return;
-        }
-
-        # add data to CAB
-        if ($UserID) {
-            push @{ $CAB{CABAgents} }, $UserID;
-        }
-        elsif ($CustomerUserID) {
-            push @{ $CAB{CABCustomers} }, $CustomerUserID;
-        }
+        #get data from cache
+        %CAB = %{$Cache};
     }
 
-    # sort the results
-    @{ $CAB{CABAgents} }    = sort @{ $CAB{CABAgents} };
-    @{ $CAB{CABCustomers} } = sort @{ $CAB{CABCustomers} };
+    else {
 
+        # get data
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id, change_id, user_id, customer_user_id '
+                . 'FROM change_cab WHERE change_id = ?',
+            Bind => [ \$Param{ChangeID} ],
+        );
+
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            my $CABID          = $Row[0];
+            my $ChangeID       = $Row[1];
+            my $UserID         = $Row[2];
+            my $CustomerUserID = $Row[3];
+
+            # error check if both columns are filled
+            if ( $UserID && $CustomerUserID ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message =>
+                        "CAB table entry with ID $CABID contains UserID and CustomerUserID! "
+                        . 'Only one at a time is allowed!',
+                );
+                return;
+            }
+
+            # add data to CAB
+            if ($UserID) {
+                push @{ $CAB{CABAgents} }, $UserID;
+            }
+            elsif ($CustomerUserID) {
+                push @{ $CAB{CABCustomers} }, $CustomerUserID;
+            }
+        }
+
+        # sort the results
+        @{ $CAB{CABAgents} }    = sort @{ $CAB{CABAgents} };
+        @{ $CAB{CABCustomers} } = sort @{ $CAB{CABCustomers} };
+
+        # set cache
+        $Self->{CacheInternalObject}->Set(
+            Key   => $CacheKey,
+            Value => \%CAB,
+        );
+    }
     return \%CAB;
 }
 
@@ -966,6 +999,9 @@ sub ChangeCABDelete {
         SQL  => 'DELETE FROM change_cab WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
+
+    # Delete cache...
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID}, );
 
     # trigger ChangeCABDeletePost-Event
     $Self->EventHandler(
@@ -1019,15 +1055,35 @@ sub ChangeLookup {
 
     # get change id
     if ( $Param{ChangeNumber} ) {
-        return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
-            Bind  => [ \$Param{ChangeNumber} ],
-            Limit => 1,
-        );
 
         my $ChangeID;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $ChangeID = $Row[0];
+
+        # check cache
+        my $CacheKey = 'ChangeLookup::ChangeNumber::' . $Param{ChangeNumber};
+        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+
+        if ($Cache) {
+
+            #get data from cache
+            $ChangeID = $Cache;
+        }
+
+        else {
+            return if !$Self->{DBObject}->Prepare(
+                SQL   => 'SELECT id FROM change_item WHERE change_number = ?',
+                Bind  => [ \$Param{ChangeNumber} ],
+                Limit => 1,
+            );
+
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $ChangeID = $Row[0];
+            }
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => $ChangeID,
+            );
         }
 
         return $ChangeID;
@@ -1036,15 +1092,35 @@ sub ChangeLookup {
     # get change number
     elsif ( $Param{ChangeID} ) {
 
-        return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT change_number FROM change_item WHERE id = ?',
-            Bind  => [ \$Param{ChangeID} ],
-            Limit => 1,
-        );
-
         my $ChangeNumber;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $ChangeNumber = $Row[0];
+
+        # check cache
+        my $CacheKey = 'ChangeLookup::ChangeID::' . $Param{ChangeID};
+        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+
+        if ($Cache) {
+
+            #get data from cache
+            $ChangeNumber = $Cache;
+        }
+
+        else {
+            return if !$Self->{DBObject}->Prepare(
+                SQL   => 'SELECT change_number FROM change_item WHERE id = ?',
+                Bind  => [ \$Param{ChangeID} ],
+                Limit => 1,
+            );
+
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $ChangeNumber = $Row[0];
+            }
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => $ChangeNumber,
+            );
+
         }
 
         return $ChangeNumber;
@@ -1074,15 +1150,34 @@ sub ChangeList {
         );
         return;
     }
-
-    # get change ids
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM change_item',
-    );
-
     my @ChangeIDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @ChangeIDs, $Row[0];
+
+    # check cache
+    my $CacheKey = 'ChangeList';
+    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+
+    if ($Cache) {
+
+        # get chnge is from cache
+        @ChangeIDs = @{$Cache};
+    }
+
+    else {
+
+        # get change ids
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id FROM change_item',
+        );
+
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            push @ChangeIDs, $Row[0];
+        }
+
+        # set cache
+        $Self->{CacheInternalObject}->Set(
+            Key   => $CacheKey,
+            Value => \@ChangeIDs,
+        );
     }
 
     return \@ChangeIDs;
@@ -1876,7 +1971,14 @@ sub ChangeDelete {
     );
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChnageGet::ID::' . $Param{ChangeID} );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeList',
+    );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete(
+        Key => 'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
+    );
 
     # trigger ChangeDeletePost-Event
     # this must be done before deleting the change from the database,
@@ -3120,6 +3222,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.236 $ $Date: 2010-05-26 22:53:15 $
+$Revision: 1.237 $ $Date: 2010-06-08 02:57:56 $
 
 =cut
