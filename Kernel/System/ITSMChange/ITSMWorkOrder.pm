@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.102 2010-06-08 17:11:14 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.103 2010-06-09 19:43:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.102 $) [1];
+$VERSION = qw($Revision: 1.103 $) [1];
 
 =head1 NAME
 
@@ -677,7 +677,7 @@ sub WorkOrderGet {
 
     if ($Cache) {
 
-        #get data from cache
+        # get data from cache
         %WorkOrderData = %{$Cache};
     }
 
@@ -700,7 +700,6 @@ sub WorkOrderGet {
         );
 
         # fetch the result
-        #my %WorkOrderData;
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             $WorkOrderData{WorkOrderID}      = $Row[0];
             $WorkOrderData{ChangeID}         = $Row[1];
@@ -725,11 +724,15 @@ sub WorkOrderGet {
             $WorkOrderData{AccountedTime}    = $Row[20];
         }
 
-        # set cache
-        $Self->{CacheInternalObject}->Set(
-            Key   => $CacheKey,
-            Value => \%WorkOrderData,
-        );
+        # set cache only if workorder data exists
+        if (%WorkOrderData) {
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => \%WorkOrderData,
+            );
+        }
     }
 
     # check error
@@ -810,11 +813,11 @@ sub WorkOrderList {
 
     if ($Cache) {
 
-        #get data from cache
+        # get data from cache
         @WorkOrderIDs = @{$Cache};
     }
 
-    #Get data from Database...
+    # get data from database...
     else {
 
         # get workorder ids
@@ -831,11 +834,15 @@ sub WorkOrderList {
             push @WorkOrderIDs, $ID;
         }
 
-        # set cache
-        $Self->{CacheInternalObject}->Set(
-            Key   => $CacheKey,
-            Value => \@WorkOrderIDs,
-        );
+        # set cache only if workorder ids exists
+        if (@WorkOrderIDs) {
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => \@WorkOrderIDs,
+            );
+        }
     }
 
     return \@WorkOrderIDs;
@@ -1528,11 +1535,21 @@ sub WorkOrderChangeTimeGet {
             $TimeReturn{ActualEndTime}    = $Row[3] || '';
         }
 
-        # set cache
-        $Self->{CacheInternalObject}->Set(
-            Key   => $CacheKey,
-            Value => \%TimeReturn,
-        );
+        # set cache only if at least one of the times is defined
+        if (
+            $TimeReturn{PlannedStartTime}
+            || $TimeReturn{PlannedEndTime}
+            || $TimeReturn{ActualStartTime}
+            || $TimeReturn{ActualEndTime}
+            )
+        {
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => \%TimeReturn,
+            );
+        }
     }
 
     # set empty string if the default time was found
@@ -2436,12 +2453,17 @@ sub WorkOrderChangeEffortsGet {
             $ChangeEfforts{AccountedTime} = $Row[1] || '';
         }
 
-        # set cache
-        $Self->{CacheInternalObject}->Set(
-            Key   => $CacheKey,
-            Value => \%ChangeEfforts,
-        );
+        # set cache only if PlannedEffort or AccountedTime is defined
+        if ( $ChangeEfforts{PlannedEffort} || $ChangeEfforts{AccountedTime} ) {
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => \%ChangeEfforts,
+            );
+        }
     }
+
     return \%ChangeEfforts;
 }
 
@@ -2850,6 +2872,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.102 $ $Date: 2010-06-08 17:11:14 $
+$Revision: 1.103 $ $Date: 2010-06-09 19:43:11 $
 
 =cut
