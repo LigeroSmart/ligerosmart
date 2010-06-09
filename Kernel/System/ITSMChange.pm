@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.241 2010-06-09 19:38:14 ub Exp $
+# $Id: ITSMChange.pm,v 1.242 2010-06-09 20:44:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.241 $) [1];
+$VERSION = qw($Revision: 1.242 $) [1];
 
 =head1 NAME
 
@@ -919,6 +919,9 @@ sub ChangeCABGet {
             Bind => [ \$Param{ChangeID} ],
         );
 
+        my $ErrorCABID;
+
+        ROW:
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
             my $CABID          = $Row[0];
             my $ChangeID       = $Row[1];
@@ -927,13 +930,8 @@ sub ChangeCABGet {
 
             # error check if both columns are filled
             if ( $UserID && $CustomerUserID ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'error',
-                    Message =>
-                        "CAB table entry with ID $CABID contains UserID and CustomerUserID! "
-                        . 'Only one at a time is allowed!',
-                );
-                return;
+                $ErrorCABID = $CABID;
+                next ROW;
             }
 
             # add data to CAB
@@ -945,15 +943,30 @@ sub ChangeCABGet {
             }
         }
 
+        # error check if both columns are filled
+        if ($ErrorCABID) {
+
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "CAB table entry with ID $ErrorCABID contains UserID and CustomerUserID! "
+                    . 'Only one at a time is allowed!',
+            );
+            return;
+        }
+
         # sort the results
         @{ $CAB{CABAgents} }    = sort @{ $CAB{CABAgents} };
         @{ $CAB{CABCustomers} } = sort @{ $CAB{CABCustomers} };
 
-        # set cache
-        $Self->{CacheInternalObject}->Set(
-            Key   => $CacheKey,
-            Value => \%CAB,
-        );
+        if ( @{ $CAB{CABAgents} } || @{ $CAB{CABCustomers} } ) {
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => \%CAB,
+            );
+        }
     }
     return \%CAB;
 }
@@ -3233,6 +3246,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.241 $ $Date: 2010-06-09 19:38:14 $
+$Revision: 1.242 $ $Date: 2010-06-09 20:44:34 $
 
 =cut
