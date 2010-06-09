@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.239 2010-06-09 17:19:07 cr Exp $
+# $Id: ITSMChange.pm,v 1.240 2010-06-09 19:34:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.239 $) [1];
+$VERSION = qw($Revision: 1.240 $) [1];
 
 =head1 NAME
 
@@ -842,7 +842,7 @@ sub ChangeCABUpdate {
     }
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID} );
 
     # trigger ChangeCABUpdatePost-Event
     $Self->EventHandler(
@@ -902,7 +902,7 @@ sub ChangeCABGet {
 
     if ($Cache) {
 
-        #get data from cache
+        # get data from cache
         %CAB = %{$Cache};
     }
 
@@ -1001,7 +1001,7 @@ sub ChangeCABDelete {
     );
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID} );
 
     # trigger ChangeCABDeletePost-Event
     $Self->EventHandler(
@@ -1064,7 +1064,7 @@ sub ChangeLookup {
 
         if ($Cache) {
 
-            #get data from cache
+            # get data from cache
             $ChangeID = $Cache;
         }
 
@@ -1079,6 +1079,7 @@ sub ChangeLookup {
                 $ChangeID = $Row[0];
             }
 
+            # set cache only if change id exists
             if ($ChangeID) {
 
                 # set cache
@@ -1103,7 +1104,7 @@ sub ChangeLookup {
 
         if ($Cache) {
 
-            #get data from cache
+            # get data from cache
             $ChangeNumber = $Cache;
         }
 
@@ -1118,12 +1119,15 @@ sub ChangeLookup {
                 $ChangeNumber = $Row[0];
             }
 
-            # set cache
-            $Self->{CacheInternalObject}->Set(
-                Key   => $CacheKey,
-                Value => $ChangeNumber,
-            );
+            # set cache only if change number exists
+            if ($ChangeNumber) {
 
+                # set cache
+                $Self->{CacheInternalObject}->Set(
+                    Key   => $CacheKey,
+                    Value => $ChangeNumber,
+                );
+            }
         }
 
         return $ChangeNumber;
@@ -3225,6 +3229,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.239 $ $Date: 2010-06-09 17:19:07 $
+$Revision: 1.240 $ $Date: 2010-06-09 19:34:01 $
 
 =cut
