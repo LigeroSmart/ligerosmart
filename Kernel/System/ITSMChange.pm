@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.240 2010-06-09 19:34:01 ub Exp $
+# $Id: ITSMChange.pm,v 1.241 2010-06-09 19:38:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.240 $) [1];
+$VERSION = qw($Revision: 1.241 $) [1];
 
 =head1 NAME
 
@@ -629,11 +629,15 @@ sub ChangeGet {
             $ChangeData{RequestedTime}      = $Row[17];
         }
 
-        # set cache
-        $Self->{CacheInternalObject}->Set(
-            Key   => $CacheKey,
-            Value => \%ChangeData,
-        );
+        # set cache only if change data exists
+        if (%ChangeData) {
+
+            # set cache
+            $Self->{CacheInternalObject}->Set(
+                Key   => $CacheKey,
+                Value => \%ChangeData,
+            );
+        }
     }
 
     # check error
@@ -3229,6 +3233,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.240 $ $Date: 2010-06-09 19:34:01 $
+$Revision: 1.241 $ $Date: 2010-06-09 19:38:14 $
 
 =cut
