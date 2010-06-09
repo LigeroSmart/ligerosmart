@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.175 2010-06-08 17:06:31 ub Exp $
+# $Id: ITSMChange.t,v 1.176 2010-06-09 17:16:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5440,7 +5440,151 @@ for my $PossibleStateID (@PossibleStateIDsReference) {
     );
 }
 
-# TODO: add tests for ChangePossibleStatesGet() with a ChangeID as argument
+# ------------------------------------------------------------ #
+# testing the method ChangePossibleStatesGet() with ChangeID argument
+# ------------------------------------------------------------ #
+
+# Set the default values...
+my $TestNumber = 0;
+
+my @PossibleStatesForRequested = (
+    'requested',
+    'in progress',
+    'pending approval',
+    'rejected',
+    'retracted',
+);
+
+my @PossibleStatesForPendigApproval = (
+    'pending approval',
+    'approved',
+    'rejected',
+    'retracted',
+);
+
+my @PossibleStatesForApproved = (
+    'approved',
+    'retracted',
+    'in progress',
+);
+
+my @PossibleStatesForInProgress = (
+    'in progress',
+    'canceled',
+    'failed',
+    'pending pir',
+    'retracted',
+    'successful',
+);
+
+# Test logic starts...
+
+# Create a change object...
+my $ChangeIDForChangePossibleStateGet = $Self->{ChangeObject}->ChangeAdd(
+    UserID => 1,
+);
+
+# Get posssible states...
+my $PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    ChangeID => $ChangeIDForChangePossibleStateGet,
+    UserID   => 1,
+);
+
+$TestNumber++;
+
+_TestPossibleStates(
+    State                 => 'Requested',
+    PossibleStates        => $PossibleStatesUsingChangeID,
+    PossibleDefaultStates => \@PossibleStatesForRequested,
+    TestNumber            => $TestNumber,
+);
+
+# Change the state
+my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+    ChangeID    => $ChangeIDForChangePossibleStateGet,
+    ChangeState => 'pending approval',
+    UserID      => 1,
+);
+
+$TestNumber++;
+
+$Self->True(
+    $ChangeUpdateSuccess,
+    "Test $TestNumber State change"
+);
+
+# Get posssible states...
+$PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    ChangeID => $ChangeIDForChangePossibleStateGet,
+    UserID   => 1,
+);
+
+_TestPossibleStates(
+    State                 => 'Approved',
+    PossibleStates        => $PossibleStatesUsingChangeID,
+    PossibleDefaultStates => \@PossibleStatesForPendigApproval,
+    TestNumber            => $TestNumber,
+);
+
+# Change the state
+my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+    ChangeID    => $ChangeIDForChangePossibleStateGet,
+    ChangeState => 'approved',
+    UserID      => 1,
+);
+
+$TestNumber++;
+
+$Self->True(
+    $ChangeUpdateSuccess,
+    "Test $TestNumber State change"
+);
+
+# Get posssible states...
+$PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    ChangeID => $ChangeIDForChangePossibleStateGet,
+    UserID   => 1,
+);
+
+_TestPossibleStates(
+    State                 => 'Approved',
+    PossibleStates        => $PossibleStatesUsingChangeID,
+    PossibleDefaultStates => \@PossibleStatesForApproved,
+    TestNumber            => $TestNumber,
+);
+
+# Change the state
+my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+    ChangeID    => $ChangeIDForChangePossibleStateGet,
+    ChangeState => 'in progress',
+    UserID      => 1,
+);
+
+$TestNumber++;
+
+$Self->True(
+    $ChangeUpdateSuccess,
+    "Test $TestNumber State change"
+);
+
+# Get posssible states...
+$PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+    ChangeID => $ChangeIDForChangePossibleStateGet,
+    UserID   => 1,
+);
+
+_TestPossibleStates(
+    State                 => 'In Progress',
+    PossibleStates        => $PossibleStatesUsingChangeID,
+    PossibleDefaultStates => \@PossibleStatesForInProgress,
+    TestNumber            => $TestNumber,
+);
+
+# Delete the Change
+$Self->{ChangeObject}->ChangeDelete(
+    ChangeID => $ChangeIDForChangePossibleStateGet,
+    UserID   => 1,
+);
 
 # ------------------------------------------------------------ #
 # CIP allocate tests
@@ -5900,5 +6044,47 @@ $Self->{ConfigObject}->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );
+
+sub _TestPossibleStates {
+    my (%Param) = @_;
+
+    my $State                 = $Param{State};
+    my $PossibleStates        = $Param{PossibleStates};
+    my @PossibleDefaultStates = @{ $Param{PossibleDefaultStates} };
+    my $TestNumber            = $Param{TestNumber};
+
+    # Check if return...
+    $Self->True(
+        $PossibleStates,
+        "Possible States Test $TestNumber: ChangePossibleStatesGet() - "
+            . "returns a list of posible states from $State State.",
+    );
+
+    # Check if returning the same number of states...
+    $Self->Is(
+        scalar @{$PossibleStatesUsingChangeID},
+        scalar @PossibleDefaultStates,
+        "Possible States Test $TestNumber: |-"
+            . "returns the same number of elements as the $State State default.",
+    );
+
+    for my $PossibleStateHash ( @{$PossibleStates} ) {
+        my ( $FirstHashRef, $SecondHashRef )
+            = grep { $_ eq $PossibleStateHash->{Value} } @PossibleDefaultStates;
+
+        # Check if the state names are correct...
+        $Self->Is(
+            $FirstHashRef,
+            $PossibleStateHash->{Value},
+            "Possible States Test $TestNumber: |- match default states from $State State.",
+        );
+
+        # Check if the state name is not repeted
+        $Self->False(
+            $SecondHashRef,
+            "Possible States Test $TestNumber: |- states form $State match only once"
+        );
+    }
+}
 
 1;
