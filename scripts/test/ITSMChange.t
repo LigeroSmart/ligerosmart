@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.176 2010-06-09 17:16:10 cr Exp $
+# $Id: ITSMChange.t,v 1.177 2010-06-10 16:05:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -6044,6 +6044,25 @@ $Self->{ConfigObject}->Set(
     Key   => 'ITSMChange::SendNotifications',
     Value => $SendNotificationsOrg,
 );
+
+=over 4
+
+=item _TestPossibleStates()
+
+Internal use only!
+Runs a series of tests for ChangePossibleStatesGet() by using a ChangeID as argument
+
+    _TestPosssibleStates(
+        State                 => 'In Progress',                 # State name to be displayed on the tests
+        PossibleStates        => $PossibleStates,               # The result from ChangePossibleStatesGet()
+        PossibleDefaultStates => \@PossibleStatesForInProgress, # Array to possible state to compare
+        TestNumber            => 1,                             # Testnumber
+
+    );
+
+=back
+
+=cut
 
 sub _TestPossibleStates {
     my (%Param) = @_;
