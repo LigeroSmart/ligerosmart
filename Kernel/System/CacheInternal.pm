@@ -2,7 +2,7 @@
 # Kernel/System/CacheInternal.pm - all cache functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CacheInternal.pm,v 1.1 2010-05-26 22:49:06 cr Exp $
+# $Id: CacheInternal.pm,v 1.2 2010-06-10 14:13:10 ub Exp $
 # $OldId: CacheInternal.pm,v 1.3 2010/02/26 20:48:21 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -157,9 +157,14 @@ sub Get {
             return;
         }
     }
+# ---
+# ITSM
+# ---
+#    # check runtime cache
+#    return $Self->{Cache}->{ $Param{Key} } if exists $Self->{Cache}->{ $Param{Key} };
 
-    # check runtime cache
-    return $Self->{Cache}->{ $Param{Key} } if exists $Self->{Cache}->{ $Param{Key} };
+    # TODO : Think about a solution, or do not use CacheInternal, as this can be dangerous in some situations.
+# ---
 
     # check permanent cache
     my $Cache;
@@ -250,6 +255,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-05-26 22:49:06 $
+$Revision: 1.2 $ $Date: 2010-06-10 14:13:10 $
 
 =cut
