@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.177 2010-06-10 16:05:56 cr Exp $
+# $Id: ITSMChange.t,v 1.178 2010-06-13 12:09:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,7 +45,7 @@ $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocat
 $Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
 
-# Create CacheInternal object...
+# create CacheInternal object...
 $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
     %{$Self},
     Type => 'ITSMChangeManagement',
@@ -6031,10 +6031,8 @@ sub SetTimes {
     );
 
     # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID}, );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeList',
-    );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeList' );
 
     return 1;
 }
