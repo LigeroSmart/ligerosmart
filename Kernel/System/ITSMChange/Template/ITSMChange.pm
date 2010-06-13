@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.3 2010-05-12 13:38:34 ub Exp $
+# $Id: ITSMChange.pm,v 1.4 2010-06-13 11:35:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -101,7 +101,7 @@ sub new {
 
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
     $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 
@@ -572,6 +572,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-05-12 13:38:34 $
+$Revision: 1.4 $ $Date: 2010-06-13 11:35:26 $
 
 =cut
