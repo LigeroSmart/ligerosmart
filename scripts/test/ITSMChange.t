@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.178 2010-06-13 12:09:42 ub Exp $
+# $Id: ITSMChange.t,v 1.179 2010-06-13 12:15:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -5527,7 +5527,7 @@ _TestPossibleStates(
 );
 
 # Change the state
-my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+$ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
     ChangeID    => $ChangeIDForChangePossibleStateGet,
     ChangeState => 'approved',
     UserID      => 1,
@@ -5554,7 +5554,7 @@ _TestPossibleStates(
 );
 
 # Change the state
-my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+$ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
     ChangeID    => $ChangeIDForChangePossibleStateGet,
     ChangeState => 'in progress',
     UserID      => 1,
