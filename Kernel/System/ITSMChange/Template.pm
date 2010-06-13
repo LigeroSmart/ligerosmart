@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template.pm - all template functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Template.pm,v 1.52 2010-02-19 08:50:55 bes Exp $
+# $Id: Template.pm,v 1.53 2010-06-13 11:53:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =head1 NAME
 
@@ -105,7 +105,7 @@ sub new {
     # create additional objects
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
     $Self->{VirtualFSObject} = Kernel::System::VirtualFS->new( %{$Self} );
@@ -1397,6 +1397,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2010-02-19 08:50:55 $
+$Revision: 1.53 $ $Date: 2010-06-13 11:53:37 $
 
 =cut
