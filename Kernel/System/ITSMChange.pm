@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.242 2010-06-09 20:44:34 ub Exp $
+# $Id: ITSMChange.pm,v 1.243 2010-06-13 12:18:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::CacheInternal;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.242 $) [1];
+$VERSION = qw($Revision: 1.243 $) [1];
 
 =head1 NAME
 
@@ -131,7 +131,7 @@ sub new {
         },
     );
 
-    # Create CacheInternal object...
+    # create CacheInternal object
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
         %{$Self},
         Type => 'ITSMChangeManagement',
@@ -275,10 +275,10 @@ sub ChangeAdd {
 
     return if !$ChangeID;
 
-    # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $ChangeID, );
+    # delete cache
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $ChangeID );
     $Self->{CacheInternalObject}->Delete( Key => 'ChangeList' );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $ChangeID, );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $ChangeID );
     $Self->{CacheInternalObject}->Delete(
         Key => 'ChangeLookup::ChangeNumber::' . $ChangeNumber,
     );
@@ -494,12 +494,12 @@ sub ChangeUpdate {
         Bind => \@Bind,
     );
 
-    # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID}, );
+    # delete cache
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
     $Self->{CacheInternalObject}->Delete(
         Key => 'ChangeList',
     );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID} );
     $Self->{CacheInternalObject}->Delete(
         Key => 'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
     );
@@ -845,7 +845,7 @@ sub ChangeCABUpdate {
         }
     }
 
-    # Delete cache...
+    # delete cache
     $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID} );
 
     # trigger ChangeCABUpdatePost-Event
@@ -1017,7 +1017,7 @@ sub ChangeCABDelete {
         Bind => [ \$Param{ChangeID} ],
     );
 
-    # Delete cache...
+    # delete cache
     $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID} );
 
     # trigger ChangeCABDeletePost-Event
@@ -1994,12 +1994,12 @@ sub ChangeDelete {
         UserID   => $Param{UserID},
     );
 
-    # Delete cache...
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID}, );
+    # delete cache
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
     $Self->{CacheInternalObject}->Delete(
         Key => 'ChangeList',
     );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID}, );
+    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID} );
     $Self->{CacheInternalObject}->Delete(
         Key => 'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
     );
@@ -3246,6 +3246,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.242 $ $Date: 2010-06-09 20:44:34 $
+$Revision: 1.243 $ $Date: 2010-06-13 12:18:53 $
 
 =cut
