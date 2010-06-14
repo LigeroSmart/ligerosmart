@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.208 2010-05-25 13:47:51 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.209 2010-06-14 11:03:27 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1462,6 +1462,15 @@
                 <Item Key="Event">(ActionExecutePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::CacheTTL" Required="1" Valid="1">
+        <Description Lang="en">Cache time in minutes for the change management.</Description>
+        <Description Lang="de">Cache-Zeit in Minuten für das Change Management.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::Cache</SubGroup>
+        <Setting>
+            <String Regex="">180</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">
