@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.243 2010-06-13 12:18:53 ub Exp $
+# $Id: ITSMChange.pm,v 1.244 2010-06-14 10:57:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,12 +25,12 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::HTMLUtils;
 use Kernel::System::VirtualFS;
-use Kernel::System::CacheInternal;
+use Kernel::System::Cache;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.243 $) [1];
+$VERSION = qw($Revision: 1.244 $) [1];
 
 =head1 NAME
 
@@ -108,6 +108,7 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
+    $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
@@ -122,6 +123,9 @@ sub new {
         %{$Self},
     );
 
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+
     # init of event handler
     $Self->EventHandlerInit(
         Config     => 'ITSMChange::EventModule',
@@ -129,13 +133,6 @@ sub new {
         Objects    => {
             %{$Self},
         },
-    );
-
-    # create CacheInternal object
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'ITSMChangeManagement',
-        TTL  => 60 * 60 * 3,
     );
 
     return $Self;
@@ -276,12 +273,19 @@ sub ChangeAdd {
     return if !$ChangeID;
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $ChangeID );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeList' );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $ChangeID );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeLookup::ChangeNumber::' . $ChangeNumber,
-    );
+    for my $Key (
+        'ChangeGet::ID::' . $ChangeID,
+        'ChangeList',
+        'ChangeLookup::ChangeID::' . $ChangeID,
+        'ChangeLookup::ChangeNumber::' . $ChangeNumber
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger ChangeAddPost-Event
     # (yes, we want do do this before the ChangeUpdate!)
@@ -495,14 +499,19 @@ sub ChangeUpdate {
     );
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeList',
-    );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
-    );
+    for my $Key (
+        'ChangeGet::ID::' . $Param{ChangeID},
+        'ChangeList',
+        'ChangeLookup::ChangeID::' . $Param{ChangeID},
+        'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber}
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger ChangeUpdatePost-Event
     $Self->EventHandler(
@@ -583,7 +592,10 @@ sub ChangeGet {
 
     # check cache
     my $CacheKey = 'ChangeGet::ID::' . $Param{ChangeID};
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     my %ChangeData;
 
@@ -633,9 +645,11 @@ sub ChangeGet {
         if (%ChangeData) {
 
             # set cache
-            $Self->{CacheInternalObject}->Set(
+            $Self->{CacheObject}->Set(
+                Type  => 'ITSMChangeManagement',
                 Key   => $CacheKey,
                 Value => \%ChangeData,
+                TTL   => $Self->{CacheTTL},
             );
         }
     }
@@ -846,7 +860,10 @@ sub ChangeCABUpdate {
     }
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID} );
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ChangeCABGet::ID::' . $Param{ChangeID},
+    );
 
     # trigger ChangeCABUpdatePost-Event
     $Self->EventHandler(
@@ -902,7 +919,10 @@ sub ChangeCABGet {
 
     # check cache
     my $CacheKey = 'ChangeCABGet::ID::' . $Param{ChangeID};
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     if ($Cache) {
 
@@ -962,9 +982,11 @@ sub ChangeCABGet {
         if ( @{ $CAB{CABAgents} } || @{ $CAB{CABCustomers} } ) {
 
             # set cache
-            $Self->{CacheInternalObject}->Set(
+            $Self->{CacheObject}->Set(
+                Type  => 'ITSMChangeManagement',
                 Key   => $CacheKey,
                 Value => \%CAB,
+                TTL   => $Self->{CacheTTL},
             );
         }
     }
@@ -1018,7 +1040,10 @@ sub ChangeCABDelete {
     );
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeCABGet::ID::' . $Param{ChangeID} );
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ChangeCABGet::ID::' . $Param{ChangeID},
+    );
 
     # trigger ChangeCABDeletePost-Event
     $Self->EventHandler(
@@ -1077,7 +1102,10 @@ sub ChangeLookup {
 
         # check cache
         my $CacheKey = 'ChangeLookup::ChangeNumber::' . $Param{ChangeNumber};
-        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+        my $Cache    = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
 
         if ($Cache) {
 
@@ -1100,9 +1128,11 @@ sub ChangeLookup {
             if ($ChangeID) {
 
                 # set cache
-                $Self->{CacheInternalObject}->Set(
+                $Self->{CacheObject}->Set(
+                    Type  => 'ITSMChangeManagement',
                     Key   => $CacheKey,
                     Value => $ChangeID,
+                    TTL   => $Self->{CacheTTL},
                 );
             }
         }
@@ -1117,7 +1147,10 @@ sub ChangeLookup {
 
         # check cache
         my $CacheKey = 'ChangeLookup::ChangeID::' . $Param{ChangeID};
-        my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+        my $Cache    = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
 
         if ($Cache) {
 
@@ -1140,9 +1173,11 @@ sub ChangeLookup {
             if ($ChangeNumber) {
 
                 # set cache
-                $Self->{CacheInternalObject}->Set(
+                $Self->{CacheObject}->Set(
+                    Type  => 'ITSMChangeManagement',
                     Key   => $CacheKey,
                     Value => $ChangeNumber,
+                    TTL   => $Self->{CacheTTL},
                 );
             }
         }
@@ -1178,7 +1213,10 @@ sub ChangeList {
 
     # check cache
     my $CacheKey = 'ChangeList';
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     if ($Cache) {
 
@@ -1198,9 +1236,11 @@ sub ChangeList {
         }
 
         # set cache
-        $Self->{CacheInternalObject}->Set(
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
             Key   => $CacheKey,
             Value => \@ChangeIDs,
+            TTL   => $Self->{CacheTTL},
         );
     }
 
@@ -1995,14 +2035,19 @@ sub ChangeDelete {
     );
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeGet::ID::' . $Param{ChangeID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeList',
-    );
-    $Self->{CacheInternalObject}->Delete( Key => 'ChangeLookup::ChangeID::' . $Param{ChangeID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
-    );
+    for my $Key (
+        'ChangeGet::ID::' . $Param{ChangeID},
+        'ChangeList',
+        'ChangeLookup::ChangeID::' . $Param{ChangeID},
+        'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber}
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger ChangeDeletePost-Event
     # this must be done before deleting the change from the database,
@@ -3246,6 +3291,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.243 $ $Date: 2010-06-13 12:18:53 $
+$Revision: 1.244 $ $Date: 2010-06-14 10:57:19 $
 
 =cut

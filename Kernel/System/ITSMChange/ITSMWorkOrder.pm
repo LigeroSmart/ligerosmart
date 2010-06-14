@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.104 2010-06-13 12:18:16 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.105 2010-06-14 11:01:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,12 +22,12 @@ use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
-use Kernel::System::CacheInternal;
+use Kernel::System::Cache;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.104 $) [1];
+$VERSION = qw($Revision: 1.105 $) [1];
 
 =head1 NAME
 
@@ -105,6 +105,7 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
+    $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
@@ -114,6 +115,9 @@ sub new {
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{VirtualFSObject}      = Kernel::System::VirtualFS->new( %{$Self} );
 
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+
     # init of event handler
     $Self->EventHandlerInit(
         Config     => 'ITSMWorkOrder::EventModule',
@@ -121,13 +125,6 @@ sub new {
         Objects    => {
             %{$Self},
         },
-    );
-
-    # create CacheInternal object
-    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
-        %{$Self},
-        Type => 'ITSMChangeManagement',
-        TTL  => 60 * 60 * 3,
     );
 
     return $Self;
@@ -324,17 +321,20 @@ sub WorkOrderAdd {
     }
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $WorkOrderID );
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderList::ChangeID::' . $Param{ChangeID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $Param{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $Param{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeGet::ID::' . $Param{ChangeID},
-    );
+    for my $Key (
+        'WorkOrderGet::ID::' . $WorkOrderID,
+        'WorkOrderList::ChangeID::' . $Param{ChangeID},
+        'WorkOrderChangeEffortsGet::ChangeID::' . $Param{ChangeID},
+        'WorkOrderChangeTimeGet::ChangeID::' . $Param{ChangeID},
+        'ChangeGet::ID::' . $Param{ChangeID},
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger WorkOrderAddPost-Event
     # (yes, we want do do this before the WorkOrderUpdate!)
@@ -590,16 +590,19 @@ sub WorkOrderUpdate {
     );
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeGet::ID::' . $WorkOrderData->{ChangeID},
-    );
+    for my $Key (
+        'WorkOrderGet::ID::' . $Param{WorkOrderID},
+        'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID},
+        'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID},
+        'ChangeGet::ID::' . $WorkOrderData->{ChangeID},
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger WorkOrderUpdatePost-Event
     $Self->EventHandler(
@@ -673,7 +676,10 @@ sub WorkOrderGet {
 
     # check cache
     my $CacheKey = 'WorkOrderGet::ID::' . $Param{WorkOrderID};
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     if ($Cache) {
 
@@ -728,9 +734,11 @@ sub WorkOrderGet {
         if (%WorkOrderData) {
 
             # set cache
-            $Self->{CacheInternalObject}->Set(
+            $Self->{CacheObject}->Set(
+                Type  => 'ITSMChangeManagement',
                 Key   => $CacheKey,
                 Value => \%WorkOrderData,
+                TTL   => $Self->{CacheTTL},
             );
         }
     }
@@ -809,7 +817,10 @@ sub WorkOrderList {
 
     # check cache
     my $CacheKey = 'WorkOrderList::ChangeID::' . $Param{ChangeID};
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     if ($Cache) {
 
@@ -817,7 +828,7 @@ sub WorkOrderList {
         @WorkOrderIDs = @{$Cache};
     }
 
-    # get data from database...
+    # get data from database
     else {
 
         # get workorder ids
@@ -838,9 +849,11 @@ sub WorkOrderList {
         if (@WorkOrderIDs) {
 
             # set cache
-            $Self->{CacheInternalObject}->Set(
+            $Self->{CacheObject}->Set(
+                Type  => 'ITSMChangeManagement',
                 Key   => $CacheKey,
                 Value => \@WorkOrderIDs,
+                TTL   => $Self->{CacheTTL},
             );
         }
     }
@@ -1416,19 +1429,20 @@ sub WorkOrderDelete {
     );
 
     # delete cache
-    $Self->{CacheInternalObject}->Delete( Key => 'WorkOrderGet::ID::' . $Param{WorkOrderID} );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderList::ChangeID::' . $WorkOrderData->{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID},
-    );
-    $Self->{CacheInternalObject}->Delete(
-        Key => 'ChangeGet::ID::' . $WorkOrderData->{ChangeID},
-    );
+    for my $Key (
+        'WorkOrderGet::ID::' . $Param{WorkOrderID},
+        'WorkOrderList::ChangeID::' . $WorkOrderData->{ChangeID},
+        'WorkOrderChangeEffortsGet::ChangeID::' . $WorkOrderData->{ChangeID},
+        'WorkOrderChangeTimeGet::ChangeID::' . $WorkOrderData->{ChangeID},
+        'ChangeGet::ID::' . $WorkOrderData->{ChangeID},
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger WorkOrderDeletePost-Event
     $Self->EventHandler(
@@ -1501,7 +1515,10 @@ sub WorkOrderChangeTimeGet {
 
     # check cache
     my $CacheKey = 'WorkOrderChangeTimeGet::ChangeID::' . $Param{ChangeID};
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     if ($Cache) {
 
@@ -1545,9 +1562,11 @@ sub WorkOrderChangeTimeGet {
         {
 
             # set cache
-            $Self->{CacheInternalObject}->Set(
+            $Self->{CacheObject}->Set(
+                Type  => 'ITSMChangeManagement',
                 Key   => $CacheKey,
                 Value => \%TimeReturn,
+                TTL   => $Self->{CacheTTL},
             );
         }
     }
@@ -2424,7 +2443,10 @@ sub WorkOrderChangeEffortsGet {
 
     # check cache
     my $CacheKey = 'WorkOrderChangeEffortsGet::ChangeID::' . $Param{ChangeID};
-    my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
 
     if ($Cache) {
 
@@ -2457,9 +2479,11 @@ sub WorkOrderChangeEffortsGet {
         if ( $ChangeEfforts{PlannedEffort} || $ChangeEfforts{AccountedTime} ) {
 
             # set cache
-            $Self->{CacheInternalObject}->Set(
+            $Self->{CacheObject}->Set(
+                Type  => 'ITSMChangeManagement',
                 Key   => $CacheKey,
                 Value => \%ChangeEfforts,
+                TTL   => $Self->{CacheTTL},
             );
         }
     }
@@ -2872,6 +2896,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.104 $ $Date: 2010-06-13 12:18:16 $
+$Revision: 1.105 $ $Date: 2010-06-14 11:01:03 $
 
 =cut
