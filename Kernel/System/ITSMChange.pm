@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.244 2010-06-14 10:57:19 ub Exp $
+# $Id: ITSMChange.pm,v 1.245 2010-06-14 11:01:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.244 $) [1];
+$VERSION = qw($Revision: 1.245 $) [1];
 
 =head1 NAME
 
@@ -277,7 +277,7 @@ sub ChangeAdd {
         'ChangeGet::ID::' . $ChangeID,
         'ChangeList',
         'ChangeLookup::ChangeID::' . $ChangeID,
-        'ChangeLookup::ChangeNumber::' . $ChangeNumber
+        'ChangeLookup::ChangeNumber::' . $ChangeNumber,
         )
     {
 
@@ -503,7 +503,7 @@ sub ChangeUpdate {
         'ChangeGet::ID::' . $Param{ChangeID},
         'ChangeList',
         'ChangeLookup::ChangeID::' . $Param{ChangeID},
-        'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber}
+        'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
         )
     {
 
@@ -2039,7 +2039,7 @@ sub ChangeDelete {
         'ChangeGet::ID::' . $Param{ChangeID},
         'ChangeList',
         'ChangeLookup::ChangeID::' . $Param{ChangeID},
-        'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber}
+        'ChangeLookup::ChangeNumber::' . $ChangeData->{ChangeNumber},
         )
     {
 
@@ -3291,6 +3291,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.244 $ $Date: 2010-06-14 10:57:19 $
+$Revision: 1.245 $ $Date: 2010-06-14 11:01:52 $
 
 =cut
