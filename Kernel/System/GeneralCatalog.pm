@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.51 2010-06-08 17:09:02 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.52 2010-06-14 11:06:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 =head1 NAME
 
@@ -96,7 +96,7 @@ sub new {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
     }
 
-    # Create CacheInternal object...
+    # create CacheInternal object
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
         %{$Self},
         Type => 'GeneralCatalog',
@@ -129,8 +129,8 @@ sub ClassList {
         push @ClassList, $Row[0];
     }
 
-    #Cache the result...
-    my $CacheKey = "ClassList";
+    # cache the result
+    my $CacheKey = 'ClassList';
     $Self->{CacheInternalObject}->Set(
         Key   => $CacheKey,
         Value => \@ClassList,
@@ -198,11 +198,6 @@ sub ClassRename {
     }
 
     # reset cache
-    #    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassOld} };
-    #    delete $Self->{Cache}->{ItemGet}->{Class}->{ $Param{ClassNew} };
-    #    delete $Self->{Cache}->{ItemGet}->{ItemID};
-    #    delete $Self->{Cache}->{ItemList};
-
     $Self->{CacheInternalObject}->CleanUp();
 
     # rename general catalog class
@@ -268,9 +263,7 @@ sub ItemList {
 
             push @PreferencesBind, \$Key, map { \$_ } @{ $Param{Preferences}->{$Key} };
 
- # add functionality list to cache key
- #            $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
- #            $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
+            # add functionality list to cache key
             $PreferencesCacheKey .= '####' if $PreferencesCacheKey;
             $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
         }
@@ -289,14 +282,10 @@ sub ItemList {
     }
 
     # create cache key
-    #    my $CacheKey = $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
     my $CacheKey
         = 'ItemList::' . $Param{Class} . '####' . $Param{Valid} . '####' . $PreferencesCacheKey;
 
     # check if result is already cached
-    #    return $Self->{Cache}->{ItemList}->{$CacheKey}
-    #        if $Self->{Cache}->{ItemList}->{$CacheKey};
-
     my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
     return $Cache if $Cache;
 
@@ -322,8 +311,6 @@ sub ItemList {
     }
 
     # cache the result
-    #$Self->{Cache}->{ItemList}->{$CacheKey} = \%Data;
-
     $Self->{CacheInternalObject}->Set(
         Key   => $CacheKey,
         Value => \%Data,
@@ -381,10 +368,7 @@ sub ItemGet {
     if ( $Param{Class} && $Param{Name} ) {
 
         # check if result is already cached
-        #        return $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} }
-        #            if $Self->{Cache}->{ItemGet}->{Class}->{ $Param{Class} }->{ $Param{Name} };
-
-        my $CacheKey = "ItemGet::Class::$Param{Class}::$Param{Name}";
+        my $CacheKey = 'ItemGet::Class::' . $Param{Class} . '::' . $Param{Name};
         my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
         return $Cache if $Cache;
 
@@ -395,9 +379,6 @@ sub ItemGet {
     else {
 
         # check if result is already cached
-        #        return $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} }
-        #            if $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
-
         my $CacheKey = 'ItemGet::ItemID::' . $Param{ItemID};
         my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
         return $Cache if $Cache;
@@ -446,15 +427,12 @@ sub ItemGet {
     }
 
     # cache the result
-    #$Self->{Cache}->{ItemGet}->{Class}->{ $ItemData{Class} }->{ $ItemData{Name} } = \%ItemData;
-    #$Self->{Cache}->{ItemGet}->{ItemID}->{ $ItemData{ItemID} } = \%ItemData;
-
     $Self->{CacheInternalObject}->Set(
-        Key   => "ItemGet::Class::$ItemData{Class}::$ItemData{Name}",
+        Key   => 'ItemGet::Class::' . $ItemData{Class} . '::' . $ItemData{Name},
         Value => \%ItemData,
     );
     $Self->{CacheInternalObject}->Set(
-        Key   => "ItemGet::ItemID::$ItemData{ItemID}",
+        Key   => 'ItemGet::ItemID::' . $ItemData{ItemID},
         Value => \%ItemData,
     );
 
@@ -536,8 +514,6 @@ sub ItemAdd {
     }
 
     # reset cache
-    #delete $Self->{Cache}->{ItemList};
-
     $Self->{CacheInternalObject}->CleanUp();
 
     # insert new item
@@ -666,11 +642,7 @@ sub ItemUpdate {
         return;
     }
 
-    #    # reset cache
-    #    delete $Self->{Cache}->{ItemGet}->{Class}->{$Class}->{ $Param{Name} };
-    #    delete $Self->{Cache}->{ItemGet}->{ItemID}->{ $Param{ItemID} };
-    #    delete $Self->{Cache}->{ItemList};
-
+    # reset cache
     $Self->{CacheInternalObject}->CleanUp();
 
     return $Self->{DBObject}->Do(
@@ -739,6 +711,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.51 $ $Date: 2010-06-08 17:09:02 $
+$Revision: 1.52 $ $Date: 2010-06-14 11:06:48 $
 
 =cut
