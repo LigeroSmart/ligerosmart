@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.105 2010-06-14 11:01:03 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.106 2010-06-15 01:27:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.105 $) [1];
+$VERSION = qw($Revision: 1.106 $) [1];
 
 =head1 NAME
 
@@ -754,11 +754,27 @@ sub WorkOrderGet {
         return;
     }
 
-    # replace default time values with empty string
+    TIMEFIELD:
     for my $Time (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+
+        next TIMEFIELD if !$WorkOrderData{$Time};
+
+        # cleanup time stamps (some databases are using e. g. 2008-02-25 22:03:00.000000)
+        $WorkOrderData{$Time}
+            =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
+
+        # replace default time values with empty string
         if ( $WorkOrderData{$Time} eq '9999-01-01 00:00:00' ) {
             $WorkOrderData{$Time} = '';
         }
+    }
+
+    # add zero to prevent ugly display of zero values with MS-SQL
+    if ( $WorkOrderData{PlannedEffort} ) {
+        $WorkOrderData{PlannedEffort} += 0;
+    }
+    if ( $WorkOrderData{AccountedTime} ) {
+        $WorkOrderData{AccountedTime} += 0;
     }
 
     # add the name of the workorder state
@@ -1552,6 +1568,21 @@ sub WorkOrderChangeTimeGet {
             $TimeReturn{ActualEndTime}    = $Row[3] || '';
         }
 
+        TIMEFIELD:
+        for my $Time ( keys %TimeReturn ) {
+
+            next TIMEFIELD if !$TimeReturn{$Time};
+
+            # cleanup time stamps (some databases are using e. g. 2008-02-25 22:03:00.000000)
+            $TimeReturn{$Time}
+                =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
+
+            # set empty string if the default time was found
+            if ( $TimeReturn{$Time} eq '9999-01-01 00:00:00' ) {
+                $TimeReturn{$Time} = '';
+            }
+        }
+
         # set cache only if at least one of the times is defined
         if (
             $TimeReturn{PlannedStartTime}
@@ -1568,13 +1599,6 @@ sub WorkOrderChangeTimeGet {
                 Value => \%TimeReturn,
                 TTL   => $Self->{CacheTTL},
             );
-        }
-    }
-
-    # set empty string if the default time was found
-    for my $Time ( keys %TimeReturn ) {
-        if ( $TimeReturn{$Time} eq '9999-01-01 00:00:00' ) {
-            $TimeReturn{$Time} = '';
         }
     }
 
@@ -2475,6 +2499,14 @@ sub WorkOrderChangeEffortsGet {
             $ChangeEfforts{AccountedTime} = $Row[1] || '';
         }
 
+        # add zero to prevent ugly display of zero values with MS-SQL
+        if ( $ChangeEfforts{PlannedEffort} ) {
+            $ChangeEfforts{PlannedEffort} += 0;
+        }
+        if ( $ChangeEfforts{AccountedTime} ) {
+            $ChangeEfforts{AccountedTime} += 0;
+        }
+
         # set cache only if PlannedEffort or AccountedTime is defined
         if ( $ChangeEfforts{PlannedEffort} || $ChangeEfforts{AccountedTime} ) {
 
@@ -2896,6 +2928,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.105 $ $Date: 2010-06-14 11:01:03 $
+$Revision: 1.106 $ $Date: 2010-06-15 01:27:22 $
 
 =cut
