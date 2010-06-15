@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.34 2010-04-27 20:33:50 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.35 2010-06-15 01:58:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -103,17 +103,24 @@ sub Run {
     # get valid list
     my %ValidList = $Self->{ValidObject}->ValidList();
 
-    # get all expression ids for the given condition id
-    my $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
-        ConditionID => $GetParam{ConditionID},
-        UserID      => $Self->{UserID},
-    );
+    my $ExpressionIDsRef = [];
+    my $ActionIDsRef     = [];
 
-    # get all action ids for the given condition id
-    my $ActionIDsRef = $Self->{ConditionObject}->ActionList(
-        ConditionID => $GetParam{ConditionID},
-        UserID      => $Self->{UserID},
-    );
+    # only get expression list and action list if condition exists already
+    if ( $GetParam{ConditionID} ne 'NEW' ) {
+
+        # get all expression ids for the given condition id
+        $ExpressionIDsRef = $Self->{ConditionObject}->ExpressionList(
+            ConditionID => $GetParam{ConditionID},
+            UserID      => $Self->{UserID},
+        );
+
+        # get all action ids for the given condition id
+        $ActionIDsRef = $Self->{ConditionObject}->ActionList(
+            ConditionID => $GetParam{ConditionID},
+            UserID      => $Self->{UserID},
+        );
+    }
 
     # Remember the reason why saving was not attempted.
     # These entries are the names of the dtl validation error blocks.
@@ -1501,7 +1508,7 @@ sub _GetCompareValueFieldType {
         $FieldType = 'Text';
     }
     elsif ( $FieldType eq 'Autocomplete' ) {
-        $FieldType = 'Selection'
+        $FieldType = 'Selection';
     }
 
     return $FieldType;
