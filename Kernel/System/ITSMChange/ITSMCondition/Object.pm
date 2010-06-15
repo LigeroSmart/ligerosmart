@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Object.pm,v 1.24 2010-01-29 21:48:05 ub Exp $
+# $Id: Object.pm,v 1.25 2010-06-15 01:04:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -238,6 +238,15 @@ sub ObjectLookup {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => 'Need ObjectID or Name - none is given!',
+        );
+        return;
+    }
+
+    # check if ObjectID is a number
+    if ( $Param{ObjectID} && $Param{ObjectID} !~ m{ \A \d+ \z }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "ObjectID must be a number! (ObjectID: $Param{ObjectID})",
         );
         return;
     }
@@ -660,6 +669,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-01-29 21:48:05 $
+$Revision: 1.25 $ $Date: 2010-06-15 01:04:47 $
 
 =cut

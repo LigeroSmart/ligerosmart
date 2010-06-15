@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Attribute.pm,v 1.10 2010-01-22 12:42:20 bes Exp $
+# $Id: Attribute.pm,v 1.11 2010-06-15 01:04:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -238,6 +238,15 @@ sub AttributeLookup {
         return;
     }
 
+    # check if AttributeID is a number
+    if ( $Param{AttributeID} && $Param{AttributeID} !~ m{ \A \d+ \z }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "AttributeID must be a number! (AttributeID: $Param{AttributeID})",
+        );
+        return;
+    }
+
     # prepare SQL statements
     if ( $Param{AttributeID} ) {
         return if !$Self->{DBObject}->Prepare(
@@ -354,6 +363,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-01-22 12:42:20 $
+$Revision: 1.11 $ $Date: 2010-06-15 01:04:47 $
 
 =cut
