@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.245 2010-06-14 11:01:52 ub Exp $
+# $Id: ITSMChange.pm,v 1.246 2010-06-15 01:44:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.245 $) [1];
+$VERSION = qw($Revision: 1.246 $) [1];
 
 =head1 NAME
 
@@ -641,6 +641,25 @@ sub ChangeGet {
             $ChangeData{RequestedTime}      = $Row[17];
         }
 
+        # check error
+        if ( !%ChangeData ) {
+            if ( !$Param{LogNo} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Change with ID $Param{ChangeID} does not exist.",
+                );
+            }
+            return;
+        }
+
+        # cleanup time stamps (some databases are using e. g. 2008-02-25 22:03:00.000000)
+        TIMEFIELD:
+        for my $Timefield ( 'CreateTime', 'ChangeTime', 'RequestedTime' ) {
+            next TIMEFIELD if !$ChangeData{$Timefield};
+            $ChangeData{$Timefield}
+                =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
+        }
+
         # set cache only if change data exists
         if (%ChangeData) {
 
@@ -652,17 +671,6 @@ sub ChangeGet {
                 TTL   => $Self->{CacheTTL},
             );
         }
-    }
-
-    # check error
-    if ( !%ChangeData ) {
-        if ( !$Param{LogNo} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Change with ID $Param{ChangeID} does not exist.",
-            );
-        }
-        return;
     }
 
     # set name of change state
@@ -3291,6 +3299,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.245 $ $Date: 2010-06-14 11:01:52 $
+$Revision: 1.246 $ $Date: 2010-06-15 01:44:00 $
 
 =cut
