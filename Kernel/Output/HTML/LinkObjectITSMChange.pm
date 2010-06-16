@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.9 2010-04-27 20:39:02 ub Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.10 2010-06-16 15:46:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -228,8 +228,9 @@ sub TableCreateComplex {
                 MaxLength => 70,
             },
             {
-                Type    => 'Text',
-                Content => $Change->{ChangeState},
+                Type      => 'Text',
+                Content   => $Change->{ChangeState},
+                Translate => 1,
             },
             {
                 Type    => 'TimeLong',
@@ -553,6 +554,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-04-27 20:39:02 $
+$Revision: 1.10 $ $Date: 2010-06-16 15:46:00 $
 
 =cut
