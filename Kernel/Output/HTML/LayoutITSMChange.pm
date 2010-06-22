@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.40 2010-02-11 16:43:47 mae Exp $
+# $Id: LayoutITSMChange.pm,v 1.41 2010-06-22 00:20:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =over 4
 
@@ -686,6 +686,230 @@ sub RemoveAJAXLoadingImage {
     $CleanedHTMLString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
 
     return $CleanedHTMLString;
+}
+
+=item BuildFreeTextHTML()
+
+Returns the a hash with HTML code for all defined change or workorder freetext fields.
+
+    my %ChangeFreeTextHTML = $LayoutObject->BuildFreeTextHTML(
+        Config                   => \%ChangeFreeTextConfig,
+        ChangeData               => \%ChangeFreeTextParam,
+        ConfiguredFreeTextFields => [ 1, 2, 3 ],
+    );
+
+or
+
+    my %WorkOrderFreeTextHTML = $LayoutObject->BuildFreeTextHTML(
+        Config                   => \%WorkOrderFreeTextConfig,
+        WorkOrderData            => \%WorkOrderFreeTextParam,
+        ConfiguredFreeTextFields =>  [ 4, 5, 6 ],
+    );
+
+=cut
+
+sub BuildFreeTextHTML {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ConfiguredFreeTextFields)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # check that not both ChangeData and WorkOrderData are given
+    if ( $Param{ChangeData} && $Param{WorkOrderData} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either ChangeData OR WorkOrderData - not both!',
+        );
+        return;
+    }
+
+    # set additional options for BuildSelection
+    my %SelectData;
+    if ( $Param{NullOption} ) {
+        $SelectData{Size}         = 3;
+        $SelectData{Multiple}     = 1;
+        $SelectData{PossibleNone} = 1;
+    }
+
+    # get the config data
+    my %Config;
+    if ( $Param{Config} ) {
+        %Config = %{ $Param{Config} };
+    }
+
+    # get the input data and the type (Change or Workorder)
+    my %InputData;
+    my $Type;
+    if ( $Param{ChangeData} ) {
+        $Type      = 'Change';
+        %InputData = %{ $Param{ChangeData} };
+    }
+    elsif ( $Param{WorkOrderData} ) {
+        $Type      = 'WorkOrder';
+        %InputData = %{ $Param{WorkOrderData} };
+    }
+
+    # to store the result HTML data
+    my %Data;
+
+    # build HTML for all configured fields
+    for my $Number ( @{ $Param{ConfiguredFreeTextFields} } ) {
+
+        # freekey config exists
+        if (
+            ref $Config{ $Type . 'FreeKey' . $Number } eq 'HASH'
+            && %{ $Config{ $Type . 'FreeKey' . $Number } }
+            )
+        {
+
+            # get all config keys for this field
+            my @ConfigKeys = keys %{ $Config{ $Type . 'FreeKey' . $Number } };
+
+            # more than one config option exists
+            if ( scalar @ConfigKeys > 1 ) {
+
+                # build dropdown list
+                $Data{ $Type . 'FreeKeyField' . $Number } = $Self->BuildSelection(
+                    Data        => $Config{ $Type . 'FreeKey' . $Number },
+                    Name        => $Type . 'FreeKey' . $Number,
+                    SelectedID  => $InputData{ $Type . 'FreeKey' . $Number },
+                    Translation => 0,
+                    HTMLQuote   => 1,
+                    %SelectData,
+                );
+            }
+
+            # just one config option exists and the only key is not an empty string
+            elsif ( $ConfigKeys[0] ) {
+
+                #  the null option is set
+                if ( $Param{NullOption} ) {
+
+                    # build just a text string
+                    $Data{ $Type . 'FreeKeyField' . $Number }
+                        = $Config{ $Type . 'FreeKey' . $Number }->{ $ConfigKeys[0] };
+                }
+
+                # no null option is set
+                else {
+
+                    # build a hidden input field
+                    $Data{ $Type . 'FreeKeyField' . $Number }
+                        = $Config{ $Type . 'FreeKey' . $Number }->{ $ConfigKeys[0] }
+                        . '<input type="hidden" name="'
+                        . $Type . 'FreeKey' . $Number
+                        . '" value="'
+                        . $Self->Ascii2Html( Text => $ConfigKeys[0] ) . '"/>';
+                }
+            }
+        }
+        else {
+
+            # freekey data is defined
+            if ( defined $InputData{ $Type . 'FreeKey' . $Number } ) {
+
+                # freekey data is an array
+                if ( ref $InputData{ $Type . 'FreeKey' . $Number } eq 'ARRAY' ) {
+
+                    # take first element...
+                    if ( $InputData{ $Type . 'FreeKey' . $Number }->[0] ) {
+                        $InputData{ $Type . 'FreeKey' . $Number }
+                            = $InputData{ $Type . 'FreeKey' . $Number }->[0];
+                    }
+
+                    # ...or nothing
+                    else {
+                        $InputData{ $Type . 'FreeKey' . $Number } = '';
+                    }
+                }
+
+                # build input field with freekey data
+                $Data{ $Type . 'FreeKeyField' . $Number }
+                    = '<input type="text" name="'
+                    . $Type . 'FreeKey' . $Number
+                    . '" value="'
+                    . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeKey' . $Number } )
+                    . '" size="18"/>';
+            }
+
+            # freekey data is not defined
+            else {
+
+                # build empty input field
+                $Data{ $Type . 'FreeKeyField' . $Number }
+                    = '<input type="text" name="'
+                    . $Type
+                    . 'FreeKey'
+                    . $Number
+                    . '" value="" size="18"/>';
+            }
+        }
+
+        # freetext config exists
+        if ( ref $Config{ $Type . 'FreeText' . $Number } eq 'HASH' ) {
+
+            # build dropdown list
+            $Data{ $Type . 'FreeTextField' . $Number } = $Self->BuildSelection(
+                Data        => $Config{ $Type . 'FreeText' . $Number },
+                Name        => $Type . 'FreeText' . $Number,
+                SelectedID  => $InputData{ $Type . 'FreeText' . $Number },
+                Translation => 0,
+                HTMLQuote   => 1,
+                %SelectData,
+            );
+        }
+        else {
+
+            # freetext data is defined
+            if ( defined $InputData{ $Type . 'FreeText' . $Number } ) {
+
+                # freetext data is an array
+                if ( ref $InputData{ $Type . 'FreeText' . $Number } eq 'ARRAY' ) {
+
+                    # take first element...
+                    if ( $InputData{ $Type . 'FreeText' . $Number }->[0] ) {
+                        $InputData{ $Type . 'FreeText' . $Number }
+                            = $InputData{ $Type . 'FreeText' . $Number }->[0];
+                    }
+
+                    # ...or nothing
+                    else {
+                        $InputData{ $Type . 'FreeText' . $Number } = '';
+                    }
+                }
+
+                # build input field with freetext data
+                $Data{ $Type . 'FreeTextField' . $Number }
+                    = '<input type="text" name="'
+                    . $Type . 'FreeText' . $Number
+                    . '" value="'
+                    . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeText' . $Number } )
+                    . '" size="30"/>';
+            }
+
+            # freetext data is not defined
+            else {
+
+                # build empty input field
+                $Data{ $Type . 'FreeTextField' . $Number }
+                    = '<input type="text" name="'
+                    . $Type
+                    . 'FreeText'
+                    . $Number
+                    . '" value="" size="30"/>';
+            }
+        }
+    }
+
+    return %Data;
 }
 
 =begin Internal:

@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.180 2010-06-14 10:55:45 ub Exp $
+# $Id: ITSMChange.t,v 1.181 2010-06-22 00:19:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1771,6 +1771,139 @@ my @ChangeTests = (
         Label => 'OrderByCIPTests',    # this change will be used in order by search tests
     },
 
+    #----------------------------------#
+    # Tests for Change FreeText fields
+    #----------------------------------#
+
+    # test some change freetext fields ChangeAdd and ChangeUpdate
+    {
+        Description => 'Test ChangeAdd and ChangeUpdate with change freetext fields.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID          => $UserIDs[0],
+                ChangeTitle     => 'Test add change with freetext fields - ' . $UniqueSignature,
+                ChangeFreeKey1  => 'AAA',
+                ChangeFreeText1 => 'BBB',
+                ChangeFreeKey2  => 'CCC',
+                ChangeFreeText2 => 'DDD',
+            },
+            ChangeUpdate => {
+                UserID          => 1,
+                ChangeFreeKey3  => 'EEE',
+                ChangeFreeText3 => 'FFF',
+                ChangeFreeKey4  => 'GGG',
+                ChangeFreeText4 => 'HHH',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeTitle     => 'Test add change with freetext fields - ' . $UniqueSignature,
+                ChangeBuilderID => $UserIDs[0],
+                ChangeFreeKey1  => 'AAA',
+                ChangeFreeText1 => 'BBB',
+                ChangeFreeKey2  => 'CCC',
+                ChangeFreeText2 => 'DDD',
+                ChangeFreeKey3  => 'EEE',
+                ChangeFreeText3 => 'FFF',
+                ChangeFreeKey4  => 'GGG',
+                ChangeFreeText4 => 'HHH',
+                CreateBy        => $UserIDs[0],
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # test change freetext fields with maximum length
+    {
+        Description => 'Test ChangeAdd freetext fields with 250 characters.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test add change freetext fields with 250 characters - '
+                    . $UniqueSignature,
+                ChangeFreeKey50  => 'A' x 250,
+                ChangeFreeText50 => 'B' x 250,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeFreeKey50  => 'A' x 250,
+                ChangeFreeText50 => 'B' x 250,
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # test freetext fields larger than maximum length
+    {
+        Description => 'Test ChangeAdd freetext fields with 251 characters.',
+        Fails       => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test add change freetext fields with 251 characters - '
+                    . $UniqueSignature,
+                ChangeFreeKey50  => 'A' x 251,
+                ChangeFreeText50 => 'B' x 251,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => undef,
+        },
+    },
+
+    # test freetext fields larger than maximum length
+    {
+        Description => 'Test ChangeUpdate freetext fields with 251 characters.',
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test update change freetext fields with 251 characters - '
+                    . $UniqueSignature,
+                ChangeFreeKey50  => 'A' x 250,
+                ChangeFreeText50 => 'B' x 250,
+            },
+            ChangeUpdate => {
+                UserID           => 1,
+                ChangeFreeText50 => 'C' x 251,
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeFreeKey50  => 'A' x 250,
+                ChangeFreeText50 => 'B' x 250,
+            },
+        },
+        SearchTest => [6],
+    },
+
+    # test freetext fields with zero and empty strings
+    {
+        Description => 'Test ChangeUpdate with zero and empty string.',
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => $UserIDs[0],
+                ChangeTitle => 'Test update change freetext fields with zero and empty string.'
+                    . $UniqueSignature,
+                ChangeFreeKey1  => 'AAA',
+                ChangeFreeText1 => 'BBB',
+            },
+            ChangeUpdate => {
+                UserID           => 1,
+                ChangeFreeKey20  => 0,
+                ChangeFreeText20 => '',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeFreeKey20  => 0,
+                ChangeFreeText20 => '',
+            },
+        },
+        SearchTest => [6],
+    },
+
     #------------------------------#
     # Tests on ChangeCAB*
     #------------------------------#
@@ -2736,7 +2869,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 5 - test changeMANAGERid
+    # Nr 5 - test ChangeManagerID
     {
         Description => 'ChangeManagerID',
         SearchData  => {
@@ -2747,7 +2880,7 @@ my @ChangeSearchTests = (
         },
     },
 
-    # Nr 6 - test changeBUILDERid and ChangeTitle with wildcard
+    # Nr 6 - test ChangeBuilderID and ChangeTitle with wildcard
     {
         Description => 'ChangeBuilderID',
         SearchData  => {

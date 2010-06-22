@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.60 2010-04-27 20:33:50 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.61 2010-06-22 00:21:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -91,6 +91,18 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # get configured change freetext field numbers
+    my @ConfiguredChangeFreeTextFields = $Self->{ChangeObject}->GetConfiguredChangeFreeTextFields();
+
+    # get change freetext params
+    my %ChangeFreeTextParam;
+    for my $Count (@ConfiguredChangeFreeTextFields) {
+        my $Key   = 'ChangeFreeKey' . $Count;
+        my $Value = 'ChangeFreeText' . $Count;
+        $ChangeFreeTextParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
+        $ChangeFreeTextParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
+    }
+
     # store time related fields in %GetParam
     TIME_TYPE:
     for my $TimeType (qw(RequestedTime MoveTime)) {
@@ -127,6 +139,9 @@ sub Run {
     # Remember the reason why saving was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
+
+    # remember the numbers of the change freetext fields with validation errors
+    my %ChangeFreeTextValidationErrors;
 
     # get meta data for all already uploaded files
     my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
@@ -322,8 +337,22 @@ sub Run {
             }
         }
 
+        # check for required change freetext fields (if configured)
+        for my $Number (@ConfiguredChangeFreeTextFields) {
+            if (
+                $Self->{Config}->{ChangeFreeText}->{$Number}
+                && $Self->{Config}->{ChangeFreeText}->{$Number} == 2
+                && $ChangeFreeTextParam{ 'ChangeFreeText' . $Number } eq ''
+                )
+            {
+
+                # remember the change freetext field number with validation errors
+                $ChangeFreeTextValidationErrors{$Number}++;
+            }
+        }
+
         # add only when there are no input validation errors
-        if ( !@ValidationErrors ) {
+        if ( !@ValidationErrors && !%ChangeFreeTextValidationErrors ) {
             my %AdditionalParam;
 
             if ( $Self->{Config}->{RequestedTime} ) {
@@ -339,6 +368,7 @@ sub Run {
                 PriorityID    => $GetParam{PriorityID},
                 UserID        => $Self->{UserID},
                 %AdditionalParam,
+                %ChangeFreeTextParam,
             );
 
             # adding was successful
@@ -539,7 +569,7 @@ sub Run {
         }
     }
 
-    # handle saaveattachment subaction
+    # handle save attachment subaction
     elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
 
         # nothing to do
@@ -779,6 +809,111 @@ sub Run {
         Name       => 'PriorityID',
         SelectedID => $SelectedPriority,
     );
+
+    # get the change freetext config
+    my %ChangeFreeTextConfig;
+    NUMBER:
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        TYPE:
+        for my $Type (qw(ChangeFreeKey ChangeFreeText)) {
+
+            # get defaults for change freetext fields if page is loaded the first time
+            if ( !$Self->{ParamObject}->GetParam( Param => 'FormID' ) ) {
+
+                $ChangeFreeTextParam{ $Type . $Number }
+                    ||= $Self->{ConfigObject}->Get( $Type . $Number . '::DefaultSelection' );
+            }
+
+            # get config
+            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
+
+            next TYPE if !$Config;
+            next TYPE if ref $Config ne 'HASH';
+
+            # store the change freetext config
+            $ChangeFreeTextConfig{ $Type . $Number } = $Config;
+        }
+    }
+
+    # build the change freetext HTML
+    my %ChangeFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
+        Config                   => \%ChangeFreeTextConfig,
+        ChangeData               => \%ChangeFreeTextParam,
+        ConfiguredFreeTextFields => \@ConfiguredChangeFreeTextFields,
+    );
+
+    # show change freetext fields
+    my $ChangeFreeTextShown;
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        # check if this freetext field should be shown in this frontend
+        if ( $Self->{Config}->{ChangeFreeText}->{$Number} ) {
+
+            # remember that at least one freetext field is shown
+            $ChangeFreeTextShown = 1;
+
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeFreeText',
+                Data => {
+                    ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
+                    ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
+                },
+            );
+
+            # show change freetext validation error
+            if ( $ChangeFreeTextValidationErrors{$Number} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidChangeFreeText',
+                    Data => {
+                        %ChangeFreeTextHTML,
+                    },
+                );
+            }
+
+            # show single change freetext blocks
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeFreeText' . $Number,
+                Data => {
+                    %ChangeFreeTextHTML,
+                },
+            );
+
+            # show change freetext validation error for single change freetext field
+            if ( $ChangeFreeTextValidationErrors{$Number} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidChangeFreeText' . $Number,
+                    Data => {
+                        %ChangeFreeTextHTML,
+                    },
+                );
+            }
+        }
+    }
+
+    # show space between priority and change freetext if change freetext fields are shown
+    if ($ChangeFreeTextShown) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ChangeFreeTextSpacer',
+            Data => {},
+        );
+    }
+
+    # build change freetext java script check
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        # java script check for required change free text fields by form submit
+        if ( $Self->{Config}->{ChangeFreeText}->{$Number} == 2 ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeFreeTextCheckJs',
+                Data => {
+                    ChangeFreeKeyField  => 'ChangeFreeKey' . $Number,
+                    ChangeFreeTextField => 'ChangeFreeText' . $Number,
+                },
+            );
+        }
+    }
 
     # add the validation error messages
     for my $BlockName (@ValidationErrors) {

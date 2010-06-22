@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.189 2010-05-21 10:22:10 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.190 2010-06-22 00:17:13 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -665,6 +665,62 @@
                 <Reference Local="group_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+
+        <TableCreate Name="change_freekey">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_freekey_change_id">
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Index Name="change_freekey_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_freekey_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_freekey_field_value_change_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="change_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_freetext">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_freetext_change_id">
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Index Name="change_freetext_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_freetext_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_freetext_field_value_change_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="change_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
             <Data Key="name" Type="Quote">1 very low</Data>
@@ -1511,8 +1567,66 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
+
+        <TableCreate Name="change_freekey" Version="2.0.71">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_freekey_change_id">
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Index Name="change_freekey_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_freekey_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_freekey_field_value_change_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="change_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_freetext" Version="2.0.71">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="change_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_freetext_change_id">
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Index Name="change_freetext_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_freetext_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_freetext_field_value_change_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="change_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="change_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_item">
+                <Reference Local="change_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
+        <TableDrop Name="change_freekey"/>
+        <TableDrop Name="change_freetext"/>
         <TableDrop Name="change_notification_rec"/>
         <TableDrop Name="change_notification_grps"/>
         <TableDrop Name="change_notification"/>

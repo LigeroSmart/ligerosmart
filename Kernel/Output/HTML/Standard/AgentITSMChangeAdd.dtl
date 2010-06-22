@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.50 2010-04-27 20:39:02 ub Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.51 2010-06-22 00:23:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -56,6 +56,15 @@ function submit_compose() {
 
         return false;
     }
+
+<!-- dtl:block:ChangeFreeTextCheckJs -->
+    if (document.compose.$Data{"ChangeFreeTextField"}.value == "") {
+        alert('$JSText{"A required field is:"} ' + document.compose.$Data{"ChangeFreeKeyField"}.value + '!');
+        document.compose.$Data{"ChangeFreeTextField"}.focus();
+
+        return false;
+    }
+<!-- dtl:block:ChangeFreeTextCheckJs -->
 
     return true;
 }
@@ -142,7 +151,6 @@ function submit_compose() {
             </td>
         </tr>
 <!-- dtl:block:ChangeTemplate -->
-
         <tr>
             <td class="mainbody">
                 <br />
@@ -230,6 +238,53 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:InvalidPriority -->
                                     </td>
                                 </tr>
+<!-- dtl:block:ChangeFreeTextSpacer -->
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+<!-- dtl:block:ChangeFreeTextSpacer -->
+<!-- dtl:block:ChangeFreeText -->
+                                <tr>
+                                    <td class="contentkey">$Data{"ChangeFreeKeyField"}:</td>
+                                    <td class="contentvalue">
+                                        $Data{"ChangeFreeTextField"}
+<!-- dtl:block:InvalidChangeFreeText -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidChangeFreeText -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:ChangeFreeText -->
+# ####################################################
+# example for customization of single freetext fields
+# ####################################################
+#<!-- dtl:block:ChangeFreeText1 -->
+#                                <tr>
+#                                  <td class="contentkey">$Data{"ChangeFreeKeyField1"}:</td>
+#                                   <td class="contentvalue">
+#                                       $Data{"ChangeFreeTextField1"}
+#<!-- dtl:block:InvalidChangeFreeText1 -->
+#                                       <br />
+#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
+#<!-- dtl:block:InvalidChangeFreeText1 -->
+#                                  </td>
+#                                </tr>
+#<!-- dtl:block:ChangeFreeText1 -->
+#
+#
+#<!-- dtl:block:ChangeFreeText2 -->
+#                                <tr>
+#                                  <td colspan="2" class="contentkey">$Data{"ChangeFreeKeyField2"}:</td>
+#                                  <td class="contentvalue">
+#                                      $Data{"ChangeFreeTextField2"}
+#<!-- dtl:block:InvalidChangeFreeText2 -->
+#                                       <br />
+#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
+#<!-- dtl:block:InvalidChangeFreeText2 -->
+#                                  </td>
+#                                </tr>
+#<!-- dtl:block:ChangeFreeText2 -->
+# ####################################################
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>

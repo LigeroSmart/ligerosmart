@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.246 2010-06-15 01:44:00 ub Exp $
+# $Id: ITSMChange.pm,v 1.247 2010-06-22 00:18:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.246 $) [1];
+$VERSION = qw($Revision: 1.247 $) [1];
 
 =head1 NAME
 
@@ -166,6 +166,8 @@ or
         CABAgents       => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers    => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
         RequestedTime   => '2006-01-19 23:59:59',              # (optional)
+        ChangeFreeKey1  => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1 => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
         UserID          => 1,
     );
 
@@ -352,6 +354,8 @@ indicates that requested time of the change should be cleared.
         CABAgents       => [ 1, 2, 4 ],                        # (optional) UserIDs
         CABCustomers    => [ 'tt', 'mm' ],                     # (optional) CustomerUserIDs
         RequestedTime   => '2006-01-19 23:59:59',              # (optional) or 'undef', which clears the time
+        ChangeFreeKey1  => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1 => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
         UserID          => 1,
     );
 
@@ -455,6 +459,9 @@ sub ChangeUpdate {
     if ( exists $Param{CABAgents} || exists $Param{CABCustomers} ) {
         return if !$Self->ChangeCABUpdate(%Param);
     }
+
+    # update change freekey and freetext fields
+    return if !$Self->_ChangeFreeTextUpdate(%Param);
 
     # map update attributes to column names
     my %Attribute = (
@@ -569,6 +576,8 @@ The returned hash reference contains the following elements:
     $Change{PlannedEffort}          # determined from the workorders
     $Change{AccountedTime}          # determined from the workorders
     $Change{RequestedTime}
+    $Change{ChangeFreeKey1}         # change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+    $Change{ChangeFreeText1}        # change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
     $Change{CreateTime}
     $Change{CreateBy}
     $Change{ChangeTime}
@@ -659,6 +668,15 @@ sub ChangeGet {
             $ChangeData{$Timefield}
                 =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
         }
+
+        # get change freekey and freetext data
+        my $ChangeFreeText = $Self->_ChangeFreeTextGet(
+            ChangeID => $Param{ChangeID},
+            UserID   => $Param{UserID},
+        );
+
+        # add result to change data
+        %ChangeData = ( %ChangeData, %{$ChangeFreeText} );
 
         # set cache only if change data exists
         if (%ChangeData) {
@@ -2042,6 +2060,12 @@ sub ChangeDelete {
         UserID   => $Param{UserID},
     );
 
+    # delete the change freetext fields
+    return if !$Self->_ChangeFreeTextDelete(
+        ChangeID => $Param{ChangeID},
+        UserID   => $Param{UserID},
+    );
+
     # delete cache
     for my $Key (
         'ChangeGet::ID::' . $Param{ChangeID},
@@ -2814,6 +2838,55 @@ sub ChangeAttachmentExists {
     return 1;
 }
 
+=item GetConfiguredChangeFreeTextFields()
+
+Returns an array with the numbers of all configured change freekey and freetext fields
+
+    my @ConfiguredChangeFreeTextFields = $ChangeObject->GetConfiguredChangeFreeTextFields();
+
+=cut
+
+sub GetConfiguredChangeFreeTextFields {
+    my ( $Self, %Param ) = @_;
+
+    # lookup cached result
+    if (
+        $Self->{ConfiguredChangeFreeTextFields}
+        && ref $Self->{ConfiguredChangeFreeTextFields} eq 'ARRAY'
+        && @{ $Self->{ConfiguredChangeFreeTextFields} }
+        )
+    {
+        return @{ $Self->{ConfiguredChangeFreeTextFields} };
+    }
+
+    # get maximum number of change freetext fields
+    my $MaxNumber = $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber');
+
+    # get all configured change freekey and freetext numbers
+    my @ConfiguredChangeFreeTextFields = ();
+    FREETEXTNUMBER:
+    for my $Number ( 1 .. $MaxNumber ) {
+
+        # check change freekey config
+        if ( $Self->{ConfigObject}->Get( 'ChangeFreeKey' . $Number ) ) {
+            push @ConfiguredChangeFreeTextFields, $Number;
+            next FREETEXTNUMBER;
+        }
+
+        # check change freetext config
+        if ( $Self->{ConfigObject}->Get( 'ChangeFreeText' . $Number ) ) {
+            push @ConfiguredChangeFreeTextFields, $Number;
+            next FREETEXTNUMBER;
+        }
+    }
+
+    # cache result
+    $Self->{ConfiguredChangeFreeTextFields} = \@ConfiguredChangeFreeTextFields;
+
+    return @ConfiguredChangeFreeTextFields;
+
+}
+
 =begin Internal:
 
 =item _CheckChangeStateIDs()
@@ -3079,6 +3152,8 @@ There are no required parameters.
         RequestedTime        => '2009-10-23 08:57:12',              # (optional)
         CABAgents            => [ 1, 2, 4 ],     # UserIDs          # (optional)
         CABCustomers         => [ 'tt', 'mm' ],  # CustomerUserIDs  # (optional)
+        ChangeFreeKey1       => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1      => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
     );
 
 The ChangeStateID is checked for existence in the general catalog.
@@ -3091,6 +3166,8 @@ These string parameters have length constraints:
     DescriptionPlain    | 3800 characters
     Justification       | 3800 characters
     JustificationPlain  | 3800 characters
+    ChangeFreeKeyXX     |  250 characters
+    ChangeFreeTextXX    |  250 characters
 
 =cut
 
@@ -3155,6 +3232,48 @@ sub _CheckChangeParams {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "The parameter '$Argument' must be shorter than 3800 characters!",
+                );
+                return;
+            }
+        }
+    }
+
+    # check the freekey and freetext parameters
+    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
+
+        # check all possible freetext fields
+        NUMBER:
+        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber') ) {
+
+            # build argument, e.g. ChangeFreeKey1
+            my $Argument = $Type . $Number;
+
+            # params are not required
+            next NUMBER if !exists $Param{$Argument};
+
+            # check if param is not defined
+            if ( !defined $Param{$Argument} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' must be defined!",
+                );
+                return;
+            }
+
+            # check if param is not a reference
+            if ( ref $Param{$Argument} ne '' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' mustn't be a reference!",
+                );
+                return;
+            }
+
+            # check the maximum length of freetext fields
+            if ( length( $Param{$Argument} ) > 250 ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' must be shorter than 250 characters!",
                 );
                 return;
             }
@@ -3281,6 +3400,258 @@ sub _CheckChangeParams {
     return 1;
 }
 
+=item _ChangeFreeTextGet()
+
+Gets the freetext and freekey fields of a change as a hash reference.
+
+    my $ChangeFreeText = $ChangeObject->_ChangeFreeTextGet(
+        ChangeID => 123,
+        UserID   => 1,
+    );
+
+Returns:
+
+    $ChangeFreeText = {
+        ChangeFreeKey1  => 'Sun',   # change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1 => 'Earth', # change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+    }
+
+=cut
+
+sub _ChangeFreeTextGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # to store change freekey and freetext data
+    my %Data;
+
+    # get change freekey and freetext data
+    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
+
+        # preset every freetext field with empty string
+        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber') ) {
+            $Data{ $Type . $Number } = '';
+        }
+
+        # set table name
+        my $TableName = '';
+        if ( $Type eq 'ChangeFreeText' ) {
+            $TableName = 'change_freetext';
+        }
+        elsif ( $Type eq 'ChangeFreeKey' ) {
+            $TableName = 'change_freekey';
+        }
+
+        # get change freetext fields
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT field_id, field_value'
+                . ' FROM ' . $TableName
+                . ' WHERE change_id = ?',
+            Bind => [ \$Param{ChangeID} ],
+        );
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            my $Field = $Type . $Row[0];
+            my $Value = $Row[1];
+            $Data{$Field} = defined $Value ? $Value : '';
+        }
+    }
+
+    return \%Data;
+}
+
+=item _ChangeFreeTextUpdate()
+
+Updates the freetext and freekey fields of a change.
+Passing an empty string deletes the freetext field.
+
+    my $Success = $ChangeObject->_ChangeFreeTextUpdate(
+        ChangeID        => 123,
+        ChangeFreeKey1  => 'Sun',   # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1 => 'Earth', # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+        UserID          => 1,
+    );
+
+=cut
+
+sub _ChangeFreeTextUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # check the given parameters
+    return if !$Self->_CheckChangeParams(%Param);
+
+    # store the given freekey and freetext ids
+    my @FreeKeyFieldIDs;
+    my @FreeTextFieldIDs;
+    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
+
+        # check all possible freetext fields
+        NUMBER:
+        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber') ) {
+
+            # build argument, e.g. ChangeFreeKey1
+            my $Argument = $Type . $Number;
+
+            # params are not required
+            next NUMBER if !exists $Param{$Argument};
+
+            # all checks were done before, so here we are safe and store the ids
+            if ( $Type eq 'ChangeFreeKey' ) {
+                push @FreeKeyFieldIDs, $Number;
+            }
+            elsif ( $Type eq 'ChangeFreeText' ) {
+                push @FreeTextFieldIDs, $Number;
+            }
+        }
+    }
+
+    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
+
+        # set table name and arrays of field ids
+        my $TableName;
+        my @FieldIDs;
+        if ( $Type eq 'ChangeFreeKey' ) {
+            $TableName = 'change_freekey';
+            @FieldIDs  = @FreeKeyFieldIDs;
+        }
+        elsif ( $Type eq 'ChangeFreeText' ) {
+            $TableName = 'change_freetext';
+            @FieldIDs  = @FreeTextFieldIDs;
+        }
+
+        # update all given change freekey and freetext fields
+        for my $FieldID (@FieldIDs) {
+
+            # check if entry exists for this combination
+            # of change_id, field_id and type (ChangeFreeKey or ChangeFreeText)
+            my $ID;
+            $Self->{DBObject}->Prepare(
+                SQL => 'SELECT id FROM ' . $TableName
+                    . ' WHERE change_id = ? '
+                    . ' AND field_id = ? ',
+                Bind => [ \$Param{ChangeID}, \$FieldID ],
+                Limit => 1,
+            );
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $ID = $Row[0];
+            }
+
+            # get new value from parameter
+            my $Value = $Param{ $Type . $FieldID };
+
+            # entry exists and needs an update
+            if ( $ID && $Value ne '' ) {
+                return if !$Self->{DBObject}->Do(
+                    SQL => 'UPDATE ' . $TableName
+                        . ' SET field_value = ?'
+                        . ' WHERE id = ?',
+                    Bind => [ \$Value, \$ID ],
+                );
+            }
+
+            # entry exists but new value is an empty string
+            elsif ( $ID && $Value eq '' ) {
+                return if !$Self->{DBObject}->Do(
+                    SQL => 'DELETE FROM ' . $TableName
+                        . ' WHERE id = ?',
+                    Bind => [ \$ID ],
+                );
+            }
+
+            # entry does not exist, create a new entry
+            elsif ( !$ID && $Value ne '' ) {
+                return if !$Self->{DBObject}->Do(
+                    SQL => 'INSERT INTO ' . $TableName
+                        . ' (change_id, field_id, field_value)'
+                        . ' VALUES (?, ?, ?)',
+                    Bind => [ \$Param{ChangeID}, \$FieldID, \$Value ],
+                );
+            }
+        }
+    }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ChangeGet::ID::' . $Param{ChangeID},
+    );
+
+    return 1;
+}
+
+=item _ChangeFreeTextDelete()
+
+Deletes all freetext and freekey fields of a change.
+
+    my $Success = $ChangeObject->_ChangeFreeTextDelete(
+        ChangeID => 123,
+        UserID   => 1,
+    );
+
+=cut
+
+sub _ChangeFreeTextDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(ChangeID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    for my $Type ( 'ChangeFreeKey', 'ChangeFreeText' ) {
+
+        # set table name
+        my $TableName;
+        if ( $Type eq 'ChangeFreeKey' ) {
+            $TableName = 'change_freekey';
+        }
+        elsif ( $Type eq 'ChangeFreeText' ) {
+            $TableName = 'change_freetext';
+        }
+
+        # delete entries from database
+        return if !$Self->{DBObject}->Do(
+            SQL => 'DELETE FROM ' . $TableName
+                . ' WHERE change_id = ?',
+            Bind => [ \$Param{ChangeID} ],
+        );
+    }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ChangeGet::ID::' . $Param{ChangeID},
+    );
+
+    return 1;
+}
+
 1;
 
 =end Internal:
@@ -3289,16 +3660,16 @@ sub _CheckChangeParams {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.246 $ $Date: 2010-06-15 01:44:00 $
+$Revision: 1.247 $ $Date: 2010-06-22 00:18:42 $
 
 =cut
