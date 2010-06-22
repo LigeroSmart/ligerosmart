@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.49 2010-06-22 01:45:29 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.50 2010-06-22 01:53:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -319,19 +319,15 @@ sub Run {
     # show the change freetext fields
     for my $Number ( sort { $a <=> $b } keys %ChangeFreeTextFields ) {
 
-        # show single change freetext fields
         $Self->{LayoutObject}->Block(
             Name => 'ChangeFreeText' . $Number,
             Data => {
                 %{$Change},
             },
         );
-
-        # show all change freetext fields
         $Self->{LayoutObject}->Block(
             Name => 'ChangeFreeText',
             Data => {
-                %{$Change},
                 ChangeFreeKey  => $Change->{ 'ChangeFreeKey' . $Number },
                 ChangeFreeText => $Change->{ 'ChangeFreeText' . $Number },
             },
@@ -339,6 +335,7 @@ sub Run {
 
         # show freetext field as link
         if ( $Self->{ConfigObject}->Get( 'ChangeFreeText' . $Number . '::Link' ) ) {
+
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeTextLink' . $Number,
                 Data => {
@@ -348,7 +345,6 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeTextLink',
                 Data => {
-                    %{$Change},
                     ChangeFreeTextLink => $Self->{ConfigObject}->Get(
                         'ChangeFreeText' . $Number . '::Link'
                     ),
