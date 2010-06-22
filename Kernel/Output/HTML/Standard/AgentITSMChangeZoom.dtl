@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.52 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.53 2010-06-22 01:48:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@
             -
 <!-- dtl:block:MenuItemSplit -->
 <!-- dtl:block:MenuItem -->
-            <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem" title="$Text{"$QData{"Description"}"}">$Text{"$QData{"Name"}"}</a>
+            <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
 <!-- dtl:block:MenuItem -->
 <!-- dtl:block:Menu -->
         </td>
@@ -131,12 +131,12 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div title="$Text{"$QData{"ChangeState"}"}">
-                                            $Text{"$QData{"ChangeState"}"}&nbsp;&nbsp;
+                                        <div title="$Text{"$Data{"ChangeState"}"}">
+                                            $Text{"$Data{"ChangeState"}"}&nbsp;&nbsp;
                                         </div>
                                     </td>
                                     <td>
-                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
+                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$Data{"ChangeState"}"}" alt="$Text{"$Data{"ChangeState"}"}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -287,6 +287,57 @@
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
+
+# show ChangeFreeKey and ChangeFreeText fields
+<!-- dtl:block:ChangeFreeText -->
+                <tr valign="top">
+                    <td class="mainkey">$QData{"ChangeFreeKey","25"}:</td>
+                    <td class="mainvalue">
+<!-- dtl:block:ChangeFreeTextPlain -->
+                        <div title="$QData{"ChangeFreeText"}">$QData{"ChangeFreeText","25"}</div>
+<!-- dtl:block:ChangeFreeTextPlain -->
+<!-- dtl:block:ChangeFreeTextLink -->
+                        <div title="$QData{"ChangeFreeText"}"><a href="$Data{"ChangeFreeTextLink"}" target="_blank">$QData{"ChangeFreeText","25"}</a></div>
+<!-- dtl:block:ChangeFreeTextLink -->
+                    </td>
+                </tr>
+<!-- dtl:block:ChangeFreeText -->
+<!-- dtl:block:ChangeFreeTextSpacer -->
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+<!-- dtl:block:ChangeFreeTextSpacer -->
+
+# ###########################################################
+# example for customization of single change freetext fields
+# ###########################################################
+#<!-- dtl:block:ChangeFreeText1 -->
+#          <tr valign="top">
+#            <td class="mainkey">$QData{"ChangeFreeKey1","25"}:</td>
+#            <td class="mainvalue">
+#<!-- dtl:block:ChangeFreeTextPlain1 -->
+#              <div title="$QData{"ChangeFreeText1"}">$QData{"ChangeFreeText1","25"}</div>
+#<!-- dtl:block:ChangeFreeTextPlain1 -->
+#<!-- dtl:block:ChangeFreeTextLink1 -->
+#              <div title="$QData{"ChangeFreeText1"}"><a href="$Config{"ChangeFreeTextLink1"}" target="_blank">$QData{"ChangeFreeText1","25"}</a></div>
+#<!-- dtl:block:ChangeFreeTextLink1 -->
+#          </tr>
+#<!-- dtl:block:ChangeFreeText1 -->
+#
+#<!-- dtl:block:ChangeFreeText2 -->
+#          <tr valign="top">
+#            <td class="mainkey">$QData{"ChangeFreeKey2","25"}:</td>
+#            <td class="mainvalue">
+#<!-- dtl:block:ChangeFreeTextPlain2 -->
+#              <div title="$QData{"ChangeFreeText2"}">$QData{"ChangeFreeText2","25"}</div>
+#<!-- dtl:block:ChangeFreeTextPlain2 -->
+#<!-- dtl:block:ChangeFreeTextLink2 -->
+#              <div title="$QData{"ChangeFreeText2"}"><a href="$Config{"ChangeFreeTextLink2"}" target="_blank">$QData{"ChangeFreeText2","25"}</a></div>
+#<!-- dtl:block:ChangeFreeTextLink2 -->
+#          </tr>
+#<!-- dtl:block:ChangeFreeText2 -->
+# ###########################################################
+
                 <tr>
                     <td class="mainkey">$Text{"Change Initiator(s)"}:</td>
                     <td class="mainvalue">
