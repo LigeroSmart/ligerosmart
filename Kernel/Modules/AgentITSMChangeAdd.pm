@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.61 2010-06-22 00:21:52 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.62 2010-06-22 01:44:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -853,25 +853,7 @@ sub Run {
             # remember that at least one freetext field is shown
             $ChangeFreeTextShown = 1;
 
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeText',
-                Data => {
-                    ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
-                    ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
-                },
-            );
-
-            # show change freetext validation error
-            if ( $ChangeFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeFreeText',
-                    Data => {
-                        %ChangeFreeTextHTML,
-                    },
-                );
-            }
-
-            # show single change freetext blocks
+            # show single change freetext fields
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeText' . $Number,
                 Data => {
@@ -883,6 +865,25 @@ sub Run {
             if ( $ChangeFreeTextValidationErrors{$Number} ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'InvalidChangeFreeText' . $Number,
+                    Data => {
+                        %ChangeFreeTextHTML,
+                    },
+                );
+            }
+
+            # show all change freetext fields
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeFreeText',
+                Data => {
+                    ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
+                    ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
+                },
+            );
+
+            # show all change freetext validation errors
+            if ( $ChangeFreeTextValidationErrors{$Number} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidChangeFreeText',
                     Data => {
                         %ChangeFreeTextHTML,
                     },
