@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.51 2010-06-22 00:23:02 ub Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.52 2010-06-22 01:43:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -255,9 +255,9 @@ $Include{"RichTextEditorITSM"}
                                     </td>
                                 </tr>
 <!-- dtl:block:ChangeFreeText -->
-# ####################################################
-# example for customization of single freetext fields
-# ####################################################
+# ###########################################################
+# example for customization of single change freetext fields
+# ###########################################################
 #<!-- dtl:block:ChangeFreeText1 -->
 #                                <tr>
 #                                  <td class="contentkey">$Data{"ChangeFreeKeyField1"}:</td>
