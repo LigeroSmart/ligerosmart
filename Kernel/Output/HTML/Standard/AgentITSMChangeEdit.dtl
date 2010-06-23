@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.50 2010-04-27 20:39:02 ub Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.51 2010-06-23 12:00:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,7 +91,6 @@ function submit_compose() {
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditorITSM"}
 <!-- dtl:block:RichText -->
-<!-- ITSM::Frontend::TextArea -->
                                             <textarea id="RichText1" name="Description" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
                                         </div>
                                     </td>
