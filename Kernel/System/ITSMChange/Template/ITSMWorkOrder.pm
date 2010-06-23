@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.3 2010-06-13 11:35:26 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.4 2010-06-23 08:09:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -167,6 +167,17 @@ sub Serialize {
         )
     {
         $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
+    }
+
+    # add workorder freekey and freetext fields to list of wanted attributes
+    ATTRIBUTE:
+    for my $Attribute ( keys %{$WorkOrder} ) {
+
+        # find the workorder freekey and freetext attributes
+        if ( $Attribute =~ m{ \A ( WorkOrderFreeKey | WorkOrderFreeText ) }xms ) {
+
+            $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
+        }
     }
 
     # templates have to be an array reference;
@@ -572,16 +583,16 @@ sub _LinkAdd {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-06-13 11:35:26 $
+$Revision: 1.4 $ $Date: 2010-06-23 08:09:23 $
 
 =cut
