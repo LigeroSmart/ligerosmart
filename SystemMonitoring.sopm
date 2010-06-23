@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
-    <CVS>$Id: SystemMonitoring.sopm,v 1.13 2010-02-19 22:14:35 ub Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.sopm,v 1.14 2010-06-23 15:46:52 mb Exp $</CVS>
     <Name>SystemMonitoring</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -11,7 +11,6 @@
     <Description Lang="de">Einfache Email Schnittstelle zu System Monitoring Suites. Weitergehende Integration mit Nagios (Acknowledge on lock and Checkscript).</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.NagiosCheck.pl"/>
-        <File Permission="644" Location="doc/SystemMonitoring.txt"/>
         <File Permission="644" Location="Kernel/Config/Files/SystemMonitoring.xml"/>
         <File Permission="644" Location="Kernel/Config/NagiosCheck.pm.example"/>
         <File Permission="644" Location="Kernel/System/PostMaster/Filter/SystemMonitoring.pm"/>
