@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.210 2010-06-22 00:17:51 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.211 2010-06-23 10:17:58 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1527,7 +1527,6 @@
             <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText1"}</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ChangeFreeKey2" Required="0" Valid="0">
         <Description Lang="en">Define the free key field 2 for changes. With this setting you can define a new change attribute.</Description>
         <Description Lang="de">Definition des Freien-Schlüssel-Feldes 2 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
@@ -1580,7 +1579,6 @@
             <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText2"}</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ChangeFreeKey3" Required="0" Valid="0">
         <Description Lang="en">Define the free key field 3 for changes. With this setting you can define a new change attribute.</Description>
         <Description Lang="de">Definition des Freien-Schlüssel-Feldes 3 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
@@ -1633,7 +1631,6 @@
             <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText3"}</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ChangeFreeKey4" Required="0" Valid="0">
         <Description Lang="en">Define the free key field 4 for changes. With this setting you can define a new change attribute.</Description>
         <Description Lang="de">Definition des Freien-Schlüssel-Feldes 4 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
@@ -1684,6 +1681,2398 @@
         <SubGroup>Core::ITSMChange::FreeText</SubGroup>
         <Setting>
             <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText4"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey5" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 5 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 5 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey5::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 5 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 5 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText5" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 5 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 5 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText5::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 5 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 5 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText5::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 5 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 5 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText5"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey6" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 6 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 6 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey6::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 6 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 6 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText6" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 6 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 6 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText6::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 6 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 6 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText6::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 6 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 6 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText6"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey7" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 7 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 7 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey7::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 7 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 7 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText7" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 7 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 7 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText7::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 7 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 7 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText7::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 7 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 7 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText7"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey8" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 8 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 8 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey8::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 8 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 8 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText8" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 8 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 8 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText8::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 8 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 8 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText8::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 8 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 8 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText8"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey9" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 9 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 9 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey9::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 9 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 9 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText9" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 9 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 9 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText9::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 9 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 9 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText9::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 9 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 9 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText9"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey10" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 10 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 10 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey10::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 10 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 10 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText10" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 10 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 10 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText10::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 10 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 10 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText10::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 10 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 10 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText10"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey11" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 11 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 11 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey11::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 11 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 11 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText11" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 11 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 11 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText11::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 11 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 11 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText11::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 11 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 11 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText11"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey12" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 12 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 12 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey12::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 12 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 12 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText12" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 12 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 12 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText12::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 12 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 12 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText12::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 12 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 12 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText12"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey13" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 13 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 13 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey13::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 13 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 13 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText13" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 13 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 13 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText13::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 13 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 13 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText13::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 13 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 13 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText13"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey14" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 14 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 14 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey14::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 14 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 14 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText14" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 14 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 14 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText14::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 14 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 14 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText14::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 14 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 14 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText14"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey15" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 15 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 15 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey15::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 15 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 15 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText15" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 15 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 15 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText15::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 15 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 15 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText15::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 15 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 15 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText15"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey16" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 16 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 16 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey16::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 16 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 16 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText16" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 16 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 16 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText16::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 16 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 16 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText16::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 16 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 16 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText16"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey17" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 17 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 17 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey17::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 17 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 17 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText17" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 17 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 17 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText17::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 17 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 17 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText17::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 17 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 17 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText17"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey18" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 18 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 18 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey18::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 18 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 18 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText18" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 18 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 18 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText18::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 18 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 18 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText18::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 18 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 18 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText18"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey19" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 19 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 19 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey19::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 19 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 19 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText19" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 19 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 19 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText19::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 19 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 19 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText19::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 19 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 19 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText19"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey20" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 20 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 20 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey20::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 20 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 20 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText20" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 20 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 20 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText20::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 20 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 20 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText20::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 20 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 20 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText20"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey21" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 21 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 21 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey21::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 21 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 21 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText21" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 21 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 21 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText21::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 21 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 21 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText21::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 21 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 21 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText21"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey22" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 22 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 22 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey22::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 22 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 22 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText22" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 22 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 22 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText22::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 22 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 22 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText22::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 22 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 22 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText22"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey23" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 23 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 23 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey23::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 23 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 23 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText23" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 23 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 23 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText23::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 23 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 23 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText23::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 23 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 23 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText23"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey24" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 24 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 24 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey24::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 24 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 24 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText24" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 24 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 24 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText24::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 24 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 24 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText24::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 24 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 24 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText24"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey25" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 25 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 25 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey25::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 25 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 25 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText25" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 25 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 25 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText25::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 25 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 25 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText25::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 25 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 25 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText25"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey26" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 26 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 26 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey26::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 26 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 26 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText26" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 26 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 26 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText26::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 26 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 26 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText26::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 26 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 26 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText26"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey27" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 27 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 27 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey27::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 27 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 27 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText27" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 27 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 27 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText27::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 27 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 27 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText27::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 27 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 27 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText27"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey28" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 28 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 28 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey28::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 28 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 28 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText28" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 28 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 28 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText28::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 28 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 28 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText28::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 28 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 28 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText28"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey29" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 29 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 29 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey29::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 29 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 29 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText29" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 29 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 29 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText29::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 29 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 29 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText29::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 29 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 29 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText29"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey30" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 30 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 30 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey30::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 30 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 30 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText30" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 30 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 30 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText30::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 30 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 30 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText30::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 30 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 30 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText30"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey31" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 31 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 31 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey31::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 31 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 31 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText31" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 31 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 31 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText31::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 31 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 31 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText31::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 31 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 31 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText31"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey32" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 32 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 32 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey32::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 32 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 32 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText32" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 32 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 32 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText32::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 32 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 32 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText32::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 32 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 32 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText32"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey33" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 33 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 33 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey33::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 33 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 33 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText33" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 33 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 33 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText33::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 33 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 33 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText33::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 33 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 33 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText33"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey34" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 34 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 34 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey34::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 34 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 34 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText34" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 34 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 34 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText34::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 34 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 34 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText34::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 34 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 34 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText34"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey35" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 35 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 35 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey35::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 35 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 35 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText35" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 35 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 35 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText35::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 35 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 35 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText35::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 35 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 35 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText35"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey36" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 36 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 36 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey36::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 36 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 36 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText36" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 36 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 36 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText36::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 36 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 36 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText36::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 36 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 36 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText36"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey37" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 37 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 37 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey37::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 37 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 37 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText37" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 37 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 37 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText37::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 37 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 37 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText37::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 37 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 37 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText37"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey38" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 38 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 38 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey38::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 38 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 38 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText38" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 38 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 38 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText38::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 38 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 38 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText38::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 38 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 38 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText38"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey39" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 39 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 39 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey39::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 39 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 39 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText39" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 39 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 39 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText39::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 39 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 39 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText39::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 39 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 39 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText39"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey40" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 40 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 40 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey40::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 40 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 40 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText40" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 40 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 40 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText40::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 40 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 40 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText40::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 40 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 40 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText40"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey41" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 41 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 41 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey41::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 41 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 41 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText41" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 41 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 41 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText41::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 41 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 41 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText41::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 41 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 41 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText41"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey42" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 42 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 42 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey42::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 42 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 42 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText42" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 42 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 42 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText42::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 42 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 42 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText42::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 42 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 42 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText42"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey43" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 43 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 43 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey43::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 43 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 43 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText43" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 43 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 43 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText43::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 43 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 43 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText43::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 43 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 43 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText43"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey44" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 44 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 44 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey44::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 44 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 44 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText44" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 44 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 44 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText44::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 44 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 44 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText44::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 44 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 44 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText44"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey45" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 45 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 45 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey45::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 45 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 45 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText45" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 45 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 45 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText45::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 45 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 45 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText45::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 45 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 45 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText45"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey46" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 46 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 46 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey46::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 46 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 46 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText46" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 46 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 46 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText46::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 46 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 46 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText46::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 46 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 46 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText46"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey47" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 47 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 47 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey47::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 47 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 47 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText47" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 47 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 47 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText47::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 47 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 47 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText47::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 47 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 47 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText47"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey48" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 48 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 48 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey48::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 48 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 48 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText48" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 48 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 48 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText48::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 48 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 48 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText48::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 48 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 48 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText48"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey49" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 49 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 49 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey49::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 49 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 49 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText49" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 49 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 49 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText49::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 49 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 49 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText49::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 49 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 49 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText49"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey50" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 50 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 50 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeKey50::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 50 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 50 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText50" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 50 for changes. With this setting you can define a new change attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 50 für Changes. Hierüber können zusätzliche Change-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText50::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 50 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 50 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ChangeFreeText50::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 50 link for changes. So this http link will be used in any change view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 50 Link für changes. Dieser http-Link wird in jeder Change-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"ChangeFreeText50"}</String>
         </Setting>
     </ConfigItem>
 
