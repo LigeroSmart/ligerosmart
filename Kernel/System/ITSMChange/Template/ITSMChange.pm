@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.4 2010-06-13 11:35:26 ub Exp $
+# $Id: ITSMChange.pm,v 1.5 2010-06-23 08:05:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -184,6 +184,17 @@ sub Serialize {
         )
     {
         $CleanChange->{$Attribute} = $Change->{$Attribute};
+    }
+
+    # add change freekey and freetext fields to list of wanted attributes
+    ATTRIBUTE:
+    for my $Attribute ( keys %{$Change} ) {
+
+        # find the change freekey and freetext attributes
+        if ( $Attribute =~ m{ \A ( ChangeFreeKey | ChangeFreeText ) }xms ) {
+
+            $CleanChange->{$Attribute} = $Change->{$Attribute};
+        }
     }
 
     my $OriginalData = { ChangeAdd => $CleanChange };
@@ -562,16 +573,16 @@ sub _LinkAdd {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-06-13 11:35:26 $
+$Revision: 1.5 $ $Date: 2010-06-23 08:05:08 $
 
 =cut
