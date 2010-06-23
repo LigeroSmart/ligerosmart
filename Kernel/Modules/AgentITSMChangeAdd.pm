@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.62 2010-06-22 01:44:40 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.63 2010-06-23 13:45:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -96,9 +96,15 @@ sub Run {
 
     # get change freetext params
     my %ChangeFreeTextParam;
-    for my $Count (@ConfiguredChangeFreeTextFields) {
-        my $Key   = 'ChangeFreeKey' . $Count;
-        my $Value = 'ChangeFreeText' . $Count;
+    NUMBER:
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        # consider only freetext fields which are activated in this frontend
+        next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
+
+        my $Key   = 'ChangeFreeKey' . $Number;
+        my $Value = 'ChangeFreeText' . $Number;
+
         $ChangeFreeTextParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
         $ChangeFreeTextParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
     }
@@ -810,7 +816,7 @@ sub Run {
         SelectedID => $SelectedPriority,
     );
 
-    # get the change freetext config
+    # get the change freetext config and fillup change freetext fields from defaults (if configured)
     my %ChangeFreeTextConfig;
     NUMBER:
     for my $Number (@ConfiguredChangeFreeTextFields) {
@@ -819,7 +825,7 @@ sub Run {
         for my $Type (qw(ChangeFreeKey ChangeFreeText)) {
 
             # get defaults for change freetext fields if page is loaded the first time
-            if ( !$Self->{ParamObject}->GetParam( Param => 'FormID' ) ) {
+            if ( !$Self->{Subaction} ) {
 
                 $ChangeFreeTextParam{ $Type . $Number }
                     ||= $Self->{ConfigObject}->Get( $Type . $Number . '::DefaultSelection' );
