@@ -2,7 +2,7 @@
 # AgentITSMChangeEdit.dtl - provides HTML form for AgentITSMChangeEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeEdit.dtl,v 1.51 2010-06-23 12:00:43 ub Exp $
+# $Id: AgentITSMChangeEdit.dtl,v 1.52 2010-06-23 13:50:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,6 +31,16 @@ function submit_compose() {
 
         return false;
     }
+
+<!-- dtl:block:ChangeFreeTextCheckJs -->
+    // check the required freetext fields
+    if (document.compose.$Data{"ChangeFreeTextField"}.value == "") {
+        alert('$JSText{"A required field is:"} ' + document.compose.$Data{"ChangeFreeKeyField"}.value + '!');
+        document.compose.$Data{"ChangeFreeTextField"}.focus();
+
+        return false;
+    }
+<!-- dtl:block:ChangeFreeTextCheckJs -->
 
     return true;
 }
@@ -66,8 +76,7 @@ function submit_compose() {
                         <td>
                             <table border="0" width="100%" cellspacing="0" cellpadding="3">
                                 <colgroup>
-                                    <col width="130">
-                                    <col>
+                                    <col width="130"/>
                                 </colgroup>
                                 <tr>
                                     <td class="contentkey">
@@ -147,6 +156,54 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
+<!-- dtl:block:ChangeFreeText -->
+                                <tr>
+                                    <td class="contentkey">$Data{"ChangeFreeKeyField"}:</td>
+                                    <td class="contentvalue">
+                                        $Data{"ChangeFreeTextField"}
+<!-- dtl:block:InvalidChangeFreeText -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidChangeFreeText -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:ChangeFreeText -->
+<!-- dtl:block:ChangeFreeTextSpacer -->
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+<!-- dtl:block:ChangeFreeTextSpacer -->
+# ###########################################################
+# example for customization of single change freetext fields
+# ###########################################################
+#<!-- dtl:block:ChangeFreeText1 -->
+#                                <tr>
+#                                  <td class="contentkey">$Data{"ChangeFreeKeyField1"}:</td>
+#                                   <td class="contentvalue">
+#                                       $Data{"ChangeFreeTextField1"}
+#<!-- dtl:block:InvalidChangeFreeText1 -->
+#                                       <br />
+#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
+#<!-- dtl:block:InvalidChangeFreeText1 -->
+#                                  </td>
+#                                </tr>
+#<!-- dtl:block:ChangeFreeText1 -->
+#
+#
+#<!-- dtl:block:ChangeFreeText2 -->
+#                                <tr>
+#                                  <td colspan="2" class="contentkey">$Data{"ChangeFreeKeyField2"}:</td>
+#                                  <td class="contentvalue">
+#                                      $Data{"ChangeFreeTextField2"}
+#<!-- dtl:block:InvalidChangeFreeText2 -->
+#                                       <br />
+#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
+#<!-- dtl:block:InvalidChangeFreeText2 -->
+#                                  </td>
+#                                </tr>
+#<!-- dtl:block:ChangeFreeText2 -->
+# ####################################################
+
 <!-- dtl:block:State -->
                                 <tr>
                                     <td class="contentkey">$Text{"State"}:</td>
@@ -180,7 +237,7 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
                                                 <td>$QData{"Filename"}</td>
-                                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};ChangeID=$QData{"ChangeID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$LQData{"FileID"};ChangeID=$LQData{"ChangeID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
                                                 <td>$QData{"Filesize"}</td>
                                                 <td width="100%"><input class="button" type="submit" name="DeleteAttachment$QData{"FileID"}" value="$Text{"Delete"}"></td>
                                             </tr>
