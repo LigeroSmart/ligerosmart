@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- $Id: SystemMonitoring.xml,v 1.1 2010-06-23 15:43:15 mb Exp $ -->
+<book lang="en">
+    <bookinfo>
+        <title>$Name</title>
+        <edition>$Description Version $Version</edition>
+        <copyright>
+            <year>$YearStamp</year>
+            <holder>$Vendor, $URL</holder>
+        </copyright>
+        <date>$DateStamp</date>
+        <legalnotice>
+            <para>$License</para>
+            <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+            <para>Build Date: $DateStamp</para>
+        </legalnotice>
+    </bookinfo>
+    <preface id="preface">
+        <title>Preface</title>
+        <para>This module implements a basic interface to System Monitoring Suites. It
+    works by receiving email messages sent by a Network Monitoring Suite. New
+    tickets are created in case of component failures. Once a ticket has
+    been opened messages regarding the effected component are attached to
+    this ticket. When the component recovers, the ticket state can be
+    changed or the ticket can be closed.
+</para>
+        <para>If an open ticket for a given Host/Service combination exists, all
+    mails concerning this particular combination will be attached to the
+    ticket until it's closed.
+</para>
+        <para>Please contact your commercial support (support@otrs.com) if you have any queries regarding this document or need further information.</para>
+    </preface>
+    <chapter>
+        <title>Control flow</title>
+        <para>The following diagram illustrates how mails are handled by this module
+    and in which cases they trigger which action. Pretty much all checks are
+    configurable using the regular expressions given by the parameters listed
+    above.
+</para>
+            <screen><![CDATA[
+Mail matches 'FromAddress'?
+|
++-> NO  --> Continue with regular mail processing
+|
++-> YES --> Does a ticket with matching Host/Service combination
+            already exist in OTRS?
+            |
+            +-> NO  -> Does 'State:' match 'NewTicketRegExp'?
+            |          |
+            |          +-> NO  -> Stop processing this mail
+            |          |          (silent drop)
+            |          |
+            |          +-> YES -> Create new ticket, record Host
+            |                     and Service, attach mail
+            |
+            +-> YES -> Attach mail to ticket
+                    -> Does 'State:' match 'CloseTicketRegExp'?
+                        |
+                        +-> NO  -> Continue with regular mail processing
+                        |
+                        +-> YES -> Change ticket type as configured in
+                                    'CloseActionState']]>
+</screen>
+<para>Besides of a few additional sanity checks this is how the
+    SystemMonitoring module treats incoming mails. By changing the regular
+    expressions it should be possible to adopt it to different monitoring
+    systems.
+</para>
+    </chapter>
+    <chapter>
+        <title>System requirements</title>
+        <sect1>
+            <title>Framework</title>
+            <para>The following OTRS framework is required:</para>
+            <para>
+        $Framework
+        </para>
+        </sect1>
+        <sect1>
+            <title>Packages</title>
+            <para>Following packages are required:</para>
+            <para>
+        $PackageRequired
+        </para>
+        </sect1>
+        <sect1>
+            <title>Operating system</title>
+            <para>Following operating systems are to be considered as dependency:</para>
+            <para>
+        $OS
+        </para>
+        </sect1>
+        <sect1>
+            <title>Third party software</title>
+            <para>Following software is required for package operation:</para>
+            <para>
+                <itemizedlist>
+                    <listitem>
+                        <para>A network monitoring system, such as Nagios, or HP OpenView, or similar, capable of sending out events via e-mail.</para>
+                    </listitem>
+                </itemizedlist>
+            </para>
+        </sect1>
+    </chapter>
+    <chapter>
+        <title>Installation</title>
+        <para>The following instructions show how to install the package. Generally, there are two possibilities: You can either use the Admin Interface or the command line.</para>
+        <para>After having successfully completed the installation, please follow the instructions provided in the chapter "First steps".</para>
+        <sect1>
+            <title>Admin Interface</title>
+            <para>
+Using the following URL you can install, as well as update or uninstall (if necessary), the package via the Admin Interface (please check whether the user is a member of the Admin Group before starting.)
+        </para>
+            <para>
+                <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Command line</title>
+            <para>
+Whenever you cannot use the Admin Interface for whatever reason, you may use the following command line tool ("bin/opm.pl") instead.
+        </para>
+            <para>
+                <screen format="linespecific">
+shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
+        </screen>
+            </para>
+        </sect1>
+    </chapter>
+    <chapter>
+        <title>Configuration</title>
+        <para>To allow flexible integration between OTRS and a System Monitoring Suite
+    the following configuration options are available. The default values
+    (as shown below) should be suitable for a standard Nagios installation.
+    </para>
+        <sect1>
+            <title>FromAddressRegExp</title>
+            <para>Only mails matching this "From:" address will be considered for this
+        filter. You need to adjust this setting to the from address your
+        System Monitoring Suite uses for outgoing mails.</para>
+            <para>Default: 'sysmon@mysystem.com'</para>
+        </sect1>
+        <sect1>
+            <title>StateRegExp</title>
+            <para>Regular Expression to extract the state from the message.</para>
+            <para>Default: '\s*State:\s+(\S+)'</para>
+        </sect1>
+        <sect1>
+            <title>NewTicketRegExp</title>
+            <para>Regular expression for extracted state to trigger a new ticket</para>
+            <para>Default: 'CRITICAL|DOWN'</para>
+        </sect1>
+        <sect1>
+            <title>CloseTicketRegExp</title>
+            <para>Regular expression for extracted "State" to trigger ticket
+        transition to "CloseActionState".</para>
+            <para>Default: 'OK|UP'</para>
+        </sect1>
+        <sect1>
+            <title>CloseActionState</title>
+            <para>New status for ticket when service recovers. This can be either
+        "OLD" in which case the old status stays, or the name of the new
+        status. Please note, that this state needs to be configured in your
+        OTRS installation as valid state. If the state you set here does not
+        exist, the ticket state will not be altered.</para>
+            <para>Default: 'closed successful'</para>
+        </sect1>
+        <sect1>
+            <title>ClosePendingTime</title>
+            <para>Pending time in seconds for 'Pending...' statuses. (Ignored for
+        other status types). Please note that this setting will be ignored
+        by OTRS versions older than 2.2. On these systems the pending time
+        already associated with the ticket will be used, which may have in
+        surprising effects. It's recommended not to use 'Pending...' states
+        with OTRS prior to 2.2.</para>
+            <para>Default: '60*60*24*2' (2 days)</para>
+        </sect1>
+        <sect1>
+            <title>HostRegExp</title>
+            <para>Regular expression to extract the affected host.</para>
+            <para>Default: '\s*Address:\s+(\d+\.\d+\.\d+\.\d+)\s*'</para>
+        </sect1>
+        <sect1>
+            <title>FreeTextHost</title>
+            <para>Free text field index to store the name of the affected host.</para>
+            <para>Default: '1'</para>
+        </sect1>
+        <sect1>
+            <title>ServiceRegExp</title>
+            <para>Regular expression to extract the affected service.</para>
+            <para>Default: '\s*Service:\s+(.*)\s*'</para>
+        </sect1>
+        <sect1>
+            <title>DefaultService</title>
+            <para>Default for "Service"; used if no service can be extracted, i.e. if
+        host goes DOWN/UP.</para>
+            <para>Default: 'Host'</para>
+        </sect1>
+        <sect1>
+            <title>FreeTexyService</title>
+            <para> Free text field index to store service.</para>
+            <para>Default: '2'</para>
+        </sect1>
+        <sect1>
+            <title>SenderType</title>
+            <para>Sender type used for creating tickets and attaching notes.</para>
+            <para>Default: 'system'</para>
+        </sect1>
+        <sect1>
+            <title>ArticleType</title>
+            <para>Article type used to attach follow up emails to existing tickets.</para>
+            <para>Default: 'note-report'</para>
+        </sect1>
+        <sect1>
+            <title>Integration with OTRS Change Management</title>
+            <para>If the OTRS::ITSM Configuration Management module is installed and
+    the configuration option 'SystemMonitoring::SetIncidentState' is set
+    to 'Yes', a CI with the given host name is searched in the CI database.
+    If exactly one CI with this name was found, the current incident state is set
+    automatically according to the incoming mail (Incident / Operational).
+
+    If the OTRS::ITSM Configuration Management module is installed and
+    the configuration option 'SystemMonitoring::LinkTicketWithCI' is set
+    to 'Yes', a CI is linked automatically with the system monitoring
+    incident ticket. This is only possible if a subsequent system monitoring
+    email arrives!
+</para></sect1>
+    </chapter>
+    <chapter>
+        <title>Contact</title>
+        <para>
+Please direct questions about the $Name Module to:
+    </para>
+        <sect1>
+            <title>OTRS AG/OTRS Inc.</title>
+            <para>
+        E-mail: enjoy@otrs.com
+        </para>
+        </sect1>
+    </chapter>
+    <chapter>
+        <title>Change log</title>
+        <para>
+    $ChangeLog
+    </para>
+    </chapter>
+</book>
