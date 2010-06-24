@@ -2,8 +2,8 @@
 # Kernel/System/CacheInternal.pm - all cache functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CacheInternal.pm,v 1.3 2010-06-14 11:05:13 ub Exp $
-# $OldId: CacheInternal.pm,v 1.3 2010/02/26 20:48:21 martin Exp $
+# $Id: CacheInternal.pm,v 1.4 2010-06-24 13:28:35 ub Exp $
+# $OldId: CacheInternal.pm,v 1.5 2010/06/17 21:39:40 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -26,6 +26,12 @@ Kernel::System::CacheInternal - cache lib
 =head1 SYNOPSIS
 
 All cache functions for internal cache management.
+
+WARNING:
+This module is storing the cache information not only in the file system, but also in memory.
+It can be dangerous and lead to incorrect caching information, if a module that makes use of
+Kernel::System::CacheInternal is created more than once during the same web request!
+Just use Kernel::System::Cache in that case, and do not cache the information in memory!
 
 =head1 PUBLIC INTERFACE
 
@@ -240,16 +246,16 @@ sub CleanUp {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2010-06-14 11:05:13 $
+$Revision: 1.4 $ $Date: 2010-06-24 13:28:35 $
 
 =cut
