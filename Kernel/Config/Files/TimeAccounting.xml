@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.12 2009-02-24 14:42:01 tr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.13 2010-06-24 12:35:59 jp Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
         <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
@@ -253,6 +253,26 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <String Regex="">^(?: PROJECT\# | INFRA: | PRODUCT: )</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TimeAccounting::ProjectListConstraints" Required="0" Valid="1">
+        <Description Lang="en">Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</Description>
+        <Description Lang="de">Reguläre Ausdrücke zur Einschränkung der Projektliste abhängig von Gruppenzuordnung des Benutzers. Schlüssel enthält RegExp für Projekt(e), Inhalt enthält kommaseparierte Liste von Gruppen.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TimeAccounting::ActionListConstraints" Required="0" Valid="1">
+        <Description Lang="en">Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</Description>
+        <Description Lang="de">Reguläre Ausdrücke zur Einschränkung der Tätigkeitenliste abhängig vom gewählten Projekt. Schlüssel enthält RegExp für Projekt, Inhalt enthält RegExp für Tätigkeit(en).</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <Hash>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.38 2010-03-31 12:59:54 tt Exp $
+# $Id: AgentTimeAccounting.pm,v 1.39 2010-06-24 12:35:58 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -324,6 +324,26 @@ sub Run {
 
         $Param{Total} = $Data{Total};
 
+        # set action list and related constraints
+        $Param{JSActionList} = '['
+            . (
+            join ', ',
+            map      {"['${_}', '$ActionList{$_}']"}
+                sort { $ActionList{$a} cmp $ActionList{$b} } keys(%ActionList)
+            ) . ']';
+
+        my $ActionListConstraints
+            = $Self->{ConfigObject}->Get('TimeAccounting::ActionListConstraints');
+        my @JSActionListConstraints;
+        for my $ProjectNameRegExp ( keys( %{$ActionListConstraints} ) ) {
+            my $ActionNameRegExp = $ActionListConstraints->{$ProjectNameRegExp};
+            for ( $ProjectNameRegExp, $ActionNameRegExp ) {
+                $_ =~ s{(['"\\])}{\\$1}smxg;
+            }
+            push @JSActionListConstraints, "['$ProjectNameRegExp', '$ActionNameRegExp']";
+        }
+        $Param{JSActionListConstraints} = '[' . ( join ', ', @JSActionListConstraints ) . ']';
+
         # build a working unit array
         my @Units = (undef);
         if ( $Data{WorkingUnits} ) {
@@ -333,24 +353,65 @@ sub Run {
         my $ShowAllInputFields = scalar @Units > 9 ? 1 : 0;
 
         # build units
+        $Param{"JSProjectList"} = "var JSProjectList = new Array();\n";
         for my $ID ( 1 .. 16 ) {
             $Param{ID} = $ID;
             my $UnitRef = $Units[$ID];
 
-            # get option fields
+            # get data of projects
+            my $ProjectList = $Self->_ProjectList(
+                SelectedID => $UnitRef->{ProjectID},
+            );
+
+            $Param{ProjectID} = $UnitRef->{ProjectID} || '';
+            $Param{ProjectName} = '';
+
+            my @JSProjectList;
+            for my $Project ( @{$ProjectList} ) {
+                push @JSProjectList,
+                    '{id:' . ( $Project->{Key} || '0' ) . ' , name:\'' . $Project->{Value} . '\'}';
+
+                if ( $Project->{Key} eq $Param{ProjectID} ) {
+                    $Param{ProjectName} = $Project->{Value};
+                }
+            }
+            $Param{"JSProjectList"}
+                .= "JSProjectList[$ID] = [" . ( join ', ', @JSProjectList ) . "];\n";
+
+            # ProjectOption will not be used any more when project autocompletion is done
+            $Frontend{ProjectOption} = $Self->{LayoutObject}->BuildSelection(
+                Data        => $ProjectList,
+                Name        => "ProjectID[$ID]",
+                Translation => 0,
+
+                #Max        => 62,
+                Class    => 'ProjectSelection',
+                OnChange => "FillActionList($ID);",
+            );
+
+# action list initially only contains empty and selected element as well as elements configured for selected project
+# if no constraints are configured, all actions will be displayed
+            my $ActionData = $Self->_ActionListConstraints(
+                ProjectID             => $UnitRef->{ProjectID},
+                ProjectList           => $ProjectList,
+                ActionList            => \%ActionList,
+                ActionListConstraints => $ActionListConstraints,
+            );
+            $ActionData->{''} = '';
+            if ( $UnitRef->{ActionID} && $ActionList{ $UnitRef->{ActionID} } ) {
+                $ActionData->{ $UnitRef->{ActionID} } = $ActionList{ $UnitRef->{ActionID} };
+            }
+
             $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
-                Data        => \%ActionList,
+
+                #                Data        => \%ActionList,
+                Data        => $ActionData,
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
                 Translation => 0,
 
-                #Max         => 37,
+                #Max        => 37,
                 Class => 'ActionSelection',
-            );
-
-            $Frontend{ProjectOption} = $Self->_ProjectList(
-                WorkingUnitID => $ID,
-                SelectedID    => $UnitRef->{ProjectID},
             );
 
             $Param{Remark} = $UnitRef->{Remark} || '';
@@ -1877,15 +1938,57 @@ sub _ActionList {
     return %ActionList;
 }
 
+sub _ActionListConstraints {
+    my ( $Self, %Param ) = @_;
+
+    my %List;
+    if ( $Param{ProjectID} && keys %{ $Param{ActionListConstraints} } ) {
+        my $ProjectName;
+        for my $Project ( @{ $Param{ProjectList} } ) {
+            if ( $Project->{Key} eq $Param{ProjectID} ) {
+                $ProjectName = $Project->{Value};
+                last;
+            }
+        }
+
+        if ( defined($ProjectName) ) {
+            for my $ActionID ( keys %{ $Param{ActionList} } ) {
+                my $ActionName = $Param{ActionList}->{$ActionID};
+                for my $ProjectNameRegExp ( keys %{ $Param{ActionListConstraints} } ) {
+                    my $ActionNameRegExp = $Param{ActionListConstraints}->{$ProjectNameRegExp};
+                    if (
+                        $ProjectName   =~ m{$ProjectNameRegExp}smx
+                        && $ActionName =~ m{$ActionNameRegExp}smx
+                        )
+                    {
+                        $List{$ActionID} = $ActionName;
+                        last;
+                    }
+                }
+            }
+        }
+    }
+
+    # all actions will be added if no action was added above (possible misconfiguration)
+    unless ( keys %List ) {
+        for my $ActionID ( keys %{ $Param{ActionList} } ) {
+            my $ActionName = $Param{ActionList}->{$ActionID};
+            $List{$ActionID} = $ActionName;
+        }
+    }
+
+    return \%List;
+}
+
 sub _ProjectList {
     my ( $Self, %Param ) = @_;
 
-    # check needed param
-    if ( !$Param{WorkingUnitID} ) {
-        $Self->{LayoutObject}->ErrorScreen(
-            Message => '_ProjectList: Need WorkingUnitID',
-        );
-    }
+    #    # check needed param
+    #    if ( !$Param{WorkingUnitID} ) {
+    #        $Self->{LayoutObject}->ErrorScreen(
+    #            Message => '_ProjectList: Need WorkingUnitID',
+    #        );
+    #    }
 
     # at first a empty line
     my @List = (
@@ -1952,15 +2055,74 @@ sub _ProjectList {
         push @List, \%Hash;
     }
 
-    return $Self->{LayoutObject}->BuildSelection(
-        Data        => \@List,
-        Name        => "ProjectID[$Param{WorkingUnitID}]",
-        Translation => 0,
-
-        #Max         => 62,
-        Class => 'ProjectSelection',
+    @List = $Self->_ProjectListConstraints(
+        List => \@List,
+        SelectedID => $Param{SelectedID} || '',
     );
 
+    return \@List;
+}
+
+sub _ProjectListConstraints
+{
+    my ( $Self, %Param ) = @_;
+
+    my @List;
+    my $ProjectCount = 0;
+    my $ProjectListConstraints
+        = $Self->{ConfigObject}->Get('TimeAccounting::ProjectListConstraints');
+
+    if ( keys %{$ProjectListConstraints} ) {
+
+        # get groups of current user
+        my %Groups = $Self->{GroupObject}->GroupMemberList(
+            UserID => $Self->{UserID},
+            Type   => 'ro',
+            Result => 'HASH',
+        );
+        %Groups = map { $Groups{$_} => 1 } keys %Groups;
+
+        # get project list constraints
+        my %ProjectRegex;
+        for my $ProjectRegex ( keys %{$ProjectListConstraints} ) {
+            for my $ProjectGroup ( split /,\s*/, $ProjectListConstraints->{$ProjectRegex} ) {
+                if ( $Groups{$ProjectGroup} ) {
+                    $ProjectRegex{$ProjectRegex} = 1;
+                }
+            }
+        }
+        my @ProjectRegex = keys %ProjectRegex;
+
+        # reduce project list according to configuration
+        if ( ref( $Param{List} ) && @ProjectRegex ) {
+            my $ElementCount = 0;
+            for my $Project ( @{ $Param{List} } ) {
+                my $ProjectName = $Project->{Value};
+
+                # empty first element, last projects separator and currently selected project
+                if ( !$ElementCount || !$Project->{Key} || $Project->{Key} eq $Param{SelectedID} ) {
+                    push( @List, $Project );
+                }
+                else {
+                    for my $ProjectRegex (@ProjectRegex) {
+                        if ( $ProjectName =~ m{$ProjectRegex}smx ) {
+                            push( @List, $Project );
+                            $ProjectCount++;
+                            last;
+                        }
+                    }
+                }
+                $ElementCount++;
+            }
+        }
+    }
+
+# get full project list if constraints resulted in empty project list or if constraints aren't configured (possible misconfiguration)
+    unless ($ProjectCount) {
+        @List = @{ $Param{List} };
+    }
+
+    return @List;
 }
 
 # integrate the handling for required remarks in relation to projects
