@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.212 2010-06-25 12:12:45 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.213 2010-06-25 12:27:48 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -5135,6 +5135,2606 @@
         <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
         <Setting>
             <String Regex="">50</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey1" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 1 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 1 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey1::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 1 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 1 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText1" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 1 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 1 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText1::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 1 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 1 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText1::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 1 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 1 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText1"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey2" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 2 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 2 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey2::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 2 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 2 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText2" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 2 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 2 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText2::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 2 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 2 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText2::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 2 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 2 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText2"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey3" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 3 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 3 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey3::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 3 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 3 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText3" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 3 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 3 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText3::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 3 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 3 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText3::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 3 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 3 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText3"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey4" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 4 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 4 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey4::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 4 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 4 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText4" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 4 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 4 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText4::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 4 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 4 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText4::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 4 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 4 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText4"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey5" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 5 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 5 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey5::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 5 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 5 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText5" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 5 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 5 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText5::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 5 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 5 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText5::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 5 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 5 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText5"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey6" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 6 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 6 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey6::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 6 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 6 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText6" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 6 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 6 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText6::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 6 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 6 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText6::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 6 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 6 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText6"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey7" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 7 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 7 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey7::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 7 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 7 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText7" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 7 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 7 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText7::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 7 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 7 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText7::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 7 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 7 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText7"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey8" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 8 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 8 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey8::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 8 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 8 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText8" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 8 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 8 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText8::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 8 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 8 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText8::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 8 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 8 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText8"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey9" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 9 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 9 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey9::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 9 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 9 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText9" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 9 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 9 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText9::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 9 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 9 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText9::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 9 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 9 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText9"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey10" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 10 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 10 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey10::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 10 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 10 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText10" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 10 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 10 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText10::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 10 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 10 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText10::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 10 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 10 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText10"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey11" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 11 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 11 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey11::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 11 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 11 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText11" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 11 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 11 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText11::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 11 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 11 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText11::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 11 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 11 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText11"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey12" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 12 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 12 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey12::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 12 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 12 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText12" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 12 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 12 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText12::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 12 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 12 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText12::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 12 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 12 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText12"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey13" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 13 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 13 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey13::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 13 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 13 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText13" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 13 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 13 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText13::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 13 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 13 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText13::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 13 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 13 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText13"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey14" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 14 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 14 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey14::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 14 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 14 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText14" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 14 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 14 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText14::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 14 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 14 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText14::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 14 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 14 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText14"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey15" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 15 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 15 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey15::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 15 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 15 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText15" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 15 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 15 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText15::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 15 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 15 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText15::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 15 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 15 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText15"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey16" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 16 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 16 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey16::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 16 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 16 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText16" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 16 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 16 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText16::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 16 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 16 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText16::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 16 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 16 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText16"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey17" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 17 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 17 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey17::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 17 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 17 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText17" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 17 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 17 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText17::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 17 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 17 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText17::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 17 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 17 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText17"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey18" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 18 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 18 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey18::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 18 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 18 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText18" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 18 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 18 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText18::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 18 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 18 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText18::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 18 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 18 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText18"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey19" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 19 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 19 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey19::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 19 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 19 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText19" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 19 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 19 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText19::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 19 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 19 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText19::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 19 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 19 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText19"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey20" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 20 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 20 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey20::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 20 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 20 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText20" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 20 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 20 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText20::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 20 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 20 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText20::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 20 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 20 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText20"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey21" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 21 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 21 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey21::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 21 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 21 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText21" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 21 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 21 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText21::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 21 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 21 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText21::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 21 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 21 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText21"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey22" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 22 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 22 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey22::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 22 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 22 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText22" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 22 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 22 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText22::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 22 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 22 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText22::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 22 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 22 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText22"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey23" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 23 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 23 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey23::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 23 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 23 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText23" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 23 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 23 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText23::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 23 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 23 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText23::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 23 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 23 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText23"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey24" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 24 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 24 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey24::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 24 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 24 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText24" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 24 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 24 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText24::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 24 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 24 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText24::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 24 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 24 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText24"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey25" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 25 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 25 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey25::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 25 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 25 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText25" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 25 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 25 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText25::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 25 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 25 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText25::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 25 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 25 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText25"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey26" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 26 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 26 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey26::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 26 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 26 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText26" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 26 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 26 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText26::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 26 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 26 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText26::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 26 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 26 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText26"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey27" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 27 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 27 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey27::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 27 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 27 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText27" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 27 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 27 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText27::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 27 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 27 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText27::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 27 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 27 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText27"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey28" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 28 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 28 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey28::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 28 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 28 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText28" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 28 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 28 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText28::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 28 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 28 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText28::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 28 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 28 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText28"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey29" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 29 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 29 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey29::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 29 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 29 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText29" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 29 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 29 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText29::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 29 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 29 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText29::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 29 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 29 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText29"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey30" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 30 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 30 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey30::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 30 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 30 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText30" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 30 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 30 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText30::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 30 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 30 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText30::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 30 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 30 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText30"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey31" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 31 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 31 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey31::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 31 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 31 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText31" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 31 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 31 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText31::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 31 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 31 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText31::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 31 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 31 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText31"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey32" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 32 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 32 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey32::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 32 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 32 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText32" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 32 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 32 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText32::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 32 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 32 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText32::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 32 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 32 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText32"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey33" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 33 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 33 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey33::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 33 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 33 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText33" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 33 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 33 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText33::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 33 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 33 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText33::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 33 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 33 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText33"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey34" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 34 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 34 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey34::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 34 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 34 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText34" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 34 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 34 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText34::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 34 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 34 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText34::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 34 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 34 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText34"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey35" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 35 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 35 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey35::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 35 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 35 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText35" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 35 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 35 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText35::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 35 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 35 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText35::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 35 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 35 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText35"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey36" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 36 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 36 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey36::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 36 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 36 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText36" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 36 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 36 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText36::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 36 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 36 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText36::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 36 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 36 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText36"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey37" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 37 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 37 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey37::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 37 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 37 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText37" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 37 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 37 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText37::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 37 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 37 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText37::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 37 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 37 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText37"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey38" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 38 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 38 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey38::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 38 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 38 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText38" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 38 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 38 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText38::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 38 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 38 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText38::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 38 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 38 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText38"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey39" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 39 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 39 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey39::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 39 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 39 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText39" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 39 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 39 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText39::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 39 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 39 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText39::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 39 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 39 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText39"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey40" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 40 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 40 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey40::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 40 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 40 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText40" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 40 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 40 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText40::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 40 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 40 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText40::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 40 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 40 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText40"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey41" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 41 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 41 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey41::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 41 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 41 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText41" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 41 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 41 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText41::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 41 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 41 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText41::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 41 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 41 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText41"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey42" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 42 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 42 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey42::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 42 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 42 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText42" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 42 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 42 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText42::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 42 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 42 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText42::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 42 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 42 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText42"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey43" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 43 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 43 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey43::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 43 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 43 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText43" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 43 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 43 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText43::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 43 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 43 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText43::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 43 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 43 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText43"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey44" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 44 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 44 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey44::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 44 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 44 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText44" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 44 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 44 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText44::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 44 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 44 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText44::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 44 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 44 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText44"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey45" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 45 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 45 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey45::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 45 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 45 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText45" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 45 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 45 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText45::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 45 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 45 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText45::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 45 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 45 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText45"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey46" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 46 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 46 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey46::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 46 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 46 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText46" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 46 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 46 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText46::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 46 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 46 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText46::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 46 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 46 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText46"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey47" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 47 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 47 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey47::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 47 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 47 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText47" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 47 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 47 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText47::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 47 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 47 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText47::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 47 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 47 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText47"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey48" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 48 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 48 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey48::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 48 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 48 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText48" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 48 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 48 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText48::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 48 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 48 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText48::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 48 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 48 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText48"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey49" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 49 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 49 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey49::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 49 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 49 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText49" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 49 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 49 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText49::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 49 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 49 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText49::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 49 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 49 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText49"}</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey50" Required="0" Valid="0">
+        <Description Lang="en">Define the free key field 50 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des Freien-Schlüssel-Feldes 50 für Workorders. Damit kann eine neue WorkOrder-Eigenschaft definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Product">Product</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeKey50::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 50 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 50 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText50" Required="0" Valid="0">
+        <Description Lang="en">Define the FreeTextField 50 for workorders. With this setting you can define a new workorder attribute.</Description>
+        <Description Lang="de">Definition des FreiTextFeldes 50 für Workorders. Hierüber können zusätzliche Workorder-Attribute definiert werden.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="PC">PC</Item>
+                <Item Key="Notebook">Notebook</Item>
+                <Item Key="Phone">Phone</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText50::DefaultSelection" Required="0" Valid="0">
+        <Description Lang="en">The default selection of FreeTextField 50 if more than one option is defined.</Description>
+        <Description Lang="de">Die Standard-Auswahl des FreiTextFeldes 50 wenn mehrere Optionen definiert sind.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">Notebook</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="WorkOrderFreeText50::Link" Required="0" Valid="0">
+        <Description Lang="en">Define the free text field 50 link for workorders. So this http link will be used in any workorder view.</Description>
+        <Description Lang="de">Definition des Freien-Text-Feldes 50 Link für Workorders. Dieser http-Link wird in jeder Workorder-Ansicht erscheinen.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">http://some.example.com/handle?query=$LQData{"WorkOrderFreeText50"}</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Hook" Required="1" Valid="1">

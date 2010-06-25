@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.190 2010-06-22 00:17:13 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.191 2010-06-25 12:23:13 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -665,7 +665,6 @@
                 <Reference Local="group_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-
         <TableCreate Name="change_freekey">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_id" Required="true" Type="BIGINT"/>
@@ -720,7 +719,60 @@
                 <Reference Local="change_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-
+        <TableCreate Name="change_workorder_freekey">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="workorder_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_workorder_freekey_workorder_id">
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Index Name="change_workorder_freekey_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_workorder_freekey_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_workorder_freekey_field_value_workorder_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="workorder_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_workorder">
+                <Reference Local="workorder_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_workorder_freetext">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="workorder_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_workorder_freetext_workorder_id">
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Index Name="change_workorder_freetext_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_workorder_freetext_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_workorder_freetext_field_value_workorder_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="workorder_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_workorder">
+                <Reference Local="workorder_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
         <Insert Table="general_catalog">
             <Data Key="general_catalog_class" Type="Quote">ITSM::ChangeManagement::Category</Data>
             <Data Key="name" Type="Quote">1 very low</Data>
@@ -1567,7 +1619,6 @@
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
         </Insert>
-
         <TableCreate Name="change_freekey" Version="2.0.71">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_id" Required="true" Type="BIGINT"/>
@@ -1622,11 +1673,66 @@
                 <Reference Local="change_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
-
+        <TableCreate Name="change_workorder_freekey" Version="2.0.71">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="workorder_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_workorder_freekey_workorder_id">
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Index Name="change_workorder_freekey_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_workorder_freekey_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_workorder_freekey_field_value_workorder_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="workorder_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_workorder">
+                <Reference Local="workorder_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
+        <TableCreate Name="change_workorder_freetext" Version="2.0.71">
+            <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
+            <Column Name="workorder_id" Required="true" Type="BIGINT"/>
+            <Column Name="field_id" Required="true" Type="INTEGER"/>
+            <Column Name="field_value" Required="false" Size="250" Type="VARCHAR"/>
+            <Index Name="change_workorder_freetext_workorder_id">
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Index Name="change_workorder_freetext_field_id">
+                <IndexColumn Name="field_id"/>
+            </Index>
+            <Index Name="change_workorder_freetext_field_value">
+                <IndexColumn Name="field_value"/>
+            </Index>
+            <Index Name="change_workorder_freetext_field_value_workorder_id">
+                <IndexColumn Name="field_id"/>
+                <IndexColumn Name="field_value"/>
+                <IndexColumn Name="workorder_id"/>
+            </Index>
+            <Unique>
+                <UniqueColumn Name="workorder_id"/>
+                <UniqueColumn Name="field_id"/>
+            </Unique>
+            <ForeignKey ForeignTable="change_workorder">
+                <Reference Local="workorder_id" Foreign="id"/>
+            </ForeignKey>
+        </TableCreate>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_freekey"/>
         <TableDrop Name="change_freetext"/>
+        <TableDrop Name="change_workorder_freekey"/>
+        <TableDrop Name="change_workorder_freetext"/>
         <TableDrop Name="change_notification_rec"/>
         <TableDrop Name="change_notification_grps"/>
         <TableDrop Name="change_notification"/>
