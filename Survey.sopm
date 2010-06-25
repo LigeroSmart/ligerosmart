@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.32 2010-04-27 13:02:14 mh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.33 2010-06-25 08:48:01 mb Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -15,6 +15,8 @@
         <File Permission="644" Location="Kernel/Language/bg_PublicSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_AgentSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/cz_PublicSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Language/da_AgentSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Language/da_PublicSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/de_AgentSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/de_PublicSurvey.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_AgentSurvey.pm"/>
