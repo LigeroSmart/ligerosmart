@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.211 2010-06-23 10:17:58 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.212 2010-06-25 12:12:45 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -1474,7 +1474,6 @@
             <String Regex="">50</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ChangeFreeKey1" Required="0" Valid="0">
         <Description Lang="en">Define the free key field 1 for changes. With this setting you can define a new change attribute.</Description>
         <Description Lang="de">Definition des Freien-Schlüssel-Feldes 1 für Changes. Damit kann eine neue Change-Eigenschaft definiert werden.</Description>
@@ -5127,6 +5126,15 @@
             <Hash>
                 <Item Key="set">1</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::FreeText::MaxNumber" Required="1" Valid="1">
+        <Description Lang="en">Define the maximum number of workorder freetext fields.</Description>
+        <Description Lang="de">Definition der maximalen Anzahl von FreiTextFeldern für Workorders.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::FreeText</SubGroup>
+        <Setting>
+            <String Regex="">50</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::Hook" Required="1" Valid="1">
