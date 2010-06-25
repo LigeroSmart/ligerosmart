@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.181 2010-06-22 00:19:36 ub Exp $
+# $Id: ITSMChange.t,v 1.182 2010-06-25 12:08:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -159,12 +159,18 @@ $Self->{ConfigObject}->Set(
 # define public interface (in alphabetical order)
 my @ObjectMethods = qw(
     ChangeAdd
+    ChangeAttachmentAdd
+    ChangeAttachmentDelete
+    ChangeAttachmentExists
+    ChangeAttachmentGet
+    ChangeAttachmentList
     ChangeCABDelete
     ChangeCABGet
     ChangeCABUpdate
     ChangeCIPLookup
     ChangeDelete
     ChangeGet
+    ChangeGetConfiguredFreeTextFields
     ChangeList
     ChangeLookup
     ChangePossibleCIPGet

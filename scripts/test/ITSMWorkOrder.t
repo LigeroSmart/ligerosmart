@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.122 2010-06-25 10:01:59 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.123 2010-06-25 12:09:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -134,17 +134,24 @@ $Self->{ConfigObject}->Set(
 my @ObjectMethods = qw(
     Permission
     WorkOrderAdd
+    WorkOrderAttachmentAdd
+    WorkOrderAttachmentDelete
+    WorkOrderAttachmentExists
+    WorkOrderAttachmentGet
+    WorkOrderAttachmentList
+    WorkOrderChangeEffortsGet
     WorkOrderChangeTimeGet
     WorkOrderDelete
     WorkOrderGet
+    WorkOrderGetConfiguredFreeTextFields
     WorkOrderList
+    WorkOrderPossibleStatesGet
     WorkOrderSearch
-    WorkOrderUpdate
-    WorkOrderStateLookup
     WorkOrderStateIDsCheck
+    WorkOrderStateLookup
     WorkOrderTypeList
     WorkOrderTypeLookup
-    WorkOrderPossibleStatesGet
+    WorkOrderUpdate
 );
 
 # check if subs are available
