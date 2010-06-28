@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.123 2010-06-25 12:09:25 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.124 2010-06-28 09:51:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1544,28 +1544,167 @@ push @WorkOrderTests, (
         SearchTest => [],
     },
 
+    # test for accounted time and planned effort
     {
         Description => 'Test 1 for AccountedTime and PlannedEffort',
         SourceData  => {
             WorkOrderAdd => {
-                UserID   => 1,
-                ChangeID => $WorkOrderAddTestID,
+                WorkOrderTitle => 'Test 1 for AccountedTime and PlannedEffort',
+                ChangeID       => $WorkOrderAddTestID,
+                UserID         => 1,
             },
             WorkOrderUpdate => {
-                UserID         => 1,
-                WorkOrderTitle => 'Test 1 for AccountedTime and PlannedEffort',
-                PlannedEffort  => '5.5',
-                AccountedTime  => '1.5',
+                PlannedEffort => '5.5',
+                AccountedTime => '1.5',
+                UserID        => 1,
             },
         },
         ReferenceData => {
             WorkOrderGet => {
-                WorkOrderTitle => 'Test 1 for AccountedTime and PlannedEffort',
-                PlannedEffort  => '5.5',
-                AccountedTime  => '1.5',
+                PlannedEffort => '5.5',
+                AccountedTime => '1.5',
             },
         },
+        SearchTest => [8],
     },
+
+    #-------------------------------------#
+    # Tests for Workorder FreeText fields
+    #-------------------------------------#
+
+    # test some workorder freetext fields WorkOrderAdd and WorkOrderUpdate
+    {
+        Description => 'Test WorkOrderAdd and WorkOrderUpdate with workorder freetext fields.',
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle => 'Test add workorder with freetext fields - ' . $UniqueSignature,
+                WorkOrderFreeKey1  => 'AAAA',
+                WorkOrderFreeText1 => 'BBBB',
+                WorkOrderFreeKey2  => 'CCCC',
+                WorkOrderFreeText2 => 'DDDD',
+                ChangeID           => $WorkOrderAddTestID,
+                UserID             => 1,
+            },
+            WorkOrderUpdate => {
+                WorkOrderFreeKey3  => 'EEEE',
+                WorkOrderFreeText3 => 'FFFF',
+                WorkOrderFreeKey4  => 'GGGG',
+                WorkOrderFreeText4 => 'HHHH',
+                UserID             => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => 'Test add workorder with freetext fields - ' . $UniqueSignature,
+                WorkOrderFreeKey1  => 'AAAA',
+                WorkOrderFreeText1 => 'BBBB',
+                WorkOrderFreeKey2  => 'CCCC',
+                WorkOrderFreeText2 => 'DDDD',
+                WorkOrderFreeKey3  => 'EEEE',
+                WorkOrderFreeText3 => 'FFFF',
+                WorkOrderFreeKey4  => 'GGGG',
+                WorkOrderFreeText4 => 'HHHH',
+            },
+        },
+        SearchTest => [8],
+    },
+
+    # test workorder freetext fields with maximum length
+    {
+        Description => 'Test WorkOrderAdd freetext fields with 250 characters.',
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle => 'Test add workorder freetext fields with 250 characters - '
+                    . $UniqueSignature,
+                WorkOrderFreeKey30  => 'A' x 250,
+                WorkOrderFreeText30 => 'B' x 250,
+                ChangeID            => $WorkOrderAddTestID,
+                UserID              => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderFreeKey30  => 'A' x 250,
+                WorkOrderFreeText30 => 'B' x 250,
+            },
+        },
+        SearchTest => [8],
+    },
+
+    # test workorder freetext fields larger than maximum length in WorkOrderAdd
+    {
+        Description => 'Test WorkOrderAdd freetext fields with 251 characters.',
+        Fails       => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle => 'Test add workorder freetext fields with 251 characters - '
+                    . $UniqueSignature,
+                WorkOrderFreeKey30  => 'A' x 251,
+                WorkOrderFreeText30 => 'B' x 251,
+                ChangeID            => $WorkOrderAddTestID,
+                UserID              => $UserIDs[0],
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => undef,
+        },
+    },
+
+    # test workorder freetext fields larger than maximum length in WorkOrderUpdate
+    {
+        Description => 'Test WorkOrderUpdate freetext fields with 251 characters.',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle => 'Test update workorder freetext fields with 251 characters - '
+                    . $UniqueSignature,
+                WorkOrderFreeKey30  => 'A' x 250,
+                WorkOrderFreeText30 => 'B' x 250,
+                ChangeID            => $WorkOrderAddTestID,
+                UserID              => 1,
+            },
+            WorkOrderUpdate => {
+                WorkOrderFreeText30 => 'C' x 251,
+                UserID              => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderFreeKey30  => 'A' x 250,
+                WorkOrderFreeText30 => 'B' x 250,
+            },
+        },
+        SearchTest => [8],
+    },
+
+    # test workorder freetext fields with zero and empty strings
+    {
+        Description => 'Test WorkOrderUpdate with zero and empty string.',
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle =>
+                    'Test update workorder freetext fields with zero and empty string - '
+                    . $UniqueSignature,
+                WorkOrderFreeKey20  => 'AAAA',
+                WorkOrderFreeText20 => 'BBBB',
+                ChangeID            => $WorkOrderAddTestID,
+                UserID              => 1,
+            },
+            WorkOrderUpdate => {
+                WorkOrderFreeKey20  => 0,
+                WorkOrderFreeText20 => '',
+                UserID              => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderFreeKey20  => 0,
+                WorkOrderFreeText20 => '',
+            },
+        },
+        SearchTest => [8],
+    },
+
 );
 
 # workorders tests for WorkOrderSearch() with OrderBy
