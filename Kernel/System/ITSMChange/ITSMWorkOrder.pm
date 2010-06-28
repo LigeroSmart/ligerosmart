@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.106 2010-06-15 01:27:22 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.107 2010-06-28 09:53:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.106 $) [1];
+$VERSION = qw($Revision: 1.107 $) [1];
 
 =head1 NAME
 
@@ -144,21 +144,23 @@ then WorkOrderUpdate() is called for setting the remaining arguments.
 or
 
     my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
-        ChangeID         => 123,
-        WorkOrderTitle   => 'Replacement of mail server',              # (optional)
-        Instruction      => 'Install the the new server',              # (optional)
-        Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 157,                                       # (optional) or WorkOrderState => 'ready'
-        WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
-        WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
-        WorkOrderType    => 'ready',                                   # (optional) or WorkOrderTypeID => 161
-        WorkOrderAgentID => 8,                                         # (optional)
-        PlannedStartTime => '2009-10-12 00:00:01',                     # (optional)
-        PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional)
-        ActualStartTime  => '2009-10-14 00:00:01',                     # (optional)
-        ActualEndTime    => '2009-01-20 00:00:01',                     # (optional)
-        PlannedEffort    => 123,                                       # (optional)
-        UserID           => 1,
+        ChangeID           => 123,
+        WorkOrderTitle     => 'Replacement of mail server',              # (optional)
+        Instruction        => 'Install the the new server',              # (optional)
+        Report             => 'Installed new server without problems',   # (optional)
+        WorkOrderStateID   => 157,                                       # (optional) or WorkOrderState => 'ready'
+        WorkOrderState     => 'ready',                                   # (optional) or WorkOrderStateID => 157
+        WorkOrderTypeID    => 161,                                       # (optional) or WorkOrderType => 'pir'
+        WorkOrderType      => 'ready',                                   # (optional) or WorkOrderTypeID => 161
+        WorkOrderAgentID   => 8,                                         # (optional)
+        PlannedStartTime   => '2009-10-12 00:00:01',                     # (optional)
+        PlannedEndTime     => '2009-10-15 15:00:00',                     # (optional)
+        ActualStartTime    => '2009-10-14 00:00:01',                     # (optional)
+        ActualEndTime      => '2009-01-20 00:00:01',                     # (optional)
+        PlannedEffort      => 123,                                       # (optional)
+        WorkOrderFreeKey1  => 'Sun',                                     # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Earth',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        UserID             => 1,
     );
 
 =cut
@@ -382,24 +384,26 @@ There passing C<undef> indicates that the workorder time should be cleared.
 Another exception is the WorkOrderAgentID. Pass undef for removing the workorder agent.
 
     my $Success = $WorkOrderObject->WorkOrderUpdate(
-        WorkOrderID      => 4,
-        WorkOrderNumber  => 5,                                         # (optional)
-        WorkOrderTitle   => 'Replacement of mail server',              # (optional)
-        Instruction      => 'Install the the new server',              # (optional)
-        Report           => 'Installed new server without problems',   # (optional)
-        WorkOrderStateID => 157,                                       # (optional) or WorkOrderState => 'ready'
-        WorkOrderState   => 'ready',                                   # (optional) or WorkOrderStateID => 157
-        WorkOrderTypeID  => 161,                                       # (optional) or WorkOrderType => 'pir'
-        WorkOrderType    => 'pir',                                     # (optional) or WorkOrderStateID => 161
-        WorkOrderAgentID => 8,                                         # (optional) can be undef for removing the workorder agent
-        PlannedStartTime => '2009-10-12 00:00:01',                     # (optional) 'undef' indicates clearing
-        PlannedEndTime   => '2009-10-15 15:00:00',                     # (optional) 'undef' indicates clearing
-        ActualStartTime  => '2009-10-14 00:00:01',                     # (optional) 'undef' indicates clearing
-        ActualEndTime    => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
-        PlannedEffort    => 123,                                       # (optional)
-        AccountedTime    => 13,                                        # (optional) the value is added to the value in the database
-        NoNumberCalc     => 1,                                         # (optional) default 0, if 1 it prevents a recalculation of the workorder numbers
-        UserID           => 1,
+        WorkOrderID        => 4,
+        WorkOrderNumber    => 5,                                         # (optional)
+        WorkOrderTitle     => 'Replacement of mail server',              # (optional)
+        Instruction        => 'Install the the new server',              # (optional)
+        Report             => 'Installed new server without problems',   # (optional)
+        WorkOrderStateID   => 157,                                       # (optional) or WorkOrderState => 'ready'
+        WorkOrderState     => 'ready',                                   # (optional) or WorkOrderStateID => 157
+        WorkOrderTypeID    => 161,                                       # (optional) or WorkOrderType => 'pir'
+        WorkOrderType      => 'pir',                                     # (optional) or WorkOrderStateID => 161
+        WorkOrderAgentID   => 8,                                         # (optional) can be undef for removing the workorder agent
+        PlannedStartTime   => '2009-10-12 00:00:01',                     # (optional) 'undef' indicates clearing
+        PlannedEndTime     => '2009-10-15 15:00:00',                     # (optional) 'undef' indicates clearing
+        ActualStartTime    => '2009-10-14 00:00:01',                     # (optional) 'undef' indicates clearing
+        ActualEndTime      => '2009-01-20 00:00:01',                     # (optional) 'undef' indicates clearing
+        PlannedEffort      => 123,                                       # (optional)
+        AccountedTime      => 13,                                        # (optional) the value is added to the value in the database
+        WorkOrderFreeKey1  => 'Sun',                                     # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Earth',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        NoNumberCalc       => 1,                                         # (optional) default 0, if 1 it prevents a recalculation of the workorder numbers
+        UserID             => 1,
     );
 
 Constraints:
@@ -477,11 +481,15 @@ sub WorkOrderUpdate {
         );
     }
 
-    # default value for planned effort
+    # default values for planned effort and accounted time
     # this avoids superflous history entries
-    if ( exists $Param{PlannedEffort} ) {
-        $Param{PlannedEffort} ||= 0;
-        $Param{PlannedEffort} = sprintf '%.2f', $Param{PlannedEffort};
+    ARGUMENT:
+    for my $Argument (qw(PlannedEffort AccountedTime)) {
+
+        next ARGUMENT if !exists $Param{$Argument};
+
+        $Param{$Argument} ||= 0;
+        $Param{$Argument} = sprintf '%.2f', $Param{$Argument};
     }
 
     # check the given parameters
@@ -523,6 +531,9 @@ sub WorkOrderUpdate {
         UserID => $Param{UserID},
     );
 
+    # update workorder freekey and freetext fields
+    return if !$Self->_WorkOrderFreeTextUpdate(%Param);
+
     # map update attributes to column names
     my %Attribute = (
         WorkOrderTitle   => 'title',
@@ -538,7 +549,6 @@ sub WorkOrderUpdate {
         ActualEndTime    => 'actual_end_time',
         InstructionPlain => 'instruction_plain',
         ReportPlain      => 'report_plain',
-        PlannedEffort    => 'planned_effort',
     );
 
     # build SQL to update workorder
@@ -560,7 +570,7 @@ sub WorkOrderUpdate {
             push @Bind, \$Param{$Attribute};
         }
 
-        # it's ok when the WorkOrderAgentID is not defined
+        # it's ok if the WorkOrderAgentID is not defined
         elsif ( $Attribute eq 'WorkOrderAgentID' && !defined $Param{$Attribute} ) {
             $SQL .= "$Attribute{$Attribute} = NULL, ";
         }
@@ -574,8 +584,34 @@ sub WorkOrderUpdate {
 
     # addition of accounted time
     if ( $Param{AccountedTime} ) {
-        $SQL .= 'accounted_time = accounted_time + ?, ';
-        push @Bind, \$Param{AccountedTime};
+
+        # get current accounted time
+        my $CurrentAccountedTime = $WorkOrderData->{AccountedTime} || 0;
+
+        # add new accouted time to current accounted time
+        my $AccountedTime = $CurrentAccountedTime + $Param{AccountedTime};
+
+        # format as decimal number
+        $AccountedTime = sprintf '%.2f', $AccountedTime;
+
+        # db quote
+        $AccountedTime = $Self->{DBObject}->Quote( $AccountedTime, 'Number' );
+
+        # build SQL (without binds)
+        $SQL .= "accounted_time = $AccountedTime, ";
+    }
+
+    # setting of planned effort
+    if ( $Param{PlannedEffort} ) {
+
+        # format as decimal number
+        $Param{PlannedEffort} = sprintf '%.2f', $Param{PlannedEffort};
+
+        # db quote
+        $Param{PlannedEffort} = $Self->{DBObject}->Quote( $Param{PlannedEffort}, 'Number' );
+
+        # build SQL (without binds)
+        $SQL .= "planned_effort = $Param{PlannedEffort}, ";
     }
 
     $SQL .= 'change_time = current_timestamp, change_by = ? ';
@@ -651,6 +687,8 @@ The returned hash reference contains following elements:
     $WorkOrder{ActualEndTime}
     $WorkOrder{AccountedTime}
     $WorkOrder{PlannedEffort}
+    $WorkOrder{WorkOrderFreeKey1}           # workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+    $WorkOrder{WorkOrderFreeText1}          # workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
     $WorkOrder{CreateTime}
     $WorkOrder{CreateBy}
     $WorkOrder{ChangeTime}
@@ -730,51 +768,60 @@ sub WorkOrderGet {
             $WorkOrderData{AccountedTime}    = $Row[20];
         }
 
-        # set cache only if workorder data exists
-        if (%WorkOrderData) {
-
-            # set cache
-            $Self->{CacheObject}->Set(
-                Type  => 'ITSMChangeManagement',
-                Key   => $CacheKey,
-                Value => \%WorkOrderData,
-                TTL   => $Self->{CacheTTL},
-            );
+        # check error
+        if ( !%WorkOrderData ) {
+            if ( !$Param{LogNo} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "WorkOrderID $Param{WorkOrderID} does not exist!",
+                );
+            }
+            return;
         }
-    }
 
-    # check error
-    if ( !%WorkOrderData ) {
-        if ( !$Param{LogNo} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "WorkOrderID $Param{WorkOrderID} does not exist!",
-            );
+        TIMEFIELD:
+        for my $Time (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+
+            next TIMEFIELD if !$WorkOrderData{$Time};
+
+            # cleanup time stamps (some databases are using e. g. 2008-02-25 22:03:00.000000)
+            $WorkOrderData{$Time}
+                =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
+
+            # replace default time values with empty string
+            if ( $WorkOrderData{$Time} eq '9999-01-01 00:00:00' ) {
+                $WorkOrderData{$Time} = '';
+            }
         }
-        return;
-    }
 
-    TIMEFIELD:
-    for my $Time (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
+        ATTRIBUTE:
+        for my $Attribute (qw(PlannedEffort AccountedTime)) {
 
-        next TIMEFIELD if !$WorkOrderData{$Time};
+            next ATTRIBUTE if !$WorkOrderData{$Attribute};
 
-        # cleanup time stamps (some databases are using e. g. 2008-02-25 22:03:00.000000)
-        $WorkOrderData{$Time}
-            =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
+            # add zero to prevent ugly display of zero values with MS-SQL
+            $WorkOrderData{$Attribute} += 0;
 
-        # replace default time values with empty string
-        if ( $WorkOrderData{$Time} eq '9999-01-01 00:00:00' ) {
-            $WorkOrderData{$Time} = '';
+            # convert decimal character from ',' to '.' if neccessary
+            $WorkOrderData{$Attribute} =~ s{,}{.}xmsg;
         }
-    }
 
-    # add zero to prevent ugly display of zero values with MS-SQL
-    if ( $WorkOrderData{PlannedEffort} ) {
-        $WorkOrderData{PlannedEffort} += 0;
-    }
-    if ( $WorkOrderData{AccountedTime} ) {
-        $WorkOrderData{AccountedTime} += 0;
+        # get workorder freekey and freetext data
+        my $WorkOrderFreeText = $Self->_WorkOrderFreeTextGet(
+            WorkOrderID => $Param{WorkOrderID},
+            UserID      => $Param{UserID},
+        );
+
+        # add result to workorder data
+        %WorkOrderData = ( %WorkOrderData, %{$WorkOrderFreeText} );
+
+        # set cache (workorder data exists at this point, it was checked before)
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%WorkOrderData,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     # add the name of the workorder state
@@ -1437,6 +1484,12 @@ sub WorkOrderDelete {
             UserID      => $Param{UserID},
         );
     }
+
+    # delete the workorder freetext fields
+    return if !$Self->_WorkOrderFreeTextDelete(
+        WorkOrderID => $Param{WorkOrderID},
+        UserID      => $Param{UserID},
+    );
 
     # delete the workorder
     return if !$Self->{DBObject}->Do(
@@ -2499,12 +2552,16 @@ sub WorkOrderChangeEffortsGet {
             $ChangeEfforts{AccountedTime} = $Row[1] || '';
         }
 
-        # add zero to prevent ugly display of zero values with MS-SQL
-        if ( $ChangeEfforts{PlannedEffort} ) {
-            $ChangeEfforts{PlannedEffort} += 0;
-        }
-        if ( $ChangeEfforts{AccountedTime} ) {
-            $ChangeEfforts{AccountedTime} += 0;
+        ATTRIBUTE:
+        for my $Attribute (qw(PlannedEffort AccountedTime)) {
+
+            next ATTRIBUTE if !$ChangeEfforts{$Attribute};
+
+            # add zero to prevent ugly display of zero values with MS-SQL
+            $ChangeEfforts{$Attribute} += 0;
+
+            # convert decimal character from ',' to '.' if neccessary
+            $ChangeEfforts{$Attribute} =~ s{,}{.}xmsg;
         }
 
         # set cache only if PlannedEffort or AccountedTime is defined
@@ -2521,6 +2578,54 @@ sub WorkOrderChangeEffortsGet {
     }
 
     return \%ChangeEfforts;
+}
+
+=item WorkOrderGetConfiguredFreeTextFields()
+
+Returns an array with the numbers of all configured workorder freekey and freetext fields
+
+    my @ConfiguredWorkOrderFreeTextFields = $WorkOrderObject->WorkOrderGetConfiguredFreeTextFields();
+
+=cut
+
+sub WorkOrderGetConfiguredFreeTextFields {
+    my ( $Self, %Param ) = @_;
+
+    # lookup cached result
+    if (
+        $Self->{ConfiguredWorkOrderFreeTextFields}
+        && ref $Self->{ConfiguredWorkOrderFreeTextFields} eq 'ARRAY'
+        && @{ $Self->{ConfiguredWorkOrderFreeTextFields} }
+        )
+    {
+        return @{ $Self->{ConfiguredWorkOrderFreeTextFields} };
+    }
+
+    # get maximum number of workorder freetext fields
+    my $MaxNumber = $Self->{ConfigObject}->Get('ITSWorkOrder::FreeText::MaxNumber');
+
+    # get all configured workorder freekey and freetext numbers
+    my @ConfiguredWorkOrderFreeTextFields = ();
+    FREETEXTNUMBER:
+    for my $Number ( 1 .. $MaxNumber ) {
+
+        # check workorder freekey config
+        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeKey' . $Number ) ) {
+            push @ConfiguredWorkOrderFreeTextFields, $Number;
+            next FREETEXTNUMBER;
+        }
+
+        # check workorder freetext config
+        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeText' . $Number ) ) {
+            push @ConfiguredWorkOrderFreeTextFields, $Number;
+            next FREETEXTNUMBER;
+        }
+    }
+
+    # cache result
+    $Self->{ConfiguredWorkOrderFreeTextFields} = \@ConfiguredWorkOrderFreeTextFields;
+
+    return @ConfiguredWorkOrderFreeTextFields;
 }
 
 =begin Internal:
@@ -2629,31 +2734,36 @@ There are no required parameters.
 The value for C<WorkOrderAgentID> can be undefined.
 
     my $Ok = $WorkOrderObject->_CheckWorkOrderParams(
-        ChangeID         => 123,                                             # (optional)
-        WorkOrderNumber  => 5,                                               # (optional)
-        WorkOrderTitle   => 'Replacement of mail server',                    # (optional)
-        Instruction      => 'Install the <b>new</b> server',                 # (optional)
-        InstructionPlain => 'Install the new server',                        # (optional)
-        Report           => 'Installed new server <b>without</b> problems',  # (optional)
-        ReportPlain      => 'Installed new server without problems',         # (optional)
-        WorkOrderStateID => 4,                                               # (optional)
-        WorkOrderTypeID  => 12,                                              # (optional)
-        WorkOrderAgentID => 8,                                               # (optional) undef is allowed
-        PlannedStartTime => '2009-10-01 10:33:00',                           # (optional)
-        ActualStartTime  => '2009-10-01 10:33:00',                           # (optional)
-        PlannedEndTime   => '2009-10-01 10:33:00',                           # (optional)
-        ActualEndTime    => '2009-10-01 10:33:00',                           # (optional)
+        ChangeID           => 123,                                             # (optional)
+        WorkOrderNumber    => 5,                                               # (optional)
+        WorkOrderTitle     => 'Replacement of mail server',                    # (optional)
+        Instruction        => 'Install the <b>new</b> server',                 # (optional)
+        InstructionPlain   => 'Install the new server',                        # (optional)
+        Report             => 'Installed new server <b>without</b> problems',  # (optional)
+        ReportPlain        => 'Installed new server without problems',         # (optional)
+        WorkOrderStateID   => 4,                                               # (optional)
+        WorkOrderTypeID    => 12,                                              # (optional)
+        WorkOrderAgentID   => 8,                                               # (optional) undef is allowed
+        PlannedStartTime   => '2009-10-01 10:33:00',                           # (optional)
+        ActualStartTime    => '2009-10-01 10:33:00',                           # (optional)
+        PlannedEndTime     => '2009-10-01 10:33:00',                           # (optional)
+        ActualEndTime      => '2009-10-01 10:33:00',                           # (optional)
+        WorkOrderFreeKey1  => 'Sun',                                           # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Earth',                                         # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+
     );
 
 These string parameters have length constraints:
 
     Parameter        | max. length
     -----------------+-----------------
-    WorkOrderTitle   |  250 characters
-    Instruction      | 3800 characters
-    InstructionPlain | 3800 characters
-    Report           | 3800 characters
-    ReportPlain      | 3800 characters
+    WorkOrderTitle      |  250 characters
+    Instruction         | 3800 characters
+    InstructionPlain    | 3800 characters
+    Report              | 3800 characters
+    ReportPlain         | 3800 characters
+    WorkOrderFreeKeyXX  |  250 characters
+    WorkOrderFreeTextXX |  250 characters
 
 =cut
 
@@ -2756,6 +2866,48 @@ sub _CheckWorkOrderParams {
         }
     }
 
+    # check the freekey and freetext parameters
+    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
+
+        # check all possible freetext fields
+        NUMBER:
+        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber') ) {
+
+            # build argument, e.g. WorkOrderFreeKey1
+            my $Argument = $Type . $Number;
+
+            # params are not required
+            next NUMBER if !exists $Param{$Argument};
+
+            # check if param is not defined
+            if ( !defined $Param{$Argument} ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' must be defined!",
+                );
+                return;
+            }
+
+            # check if param is not a reference
+            if ( ref $Param{$Argument} ne '' ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' mustn't be a reference!",
+                );
+                return;
+            }
+
+            # check the maximum length of freetext fields
+            if ( length( $Param{$Argument} ) > 250 ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "The parameter '$Argument' must be shorter than 250 characters!",
+                );
+                return;
+            }
+        }
+    }
+
     # check if given WorkOrderStateID is valid
     if ( exists $Param{WorkOrderStateID} ) {
         return if !$Self->WorkOrderStateIDsCheck(
@@ -2820,7 +2972,7 @@ sub _CheckTimestamps {
         # for the log messages
         my $TypeLc = lc $Type;
 
-        my $StartTime;
+        my $StartTime = '';
         if ( !exists $Param{ $Type . 'StartTime' } ) {
 
             # if a time is not given, get it from the workorder
@@ -2847,7 +2999,7 @@ sub _CheckTimestamps {
             $StartTime = $Param{ $Type . 'StartTime' };
         }
 
-        my $EndTime;
+        my $EndTime = '';
         if ( !exists $Param{ $Type . 'EndTime' } ) {
 
             # if a time is not given, get it from the workorder
@@ -2910,6 +3062,258 @@ sub _CheckTimestamps {
     return 1;
 }
 
+=item _WorkOrderFreeTextGet()
+
+Gets the freetext and freekey fields of a workorder as a hash reference.
+
+    my $WorkOrderFreeText = $WorkOrderObject->_WorkOrderFreeTextGet(
+        WorkOrderID => 123,
+        UserID      => 1,
+    );
+
+Returns:
+
+    $WorkOrderFreeText = {
+        WorkOrderFreeKey1  => 'Sun',   # workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Earth', # workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+    }
+
+=cut
+
+sub _WorkOrderFreeTextGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # to store workorder freekey and freetext data
+    my %Data;
+
+    # get workorder freekey and freetext data
+    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
+
+        # preset every freetext field with empty string
+        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber') ) {
+            $Data{ $Type . $Number } = '';
+        }
+
+        # set table name
+        my $TableName = '';
+        if ( $Type eq 'WorkOrderFreeText' ) {
+            $TableName = 'change_workorder_freetext';
+        }
+        elsif ( $Type eq 'WorkOrderFreeKey' ) {
+            $TableName = 'change_workorder_freekey';
+        }
+
+        # get workorder freetext fields
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT field_id, field_value'
+                . ' FROM ' . $TableName
+                . ' WHERE workorder_id = ?',
+            Bind => [ \$Param{WorkOrderID} ],
+        );
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            my $Field = $Type . $Row[0];
+            my $Value = $Row[1];
+            $Data{$Field} = defined $Value ? $Value : '';
+        }
+    }
+
+    return \%Data;
+}
+
+=item _WorkOrderFreeTextUpdate()
+
+Updates the freetext and freekey fields of a workorder.
+Passing an empty string deletes the freetext field.
+
+    my $Success = $WorkOrderObject->_WorkOrderFreeTextUpdate(
+        WorkOrderID        => 123,
+        WorkOrderFreeKey1  => 'Sun',   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Earth', # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        UserID             => 1,
+    );
+
+=cut
+
+sub _WorkOrderFreeTextUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # check the given parameters
+    return if !$Self->_CheckWorkOrderParams(%Param);
+
+    # store the given freekey and freetext ids
+    my @FreeKeyFieldIDs;
+    my @FreeTextFieldIDs;
+    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
+
+        # check all possible freetext fields
+        NUMBER:
+        for my $Number ( 1 .. $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber') ) {
+
+            # build argument, e.g. WorkOrderFreeKey1
+            my $Argument = $Type . $Number;
+
+            # params are not required
+            next NUMBER if !exists $Param{$Argument};
+
+            # all checks were done before, so here we are safe and store the ids
+            if ( $Type eq 'WorkOrderFreeKey' ) {
+                push @FreeKeyFieldIDs, $Number;
+            }
+            elsif ( $Type eq 'WorkOrderFreeText' ) {
+                push @FreeTextFieldIDs, $Number;
+            }
+        }
+    }
+
+    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
+
+        # set table name and arrays of field ids
+        my $TableName;
+        my @FieldIDs;
+        if ( $Type eq 'WorkOrderFreeKey' ) {
+            $TableName = 'change_workorder_freekey';
+            @FieldIDs  = @FreeKeyFieldIDs;
+        }
+        elsif ( $Type eq 'WorkOrderFreeText' ) {
+            $TableName = 'change_workorder_freetext';
+            @FieldIDs  = @FreeTextFieldIDs;
+        }
+
+        # update all given workorder freekey and freetext fields
+        for my $FieldID (@FieldIDs) {
+
+            # check if entry exists for this combination
+            # of workorder_id, field_id and type (WorkOrderFreeKey or WorkOrderFreeText)
+            my $ID;
+            $Self->{DBObject}->Prepare(
+                SQL => 'SELECT id FROM ' . $TableName
+                    . ' WHERE workorder_id = ? '
+                    . ' AND field_id = ? ',
+                Bind => [ \$Param{WorkOrderID}, \$FieldID ],
+                Limit => 1,
+            );
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $ID = $Row[0];
+            }
+
+            # get new value from parameter
+            my $Value = $Param{ $Type . $FieldID };
+
+            # entry exists and needs an update
+            if ( $ID && $Value ne '' ) {
+                return if !$Self->{DBObject}->Do(
+                    SQL => 'UPDATE ' . $TableName
+                        . ' SET field_value = ?'
+                        . ' WHERE id = ?',
+                    Bind => [ \$Value, \$ID ],
+                );
+            }
+
+            # entry exists but new value is an empty string
+            elsif ( $ID && $Value eq '' ) {
+                return if !$Self->{DBObject}->Do(
+                    SQL => 'DELETE FROM ' . $TableName
+                        . ' WHERE id = ?',
+                    Bind => [ \$ID ],
+                );
+            }
+
+            # entry does not exist, create a new entry
+            elsif ( !$ID && $Value ne '' ) {
+                return if !$Self->{DBObject}->Do(
+                    SQL => 'INSERT INTO ' . $TableName
+                        . ' (workorder_id, field_id, field_value)'
+                        . ' VALUES (?, ?, ?)',
+                    Bind => [ \$Param{WorkOrderID}, \$FieldID, \$Value ],
+                );
+            }
+        }
+    }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'WorkOrderGet::ID::' . $Param{WorkOrderID},
+    );
+
+    return 1;
+}
+
+=item _WorkOrderFreeTextDelete()
+
+Deletes all freetext and freekey fields of a workorder.
+
+    my $Success = $WorkOrderObject->_WorkOrderFreeTextDelete(
+        WorkOrderID => 123,
+        UserID      => 1,
+    );
+
+=cut
+
+sub _WorkOrderFreeTextDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(WorkOrderID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    for my $Type ( 'WorkOrderFreeKey', 'WorkOrderFreeText' ) {
+
+        # set table name
+        my $TableName;
+        if ( $Type eq 'WorkOrderFreeKey' ) {
+            $TableName = 'change_workorder_freekey';
+        }
+        elsif ( $Type eq 'WorkOrderFreeText' ) {
+            $TableName = 'change_workorder_freetext';
+        }
+
+        # delete entries from database
+        return if !$Self->{DBObject}->Do(
+            SQL => 'DELETE FROM ' . $TableName
+                . ' WHERE workorder_id = ?',
+            Bind => [ \$Param{WorkOrderID} ],
+        );
+    }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'WorkOrderGet::ID::' . $Param{WorkOrderID},
+    );
+
+    return 1;
+}
+
 1;
 
 =end Internal:
@@ -2918,16 +3322,16 @@ sub _CheckTimestamps {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.106 $ $Date: 2010-06-15 01:27:22 $
+$Revision: 1.107 $ $Date: 2010-06-28 09:53:51 $
 
 =cut
