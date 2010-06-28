@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.125 2010-06-28 13:12:25 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.126 2010-06-28 15:49:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1561,11 +1561,10 @@ push @WorkOrderTests, (
         },
         ReferenceData => {
             WorkOrderGet => {
-                PlannedEffort => '5.5',
-                AccountedTime => '1.5',
+                PlannedEffort => '5.50',    # output is always formatted with 2 decimal places
+                AccountedTime => '1.50',    # output is always formatted with 2 decimal places
             },
         },
-        SearchTest => [8],
     },
 
     #-------------------------------------#
