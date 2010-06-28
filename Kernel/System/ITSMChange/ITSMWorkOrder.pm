@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.108 2010-06-28 14:28:41 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.109 2010-06-28 16:06:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.108 $) [1];
+$VERSION = qw($Revision: 1.109 $) [1];
 
 =head1 NAME
 
@@ -489,7 +489,6 @@ sub WorkOrderUpdate {
         next ARGUMENT if !exists $Param{$Argument};
 
         $Param{$Argument} ||= 0;
-        $Param{$Argument} = sprintf '%.2f', $Param{$Argument};
     }
 
     # check the given parameters
@@ -591,9 +590,6 @@ sub WorkOrderUpdate {
         # add new accouted time to current accounted time
         my $AccountedTime = $CurrentAccountedTime + $Param{AccountedTime};
 
-        # format as decimal number
-        $AccountedTime = sprintf '%.2f', $AccountedTime;
-
         # db quote
         $AccountedTime = $Self->{DBObject}->Quote( $AccountedTime, 'Number' );
 
@@ -603,9 +599,6 @@ sub WorkOrderUpdate {
 
     # setting of planned effort
     if ( $Param{PlannedEffort} ) {
-
-        # format as decimal number
-        $Param{PlannedEffort} = sprintf '%.2f', $Param{PlannedEffort};
 
         # db quote
         $Param{PlannedEffort} = $Self->{DBObject}->Quote( $Param{PlannedEffort}, 'Number' );
@@ -799,8 +792,17 @@ sub WorkOrderGet {
 
             next ATTRIBUTE if !$WorkOrderData{$Attribute};
 
+            # do not show zero values
+            if ( $WorkOrderData{$Attribute} == 0 ) {
+                $WorkOrderData{$Attribute} = '';
+                next ATTRIBUTE;
+            }
+
             # convert decimal character from ',' to '.' if neccessary
             $WorkOrderData{$Attribute} =~ s{,}{.}xmsg;
+
+            # format as decimal number
+            $WorkOrderData{$Attribute} = sprintf '%.2f', $WorkOrderData{$Attribute};
         }
 
         # get workorder freekey and freetext data
@@ -2554,8 +2556,17 @@ sub WorkOrderChangeEffortsGet {
 
             next ATTRIBUTE if !$ChangeEfforts{$Attribute};
 
+            # do not show zero values
+            if ( $ChangeEfforts{$Attribute} == 0 ) {
+                $ChangeEfforts{$Attribute} = '';
+                next ATTRIBUTE;
+            }
+
             # convert decimal character from ',' to '.' if neccessary
             $ChangeEfforts{$Attribute} =~ s{,}{.}xmsg;
+
+            # format as decimal number
+            $ChangeEfforts{$Attribute} = sprintf '%.2f', $ChangeEfforts{$Attribute};
         }
 
         # set cache only if PlannedEffort or AccountedTime is defined
@@ -3326,6 +3337,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.108 $ $Date: 2010-06-28 14:28:41 $
+$Revision: 1.109 $ $Date: 2010-06-28 16:06:03 $
 
 =cut
