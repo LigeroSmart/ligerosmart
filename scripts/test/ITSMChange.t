@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.182 2010-06-25 12:08:50 ub Exp $
+# $Id: ITSMChange.t,v 1.183 2010-06-28 09:40:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1840,7 +1840,7 @@ my @ChangeTests = (
         SearchTest => [6],
     },
 
-    # test freetext fields larger than maximum length
+    # test change freetext fields larger than maximum length
     {
         Description => 'Test ChangeAdd freetext fields with 251 characters.',
         Fails       => 1,
@@ -1858,7 +1858,7 @@ my @ChangeTests = (
         },
     },
 
-    # test freetext fields larger than maximum length
+    # test change freetext fields larger than maximum length
     {
         Description => 'Test ChangeUpdate freetext fields with 251 characters.',
         UpdateFails => 1,
@@ -1884,13 +1884,13 @@ my @ChangeTests = (
         SearchTest => [6],
     },
 
-    # test freetext fields with zero and empty strings
+    # test change freetext fields with zero and empty strings
     {
         Description => 'Test ChangeUpdate with zero and empty string.',
         SourceData  => {
             ChangeAdd => {
                 UserID      => $UserIDs[0],
-                ChangeTitle => 'Test update change freetext fields with zero and empty string.'
+                ChangeTitle => 'Test update change freetext fields with zero and empty string - '
                     . $UniqueSignature,
                 ChangeFreeKey1  => 'AAA',
                 ChangeFreeText1 => 'BBB',
