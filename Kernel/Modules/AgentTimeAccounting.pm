@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.39 2010-06-24 12:35:58 jp Exp $
+# $Id: AgentTimeAccounting.pm,v 1.40 2010-06-28 13:44:21 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -325,21 +325,20 @@ sub Run {
         $Param{Total} = $Data{Total};
 
         # set action list and related constraints
-        $Param{JSActionList} = '['
-            . (
-            join ', ',
-            map      {"['${_}', '$ActionList{$_}']"}
-                sort { $ActionList{$a} cmp $ActionList{$b} } keys(%ActionList)
-            ) . ']';
+        # generate a JavaScript Array which will be output to the template
+        my @ActionIDs = sort { $ActionList{$a} cmp $ActionList{$b} } keys %ActionList;
+        my @JSActions;
+        foreach my $ActionID (@ActionIDs) {
+            push @JSActions, "['$ActionID', '$ActionList{$ActionID}']";
+        }
+        $Param{JSActionList} = '[' . ( join ', ', @JSActions ) . ']';
 
         my $ActionListConstraints
             = $Self->{ConfigObject}->Get('TimeAccounting::ActionListConstraints');
         my @JSActionListConstraints;
-        for my $ProjectNameRegExp ( keys( %{$ActionListConstraints} ) ) {
+        for my $ProjectNameRegExp ( keys %{$ActionListConstraints} ) {
             my $ActionNameRegExp = $ActionListConstraints->{$ProjectNameRegExp};
-            for ( $ProjectNameRegExp, $ActionNameRegExp ) {
-                $_ =~ s{(['"\\])}{\\$1}smxg;
-            }
+            s{(['"\\])}{\\$1}smxg for ( $ProjectNameRegExp, $ActionNameRegExp );
             push @JSActionListConstraints, "['$ProjectNameRegExp', '$ActionNameRegExp']";
         }
         $Param{JSActionListConstraints} = '[' . ( join ', ', @JSActionListConstraints ) . ']';
@@ -366,6 +365,7 @@ sub Run {
             $Param{ProjectID} = $UnitRef->{ProjectID} || '';
             $Param{ProjectName} = '';
 
+            # generate JavaScript array which will be output to the template
             my @JSProjectList;
             for my $Project ( @{$ProjectList} ) {
                 push @JSProjectList,
@@ -404,7 +404,7 @@ sub Run {
 
             $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
 
-                #                Data        => \%ActionList,
+                #Data        => \%ActionList,
                 Data        => $ActionData,
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
@@ -1943,17 +1943,26 @@ sub _ActionListConstraints {
 
     my %List;
     if ( $Param{ProjectID} && keys %{ $Param{ActionListConstraints} } ) {
+
         my $ProjectName;
+
+        PROJECT:
         for my $Project ( @{ $Param{ProjectList} } ) {
             if ( $Project->{Key} eq $Param{ProjectID} ) {
                 $ProjectName = $Project->{Value};
-                last;
+                last PROJECT;
             }
         }
 
         if ( defined($ProjectName) ) {
+
+            # loop over actions to find matches for configured project
+            # and action regexp pairs
             for my $ActionID ( keys %{ $Param{ActionList} } ) {
+
                 my $ActionName = $Param{ActionList}->{$ActionID};
+
+                REGEXP:
                 for my $ProjectNameRegExp ( keys %{ $Param{ActionListConstraints} } ) {
                     my $ActionNameRegExp = $Param{ActionListConstraints}->{$ProjectNameRegExp};
                     if (
@@ -1962,7 +1971,7 @@ sub _ActionListConstraints {
                         )
                     {
                         $List{$ActionID} = $ActionName;
-                        last;
+                        last REGEXP;
                     }
                 }
             }
@@ -1970,7 +1979,7 @@ sub _ActionListConstraints {
     }
 
     # all actions will be added if no action was added above (possible misconfiguration)
-    unless ( keys %List ) {
+    if ( !keys %List ) {
         for my $ActionID ( keys %{ $Param{ActionList} } ) {
             my $ActionName = $Param{ActionList}->{$ActionID};
             $List{$ActionID} = $ActionName;
@@ -2095,20 +2104,23 @@ sub _ProjectListConstraints
 
         # reduce project list according to configuration
         if ( ref( $Param{List} ) && @ProjectRegex ) {
+
             my $ElementCount = 0;
+
             for my $Project ( @{ $Param{List} } ) {
                 my $ProjectName = $Project->{Value};
 
                 # empty first element, last projects separator and currently selected project
                 if ( !$ElementCount || !$Project->{Key} || $Project->{Key} eq $Param{SelectedID} ) {
-                    push( @List, $Project );
+                    push @List, $Project;
                 }
                 else {
+                    PROJECTREGEXP:
                     for my $ProjectRegex (@ProjectRegex) {
                         if ( $ProjectName =~ m{$ProjectRegex}smx ) {
-                            push( @List, $Project );
+                            push @List, $Project;
                             $ProjectCount++;
-                            last;
+                            last PROJECTREGEXP;
                         }
                     }
                 }
@@ -2118,7 +2130,7 @@ sub _ProjectListConstraints
     }
 
 # get full project list if constraints resulted in empty project list or if constraints aren't configured (possible misconfiguration)
-    unless ($ProjectCount) {
+    if ( !$ProjectCount ) {
         @List = @{ $Param{List} };
     }
 
