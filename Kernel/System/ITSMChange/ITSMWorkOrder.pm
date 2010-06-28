@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.107 2010-06-28 09:53:51 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.108 2010-06-28 14:28:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.107 $) [1];
+$VERSION = qw($Revision: 1.108 $) [1];
 
 =head1 NAME
 
@@ -798,9 +798,6 @@ sub WorkOrderGet {
         for my $Attribute (qw(PlannedEffort AccountedTime)) {
 
             next ATTRIBUTE if !$WorkOrderData{$Attribute};
-
-            # add zero to prevent ugly display of zero values with MS-SQL
-            $WorkOrderData{$Attribute} += 0;
 
             # convert decimal character from ',' to '.' if neccessary
             $WorkOrderData{$Attribute} =~ s{,}{.}xmsg;
@@ -2557,9 +2554,6 @@ sub WorkOrderChangeEffortsGet {
 
             next ATTRIBUTE if !$ChangeEfforts{$Attribute};
 
-            # add zero to prevent ugly display of zero values with MS-SQL
-            $ChangeEfforts{$Attribute} += 0;
-
             # convert decimal character from ',' to '.' if neccessary
             $ChangeEfforts{$Attribute} =~ s{,}{.}xmsg;
         }
@@ -3332,6 +3326,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.107 $ $Date: 2010-06-28 09:53:51 $
+$Revision: 1.108 $ $Date: 2010-06-28 14:28:41 $
 
 =cut
