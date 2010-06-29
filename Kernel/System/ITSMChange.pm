@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.249 2010-06-25 12:10:51 ub Exp $
+# $Id: ITSMChange.pm,v 1.250 2010-06-29 12:41:36 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,8 +29,8 @@ use Kernel::System::Cache;
 
 use base qw(Kernel::System::EventHandler);
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.249 $) [1];
+use vars qw(@ISA $VERSION);
+$VERSION = qw($Revision: 1.250 $) [1];
 
 =head1 NAME
 
@@ -123,6 +123,14 @@ sub new {
         %{$Self},
     );
 
+    # load change number generator
+    my $GeneratorModule = $Self->{ConfigObject}->Get('ITSMChange::NumberGenerator')
+        || 'Kernel::System::ITSMChange::Number::DateChecksum';
+    if ( !$Self->{MainObject}->Require($GeneratorModule) ) {
+        die "Can't load change number generator backend module $GeneratorModule! $@";
+    }
+    push @ISA, $GeneratorModule;
+
     # get the cache TTL (in seconds)
     $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
@@ -209,7 +217,7 @@ sub ChangeAdd {
     );
 
     # create a new change number
-    my $ChangeNumber = $Self->_ChangeNumberCreate();
+    my $ChangeNumber = $Self->ChangeNumberCreate();
 
     # get initial change state id
     my $ChangeStateID = delete $Param{ChangeStateID};
@@ -3000,133 +3008,6 @@ sub _CheckChangeCIPIDs {
     return 1;
 }
 
-=item _ChangeNumberCreate()
-
-Create a new unique change number. Used in ChangeAdd().
-
-    my $ChangeNumber = $ChangeObject->_ChangeNumberCreate();
-
-=cut
-
-sub _ChangeNumberCreate {
-    my ( $Self, %Param ) = @_;
-
-    # get needed config options
-    my $CounterLog = $Self->{ConfigObject}->Get('ITSMChange::CounterLog');
-    my $SystemID   = $Self->{ConfigObject}->Get('SystemID');
-
-    # define number of maximum loops if created change number exists
-    my $MaxRetryNumber        = 16000;
-    my $LoopProtectionCounter = 0;
-
-    # try to create a unique change number for up to $MaxRetryNumber times
-    while ( $LoopProtectionCounter <= $MaxRetryNumber ) {
-
-        # get current time
-        my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
-            SystemTime => $Self->{TimeObject}->SystemTime(),
-        );
-
-        # read count
-        my $Count      = 0;
-        my $LastModify = '';
-        if ( -f $CounterLog ) {
-            my $ContentSCALARRef = $Self->{MainObject}->FileRead(
-                Location => $CounterLog,
-            );
-            if ( $ContentSCALARRef && ${$ContentSCALARRef} ) {
-                ( $Count, $LastModify ) = split( /;/, ${$ContentSCALARRef} );
-
-                # just debug
-                if ( $Self->{Debug} > 0 ) {
-                    $Self->{LogObject}->Log(
-                        Priority => 'debug',
-                        Message  => "Read counter from $CounterLog: $Count",
-                    );
-                }
-            }
-        }
-
-        # check if we need to reset the counter
-        if ( !$LastModify || $LastModify ne "$Year-$Month-$Day" ) {
-            $Count = 0;
-        }
-
-        # count auto increment
-        $Count++;
-
-        # increase the the counter faster if we are in loop pretection mode
-        $Count += $LoopProtectionCounter;
-
-        my $Content = $Count . ";$Year-$Month-$Day;";
-
-        # write new count
-        my $Write = $Self->{MainObject}->FileWrite(
-            Location => $CounterLog,
-            Content  => \$Content,
-        );
-        if ($Write) {
-            if ( $Self->{Debug} > 0 ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'debug',
-                    Message  => "Write counter: $Count",
-                );
-            }
-        }
-
-        # pad change number with leading '0' to length 5
-        $Count = sprintf "%05d", $Count;
-
-        # create new change number
-        my $ChangeNumber = $Year . $Month . $Day . $SystemID . $Count;
-
-        # calculate a checksum
-        my $ChkSum = 0;
-        my $Mult   = 1;
-        for ( my $i = 0; $i < length($ChangeNumber); ++$i ) {
-            my $Digit = substr( $ChangeNumber, $i, 1 );
-            $ChkSum = $ChkSum + ( $Mult * $Digit );
-            $Mult += 1;
-            if ( $Mult == 3 ) {
-                $Mult = 1;
-            }
-        }
-        $ChkSum %= 10;
-        $ChkSum = 10 - $ChkSum;
-        if ( $ChkSum == 10 ) {
-            $ChkSum = 1;
-        }
-
-        # add checksum to change number
-        $ChangeNumber .= $ChkSum;
-
-        # lookup if change number exists already
-        my $ChangeID = $Self->ChangeLookup(
-            ChangeNumber => $ChangeNumber,
-        );
-
-        # now we have a new unused change number and return it
-        return $ChangeNumber if !$ChangeID;
-
-        # start loop protection mode
-        $LoopProtectionCounter++;
-
-        # create new change number again
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message  => "ChangeNumber ($ChangeNumber) exists! Creating a new one.",
-        );
-    }
-
-    # loop was running too long
-    $Self->{LogObject}->Log(
-        Priority => 'error',
-        Message  => "LoopProtectionCounter is now $LoopProtectionCounter!"
-            . " Stopped ChangeNumberCreate()!",
-    );
-    return;
-}
-
 =item _CheckChangeParams()
 
 Checks the params to ChangeAdd() and ChangeUpdate().
@@ -3665,6 +3546,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.249 $ $Date: 2010-06-25 12:10:51 $
+$Revision: 1.250 $ $Date: 2010-06-29 12:41:36 $
 
 =cut
