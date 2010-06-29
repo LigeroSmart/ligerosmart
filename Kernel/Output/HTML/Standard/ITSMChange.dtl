@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.28 2010-06-29 12:49:35 sb Exp $
+# $Id: ITSMChange.dtl,v 1.29 2010-06-29 12:50:30 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,8 +28,8 @@
         height: 100%;
     }
     div.lines_scale {
-        margin-left: 62px;
-        padding-left: 62px;
+        margin-left: $QData{"LabelMargin"}px;
+        padding-left: $QData{"LabelMargin"}px;
         height: 100%;
         position: relative;
     }
@@ -60,15 +60,15 @@
 /* <!-- dtl:block:CSSTimeLine --> */
 
     div.label {
-        width: 60px;
+        width: $QData{"LabelWidth"}px;
         margin-right: 2px;
         float: left;
-        text-align: center;
+        text-align: right;
         position: relative;
     }
 
     div.workorder {
-        margin-left: 62px;
+        margin-left: $QData{"LabelMargin"}px;
     }
 
     div.workorder a {
@@ -237,6 +237,12 @@
             <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
             <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
                 |--> $QData{"WorkOrderNumber"}.
+<!-- dtl:block:WorkOrderItemState -->
+                - $Text{"$Data{"WorkOrderState"}"}
+<!-- dtl:block:WorkOrderItemState -->
+<!-- dtl:block:WorkOrderItemTitle -->
+                - $QData{"WorkOrderTitle","20"}
+<!-- dtl:block:WorkOrderItemTitle -->
             </a>
         </div>
 <!-- dtl:block:WorkOrderItemGraph -->
@@ -318,7 +324,7 @@
     </div>
 
 <!-- dtl:block:Scale -->
-    <div style="padding-left: 62px;">
+    <div style="padding-left: $QData{"LabelMargin"}px;">
         <div class="scale">
             <div class="scale_entry scale_0 scale_entry_tail">$TimeLong{"$Data{"StartTime"}"}</div>
 <!-- dtl:block:ScaleLabel -->

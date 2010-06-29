@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.41 2010-06-22 00:20:24 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.42 2010-06-29 12:50:30 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =over 4
 
@@ -222,10 +222,25 @@ sub ITSMChangeBuildWorkOrderGraph {
         }
     }
 
-    # load graph sceleton
+    # compute effecive label width
+    my $LabelWidth = 60;
+    if ( $ChangeZoomConfig->{WorkOrderState} && $ChangeZoomConfig->{WorkOrderTitle} ) {
+        $LabelWidth += 180;
+    }
+    elsif ( $ChangeZoomConfig->{WorkOrderState} ) {
+        $LabelWidth += 70;
+    }
+    elsif ( $ChangeZoomConfig->{WorkOrderTitle} ) {
+        $LabelWidth += 125;
+    }
+
+    # load graph skeleton
     $Self->Block(
         Name => 'WorkOrderGraph',
-        Data => {},
+        Data => {
+            LabelWidth  => $LabelWidth,
+            LabelMargin => $LabelWidth + 2,
+        },
     );
 
     # create color definitions for all configured workorder types
@@ -320,9 +335,10 @@ sub ITSMChangeBuildWorkOrderGraph {
 
     # build scale of graph
     $Self->_ITSMChangeGetChangeScale(
-        StartTime => $Time{StartTime},
-        EndTime   => $Time{EndTime},
-        Ticks     => $ChangeTicks,
+        StartTime   => $Time{StartTime},
+        EndTime     => $Time{EndTime},
+        Ticks       => $ChangeTicks,
+        LabelMargin => $LabelWidth + 2,
     );
 
     # render graph and return HTML with ITSMChange.dtl template
@@ -979,6 +995,7 @@ sub _ITSMChangeGetChangeScale {
         Name => 'Scale',
         Data => {
             %ScaleName,
+            LabelMargin => $Param{LabelMargin},
         },
     );
 
@@ -1035,6 +1052,29 @@ sub _ITSMChangeGetWorkOrderGraph {
             %{$WorkOrder},
         },
     );
+
+    # get config settings
+    my $ChangeZoomConfig = $Self->{ConfigObject}->Get('ITSMChange::Frontend::AgentITSMChangeZoom');
+
+    # add workorder state
+    if ( $ChangeZoomConfig->{WorkOrderState} ) {
+        $Self->Block(
+            Name => 'WorkOrderItemState',
+            Data => {
+                %{$WorkOrder},
+            },
+        );
+    }
+
+    # add workorder title
+    if ( $ChangeZoomConfig->{WorkOrderTitle} ) {
+        $Self->Block(
+            Name => 'WorkOrderItemTitle',
+            Data => {
+                %{$WorkOrder},
+            },
+        );
+    }
 
     # check if ticks are calculated
     return if !$Param{Ticks};
