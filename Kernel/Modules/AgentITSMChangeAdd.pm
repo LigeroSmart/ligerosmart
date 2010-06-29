@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.64 2010-06-25 12:10:51 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.65 2010-06-29 13:36:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -908,7 +908,10 @@ sub Run {
     }
 
     # build change freetext java script check
+    NUMBER:
     for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
 
         # java script check for required change free text fields by form submit
         if ( $Self->{Config}->{ChangeFreeText}->{$Number} == 2 ) {
