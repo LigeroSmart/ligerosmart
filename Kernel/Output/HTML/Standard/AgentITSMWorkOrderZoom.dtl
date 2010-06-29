@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.42 2010-04-27 20:45:04 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.43 2010-06-29 13:55:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@
             -
 <!-- dtl:block:MenuItemSplit -->
 <!-- dtl:block:MenuItem -->
-            <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem" title="$Text{"$QData{"Description"}"}">$Text{"$QData{"Name"}"}</a>
+            <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
 <!-- dtl:block:MenuItem -->
 <!-- dtl:block:Menu -->
         </td>
@@ -47,7 +47,7 @@
                 </colgroup>
                 <tr>
                     <td style="text-align:center;">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$Data{"ChangeState"}"}" alt="$Text{"$Data{"ChangeState"}"}">
                     </td>
                     <td>
                         <span style="font-weight:bold;">
@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <td style="text-align:center;">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
                     </td>
                     <td>
                         <span style="font-weight:bold; font-size:10px; font-style:italic;">
@@ -149,12 +149,12 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <div title="$Text{"$QData{"WorkOrderState"}"}">
+                                        <div title="$Text{"$Data{"WorkOrderState"}"}">
                                             $Text{"$Data{"WorkOrderState"}"}&nbsp;&nbsp;
                                         </div>
                                     </td>
                                     <td>
-                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -279,6 +279,57 @@
                 <tr>
                     <td colspan="2">&nbsp;</td>
                 </tr>
+
+# show WorkOrderFreeKey and WorkOrderFreeText fields
+<!-- dtl:block:WorkOrderFreeText -->
+                <tr valign="top">
+                    <td class="mainkey">$QData{"WorkOrderFreeKey","25"}:</td>
+                    <td class="mainvalue">
+<!-- dtl:block:WorkOrderFreeTextPlain -->
+                        <div title="$QData{"WorkOrderFreeText"}">$QData{"WorkOrderFreeText","25"}</div>
+<!-- dtl:block:WorkOrderFreeTextPlain -->
+<!-- dtl:block:WorkOrderFreeTextLink -->
+                        <div title="$QData{"WorkOrderFreeText"}"><a href="$Data{"WorkOrderFreeTextLink"}" target="_blank">$QData{"WorkOrderFreeText","25"}</a></div>
+<!-- dtl:block:WorkOrderFreeTextLink -->
+                    </td>
+                </tr>
+<!-- dtl:block:WorkOrderFreeText -->
+<!-- dtl:block:WorkOrderFreeTextSpacer -->
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+<!-- dtl:block:WorkOrderFreeTextSpacer -->
+
+# #############################################################
+# example for customization of single workorder freetext fields
+# #############################################################
+#<!-- dtl:block:WorkOrderFreeText1 -->
+#          <tr valign="top">
+#            <td class="mainkey">$QData{"WorkOrderFreeKey1","25"}:</td>
+#            <td class="mainvalue">
+#<!-- dtl:block:WorkOrderFreeTextPlain1 -->
+#              <div title="$QData{"WorkOrderFreeText1"}">$QData{"WorkOrderFreeText1","25"}</div>
+#<!-- dtl:block:WorkOrderFreeTextPlain1 -->
+#<!-- dtl:block:WorkOrderFreeTextLink1 -->
+#              <div title="$QData{"WorkOrderFreeText1"}"><a href="$Config{"WorkOrderFreeTextLink1"}" target="_blank">$QData{"WorkOrderFreeText1","25"}</a></div>
+#<!-- dtl:block:WorkOrderFreeTextLink1 -->
+#          </tr>
+#<!-- dtl:block:WorkOrderFreeText1 -->
+#
+#<!-- dtl:block:WorkOrderFreeText2 -->
+#          <tr valign="top">
+#            <td class="mainkey">$QData{"WorkOrderFreeKey2","25"}:</td>
+#            <td class="mainvalue">
+#<!-- dtl:block:WorkOrderFreeTextPlain2 -->
+#              <div title="$QData{"WorkOrderFreeText2"}">$QData{"WorkOrderFreeText2","25"}</div>
+#<!-- dtl:block:WorkOrderFreeTextPlain2 -->
+#<!-- dtl:block:WorkOrderFreeTextLink2 -->
+#              <div title="$QData{"WorkOrderFreeText2"}"><a href="$Config{"WorkOrderFreeTextLink2"}" target="_blank">$QData{"WorkOrderFreeText2","25"}</a></div>
+#<!-- dtl:block:WorkOrderFreeTextLink2 -->
+#          </tr>
+#<!-- dtl:block:WorkOrderFreeText2 -->
+# ###########################################################
+
                 <tr>
                     <td><b>$Text{"Change Builder"}:</b></td>
                     <td>

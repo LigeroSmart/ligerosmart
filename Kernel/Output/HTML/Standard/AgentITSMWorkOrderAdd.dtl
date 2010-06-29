@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.52 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.53 2010-06-29 13:51:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,6 +54,16 @@ function submit_compose() {
     if ( !CheckStartBeforeEnd( 'PlannedStartTime', 'PlannedEndTime', StartAfterEndMsg ) ) {
         return false;
     }
+
+<!-- dtl:block:WorkOrderFreeTextCheckJs -->
+    // check the required freetext fields
+    if (document.compose.$Data{"WorkOrderFreeTextField"}.value == "") {
+        alert('$JSText{"A required field is:"} ' + document.compose.$Data{"WorkOrderFreeKeyField"}.value + '!');
+        document.compose.$Data{"WorkOrderFreeTextField"}.focus();
+
+        return false;
+    }
+<!-- dtl:block:WorkOrderFreeTextCheckJs -->
 
     return true;
 }
@@ -198,6 +208,53 @@ $Include{"RichTextEditorITSM"}
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
+<!-- dtl:block:WorkOrderFreeText -->
+                                <tr>
+                                    <td class="contentkey">$Data{"WorkOrderFreeKeyField"}:</td>
+                                    <td class="contentvalue">
+                                        $Data{"WorkOrderFreeTextField"}
+<!-- dtl:block:InvalidWorkOrderFreeText -->
+                                        <br />
+                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidWorkOrderFreeText -->
+                                    </td>
+                                </tr>
+<!-- dtl:block:WorkOrderFreeText -->
+<!-- dtl:block:WorkOrderFreeTextSpacer -->
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+<!-- dtl:block:WorkOrderFreeTextSpacer -->
+# #############################################################
+# example for customization of single workorder freetext fields
+# #############################################################
+#<!-- dtl:block:WorkOrderFreeText1 -->
+#                                <tr>
+#                                  <td class="contentkey">$Data{"WorkOrderFreeKeyField1"}:</td>
+#                                   <td class="contentvalue">
+#                                       $Data{"WorkOrderFreeTextField1"}
+#<!-- dtl:block:InvalidWorkOrderFreeText1 -->
+#                                       <br />
+#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
+#<!-- dtl:block:InvalidWorkOrderFreeText1 -->
+#                                  </td>
+#                                </tr>
+#<!-- dtl:block:WorkOrderFreeText1 -->
+#
+#
+#<!-- dtl:block:WorkOrderFreeText2 -->
+#                                <tr>
+#                                  <td colspan="2" class="contentkey">$Data{"WorkOrderFreeKeyField2"}:</td>
+#                                  <td class="contentvalue">
+#                                      $Data{"WorkOrderFreeTextField2"}
+#<!-- dtl:block:InvalidWorkOrderFreeText2 -->
+#                                       <br />
+#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
+#<!-- dtl:block:InvalidWorkOrderFreeText2 -->
+#                                  </td>
+#                                </tr>
+#<!-- dtl:block:WorkOrderFreeText2 -->
+# ####################################################
                                 <tr>
                                     <td class="contentkey">
                                         $Text{"PlannedStartTime"}:

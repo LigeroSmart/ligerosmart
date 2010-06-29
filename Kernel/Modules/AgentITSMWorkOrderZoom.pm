@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.38 2010-02-02 11:05:58 bes Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.39 2010-06-29 13:49:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -279,6 +279,89 @@ sub Run {
                 Name => 'Empty' . $BlockName,
             );
         }
+    }
+
+    # get all workorder freekey and freetext numbers from workorder
+    my %WorkOrderFreeTextFields;
+    ATTRIBUTE:
+    for my $Attribute ( keys %{$WorkOrder} ) {
+
+        # get the freekey or freetext number
+        if ( $Attribute =~ m{ ( WorkOrderFreeKey | WorkOrderFreeText ) ( \d+ ) }xms ) {
+
+            # do not show empty freetext values
+            next ATTRIBUTE if $WorkOrder->{$Attribute} eq '';
+
+            # remember the freetext number
+            my $Number = $2;
+            $WorkOrderFreeTextFields{$Number}++;
+        }
+    }
+
+    # show the workorder freetext fields
+    for my $Number ( sort { $a <=> $b } keys %WorkOrderFreeTextFields ) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderFreeText' . $Number,
+            Data => {
+                %{$WorkOrder},
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderFreeText',
+            Data => {
+                WorkOrderFreeKey  => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
+                WorkOrderFreeText => $WorkOrder->{ 'WorkOrderFreeText' . $Number },
+            },
+        );
+
+        # show freetext field as link
+        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeText' . $Number . '::Link' ) ) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeTextLink' . $Number,
+                Data => {
+                    %{$WorkOrder},
+                },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeTextLink',
+                Data => {
+                    WorkOrderFreeTextLink => $Self->{ConfigObject}->Get(
+                        'WorkOrderFreeText' . $Number . '::Link'
+                    ),
+                    WorkOrderFreeKey  => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
+                    WorkOrderFreeText => $WorkOrder->{ 'WorkOrderFreeText' . $Number },
+                },
+            );
+        }
+
+        # show freetext field as plain text
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeTextPlain' . $Number,
+                Data => {
+                    %{$WorkOrder},
+                },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeTextPlain',
+                Data => {
+                    %{$WorkOrder},
+                    WorkOrderFreeKey  => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
+                    WorkOrderFreeText => $WorkOrder->{ 'WorkOrderFreeText' . $Number },
+                },
+            );
+        }
+    }
+
+    # show space between workorder freetext fields and the following fields
+    if (%WorkOrderFreeTextFields) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderFreeTextSpacer',
+            Data => {},
+        );
     }
 
     # get change builder user
