@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.126 2010-06-28 15:49:05 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.127 2010-06-29 00:58:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -3019,59 +3019,59 @@ for my $OrderByColumn (qw(PlannedStartTime PlannedEndTime ActualStartTime Actual
 
 my @TimeSearchTests = (
     {
-        Description => 'First workorder in the first century.',
+        Description => 'First workorder in the 19th century.',
         SourceData  => {
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-01-01 00:00:00',
-                PlannedEndTime   => '1009-01-30 00:00:00',
-                ActualStartTime  => '1009-01-02 00:00:00',
-                ActualEndTime    => '1009-01-29 00:00:00',
+                PlannedStartTime => '1909-01-01 00:00:00',
+                PlannedEndTime   => '1909-01-30 00:00:00',
+                ActualStartTime  => '1909-01-02 00:00:00',
+                ActualEndTime    => '1909-01-29 00:00:00',
             },
         },
     },
     {
-        Description => 'Second workorder in the 11th century.',
+        Description => 'Second workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-01-10 00:00:00',
-                PlannedEndTime   => '1009-01-20 00:00:00',
-                ActualStartTime  => '1009-01-11 00:00:00',
-                ActualEndTime    => '1009-01-19 00:00:00',
+                PlannedStartTime => '1909-01-10 00:00:00',
+                PlannedEndTime   => '1909-01-20 00:00:00',
+                ActualStartTime  => '1909-01-11 00:00:00',
+                ActualEndTime    => '1909-01-19 00:00:00',
             },
         },
     },
     {
-        Description => 'Third change with one workorder in the 11th century.',
+        Description => 'Third change with one workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-02-01 00:00:00',
-                PlannedEndTime   => '1009-02-27 00:00:00',
-                ActualStartTime  => '1009-02-02 00:00:00',
-                ActualEndTime    => '1009-02-26 00:00:00',
+                PlannedStartTime => '1909-02-01 00:00:00',
+                PlannedEndTime   => '1909-02-27 00:00:00',
+                ActualStartTime  => '1909-02-02 00:00:00',
+                ActualEndTime    => '1909-02-26 00:00:00',
             },
         },
     },
     {
-        Description => 'Fourth workorder in the 11th century.',
+        Description => 'Fourth workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 UserID => 1,
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-03-01 00:00:00',
-                PlannedEndTime   => '1009-04-07 00:00:00',
-                ActualStartTime  => '1009-02-20 00:00:00',
-                ActualEndTime    => '1009-05-01 00:00:00',
+                PlannedStartTime => '1909-03-01 00:00:00',
+                PlannedEndTime   => '1909-04-07 00:00:00',
+                ActualStartTime  => '1909-02-20 00:00:00',
+                ActualEndTime    => '1909-05-01 00:00:00',
             },
         },
     },
@@ -3084,8 +3084,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-01-01 00:00:00',
-                PlannedStartTimeOlderDate => '1009-01-02 00:00:00',
+                PlannedStartTimeNewerDate => '1909-01-01 00:00:00',
+                PlannedStartTimeOlderDate => '1909-01-02 00:00:00',
             },
         },
         ReferenceData => [
@@ -3097,8 +3097,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1008-12-01 00:00:00',
-                PlannedStartTimeOlderDate => '1008-12-31 00:00:00',
+                PlannedStartTimeNewerDate => '1908-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3108,7 +3108,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-02-01 00:00:00',
+                PlannedStartTimeNewerDate => '1909-02-01 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -3118,7 +3118,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
+                PlannedStartTimeNewerDate => '1909-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3128,7 +3128,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeOlderDate => '1009-01-10 00:00:00',
+                PlannedStartTimeOlderDate => '1909-01-10 00:00:00',
             },
         },
         ReferenceData => [ 0, 1, ],
@@ -3138,7 +3138,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeOlderDate => '1008-01-31 00:00:00',
+                PlannedStartTimeOlderDate => '1908-01-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3148,8 +3148,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
-                PlannedStartTimeOlderDate => '1008-12-01 00:00:00',
+                PlannedStartTimeNewerDate => '1909-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3163,8 +3163,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-01-30 00:00:00',
-                PlannedEndTimeOlderDate => '1009-01-31 00:00:00',
+                PlannedEndTimeNewerDate => '1909-01-30 00:00:00',
+                PlannedEndTimeOlderDate => '1909-01-31 00:00:00',
             },
         },
         ReferenceData => [
@@ -3176,8 +3176,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1008-12-01 00:00:00',
-                PlannedEndTimeOlderDate => '1008-12-31 00:00:00',
+                PlannedEndTimeNewerDate => '1908-12-01 00:00:00',
+                PlannedEndTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3187,7 +3187,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-02-27 00:00:00',
+                PlannedEndTimeNewerDate => '1909-02-27 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -3197,7 +3197,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
+                PlannedEndTimeNewerDate => '1909-05-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3207,7 +3207,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeOlderDate => '1009-01-25 00:00:00',
+                PlannedEndTimeOlderDate => '1909-01-25 00:00:00',
             },
         },
         ReferenceData => [ 1, ],
@@ -3217,7 +3217,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeOlderDate => '1008-01-31 00:00:00',
+                PlannedEndTimeOlderDate => '1908-01-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3227,8 +3227,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
-                PlannedEndTimeOlderDate => '1008-12-01 00:00:00',
+                PlannedEndTimeNewerDate => '1909-05-01 00:00:00',
+                PlannedEndTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3242,8 +3242,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-01-02 00:00:00',
-                ActualStartTimeOlderDate => '1009-01-02 00:00:00',
+                ActualStartTimeNewerDate => '1909-01-02 00:00:00',
+                ActualStartTimeOlderDate => '1909-01-02 00:00:00',
             },
         },
         ReferenceData => [
@@ -3255,8 +3255,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1008-12-01 00:00:00',
-                ActualStartTimeOlderDate => '1008-12-31 00:00:00',
+                ActualStartTimeNewerDate => '1908-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3266,7 +3266,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-02-01 00:00:00',
+                ActualStartTimeNewerDate => '1909-02-01 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -3276,7 +3276,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-12-30 00:00:00',
+                ActualStartTimeNewerDate => '1909-12-30 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3286,7 +3286,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeOlderDate => '1009-01-12 00:00:00',
+                ActualStartTimeOlderDate => '1909-01-12 00:00:00',
             },
         },
         ReferenceData => [ 0, 1, ],
@@ -3296,7 +3296,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeOlderDate => '1008-01-31 00:00:00',
+                ActualStartTimeOlderDate => '1908-01-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3306,8 +3306,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-12-01 00:00:00',
-                ActualStartTimeOlderDate => '1008-12-01 00:00:00',
+                ActualStartTimeNewerDate => '1909-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3321,8 +3321,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-01-28 00:00:00',
-                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+                ActualEndTimeNewerDate => '1909-01-28 00:00:00',
+                ActualEndTimeOlderDate => '1909-01-29 00:00:00',
             },
         },
         ReferenceData => [
@@ -3334,8 +3334,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1008-12-01 00:00:00',
-                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+                ActualEndTimeNewerDate => '1908-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3345,7 +3345,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-02-26 00:00:00',
+                ActualEndTimeNewerDate => '1909-02-26 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -3355,7 +3355,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
+                ActualEndTimeNewerDate => '1909-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3365,7 +3365,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+                ActualEndTimeOlderDate => '1909-01-29 00:00:00',
             },
         },
         ReferenceData => [ 0, 1, ],
@@ -3375,7 +3375,7 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeOlderDate => '1008-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -3385,8 +3385,8 @@ my @TimeSearchTests = (
         SourceData  => {
             WorkOrderSearch => {
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
-                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+                ActualEndTimeNewerDate => '1909-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],

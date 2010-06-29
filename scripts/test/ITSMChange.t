@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.184 2010-06-29 00:06:06 ub Exp $
+# $Id: ITSMChange.t,v 1.185 2010-06-29 00:55:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -4229,7 +4229,7 @@ my $TSTChangeTitle = 'TimeSearchTest - Title - ' . $UniqueSignature;
 my @TSTChangeIDs;
 my @TimeSearchTests = (
     {
-        Description => 'Insert change with one workorder in the 11th century.',
+        Description => 'Insert change with one workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 ChangeTitle => $TSTChangeTitle,
@@ -4237,15 +4237,15 @@ my @TimeSearchTests = (
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-01-01 00:00:00',
-                PlannedEndTime   => '1009-01-30 00:00:00',
-                ActualStartTime  => '1009-01-02 00:00:00',
-                ActualEndTime    => '1009-01-29 00:00:00',
+                PlannedStartTime => '1909-01-01 00:00:00',
+                PlannedEndTime   => '1909-01-30 00:00:00',
+                ActualStartTime  => '1909-01-02 00:00:00',
+                ActualEndTime    => '1909-01-29 00:00:00',
             },
         },
     },
     {
-        Description => 'Insert change with one workorder in the 11th century.',
+        Description => 'Insert change with one workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 ChangeTitle => $TSTChangeTitle,
@@ -4253,15 +4253,15 @@ my @TimeSearchTests = (
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-01-10 00:00:00',
-                PlannedEndTime   => '1009-01-20 00:00:00',
-                ActualStartTime  => '1009-01-11 00:00:00',
-                ActualEndTime    => '1009-01-19 00:00:00',
+                PlannedStartTime => '1909-01-10 00:00:00',
+                PlannedEndTime   => '1909-01-20 00:00:00',
+                ActualStartTime  => '1909-01-11 00:00:00',
+                ActualEndTime    => '1909-01-19 00:00:00',
             },
         },
     },
     {
-        Description => 'Insert change with one workorder in the 11th century.',
+        Description => 'Insert change with one workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 ChangeTitle => $TSTChangeTitle,
@@ -4269,15 +4269,15 @@ my @TimeSearchTests = (
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-02-01 00:00:00',
-                PlannedEndTime   => '1009-02-27 00:00:00',
-                ActualStartTime  => '1009-02-02 00:00:00',
-                ActualEndTime    => '1009-02-26 00:00:00',
+                PlannedStartTime => '1909-02-01 00:00:00',
+                PlannedEndTime   => '1909-02-27 00:00:00',
+                ActualStartTime  => '1909-02-02 00:00:00',
+                ActualEndTime    => '1909-02-26 00:00:00',
             },
         },
     },
     {
-        Description => 'Insert change with one workorder in the 11th century.',
+        Description => 'Insert change with one workorder in the 19th century.',
         SourceData  => {
             ChangeAdd => {
                 ChangeTitle => $TSTChangeTitle,
@@ -4285,10 +4285,10 @@ my @TimeSearchTests = (
             },
             WorkOrderAdd => {
                 UserID           => 1,
-                PlannedStartTime => '1009-03-01 00:00:00',
-                PlannedEndTime   => '1009-04-07 00:00:00',
-                ActualStartTime  => '1009-02-20 00:00:00',
-                ActualEndTime    => '1009-05-01 00:00:00',
+                PlannedStartTime => '1909-03-01 00:00:00',
+                PlannedEndTime   => '1909-04-07 00:00:00',
+                ActualStartTime  => '1909-02-20 00:00:00',
+                ActualEndTime    => '1909-05-01 00:00:00',
             },
         },
     },
@@ -4302,8 +4302,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-01-01 00:00:00',
-                PlannedStartTimeOlderDate => '1009-01-02 00:00:00',
+                PlannedStartTimeNewerDate => '1909-01-01 00:00:00',
+                PlannedStartTimeOlderDate => '1909-01-02 00:00:00',
             },
         },
         ReferenceData => [
@@ -4316,8 +4316,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1008-12-01 00:00:00',
-                PlannedStartTimeOlderDate => '1008-12-31 00:00:00',
+                PlannedStartTimeNewerDate => '1908-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4328,7 +4328,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-02-01 00:00:00',
+                PlannedStartTimeNewerDate => '1909-02-01 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -4339,7 +4339,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
+                PlannedStartTimeNewerDate => '1909-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4350,7 +4350,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeOlderDate => '1009-01-10 00:00:00',
+                PlannedStartTimeOlderDate => '1909-01-10 00:00:00',
             },
         },
         ReferenceData => [ 0, 1, ],
@@ -4361,7 +4361,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeOlderDate => '1008-01-31 00:00:00',
+                PlannedStartTimeOlderDate => '1908-01-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4372,8 +4372,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle               => $TSTChangeTitle,
                 UserID                    => 1,
-                PlannedStartTimeNewerDate => '1009-12-01 00:00:00',
-                PlannedStartTimeOlderDate => '1008-12-01 00:00:00',
+                PlannedStartTimeNewerDate => '1909-12-01 00:00:00',
+                PlannedStartTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4388,8 +4388,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-01-30 00:00:00',
-                PlannedEndTimeOlderDate => '1009-01-31 00:00:00',
+                PlannedEndTimeNewerDate => '1909-01-30 00:00:00',
+                PlannedEndTimeOlderDate => '1909-01-31 00:00:00',
             },
         },
         ReferenceData => [
@@ -4402,8 +4402,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1008-12-01 00:00:00',
-                PlannedEndTimeOlderDate => '1008-12-31 00:00:00',
+                PlannedEndTimeNewerDate => '1908-12-01 00:00:00',
+                PlannedEndTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4414,7 +4414,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-02-27 00:00:00',
+                PlannedEndTimeNewerDate => '1909-02-27 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -4425,7 +4425,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
+                PlannedEndTimeNewerDate => '1909-05-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4436,7 +4436,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeOlderDate => '1009-01-25 00:00:00',
+                PlannedEndTimeOlderDate => '1909-01-25 00:00:00',
             },
         },
         ReferenceData => [ 1, ],
@@ -4447,7 +4447,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeOlderDate => '1008-01-31 00:00:00',
+                PlannedEndTimeOlderDate => '1908-01-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4458,8 +4458,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle             => $TSTChangeTitle,
                 UserID                  => 1,
-                PlannedEndTimeNewerDate => '1009-05-01 00:00:00',
-                PlannedEndTimeOlderDate => '1008-12-01 00:00:00',
+                PlannedEndTimeNewerDate => '1909-05-01 00:00:00',
+                PlannedEndTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4474,8 +4474,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-01-02 00:00:00',
-                ActualStartTimeOlderDate => '1009-01-02 00:00:00',
+                ActualStartTimeNewerDate => '1909-01-02 00:00:00',
+                ActualStartTimeOlderDate => '1909-01-02 00:00:00',
             },
         },
         ReferenceData => [
@@ -4488,8 +4488,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1008-12-01 00:00:00',
-                ActualStartTimeOlderDate => '1008-12-31 00:00:00',
+                ActualStartTimeNewerDate => '1908-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4500,7 +4500,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-02-01 00:00:00',
+                ActualStartTimeNewerDate => '1909-02-01 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -4511,7 +4511,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-12-30 00:00:00',
+                ActualStartTimeNewerDate => '1909-12-30 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4522,7 +4522,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeOlderDate => '1009-01-12 00:00:00',
+                ActualStartTimeOlderDate => '1909-01-12 00:00:00',
             },
         },
         ReferenceData => [ 0, 1, ],
@@ -4533,7 +4533,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeOlderDate => '1008-01-31 00:00:00',
+                ActualStartTimeOlderDate => '1908-01-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4544,8 +4544,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle              => $TSTChangeTitle,
                 UserID                   => 1,
-                ActualStartTimeNewerDate => '1009-12-01 00:00:00',
-                ActualStartTimeOlderDate => '1008-12-01 00:00:00',
+                ActualStartTimeNewerDate => '1909-12-01 00:00:00',
+                ActualStartTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4560,8 +4560,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-01-28 00:00:00',
-                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+                ActualEndTimeNewerDate => '1909-01-28 00:00:00',
+                ActualEndTimeOlderDate => '1909-01-29 00:00:00',
             },
         },
         ReferenceData => [
@@ -4574,8 +4574,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1008-12-01 00:00:00',
-                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+                ActualEndTimeNewerDate => '1908-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4586,7 +4586,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-02-26 00:00:00',
+                ActualEndTimeNewerDate => '1909-02-26 00:00:00',
             },
         },
         ReferenceData => [ 2, 3, ],
@@ -4597,7 +4597,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
+                ActualEndTimeNewerDate => '1909-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4608,7 +4608,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeOlderDate => '1009-01-29 00:00:00',
+                ActualEndTimeOlderDate => '1909-01-29 00:00:00',
             },
         },
         ReferenceData => [ 0, 1, ],
@@ -4619,7 +4619,7 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeOlderDate => '1008-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1908-12-01 00:00:00',
             },
         },
         ReferenceData => [],
@@ -4630,8 +4630,8 @@ my @TimeSearchTests = (
             ChangeSearch => {
                 ChangeTitle            => $TSTChangeTitle,
                 UserID                 => 1,
-                ActualEndTimeNewerDate => '1009-12-01 00:00:00',
-                ActualEndTimeOlderDate => '1008-12-31 00:00:00',
+                ActualEndTimeNewerDate => '1909-12-01 00:00:00',
+                ActualEndTimeOlderDate => '1908-12-31 00:00:00',
             },
         },
         ReferenceData => [],
