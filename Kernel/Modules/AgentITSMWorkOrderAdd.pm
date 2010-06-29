@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.58 2010-06-29 13:42:40 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.59 2010-06-29 13:48:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -662,7 +662,7 @@ sub Run {
         }
     }
 
-    # show space between priority and workorder freetext if workorder freetext fields are shown
+    # show space after workorder freetext fields
     if ($WorkOrderFreeTextShown) {
 
         $Self->{LayoutObject}->Block(
