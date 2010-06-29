@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.55 2010-04-27 20:36:57 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.56 2010-06-29 13:38:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -114,6 +114,25 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # get configured workorder freetext field numbers
+    my @ConfiguredWorkOrderFreeTextFields
+        = $Self->{WorkOrderObject}->WorkOrderGetConfiguredFreeTextFields();
+
+    # get workorder freetext params
+    my %WorkOrderFreeTextParam;
+    NUMBER:
+    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+
+        # consider only freetext fields which are activated in this frontend
+        next NUMBER if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
+
+        my $Key   = 'WorkOrderFreeKey' . $Number;
+        my $Value = 'WorkOrderFreeText' . $Number;
+
+        $WorkOrderFreeTextParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
+        $WorkOrderFreeTextParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
+    }
+
     # store time related fields in %GetParam
     for my $TimeType (qw(PlannedStartTime PlannedEndTime MoveTime)) {
         for my $TimePart (qw(Used Year Month Day Hour Minute)) {
@@ -125,6 +144,9 @@ sub Run {
     # Remember the reason why saving was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
+
+    # remember the numbers of the workorder freetext fields with validation errors
+    my %WorkOrderFreeTextValidationErrors;
 
     # get meta data for all already uploaded files
     my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
@@ -251,8 +273,22 @@ sub Run {
             push @ValidationErrors, 'InvalidPlannedEffort';
         }
 
+        # check for required workorder freetext fields (if configured)
+        for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+            if (
+                $Self->{Config}->{WorkOrderFreeText}->{$Number}
+                && $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2
+                && $WorkOrderFreeTextParam{ 'WorkOrderFreeText' . $Number } eq ''
+                )
+            {
+
+                # remember the workorder freetext field number with validation errors
+                $WorkOrderFreeTextValidationErrors{$Number}++;
+            }
+        }
+
         # add only when there are no input validation errors
-        if ( !@ValidationErrors ) {
+        if ( !@ValidationErrors && !%WorkOrderFreeTextValidationErrors ) {
             my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
                 ChangeID         => $ChangeID,
                 WorkOrderTitle   => $GetParam{WorkOrderTitle},
@@ -262,6 +298,7 @@ sub Run {
                 WorkOrderTypeID  => $GetParam{WorkOrderTypeID},
                 PlannedEffort    => $GetParam{PlannedEffort},
                 UserID           => $Self->{UserID},
+                %WorkOrderFreeTextParam,
             );
 
             # adding was successful
@@ -539,6 +576,117 @@ sub Run {
             TypeStrg => $WorkOrderTypeDropDown,
         },
     );
+
+# get the workorder freetext config and fillup workorder freetext fields from defaults (if configured)
+    my %WorkOrderFreeTextConfig;
+    NUMBER:
+    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+
+        TYPE:
+        for my $Type (qw(WorkOrderFreeKey WorkOrderFreeText)) {
+
+            # get defaults for workorder freetext fields if page is loaded the first time
+            if ( !$Self->{Subaction} ) {
+
+                $WorkOrderFreeTextParam{ $Type . $Number }
+                    ||= $Self->{ConfigObject}->Get( $Type . $Number . '::DefaultSelection' );
+            }
+
+            # get config
+            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
+
+            next TYPE if !$Config;
+            next TYPE if ref $Config ne 'HASH';
+
+            # store the workorder freetext config
+            $WorkOrderFreeTextConfig{ $Type . $Number } = $Config;
+        }
+    }
+
+    # build the workorder freetext HTML
+    my %WorkOrderFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
+        Config                   => \%WorkOrderFreeTextConfig,
+        WorkOrderData            => \%WorkOrderFreeTextParam,
+        ConfiguredFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
+    );
+
+    # show workorder freetext fields
+    my $WorkOrderFreeTextShown;
+    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+
+        # check if this freetext field should be shown in this frontend
+        if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} ) {
+
+            # remember that at least one freetext field is shown
+            $WorkOrderFreeTextShown = 1;
+
+            # show single workorder freetext fields
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeText' . $Number,
+                Data => {
+                    %WorkOrderFreeTextHTML,
+                },
+            );
+
+            # show workorder freetext validation error for single workorder freetext field
+            if ( $WorkOrderFreeTextValidationErrors{$Number} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidWorkOrderFreeText' . $Number,
+                    Data => {
+                        %WorkOrderFreeTextHTML,
+                    },
+                );
+            }
+
+            # show all workorder freetext fields
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeText',
+                Data => {
+                    WorkOrderFreeKeyField =>
+                        $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
+                    WorkOrderFreeTextField =>
+                        $WorkOrderFreeTextHTML{ 'WorkOrderFreeTextField' . $Number },
+                },
+            );
+
+            # show all workorder freetext validation errors
+            if ( $WorkOrderFreeTextValidationErrors{$Number} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InvalidWorkOrderFreeText',
+                    Data => {
+                        %WorkOrderFreeTextHTML,
+                    },
+                );
+            }
+        }
+    }
+
+    # show space between priority and workorder freetext if workorder freetext fields are shown
+    if ($WorkOrderFreeTextShown) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderFreeTextSpacer',
+            Data => {},
+        );
+    }
+
+    # build workorder freetext java script check
+    NUMBER:
+    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+
+        next NUMBER if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
+
+        # java script check for required workorder free text fields by form submit
+        if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2 ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'WorkOrderFreeTextCheckJs',
+                Data => {
+                    WorkOrderFreeKeyField  => 'WorkOrderFreeKey' . $Number,
+                    WorkOrderFreeTextField => 'WorkOrderFreeText' . $Number,
+                },
+            );
+        }
+    }
 
     # set the time selections
     for my $TimeType (qw(PlannedStartTime PlannedEndTime)) {
