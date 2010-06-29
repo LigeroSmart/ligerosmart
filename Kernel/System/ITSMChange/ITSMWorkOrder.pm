@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.109 2010-06-28 16:06:03 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.110 2010-06-29 13:17:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.109 $) [1];
+$VERSION = qw($Revision: 1.110 $) [1];
 
 =head1 NAME
 
@@ -2607,7 +2607,7 @@ sub WorkOrderGetConfiguredFreeTextFields {
     }
 
     # get maximum number of workorder freetext fields
-    my $MaxNumber = $Self->{ConfigObject}->Get('ITSWorkOrder::FreeText::MaxNumber');
+    my $MaxNumber = $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber');
 
     # get all configured workorder freekey and freetext numbers
     my @ConfiguredWorkOrderFreeTextFields = ();
@@ -3337,6 +3337,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.109 $ $Date: 2010-06-28 16:06:03 $
+$Revision: 1.110 $ $Date: 2010-06-29 13:17:45 $
 
 =cut
