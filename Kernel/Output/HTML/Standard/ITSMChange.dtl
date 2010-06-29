@@ -1,8 +1,8 @@
 # --
 # ITSMChange.dtl - provides HTML elements for work order graph
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.27 2010-04-27 20:45:04 ub Exp $
+# $Id: ITSMChange.dtl,v 1.28 2010-06-29 12:49:35 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -234,7 +234,7 @@
 
 <!-- dtl:block:WorkOrderItem -->
         <div class="label" title="$QData{"WorkOrderLabel"}">
-            <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+            <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
             <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
                 |--> $QData{"WorkOrderNumber"}.
             </a>
@@ -265,11 +265,11 @@
                         </tr>
                         <tr class="searchpassive">
                             <td class="contentkey">$Text{"State"}:</td>
-                            <td class="contentvalue">$Text{"$QData{"WorkOrderState"}"}</td>
+                            <td class="contentvalue">$Text{"$Data{"WorkOrderState"}"}</td>
                         </tr>
                         <tr class="searchactive">
                             <td class="contentkey">$Text{"Type"}:</td>
-                            <td class="contentvalue">$Text{"$QData{"WorkOrderType"}"}</td>
+                            <td class="contentvalue">$Text{"$Data{"WorkOrderType"}"}</td>
                         </tr>
                         <tr class="searchpassive">
                             <td class="contentkey">$Text{"WorkOrderAgent"}:</td>
