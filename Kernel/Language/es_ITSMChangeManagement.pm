@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.6 2010-05-18 15:02:44 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.7 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -47,6 +47,7 @@ sub Data {
     $Lang->{'Do you really want to delete this template?'} = 'Realmente desea eliminar esta plantilla?';
     $Lang->{'Change Advisory Board'}                = 'Comités de Cambio';
     $Lang->{'CAB'}                                  = 'CAB';
+    $Lang->{'Reset States'}                         = '';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Mis Cambios';

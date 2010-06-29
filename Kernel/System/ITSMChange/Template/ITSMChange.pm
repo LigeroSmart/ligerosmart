@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.5 2010-06-23 08:05:08 ub Exp $
+# $Id: ITSMChange.pm,v 1.6 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,12 +17,13 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Template::ITSMCondition;
+use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -109,6 +110,7 @@ sub new {
         = Kernel::System::ITSMChange::Template::ITSMWorkOrder->new( %{$Self} );
     $Self->{ConditionTemplateObject}
         = Kernel::System::ITSMChange::Template::ITSMCondition->new( %{$Self} );
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
 
     return $Self;
 }
@@ -120,9 +122,10 @@ a serialized string of the datastructure. The change actions
 are "wrapped" within an arrayreference...
 
     my $TemplateString = $TemplateObject->Serialize(
-        ChangeID => 1,
-        UserID   => 1,
-        Return   => 'HASH', # (optional) HASH|STRING default 'STRING'
+        ChangeID   => 1,
+        StateReset => 1, # (optional) reset to default state
+        UserID     => 1,
+        Return     => 'HASH', # (optional) HASH|STRING default 'STRING'
     );
 
 returns
@@ -186,6 +189,17 @@ sub Serialize {
         $CleanChange->{$Attribute} = $Change->{$Attribute};
     }
 
+    # reset change state to default if requested
+    if ( $Param{StateReset} ) {
+
+        # get initial change state id
+        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => 0,
+            Class   => 'ITSM::ChangeManagement::Change::State',
+        );
+        $CleanChange->{ChangeStateID} = $NextStateIDs->[0];
+    }
+
     # add change freekey and freetext fields to list of wanted attributes
     ATTRIBUTE:
     for my $Attribute ( keys %{$Change} ) {
@@ -214,6 +228,7 @@ sub Serialize {
     for my $WorkOrderID ( @{ $Change->{WorkOrderIDs} } ) {
         my $WorkOrder = $Self->{WorkOrderTemplateObject}->Serialize(
             WorkOrderID => $WorkOrderID,
+            StateReset  => $Param{StateReset} || 0,
             UserID      => $Param{UserID},
             Return      => 'HASH',
         );
@@ -583,6 +598,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-06-23 08:05:08 $
+$Revision: 1.6 $ $Date: 2010-06-29 12:56:31 $
 
 =cut

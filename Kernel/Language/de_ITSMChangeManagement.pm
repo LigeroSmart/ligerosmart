@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.75 2010-05-18 15:02:44 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.76 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.75 $) [1];
+$VERSION = qw($Revision: 1.76 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -47,6 +47,7 @@ sub Data {
     $Lang->{'Do you really want to delete this template?'} = 'Möchten Sie diese Vorlage wirklich löschen?';
     $Lang->{'Change Advisory Board'}                = 'Change Advisory Board';
     $Lang->{'CAB'}                                  = 'CAB';
+    $Lang->{'Reset States'}                         = 'Setze Status zurück';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Meine Changes';

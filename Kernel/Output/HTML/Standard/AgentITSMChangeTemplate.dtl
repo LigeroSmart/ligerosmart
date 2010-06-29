@@ -2,7 +2,7 @@
 # AgentITSMChangeTemplate.dtl - provides HTML form for AgentITSMChangeTemplate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTemplate.dtl,v 1.14 2010-05-18 13:54:31 ub Exp $
+# $Id: AgentITSMChangeTemplate.dtl,v 1.15 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,6 +78,14 @@ function submit_compose() {
                                     </td>
                                     <td class="contentvalue">
                                         <input type="text" name="Comment" value="$QData{"Comment"}" size="70" maxlength="250">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="contentkey">
+                                        $Text{"Reset States"}:
+                                    </td>
+                                    <td class="contentvalue">
+                                        <input type="checkbox" name="StateReset" value="1" $QData{"StateReset"}/>
                                     </td>
                                 </tr>
                                 <tr>

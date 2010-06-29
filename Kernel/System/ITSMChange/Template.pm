@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Template.pm,v 1.54 2010-06-15 01:53:34 ub Exp $
+# $Id: Template.pm,v 1.55 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =head1 NAME
 
@@ -1065,6 +1065,7 @@ The method returns a datastructure, serialized with Data::Dumper.
 
     my $ChangeTemplate = $TemplateObject->TemplateSerialize(
         TemplateType => 'ITSMChange',
+        StateReset   => 1, # (optional) reset to default state
         UserID       => 1,
 
         # other options needed depending on the template type
@@ -1395,16 +1396,16 @@ sub _TemplateLoadBackend {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2010-06-15 01:53:34 $
+$Revision: 1.55 $ $Date: 2010-06-29 12:56:31 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTemplate.pm,v 1.9 2010-02-03 12:16:03 bes Exp $
+# $Id: AgentITSMChangeTemplate.pm,v 1.10 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -91,7 +91,7 @@ sub Run {
 
     # store needed parameters in %GetParam to make it reloadable
     my %GetParam;
-    for my $ParamName (qw(TemplateName Comment ValidID)) {
+    for my $ParamName (qw(TemplateName Comment ValidID StateReset)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -112,6 +112,7 @@ sub Run {
             # serialize the change
             my $TemplateContent = $Self->{TemplateObject}->TemplateSerialize(
                 TemplateType => 'ITSMChange',
+                StateReset   => $Param{StateReset} || 0,
                 ChangeID     => $ChangeID,
                 UserID       => $Self->{UserID},
             );
@@ -171,6 +172,11 @@ sub Run {
     # add the validation error messages
     for my $BlockName (@ValidationErrors) {
         $Self->{LayoutObject}->Block( Name => $BlockName );
+    }
+
+    # set checkbox for state reset
+    if ( $GetParam{StateReset} ) {
+        $GetParam{StateReset} = 'checked="checked"';
     }
 
     # start template output

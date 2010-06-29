@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.4 2010-06-23 08:09:23 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.5 2010-06-29 12:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,12 +15,13 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::LinkObject;
 use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -98,9 +99,10 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+    $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+    $Self->{StateMachineObject} = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
 
     return $Self;
 }
@@ -113,6 +115,7 @@ are "wrapped" within a hashreference...
 
     my $TemplateString = $TemplateObject->Serialize(
         WorkOrderID => 1,
+        StateReset  => 1, # (optional) reset to default state
         UserID      => 1,
         Return      => 'HASH', # (optional) HASH|STRING default 'STRING'
     );
@@ -167,6 +170,17 @@ sub Serialize {
         )
     {
         $CleanWorkOrder->{$Attribute} = $WorkOrder->{$Attribute};
+    }
+
+    # reset workorder state to default if requested
+    if ( $Param{StateReset} ) {
+
+        # get initial workorder state id
+        my $NextStateIDs = $Self->{StateMachineObject}->StateTransitionGet(
+            StateID => 0,
+            Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+        );
+        $CleanWorkOrder->{WorkOrderStateID} = $NextStateIDs->[0];
     }
 
     # add workorder freekey and freetext fields to list of wanted attributes
@@ -593,6 +607,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-06-23 08:09:23 $
+$Revision: 1.5 $ $Date: 2010-06-29 12:56:31 $
 
 =cut
