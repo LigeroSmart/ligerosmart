@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.250 2010-06-29 12:41:36 sb Exp $
+# $Id: ITSMChange.pm,v 1.251 2010-06-30 12:08:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.250 $) [1];
+$VERSION = qw($Revision: 1.251 $) [1];
 
 =head1 NAME
 
@@ -1311,6 +1311,10 @@ is ignored.
         Priorities        => [ '1 very low', '2 low' ],                # (optional)
         PriorityIDs       => [ 137, 175 ],                             # (optional)
 
+        # search in change freetext and freekey parameters
+        ChangeFreeKey1    => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1   => 'Earth',                                  # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+
         # search in text fields of workorder object
         WorkOrderTitle            => 'Boot Mailserver',                # (optional)
         WorkOrderInstruction      => 'Press the button.',              # (optional)
@@ -1600,6 +1604,9 @@ sub ChangeSearch {
     my @InnerJoinTables;    # keep track of the tables that need to be inner joined
     my @OuterJoinTables;    # keep track of the tables that need to be outer joined
 
+    # keep track of the tables that need to be inner joined for change freetext fields
+    my @InnerJoinTablesChangeFreeText;
+
     # add string params to the WHERE clause
     my %StringParams = (
 
@@ -1614,6 +1621,28 @@ sub ChangeSearch {
         WorkOrderInstruction => 'wo2.instruction_plain',
         WorkOrderReport      => 'wo2.report_plain',
     );
+
+    # add change freetext fields to %StringParams
+    ARGUMENT:
+    for my $Argument ( sort keys %Param ) {
+
+        next ARGUMENT if $Argument !~ m{ \A ( ChangeFree ( Text | Key ) ( \d+ ) ) \z }xms;
+
+        my $Type   = $2;
+        my $Number = $3;
+
+        # set the table alias and column
+        if ( $Type eq 'Text' ) {
+
+            # change freetext field
+            $StringParams{$Argument} = 'cft' . $Number . '.field_value';
+        }
+        elsif ( $Type eq 'Key' ) {
+
+            # change freekey field
+            $StringParams{$Argument} = 'cfk' . $Number . '.field_value';
+        }
+    }
 
     # add string params to sql-where-array
     STRINGPARAM:
@@ -1653,6 +1682,19 @@ sub ChangeSearch {
 
             # the change_workorder table needs to be joined, when it occurs in the WHERE clause
             push @InnerJoinTables, 'wo2';
+        }
+
+        # add field_id to where clause for change freetext fields
+        if ( $StringParams{$StringParam} =~ m{ \A ( ( cft | cfk ) ( \d+ ) ) }xms ) {
+
+            my $TableAlias = $1;
+            my $Number     = $3;
+
+            # add the field id to the where clause
+            push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
+
+# the change_freetext and change_freekey tables need to be joined, when they occur in the WHERE clause
+            push @InnerJoinTablesChangeFreeText, $TableAlias;
         }
     }
 
@@ -1888,6 +1930,20 @@ sub ChangeSearch {
         $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.change_id = c.id ";
     }
 
+    INNER_JOIN_TABLE_CHANGE_FREETEXT:
+    for my $Table (@InnerJoinTablesChangeFreeText) {
+
+        # change freetext
+        if ( $Table =~ m{ \A cft }xms ) {
+            $SQL .= "INNER JOIN change_freetext $Table ON $Table.change_id = c.id ";
+        }
+
+        # change freekey
+        elsif ( $Table =~ m{ \A cfk }xms ) {
+            $SQL .= "INNER JOIN change_freekey $Table ON $Table.change_id = c.id ";
+        }
+    }
+
     OUTER_JOIN_TABLE:
     for my $Table (@OuterJoinTables) {
 
@@ -1917,7 +1973,12 @@ sub ChangeSearch {
     }
 
     # we need to group whenever there is a join
-    if ( scalar @InnerJoinTables || scalar @OuterJoinTables ) {
+    if (
+        scalar @InnerJoinTables
+        || scalar @InnerJoinTablesChangeFreeText
+        || scalar @OuterJoinTables
+        )
+    {
         $SQL .= 'GROUP BY c.id ';
     }
 
@@ -1952,7 +2013,13 @@ sub ChangeSearch {
         push @IDs, $Row[0];
     }
 
-    if ( $Result eq 'COUNT' && !@InnerJoinTables && !@OuterJoinTables ) {
+    if (
+        $Result eq 'COUNT'
+        && !@InnerJoinTables
+        && !@InnerJoinTablesChangeFreeText
+        && !@OuterJoinTables
+        )
+    {
 
         # return the COUNT(c.id) attribute
         return $IDs[0];
@@ -3546,6 +3613,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.250 $ $Date: 2010-06-29 12:41:36 $
+$Revision: 1.251 $ $Date: 2010-06-30 12:08:55 $
 
 =cut
