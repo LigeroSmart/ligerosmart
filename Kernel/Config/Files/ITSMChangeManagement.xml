@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.216 2010-06-29 13:35:34 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.217 2010-06-30 20:50:34 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -8796,6 +8796,66 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###ChangeFreeText" Required="0" Valid="1">
+        <Description Lang="en">Shown change free text options. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Description Lang="de">Angezeigte Change-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">0</Item>
+                <Item Key="16">0</Item>
+                <Item Key="17">0</Item>
+                <Item Key="18">0</Item>
+                <Item Key="19">0</Item>
+                <Item Key="20">0</Item>
+                <Item Key="21">0</Item>
+                <Item Key="22">0</Item>
+                <Item Key="23">0</Item>
+                <Item Key="24">0</Item>
+                <Item Key="25">0</Item>
+                <Item Key="26">0</Item>
+                <Item Key="27">0</Item>
+                <Item Key="28">0</Item>
+                <Item Key="29">0</Item>
+                <Item Key="30">0</Item>
+                <Item Key="31">0</Item>
+                <Item Key="32">0</Item>
+                <Item Key="33">0</Item>
+                <Item Key="34">0</Item>
+                <Item Key="35">0</Item>
+                <Item Key="36">0</Item>
+                <Item Key="37">0</Item>
+                <Item Key="38">0</Item>
+                <Item Key="39">0</Item>
+                <Item Key="40">0</Item>
+                <Item Key="41">0</Item>
+                <Item Key="42">0</Item>
+                <Item Key="43">0</Item>
+                <Item Key="44">0</Item>
+                <Item Key="45">0</Item>
+                <Item Key="46">0</Item>
+                <Item Key="47">0</Item>
+                <Item Key="48">0</Item>
+                <Item Key="49">0</Item>
+                <Item Key="50">0</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RequestedTime" Required="1" Valid="1">
