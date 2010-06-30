@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.185 2010-06-29 00:55:03 ub Exp $
+# $Id: ITSMChange.t,v 1.186 2010-06-30 12:02:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1816,7 +1816,7 @@ my @ChangeTests = (
                 CreateBy        => $UserIDs[0],
             },
         },
-        SearchTest => [6],
+        SearchTest => [ 6, 69, 70, 71 ],
     },
 
     # test change freetext fields with maximum length
@@ -1907,7 +1907,7 @@ my @ChangeTests = (
                 ChangeFreeText20 => '',
             },
         },
-        SearchTest => [6],
+        SearchTest => [ 6, 69 ],
     },
 
     #------------------------------#
@@ -3674,6 +3674,51 @@ my @ChangeSearchTests = (
             ChangeTitle => 'Test%CIP%' . $UniqueSignature,
         },
         SearchFails => 1,
+    },
+
+    # Nr 69 - Search for change freetext fields
+    {
+        Description => 'Search for change freetext fields',
+        SearchData  => {
+            ChangeFreeKey1  => 'AAA',
+            ChangeFreeText1 => 'BBB',
+            UsingWildcards  => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 70 - Search for change freetext fields
+    {
+        Description => 'Search for change freetext fields',
+        SearchData  => {
+            ChangeFreeKey1  => 'AAA',
+            ChangeFreeText1 => 'BBB',
+            ChangeFreeKey3  => 'EEE',
+            ChangeFreeText4 => 'HHH',
+            UsingWildcards  => 1,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 71 - Search for change freetext fields
+    {
+        Description => 'Search for change freetext fields',
+        SearchData  => {
+            ChangeTitle     => 'Test add change with freetext fields - ' . $UniqueSignature,
+            ChangeFreeKey1  => 'AAA',
+            ChangeFreeText1 => 'BBB',
+            UsingWildcards  => 1,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
     },
 );
 
