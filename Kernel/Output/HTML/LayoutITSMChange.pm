@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.42 2010-06-29 12:50:30 sb Exp $
+# $Id: LayoutITSMChange.pm,v 1.43 2010-06-30 20:53:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =over 4
 
@@ -747,14 +747,6 @@ sub BuildFreeTextHTML {
         return;
     }
 
-    # set additional options for BuildSelection
-    my %SelectData;
-    if ( $Param{NullOption} ) {
-        $SelectData{Size}         = 3;
-        $SelectData{Multiple}     = 1;
-        $SelectData{PossibleNone} = 1;
-    }
-
     # get the config data
     my %Config;
     if ( $Param{Config} ) {
@@ -792,14 +784,28 @@ sub BuildFreeTextHTML {
             # more than one config option exists
             if ( scalar @ConfigKeys > 1 ) {
 
+                # check if NullOption is requested (needed in search forms)
+                my $PossibleNone = 0;
+                if ( $Param{NullOption} ) {
+
+                    # only if data does not already contain a null entry
+                    if (
+                        !$Config{ $Type . 'FreeKey' . $Number }->{''}
+                        || $Config{ $Type . 'FreeKey' . $Number }->{''} ne '-'
+                        )
+                    {
+                        $PossibleNone = 1;
+                    }
+                }
+
                 # build dropdown list
                 $Data{ $Type . 'FreeKeyField' . $Number } = $Self->BuildSelection(
-                    Data        => $Config{ $Type . 'FreeKey' . $Number },
-                    Name        => $Type . 'FreeKey' . $Number,
-                    SelectedID  => $InputData{ $Type . 'FreeKey' . $Number },
-                    Translation => 0,
-                    HTMLQuote   => 1,
-                    %SelectData,
+                    Data         => $Config{ $Type . 'FreeKey' . $Number },
+                    Name         => $Type . 'FreeKey' . $Number,
+                    SelectedID   => $InputData{ $Type . 'FreeKey' . $Number },
+                    Translation  => 0,
+                    HTMLQuote    => 1,
+                    PossibleNone => $PossibleNone,
                 );
             }
 
@@ -872,14 +878,28 @@ sub BuildFreeTextHTML {
         # freetext config exists
         if ( ref $Config{ $Type . 'FreeText' . $Number } eq 'HASH' ) {
 
+            # check if NullOption is requested (needed in search forms)
+            my $PossibleNone = 0;
+            if ( $Param{NullOption} ) {
+
+                # only if data does not already contain a null entry
+                if (
+                    !$Config{ $Type . 'FreeText' . $Number }->{''}
+                    || $Config{ $Type . 'FreeText' . $Number }->{''} ne '-'
+                    )
+                {
+                    $PossibleNone = 1;
+                }
+            }
+
             # build dropdown list
             $Data{ $Type . 'FreeTextField' . $Number } = $Self->BuildSelection(
-                Data        => $Config{ $Type . 'FreeText' . $Number },
-                Name        => $Type . 'FreeText' . $Number,
-                SelectedID  => $InputData{ $Type . 'FreeText' . $Number },
-                Translation => 0,
-                HTMLQuote   => 1,
-                %SelectData,
+                Data         => $Config{ $Type . 'FreeText' . $Number },
+                Name         => $Type . 'FreeText' . $Number,
+                SelectedID   => $InputData{ $Type . 'FreeText' . $Number },
+                Translation  => 0,
+                HTMLQuote    => 1,
+                PossibleNone => $PossibleNone,
             );
         }
         else {
