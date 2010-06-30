@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.54 2010-04-27 20:36:57 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.55 2010-06-30 20:52:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,6 +68,9 @@ sub Run {
 
     # search parameters
     my %GetParam;
+
+    # get configured change freetext field numbers
+    my @ConfiguredChangeFreeTextFields = $Self->{ChangeObject}->ChangeGetConfiguredFreeTextFields();
 
     # load parameters from search profile,
     # this happens when the next result page should be shown, or when the results are reordered
@@ -141,6 +144,20 @@ sub Run {
                 # store in %GetParam
                 $GetParam{$ParamKey} = $ParamVal;
             }
+        }
+
+        # get change freetext params
+        NUMBER:
+        for my $Number (@ConfiguredChangeFreeTextFields) {
+
+            # consider only freetext fields which are activated in this frontend
+            next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
+
+            my $Key   = 'ChangeFreeKey' . $Number;
+            my $Value = 'ChangeFreeText' . $Number;
+
+            $GetParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
+            $GetParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
         }
     }
 
@@ -477,7 +494,8 @@ sub Run {
     $Output .= $Self->_MaskForm(
         %GetParam,
         %ExpandInfo,
-        ValidationErrors => \@ValidationErrors,
+        ValidationErrors               => \@ValidationErrors,
+        ConfiguredChangeFreeTextFields => \@ConfiguredChangeFreeTextFields,
     );
     $Output .= $Self->{LayoutObject}->Footer();
 
@@ -486,6 +504,9 @@ sub Run {
 
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
+
+    # get configured change freetext field numbers
+    my @ConfiguredChangeFreeTextFields = @{ $Param{ConfiguredChangeFreeTextFields} };
 
     # Get a complete list of users
     # for the selection 'ChangeBuilder', 'ChangeManager' and 'created by user'.
@@ -784,6 +805,63 @@ sub _MaskForm {
         $Self->{LayoutObject}->Block(
             Name => 'SearchUserButton1',
         );
+    }
+
+    # get the change freetext config
+    my %ChangeFreeTextConfig;
+    NUMBER:
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        TYPE:
+        for my $Type (qw(ChangeFreeKey ChangeFreeText)) {
+
+            # get config
+            my $Config = $Self->{ConfigObject}->Get( $Type . $Number );
+
+            next TYPE if !$Config;
+            next TYPE if ref $Config ne 'HASH';
+
+            # store the change freetext config
+            $ChangeFreeTextConfig{ $Type . $Number } = $Config;
+        }
+    }
+
+    # build the change freetext HTML
+    my %ChangeFreeTextHTML = $Self->{LayoutObject}->BuildFreeTextHTML(
+        Config                   => \%ChangeFreeTextConfig,
+        ChangeData               => \%Param,
+        ConfiguredFreeTextFields => \@ConfiguredChangeFreeTextFields,
+        NullOption               => 1,
+    );
+
+    # show change freetext area if freetext fields are configured
+    if (
+        @ConfiguredChangeFreeTextFields && grep {$_}
+        values %{ $Self->{Config}->{ChangeFreeText} }
+        )
+    {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ChangeFreeTextArea',
+            Data => {},
+        );
+    }
+
+    # show change freetext fields
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        # check if this freetext field should be shown in this frontend
+        if ( $Self->{Config}->{ChangeFreeText}->{$Number} ) {
+
+            # show all change freetext fields
+            $Self->{LayoutObject}->Block(
+                Name => 'ChangeFreeText',
+                Data => {
+                    ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
+                    ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
+                },
+            );
+        }
     }
 
     # build output

@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.38 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.39 2010-06-30 20:51:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -219,6 +219,29 @@ document.observe( "dom:loaded", function() {
                             </table>
                         </td>
                     </tr>
+<!-- dtl:block:ChangeFreeTextArea -->
+                    <tr>
+                        <td colspan="2" class="contenthead">$Text{"ChangeFreeText"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="contentbody">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="50%">
+                                </colgroup>
+                                <tr>
+<!-- dtl:block:ChangeFreeText -->
+                                    <tr>
+                                        <td class="contentkey">$Data{"ChangeFreeKeyField"}</td>
+                                        <td class="contentvalue">$Data{"ChangeFreeTextField"}</td>
+                                    </tr>
+<!-- dtl:block:ChangeFreeText -->
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+<!-- dtl:block:ChangeFreeTextArea -->
                     <tr>
                         <td class="contenthead">$Text{"ITSM Change"} $Text{"Priority"}</td>
                         <td class="contenthead">$Text{"ITSM Change"} $Text{"Impact"}</td>
@@ -261,7 +284,7 @@ document.observe( "dom:loaded", function() {
                     </tr>
 <!-- dtl:block:TimeSelection -->
                     <tr>
-                        <td colspan="2" class="contenthead">$Text{"$QData{"Title"}"}</td>
+                        <td colspan="2" class="contenthead">$Text{"$Data{"Title"}"}</td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
@@ -272,13 +295,13 @@ document.observe( "dom:loaded", function() {
                     <tr>
                         <td colspan="2" class="contentbody">
                             <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimePoint" name="$QData{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
-                            $Text{"$QData{"Title"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
+                            $Text{"$Data{"Title"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="contentbody">
                             <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimeSlot" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
-                            $Text{"$QData{"Title"}"} $Text{"between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
+                            $Text{"$Data{"Title"}"} $Text{"between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
 <!-- dtl:block:InvalidTimeSlot -->
                             <br />
                             <font color="red" size="-2">$Text{"Input invalid"}</font>
