@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.111 2010-06-30 12:46:23 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.112 2010-06-30 12:49:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.111 $) [1];
+$VERSION = qw($Revision: 1.112 $) [1];
 
 =head1 NAME
 
@@ -1221,10 +1221,10 @@ sub WorkOrderSearch {
     ARGUMENT:
     for my $Argument ( sort keys %Param ) {
 
-        next ARGUMENT if $Argument !~ m{ \A ( WorkOrderFree ( Text | Key ) ( \d+ ) ) \z }xms;
+        next ARGUMENT if $Argument !~ m{ \A WorkOrderFree ( Text | Key ) ( \d+ ) \z }xms;
 
-        my $Type   = $2;
-        my $Number = $3;
+        my $Type   = $1;
+        my $Number = $2;
 
         # set the table alias and column
         if ( $Type eq 'Text' ) {
@@ -3394,6 +3394,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.111 $ $Date: 2010-06-30 12:46:23 $
+$Revision: 1.112 $ $Date: 2010-06-30 12:49:44 $
 
 =cut
