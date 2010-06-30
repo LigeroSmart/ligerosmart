@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.253 2010-06-30 12:11:18 ub Exp $
+# $Id: ITSMChange.pm,v 1.254 2010-06-30 12:26:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.253 $) [1];
+$VERSION = qw($Revision: 1.254 $) [1];
 
 =head1 NAME
 
@@ -1311,7 +1311,7 @@ is ignored.
         Priorities        => [ '1 very low', '2 low' ],                # (optional)
         PriorityIDs       => [ 137, 175 ],                             # (optional)
 
-        # search in change freetext and freekey parameters
+        # search in change freetext and freekey fields
         ChangeFreeKey1    => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
         ChangeFreeText1   => 'Earth',                                  # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
 
@@ -3614,6 +3614,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.253 $ $Date: 2010-06-30 12:11:18 $
+$Revision: 1.254 $ $Date: 2010-06-30 12:26:21 $
 
 =cut
