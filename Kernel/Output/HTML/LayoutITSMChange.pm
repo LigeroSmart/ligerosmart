@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.43 2010-06-30 20:53:46 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.44 2010-06-30 21:20:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =over 4
 
@@ -108,7 +108,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     # get smallest start time
     if ( !$Time{StartTime} ) {
         $Time{StartTime}
-            = ( $Time{PlannedStartTime} < $Time{ActualStartTime} )
+            = ( $Time{PlannedStartTime} lt $Time{ActualStartTime} )
             ? $Time{PlannedStartTime}
             : $Time{ActualStartTime};
     }
@@ -116,7 +116,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     # get highest end time
     if ( !$Time{EndTime} ) {
         $Time{EndTime}
-            = ( $Time{PlannedEndTime} > $Time{ActualEndTime} )
+            = ( $Time{PlannedEndTime} gt $Time{ActualEndTime} )
             ? $Time{PlannedEndTime}
             : $Time{ActualEndTime};
     }
@@ -126,7 +126,7 @@ sub ITSMChangeBuildWorkOrderGraph {
     if (
         $Time{ActualStartTime}
         && !$Time{ActualEndTime}
-        && ( $Time{EndTime} < $Self->{TimeObject}->SystemTime() )
+        && ( $Time{EndTime} lt $Self->{TimeObject}->SystemTime() )
         )
     {
         $Time{EndTime} = $Self->{TimeObject}->SystemTime();
