@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.252 2010-06-30 12:10:33 ub Exp $
+# $Id: ITSMChange.pm,v 1.253 2010-06-30 12:11:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.252 $) [1];
+$VERSION = qw($Revision: 1.253 $) [1];
 
 =head1 NAME
 
@@ -1693,7 +1693,8 @@ sub ChangeSearch {
             # add the field id to the where clause
             push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
 
-# the change_freetext and change_freekey tables need to be joined, when they occur in the WHERE clause
+            # the change_freetext and change_freekey tables need to be joined,
+            # when they occur in the WHERE clause
             push @InnerJoinTablesChangeFreeText, $TableAlias;
         }
     }
@@ -3613,6 +3614,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.252 $ $Date: 2010-06-30 12:10:33 $
+$Revision: 1.253 $ $Date: 2010-06-30 12:11:18 $
 
 =cut
