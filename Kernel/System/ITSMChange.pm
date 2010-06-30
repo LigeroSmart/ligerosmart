@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.251 2010-06-30 12:08:55 ub Exp $
+# $Id: ITSMChange.pm,v 1.252 2010-06-30 12:10:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.251 $) [1];
+$VERSION = qw($Revision: 1.252 $) [1];
 
 =head1 NAME
 
@@ -3613,6 +3613,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.251 $ $Date: 2010-06-30 12:08:55 $
+$Revision: 1.252 $ $Date: 2010-06-30 12:10:33 $
 
 =cut
