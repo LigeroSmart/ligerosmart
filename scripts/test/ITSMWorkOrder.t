@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.127 2010-06-29 00:58:16 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.128 2010-06-30 13:55:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1605,7 +1605,37 @@ push @WorkOrderTests, (
                 WorkOrderFreeText4 => 'HHHH',
             },
         },
-        SearchTest => [8],
+        SearchTest => [ 8, 35 ],
+    },
+
+    # test some workorder freetext fields WorkOrderAdd
+    {
+        Description => 'Test WorkOrderAdd and WorkOrderUpdate with workorder freetext fields.',
+        SourceData  => {
+            WorkOrderAdd => {
+                WorkOrderTitle => 'Test add workorder with freetext fields - ' . $UniqueSignature,
+                WorkOrderFreeKey1  => 'AAAA',
+                WorkOrderFreeText1 => 'BBBB',
+                WorkOrderFreeKey2  => 'CCCC',
+                WorkOrderFreeText2 => 'DDDD',
+                WorkOrderFreeKey3  => 'XXXX',
+                WorkOrderFreeText3 => 'YYYY',
+                ChangeID           => $WorkOrderAddTestID,
+                UserID             => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                WorkOrderTitle => 'Test add workorder with freetext fields - ' . $UniqueSignature,
+                WorkOrderFreeKey1  => 'AAAA',
+                WorkOrderFreeText1 => 'BBBB',
+                WorkOrderFreeKey2  => 'CCCC',
+                WorkOrderFreeText2 => 'DDDD',
+                WorkOrderFreeKey3  => 'XXXX',
+                WorkOrderFreeText3 => 'YYYY',
+            },
+        },
+        SearchTest => [ 8, 35, 36 ],
     },
 
     # test workorder freetext fields with maximum length
@@ -2541,6 +2571,42 @@ my @WorkOrderSearchTests = (
             TestCount     => 1,
         },
     },
+
+    # Nr 35 - Search for workorder freetext fields
+    {
+        Description => 'Search for workorder freetext fields',
+        SearchData  => {
+            WorkOrderFreeKey1  => 'AAAA',
+            WorkOrderFreeText1 => 'BBBB',
+            WorkOrderFreeKey2  => 'CCCC',
+            WorkOrderFreeText2 => 'DDDD',
+            UsingWildcards     => 0,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 36 - Search for workorder freetext fields
+    {
+        Description => 'Search for workorder freetext fields',
+        SearchData  => {
+            WorkOrderTitle     => 'Test add workorder with freetext fields - ' . $UniqueSignature,
+            WorkOrderFreeKey1  => 'AAAA',
+            WorkOrderFreeText1 => 'BBBB',
+            WorkOrderFreeKey2  => 'CCCC',
+            WorkOrderFreeText2 => 'DDDD',
+            WorkOrderFreeKey3  => 'XXXX',
+            WorkOrderFreeText3 => 'YYYY',
+            UsingWildcards     => 1,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
 );
 
 my $SearchTestCount = 1;
