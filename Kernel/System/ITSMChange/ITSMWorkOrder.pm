@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.110 2010-06-29 13:17:45 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.111 2010-06-30 12:46:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.110 $) [1];
+$VERSION = qw($Revision: 1.111 $) [1];
 
 =head1 NAME
 
@@ -941,6 +941,10 @@ is ignored.
         Instruction       => 'Install the the new server',             # (optional)
         Report            => 'Installed new server without problems',  # (optional)
 
+        # search in workorder freetext and freekey fields
+        WorkOrderFreeKey1  => 'Sun',                                   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Earth',                                 # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+
         WorkOrderStateIDs => [ 11, 12 ],                               # (optional)
         WorkOrderStates   => [ 'closed', 'canceled' ],                 # (optional)
 
@@ -1066,6 +1070,9 @@ sub WorkOrderSearch {
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
     my @InnerJoinTables;    # keep track of the tables that need to be inner joined
+
+    # keep track of the tables that need to be inner joined for workorder freetext fields
+    my @InnerJoinTablesWorkOrderFreeText;
 
     # define order table
     my %OrderByTable = (
@@ -1210,6 +1217,28 @@ sub WorkOrderSearch {
         ChangeJustification => 'c.justification_plain',
     );
 
+    # add workorder freetext fields to %StringParams
+    ARGUMENT:
+    for my $Argument ( sort keys %Param ) {
+
+        next ARGUMENT if $Argument !~ m{ \A ( WorkOrderFree ( Text | Key ) ( \d+ ) ) \z }xms;
+
+        my $Type   = $2;
+        my $Number = $3;
+
+        # set the table alias and column
+        if ( $Type eq 'Text' ) {
+
+            # workorder freetext field
+            $StringParams{$Argument} = 'wft' . $Number . '.field_value';
+        }
+        elsif ( $Type eq 'Key' ) {
+
+            # workorder freekey field
+            $StringParams{$Argument} = 'wfk' . $Number . '.field_value';
+        }
+    }
+
     # add string params to sql-where-array
     STRINGPARAM:
     for my $StringParam ( keys %StringParams ) {
@@ -1247,6 +1276,20 @@ sub WorkOrderSearch {
         # join the change table, when it is needed in the WHERE clause
         if ( $StringParams{$StringParam} =~ m{ \A c[.] }xms ) {
             push @InnerJoinTables, 'c';
+        }
+
+        # add field_id to where clause for workorder freetext fields
+        if ( $StringParams{$StringParam} =~ m{ \A ( ( wft | wfk ) ( \d+ ) ) }xms ) {
+
+            my $TableAlias = $1;
+            my $Number     = $3;
+
+            # add the field id to the where clause
+            push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
+
+            # the change_workorder_freetext and change_workorder_freekey tables need to be joined,
+            # when they occur in the WHERE clause
+            push @InnerJoinTablesWorkOrderFreeText, $TableAlias;
         }
     }
 
@@ -1381,6 +1424,20 @@ sub WorkOrderSearch {
         }
 
         $SQL .= "INNER JOIN $LongTableName{$Table} $Table ON $Table.id = wo.change_id ";
+    }
+
+    INNER_JOIN_TABLE_WORKORDER_FREETEXT:
+    for my $Table (@InnerJoinTablesWorkOrderFreeText) {
+
+        # workorder freetext
+        if ( $Table =~ m{ \A wft }xms ) {
+            $SQL .= "INNER JOIN change_workorder_freetext $Table ON $Table.workorder_id = wo.id ";
+        }
+
+        # workorder freekey
+        elsif ( $Table =~ m{ \A wfk }xms ) {
+            $SQL .= "INNER JOIN change_workorder_freekey $Table ON $Table.workorder_id = wo.id ";
+        }
     }
 
     # add the WHERE clause
@@ -3337,6 +3394,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.110 $ $Date: 2010-06-29 13:17:45 $
+$Revision: 1.111 $ $Date: 2010-06-30 12:46:23 $
 
 =cut
