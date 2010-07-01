@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.186 2010-06-30 12:02:28 ub Exp $
+# $Id: ITSMChange.t,v 1.187 2010-07-01 17:05:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1800,6 +1800,13 @@ my @ChangeTests = (
                 ChangeFreeKey4  => 'GGG',
                 ChangeFreeText4 => 'HHH',
             },
+            WorkOrderAdd => {
+                UserID             => $UserIDs[0],
+                WorkOrderFreeKey1  => 'W-AAA',
+                WorkOrderFreeText1 => 'W-BBB',
+                WorkOrderFreeKey2  => 'W-CCC',
+                WorkOrderFreeText2 => 'W-DDD',
+            },
         },
         ReferenceData => {
             ChangeGet => {
@@ -1816,7 +1823,7 @@ my @ChangeTests = (
                 CreateBy        => $UserIDs[0],
             },
         },
-        SearchTest => [ 6, 69, 70, 71 ],
+        SearchTest => [ 6, 69, 70, 71, 72 ],
     },
 
     # test change freetext fields with maximum length
@@ -2590,6 +2597,19 @@ for my $Test (@ChangeTests) {
             );
         }
     }    # end if 'ChangeCABDelete'
+
+    # add a workorder
+    if ( $SourceData->{WorkOrderAdd} ) {
+        my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+            %{ $SourceData->{WorkOrderAdd} },
+            ChangeID => $ChangeID,
+        );
+
+        $Self->True(
+            $WorkOrderID,
+            "Test $TestCount: |- WorkOrderAdd",
+        );
+    }
 
     # get a change and compare the retrieved data with the reference
     if ( exists $ReferenceData->{ChangeGet} ) {
@@ -3714,6 +3734,22 @@ my @ChangeSearchTests = (
             ChangeFreeKey1  => 'AAA',
             ChangeFreeText1 => 'BBB',
             UsingWildcards  => 1,
+        },
+        ResultData => {
+            TestExistence => 1,
+            TestCount     => 1,
+        },
+    },
+
+    # Nr 72 - Search for change and workorder freetext fields
+    {
+        Description => 'Search for change and workorder freetext fields',
+        SearchData  => {
+            ChangeFreeKey1     => 'AAA',
+            ChangeFreeText1    => 'BBB',
+            WorkOrderFreeKey1  => 'W-AAA',
+            WorkOrderFreeText1 => 'W-BBB',
+            WorkOrderFreeKey2  => 'W-CCC',
         },
         ResultData => {
             TestExistence => 1,
