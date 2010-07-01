@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.255 2010-06-30 12:49:44 ub Exp $
+# $Id: ITSMChange.pm,v 1.256 2010-07-01 13:51:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.255 $) [1];
+$VERSION = qw($Revision: 1.256 $) [1];
 
 =head1 NAME
 
@@ -1288,32 +1288,36 @@ When an undef or a reference to an empty array is passed, then the search criter
 is ignored.
 
     my $ChangeIDsRef = $ChangeObject->ChangeSearch(
-        ChangeNumber      => '2009100112345778',                       # (optional)
+        ChangeNumber       => '2009100112345778',                       # (optional)
 
-        ChangeTitle       => 'Replacement of slow mail server',        # (optional)
-        Description       => 'New mail server is faster',              # (optional)
-        Justification     => 'Old mail server too slow',               # (optional)
+        ChangeTitle        => 'Replacement of slow mail server',        # (optional)
+        Description        => 'New mail server is faster',              # (optional)
+        Justification      => 'Old mail server too slow',               # (optional)
 
         # array parameters are used with logical OR operator
-        ChangeStateIDs    => [ 11, 12, 13 ],                           # (optional)
-        ChangeStates      => [ 'requested', 'failed' ],                # (optional)
-        ChangeManagerIDs  => [ 1, 2, 3 ],                              # (optional)
-        ChangeBuilderIDs  => [ 5, 7, 4 ],                              # (optional)
-        CreateBy          => [ 5, 2, 3 ],                              # (optional)
-        ChangeBy          => [ 3, 2, 1 ],                              # (optional)
-        WorkOrderAgentIDs => [ 6, 2 ],                                 # (optional)
-        CABAgents         => [ 9, 13 ],                                # (optional)
-        CABCustomers      => [ 'tt', 'xx' ],                           # (optional)
-        Categories        => [ '1 very low', '2 low' ],                # (optional)
-        CategoryIDs       => [ 135, 173 ],                             # (optional)
-        Impacts           => [ '1 very low', '2 low' ],                # (optional)
-        ImpactIDs         => [ 136, 174 ],                             # (optional)
-        Priorities        => [ '1 very low', '2 low' ],                # (optional)
-        PriorityIDs       => [ 137, 175 ],                             # (optional)
+        ChangeStateIDs     => [ 11, 12, 13 ],                           # (optional)
+        ChangeStates       => [ 'requested', 'failed' ],                # (optional)
+        ChangeManagerIDs   => [ 1, 2, 3 ],                              # (optional)
+        ChangeBuilderIDs   => [ 5, 7, 4 ],                              # (optional)
+        CreateBy           => [ 5, 2, 3 ],                              # (optional)
+        ChangeBy           => [ 3, 2, 1 ],                              # (optional)
+        WorkOrderAgentIDs  => [ 6, 2 ],                                 # (optional)
+        CABAgents          => [ 9, 13 ],                                # (optional)
+        CABCustomers       => [ 'tt', 'xx' ],                           # (optional)
+        Categories         => [ '1 very low', '2 low' ],                # (optional)
+        CategoryIDs        => [ 135, 173 ],                             # (optional)
+        Impacts            => [ '1 very low', '2 low' ],                # (optional)
+        ImpactIDs          => [ 136, 174 ],                             # (optional)
+        Priorities         => [ '1 very low', '2 low' ],                # (optional)
+        PriorityIDs        => [ 137, 175 ],                             # (optional)
 
         # search in change freetext and freekey fields
-        ChangeFreeKey1    => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1   => 'Earth',                                  # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeKey1     => 'Sun',                                    # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1    => 'Earth',                                  # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+
+        # search in workorder freetext and freekey fields
+        WorkOrderFreeKey1  => 'Moon',                                   # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
+        WorkOrderFreeText1 => 'Mars',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
 
         # search in text fields of workorder object
         WorkOrderTitle            => 'Boot Mailserver',                # (optional)
@@ -1607,6 +1611,9 @@ sub ChangeSearch {
     # keep track of the tables that need to be inner joined for change freetext fields
     my @InnerJoinTablesChangeFreeText;
 
+    # keep track of the tables that need to be inner joined for workorder freetext fields
+    my @InnerJoinTablesWorkOrderFreeText;
+
     # add string params to the WHERE clause
     my %StringParams = (
 
@@ -1622,25 +1629,28 @@ sub ChangeSearch {
         WorkOrderReport      => 'wo2.report_plain',
     );
 
-    # add change freetext fields to %StringParams
+    # add change and workorder freetext fields to %StringParams
     ARGUMENT:
     for my $Argument ( sort keys %Param ) {
 
-        next ARGUMENT if $Argument !~ m{ \A ChangeFree ( Text | Key ) ( \d+ ) \z }xms;
+        next ARGUMENT
+            if $Argument !~ m{ \A (( Change | WorkOrder ) Free ( Text | Key )) ( \d+ ) \z }xms;
 
         my $Type   = $1;
-        my $Number = $2;
+        my $Number = $4;
 
         # set the table alias and column
-        if ( $Type eq 'Text' ) {
-
-            # change freetext field
+        if ( $Type eq 'ChangeFreeText' ) {
             $StringParams{$Argument} = 'cft' . $Number . '.field_value';
         }
-        elsif ( $Type eq 'Key' ) {
-
-            # change freekey field
+        elsif ( $Type eq 'ChangeFreeKey' ) {
             $StringParams{$Argument} = 'cfk' . $Number . '.field_value';
+        }
+        elsif ( $Type eq 'WorkOrderFreeText' ) {
+            $StringParams{$Argument} = 'wft' . $Number . '.field_value';
+        }
+        elsif ( $Type eq 'WorkOrderFreeKey' ) {
+            $StringParams{$Argument} = 'wfk' . $Number . '.field_value';
         }
     }
 
@@ -1696,6 +1706,20 @@ sub ChangeSearch {
             # the change_freetext and change_freekey tables need to be joined,
             # when they occur in the WHERE clause
             push @InnerJoinTablesChangeFreeText, $TableAlias;
+        }
+
+        # add field_id to where clause for workorder freetext fields
+        elsif ( $StringParams{$StringParam} =~ m{ \A ( ( wft | wfk ) ( \d+ ) ) }xms ) {
+
+            my $TableAlias = $1;
+            my $Number     = $3;
+
+            # add the field id to the where clause
+            push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
+
+            # the change_workorder_freetext and change_workorder_freekey tables need to be joined,
+            # when they occur in the WHERE clause
+            push @InnerJoinTablesWorkOrderFreeText, $TableAlias;
         }
     }
 
@@ -1945,6 +1969,29 @@ sub ChangeSearch {
         }
     }
 
+    # check if we need have to join workorder freetext tables
+    if (@InnerJoinTablesWorkOrderFreeText) {
+
+        # we also need to join the workorder table
+        $SQL .= 'INNER JOIN change_workorder ON change_workorder.change_id = c.id ';
+
+        INNER_JOIN_TABLE_WORKORDER_FREETEXT:
+        for my $Table (@InnerJoinTablesWorkOrderFreeText) {
+
+            # workorder freetext
+            if ( $Table =~ m{ \A wft }xms ) {
+                $SQL
+                    .= "INNER JOIN change_workorder_freetext $Table ON $Table.workorder_id = change_workorder.id ";
+            }
+
+            # workorder freekey
+            elsif ( $Table =~ m{ \A wfk }xms ) {
+                $SQL
+                    .= "INNER JOIN change_workorder_freekey $Table ON $Table.workorder_id = change_workorder.id ";
+            }
+        }
+    }
+
     OUTER_JOIN_TABLE:
     for my $Table (@OuterJoinTables) {
 
@@ -1977,6 +2024,7 @@ sub ChangeSearch {
     if (
         scalar @InnerJoinTables
         || scalar @InnerJoinTablesChangeFreeText
+        || scalar @InnerJoinTablesWorkOrderFreeText
         || scalar @OuterJoinTables
         )
     {
@@ -2018,6 +2066,7 @@ sub ChangeSearch {
         $Result eq 'COUNT'
         && !@InnerJoinTables
         && !@InnerJoinTablesChangeFreeText
+        && !@InnerJoinTablesWorkOrderFreeText
         && !@OuterJoinTables
         )
     {
@@ -3614,6 +3663,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.255 $ $Date: 2010-06-30 12:49:44 $
+$Revision: 1.256 $ $Date: 2010-07-01 13:51:12 $
 
 =cut

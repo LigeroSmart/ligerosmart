@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.39 2010-06-30 20:51:57 ub Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.40 2010-07-01 13:52:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -242,6 +242,29 @@ document.observe( "dom:loaded", function() {
                         </td>
                     </tr>
 <!-- dtl:block:ChangeFreeTextArea -->
+<!-- dtl:block:WorkOrderFreeTextArea -->
+                    <tr>
+                        <td colspan="2" class="contenthead">$Text{"WorkOrderFreeText"}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="contentbody">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col width="50%">
+                                </colgroup>
+                                <tr>
+<!-- dtl:block:WorkOrderFreeText -->
+                                    <tr>
+                                        <td class="contentkey">$Data{"WorkOrderFreeKeyField"}</td>
+                                        <td class="contentvalue">$Data{"WorkOrderFreeTextField"}</td>
+                                    </tr>
+<!-- dtl:block:WorkOrderFreeText -->
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+<!-- dtl:block:WorkOrderFreeTextArea -->
                     <tr>
                         <td class="contenthead">$Text{"ITSM Change"} $Text{"Priority"}</td>
                         <td class="contenthead">$Text{"ITSM Change"} $Text{"Impact"}</td>
