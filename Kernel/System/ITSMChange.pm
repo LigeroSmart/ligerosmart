@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.256 2010-07-01 13:51:12 ub Exp $
+# $Id: ITSMChange.pm,v 1.257 2010-07-01 14:08:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.256 $) [1];
+$VERSION = qw($Revision: 1.257 $) [1];
 
 =head1 NAME
 
@@ -1980,14 +1980,14 @@ sub ChangeSearch {
 
             # workorder freetext
             if ( $Table =~ m{ \A wft }xms ) {
-                $SQL
-                    .= "INNER JOIN change_workorder_freetext $Table ON $Table.workorder_id = change_workorder.id ";
+                $SQL .= "INNER JOIN change_workorder_freetext $Table "
+                    . "ON $Table.workorder_id = change_workorder.id ";
             }
 
             # workorder freekey
             elsif ( $Table =~ m{ \A wfk }xms ) {
-                $SQL
-                    .= "INNER JOIN change_workorder_freekey $Table ON $Table.workorder_id = change_workorder.id ";
+                $SQL .= "INNER JOIN change_workorder_freekey $Table ON "
+                    . "$Table.workorder_id = change_workorder.id ";
             }
         }
     }
@@ -3663,6 +3663,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.256 $ $Date: 2010-07-01 13:51:12 $
+$Revision: 1.257 $ $Date: 2010-07-01 14:08:34 $
 
 =cut
