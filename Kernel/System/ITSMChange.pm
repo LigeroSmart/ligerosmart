@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.257 2010-07-01 14:08:34 ub Exp $
+# $Id: ITSMChange.pm,v 1.258 2010-07-02 23:06:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.257 $) [1];
+$VERSION = qw($Revision: 1.258 $) [1];
 
 =head1 NAME
 
@@ -1717,7 +1717,7 @@ sub ChangeSearch {
             # add the field id to the where clause
             push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
 
-            # the change_workorder_freetext and change_workorder_freekey tables need to be joined,
+            # the change_wo_freetext and change_wo_freekey tables need to be joined,
             # when they occur in the WHERE clause
             push @InnerJoinTablesWorkOrderFreeText, $TableAlias;
         }
@@ -1980,13 +1980,13 @@ sub ChangeSearch {
 
             # workorder freetext
             if ( $Table =~ m{ \A wft }xms ) {
-                $SQL .= "INNER JOIN change_workorder_freetext $Table "
+                $SQL .= "INNER JOIN change_wo_freetext $Table "
                     . "ON $Table.workorder_id = change_workorder.id ";
             }
 
             # workorder freekey
             elsif ( $Table =~ m{ \A wfk }xms ) {
-                $SQL .= "INNER JOIN change_workorder_freekey $Table ON "
+                $SQL .= "INNER JOIN change_wo_freekey $Table ON "
                     . "$Table.workorder_id = change_workorder.id ";
             }
         }
@@ -3663,6 +3663,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.257 $ $Date: 2010-07-01 14:08:34 $
+$Revision: 1.258 $ $Date: 2010-07-02 23:06:13 $
 
 =cut

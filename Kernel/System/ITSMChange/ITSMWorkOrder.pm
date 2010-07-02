@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.112 2010-06-30 12:49:44 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.113 2010-07-02 23:07:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.112 $) [1];
+$VERSION = qw($Revision: 1.113 $) [1];
 
 =head1 NAME
 
@@ -1287,7 +1287,7 @@ sub WorkOrderSearch {
             # add the field id to the where clause
             push @SQLWhere, $TableAlias . '.field_id = ' . $Number;
 
-            # the change_workorder_freetext and change_workorder_freekey tables need to be joined,
+            # the change_wo_freetext and change_wo_freekey tables need to be joined,
             # when they occur in the WHERE clause
             push @InnerJoinTablesWorkOrderFreeText, $TableAlias;
         }
@@ -1431,12 +1431,12 @@ sub WorkOrderSearch {
 
         # workorder freetext
         if ( $Table =~ m{ \A wft }xms ) {
-            $SQL .= "INNER JOIN change_workorder_freetext $Table ON $Table.workorder_id = wo.id ";
+            $SQL .= "INNER JOIN change_wo_freetext $Table ON $Table.workorder_id = wo.id ";
         }
 
         # workorder freekey
         elsif ( $Table =~ m{ \A wfk }xms ) {
-            $SQL .= "INNER JOIN change_workorder_freekey $Table ON $Table.workorder_id = wo.id ";
+            $SQL .= "INNER JOIN change_wo_freekey $Table ON $Table.workorder_id = wo.id ";
         }
     }
 
@@ -3170,10 +3170,10 @@ sub _WorkOrderFreeTextGet {
         # set table name
         my $TableName = '';
         if ( $Type eq 'WorkOrderFreeText' ) {
-            $TableName = 'change_workorder_freetext';
+            $TableName = 'change_wo_freetext';
         }
         elsif ( $Type eq 'WorkOrderFreeKey' ) {
-            $TableName = 'change_workorder_freekey';
+            $TableName = 'change_wo_freekey';
         }
 
         # get workorder freetext fields
@@ -3255,11 +3255,11 @@ sub _WorkOrderFreeTextUpdate {
         my $TableName;
         my @FieldIDs;
         if ( $Type eq 'WorkOrderFreeKey' ) {
-            $TableName = 'change_workorder_freekey';
+            $TableName = 'change_wo_freekey';
             @FieldIDs  = @FreeKeyFieldIDs;
         }
         elsif ( $Type eq 'WorkOrderFreeText' ) {
-            $TableName = 'change_workorder_freetext';
+            $TableName = 'change_wo_freetext';
             @FieldIDs  = @FreeTextFieldIDs;
         }
 
@@ -3353,10 +3353,10 @@ sub _WorkOrderFreeTextDelete {
         # set table name
         my $TableName;
         if ( $Type eq 'WorkOrderFreeKey' ) {
-            $TableName = 'change_workorder_freekey';
+            $TableName = 'change_wo_freekey';
         }
         elsif ( $Type eq 'WorkOrderFreeText' ) {
-            $TableName = 'change_workorder_freetext';
+            $TableName = 'change_wo_freetext';
         }
 
         # delete entries from database
@@ -3394,6 +3394,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.112 $ $Date: 2010-06-30 12:49:44 $
+$Revision: 1.113 $ $Date: 2010-07-02 23:07:57 $
 
 =cut
