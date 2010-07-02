@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.36 2010-07-02 23:05:07 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.37 2010-07-02 23:26:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1611,11 +1611,7 @@ sub _GetAttributeSelection {
                 my $AttributeName = $AllAttributes->{$AttributeID};
 
                 # check if it is a change or workorder freetext field
-                if (
-                    $AttributeName
-                    =~ m{ \A (( Change | WorkOrder ) Free ( Key | Text )) ( \d+ ) }xms
-                    )
-                {
+                if ( $AttributeName =~ m{ \A ((Change|WorkOrder) Free (Key|Text)) (\d+) }xms ) {
 
                     # remove the ID from the attribute name to check the mapping
                     $AttributeName = $1;
