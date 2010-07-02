@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.35 2010-06-15 01:58:56 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.36 2010-07-02 23:05:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1592,11 +1592,50 @@ sub _GetAttributeSelection {
             );
         }
 
+        # get maximum number of change and workorder freetext fields
+        my $ChangeFreeTextMaxNumber = $Self->{ConfigObject}->Get('ITSMChange::FreeText::MaxNumber');
+        my $WorkOrderFreeTextMaxNumber
+            = $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber');
+
         # get the valid attributes for the given object
         ATTRIBUTEID:
         for my $AttributeID ( keys %{$AllAttributes} ) {
-            next ATTRIBUTEID if !$ObjectAttributeMapping->{ $AllAttributes->{$AttributeID} };
-            $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
+
+            # check if attribute is in the mapping
+            if ( $ObjectAttributeMapping->{ $AllAttributes->{$AttributeID} } ) {
+                $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
+            }
+            else {
+
+                # get attribute name
+                my $AttributeName = $AllAttributes->{$AttributeID};
+
+                # check if it is a change or workorder freetext field
+                if (
+                    $AttributeName
+                    =~ m{ \A (( Change | WorkOrder ) Free ( Key | Text )) ( \d+ ) }xms
+                    )
+                {
+
+                    # remove the ID from the attribute name to check the mapping
+                    $AttributeName = $1;
+                    my $Type        = $2;
+                    my $FieldNumber = $4;
+
+                    # do not use fields with a higher number than the max number
+                    if ( $Type eq 'Change' ) {
+                        next ATTRIBUTEID if $FieldNumber > $ChangeFreeTextMaxNumber;
+                    }
+                    elsif ( $Type eq 'WorkOrder' ) {
+                        next ATTRIBUTEID if $FieldNumber > $WorkOrderFreeTextMaxNumber;
+                    }
+
+                    # check the mapping without ID, but add the the field with ID
+                    if ( $ObjectAttributeMapping->{$AttributeName} ) {
+                        $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
+                    }
+                }
+            }
         }
 
         for my $Attribute ( values %Attributes ) {
@@ -1666,6 +1705,9 @@ sub _GetOperatorSelection {
                 $ObjectName . '::Mapping::Action::Attribute::Operator'
             );
         }
+
+        # remove the ID from change or workorder freetext fields
+        $AttributeName =~ s{ \A (( Change | WorkOrder ) Free ( Key | Text )) ( \d+ ) }{$1}xms;
 
         my $AttributeOperatorMapping;
         if ($MappingConfig) {

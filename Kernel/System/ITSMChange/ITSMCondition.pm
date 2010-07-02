@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.50 2010-06-15 01:50:42 ub Exp $
+# $Id: ITSMCondition.pm,v 1.51 2010-07-02 23:08:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -1021,6 +1021,9 @@ sub ConditionCompareValueFieldType {
     # check error
     return if !$Config;
 
+    # remove the ID from change or workorder freetext fields
+    $AttributeName =~ s{ \A (( Change | WorkOrder ) Free ( Key | Text )) ( \d+ ) }{$1}xms;
+
     # get the field type for the given attribute or return the default field type 'Selection'
     my $FieldType = $Config->{$AttributeName} || 'Selection';
 
@@ -1360,16 +1363,16 @@ sub _ConditionListByObject {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2010-06-15 01:50:42 $
+$Revision: 1.51 $ $Date: 2010-07-02 23:08:31 $
 
 =cut
