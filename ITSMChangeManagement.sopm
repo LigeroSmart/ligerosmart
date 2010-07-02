@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.192 2010-06-29 22:26:53 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.193 2010-07-02 13:49:51 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -1490,6 +1490,606 @@
         <Insert Table="condition_attribute">
             <Data Key="name" Type="Quote">WorkOrderAgentID</Data>
         </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey1</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey2</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey3</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey4</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey5</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey6</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey7</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey8</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey9</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey10</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey11</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey12</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey13</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey14</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey15</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey16</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey17</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey18</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey19</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey20</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey21</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey22</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey23</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey24</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey25</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey26</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey27</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey28</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey29</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey30</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey31</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey32</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey33</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey34</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey35</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey36</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey37</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey38</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey39</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey40</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey41</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey42</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey43</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey44</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey45</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey46</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey47</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey48</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey49</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeKey50</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText1</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText2</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText3</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText4</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText5</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText6</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText7</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText8</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText9</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText10</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText11</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText12</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText13</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText14</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText15</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText16</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText17</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText18</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText19</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText20</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText21</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText22</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText23</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText24</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText25</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText26</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText27</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText28</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText29</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText30</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText31</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText32</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText33</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText34</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText35</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText36</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText37</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText38</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText39</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText40</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText41</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText42</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText43</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText44</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText45</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText46</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText47</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText48</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText49</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">ChangeFreeText50</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey1</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey2</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey3</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey4</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey5</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey6</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey7</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey8</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey9</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey10</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey11</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey12</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey13</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey14</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey15</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey16</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey17</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey18</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey19</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey20</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey21</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey22</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey23</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey24</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey25</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey26</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey27</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey28</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey29</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey30</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey31</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey32</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey33</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey34</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey35</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey36</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey37</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey38</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey39</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey40</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey41</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey42</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey43</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey44</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey45</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey46</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey47</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey48</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey49</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey50</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText1</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText2</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText3</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText4</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText5</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText6</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText7</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText8</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText9</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText10</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText11</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText12</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText13</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText14</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText15</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText16</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText17</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText18</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText19</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText20</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText21</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText22</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText23</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText24</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText25</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText26</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText27</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText28</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText29</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText30</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText31</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText32</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText33</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText34</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText35</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText36</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText37</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText38</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText39</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText40</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText41</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText42</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText43</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText44</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText45</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText46</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText47</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText48</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText49</Data>
+        </Insert>
+        <Insert Table="condition_attribute">
+            <Data Key="name" Type="Quote">WorkOrderFreeText50</Data>
+        </Insert>
         <Insert Table="condition_operator">
             <Data Key="name" Type="Quote">is</Data>
         </Insert>
@@ -1620,6 +2220,606 @@
             <Data Key="create_by">1</Data>
             <Data Key="change_time">current_timestamp</Data>
             <Data Key="change_by">1</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey1</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey2</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey3</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey4</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey5</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey6</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey7</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey8</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey9</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey10</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey11</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey12</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey13</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey14</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey15</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey16</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey17</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey18</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey19</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey20</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey21</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey22</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey23</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey24</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey25</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey26</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey27</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey28</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey29</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey30</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey31</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey32</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey33</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey34</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey35</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey36</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey37</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey38</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey39</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey40</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey41</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey42</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey43</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey44</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey45</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey46</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey47</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey48</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey49</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeKey50</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText1</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText2</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText3</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText4</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText5</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText6</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText7</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText8</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText9</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText10</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText11</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText12</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText13</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText14</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText15</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText16</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText17</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText18</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText19</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText20</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText21</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText22</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText23</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText24</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText25</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText26</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText27</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText28</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText29</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText30</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText31</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText32</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText33</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText34</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText35</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText36</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText37</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText38</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText39</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText40</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText41</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText42</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText43</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText44</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText45</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText46</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText47</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText48</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText49</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">ChangeFreeText50</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey1</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey2</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey3</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey4</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey5</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey6</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey7</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey8</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey9</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey10</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey11</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey12</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey13</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey14</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey15</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey16</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey17</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey18</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey19</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey20</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey21</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey22</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey23</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey24</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey25</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey26</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey27</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey28</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey29</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey30</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey31</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey32</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey33</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey34</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey35</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey36</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey37</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey38</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey39</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey40</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey41</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey42</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey43</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey44</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey45</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey46</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey47</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey48</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey49</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeKey50</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText1</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText2</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText3</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText4</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText5</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText6</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText7</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText8</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText9</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText10</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText11</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText12</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText13</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText14</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText15</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText16</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText17</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText18</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText19</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText20</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText21</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText22</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText23</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText24</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText25</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText26</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText27</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText28</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText29</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText30</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText31</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText32</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText33</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText34</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText35</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText36</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText37</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText38</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText39</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText40</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText41</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText42</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText43</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText44</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText45</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText46</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText47</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText48</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText49</Data>
+        </Insert>
+        <Insert Table="condition_attribute" Version="2.0.71">
+            <Data Key="name" Type="Quote">WorkOrderFreeText50</Data>
         </Insert>
         <TableCreate Name="change_freekey" Version="2.0.71">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
