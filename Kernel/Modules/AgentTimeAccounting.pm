@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.40 2010-06-28 13:44:21 jp Exp $
+# $Id: AgentTimeAccounting.pm,v 1.41 2010-07-02 09:45:46 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -404,14 +404,11 @@ sub Run {
 
             $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
 
-                #Data        => \%ActionList,
                 Data        => $ActionData,
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
                 Translation => 0,
-
-                #Max        => 37,
-                Class => 'ActionSelection',
+                Class       => 'ActionSelection',
             );
 
             $Param{Remark} = $UnitRef->{Remark} || '';
@@ -1978,7 +1975,7 @@ sub _ActionListConstraints {
         }
     }
 
-    # all actions will be added if no action was added above (possible misconfiguration)
+    # all available actions will be added if no action was added above (possible misconfiguration)
     if ( !keys %List ) {
         for my $ActionID ( keys %{ $Param{ActionList} } ) {
             my $ActionName = $Param{ActionList}->{$ActionID};
@@ -1991,13 +1988,6 @@ sub _ActionListConstraints {
 
 sub _ProjectList {
     my ( $Self, %Param ) = @_;
-
-    #    # check needed param
-    #    if ( !$Param{WorkingUnitID} ) {
-    #        $Self->{LayoutObject}->ErrorScreen(
-    #            Message => '_ProjectList: Need WorkingUnitID',
-    #        );
-    #    }
 
     # at first a empty line
     my @List = (
