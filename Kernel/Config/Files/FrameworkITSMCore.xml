@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.44 2010-04-27 22:21:10 ub Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.45 2010-07-03 10:25:07 ub Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.242.2.6 2010/03/09 09:37:46 dz Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Lang="en">This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.</Description>
@@ -8,7 +8,7 @@
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 2.0.2</String>
+            <String Regex="">OTRS::ITSM 2.0.71</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -30,7 +30,7 @@
         <SubGroup>Core::Package</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages20/">[--OTRS::ITSM 2.0 Master--] http://ftp.otrs.org/</Item>
+                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages21/">[--OTRS::ITSM 2.1 Master--] http://ftp.otrs.org/</Item>
             </Hash>
         </Setting>
     </ConfigItem>
