@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.113 2010-07-02 23:07:57 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.114 2010-07-03 00:36:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.113 $) [1];
+$VERSION = qw($Revision: 1.114 $) [1];
 
 =head1 NAME
 
@@ -403,6 +403,7 @@ Another exception is the WorkOrderAgentID. Pass undef for removing the workorder
         WorkOrderFreeKey1  => 'Sun',                                     # (optional) workorder freekey fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
         WorkOrderFreeText1 => 'Earth',                                   # (optional) workorder freetext fields from 1 to ITSMWorkOrder::FreeText::MaxNumber
         NoNumberCalc       => 1,                                         # (optional) default 0, if 1 it prevents a recalculation of the workorder numbers
+        BypassStateMachine => 1,                                         # (optional) default 0, if 1 the state machine will be bypassed
         UserID             => 1,
     );
 
@@ -496,8 +497,20 @@ sub WorkOrderUpdate {
 
     # check sanity of the new state with the state machine
     if ( $Param{WorkOrderStateID} ) {
+
+        # get workorder id
+        my $WorkOrderID = $Param{WorkOrderID};
+
+        # do not give WorkOrderPossibleStatesGet() the WorkOrderID
+        # if the statemachine should be bypassed.
+        # WorkOrderPossibleStatesGet() will then return all workorder states
+        if ( $Param{BypassStateMachine} ) {
+            $WorkOrderID = undef;
+        }
+
+        # get the list of possible next states
         my $StateList = $Self->WorkOrderPossibleStatesGet(
-            WorkOrderID => $Param{WorkOrderID},
+            WorkOrderID => $WorkOrderID,
             UserID      => $Param{UserID},
         );
         if ( !grep { $_->{Key} == $Param{WorkOrderStateID} } @{$StateList} ) {
@@ -3394,6 +3407,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.113 $ $Date: 2010-07-02 23:07:57 $
+$Revision: 1.114 $ $Date: 2010-07-03 00:36:39 $
 
 =cut

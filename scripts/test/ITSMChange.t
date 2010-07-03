@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.187 2010-07-01 17:05:21 ub Exp $
+# $Id: ITSMChange.t,v 1.188 2010-07-03 00:40:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -706,6 +706,53 @@ my @ChangeTests = (
             },
         },
         SearchTest => [ 4, 25, 26, 37 ],
+    },
+
+    # ChangeUpdate() with not allowed next ChangeState
+    {
+        Description => 'ChangeUpdate() with not allowed next ChangeState - ' . $UniqueSignature,
+        UpdateFails => 1,
+        SourceData  => {
+            ChangeAdd => {
+                UserID      => 1,
+                Description => 'ChangeStates - ' . $UniqueSignature,
+                ChangeState => 'pending approval',
+            },
+            ChangeUpdate => {
+                UserID      => 1,
+                ChangeState => 'successful',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeState => 'pending approval',
+            },
+        },
+        SearchTest => [38],
+    },
+
+    # ChangeUpdate() with not allowed next ChangeState but BypassStateMachine parameter
+    {
+        Description =>
+            'ChangeUpdate() with not allowed next ChangeState but BypassStateMachine parameter - '
+            . $UniqueSignature,
+        SourceData => {
+            ChangeAdd => {
+                UserID      => 1,
+                Description => 'ChangeStates - ' . $UniqueSignature,
+                ChangeState => 'pending approval',
+            },
+            ChangeUpdate => {
+                UserID             => 1,
+                BypassStateMachine => 1,
+                ChangeState        => 'successful',
+            },
+        },
+        ReferenceData => {
+            ChangeGet => {
+                ChangeState => 'successful',
+            },
+        },
     },
 
     # change contains all data - (all attributes)

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.258 2010-07-02 23:06:13 ub Exp $
+# $Id: ITSMChange.pm,v 1.259 2010-07-03 00:37:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.258 $) [1];
+$VERSION = qw($Revision: 1.259 $) [1];
 
 =head1 NAME
 
@@ -345,26 +345,27 @@ An exception is the parameter C<RequestedTime>, where the undefined value
 indicates that requested time of the change should be cleared.
 
     my $Success = $ChangeObject->ChangeUpdate(
-        ChangeID        => 123,
-        ChangeTitle     => 'Replacement of slow mail server',  # (optional)
-        Description     => 'New mail server is faster',        # (optional)
-        Justification   => 'Old mail server too slow',         # (optional)
-        ChangeStateID   => 4,                                  # (optional) or ChangeState => 'accepted'
-        ChangeState     => 'accepted',                         # (optional) or ChangeStateID => 4
-        ChangeManagerID => 5,                                  # (optional)
-        ChangeBuilderID => 6,                                  # (optional)
-        CategoryID      => 7,                                  # (optional) or Category => '3 normal'
-        Category        => '3 normal',                         # (optional) or CategoryID => 4
-        ImpactID        => 8,                                  # (optional) or Impact => '4 high'
-        Impact          => '4 high',                           # (optional) or ImpactID => 5
-        PriorityID      => 9,                                  # (optional) or Priority => '5 very high'
-        Priority        => '5 very high',                      # (optional) or PriorityID => 6
-        CABAgents       => [ 1, 2, 4 ],                        # (optional) UserIDs
-        CABCustomers    => [ 'tt', 'mm' ],                     # (optional) CustomerUserIDs
-        RequestedTime   => '2006-01-19 23:59:59',              # (optional) or 'undef', which clears the time
-        ChangeFreeKey1  => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
-        ChangeFreeText1 => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
-        UserID          => 1,
+        ChangeID           => 123,
+        ChangeTitle        => 'Replacement of slow mail server',  # (optional)
+        Description        => 'New mail server is faster',        # (optional)
+        Justification      => 'Old mail server too slow',         # (optional)
+        ChangeStateID      => 4,                                  # (optional) or ChangeState => 'accepted'
+        ChangeState        => 'accepted',                         # (optional) or ChangeStateID => 4
+        ChangeManagerID    => 5,                                  # (optional)
+        ChangeBuilderID    => 6,                                  # (optional)
+        CategoryID         => 7,                                  # (optional) or Category => '3 normal'
+        Category           => '3 normal',                         # (optional) or CategoryID => 4
+        ImpactID           => 8,                                  # (optional) or Impact => '4 high'
+        Impact             => '4 high',                           # (optional) or ImpactID => 5
+        PriorityID         => 9,                                  # (optional) or Priority => '5 very high'
+        Priority           => '5 very high',                      # (optional) or PriorityID => 6
+        CABAgents          => [ 1, 2, 4 ],                        # (optional) UserIDs
+        CABCustomers       => [ 'tt', 'mm' ],                     # (optional) CustomerUserIDs
+        RequestedTime      => '2006-01-19 23:59:59',              # (optional) or 'undef', which clears the time
+        ChangeFreeKey1     => 'Sun',                              # (optional) change freekey fields from 1 to ITSMChange::FreeText::MaxNumber
+        ChangeFreeText1    => 'Earth',                            # (optional) change freetext fields from 1 to ITSMChange::FreeText::MaxNumber
+        BypassStateMachine => 1,                                  # (optional) default 0, if 1 the state machine will be bypassed
+        UserID             => 1,
     );
 
 =cut
@@ -435,8 +436,20 @@ sub ChangeUpdate {
 
     # check sanity of the new state with the state machine
     if ( $Param{ChangeStateID} ) {
+
+        # get change id
+        my $ChangeID = $Param{ChangeID};
+
+        # do not give ChangePossibleStatesGet() the ChangeID
+        # if the statemachine should be bypassed.
+        # ChangePossibleStatesGet() will then return all change states.
+        if ( $Param{BypassStateMachine} ) {
+            $ChangeID = undef;
+        }
+
+        # get the list of possible next states
         my $StateList = $Self->ChangePossibleStatesGet(
-            ChangeID => $Param{ChangeID},
+            ChangeID => $ChangeID,
             UserID   => $Param{UserID},
         );
         if ( !grep { $_->{Key} == $Param{ChangeStateID} } @{$StateList} ) {
@@ -3663,6 +3676,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.258 $ $Date: 2010-07-02 23:06:13 $
+$Revision: 1.259 $ $Date: 2010-07-03 00:37:56 $
 
 =cut

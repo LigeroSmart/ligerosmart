@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.128 2010-06-30 13:55:19 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.129 2010-07-03 00:39:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -312,8 +312,7 @@ for my $DefaultWorkOrderType (@DefaultWorkOrderTypes) {
     );
 }
 
-# Text the method WorkOrderTypeList(). It should return a list of all types.
-# get possible states
+# test the method WorkOrderTypeList(). It should return a list of all types.
 my $TypesListUnderTest = $Self->{WorkOrderObject}->WorkOrderTypeList(
     UserID => 1,
 ) || {};
@@ -977,6 +976,56 @@ my @WorkOrderTests = (
             },
         },
     },
+
+    {
+        Description => 'Test for WorkOrderUpdate() with not allowed workorder state',
+        UpdateFails => 1,
+        SourceData  => {
+            WorkOrderAdd => {
+                ChangeID       => $WorkOrderAddTestID,
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderUpdate() - ' . $UniqueSignature,
+            },
+            WorkOrderUpdate => {
+                WorkOrderState => 'in progress',
+                UserID         => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID       => $WorkOrderAddTestID,
+                CreateBy       => 1,
+                ChangeBy       => 1,
+                WorkOrderTitle => 'WorkOrderUpdate() - ' . $UniqueSignature,
+                WorkOrderState => 'created',
+            },
+        },
+    },
+
+    {
+        Description =>
+            'Test for WorkOrderUpdate() with not allowed workorder state but BypassStateMachine parameter.',
+        SourceData => {
+            WorkOrderAdd => {
+                ChangeID       => $WorkOrderAddTestID,
+                UserID         => 1,
+                WorkOrderTitle => 'WorkOrderUpdate() BypassStateMachine - ' . $UniqueSignature,
+            },
+            WorkOrderUpdate => {
+                WorkOrderState     => 'in progress',
+                BypassStateMachine => 1,
+                UserID             => 1,
+            },
+        },
+        ReferenceData => {
+            WorkOrderGet => {
+                ChangeID       => $WorkOrderAddTestID,
+                WorkOrderTitle => 'WorkOrderUpdate() BypassStateMachine - ' . $UniqueSignature,
+                WorkOrderState => 'in progress',
+            },
+        },
+    },
+
 );
 
 # tests for WorkOrderUpdate();
