@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.219 2010-07-02 23:04:18 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.220 2010-07-03 17:52:17 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the AdminITSMChangeCIPAllocate configuration in the admin area.</Description>
         <Description Lang="de">Frontendmodul-Registration der AdminITSMChangeCIPAllocate Konfiguration im Admin-Bereich.</Description>
@@ -9061,8 +9061,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###RequestedTime" Required="1" Valid="1">
-        <Description Lang="en">If you want to set the requested (by customer) date.</Description>
-        <Description Lang="de">Soll der Wunschtermin des Kunden eingestellt werden.</Description>
+        <Description Lang="en">If you want to search the requested (by customer) date.</Description>
+        <Description Lang="de">Soll der Wunschtermin des Kunden gesucht werden können.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
         <Setting>
