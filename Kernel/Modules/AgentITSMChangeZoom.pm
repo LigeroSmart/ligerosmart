@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.51 2010-07-04 09:44:51 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.52 2010-07-05 10:42:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -306,13 +306,15 @@ sub Run {
 
         # get the freetext number, only look at the freetext field,
         # as we do not want to show empty fields in the zoom view
-        if ( $Attribute =~ m{ ( ChangeFreeText ) ( \d+ ) }xms ) {
+        if ( $Attribute =~ m{ \A ChangeFreeText ( \d+ ) }xms ) {
 
             # do not show empty freetext values
             next ATTRIBUTE if $Change->{$Attribute} eq '';
 
+            # get the freetext number
+            my $Number = $1;
+
             # remember the freetext number
-            my $Number = $2;
             $ChangeFreeTextFields{$Number}++;
         }
     }

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.37 2010-07-02 23:26:46 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.38 2010-07-05 10:42:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1611,12 +1611,13 @@ sub _GetAttributeSelection {
                 my $AttributeName = $AllAttributes->{$AttributeID};
 
                 # check if it is a change or workorder freetext field
-                if ( $AttributeName =~ m{ \A ((Change|WorkOrder) Free (Key|Text)) (\d+) }xms ) {
+                if ( $AttributeName =~ m{ \A ( (Change|WorkOrder) Free (?: Key|Text) ) (\d+) }xms )
+                {
 
                     # remove the ID from the attribute name to check the mapping
-                    $AttributeName = $1;
-                    my $Type        = $2;
-                    my $FieldNumber = $4;
+                    my $AttributeWithoutNumber = $1;
+                    my $Type                   = $2;
+                    my $FieldNumber            = $3;
 
                     # do not use fields with a higher number than the max number
                     if ( $Type eq 'Change' ) {
@@ -1627,7 +1628,7 @@ sub _GetAttributeSelection {
                     }
 
                     # check the mapping without ID, but add the the field with ID
-                    if ( $ObjectAttributeMapping->{$AttributeName} ) {
+                    if ( $ObjectAttributeMapping->{$AttributeWithoutNumber} ) {
                         $Attributes{$AttributeID} = $AllAttributes->{$AttributeID};
                     }
                 }

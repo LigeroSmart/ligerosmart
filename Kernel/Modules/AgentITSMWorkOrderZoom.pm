@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.40 2010-07-04 09:44:51 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.41 2010-07-05 10:42:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -288,13 +288,15 @@ sub Run {
 
         # get the freetext number, only look at the freetext field,
         # as we do not want to show empty fields in the zoom view
-        if ( $Attribute =~ m{ ( WorkOrderFreeText ) ( \d+ ) }xms ) {
+        if ( $Attribute =~ m{ \A WorkOrderFreeText ( \d+ ) }xms ) {
 
             # do not show empty freetext values
             next ATTRIBUTE if $WorkOrder->{$Attribute} eq '';
 
+            # get the freetext number
+            my $Number = $1;
+
             # remember the freetext number
-            my $Number = $2;
             $WorkOrderFreeTextFields{$Number}++;
         }
     }
