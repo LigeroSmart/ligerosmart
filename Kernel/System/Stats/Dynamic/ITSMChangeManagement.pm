@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.11 2010-02-22 10:09:10 reb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.12 2010-07-05 11:38:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -234,7 +234,7 @@ sub ImportWrapper {
                     else {
                         $Self->{LogObject}->Log(
                             Priority => 'error',
-                            Message  => "Import: Can' find state $ID->{Content}!"
+                            Message  => "Import: Can't find state $ID->{Content}!"
                         );
                         $ID = undef;
                     }
@@ -258,7 +258,7 @@ sub ImportWrapper {
                         else {
                             $Self->{LogObject}->Log(
                                 Priority => 'error',
-                                Message  => "Import: Can' find $Type $ID->{Content}!"
+                                Message  => "Import: Can't find $Type $ID->{Content}!"
                             );
                             $ID = undef;
                         }
