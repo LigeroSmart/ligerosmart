@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.53 2010-06-29 13:51:45 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.54 2010-07-08 09:30:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,9 @@
 function submit_template() {
 
     // check the planned time
-    if ( document.template.MoveTimeUsed.checked && !CheckTime( 'MoveTime' ) ) {
+    // 2010-01-32 is rejected, but 2010-02-31 is allowed
+    // an exact time check is performed on the serverside
+    if ( !CheckTime( 'MoveTime' ) ) {
         alert('$JSText{"The planned time is invalid!"}');
 
         return false;
