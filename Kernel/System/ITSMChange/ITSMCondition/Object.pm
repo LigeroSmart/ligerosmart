@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Object.pm,v 1.25 2010-06-15 01:04:47 ub Exp $
+# $Id: Object.pm,v 1.26 2010-07-14 11:58:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -605,7 +605,7 @@ sub ObjectDataGet {
 
 Returns a newly loaded backend object
 
-    my $Result = $ConditionObject->_ObjectLoadBackend(
+    my $BackendObject = $ConditionObject->_ObjectLoadBackend(
         Type => 'ITSMChange',  # ( ITSMChange | ITSMWorkOrder )
     );
 
@@ -659,16 +659,16 @@ sub _ObjectLoadBackend {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2010-06-15 01:04:47 $
+$Revision: 1.26 $ $Date: 2010-07-14 11:58:14 $
 
 =cut
