@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm - stats functions for the solution time average
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTicketSolutionTimeAverage.pm,v 1.5 2010-02-22 10:07:40 reb Exp $
+# $Id: ITSMTicketSolutionTimeAverage.pm,v 1.6 2010-07-15 09:45:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -617,7 +617,7 @@ sub _TicketHistoryDataGet {
         SQL => 'SELECT state_id, create_time FROM ticket_history '
             . 'WHERE ticket_id = ? AND history_type_id IN ( ?, ? ) '
             . 'ORDER BY create_time',
-        Bind => [ \$Param{TicketID}, \$Self->{StateUpdateID}, $Self->{NewTicketID} ],
+        Bind => [ \$Param{TicketID}, \$Self->{StateUpdateID}, \$Self->{NewTicketID} ],
     );
 
     # fetch the result
