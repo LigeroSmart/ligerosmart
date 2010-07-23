@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.37 2010-06-02 15:56:22 mh Exp $
+# $Id: TimeAccounting.pm,v 1.38 2010-07-23 16:34:40 tt Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
 
@@ -871,14 +871,24 @@ sub WorkingUnitsCompletnessCheck {
                     Calendar => $Calendar,
                 );
 
+                my $Date = sprintf( "%04d-%02d-%02d", $Year, $Month, $Day );
+                my $DayStartTime
+                    = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
+                my $DayStopTime
+                    = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
+                my $ThisDayWorkingTime = $Self->{TimeObject}->WorkingTime(
+                    StartTime => $DayStartTime,
+                    StopTime  => $DayStopTime,
+                    Calendar  => $Calendar || '',
+                ) || '0';
+
                 my $DayString = sprintf( "%02d", $Day );
-                my $Weekday = Day_of_Week( $Year, $Month, $Day );
-                if ( $Weekday != 6 && $Weekday != 7 && !$VacationCheck ) {
+
+                if ( $ThisDayWorkingTime && !$VacationCheck ) {
                     $WorkingDays++;
                 }
                 if (
-                    $Weekday != 6
-                    && $Weekday != 7
+                    $ThisDayWorkingTime
                     && !$VacationCheck
                     && !$CompleteWorkingDays{$Year}{$MonthString}{$DayString}
                     )
@@ -1377,14 +1387,14 @@ sub LastProjectsOfUser {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.37 $ $Date: 2010-06-02 15:56:22 $
+$Revision: 1.38 $ $Date: 2010-07-23 16:34:40 $
 
 =cut
