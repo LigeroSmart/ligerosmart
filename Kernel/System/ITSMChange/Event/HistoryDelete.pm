@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/HistoryDelete.pm - HistoryDelete event module for ITSMChange
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: HistoryDelete.pm,v 1.1 2010-02-03 11:04:33 bes Exp $
+# $Id: HistoryDelete.pm,v 1.2 2010-07-27 10:47:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -147,8 +147,7 @@ sub Run {
         if ( !$Success ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message =>
-                    "ConditionHistoryDelete() failed for ChangeID '$Param{Data}->{ChangeID}'!"
+                Message  => "ChangeDelete() failed for ChangeID '$Param{Data}->{ChangeID}'!",
             );
             return;
         }
@@ -183,16 +182,16 @@ sub Run {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-02-03 11:04:33 $
+$Revision: 1.2 $ $Date: 2010-07-27 10:47:06 $
 
 =cut
