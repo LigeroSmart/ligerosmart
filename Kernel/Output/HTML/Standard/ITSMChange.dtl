@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.30 2010-06-29 13:11:45 sb Exp $
+# $Id: ITSMChange.dtl,v 1.31 2010-07-28 20:41:42 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -195,7 +195,7 @@
             height: 100%;
         }
         div.lines_scale {
-            margin-left: 62px;
+            margin-left: $QData{"LabelMargin"}px;
             height: 100%;
             width: 100%;
             position: relative;
