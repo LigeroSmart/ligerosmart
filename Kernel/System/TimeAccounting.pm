@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.38 2010-07-23 16:34:40 tt Exp $
+# $Id: TimeAccounting.pm,v 1.39 2010-07-28 08:44:18 mae Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,9 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
-use Date::Pcalc qw(Today Days_in_Month Day_of_Week);
+use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
 =head1 NAME#
 
@@ -95,8 +95,8 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject UserID TimeObject UserObject MainObject)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(DBObject ConfigObject LogObject UserID TimeObject UserObject MainObject)) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     return $Self;
@@ -112,41 +112,61 @@ returns a hash with the user of the current period data
         Day   => '24'
     );
 
+The returned hash contains the following elements:
+
+    %UserData = (
+        1 => {
+            UserID      => 1,
+            Period      => 123,
+            DateStart   => '2005-12-24',
+            DateEnd     => '2005-12-24',
+            WeeklyHours => 40.4,
+            LeaveDays   => 12,
+            OverTime    => 34,
+        },
+    );
+
 =cut
 
 sub UserCurrentPeriodGet {
     my ( $Self, %Param ) = @_;
 
-    for (qw(Year Month Day)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-        if ( !$Param{$_} ) {
+    # check needed params
+    for my $NeededParam (qw(Year Month Day)) {
+        if ( !$Param{$NeededParam} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "UserCurrentPeriodGet: Need $_!"
+                Message  => "UserCurrentPeriodGet: Need $NeededParam!"
             );
             return;
         }
     }
 
-    my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} ) . " 00:00:00";
+    # build date string for given params
+    my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} ) . ' 00:00:00';
 
+    # TODO: Check caching!
     # Caching
     if ( $Self->{'Cache::UserCurrentPeriodGet'}{$Date} ) {
         return %{ $Self->{'Cache::UserCurrentPeriodGet'}{$Date} };
     }
 
     # db select
-    my %Data = ();
-    $Self->{DBObject}->Prepare(
+    my $PrepareSuccess = $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT user_id, preference_period, date_start, date_end, "
-            . "weekly_hours, leave_days, overtime "
-            . "FROM time_accounting_user_period "
-            . "WHERE date_start <= '$Date' AND date_end  >='$Date' "
-            . "AND status = '1'",
+            'SELECT user_id, preference_period, date_start, date_end, '
+            . 'weekly_hours, leave_days, overtime '
+            . 'FROM time_accounting_user_period '
+            . 'WHERE date_start <= ? AND date_end  >= ? '
+            . 'AND status = ?',
+        Bind => [ \$Date, \$Date, \1, ],
     );
 
+    # check success of prepare statement
+    return if !$PrepareSuccess;
+
     # fetch Data
+    my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my $UserRef = {
             UserID      => $Row[0],
@@ -160,6 +180,10 @@ sub UserCurrentPeriodGet {
         $Data{ $Row[0] } = $UserRef;
     }
 
+    # check for valid user data
+    return if !%Data;
+
+    # store user data in cache
     $Self->{'Cache::UserCurrentPeriodGet'}{$Date} = \%Data;
 
     return %Data;
@@ -181,18 +205,21 @@ workinghours etc. of all users
 sub UserReporting {
     my ( $Self, %Param ) = @_;
 
-    my %Data = ();
-    for (qw(Year Month Day)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-        if ( !$Param{$_} && $_ ne 'Day' ) {
+    # check needed params
+    for my $NeededParam (qw(Year Month Day)) {
+        if ( !$Param{$NeededParam} && $NeededParam ne 'Day' ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "UserReporting: Need $_!"
+                Message  => "UserReporting: Need $NeededParam!"
             );
             return;
         }
     }
 
+    # check valide date values
+    return if !check_date( $Param{Year}, $Param{Month}, $Param{Day} || 1 );
+
+    # get days of month if not provided
     $Param{Day} ||= Days_in_Month( $Param{Year}, $Param{Month} );
 
     my %UserCurrentPeriod = $Self->UserCurrentPeriodGet(%Param);
@@ -203,6 +230,7 @@ sub UserReporting {
     my $MonthEnd          = $Param{Month};
     my $DayEnd            = $Param{Day};
 
+    my %Data;
     for my $UserID ( keys %UserCurrentPeriod ) {
         if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
             $YearStart  = $1;
@@ -1395,6 +1423,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.38 $ $Date: 2010-07-23 16:34:40 $
+$Revision: 1.39 $ $Date: 2010-07-28 08:44:18 $
 
 =cut
