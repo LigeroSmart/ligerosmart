@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.39 2010-07-28 08:44:18 mae Exp $
+# $Id: TimeAccounting.pm,v 1.40 2010-07-29 08:40:16 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -231,32 +231,58 @@ sub UserReporting {
     my $DayEnd            = $Param{Day};
 
     my %Data;
+
+    USERID:
     for my $UserID ( keys %UserCurrentPeriod ) {
-        if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
+        if ( $UserCurrentPeriod{$UserID}{DateStart} =~ m{ \A (\d{4})-(\d{2})-(\d{2}) }smx ) {
             $YearStart  = $1;
             $MonthStart = $2;
             $DayStart   = $3;
         }
-        $Data{$UserID}{LeaveDay}         = 0;
-        $Data{$UserID}{Sick}             = 0;
-        $Data{$UserID}{Overtime}         = 0;
-        $Data{$UserID}{TargetState}      = 0;
-        $Data{$UserID}{LeaveDayTotal}    = 0;
-        $Data{$UserID}{SickTotal}        = 0;
-        $Data{$UserID}{OvertimeTotal}    = 0;
-        $Data{$UserID}{TargetStateTotal} = 0;
 
-        my $Counter = 0;
+        if ( !check_date( $YearStart, $MonthStart, $DayStart ) ) {
+
+            $Self->{LogObject}->Log(
+                Priority => 'notice',
+                Message  => 'UserReporting: Invalid start date for user '
+                    . "$UserID: $UserCurrentPeriod{$UserID}{DateStart}"
+            );
+
+            next USERID;
+        }
+
+        my %CurrentUserData = (
+            LeaveDate        => 0,
+            Sick             => 0,
+            Overtime         => 0,
+            TargetState      => 0,
+            LeaveDayTotal    => 0,
+            SickTotal        => 0,
+            SickTotal        => 0,
+            TargetStateTotal => 0,
+        );
+
+        YEAR:
         for my $Year ( $YearStart .. $YearEnd ) {
             my $MonthStartPoint = $Year == $YearStart ? $MonthStart : 1;
             my $MonthEndPoint   = $Year == $YearEnd   ? $MonthEnd   : 12;
 
+            MONTH:
             for my $Month ( $MonthStartPoint .. $MonthEndPoint ) {
 
-                my $DayStartPoint = $Year == $YearStart && $Month == $MonthStart ? $DayStart : 1;
-                my $DayEndPoint = $Year == $YearEnd
-                    && $Month == $MonthEnd ? $DayEnd : Days_in_Month( $Year, $Month );
+                my $DayStartPoint =
+                    $Year == $YearStart && $Month == $MonthStart
+                    ? $DayStart
+                    : 1
+                    ;
 
+                my $DayEndPoint =
+                    $Year == $YearEnd && $Month == $MonthEnd
+                    ? $DayEnd
+                    : Days_in_Month( $Year, $Month )
+                    ;
+
+                DAY:
                 for my $Day ( $DayStartPoint .. $DayEndPoint ) {
                     my %WorkingUnit = $Self->WorkingUnitsGet(
                         Year   => $Year,
@@ -271,19 +297,19 @@ sub UserReporting {
                     my $TargetState = 0;
 
                     if ( $WorkingUnit{LeaveDay} ) {
-                        $Data{$UserID}{LeaveDayTotal}++;
+                        $CurrentUserData{LeaveDayTotal}++;
                         $LeaveDay = 1;
                     }
                     elsif ( $WorkingUnit{Sick} ) {
-                        $Data{$UserID}{SickTotal}++;
+                        $CurrentUserData{SickTotal}++;
                         $Sick = 1;
                     }
                     elsif ( $WorkingUnit{Overtime} ) {
-                        $Data{$UserID}{OvertimeTotal}++;
+                        $CurrentUserData{OvertimeTotal}++;
                         $Overtime = 1;
                     }
 
-                    $Data{$UserID}{WorkingHoursTotal} += $WorkingUnit{Total};
+                    $CurrentUserData{WorkingHoursTotal} += $WorkingUnit{Total};
                     my $VacationCheck = $Self->{TimeObject}->VacationCheck(
                         Year  => $Year,
                         Month => $Month,
@@ -298,28 +324,31 @@ sub UserReporting {
                         && !$LeaveDay
                         )
                     {
-                        $Data{$UserID}{TargetStateTotal}
+                        $CurrentUserData{TargetStateTotal}
                             += $UserCurrentPeriod{$UserID}{WeeklyHours} / 5;
                         $TargetState = $UserCurrentPeriod{$UserID}{WeeklyHours} / 5;
                     }
 
                     if ( $Month == $MonthEnd && $Year == $YearEnd ) {
-                        $Data{$UserID}{TargetState}  += $TargetState;
-                        $Data{$UserID}{WorkingHours} += $WorkingUnit{Total};
-                        $Data{$UserID}{LeaveDay}     += $LeaveDay;
-                        $Data{$UserID}{Sick}         += $Sick;
+                        $CurrentUserData{TargetState}  += $TargetState;
+                        $CurrentUserData{WorkingHours} += $WorkingUnit{Total};
+                        $CurrentUserData{LeaveDay}     += $LeaveDay;
+                        $CurrentUserData{Sick}         += $Sick;
                     }
                 }
             }
         }
-        $Data{$UserID}{Overtime} = $Data{$UserID}{WorkingHours} - $Data{$UserID}{TargetState};
-        $Data{$UserID}{OvertimeTotal}
+        $CurrentUserData{Overtime} = $CurrentUserData{WorkingHours} - $CurrentUserData{TargetState};
+        $CurrentUserData{OvertimeTotal}
             = $UserCurrentPeriod{$UserID}{Overtime}
-            + $Data{$UserID}{WorkingHoursTotal}
-            - $Data{$UserID}{TargetStateTotal};
-        $Data{$UserID}{OvertimeUntil} = $Data{$UserID}{OvertimeTotal} - $Data{$UserID}{Overtime};
-        $Data{$UserID}{LeaveDayRemaining}
-            = $UserCurrentPeriod{$UserID}{LeaveDays} - $Data{$UserID}{LeaveDayTotal};
+            + $CurrentUserData{WorkingHoursTotal}
+            - $CurrentUserData{TargetStateTotal};
+        $CurrentUserData{OvertimeUntil}
+            = $CurrentUserData{OvertimeTotal} - $CurrentUserData{Overtime};
+        $CurrentUserData{LeaveDayRemaining}
+            = $UserCurrentPeriod{$UserID}{LeaveDays} - $CurrentUserData{LeaveDayTotal};
+
+        $Data{$UserID} = \%CurrentUserData;
     }
     return %Data;
 }
@@ -366,9 +395,12 @@ sub ProjectSettingsGet {
 insert new project data in the db
 
     $TimeAccountingObject->ProjectSettingsInsert(
-        Project       => 'internal', # optional
-        ProjectStatus => 1 || 0,     # optional
+        Project            => 'internal',    # optional
+        ProjectDescription => 'description', # optional
+        ProjectStatus      => 1 || 0,        # optional
     );
+
+    returns ID of created project
 
 =cut
 
@@ -377,19 +409,62 @@ sub ProjectSettingsInsert {
 
     $Param{Project} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectName') || '';
     $Param{ProjectStatus} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus')
-        || '0';
+        || 0;
     $Param{ProjectDescription} ||= '';
 
-    # build sql
+    # insert project record
+    my $Result = $Self->{DBObject}->Do(
+        SQL => 'INSERT INTO time_accounting_project (project, description, status) '
+            . 'VALUES (?, ?, ?)',
+        Bind => [ \$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus} ],
+    );
+    return if !$Result;
 
-    my $SQL
-        = 'INSERT INTO time_accounting_project (project, description, status) VALUES ( ? , ? , ?)';
+    # get ID of newly created project record
+    $Result = $Self->{DBObject}->Prepare(
+        SQL   => 'SELECT id FROM time_accounting_project WHERE project = ?',
+        Bind  => [ \$Param{Project} ],
+        Limit => 1,
+    );
+    return if !$Result;
 
-    my $Bind = [ \$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus} ];
+    # fetch Data
+    my $ProjectID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $ProjectID = $Row[0];
+    }
 
-    # db insert
-    return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
-    return 1;
+    return $ProjectID;
+}
+
+=item ProjectSettingsDelete()
+
+delete records of project from database
+
+    $TimeAccountingObject->ProjectSettingsDelete(
+        ProjectID          => 3423, # ID of record
+    );
+
+=cut
+
+sub ProjectSettingsDelete {
+    my ( $Self, %Param ) = @_;
+
+    if ( !exists $Param{ProjectID} || !$Param{ProjectID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'ProjectSettingsDelete: Need ProjectID!',
+        );
+        return;
+    }
+
+    # delete project record
+    my $Result = $Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM time_accounting_project WHERE id = ?',
+        Bind => [ \$Param{ProjectID}, ],
+    );
+
+    return $Result;
 }
 
 =item ProjectSettingsUpdate()
@@ -1423,6 +1498,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2010-07-28 08:44:18 $
+$Revision: 1.40 $ $Date: 2010-07-29 08:40:16 $
 
 =cut
