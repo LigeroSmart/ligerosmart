@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.40 2010-04-27 20:36:57 ub Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.41 2010-07-30 08:53:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -748,6 +748,36 @@ sub _OutputChangeInfo {
         $ComplicatedValue{Attachments} = join( "\n", @Values ) || '-';
     }
 
+    # get all change freekey and freetext numbers from change
+    my %ChangeFreeTextFields;
+    ATTRIBUTE:
+    for my $Attribute ( keys %{$Change} ) {
+
+        # get the freetext number, only look at the freetext field,
+        # as we do not want to show empty fields in the zoom view
+        if ( $Attribute =~ m{ \A ChangeFreeText ( \d+ ) }xms ) {
+
+            # do not show empty freetext values
+            next ATTRIBUTE if $Change->{$Attribute} eq '';
+
+            # get the freetext number
+            my $Number = $1;
+
+            # remember the freetext number
+            $ChangeFreeTextFields{$Number}++;
+        }
+    }
+
+    # show the change freetext fields
+    my @FreeTextRowSpec;
+    for my $Number ( sort { $a <=> $b } keys %ChangeFreeTextFields ) {
+        push @FreeTextRowSpec, {
+            Attribute => 'ChangeFreeText' . $Number,
+            Key       => $Change->{ 'ChangeFreeKey' . $Number },
+            Table     => \@TableLeft,
+        };
+    }
+
     my @RowSpec = (
         {
             Attribute           => 'ChangeState',
@@ -782,6 +812,7 @@ sub _OutputChangeInfo {
             Table               => \@TableLeft,
             ValueIsTranslatable => 1,
         },
+        @FreeTextRowSpec,
         {
             Attribute   => 'ChangeManager',
             Table       => \@TableLeft,
@@ -975,6 +1006,36 @@ sub _OutputWorkOrderInfo {
     ( $ComplicatedValue{WrappableChangeTitle} = $Change->{ChangeTitle} )
         =~ s{ ( \S{25} ) }{$1 }xmsg;
 
+    # get all workorder freekey and freetext numbers from workorder
+    my %WorkOrderFreeTextFields;
+    ATTRIBUTE:
+    for my $Attribute ( keys %{$WorkOrder} ) {
+
+        # get the freetext number, only look at the freetext field,
+        # as we do not want to show empty fields in the zoom view
+        if ( $Attribute =~ m{ \A WorkOrderFreeText ( \d+ ) }xms ) {
+
+            # do not show empty freetext values
+            next ATTRIBUTE if $WorkOrder->{$Attribute} eq '';
+
+            # get the freetext number
+            my $Number = $1;
+
+            # remember the freetext number
+            $WorkOrderFreeTextFields{$Number}++;
+        }
+    }
+
+    # show the workorder freetext fields
+    my @FreeTextRowSpec;
+    for my $Number ( sort { $a <=> $b } keys %WorkOrderFreeTextFields ) {
+        push @FreeTextRowSpec, {
+            Attribute => 'WorkOrderFreeText' . $Number,
+            Key       => $WorkOrder->{ 'WorkOrderFreeKey' . $Number },
+            Table     => \@TableLeft,
+        };
+    }
+
     my @RowSpec = (
         {
             Attribute => 'WrappableChangeTitle',
@@ -1013,6 +1074,7 @@ sub _OutputWorkOrderInfo {
             Table      => \@TableLeft,
             Key        => 'AccountedTime',
         },
+        @FreeTextRowSpec,
         {
             Attribute => 'Attachments',
             Key       => 'Attachments',
