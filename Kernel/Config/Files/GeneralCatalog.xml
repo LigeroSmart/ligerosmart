@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: GeneralCatalog.xml,v 1.4 2009-10-07 13:18:18 reb Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.xml,v 1.5 2010-08-08 20:59:57 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminGeneralCatalog" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AdminGeneralCatalog configuration in the admin area.</Description>
-        <Description Lang="de">Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.</Description>
+        <Description Translatable="1">Frontend module registration for the AdminGeneralCatalog configuration in the admin area.</Description>
         <Group>Framework</Group>
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
@@ -14,8 +13,9 @@
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
-                    <Name>General Catalog</Name>
-                    <Block>Block3</Block>
+                    <Name Translatable="1">General Catalog</Name>
+                    <Description Translatable="1">Create and manage the General Catalog.</Description>
+                    <Block>Ticket</Block>
                     <Prio>410</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
