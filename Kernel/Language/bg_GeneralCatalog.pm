@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/bg_GeneralCatalog.pm - the bulgarian translation of GeneralCatalog
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: bg_GeneralCatalog.pm,v 1.11 2009-05-18 09:40:46 mh Exp $
+# $Id: bg_GeneralCatalog.pm,v 1.12 2010-08-08 21:01:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -32,6 +32,7 @@ sub Data {
     $Lang->{'Add Catalog Item'}           = 'Добави елемент към каталога';
     $Lang->{'Add Catalog Class'}          = 'Добави клас в каталога';
     $Lang->{'Functionality'}              = 'Функционалност';
+    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
 
     return 1;
 }

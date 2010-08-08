@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/es_GeneralCatalog.pm - the spanish translation of GeneralCatalog
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_GeneralCatalog.pm,v 1.5 2009-05-18 09:40:46 mh Exp $
+# $Id: es_GeneralCatalog.pm,v 1.6 2010-08-08 21:01:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -32,6 +32,7 @@ sub Data {
     $Lang->{'Add Catalog Item'}           = 'Añadir Elemento al Catalogo';
     $Lang->{'Add Catalog Class'}          = 'Añadir Clase al Catalogo';
     $Lang->{'Functionality'}              = 'Funcionalidad';
+    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
 
     return 1;
 }
