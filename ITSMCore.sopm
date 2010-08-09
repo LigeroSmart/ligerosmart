@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.107 2010-07-26 23:08:28 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.108 2010-08-09 06:46:32 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
-    <Framework>2.4.x</Framework>
-    <PackageRequired Version="2.0.91">GeneralCatalog</PackageRequired>
+    <Framework>3.0.x</Framework>
+    <PackageRequired Version="2.1.91">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -623,7 +623,7 @@
         <br>
         <b>REQUIRED OTRS PACKAGES</b>
         <ul>
-        <li>GeneralCatalog 2.0.91</li>
+        <li>GeneralCatalog 2.1.91</li>
         </ul>
         <br>
         <b>ATTENTION</b>
@@ -647,7 +647,7 @@
         <br>
         <b>BENÖTIGTE OTRS-PAKETE</b>
         <ul>
-        <li>GeneralCatalog 2.0.91</li>
+        <li>GeneralCatalog 2.1.91</li>
         </ul>
         <br>
         <b>ACHTUNG</b>
@@ -703,7 +703,7 @@
         <br>
         <b>REQUIRED OTRS PACKAGES</b>
         <ul>
-        <li>GeneralCatalog 2.0.91</li>
+        <li>GeneralCatalog 2.1.91</li>
         </ul>
         <br>
         </b>ATTENTION</b>
@@ -727,7 +727,7 @@
         <br>
         <b>BENÖTIGTE OTRS-PAKETE</b>
         <ul>
-        <li>GeneralCatalog 2.0.91</li>
+        <li>GeneralCatalog 2.1.91</li>
         </ul>
         <br>
         <b>ACHTUNG</b>
