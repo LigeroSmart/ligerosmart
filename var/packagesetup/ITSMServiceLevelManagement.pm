@@ -1,8 +1,8 @@
 # --
 # ITSMServiceLevelManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceLevelManagement.pm,v 1.20 2009-07-20 23:18:46 ub Exp $
+# $Id: ITSMServiceLevelManagement.pm,v 1.21 2010-08-09 06:55:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,14 +15,14 @@ use strict;
 use warnings;
 
 use Kernel::Config;
-use Kernel::System::Config;
+use Kernel::System::SysConfig;
 use Kernel::System::CSV;
 use Kernel::System::Group;
 use Kernel::System::Stats;
 use Kernel::System::User;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -101,12 +101,15 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)) {
+    for my $Object (
+        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
+    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
 
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
@@ -227,16 +230,16 @@ sub CodeUninstall {
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This Software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2009-07-20 23:18:46 $
+$Revision: 1.21 $ $Date: 2010-08-09 06:55:38 $
 
 =cut
