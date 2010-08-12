@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.23 2009-10-07 13:18:18 reb Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.24 2010-08-12 18:59:16 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,6 +56,7 @@ sub Run {
         my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name         => 'Class',
             Data         => $ClassList,
+            Class        => 'W100pc',
             SelectedID   => $Class,
             PossibleNone => 1,
             Translation  => 0,
@@ -66,7 +67,6 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                ClassOptionStrg => $ClassOptionStrg,
             },
         );
         $Self->{LayoutObject}->Block(
@@ -90,11 +90,7 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen()
             if !$ItemIDList || !%{$ItemIDList};
 
-        my $CssClass = '';
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
-
-            # set output class
-            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # get item data
             my $ItemData = $Self->{GeneralCatalogObject}->ItemGet(
@@ -106,11 +102,29 @@ sub Run {
                 Name => 'OverviewItemList',
                 Data => {
                     %{$ItemData},
-                    CssClass => $CssClass,
-                    Valid    => $ValidList{ $ItemData->{ValidID} },
+                    Valid => $ValidList{ $ItemData->{ValidID} },
                 },
             );
         }
+
+        # ActionOverview
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionAddItem',
+            Data => {
+                %Param,
+                ClassOptionStrg => $ClassOptionStrg,
+            },
+        );
+
+        # ActionAddClass
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionAddClass',
+        );
+
+        # ActionOverview
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionOverview',
+        );
 
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
@@ -165,6 +179,7 @@ sub Run {
             Name         => 'Class',
             Data         => $ClassList,
             SelectedID   => $ItemData{Class},
+            Class        => 'W100pc',
             PossibleNone => 1,
             Translation  => 0,
         );
@@ -259,6 +274,15 @@ sub Run {
                     Class => $ItemData{Class},
                 },
             );
+
+            # ActionOverview
+            $Self->{LayoutObject}->Block(
+                Name => 'ActionAddItem',
+                Data => {
+                    %Param,
+                    ClassOptionStrg => $ClassOptionStrg,
+                },
+            );
         }
         else {
 
@@ -269,7 +293,17 @@ sub Run {
                     Class => $ItemData{Class},
                 },
             );
+
+            # ActionAddClass
+            $Self->{LayoutObject}->Block(
+                Name => 'ActionAddClass',
+            );
         }
+
+        # ActionOverview
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionOverview',
+        );
 
         # output header
         my $Output = $Self->{LayoutObject}->Header();
@@ -379,6 +413,7 @@ sub Run {
         my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
             Name         => 'Class',
             Data         => $ClassList,
+            Class        => 'W100pc',
             PossibleNone => 1,
             Translation  => 0,
         );
@@ -388,7 +423,6 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                ClassOptionStrg => $ClassOptionStrg,
             },
         );
         $Self->{LayoutObject}->Block(
@@ -398,21 +432,30 @@ sub Run {
             },
         );
 
-        my $CssClass = '';
         for my $Class ( @{$ClassList} ) {
-
-            # set output class
-            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # output overview class list
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewClassList',
                 Data => {
-                    Class    => $Class,
-                    CssClass => $CssClass,
+                    Class => $Class,
                 },
             );
         }
+
+        # ActionOverview
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionAddItem',
+            Data => {
+                %Param,
+                ClassOptionStrg => $ClassOptionStrg,
+            },
+        );
+
+        # ActionAddClass
+        $Self->{LayoutObject}->Block(
+            Name => 'ActionAddClass',
+        );
 
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
