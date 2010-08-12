@@ -2,7 +2,7 @@
 # AdminGeneralCatalog.dtl - provides HTML form for AdminGeneralCatalog
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.dtl,v 1.9 2010-08-12 18:58:51 cg Exp $
+# $Id: AdminGeneralCatalog.dtl,v 1.10 2010-08-12 22:57:43 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,9 +23,9 @@
 <!--dtl:block:ActionAddItem-->
                     <li>
                         <form action="$Env{"CGIHandle"}" method="get">
-                            <input type="hidden" name="Action" value="$Env{"Action"}">
-                            <input type="hidden" name="Subaction" value="ItemEdit">
-                            <input type="hidden" name="ItemID" value="NEW">
+                            <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                            <input type="hidden" name="Subaction" value="ItemEdit"/>
+                            <input type="hidden" name="ItemID" value="NEW"/>
 
                             <div>$Data{"ClassOptionStrg"}</div>
                             <button class="CallForAction Plus" type="submit" value="$Text{"Add"}">
@@ -37,10 +37,10 @@
 <!--dtl:block:ActionAddClass-->
                     <li>
                         <form action="$Env{"CGIHandle"}" method="get">
-                            <input type="hidden" name="Action" value="$Env{"Action"}">
-                            <input type="hidden" name="Subaction" value="ItemEdit">
-                            <input type="hidden" name="ItemID" value="NEW">
-                            <input type="hidden" name="Class" value="NEW">
+                            <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                            <input type="hidden" name="Subaction" value="ItemEdit"/>
+                            <input type="hidden" name="ItemID" value="NEW"/>
+                            <input type="hidden" name="Class" value="NEW"/>
                             <button class="CallForAction Plus" type="submit" value="$Text{"Add"}">
                                 <span>$Text{"Add Catalog Class"}</span>
                             </button>
@@ -114,15 +114,17 @@
             </div>
             <div class="Content">
 
-                <form action="$Env{"CGIHandle"}" method="get">
-                    <input type="hidden" name="Action" value="$Env{"Action"}">
-                    <input type="hidden" name="Subaction" value="ItemSave">
-                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}">
+                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                    <input type="hidden" name="Subaction" value="ItemSave"/>
+                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
                     <fieldset class="TableLike">
 <!-- dtl:block:ItemEditClassAdd -->
-                        <label for="Class">$Text{"Catalog Class"}: </label>
+                        <label for="ClassDsc">$Text{"Catalog Class"}: </label>
                         <div class="Field">
-                            <input type="text" name="Class" id="Class" value="$QData{"Name"}" class="W50pc" maxlength="100" />
+                            <input type="text" name="Class" id="ClassDsc" value="$QData{"Name"}" class="W50pc Validate_Required" maxlength="100" />
+                            <div id="ClassDscError" class="TooltipErrorMessage" ><p>$Text{"A Catalog Class should have a description!"}</p></div>
+                            <div id="ClassDscServerError" class="TooltipErrorMessage"><p>$Text{"Catalog Class is required."}</p></div>
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:ItemEditClassAdd -->
@@ -134,9 +136,11 @@
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:ItemEditClassExist -->
-                        <label for="ClassName">$Text{"Name"}: </label>
+                        <label for="Name">$Text{"Name"}: </label>
                         <div class="Field">
-                            <input type="text" name="Name" id="ClassName" value="$QData{"Name"}" class="W50pc" maxlength="100"/>
+                            <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required" maxlength="100"/>
+                            <div id="NameError" class="TooltipErrorMessage" ><p>$Text{"A Catalog Class should have a Name!"}</p></div>
+                            <div id="NameServerError" class="TooltipErrorMessage"><p>$Text{"Name is required."}</p></div>
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:InputKey -->
@@ -161,7 +165,7 @@
                         <div class="Clear"></div>
 <!-- dtl:block:TextArea -->
 <!-- dtl:block:Option -->
-                        <label for="">$Text{"$Data{"Label"}"} $Text{"$Data{"Key"}"}:<br/><em>($Text{"$Data{"Desc"}"})</em></label>
+                        <label for="$QData{"Name"}">$Text{"$Data{"Label"}"} $Text{"$Data{"Key"}"}:<br/><em>($Text{"$Data{"Desc"}"})</em></label>
                         <div class="Field">
                             $Data{"Option"}
                         </div>
@@ -182,7 +186,7 @@
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:Password -->
-                        <label for="">$Text{"Valid"}: </label>
+                        <label for="ValidID">$Text{"Valid"}: </label>
                         <div class="Field">
                             $Data{"ValidOptionStrg"}
                         </div>
