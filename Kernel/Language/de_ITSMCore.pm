@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.17 2010-06-01 19:25:22 mb Exp $
+# $Id: de_ITSMCore.pm,v 1.18 2010-08-12 21:08:44 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -63,6 +63,9 @@ sub Data {
     $Lang->{'Resolution Rate'}                     = 'Lösungszeit';
     $Lang->{'Response Time'}                       = 'Reaktionszeit';
     $Lang->{'Transactions'}                        = 'Transaktionen';
+    $Lang->{'This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.'} = 'Im WebFrontend angezeigter Name der Software.';
+    $Lang->{'Determines the way the linked objects are displayed in each zoom mask.'} = 'Legt die Ansicht der verlinkten Objekte in den jeweiligen Zoom-Masken fest.';
+    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" and Content="Some Name").'} = 'Liste der zur Verfuegung stehenden Online-Quellen (es koennen z. B. auch andere Installationen als Online-Quellen verwendet werden mit der Verwendung von Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" and Content="Ein Name").';
 
     return 1;
 }

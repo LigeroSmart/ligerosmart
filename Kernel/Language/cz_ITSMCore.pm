@@ -4,7 +4,7 @@
 # Copyright (C) 2007-2008 Milen Koutev
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ITSMCore.pm,v 1.16 2010-06-01 19:25:22 mb Exp $
+# $Id: cz_ITSMCore.pm,v 1.17 2010-08-12 21:08:44 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -65,6 +65,9 @@ sub Data {
     $Lang->{'Resolution Rate'}                     = 'Èas Øe¹ení';
     $Lang->{'Response Time'}                       = 'Èas Odpovìdi';
     $Lang->{'Transactions'}                        = 'Transakce';
+    $Lang->{'This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.'} = '';
+    $Lang->{'Determines the way the linked objects are displayed in each zoom mask.'} = '';
+    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" and Content="Some Name").'} = '';
 
     return 1;
 }
