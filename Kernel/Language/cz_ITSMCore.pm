@@ -4,7 +4,7 @@
 # Copyright (C) 2007-2008 Milen Koutev
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ITSMCore.pm,v 1.18 2010-08-12 22:33:56 en Exp $
+# $Id: cz_ITSMCore.pm,v 1.19 2010-08-12 22:58:07 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -79,6 +79,7 @@ sub Data {
     $Lang->{'Module to show link link in service menu.'} = '';
     $Lang->{'Module to show back link in sla menu.'} = '';
     $Lang->{'Module to show print link in sla menu.'} = '';
+    $Lang->{'If ticket service/SLA feature is enabled, you can define ticket services and SLAs for tickets (e. g. email, desktop, network, ...).'} = '';
 
     return 1;
 }

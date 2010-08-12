@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMCore.pm - the Dutch translation of ITSMCore
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_ITSMCore.pm,v 1.5 2010-08-12 22:33:56 en Exp $
+# $Id: nl_ITSMCore.pm,v 1.6 2010-08-12 22:58:07 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -76,6 +76,7 @@ sub Data {
     $Lang->{'Module to show link link in service menu.'} = '';
     $Lang->{'Module to show back link in sla menu.'} = '';
     $Lang->{'Module to show print link in sla menu.'} = '';
+    $Lang->{'If ticket service/SLA feature is enabled, you can define ticket services and SLAs for tickets (e. g. email, desktop, network, ...).'} = '';
 
     return 1;
 }
