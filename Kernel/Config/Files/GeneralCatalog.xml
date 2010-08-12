@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: GeneralCatalog.xml,v 1.5 2010-08-08 20:59:57 ub Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.xml,v 1.6 2010-08-12 22:50:38 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminGeneralCatalog" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AdminGeneralCatalog configuration in the admin area.</Description>
         <Group>Framework</Group>
@@ -22,8 +22,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="GeneralCatalogPreferences###Comment2" Required="0" Valid="0">
-        <Description Lang="en">Parameters for the example comment 2 of general catalog attributes.</Description>
-        <Description Lang="de">Parameter für den Beispiel-Kommentar 2 der GeneralCatalog-Attribute.</Description>
+        <Description Translatable="1">Parameters for the example comment 2 of general catalog attributes.</Description>
         <Group>GeneralCatalog</Group>
         <SubGroup>GeneralCatalog::Preferences</SubGroup>
         <Setting>
@@ -39,8 +38,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="GeneralCatalogPreferences###Permissions" Required="0" Valid="0">
-        <Description Lang="en">Parameters for the example permission groups of general catalog attributes.</Description>
-        <Description Lang="de">Parameter für die zugriffsberechtigte Gruppe der GeneralCatalog-Attribute.</Description>
+        <Description Translatable="1">Parameters for the example permission groups of general catalog attributes.</Description>
         <Group>GeneralCatalog</Group>
         <SubGroup>GeneralCatalog::Preferences</SubGroup>
         <Setting>

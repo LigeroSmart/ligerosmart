@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_GeneralCatalog.pm,v 1.6 2010-08-08 21:01:54 ub Exp $
+# $Id: es_GeneralCatalog.pm,v 1.7 2010-08-12 22:50:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -32,7 +32,12 @@ sub Data {
     $Lang->{'Add Catalog Item'}           = 'Añadir Elemento al Catalogo';
     $Lang->{'Add Catalog Class'}          = 'Añadir Clase al Catalogo';
     $Lang->{'Functionality'}              = 'Funcionalidad';
-    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'}
+        = 'Registro para la configuración del módulo AdminGeneralCatalog dentro el área de administración';
+    $Lang->{'Parameters for the example comment 2 of general catalog attributes.'}
+        = 'Parámetros para el ejemplo comentario 2 de los atributos del catálogo general';
+    $Lang->{'Parameters for the example permission groups of general catalog attributes.'}
+        = 'Parámetros para el ejemplo grupos de permisos de los atributos del catálogo general';
 
     return 1;
 }

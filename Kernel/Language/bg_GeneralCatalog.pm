@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: bg_GeneralCatalog.pm,v 1.12 2010-08-08 21:01:54 ub Exp $
+# $Id: bg_GeneralCatalog.pm,v 1.13 2010-08-12 22:50:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -33,6 +33,8 @@ sub Data {
     $Lang->{'Add Catalog Class'}          = 'Добави клас в каталога';
     $Lang->{'Functionality'}              = 'Функционалност';
     $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Lang->{'Parameters for the example comment 2 of general catalog attributes.'} = '';
+    $Lang->{'Parameters for the example permission groups of general catalog attributes.'} = '';
 
     return 1;
 }
