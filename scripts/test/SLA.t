@@ -1,9 +1,9 @@
 # --
 # SLA.t - SLA tests
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.t,v 1.3 2009-06-30 14:55:23 ub Exp $
-# $OldId: SLA.t,v 1.10 2009/02/16 12:41:12 tr Exp $
+# $Id: SLA.t,v 1.4 2010-08-13 16:04:11 dz Exp $
+# $OldId: SLA.t,v 1.11 2010/06/22 22:00:52 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,6 +12,7 @@
 
 use strict;
 use warnings;
+use vars (qw($Self));
 use utf8;
 
 use vars qw($Self);
