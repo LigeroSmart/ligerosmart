@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMCore.pm,v 1.10 2010-08-13 16:25:21 dz Exp $
+# $Id: es_ITSMCore.pm,v 1.11 2010-08-13 17:32:26 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -79,6 +79,38 @@ sub Data {
     $Lang->{'Module to show back link in sla menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de SLA.';
     $Lang->{'Module to show print link in sla menu.'} = 'Módulo para mostar un vínculo para imprimir en el menú de SLA.';
     $Lang->{'If ticket service/SLA feature is enabled, you can define ticket services and SLAs for tickets (e. g. email, desktop, network, ...).'} = 'Si la funcionalidad del ticket Servicio/SLA está habilitada, es posible definir servicios y SLAs para los tickets (por ejemplo: email, escritorio, red, ...).';
+    $Lang->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registro de modulos frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
+    $Lang->{'Set the type of link to be used to calculate the incident state.'} = 'Define el tipo de vinculo usado para calcular el estado del incidente';
+    $Lang->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vinculo \'AlternativeTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vinculo sin direccion. Si los valores son diferentes, el resultado es un vinculo con direccion.';
+    $Lang->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vinculo \'ConnectedTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vinculo sin direccion. Si los valores son diferentes, el resultado es un vinculo con direccion.';
+    $Lang->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vinculo \'DependsOn\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vinculo sin direccion. Si los valores son diferentes, el resultado es un vinculo con direccion.';
+    $Lang->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vinculo \'Includes\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vinculo sin direccion. Si los valores son diferentes, el resultado es un vinculo con direccion.';
+    $Lang->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vinculo \'RelevantTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vinculo sin direccion. Si los valores son diferentes, el resultado es un vinculo con direccion.';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vinculo de tipo \'AlternativeTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vinculo de tipo \'ConnectedTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vinculo de tipo \'DependsOn\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vinculo de tipo \'Includes\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vinculo \'RelevantTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vinculo de tipo \'AlternativeTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vinculo de tipo \'AlternativeTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vinculo de tipo \'RelevantTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vinculo de tipo \'AlternativeTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vinculo de tipo \'DependsOn\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vinculo de tipo \'RelevantTo\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vinculo de tipo \'Normal\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vinculo de tipo \'ParentChild\'';
+    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vinculo de tipo \'RelevantTo\'';
+    $Lang->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vinculo de tipo \'Normal\'';
+    $Lang->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vinculo de tipo \'ParentChild\'';
+    $Lang->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vinculo de tipo \'RelevantTo\'';
+    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Service\' usando el vinculo de tipo \'Normal\'';
+    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Service\' usando el vinculo de tipo \'DependsOn\'';
+    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'ITSMConfigItem\' usando el vinculo de tipo \'Normal\'';
+    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'ITSMConfigItem\' usando el vinculo de tipo \'DependsOn\'';
+    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Ticket\' usando el vinculo de tipo \'Normal\'';
+    $Lang->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMChange\' puede ser vinculado con objetos \'Ticket\' usando el vinculo de tipo \'Normal\'';
+    $Lang->{'Width of ITSM textareas.'} = 'Define el ancho del textarea de ITSM';
+    $Lang->{'Parameters for the incident states in the preference view.'} = 'Parametros para el estado de los incidentes en la vista de preferencias';
 
     return 1;
 }
