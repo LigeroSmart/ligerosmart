@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.15 2010-04-13 17:40:20 ub Exp $
-# $OldId: Service.pm,v 1.39.2.1 2010/04/13 17:31:45 ub Exp $
+# $Id: Service.pm,v 1.16 2010-08-13 17:57:29 en Exp $
+# $OldId: Service.pm,v 1.43 2010/06/17 21:39:40 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use warnings;
 
 use Kernel::System::CheckItem;
 use Kernel::System::Valid;
+
 # ---
 # ITSM
 # ---
@@ -26,7 +27,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -95,6 +96,7 @@ sub new {
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+
 # ---
 # ITSM
 # ---
@@ -228,20 +230,48 @@ Return
         UserID    => 1,
     );
 
+    my %ServiceData = $ServiceObject->ServiceGet(
+        Name    => 'Service::SubService',
+        UserID  => 1,
+    );
+
 =cut
 
 sub ServiceGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ServiceID UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+
+    # either ServiceID or Name must be passed
+    if ( !$Param{ServiceID} && !$Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need ServiceID or Name!',
+        );
+        return;
+    }
+
+    # check that not both ServiceID and Name are given
+    if ( $Param{ServiceID} && $Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need either ServiceID OR Name - not both!',
+        );
+        return;
+    }
+
+    # lookup the ServiceID
+    if ( $Param{Name} ) {
+        $Param{ServiceID} = $Self->ServiceLookup(
+            Name => $Param{Name},
+        );
     }
 
     # get service from db
@@ -288,7 +318,7 @@ sub ServiceGet {
 
     # create short name and parentid
     $ServiceData{NameShort} = $ServiceData{Name};
-    if ( $ServiceData{Name} =~ /^(.*)::(.+?)$/ ) {
+    if ( $ServiceData{Name} =~ m{ \A (.*) :: (.+?) \z }xms ) {
         $ServiceData{NameShort} = $2;
 
         # lookup parent
@@ -302,6 +332,7 @@ sub ServiceGet {
     my %Preferences = $Self->ServicePreferencesGet(
         ServiceID => $Param{ServiceID},
     );
+
 # ---
 # ITSM
 # ---
@@ -596,7 +627,7 @@ sub ServiceAdd {
     }
 
     # check service name
-    if ( $Param{Name} =~ /::/ ) {
+    if ( $Param{Name} =~ m{ :: }xms ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't add service! Invalid Service name '$Param{Name}'!",
@@ -728,7 +759,7 @@ sub ServiceUpdate {
     }
 
     # check service name
-    if ( $Param{Name} =~ /::/ ) {
+    if ( $Param{Name} =~ m{ :: }xms ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Can't update service! Invalid Service name '$Param{Name}'!",
@@ -759,7 +790,7 @@ sub ServiceUpdate {
         }
 
         # check, if selected parent was a child of this service
-        if ( $Param{FullName} =~ /^(\Q$OldServiceName\E)::/ ) {
+        if ( $Param{FullName} =~ m{ \A ( \Q$OldServiceName\E ) :: }xms ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => 'Can\'t update service! Invalid parent was selected.'
@@ -828,7 +859,7 @@ sub ServiceUpdate {
 
     # update childs
     for my $Child (@Childs) {
-        $Child->{Name} =~ s/^(\Q$OldServiceName\E)::/$Param{FullName}::/;
+        $Child->{Name} =~ s{ \A ( \Q$OldServiceName\E ) :: }{$Param{FullName}::}xms;
         $Self->{DBObject}->Do(
             SQL => 'UPDATE service SET name = ? WHERE id = ?',
             Bind => [ \$Child->{Name}, \$Child->{ServiceID} ],
@@ -1162,16 +1193,16 @@ sub ServicePreferencesGet {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2010-04-13 17:40:20 $
+$Revision: 1.16 $ $Date: 2010-08-13 17:57:29 $
 
 =cut

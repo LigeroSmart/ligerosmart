@@ -1,9 +1,9 @@
 # --
 # Service.t - Service tests
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.2 2009-06-30 14:55:47 ub Exp $
-# $OldId: Service.t,v 1.10 2009/02/16 12:40:23 tr Exp $
+# $Id: Service.t,v 1.3 2010-08-13 17:57:28 en Exp $
+# $OldId: Service.t,v 1.13 2010/06/22 22:00:52 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,6 +12,7 @@
 
 use strict;
 use warnings;
+use vars (qw($Self));
 use utf8;
 
 use vars qw($Self);
@@ -837,7 +838,7 @@ for my $Item ( @{$ItemData} ) {
 
     if ( $Item->{Update} ) {
 
-        # check last service id varaible
+        # check last service id variable
         if ( !$LastAddedServiceID ) {
             $Self->False(
                 1,
@@ -932,6 +933,38 @@ for my $Item ( @{$ItemData} ) {
 }
 
 # ------------------------------------------------------------ #
+# Additional ServiceGet test (By Servicename and ServiceID)
+# ------------------------------------------------------------ #
+
+{
+
+    # get a service by using the service name
+    my %ServiceGet = $Self->{ServiceObject}->ServiceGet(
+        Name   => $ServiceName[0],
+        UserID => 1,
+    );
+
+    $Self->Is(
+        $ServiceGet{Name},
+        $ServiceName[0],
+        "Test $TestCount: ServiceGet() - by service name",
+    );
+
+    # get the same service by using the service id
+    %ServiceGet = $Self->{ServiceObject}->ServiceGet(
+        ServiceID => $ServiceGet{ServiceID},
+        UserID    => 1,
+    );
+
+    $Self->Is(
+        $ServiceGet{Name},
+        $ServiceName[0],
+        "Test $TestCount: ServiceGet() - by service id",
+    );
+
+}
+
+# ------------------------------------------------------------ #
 # ServiceList test 1 (check general functionality)
 # ------------------------------------------------------------ #
 
@@ -978,8 +1011,8 @@ my $ServiceList2ServiceID = $Self->{ServiceObject}->ServiceAdd(
 # ---
 # ITSM
 # ---
-    TypeID        => 1,
-    CriticalityID => 1,
+            TypeID        => 1,
+            CriticalityID => 1,
 # ---
 );
 
@@ -1067,8 +1100,8 @@ for my $ServiceName (@ServiceNames) {
 # ---
 # ITSM
 # ---
-        TypeID        => 1,
-        CriticalityID => 1,
+            TypeID        => 1,
+            CriticalityID => 1,
 # ---
     );
 
