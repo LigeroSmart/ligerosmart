@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.42 2010-08-09 06:55:16 ub Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.43 2010-08-13 16:46:13 cr Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -11,7 +11,6 @@
     <Description Lang="en">The OTRS::ITSM Service Level Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Service Level Management Paket.</Description>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMStats.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-001-Ticket.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-002-Ticket.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-003-Ticket.xml"/>
