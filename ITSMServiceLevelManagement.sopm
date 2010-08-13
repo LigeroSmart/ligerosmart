@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.43 2010-08-13 16:46:13 cr Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.44 2010-08-13 16:57:07 cr Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -214,13 +214,13 @@
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
         <br>
-        <b>WELCOME</b>
+        <strong>WELCOME</strong>
         <br>
         <br>
         You are about to install the OTRS package ITSMServiceLevelManagement.<br>
         <br>
         <br>
-        <b>REQUIRED OTRS PACKAGES</b>
+        <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -232,13 +232,13 @@
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
         <br>
-        <b>WILLKOMMEN</b>
+        <strong>WILLKOMMEN</strong>
         <br>
         <br>
         Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu installieren.<br>
         <br>
         <br>
-        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -250,7 +250,7 @@
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
         <br>
-        <b>NOTICE</b>
+        <strong>NOTICE</strong>
         <br>
         <br>
         The statistics that were installed by this package will be available in the menu item 'Stats'.
@@ -263,7 +263,7 @@
     <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
 
         <br>
-        <b>HINWEIS</b>
+        <strong>HINWEIS</strong>
         <br>
         <br>
         Im Menü-Punkt 'Statistik' sind die von diesem Paket installierten Statistiken verfügbar.
@@ -276,13 +276,13 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br>
-        <b>WELCOME</b>
+        <strong>WELCOME</strong>
         <br>
         <br>
         You are about to upgrade the OTRS package ITSMServiceLevelManagement.<br>
         <br>
         <br>
-        <b>REQUIRED OTRS PACKAGES</b>
+        <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -294,13 +294,13 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
 
         <br>
-        <b>WILLKOMMEN</b>
+        <strong>WILLKOMMEN</strong>
         <br>
         <br>
         Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu aktualisieren.<br>
         <br>
         <br>
-        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -312,7 +312,7 @@
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br>
-        <b>ATTENTION</b>
+        <strong>ATTENTION</strong>
         <br>
         <br>
         The statistics that are associated with this package, will no longer be available if the package is uninstalled.
@@ -325,7 +325,7 @@
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
         <br>
-        <b>ACHTUNG</b>
+        <strong>ACHTUNG</strong>
         <br>
         <br>
         Nach der Deinstallation sind die von diesem Paket installierten Statistiken nicht mehr verfügbar.
