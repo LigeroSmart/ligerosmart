@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/Service.pm - to link service objects
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.7 2009-08-18 22:20:52 mh Exp $
+# $Id: Service.pm,v 1.8 2010-08-14 03:39:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject LinkObject)
+        qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
