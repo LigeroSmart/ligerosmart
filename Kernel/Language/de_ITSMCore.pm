@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - the german translation of ITSMCore
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.21 2010-08-13 17:10:41 mp Exp $
+# $Id: de_ITSMCore.pm,v 1.22 2010-08-16 16:53:45 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -110,6 +110,9 @@ sub Data {
     $Lang->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Definiert, dass ein \'ITSMChange\'-Objekt mit dem Linktyp \'Normal\' mit \'Ticket\'-Objekten verlinkt werden kann.';
     $Lang->{'Width of ITSM textareas.'} = 'Anzahl der Zeichen pro Zeile in ITSM TextAreas.';
     $Lang->{'Parameters for the incident states in the preference view.'} = 'Parameter fuer den Vorfallsstatus in der Ansicht fuer die Einstellungen.';
+    $Lang->{'Manage priority matrix.'} = '';
+    $Lang->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
+    $Lang->{'Impact \ Criticality'} = '';
 
     return 1;
 }

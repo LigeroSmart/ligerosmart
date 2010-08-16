@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.11 2009-05-18 09:48:35 mh Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.12 2010-08-16 16:53:45 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -115,7 +115,8 @@ sub Run {
         );
 
         my $AllocateMatrix;
-        $AllocateMatrix->[0]->[0]->{Class} = 'Description';
+        $AllocateMatrix->[0]->[0]->{ObjectType} = 'Impact \ Criticality';
+        $AllocateMatrix->[0]->[0]->{Class}      = 'HeaderColumnDescription';
 
         # generate table description (Impact)
         my $Counter1 = 1;
@@ -127,7 +128,6 @@ sub Run {
             $AllocateMatrix->[$Counter1]->[0]->{ObjectType}   = 'Impact';
             $AllocateMatrix->[$Counter1]->[0]->{ImpactKey}    = $Impact;
             $AllocateMatrix->[$Counter1]->[0]->{ObjectOption} = $ObjectOption{ImpactList}{$Impact};
-            $AllocateMatrix->[$Counter1]->[0]->{Class}        = 'Description';
             $Counter1++;
         }
 
@@ -142,7 +142,6 @@ sub Run {
             $AllocateMatrix->[0]->[$Counter2]->{CriticalityKey} = $Criticality;
             $AllocateMatrix->[0]->[$Counter2]->{ObjectOption}
                 = $ObjectOption{CriticalityList}{$Criticality};
-            $AllocateMatrix->[0]->[$Counter2]->{Class} = 'Description';
             $Counter2++;
         }
 
@@ -166,17 +165,44 @@ sub Run {
             }
         }
 
-        # output allocation matrix
-        for my $RowRef ( @{$AllocateMatrix} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'CIPAllocateRow',
-            );
+        for my $Row ( 0 .. $#{$AllocateMatrix} ) {
 
-            for my $Cell ( @{$RowRef} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'CIPAllocateRowColumn' . $Cell->{Class},
-                    Data => $Cell,
-                );
+            if ( $Row != 0 ) {
+                $Self->{LayoutObject}->Block( Name => 'Row' )
+            }
+
+            for my $Column ( 0 .. $#{ $AllocateMatrix->[$Row] } ) {
+
+                #check if the row is header
+                if ( $Row == 0 ) {
+
+                    if ( $Column == 0 ) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'HeaderColumnDescription',
+                            Data => $AllocateMatrix->[$Row]->[$Column],
+                        );
+                    }
+                    else {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'HeaderCell',
+                            Data => $AllocateMatrix->[$Row]->[$Column],
+                        );
+                    }
+                }
+
+                #check if the column is description
+                elsif ( $Column == 0 ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'DescriptionCell',
+                        Data => $AllocateMatrix->[$Row]->[$Column],
+                    );
+                }
+                else {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ContentCell',
+                        Data => $AllocateMatrix->[$Row]->[$Column],
+                    );
+                }
             }
         }
 

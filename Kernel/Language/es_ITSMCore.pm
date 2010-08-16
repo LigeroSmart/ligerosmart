@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMCore.pm,v 1.11 2010-08-13 17:32:26 mp Exp $
+# $Id: es_ITSMCore.pm,v 1.12 2010-08-16 16:53:45 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -111,6 +111,9 @@ sub Data {
     $Lang->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMChange\' puede ser vinculado con objetos \'Ticket\' usando el vinculo de tipo \'Normal\'';
     $Lang->{'Width of ITSM textareas.'} = 'Define el ancho del textarea de ITSM';
     $Lang->{'Parameters for the incident states in the preference view.'} = 'Parametros para el estado de los incidentes en la vista de preferencias';
+    $Lang->{'Manage priority matrix.'} = 'Administrar la matríz de prioridades.';
+    $Lang->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Administrar la prioridad resultante al combinar Urgencia <-> Impacto.';
+    $Lang->{'Impact \ Criticality'} = 'Impacto \ Urgencia';
 
     return 1;
 }

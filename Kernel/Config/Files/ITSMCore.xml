@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMCore.xml,v 1.32 2010-08-13 17:04:22 mp Exp $</CVS>
+    <CVS>$Id: ITSMCore.xml,v 1.33 2010-08-16 16:53:45 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.</Description>
         <Group>ITSM Core</Group>
@@ -8,13 +8,13 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>admin</Group>
-                <Description>Admin</Description>
+                <Description Translatable="1">Manage priority matrix.</Description>
                 <Title>Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
-                    <Name>Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Name>
-                    <Block>Block3</Block>
+                    <Name Translatable="1">Criticality &lt;-&gt; Impact &lt;-&gt; Priority</Name>
+                    <Block>System</Block>
                     <Prio>430</Prio>
                 </NavBarModule>
             </FrontendModuleReg>
