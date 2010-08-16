@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.7 2010-04-13 12:30:21 ub Exp $
+# $Id: AgentITSMService.pm,v 1.8 2010-08-16 23:12:28 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,11 +69,7 @@ sub Run {
         $TreeView = 1;
     }
 
-    my $CssClass = '';
     for my $ServiceID ( sort { $ServiceList{$a} cmp $ServiceList{$b} } keys %ServiceList ) {
-
-        # set output object
-        $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
         # get service data
         my %Service = $Self->{ServiceObject}->ServiceGet(
@@ -97,7 +93,6 @@ sub Run {
                     LevelSpace    => $LevelSpace,
                     Name          => $Service{NameShort},
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                    CssClass      => $CssClass,
                 },
             );
         }
@@ -110,7 +105,6 @@ sub Run {
                     %Service,
                     Name          => $Service{Name},
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                    CssClass      => $CssClass,
                 },
             );
         }

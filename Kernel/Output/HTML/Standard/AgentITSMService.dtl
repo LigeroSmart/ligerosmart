@@ -2,7 +2,7 @@
 # AgentITSMService.dtl - provides HTML form for AgentITSMService
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.dtl,v 1.5 2010-03-18 15:06:39 ub Exp $
+# $Id: AgentITSMService.dtl,v 1.6 2010-08-16 23:12:28 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,45 +10,44 @@
 # --
 
 <!-- dtl:block:Overview -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"}$Text{"Overview"}: $Text{"Service"}$Env{"Box1"}
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody" align="center">
-            <br>
-            <table border="0" width="800" cellspacing="0" cellpadding="3">
-                <tr class="contenthead">
-                    <td class="contentkey" width="20">&nbsp;</td>
-                    <td class="contentkey">$Text{"Service"}</td>
-                    <td class="contentkey">$Text{"Type"}</td>
-                    <td class="contentkey">$Text{"Criticality"}</td>
-                    <td class="contentkey" width="150">$Text{"Changed"}</td>
-                </tr>
+<div class="MainBox AriaRoleMain SpacingTop">
+    <div class="W75pc SpacingBottom CenterBox">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Overview"}: $Text{"Service"}</h2>
+            </div>
+            <div class="Content SpacingBottom">
+                <table class="DataTable SpacingTop">
+                    <thead>
+                        <th>$Text{"State"}</th>
+                        <th>$Text{"Service"}</th>
+                        <th>$Text{"Type"}</th>
+                        <th>$Text{"Criticality"}</th>
+                        <th>$Text{"Changed"}</th>
+                    </thead>
+                    <tbody>
 <!-- dtl:block:OverviewRow -->
-                <tr class="contentbody">
-                    <td class="$QData{"CssClass"}" align="right">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"CurInciSignal"}.png" title="$Quote{"$Text{"$Data{"CurInciState"}"}"}" alt="$Quote{"$Text{"$Data{"CurInciState"}"}"}">
-                    </td>
-                    <td class="$QData{"CssClass"}">
-                        $Data{"LevelSpace"}
-                        <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=$QData{"ServiceID"}">
-                        $QData{"Name"}
-                        </a>
-                    </td>
-                    <td class="$QData{"CssClass"}">$Text{"$QData{"Type"}"}</td>
-                    <td class="$QData{"CssClass"}">$Text{"$QData{"Criticality"}"}</td>
-                    <td class="$QData{"CssClass"}" width="150">$TimeLong{"$QData{"ChangeTime"}"}</td>
-                </tr>
+                        <tr>
+                            <td>
+                                <div class="Flag">
+                                    <span class="$Data{"CurInciSignal"} SpacingTopSmall"></span>
+                                </div>
+                            </td>
+                            <td>
+                                $Data{"LevelSpace"}
+                                <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=$QData{"ServiceID"}">
+                                    $QData{"Name"}
+                                </a>
+                            </td>
+                            <td>$Text{"$Data{"Type"}"}</td>
+                            <td>$Text{"$Data{"Criticality"}"}</td>
+                            <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
+                        </tr>
 <!-- dtl:block:OverviewRow -->
-                <tr class="contentfooter">
-                    <td colspan="5">&nbsp;</td>
-                </tr>
-            </table>
-            <br>
-        </td>
-    </tr>
-</table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- dtl:block:Overview -->
