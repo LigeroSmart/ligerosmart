@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.8 2010-08-16 23:12:28 dz Exp $
+# $Id: AgentITSMService.pm,v 1.9 2010-08-17 14:58:49 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -93,6 +93,7 @@ sub Run {
                     LevelSpace    => $LevelSpace,
                     Name          => $Service{NameShort},
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                    State         => $Service{CurInciStateType},
                 },
             );
         }
@@ -105,6 +106,7 @@ sub Run {
                     %Service,
                     Name          => $Service{Name},
                     CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                    State         => $Service{CurInciStateType},
                 },
             );
         }
