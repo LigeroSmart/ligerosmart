@@ -2,7 +2,7 @@
 # AgentITSMService.dtl - provides HTML form for AgentITSMService
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.dtl,v 1.8 2010-08-17 22:09:17 dz Exp $
+# $Id: AgentITSMService.dtl,v 1.9 2010-08-17 23:13:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,8 +29,8 @@
 <!-- dtl:block:OverviewRow -->
                         <tr>
                             <td>
-                                <div class="Flag">
-                                    <span class="$Data{"CurInciSignal"} SpacingTopSmall" title="$Data{"State"}"></span>
+                                <div class="Flag Small">
+                                    <span class="$Data{"CurInciSignal"}" title="$Data{"State"}"></span>
                                 </div>
                             </td>
                             <td>
