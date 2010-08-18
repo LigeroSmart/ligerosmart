@@ -1,13 +1,13 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
 
 /**
  * @package     Skin "Default"
- * @section     TicketDetails
+ * @section     ITSMDetails
  */
 
 @media screen,projection,tv,handheld {
@@ -76,50 +76,6 @@
 
 .ControlRow .ITSMFilter.Icons .Active span {
     background-position: 0 -16px;
-}
-
-/**
- * @subsection  Attachment Dialog Content
- */
- 
-.Dialog > .Content > .Attachment.InnerContent {
-    padding: 0;
-}
-    
-.AttachmentContent {
-    width: 300px;
-    height: 500px;
-    overflow: hidden;
-    overflow-y: scroll;
-}
-
-.AttachmentElement {
-    margin: 5px 9px;
-    border-bottom: 1px solid #E6E6E6;
-    padding-bottom: 2px;
-}
-
-.AttachmentPreview {
-    height: 80px;
-    width: 60px;
-    border: 1px solid #DDD;
-    float: left;
-    margin-right: 15px;
-    background-color: #E6E6E6;
-    background-position: center;
-    background-repeat: no-repeat;
-    clear: left;
-}
-
-.AttachmentPreview a {
-    display: block;
-    height: 100%;
-    width: 100%;
-}
-
-.AttachmentElement h3 {
-    font-size: 12px;
-    font-weight: bold;
 }
 
 /**
