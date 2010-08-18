@@ -2,7 +2,7 @@
 # AgentITSMService.dtl - provides HTML form for AgentITSMService
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.dtl,v 1.9 2010-08-17 23:13:24 dz Exp $
+# $Id: AgentITSMService.dtl,v 1.10 2010-08-18 20:14:04 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@
                             </td>
                             <td>
                                 $Data{"LevelSpace"}
-                                <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$QData{"ServiceID"}">
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$QData{"ServiceID"}">
                                     $QData{"Name"}
                                 </a>
                             </td>
