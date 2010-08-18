@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMSLA.pm - the OTRS::ITSM SLA module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.pm,v 1.4 2009-05-18 09:48:35 mh Exp $
+# $Id: AgentITSMSLA.pm,v 1.5 2010-08-18 20:23:15 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,11 +51,7 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    my $CssClass = '';
     for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
-
-        # set output object
-        $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
         # get sla data
         my %SLA = $Self->{SLAObject}->SLAGet(
@@ -68,7 +64,6 @@ sub Run {
             Name => 'OverviewRow',
             Data => {
                 %SLA,
-                CssClass => $CssClass,
             },
         );
     }

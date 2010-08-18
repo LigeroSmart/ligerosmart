@@ -1,8 +1,8 @@
 # --
 # AgentITSMSLA.dtl - provides HTML form for AgentITSMSLA
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.dtl,v 1.2 2009-05-18 09:48:46 mh Exp $
+# $Id: AgentITSMSLA.dtl,v 1.3 2010-08-18 20:18:35 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,40 +10,35 @@
 # --
 
 <!-- dtl:block:Overview -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-  <tr>
-    <td class="mainhead">
-      $Env{"Box0"}$Text{"Overview"}: $Text{"SLA"}$Env{"Box1"}
-    </td>
-  </tr>
-  <tr>
-    <td class="mainbody" align="center">
-      <br>
-      <table border="0" width="800" cellspacing="0" cellpadding="3">
-        <tr class="contenthead">
-          <td class="contentkey" width="10">&nbsp;</td>
-          <td class="contentkey">$Text{"SLA"}</td>
-          <td class="contentkey">$Text{"Type"}</td>
-          <td class="contentkey" width="150">$Text{"Changed"}</td>
-        </tr>
+<div class="MainBox AriaRoleMain SpacingTop">
+    <div class="W75pc SpacingBottom CenterBox">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Overview"}: $Text{"SLA"}</h2>
+            </div>
+            <div class="Content SpacingBottom">
+                <table class="DataTable SpacingTop">
+                    <thead>
+                        <th>$Text{"SLA"}</th>
+                        <th>$Text{"Type"}</th>
+                        <th>$Text{"Changed"}</th>
+                    </thead>
+                    <tbody>
 <!-- dtl:block:OverviewRow -->
-        <tr class="contentbody">
-          <td class="$QData{"CssClass"}">&nbsp;</td>
-          <td class="$QData{"CssClass"}">
-            <a href="$Env{"Baselink"}Action=AgentITSMSLAZoom&SLAID=$QData{"SLAID"}">
-            $QData{"Name"}
-            </a>
-          </td>
-          <td class="$QData{"CssClass"}">$Text{"$QData{"Type"}"}</td>
-          <td class="$QData{"CssClass"}" width="150">$TimeLong{"$QData{"ChangeTime"}"}</td>
-        </tr>
+                        <tr>
+                            <td>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMSLAZoom&SLAID=$QData{"SLAID"}">
+                                    $QData{"Name"}
+                                </a>
+                            </td>
+                            <td>$Text{"$Data{"Type"}"}</td>
+                            <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
+                        </tr>
 <!-- dtl:block:OverviewRow -->
-        <tr class="contentfooter">
-          <td colspan="4">&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-    </td>
-  </tr>
-</table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- dtl:block:Overview -->
