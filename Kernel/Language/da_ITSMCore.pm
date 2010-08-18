@@ -2,7 +2,7 @@
 # Kernel/Language/da_ITSMCore.pm - provides da (Danish) language translation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: da_ITSMCore.pm,v 1.7 2010-08-18 16:39:47 en Exp $
+# $Id: da_ITSMCore.pm,v 1.8 2010-08-18 21:13:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -44,10 +44,10 @@ sub Data {
     $Lang->{'SLA Overview'}                        = 'SLA oversigt';
     $Lang->{'Associated Services'}                 = 'Tilknyttede services';
     $Lang->{'Associated SLAs'}                     = 'Tilknyttede SLAs';
-    $Lang->{'Back End'}                            = 'Backend';
+    $Lang->{'Back End'}                             = 'Backend';
     $Lang->{'Demonstration'}                       = 'Demonstration';
     $Lang->{'End User Service'}                    = 'Kundeservice';
-    $Lang->{'Front End'}                           = 'Frontend';
+    $Lang->{'Front End'}                            = 'Frontend';
     $Lang->{'IT Management'}                       = 'IT Management';
     $Lang->{'IT Operational'}                      = 'IT operationel';
     $Lang->{'Other'}                               = 'Andre';
@@ -112,6 +112,11 @@ sub Data {
     $Lang->{'Manage priority matrix.'} = '';
     $Lang->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Lang->{'Impact \ Criticality'} = '';
+    $Lang->{'Service Actions'} = '';
+    $Lang->{'SLA Actions'} = '';
+    $Lang->{'Current incident state'} = '';
+    $Lang->{'Linked Objects'} = '';
+
     return 1;
 }
 

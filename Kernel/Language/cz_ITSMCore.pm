@@ -4,7 +4,7 @@
 # Copyright (C) 2007-2008 Milen Koutev
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ITSMCore.pm,v 1.22 2010-08-18 16:39:47 en Exp $
+# $Id: cz_ITSMCore.pm,v 1.23 2010-08-18 21:13:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -47,10 +47,10 @@ sub Data {
     $Lang->{'SLA Overview'}                        = 'SLA Pøehled';
     $Lang->{'Associated Services'}                 = 'Pøiøazené Slu¾by';
     $Lang->{'Associated SLAs'}                     = 'Pøiøazené SLA smlouvy';
-    $Lang->{'Back End'}                            = 'Základní rozhraní/BackEnd';
+    $Lang->{'Back End'}                            = 'Základní rozhraní/Backend';
     $Lang->{'Demonstration'}                       = 'Ukázka';
     $Lang->{'End User Service'}                    = 'Slu¾by koncovým u¾ivatelùm';
-    $Lang->{'Front End'}                           = 'Zákaznické rozhraní/FrontEnd';
+    $Lang->{'Front End'}                           = 'Zákaznické rozhraní/Frontend';
     $Lang->{'IT Management'}                       = 'Øízení IT';
     $Lang->{'IT Operational'}                      = 'IT Operace';
     $Lang->{'Other'}                               = 'Dal¹í';
@@ -115,6 +115,10 @@ sub Data {
     $Lang->{'Manage priority matrix.'} = '';
     $Lang->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Lang->{'Impact \ Criticality'} = '';
+    $Lang->{'Service Actions'} = '';
+    $Lang->{'SLA Actions'} = '';
+    $Lang->{'Current incident state'} = '';
+    $Lang->{'Linked Objects'} = '';
 
     return 1;
 }

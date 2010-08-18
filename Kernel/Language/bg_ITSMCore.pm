@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # --
-# $Id: bg_ITSMCore.pm,v 1.21 2010-08-18 16:39:47 en Exp $
+# $Id: bg_ITSMCore.pm,v 1.22 2010-08-18 21:13:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -46,10 +46,10 @@ sub Data {
     $Lang->{'SLA Overview'}                        = '';
     $Lang->{'Associated Services'}                 = '';
     $Lang->{'Associated SLAs'}                     = 'Свързани SLA договори';
-    $Lang->{'Back End'}                            = 'Основна система/BackEnd';
+    $Lang->{'Back End'}                            = 'Основна система/Backend';
     $Lang->{'Demonstration'}                       = 'Демонстрация';
     $Lang->{'End User Service'}                    = 'Услуги за крайни потребители';
-    $Lang->{'Front End'}                           = 'Клиентска система/FrontEnd';
+    $Lang->{'Front End'}                           = 'Клиентска система/Frontend';
     $Lang->{'IT Management'}                       = 'Управление на ИТ';
     $Lang->{'IT Operational'}                      = 'ИТ Операции';
     $Lang->{'Other'}                               = 'Други';
@@ -114,6 +114,10 @@ sub Data {
     $Lang->{'Manage priority matrix.'} = '';
     $Lang->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Lang->{'Impact \ Criticality'} = '';
+    $Lang->{'Service Actions'} = '';
+    $Lang->{'SLA Actions'} = '';
+    $Lang->{'Current incident state'} = '';
+    $Lang->{'Linked Objects'} = '';
 
     return 1;
 }
