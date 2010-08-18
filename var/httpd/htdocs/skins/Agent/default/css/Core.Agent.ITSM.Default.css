@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -20,6 +20,11 @@ fieldset.TableLike div.Value .Flag {
     float: left;
     margin-right: 5px;
     margin-top: 3px;
+}
+
+.RTL fieldset.TableLike div.Value .Flag {
+    float: right;
+    margin-left: 5px;
 }
 
 .Flag span.greyled {

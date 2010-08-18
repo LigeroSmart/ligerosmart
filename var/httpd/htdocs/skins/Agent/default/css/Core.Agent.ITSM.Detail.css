@@ -1,0 +1,157 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     TicketDetails
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Headline
+ */
+
+/**
+ * @subsection  ITSM tree
+ */
+#ITSMTree {
+    margin-top: 20px;
+}
+
+
+/**
+ * @subsection  ITSM table body
+ */
+#ITSMTableBody {
+    position: relative;
+    overflow: hidden;
+    border-bottom: none;
+}
+
+#ITSMTableBody .Scroller {
+    height: 140px;
+    overflow-y: scroll;
+}
+
+/**
+ * @subsection  ControlRow Icons
+ */
+
+
+.ITSMItemView {
+    float: right;
+}
+
+.RTL .ITSMItemView {
+    float: left;
+}
+
+.ControlRow .ITSMItemView.Icons a span {
+    background: transparent url(../img/articleview.png) no-repeat;
+}
+
+.ControlRow .ITSMItemView.Icons .OneITSMItem.Active span,
+.ControlRow .ITSMItemView.Icons .OneITSMItem.Active:hover span {
+    background-position: -16px 0;
+}
+
+.ControlRow .ITSMItemView.Icons .AllITSMItems span,
+.ControlRow .ITSMItemView.Icons .AllITSMItems:hover span {
+    background-position: 0 -16px;
+}
+
+.ControlRow .ITSMItemView.Icons .AllITSMItems.Active span,
+.ControlRow .ITSMItemView.Icons .AllITSMItems.Active:hover span {
+    background-position: -16px -16px;
+}
+
+.ControlRow .ITSMFilter.Icons a span {
+    background: url(../img/articlefilter.png) no-repeat;
+}
+
+.ControlRow .ITSMFilter.Icons .Active span {
+    background-position: 0 -16px;
+}
+
+/**
+ * @subsection  Attachment Dialog Content
+ */
+ 
+.Dialog > .Content > .Attachment.InnerContent {
+    padding: 0;
+}
+    
+.AttachmentContent {
+    width: 300px;
+    height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.AttachmentElement {
+    margin: 5px 9px;
+    border-bottom: 1px solid #E6E6E6;
+    padding-bottom: 2px;
+}
+
+.AttachmentPreview {
+    height: 80px;
+    width: 60px;
+    border: 1px solid #DDD;
+    float: left;
+    margin-right: 15px;
+    background-color: #E6E6E6;
+    background-position: center;
+    background-repeat: no-repeat;
+    clear: left;
+}
+
+.AttachmentPreview a {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.AttachmentElement h3 {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/**
+ * @subsection  ItemRow
+ * @note        contains random items and is positioned in the sidebar
+ */
+
+.ItemRow {
+    margin-left: 40%;
+}
+    
+.RTL .ItemRow {
+    margin-left: 0;
+    margin-right: 40%;
+}
+
+.ItemRow li {
+    padding: 3px 0 5px 8px;
+}
+    
+.RTL .ItemRow li {
+    padding: 3px 8px 5px 0;
+}
+
+.ItemRow a {
+    line-height: 14px;
+    color: #000;
+    text-decoration: underline;
+}
+
+.ItemRow a:hover {
+    color: #666;
+}
+
+} /* end @media */
