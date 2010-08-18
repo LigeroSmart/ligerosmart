@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.113 2010-08-18 16:19:58 cr Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.114 2010-08-18 21:15:07 en Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -52,7 +52,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLA.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMSLAZoom.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/RichTextEditorITSM.dtl"/>
         <File Permission="644" Location="Kernel/System/LinkObject/Service.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/System/Service.pm"/>
@@ -61,7 +60,6 @@
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_service.png"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.ITSM.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Agent.ITSM.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Agent.ITSM.Detail.css"/>
