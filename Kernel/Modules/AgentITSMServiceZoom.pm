@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.6 2009-10-06 20:29:33 ub Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.7 2010-08-18 17:21:22 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -94,26 +94,19 @@ sub Run {
         }
     }
 
-    my $OutputHorizontalRuler = 0;
-
     # get sla list
     my %SLAList = $Self->{SLAObject}->SLAList(
         ServiceID => $ServiceID,
         UserID    => $Self->{UserID},
     );
     if (%SLAList) {
-        $OutputHorizontalRuler = 1;
 
         # output row
         $Self->{LayoutObject}->Block(
             Name => 'SLA',
         );
 
-        my $CssClass = '';
         for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
-
-            # set output object
-            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
 
             # get service data
             my %SLA = $Self->{SLAObject}->SLAGet(
@@ -126,7 +119,6 @@ sub Run {
                 Name => 'SLARow',
                 Data => {
                     %SLA,
-                    CssClass => $CssClass,
                 },
             );
         }
@@ -156,15 +148,6 @@ sub Run {
             Data => {
                 LinkTableStrg => $LinkTableStrg,
             },
-        );
-
-        $OutputHorizontalRuler = 1;
-    }
-
-    # output horizontal ruler
-    if ($OutputHorizontalRuler) {
-        $Self->{LayoutObject}->Block(
-            Name => 'HorizontalRuler',
         );
     }
 
