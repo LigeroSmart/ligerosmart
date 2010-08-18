@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.112 2010-08-16 23:08:10 dz Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.113 2010-08-18 16:19:58 cr Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -62,8 +62,11 @@
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_service.png"/>
-        <File Permission="644" Location="var/packagesetup/ITSMCore.pm"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.Agent.ITSM.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Agent.ITSM.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Agent.ITSM.Detail.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.Agent.ITSM.Detail.IE7.css"/>
+        <File Permission="644" Location="var/packagesetup/ITSMCore.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="cip_allocate">
