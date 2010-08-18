@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LinkObjectService.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectService.pm,v 1.7 2009-10-14 19:26:30 ub Exp $
+# $Id: LinkObjectService.pm,v 1.8 2010-08-18 17:24:12 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -216,7 +216,7 @@ sub TableCreateComplex {
             {
                 Type      => 'Link',
                 Content   => $Service->{Name},
-                Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=' . $ServiceID,
+                Link      => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
                 MaxLength => 70,
             },
             {
@@ -346,7 +346,7 @@ sub TableCreateSimple {
                     Type    => 'Link',
                     Content => "S:$Service->{NameShort}",
                     Title   => "Service: $Service->{Name}",
-                    Link => '$Env{"Baselink"}Action=AgentITSMServiceZoom&ServiceID=' . $ServiceID,
+                    Link => '$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=' . $ServiceID,
                     MaxLength => 20,
                 );
 
@@ -399,8 +399,9 @@ sub ContentStringCreate {
     $CurInciSignal ||= $InciSignals{unknown};
 
     my $String = $Self->{LayoutObject}->Output(
-        Template => '<img border="0" src="$Env{"Images"}$QData{"CurInciSignal"}.png" '
-            . 'title="$Text{"$QData{"CurInciState"}"}" alt="$Text{"$QData{"CurInciState"}"}">',
+        Template => '<div class="Flag Small" title="$QData{"CurInciState"}"> '
+            . '<span class="$QData{"CurInciSignal"}"></span> </div>',
+
         Data => {
             CurInciSignal => $CurInciSignal,
             CurInciState => $Content->{Content} || '',
@@ -518,16 +519,16 @@ sub SearchOptionList {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-10-14 19:26:30 $
+$Revision: 1.8 $ $Date: 2010-08-18 17:24:12 $
 
 =cut
