@@ -2,7 +2,7 @@
 # Kernel/Language/it_ITSMCore.pm - the italian translation of ITSMCore
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: it_ITSMCore.pm,v 1.8 2010-08-16 16:53:45 dz Exp $
+# $Id: it_ITSMCore.pm,v 1.9 2010-08-18 16:39:47 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -65,7 +65,7 @@ sub Data {
     $Lang->{'Transactions'}                        = 'Transazioni';
     $Lang->{'This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.'} = '';
     $Lang->{'Determines the way the linked objects are displayed in each zoom mask.'} = '';
-    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" and Content="Some Name").'} = '';
+    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name").'} = '';
     $Lang->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
     $Lang->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = '';
     $Lang->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';

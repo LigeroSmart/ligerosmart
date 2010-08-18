@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.50 2010-08-12 21:05:20 en Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.51 2010-08-18 16:35:36 en Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.242.2.6 2010/03/09 09:37:46 dz Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Translatable="1">This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.</Description>
@@ -22,7 +22,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Package::RepositoryList" Required="0" Valid="1">
-        <Description Translatable="1">List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&amp;File=" and Content="Some Name").</Description>
+        <Description Translatable="1">List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name").</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Package</SubGroup>
         <Setting>

@@ -4,7 +4,7 @@
 # Copyright (C) 2007-2008 Milen Koutev
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ITSMCore.pm,v 1.21 2010-08-16 16:53:45 dz Exp $
+# $Id: cz_ITSMCore.pm,v 1.22 2010-08-18 16:39:47 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -67,7 +67,7 @@ sub Data {
     $Lang->{'Transactions'}                        = 'Transakce';
     $Lang->{'This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.'} = '';
     $Lang->{'Determines the way the linked objects are displayed in each zoom mask.'} = '';
-    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" and Content="Some Name").'} = '';
+    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name").'} = '';
     $Lang->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
     $Lang->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = '';
     $Lang->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';

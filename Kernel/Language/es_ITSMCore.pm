@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMCore.pm,v 1.12 2010-08-16 16:53:45 dz Exp $
+# $Id: es_ITSMCore.pm,v 1.13 2010-08-18 16:39:47 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -66,7 +66,7 @@ sub Data {
     $Lang->{'Transactions'}                        = 'Transacciones';
     $Lang->{'This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.'} = 'Esta configuración controla el nombre de la aplicación, tal y como se muestra en la interfaz web, así como en las tabs y en la barra de título del explorador web.';
     $Lang->{'Determines the way the linked objects are displayed in each zoom mask.'} = 'Determina la manera en que los objetos vinculados se despliegan en cada máscara de zoom.';
-    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" and Content="Some Name").'} = 'Lista de los repositorios disponibles (por ejemplo, también se pueden usar otras instalaciones como respositorio, usando Key="http://example.com/otrs/public.pl?Action=PublicRepository&File=" y Content="Algún nombre").';
+    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name").'} = 'Lista de los repositorios disponibles (por ejemplo, también se pueden usar otras instalaciones como respositorio, usando Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" y Content="Algún nombre").';
     $Lang->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Registro de módulo frontend para el objeto AgentITSMService en la interfaz del agente.';
     $Lang->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Registro de módulo frontend para el objeto AgentITSMSLA en la interfaz del agente.';
     $Lang->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Registro de módulo frontend para el objeto AgentITSMServiceZoom en la interfaz del agente.';
