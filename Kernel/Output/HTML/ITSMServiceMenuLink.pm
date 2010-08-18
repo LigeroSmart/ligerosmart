@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMServiceMenuLink.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMServiceMenuLink.pm,v 1.4 2009-05-18 09:48:46 mh Exp $
+# $Id: ITSMServiceMenuLink.pm,v 1.5 2010-08-18 17:23:04 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,11 +81,6 @@ sub Run {
 
     # don't show link menu item if there are no linkable objects
     return if !%PossibleObjects;
-
-    $Self->{LayoutObject}->Block( Name => 'Menu' );
-    if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
-    }
 
     $Self->{LayoutObject}->Block(
         Name => 'MenuItem',
