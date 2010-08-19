@@ -1,8 +1,8 @@
 # --
 # ITSMCore.pm - code to excecute during package installation
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.16 2009-10-07 13:27:33 reb Exp $
+# $Id: ITSMCore.pm,v 1.17 2010-08-19 14:49:12 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -126,12 +126,6 @@ run the code install part
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
-    # change background color to the ITSM blue
-    $Self->_BackgroundColorChange(
-        OldColor => 'bbddff',
-        NewColor => '003399',
-    );
-
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
 
@@ -166,12 +160,6 @@ run the code reinstall part
 
 sub CodeReinstall {
     my ( $Self, %Param ) = @_;
-
-    # change background color to the ITSM blue
-    $Self->_BackgroundColorChange(
-        OldColor => 'bbddff',
-        NewColor => '003399',
-    );
 
     # set default CIP matrix
     $Self->_CIPDefaultMatrixSet();
@@ -231,12 +219,6 @@ run the code uninstall part
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
 
-    # restore the original background
-    $Self->_BackgroundColorChange(
-        OldColor => '003399',
-        NewColor => 'bbddff',
-    );
-
     # deactivate the group itsm-service
     $Self->_GroupDeactivate(
         Name => 'itsm-service',
@@ -275,63 +257,6 @@ sub _SetPreferences {
             Value  => $Map{$Name},
         );
     }
-}
-
-=item _BackgroundColorChange()
-
-change the backround color
-
-    my $Result = $CodeObject->_BackgroundColorChange(
-        OldColor => 'bbddff',
-        NewColor => '003399',
-    );
-
-=cut
-
-sub _BackgroundColorChange {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(OldColor NewColor)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # define the css file
-    my $CssFile = $Self->{ConfigObject}->Get('Home') . '/var/httpd/htdocs/css/Standard/agent.css';
-
-    return 1 if -e $CssFile . '.save';
-
-    # read file content
-    my $Content = $Self->{MainObject}->FileRead(
-        Location        => $CssFile,
-        Mode            => 'binmode',
-        Result          => 'SCALAR',
-        DisableWarnings => 1,
-    );
-
-    return if !$Content;
-    return if ref $Content ne 'SCALAR';
-    return if !${$Content};
-
-    # change background color
-    ${$Content} =~ s{
-        background-color\:\#$Param{OldColor}\;
-    }{background-color\:\#$Param{NewColor}\;}xms;
-
-    # write new content to file
-    $Self->{MainObject}->FileWrite(
-        Location => $CssFile,
-        Content  => $Content,
-        Mode     => 'binmode',
-    );
-
-    return 1;
 }
 
 =item _CIPDefaultMatrixSet()
@@ -694,16 +619,16 @@ sub _FillupEmptySLATypeID {
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This Software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2009-10-07 13:27:33 $
+$Revision: 1.17 $ $Date: 2010-08-19 14:49:12 $
 
 =cut
