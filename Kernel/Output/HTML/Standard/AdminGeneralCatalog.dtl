@@ -2,7 +2,7 @@
 # AdminGeneralCatalog.dtl - provides HTML form for AdminGeneralCatalog
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.dtl,v 1.10 2010-08-12 22:57:43 cg Exp $
+# $Id: AdminGeneralCatalog.dtl,v 1.11 2010-08-19 17:47:39 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -95,6 +95,8 @@
                             <th class="W60pc">$QData{"Class"}</th>
                             <th class="Center">$Text{"Valid"}</th>
                         </tr>
+                    </thead>
+                    <tbody>
 <!-- dtl:block:OverviewItemList -->
                         <tr>
                             <td>
