@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.9 2010-08-17 14:58:49 dz Exp $
+# $Id: AgentITSMService.pm,v 1.10 2010-08-19 17:26:28 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -63,12 +63,6 @@ sub Run {
         incident    => 'redled',
     );
 
-    # check if treeview is enabled
-    my $TreeView = 0;
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
-        $TreeView = 1;
-    }
-
     for my $ServiceID ( sort { $ServiceList{$a} cmp $ServiceList{$b} } keys %ServiceList ) {
 
         # get service data
@@ -77,39 +71,16 @@ sub Run {
             UserID    => $Self->{UserID},
         );
 
-        # output row
-        if ($TreeView) {
-
-            # calculate level space
-            my @Fragment   = split '::', $Service{Name};
-            my $Level      = scalar @Fragment - 1;
-            my $LevelSpace = '&nbsp;&nbsp;&nbsp;&nbsp;' x $Level;
-
-            # output overview row
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewRow',
-                Data => {
-                    %Service,
-                    LevelSpace    => $LevelSpace,
-                    Name          => $Service{NameShort},
-                    CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                    State         => $Service{CurInciStateType},
-                },
-            );
-        }
-        else {
-
-            # output overview row
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewRow',
-                Data => {
-                    %Service,
-                    Name          => $Service{Name},
-                    CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                    State         => $Service{CurInciStateType},
-                },
-            );
-        }
+        # output overview row
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewRow',
+            Data => {
+                %Service,
+                Name          => $Service{Name},
+                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                State         => $Service{CurInciStateType},
+            },
+        );
     }
 
     # investigate refresh
