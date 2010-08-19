@@ -2,7 +2,7 @@
 # AgentITSMSLA.dtl - provides HTML form for AgentITSMSLA
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.dtl,v 1.3 2010-08-18 20:18:35 mp Exp $
+# $Id: AgentITSMSLA.dtl,v 1.4 2010-08-19 00:22:58 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,15 +19,17 @@
             <div class="Content SpacingBottom">
                 <table class="DataTable SpacingTop">
                     <thead>
-                        <th>$Text{"SLA"}</th>
-                        <th>$Text{"Type"}</th>
-                        <th>$Text{"Changed"}</th>
+                        <tr>
+                            <th>$Text{"SLA"}</th>
+                            <th>$Text{"Type"}</th>
+                            <th>$Text{"Changed"}</th>
+                        </tr>
                     </thead>
                     <tbody>
 <!-- dtl:block:OverviewRow -->
                         <tr>
                             <td>
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMSLAZoom&SLAID=$QData{"SLAID"}">
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$QData{"SLAID"}">
                                     $QData{"Name"}
                                 </a>
                             </td>
