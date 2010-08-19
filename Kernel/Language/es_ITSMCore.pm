@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMCore.pm,v 1.14 2010-08-18 21:13:24 en Exp $
+# $Id: es_ITSMCore.pm,v 1.15 2010-08-19 00:23:26 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -38,7 +38,7 @@ sub Data {
     $Lang->{'Connected to'}                        = 'Conectado a';
     $Lang->{'Alternative to'}                      = 'Alterantiva a';
     $Lang->{'Incident State'}                      = 'Estado del Incidente';
-    $Lang->{'Current Incident State'}              = 'Estado Actual del Incidente';
+    $Lang->{'Current Incident State'}              = 'Estado de Incidente Actual';
     $Lang->{'Current State'}                       = 'Estado Actual';
     $Lang->{'Service-Area'}                        = 'Area-Servicio';
     $Lang->{'Minimum Time Between Incidents'}      = 'Tiempo Mínimo entre Incidentes';
