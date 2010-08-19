@@ -2,7 +2,7 @@
 # AdminITSMCIPAllocate.dtl - provides HTML form for AdminITSMCIPAllocate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.dtl,v 1.10 2010-08-16 16:53:45 dz Exp $
+# $Id: AdminITSMCIPAllocate.dtl,v 1.11 2010-08-19 16:43:47 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,8 +31,8 @@
 
             <div class="Content">
                 <form action="$Env{"CGIHandle"}" method="post">
-                    <input type="hidden" name="Action" value="$Env{"Action"}">
-                    <input type="hidden" name="Subaction" value="CIPAllocate">
+                    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                    <input type="hidden" name="Subaction" value="CIPAllocate"/>
                     <table class="DataTable">
                         <thead>
                             <tr>
@@ -67,7 +67,7 @@
                         </tbody>
                     </table>
                     <div class="SpacingTop">
-                        <button type="submit" class"Primary">$Text{"Submit"}</button>
+                        <button type="submit" class="Primary">$Text{"Submit"}</button>
                     </div>
                 </form>
             </div>
