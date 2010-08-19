@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.6 2010-08-18 17:25:40 en Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.7 2010-08-19 00:09:31 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,7 +63,6 @@
                     <h2>$Text{"Linked Objects"}</h2>
                 </div>
                 <div class="Content">
-# object links
                     $Data{"LinkTableStrg"}
                 </div>
             </div>
@@ -81,7 +80,6 @@
                         <a href="$Env{"Baselink"}$Data{"Link"}">$Text{"$Data{"Name"}"}</a>
                     </li>
 <!-- dtl:block:MenuItem -->
-
                 </ul>
                 <div class="Clear"></div>
             </div>
@@ -142,7 +140,6 @@
                     <h2>$Text{"Linked Objects"}</h2>
                 </div>
                 <div class="Content">
-# object links
                     $Data{"LinkTableStrg"}
                 </div>
             </div>
