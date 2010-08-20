@@ -2,8 +2,8 @@
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminSLA.pm,v 1.6 2010-08-16 22:42:31 en Exp $
-# $OldId: AdminSLA.pm,v 1.33 2010/08/16 21:30:00 en Exp $
+# $Id: AdminSLA.pm,v 1.7 2010-08-20 20:52:48 en Exp $
+# $OldId: AdminSLA.pm,v 1.34 2010/08/19 16:12:23 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -338,18 +338,12 @@ sub _MaskNew {
     );
 
     # generate ServiceOptionStrg
-    my $TreeView = 0;
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
-        $TreeView = 1;
-    }
     $Param{ServiceOptionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data        => \%ServiceList,
         Name        => 'ServiceIDs',
         SelectedID  => $SLAData{ServiceIDs} || [],
         Multiple    => 1,
         Size        => 5,
-        TreeView    => $TreeView,
-        Sort        => 'TreeView',
         Translation => 0,
         Max         => 200,
     );
