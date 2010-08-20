@@ -2,8 +2,8 @@
 # AdminService.dtl - provides HTML form for AdminService
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.dtl,v 1.4 2010-08-17 15:09:40 mp Exp $
-# $OldId: AdminService.dtl,v 1.33 2009/10/01 14:12:45 ub Exp $
+# $Id: AdminService.dtl,v 1.5 2010-08-20 21:07:30 dz Exp $
+# $OldId: AdminService.dtl,v 1.33 2010/08/17 15:00:09 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

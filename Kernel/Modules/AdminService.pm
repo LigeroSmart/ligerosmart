@@ -2,8 +2,8 @@
 # Kernel/Modules/AdminService.pm - admin frontend to manage services
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.pm,v 1.3 2010-08-17 15:08:59 mp Exp $
-# $OldId:  AdminService.pm,v 1.32 2009/04/22 14:42:02 mh Exp $
+# $Id: AdminService.pm,v 1.4 2010-08-20 21:07:30 dz Exp $
+# $OldId: AdminService.pm,v 1.33 2010/08/19 16:12:23 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,6 +46,7 @@ sub new {
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
 # ---
+
     return $Self;
 }
 
@@ -56,7 +57,8 @@ sub Run {
     # service edit
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'ServiceEdit' ) {
-       # header
+
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -82,7 +84,7 @@ sub Run {
 # ---
 # ITSM
 # ---
-#       for (qw(ServiceID ParentID Name ValidID Comment))
+#        for (qw(ServiceID ParentID Name ValidID Comment)) {
         for (qw(ServiceID ParentID Name ValidID Comment TypeID CriticalityID)) {
 # ---
             $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
@@ -94,7 +96,7 @@ sub Run {
             $Error{'NameInvalid'} = 'ServerError';
         }
 
-        if (%Error){
+        if (%Error) {
             my $Output = $Self->{LayoutObject}->Header();
             $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -230,29 +232,13 @@ sub Run {
                 );
 
                 # output row
-                if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
-
-                    # output row
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewListRow',
-                        Data => {
-                            %ServiceData,
-                            Name  => $ServiceData{Name},
-                            Valid => $ValidList{ $ServiceData{ValidID} },
-                        },
-                    );
-                }
-                else {
-
-                    # output row
-                    $Self->{LayoutObject}->Block(
-                        Name => 'OverviewListRow',
-                        Data => {
-                            %ServiceData,
-                            Valid => $ValidList{ $ServiceData{ValidID} },
-                        },
-                    );
-                }
+                $Self->{LayoutObject}->Block(
+                    Name => 'OverviewListRow',
+                    Data => {
+                        %ServiceData,
+                        Valid => $ValidList{ $ServiceData{ValidID} },
+                    },
+                );
             }
 
         }
@@ -279,144 +265,137 @@ sub Run {
 sub _MaskNew {
     my ( $Self, %Param ) = @_;
 
-        my %ServiceData;
+    my %ServiceData;
 
-        # get params
-        $ServiceData{ServiceID} = $Self->{ParamObject}->GetParam( Param => "ServiceID" );
-        if ( $ServiceData{ServiceID} ne 'NEW' ) {
-            %ServiceData = $Self->{ServiceObject}->ServiceGet(
-                ServiceID => $ServiceData{ServiceID},
-                UserID    => $Self->{UserID},
-            );
-        }
-
-        # output overview
-        $Self->{LayoutObject}->Block(
-            Name => 'Overview',
-            Data => { %Param, },
+    # get params
+    $ServiceData{ServiceID} = $Self->{ParamObject}->GetParam( Param => "ServiceID" );
+    if ( $ServiceData{ServiceID} ne 'NEW' ) {
+        %ServiceData = $Self->{ServiceObject}->ServiceGet(
+            ServiceID => $ServiceData{ServiceID},
+            UserID    => $Self->{UserID},
         );
+    }
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList' );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+    # output overview
+    $Self->{LayoutObject}->Block(
+        Name => 'Overview',
+        Data => { %Param, },
+    );
 
-        # generate ParentOptionStrg
-        my $TreeView = 0;
-        if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
-            $TreeView = 1;
-        }
-        my %ServiceList = $Self->{ServiceObject}->ServiceList(
-            Valid  => 0,
-            UserID => $Self->{UserID},
-        );
-        $ServiceData{ParentOptionStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data           => \%ServiceList,
-            Name           => 'ParentID',
-            SelectedID     => $Param{ParentID} || $ServiceData{ParentID},
-            PossibleNone   => 1,
-            TreeView       => $TreeView,
-            Sort           => 'TreeView',
-            DisabledBranch => $ServiceData{Name},
-            Translation    => 0,
-            Max            => 50,
-        );
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+
+    # generate ParentOptionStrg
+    my %ServiceList = $Self->{ServiceObject}->ServiceList(
+        Valid  => 0,
+        UserID => $Self->{UserID},
+    );
+    $ServiceData{ParentOptionStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data           => \%ServiceList,
+        Name           => 'ParentID',
+        SelectedID     => $Param{ParentID} || $ServiceData{ParentID},
+        PossibleNone   => 1,
+        DisabledBranch => $ServiceData{Name},
+        Translation    => 0,
+        Max            => 50,
+    );
 # ---
 # ITSM
 # ---
-        # generate TypeOptionStrg
-        my $TypeList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Service::Type',
-        );
-        $ServiceData{TypeOptionStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => $TypeList,
-            Name => 'TypeID',
-            SelectedID => $Param{TypeID} || $ServiceData{TypeID},
-        );
-        # generate CriticalityOptionStrg
-        my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-            Class => 'ITSM::Core::Criticality',
-        );
-        $ServiceData{CriticalityOptionStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => $CriticalityList,
-            Name => 'CriticalityID',
-            SelectedID => $Param{CriticalityID} || $ServiceData{CriticalityID},
-        );
+    # generate TypeOptionStrg
+    my $TypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Service::Type',
+    );
+    $ServiceData{TypeOptionStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data => $TypeList,
+        Name => 'TypeID',
+        SelectedID => $Param{TypeID} || $ServiceData{TypeID},
+    );
+    # generate CriticalityOptionStrg
+    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::Criticality',
+    );
+    $ServiceData{CriticalityOptionStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data => $CriticalityList,
+        Name => 'CriticalityID',
+        SelectedID => $Param{CriticalityID} || $ServiceData{CriticalityID},
+    );
 # ---
 
-        # get valid list
-        my %ValidList        = $Self->{ValidObject}->ValidList();
-        my %ValidListReverse = reverse %ValidList;
+    # get valid list
+    my %ValidList        = $Self->{ValidObject}->ValidList();
+    my %ValidListReverse = reverse %ValidList;
 
-        $ServiceData{ValidOptionStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%ValidList,
-            Name       => 'ValidID',
-            SelectedID => $ServiceData{ValidID} || $ValidListReverse{valid},
-        );
+    $ServiceData{ValidOptionStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%ValidList,
+        Name       => 'ValidID',
+        SelectedID => $ServiceData{ValidID} || $ValidListReverse{valid},
+    );
 
-        # output service edit
+    # output service edit
+    $Self->{LayoutObject}->Block(
+        Name => 'ServiceEdit',
+        Data => { %Param, %ServiceData, },
+    );
+
+    # shows header
+    if ( $ServiceData{ServiceID} ne 'NEW' ) {
         $Self->{LayoutObject}->Block(
-            Name => 'ServiceEdit',
-            Data => { %Param, %ServiceData, },
+            Name => 'HeaderEdit',
+            Data => {%ServiceData},
         );
+    }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'HeaderAdd' );
+    }
 
-        # shows header
-        if ( $ServiceData{ServiceID} ne 'NEW' ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'HeaderEdit',
-                Data => {%ServiceData},
-            );
-        }
-        else {
-            $Self->{LayoutObject}->Block( Name => 'HeaderAdd' );
-        }
+    # show each preferences setting
+    my %Preferences = ();
+    if ( $Self->{ConfigObject}->Get('ServicePreferences') ) {
+        %Preferences = %{ $Self->{ConfigObject}->Get('ServicePreferences') };
+    }
+    for my $Item ( sort keys %Preferences ) {
+        my $Module = $Preferences{$Item}->{Module}
+            || 'Kernel::Output::HTML::ServicePreferencesGeneric';
 
-        # show each preferences setting
-        my %Preferences = ();
-        if ( $Self->{ConfigObject}->Get('ServicePreferences') ) {
-            %Preferences = %{ $Self->{ConfigObject}->Get('ServicePreferences') };
+        # load module
+        if ( !$Self->{MainObject}->Require($Module) ) {
+            return $Self->{LayoutObject}->FatalError();
         }
-        for my $Item ( sort keys %Preferences ) {
-            my $Module = $Preferences{$Item}->{Module}
-                || 'Kernel::Output::HTML::ServicePreferencesGeneric';
-
-            # load module
-            if ( !$Self->{MainObject}->Require($Module) ) {
-                return $Self->{LayoutObject}->FatalError();
-            }
-            my $Object = $Module->new(
-                %{$Self},
-                ConfigItem => $Preferences{$Item},
-                Debug      => $Self->{Debug},
-            );
-            my @Params = $Object->Param( ServiceData => \%ServiceData );
-            if (@Params) {
-                for my $ParamItem (@Params) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Item',
-                        Data => { %Param, },
-                    );
-                    if (
-                        ref( $ParamItem->{Data} ) eq 'HASH'
-                        || ref( $Preferences{$Item}->{Data} ) eq 'HASH'
-                        )
-                    {
-                        $ParamItem->{'Option'} = $Self->{LayoutObject}->BuildSelection(
-                            %{ $Preferences{$Item} },
-                            %{$ParamItem},
-                        );
-                    }
-                    $Self->{LayoutObject}->Block(
-                        Name => $ParamItem->{Block} || $Preferences{$Item}->{Block} || 'Option',
-                        Data => {
-                            %{ $Preferences{$Item} },
-                            %{$ParamItem},
-                        },
+        my $Object = $Module->new(
+            %{$Self},
+            ConfigItem => $Preferences{$Item},
+            Debug      => $Self->{Debug},
+        );
+        my @Params = $Object->Param( ServiceData => \%ServiceData );
+        if (@Params) {
+            for my $ParamItem (@Params) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'Item',
+                    Data => { %Param, },
+                );
+                if (
+                    ref( $ParamItem->{Data} ) eq 'HASH'
+                    || ref( $Preferences{$Item}->{Data} ) eq 'HASH'
+                    )
+                {
+                    $ParamItem->{'Option'} = $Self->{LayoutObject}->BuildSelection(
+                        %{ $Preferences{$Item} },
+                        %{$ParamItem},
                     );
                 }
+                $Self->{LayoutObject}->Block(
+                    Name => $ParamItem->{Block} || $Preferences{$Item}->{Block} || 'Option',
+                    Data => {
+                        %{ $Preferences{$Item} },
+                        %{$ParamItem},
+                    },
+                );
             }
         }
+    }
 
-        # generate output
-        return $Self->{LayoutObject}->Output( TemplateFile => 'AdminService', Data => \%Param );
+    # generate output
+    return $Self->{LayoutObject}->Output( TemplateFile => 'AdminService', Data => \%Param );
 }
-
 1;
