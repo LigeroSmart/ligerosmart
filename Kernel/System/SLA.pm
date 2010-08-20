@@ -2,7 +2,7 @@
 # Kernel/System/SLA.pm - all sla function
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.6 2010-08-13 16:04:11 dz Exp $
+# $Id: SLA.pm,v 1.7 2010-08-20 20:46:17 en Exp $
 # $OldId: SLA.pm,v 1.37 2010/06/17 21:39:40 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -22,8 +22,9 @@ use Kernel::System::Valid;
 # ---
 use Kernel::System::GeneralCatalog;
 # ---
+
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -92,7 +93,6 @@ sub new {
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
-
 # ---
 # ITSM
 # ---
@@ -279,7 +279,6 @@ sub SLAGet {
         );
         return;
     }
-
 # ---
 # ITSM
 # ---
@@ -471,6 +470,7 @@ sub SLAAdd {
 # ---
     $Param{MinTimeBetweenIncidents} ||= 0;
 # ---
+
     # cleanup given params
     for my $Argument (qw(Name Comment)) {
         $Self->{CheckItemObject}->StringClean(
@@ -645,6 +645,7 @@ sub SLAUpdate {
 # ---
     $Param{MinTimeBetweenIncidents} ||= 0;
 # ---
+
     # cleanup given params
     for my $Argument (qw(Name Comment)) {
         $Self->{CheckItemObject}->StringClean(
@@ -785,6 +786,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-08-13 16:04:11 $
+$Revision: 1.7 $ $Date: 2010-08-20 20:46:17 $
 
 =cut
