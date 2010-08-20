@@ -2,7 +2,7 @@
 // Core.Agent.TicketZoom.js - provides the special module functions for TicketZoom
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: Core.Agent.ITSM.Zoom.js,v 1.1 2010-08-18 16:20:40 cr Exp $
+// $Id: ITSM.Agent.Zoom.js,v 1.1 2010-08-20 17:13:02 cr Exp $
 // $OldId: Core.Agent.TicketZoom.js,v 1.17 2010/08/11 15:23:23 martin Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,8 +12,8 @@
 
 "use strict";
 
-var Core = Core || {};
-Core.Agent.ITSM = Core.Agent.ITSM || {};
+var ITSM = ITSM || {};
+ITSM.Agent = ITSM.Agent || {};
 
 /**
  * @namespace
@@ -21,7 +21,7 @@ Core.Agent.ITSM = Core.Agent.ITSM || {};
  * @description
  *      This namespace contains the special module functions for TicketZoom.
  */
-Core.Agent.ITSM.Zoom = (function (TargetNS) {
+ITSM.Agent.Zoom = (function (TargetNS) {
     /**
      * @function
      * @param {jQueryObject} $Iframe The iframe which should be auto-heighted
@@ -52,11 +52,11 @@ Core.Agent.ITSM.Zoom = (function (TargetNS) {
         var $THead = $('#FixedTable thead'),
             $TBody = $('#FixedTable tbody'),
             ZoomExpand = !$('div.ITSMItemView a.OneITSMItem').hasClass('Active'),
-            URLHash,
-            $ArticleElement;
+            URLHash;
+//            $ArticleElement;
         Core.UI.Resizable.Init($('#ITSMTableBody'), ITSMTableHeight, function (event, ui, Height, Width) {
 
-            // remember new hight for next reload
+            // remember new height for next reload
             window.clearTimeout(TargetNS.ResizeTimeOutScraller);
             TargetNS.ResizeTimeOutScraller = window.setTimeout(function () {
                 Core.Agent.PreferencesUpdate('UserConfigItemZoomTableHeight', Height);
@@ -71,10 +71,10 @@ Core.Agent.ITSM.Zoom = (function (TargetNS) {
             }, 500);
         });
 
-        Core.UI.Dialog.RegisterAttachmentDialog($('.TableSmall tbody td a.Attachment'));
+//        Core.UI.Dialog.RegisterAttachmentDialog($('.TableSmall tbody td a.Attachment'));
 
 
     };
 
     return TargetNS;
-}(Core.Agent.ITSM.Zoom || {}));
+}(ITSM.Agent.Zoom || {}));
