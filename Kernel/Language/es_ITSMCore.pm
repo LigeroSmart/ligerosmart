@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMCore.pm,v 1.15 2010-08-19 00:23:26 dz Exp $
+# $Id: es_ITSMCore.pm,v 1.16 2010-08-20 22:52:36 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -70,7 +70,7 @@ sub Data {
     $Lang->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMService en la interfaz del agente.';
     $Lang->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMSLA en la interfaz del agente.';
     $Lang->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMServiceZoom en la interfaz del agente.';
-    $Lang->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Registro del módulol frontend para el objeto AgentITSMServicePrint en la interfaz del agente.';
+    $Lang->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMServicePrint en la interfaz del agente.';
     $Lang->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMSLAZoom en la interfaz del agente.';
     $Lang->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMSLAPrint en la interfaz del agente.';
     $Lang->{'Module to show back link in service menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de servicio.';
@@ -79,7 +79,7 @@ sub Data {
     $Lang->{'Module to show back link in sla menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de SLA.';
     $Lang->{'Module to show print link in sla menu.'} = 'Módulo para mostar un vínculo para imprimir en el menú de SLA.';
     $Lang->{'If ticket service/SLA feature is enabled, you can define ticket services and SLAs for tickets (e. g. email, desktop, network, ...).'} = 'Si la funcionalidad del ticket Servicio/SLA está habilitada, es posible definir servicios y SLAs para los tickets (por ejemplo: email, escritorio, red, ...).';
-    $Lang->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registro de módulos frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
+    $Lang->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registro del módulo frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
     $Lang->{'Set the type of link to be used to calculate the incident state.'} = 'Define el tipo de vínculo usado para calcular el estado del incidente.';
     $Lang->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'AlternativeTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
     $Lang->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'ConnectedTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
