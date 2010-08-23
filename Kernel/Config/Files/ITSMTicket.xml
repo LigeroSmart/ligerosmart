@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMTicket.xml,v 1.7 2008-08-25 17:05:10 mh Exp $</CVS>
+    <CVS>$Id: ITSMTicket.xml,v 1.8 2010-08-23 22:39:26 mp Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentTicketAddtlITSMField-Objekts im Agent-Interface.</Description>
+        <Description Translatable="1">Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -15,8 +14,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentTicketDecision" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AgentTicketDecision object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des AgentTicketDecision-Objekts im Agent-Interface.</Description>
+        <Description Translatable="1">Frontend module registration for the AgentTicketDecision object in the agent interface.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -28,8 +26,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::MenuModule###315-AddtlITSMField" Required="0" Valid="1">
-        <Description Lang="en">Module to show additional ITSM field link in menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Zusätzliche ITSM Felder-Link in der Linkleiste der Ticketansicht angezeigt.</Description>
+        <Description Translatable="1">Module to show additional ITSM field link in menu.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
@@ -43,8 +40,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::MenuModule###420-Decision" Required="0" Valid="1">
-        <Description Lang="en">Module to show decision link in menu.</Description>
-        <Description Lang="de">Über dieses Modul wird der Entscheidung-Link in der Linkleiste der Ticketansicht angezeigt.</Description>
+        <Description Translatable="1">Module to show decision link in menu.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
         <Setting>
@@ -58,8 +54,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required permissions to use this option.</Description>
-        <Description Lang="de">Benötigte Rechte zur Bearbeitung des Tickets.</Description>
+        <Description Translatable="1">Required permissions to use this option.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -67,8 +62,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###RequiredLock" Required="0" Valid="1">
-        <Description Lang="en">A ticket lock is required. In case the ticket isn't locked, the ticket gets locked and the current agent will be set automatically as ticket owner.</Description>
-        <Description Lang="de">Eine Ticket-Sperre wird benötigt. Wenn Ticket nicht gesperrt ist, wird das Ticket automatisch gesperrt und der Agent als Besitzer gesetzt.</Description>
+        <Description Translatable="1">A ticket lock is required. In case the ticket isn't locked, the ticket gets locked and the current agent will be set automatically as ticket owner.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -79,8 +73,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketType" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
-        <Description Lang="de">Wenn der Ticket-Typ gesetzt werden soll (Ticket::Type muss aktiv sein).</Description>
+        <Description Translatable="1">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -91,8 +84,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Service" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the service (Ticket::Service needs to be activated).</Description>
-        <Description Lang="de">Wenn der Service gesetzt werden soll (Ticket::Service muss aktiv sein).</Description>
+        <Description Translatable="1">If you want to set the service (Ticket::Service needs to be activated).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -103,8 +95,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Owner" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the owner.</Description>
-        <Description Lang="de">Wenn der Besitzer gesetzt werden soll.</Description>
+        <Description Translatable="1">If you want to set the owner.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -115,8 +106,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Responsible" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the responsible agent.</Description>
-        <Description Lang="de">Wenn der Verantwortliche gesetzt werden soll.</Description>
+        <Description Translatable="1">If you want to set the responsible agent.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -127,8 +117,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###State" Required="0" Valid="1">
-        <Description Lang="en">Would you like to set the state of a ticket if a note is added by an agent?</Description>
-        <Description Lang="de">Soll der Status eines Tickets gesetzt werden können, wenn eine Notiz durch einen Agent angelegt wird?</Description>
+        <Description Translatable="1">Would you like to set the state of a ticket if a note is added by an agent?</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -139,8 +128,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateType" Required="1" Valid="1">
-        <Description Lang="en">Default next states after adding a note.</Description>
-        <Description Lang="de">Nächstmögliche Status nach dem Hinzufügen einer Notiz.</Description>
+        <Description Translatable="1">Default next states after adding a note.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -153,8 +141,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###StateDefault" Required="0" Valid="0">
-        <Description Lang="en">Default next state.</Description>
-        <Description Lang="de">Standardmäßig ausgewählter nächster Status.</Description>
+        <Description Translatable="1">Default next state.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -162,8 +149,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Note" Required="0" Valid="1">
-        <Description Lang="en">Show note fields.</Description>
-        <Description Lang="de">Eingabemöglichkeit für Notiz.</Description>
+        <Description Translatable="1">Show note fields.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -174,8 +160,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Subject" Required="0" Valid="1">
-        <Description Lang="en">Default note subject.</Description>
-        <Description Lang="de">Standardtext im Betreff einer Notiz.</Description>
+        <Description Translatable="1">Default note subject.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -183,8 +168,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Body" Required="0" Valid="1">
-        <Description Lang="en">Default note text.</Description>
-        <Description Lang="de">Standardtext im Textfeld einer Notiz.</Description>
+        <Description Translatable="1">Default note text.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -192,8 +176,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###InvolvedAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of involved agents.</Description>
-        <Description Lang="de">Auswahl der involvierten Agents anzeigen.</Description>
+        <Description Translatable="1">Show selection of involved agents.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -204,8 +187,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###InformAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of agents to inform (all agents with note permissions on the queue/ticket).</Description>
-        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen (alle Agenten mit "notiz" Rechten am Ticket/Queue).</Description>
+        <Description Translatable="1">Show selection of agents to inform (all agents with note permissions on the queue/ticket).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -216,8 +198,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleTypeDefault" Required="0" Valid="1">
-        <Description Lang="en">Default note type.</Description>
-        <Description Lang="de">Voreingestellter Notiztyp.</Description>
+        <Description Translatable="1">Default note type.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -225,8 +206,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleTypes" Required="0" Valid="1">
-        <Description Lang="en">Specify the different note types that you want to use in your system.</Description>
-        <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
+        <Description Translatable="1">Specify the different note types that you want to use in your system.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -238,8 +218,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Priority" Required="0" Valid="0">
-        <Description Lang="en">Show priority options.</Description>
-        <Description Lang="de">Möglichkeit eine Priorität auszuwählen.</Description>
+        <Description Translatable="1">Show priority options.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -250,8 +229,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###PriorityDefault" Required="0" Valid="0">
-        <Description Lang="en">Default priority options.</Description>
-        <Description Lang="de">Default Auswahl der Priorität.</Description>
+        <Description Translatable="1">Default priority options.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -259,8 +237,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###Title" Required="0" Valid="1">
-        <Description Lang="en">Show title fields.</Description>
-        <Description Lang="de">Eingabemöglichkeit für Title.</Description>
+        <Description Translatable="1">Show title fields.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -271,8 +248,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeText" Required="0" Valid="1">
-        <Description Lang="en">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Description Lang="de">Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
+        <Description Translatable="1">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -297,8 +273,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
+        <Description Translatable="1">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -313,8 +288,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleFreeText" Required="0" Valid="1">
-        <Description Lang="en">Shown article free text options.</Description>
-        <Description Lang="de">Gezeigte Artikel-Frei-Text-Felder.</Description>
+        <Description Translatable="1">Shown article free text options.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -326,8 +300,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryType" Required="0" Valid="1">
-        <Description Lang="en">History type for this action.</Description>
-        <Description Lang="de">Historientyp für diese Aktion.</Description>
+        <Description Translatable="1">History type for this action.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -335,8 +308,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###HistoryComment" Required="0" Valid="1">
-        <Description Lang="en">History comment for this action.</Description>
-        <Description Lang="de">Historienkommentar für diese Aktion.</Description>
+        <Description Translatable="1">History comment for this action.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
@@ -344,8 +316,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Permission" Required="1" Valid="1">
-        <Description Lang="en">Required permissions to use this option.</Description>
-        <Description Lang="de">Benötigte Rechte zur Bearbeitung des Tickets.</Description>
+        <Description Translatable="1">Required permissions to use this option.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -353,8 +324,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###RequiredLock" Required="0" Valid="1">
-        <Description Lang="en">A ticket lock is required. In case the ticket isn't locked, the tickets get locked and the current agent will be set automatically as ticket owner.</Description>
-        <Description Lang="de">Eine Ticket-Sperre wird benötigt bzw. wenn Ticket nicht gesperrt ist, wird das Ticket automatisch gesperrt und der Agent als Besitzer gesetzt.</Description>
+        <Description Translatable="1">A ticket lock is required. In case the ticket isn't locked, the tickets get locked and the current agent will be set automatically as ticket owner.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -365,8 +335,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketType" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
-        <Description Lang="de">Wenn der Ticket-Typ gesetzt werden soll (Ticket::Type muss aktiv sein).</Description>
+        <Description Translatable="1">If you want to set the ticket type (Ticket::Type needs to be activated).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -377,8 +346,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Service" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the service (Ticket::Service needs to be activated).</Description>
-        <Description Lang="de">Wenn der Service gesetzt werden soll (Ticket::Service muss aktiv sein).</Description>
+        <Description Translatable="1">If you want to set the service (Ticket::Service needs to be activated).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -389,8 +357,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Owner" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the owner.</Description>
-        <Description Lang="de">Wenn der Besitzer gesetzt werden soll.</Description>
+        <Description Translatable="1">If you want to set the owner.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -401,8 +368,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Responsible" Required="0" Valid="1">
-        <Description Lang="en">If you want to set the responsible.</Description>
-        <Description Lang="de">Wenn der Verantwortliche gesetzt werden soll.</Description>
+        <Description Translatable="1">If you want to set the responsible agent.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -413,8 +379,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###State" Required="0" Valid="1">
-        <Description Lang="en">Would you like to set the state of a ticket if a note is created by an agent?</Description>
-        <Description Lang="de">Soll der Status eines Tickets gesetzt werden können, wenn eine Notiz durch einen Agent angelegt wird?</Description>
+        <Description Translatable="1">Would you like to set the state of a ticket if a note is created by an agent?</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -425,8 +390,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###StateType" Required="1" Valid="1">
-        <Description Lang="en">Default next states after adding a note.</Description>
-        <Description Lang="de">Nächstmögliche Status nach dem Hinzufügen einer Notiz.</Description>
+        <Description Translatable="1">Default next states after adding a note.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -439,8 +403,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###StateDefault" Required="0" Valid="0">
-        <Description Lang="en">Default next state.</Description>
-        <Description Lang="de">Standardmäßig ausgewählter nächster Status.</Description>
+        <Description Translatable="1">Default next state.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -448,8 +411,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Note" Required="0" Valid="1">
-        <Description Lang="en">Show note fields.</Description>
-        <Description Lang="de">Eingabemöglichkeit für Notiz.</Description>
+        <Description Translatable="1">Show note fields.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -460,8 +422,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Subject" Required="0" Valid="1">
-        <Description Lang="en">Default note subject.</Description>
-        <Description Lang="de">Standardtext im Betreff einer Notiz.</Description>
+        <Description Translatable="1">Default note subject.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -469,8 +430,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Body" Required="0" Valid="1">
-        <Description Lang="en">Default note text.</Description>
-        <Description Lang="de">Standardtext im Textfeld einer Notiz.</Description>
+        <Description Translatable="1">Default note text.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -478,8 +438,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InvolvedAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of involved agents.</Description>
-        <Description Lang="de">Auswahl der involvierten Agents anzeigen.</Description>
+        <Description Translatable="1">Show selection of involved agents.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -490,8 +449,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###InformAgent" Required="0" Valid="0">
-        <Description Lang="en">Show selection of agents to inform (all agents with note permissions on the queue/ticket).</Description>
-        <Description Lang="de">Auswahl der zu informierenden Agents anzeigen (alle Agenten mit "notiz" Rechten am Ticket/Queue).</Description>
+        <Description Translatable="1">Show selection of agents to inform (all agents with note permissions on the queue/ticket).</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -502,8 +460,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleTypeDefault" Required="0" Valid="1">
-        <Description Lang="en">Default note type.</Description>
-        <Description Lang="de">Voreingestellter Notiztyp.</Description>
+        <Description Translatable="1">Default note type.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -511,8 +468,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleTypes" Required="0" Valid="1">
-        <Description Lang="en">Specify the different note types, that you want to use in your system.</Description>
-        <Description Lang="de">Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.</Description>
+        <Description Translatable="1">Specify the different note types, that you want to use in your system.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -524,8 +480,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Priority" Required="0" Valid="0">
-        <Description Lang="en">Show priority options.</Description>
-        <Description Lang="de">Möglichkeit der Auswahl für die Priorität.</Description>
+        <Description Translatable="1">Show priority options.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -536,8 +491,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###PriorityDefault" Required="0" Valid="0">
-        <Description Lang="en">Default priority options.</Description>
-        <Description Lang="de">Default Auswahl der Priorität.</Description>
+        <Description Translatable="1">Default priority options.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -545,8 +499,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###Title" Required="0" Valid="1">
-        <Description Lang="en">Show title fields.</Description>
-        <Description Lang="de">Eingabemöglichkeit für Title.</Description>
+        <Description Translatable="1">Show title fields.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -557,8 +510,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeText" Required="0" Valid="1">
-        <Description Lang="en">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Description Lang="de">Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
+        <Description Translatable="1">Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -583,8 +535,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeTime" Required="0" Valid="1">
-        <Description Lang="en">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Description Lang="de">Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.</Description>
+        <Description Translatable="1">Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -599,8 +550,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleFreeText" Required="0" Valid="1">
-        <Description Lang="en">Shown article free text options.</Description>
-        <Description Lang="de">Gezeigte Artikel-Frei-Text-Felder.</Description>
+        <Description Translatable="1">Shown article free text options.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -612,8 +562,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###HistoryType" Required="0" Valid="1">
-        <Description Lang="en">History type for this action.</Description>
-        <Description Lang="de">Historientyp für diese Aktion.</Description>
+        <Description Translatable="1">History type for this action.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -621,8 +570,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###HistoryComment" Required="0" Valid="1">
-        <Description Lang="en">History comment for this action.</Description>
-        <Description Lang="de">Historienkommentar für diese Aktion.</Description>
+        <Description Translatable="1">History comment for this action.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
@@ -630,8 +578,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMTicketFirstLevelSolutionRate" Required="0" Valid="1">
-        <Description Lang="en">Here you can decide if the stats module may generate stats about itsm ticket first level solution rate stuff.</Description>
-        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch Statistiken über ITSM-Ticket-Erstlösungsrate Dinge generieren darf.</Description>
+        <Description Translatable="1">Here you can decide if the stats module may generate stats about itsm ticket first level solution rate stuff.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Stats</SubGroup>
         <Setting>
@@ -641,8 +588,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Stats::DynamicObjectRegistration###ITSMTicketSolutionTimeAverage" Required="0" Valid="1">
-        <Description Lang="en">Here you can decide if the stats module may generate stats about itsm ticket solution average stuff.</Description>
-        <Description Lang="de">Hier können Sie festlegen, ob das Statistik-Modul auch Statistiken über ITSM-Ticket-Lösungszeit-Durchscnitt Dinge generieren darf.</Description>
+        <Description Translatable="1">Here you can decide if the stats module may generate stats about itsm ticket solution average stuff.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Stats</SubGroup>
         <Setting>
