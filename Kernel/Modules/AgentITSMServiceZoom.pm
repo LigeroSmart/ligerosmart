@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.7 2010-08-18 17:21:22 en Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.8 2010-08-23 16:15:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,6 +79,16 @@ sub Run {
                     %{$Self},
                     ServiceID => $Self->{ServiceID},
                 );
+
+                # set classes
+                if ( $Menus{$Menu}->{Target} ) {
+                    if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+                        $Menus{$Menu}->{MenuClass} = 'AsPopup';
+                    }
+                    elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
+                        $Menus{$Menu}->{MenuClass} = 'HistoryBack';
+                    }
+                }
 
                 # run module
                 $Counter = $Object->Run(
