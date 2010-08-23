@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_ITSMTicket.pm - the Chinese simple translation of ITSMTicket
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_ITSMTicket.pm,v 1.3 2010-08-23 18:58:35 en Exp $
+# $Id: zh_CN_ITSMTicket.pm,v 1.4 2010-08-23 22:55:14 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -75,6 +75,36 @@ sub Data {
     $Lang->{'Ticket free text options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Lang->{'Ticket free time options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Lang->{'Shows a link in the menu to add a free text field in the ticket zoom view of the agent interface.'} = '';
+    $Lang->{'Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.'} = '';
+    $Lang->{'Frontend module registration for the AgentTicketDecision object in the agent interface.'} = '';
+    $Lang->{'Module to show additional ITSM field link in menu.'} = '';
+    $Lang->{'Module to show decision link in menu.'} = '';
+    $Lang->{'Required permissions to use this option.'} = '';
+    $Lang->{'A ticket lock is required. In case the ticket isn\'\t locked, the ticket gets locked and the current agent will be set automatically as ticket owner.'} = '';
+    $Lang->{'If you want to set the ticket type (Ticket::Type needs to be activated).'} = '';
+    $Lang->{'If you want to set the service (Ticket::Service needs to be activated).'} = '';
+    $Lang->{'If you want to set the owner.'} = '';
+    $Lang->{'If you want to set the responsible agent.'} = '';
+    $Lang->{'Would you like to set the state of a ticket if a note is added by an agent?'} = '';
+    $Lang->{'Default next states after adding a note.'} = '';
+    $Lang->{'Default next state.'} = '';
+    $Lang->{'Show note fields.'} = '';
+    $Lang->{'Default note subject.'} = '';
+    $Lang->{'Default note text.'} = '';
+    $Lang->{'Show selection of involved agents.'} = '';
+    $Lang->{'Show selection of agents to inform (all agents with note permissions on the queue/ticket).'} = '';
+    $Lang->{'Default note type.'} = '';
+    $Lang->{'Specify the different note types that you want to use in your system.'} = '';
+    $Lang->{'Show priority options.'} = '';
+    $Lang->{'Default priority options.'} = '';
+    $Lang->{'Show title fields.'} = '';
+    $Lang->{'Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Shown article free text options.'} = '';
+    $Lang->{'History type for this action.'} = '';
+    $Lang->{'History comment for this action.'} = '';
+    $Lang->{'Here you can decide if the stats module may generate stats about itsm ticket first level solution rate stuff.'} = '';
+    $Lang->{'Here you can decide if the stats module may generate stats about itsm ticket solution average stuff.'} = '';
 
     return 1;
 }
