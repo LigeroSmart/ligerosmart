@@ -2,7 +2,7 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.5 2010-08-19 00:09:31 dz Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.6 2010-08-23 16:48:34 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,7 +59,7 @@
                 <ul class="Actions">
 <!-- dtl:block:MenuItem -->
                     <li>
-                        <a href="$Env{"Baselink"}$Data{"Link"}" title="$Text{"$Data{"Name"}"}">$Text{"$Data{"Name"}"}</a>
+                        <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                     </li>
 <!-- dtl:block:MenuItem -->
                 </ul>
@@ -138,5 +138,19 @@
 
         </div>
     </div>
-
 </div>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+
+    $('ul.Actions a.AsPopup').bind('click', function (Event) {
+        Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
+        return false;
+    });
+
+    $('ul.Actions a.HistoryBack').bind('click', function (Event) {
+        javascript:history.back();
+        return false;
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->

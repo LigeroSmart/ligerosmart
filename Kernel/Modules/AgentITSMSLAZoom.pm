@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMSLAZoom.pm - the OTRS::ITSM SLA zoom module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.pm,v 1.6 2009-05-18 09:48:35 mh Exp $
+# $Id: AgentITSMSLAZoom.pm,v 1.7 2010-08-23 16:48:34 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,6 +86,16 @@ sub Run {
                     %{$Self},
                     SLAID => $Self->{SLAID},
                 );
+
+                # set classes
+                if ( $Menus{$Menu}->{Target} ) {
+                    if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+                        $Menus{$Menu}->{MenuClass} = 'AsPopup';
+                    }
+                    elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
+                        $Menus{$Menu}->{MenuClass} = 'HistoryBack';
+                    }
+                }
 
                 # run module
                 $Counter = $Object->Run(
