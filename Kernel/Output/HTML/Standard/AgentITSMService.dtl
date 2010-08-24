@@ -2,7 +2,7 @@
 # AgentITSMService.dtl - provides HTML form for AgentITSMService
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.dtl,v 1.11 2010-08-19 18:32:49 dz Exp $
+# $Id: AgentITSMService.dtl,v 1.12 2010-08-24 22:33:21 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,6 +46,13 @@
                             <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
                         </tr>
 <!-- dtl:block:OverviewRow -->
+<!-- dtl:block:NoDataFoundMsg -->
+                        <tr>
+                            <td colspan="5">
+                                $Text{"No data found."}
+                            </td>
+                        </tr>
+<!-- dtl:block:NoDataFoundMsg -->
                     </tbody>
                 </table>
             </div>

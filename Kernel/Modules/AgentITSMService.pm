@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.10 2010-08-19 17:26:28 en Exp $
+# $Id: AgentITSMService.pm,v 1.11 2010-08-24 22:33:22 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -63,23 +63,32 @@ sub Run {
         incident    => 'redled',
     );
 
-    for my $ServiceID ( sort { $ServiceList{$a} cmp $ServiceList{$b} } keys %ServiceList ) {
+    if (%ServiceList) {
+        for my $ServiceID ( sort { $ServiceList{$a} cmp $ServiceList{$b} } keys %ServiceList ) {
 
-        # get service data
-        my %Service = $Self->{ServiceObject}->ServiceGet(
-            ServiceID => $ServiceID,
-            UserID    => $Self->{UserID},
-        );
+            # get service data
+            my %Service = $Self->{ServiceObject}->ServiceGet(
+                ServiceID => $ServiceID,
+                UserID    => $Self->{UserID},
+            );
 
-        # output overview row
+            # output overview row
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewRow',
+                Data => {
+                    %Service,
+                    Name          => $Service{Name},
+                    CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
+                    State         => $Service{CurInciStateType},
+                },
+            );
+        }
+    }
+
+    # otherwise it displays a no data found message
+    else {
         $Self->{LayoutObject}->Block(
-            Name => 'OverviewRow',
-            Data => {
-                %Service,
-                Name          => $Service{Name},
-                CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                State         => $Service{CurInciStateType},
-            },
+            Name => 'NoDataFoundMsg',
         );
     }
 

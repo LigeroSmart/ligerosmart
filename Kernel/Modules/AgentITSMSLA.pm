@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMSLA.pm - the OTRS::ITSM SLA module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.pm,v 1.5 2010-08-18 20:23:15 mp Exp $
+# $Id: AgentITSMSLA.pm,v 1.6 2010-08-24 22:33:22 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,20 +51,29 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
+    if (%SLAList) {
+        for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
 
-        # get sla data
-        my %SLA = $Self->{SLAObject}->SLAGet(
-            SLAID  => $SLAID,
-            UserID => $Self->{UserID},
-        );
+            # get sla data
+            my %SLA = $Self->{SLAObject}->SLAGet(
+                SLAID  => $SLAID,
+                UserID => $Self->{UserID},
+            );
 
-        # output overview row
+            # output overview row
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewRow',
+                Data => {
+                    %SLA,
+                },
+            );
+        }
+    }
+
+    # otherwise it displays a no data found message
+    else {
         $Self->{LayoutObject}->Block(
-            Name => 'OverviewRow',
-            Data => {
-                %SLA,
-            },
+            Name => 'NoDataFoundMsg',
         );
     }
 
