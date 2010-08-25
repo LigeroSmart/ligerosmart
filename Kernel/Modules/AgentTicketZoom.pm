@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.8 2009-09-30 17:53:05 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.75.2.4 2009/09/29 11:47:48 martin Exp $
+# $Id: AgentTicketZoom.pm,v 1.9 2010-08-25 20:49:29 dz Exp $
+# $OldId: AgentTicketZoom.pm,v 1.113 2010/08/12 10:56:07 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,9 +22,8 @@ use Kernel::System::LinkObject;
 # ---
 use Kernel::System::GeneralCatalog;
 # ---
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -67,8 +66,16 @@ sub new {
     # define if rich text should be used
     $Self->{RichText}
         = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomRichTextForce')
-        || $Self->{ConfigObject}->Get('Frontend::RichText')
+        || $Self->{LayoutObject}->{BrowserRichText}
         || 0;
+
+    # strip html and ascii attachments of content
+    $Self->{StripPlainBodyAsAttachment} = 1;
+
+    # check if rich text is enabled, if not only stip ascii attachments
+    if ( !$Self->{RichText} ) {
+        $Self->{StripPlainBodyAsAttachment} = 2;
+    }
 
     # ticket id lookup
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
@@ -84,25 +91,22 @@ sub new {
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
 # ---
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $Output;
-
     # check needed stuff
     if ( !$Self->{TicketID} ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "No TicketID is given!",
+            Message => 'No TicketID is given!',
             Comment => 'Please contact the admin.',
         );
     }
 
     # check permissions
-    my $Access = $Self->{TicketObject}->Permission(
+    my $Access = $Self->{TicketObject}->TicketPermission(
         Type     => 'ro',
         TicketID => $Self->{TicketID},
         UserID   => $Self->{UserID}
@@ -111,6 +115,60 @@ sub Run {
     # error screen, don't show ticket
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+    }
+
+    # get ticket attributes
+    my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
+
+    # get ack actions
+    $Self->{TicketObject}->TicketAcl(
+        Data          => '-',
+        Action        => $Self->{Action},
+        TicketID      => $Self->{TicketID},
+        ReturnType    => 'Action',
+        ReturnSubType => '-',
+        UserID        => $Self->{UserID},
+    );
+    my %AclAction = $Self->{TicketObject}->TicketAclActionData();
+
+    # article update
+    if ( $Self->{Subaction} eq 'ArticleUpdate' ) {
+        my $Count = $Self->{ParamObject}->GetParam( Param => 'Count' );
+        my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Self->{ArticleID} );
+        $Article{Count} = $Count;
+
+        # get attachment index (without attachments)
+        my %AtmIndex = $Self->{TicketObject}->ArticleAttachmentIndex(
+            ArticleID                  => $Self->{ArticleID},
+            StripPlainBodyAsAttachment => $Self->{StripPlainBodyAsAttachment},
+            Article                    => \%Article,
+            UserID                     => $Self->{UserID},
+        );
+        $Article{Atms} = \%AtmIndex;
+
+        # fetch all std. responses
+        my %StandardResponses = $Self->{QueueObject}->GetStandardResponses(
+            QueueID => $Ticket{QueueID},
+        );
+
+        my $Content = $Self->_ArticleItem(
+            Ticket            => \%Ticket,
+            Article           => \%Article,
+            AclAction         => \%AclAction,
+            StandardResponses => \%StandardResponses,
+            Type              => 'OnLoad',
+        );
+        if ( !$Content ) {
+            $Self->{LayoutObject}->FatalError(
+                Message => "Can't get for ArticleID $Self->{ArticleID}!",
+            );
+        }
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/html',
+            Content     => $Content,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
     }
 
     # write article filter settings to session
@@ -142,12 +200,12 @@ sub Run {
         if ($SaveDefaults) {
             $Self->{UserObject}->SetPreferences(
                 UserID => $Self->{UserID},
-                Key    => "ArticleFilterDefault",
+                Key    => 'ArticleFilterDefault',
                 Value  => $SessionString,
             );
             $Self->{SessionObject}->UpdateSessionID(
                 SessionID => $Self->{SessionID},
-                Key       => "ArticleFilterDefault",
+                Key       => 'ArticleFilterDefault',
                 Value     => $SessionString,
             );
         }
@@ -167,7 +225,7 @@ sub Run {
         # build JSON output
         my $JSON = '';
         if ($Update) {
-            $JSON = $Self->{LayoutObject}->JSON(
+            $JSON = $Self->{LayoutObject}->JSONEncode(
                 Data => {
                     Message => 'Article filter settings were saved.',
                 },
@@ -176,7 +234,7 @@ sub Run {
 
         # send JSON response
         return $Self->{LayoutObject}->Attachment(
-            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
             Content     => $JSON || '',
             Type        => 'inline',
             NoCache     => 1,
@@ -196,7 +254,7 @@ sub Run {
     if ( $Self->{ArticleFilterActive} ) {
 
         # get article filter settings from session string
-        my $ArticleFilterSessionString = $Self->{ "ArticleFilter" . $Self->{TicketID} };
+        my $ArticleFilterSessionString = $Self->{ 'ArticleFilter' . $Self->{TicketID} };
 
         # set article filter for this ticket from user preferences
         if ( !$ArticleFilterSessionString ) {
@@ -229,16 +287,6 @@ sub Run {
         }
     }
 
-    # strip html and ascii attachments of content
-    my $StripPlainBodyAsAttachment = 1;
-
-    # check if rich text is enabled, if not only stip ascii attachments
-    if ( !$Self->{RichText} ) {
-        $StripPlainBodyAsAttachment = 2;
-    }
-
-    # get content
-    my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
 # ---
 # ITSM
 # ---
@@ -261,11 +309,6 @@ sub Run {
         $Ticket{Impact} = $ImpactList->{$Ticket{TicketFreeText14}};
     }
 # ---
-    my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
-        TicketID                   => $Self->{TicketID},
-        StripPlainBodyAsAttachment => $StripPlainBodyAsAttachment,
-    );
-
     # return if HTML email
     if ( $Self->{Subaction} eq 'ShowHTMLeMail' ) {
 
@@ -275,12 +318,7 @@ sub Run {
         }
 
         # get article data
-        my %Article = ();
-        for my $ArticleTmp (@ArticleBox) {
-            if ( $ArticleTmp->{ArticleID} eq $Self->{ArticleID} ) {
-                %Article = %{$ArticleTmp};
-            }
-        }
+        my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Self->{ArticleID} );
 
         # check if article data exists
         if ( !%Article ) {
@@ -297,162 +335,90 @@ sub Run {
         );
     }
 
-    # else show normal ticket zoom view
-    # fetch all move queues
-    my %MoveQueues = $Self->{TicketObject}->MoveList(
-        TicketID => $Self->{TicketID},
-        UserID   => $Self->{UserID},
-        Action   => $Self->{Action},
-        Type     => 'move_into',
-    );
-
-    # fetch all std. responses
-    my %StdResponses = $Self->{QueueObject}->GetStdResponses( QueueID => $Ticket{QueueID} );
-
-    # customer info
-    my %CustomerData = ();
-    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoom') ) {
-        if ( $Ticket{CustomerUserID} ) {
-            %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                User => $Ticket{CustomerUserID},
-            );
-        }
-        elsif ( $Ticket{CustomerID} ) {
-            %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                CustomerID => $Ticket{CustomerID},
-            );
-        }
-    }
-
     # generate output
-    $Output .= $Self->{LayoutObject}->Header( Value => $Ticket{TicketNumber} );
+    my $Output = $Self->{LayoutObject}->Header( Value => $Ticket{TicketNumber} );
     $Output .= $Self->{LayoutObject}->NavigationBar();
-
-    # show ticket
-    $Output .= $Self->MaskAgentZoom(
-        MoveQueues      => \%MoveQueues,
-        StdResponses    => \%StdResponses,
-        ArticleBox      => \@ArticleBox,
-        CustomerData    => \%CustomerData,
-        TicketTimeUnits => $Self->{TicketObject}->TicketAccountedTimeGet(%Ticket),
-        %Ticket,
-    );
-
-    # add footer
+    $Output .= $Self->MaskAgentZoom( Ticket => \%Ticket, AclAction => \%AclAction );
     $Output .= $Self->{LayoutObject}->Footer();
-
-    # return output
     return $Output;
 }
 
 sub MaskAgentZoom {
     my ( $Self, %Param ) = @_;
 
+    my %Ticket    = %{ $Param{Ticket} };
+    my %AclAction = %{ $Param{AclAction} };
+
+    # else show normal ticket zoom view
+    # fetch all move queues
+    my %MoveQueues = $Self->{TicketObject}->MoveList(
+        TicketID => $Ticket{TicketID},
+        UserID   => $Self->{UserID},
+        Action   => $Self->{Action},
+        Type     => 'move_into',
+    );
+
+    # fetch all std. responses
+    my %StandardResponses
+        = $Self->{QueueObject}->GetStandardResponses( QueueID => $Ticket{QueueID} );
+
+    $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(%Ticket);
+
     # owner info
     my %OwnerInfo = $Self->{UserObject}->GetUserData(
-        UserID => $Param{OwnerID},
-        Cached => 1
+        UserID => $Ticket{OwnerID},
     );
 
     # responsible info
     my %ResponsibleInfo = $Self->{UserObject}->GetUserData(
-        UserID => $Param{ResponsibleID} || 1,
-        Cached => 1
+        UserID => $Ticket{ResponsibleID} || 1,
     );
 
-    # get ack actions
-    $Self->{TicketObject}->TicketAcl(
-        Data          => '-',
-        Action        => $Self->{Action},
-        TicketID      => $Self->{TicketID},
-        ReturnType    => 'Action',
-        ReturnSubType => '-',
-        UserID        => $Self->{UserID},
+    # generate shown articles
+
+    # get content
+    my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
+        TicketID                   => $Self->{TicketID},
+        StripPlainBodyAsAttachment => $Self->{StripPlainBodyAsAttachment},
+        UserID                     => $Self->{UserID},
     );
 
-    my %AclAction = $Self->{TicketObject}->TicketAclActionData();
-
-    # age design
-    $Param{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Param{Age}, Space => ' ' );
-    if ( $Param{UntilTime} ) {
-        if ( $Param{UntilTime} < -1 && $Self->{HighlightColor2} ) {
-            $Param{PendingUntil} = "<font color='$Self->{HighlightColor2}'>";
-        }
-        $Param{PendingUntil} .= $Self->{LayoutObject}->CustomerAge(
-            Age   => $Param{UntilTime},
-            Space => '<br>',
-        );
-        if ( $Param{UntilTime} < -1 && $Self->{HighlightColor2} ) {
-            $Param{PendingUntil} .= "</font>";
-        }
+    # add counter
+    my $Count = 0;
+    for my $Article (@ArticleBox) {
+        $Count++;
+        $Article->{Count} = $Count;
     }
-    $Self->{LayoutObject}->Block(
-        Name => 'Header',
-        Data => { %Param, %AclAction },
-    );
-
-    # run ticket menu modules
-    if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') eq 'HASH' ) {
-        my %Menus   = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') };
-        my $Counter = 0;
-        for my $Menu ( sort keys %Menus ) {
-
-            # load module
-            if ( !$Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
-                return $Self->{LayoutObject}->FatalError();
-            }
-
-            my $Object = $Menus{$Menu}->{Module}->new( %{$Self}, TicketID => $Self->{TicketID}, );
-
-            # run module
-            $Counter = $Object->Run(
-                %Param,
-                Ticket  => \%Param,
-                Counter => $Counter,
-                ACL     => \%AclAction,
-                Config  => $Menus{$Menu},
-            );
-        }
-    }
-
-    # get linked objects
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'Ticket',
-        Key    => $Self->{TicketID},
-        State  => 'Valid',
-        UserID => $Self->{UserID},
-    );
-
-    # get link table view mode
-    my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
-
-    # create the link table
-    my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
-        LinkListWithData => $LinkListWithData,
-        ViewMode         => $LinkTableViewMode,
-    );
-
-    # build article stuff
-    my $BaseLink   = $Self->{LayoutObject}->{Baselink} . "TicketID=$Self->{TicketID}&";
-    my @ArticleBox = @{ $Param{ArticleBox} };
 
     # get selected or last customer article
-    my $CounterArray = 0;
     my $ArticleID;
     if ( $Self->{ArticleID} ) {
         $ArticleID = $Self->{ArticleID};
     }
     else {
 
-        # set first article
-        if (@ArticleBox) {
-            $ArticleID = $ArticleBox[0]->{ArticleID};
+        # find latest not seen article
+        for my $Article (@ArticleBox) {
+            my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
+                ArticleID => $Article->{ArticleID},
+                UserID    => $Self->{UserID},
+            );
+            next if $ArticleFlag{Seen} || $ArticleFlag{seen};
+            $ArticleID = $Article->{ArticleID};
+            last;
         }
 
-        # get last customer article
-        for my $ArticleTmp (@ArticleBox) {
-            if ( $ArticleTmp->{SenderType} eq 'customer' ) {
-                $ArticleID = $ArticleTmp->{ArticleID};
+        # set first article as default
+        if ( !$ArticleID ) {
+            if (@ArticleBox) {
+                $ArticleID = $ArticleBox[0]->{ArticleID};
+            }
+
+            # get last customer article
+            for my $ArticleTmp (@ArticleBox) {
+                if ( $ArticleTmp->{SenderType} eq 'customer' ) {
+                    $ArticleID = $ArticleTmp->{ArticleID};
+                }
             }
         }
     }
@@ -513,11 +479,6 @@ sub MaskAgentZoom {
         $Self->{ArticleFilter}->{ShownArticleIDs}->{$ArticleID} = 1;
     }
 
-    # build thread string
-    my $Counter        = '';
-    my $Space          = '';
-    my $LastSenderType = '';
-
     # check if expand view is usable (only for less then 400 article)
     # if you have more articles is going to be slow and not usable
     my $ArticleMaxLimit = 400;
@@ -526,900 +487,117 @@ sub MaskAgentZoom {
     }
 
     # get shown article(s)
-    my @NewArticleBox = ();
+    my @ArticleBoxShown;
     if ( !$Self->{ZoomExpand} ) {
         for my $ArticleTmp (@ArticleBox) {
             if ( $ArticleID eq $ArticleTmp->{ArticleID} ) {
-                push @NewArticleBox, $ArticleTmp;
+                push @ArticleBoxShown, $ArticleTmp;
             }
         }
     }
     else {
-        @NewArticleBox = @ArticleBox;
+        @ArticleBoxShown = @ArticleBox;
     }
 
     # resort article order
-    if ( $Self->{ZoomExpandSort} eq 'reverse' ) {
-        @ArticleBox    = reverse @ArticleBox;
-        @NewArticleBox = reverse @NewArticleBox;
+    if ( $Self->{ZoomExpandSort} ne 'reverse' ) {
+        @ArticleBox      = reverse @ArticleBox;
+        @ArticleBoxShown = reverse @ArticleBoxShown;
     }
 
-    # build shown article(s)
-    my $Count      = 0;
-    my $BodyOutput = '';
-    ARTICLE:
-    for my $ArticleTmp (@NewArticleBox) {
+    # show article tree
+    $Param{ArticleTree} = $Self->_ArticleTree(
+        Ticket          => \%Ticket,
+        ArticleID       => $ArticleID,
+        ArticleMaxLimit => $ArticleMaxLimit,
+        ArticleBox      => \@ArticleBox,
+    );
+
+    # show articles items
+    $Param{ArticleItems} = '';
+    for my $ArticleTmp (@ArticleBoxShown) {
         my %Article = %$ArticleTmp;
 
-        # # article filter is activated in sysconfig and there are articles that passed the filter
-        if (
-            $Self->{ArticleFilterActive}
-            && $Self->{ArticleFilter}
-            && $Self->{ArticleFilter}->{ShownArticleIDs}
-            )
-        {
+        # article filter is activated in sysconfig and there are articles that passed the filter
+        if ( $Self->{ArticleFilterActive} ) {
+            if ( $Self->{ArticleFilter} && $Self->{ArticleFilter}->{ShownArticleIDs} ) {
 
-            # do not show article if it does not match the filter
-            if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
-                next ARTICLE;
+                # do not show article if it does not match the filter
+                if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
+                    next;
+                }
             }
         }
 
-        # count shown articles
-        $Count++;
-
-        $Self->{LayoutObject}->Block(
-            Name => 'Body',
-            Data => { %Param, %Article, %AclAction, },
+        $Param{ArticleItems} .= $Self->_ArticleItem(
+            Ticket            => \%Ticket,
+            Article           => \%Article,
+            AclAction         => \%AclAction,
+            StandardResponses => \%StandardResponses,
+            Type              => 'Static',
         );
+    }
 
-        # show body as html or plain text
-        my $ViewMode = 'BodyHTML';
-
-        # in case show plain article body (if no html body as attachment exists of if rich
-        # text is not enabled)
-        if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
-            $ViewMode = 'BodyPlain';
-
-            # remember plain body for further processing by ArticleViewModules
-            $Article{BodyPlain} = $Article{Body};
-
-            # html quoting
-            $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
-                NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
-                Text           => $Article{Body},
-                VMax           => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
-                HTMLResultMode => 1,
-                LinkFeature    => 1,
-            );
-
-            # do charset check
-            if ( my $CharsetText = $Self->{LayoutObject}->CheckCharset( %Param, %Article ) ) {
-                $Article{BodyNote} = $CharsetText;
-            }
+    # age design
+    $Ticket{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Ticket{Age}, Space => ' ' );
+    if ( $Ticket{UntilTime} ) {
+        if ( $Ticket{UntilTime} < -1 && $Self->{HighlightColor2} ) {
+            $Ticket{PendingUntil} = qq§<span style="color: $Self->{HighlightColor2};">§;
         }
-
-        # show body
-        # Create a reference to an anonymous copy of %Article and pass it to
-        # the LayoutObject, because %Article may be modified afterwards.
-        $Self->{LayoutObject}->Block(
-            Name => $ViewMode,
-            Data => {%Article},
+        $Ticket{PendingUntil} .= $Self->{LayoutObject}->CustomerAge(
+            Age   => $Ticket{UntilTime},
+            Space => '<br/>'
         );
-
-        # restore plain body for further processing by ArticleViewModules
-        if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
-            $Article{Body} = $Article{BodyPlain};
+        if ( $Ticket{UntilTime} < -1 && $Self->{HighlightColor2} ) {
+            $Ticket{PendingUntil} .= "</span>";
         }
+    }
 
-        # show article tree
-        if ( $Count == 1 ) {
+    # number of articles
+    $Param{ArticleCount} = scalar @ArticleBox;
 
-            # show status info
-            $Self->{LayoutObject}->Block(
-                Name => 'Status',
-                Data => { %Param, %AclAction },
+    $Self->{LayoutObject}->Block(
+        Name => 'Header',
+        Data => { %Param, %Ticket, %AclAction },
+    );
+
+    # run ticket menu modules
+    if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') eq 'HASH' ) {
+        my %Menus = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::MenuModule') };
+        for my $Menu ( sort keys %Menus ) {
+
+            # load module
+            if ( !$Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+                return $Self->{LayoutObject}->FatalError();
+            }
+
+            my $Object = $Menus{$Menu}->{Module}->new( %{$Self}, TicketID => $Self->{TicketID}, );
+
+            # run module
+            my $Item = $Object->Run(
+                %Param,
+                Ticket => \%Ticket,
+                ACL    => \%AclAction,
+                Config => $Menus{$Menu},
             );
-
-            # ticket type
-            if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Type',
-                    Data => { %Param, %AclAction },
-                );
-            }
-
-            # ticket service
-            if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Param{Service} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Service',
-                    Data => { %Param, %AclAction },
-                );
-                if ( $Param{SLA} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'SLA',
-                        Data => { %Param, %AclAction },
-                    );
-                }
-            }
-
-            # show first response time if needed
-            if ( defined $Param{FirstResponseTime} ) {
-                $Param{FirstResponseTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
-                    Age   => $Param{'FirstResponseTime'},
-                    Space => ' ',
-                );
-                $Param{FirstResponseTimeWorkingTime} = $Self->{LayoutObject}->CustomerAgeInHours(
-                    Age   => $Param{'FirstResponseTimeWorkingTime'},
-                    Space => ' ',
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'FirstResponseTime',
-                    Data => { %Param, %AclAction },
-                );
-                if ( 60 * 60 * 1 > $Param{FirstResponseTime} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'FirstResponseTimeFontStart',
-                        Data => { %Param, %AclAction },
-                    );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'FirstResponseTimeFontStop',
-                        Data => { %Param, %AclAction },
-                    );
-                }
-            }
-
-            # show update time if needed
-            if ( defined $Param{UpdateTime} ) {
-                $Param{UpdateTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
-                    Age   => $Param{'UpdateTime'},
-                    Space => ' ',
-                );
-                $Param{UpdateTimeWorkingTime} = $Self->{LayoutObject}->CustomerAgeInHours(
-                    Age   => $Param{'UpdateTimeWorkingTime'},
-                    Space => ' ',
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'UpdateTime',
-                    Data => { %Param, %AclAction },
-                );
-                if ( 60 * 60 * 1 > $Param{UpdateTime} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'UpdateTimeFontStart',
-                        Data => { %Param, %AclAction },
-                    );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'UpdateTimeFontStop',
-                        Data => { %Param, %AclAction },
-                    );
-                }
-            }
-
-            # show solution time if needed
-            if ( defined $Param{SolutionTime} ) {
-                $Param{SolutionTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
-                    Age   => $Param{'SolutionTime'},
-                    Space => ' ',
-                );
-                $Param{SolutionTimeWorkingTime} = $Self->{LayoutObject}->CustomerAgeInHours(
-                    Age   => $Param{'SolutionTimeWorkingTime'},
-                    Space => ' ',
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'SolutionTime',
-                    Data => { %Param, %AclAction },
-                );
-                if ( 60 * 60 * 1 > $Param{SolutionTime} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'SolutionTimeFontStart',
-                        Data => { %Param, %AclAction },
-                    );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'SolutionTimeFontStop',
-                        Data => { %Param, %AclAction },
-                    );
-                }
-            }
-
-            # customer info string
-            if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoom') ) {
-                $Param{CustomerTable} = $Self->{LayoutObject}->AgentCustomerViewTable(
-                    Data   => $Param{CustomerData},
-                    Ticket => \%Param,
-                    Max => $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoomMaxSize'),
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'CustomerTable',
-                    Data => \%Param,
-                );
+            next if !$Item;
+            if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+                $Item->{Class} = 'AsPopup';
             }
             $Self->{LayoutObject}->Block(
-                Name => 'Owner',
-                Data => { %Param, %OwnerInfo, %AclAction },
+                Name => 'TicketMenu',
+                Data => $Item,
             );
-            if ( $Self->{ConfigObject}->Get('Ticket::Responsible') ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Responsible',
-                    Data => { %Param, %ResponsibleInfo, %AclAction },
-                );
-            }
-
-            # output the simple link table
-            if ( $LinkTableStrg && $LinkTableViewMode eq 'Simple' ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'LinkTableSimple',
-                    Data => {
-                        LinkTableStrg => $LinkTableStrg,
-                    },
-                );
-            }
-
-            # ticket free text
-# ---
-# ITSM
-# ---
-#            for my $Count ( 1 .. 16 ) {
-            COUNT:
-            for my $Count ( 1 .. 16 ) {
-                next COUNT if ( ($Count >= 13) && ($Count <= 16) );
-# ---
-                if ( $Param{ 'TicketFreeText' . $Count } ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'TicketFreeText' . $Count,
-                        Data => { %Param, %AclAction },
-                    );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'TicketFreeText',
-                        Data => {
-                            %Param, %AclAction,
-                            TicketFreeKey  => $Param{ 'TicketFreeKey' . $Count },
-                            TicketFreeText => $Param{ 'TicketFreeText' . $Count },
-                            Count          => $Count,
-                        },
-                    );
-                    if ( !$Self->{ConfigObject}->Get( 'TicketFreeText' . $Count . '::Link' ) ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'TicketFreeTextPlain' . $Count,
-                            Data => { %Param, %AclAction },
-                        );
-                        $Self->{LayoutObject}->Block(
-                            Name => 'TicketFreeTextPlain',
-                            Data => {
-                                %Param, %AclAction,
-                                TicketFreeKey  => $Param{ 'TicketFreeKey' . $Count },
-                                TicketFreeText => $Param{ 'TicketFreeText' . $Count },
-                                Count          => $Count,
-                            },
-                        );
-                    }
-                    else {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'TicketFreeTextLink' . $Count,
-                            Data => { %Param, %AclAction },
-                        );
-                        $Self->{LayoutObject}->Block(
-                            Name => 'TicketFreeTextLink',
-                            Data => {
-                                %Param, %AclAction,
-                                TicketFreeTextLink => $Self->{ConfigObject}->Get(
-                                    'TicketFreeText' . $Count . '::Link'
-                                ),
-                                TicketFreeKey  => $Param{ 'TicketFreeKey' . $Count },
-                                TicketFreeText => $Param{ 'TicketFreeText' . $Count },
-                                Count          => $Count,
-                            },
-                        );
-                    }
-                }
-            }
-
-            # ticket free time
-            for my $Count ( 1 .. 6 ) {
-                if ( $Param{ 'TicketFreeTime' . $Count } ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'TicketFreeTime' . $Count,
-                        Data => { %Param, %AclAction },
-                    );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'TicketFreeTime',
-                        Data => {
-                            %Param, %AclAction,
-                            TicketFreeTimeKey =>
-                                $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
-                            TicketFreeTime => $Param{ 'TicketFreeTime' . $Count },
-                            Count          => $Count,
-                        },
-                    );
-                }
-            }
-
-            # build thread string
-            $Self->{LayoutObject}->Block(
-                Name => 'Tree',
-                Data => { %Param, %Article, %AclAction },
-            );
-
-            # article filter is activated in sysconfig
-            if ( $Self->{ArticleFilterActive} ) {
-
-                # define highlight style for links if filter is active
-                my $HighlightStyle = 'menu';
-                if ( $Self->{ArticleFilter} ) {
-                    $HighlightStyle = 'PriorityID-5';
-                }
-
-                # build article filter links
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleFilterDialogLink',
-                    Data => {
-                        %Param,
-                        HighlightStyle => $HighlightStyle,
-                    },
-                );
-
-                # build article filter reset link only if filter is set
-                if ( $Self->{ArticleFilter} ) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'ArticleFilterResetLink',
-                        Data => {%Param},
-                    );
-                }
-            }
-
-            my $CounterTree    = 0;
-            my $Counter        = '';
-            my $Space          = '';
-            my $LastSenderType = '';
-
-            TREEARTICLE:
-            for my $ArticleTmp (@ArticleBox) {
-                my %Article = %$ArticleTmp;
-                my $Start   = '';
-                my $Stop    = '';
-                my $Start2  = '';
-                my $Stop2   = '';
-                $CounterTree++;
-                my $TmpSubject = $Self->{TicketObject}->TicketSubjectClean(
-                    TicketNumber => $Article{TicketNumber},
-                    Subject => $Article{Subject} || '',
-                );
-                if ( $LastSenderType ne $Article{SenderType} ) {
-                    $Counter .= "&nbsp;";
-                    $Space = "$Counter&nbsp;|--&gt;";
-                }
-                $LastSenderType = $Article{SenderType};
-
-                # article filter is activated in sysconfig and there are articles
-                # that passed the filter
-                if (
-                    $Self->{ArticleFilterActive}
-                    && $Self->{ArticleFilter}
-                    && $Self->{ArticleFilter}->{ShownArticleIDs}
-                    )
-                {
-
-                    # do not show article in tree if it does not match the filter
-                    if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
-                        next TREEARTICLE;
-                    }
-                }
-
-                # if this is the shown article -=> add <i><u> and <b>
-                if ( $ArticleID eq $Article{ArticleID} ) {
-                    $Start  = '<i><u>';
-                    $Stop   = '</u></i>';
-                    $Start2 = '<b>';
-                    $Stop2  = '</b>';
-                }
-
-                # check if we need to show also expand/collapse icon
-                $Self->{LayoutObject}->Block(
-                    Name => 'TreeItem',
-                    Data => {
-                        %Article,
-                        Subject        => $TmpSubject,
-                        Space          => $Space,
-                        Start          => $Start,
-                        Stop           => $Stop,
-                        Start2         => $Start2,
-                        Stop2          => $Stop2,
-                        Count          => $CounterTree,
-                        ZoomExpand     => $Self->{ZoomExpand},
-                        ZoomExpandSort => $Self->{ZoomExpandSort},
-                    },
-                );
-
-                # show plain link
-                if (
-                    $Self->{ConfigObject}->Get('Ticket::Frontend::PlainView')
-                    && $Article{ArticleType} =~ /^email/
-                    )
-                {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'TreeItemEmail',
-                        Data => { %Article, },
-                    );
-                }
-
-                # add attachment icons
-                if (
-                    $Article{Atms}
-                    && %{ $Article{Atms} }
-                    && $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplay')
-                    )
-                {
-
-                    # download type
-                    my $Type = $Self->{ConfigObject}->Get('AttachmentDownloadType')
-                        || 'attachment';
-
-                    # if attachment will be forced to download, don't open a new download window!
-                    my $Target = '';
-                    if ( $Type =~ /inline/i ) {
-                        $Target = 'target="attachment" ';
-                    }
-                    my $ZoomAttachmentDisplayCount
-                        = $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplayCount');
-                    my $CountShown = 0;
-                    for my $Count ( 1 .. ( $ZoomAttachmentDisplayCount + 2 ) ) {
-                        next if !$Article{Atms}->{$Count};
-                        $CountShown++;
-
-                        # show more logo
-                        if ( $CountShown > $ZoomAttachmentDisplayCount ) {
-                            $Self->{LayoutObject}->Block(
-                                Name => 'TreeItemAttachmentMore',
-                                Data => {
-                                    %Article,
-                                    %{ $Article{Atms}->{$Count} },
-                                    FileID => $Count,
-                                    Target => $Target,
-                                },
-                            );
-                            last;
-                        }
-
-                        # show attachment logo
-                        $Self->{LayoutObject}->Block(
-                            Name => 'TreeItemAttachment',
-                            Data => {
-                                %Article,
-                                %{ $Article{Atms}->{$Count} },
-                                FileID => $Count,
-                                Target => $Target,
-                            },
-                        );
-                    }
-                }
-            }
-        }
-
-        # check if expand/collapse view is usable (only for less then 300 articles)
-        if ( $Count == 1 && $#ArticleBox < $ArticleMaxLimit ) {
-            if ( $Self->{ZoomExpand} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Collapse',
-                    Data => {
-                        %Article,
-                        ArticleID      => $ArticleID,
-                        ZoomExpand     => $Self->{ZoomExpand},
-                        ZoomExpandSort => $Self->{ZoomExpandSort},
-                    },
-                );
-            }
-            else {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Expand',
-                    Data => {
-                        %Article,
-                        ArticleID      => $ArticleID,
-                        ZoomExpand     => $Self->{ZoomExpand},
-                        ZoomExpandSort => $Self->{ZoomExpandSort},
-                    },
-                );
-            }
-        }
-
-        # do some strips && quoting
-        for (qw(From To Cc Subject)) {
-            if ( $Article{$_} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Row',
-                    Data => {
-                        Key   => $_,
-                        Value => $Article{$_},
-                    },
-                );
-            }
-        }
-
-        # show accounted article time
-        if ( $Self->{ConfigObject}->Get('Ticket::ZoomTimeDisplay') ) {
-            my $ArticleTime = $Self->{TicketObject}->ArticleAccountedTimeGet(
-                ArticleID => $Article{ArticleID}
-            );
-            $Self->{LayoutObject}->Block(
-                Name => "Row",
-                Data => {
-                    Key   => 'Time',
-                    Value => $ArticleTime,
-                },
-            );
-        }
-
-        # show article free text
-        for ( 1 .. 3 ) {
-            if ( $Article{"ArticleFreeText$_"} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleFreeText',
-                    Data => {
-                        Key   => $Article{"ArticleFreeKey$_"},
-                        Value => $Article{"ArticleFreeText$_"},
-                    },
-                );
-            }
-        }
-
-        # run article modules
-        if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleViewModule') eq 'HASH' ) {
-            my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleViewModule') };
-            for my $Job ( sort keys %Jobs ) {
-
-                # load module
-                if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                    return $Self->{LayoutObject}->ErrorScreen();
-                }
-                my $Object = $Jobs{$Job}->{Module}->new(
-                    %{$Self},
-                    TicketID  => $Self->{TicketID},
-                    ArticleID => $Article{ArticleID},
-                );
-
-                # run module
-                my @Data = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
-                for my $DataRef (@Data) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'ArticleOption',
-                        Data => $DataRef,
-                    );
-                }
-
-                # filter option
-                $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
-            }
-        }
-
-        # output the complex link table
-        if (
-            $LinkTableStrg
-            && $LinkTableViewMode eq 'Complex'
-            && $ArticleTmp eq $NewArticleBox[-1]
-            )
-        {
-            $Self->{LayoutObject}->Block(
-                Name => 'LinkTableComplex',
-                Data => {
-                    LinkTableStrg => $LinkTableStrg,
-                },
-            );
-        }
-
-        # get StdResponsesStrg
-        $Param{StdResponsesStrg} = $Self->{LayoutObject}->TicketStdResponseString(
-            StdResponsesRef => $Param{StdResponses},
-            TicketID        => $Param{TicketID},
-            ArticleID       => $Article{ArticleID},
-        );
-
-        # get attachment string
-        my %AtmIndex = ();
-        if ( $Article{Atms} ) {
-
-            %AtmIndex = %{ $Article{Atms} };
-        }
-
-        # add block for attachments
-        if (%AtmIndex) {
-            $Self->{LayoutObject}->Block(
-                Name => 'ArticleAttachment',
-                Data => { Key => 'Attachment', },
-            );
-        }
-        for my $FileID ( sort keys %AtmIndex ) {
-            my %File = %{ $AtmIndex{$FileID} };
-            $Self->{LayoutObject}->Block(
-                Name => 'ArticleAttachmentRow',
-                Data => { %File, },
-            );
-
-            # run article attachment modules
-            if (
-                ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleAttachmentModule') eq
-                'HASH'
-                )
-            {
-                my %Jobs
-                    = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleAttachmentModule') };
-                for my $Job ( sort keys %Jobs ) {
-
-                    # load module
-                    if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                        return $Self->{LayoutObject}->ErrorScreen();
-                    }
-                    my $Object = $Jobs{$Job}->{Module}->new(
-                        %{$Self},
-                        TicketID  => $Self->{TicketID},
-                        ArticleID => $Article{ArticleID},
-                    );
-
-                    # run module
-                    my %Data = $Object->Run(
-                        File => { %File, FileID => $FileID, },
-                        Article => \%Article,
-                    );
-                    if (%Data) {
-                        $Self->{LayoutObject}->Block(
-                            Name => $Data{Block} || 'ArticleAttachmentRowLink',
-                            Data => {%Data},
-                        );
-                    }
-                }
-            }
-        }
-
-        # select the output template
-        if ( $Article{ArticleType} =~ /^note/i ) {
-
-            # without compose links!
-            $Self->{LayoutObject}->Block(
-                Name => 'AgentArticleCom',
-                Data => { %Param, %Article, %AclAction },
-            );
-
-            # check if print link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPrint}
-                && ( !defined $AclAction{AgentTicketPrint} || $AclAction{AgentTicketPrint} )
-                )
-            {
-                my $OK = $Self->{TicketObject}->Permission(
-                    Type     => 'ro',
-                    TicketID => $Param{TicketID},
-                    UserID   => $Self->{UserID},
-                    LogNo    => 1,
-                );
-                if ($OK) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'AgentArticleComPrint',
-                        Data => { %Param, %Article, %AclAction },
-                    );
-                }
-            }
-
-        }
-        else {
-
-            # without all!
-            $Self->{LayoutObject}->Block(
-                Name => 'AgentAnswer',
-                Data => { %Param, %Article, %AclAction },
-            );
-
-            # check if compose link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketCompose}
-                && (
-                    !defined $AclAction{AgentTicketCompose}
-                    || $AclAction{AgentTicketCompose}
-                )
-                )
-            {
-                my $Access = 1;
-                my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketCompose");
-                if ( $Config->{Permission} ) {
-                    my $Ok = $Self->{TicketObject}->Permission(
-                        Type     => $Config->{Permission},
-                        TicketID => $Param{TicketID},
-                        UserID   => $Self->{UserID},
-                        LogNo    => 1,
-                    );
-                    if ( !$Ok ) {
-                        $Access = 0;
-                    }
-                }
-                if ( $Config->{RequiredLock} ) {
-                    if (
-                        $Self->{TicketObject}->LockIsTicketLocked(
-                            TicketID => $Param{TicketID}
-                        )
-                        )
-                    {
-                        my $AccessOk = $Self->{TicketObject}->OwnerCheck(
-                            TicketID => $Param{TicketID},
-                            OwnerID  => $Self->{UserID},
-                        );
-                        if ( !$AccessOk ) {
-                            $Access = 0;
-                        }
-                    }
-                }
-                if ($Access) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'AgentAnswerCompose',
-                        Data => { %Param, %Article, %AclAction },
-                    );
-                }
-            }
-
-            # check if phone link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhoneOutbound}
-                && (
-                    !defined $AclAction{AgentTicketPhoneOutbound}
-                    || $AclAction{AgentTicketPhoneOutbound}
-                )
-                )
-            {
-                my $Access = 1;
-                my $Config
-                    = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketPhoneOutbound");
-                if ( $Config->{Permission} ) {
-                    my $OK = $Self->{TicketObject}->Permission(
-                        Type     => $Config->{Permission},
-                        TicketID => $Param{TicketID},
-                        UserID   => $Self->{UserID},
-                        LogNo    => 1,
-                    );
-                    if ( !$OK ) {
-                        $Access = 0;
-                    }
-                }
-                if ( $Config->{RequiredLock} ) {
-                    if (
-                        $Self->{TicketObject}->LockIsTicketLocked(
-                            TicketID => $Param{TicketID}
-                        )
-                        )
-                    {
-                        my $AccessOk = $Self->{TicketObject}->OwnerCheck(
-                            TicketID => $Param{TicketID},
-                            OwnerID  => $Self->{UserID},
-                        );
-                        if ( !$AccessOk ) {
-                            $Access = 0;
-                        }
-                    }
-                }
-                if ($Access) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'AgentAnswerPhoneOutbound',
-                        Data => { %Param, %Article, %AclAction },
-                    );
-                }
-            }
-            $Self->{LayoutObject}->Block(
-                Name => 'AgentArticleCom',
-                Data => { %Param, %Article, %AclAction },
-            );
-
-            # check if print link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPrint}
-                && ( !defined $AclAction{AgentTicketPrint} || $AclAction{AgentTicketPrint} )
-                )
-            {
-                my $OK = $Self->{TicketObject}->Permission(
-                    Type     => 'ro',
-                    TicketID => $Param{TicketID},
-                    UserID   => $Self->{UserID},
-                    LogNo    => 1,
-                );
-                if ($OK) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'AgentArticleComPrint',
-                        Data => { %Param, %Article, %AclAction },
-                    );
-                }
-            }
-
-            # check if forward link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketForward}
-                && ( !defined $AclAction{AgentTicketForward} || $AclAction{AgentTicketForward} )
-                )
-            {
-                my $Access = 1;
-                my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketForward");
-                if ( $Config->{Permission} ) {
-                    my $OK = $Self->{TicketObject}->Permission(
-                        Type     => $Config->{Permission},
-                        TicketID => $Param{TicketID},
-                        UserID   => $Self->{UserID},
-                        LogNo    => 1,
-                    );
-                    if ( !$OK ) {
-                        $Access = 0;
-                    }
-                }
-                if ( $Config->{RequiredLock} ) {
-                    if ( $Self->{TicketObject}->LockIsTicketLocked( TicketID => $Param{TicketID} ) )
-                    {
-                        my $AccessOk = $Self->{TicketObject}->OwnerCheck(
-                            TicketID => $Param{TicketID},
-                            OwnerID  => $Self->{UserID},
-                        );
-                        if ( !$AccessOk ) {
-                            $Access = 0;
-                        }
-                    }
-                }
-                if ($Access) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'AgentArticleComForward',
-                        Data => { %Param, %Article, %AclAction },
-                    );
-                }
-            }
-
-            # check if bounce link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketBounce}
-                && ( !defined $AclAction{AgentTicketBounce} || $AclAction{AgentTicketBounce} )
-                )
-            {
-                my $Access = 1;
-                my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketBounce");
-                if ( $Config->{Permission} ) {
-                    my $OK = $Self->{TicketObject}->Permission(
-                        Type     => $Config->{Permission},
-                        TicketID => $Param{TicketID},
-                        UserID   => $Self->{UserID},
-                        LogNo    => 1,
-                    );
-                    if ( !$OK ) {
-                        $Access = 0;
-                    }
-                }
-                if ( $Config->{RequiredLock} ) {
-                    if ( $Self->{TicketObject}->LockIsTicketLocked( TicketID => $Param{TicketID} ) )
-                    {
-                        my $AccessOk = $Self->{TicketObject}->OwnerCheck(
-                            TicketID => $Param{TicketID},
-                            OwnerID  => $Self->{UserID},
-                        );
-                        if ( !$AccessOk ) {
-                            $Access = 0;
-                        }
-                    }
-                }
-                if ($Access) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'AgentArticleComBounce',
-                        Data => { %Param, %Article, %AclAction },
-                    );
-                }
-            }
-
-            # check if split link should be shown
-            if (
-                $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhone}
-                && ( !defined $AclAction{AgentTicketPhone} || $AclAction{AgentTicketPhone} )
-                )
-            {
-                $Self->{LayoutObject}->Block(
-                    Name => 'AgentArticleComPhone',
-                    Data => { %Param, %Article, %AclAction },
-                );
-            }
         }
     }
 
     # get MoveQueuesStrg
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::MoveType') =~ /^form$/i ) {
+        $MoveQueues{0}
+            = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Move') . ' -';
         $Param{MoveQueuesStrg} = $Self->{LayoutObject}->AgentQueueListOption(
-            Name       => 'DestQueueID',
-            Data       => $Param{MoveQueues},
-            SelectedID => $Param{QueueID},
+            Name => 'DestQueueID',
+            Data => \%MoveQueues,
         );
     }
     if (
@@ -1427,23 +605,284 @@ sub MaskAgentZoom {
         && ( !defined $AclAction{AgentTicketMove} || $AclAction{AgentTicketMove} )
         )
     {
-        my $Access = $Self->{TicketObject}->Permission(
+        my $Access = $Self->{TicketObject}->TicketPermission(
             Type     => 'move',
-            TicketID => $Param{TicketID},
+            TicketID => $Ticket{TicketID},
             UserID   => $Self->{UserID},
             LogNo    => 1,
         );
+        $Param{TicketID} = $Ticket{TicketID};
         if ($Access) {
+            if ( $Self->{ConfigObject}->Get('Ticket::Frontend::MoveType') =~ /^form$/i ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'MoveLink',
+                    Data => { %Param, %AclAction },
+                );
+            }
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'MoveForm',
+                    Data => { %Param, %AclAction },
+                );
+            }
+        }
+    }
+
+    # get linked objects
+    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        Object => 'Ticket',
+        Key    => $Self->{TicketID},
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );
+
+    # ticket type
+    if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Type',
+            Data => { %Ticket, %AclAction },
+        );
+    }
+
+    # ticket service
+    if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Ticket{Service} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Service',
+            Data => { %Ticket, %AclAction },
+        );
+        if ( $Ticket{SLA} ) {
             $Self->{LayoutObject}->Block(
-                Name => 'Move',
-                Data => { %Param, %AclAction },
+                Name => 'SLA',
+                Data => { %Ticket, %AclAction },
             );
         }
     }
+
+    # show first response time if needed
+    if ( defined $Ticket{FirstResponseTime} ) {
+        $Ticket{FirstResponseTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
+            Age   => $Ticket{FirstResponseTime},
+            Space => ' ',
+        );
+        $Ticket{FirstResponseTimeWorkingTime} = $Self->{LayoutObject}->CustomerAgeInHours(
+            Age   => $Ticket{FirstResponseTimeWorkingTime},
+            Space => ' ',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'FirstResponseTime',
+            Data => { %Ticket, %AclAction },
+        );
+        if ( 60 * 60 * 1 > $Ticket{FirstResponseTime} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'FirstResponseTimeFontStart',
+                Data => { %Ticket, %AclAction },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'FirstResponseTimeFontStop',
+                Data => { %Ticket, %AclAction },
+            );
+        }
+    }
+
+    # show update time if needed
+    if ( defined $Ticket{UpdateTime} ) {
+        $Ticket{UpdateTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
+            Age   => $Ticket{UpdateTime},
+            Space => ' ',
+        );
+        $Ticket{UpdateTimeWorkingTime} = $Self->{LayoutObject}->CustomerAgeInHours(
+            Age   => $Ticket{UpdateTimeWorkingTime},
+            Space => ' ',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'UpdateTime',
+            Data => { %Ticket, %AclAction },
+        );
+        if ( 60 * 60 * 1 > $Ticket{UpdateTime} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'UpdateTimeFontStart',
+                Data => { %Ticket, %AclAction },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'UpdateTimeFontStop',
+                Data => { %Ticket, %AclAction },
+            );
+        }
+    }
+
+    # show solution time if needed
+    if ( defined $Ticket{SolutionTime} ) {
+        $Ticket{SolutionTimeHuman} = $Self->{LayoutObject}->CustomerAgeInHours(
+            Age   => $Ticket{SolutionTime},
+            Space => ' ',
+        );
+        $Ticket{SolutionTimeWorkingTime} = $Self->{LayoutObject}->CustomerAgeInHours(
+            Age   => $Ticket{SolutionTimeWorkingTime},
+            Space => ' ',
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'SolutionTime',
+            Data => { %Ticket, %AclAction },
+        );
+        if ( 60 * 60 * 1 > $Ticket{SolutionTime} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'SolutionTimeFontStart',
+                Data => { %Ticket, %AclAction },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'SolutionTimeFontStop',
+                Data => { %Ticket, %AclAction },
+            );
+        }
+    }
+
+    # show pending until, if set:
+    if ( defined $Ticket{PendingUntil} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'PendingUntil',
+            Data => { %Ticket, }
+        );
+    }
+
+    # show owner
     $Self->{LayoutObject}->Block(
-        Name => 'Footer',
-        Data => { %Param, %AclAction },
+        Name => 'Owner',
+        Data => { %Ticket, %OwnerInfo, %AclAction },
     );
+
+    # show responsible
+    if ( $Self->{ConfigObject}->Get('Ticket::Responsible') ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Responsible',
+            Data => { %Ticket, %ResponsibleInfo, %AclAction },
+        );
+    }
+
+    # ticket free text
+    for my $Count ( 1 .. 16 ) {
+        next if !$Ticket{ 'TicketFreeText' . $Count };
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeText' . $Count,
+            Data => { %Ticket, %AclAction },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeText',
+            Data => {
+                %Ticket, %AclAction,
+                TicketFreeKey  => $Ticket{ 'TicketFreeKey' . $Count },
+                TicketFreeText => $Ticket{ 'TicketFreeText' . $Count },
+                Count          => $Count,
+            },
+        );
+        if ( !$Self->{ConfigObject}->Get( 'TicketFreeText' . $Count . '::Link' ) ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketFreeTextPlain' . $Count,
+                Data => { %Ticket, %AclAction },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketFreeTextPlain',
+                Data => {
+                    %Ticket, %AclAction,
+                    TicketFreeKey  => $Ticket{ 'TicketFreeKey' . $Count },
+                    TicketFreeText => $Ticket{ 'TicketFreeText' . $Count },
+                    Count          => $Count,
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketFreeTextLink' . $Count,
+                Data => { %Ticket, %AclAction },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketFreeTextLink',
+                Data => {
+                    %Ticket, %AclAction,
+                    TicketFreeTextLink => $Self->{ConfigObject}->Get(
+                        'TicketFreeText' . $Count . '::Link'
+                    ),
+                    TicketFreeKey  => $Ticket{ 'TicketFreeKey' . $Count },
+                    TicketFreeText => $Ticket{ 'TicketFreeText' . $Count },
+                    Count          => $Count,
+                },
+            );
+        }
+    }
+
+    # ticket free time
+# ---
+# ITSM
+# ---
+#    for my $Count ( 1 .. 16 ) {
+    COUNT:
+    for my $Count ( 1 .. 16 ) {
+        next COUNT if ( ($Count >= 13) && ($Count <= 16) );
+# ---
+        next if !$Ticket{ 'TicketFreeTime' . $Count };
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeTime' . $Count,
+            Data => { %Ticket, %AclAction },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeTime',
+            Data => {
+                %Ticket, %AclAction,
+                TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
+                TicketFreeTime    => $Ticket{ 'TicketFreeTime' . $Count },
+                Count             => $Count,
+            },
+        );
+    }
+
+    # customer info string
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoom') ) {
+
+        # customer info
+        my %CustomerData;
+        if ( $Ticket{CustomerUserID} ) {
+            %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User => $Ticket{CustomerUserID},
+            );
+        }
+        $Param{CustomerTable} = $Self->{LayoutObject}->AgentCustomerViewTable(
+            Data   => \%CustomerData,
+            Ticket => \%Ticket,
+            Max    => $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoomMaxSize'),
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerTable',
+            Data => \%Param,
+        );
+    }
+
+    # get link table view mode
+    my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
+
+    # create the link table
+    my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
+        LinkListWithData => $LinkListWithData,
+        ViewMode         => $LinkTableViewMode,
+    );
+
+    # output the simple link table
+    if ( $LinkTableStrg && $LinkTableViewMode eq 'Simple' ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'LinkTableSimple',
+            Data => {
+                LinkTableStrg => $LinkTableStrg,
+            },
+        );
+    }
+
+    # output the complex link table
+    if ( $LinkTableStrg && $LinkTableViewMode eq 'Complex' ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'LinkTableComplex',
+            Data => {
+                LinkTableStrg => $LinkTableStrg,
+            },
+        );
+    }
 
     # article filter is activated in sysconfig
     if ( $Self->{ArticleFilterActive} ) {
@@ -1454,7 +893,7 @@ sub MaskAgentZoom {
         );
 
         # build article type list for filter dialog
-        $Param{'ArticleTypeFilterString'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{ArticleTypeFilterString} = $Self->{LayoutObject}->BuildSelection(
             Data        => \%ArticleTypes,
             SelectedID  => [ keys %{ $Self->{ArticleFilter}->{ArticleTypeID} } ],
             Translation => 1,
@@ -1469,7 +908,7 @@ sub MaskAgentZoom {
         );
 
         # build article sender type list for filter dialog
-        $Param{'ArticleSenderTypeFilterString'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{ArticleSenderTypeFilterString} = $Self->{LayoutObject}->BuildSelection(
             Data        => \%ArticleSenderTypes,
             SelectedID  => [ keys %{ $Self->{ArticleFilter}->{SenderTypeID} } ],
             Translation => 1,
@@ -1478,17 +917,776 @@ sub MaskAgentZoom {
             Name        => 'ArticleSenderTypeFilter',
         );
 
+        # Ticket ID
+        $Param{TicketID} = $Self->{TicketID};
+
         $Self->{LayoutObject}->Block(
             Name => 'ArticleFilterDialog',
             Data => {%Param},
         );
     }
 
+    # check if ticket need to be marked as seen
+    my $ArticleAllSeen = 1;
+    for my $Article (@ArticleBox) {
+        my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
+            ArticleID => $Article->{ArticleID},
+            UserID    => $Self->{UserID},
+        );
+
+        # last if article was not shown
+        if ( !$ArticleFlag{Seen} && !$ArticleFlag{seen} ) {
+            $ArticleAllSeen = 0;
+            last;
+        }
+    }
+
+    # mark ticket as seen if all article are shown
+    if ($ArticleAllSeen) {
+        $Self->{TicketObject}->TicketFlagSet(
+            TicketID => $Self->{TicketID},
+            Key      => 'Seen',
+            Value    => 1,
+            UserID   => $Self->{UserID},
+        );
+    }
+
     # return output
     return $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketZoom',
-        Data => { %Param, %AclAction },
+        Data => { %Param, %Ticket, %AclAction },
     );
 }
 
+sub _ArticleTree {
+    my ( $Self, %Param ) = @_;
+
+    my %Ticket          = %{ $Param{Ticket} };
+    my @ArticleBox      = @{ $Param{ArticleBox} };
+    my $ArticleMaxLimit = $Param{ArticleMaxLimit};
+    my $ArticleID       = $Param{ArticleID};
+
+    # build thread string
+    $Self->{LayoutObject}->Block(
+        Name => 'Tree',
+        Data => {%Param},
+    );
+
+    # check if expand/collapse view is usable (only for less then 300 articles)
+    if ( $#ArticleBox < $ArticleMaxLimit ) {
+        if ( $Self->{ZoomExpand} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'Collapse',
+                Data => {
+                    %Ticket,
+                    ArticleID      => $ArticleID,
+                    ZoomExpand     => $Self->{ZoomExpand},
+                    ZoomExpandSort => $Self->{ZoomExpandSort},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'Expand',
+                Data => {
+                    %Ticket,
+                    ArticleID      => $ArticleID,
+                    ZoomExpand     => $Self->{ZoomExpand},
+                    ZoomExpandSort => $Self->{ZoomExpandSort},
+                },
+            );
+        }
+    }
+
+    # article filter is activated in sysconfig
+    if ( $Self->{ArticleFilterActive} ) {
+
+        # define highlight style for links if filter is active
+        my $HighlightStyle = 'menu';
+        if ( $Self->{ArticleFilter} ) {
+            $HighlightStyle = 'PriorityID-5';
+        }
+
+        # build article filter links
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleFilterDialogLink',
+            Data => {
+                %Param,
+                HighlightStyle => $HighlightStyle,
+            },
+        );
+
+        # build article filter reset link only if filter is set
+        if ( $Self->{ArticleFilter} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleFilterResetLink',
+                Data => {%Param},
+            );
+        }
+    }
+
+    # show article tree
+    for my $ArticleTmp (@ArticleBox) {
+        my %Article = %$ArticleTmp;
+
+        # article filter is activated in sysconfig and there are articles
+        # that passed the filter
+        if ( $Self->{ArticleFilterActive} ) {
+            if ( $Self->{ArticleFilter} && $Self->{ArticleFilter}->{ShownArticleIDs} ) {
+
+                # do not show article in tree if it does not match the filter
+                if ( !$Self->{ArticleFilter}->{ShownArticleIDs}->{ $Article{ArticleID} } ) {
+                    next;
+                }
+            }
+        }
+
+        # show article flags
+        my $Class       = '';
+        my $ClassRow    = '';
+        my $NewArticle  = 0;
+        my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
+            ArticleID => $Article{ArticleID},
+            UserID    => $Self->{UserID},
+        );
+        if ( !$ArticleFlag{Seen} && !$ArticleFlag{seen} ) {
+            $NewArticle = 1;
+
+            # show ticket flags
+            $Class    .= ' UnreadArticles';
+            $ClassRow .= ' UnreadArticles';
+
+            # just show ticket flags if agent belongs to the ticket
+            my $ShowMeta;
+            if (
+                $Self->{UserID} == $Article{OwnerID}
+                || $Self->{UserID} == $Article{ResponsibleID}
+                )
+            {
+                $ShowMeta = 1;
+            }
+            if ( !$ShowMeta && $Self->{ConfigObject}->Get('Ticket::Watcher') ) {
+                my %Watch = $Self->{TicketObject}->TicketWatchGet(
+                    TicketID => $Article{TicketID},
+                );
+                if ( $Watch{ $Self->{UserID} } ) {
+                    $ShowMeta = 1;
+                }
+            }
+
+            # show ticket flags
+            if ($ShowMeta) {
+                $Class .= ' Important';
+            }
+            else {
+                $Class .= ' Unimportant';
+            }
+        }
+
+        # if this is the shown article -=> set class to active
+        if ( $ArticleID eq $Article{ArticleID} && !$Self->{ZoomExpand} ) {
+            $ClassRow .= ' Active';
+        }
+
+        my $TmpSubject = $Self->{TicketObject}->TicketSubjectClean(
+            TicketNumber => $Article{TicketNumber},
+            Subject => $Article{Subject} || '',
+        );
+
+        # check if we need to show also expand/collapse icon
+        $Self->{LayoutObject}->Block(
+            Name => 'TreeItem',
+            Data => {
+                %Article,
+                Class          => $Class,
+                ClassRow       => $ClassRow,
+                Subject        => $TmpSubject,
+                ZoomExpand     => $Self->{ZoomExpand},
+                ZoomExpandSort => $Self->{ZoomExpandSort},
+            },
+        );
+
+        if ($NewArticle) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TreeItemNewArticle',
+                Data => {
+                    %Article,
+                    Class => $Class,
+                },
+            );
+        }
+
+        # show attachment info
+        next if !$Article{Atms};
+        next if !%{ $Article{Atms} };
+
+        # download type
+        my $Type = $Self->{ConfigObject}->Get('AttachmentDownloadType') || 'attachment';
+
+        # if attachment will be forced to download, don't open a new download window!
+        my $Target = '';
+        if ( $Type =~ /inline/i ) {
+            $Target = 'target="attachment" ';
+        }
+        my $ZoomAttachmentDisplayCount
+            = $Self->{ConfigObject}->Get('Ticket::ZoomAttachmentDisplayCount');
+        my $CountShown = 0;
+        for my $Count ( 1 .. ( $ZoomAttachmentDisplayCount + 2 ) ) {
+            next if !$Article{Atms}->{$Count};
+            if ( $CountShown == 0 ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'TreeItemAttachment',
+                    Data => {
+                        %Article,
+                    },
+                );
+            }
+            $CountShown++;
+
+            # show more info
+            last if ( $CountShown > $ZoomAttachmentDisplayCount );
+
+            # show attachment info
+            $Self->{LayoutObject}->Block(
+                Name => 'TreeItemAttachmentItem',
+                Data => {
+                    %Article,
+                    %{ $Article{Atms}->{$Count} },
+                    FileID => $Count,
+                    Target => $Target,
+                },
+            );
+        }
+    }
+
+    # return output
+    return $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentTicketZoom',
+        Data => { %Param, %Ticket },
+    );
+}
+
+sub _ArticleItem {
+    my ( $Self, %Param ) = @_;
+
+    my %Ticket    = %{ $Param{Ticket} };
+    my %Article   = %{ $Param{Article} };
+    my %AclAction = %{ $Param{AclAction} };
+
+    # mark shown article as seen
+    $Self->{TicketObject}->ArticleFlagSet(
+        ArticleID => $Article{ArticleID},
+        Key       => 'Seen',
+        Value     => 1,
+        UserID    => $Self->{UserID},
+    );
+
+    # cleanup subject
+    $Article{Subject} = $Self->{TicketObject}->TicketSubjectClean(
+        TicketNumber => $Article{TicketNumber},
+        Subject => $Article{Subject} || '',
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'ArticleItem',
+        Data => { %Param, %Article, %AclAction },
+    );
+
+    # show article actions
+
+    # select the output template
+    if ( $Article{ArticleType} !~ /^(note|email-noti)/i ) {
+
+        # check if compose link should be shown
+        if (
+            $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketCompose}
+            && (
+                !defined $AclAction{AgentTicketCompose}
+                || $AclAction{AgentTicketCompose}
+            )
+            )
+        {
+            my $Access = 1;
+            my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketCompose');
+            if ( $Config->{Permission} ) {
+                my $Ok = $Self->{TicketObject}->TicketPermission(
+                    Type     => $Config->{Permission},
+                    TicketID => $Ticket{TicketID},
+                    UserID   => $Self->{UserID},
+                    LogNo    => 1,
+                );
+                if ( !$Ok ) {
+                    $Access = 0;
+                }
+            }
+            if ( $Config->{RequiredLock} ) {
+                my $Locked = $Self->{TicketObject}->TicketLockGet(
+                    TicketID => $Ticket{TicketID}
+                );
+                if ($Locked) {
+                    my $AccessOk = $Self->{TicketObject}->OwnerCheck(
+                        TicketID => $Ticket{TicketID},
+                        OwnerID  => $Self->{UserID},
+                    );
+                    if ( !$AccessOk ) {
+                        $Access = 0;
+                    }
+                }
+            }
+            if ($Access) {
+
+                # get StandardResponsesStrg
+                $Param{StandardResponses}->{0}
+                    = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply') . ' -';
+
+                # build html string
+                my $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
+                    Name => 'ResponseID',
+                    ID   => 'ResponseID',
+                    Data => $Param{StandardResponses},
+                );
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleReply',
+                    Data => {
+                        %Ticket, %Article, %AclAction,
+                        StandardResponsesStrg => $StandardResponsesStrg,
+                        Name                  => 'Reply',
+                        Class                 => 'AsPopup',
+                        Action                => 'AgentTicketCompose',
+                        FormID                => 'Reply',
+                    },
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleReply' . $Param{Type},
+                    Data => {
+                        %Ticket, %Article, %AclAction,
+                        FormID => 'Reply',
+                    },
+                );
+
+                $Param{StandardResponses}->{0}
+                    = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -';
+
+                $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
+                    Name => 'ResponseID',
+                    ID   => 'ResponseIDAll',
+                    Data => $Param{StandardResponses},
+                );
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleReply',
+                    Data => {
+                        %Ticket, %Article, %AclAction,
+                        StandardResponsesStrg => $StandardResponsesStrg,
+                        Name                  => 'Reply All',
+                        Class                 => 'AsPopup',
+                        Action                => 'AgentTicketCompose',
+                        FormID                => 'ReplyAll',
+                        ReplyAll              => 1,
+                    },
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleReply' . $Param{Type},
+                    Data => {
+                        %Ticket, %Article, %AclAction,
+                        FormID => 'ReplyAll',
+                    },
+                );
+            }
+        }
+
+        # check if forward link should be shown
+        if (
+            $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketForward}
+            && ( !defined $AclAction{AgentTicketForward} || $AclAction{AgentTicketForward} )
+            )
+        {
+            my $Access = 1;
+            my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketForward');
+            if ( $Config->{Permission} ) {
+                my $OK = $Self->{TicketObject}->TicketPermission(
+                    Type     => $Config->{Permission},
+                    TicketID => $Ticket{TicketID},
+                    UserID   => $Self->{UserID},
+                    LogNo    => 1,
+                );
+                if ( !$OK ) {
+                    $Access = 0;
+                }
+            }
+            if ( $Config->{RequiredLock} ) {
+                if ( $Self->{TicketObject}->TicketLockGet( TicketID => $Ticket{TicketID} ) )
+                {
+                    my $AccessOk = $Self->{TicketObject}->OwnerCheck(
+                        TicketID => $Ticket{TicketID},
+                        OwnerID  => $Self->{UserID},
+                    );
+                    if ( !$AccessOk ) {
+                        $Access = 0;
+                    }
+                }
+            }
+            if ($Access) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleMenu',
+                    Data => {
+                        %Ticket, %Article, %AclAction,
+                        Name  => 'Forward',
+                        Class => 'AsPopup',
+                        Link =>
+                            'Action=AgentTicketForward;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                    },
+                );
+            }
+        }
+
+        # check if bounce link should be shown
+        if (
+            $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketBounce}
+            && ( !defined $AclAction{AgentTicketBounce} || $AclAction{AgentTicketBounce} )
+            )
+        {
+            my $Access = 1;
+            my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketBounce');
+            if ( $Config->{Permission} ) {
+                my $OK = $Self->{TicketObject}->TicketPermission(
+                    Type     => $Config->{Permission},
+                    TicketID => $Ticket{TicketID},
+                    UserID   => $Self->{UserID},
+                    LogNo    => 1,
+                );
+                if ( !$OK ) {
+                    $Access = 0;
+                }
+            }
+            if ( $Config->{RequiredLock} ) {
+                if ( $Self->{TicketObject}->TicketLockGet( TicketID => $Ticket{TicketID} ) )
+                {
+                    my $AccessOk = $Self->{TicketObject}->OwnerCheck(
+                        TicketID => $Ticket{TicketID},
+                        OwnerID  => $Self->{UserID},
+                    );
+                    if ( !$AccessOk ) {
+                        $Access = 0;
+                    }
+                }
+            }
+            if ($Access) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleMenu',
+                    Data => {
+                        %Ticket, %Article, %AclAction,
+                        Name  => 'Bounce',
+                        Class => 'AsPopup',
+                        Link =>
+                            'Action=AgentTicketBounce;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                    },
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'AgentArticleComBounce',
+                    Data => { %Ticket, %Article, %AclAction },
+                );
+            }
+        }
+    }
+
+    # check if phone link should be shown
+    if (
+        $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhoneOutbound}
+        && (
+            !defined $AclAction{AgentTicketPhoneOutbound}
+            || $AclAction{AgentTicketPhoneOutbound}
+        )
+        )
+    {
+        my $Access = 1;
+        my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketPhoneOutbound');
+        if ( $Config->{Permission} ) {
+            my $OK = $Self->{TicketObject}->TicketPermission(
+                Type     => $Config->{Permission},
+                TicketID => $Ticket{TicketID},
+                UserID   => $Self->{UserID},
+                LogNo    => 1,
+            );
+            if ( !$OK ) {
+                $Access = 0;
+            }
+        }
+        if ( $Config->{RequiredLock} ) {
+            my $Locked = $Self->{TicketObject}->TicketLockGet(
+                TicketID => $Ticket{TicketID}
+            );
+            if ($Locked) {
+                my $AccessOk = $Self->{TicketObject}->OwnerCheck(
+                    TicketID => $Ticket{TicketID},
+                    OwnerID  => $Self->{UserID},
+                );
+                if ( !$AccessOk ) {
+                    $Access = 0;
+                }
+            }
+        }
+        if ($Access) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleMenu',
+                Data => {
+                    %Ticket, %Article, %AclAction,
+                    Name  => 'Phone Call Outbound',
+                    Class => 'AsPopup',
+                    Link  => 'Action=AgentTicketPhoneOutbound;TicketID=$Data{"TicketID"}'
+                },
+            );
+        }
+    }
+
+    # check if split link should be shown
+    if (
+        $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPhone}
+        && ( !defined $AclAction{AgentTicketPhone} || $AclAction{AgentTicketPhone} )
+        )
+    {
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleMenu',
+            Data => {
+                %Ticket, %Article, %AclAction,
+                Name => 'Split',
+                Link =>
+                    'Action=AgentTicketPhone;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+            },
+        );
+    }
+
+    # check if print link should be shown
+    if (
+        $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPrint}
+        && ( !defined $AclAction{AgentTicketPrint} || $AclAction{AgentTicketPrint} )
+        )
+    {
+        my $OK = $Self->{TicketObject}->TicketPermission(
+            Type     => 'ro',
+            TicketID => $Ticket{TicketID},
+            UserID   => $Self->{UserID},
+            LogNo    => 1,
+        );
+        if ($OK) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleMenu',
+                Data => {
+                    %Ticket, %Article, %AclAction,
+                    Name  => 'Print',
+                    Class => 'AsPopup',
+                    Link =>
+                        'Action=AgentTicketPrint;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
+                },
+            );
+        }
+    }
+
+    # check if plain link should be shown
+    if (
+        $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketPlain}
+        && ( !defined $AclAction{AgentTicketPlain} || $AclAction{AgentTicketPlain} )
+        && $Article{ArticleType} =~ /email/i
+        )
+    {
+        my $OK = $Self->{TicketObject}->TicketPermission(
+            Type     => 'ro',
+            TicketID => $Ticket{TicketID},
+            UserID   => $Self->{UserID},
+            LogNo    => 1,
+        );
+        if ($OK) {
+            my $Link
+                = 'Action=AgentTicketPlain;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}';
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleMenu',
+                Data => {
+                    %Ticket, %Article, %AclAction,
+                    Name  => 'Plain Format',
+                    Class => 'AsPopup',
+                    Link  => $Link,
+                },
+            );
+        }
+    }
+
+    # do some strips && quoting
+    for my $Key (qw(From To Cc)) {
+        next if !$Article{$Key};
+        $Self->{LayoutObject}->Block(
+            Name => 'RowRecipient',
+            Data => {
+                Key      => $Key,
+                Value    => $Article{$Key},
+                Realname => $Article{ $Key . 'Realname' },
+            },
+        );
+    }
+    for my $Key (qw(Subject)) {
+        next if !$Article{$Key};
+        $Self->{LayoutObject}->Block(
+            Name => 'RowData',
+            Data => {
+                Key   => $Key,
+                Value => $Article{$Key},
+            },
+        );
+    }
+
+    # show accounted article time
+    if ( $Self->{ConfigObject}->Get('Ticket::ZoomTimeDisplay') ) {
+        my $ArticleTime = $Self->{TicketObject}->ArticleAccountedTimeGet(
+            ArticleID => $Article{ArticleID}
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'Row',
+            Data => {
+                Key   => 'Time',
+                Value => $ArticleTime,
+            },
+        );
+    }
+
+    # show article free text
+    for my $Count ( 1 .. 3 ) {
+        next if !$Article{"ArticleFreeText$Count"};
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleFreeText',
+            Data => {
+                Key   => $Article{"ArticleFreeKey$Count"},
+                Value => $Article{"ArticleFreeText$Count"},
+            },
+        );
+    }
+
+    # add block for attachments
+    if ( $Article{Atms} && %{ $Article{Atms} } ) {
+        my %AtmIndex = %{ $Article{Atms} };
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleAttachment',
+            Data => {},
+        );
+
+        my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleAttachmentModule');
+        for my $FileID ( sort keys %AtmIndex ) {
+            my %File = %{ $AtmIndex{$FileID} };
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleAttachmentRow',
+                Data => \%File,
+            );
+
+            # run article attachment modules
+            next if ref $Config ne 'HASH';
+            my %Jobs = %{$Config};
+            for my $Job ( sort keys %Jobs ) {
+
+                # load module
+                if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
+                    return $Self->{LayoutObject}->ErrorScreen();
+                }
+                my $Object = $Jobs{$Job}->{Module}->new(
+                    %{$Self},
+                    TicketID  => $Self->{TicketID},
+                    ArticleID => $Article{ArticleID},
+                );
+
+                # run module
+                my %Data = $Object->Run(
+                    File => {
+                        %File,
+                        FileID => $FileID,
+                    },
+                    Article => \%Article,
+                );
+                next if !%Data;
+                $Self->{LayoutObject}->Block(
+                    Name => $Data{Block} || 'ArticleAttachmentRowLink',
+                    Data => {%Data},
+                );
+            }
+        }
+    }
+
+    # run article view modules
+    my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::ArticleViewModule');
+    if ( ref $Config eq 'HASH' ) {
+        my %Jobs = %{$Config};
+        for my $Job ( sort keys %Jobs ) {
+
+            # load module
+            if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
+                return $Self->{LayoutObject}->ErrorScreen();
+            }
+            my $Object = $Jobs{$Job}->{Module}->new(
+                %{$Self},
+                TicketID  => $Self->{TicketID},
+                ArticleID => $Article{ArticleID},
+            );
+
+            # run module
+            my @Data = $Object->Check( Article => \%Article, %Ticket, Config => $Jobs{$Job} );
+            for my $DataRef (@Data) {
+                if ( !$DataRef->{Successful} ) {
+                    $DataRef->{Result} = 'Error';
+                }
+                else {
+                    $DataRef->{Result} = 'Success';
+                }
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleOption',
+                    Data => $DataRef,
+                );
+            }
+
+            # filter option
+            $Object->Filter( Article => \%Article, %Ticket, Config => $Jobs{$Job} );
+        }
+    }
+
+    # show body as html or plain text
+    my $ViewMode = 'BodyHTML';
+
+    # in case show plain article body (if no html body as attachment exists of if rich
+    # text is not enabled)
+    if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
+        $ViewMode = 'BodyPlain';
+
+        # remember plain body for further processing by ArticleViewModules
+        $Article{BodyPlain} = $Article{Body};
+
+        # html quoting
+        $Article{Body} = $Self->{LayoutObject}->Ascii2Html(
+            NewLine        => $Self->{ConfigObject}->Get('DefaultViewNewLine'),
+            Text           => $Article{Body},
+            VMax           => $Self->{ConfigObject}->Get('DefaultViewLines') || 5000,
+            HTMLResultMode => 1,
+            LinkFeature    => 1,
+        );
+
+        # do charset check
+        if ( my $CharsetText = $Self->{LayoutObject}->CheckCharset( %Ticket, %Article ) ) {
+            $Article{BodyNote} = $CharsetText;
+        }
+    }
+
+    # show body
+    # Create a reference to an anonymous copy of %Article and pass it to
+    # the LayoutObject, because %Article may be modified afterwards.
+    $Self->{LayoutObject}->Block(
+        Name => $ViewMode,
+        Data => {%Article},
+    );
+
+    # restore plain body for further processing by ArticleViewModules
+    if ( !$Self->{RichText} || !$Article{AttachmentIDOfHTMLBody} ) {
+        $Article{Body} = $Article{BodyPlain};
+    }
+
+    # return output
+    return $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentTicketZoom',
+        Data => { %Param, %Ticket, %AclAction },
+    );
+}
 1;
