@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.9 2010-08-25 20:49:29 dz Exp $
+# $Id: AgentTicketZoom.pm,v 1.10 2010-08-25 21:06:08 dz Exp $
 # $OldId: AgentTicketZoom.pm,v 1.113 2010/08/12 10:56:07 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -17,13 +17,14 @@ use warnings;
 
 use Kernel::System::CustomerUser;
 use Kernel::System::LinkObject;
+
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,6 +87,7 @@ sub new {
     }
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+
 # ---
 # ITSM
 # ---
@@ -581,7 +583,7 @@ sub MaskAgentZoom {
                 Config => $Menus{$Menu},
             );
             next if !$Item;
-            if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+            if ( $Menus{$Menu}->{Target} and $Menus{$Menu}->{Target} eq 'PopUp' ) {
                 $Item->{Class} = 'AsPopup';
             }
             $Self->{LayoutObject}->Block(
@@ -813,7 +815,7 @@ sub MaskAgentZoom {
 # ---
 # ITSM
 # ---
-#    for my $Count ( 1 .. 16 ) {
+#    for my $Count ( 1 .. 6 ) {
     COUNT:
     for my $Count ( 1 .. 16 ) {
         next COUNT if ( ($Count >= 13) && ($Count <= 16) );
