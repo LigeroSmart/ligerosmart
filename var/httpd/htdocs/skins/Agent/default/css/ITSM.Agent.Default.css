@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -43,4 +43,34 @@ fieldset.TableLike div.Value .Flag {
     background-color:#ff505e;
 }
 
+}
+
+
+/**
+ * @note     This classes are used for a Label and a Div with class 'Field',
+ *           that are inside a Field Div .
+ */
+
+fieldset.TableLike > .ContentField {
+    line-height: 1.2em;
+    margin-left: 30%;
+    margin-right: 0;
+    padding-top: 3px;
+    padding-left: 10px;
+    padding-right: 0;
+    padding-bottom: 5px;
+}
+fieldset.TableLike > .ContentField > label {
+    color: #929292;
+    width: 25%;
+    float: left;
+    text-align: right;
+    padding-top: 3px;
+}
+
+fieldset.TableLike > .ContentField > .Field{
+    line-height: 1.2em;
+    margin-left: 25%;
+    padding-left: 10px;
+    padding-bottom: 0px;
 }
