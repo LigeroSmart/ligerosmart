@@ -1,359 +1,202 @@
 # --
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.9 2009-10-02 07:26:46 ub Exp $
-# $OldId: CustomerTicketZoom.dtl,v 1.44.2.3 2009/10/01 14:14:16 ub Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.10 2010-08-27 20:37:01 en Exp $
+# $OldId: CustomerTicketZoom.dtl,v 1.90 2010/08/19 12:14:44 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-
-<!-- start ticket $Data{"TicketNumber"} -->
-<!-- This java script is just for nice to have funktions! -->
-<script language="JavaScript" type="text/javascript">
-<!--
-function submit_compose() {
-    // if RichText is enabled, update the hidden textarea now for the body content check to work correctly
-    if (typeof RichTextUpdateLinkedField == 'function') {
-        RichTextUpdateLinkedField();
-    }
-
-    if (document.compose.Subject.value == "") {
-        alert('$JSText{"A message should have a subject!"}');
-        document.compose.Subject.focus();
-        return false;
-    }
-    else if (document.compose.Body.value == "") {
-        alert('$JSText{"A message should have a body!"}');
-        if (typeof RichTextUpdateLinkedField == 'function') {
-            RichTextFocus();
-        }
-        else {
-            document.compose.Body.focus();
-        }
-        return false;
-    }
-    else {
-        return true;
-    }
-}
-//-->
-</script>
-
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td width="50%" class="mainhead">
-            $Env{"Box0"}$Text{"Zoom"} $Config{"Ticket::Hook"}: $Data{"TicketNumber"}$Env{"Box1"}
-        </td>
-        <td align="right" width="50%" class="mainhead">
-            $Env{"Box0"}$Text{"Age"}: $Data{"Age"}$Env{"Box1"}
-        </td>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td width="70%" class="menu">
-            <a href="$Env{"Baselink"}Action=CustomerTicketPrint&TicketID=$QData{"TicketID"}" onmouseover="window.status='$JSText{"Print"}'; return true;" onmouseout="window.status='';" target="_blank">$Text{"Print"}</a>
-        </td>
-        <td align="right" width="30%" class="menu">
-            <b>$Text{"Created"}:</b> $TimeLong{"$Data{"Created"}"}
-        </td>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td valign="top" width="75%" class="small">
-<!-- dtl:block:Tree -->
-            <table border="0" width="100%" cellspacing="0" cellpadding="1">
-<!-- dtl:block:TreeItem -->
-                <tr class="$QData{"SenderType"}-$QData{"ArticleType"}" onmouseover="this.className='highlight';" onmouseout="this.className='$QData{"SenderType"}-$QData{"ArticleType"}';">
-                    <td class="small">
-                        <div title="$QData{"From","50"}: $QData{"Subject","200"} - $TimeLong{"$QData{"Created"}"}">
-                            $Data{"Start2"}$Data{"Space"}$Data{"Stop2"}$Data{"Start"}$Data{"Start2"}&nbsp;$QData{"Count"}.&nbsp;$Data{"Stop2"}&nbsp;<a href="$Env{"Baselink"}Action=CustomerTicketZoom&TicketID=$QData{"TicketID"}&ArticleID=$QData{"ArticleID"}#$QData{"ArticleID"}" onmouseover="window.status='$JSText{"$QData{"SenderType"}"} ($Text{"$QData{"ArticleType"}"})'; return true;" onmouseout="window.status='';">$Text{"$QData{"SenderType"}"} ($Text{"$QData{"ArticleType"}"})</a>
-                            $QData{"From","24"}: $QData{"Subject","30"}$Data{"Stop"}
-                        </div>
-                    </td>
-                    <td class="small" align="right">
-                        <nobr>
-<!-- dtl:block:TreeItemAttachmentMore -->
-                        [..]
-<!-- dtl:block:TreeItemAttachmentMore -->
-<!-- dtl:block:TreeItemAttachment -->
-                        &nbsp;<a href="$Env{"CGIHandle"}/$LQData{"Filename"}?Action=CustomerTicketAttachment&ArticleID=$QData{"ArticleID"}&FileID=$QData{"FileID"}" title="$QData{"Filename"} - $QData{"Filesize"}" $Data{"Target"}><img border="0" src="$Config{"Frontend::ImagePath"}attach-small.png"></a>
-<!-- dtl:block:TreeItemAttachment -->
-                        </nobr>
-                    </td>
-                    <td class="small" align="right">
-                        <nobr>$Data{"Start"}$TimeLong{"$QData{"Created"}"}$Data{"Stop"}</nobr>
-                    </td>
-                </tr>
-<!-- dtl:block:TreeItem -->
-            </table>
-<!-- dtl:block:Tree -->
-            <hr>
-            <table border="0" width="100%" cellspacing="0" cellpadding="1">
-<!-- dtl:block:Row -->
-                <tr>
-                    <td class="contentkey" width="15%">$Text{"$Data{"Key"}"}:</td>
-                    <td class="contentvalue" width="85%"> <div title="$QData{"Value"}">$QData{"Value","200"}</div></td>
-                </tr>
-<!-- dtl:block:Row -->
-# show the Article::FreeKey1-3 and Article::FreeValue1-3
-                <dtl if ($Data{"ArticleFreeKey1"} ne "") { $Data{"ArticleFreeString1"} = "<tr><td class="contentkey">$QData{"ArticleFreeKey1"}:</td><td class="contentvalue"> $QData{"ArticleFreeText1"}</td></tr>"; }>
-                <dtl if ($Data{"ArticleFreeKey2"} ne "") { $Data{"ArticleFreeString2"} = "<tr><td class="contentkey">$QData{"ArticleFreeKey2"}:</td><td class="contentvalue"> $QData{"ArticleFreeText2"}</td></tr>"; }>
-                <dtl if ($Data{"ArticleFreeKey3"} ne "") { $Data{"ArticleFreeString3"} = "<tr><td class="contentkey">$QData{"ArticleFreeKey3"}:</td><td class="contentvalue"> $QData{"ArticleFreeText3"}</td></tr>"; }>
-                $Data{"ArticleFreeString1"}
-                $Data{"ArticleFreeString2"}
-                $Data{"ArticleFreeString3"}
-# show attachments
-<!-- dtl:block:ArticleAttachment -->
-                <tr>
-                    <td class="contentkey" width="15%">$Text{"$Data{"Key"}"}:</td>
-                    <td class="contentvalue" width="85%">
-                        <table border="0" cellspacing="0" cellpadding="1">
-<!-- dtl:block:ArticleAttachmentRow -->
-                            <tr>
-                                <td>$QData{"Filename"}</td>
-                                <td>
-<!-- dtl:block:ArticleAttachmentRowLink -->
-                                    <a href="$Data{"Link"}" $Data{"Target"} onmouseover="window.status='$JSText{"$QData{"Action"}"}: $QData{"Filename"}';return true;" onmouseout="window.status='';"><img src="$Config{"Frontend::ImagePath"}$QData{"Image"}" border="0" alt="$Text{"$QData{"Action"}"}" title="$Text{"$QData{"Action"}"}"></a>
-<!-- dtl:block:ArticleAttachmentRowLink -->
-<!-- dtl:block:ArticleAttachmentRowNoLink -->
-                                    <img src="$Config{"Frontend::ImagePath"}$QData{"Image"}" border="0" alt="$Text{"$QData{"Action"}"}" title="$Text{"$QData{"Action"}"}">
-<!-- dtl:block:ArticleAttachmentRowNoLink -->
-                                </td>
-                                <td align="right">$QData{"Filesize"}</td>
-                            </tr>
-<!-- dtl:block:ArticleAttachmentRow -->
-                        </table>
-                    </td>
-                </tr>
-<!-- dtl:block:ArticleAttachment -->
-            </table>
-            <p>
-<!-- dtl:block:BodyPlain -->
-$Data{"Article::TextNote"}
-                <div class="message">
-$Data{"Article::Text"}
-                </div>
-<!-- dtl:block:BodyPlain -->
-<!-- dtl:block:BodyHTML -->
-                <div class="message">
-                    <script src="$Config{"Frontend::YUIPath"}build/yahoo/yahoo-min.js" type="text/javascript"></script>
-                    <script src="$Config{"Frontend::YUIPath"}build/dom/dom-min.js" type="text/javascript"></script>
-                    <script src="$Config{"Frontend::YUIPath"}build/event/event-min.js" type="text/javascript"></script>
-                    <script src="$Config{"Frontend::YUIPath"}build/element/element-min.js" type="text/javascript"></script>
-                    <script language="JavaScript" type="text/javascript">
-<!--
-                    function IframeAutoHeight( IframeID ) {
-                    var Dom = YAHOO.util.Dom;
-                    var iframe = new YAHOO.util.Element( IframeID );
-                    var newHeight = iframe.get('element').contentWindow.document.body.scrollHeight;
-                    if ( !newHeight || isNaN( newHeight ) ) {
-                    newHeight = $Config{"Ticket::Frontend::HTMLArticleHeightDefault"};
-                    }
-                    else if ( newHeight > $Config{"Ticket::Frontend::HTMLArticleHeightMax"} ) {
-                    newHeight = $Config{"Ticket::Frontend::HTMLArticleHeightMax"};
-                    }
-                    Dom.setStyle(iframe, 'height', newHeight);
-                    }
-                    //-->
-                    </script>
-                    <iframe width="100%" frameborder="0" border="0" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" style="width: 100%;" id="iframe$QData{"ArticleID"}" onload="IframeAutoHeight('iframe$QData{"ArticleID"}');" src="$Env{"Baselink"}Action=CustomerTicketAttachment&Subaction=HTMLView&ArticleID=$QData{"ArticleID"}&FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
-                </div>
-<!-- dtl:block:BodyHTML -->
-            </p>
-<!-- dtl:block:FollowUp -->
-            <hr>
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action" value="CustomerTicketZoom"/>
-                <input type="hidden" name="Subaction" value="Store"/>
-                <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
-                <input type="hidden" name="ArticleID" value="$QData{"Article::ArticleID"}"/>
-                <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
-                <table border="0" width="100%">
-                    <tr>
-                        <td class="contentkey" width="15%">$Text{"Subject"}:</td>
-                        <td class="contentvalue" width="85%">
-                            <input type="text" name="Subject" value="$QData{"Subject"}" size="70"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentkey">$Text{"Text"}:</td>
-                        <td class="contentvalue">
-                            <div class="yui-skin-sam">
-<!-- dtl:block:RichText -->
-$Include{"RichTextEditor"}
-# set white background for buttons
-<style type="text/css">
-<!--
-                                .yui-skin-sam .yui-toolbar-container { background-color: #FFFFFF; }
-                                -->
-                                </style>
-<!-- dtl:block:RichText -->
-                                <textarea id="RichText" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
-                                <font color="red" size="-2">$Text{"$Data{"Body invalid"}"}</font>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentkey">$Text{"Attachment"}:</td>
-                        <td class="contentvalue">
-                            <table cellspacing="0" cellpadding="0" width="400">
-<!-- dtl:block:Attachment -->
-                                <tr>
-                                    <td>$QData{"Filename"}</td>
-                                    <td>$QData{"Filesize"}</td>
-                                    <td align="right">
-                                        <input class="button" type="submit" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}"/>
-                                    </td>
-                                </tr>
-<!-- dtl:block:Attachment -->
-                                <tr>
-                                    <td colspan="2"><input name="file_upload" type="file" size="40" class="fixed"/></td>
-                                    <td align="right">
-                                        <input class="button" type="submit" name="AttachmentUpload" value="$Text{"Attach"}"/>
-                                        <a name="attachment"></a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-<!-- dtl:block:State -->
-                    <tr>
-                        <td class="contentkey">$Text{"Next state"}:</td>
-                        <td class="contentvalue"> $Data{"NextStatesStrg"}</td>
-                    </tr>
-<!-- dtl:block:State -->
-<!-- dtl:block:Priority -->
-                    <tr>
-                        <td class="contentkey">$Text{"Priority"}:</td>
-                        <td class="contentvalue"> $Data{"PriorityStrg"}</td>
-                    </tr>
-<!-- dtl:block:Priority -->
-                </table>
-                <br/>
-                <input class="button" id="submitRichText" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();"/>
-            </form>
-<!-- dtl:block:FollowUp -->
-        </td>
-        <td width="25%" align="center" class="menu">
-            <table border="0" cellspacing="0" cellpadding="1" width="95%">
+<div id="MainBox" class="TicketZoom ARIARoleMain">
+<!-- dtl:block:Back -->
+    <div class="ActionRow">
+        <ul class="Tabs">
+            <li><a href="$Env{"Baselink"}$Env{"LastScreenOverview"}">&larr; $Text{"Back"}</a></li>
+        </ul>
+        <div class="Clear"></div>
+    </div>
+<!-- dtl:block:Back -->
+    <div class="Content">
+        <div class="TicketHeader">
+            <h2 title="$QData{"Title"}">
+                <span title="$Text{"$Data{"StateTypeGeneric"}"}" id="Flag" class="$Data{"StateTypeGeneric"}"><span>$Text{"$Data{"StateTypeGeneric"}"}</span></span>
+                $QData{"Title","40"}
+                <span class="TicketHook">$QData{"TicketNumber"}</span>
+            </h2>
+            <ul id="Metadata">
 <!-- dtl:block:Type -->
-                <tr>
-                    <td class="contentkey">$Text{"Type"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$Quote{"$Text{"$Data{"Type"}"}"}">$Quote{"$Text{"$Data{"Type"}"}","18"}</div></font></td>
-                </tr>
+                <li><span class="Key">$Text{"Type"}:</span> <span title="$QData{"Type"}">$QData{"Type","18"}</span></li>
 <!-- dtl:block:Type -->
-                <tr>
-                    <td class="contentkey">$Text{"State"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$Quote{"$Text{"$Data{"State"}"}"}">$Quote{"$Text{"$Data{"State"}"}","18"}</div></font></td>
-                </tr>
-                <tr>
-                    <td class="contentkey">$Text{"Priority"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$Quote{"$Text{"$Data{"Priority"}"}"}">$Quote{"$Text{"$Data{"Priority"}"}","18"}</div></font></td>
-                </tr>
-                <tr>
-                    <td class="contentkey">$Text{"Queue"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$QData{"Queue"}">$QData{"Queue","18"}</div></font></td>
-                </tr>
 <!-- dtl:block:Service -->
-                <tr>
-                    <td class="contentkey">$Text{"Service"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$QData{"Service"}">$QData{"Service","18"}</div></font></td>
-                </tr>
+                <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Quote{"$Text{"$Data{"Service"}"}","18"}</span></li>
 <!-- dtl:block:Service -->
 <!-- dtl:block:SLA -->
-                <tr>
-                    <td class="contentkey">$Text{"SLA"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$QData{"SLA"}">$QData{"SLA","18"}</div></font></td>
-                </tr>
+                <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Quote{"$Text{"$Data{"SLA"}"}","18"}</span></li>
 <!-- dtl:block:SLA -->
 # ---
 # ITSM
 # ---
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="contentkey">$Text{"Criticality"}:</td>
-                    <td class="contentvalue">$Text{"$Data{"Criticality"}"}</td>
-                </tr>
-                <tr>
-                    <td class="contentkey">$Text{"Impact"}:</td>
-                    <td class="contentvalue">$Text{"$Data{"Impact"}"}</td>
-                </tr>
-                <tr>
-                    <td class="contentkey">$Text{"Priority"}:</td>
-                    <td class="contentvalue"><font color="red"><div title="$Quote{"$Text{"$Data{"Priority"}"}"}">$Quote{"$Text{"$Data{"Priority"}"}","18"}</div></font></td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
+                <li><span class="Key">$Text{"Criticality"}:</span> <span title="$Text{"$Data{"Criticality"}"}">$Quote{"$Text{"$Data{"Criticality"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Impact"}:</span> <span title="$Text{"$Data{"Impact"}"}">$Quote{"$Text{"$Data{"Impact"}"}","18"}</span></li>
 # ---
-                <tr>
-                    <td class="contentkey">$Text{"CustomerID"}:</td>
-                    <td class="contentvalue"><div title="$QData{"CustomerID"}">$QData{"CustomerID","18"}</div></td>
-                </tr>
-#      <tr>
-#        <td class="contentkey">$Text{"Accounted time"}:</td>
-#        <td class="contentvalue">$Data{"TicketTimeUnits"}</td>
-#      </tr>
-#      <tr>
-#        <td class="contentkey">$Text{"Owner"}:</td>
-#        <td class="contentvalue"><div title="$QData{"Owner"}">$QData{"Owner","18"}</div></td>
-#      </tr>
-
+<!-- dtl:block:State -->
+                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Quote{"$Text{"$Data{"State"}"}","18"}</span></li>
+<!-- dtl:block:State -->
+<!-- dtl:block:Priority -->
+                <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Quote{"$Text{"$Data{"Priority"}"}","18"}</span></li>
+<!-- dtl:block:Priority -->
+<!-- dtl:block:Queue -->
+                <li><span class="Key">$Text{"Queue"}:</span> <span title="$QData{"Queue"}">$QData{"Queue","18"}</span></li>
+<!-- dtl:block:Queue -->
 # use this if you want to show TicketFreeKey1-16 and TicketFreeText1-16
 <!-- dtl:block:TicketFreeText -->
-                <tr>
-                    <td class="contentkey">$QData{"TicketFreeKey","20"}:</td>
-                    <td class="contentvalue">
-                        <div title="$QData{"TicketFreeText"}">$QData{"TicketFreeText","20"}</div>
-                    </td>
-                </tr>
+                <li><span class="Key">$QData{"TicketFreeKey","20"}:</span> <span title="$QData{"TicketFreeText"}">$QData{"TicketFreeText","20"}</span></li>
 <!-- dtl:block:TicketFreeText -->
 #<!-- dtl:block:TicketFreeText1 -->
-#        <tr>
-#          <td class="contentkey">$QData{"TicketFreeKey1","20"}:</td>
-#          <td class="contentvalue">
-#            <div title="$QData{"TicketFreeText"}">$QData{"TicketFreeText1","20"}</div>
-#          </td>
-#        </tr>
+#                    <li><span class="Key">$QData{"TicketFreeKey1","20"}:</span> <span title="$QData{"TicketFreeText1"}">$QData{"TicketFreeText1","20"}</span></li>
 #<!-- dtl:block:TicketFreeText1 -->
 #<!-- dtl:block:TicketFreeText2 -->
-#        <tr>
-#          <td class="contentkey">$QData{"TicketFreeKey2","20"}:</td>
-#          <td class="contentvalue">
-#            <div title="$QData{"TicketFreeText"}">$QData{"TicketFreeText2","20"}</div>
-#          </td>
-#        </tr>
+#                    <li><span class="Key">$QData{"TicketFreeKey2","20"}:</span> <span title="$QData{"TicketFreeText2"}">$QData{"TicketFreeText2","20"}</span></li>
 #<!-- dtl:block:TicketFreeText2 -->
-
 # use this if you want to show TicketFreeTime1-6
 <!-- dtl:block:TicketFreeTime -->
-                <tr>
-                    <td class="contentkey">$Text{"$QData{"TicketFreeTimeKey"}"}:</td>
-                    <td class="contentvalue"><div title="$TimeShort{"$QData{"TicketFreeTime"}"}">$TimeShort{"$QData{"TicketFreeTime"}"}</div></td>
-                </tr>
+                <li><span class="Key">$Text{"$Data{"TicketFreeTimeKey"}"}:</span> <span title="$TimeShort{"$QData{"TicketFreeTime"}"}">$TimeShort{"$QData{"TicketFreeTime"}"}</span></li>
 <!-- dtl:block:TicketFreeTime -->
 #<!-- dtl:block:TicketFreeTime1 -->
-#          <tr>
-#            <td class="contentkey">$Text{"$Config{"TicketFreeTimeKey1"}"}:</td>
-#            <td class="contentvalue"><div title="$TimeShort{"$QData{"TicketFreeTime1"}"}">$TimeShort{"$QData{"TicketFreeTime1"}"}</div></td>
-#          </tr>
+#                    <li><span class="Key">$Text{"$Data{"TicketFreeTimeKey1"}"}:</span> <span title="$TimeShort{"$QData{"TicketFreeTime1"}"}">$TimeShort{"$QData{"TicketFreeTime1"}"}</span></li>
 #<!-- dtl:block:TicketFreeTime1 -->
 #<!-- dtl:block:TicketFreeTime2 -->
-#          <tr>
-#            <td class="contentkey">$Text{"$Config{"TicketFreeTimeKey2"}"}:</td>
-#            <td class="contentvalue"><div title="$TimeShort{"$QData{"TicketFreeTime2"}"}">$TimeShort{"$QData{"TicketFreeTime2"}"}</div></td>
-#          </tr>
+#                    <li><span class="Key">$Text{"$Data{"TicketFreeTimeKey2"}"}:</span> <span title="$TimeShort{"$QData{"TicketFreeTime2"}"}">$TimeShort{"$QData{"TicketFreeTime2"}"}</span></li>
 #<!-- dtl:block:TicketFreeTime2 -->
+<!-- dtl:block:Print -->
+                <li><a href="$Env{"Baselink"}Action=CustomerTicketPrint;TicketID=$QData{"TicketID"}" class="Print AsPopup" title="$Text{"Print"}">$Text{"Print"}</a></li>
+<!-- dtl:block:Print -->
+            </ul>
+            <div class="Clear"></div>
+        </div>
+        <form action="$Env{"CGIHandle"}#FollowUp" method="post" enctype="multipart/form-data" name="compose" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action" value="CustomerTicketZoom" />
+            <input type="hidden" name="Subaction" value="Store" />
+            <input type="hidden" name="TicketID" value="$QData{"TicketID"}" />
+            <input type="hidden" name="ArticleID" value="$QData{"ArticleID"}" />
+            <input type="hidden" name="FormID" value="$QData{"FormID"}" />
+            <ul id="Messages">
+<!-- dtl:block:Article -->
+                <li class="$QData{"SenderType"} $QData{"ArticleType"} $QData{"Class"}">
+                    <div class="MessageHeader">
+                        <h3><a href="$Env{"Baselink"}Action=$Env{"Action"};TicketID=$LQData{"TicketID"};ArticleID=$LQData{"ArticleID"}">$QData{"FromRealname","60"} &ndash; <span title="$Text{"Loading"}...">$QData{"Subject","120"}</span></a></h3>
+                        <span class="Age" title="$TimeLong{"$QData{"Created"}"}">$Data{"Age"}</span>
+                        <div class="Clear"></div>
+                    </div>
+                    <input type="hidden" name="ArticleState" value="untouched" />
+                    <div class="MessageBody">
+                        <div class="Details SeperatorRow">
+<!-- dtl:block:ArticleRow -->
+                            <div>
+                                <div class="Label">$Text{"$Data{"Key"}"}:</div> <span title="$QData{"Value"}">$QData{"Realname","100"}</span>
+                                <div class="Clear"></div>
+                            </div>
+<!-- dtl:block:ArticleRow -->
+                            <div>
+                                <div class="Label">$Text{"Subject"}:</div> <span title="$QData{"Subject"}">$QData{"Subject","100"}</span>
+                                <div class="Clear"></div>
+                            </div>
+<!-- dtl:block:ArticleAttachment -->
+                            <div class="Attachments">
+                                <div class="Label">$Text{"$Data{"Key"}"}:</div>
+                                <div>
+<!-- dtl:block:ArticleAttachmentRow -->
+                                    <span class="DownloadAttachment" title="$QData{"Filename"} - $QData{"Filesize"}">
+<!-- dtl:block:ArticleAttachmentRowLink -->
+                                        <a href="$Data{"Link"}" $Data{"Target"} title="$Text{"$Data{"Action"}"}">$QData{"Filename"}</a>, $QData{"Filesize"}
+<!-- dtl:block:ArticleAttachmentRowLink -->
+<!-- dtl:block:ArticleAttachmentRowNoLink -->
+                                        $QData{"Filename"}, $QData{"Filesize"}
+<!-- dtl:block:ArticleAttachmentRowNoLink -->
+                                    </span>
+<!-- dtl:block:ArticleAttachmentRow -->
+                                </div>
+                                <div class="Clear"></div>
+                            </div>
+<!-- dtl:block:ArticleAttachment -->
+                        </div>
+                        <div class="MessageContent">
+<!-- dtl:block:BodyPlain -->
+                            $Data{"BodyNote"}
+                            <div class="message">
+                                $Data{"Body"}
+                            </div>
+<!-- dtl:block:BodyPlain -->
+<!-- dtl:block:BodyHTMLLoad -->
+                            <iframe title="about:blank" frameborder="0" id="VisibleFrame" src="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
+<!-- dtl:block:BodyHTMLLoad -->
+<!-- dtl:block:BodyHTMLPlaceholder -->
+                            <iframe src="about:blank" frameborder="0" title="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
+<!-- dtl:block:BodyHTMLPlaceholder -->
+                        </div>
+                    </div>
+                </li>
+<!-- dtl:block:Article -->
+            </ul> <!-- /Messages -->
+<!-- dtl:block:FollowUp -->
+            <div id="FollowUp" class="$QData{"FollowUpVisible"}">
+                <div id="Messenger">
+                    <input class="DontPrint" type="text" name="Subject" id="Subject" value="$QData{"Subject"}" />
+<!-- dtl:block:RichText-->
+                    $Include{"CustomerRichTextEditor"}
+<!-- dtl:block:RichText-->
+                    <textarea title="$Text{"Reply"}" id="RichText" class="RichText DontPrint" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
+                    <fieldset class="DontPrint">
+                        <div id="AttachmentHolder">
+                            <label for="Attachment">$Text{"Attachment"}:</label>
+                            <input name="file_upload" title="Attachment" id="Attachment" type="file" size="30" />
+                            <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#Attachment').bind('change', function (Event) {
+        var $Form = $('#Attachment').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 
-            </table>
-        </td>
-    </tr>
-</table>
-<!-- end ticket -->
+<!-- dtl:block:FollowUpAttachment -->
+                            <div class="Attachment" title="$QData{"Filename"} - $QData{"Filesize"}">
+                                $QData{"Filename"}
+                                <button type="submit" title="$Text{"delete"} $QData{"Filename"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+                            </div>
+<!-- dtl:block:FollowUpAttachment -->
+                        </div>
+<!-- dtl:block:FollowUpState -->
+                        <div>
+                            <label for="StateID">$Text{"Next state"}:</label> $Data{"NextStatesStrg"}
+                        </div>
+<!-- dtl:block:FollowUpState -->
+<!-- dtl:block:FollowUpPriority -->
+                        <div>
+                            <label for="PriorityID">$Text{"Priority"}:</label> $Data{"PriorityStrg"}
+                        </div>
+<!-- dtl:block:FollowUpPriority -->
+                    </fieldset>
+                    <div class="ActionRow">
+                        <button type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button> $Text{"or"} <a id="CloseButton" href="">$Text{"Cancel"}</a>
+                    </div>
+                </div>
+                <a id="ReplyButton" class="DontPrint" href="">$Text{"Reply"}</a>
+            </div>
+<!-- dtl:block:FollowUp -->
+        </form>
+    </div>
+</div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">
+    Core.Customer.TicketZoom.Init();
+    $('a.AsPopup').bind('click', function (Event) {
+        Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
+        return false;
+    });
+</script>
+<!-- dtl:js_on_document_complete -->
