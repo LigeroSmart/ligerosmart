@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.pm,v 1.3 2009-08-28 11:40:03 mh Exp $
-# $OldId: CustomerTicketPrint.pm,v 1.27 2009/08/27 16:00:23 martin Exp $
+# $Id: CustomerTicketPrint.pm,v 1.4 2010-08-30 20:48:36 dz Exp $
+# $OldId: CustomerTicketPrint.pm,v 1.34 2010/07/02 12:09:33 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -64,16 +64,16 @@ sub Run {
 
     # check needed stuff
     if ( !$Self->{TicketID} ) {
-        return $Self->{LayoutObject}->Error( Message => 'Need TicketID!' );
+        return $Self->{LayoutObject}->ErrorScreen( Message => 'Need TicketID!' );
     }
     $QueueID = $Self->{TicketObject}->TicketQueueID( TicketID => $Self->{TicketID} );
     if ( !$QueueID ) {
-        return $Self->{LayoutObject}->Error( Message => 'Need TicketID!' );
+        return $Self->{LayoutObject}->ErrorScreen( Message => 'Need TicketID!' );
     }
 
     # check permissions
     if (
-        !$Self->{TicketObject}->CustomerPermission(
+        !$Self->{TicketObject}->TicketCustomerPermission(
             Type     => 'ro',
             TicketID => $Self->{TicketID},
             UserID   => $Self->{UserID}
@@ -114,13 +114,14 @@ sub Run {
         TicketID                   => $Self->{TicketID},
         ArticleType                => \@CustomerArticleTypes,
         StripPlainBodyAsAttachment => 1,
+        UserID                     => $Self->{UserID},
     );
     $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(
         TicketID => $Ticket{TicketID},
     );
 
     # customer info
-    my %CustomerData = ();
+    my %CustomerData;
     if ( $Ticket{CustomerUserID} ) {
         %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User => $Ticket{CustomerUserID},
@@ -196,6 +197,28 @@ sub Run {
             %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
         );
         $Page{PageCount}++;
+
+        # type of print tag
+        my $PrintTag = '';
+
+        $PrintTag = ( $Self->{LayoutObject}->{LanguageObject}->Get('Ticket') ) . ' ' .
+            ( $Self->{LayoutObject}->{LanguageObject}->Get('Print') );
+
+        # output headline
+        $Self->{PDFObject}->Text(
+            Text     => $PrintTag,
+            Height   => 9,
+            Type     => 'Cut',
+            Font     => 'ProportionalBold',
+            Align    => 'right',
+            FontSize => 9,
+            Color    => '#666666',
+        );
+
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -6,
+        );
 
         # output ticket infos
         $Self->_PDFOutputTicketInfos(
@@ -671,7 +694,7 @@ sub _PDFOutputCustomerInfos {
 
         # output headline
         $Self->{PDFObject}->Text(
-            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Customer Infos'),
+            Text     => $Self->{LayoutObject}->{LanguageObject}->Get('Customer Information'),
             Height   => 7,
             Type     => 'Cut',
             Font     => 'ProportionalBoldItalic',
@@ -727,9 +750,9 @@ sub _PDFOutputArticles {
     }
     my %Page = %{ $Param{PageData} };
 
-    my $FirstArticle = 1;
+    my $ArticleCounter = 1;
     for my $ArticleTmp ( @{ $Param{ArticleData} } ) {
-        if ($FirstArticle) {
+        if ( $ArticleCounter == 1 ) {
             $Self->{PDFObject}->PositionSet(
                 Move => 'relativ',
                 Y    => -15,
@@ -748,7 +771,6 @@ sub _PDFOutputArticles {
                 Move => 'relativ',
                 Y    => 2,
             );
-            $FirstArticle = 0;
         }
 
         my %Article = %{$ArticleTmp};
@@ -767,6 +789,27 @@ sub _PDFOutputArticles {
         # generate article info table
         my %TableParam1;
         my $Row = 0;
+
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -6,
+        );
+
+        # article number tag
+        $Self->{PDFObject}->Text(
+            Text     => '    # ' . $ArticleCounter,
+            Height   => 7,
+            Type     => 'Cut',
+            Font     => 'ProportionalBoldItalic',
+            FontSize => 7,
+            Color    => '#666666',
+        );
+
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => 2,
+        );
+
         for (qw(From To Cc Subject)) {
             if ( $Article{$_} ) {
                 $TableParam1{CellData}[$Row][0]{Content}
@@ -874,6 +917,7 @@ sub _PDFOutputArticles {
                 $Page{PageCount}++;
             }
         }
+        $ArticleCounter++;
     }
     return 1;
 }
@@ -965,10 +1009,10 @@ sub _HTMLMask {
             $File{Filename} = $Self->{LayoutObject}->Ascii2Html( Text => $File{Filename} );
             $Param{'Article::ATM'}
                 .= '<a href="$Env{"CGIHandle"}/$QData{"Filename"}?Action=CustomerTicketAttachment&'
-                . "ArticleID=$Article{ArticleID}&FileID=$FileID\" target=\"attachment\" "
+                . "ArticleID=$Article{ArticleID};FileID=$FileID\" target=\"attachment\" "
                 . "onmouseover=\"window.status='\$Text{\"Download\"}: $File{Filename}';"
                 . ' return true;" onmouseout="window.status=\'\';">'
-                . "$File{Filename}</a> $File{Filesize}<br>";
+                . "$File{Filename}</a> $File{Filesize}<br/>";
         }
 
         # check if just a only html email
