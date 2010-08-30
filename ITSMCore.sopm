@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.116 2010-08-20 17:37:30 dz Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.117 2010-08-30 16:41:27 cr Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -65,6 +65,7 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.IE7.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Print.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Table.css"/>
         <File Permission="644" Location="var/packagesetup/ITSMCore.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
