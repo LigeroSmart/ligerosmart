@@ -1,0 +1,23 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Tables
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Overview Small View Table
+ */
+
+.TableSmall thead.ITSMHeader span {
+    color: #4A4A4A;
+}
+
+}
