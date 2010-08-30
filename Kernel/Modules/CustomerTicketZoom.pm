@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.11 2010-08-27 20:36:25 en Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.70 2010/07/26 06:28:23 martin Exp $
+# $Id: CustomerTicketZoom.pm,v 1.12 2010-08-30 20:24:41 en Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.71 2010/08/30 19:01:45 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -193,6 +193,9 @@ sub Run {
                 =~ s/(^>.+|.{4,$Self->{ConfigObject}->Get('Ticket::Frontend::TextAreaNote')})(?:\s|\z)/$1\n/gm;
         }
 
+        # If is an action about attachments
+        my $IsUpload = 0;
+
         # attachment delete
         for my $Count ( 1 .. 32 ) {
             my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
@@ -203,6 +206,7 @@ sub Run {
                 FormID => $Self->{FormID},
                 FileID => $Count,
             );
+            $IsUpload = 1;
         }
 
         # attachment upload
@@ -217,6 +221,14 @@ sub Run {
                 FormID => $Self->{FormID},
                 %UploadStuff,
             );
+            $IsUpload = 1;
+        }
+
+        if ( !$IsUpload ) {
+            if ( !$GetParam{Body} || $GetParam{Body} eq '<br />' ) {
+                $Error{RichTextInvalid}    = 'ServerError';
+                $GetParam{FollowUpVisible} = 'Visible';
+            }
         }
 
         # show edit again
@@ -228,6 +240,7 @@ sub Run {
             $Output .= $Self->_Mask(
                 TicketID   => $Self->{TicketID},
                 ArticleBox => \@ArticleBox,
+                Errors     => \%Error,
                 %Ticket,
                 %GetParam,
             );
@@ -412,6 +425,14 @@ sub _Mask {
         return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'no' );
     }
 
+    # prepare errors!
+    if ( $Param{Errors} ) {
+        for my $KeyError ( keys %{ $Param{Errors} } ) {
+            $Param{$KeyError}
+                = $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$KeyError} );
+        }
+    }
+
     # get last customer article
     my $CounterArray = 0;
     my $LastCustomerArticleID;
@@ -427,7 +448,7 @@ sub _Mask {
             $LastCustomerArticle   = $CounterArray;
         }
         $CounterArray++;
-        if ( $SelectedArticleID eq $Article{ArticleID} ) {
+        if ( ($SelectedArticleID) && ( $SelectedArticleID eq $Article{ArticleID} ) ) {
             $ArticleID = $Article{ArticleID};
         }
     }
