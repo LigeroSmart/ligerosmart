@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.15 2010-01-20 13:53:50 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.113.2.2 2010/01/07 22:26:02 martin Exp $
+# $Id: AgentTicketPhone.pm,v 1.16 2010-08-30 20:28:34 en Exp $
+# $OldId: AgentTicketPhone.pm,v 1.158 2010/08/19 16:47:22 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,9 +41,12 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(ParamObject DBObject TicketObject LayoutObject LogObject QueueObject ConfigObject)) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+    for my $Needed (
+        qw(ParamObject DBObject TicketObject LayoutObject LogObject QueueObject ConfigObject)
+        )
+    {
+        if ( !$Self->{$Needed} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
         }
     }
 
@@ -51,7 +54,7 @@ sub new {
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{CheckItemObject}    = Kernel::System::CheckItem->new(%Param);
     $Self->{StateObject}        = Kernel::System::State->new(%Param);
-    $Self->{UploadCachObject}   = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
 # ---
 # ITSM
@@ -66,7 +69,7 @@ sub new {
 
     # create form id
     if ( !$Self->{FormID} ) {
-        $Self->{FormID} = $Self->{UploadCachObject}->FormIDCreate();
+        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
     }
 
     $Self->{Config} = $Self->{ConfigObject}->Get("Ticket::Frontend::$Self->{Action}");
@@ -78,20 +81,16 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get params
-    my %GetParam = ();
-    for (
-        qw(AttachmentUpload ArticleID LinkTicketID PriorityID NewUserID
+    my %GetParam;
+    for my $Key (
+        qw(ArticleID LinkTicketID PriorityID NewUserID
         From Subject Body NextStateID TimeUnits
         Year Month Day Hour Minute
         NewResponsibleID ResponsibleAll OwnerAll TypeID ServiceID SLAID
-        AttachmentDelete1 AttachmentDelete2 AttachmentDelete3 AttachmentDelete4
-        AttachmentDelete5 AttachmentDelete6 AttachmentDelete7 AttachmentDelete8
-        AttachmentDelete9 AttachmentDelete10 AttachmentDelete11 AttachmentDelete12
-        AttachmentDelete13 AttachmentDelete14 AttachmentDelete15 AttachmentDelete16
         )
         )
     {
-        $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key );
     }
 # ---
 # ITSM
@@ -153,32 +152,65 @@ sub Run {
 # ---
 
     # get ticket free text params
-    for ( 1 .. 16 ) {
-        $GetParam{"TicketFreeKey$_"} = $Self->{ParamObject}->GetParam( Param => "TicketFreeKey$_" );
-        $GetParam{"TicketFreeText$_"}
-            = $Self->{ParamObject}->GetParam( Param => "TicketFreeText$_" );
+    for my $Count ( 1 .. 16 ) {
+        my $Key  = 'TicketFreeKey' . $Count;
+        my $Text = 'TicketFreeText' . $Count;
+        $GetParam{$Key}  = $Self->{ParamObject}->GetParam( Param => $Key );
+        $GetParam{$Text} = $Self->{ParamObject}->GetParam( Param => $Text );
     }
 
     # get ticket free time params
-    for ( 1 .. 6 ) {
+    for my $Count ( 1 .. 6 ) {
         for my $Type (qw(Used Year Month Day Hour Minute)) {
-            $GetParam{ "TicketFreeTime" . $_ . $Type } = $Self->{ParamObject}->GetParam(
-                Param => "TicketFreeTime" . $_ . $Type,
+            $GetParam{ "TicketFreeTime" . $Count . $Type } = $Self->{ParamObject}->GetParam(
+                Param => "TicketFreeTime" . $Count . $Type,
             );
         }
-        $GetParam{ 'TicketFreeTime' . $_ . 'Optional' }
-            = $Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $_ ) || 0;
-        if ( !$Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $_ ) ) {
-            $GetParam{ 'TicketFreeTime' . $_ . 'Used' } = 1;
+        $GetParam{ 'TicketFreeTime' . $Count . 'Optional' }
+            = $Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $Count ) || 0;
+        if ( !$Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $Count ) ) {
+            $GetParam{ 'TicketFreeTime' . $Count . 'Used' } = 1;
+        }
+
+        if ( $Self->{Config}->{TicketFreeTime}->{$Count} == 2 ) {
+            $GetParam{ 'TicketFreeTime' . $Count . 'Required' } = 1;
         }
     }
 
     # get article free text params
-    for ( 1 .. 3 ) {
-        $GetParam{"ArticleFreeKey$_"}
-            = $Self->{ParamObject}->GetParam( Param => "ArticleFreeKey$_" );
-        $GetParam{"ArticleFreeText$_"}
-            = $Self->{ParamObject}->GetParam( Param => "ArticleFreeText$_" );
+    for my $Count ( 1 .. 3 ) {
+        my $Key  = 'ArticleFreeKey' . $Count;
+        my $Text = 'ArticleFreeText' . $Count;
+        $GetParam{$Key}  = $Self->{ParamObject}->GetParam( Param => $Key );
+        $GetParam{$Text} = $Self->{ParamObject}->GetParam( Param => $Text );
+    }
+
+    # transform pending time, time stamp based on user time zone
+    if (
+        defined $GetParam{Year}
+        && defined $GetParam{Month}
+        && defined $GetParam{Day}
+        && defined $GetParam{Hour}
+        && defined $GetParam{Minute}
+        )
+    {
+        %GetParam = $Self->{LayoutObject}->TransfromDateSelection(
+            %GetParam,
+        );
+    }
+
+    # transform free time, time stamp based on user time zone
+    for my $Count ( 1 .. 6 ) {
+        my $Prefix = 'TicketFreeTime' . $Count;
+        next if !$GetParam{ $Prefix . 'Year' };
+        next if !$GetParam{ $Prefix . 'Month' };
+        next if !$GetParam{ $Prefix . 'Day' };
+        next if !$GetParam{ $Prefix . 'Hour' };
+        next if !$GetParam{ $Prefix . 'Minute' };
+        %GetParam = $Self->{LayoutObject}->TransfromDateSelection(
+            %GetParam,
+            Prefix => $Prefix
+        );
     }
 
     if ( !$Self->{Subaction} || $Self->{Subaction} eq 'Created' ) {
@@ -194,7 +226,7 @@ sub Run {
             my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
             $Output .= $Self->{LayoutObject}->Notify(
                 Info => 'Ticket "%s" created!", "' . $Ticket{TicketNumber},
-                Link => '$Env{"Baselink"}Action=AgentTicketZoom&TicketID=' . $Ticket{TicketID},
+                Link => '$Env{"Baselink"}Action=AgentTicketZoom;TicketID=' . $Ticket{TicketID},
             );
         }
 
@@ -213,8 +245,8 @@ sub Run {
 
         # get split article if given
         # get ArticleID
-        my %Article      = ();
-        my %CustomerData = ();
+        my %Article;
+        my %CustomerData;
         if ( $GetParam{ArticleID} ) {
             %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $GetParam{ArticleID} );
             $Article{Subject} = $Self->{TicketObject}->TicketSubjectClean(
@@ -224,11 +256,13 @@ sub Run {
 
             # fill free text fields
             for my $Count ( 1 .. 16 ) {
-                if ( defined $Article{ 'TicketFreeKey' . $Count } ) {
-                    $GetParam{ 'TicketFreeKey' . $Count } = $Article{ 'TicketFreeKey' . $Count };
+                my $Key  = 'TicketFreeKey' . $Count;
+                my $Text = 'TicketFreeText' . $Count;
+                if ( defined $Article{$Key} ) {
+                    $GetParam{$Key} = $Article{$Key};
                 }
-                if ( defined $Article{ 'TicketFreeText' . $Count } ) {
-                    $GetParam{ 'TicketFreeText' . $Count } = $Article{ 'TicketFreeText' . $Count };
+                if ( defined $Article{$Text} ) {
+                    $GetParam{$Text} = $Article{$Text};
                 }
             }
 
@@ -248,12 +282,6 @@ sub Run {
                     $GetParam{ 'TicketFreeTime' . $Count . 'Day' }    = $Day;
                     $GetParam{ 'TicketFreeTime' . $Count . 'Hour' }   = $Hour;
                     $GetParam{ 'TicketFreeTime' . $Count . 'Minute' } = $Min;
-
-                    # do agent time zone translation
-                    %GetParam = $Self->{LayoutObject}->TransfromDateSelection(
-                        %GetParam,
-                        Prefix => 'TicketFreeTime' . $Count,
-                    );
                 }
             }
 
@@ -262,10 +290,10 @@ sub Run {
                 TicketID           => $Article{TicketID},
                 ArticleID          => $GetParam{ArticleID},
                 FormID             => $Self->{FormID},
-                UploadCachObject   => $Self->{UploadCachObject},
+                UploadCacheObject  => $Self->{UploadCacheObject},
                 AttachmentsInclude => 1,
             );
-            if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+            if ( $Self->{LayoutObject}->{BrowserRichText} ) {
                 $Article{ContentType} = 'text/html';
             }
             else {
@@ -289,38 +317,48 @@ sub Run {
                 my %CustomerUserList = $Self->{CustomerUserObject}->CustomerSearch(
                     UserLogin => $Article{CustomerUserID},
                 );
-                for ( sort keys %CustomerUserList ) {
-                    $Article{From} = $CustomerUserList{$_};
+                for my $KeyCustomerUserList ( sort keys %CustomerUserList ) {
+                    $Article{From} = $CustomerUserList{$KeyCustomerUserList};
                 }
             }
         }
 
         # get default selections
-        my %TicketFreeDefault = ();
-        for ( 1 .. 16 ) {
-            $TicketFreeDefault{ 'TicketFreeKey' . $_ } = $GetParam{ 'TicketFreeKey' . $_ }
-                || $Self->{ConfigObject}->Get( 'TicketFreeKey' . $_ . '::DefaultSelection' );
-            $TicketFreeDefault{ 'TicketFreeText' . $_ } = $GetParam{ 'TicketFreeText' . $_ }
-                || $Self->{ConfigObject}->Get( 'TicketFreeText' . $_ . '::DefaultSelection' );
+        my %TicketFreeDefault;
+        for my $Count ( 1 .. 16 ) {
+            my $Key  = 'TicketFreeKey' . $Count;
+            my $Text = 'TicketFreeText' . $Count;
+
+            $TicketFreeDefault{$Key} = $GetParam{$Key}
+                || $Self->{ConfigObject}->Get( $Key . '::DefaultSelection' );
+            $TicketFreeDefault{$Text} = $GetParam{$Text}
+                || $Self->{ConfigObject}->Get( $Text . '::DefaultSelection' );
         }
 
         # get free text config options
-        my %TicketFreeText = ();
-        for ( 1 .. 16 ) {
-            $TicketFreeText{"TicketFreeKey$_"} = $Self->{TicketObject}->TicketFreeTextGet(
+        my %TicketFreeText;
+        for my $Count ( 1 .. 16 ) {
+            my $Key  = 'TicketFreeKey' . $Count;
+            my $Text = 'TicketFreeText' . $Count;
+            $TicketFreeText{$Key} = $Self->{TicketObject}->TicketFreeTextGet(
                 TicketID       => $Self->{TicketID},
                 Action         => $Self->{Action},
-                Type           => "TicketFreeKey$_",
+                Type           => $Key,
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
-            $TicketFreeText{"TicketFreeText$_"} = $Self->{TicketObject}->TicketFreeTextGet(
+            $TicketFreeText{$Text} = $Self->{TicketObject}->TicketFreeTextGet(
                 TicketID       => $Self->{TicketID},
                 Action         => $Self->{Action},
-                Type           => "TicketFreeText$_",
+                Type           => $Text,
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
+
+            # If Key has value 2, this means that the freetextfield is required
+            if ( $Self->{Config}->{TicketFreeText}->{$Count} == 2 ) {
+                $TicketFreeText{Required}->{$Count} = 1;
+            }
         }
         my %TicketFreeTextHTML = $Self->{LayoutObject}->AgentFreeText(
             Config => \%TicketFreeText,
@@ -328,7 +366,6 @@ sub Run {
                 %TicketFreeDefault,
                 $Self->{UserObject}->GetUserData(
                     UserID => $Self->{UserID},
-                    Cached => 1,
                 ),
             },
         );
@@ -340,31 +377,40 @@ sub Run {
         );
 
         # get article free text default selections
-        my %ArticleFreeDefault = ();
-        for ( 1 .. 3 ) {
-            $ArticleFreeDefault{ 'ArticleFreeKey' . $_ } = $GetParam{ 'ArticleFreeKey' . $_ }
-                || $Self->{ConfigObject}->Get( 'ArticleFreeKey' . $_ . '::DefaultSelection' );
-            $ArticleFreeDefault{ 'ArticleFreeText' . $_ } = $GetParam{ 'ArticleFreeText' . $_ }
-                || $Self->{ConfigObject}->Get( 'ArticleFreeText' . $_ . '::DefaultSelection' );
+        my %ArticleFreeDefault;
+        for my $Count ( 1 .. 3 ) {
+            my $Key  = 'ArticleFreeKey' . $Count;
+            my $Text = 'ArticleFreeText' . $Count;
+            $ArticleFreeDefault{$Key} = $GetParam{$Key}
+                || $Self->{ConfigObject}->Get( $Key . '::DefaultSelection' );
+            $ArticleFreeDefault{$Text} = $GetParam{$Text}
+                || $Self->{ConfigObject}->Get( $Text . '::DefaultSelection' );
         }
 
         # article free text
-        my %ArticleFreeText = ();
-        for ( 1 .. 3 ) {
-            $ArticleFreeText{"ArticleFreeKey$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
+        my %ArticleFreeText;
+        for my $Count ( 1 .. 3 ) {
+            my $Key  = 'ArticleFreeKey' . $Count;
+            my $Text = 'ArticleFreeText' . $Count;
+            $ArticleFreeText{$Key} = $Self->{TicketObject}->ArticleFreeTextGet(
                 TicketID       => $Self->{TicketID},
-                Type           => "ArticleFreeKey$_",
+                Type           => $Key,
                 Action         => $Self->{Action},
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
-            $ArticleFreeText{"ArticleFreeText$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
+            $ArticleFreeText{$Text} = $Self->{TicketObject}->ArticleFreeTextGet(
                 TicketID       => $Self->{TicketID},
-                Type           => "ArticleFreeText$_",
+                Type           => $Text,
                 Action         => $Self->{Action},
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerData{CustomerUserLogin} || '',
             );
+
+            # If Key has value 2, this means that the field is required
+            if ( $Self->{Config}->{ArticleFreeText}->{$Count} == 2 ) {
+                $ArticleFreeText{Required}->{$Count} = 1;
+            }
         }
         my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(
             Config => \%ArticleFreeText,
@@ -372,7 +418,7 @@ sub Run {
         );
 
         # get all attachments meta data
-        my @Attachments = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
+        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
             FormID => $Self->{FormID},
         );
 
@@ -391,7 +437,7 @@ sub Run {
         }
 
         # make sure body is rich text (if body is based on config)
-        if ( !$GetParam{ArticleID} && $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+        if ( !$GetParam{ArticleID} && $Self->{LayoutObject}->{BrowserRichText} ) {
             $Body = $Self->{LayoutObject}->Ascii2RichText(
                 String => $Body,
             );
@@ -461,8 +507,9 @@ sub Run {
 
     # create new ticket and article
     elsif ( $Self->{Subaction} eq 'StoreNew' ) {
-        my %Error     = ();
-        my %StateData = ();
+
+        my %Error;
+        my %StateData;
         if ( $GetParam{NextStateID} ) {
             %StateData = $Self->{TicketObject}->{StateObject}->StateGet(
                 ID => $GetParam{NextStateID},
@@ -493,93 +540,111 @@ sub Run {
             $GetParam{From} = '';
             $ExpandCustomerName = 3;
         }
-        for ( 1 .. 2 ) {
-            my $Item = $Self->{ParamObject}->GetParam( Param => "ExpandCustomerName$_" ) || 0;
-            if ( $_ == 1 && $Item ) {
+        for my $Count ( 1 .. 2 ) {
+            my $Item = $Self->{ParamObject}->GetParam( Param => "ExpandCustomerName$Count" ) || 0;
+            if ( $Count == 1 && $Item ) {
                 $ExpandCustomerName = 1;
             }
-            elsif ( $_ == 2 && $Item ) {
+            elsif ( $Count == 2 && $Item ) {
                 $ExpandCustomerName = 2;
             }
         }
 
         # rewrap body if exists
-        if ( $Self->{ConfigObject}->Get('Frontend::RichText') && $GetParam{Body} ) {
+        if ( $Self->{LayoutObject}->{BrowserRichText} && $GetParam{Body} ) {
             $GetParam{Body}
                 =~ s/(^>.+|.{4,$Self->{ConfigObject}->Get('Ticket::Frontend::TextAreaNote')})(?:\s|\z)/$1\n/gm;
         }
 
-        # check pending date
-        if ( $StateData{TypeName} && $StateData{TypeName} =~ /^pending/i ) {
-            if ( !$Self->{TimeObject}->Date2SystemTime( %GetParam, Second => 0 ) ) {
-                $Error{"Date invalid"} = 'invalid';
-            }
-            if (
-                $Self->{TimeObject}->Date2SystemTime( %GetParam, Second => 0 )
-                < $Self->{TimeObject}->SystemTime()
-                )
-            {
-                $Error{"Date invalid"} = 'invalid';
-            }
-        }
+        # If is an action about attachments
+        my $IsUpload = 0;
 
         # attachment delete
-        for ( 1 .. 16 ) {
-            if ( $GetParam{"AttachmentDelete$_"} ) {
-                $Error{AttachmentDelete} = 1;
-                $Self->{UploadCachObject}->FormIDRemoveFile(
-                    FormID => $Self->{FormID},
-                    FileID => $_,
-                );
-            }
+        for my $Count ( 1 .. 16 ) {
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
+            next if !$Delete;
+            $Error{AttachmentDelete} = 1;
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Count,
+            );
+            $IsUpload = 1;
         }
 
         # attachment upload
-        if ( $GetParam{AttachmentUpload} ) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'AttachmentUpload' ) ) {
+            $IsUpload                = 1;
+            %Error                   = ();
             $Error{AttachmentUpload} = 1;
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => "file_upload",
+                Param  => 'FileUpload',
                 Source => 'string',
             );
-            $Self->{UploadCachObject}->FormIDAddFile(
+            $Self->{UploadCacheObject}->FormIDAddFile(
                 FormID => $Self->{FormID},
                 %UploadStuff,
             );
         }
 
         # get all attachments meta data
-        my @Attachments = $Self->{UploadCachObject}->FormIDGetAllFilesMeta(
+        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
             FormID => $Self->{FormID},
         );
 
+        # check pending date
+        if ( $StateData{TypeName} && $StateData{TypeName} =~ /^pending/i ) {
+            if ( !$Self->{TimeObject}->Date2SystemTime( %GetParam, Second => 0 ) ) {
+                if ( $IsUpload == 0 ) {
+                    $Error{'DateInvalid'} = ' ServerError';
+                }
+            }
+            if (
+                $Self->{TimeObject}->Date2SystemTime( %GetParam, Second => 0 )
+                < $Self->{TimeObject}->SystemTime()
+                )
+            {
+                if ( $IsUpload == 0 ) {
+                    $Error{'DateInvalid'} = ' ServerError';
+                }
+            }
+        }
+
         # get free text config options
-        my %TicketFreeText = ();
-        for ( 1 .. 16 ) {
-            $TicketFreeText{"TicketFreeKey$_"} = $Self->{TicketObject}->TicketFreeTextGet(
+        my %TicketFreeText;
+        for my $Count ( 1 .. 16 ) {
+            my $Key  = 'TicketFreeKey' . $Count;
+            my $Text = 'TicketFreeText' . $Count;
+            $TicketFreeText{$Key} = $Self->{TicketObject}->TicketFreeTextGet(
                 TicketID       => $Self->{TicketID},
-                Type           => "TicketFreeKey$_",
+                Type           => $Key,
                 Action         => $Self->{Action},
                 QueueID        => $NewQueueID || 0,
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
-            $TicketFreeText{"TicketFreeText$_"} = $Self->{TicketObject}->TicketFreeTextGet(
+            $TicketFreeText{$Text} = $Self->{TicketObject}->TicketFreeTextGet(
                 TicketID       => $Self->{TicketID},
-                Type           => "TicketFreeText$_",
+                Type           => $Text,
                 Action         => $Self->{Action},
                 QueueID        => $NewQueueID || 0,
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
 
+            # If Key has value 2, this means that the freetextfield is required
+            if ( $Self->{Config}->{TicketFreeText}->{$Count} == 2 ) {
+                $TicketFreeText{Required}->{$Count} = 1;
+            }
+
             # check required FreeTextField (if configured)
             if (
-                $Self->{Config}{'TicketFreeText'}->{$_} == 2
-                && $GetParam{"TicketFreeText$_"} eq ''
+                $Self->{Config}->{TicketFreeText}->{$Count} == 2
+                && $GetParam{$Text} eq ''
                 && $ExpandCustomerName == 0
+                && $IsUpload == 0
                 )
             {
-                $Error{"TicketFreeTextField$_ invalid"} = 'invalid';
+                $TicketFreeText{Error}->{$Count} = 1;
             }
         }
         my %TicketFreeTextHTML = $Self->{LayoutObject}->AgentFreeText(
@@ -591,22 +656,40 @@ sub Run {
         my %TicketFreeTimeHTML = $Self->{LayoutObject}->AgentFreeDate( Ticket => \%GetParam, );
 
         # article free text
-        my %ArticleFreeText = ();
-        for ( 1 .. 3 ) {
-            $ArticleFreeText{"ArticleFreeKey$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
+        my %ArticleFreeText;
+        for my $Count ( 1 .. 3 ) {
+            my $Key  = 'ArticleFreeKey' . $Count;
+            my $Text = 'ArticleFreeText' . $Count;
+            $ArticleFreeText{$Key} = $Self->{TicketObject}->ArticleFreeTextGet(
                 TicketID       => $Self->{TicketID},
-                Type           => "ArticleFreeKey$_",
+                Type           => $Key,
                 Action         => $Self->{Action},
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
-            $ArticleFreeText{"ArticleFreeText$_"} = $Self->{TicketObject}->ArticleFreeTextGet(
+            $ArticleFreeText{$Text} = $Self->{TicketObject}->ArticleFreeTextGet(
                 TicketID       => $Self->{TicketID},
-                Type           => "ArticleFreeText$_",
+                Type           => $Text,
                 Action         => $Self->{Action},
                 UserID         => $Self->{UserID},
                 CustomerUserID => $CustomerUser || $SelectedCustomerUser || '',
             );
+
+            # If Key has value 2, this means that the field is required
+            if ( $Self->{Config}->{ArticleFreeText}->{$Count} == 2 ) {
+                $ArticleFreeText{Required}->{$Count} = 1;
+            }
+
+            # check required ArticleTextField (if configured)
+            if (
+                $Self->{Config}->{ArticleFreeText}->{$Count} == 2
+                && $GetParam{$Text} eq ''
+                && $ExpandCustomerName == 0
+                && $IsUpload == 0
+                )
+            {
+                $ArticleFreeText{Error}->{$Count} = 1;
+            }
         }
         my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(
             Config  => \%ArticleFreeText,
@@ -614,11 +697,11 @@ sub Run {
         );
 
         # expand customer name
-        my %CustomerUserData = ();
+        my %CustomerUserData;
         if ( $ExpandCustomerName == 1 ) {
 
             # search customer
-            my %CustomerUserList = ();
+            my %CustomerUserList;
             %CustomerUserList = $Self->{CustomerUserObject}->CustomerSearch(
                 Search => $GetParam{From},
             );
@@ -626,14 +709,14 @@ sub Run {
             # check if just one customer user exists
             # if just one, fillup CustomerUserID and CustomerID
             $Param{CustomerUserListCount} = 0;
-            for ( keys %CustomerUserList ) {
+            for my $KeyCustomerUser ( keys %CustomerUserList ) {
                 $Param{CustomerUserListCount}++;
-                $Param{CustomerUserListLast}     = $CustomerUserList{$_};
-                $Param{CustomerUserListLastUser} = $_;
+                $Param{CustomerUserListLast}     = $CustomerUserList{$KeyCustomerUser};
+                $Param{CustomerUserListLastUser} = $KeyCustomerUser;
             }
             if ( $Param{CustomerUserListCount} == 1 ) {
                 $GetParam{From} = $Param{CustomerUserListLast};
-                $Error{"ExpandCustomerName"} = 1;
+                $Error{'ExpandCustomerName'} = 1;
                 my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
                     User => $Param{CustomerUserListLastUser},
                 );
@@ -652,13 +735,13 @@ sub Run {
                 # don't check email syntax on multi customer select
                 $Self->{ConfigObject}->Set( Key => 'CheckEmailAddresses', Value => 0 );
                 $CustomerID = '';
-                $Param{"FromOptions"} = \%CustomerUserList;
+                $Param{FromOptions} = \%CustomerUserList;
 
                 # clear from if there is no customer found
                 if ( !%CustomerUserList ) {
                     $GetParam{From} = '';
                 }
-                $Error{"ExpandCustomerName"} = 1;
+                $Error{ExpandCustomerName} = 1;
             }
         }
 
@@ -670,8 +753,8 @@ sub Run {
             my %CustomerUserList = $Self->{CustomerUserObject}->CustomerSearch(
                 UserLogin => $CustomerUser,
             );
-            for ( keys %CustomerUserList ) {
-                $GetParam{From} = $CustomerUserList{$_};
+            for my $KeyCustomerUser ( keys %CustomerUserList ) {
+                $GetParam{From} = $CustomerUserList{$KeyCustomerUser};
             }
             if ( $CustomerUserData{UserCustomerID} ) {
                 $CustomerID = $CustomerUserData{UserCustomerID};
@@ -694,7 +777,7 @@ sub Run {
         }
 
         # show customer info
-        my %CustomerData = ();
+        my %CustomerData;
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoCompose') ) {
             if ( $CustomerUser || $SelectedCustomerUser ) {
                 %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
@@ -708,28 +791,49 @@ sub Run {
             }
         }
 
+        #        my $ErrorDestination;
         # check email address
         for my $Email ( Mail::Address->parse( $GetParam{From} ) ) {
             if ( !$Self->{CheckItemObject}->CheckEmail( Address => $Email->address() ) ) {
-                $Error{'From invalid'} .= $Self->{CheckItemObject}->CheckError();
+                $Error{'FromInvalid'} = ' ServerError';
             }
         }
-        if ( !$GetParam{From} && $ExpandCustomerName != 1 && $ExpandCustomerName == 0 ) {
-            $Error{'From invalid'} = 'invalid';
-        }
-        if ( !$GetParam{Subject} && $ExpandCustomerName == 0 ) {
-            $Error{'Subject invalid'} = 'invalid';
-        }
-        if ( !$NewQueueID && $ExpandCustomerName == 0 ) {
-            $Error{'Destination invalid'} = 'invalid';
-        }
-        if (
-            $Self->{ConfigObject}->Get('Ticket::Service')
-            && $GetParam{SLAID}
-            && !$GetParam{ServiceID}
-            )
-        {
-            $Error{'Service invalid'} = 'invalid';
+        if ( !$IsUpload ) {
+            if (
+                !$GetParam{From}
+                && $ExpandCustomerName != 1
+                && $ExpandCustomerName == 0
+                )
+            {
+                $Error{'FromInvalid'} = ' ServerError';
+            }
+            if ( !$GetParam{Subject} && $ExpandCustomerName == 0 ) {
+                $Error{'SubjectInvalid'} = ' ServerError';
+            }
+            if ( !$NewQueueID && $ExpandCustomerName == 0 ) {
+                $Error{'DestinationInvalid'} = ' ServerError';
+            }
+            if (
+                $Self->{ConfigObject}->Get('Ticket::Service')
+                && $GetParam{SLAID}
+                && !$GetParam{ServiceID}
+                )
+            {
+                $Error{'ServiceInvalid'} = ' ServerError';
+            }
+            if ( ( !$GetParam{TypeID} ) && ( $Self->{ConfigObject}->Get('Ticket::Type') ) ) {
+                $Error{'TypeIDInvalid'} = ' ServerError';
+            }
+            if ( !$GetParam{Body} && $ExpandCustomerName == 0 ) {
+                $Error{'RichTextInvalid'} = ' ServerError';
+            }
+            if (
+                ( $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') )
+                && !$GetParam{TimeUnits}
+                )
+            {
+                $Error{'TimeUnitsInvalid'} = ' ServerError';
+            }
         }
 
         if (%Error) {
@@ -824,18 +928,19 @@ sub Run {
         );
 
         # set ticket free text
-        for ( 1 .. 16 ) {
-            if ( defined( $GetParam{"TicketFreeKey$_"} ) ) {
+        for my $Count ( 1 .. 16 ) {
+            my $Key  = 'TicketFreeKey' . $Count;
+            my $Text = 'TicketFreeText' . $Count;
+            if ( defined $GetParam{$Key} ) {
                 $Self->{TicketObject}->TicketFreeTextSet(
                     TicketID => $TicketID,
-                    Key      => $GetParam{"TicketFreeKey$_"},
-                    Value    => $GetParam{"TicketFreeText$_"},
-                    Counter  => $_,
+                    Key      => $GetParam{$Key},
+                    Value    => $GetParam{$Text},
+                    Counter  => $Count,
                     UserID   => $Self->{UserID},
                 );
             }
         }
-
 # ---
 # ITSM
 # ---
@@ -858,66 +963,66 @@ sub Run {
             );
         }
 # ---
-        # set ticket free time
-        for ( 1 .. 6 ) {
-            if (
-                defined( $GetParam{ 'TicketFreeTime' . $_ . 'Year' } )
-                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Month' } )
-                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Day' } )
-                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Hour' } )
-                && defined( $GetParam{ 'TicketFreeTime' . $_ . 'Minute' } )
-                )
-            {
-                my %Time;
-                $Time{ 'TicketFreeTime' . $_ . 'Year' }    = 0;
-                $Time{ 'TicketFreeTime' . $_ . 'Month' }   = 0;
-                $Time{ 'TicketFreeTime' . $_ . 'Day' }     = 0;
-                $Time{ 'TicketFreeTime' . $_ . 'Hour' }    = 0;
-                $Time{ 'TicketFreeTime' . $_ . 'Minute' }  = 0;
-                $Time{ 'TicketFreeTime' . $_ . 'Secunde' } = 0;
 
-                if ( $GetParam{ 'TicketFreeTime' . $_ . 'Used' } ) {
-                    %Time = $Self->{LayoutObject}->TransfromDateSelection(
-                        %GetParam,
-                        Prefix => 'TicketFreeTime' . $_,
-                    );
-                }
-                $Self->{TicketObject}->TicketFreeTimeSet(
-                    %Time,
-                    Prefix   => 'TicketFreeTime',
-                    TicketID => $TicketID,
-                    Counter  => $_,
-                    UserID   => $Self->{UserID},
-                );
+        # set ticket free time
+        for my $Count ( 1 .. 6 ) {
+            my $Prefix = 'TicketFreeTime' . $Count;
+            next if !defined $GetParam{ $Prefix . 'Year' };
+            next if !defined $GetParam{ $Prefix . 'Month' };
+            next if !defined $GetParam{ $Prefix . 'Day' };
+            next if !defined $GetParam{ $Prefix . 'Hour' };
+            next if !defined $GetParam{ $Prefix . 'Minute' };
+
+            # set time stamp to NULL if field is not used/checked
+            if ( !$GetParam{ $Prefix . 'Used' } ) {
+                $GetParam{ $Prefix . 'Year' }   = 0;
+                $GetParam{ $Prefix . 'Month' }  = 0;
+                $GetParam{ $Prefix . 'Day' }    = 0;
+                $GetParam{ $Prefix . 'Hour' }   = 0;
+                $GetParam{ $Prefix . 'Minute' } = 0;
             }
+
+            # set free time
+            $Self->{TicketObject}->TicketFreeTimeSet(
+                %GetParam,
+                Prefix   => 'TicketFreeTime',
+                TicketID => $TicketID,
+                Counter  => $Count,
+                UserID   => $Self->{UserID},
+            );
         }
 
         # get pre loaded attachment
-        my @AttachmentData = $Self->{UploadCachObject}->FormIDGetAllFilesData(
+        my @AttachmentData = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
             FormID => $Self->{FormID},
         );
 
         # get submit attachment
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => 'file_upload',
+            Param  => 'FileUpload',
             Source => 'String',
         );
         if (%UploadStuff) {
-            push( @AttachmentData, \%UploadStuff );
+            push @AttachmentData, \%UploadStuff;
         }
 
         my $MimeType = 'text/plain';
-        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+        if ( $Self->{LayoutObject}->{BrowserRichText} ) {
             $MimeType = 'text/html';
 
             # remove unused inline images
-            my @NewAttachmentData = ();
-            REMOVEINLINE:
-            for my $TmpAttachment (@AttachmentData) {
-                next REMOVEINLINE if $TmpAttachment->{ContentID}
-                        && $TmpAttachment->{ContentID} =~ /^inline/
-                        && $GetParam{Body} !~ /$TmpAttachment->{ContentID}/;
-                push @NewAttachmentData, \%{$TmpAttachment};
+            my @NewAttachmentData;
+            for my $Attachment (@AttachmentData) {
+                my $ContentID = $Attachment->{ContentID};
+                if ($ContentID) {
+                    my $ContentIDHTMLQuote = $Self->{LayoutObject}->Ascii2Html(
+                        Text => $ContentID,
+                    );
+                    next if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
+                }
+
+                # remember inline images and normal attachments
+                push @NewAttachmentData, \%{$Attachment};
             }
             @AttachmentData = @NewAttachmentData;
 
@@ -956,126 +1061,133 @@ sub Run {
             },
             Queue => $Self->{QueueObject}->QueueLookup( QueueID => $NewQueueID ),
         );
-        if ($ArticleID) {
+        if ( !$ArticleID ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
 
-            # set article free text
-            for ( 1 .. 3 ) {
-                if ( defined( $GetParam{"ArticleFreeKey$_"} ) ) {
-                    $Self->{TicketObject}->ArticleFreeTextSet(
-                        TicketID  => $TicketID,
-                        ArticleID => $ArticleID,
-                        Key       => $GetParam{"ArticleFreeKey$_"},
-                        Value     => $GetParam{"ArticleFreeText$_"},
-                        Counter   => $_,
-                        UserID    => $Self->{UserID},
-                    );
-                }
-            }
-
-            # set owner (if new user id is given)
-            if ( $GetParam{NewUserID} ) {
-                $Self->{TicketObject}->OwnerSet(
-                    TicketID  => $TicketID,
-                    NewUserID => $GetParam{NewUserID},
-                    UserID    => $Self->{UserID},
-                );
-
-                # set lock
-                $Self->{TicketObject}->LockSet(
-                    TicketID => $TicketID,
-                    Lock     => 'lock',
-                    UserID   => $Self->{UserID},
-                );
-            }
-
-            # else set owner to current agent but do not lock it
-            else {
-                $Self->{TicketObject}->OwnerSet(
-                    TicketID           => $TicketID,
-                    NewUserID          => $Self->{UserID},
-                    SendNoNotification => 1,
-                    UserID             => $Self->{UserID},
-                );
-            }
-
-            # set responsible (if new user id is given)
-            if ( $GetParam{NewResponsibleID} ) {
-                $Self->{TicketObject}->ResponsibleSet(
-                    TicketID  => $TicketID,
-                    NewUserID => $GetParam{NewResponsibleID},
-                    UserID    => $Self->{UserID},
-                );
-            }
-
-            # time accounting
-            if ( $GetParam{TimeUnits} ) {
-                $Self->{TicketObject}->TicketAccountTime(
+        # set article free text
+        for my $Count ( 1 .. 3 ) {
+            my $Key  = 'ArticleFreeKey' . $Count;
+            my $Text = 'ArticleFreeText' . $Count;
+            if ( defined $GetParam{$Key} ) {
+                $Self->{TicketObject}->ArticleFreeTextSet(
                     TicketID  => $TicketID,
                     ArticleID => $ArticleID,
-                    TimeUnit  => $GetParam{TimeUnits},
+                    Key       => $GetParam{$Key},
+                    Value     => $GetParam{$Text},
+                    Counter   => $Count,
                     UserID    => $Self->{UserID},
                 );
             }
+        }
 
-            # write attachments
-            for my $Ref (@AttachmentData) {
-                $Self->{TicketObject}->ArticleWriteAttachment(
-                    %{$Ref},
-                    ArticleID => $ArticleID,
-                    UserID    => $Self->{UserID},
-                );
+        # set owner (if new user id is given)
+        if ( $GetParam{NewUserID} ) {
+            $Self->{TicketObject}->TicketOwnerSet(
+                TicketID  => $TicketID,
+                NewUserID => $GetParam{NewUserID},
+                UserID    => $Self->{UserID},
+            );
+
+            # set lock
+            $Self->{TicketObject}->TicketLockSet(
+                TicketID => $TicketID,
+                Lock     => 'lock',
+                UserID   => $Self->{UserID},
+            );
+        }
+
+        # else set owner to current agent but do not lock it
+        else {
+            $Self->{TicketObject}->TicketOwnerSet(
+                TicketID           => $TicketID,
+                NewUserID          => $Self->{UserID},
+                SendNoNotification => 1,
+                UserID             => $Self->{UserID},
+            );
+        }
+
+        # set responsible (if new user id is given)
+        if ( $GetParam{NewResponsibleID} ) {
+            $Self->{TicketObject}->TicketResponsibleSet(
+                TicketID  => $TicketID,
+                NewUserID => $GetParam{NewResponsibleID},
+                UserID    => $Self->{UserID},
+            );
+        }
+
+        # time accounting
+        if ( $GetParam{TimeUnits} ) {
+            $Self->{TicketObject}->TicketAccountTime(
+                TicketID  => $TicketID,
+                ArticleID => $ArticleID,
+                TimeUnit  => $GetParam{TimeUnits},
+                UserID    => $Self->{UserID},
+            );
+        }
+
+        # write attachments
+        for my $Attachment (@AttachmentData) {
+            $Self->{TicketObject}->ArticleWriteAttachment(
+                %{$Attachment},
+                ArticleID => $ArticleID,
+                UserID    => $Self->{UserID},
+            );
+        }
+
+        # remove pre submited attachments
+        $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
+
+        # link tickets
+        if (
+            $GetParam{LinkTicketID}
+            && $Self->{Config}->{SplitLinkType}
+            && $Self->{Config}->{SplitLinkType}->{LinkType}
+            && $Self->{Config}->{SplitLinkType}->{Direction}
+            )
+        {
+
+            my $SourceKey = $GetParam{LinkTicketID};
+            my $TargetKey = $TicketID;
+
+            if ( $Self->{Config}->{SplitLinkType}->{Direction} eq 'Source' ) {
+                $SourceKey = $TicketID;
+                $TargetKey = $GetParam{LinkTicketID};
             }
 
-            # remove pre submited attachments
-            $Self->{UploadCachObject}->FormIDRemove( FormID => $Self->{FormID} );
+            # link the tickets
+            $Self->{LinkObject}->LinkAdd(
+                SourceObject => 'Ticket',
+                SourceKey    => $SourceKey,
+                TargetObject => 'Ticket',
+                TargetKey    => $TargetKey,
+                Type         => $Self->{Config}->{SplitLinkType}->{LinkType} || 'Normal',
+                State        => 'Valid',
+                UserID       => $Self->{UserID},
+            );
+        }
 
-            # link tickets
-            if (
-                $GetParam{LinkTicketID}
-                && $Self->{Config}->{SplitLinkType}
-                && $Self->{Config}->{SplitLinkType}->{LinkType}
-                && $Self->{Config}->{SplitLinkType}->{Direction}
-                )
-            {
+        # should i set an unlock?
+        if ( $StateData{TypeName} =~ /^close/i ) {
 
-                my $SourceKey = $GetParam{LinkTicketID};
-                my $TargetKey = $TicketID;
+            # set lock
+            $Self->{TicketObject}->TicketLockSet(
+                TicketID => $TicketID,
+                Lock     => 'unlock',
+                UserID   => $Self->{UserID},
+            );
+        }
 
-                if ( $Self->{Config}->{SplitLinkType}->{Direction} eq 'Source' ) {
-                    $SourceKey = $TicketID;
-                    $TargetKey = $GetParam{LinkTicketID};
-                }
-
-                # link the tickets
-                $Self->{LinkObject}->LinkAdd(
-                    SourceObject => 'Ticket',
-                    SourceKey    => $SourceKey,
-                    TargetObject => 'Ticket',
-                    TargetKey    => $TargetKey,
-                    Type         => $Self->{Config}->{SplitLinkType}->{LinkType} || 'Normal',
-                    State        => 'Valid',
-                    UserID       => $Self->{UserID},
-                );
-            }
-
-            # should i set an unlock?
-            my %StateData = $Self->{StateObject}->StateGet( ID => $GetParam{NextStateID} );
-            if ( $StateData{TypeName} =~ /^close/i ) {
-                $Self->{TicketObject}->LockSet(
-                    TicketID => $TicketID,
-                    Lock     => 'unlock',
-                    UserID   => $Self->{UserID},
-                );
-            }
+        # set pending time
+        elsif ( $StateData{TypeName} =~ /^pending/i ) {
 
             # set pending time
-            elsif ( $StateData{TypeName} =~ /^pending/i ) {
-                $Self->{TicketObject}->TicketPendingTimeSet(
-                    UserID   => $Self->{UserID},
-                    TicketID => $TicketID,
-                    %GetParam,
-                );
-            }
+            $Self->{TicketObject}->TicketPendingTimeSet(
+                UserID   => $Self->{UserID},
+                TicketID => $TicketID,
+                %GetParam,
+            );
+        }
 # ---
 # ITSM
 # ---
@@ -1143,17 +1255,13 @@ sub Run {
             }
 # ---
 
-            # get redirect screen
-            my $NextScreen = $Self->{UserCreateNextMask} || 'AgentTicketPhone';
+        # get redirect screen
+        my $NextScreen = $Self->{UserCreateNextMask} || 'AgentTicketPhone';
 
-            # redirect
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=$NextScreen&Subaction=Created&TicketID=$TicketID",
-            );
-        }
-        else {
-            return $Self->{LayoutObject}->ErrorScreen();
-        }
+        # redirect
+        return $Self->{LayoutObject}->Redirect(
+            OP => "Action=$NextScreen;Subaction=Created;TicketID=$TicketID",
+        );
     }
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my $Dest         = $Self->{ParamObject}->GetParam( Param => 'Dest' ) || '';
@@ -1200,12 +1308,14 @@ sub Run {
         );
 
         # get free text config options
-        my @TicketFreeTextConfig = ();
-        for ( 1 .. 16 ) {
+        my @TicketFreeTextConfig;
+        for my $Count ( 1 .. 16 ) {
+            my $Key       = 'TicketFreeKey' . $Count;
+            my $Text      = 'TicketFreeText' . $Count;
             my $ConfigKey = $Self->{TicketObject}->TicketFreeTextGet(
                 %GetParam,
                 TicketID       => $Self->{TicketID},
-                Type           => "TicketFreeKey$_",
+                Type           => $Key,
                 Action         => $Self->{Action},
                 QueueID        => $QueueID || 0,
                 UserID         => $Self->{UserID},
@@ -1215,9 +1325,9 @@ sub Run {
                 push(
                     @TicketFreeTextConfig,
                     {
-                        Name        => "TicketFreeKey$_",
+                        Name        => $Key,
                         Data        => $ConfigKey,
-                        SelectedID  => $GetParam{"TicketFreeKey$_"},
+                        SelectedID  => $GetParam{$Key},
                         Translation => 0,
                         Max         => 100,
                     }
@@ -1226,7 +1336,7 @@ sub Run {
             my $ConfigValue = $Self->{TicketObject}->TicketFreeTextGet(
                 %GetParam,
                 TicketID       => $Self->{TicketID},
-                Type           => "TicketFreeText$_",
+                Type           => $Text,
                 Action         => $Self->{Action},
                 QueueID        => $QueueID || 0,
                 UserID         => $Self->{UserID},
@@ -1236,16 +1346,16 @@ sub Run {
                 push(
                     @TicketFreeTextConfig,
                     {
-                        Name        => "TicketFreeText$_",
+                        Name        => $Text,
                         Data        => $ConfigValue,
-                        SelectedID  => $GetParam{"TicketFreeText$_"},
+                        SelectedID  => $GetParam{$Text},
                         Translation => 0,
                         Max         => 100,
                     }
                 );
             }
         }
-        my $JSON = $Self->{LayoutObject}->BuildJSON(
+        my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
                 {
                     Name         => 'NewUserID',
@@ -1310,7 +1420,7 @@ sub Run {
             ],
         );
         return $Self->{LayoutObject}->Attachment(
-            ContentType => 'text/plain; charset=' . $Self->{LayoutObject}->{Charset},
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
             Content     => $JSON,
             Type        => 'inline',
             NoCache     => 1,
@@ -1327,9 +1437,9 @@ sub Run {
 sub _GetNextStates {
     my ( $Self, %Param ) = @_;
 
-    my %NextStates = ();
+    my %NextStates;
     if ( $Param{QueueID} || $Param{TicketID} ) {
-        %NextStates = $Self->{TicketObject}->StateList(
+        %NextStates = $Self->{TicketObject}->TicketStateList(
             %Param,
             Action => $Self->{Action},
             UserID => $Self->{UserID},
@@ -1342,7 +1452,7 @@ sub _GetUsers {
     my ( $Self, %Param ) = @_;
 
     # get users
-    my %ShownUsers       = ();
+    my %ShownUsers;
     my %AllGroupsMembers = $Self->{UserObject}->UserList(
         Type  => 'Long',
         Valid => 1,
@@ -1351,15 +1461,15 @@ sub _GetUsers {
     # just show only users with selected custom queue
     if ( $Param{QueueID} && !$Param{AllUsers} ) {
         my @UserIDs = $Self->{TicketObject}->GetSubscribedUserIDsByQueueID(%Param);
-        for ( keys %AllGroupsMembers ) {
+        for my $KeyGroupMember ( keys %AllGroupsMembers ) {
             my $Hit = 0;
             for my $UID (@UserIDs) {
-                if ( $UID eq $_ ) {
+                if ( $UID eq $KeyGroupMember ) {
                     $Hit = 1;
                 }
             }
             if ( !$Hit ) {
-                delete $AllGroupsMembers{$_};
+                delete $AllGroupsMembers{$KeyGroupMember};
             }
         }
     }
@@ -1376,11 +1486,10 @@ sub _GetUsers {
             GroupID => $GID,
             Type    => 'rw',
             Result  => 'HASH',
-            Cached  => 1,
         );
-        for ( keys %MemberList ) {
-            if ( $AllGroupsMembers{$_} ) {
-                $ShownUsers{$_} = $AllGroupsMembers{$_};
+        for my $KeyMember ( keys %MemberList ) {
+            if ( $AllGroupsMembers{$KeyMember} ) {
+                $ShownUsers{$KeyMember} = $AllGroupsMembers{$KeyMember};
             }
         }
     }
@@ -1390,11 +1499,10 @@ sub _GetUsers {
 sub _GetPriorities {
     my ( $Self, %Param ) = @_;
 
-    my %Priorities = ();
-
     # get priority
+    my %Priorities;
     if ( $Param{QueueID} || $Param{TicketID} ) {
-        %Priorities = $Self->{TicketObject}->PriorityList(
+        %Priorities = $Self->{TicketObject}->TicketPriorityList(
             %Param,
             Action => $Self->{Action},
             UserID => $Self->{UserID},
@@ -1406,9 +1514,8 @@ sub _GetPriorities {
 sub _GetTypes {
     my ( $Self, %Param ) = @_;
 
-    my %Type = ();
-
     # get type
+    my %Type;
     if ( $Param{QueueID} || $Param{TicketID} ) {
         %Type = $Self->{TicketObject}->TicketTypeList(
             %Param,
@@ -1422,9 +1529,8 @@ sub _GetTypes {
 sub _GetServices {
     my ( $Self, %Param ) = @_;
 
-    my %Service = ();
-
     # get service
+    my %Service;
     if ( ( $Param{QueueID} || $Param{TicketID} ) && $Param{CustomerUserID} ) {
         %Service = $Self->{TicketObject}->TicketServiceList(
             %Param,
@@ -1438,9 +1544,8 @@ sub _GetServices {
 sub _GetSLAs {
     my ( $Self, %Param ) = @_;
 
-    my %SLA = ();
-
     # get sla
+    my %SLA;
     if ( $Param{ServiceID} && $Param{Services} && %{ $Param{Services} } ) {
         if ( $Param{Services}->{ $Param{ServiceID} } ) {
             %SLA = $Self->{TicketObject}->TicketSLAList(
@@ -1457,14 +1562,14 @@ sub _GetTos {
     my ( $Self, %Param ) = @_;
 
     # check own selection
-    my %NewTos = ();
-    if ( $Self->{ConfigObject}->{'Ticket::Frontend::NewQueueOwnSelection'} ) {
-        %NewTos = %{ $Self->{ConfigObject}->{'Ticket::Frontend::NewQueueOwnSelection'} };
+    my %NewTos;
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueOwnSelection') ) {
+        %NewTos = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueOwnSelection') };
     }
     else {
 
         # SelectionType Queue or SystemAddress?
-        my %Tos = ();
+        my %Tos;
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionType') eq 'Queue' ) {
             %Tos = $Self->{TicketObject}->MoveList(
                 Type    => 'create',
@@ -1487,7 +1592,6 @@ sub _GetTos {
             UserID => $Self->{UserID},
             Type   => 'create',
             Result => 'HASH',
-            Cached => 1,
         );
 
         # build selection string
@@ -1532,31 +1636,19 @@ sub _MaskPhoneNew {
     # build customer search autocomplete field
     my $AutoCompleteConfig
         = $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerSearchAutoComplete');
-    if ( $AutoCompleteConfig->{Active} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'CustomerSearchAutoComplete',
-            Data => {
-                minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
-                queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
-                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
-                maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            },
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CustomerSearchAutoCompleteDivStart',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CustomerSearchAutoCompleteDivEnd',
-        );
-    }
-    else {
-        $Self->{LayoutObject}->Block(
-            Name => 'SearchCustomerButton',
-        );
-    }
+    $Self->{LayoutObject}->Block(
+        Name => 'CustomerSearchAutoComplete',
+        Data => {
+            ActiveAutoComplete  => $AutoCompleteConfig->{Active},
+            minQueryLength      => $AutoCompleteConfig->{MinQueryLength} || 2,
+            queryDelay          => $AutoCompleteConfig->{QueryDelay} || 0.1,
+            typeAhead           => $AutoCompleteConfig->{TypeAhead} || 'false',
+            maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
+        },
+    );
 
     # build string
-    $Param{'OptionStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{OptionStrg} = $Self->{LayoutObject}->BuildSelection(
         Data         => $Param{Users},
         SelectedID   => $Param{UserSelected},
         Translation  => 0,
@@ -1565,156 +1657,38 @@ sub _MaskPhoneNew {
     );
 
     # build next states string
-    $Param{'NextStatesStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{NextStatesStrg} = $Self->{LayoutObject}->BuildSelection(
         Data          => $Param{NextStates},
         Name          => 'NextStateID',
         Translation   => 1,
         SelectedValue => $Param{NextState} || $Self->{Config}->{StateDefault},
     );
 
-    # build from string
-    if ( $Param{FromOptions} && %{ $Param{FromOptions} } ) {
-        $Param{'CustomerUserStrg'} = $Self->{LayoutObject}->BuildSelection(
-            Data        => $Param{FromOptions},
-            Name        => 'CustomerUser',
-            Translation => 0,
-            Max         => 70,
-        );
-    }
-
-    # build so string
-    my %NewTo = ();
+    # build to string
+    my %NewTo;
     if ( $Param{To} ) {
-        for ( keys %{ $Param{To} } ) {
-            $NewTo{"$_||$Param{To}->{$_}"} = $Param{To}->{$_};
+        for my $KeyTo ( keys %{ $Param{To} } ) {
+            $NewTo{"$KeyTo||$Param{To}->{$KeyTo}"} = $Param{To}->{$KeyTo};
         }
     }
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionType') eq 'Queue' ) {
-        $Param{'ToStrg'} = $Self->{LayoutObject}->AgentQueueListOption(
+        $Param{ToStrg} = $Self->{LayoutObject}->AgentQueueListOption(
+            Class          => 'Validate_RequiredDropdown',
             Data           => \%NewTo,
             Multiple       => 0,
             Size           => 0,
             Name           => 'Dest',
             SelectedID     => $Param{ToSelected},
             OnChangeSubmit => 0,
-            OnChange =>
-                "document.compose.ExpandCustomerName.value='3'; document.compose.submit(); return false;",
-            Ajax => {
-                Update => [
-                    'NewUserID',
-                    'NewResponsibleID',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Depend => [
-                    'Dest',
-                    'SelectedCustomerUser',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'OwnerAll',
-                    'ResponsibleAll',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Subaction => 'AJAXUpdate',
-            },
         );
     }
     else {
-        $Param{'ToStrg'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{ToStrg} = $Self->{LayoutObject}->BuildSelection(
+            Class       => 'Validate_RequiredDropdown',
             Data        => \%NewTo,
             Name        => 'Dest',
             SelectedID  => $Param{ToSelected},
             Translation => 0,
-            OnChange =>
-                "document.compose.ExpandCustomerName.value='3'; document.compose.submit(); return false;",
-            Ajax => {
-                Update => [
-                    'NewUserID',
-                    'NewResponsibleID',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Depend => [
-                    'Dest',
-                    'SelectedCustomerUser',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'OwnerAll',
-                    'ResponsibleAll',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Subaction => 'AJAXUpdate',
-            },
         );
     }
 
@@ -1732,83 +1706,22 @@ sub _MaskPhoneNew {
 
     # prepare errors!
     if ( $Param{Errors} ) {
-        for ( keys %{ $Param{Errors} } ) {
-            $Param{$_} = '* ' . $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$_} );
-        }
-
-        # handle 'From invalid' error if AutoComplete is enabled
-        if ( $AutoCompleteConfig->{Active} && $Param{'From invalid'} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'CustomerSearchAutoCompleteFromInvalid',
-                Data => {%Param},
-            );
+        for my $KeyError ( keys %{ $Param{Errors} } ) {
+            $Param{$KeyError}
+                = '* ' . $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$KeyError} );
         }
     }
 
     # build type string
     if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
-        $Param{'TypeStrg'} = $Self->{LayoutObject}->BuildSelection(
-            Data         => $Param{Types},
-            Name         => 'TypeID',
+        $Param{TypeStrg} = $Self->{LayoutObject}->BuildSelection(
+            Class => 'Validate_RequiredDropdown' . ( $Param{Errors}->{TypeIDInvalid} || ' ' ),
+            Data  => $Param{Types},
+            Name  => 'TypeID',
             SelectedID   => $Param{TypeID},
             PossibleNone => 1,
             Sort         => 'AlphanumericValue',
             Translation  => 0,
-            OnChange =>
-                "document.compose.ExpandCustomerName.value='3'; document.compose.submit(); return false;",
-            Ajax => {
-                Update => [
-                    'NewUserID',
-                    'NewResponsibleID',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Depend => [
-                    'Dest',
-                    'SelectedCustomerUser',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'OwnerAll',
-                    'ResponsibleAll',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Subaction => 'AJAXUpdate',
-            },
         );
         $Self->{LayoutObject}->Block(
             Name => 'TicketType',
@@ -1818,81 +1731,22 @@ sub _MaskPhoneNew {
 
     # build service string
     if ( $Self->{ConfigObject}->Get('Ticket::Service') ) {
-        $Param{'ServiceStrg'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{ServiceStrg} = $Self->{LayoutObject}->BuildSelection(
             Data         => $Param{Services},
             Name         => 'ServiceID',
+            Class        => $Param{Errors}->{ServiceInvalid} || ' ',
             SelectedID   => $Param{ServiceID},
             PossibleNone => 1,
             TreeView     => $TreeView,
             Sort         => 'TreeView',
             Translation  => 0,
             Max          => 200,
-            OnChange =>
-# ---
-# ITSM
-# ---
-#                "document.compose.ExpandCustomerName.value='3'; document.compose.submit(); return false;",
-                "document.compose.ExpandCustomerName.value='3'; document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
-# ---
-            Ajax => {
-                Update => [
-                    'NewUserID',
-                    'NewResponsibleID',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Depend => [
-                    'Dest',
-                    'SelectedCustomerUser',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'OwnerAll',
-                    'ResponsibleAll',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Subaction => 'AJAXUpdate',
-            },
         );
         $Self->{LayoutObject}->Block(
             Name => 'TicketService',
             Data => {%Param},
         );
-        $Param{'SLAStrg'} = $Self->{LayoutObject}->BuildSelection(
+        $Param{SLAStrg} = $Self->{LayoutObject}->BuildSelection(
             Data         => $Param{SLAs},
             Name         => 'SLAID',
             SelectedID   => $Param{SLAID},
@@ -1900,61 +1754,6 @@ sub _MaskPhoneNew {
             Sort         => 'AlphanumericValue',
             Translation  => 0,
             Max          => 200,
-            OnChange =>
-                "document.compose.ExpandCustomerName.value='3'; document.compose.submit(); return false;",
-            Ajax => {
-                Update => [
-                    'NewUserID',
-                    'NewResponsibleID',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Depend => [
-                    'Dest',
-                    'SelectedCustomerUser',
-                    'NextStateID',
-                    'PriorityID',
-                    'ServiceID',
-                    'SLAID',
-                    'OwnerAll',
-                    'ResponsibleAll',
-                    'TicketFreeText1',
-                    'TicketFreeText2',
-                    'TicketFreeText3',
-                    'TicketFreeText4',
-                    'TicketFreeText5',
-                    'TicketFreeText6',
-                    'TicketFreeText7',
-                    'TicketFreeText8',
-                    'TicketFreeText9',
-                    'TicketFreeText10',
-                    'TicketFreeText11',
-                    'TicketFreeText12',
-                    'TicketFreeText13',
-                    'TicketFreeText14',
-                    'TicketFreeText15',
-                    'TicketFreeText16',
-                ],
-                Subaction => 'AJAXUpdate',
-            },
         );
         $Self->{LayoutObject}->Block(
             Name => 'TicketSLA',
@@ -1970,18 +1769,6 @@ sub _MaskPhoneNew {
         Data       => $Param{Impacts},
         Name       => 'TicketFreeText14',
         SelectedID => $Param{ImpactID},
-        OnChange   => "document.compose.ExpandCustomerName.value='3'; "
-            . "document.compose.PriorityRC.value='1'; document.compose.submit(); return false;",
-        Ajax       => {
-            Update => [
-                'PriorityID',
-            ],
-            Depend => [
-                'TicketFreeText14',
-                'ServiceID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
     if ( $Param{PriorityIDFromImpact} ) {
         $Param{PriorityID} = $Param{PriorityIDFromImpact};
@@ -1992,7 +1779,7 @@ sub _MaskPhoneNew {
     if ( !$Param{PriorityID} ) {
         $Param{Priority} = $Self->{Config}->{Priority};
     }
-    $Param{'PriorityStrg'} = $Self->{LayoutObject}->BuildSelection(
+    $Param{PriorityStrg} = $Self->{LayoutObject}->BuildSelection(
         Data          => $Param{Priorities},
         Name          => 'PriorityID',
         SelectedID    => $Param{PriorityID},
@@ -2003,17 +1790,13 @@ sub _MaskPhoneNew {
     # pending data string
     $Param{PendingDateString} = $Self->{LayoutObject}->BuildDateSelection(
         %Param,
-        Format => 'DateInputFormatLong',
-        DiffTime => $Self->{ConfigObject}->Get('Ticket::Frontend::PendingDiffTime') || 0,
+        Format           => 'DateInputFormatLong',
+        YearPeriodPast   => 0,
+        YearPeriodFuture => 5,
+        DiffTime         => $Self->{ConfigObject}->Get('Ticket::Frontend::PendingDiffTime') || 0,
+        Validate         => 1,
+        Class            => $Param{Errors}->{DateInvalid},
     );
-
-    # to update
-    if ( !$Self->{LayoutObject}->{BrowserJavaScriptSupport} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ToUpdateSubmit',
-            Data => \%Param,
-        );
-    }
 
     # show owner selection
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewOwnerSelection') ) {
@@ -2021,110 +1804,82 @@ sub _MaskPhoneNew {
             Name => 'OwnerSelection',
             Data => \%Param,
         );
-        if ( $Self->{LayoutObject}->{BrowserJavaScriptSupport} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'OwnerSelectionAllJS',
-                Data => {},
-            );
-        }
-        else {
-            $Self->{LayoutObject}->Block(
-                Name => 'OwnerSelectionAllSubmit',
-                Data => {},
-            );
-        }
     }
 
     # show responsible selection
     if (
         $Self->{ConfigObject}->Get('Ticket::Responsible')
-        &&
-        $Self->{ConfigObject}->Get('Ticket::Frontend::NewResponsibleSelection')
+        && $Self->{ConfigObject}->Get('Ticket::Frontend::NewResponsibleSelection')
         )
     {
-        $Param{'ResponsibleOptionStrg'} = $Self->{LayoutObject}->BuildSelection(
-            Data         => $Param{ResponsibleUsers},
-            SelectedID   => $Param{ResponsibleUserSelected},
-            Name         => 'NewResponsibleID',
-            Translation  => 0,
-            PossibleNone => 1,
+        $Param{ResponsibleUsers}->{''} = '-';
+        $Param{ResponsibleOptionStrg} = $Self->{LayoutObject}->BuildSelection(
+            Data       => $Param{ResponsibleUsers},
+            SelectedID => $Param{ResponsibleUsersSelected},
+            Name       => 'NewResponsibleID',
         );
         $Self->{LayoutObject}->Block(
             Name => 'ResponsibleSelection',
             Data => \%Param,
         );
-        if ( $Self->{LayoutObject}->{BrowserJavaScriptSupport} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'ResponsibleSelectionAllJS',
-                Data => {},
-            );
-        }
-        else {
-            $Self->{LayoutObject}->Block(
-                Name => 'ResponsibleSelectionAllSubmit',
-                Data => {},
-            );
-        }
     }
 
     # ticket free text
     for my $Count ( 1 .. 16 ) {
-        if ( $Self->{Config}->{'TicketFreeText'}->{$Count} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeText',
-                Data => {
-                    TicketFreeKeyField  => $Param{ 'TicketFreeKeyField' . $Count },
-                    TicketFreeTextField => $Param{ 'TicketFreeTextField' . $Count },
-                    Count               => $Count,
-                    %Param,
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeText' . $Count,
-                Data => { %Param, Count => $Count, },
-            );
-        }
+        next if !$Self->{Config}->{TicketFreeText}->{$Count};
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeText',
+            Data => {
+                TicketFreeKeyField  => $Param{ 'TicketFreeKeyField' . $Count },
+                TicketFreeTextField => $Param{ 'TicketFreeTextField' . $Count },
+                Count               => $Count,
+                %Param,
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeText' . $Count,
+            Data => { %Param, Count => $Count, },
+        );
     }
     for my $Count ( 1 .. 6 ) {
-        if ( $Self->{Config}->{'TicketFreeTime'}->{$Count} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeTime',
-                Data => {
-                    TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
-                    TicketFreeTime    => $Param{ 'TicketFreeTime' . $Count },
-                    Count             => $Count,
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeTime' . $Count,
-                Data => { %Param, Count => $Count, },
-            );
-        }
+        next if !$Self->{Config}->{TicketFreeTime}->{$Count};
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeTime',
+            Data => {
+                TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
+                TicketFreeTime    => $Param{ 'TicketFreeTime' . $Count },
+                Count             => $Count,
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketFreeTime' . $Count,
+            Data => { %Param, Count => $Count, },
+        );
     }
 
     # article free text
     for my $Count ( 1 .. 3 ) {
-        if ( $Self->{Config}->{'ArticleFreeText'}->{$Count} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'ArticleFreeText',
-                Data => {
-                    ArticleFreeKeyField  => $Param{ 'ArticleFreeKeyField' . $Count },
-                    ArticleFreeTextField => $Param{ 'ArticleFreeTextField' . $Count },
-                    Count                => $Count,
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'ArticleFreeText' . $Count,
-                Data => { %Param, Count => $Count, },
-            );
-        }
+        next if !$Self->{Config}->{ArticleFreeText}->{$Count};
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleFreeText',
+            Data => {
+                ArticleFreeKeyField  => $Param{ 'ArticleFreeKeyField' . $Count },
+                ArticleFreeTextField => $Param{ 'ArticleFreeTextField' . $Count },
+                Count                => $Count,
+            },
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleFreeText' . $Count,
+            Data => { %Param, Count => $Count, },
+        );
     }
 
     # show time accounting box
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'TimeUnitsJs',
-            Data => \%Param,
+        $Param{TimeUnitsRequired} = (
+            $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
+            ? 'Validate_Required'
+            : ''
         );
         $Self->{LayoutObject}->Block(
             Name => 'TimeUnits',
@@ -2140,43 +1895,29 @@ sub _MaskPhoneNew {
         );
     }
 
-    # show attachments
-    for my $DataRef ( @{ $Param{Attachments} } ) {
+    # show customer edit link
+    my $OptionCustomer = $Self->{LayoutObject}->Permission(
+        Action => 'AdminCustomerUser',
+        Type   => 'rw',
+    );
+    if ($OptionCustomer) {
         $Self->{LayoutObject}->Block(
-            Name => 'Attachment',
-            Data => $DataRef,
+            Name => 'OptionCustomer',
+            Data => {},
         );
     }
 
-    # java script check for required free text fields by form submit
-    for my $Key ( keys %{ $Self->{Config}->{TicketFreeText} } ) {
-        if ( $Self->{Config}->{TicketFreeText}->{$Key} == 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeTextCheckJs',
-                Data => {
-                    TicketFreeTextField => "TicketFreeText$Key",
-                    TicketFreeKeyField  => "TicketFreeKey$Key",
-                },
-            );
-        }
-    }
-
-    # java script check for required free time fields by form submit
-    for my $Key ( keys %{ $Self->{Config}->{TicketFreeTime} } ) {
-        if ( $Self->{Config}->{TicketFreeTime}->{$Key} == 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeTimeCheckJs',
-                Data => {
-                    TicketFreeTimeCheck => 'TicketFreeTime' . $Key . 'Used',
-                    TicketFreeTimeField => 'TicketFreeTime' . $Key,
-                    TicketFreeTimeKey   => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Key ),
-                },
-            );
-        }
+    # show attachments
+    for my $Attachment ( @{ $Param{Attachments} } ) {
+        next if $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText};
+        $Self->{LayoutObject}->Block(
+            Name => 'Attachment',
+            Data => $Attachment,
+        );
     }
 
     # add rich text editor
-    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
             Data => \%Param,
