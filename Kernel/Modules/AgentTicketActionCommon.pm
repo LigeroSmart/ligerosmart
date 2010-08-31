@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.1 2010-08-30 20:52:05 en Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.2 2010-08-31 21:57:35 mp Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.17 2010/08/19 16:47:22 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -187,6 +187,7 @@ sub Run {
 # ---
     # get needed stuff
     $GetParam{ImpactID} = $Self->{ParamObject}->GetParam(Param => 'TicketFreeText14');
+    $GetParam{PriorityRC} = $Self->{ParamObject}->GetParam(Param => "PriorityRC");
     $GetParam{ElementChanged} = $Self->{ParamObject}->GetParam(Param => 'ElementChanged') || '';
 
     # set PriorityRC from changed ajax element
@@ -925,6 +926,9 @@ sub Run {
 # ITSM
 # ---
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
+
+        $ImpactList->{''} = '-';
+
         my %PriorityList = $Self->{TicketObject}->PriorityList(
             UserID   => $Self->{UserID},
             TicketID => $Self->{TicketID},
