@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.13 2010-08-25 20:49:29 dz Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.141 2010/08/25 15:27:34 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.14 2010-08-31 22:22:06 en Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.143 2010/08/30 11:43:25 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -485,19 +485,31 @@ $Data{"ArticleItems"}
                     </form>
 <!-- dtl:block:ArticleReplyOnLoad -->
 <script type="text/javascript">//<![CDATA[
-    $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
-        var url = Core.Config.Get('Baselink') + $(this).parents().serialize();
-        Core.UI.Popup.OpenPopup(url, 'Action');
-    });
+$('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
+    var URL;
+
+    if ($(this).val() > 0) {
+        URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
+        Core.UI.Popup.OpenPopup(URL, 'Action');
+        // reset the select box so that it can be used again from the same window
+        $(this).val('0');
+    }
+});
 //]]></script>
 <!-- dtl:block:ArticleReplyOnLoad -->
 <!-- dtl:block:ArticleReplyStatic -->
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-    $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
-        var url = Core.Config.Get('Baselink') + $(this).parents().serialize();
-        Core.UI.Popup.OpenPopup(url, 'Action');
-    });
+$('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
+    var URL;
+
+    if ($(this).val() > 0) {
+        URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
+        Core.UI.Popup.OpenPopup(URL, 'Action');
+        // reset the select box so that it can be used again from the same window
+        $(this).val('0');
+    }
+});
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 <!-- dtl:block:ArticleReplyStatic -->

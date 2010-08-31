@@ -2,8 +2,8 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.11 2010-08-30 20:28:34 en Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.111 2010/08/17 12:17:01 mg Exp $
+# $Id: AgentTicketPhone.dtl,v 1.12 2010-08-31 22:22:06 en Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.112 2010/08/30 22:12:45 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ $Include{"AgentCustomerSearch"}
     <input type="hidden" name="Action" value="$Env{"Action"}"/>
     <input type="hidden" name="Subaction" value="StoreNew"/>
     <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
-    <input type="hidden" name="ExpandCustomerName" value="0"/>
+    <input type="hidden" name="ExpandCustomerName" id="ExpandCustomerName" value="0"/>
 # ---
 # ITSM
 # ---
@@ -24,7 +24,7 @@ $Include{"AgentCustomerSearch"}
 # ---
     <input type="hidden" name="OwnerAll" id="OwnerAll" value="$QData{"OwnerAll"}"/>
     <input type="hidden" name="ResponsibleAll" id="ResponsibleAll" value="$QData{"ResponsibleAll"}"/>
-    <input type="hidden" name="PreSelectedCustomerUser" value=""/>
+    <input type="hidden" name="PreSelectedCustomerUser" id="PreSelectedCustomerUser" value=""/>
     <input type="hidden" name="SelectedCustomerUser" id="SelectedCustomerUser" value="$QData{"CustomerUser"}"/>
     <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
     <input type="hidden" name="LinkTicketID" value="$QData{"LinkTicketID"}"/>
@@ -276,17 +276,17 @@ $Include{"RichTextEditor"}
 # ---
 # ITSM
 # ---
-                    <label for="ImpactID">$Text{"Impact"}:</label>
+                    <label for="TicketFreeText14">$Text{"Impact"}:</label>
                     <div class="Field">
                         $Data{"ImpactStrg"}
                     </div>
                     <div class="Clear"></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
-    $('#ImpactID').bind('click', function (Event) {
+    $('#TicketFreeText14').bind('click', function (Event) {
         $('#ExpandCustomerName').val('3');
         $('#PriorityRC').val('1');
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ImpactID', ['PriorityID']);
+        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'TicketFreeText14', ['PriorityID']);
         return false;
     });
 <!--dtl:js_on_document_complete-->

@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.3 2010-08-27 22:32:29 dz Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.47 2010/08/20 12:45:55 mg Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.4 2010-08-31 22:22:06 en Exp $
+# $OldId: AgentTicketOverviewPreview.dtl,v 1.49 2010/08/30 14:17:47 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -112,11 +112,11 @@
                                 <label>$Text{"First Response Time"}</label>
 <!-- dtl:block:FirstResponseTime -->
 <!-- dtl:block:FirstResponseTimeFontStart -->
-                                <font color="red">
+                                <div class="Warning">
 <!-- dtl:block:FirstResponseTimeFontStart -->
-                                <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
+                                    <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
 <!-- dtl:block:FirstResponseTimeFontStop -->
-                                </font>
+                                </div>
 <!-- dtl:block:FirstResponseTimeFontStop -->
 <!-- dtl:block:FirstResponseTime -->
                             </td>
@@ -131,11 +131,11 @@
                                 <label>$Text{"Update Time"}</label>
 <!-- dtl:block:UpdateTime -->
 <!-- dtl:block:UpdateTimeFontStart -->
-                                <font color="red">
+                                <div class="Warning">
 <!-- dtl:block:UpdateTimeFontStart -->
-                                <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
+                                    <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
 <!-- dtl:block:UpdateTimeFontStop -->
-                                </font>
+                                </div>
 <!-- dtl:block:UpdateTimeFontStop -->
 <!-- dtl:block:UpdateTime -->
                             </td>
@@ -148,11 +148,11 @@
                                 <label>$Text{"Solution Time"}</label>
 <!-- dtl:block:SolutionTime -->
 <!-- dtl:block:SolutionTimeFontStart -->
-                                <font color="red">
+                                <div class="Warning">
 <!-- dtl:block:SolutionTimeFontStart -->
-                                <div title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}">$QData{"SolutionTimeHuman"} / $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}</div>
+                                    <div title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}">$QData{"SolutionTimeHuman"} / $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}</div>
 <!-- dtl:block:SolutionTimeFontStop -->
-                                </font>
+                                </div>
 <!-- dtl:block:SolutionTimeFontStop -->
 <!-- dtl:block:SolutionTime -->
                             </td>
@@ -171,7 +171,6 @@
                             </td>
                         </tr>
 # ---
-
                     </tbody>
                 </table>
             </div>
@@ -200,14 +199,19 @@
                                             <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
                                             <input type="hidden" name="ArticleID" value="$QData{"ArticleID"}"/>
                                             <input type="hidden" name="ReplyAll" value="$QData{"ReplyAll"}"/>
-                                            <label for="ResponseID" class="InvisibleText">$Text{"$Data{"Name"}"}:</label>
+                                            <label for="ResponseID$QData{"ArticleID"}" class="InvisibleText">$Text{"$Data{"Name"}"}:</label>
                                             $Data{"StandardResponsesStrg"}
                                         </form>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
-        var url = Core.Config.Get('Baselink') + $(this).parents().serialize();
-        Core.UI.Popup.OpenPopup(url, 'Action');
+        var URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
+        Core.UI.Popup.OpenPopup(URL, 'Action');
+    });
+    // make sure this click event does not bubble up to the table row and execute its click handler
+    $('#$QData{"FormID"} select[name=ResponseID]').bind('click', function (Event) {
+        Event.stopPropagation();
+        return false;
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->

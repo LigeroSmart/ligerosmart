@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.3 2010-08-27 22:32:29 dz Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.34 2010/08/18 16:05:25 martin Exp $
+# $Id: TicketOverviewPreview.pm,v 1.4 2010-08-31 22:22:06 en Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.35 2010/08/30 14:17:47 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use warnings;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -231,7 +231,6 @@ sub _Show {
         UserID => $Article{OwnerID},
     );
     %Article = ( %UserInfo, %Article );
-
 # ---
 # ITSM
 # ---
@@ -763,19 +762,19 @@ sub _Show {
                     # build html string
                     my $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
                         Name => 'ResponseID',
-                        ID   => 'ResponseID',
+                        ID   => 'ResponseID' . $ArticleItem->{ArticleID},
                         Data => \%StandardResponses,
                     );
 
                     $Self->{LayoutObject}->Block(
                         Name => 'ArticlePreviewActionRowItem',
                         Data => {
-                            %Article,
+                            %{$ArticleItem},
                             StandardResponsesStrg => $StandardResponsesStrg,
                             Name                  => 'Reply',
                             Class                 => 'AsPopup',
                             Action                => 'AgentTicketCompose',
-                            FormID                => 'Reply',
+                            FormID                => 'Reply' . $ArticleItem->{ArticleID},
                         },
                     );
 
@@ -784,19 +783,19 @@ sub _Show {
                         = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -';
                     $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
                         Name => 'ResponseID',
-                        ID   => 'ResponseIDAll',
+                        ID   => 'ResponseIDAll' . $ArticleItem->{ArticleID},
                         Data => \%StandardResponses,
                     );
 
                     $Self->{LayoutObject}->Block(
                         Name => 'ArticlePreviewActionRowItem',
                         Data => {
-                            %Article,
+                            %{$ArticleItem},
                             StandardResponsesStrg => $StandardResponsesStrg,
                             Name                  => 'Reply All',
                             Class                 => 'AsPopup',
                             Action                => 'AgentTicketCompose',
-                            FormID                => 'ReplyAll',
+                            FormID                => 'ReplyAll' . $ArticleItem->{ArticleID},
                             ReplyAll              => 1,
                         },
                     );
