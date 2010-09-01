@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMTicket.xml,v 1.9 2010-08-31 21:55:18 mp Exp $</CVS>
+    <CVS>$Id: ITSMTicket.xml,v 1.10 2010-09-01 17:53:39 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.</Description>
         <Group>Ticket</Group>
@@ -38,7 +38,7 @@
                 <Item Key="Name">Additional ITSM Fields</Item>
                 <Item Key="Description">Change the ITSM fields!</Item>
                 <Item Key="Action">AgentTicketAddtlITSMField</Item>
-                <Item Key="Link">Action=AgentTicketAddtlITSMField&amp;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentTicketAddtlITSMField;TicketID=$QData{"TicketID"}</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
@@ -53,7 +53,8 @@
                 <Item Key="Name">Decision</Item>
                 <Item Key="Description">Add a decision!</Item>
                 <Item Key="Action">AgentTicketDecision</Item>
-                <Item Key="Link">Action=AgentTicketDecision&amp;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentTicketDecision;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>

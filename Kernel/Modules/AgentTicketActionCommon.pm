@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.2 2010-08-31 21:57:35 mp Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.3 2010-09-01 17:53:39 dz Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.17 2010/08/19 16:47:22 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -912,7 +912,7 @@ sub Run {
             }
 
             # redirect parent window to last screen overview on closed tickets
-            if ( $StateData{TypeName} =~ /^close/i ) {
+            if ( $StateData{TypeName} =~ /^close/i && $Self->{LastScreenOverview}) {
                 return $Self->{LayoutObject}->PopupClose( URL => $Self->{LastScreenOverview} );
             }
         }
