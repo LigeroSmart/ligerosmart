@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.3 2010-08-30 18:29:48 mp Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.29 2010/08/18 15:42:01 martin Exp $
+# $Id: TicketOverviewMedium.pm,v 1.4 2010-09-01 23:02:12 mp Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.30 2010/09/01 12:34:46 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -602,20 +602,13 @@ sub _Show {
             Age   => $Article{FirstResponseTimeWorkingTime},
             Space => ' ',
         );
+        if ( 60 * 60 * 1 > $Article{FirstResponseTime} ) {
+            $Article{FirstResponseTimeClass} = 'Warning'
+        }
         $Self->{LayoutObject}->Block(
             Name => 'FirstResponseTime',
             Data => { %Param, %Article },
         );
-        if ( 60 * 60 * 1 > $Article{FirstResponseTime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'FirstResponseTimeFontStart',
-                Data => { %Param, %Article },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'FirstResponseTimeFontStop',
-                Data => { %Param, %Article },
-            );
-        }
     }
 
     # show update time if needed
@@ -628,20 +621,13 @@ sub _Show {
             Age   => $Article{UpdateTimeWorkingTime},
             Space => ' ',
         );
+        if ( 60 * 60 * 1 > $Article{UpdateTime} ) {
+            $Article{UpdateTimeClass} = 'Warning'
+        }
         $Self->{LayoutObject}->Block(
             Name => 'UpdateTime',
             Data => { %Param, %Article },
         );
-        if ( 60 * 60 * 1 > $Article{UpdateTime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'UpdateTimeFontStart',
-                Data => { %Param, %Article },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'UpdateTimeFontStop',
-                Data => { %Param, %Article },
-            );
-        }
     }
 
     # show solution time if needed
@@ -654,20 +640,13 @@ sub _Show {
             Age   => $Article{SolutionTimeWorkingTime},
             Space => ' ',
         );
+        if ( 60 * 60 * 1 > $Article{SolutionTime} ) {
+            $Article{SolutionTimeClass} = 'Warning'
+        }
         $Self->{LayoutObject}->Block(
             Name => 'SolutionTime',
             Data => { %Param, %Article },
         );
-        if ( 60 * 60 * 1 > $Article{SolutionTime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'SolutionTimeFontStart',
-                Data => { %Param, %Article },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'SolutionTimeFontStop',
-                Data => { %Param, %Article },
-            );
-        }
     }
 
     # get MoveQueuesStrg
