@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMTicket.pm - the german translation of ITSMTicket
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMTicket.pm,v 1.5 2010-08-23 22:41:45 mp Exp $
+# $Id: de_ITSMTicket.pm,v 1.6 2010-09-02 21:54:58 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -69,36 +69,57 @@ sub Data {
     $Lang->{'Ticket free text options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Lang->{'Ticket free time options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Lang->{'Shows a link in the menu to add a free text field in the ticket zoom view of the agent interface.'} = '';
-    $Lang->{'Frontend module registration for the AgentTicketAddtlITSMField object in the agent interface.'} = 'Frontendmodul-Registration des AgentTicketAddtlITSMField-Objekts im Agent-Interface.';
-    $Lang->{'Frontend module registration for the AgentTicketDecision object in the agent interface.'} = 'Frontendmodul-Registration des AgentTicketDecision-Objekts im Agent-Interface.';
-    $Lang->{'Module to show additional ITSM field link in menu.'} = 'Über dieses Modul wird der Zusätzliche ITSM Felder-Link in der Linkleiste der Ticketansicht angezeigt.';
-    $Lang->{'Module to show decision link in menu.'} = 'Über dieses Modul wird der Entscheidung-Link in der Linkleiste der Ticketansicht angezeigt.';
-    $Lang->{'Required permissions to use this option.'} = 'Benötigte Rechte zur Bearbeitung des Tickets.';
-    $Lang->{'A ticket lock is required. In case the ticket isn\'\t locked, the ticket gets locked and the current agent will be set automatically as ticket owner.'} = 'Eine Ticket-Sperre wird benötigt. Wenn Ticket nicht gesperrt ist, wird das Ticket automatisch gesperrt und der Agent als Besitzer gesetzt.';
-    $Lang->{'If you want to set the ticket type (Ticket::Type needs to be activated).'} = 'Wenn der Ticket-Typ gesetzt werden soll (Ticket::Type muss aktiv sein).';
-    $Lang->{'If you want to set the service (Ticket::Service needs to be activated).'} = 'Wenn der Service gesetzt werden soll (Ticket::Service muss aktiv sein).';
-    $Lang->{'If you want to set the owner.'} = 'Wenn der Besitzer gesetzt werden soll.';
-    $Lang->{'If you want to set the responsible agent.'} = 'Wenn der Verantwortliche gesetzt werden soll.';
-    $Lang->{'Would you like to set the state of a ticket if a note is added by an agent?'} = 'Soll der Status eines Tickets gesetzt werden können, wenn eine Notiz durch einen Agent angelegt wird?';
-    $Lang->{'Default next states after adding a note.'} = 'Nächstmögliche Status nach dem Hinzufügen einer Notiz.';
-    $Lang->{'Default next state.'} = 'Standardmäßig ausgewählter nächster Status.';
-    $Lang->{'Show note fields.'} = 'Eingabemöglichkeit für Notiz.';
-    $Lang->{'Default note subject.'} = 'Standardtext im Betreff einer Notiz.';
-    $Lang->{'Default note text.'} = 'Standardtext im Textfeld einer Notiz.';
-    $Lang->{'Show selection of involved agents.'} = 'Auswahl der involvierten Agents anzeigen.';
-    $Lang->{'Show selection of agents to inform (all agents with note permissions on the queue/ticket).'} = 'Auswahl der zu informierenden Agents anzeigen (alle Agenten mit "notiz" Rechten am Ticket/Queue).';
-    $Lang->{'Default note type.'} = 'Voreingestellter Notiztyp.';
-    $Lang->{'Specify the different note types that you want to use in your system.'} = 'Hier können die verschiedenen Notiz-Typen festgelegt werden, die innerhalb des Systems verwendet werden sollen.';
-    $Lang->{'Show priority options.'} = 'Möglichkeit eine Priorität auszuwählen.';
-    $Lang->{'Default priority options.'} = 'Default Auswahl der Priorität.';
-    $Lang->{'Show title fields.'} = 'Eingabemöglichkeit für Title.';
-    $Lang->{'Shown ticket free text options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = 'Angezeigte Ticket-Frei-Text-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.';
-    $Lang->{'Shown ticket free time options. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = 'Angezeigte Ticket-Frei-Time-Felder. Mögliche Einstellungen: 0 = Deaktiviert, 1 = Aktiviert, 2 = Aktiviert und Pflichtfeld.';
-    $Lang->{'Shown article free text options.'} = 'Gezeigte Artikel-Frei-Text-Felder.';
-    $Lang->{'History type for this action.'} = 'Historientyp für diese Aktion.';
-    $Lang->{'History comment for this action.'} = 'Historienkommentar für diese Aktion.';
-    $Lang->{'Here you can decide if the stats module may generate stats about itsm ticket first level solution rate stuff.'} = 'Hier können Sie festlegen, ob das Statistik-Modul auch Statistiken über ITSM-Ticket-Erstlösungsrate Dinge generieren darf.';
-    $Lang->{'Here you can decide if the stats module may generate stats about itsm ticket solution average stuff.'} = 'Hier können Sie festlegen, ob das Statistik-Modul auch Statistiken über ITSM-Ticket-Lösungszeit-Durchscnitt Dinge generieren darf.';
+    $Lang->{'Shows a link in the menu to modify additional ITSM fields in the ticket zoom view of the agent interface.'} = '';
+    $Lang->{'Shows a link in the menu to change the decision of a ticket in its zoom view of the agent interface.'} = '';
+    $Lang->{'Required permissions to use the additional ITSM field screen in the agent interface.'} = '';
+    $Lang->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
+    $Lang->{'Sets the ticket type in the additional ITSM field screen of the agent interface (Ticket::Type needs to be activated).'} = '';
+    $Lang->{'Sets the service in the additional ITSM field screen of the agent interface (Ticket::Service needs to be activated).'} = '';
+    $Lang->{'Sets the ticket owner in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Sets the ticket responsible in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'If a note is added by an agent, sets the state of a ticket in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Defines the next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Defines the default next state of a ticket after adding a note, in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Defines the default subject of a note in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Shows a list of all the involved agents on this ticket, in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Defines the default type of the note in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Specifies the different note types that will be used in the system.'} = '';
+    $Lang->{'Shows the ticket priority options in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Defines the default ticket priority in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Shows the title fields in the additional ITSM field screen of the agent interface.'} = '';
+    $Lang->{'Ticket free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Ticket free time options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Defines the history type for the additional ITSM field screen action, which gets used for ticket history.'} = '';
+    $Lang->{'Defines the history comment for the additional ITSM field screen action, which gets used for ticket history.'} = '';
+    $Lang->{'Required permissions to use the decision screen in the agent interface.'} = '';
+    $Lang->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
+    $Lang->{'Sets the ticket type in the decision screen of the agent interface (Ticket::Type needs to be activated).'} = '';
+    $Lang->{'Sets the service in the decision screen of the agent interface (Ticket::Service needs to be activated).'} = '';
+    $Lang->{'Sets the ticket owner in the decision screen of the agent interface.'} = '';
+    $Lang->{'Sets the ticket responsible in the decision screen of the agent interface.'} = '';
+    $Lang->{'If a note is added by an agent, sets the state of a ticket in the decision screen of the agent interface.'} = '';
+    $Lang->{'Defines the next state of a ticket after adding a note, in the decision screen of the agent interface.'} = '';
+    $Lang->{'Defines the default next state of a ticket after adding a note, in the decision screen of the agent interface.'} = '';
+    $Lang->{'Allows adding notes in the decision screen of the agent interface.'} = '';
+    $Lang->{'Defines the default subject of a note in the decision screen of the agent interface.'} = '';
+    $Lang->{'Defines the default body of a note in the decision screen of the agent interface.'} = '';
+    $Lang->{'Shows a list of all the involved agents on this ticket, in the decision screen of the agent interface.'} = '';
+    $Lang->{'Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the decision screen of the agent interface.'} = '';
+    $Lang->{'Defines the default type of the note in the decision screen of the agent interface.'} = '';
+    $Lang->{'Shows the ticket priority options in the decision screen of the agent interface.'} = '';
+    $Lang->{'Defines the default ticket priority in the decision screen of the agent interface.'} = '';
+    $Lang->{'Shows the title fields in the decision screen of the agent interface.'} = '';
+    $Lang->{'Ticket free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Ticket free time options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
+    $Lang->{'Defines the history type for the decision screen action, which gets used for ticket history.'} = '';
+    $Lang->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} = '';
+    $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} = '';
+    $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} = '';
 
     return 1;
 }
