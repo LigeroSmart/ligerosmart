@@ -2,7 +2,7 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.7 2010-09-02 18:34:18 mp Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.8 2010-09-02 22:18:42 dz Exp $
 # $OldId: AgentTicketOverviewMedium.dtl,v 1.43 2010/09/01 12:34:46 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -106,10 +106,10 @@
                             <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}" class="$QData{"FirstResponseTimeClass"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
 <!-- dtl:block:FirstResponseTime -->
                         </td>
-                        <td>
 # ---
 # ITSM
 # ---
+                        <td>
                             <label>$Text{"Update Time"}</label>
 <!-- dtl:block:UpdateTime -->
                             <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}" class="$QData{"UpdateTimeClass"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
@@ -137,14 +137,14 @@
 <!-- dtl:block:Type -->
                             <label>$Text{"Type"}</label><div title="$QData{"Type"}">$QData{"Type","26"}</div>
 <!-- dtl:block:Type -->
+                        </td>
 # ---
 # ITSM
 # ---
-                            <td>
-                                <label>$Text{"Priority"}:</label><div title="$Quote{"$Text{"$Data{"Priority"}"}"}">$Quote{"$Text{"$Data{"Priority"}"}","14"}</div>
-                            </td>
-# ---
+                        <td>
+                            <label>$Text{"Priority"}:</label><div title="$Quote{"$Text{"$Data{"Priority"}"}"}">$Quote{"$Text{"$Data{"Priority"}"}","14"}</div>
                         </td>
+# ---
 #                        <td>
 #<!-- dtl:block:TicketFreeText2 -->
 #                            <label>$QData{"TicketFreeKey2","25"}</label>
@@ -170,7 +170,7 @@
 #<!-- dtl:block:UpdateTime -->
 #                            <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}" class="$QData{"UpdateTimeClass"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
 #<!-- dtl:block:UpdateTime -->
-#                       </td>
+#                        </td>
 # ---
                     </tr>
                     <tr>
@@ -198,7 +198,6 @@
                             <label>$Text{"CustomerID"}:</label><a href="$Config{"CustomerDBLink"}" $Config{"CustomerDBLinkTarget"}>$Quote{"$Data{"CustomerID"}","14"}</a>
                         </td>
 # ---
-
 #                        <td>
 #<!-- dtl:block:TicketFreeText3 -->
 #                            <label>$QData{"TicketFreeKey3","25"}</label>

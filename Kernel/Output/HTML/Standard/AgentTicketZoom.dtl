@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.14 2010-08-31 22:22:06 en Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.143 2010/08/30 11:43:25 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.15 2010-09-02 22:18:42 dz Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.147 2010/09/02 14:03:35 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -117,7 +117,7 @@
                         <div class="Clear"></div>
 <!-- dtl:block:Service -->
 <!-- dtl:block:SLA -->
-                        <label>$Text{"SLA"}:</label>
+                        <label>$Text{"Service Level Agreement"}:</label>
                         <p class="Value" title="$QData{"SLA"}">$QData{"SLA","18"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:SLA -->
@@ -127,51 +127,33 @@
 <!-- dtl:block:FirstResponseTime -->
                         <label>$Text{"First Response Time"}:</label>
                         <div class="Value">
-<!-- dtl:block:FirstResponseTimeFontStart -->
-                            <div class="Notice">
-<!-- dtl:block:FirstResponseTimeFontStart -->
-                                <p title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}">
-                                    $QData{"FirstResponseTimeHuman"}
-                                    <br/>
-                                    $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}
-                                </p>
-<!-- dtl:block:FirstResponseTimeFontStop -->
-                            </div>
-<!-- dtl:block:FirstResponseTimeFontStop -->
+                            <p title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}" class="$QData{"FirstResponseTimeClass"}">
+                                $QData{"FirstResponseTimeHuman"}
+                                <br/>
+                                $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}
+                            </p>
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:FirstResponseTime -->
 <!-- dtl:block:UpdateTime -->
                         <label>$Text{"Update Time"}:</label>
                         <div class="Value">
-<!-- dtl:block:UpdateTimeFontStart -->
-                            <div class="Notice">
-<!-- dtl:block:UpdateTimeFontStart -->
-                                <p title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}">
-                                    $QData{"UpdateTimeHuman"}
-                                    <br/>
-                                    $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}
-                                </p>
-<!-- dtl:block:UpdateTimeFontStop -->
-                            </div>
-<!-- dtl:block:UpdateTimeFontStop -->
+                            <p title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}" class="$QData{"UpdateTimeClass"}">
+                                $QData{"UpdateTimeHuman"}
+                                <br/>
+                                $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}
+                            </p>
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:UpdateTime -->
 <!-- dtl:block:SolutionTime -->
                         <label>$Text{"Solution Time"}:</label>
                         <div class="Value">
-<!-- dtl:block:SolutionTimeFontStart -->
-                            <div class="Notice">
-<!-- dtl:block:SolutionTimeFontStart -->
-                                <p title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}">
-                                    $QData{"SolutionTimeHuman"}
-                                    <br/>
-                                    $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}
-                                </p>
-<!-- dtl:block:SolutionTimeFontStop -->
-                            </div>
-<!-- dtl:block:SolutionTimeFontStop -->
+                            <p title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}" class="$QData{"SolutionTimeClass"}">
+                                $QData{"SolutionTimeHuman"}
+                                <br/>
+                                $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}
+                            </p>
                         </div>
                         <div class="Clear"></div>
 <!-- dtl:block:SolutionTime -->
@@ -188,7 +170,7 @@
 
 <!-- dtl:block:PendingUntil -->
                         <label>$Text{"Pending till"}:</label>
-                        <p class="Value">$Data{"PendingUntil"}</p>
+                        <p class="Value $QData{"PendingUntilClass"}">$Data{"PendingUntil"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:PendingUntil -->
 <!-- dtl:block:Owner -->
@@ -365,7 +347,7 @@ $Data{"ArticleItems"}
     <div class="ControlRow">
 <!-- dtl:block:ArticleFilterDialogLink -->
         <div class="ArticleFilter Icons">
-            <span class="InvisibleText">$Text{"Article"} $Text{"Filter"}:</span>
+            <span class="InvisibleText">$Text{"Article Filter"}:</span>
 # Only show one: Set or Reset.
 #<!-- dtl:block:ArticleFilterSetLink -->
             <a href="#" id="SetArticleFilter" title="$Text{"Add Filter"}"><span>$Text{"Set"}</span></a>
@@ -590,7 +572,7 @@ $Data{"Body"}
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-    Core.Agent.TicketZoom.Init($Env{"UserTicketZoomArticleTableHeight"});
+    Core.Agent.TicketZoom.Init({ ArticleTableHeight: parseInt('$Env{"UserTicketZoomArticleTableHeight"}', 10)});
     $('ul.Actions a.AsPopup').bind('click', function (Event) {
         Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
         return false;
