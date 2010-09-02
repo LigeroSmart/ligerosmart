@@ -2,7 +2,7 @@
 # AgentTicketPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.dtl,v 1.3 2010-09-02 17:26:35 en Exp $
+# $Id: AgentTicketPrint.dtl,v 1.4 2010-09-02 17:33:33 en Exp $
 # $OldId: AgentTicketPrint.dtl,v 1.28 2010/08/31 17:11:07 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,8 +31,8 @@
 # ITSM
 # ---
 #                            <tr>
-#                              <td class="contentkey">$Text{"Priority"}:</td>
-#                              <td class="contentvalue">$Text{"$Data{"Priority"}"}</td>
+#                                <td class="contentkey">$Text{"Priority"}:</td>
+#                                <td class="contentvalue">$Text{"$Data{"Priority"}"}</td>
 #                            </tr>
 # ---
                             <tr>
