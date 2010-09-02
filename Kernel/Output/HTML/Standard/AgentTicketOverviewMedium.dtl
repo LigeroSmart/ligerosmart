@@ -2,7 +2,7 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.6 2010-09-02 15:59:05 mp Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.7 2010-09-02 18:34:18 mp Exp $
 # $OldId: AgentTicketOverviewMedium.dtl,v 1.43 2010/09/01 12:34:46 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -171,6 +171,7 @@
 #                            <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}" class="$QData{"UpdateTimeClass"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
 #<!-- dtl:block:UpdateTime -->
 #                       </td>
+# ---
                     </tr>
                     <tr>
                         <td>
@@ -224,6 +225,7 @@
 #                            <div title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}" class="$QData{"SolutionTimeClass"}">$QData{"SolutionTimeHuman"} / $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}</div>
 #<!-- dtl:block:SolutionTime -->
 #                        </td>
+# ---
                     </tr>
                 </tbody>
             </table>
