@@ -2,7 +2,7 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.5 2010-09-01 23:27:23 mp Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.6 2010-09-02 15:59:05 mp Exp $
 # $OldId: AgentTicketOverviewMedium.dtl,v 1.43 2010/09/01 12:34:46 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -103,7 +103,7 @@
                         <td>
                             <label>$Text{"First Response Time"}</label>
 <!-- dtl:block:FirstResponseTime -->
-                            <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"} class="$QData{"FirstResponseTimeClass"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
+                            <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}" class="$QData{"FirstResponseTimeClass"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
 <!-- dtl:block:FirstResponseTime -->
                         </td>
                         <td>
@@ -145,7 +145,7 @@
                             </td>
 # ---
                         </td>
-#                       <td>
+#                        <td>
 #<!-- dtl:block:TicketFreeText2 -->
 #                            <label>$QData{"TicketFreeKey2","25"}</label>
 #<!-- dtl:block:TicketFreeTextPlain2 -->
