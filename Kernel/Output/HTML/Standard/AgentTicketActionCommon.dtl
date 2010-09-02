@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.4 2010-09-02 16:52:03 en Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.5 2010-09-02 17:26:35 en Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -33,10 +33,6 @@
                 $Text{"Change Free Text of Ticket"}
 <!-- dtl:block:HeaderAgentTicketFreeText -->
 
-<!-- dtl:block:HeaderAgentTicketDecision -->
-                $Text{"Change Decision of Ticket"}
-<!-- dtl:block:HeaderAgentTicketDecision -->
-
 <!-- dtl:block:HeaderAgentTicketOwner -->
                 $Text{"Change Owner of Ticket"}
 <!-- dtl:block:HeaderAgentTicketOwner -->
@@ -63,6 +59,10 @@
 # ---
 # ITSM
 # ---
+<!-- dtl:block:HeaderAgentTicketDecision -->
+                $Text{"Change Decision of Ticket"}
+<!-- dtl:block:HeaderAgentTicketDecision -->
+
 <!-- dtl:block:HeaderAgentTicketAddtlITSMField -->
                 $Text{"Change ITSM fields of ticket"}
 <!-- dtl:block:HeaderAgentTicketAddtlITSMField -->
