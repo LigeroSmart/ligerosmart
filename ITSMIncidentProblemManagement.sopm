@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.58 2010-08-09 06:52:03 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.59 2010-09-02 19:29:16 dz Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -10,6 +10,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The OTRS::ITSM Incident and Problem Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Incident und Problem Management Paket.</Description>
+    <Description Lang="es">Paquete Incident and Problem Management de OTRS::ITSM.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ITSMTicket.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/TicketITSMTicket.xml"/>
@@ -28,39 +29,27 @@
         <File Permission="644" Location="Kernel/Language/ru_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketAddtlITSMField.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketClose.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketDecision.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketEmail.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketFreeText.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketNote.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketOwner.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketPending.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPhone.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketPrint.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketPriority.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentTicketResponsible.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerTicketZoom.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketActionCommon.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketAddtlITSMField.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketClose.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketDecision.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketEmail.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketFreeText.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketNote.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOverviewMedium.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOverviewPreview.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketOwner.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPending.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPhone.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPrint.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketPriority.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketResponsible.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerTicketZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewMedium.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/TicketOverviewPreview.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketActionCommon.dtl"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/ITSMTicketSolutionTimeAverage.pm"/>
         <File Permission="644" Location="var/packagesetup/ITSMIncidentProblemManagement.pm"/>
@@ -258,13 +247,13 @@
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
         <br>
-        <b>WELCOME</b>
+        <strong>WELCOME</strong>
         <br>
         <br>
         You are about to install the OTRS package ITSMIncidentProblemManagement.<br>
         <br>
         <br>
-        <b>REQUIRED OTRS PACKAGES</b>
+        <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -276,13 +265,31 @@
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
         <br>
-        <b>WILLKOMMEN</b>
+        <strong>WILLKOMMEN</strong>
         <br>
         <br>
         Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu installieren.<br>
         <br>
         <br>
-        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>ITSMCore 2.1.91</li>
+        </ul>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br>
+        <strong>BIENVENIDO</strong>
+        <br>
+        <br>
+        Usted esta apunto de instalar el paquete ITSMIncidentProblemManagement de OTRS.<br>
+        <br>
+        <br>
+        <strong>Paquetes OTRS requeridos</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -294,13 +301,13 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
         <br>
-        <b>WELCOME</b>
+        <strong>WELCOME</strong>
         <br>
         <br>
         You are about to upgrade the OTRS package ITSMIncidentProblemManagement.<br>
         <br>
         <br>
-        <b>REQUIRED OTRS PACKAGES</b>
+        <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -312,13 +319,31 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
 
         <br>
-        <b>WILLKOMMEN</b>
+        <strong>WILLKOMMEN</strong>
         <br>
         <br>
         Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu aktualisieren.<br>
         <br>
         <br>
-        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <ul>
+        <li>ITSMCore 2.1.91</li>
+        </ul>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+
+        <br>
+        <strong>BIENVENIDO</strong>
+        <br>
+        <br>
+        Usted esta apunto de actualizar el paquete ITSMIncidentProblemManagement de OTRS.<br>
+        <br>
+        <br>
+        <strong>Paquetes OTRS requeridos</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -330,7 +355,7 @@
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
         <br>
-        <b>ATTENTION</b>
+        <strong>ATTENTION</strong>
         <br>
         <br>
         If you uninstall this package, the ticket types and states that were added during installation will be deactivated.
@@ -347,7 +372,7 @@
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
         <br>
-        <b>ACHTUNG</b>
+        <strong>ACHTUNG</strong>
         <br>
         <br>
         Bei der Deinstallation werden die von diesem Paket angelegten Ticket-Typen und -Status deaktiviert.
@@ -361,4 +386,22 @@
         <br>
 
     ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br>
+        <strong>ATTENTION</strong>
+        <br>
+        <br>
+        Si usted desinstala este paquete los tipos de ticket y estados que fueron agregados durante la instalación serán desactivados.
+        Pueden ser activados de nuevo en el área de admin.
+        <br>
+        <br>
+        Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUninstall>
+
 </otrs_package>
