@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.4 2010-08-31 22:22:06 en Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.49 2010/08/30 14:17:47 mg Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.5 2010-09-02 16:47:10 mp Exp $
+# $OldId:  AgentTicketOverviewPreview.dtl,v 1.51 2010/09/01 12:34:46 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,7 +91,7 @@
                             </td>
                             <td>
 <!-- dtl:block:SLA -->
-                                <label>$Text{"SLA"}</label><div title="$QData{"SLA"}">$QData{"SLA","26"}</div>
+                                <label>$Text{"Service Level Agreement"}</label><div title="$QData{"SLA"}">$QData{"SLA","26"}</div>
 <!-- dtl:block:SLA -->
                             </td>
                         </tr>
@@ -111,13 +111,7 @@
                             <td>
                                 <label>$Text{"First Response Time"}</label>
 <!-- dtl:block:FirstResponseTime -->
-<!-- dtl:block:FirstResponseTimeFontStart -->
-                                <div class="Warning">
-<!-- dtl:block:FirstResponseTimeFontStart -->
-                                    <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
-<!-- dtl:block:FirstResponseTimeFontStop -->
-                                </div>
-<!-- dtl:block:FirstResponseTimeFontStop -->
+                                <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}" class="$QData{"FirstResponseTimeClass"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
 <!-- dtl:block:FirstResponseTime -->
                             </td>
                         </tr>
@@ -130,13 +124,7 @@
                             <td>
                                 <label>$Text{"Update Time"}</label>
 <!-- dtl:block:UpdateTime -->
-<!-- dtl:block:UpdateTimeFontStart -->
-                                <div class="Warning">
-<!-- dtl:block:UpdateTimeFontStart -->
-                                    <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
-<!-- dtl:block:UpdateTimeFontStop -->
-                                </div>
-<!-- dtl:block:UpdateTimeFontStop -->
+                                <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}" class="$QData{"UpdateTimeClass"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
 <!-- dtl:block:UpdateTime -->
                             </td>
                         </tr>
@@ -147,13 +135,7 @@
                             <td>
                                 <label>$Text{"Solution Time"}</label>
 <!-- dtl:block:SolutionTime -->
-<!-- dtl:block:SolutionTimeFontStart -->
-                                <div class="Warning">
-<!-- dtl:block:SolutionTimeFontStart -->
-                                    <div title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}">$QData{"SolutionTimeHuman"} / $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}</div>
-<!-- dtl:block:SolutionTimeFontStop -->
-                                </div>
-<!-- dtl:block:SolutionTimeFontStop -->
+                                <div title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}" class="$QData{"SolutionTimeClass"}">$QData{"SolutionTimeHuman"} / $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}</div>
 <!-- dtl:block:SolutionTime -->
                             </td>
                         </tr>
