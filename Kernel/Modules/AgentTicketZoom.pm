@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.10 2010-08-25 21:06:08 dz Exp $
-# $OldId: AgentTicketZoom.pm,v 1.113 2010/08/12 10:56:07 mg Exp $
+# $Id: AgentTicketZoom.pm,v 1.11 2010-09-02 16:52:03 en Exp $
+# $OldId: AgentTicketZoom.pm,v 1.117 2010/09/01 12:34:46 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,14 +17,14 @@ use warnings;
 
 use Kernel::System::CustomerUser;
 use Kernel::System::LinkObject;
-
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
 # ---
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,11 +56,6 @@ sub new {
     if ( !defined $Self->{ZoomExpandSort} ) {
         $Self->{ZoomExpandSort} = $Self->{ConfigObject}->Get('Ticket::Frontend::ZoomExpandSort');
     }
-    my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketQueue');
-    if ($Config) {
-        $Self->{HighlightColor1} = $Config->{HighlightColor1} || 'orange';
-        $Self->{HighlightColor2} = $Config->{HighlightColor2} || 'red';
-    }
     $Self->{ArticleFilterActive}
         = $Self->{ConfigObject}->Get('Ticket::Frontend::TicketArticleFilter');
 
@@ -87,12 +82,12 @@ sub new {
     }
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
-
 # ---
 # ITSM
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
 # ---
+
     return $Self;
 }
 
@@ -237,7 +232,7 @@ sub Run {
         # send JSON response
         return $Self->{LayoutObject}->Attachment(
             ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
-            Content     => $JSON || '',
+            Content     => $JSON,
             Type        => 'inline',
             NoCache     => 1,
         );
@@ -288,7 +283,6 @@ sub Run {
             $Self->{ArticleFilter}->{SenderTypeID} = { map { $_ => 1 } @IDs };
         }
     }
-
 # ---
 # ITSM
 # ---
@@ -311,6 +305,7 @@ sub Run {
         $Ticket{Impact} = $ImpactList->{$Ticket{TicketFreeText14}};
     }
 # ---
+
     # return if HTML email
     if ( $Self->{Subaction} eq 'ShowHTMLeMail' ) {
 
@@ -542,18 +537,6 @@ sub MaskAgentZoom {
 
     # age design
     $Ticket{Age} = $Self->{LayoutObject}->CustomerAge( Age => $Ticket{Age}, Space => ' ' );
-    if ( $Ticket{UntilTime} ) {
-        if ( $Ticket{UntilTime} < -1 && $Self->{HighlightColor2} ) {
-            $Ticket{PendingUntil} = qq§<span style="color: $Self->{HighlightColor2};">§;
-        }
-        $Ticket{PendingUntil} .= $Self->{LayoutObject}->CustomerAge(
-            Age   => $Ticket{UntilTime},
-            Space => '<br/>'
-        );
-        if ( $Ticket{UntilTime} < -1 && $Self->{HighlightColor2} ) {
-            $Ticket{PendingUntil} .= "</span>";
-        }
-    }
 
     # number of articles
     $Param{ArticleCount} = scalar @ArticleBox;
@@ -583,7 +566,7 @@ sub MaskAgentZoom {
                 Config => $Menus{$Menu},
             );
             next if !$Item;
-            if ( $Menus{$Menu}->{Target} and $Menus{$Menu}->{Target} eq 'PopUp' ) {
+            if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
                 $Item->{Class} = 'AsPopup';
             }
             $Self->{LayoutObject}->Block(
@@ -670,20 +653,13 @@ sub MaskAgentZoom {
             Age   => $Ticket{FirstResponseTimeWorkingTime},
             Space => ' ',
         );
+        if ( 60 * 60 * 1 > $Ticket{FirstResponseTime} ) {
+            $Ticket{FirstResponseTimeClass} = 'Warning';
+        }
         $Self->{LayoutObject}->Block(
             Name => 'FirstResponseTime',
             Data => { %Ticket, %AclAction },
         );
-        if ( 60 * 60 * 1 > $Ticket{FirstResponseTime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'FirstResponseTimeFontStart',
-                Data => { %Ticket, %AclAction },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'FirstResponseTimeFontStop',
-                Data => { %Ticket, %AclAction },
-            );
-        }
     }
 
     # show update time if needed
@@ -696,20 +672,13 @@ sub MaskAgentZoom {
             Age   => $Ticket{UpdateTimeWorkingTime},
             Space => ' ',
         );
+        if ( 60 * 60 * 1 > $Ticket{UpdateTime} ) {
+            $Ticket{UpdateTimeClass} = 'Warning';
+        }
         $Self->{LayoutObject}->Block(
             Name => 'UpdateTime',
             Data => { %Ticket, %AclAction },
         );
-        if ( 60 * 60 * 1 > $Ticket{UpdateTime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'UpdateTimeFontStart',
-                Data => { %Ticket, %AclAction },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'UpdateTimeFontStop',
-                Data => { %Ticket, %AclAction },
-            );
-        }
     }
 
     # show solution time if needed
@@ -722,27 +691,27 @@ sub MaskAgentZoom {
             Age   => $Ticket{SolutionTimeWorkingTime},
             Space => ' ',
         );
+        if ( 60 * 60 * 1 > $Ticket{SolutionTime} ) {
+            $Ticket{SolutionTimeClass} = 'Warning';
+        }
         $Self->{LayoutObject}->Block(
             Name => 'SolutionTime',
             Data => { %Ticket, %AclAction },
         );
-        if ( 60 * 60 * 1 > $Ticket{SolutionTime} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'SolutionTimeFontStart',
-                Data => { %Ticket, %AclAction },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'SolutionTimeFontStop',
-                Data => { %Ticket, %AclAction },
-            );
-        }
     }
 
     # show pending until, if set:
-    if ( defined $Ticket{PendingUntil} ) {
+    if ( $Ticket{UntilTime} ) {
+        if ( $Ticket{UntilTime} < -1 ) {
+            $Ticket{PendingUntilClass} = 'Warning';
+        }
+        $Ticket{PendingUntil} .= $Self->{LayoutObject}->CustomerAge(
+            Age   => $Ticket{UntilTime},
+            Space => '<br/>'
+        );
         $Self->{LayoutObject}->Block(
             Name => 'PendingUntil',
-            Data => { %Ticket, }
+            Data => \%Ticket,
         );
     }
 
@@ -1299,9 +1268,11 @@ sub _ArticleItem {
         }
 
         # check if forward link should be shown
+        # (only show forward on email-external, email-internal, phone, webrequest and fax
         if (
             $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketForward}
             && ( !defined $AclAction{AgentTicketForward} || $AclAction{AgentTicketForward} )
+            && $Article{ArticleType} =~ /^(email-external|email-internal|phone|webrequest|fax)$/i
             )
         {
             my $Access = 1;
@@ -1344,9 +1315,11 @@ sub _ArticleItem {
         }
 
         # check if bounce link should be shown
+        # (only show forward on email-external and email-internal
         if (
             $Self->{ConfigObject}->Get('Frontend::Module')->{AgentTicketBounce}
             && ( !defined $AclAction{AgentTicketBounce} || $AclAction{AgentTicketBounce} )
+            && $Article{ArticleType} =~ /^(email-external|email-internal)$/i
             )
         {
             my $Access = 1;

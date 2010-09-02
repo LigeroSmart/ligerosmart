@@ -2,8 +2,8 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.13 2010-09-01 17:21:30 en Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.112 2010/08/30 22:12:45 cg Exp $
+# $Id: AgentTicketPhone.dtl,v 1.14 2010-09-02 16:52:03 en Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.113 2010/08/31 17:11:07 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -198,6 +198,7 @@ $Include{"AgentCustomerSearch"}
 # ---
                         <a href="$Env{"Baselink"}Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=$QData{"FormID"};TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ $Text{"Link Ticket"} ]</a>
 # ---
+
                     </div>
                     <div class="Clear"></div>
 
