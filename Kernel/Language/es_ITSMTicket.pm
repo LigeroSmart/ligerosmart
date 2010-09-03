@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ITSMTicket.pm,v 1.9 2010-09-02 21:54:58 en Exp $
+# $Id: es_ITSMTicket.pm,v 1.10 2010-09-03 18:17:04 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -25,7 +25,7 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Due Date'}                     = 'Fecha de Vencimiento';
+    $Lang->{'Due date'}                     = 'Fecha de vencimiento';
     $Lang->{'Decision'}                     = 'Decisión';
     $Lang->{'Reason'}                       = 'Motivo';
     $Lang->{'Decision Date'}                = 'Fecha de Decisión';
@@ -121,6 +121,7 @@ sub Data {
     $Lang->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} = 'Define el comentario del historial, para la acción de la ventana de decisión, misma que es usada por el historial del ticket.';
     $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} = 'Habilita, en el módulo de estadísticas, la generación de estadísticas acerca del promedio de solución de tickets ITSM.';
     $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} = 'Habilita, en el módulo de estadísticas, la generación de estadísticas acerca del tasa promedio de solución de primer nivel de tickets ITSM.';
+    $Lang->{'Link ticket'} = 'Vincular ticket';
 
     return 1;
 }

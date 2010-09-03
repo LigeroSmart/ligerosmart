@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_ITSMTicket.pm - the Chinese simple translation of ITSMTicket
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_ITSMTicket.pm,v 1.5 2010-09-02 21:54:58 en Exp $
+# $Id: zh_CN_ITSMTicket.pm,v 1.6 2010-09-03 18:17:04 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -24,7 +24,7 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Due Date'}                     = '截止日期';
+    $Lang->{'Due date'}                     = '截止日期';
     $Lang->{'Decision'}                     = '决定';
     $Lang->{'Reason'}                       = '理由';
     $Lang->{'Decision Date'}                = '决定日期';
@@ -126,6 +126,7 @@ sub Data {
     $Lang->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} = '';
     $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} = '';
     $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} = '';
+    $Lang->{'Link ticket'} = '';
 
     return 1;
 }

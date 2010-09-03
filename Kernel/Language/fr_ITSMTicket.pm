@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2009 Olivier Sallou <olivier.sallou at irisa.fr>
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: fr_ITSMTicket.pm,v 1.5 2010-09-02 21:54:58 en Exp $
+# $Id: fr_ITSMTicket.pm,v 1.6 2010-09-03 18:17:04 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -25,7 +25,7 @@ sub Data {
 
     return if ref $Lang ne 'HASH';
 
-    $Lang->{'Due Date'}                     = 'Engagenent de Date';
+    $Lang->{'Due date'}                     = 'Engagenent de date';
     $Lang->{'Decision'}                     = 'Décision';
     $Lang->{'Reason'}                       = 'Raison';
     $Lang->{'Decision Date'}                = 'Date de décision';
@@ -121,6 +121,7 @@ sub Data {
     $Lang->{'Defines the history comment for the decision screen action, which gets used for ticket history.'} = '';
     $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket solution.'} = '';
     $Lang->{'Enables the stats module to generate statistics about the average of ITSM ticket first level solution rate.'} = '';
+    $Lang->{'Link ticket'} = '';
 
     return 1;
 }
