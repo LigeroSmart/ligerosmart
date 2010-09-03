@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.15 2010-09-02 22:18:42 dz Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.147 2010/09/02 14:03:35 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.16 2010-09-03 20:22:55 en Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.149 2010/09/03 12:52:11 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@
                     $('#ArticleTypeFilter').val('');
                     $('#ArticleSenderTypeFilter').val('');
                 }
-            },
+            }
         ]);
         return false;
     });
@@ -86,7 +86,7 @@
         <div class="SidebarColumn">
             <div class="WidgetSimple">
                 <div class="Header">
-                    <h2>Ticket Information</h2>
+                    <h2>$Text{"Ticket Information"}</h2>
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall Tight">
