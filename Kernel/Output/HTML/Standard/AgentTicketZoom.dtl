@@ -2,7 +2,7 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.18 2010-09-06 21:21:46 dz Exp $
+# $Id: AgentTicketZoom.dtl,v 1.19 2010-09-06 21:46:45 dz Exp $
 # $OldId: AgentTicketZoom.dtl,v 1.149 2010/09/03 12:52:11 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -357,7 +357,7 @@
 #                    </fieldset>
 # show TicketFreeKey1-16 and TicketFreeText1-16
                     <fieldset class="TableLike FixedLabelSmall Tight">
-                        <label>$Text{"$Data{"TicketFreeKey16"}"}:</label>
+                        <label>$Text{"Decision Result"}:</label>
                         <p class="Value" title="$Text{"$Data{"TicketFreeText16"}"}">$Text{"$Data{"TicketFreeText16"}"}</p>
                         <div class="Clear"></div>
 
