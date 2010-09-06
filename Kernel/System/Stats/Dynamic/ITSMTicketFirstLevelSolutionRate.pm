@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm - stats functions for the first level solution rate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTicketFirstLevelSolutionRate.pm,v 1.5 2010-02-22 10:07:40 reb Exp $
+# $Id: ITSMTicketFirstLevelSolutionRate.pm,v 1.6 2010-09-06 20:46:52 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -472,6 +472,8 @@ sub GetStatElement {
 
             # first artilce comes from an agent (Email-Ticket)
             if (
+                $ArticleDataList->[0]->{AgentSenderTypeID}
+                &&
                 $ArticleDataList->[0]->{AgentSenderTypeID} eq $Self->{AgentSenderTypeID}
                 && !$ArticleDataList->[1]
                 )
@@ -482,6 +484,8 @@ sub GetStatElement {
 
             # first article comes from customer and the second one from an agent
             if (
+                $ArticleDataList->[0]->{AgentSenderTypeID}
+                &&
                 $ArticleDataList->[0]->{AgentSenderTypeID} eq $Self->{CustomerSenderTypeID}
                 && $ArticleDataList->[1]
                 && $ArticleDataList->[1]->{AgentSenderTypeID} eq $Self->{AgentSenderTypeID}
