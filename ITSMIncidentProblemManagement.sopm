@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.60 2010-09-07 17:30:59 dz Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.61 2010-09-07 18:22:39 dz Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -289,7 +289,7 @@
         Usted esta apunto de instalar el paquete ITSMIncidentProblemManagement de OTRS.<br/>
         <br/>
         <br/>
-        <strong>Paquetes OTRS requeridos</strong>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -343,7 +343,7 @@
         Usted esta apunto de actualizar el paquete ITSMIncidentProblemManagement de OTRS.<br/>
         <br/>
         <br/>
-        <strong>Paquetes OTRS requeridos</strong>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
@@ -392,7 +392,7 @@
         <strong>ATTENTION</strong>
         <br/>
         <br/>
-        Si usted desinstala este paquete los tipos de ticket y estados que fueron agregados durante la instalación serán desactivados.
+        Si usted desinstala este paquete, los tipos de ticket y estados que fueron agregados durante la instalación serán desactivados.
         Pueden ser activados de nuevo en el área de admin.
         <br/>
         <br/>
