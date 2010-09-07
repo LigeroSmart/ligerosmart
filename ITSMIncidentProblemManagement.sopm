@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.59 2010-09-02 19:29:16 dz Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.60 2010-09-07 17:30:59 dz Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -246,161 +246,161 @@
     ]]></CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WELCOME</strong>
-        <br>
-        <br>
-        You are about to install the OTRS package ITSMIncidentProblemManagement.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        You are about to install the OTRS package ITSMIncidentProblemManagement.<br/>
+        <br/>
+        <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WILLKOMMEN</strong>
-        <br>
-        <br>
-        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu installieren.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu installieren.<br/>
+        <br/>
+        <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
 
-        <br>
+        <br/>
         <strong>BIENVENIDO</strong>
-        <br>
-        <br>
-        Usted esta apunto de instalar el paquete ITSMIncidentProblemManagement de OTRS.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        Usted esta apunto de instalar el paquete ITSMIncidentProblemManagement de OTRS.<br/>
+        <br/>
+        <br/>
         <strong>Paquetes OTRS requeridos</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WELCOME</strong>
-        <br>
-        <br>
-        You are about to upgrade the OTRS package ITSMIncidentProblemManagement.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package ITSMIncidentProblemManagement.<br/>
+        <br/>
+        <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WILLKOMMEN</strong>
-        <br>
-        <br>
-        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu aktualisieren.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu aktualisieren.<br/>
+        <br/>
+        <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
 
-        <br>
+        <br/>
         <strong>BIENVENIDO</strong>
-        <br>
-        <br>
-        Usted esta apunto de actualizar el paquete ITSMIncidentProblemManagement de OTRS.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        Usted esta apunto de actualizar el paquete ITSMIncidentProblemManagement de OTRS.<br/>
+        <br/>
+        <br/>
         <strong>Paquetes OTRS requeridos</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>ATTENTION</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         If you uninstall this package, the ticket types and states that were added during installation will be deactivated.
         They can be activated again in the admin area.
-        <br>
-        <br>
+        <br/>
+        <br/>
         The statistics that are associated with this package, will no longer be available if the package is uninstalled.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>ACHTUNG</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         Bei der Deinstallation werden die von diesem Paket angelegten Ticket-Typen und -Status deaktiviert.
         Diese können jederzeit im Admin-Bereich wieder aktiviert werden.
-        <br>
-        <br>
+        <br/>
+        <br/>
         Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
     <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
 
-        <br>
+        <br/>
         <strong>ATTENTION</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         Si usted desinstala este paquete los tipos de ticket y estados que fueron agregados durante la instalación serán desactivados.
         Pueden ser activados de nuevo en el área de admin.
-        <br>
-        <br>
+        <br/>
+        <br/>
         Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
 
