@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: ImportExport.xml,v 1.3 2008-01-24 16:33:56 mh Exp $</CVS>
+    <CVS>$Id: ImportExport.xml,v 1.4 2010-09-07 21:29:15 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminImportExport" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the AdminImportExport in the admin area.</Description>
-        <Description Lang="de">Frontendmodul-Registration der AdminImportExport im Admin-Bereich.</Description>
+        <Description Translatable="1">Frontend module registration for the AdminImportExport in the admin area.</Description>
         <Group>ImportExport</Group>
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
@@ -22,8 +21,8 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ImportExport::FormatBackendRegistration###CSV" Required="0" Valid="1">
-        <Description Lang="en">Format backend module registration for the import/export modul.</Description>
-        <Description Lang="de">Format-Backend Modul Registration des Import/Export Moduls.</Description>
+        <Description Translatable="1">Format backend module registration for the import/export module.</Description>
+        <Description Lang="de"></Description>
         <Group>ImportExport</Group>
         <SubGroup>FormatBackend::ModuleRegistration</SubGroup>
         <Setting>
