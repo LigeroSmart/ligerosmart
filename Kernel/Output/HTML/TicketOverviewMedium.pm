@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.4 2010-09-01 23:02:12 mp Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.30 2010/09/01 12:34:46 martin Exp $
+# $Id: TicketOverviewMedium.pm,v 1.5 2010-09-07 15:15:48 en Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.31 2010/09/07 10:18:55 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -524,7 +524,7 @@ sub _Show {
         my $Access = 1;
         my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketCompose");
         if ( $Config->{Permission} ) {
-            my $Ok = $Self->{TicketObject}->Permission(
+            my $Ok = $Self->{TicketObject}->TicketPermission(
                 Type     => $Config->{Permission},
                 TicketID => $Param{TicketID},
                 UserID   => $Self->{UserID},
@@ -552,7 +552,7 @@ sub _Show {
         my $Access = 1;
         my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketPhoneOutbound");
         if ( $Config->{Permission} ) {
-            my $OK = $Self->{TicketObject}->Permission(
+            my $OK = $Self->{TicketObject}->TicketPermission(
                 Type     => $Config->{Permission},
                 TicketID => $Param{TicketID},
                 UserID   => $Self->{UserID},
@@ -662,7 +662,7 @@ sub _Show {
         && ( !defined $AclAction{AgentTicketMove} || $AclAction{AgentTicketMove} )
         )
     {
-        my $Access = $Self->{TicketObject}->Permission(
+        my $Access = $Self->{TicketObject}->TicketPermission(
             Type     => 'move',
             TicketID => $Param{TicketID},
             UserID   => $Self->{UserID},
