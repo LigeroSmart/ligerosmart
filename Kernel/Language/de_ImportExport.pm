@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.22 2010-09-08 16:16:31 dz Exp $
+# $Id: de_ImportExport.pm,v 1.23 2010-09-08 18:02:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -45,7 +45,7 @@ sub Data {
     $Lang->{'Colon (:)'}                  = 'Doppelpunkt (:)';
     $Lang->{'Dot (.)'}                    = 'Punkt (.)';
     $Lang->{'Charset'}                    = 'Zeichensatz';
-    $Lang->{'Frontend module registration for the AdminImportExport in the admin area.'} = 'Frontendmodul-Registration der AdminImportExport im Admin-Bereich.';
+    $Lang->{'Frontend module registration for the agent interface.'} = '';
     $Lang->{'Format backend module registration for the import/export module.'} = 'Format-Backend Modul Registration des Import/Export Moduls.';
     $Lang->{'Import and export object information.'} = '';
     return 1;

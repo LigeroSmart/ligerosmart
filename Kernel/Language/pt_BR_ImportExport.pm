@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Cristiano Korndörfer, http://www.dorfer.com.br/
 # --
-# $Id: pt_BR_ImportExport.pm,v 1.2 2010-05-17 13:49:43 ub Exp $
+# $Id: pt_BR_ImportExport.pm,v 1.3 2010-09-08 18:02:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -46,6 +46,9 @@ sub Data {
     $Lang->{'Colon (:)'}                  = 'Dois Pontos (:)';
     $Lang->{'Dot (.)'}                    = 'Ponto (.)';
     $Lang->{'Charset'}                    = 'Codificação de Caracteres';
+    $Lang->{'Frontend module registration for the agent interface.'} = '';
+    $Lang->{'Format backend module registration for the import/export module.'} = '';
+    $Lang->{'Import and export object information.'} = '';
 
     return 1;
 }

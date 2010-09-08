@@ -2,7 +2,7 @@
 # Kernel/Language/da_ImportExport.pm - provides da (Danish) language translation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: da_ImportExport.pm,v 1.1 2010-06-25 08:52:51 mb Exp $
+# $Id: da_ImportExport.pm,v 1.2 2010-09-08 18:02:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -45,6 +45,9 @@ sub Data {
     $Lang->{'Colon (:)'}                  = 'Kolon (:)';
     $Lang->{'Dot (.)'}                    = 'Punktum (.)';
     $Lang->{'Charset'}                    = 'Tegnsæt';
+    $Lang->{'Frontend module registration for the agent interface.'} = '';
+    $Lang->{'Format backend module registration for the import/export module.'} = '';
+    $Lang->{'Import and export object information.'} = '';
 
     return 1;
 }
