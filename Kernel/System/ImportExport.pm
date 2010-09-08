@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.39 2010-02-24 09:46:33 bes Exp $
+# $Id: ImportExport.pm,v 1.40 2010-09-08 18:51:10 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 =head1 NAME
 
@@ -374,7 +374,7 @@ sub TemplateUpdate {
     if ( !$Object ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Can't update template! I can't find the template.",
+            Message  => "Can't update template because it hasn't been found!",
         );
         return;
     }
@@ -565,7 +565,7 @@ sub ObjectAttributesGet {
     if ( !$TemplateData || !$TemplateData->{Object} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -654,7 +654,7 @@ sub ObjectDataSave {
     if ( ref $Param{ObjectData} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'ObjectData must be an hash reference!',
+            Message  => 'ObjectData must be a hash reference!',
         );
         return;
     }
@@ -802,7 +802,7 @@ sub FormatAttributesGet {
     if ( !$TemplateData || !$TemplateData->{Format} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -891,7 +891,7 @@ sub FormatDataSave {
     if ( ref $Param{FormatData} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'FormatData must be an hash reference!',
+            Message  => 'FormatData must be a hash reference!',
         );
         return;
     }
@@ -1376,7 +1376,7 @@ sub MappingObjectAttributesGet {
     if ( !$TemplateData || !$TemplateData->{Object} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -1482,7 +1482,7 @@ sub MappingObjectDataSave {
     if ( ref $Param{MappingObjectData} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'MappingObjectData must be an hash reference!',
+            Message  => 'MappingObjectData must be a hash reference!',
         );
         return;
     }
@@ -1587,7 +1587,7 @@ sub MappingFormatAttributesGet {
     if ( !$TemplateData || !$TemplateData->{Format} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -1692,7 +1692,7 @@ sub MappingFormatDataSave {
     if ( ref $Param{MappingFormatData} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'MappingFormatData must be an hash reference!',
+            Message  => 'MappingFormatData must be a hash reference!',
         );
         return;
     }
@@ -1797,7 +1797,7 @@ sub SearchAttributesGet {
     if ( !$TemplateData || !$TemplateData->{Object} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -1887,7 +1887,7 @@ sub SearchDataSave {
     if ( ref $Param{SearchData} ne 'HASH' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'SearchData must be an hash reference!',
+            Message  => 'SearchData must be a hash reference!',
         );
         return;
     }
@@ -2020,7 +2020,7 @@ sub Export {
     if ( !$TemplateData || !$TemplateData->{Object} || !$TemplateData->{Format} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -2078,7 +2078,7 @@ sub Export {
     );
     $Self->{LogObject}->Log(
         Priority => 'notice',
-        Message  => "Export of $Result{Success} records ($TemplateData->{Object}): success!",
+        Message  => "Export of $Result{Success} records ($TemplateData->{Object}): successful!",
     );
 
     return \%Result;
@@ -2120,7 +2120,7 @@ sub Import {
     if ( !$TemplateData || !$TemplateData->{Object} || !$TemplateData->{Format} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Template with ID $Param{TemplateID} not complete!",
+            Message  => "Template with ID $Param{TemplateID} is incomplete!",
         );
         return;
     }
@@ -2260,16 +2260,16 @@ sub _LoadBackend {
 
 =head1 TERMS AND CONDITIONS
 
-This Software is part of the OTRS project (http://otrs.org/).
+This Software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.39 $ $Date: 2010-02-24 09:46:33 $
+$Revision: 1.40 $ $Date: 2010-09-08 18:51:10 $
 
 =cut
