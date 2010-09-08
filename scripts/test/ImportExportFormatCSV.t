@@ -2,7 +2,7 @@
 # ImportExportFormatCSV.t - all import export tests for the CSV format backend
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportFormatCSV.t,v 1.10 2010-04-13 17:22:47 ub Exp $
+# $Id: ImportExportFormatCSV.t,v 1.11 2010-09-08 15:31:04 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1068,7 +1068,7 @@ for my $Test ( @{$ImportDataTests} ) {
 
         # read source file
         my $SourceContent = $Self->{MainObject}->FileRead(
-            Location => $Self->{Home} . '/scripts/test/sample/' . $SourceFile,
+            Location => $Self->{Home} . '/scripts/test/sample/ImportExport/' . $SourceFile,
             Result   => 'SCALAR',
             Mode     => 'binmode',
         );
