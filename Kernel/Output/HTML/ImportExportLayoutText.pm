@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ImportExportLayoutText.pm - layout backend module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutText.pm,v 1.7 2009-05-18 09:42:52 mh Exp $
+# $Id: ImportExportLayoutText.pm,v 1.8 2010-09-08 18:40:09 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -79,7 +79,21 @@ sub FormInputCreate {
 
     my $Value = $Param{Value} || $Param{Item}->{Input}->{ValueDefault};
     my $Size = $Param{Item}->{Input}->{Size} || 40;
-    my $String = "<input type=\"Text\" name=\"$Param{Prefix}$Param{Item}->{Key}\" size=\"$Size\" ";
+    my $SizeClass;
+    if ( $Size < 15 ) {
+        $SizeClass = 'W10pc';
+    }
+    elsif ( $Size < 35 ) {
+        $SizeClass = 'W33pc';
+    }
+    elsif ( $Size < 50 ) {
+        $SizeClass = 'W50pc';
+    }
+    else {
+        $SizeClass = 'W75pc';
+    }
+    my $String
+        = "<input type=\"Text\" name=\"$Param{Prefix}$Param{Item}->{Key}\" class=\"$SizeClass\" ";
 
     if ($Value) {
 
@@ -156,16 +170,16 @@ sub FormDataGet {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2009-05-18 09:42:52 $
+$Revision: 1.8 $ $Date: 2010-09-08 18:40:09 $
 
 =cut
