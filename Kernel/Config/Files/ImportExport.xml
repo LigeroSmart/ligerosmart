@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: ImportExport.xml,v 1.5 2010-09-08 15:59:56 dz Exp $</CVS>
+    <CVS>$Id: ImportExport.xml,v 1.6 2010-09-08 16:16:31 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminImportExport" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AdminImportExport in the admin area.</Description>
         <Group>ImportExport</Group>
@@ -8,7 +8,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>admin</Group>
-                <Description Translatable="1">Import and export object configurations.</Description>
+                <Description Translatable="1">Import and export object information.</Description>
                 <Title>Import/Export</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>

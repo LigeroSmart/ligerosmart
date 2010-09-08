@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ImportExport.pm,v 1.7 2010-09-07 21:29:15 dz Exp $
+# $Id: es_ImportExport.pm,v 1.8 2010-09-08 16:16:31 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -48,6 +48,7 @@ sub Data {
     $Lang->{'Charset'}                    = '';
     $Lang->{'Frontend module registration for the AdminImportExport in the admin area.'} = 'Registro de módulo frontend AdminImportExport en el área de admin';
     $Lang->{'Format backend module registration for the import/export module.'} = 'Formato backend para el módulo import/export.';
+    $Lang->{'Import and export object information.'} = 'Importar o exportar información de objetos';
     return 1;
 }
 
