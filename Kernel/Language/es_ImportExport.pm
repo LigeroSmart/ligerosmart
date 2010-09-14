@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ImportExport.pm,v 1.9 2010-09-08 18:02:53 en Exp $
+# $Id: es_ImportExport.pm,v 1.10 2010-09-14 21:25:45 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -49,6 +49,12 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} = 'Registro de módulo frontend para la interfaz del agente.';
     $Lang->{'Format backend module registration for the import/export module.'} = 'Registro de módulo de formato backend para el módulo import/export.';
     $Lang->{'Import and export object information.'} = 'Importar y exportar información de objetos.';
+    $Lang->{'Object is required!'} = '¡Debe especificar Objeto!';
+    $Lang->{'Format is required!'} = '¡Debe especificar Formato!';
+    $Lang->{'Class is required!'} = '¡Debe especificar Clase!';
+    $Lang->{'Column Separator is required!'} = '¡Debe especificar Separador de Columna!';
+    $Lang->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
+
     return 1;
 }
 

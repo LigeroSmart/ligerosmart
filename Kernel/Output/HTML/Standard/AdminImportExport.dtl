@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.17 2010-09-14 20:58:21 dz Exp $
+# $Id: AdminImportExport.dtl,v 1.18 2010-09-14 21:25:45 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -359,7 +359,7 @@
 <!-- dtl:block:TemplateEdit4Element -->
 <!-- dtl:block:TemplateEdit4NoMapFound -->
                         <div class="NoMapFound">
-                            $Text{"No Map Elements Found."}
+                            $Text{"No map elements found."}
                         </div>
 <!-- dtl:block:TemplateEdit4NoMapFound -->
                     </div>
