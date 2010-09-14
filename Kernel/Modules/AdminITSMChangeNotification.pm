@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AdminITSMChangeNotification.pm - to add/update/delete
 # notification rules for ITSM change management
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.13 2010-01-16 19:58:00 ub Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.14 2010-09-14 20:54:11 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,13 +122,29 @@ sub Run {
 
         my $Note = '';
         my %GetParam;
+        my %Error;
+
         for my $Param (qw(ID EventID Name Comment ValidID Attribute Rule)) {
             $GetParam{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+        }
+
+        if ( !$GetParam{Name} ) {
+
+            $Error{'NameInvalid'} = 'ServerError';
         }
 
         $GetParam{RecipientIDs} = [
             $Self->{ParamObject}->GetArray( Param => 'RecipientIDs' )
         ];
+
+        if (%Error) {
+            $Self->_Edit(
+                Action      => 'Add',
+                ActionLabel => 'Add',
+                %GetParam,
+                %Error,
+            );
+        }
 
         # add notification rule
         if ( my $StateID = $Self->{NotificationObject}->NotificationRuleAdd(%GetParam) ) {
@@ -137,17 +153,7 @@ sub Run {
             # notification was added
             %Notification = ( Info => 'Notification added!' );
         }
-        else {
 
-            # an error occured -> show notification
-            %Notification = ( Priority => 'Error' );
-
-            $Self->_Edit(
-                Action      => 'Add',
-                ActionLabel => 'Add',
-                %GetParam,
-            );
-        }
     }
 
     # ------------------------------------------------------------
@@ -179,6 +185,9 @@ sub _Edit {
         Name => 'Overview',
         Data => \%Param,
     );
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+
     $Param{ValidOption} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             $Self->{ValidObject}->ValidList(),
@@ -216,6 +225,10 @@ sub _Overview {
         Name => 'Overview',
         Data => \%Param,
     );
+
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
+
     $Self->{LayoutObject}->Block(
         Name => 'OverviewResult',
         Data => \%Param,
@@ -224,16 +237,7 @@ sub _Overview {
 
     # get valid list
     my %ValidList = $Self->{ValidObject}->ValidList();
-    my $CssClass  = '';
     for my $RuleID ( @{$RuleIDs} ) {
-
-        # set output class
-        if ( $CssClass && $CssClass eq 'searchactive' ) {
-            $CssClass = 'searchpassive';
-        }
-        else {
-            $CssClass = 'searchactive';
-        }
 
         my $Data = $Self->{NotificationObject}->NotificationRuleGet( ID => $RuleID );
         my $Recipients = join ', ', @{ $Data->{Recipients} || [] };
@@ -241,8 +245,7 @@ sub _Overview {
         $Self->{LayoutObject}->Block(
             Name => 'OverviewResultRow',
             Data => {
-                Valid    => $ValidList{ $Data->{ValidID} },
-                CssClass => $CssClass,
+                Valid => $ValidList{ $Data->{ValidID} },
                 %{$Data},
                 Recipients => $Recipients,
             },
