@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ImportExport.pm,v 1.10 2010-09-14 21:25:45 dz Exp $
+# $Id: es_ImportExport.pm,v 1.11 2010-09-14 21:49:14 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -45,6 +45,7 @@ sub Data {
     $Lang->{'Semicolon (;)'}              = 'Punto y Coma (;)';
     $Lang->{'Colon (:)'}                  = 'Dos puntos (:)';
     $Lang->{'Dot (.)'}                    = 'Punto (.)';
+    $Lang->{'Comma (,)'}                  = 'Coma (,)';
     $Lang->{'Charset'}                    = 'Juego de caracteres';
     $Lang->{'Frontend module registration for the agent interface.'} = 'Registro de módulo frontend para la interfaz del agente.';
     $Lang->{'Format backend module registration for the import/export module.'} = 'Registro de módulo de formato backend para el módulo import/export.';
@@ -54,6 +55,8 @@ sub Data {
     $Lang->{'Class is required!'} = '¡Debe especificar Clase!';
     $Lang->{'Column Separator is required!'} = '¡Debe especificar Separador de Columna!';
     $Lang->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
+    $Lang->{'Empty fields indicate that the current values are kept'} = 'Los campos vacíos indican que los valores actuales se mantienen';
+    $Lang->{'Create a template in order to can import and export object information.'} = 'Agregue una plantilla nueva para poder importar y exportar.';
 
     return 1;
 }

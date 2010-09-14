@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - the german translation of ImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.24 2010-09-14 21:25:45 dz Exp $
+# $Id: de_ImportExport.pm,v 1.25 2010-09-14 21:49:14 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -53,6 +53,8 @@ sub Data {
     $Lang->{'Class is required!'} = '';
     $Lang->{'Column Separator is required!'} = '';
     $Lang->{'No map elements found.'} = '';
+    $Lang->{'Empty fields indicate that the current values are kept'} = '';
+    $Lang->{'Create a template in order to can import and export object information.'} = '';
 
     return 1;
 }
