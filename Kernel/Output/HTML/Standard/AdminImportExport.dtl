@@ -1,8 +1,8 @@
 # --
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.16 2009-05-18 09:42:52 mh Exp $
+# $Id: AdminImportExport.dtl,v 1.17 2010-09-14 20:58:21 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,402 +10,443 @@
 # --
 
 <!-- dtl:block:Overview -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-  <tr>
-    <td colspan="2" class="mainhead">
-      $Env{"Box0"}$Text{"Import/Export Management"}$Env{"Box1"}
-    </td>
-  </tr>
-  <tr>
-    <td width="30%" class="mainbody">
-      <form action="$Env{"CGIHandle"}" method="get">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="TemplateEdit1">
-        <input type="hidden" name="TemplateID" value="NEW">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Add mapping template"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table>
-                <tr>
-                  <td class="contentkey" width="100">$Text{"Object"}: </td>
-                  <td class="contentvalue">$Data{"ObjectOptionStrg"}</td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Format"}: </td>
-                  <td class="contentvalue">$Data{"FormatOptionStrg"}</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" value="$Text{"Add"}">
-            </td>
-          </tr>
-        </table>
-      </form>
-    </td>
-    <td width="70%" class="mainbody">
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>$Text{"Import/Export Management"}</h1>
+
+    <div class="SidebarColumn">
+
+<!-- dtl:block:ActionList -->
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Actions"}</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+<!-- dtl:block:ActionOverview -->
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}" class="CallForAction"><span>$Text{"Go to overview"}</span></a>
+                    </li>
+<!-- dtl:block:ActionOverview -->
+<!-- dtl:block:ActionAdd -->
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1" class="CallForAction Plus"><span>$Text{"Add template"}</span></a>
+                    </li>
+<!-- dtl:block:ActionAdd -->
+                </ul>
+            </div>
+        </div>
+<!-- dtl:block:ActionList -->
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Note"}</h2>
+            </div>
+            <div class="Content">
+                <p class="FieldExplanation">
+                    $Text{"Create a template in order to can import and export object information."}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
 <!-- dtl:block:OverviewList -->
-      <table width="100%" cellspacing="0" cellpadding="4">
-        <tr>
-          <td class="contenthead">$Text{"$QData{"ObjectName"}"}:</td>
-        </tr>
-        <tr>
-          <td class="contentbody">
-            <table width="100%" border="0" cellspacing="0" cellpadding="3">
-              <tr>
-                <td class="contentkey">$Text{"Number"}</td>
-                <td class="contentkey">$Text{"Name"}</td>
-                <td class="contentkey">$Text{"Format"}</td>
-                <td align="center" class="contentkey">$Text{"valid"}/$Text{"invalid"}</td>
-                <td align="center" class="contentkey" width="90">$Text{"Delete"}</td>
-                <td align="center" class="contentkey" width="90">$Text{"Start Import"}</td>
-                <td align="center" class="contentkey" width="90">$Text{"Start Export"}</td>
-              </tr>
+            <div class="Header">
+                <h2>$Text{"$Data{"ObjectName"}"}</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>$Text{"Number"}</th>
+                            <th>$Text{"Name"}</th>
+                            <th>$Text{"Format"}</th>
+                            <th>$Text{"valid"}/$Text{"invalid"}</th>
+                            <th>$Text{"Delete"}</th>
+                            <th>$Text{"Start Import"}</th>
+                            <th>$Text{"Start Export"}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<!-- dtl:block:NoDataFoundMsg -->
+                        <tr>
+                            <td colspan="7">
+                                $Text{"No data found."}
+                            </td>
+                        </tr>
+<!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:OverviewListRow -->
-              <tr>
-                <td class="$QData{"CssClass"}">
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateEdit1&TemplateID=$QData{"TemplateID"}">
-                  $QData{"Number"}
-                  </a>
-                </td>
-                <td class="$QData{"CssClass"}">$QData{"Name"}</td>
-                <td class="$QData{"CssClass"}">$Text{"$QData{"FormatName"}"}</td>
-                <td align="center" class="$QData{"CssClass"}">$Text{"$QData{"Valid"}"}</td>
-                <td align="center" class="$QData{"CssClass"}">
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$QData{"TemplateID"}">
-                  $Text{"x"}
-                  </a>
-                </td>
-                <td align="center" class="$QData{"CssClass"}">
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ImportInformation&TemplateID=$QData{"TemplateID"}">
-                  $Text{"x"}
-                  </a>
-                </td>
-                <td align="center" class="$QData{"CssClass"}">
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Export&TemplateID=$QData{"TemplateID"}">
-                  $Text{"x"}
-                  </a>
-                </td>
-              </tr>
+                        <tr>
+                            <td>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateEdit1&TemplateID=$QData{"TemplateID"}">
+                                    $QData{"Number"}
+                                </a>
+                            </td>
+                            <td>$QData{"Name"}</td>
+                            <td>$Text{"$Data{"FormatName"}"}</td>
+                            <td>$Text{"$Data{"Valid"}"}</td>
+                            <td>
+                                <a class="TrashCan" title="Delete Template" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$QData{"TemplateID"}">
+                                    $Text{"Delete Template"}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ImportInformation&TemplateID=$QData{"TemplateID"}">
+                                    $Text{"Import"}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Export&TemplateID=$QData{"TemplateID"}">
+                                    $Text{"Export"}
+                                </a>
+                            </td>
+                        </tr>
 <!-- dtl:block:OverviewListRow -->
-            </table>
-            <br>
-          </td>
-        </tr>
-        <tr>
-          <td class="contentfooter">
-            &nbsp;
-          </td>
-        </tr>
-      </table>
-      <br>
+                    </tbody>
+                </table>
+            </div>
 <!-- dtl:block:OverviewList -->
+
 <!-- dtl:block:TemplateEdit1 -->
-      <form action="$Env{"CGIHandle"}" method="get">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="TemplateSave1">
-        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Step"} 1 $Text{"of"} 5 - $Text{"Edit common information"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Name"}: </td>
-                  <td class="contentvalue">
-                    <input type="text" name="Name" value="$QData{"Name"}" size="45" maxlength="200">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Object"}: </td>
-                  <td class="contentvalue">
-                    $QData{"ObjectName"}
-                    <input type="hidden" name="Object" value="$QData{"Object"}">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Format"}: </td>
-                  <td class="contentvalue">
-                    $QData{"FormatName"}
-                    <input type="hidden" name="Format" value="$QData{"Format"}">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Valid"}: </td>
-                  <td class="contentvalue">$Data{"ValidOptionStrg"}</td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Comment"}: </td>
-                  <td class="contentvalue">
-                    <input type="text" name="Comment" value="$QData{"Comment"}" size="50" maxlength="200">
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" name="SubmitNext" value="$Text{"Next..."}">
-            </td>
-          </tr>
-        </table>
-      </form>
+            <div class="Header">
+                <h2>$Text{"Step"} 1 $Text{"of"} 5 - $Text{"Edit common information"}:</h2>
+            </div>
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="TemplateSave1" />
+                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+
+                    <fieldset class="TableLike">
+
+                        <label for="Name">$Text{"Name"}:</label>
+                        <div class="Field">
+
+                            <input id="Name" class="Validate_Required $Data{"Class"}" type="text" name="Name" value="$QData{"Name"}" size="50" maxlength="200" />
+                            <div id="NameError" class="TooltipErrorMessage">
+                                <p>$Text{"Name is required!"}</p>
+                            </div>
+                            <div id="NameServerError" class="TooltipErrorMessage">
+                                <p>$Text{"Name is required!"}</p>
+                            </div>
+
+                        </div>
+                        <div class="Clear"></div>
+
+<!-- dtl:block:NewObjectFormat -->
+                        <label for="Object">$Text{"Object"}:</label>
+                        <div class="Field">
+
+                            $Data{"ObjectOption"}
+                            <div id="ObjectError" class="TooltipErrorMessage">
+                                <p>$Text{"Object is required!"}</p>
+                            </div>
+                            <div id="ObjectServerError" class="TooltipErrorMessage">
+                                <p>$Text{"Object is required!"}</p>
+                            </div>
+
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Format">$Text{"Format"}:</label>
+                        <div class="Field">
+
+                            $Data{"FormatOption"}
+                            <div id="FormatError" class="TooltipErrorMessage">
+                                <p>$Text{"Format is required!"}</p>
+                            </div>
+                            <div id="FormatServerError" class="TooltipErrorMessage">
+                                <p>$Text{"Format is required!"}</p>
+                            </div>
+
+                        </div>
+<!-- dtl:block:NewObjectFormat -->
+<!-- dtl:block:EditObjectFormat -->
+                        <label>$Text{"Object"}:</label>
+                        <div class="Field">
+                            $QData{"ObjectName"}
+                        </div>
+                        <input type="hidden" name="Object" value="$QData{"Object"}" />
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Format"}:</label>
+                        <div class="Field">
+                            <span>$QData{"FormatName"}</span>
+                            <input type="hidden" name="Format" value="$QData{"Format"}" />
+                        </div>
+<!-- dtl:block:EditObjectFormat -->
+
+                        <input type="hidden" name="Format" value="$QData{"Format"}" />
+                        <div class="Clear"></div>
+
+                        <label for="ValidID">$Text{"Valid"}:</label>
+                        <div class="Field">
+                            $Data{"ValidOptionStrg"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="Comment">$Text{"Comment"}:</label>
+                        <div class="Field">
+                            <input id="Comment" type="text" name="Comment" value="$QData{"Comment"}" size="50" maxlength="200" />
+                        </div>
+                        <div class="Clear"></div>
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next..."}</button>
+                            $Text{"or"}
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"} </a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
 <!-- dtl:block:TemplateEdit1 -->
+
 <!-- dtl:block:TemplateEdit2 -->
-      <form action="$Env{"CGIHandle"}" method="get">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="TemplateSave2">
-        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Step"} 2 $Text{"of"} 5 - $Text{"Edit object information"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Name"}: </td>
-                  <td class="contentvalue">$QData{"Name"}</td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Object"}: </td>
-                  <td class="contentvalue">$QData{"ObjectName"}</td>
-                </tr>
-<!-- dtl:block:TemplateEdit2Row -->
-                <tr>
-                  <td class="contentkey">$Text{"$QData{"Name"}"}:
-<!-- dtl:block:TemplateEdit2RowRequired -->
-                    <font color="red" title="$Text{"Required"}">*</font>
-<!-- dtl:block:TemplateEdit2RowRequired -->
-                    &nbsp;
-                  </td>
-                  <td class="contentvalue">$Data{"InputStrg"}</td>
-                </tr>
-<!-- dtl:block:TemplateEdit2Row -->
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" name="SubmitBack" value="$Text{"...Back"}">&nbsp;
-              <input class="button" type="submit" name="SubmitNext" value="$Text{"Next..."}">
-            </td>
-          </tr>
-        </table>
-      </form>
+            <div class="Header">
+                <h2>$Text{"Step"} 2 $Text{"of"} 5 - $Text{"Edit object information"}:</h2>
+            </div>
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="TemplateSave2" />
+                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+
+                    <fieldset class="TableLike">
+
+                        <label>$Text{"Name"}:</label>
+                        <div class="Field">
+                            $QData{"Name"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Object"}:</label>
+                        <div class="Field">
+                            $QData{"ObjectName"}
+                        </div>
+                        <div class="Clear"></div>
+
+<!-- dtl:block:TemplateEdit2Element -->
+                        <label for="$Data{"ID"}">$Text{"$Data{"Name"}"}: </label>
+                        <div class="Field">
+                            $Data{"InputStrg"}
+<!-- dtl:block:TemplateEdit2ElementRequired -->
+                            <div id="$Data{"ID"}Error" class="TooltipErrorMessage">
+                                <p>$Text{"$Data{"Name"} is required!"}</p>
+                            </div>
+                            <div id="$Data{"ID"}ServerError" class="TooltipErrorMessage">
+                                <p>$Text{"$Data{"Name"} is required!"}</p>
+                            </div>
+<!-- dtl:block:TemplateEdit2ElementRequired -->
+                        </div>
+<!-- dtl:block:TemplateEdit2Element -->
+                        <div class="Field SpacingTop">
+                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next..."}</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
 <!-- dtl:block:TemplateEdit2 -->
+
 <!-- dtl:block:TemplateEdit3 -->
-      <form action="$Env{"CGIHandle"}" method="get">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="TemplateSave3">
-        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Step"} 3 $Text{"of"} 5 - $Text{"Edit format information"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Name"}: </td>
-                  <td class="contentvalue">$QData{"Name"}</td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Format"}: </td>
-                  <td class="contentvalue">$QData{"FormatName"}</td>
-                </tr>
-<!-- dtl:block:TemplateEdit3Row -->
-                <tr>
-                  <td class="contentkey">$Text{"$QData{"Name"}"}:
-<!-- dtl:block:TemplateEdit3RowRequired -->
-                    <font color="red" title="$Text{"Required"}">*</font>
-<!-- dtl:block:TemplateEdit3RowRequired -->
-                    &nbsp;
-                  </td>
-                  <td class="contentvalue">$Data{"InputStrg"}</td>
-                </tr>
-<!-- dtl:block:TemplateEdit3Row -->
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" name="SubmitBack" value="$Text{"...Back"}">&nbsp;
-              <input class="button" type="submit" name="SubmitNext" value="$Text{"Next..."}">
-            </td>
-          </tr>
-        </table>
-      </form>
+            <div class="Header">
+                <h2>$Text{"Step"} 3 $Text{"of"} 5 - $Text{"Edit format information"}:</h2>
+            </div>
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="TemplateSave3" />
+                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+
+                    <fieldset class="TableLike">
+
+                        <label>$Text{"Name"}:</label>
+                        <div class="Field">
+                            $QData{"Name"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Format"}:</label>
+                        <div class="Field">
+                            $QData{"FormatName"}
+                        </div>
+                        <div class="Clear"></div>
+
+<!-- dtl:block:TemplateEdit3Element -->
+                        <label for="$Data{"ID"}">$Text{"$Data{"Name"}"}: </label>
+                        <div class="Field">
+                            $Data{"InputStrg"}
+<!-- dtl:block:TemplateEdit3ElementRequired -->
+                            <div id="$Data{"ID"}Error" class="TooltipErrorMessage">
+                                <p>$Text{"$Data{"Name"} is required!"}</p>
+                            </div>
+                            <div id="$Data{"ID"}ServerError" class="TooltipErrorMessage">
+                                <p>$Text{"$Data{"Name"} element is required."}</p>
+                            </div>
+<!-- dtl:block:TemplateEdit3ElementRequired -->
+                        </div>
+<!-- dtl:block:TemplateEdit3Element -->
+                        <div class="Field SpacingTop">
+                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
 <!-- dtl:block:TemplateEdit3 -->
+
 <!-- dtl:block:TemplateEdit4 -->
-      <form action="$Env{"CGIHandle"}" method="get">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="TemplateSave4">
-        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Step"} 4 $Text{"of"} 5 - $Text{"Edit mapping information"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Name"}: </td>
-                  <td class="contentvalue">$QData{"Name"}</td>
-                </tr>
-              </table>
-              <br>
-              <table border="0" cellspacing="0" cellpadding="2" width="100%">
-                <tr>
-                  <td class="contentkey">$QData{"ObjectName"}</td>
-                  <td class="contentkey">$QData{"FormatName"}</td>
-                  <td class="contentkey">&nbsp;</td>
-                </tr>
-                <br>
-                <tr>
-                  <td class="contentvalue" colspan="3"><hr width="100%"></td>
-                </tr>
-<!-- dtl:block:TemplateEdit4Row -->
-                <tr>
-                  <td>
-                    <table border="0" cellspacing="0" cellpadding="3">
-<!-- dtl:block:TemplateEdit4RowObject -->
-                      <tr>
-                        <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
-                        <td class="contentvalue">$Data{"InputStrg"}</td>
-                      </tr>
-<!-- dtl:block:TemplateEdit4RowObject -->
-                    </table>
-                  </td>
-                  <td>
-                    <table border="0" cellspacing="0" cellpadding="3">
-<!-- dtl:block:TemplateEdit4RowFormat -->
-                      <tr>
-                        <td class="contentkey">$Text{"$QData{"Name"}"}: </td>
-                        <td class="contentvalue">$Data{"InputStrg"}</td>
-                      </tr>
-<!-- dtl:block:TemplateEdit4RowFormat -->
-                    </table>
-                  </td>
-                  <td align="right">
-                    <input class="button" type="submit" name="MappingUp::$QData{"MappingID"}" value="$Text{"Up"}">
-                    <input class="button" type="submit" name="MappingDown::$QData{"MappingID"}" value="$Text{"Down"}">
-                    &nbsp;&nbsp;&nbsp;
-                    <input class="button" type="submit" name="MappingDelete::$QData{"MappingID"}" value="$Text{"Delete"}">
-                  </td>
-                </tr>
-                <tr>
-                  <td class="contentvalue" colspan="3"><hr width="100%"></td>
-                </tr>
-<!-- dtl:block:TemplateEdit4Row -->
-                <tr>
-                  <td class="contentvalue" colspan="3">
-                    <input class="button" type="submit" name="MappingAdd" value="$Text{"Add"}">
-                  </td>
-                </tr>
-              </table>
-              <br>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" name="SubmitBack" value="$Text{"...Back"}">&nbsp;
-              <input class="button" type="submit" name="SubmitNext" value="$Text{"Next..."}">
-            </td>
-          </tr>
-        </table>
-      </form>
+            <div class="Header">
+                <h2>$Text{"Step"} 4 $Text{"of"} 5 - $Text{"Edit mapping information"}:</h2>
+            </div>
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="get">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="TemplateSave4" />
+                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+                    <div class="MapHeaderRow SpacingTop">
+                        <div class="Header">
+                            <label>$Text{"Name"}:</label>
+                            <div class="Field">
+                                $QData{"Name"}
+                            </div>
+                            <div class="Clear"></div>
+                        </div>
+
+                        <div class="Header">
+                            <label>$Text{"Object"}:</label>
+                            <div class="Field">
+                                $QData{"ObjectName"}
+                            </div>
+                            <div class="Clear"></div>
+                        </div>
+
+                        <div class="Header">
+                            <label>$Text{"Format"}:</label>
+                            <div class="Field">
+                                $QData{"FormatName"}
+                            </div>
+                            <div class="Clear"></div>
+                        </div>
+                    </div>
+
+                    <div class="MapContainer SpacingTop">
+<!-- dtl:block:TemplateEdit4Element -->
+                        <div class="MapElementContainer">
+<!-- dtl:block:TemplateEdit4ElementObject -->
+                            <div class="MapElement">
+                                <label for="$Data{"ID"}">$Text{"$Data{"Name"}"}: </label>
+                                <div>
+                                    $Data{"InputStrg"}
+                                </div>
+                            </div>
+<!-- dtl:block:TemplateEdit4ElementObject -->
+<!-- dtl:block:TemplateEdit4ElementObjectColumn -->
+                            <div class="MapElement">
+                                <label>$Text{"$Data{"Name"}"}: </label>
+                                <div>
+                                    $Data{"InputStrg"}
+                                </div>
+                            </div>
+<!-- dtl:block:TemplateEdit4ElementObjectColumn-->
+
+                            <div class="MappingOptions">
+                                <button class="Primary" type="submit" name="MappingUp::$QData{"MappingID"}" value="$Text{"Up"}"> $Text{"Up"} </button>
+                                <button class="Primary" type="submit" name="MappingDown::$QData{"MappingID"}" value="$Text{"Down"}"> $Text{"Down"}</button>
+                                <button class="Primary" type="submit" name="MappingDelete::$QData{"MappingID"}" value="$Text{"Delete"}"> $Text{"Delete"} </button>
+                            </div>
+                        </div>
+<!-- dtl:block:TemplateEdit4Element -->
+<!-- dtl:block:TemplateEdit4NoMapFound -->
+                        <div class="NoMapFound">
+                            $Text{"No Map Elements Found."}
+                        </div>
+<!-- dtl:block:TemplateEdit4NoMapFound -->
+                    </div>
+
+
+                    <div class="Field SpacingTop">
+                        <button id="MappingAdd" type="submit" name="MappingAdd" value="$Text{"Add"}">$Text{"Add"}</button>
+                    </div>
+                    <div class="Submit SpacingTop">
+                        <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
+                        <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
+                    </div>
+                </form>
+            </div>
 <!-- dtl:block:TemplateEdit4 -->
+
 <!-- dtl:block:TemplateEdit5 -->
-      <form action="$Env{"CGIHandle"}" method="get">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="TemplateSave5">
-        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Step"} 5 $Text{"of"} 5 - $Text{"Edit search information"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Name"}: </td>
-                  <td class="contentvalue">$QData{"Name"}</td>
-                </tr>
-                <tr>
-                  <td class="contentkey">$Text{"Restrict export per search"}: </td>
-                  <td class="contentvalue">$Data{"RestrictExportStrg"}</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contenthead">&nbsp;</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-<!-- dtl:block:TemplateEdit5Row -->
-                <tr>
-                  <td class="contentkey">$Text{"$QData{"Name"}"}:
-                    &nbsp;
-                  </td>
-                  <td class="contentvalue">$Data{"InputStrg"}</td>
-                </tr>
-<!-- dtl:block:TemplateEdit5Row -->
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" name="SubmitBack" value="$Text{"...Back"}">&nbsp;
-              <input class="button" type="submit" name="SubmitNext" value="$Text{"Finish"}">
-            </td>
-          </tr>
-        </table>
-      </form>
+            <div class="Header">
+                <h2>$Text{"Step"} 5 $Text{"of"} 5 - $Text{"Edit search information"}:</h2>
+            </div>
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="get">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="TemplateSave5" />
+                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+                    <fieldset class="TableLike">
+                        <label>$Text{"Name"}:</label>
+                        <div class="Field">
+                            $QData{"Name"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="RestrictExport">$Text{"Restrict export per search"}:</label>
+                        <div class="Field">
+                            $Data{"RestrictExportStrg"}
+                        </div>
+                        <div class="Clear"></div>
+
+<!-- dtl:block:TemplateEdit5Element -->
+                        <label for="$Data{"ID"}">$Text{"$Data{"Name"}"}: </label>
+                        <div class="Field">
+                            $Data{"InputStrg"}
+                        </div>
+<!-- dtl:block:TemplateEdit5Element -->
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
 <!-- dtl:block:TemplateEdit5 -->
+
 <!-- dtl:block:ImportInformation -->
-      <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="Action" value="$Env{"Action"}">
-        <input type="hidden" name="Subaction" value="Import">
-        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}">
-        <table width="100%" cellspacing="0" cellpadding="4">
-          <tr>
-            <td class="contenthead">$Text{"Import information"}:</td>
-          </tr>
-          <tr>
-            <td class="contentbody">
-              <table border="0" cellspacing="0" cellpadding="3">
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Name"}: </td>
-                  <td class="contentvalue">$QData{"Name"}</td>
-                </tr>
-                <tr>
-                  <td class="contentkey" width="150">$Text{"Source File"}: </td>
-                  <td class="contentvalue">
-                    <input type="file" name="SourceFile" size="40" class="fixed">
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td class="contentfooter">
-              <input class="button" type="submit" value="$Text{"Start Import"}">
-            </td>
-          </tr>
-        </table>
-      </form>
+            <div class="Header">
+                <h2>$Text{"Import information"}:</h2>
+            </div>
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="Import" />
+                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+
+                    <fieldset class="TableLike">
+
+                        <label for="SourceFile">$Text{"Name"}:</label>
+                        <div class="Field">
+                            $QData{"Name"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="SourceFile">$Text{"Source File"}:</label>
+                        <div class="Field">
+                            <input type="file" name="SourceFile" size="40" class="fixed" />
+                        </div>
+                        <div class="Clear"></div>
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary" type="submit" value="$Text{"Start Import"}">$Text{"Start Import"}</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
 <!-- dtl:block:ImportInformation -->
-    </td>
-  </tr>
-</table>
+
+        </div>
+    </div>
+</div>
 <!-- dtl:block:Overview -->

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutCheckbox.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutCheckbox.pm,v 1.5 2010-02-24 12:56:37 bes Exp $
+# $Id: ImportExportLayoutCheckbox.pm,v 1.6 2010-09-14 20:58:20 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -82,7 +82,8 @@ sub FormInputCreate {
 
     my $Checked = $Param{Value} ? 'checked="checked"' : '';
 
-    return qq{<input type="checkbox" name="$Param{Prefix}$Param{Item}->{Key}" $Checked>};
+    return
+        qq{<input id="$Param{Prefix}$Param{Item}->{Key}" type="checkbox" name="$Param{Prefix}$Param{Item}->{Key}" $Checked />};
 }
 
 =item FormDataGet()
@@ -124,16 +125,16 @@ sub FormDataGet {
 
 =head1 TERMS AND CONDITIONS
 
-This software is part of the OTRS project (http://otrs.org/).
+This software is part of the OTRS project (L<http://otrs.org/>).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-02-24 12:56:37 $
+$Revision: 1.6 $ $Date: 2010-09-14 20:58:20 $
 
 =cut

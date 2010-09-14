@@ -1,0 +1,71 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Import Export Screen
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection
+ */
+
+
+.MapHeaderRow,
+.MapContainer,
+#MappingAdd,
+.Submit{
+    margin-left:5%;
+}
+
+.MapHeaderRow label{
+    color:#929292;
+}
+
+.MapHeaderRow .Header,
+.MapHeaderRow .Field{
+    display:inline-block;
+    margin-right:15px;
+}
+
+.MapContainer{
+    width:90%;
+    padding:10px;
+    background-color:#FFFFFF;
+    -moz-box-shadow:0 1px 2px #E8E8E8 inset, 0 1px 0 #FFFFFF;
+    background-color:#FFFFFF;
+    border-color:#C0C0C0 #C9C9C9 #C9C9C9;
+    border-right:1px solid #C9C9C9;
+    border-style:solid;
+    border-width:1px;
+}
+
+.MapElementContainer{
+    padding:5px;
+}
+
+.MapElement{
+    margin-right:10px;
+}
+
+.MapElement label,
+.NoMapFound {
+    color:#666666;
+}
+
+.MapContainer label,
+.MapContainer div, 
+.MapContainer input{
+    display:inline-block;
+}
+
+.MappingOptions{
+    margin-left:1px;
+}
+}

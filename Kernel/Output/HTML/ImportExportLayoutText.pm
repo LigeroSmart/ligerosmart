@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ImportExportLayoutText.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExportLayoutText.pm,v 1.8 2010-09-08 18:40:09 en Exp $
+# $Id: ImportExportLayoutText.pm,v 1.9 2010-09-14 20:58:20 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -93,7 +93,7 @@ sub FormInputCreate {
         $SizeClass = 'W75pc';
     }
     my $String
-        = "<input type=\"Text\" name=\"$Param{Prefix}$Param{Item}->{Key}\" class=\"$SizeClass\" ";
+        = "<input id=\"$Param{Prefix}$Param{Item}->{Key}\" type=\"text\" name=\"$Param{Prefix}$Param{Item}->{Key}\" class=\"$SizeClass\" ";
 
     if ($Value) {
 
@@ -116,7 +116,7 @@ sub FormInputCreate {
         $String .= "maxlength=\"$Param{Item}->{Input}->{MaxLength}\" ";
     }
 
-    $String .= "> ";
+    $String .= "/> ";
 
     return $String;
 }
@@ -180,6 +180,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-09-08 18:40:09 $
+$Revision: 1.9 $ $Date: 2010-09-14 20:58:20 $
 
 =cut

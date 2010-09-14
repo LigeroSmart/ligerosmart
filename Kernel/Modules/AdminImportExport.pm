@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.20 2009-05-18 09:42:52 mh Exp $
+# $Id: AdminImportExport.pm,v 1.21 2010-09-14 20:58:20 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,17 +62,8 @@ sub Run {
         # get params
         my $TemplateData = {};
         $TemplateData->{TemplateID} = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
-        if ( $TemplateData->{TemplateID} eq 'NEW' ) {
 
-            # get needed data
-            $TemplateData->{Object} = $Self->{ParamObject}->GetParam( Param => 'Object' );
-            $TemplateData->{Format} = $Self->{ParamObject}->GetParam( Param => 'Format' );
-
-            # redirect to overview
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
-                if !$TemplateData->{Object} || !$TemplateData->{Format};
-        }
-        else {
+        if ( $TemplateData->{TemplateID} ) {
 
             # get template data
             $TemplateData = $Self->{ImportExportObject}->TemplateGet(
@@ -91,6 +82,7 @@ sub Run {
             SelectedID   => $TemplateData->{Object},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Validate_Required',
         );
 
         # generate FormatOptionStrg
@@ -100,6 +92,7 @@ sub Run {
             SelectedID   => $TemplateData->{Format},
             PossibleNone => 1,
             Translation  => 1,
+            Class        => 'Validate_Required',
         );
 
         # output overview
@@ -107,10 +100,11 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                ObjectOptionStrg => $ObjectOptionStrg,
-                FormatOptionStrg => $FormatOptionStrg,
             },
         );
+
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
 
         # generate ValidOptionStrg
         my %ValidList        = $Self->{ValidObject}->ValidList();
@@ -126,11 +120,28 @@ sub Run {
             Name => 'TemplateEdit1',
             Data => {
                 %{$TemplateData},
-                ObjectName      => $ObjectList->{ $TemplateData->{Object} },
-                FormatName      => $FormatList->{ $TemplateData->{Format} },
                 ValidOptionStrg => $ValidOptionStrg,
             },
         );
+
+        if ( $TemplateData->{TemplateID} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'EditObjectFormat',
+                Data => {
+                    ObjectName => $ObjectList->{ $TemplateData->{Object} },
+                    FormatName => $FormatList->{ $TemplateData->{Format} },
+                    }
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'NewObjectFormat',
+                Data => {
+                    ObjectOption => $ObjectOptionStrg,
+                    FormatOption => $FormatOptionStrg,
+                    }
+            );
+        }
 
         # output header and navbar
         my $Output = $Self->{LayoutObject}->Header();
@@ -153,8 +164,10 @@ sub Run {
         my $TemplateData = {};
 
         # get params
-        for my $Param (qw(TemplateID Object Format Name ValidID Comment)) {
-            $TemplateData->{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+        for my $Param (qw(TemplateID Comment Object Format Name ValidID)) {
+            if ( $Self->{ParamObject}->GetParam( Param => $Param ) ) {
+                $TemplateData->{$Param} = $Self->{ParamObject}->GetParam( Param => $Param ) || '';
+            }
         }
 
         my %Submit = (
@@ -175,7 +188,7 @@ sub Run {
 
         # save to database
         my $Success;
-        if ( $TemplateData->{TemplateID} eq 'NEW' ) {
+        if ( !$TemplateData->{TemplateID} ) {
             $TemplateData->{TemplateID} = $Self->{ImportExportObject}->TemplateAdd(
                 %{$TemplateData},
                 UserID => $Self->{UserID},
@@ -258,6 +271,9 @@ sub Run {
             },
         );
 
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+
         # output list
         $Self->{LayoutObject}->Block(
             Name => 'TemplateEdit2',
@@ -282,25 +298,38 @@ sub Run {
         # output object attributes
         for my $Item ( @{$ObjectAttributeList} ) {
 
+            my $Class = '';
+            $Class = 'Validate_Required' if ( $Item->{Input}->{Required} );
+
             # create form input
             my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                 Item  => $Item,
+                Class => $Class,
                 Value => $ObjectData->{ $Item->{Key} },
             );
 
+            #build id
+            my $Id;
+            $Id = ( $Item->{Prefix} ) ? "$Item->{Prefix}$Item->{Key}" : $Item->{Key};
+
             # output attribute row
             $Self->{LayoutObject}->Block(
-                Name => 'TemplateEdit2Row',
+                Name => 'TemplateEdit2Element',
                 Data => {
                     Name => $Item->{Name} || '',
                     InputStrg => $InputString,
+                    ID        => $Id,
                 },
             );
 
             # output required notice
             if ( $Item->{Input}->{Required} ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'TemplateEdit2RowRequired',
+                    Name => 'TemplateEdit2ElementRequired',
+                    Data => {
+                        Name => $Item->{Name} || '',
+                        ID => $Id,
+                    },
                 );
             }
         }
@@ -339,7 +368,6 @@ sub Run {
         PARAM:
         for my $SubmitKey ( keys %Submit ) {
             next PARAM if !$Self->{ParamObject}->GetParam( Param => $SubmitKey );
-
             $Subaction = $Submit{$SubmitKey};
             last PARAM;
         }
@@ -435,6 +463,9 @@ sub Run {
             },
         );
 
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+
         # output list
         $Self->{LayoutObject}->Block(
             Name => 'TemplateEdit3',
@@ -459,25 +490,38 @@ sub Run {
         # output format attributes
         for my $Item ( @{$FormatAttributeList} ) {
 
+            #build id
+            my $Id;
+            $Id = ( $Item->{Prefix} ) ? "$Item->{Prefix}$Item->{Key}" : $Item->{Key};
+
+            my $Class = '';
+            $Class = 'Validate_Required' if ( $Item->{Input}->{Required} );
+
             # create form input
             my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                 Item  => $Item,
+                Class => $Class,
                 Value => $FormatData->{ $Item->{Key} },
             );
 
             # output attribute row
             $Self->{LayoutObject}->Block(
-                Name => 'TemplateEdit3Row',
+                Name => 'TemplateEdit3Element',
                 Data => {
                     Name => $Item->{Name} || '',
                     InputStrg => $InputString,
+                    ID        => $Id,
                 },
             );
 
             # output required notice
             if ( $Item->{Input}->{Required} ) {
                 $Self->{LayoutObject}->Block(
-                    Name => 'TemplateEdit3RowRequired',
+                    Name => 'TemplateEdit3ElementRequired',
+                    Data => {
+                        Name => $Item->{Name} || '',
+                        ID => $Id,
+                    },
                 );
             }
         }
@@ -612,6 +656,9 @@ sub Run {
             },
         );
 
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+
         # output headline
         $Self->{LayoutObject}->Block(
             Name => 'TemplateEdit4',
@@ -640,12 +687,16 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        my $Counter = 0;
+        my $EmptyMap = 1;
+        my $Counter  = 0;
+
         for my $MappingID ( @{$MappingList} ) {
+
+            $EmptyMap = 0;
 
             # output attribute row
             $Self->{LayoutObject}->Block(
-                Name => 'TemplateEdit4Row',
+                Name => 'TemplateEdit4Element',
                 Data => {
                     MappingID => $MappingID,
                 },
@@ -670,13 +721,15 @@ sub Run {
                     Item   => $Item,
                     Prefix => 'Object::' . $Counter . '::',
                     Value  => $MappingObjectData->{ $Item->{Key} },
+                    ID     => $Item->{Key} . $Counter,
                 );
 
                 # output attribute row
                 $Self->{LayoutObject}->Block(
-                    Name => 'TemplateEdit4RowObject',
+                    Name => 'TemplateEdit4ElementObject',
                     Data => {
                         Name      => $Item->{Name},
+                        ID        => 'Object::' . $Counter . '::' . $Item->{Key},
                         InputStrg => $InputString,
                         Counter   => $Counter,
                     },
@@ -694,7 +747,7 @@ sub Run {
 
                 # output attribute row
                 $Self->{LayoutObject}->Block(
-                    Name => 'TemplateEdit4RowFormat',
+                    Name => 'TemplateEdit4ElementObjectColumn',
                     Data => {
                         Name      => $Item->{Name},
                         InputStrg => $InputString,
@@ -704,6 +757,13 @@ sub Run {
             }
 
             $Counter++;
+        }
+
+        # output an empty list
+        if ($EmptyMap) {
+
+            # output list
+            $Self->{LayoutObject}->Block( Name => 'TemplateEdit4NoMapFound', );
         }
 
         # output header and navbar
@@ -919,6 +979,9 @@ sub Run {
             },
         );
 
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+
         # get search data
         my $SearchData = $Self->{ImportExportObject}->SearchDataGet(
             TemplateID => $TemplateData->{TemplateID},
@@ -962,10 +1025,11 @@ sub Run {
 
             # output attribute row
             $Self->{LayoutObject}->Block(
-                Name => 'TemplateEdit5Row',
+                Name => 'TemplateEdit5Element',
                 Data => {
                     Name => $Item->{Name} || '',
                     InputStrg => $InputString,
+                    ID        => $Item->{Key},
                 },
             );
         }
@@ -1132,6 +1196,9 @@ sub Run {
             },
         );
 
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+
         # output list
         $Self->{LayoutObject}->Block(
             Name => 'ImportInformation',
@@ -1252,30 +1319,20 @@ sub Run {
         return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
             if !$FormatList;
 
-        # generate ObjectOptionStrg
-        my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data         => $ObjectList,
-            Name         => 'Object',
-            PossibleNone => 1,
-            Translation  => 1,
-        );
-
-        # generate FormatOptionStrg
-        my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Data         => $FormatList,
-            Name         => 'Format',
-            PossibleNone => 1,
-            Translation  => 1,
-        );
-
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
             Data => {
                 %Param,
-                ObjectOptionStrg => $ObjectOptionStrg,
-                FormatOptionStrg => $FormatOptionStrg,
-            },
+                }
+        );
+
+        $Self->{LayoutObject}->Block( Name => 'ActionList', );
+        $Self->{LayoutObject}->Block( Name => 'ActionAdd', );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewResult',
+            Data => \%Param,
         );
 
         # get valid list
@@ -1292,9 +1349,9 @@ sub Run {
                 UserID => $Self->{UserID},
             );
 
-            next CLASS if !$TemplateList;
-            next CLASS if ref $TemplateList ne 'ARRAY';
-            next CLASS if !@{$TemplateList};
+            if ( !$TemplateList || ref $TemplateList ne 'ARRAY' || !@{$TemplateList} ) {
+                next CLASS;
+            }
 
             $EmptyDatabase = 0;
 
@@ -1306,11 +1363,7 @@ sub Run {
                 },
             );
 
-            my $CssClass = '';
             for my $TemplateID ( @{$TemplateList} ) {
-
-                # set output object
-                $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
                 # get template data
                 my $TemplateData = $Self->{ImportExportObject}->TemplateGet(
@@ -1324,7 +1377,6 @@ sub Run {
                     Data => {
                         %{$TemplateData},
                         FormatName => $FormatList->{ $TemplateData->{Format} },
-                        CssClass   => $CssClass,
                         Valid      => $ValidList{ $TemplateData->{ValidID} },
                     },
                 );
@@ -1338,9 +1390,10 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewList',
                 Data => {
-                    ObjectName => 'Template',
+                    ObjectName => 'Template List',
                 },
             );
+            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
         }
 
         # output header and navbar
