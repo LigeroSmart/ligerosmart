@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.44 2010-08-13 16:57:07 cr Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.45 2010-09-21 16:40:28 cr Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -10,6 +10,7 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The OTRS::ITSM Service Level Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Service Level Management Paket.</Description>
+    <Description Lang="es">El paquete OTRS::ITSM Service Level Management.</Description>
     <Filelist>
         <File Permission="644" Location="var/stats/ITSMStats-001-Ticket.xml"/>
         <File Permission="644" Location="var/stats/ITSMStats-002-Ticket.xml"/>
@@ -213,126 +214,188 @@
     ]]></CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WELCOME</strong>
-        <br>
-        <br>
-        You are about to install the OTRS package ITSMServiceLevelManagement.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        You are about to install the OTRS package ITSMServiceLevelManagement.<br/>
+        <br/>
+        <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WILLKOMMEN</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu installieren.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted esta apunto de instalar el paquete ITSMServiceLevelManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 2.1.91</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>NOTICE</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         The statistics that were installed by this package will be available in the menu item 'Stats'.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>HINWEIS</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         Im Menü-Punkt 'Statistik' sind die von diesem Paket installierten Statistiken verfügbar.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Información de Instalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>NOTA</strong>
+        <br/>
+        <br/>
+        Las estadísticas que serán instaladas mediante este paquete estarán disponibles en el menú 'Stats'.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WELCOME</strong>
-        <br>
-        <br>
-        You are about to upgrade the OTRS package ITSMServiceLevelManagement.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package ITSMServiceLevelManagement.<br/>
+        <br/>
+        <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>WILLKOMMEN</strong>
-        <br>
-        <br>
-        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu aktualisieren.<br>
-        <br>
-        <br>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMServiceLevelManagement zu aktualisieren.<br/>
+        <br/>
+        <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.91</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted esta apunto de actualizar el paquete ITSMServiceLevelManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 2.1.91</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
-        <br>
+        <br/>
         <strong>ATTENTION</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         The statistics that are associated with this package, will no longer be available if the package is uninstalled.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
-        <br>
+        <br/>
         <strong>ACHTUNG</strong>
-        <br>
-        <br>
+        <br/>
+        <br/>
         Nach der Deinstallation sind die von diesem Paket installierten Statistiken nicht mehr verfügbar.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
 </otrs_package>
