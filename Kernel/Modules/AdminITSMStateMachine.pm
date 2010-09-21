@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.25 2010-01-20 08:32:14 ub Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.26 2010-09-21 21:38:59 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,29 +52,18 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my %Error;
+
     # store commonly needed parameters in %GetParam
     my %GetParam;
     for my $ParamName (qw(StateID NextStateID Class)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # translate from name to class and visa versa
+    # translate from name to class and vice versa
     if ( $GetParam{Class} ) {
         $GetParam{ClassShortName} = $Self->{ConfigByClass}->{ $GetParam{Class} }->{Name};
     }
-
-    # Build drop-down for the class selection on the left side.
-    my @ArrHashRef;
-    for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
-        push @ArrHashRef, { Key => $Class, Value => $Class, };
-    }
-    $GetParam{ClassSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Name         => 'Class',
-        Data         => \@ArrHashRef,
-        SelectedID   => $GetParam{Class},
-        PossibleNone => 1,
-        Translation  => 0,
-    );
 
     # error messages are added to this variable
     my $Note = '';
@@ -89,10 +78,7 @@ sub Run {
     }
     elsif ( $Self->{Subaction} eq 'StateTransitionAdd' ) {
         if ( !$GetParam{Class} ) {
-            $Note .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Info     => 'Please select first a catalog class!',
-            );
+            $Error{'ClassInvalid'} = 'ServerError';
         }
         else {
 
@@ -111,6 +97,20 @@ sub Run {
             %GetParam,
         );
     }
+
+    # Build drop-down for the class selection on the left side.
+    my @ArrHashRef;
+    for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
+        push @ArrHashRef, { Key => $Class, Value => $Class, };
+    }
+    $GetParam{ClassSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Name         => 'Class',
+        Data         => \@ArrHashRef,
+        SelectedID   => $GetParam{Class},
+        Class        => 'Validate_RequiredDropdown W100pc ' . ( $Error{ClassInvalid} || '' ),
+        PossibleNone => 1,
+        Translation  => 0,
+    );
 
     # perform actions
 
@@ -135,29 +135,25 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'StateTransitionAddAction' ) {
 
         my $IsValid = 1;
+        %Error = '';
 
         # we need to distinguish between empty string '' and the string '0'.
         # '' indicates that no value was selected, which is invalid
         # '0' indicated '*START*' or '*END*'
         if ( $GetParam{StateID} eq '' ) {
             $IsValid = 0;
-            $Note .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Info     => 'Please select a state!',
-            );
+            $Error{'StateInvalid'} = 'ServerError';
         }
 
         if ( $GetParam{NextStateID} eq '' ) {
             $IsValid = 0;
-            $Note .= $Self->{LayoutObject}->Notify(
-                Priority => 'Error',
-                Info     => 'Please select a next state!',
-            );
+            $Error{'NextStateInvalid'} = 'ServerError';
         }
 
         if ( !$IsValid ) {
             return $Self->_StateTransitionAddPageGet(
                 %GetParam,
+                %Error,
                 Action => 'StateTransitionAdd',
                 Note   => $Note,
             );
@@ -225,6 +221,8 @@ sub _StateTransitionUpdatePageGet {
         Data => \%Param,
     );
 
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+
     $Self->{LayoutObject}->Block(
         Name => 'StateTransitionUpdate',
         Data => \%Param,
@@ -262,6 +260,7 @@ sub _StateTransitionAddPageGet {
         Name         => 'StateID',
         SelectedID   => $Param{StateID},
         PossibleNone => 1,
+        Class        => 'Validate_RequiredDropdown ' . ( $Param{StateInvalid} || '' ),
     );
 
     # dropdown menu, where the next state can be selected for addition
@@ -271,12 +270,15 @@ sub _StateTransitionAddPageGet {
         Name         => 'NextStateID',
         SelectedID   => $Param{NextStateID},
         PossibleNone => 1,
+        Class        => 'Validate_RequiredDropdown ' . ( $Param{NextStateInvalid} || '' ),
     );
 
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
         Data => \%Param,
     );
+
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
 
     $Self->{LayoutObject}->Block(
         Name => 'StateTransitionAdd',
@@ -304,6 +306,8 @@ sub _StateTransitionDeletePageGet {
         Name => 'Overview',
         Data => \%Param,
     );
+
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
 
     $Param{StateName} = $Self->{StateMachineObject}->StateLookup(
         Class   => $Param{Class},
@@ -341,6 +345,8 @@ sub _OverviewStateTransitionsPageGet {
         Name => 'Overview',
         Data => \%Param,
     );
+
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
 
     $Self->{LayoutObject}->Block(
         Name => 'OverviewStateTransitions',
@@ -420,6 +426,12 @@ sub _OverviewClassesPageGet {
         Name => 'Overview',
         Data => \%Param,
     );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'ActionAddState',
+        Data => \%Param,
+    );
+
     $Self->{LayoutObject}->Block(
         Name => 'OverviewClasses',
         Data => \%Param,
