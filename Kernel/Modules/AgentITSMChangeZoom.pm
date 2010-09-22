@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.52 2010-07-05 10:42:39 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.53 2010-09-22 15:55:26 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -158,6 +158,18 @@ sub Run {
                     %{$Self},
                     ChangeID => $Self->{ChangeID},
                 );
+
+                # set classes
+                if ( $Menus{$Menu}->{Target} ) {
+
+                    if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+                        $Menus{$Menu}->{MenuClass} = 'AsPopup';
+                    }
+                    elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
+                        $Menus{$Menu}->{MenuClass} = 'HistoryBack';
+                    }
+
+                }
 
                 # run module
                 $Counter = $Object->Run(
