@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.77 2010-09-15 21:09:34 en Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.78 2010-09-22 21:27:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.77 $) [1];
+$VERSION = qw($Revision: 1.78 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -33,9 +33,9 @@ sub Data {
     $Lang->{'Create a change from this ticket!'}    = 'Einen Change aus diesem Ticket erstellen!';
     $Lang->{'Create Change'}                        = 'Change erstellen';
     $Lang->{'e.g.'}                                 = 'z. B.';
-    $Lang->{'Save Change as template'}              = 'Speichere Change als Vorlage';
-    $Lang->{'Save Workorder as template'}           = 'Speichere Workorder als Vorlage';
-    $Lang->{'Save Change CAB as template'}          = 'Speichere Change CAB als Vorlage';
+    $Lang->{'Save Change as Template'}              = 'Speichere Change als Vorlage';
+    $Lang->{'Save Workorder as Template'}           = 'Speichere Workorder als Vorlage';
+    $Lang->{'Save Change CAB as Template'}          = 'Speichere Change CAB als Vorlage';
     $Lang->{'New time'}                             = 'Neue Zeit';
     $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
     $Lang->{'The planned end time is invalid!'}     = 'Die geplante Endzeit ist ungültig!';

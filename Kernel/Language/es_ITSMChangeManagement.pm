@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.9 2010-09-21 18:28:44 en Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.10 2010-09-22 21:27:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -34,9 +34,9 @@ sub Data {
     $Lang->{'Create a change from this ticket!'}    = '¡Crear un cambio a partir de este ticket!';
     $Lang->{'Create Change'}                        = 'Crear un Cambio';
     $Lang->{'e.g.'}                                 = 'ej.';
-    $Lang->{'Save Change as template'}              = 'Guardar Cambio como plantilla';
-    $Lang->{'Save Workorder as template'}           = 'Guardar Orden de Trabajo como plantilla';
-    $Lang->{'Save Change CAB as template'}          = 'Guardar Change CAB como plantilla';
+    $Lang->{'Save Change as Template'}              = 'Guardar Cambio como Plantilla';
+    $Lang->{'Save Workorder as Template'}           = 'Guardar Orden de Trabajo como Plantilla';
+    $Lang->{'Save Change CAB as Template'}          = 'Guardar Change CAB como Plantilla';
     $Lang->{'New time'}                             = 'Nuevo intervalo de tiempo';
     $Lang->{'Requested (by customer) Date'}         = 'Fecha solicitada (por el cliente)';
     $Lang->{'The planned end time is invalid!'}     = '¡La fecha de finalización planeada es inválida!';
