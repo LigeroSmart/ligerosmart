@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.221 2010-09-15 21:10:18 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.222 2010-09-22 15:54:24 en Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -419,6 +419,9 @@
                 <Description>Change Zoom</Description>
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
+                <Loader>
+                    <JavaScript>Core.UI.Popup.js</JavaScript>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -730,6 +733,7 @@
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">$Env{"LastScreenChanges"}</Item>
+                <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -744,6 +748,7 @@
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMChangeHistory</Item>
                 <Item Key="Link">Action=AgentITSMChangeHistory&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -759,6 +764,7 @@
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;ChangeID=$QData{"ChangeID"}</Item>
                 <Item Key="LinkParam">target="print_change"</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -773,6 +779,7 @@
                 <Item Key="Description">Edit the change</Item>
                 <Item Key="Action">AgentITSMChangeEdit</Item>
                 <Item Key="Link">Action=AgentITSMChangeEdit&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -787,6 +794,7 @@
                 <Item Key="Description">Change involved persons of the change</Item>
                 <Item Key="Action">AgentITSMChangeInvolvedPersons</Item>
                 <Item Key="Link">Action=AgentITSMChangeInvolvedPersons&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -801,6 +809,7 @@
                 <Item Key="Description">Add a workorder to the change</Item>
                 <Item Key="Action">AgentITSMWorkOrderAdd</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAdd&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -815,6 +824,7 @@
                 <Item Key="Description">Edit the conditions of the change</Item>
                 <Item Key="Action">AgentITSMChangeCondition</Item>
                 <Item Key="Link">Action=AgentITSMChangeCondition&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -829,6 +839,7 @@
                 <Item Key="Description">Link another object to the change</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMChange&amp;SourceKey=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -843,6 +854,7 @@
                 <Item Key="Description">Move all workorders in time</Item>
                 <Item Key="Action">AgentITSMChangeTimeSlot</Item>
                 <Item Key="Link">Action=AgentITSMChangeTimeSlot&amp;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -857,6 +869,7 @@
                 <Item Key="Description">Save change as a template</Item>
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
