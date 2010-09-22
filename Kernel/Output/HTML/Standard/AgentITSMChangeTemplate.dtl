@@ -2,7 +2,7 @@
 # AgentITSMChangeTemplate.dtl - provides HTML form for AgentITSMChangeTemplate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTemplate.dtl,v 1.16 2010-09-22 21:31:16 en Exp $
+# $Id: AgentITSMChangeTemplate.dtl,v 1.17 2010-09-22 22:02:18 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,7 +47,7 @@
                 </div>
                 <div class="Clear"></div>
 
-                <label for="StateReset">$Text{"Valid"}:</label>
+                <label for="ValidID">$Text{"Valid"}:</label>
                 <div class="Field">
                     $Data{"ValidSelectionString"}
                 </div>
