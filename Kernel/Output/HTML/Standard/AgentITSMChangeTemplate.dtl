@@ -2,107 +2,61 @@
 # AgentITSMChangeTemplate.dtl - provides HTML form for AgentITSMChangeTemplate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTemplate.dtl,v 1.15 2010-06-29 12:56:31 sb Exp $
+# $Id: AgentITSMChangeTemplate.dtl,v 1.16 2010-09-22 21:31:16 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<script type="text/javascript">
-<!--
+<form action="$Env{"CGIHandle"}" method="post" name="compose" id="Compose" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action"       value="$Env{"Action"}">
+    <input type="hidden" name="Subaction"    value="AddTemplate">
+    <input type="hidden" name="ChangeID"     value="$QData{"ChangeID"}">
 
-function submit_compose() {
+    <div class="WidgetPopup ARIARoleMain">
+        <div class="Header">
+            <h1>$Text{"Save Change as Template"}:</h1>
+            <h2>$Config{"ITSMChange::Hook"}: $Data{"ChangeNumber"} $QData{"ChangeTitle"}</h2>
+            <p>
+                <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
 
-    // check the template name, all whitespace counts as empty
-    if (document.compose.TemplateName.value.match(/^\s*$/)) {
-        alert('$JSText{"A template must have a name!"}');
-        document.compose.TemplateName.focus();
+            <h2>$Text{"Options"}</h2>
 
-        return false;
-    }
+            <fieldset class="TableLike FixedLabel">
+                <label for="TemplateName">$Text{"Template Name"}:</label>
+                <div class="Field">
+                    <input type="text" id="TemplateName" name="TemplateName" value="$QData{"TemplateName"}" class="W75pc Validate_Required $QData{"TemplateNameInvalid"}" />
+                    <div id="TemplateNameError" class="TooltipErrorMessage" ><p>$Text{"A template should have a name!"}</p></div>
+                    <div id="TemplateNameServerError" class="TooltipErrorMessage"><p>$Text{"The template name is required."}</p></div>
+                </div>
+                <div class="Clear"></div>
 
-    return true;
-}
+                <label for="Comment">$Text{"Comment"}:</label>
+                <div class="Field">
+                    <input type="text" id="Comment" name="Comment" value="$QData{"Comment"}" class="W75pc" />
+                </div>
+                <div class="Clear"></div>
 
-//-->
-</script>
+                <label for="StateReset">$Text{"Reset States"}:</label>
+                <div class="Field">
+                    <input type="checkbox" id="StateReset" name="StateReset" value="1" $QData{"StateReset"}/>
+                </div>
+                <div class="Clear"></div>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Save Change as template"} : $Config{"ITSMChange::Hook"}: $Data{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Save Change as template"} : $Config{"ITSMChange::Hook"}: $Data{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
+                <label for="StateReset">$Text{"Valid"}:</label>
+                <div class="Field">
+                    $Data{"ValidSelectionString"}
+                </div>
+                <div class="Clear"></div>
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" name="compose">
-                <input type="hidden" name="Action"       value="$Env{"Action"}">
-                <input type="hidden" name="Subaction"    value="AddTemplate">
-                <input type="hidden" name="ChangeID"     value="$QData{"ChangeID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Save Change as template"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130"/>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Template Name"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
-                                    </td>
-                                    <td class="contentvalue">
-                                        <input type="text" name="TemplateName" value="$QData{"TemplateName"}" size="70" maxlength="250">
-<!-- dtl:block:InvalidTemplateName -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTemplateName -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Comment"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        <input type="text" name="Comment" value="$QData{"Comment"}" size="70" maxlength="250">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Reset States"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        <input type="checkbox" name="StateReset" value="1" $QData{"StateReset"}/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"Valid"}: </td>
-                                    <td class="contentvalue">$Data{"ValidSelectionString"}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" id="submitAddTemplate" accesskey="g" type="submit" name="AddTemplate" value="$Text{"Add"}" onclick="return submit_compose();"/>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
-        </td>
-    </tr>
-</table>
+            </fieldset>
+        </div>
+        <div class="Footer">
+            <button class="Primary" id="submitAddTemplate" accesskey="g" type="submit" name="AddTemplate" value="$Text{"Add"}">$Text{"Add"}</button>
+        </div>
+    </div>
+</form>

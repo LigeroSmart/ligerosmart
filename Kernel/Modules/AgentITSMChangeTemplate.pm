@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTemplate.pm,v 1.11 2010-06-29 13:45:17 sb Exp $
+# $Id: AgentITSMChangeTemplate.pm,v 1.12 2010-09-22 21:30:52 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,7 +56,7 @@ sub Run {
     if ( !$ChangeID ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No ChangeID is given!',
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -85,7 +85,7 @@ sub Run {
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "No change found for change ID $ChangeID.",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -95,19 +95,18 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # Remember the reason why saving was not attempted.
-    # The items are the names of the dtl validation error blocks.
-    my @ValidationErrors;
+    # Check required fields to look for errors.
+    my %Error;
 
     # add a template
     if ( $Self->{Subaction} eq 'AddTemplate' ) {
 
         # check validity of the template name
         if ( !$GetParam{TemplateName} ) {
-            push @ValidationErrors, 'InvalidTemplateName';
+            $Error{'TemplateNameInvalid'} = 'ServerError';
         }
 
-        if ( !@ValidationErrors ) {
+        if ( !%Error ) {
 
             # serialize the change
             my $TemplateContent = $Self->{TemplateObject}->TemplateSerialize(
@@ -121,7 +120,7 @@ sub Run {
             if ( !$TemplateContent ) {
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "The change '$ChangeID' could not be serialized.",
-                    Comment => 'Please contact the admin.',
+                    Comment => 'Please contact the administrator.',
                 );
             }
 
@@ -139,26 +138,26 @@ sub Run {
             if ( !$TemplateID ) {
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "Could not add the template.",
-                    Comment => 'Please contact the admin.',
+                    Comment => 'Please contact the administrator.',
                 );
             }
 
-            # everything went well, redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => $Self->{LastChangeView},
+            # load new URL in parent window and close popup
+            return $Self->{LayoutObject}->PopupClose(
+                URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
             );
         }
     }
     else {
 
-        # no subaction,
+        # no subaction
     }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
+        Type  => 'Small',
         Title => 'Template',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => {
@@ -168,11 +167,6 @@ sub Run {
         SelectedID => $GetParam{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
         Sort       => 'NumericKey',
     );
-
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
 
     # set checkbox for state reset
     if ( $GetParam{StateReset} ) {
@@ -188,11 +182,14 @@ sub Run {
             ValidSelectionString => $ValidSelectionString,
             ChangeNumber         => $Change->{ChangeNumber},
             ChangeTitle          => $Change->{ChangeTitle},
+            %Error,
         },
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer(
+        Type => 'Small',
+    );
 
     return $Output;
 }
