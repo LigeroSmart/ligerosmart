@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.259 2010-07-03 00:37:56 ub Exp $
+# $Id: ITSMChange.pm,v 1.260 2010-09-22 15:57:10 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.259 $) [1];
+$VERSION = qw($Revision: 1.260 $) [1];
 
 =head1 NAME
 
@@ -2923,7 +2923,7 @@ sub ChangeAttachmentList {
     }
 
     # search for attachments
-    my %Attachments = $Self->{VirtualFSObject}->Search(
+    my %Attachments = $Self->{VirtualFSObject}->Find(
         Preferences => {
             ChangeID => $Param{ChangeID},
         },
@@ -3676,6 +3676,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.259 $ $Date: 2010-07-03 00:37:56 $
+$Revision: 1.260 $ $Date: 2010-09-22 15:57:10 $
 
 =cut
