@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.53 2010-06-22 01:48:38 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.54 2010-09-22 15:56:20 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,17 +20,20 @@
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
-        <td width="75%" class="menu">
+        <div class="ControlRow">
+            <h2></h2>
+        </div>
+        <div class="ActionRow">
+            <ul class="Actions">
 <!-- dtl:block:Menu -->
-<!-- dtl:block:MenuItemSplit -->
-            -
-<!-- dtl:block:MenuItemSplit -->
 <!-- dtl:block:MenuItem -->
-            <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} onmouseover="window.status='$JSText{"$QData{"Name"}"}'; return true;" onmouseout="window.status='';" class="menuitem" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                <li>
+                    <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                </li>
 <!-- dtl:block:MenuItem -->
 <!-- dtl:block:Menu -->
-        </td>
-        <td align="right" width="25%" class="menu"></td>
+            </ul>
+        </div>
     </tr>
 </table>
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
@@ -438,3 +441,17 @@
         </td>
     </tr>
 </table>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('ul.Actions a.AsPopup').bind('click', function (Event) {
+    Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
+    return false;
+    });
+
+    $('ul.Actions a.HistoryBack').bind('click', function (Event) {
+        javascript:history.back();
+        return false;
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
