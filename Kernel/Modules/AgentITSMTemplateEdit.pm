@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMTemplateEdit.pm - the template edit module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateEdit.pm,v 1.4 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMTemplateEdit.pm,v 1.5 2010-09-23 17:48:51 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,57 +69,8 @@ sub Run {
     if ( !$TemplateID ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No TemplateID is given!',
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
-    }
-
-    # store needed parameters in %GetParam to make it reloadable
-    my %GetParam;
-    for my $ParamName (qw(TemplateName Comment ValidID)) {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
-    }
-
-    my @ValidationErrors;
-
-    # update the template
-    if ( $Self->{Subaction} eq 'UpdateTemplate' ) {
-
-        # check validity of the template name
-        my $TemplateName = $GetParam{TemplateName};
-        if ( !$TemplateName ) {
-            push @ValidationErrors, 'InvalidTemplateName';
-        }
-
-        if ( !@ValidationErrors ) {
-            my $CouldUpdateTemplate = $Self->{TemplateObject}->TemplateUpdate(
-                TemplateID => $TemplateID,
-                Name       => $GetParam{TemplateName},
-                Comment    => $GetParam{Comment},
-                ValidID    => $GetParam{ValidID},
-                UserID     => $Self->{UserID},
-            );
-
-            if ($CouldUpdateTemplate) {
-
-                # redirect to zoom mask, TODO: use the stored last view
-                return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMTemplateOverview",
-                );
-            }
-            else {
-
-                # show error message
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to update Template $TemplateID!",
-                    Comment => 'Please contact the admin.',
-                );
-            }
-        }
-    }
-    else {
-
-        # initially use the data from $Template
-        %GetParam = ();
     }
 
     # get template data
@@ -132,18 +83,62 @@ sub Run {
     if ( !$Template ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Template '$TemplateID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
+    my %GetParam;
+
+    # update the template
+    if ( $Self->{Subaction} eq 'UpdateTemplate' ) {
+
+        # store needed parameters in %GetParam to make it reloadable
+        for my $ParamName (qw(TemplateName Comment ValidID)) {
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+        }
+
+        # check validity of the template name
+        my $TemplateName = $GetParam{TemplateName} || $Template->{Name};
+
+        if ($TemplateName) {
+            my $CouldUpdateTemplate = $Self->{TemplateObject}->TemplateUpdate(
+                TemplateID => $TemplateID,
+                Name       => $TemplateName,
+                Comment    => $GetParam{Comment} || $Template->{Comment},
+                ValidID    => $GetParam{ValidID} || $Template->{ValidID},
+                UserID     => $Self->{UserID},
+            );
+
+            if ($CouldUpdateTemplate) {
+
+                # load new URL in parent window and close popup
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => "Action=AgentITSMTemplateOverview",
+                );
+            }
+            else {
+
+                # show error message
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "Was not able to update Template $TemplateID!",
+                    Comment => 'Please contact the administrator.',
+                );
+            }
+        }
+    }
+    else {
+
+        # no subaction
+    }
+
     # fix up the name
-    $Template->{TemplateName} = $Template->{Name};
+    $Template->{TemplateName} = $GetParam{TemplateName} || $Template->{Name};
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
+        Type  => 'Small',
         Title => $Template->{TemplateName},
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => {
@@ -155,11 +150,6 @@ sub Run {
             || ( $Self->{ValidObject}->ValidIDsGet() )[0],
         Sort => 'NumericKey',
     );
-
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
