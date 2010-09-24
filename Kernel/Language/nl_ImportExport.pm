@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ImportExport.pm - the Dutch translation of ImportExport
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_ImportExport.pm,v 1.6 2010-09-14 21:49:14 dz Exp $
+# $Id: nl_ImportExport.pm,v 1.7 2010-09-24 08:58:15 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -47,14 +47,14 @@ sub Data {
     $Lang->{'Charset'}                    = 'Karakterset';
     $Lang->{'Frontend module registration for the agent interface.'} = '';
     $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    $Lang->{'Import and export object information.'} = 'Import en export objectinformatie';
+    $Lang->{'Object is required!'} = 'Object is verplicht.';
+    $Lang->{'Format is required!'} = 'Formaat is verplicht.';
+    $Lang->{'Class is required!'} = 'Klasse is verplicht.';
+    $Lang->{'Column Separator is required!'} = 'Scheidingsteken is verplicht';
+    $Lang->{'No map elements found.'} = 'Geen elementen gevonden.';
+    $Lang->{'Empty fields indicate that the current values are kept'} = 'Bij lege velden wordt de huidige waarde behouden';
+    $Lang->{'Create a template in order to can import and export object information.'} = 'Maak een template aan om objecten te importeren of exporteren.';
 
     return 1;
 }
