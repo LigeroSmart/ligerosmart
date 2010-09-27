@@ -3,7 +3,7 @@
 # otrs.NagiosCheckTicketCount.pl - OTRS Nagios checker
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.NagiosCheckTicketCount.pl,v 1.1 2010-02-25 15:00:32 jb Exp $
+# $Id: otrs.NagiosCheckTicketCount.pl,v 1.2 2010-09-27 21:39:54 jb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -25,7 +25,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use File::Basename;
 use FindBin qw($RealBin);
@@ -77,7 +77,7 @@ $CommonObject{ConfigObject} = Kernel::Config->new(%CommonObject);
 $CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
 $CommonObject{LogObject}    = Kernel::System::Log->new(
     %CommonObject,
-    LogPrefix => 'otrs.NagiosCheck'
+    LogPrefix => 'otrs.NagiosCheckTicketCount'
 );
 $CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
 $CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
