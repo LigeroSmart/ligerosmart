@@ -1,96 +1,98 @@
 # --
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.20 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.21 2010-09-27 22:50:05 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"History of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"History of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
+<div class="WidgetPopup ARIARoleMain">
+
+    <div class="Header">
+        <h1>
+            $Text{"History of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} - $QData{"ChangeTitle","60"}
+        </h1>
+        <p>
+            <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
+        </p>
+    </div>
+
+    <div class="Content">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>
+                    $Text{"History Content"}
+                </h2>
             </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody">
-            <table border="0" cellspacing="0" cellpadding="2" width="100%">
-                <colgroup>
-                    <col>
-                    <col>
-                    <col width="60" align="center">
-                    <col width="60" align="center">
-                    <col>
-                    <col>
-                </colgroup>
-                <tr class="contenthead">
-                    <td>
-                        $Text{"Action"}:
-                    </td>
-                    <td>
-                        $Text{"Comment"}:
-                    </td>
-                    <td>
-                        $Text{"Details"}:
-                    </td>
-                    <td>
-                        $Text{"Workorder"}:
-                    </td>
-                    <td>
-                        $Text{"User"}:
-                    </td>
-                    <td>
-                        $Text{"Createtime"}:
-                    </td>
-                </tr>
+            <div class="Content">
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>$Text{"Action"}</th>
+                            <th>$Text{"Comment"}</th>
+                            <th>$Text{"Details"}</th>
+                            <th>$Text{"Workorder"}</th>
+                            <th>$Text{"User"}</th>
+                            <th>$Text{"Createtime"}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+<!-- dtl:block:NoDataFoundMsg -->
+                        <tr>
+                            <td colspan="6">
+                                $Text{"No data found."}
+                            </td>
+                        </tr>
+<!-- dtl:block:NoDataFoundMsg -->
+
 <!-- dtl:block:Row -->
-                <tr class="$QData{"css"}">
-                    <td>
-                        $Quote{"$Data{"HistoryType"}"}
-                    </td>
-                    <td>
-                        <div title="$QData{"Content"}">$QData{"Content","100"}</div>
-                    </td>
-                    <td align="center">
+                        <tr>
+                            <td>
+                                $QData{"HistoryType"}
+                            </td>
+                            <td>
+                                $QData{"Content","100"}
+                            </td>
+                            <td>
 <!-- dtl:block:HistoryZoomDash -->
-                        -
+                                -
 <!-- dtl:block:HistoryZoomDash -->
 <!-- dtl:block:HistoryZoom -->
-                        <a href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom&HistoryEntryID=$Data{"HistoryEntryID"}" onmouseover="window.status='$JSText{"More Info"}'; return true;" onmouseout="window.status='';">x</a>
+                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:HistoryZoom -->
-                    </td>
-                    <td align="center">
+                            </td>
+                            <td>
 <!-- dtl:block:Dash -->
-                        -
+                                -
 <!-- dtl:block:Dash -->
 <!-- dtl:block:WorkOrderZoom -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom&WorkOrderID=$Data{"WorkOrderID"}" onmouseover="window.status='$JSText{"Zoom"}'; return true;" onmouseout="window.status='';">x</a>
+                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:WorkOrderZoom -->
-                    </td>
-                    <td>
-                        <div title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
-                            $Quote{"$Data{"UserLogin"}"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","20"})
-                        </div>
-                    </td>
-                    <td>
-                        $TimeLong{"$Data{"CreateTime"}"}
-                    </td>
-                </tr>
+                            </td>
+                            <td>
+                                $QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","20"})
+                            </td>
+                            <td>
+                                $TimeLong{"$Data{"CreateTime"}"}
+                            </td>
+                        </tr>
 <!-- dtl:block:Row -->
-                <tr class="contenthead">
-                    <td colspan="6">&nbsp;</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('a.LinkZoomView').bind('click', function () {
+        window.opener.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
+        window.close();
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+    </div>
+</div>
