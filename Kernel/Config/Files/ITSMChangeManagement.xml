@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.224 2010-09-23 22:24:26 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.225 2010-09-28 21:00:48 en Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -615,6 +615,9 @@
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
             </FrontendModuleReg>
+            <Loader>
+                <JavaScript>Core.UI.Popup.js</JavaScript>
+            </Loader>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CustomerFrontend::Module###CustomerITSMChangeSchedule" Required="0" Valid="0">
@@ -884,6 +887,7 @@
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">$Env{"LastScreenWorkOrders"}</Item>
+                <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -898,6 +902,7 @@
                 <Item Key="Description">History</Item>
                 <Item Key="Action">AgentITSMWorkOrderHistory</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderHistory&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -912,6 +917,7 @@
                 <Item Key="Description">Print the workorder</Item>
                 <Item Key="Action">AgentITSMChangePrint</Item>
                 <Item Key="Link">Action=AgentITSMChangePrint;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -926,6 +932,7 @@
                 <Item Key="Description">Edit the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderEdit</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderEdit&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -940,6 +947,7 @@
                 <Item Key="Description">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -954,6 +962,7 @@
                 <Item Key="Description">Set the agent for the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderAgent</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderAgent&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -968,6 +977,7 @@
                 <Item Key="Description">Report</Item>
                 <Item Key="Action">AgentITSMWorkOrderReport</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderReport&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -982,6 +992,7 @@
                 <Item Key="Description">Link another object to the workorder</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=ITSMWorkOrder&amp;SourceKey=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -996,6 +1007,7 @@
                 <Item Key="Description">Save workorder as a template</Item>
                 <Item Key="Action">AgentITSMWorkOrderTemplate</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTemplate;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1010,6 +1022,7 @@
                 <Item Key="Description">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderDelete&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
