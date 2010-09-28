@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.23 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.24 2010-09-28 17:15:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -109,7 +109,7 @@
 
 <!-- dtl:block:RecordRequestedTimeHeader -->
                     <th>$Text{"Requested Time"}<br/>
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RequestedalizeTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
+                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RequestedTime&OrderBy=Up" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
                         <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"}&$Data{"LinkSort"}&SortBy=RequestedTime&OrderBy=Down" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
                     </th>
 <!-- dtl:block:RecordRequestedTimeHeader -->
@@ -148,12 +148,12 @@
                 <tr class="$QData{"CssClass"}">
 <!-- dtl:block:RecordChangeStateSignal -->
                     <td>
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$QData{"ChangeState"}"}" alt="$Text{"$QData{"ChangeState"}"}">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$Data{"ChangeState"}"}" alt="$Text{"$Data{"ChangeState"}"}">
                     </td>
 <!-- dtl:block:RecordChangeStateSignal -->
 <!-- dtl:block:RecordWorkOrderStateSignal -->
                     <td>
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}">
+                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
                     </td>
 <!-- dtl:block:RecordWorkOrderStateSignal -->
 <!-- dtl:block:RecordChangeNumber -->
@@ -222,38 +222,38 @@
 <!-- dtl:block:RecordWorkOrderCount -->
 <!-- dtl:block:RecordChangeState -->
                     <td>
-                        <div title="$Text{"$QData{"ChangeState"}"}">$Text{"$QData{"ChangeState"}"}</div>
+                        <div title="$Text{"$Data{"ChangeState"}"}">$Text{"$Data{"ChangeState"}"}</div>
                     </td>
 <!-- dtl:block:RecordChangeState -->
 <!-- dtl:block:RecordWorkOrderState -->
                     <td>
-                        <div title="$Text{"$QData{"WorkOrderState"}"}">$Text{"$QData{"WorkOrderState"}"}</div>
+                        <div title="$Text{"$Data{"WorkOrderState"}"}">$Text{"$Data{"WorkOrderState"}"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderState -->
 <!-- dtl:block:RecordWorkOrderType -->
                     <td>
-                        <div title="$Text{"$QData{"WorkOrderType"}"}">$Text{"$QData{"WorkOrderType"}"}</div>
+                        <div title="$Text{"$Data{"WorkOrderType"}"}">$Text{"$Data{"WorkOrderType"}"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderType -->
 <!-- dtl:block:RecordCategory -->
                     <td>
-                        <div title="$Text{"$QData{"Category"}"}">$Text{"$QData{"Category"}"}</div>
+                        <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
                     </td>
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordImpact -->
                     <td>
-                        <div title="$Text{"$QData{"Impact"}"}">$Text{"$QData{"Impact"}"}</div>
+                        <div title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</div>
                     </td>
 <!-- dtl:block:RecordImpact -->
 <!-- dtl:block:RecordPriority -->
                     <td>
-                        <div title="$Text{"$QData{"Priority"}"}">$Text{"$QData{"Priority"}"}</div>
+                        <div title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</div>
                     </td>
 <!-- dtl:block:RecordPriority -->
 <!-- dtl:block:RecordServices -->
                     <td>
 <!-- dtl:block:RecordServicesSubElement -->
-                        <div title="$Text{"$QData{"Name"}"}">
+                        <div title="$Text{"$Data{"Name"}"}">
                             <table border="0" cellspacing="0" cellpadding="1">
                                 <tr>
                                     <td>
