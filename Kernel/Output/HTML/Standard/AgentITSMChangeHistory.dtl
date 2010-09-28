@@ -2,7 +2,7 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.21 2010-09-27 22:50:05 en Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.22 2010-09-28 21:03:11 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,14 +41,6 @@
                     </thead>
                     <tbody>
 
-<!-- dtl:block:NoDataFoundMsg -->
-                        <tr>
-                            <td colspan="6">
-                                $Text{"No data found."}
-                            </td>
-                        </tr>
-<!-- dtl:block:NoDataFoundMsg -->
-
 <!-- dtl:block:Row -->
                         <tr>
                             <td>
@@ -58,20 +50,20 @@
                                 $QData{"Content","100"}
                             </td>
                             <td>
-<!-- dtl:block:HistoryZoomDash -->
+<!-- dtl:block:NoHistoryZoom -->
                                 -
-<!-- dtl:block:HistoryZoomDash -->
-<!-- dtl:block:HistoryZoom -->
+<!-- dtl:block:NoHistoryZoom -->
+<!-- dtl:block:ShowHistoryZoom -->
                                 <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
-<!-- dtl:block:HistoryZoom -->
+<!-- dtl:block:ShowHistoryZoom -->
                             </td>
                             <td>
-<!-- dtl:block:Dash -->
+<!-- dtl:block:NoWorkOrderZoom -->
                                 -
-<!-- dtl:block:Dash -->
-<!-- dtl:block:WorkOrderZoom -->
+<!-- dtl:block:NoWorkOrderZoom -->
+<!-- dtl:block:ShowWorkOrderZoom -->
                                 <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
-<!-- dtl:block:WorkOrderZoom -->
+<!-- dtl:block:ShowWorkOrderZoom -->
                             </td>
                             <td>
                                 $QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","20"})
