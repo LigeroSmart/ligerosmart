@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.21 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.22 2010-09-28 21:05:11 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -60,7 +60,7 @@ sub Run {
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Can't show history, as no WorkOrderID is given!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -88,8 +88,8 @@ sub Run {
     # check error
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "WorkOrder '$WorkOrderID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => "WorkOrder '$WorkOrderID' not found in the data base!",
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -102,17 +102,10 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Change '$WorkOrder->{ChangeID}' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => "Change '$WorkOrder->{ChangeID}' not found in the data base!",
+            Comment => 'Please contact the administrator.',
         );
     }
-
-    # Store LastScreenHistory, for backlinks in HistoryZoom
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key       => 'LastScreenHistory',
-        Value     => $Self->{RequestedURL},
-    );
 
     # get history entries
     my $HistoryEntriesRef = $Self->{HistoryObject}->WorkOrderHistoryGet(
@@ -187,7 +180,7 @@ sub Run {
                             else {
                                 return $Self->{LayoutObject}->ErrorScreen(
                                     Message => "Unknown type '$Type' encountered!",
-                                    Comment => 'Please contact the admin.',
+                                    Comment => 'Please contact the administrator.',
                                 );
                             }
 
@@ -277,9 +270,6 @@ sub Run {
             $Data{Content} =~ s{ % s }{}xmsg;
         }
 
-        # separate each searchresult line by using several css
-        $Data{css} = $Counter % 2 ? 'searchpassive' : 'searchactive';
-
         $Self->{LayoutObject}->Block(
             Name => 'Row',
             Data => {%Data},
@@ -287,14 +277,21 @@ sub Run {
 
         # show a 'more info' link
         if (
-            ( $HistoryEntry->{ContentNew} && length( $HistoryEntry->{ContentNew} ) > $MaxLength )
-            || ( $HistoryEntry->{ContentOld} && length( $HistoryEntry->{ContentOld} ) > $MaxLength )
+            (
+                $HistoryEntry->{ContentNew}
+                && length( $HistoryEntry->{ContentNew} ) > $MaxLength
+            )
+            ||
+            (
+                $HistoryEntry->{ContentOld}
+                && length( $HistoryEntry->{ContentOld} ) > $MaxLength
+            )
             )
         {
 
             # show historyzoom block
             $Self->{LayoutObject}->Block(
-                Name => 'HistoryZoom',
+                Name => 'ShowHistoryZoom',
                 Data => {%Data},
             );
         }
@@ -302,12 +299,12 @@ sub Run {
         # don't show a link
         else {
             $Self->{LayoutObject}->Block(
-                Name => 'HistoryZoomDash',
+                Name => 'NoHistoryZoom',
             );
         }
 
         $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderZoom',
+            Name => 'ShowWorkOrderZoom',
             Data => {%Data},
         );
 
@@ -315,9 +312,9 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
+        Type  => 'Small',
         Title => 'WorkOrderHistory',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
@@ -330,7 +327,9 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer(
+        Type => 'Small',
+    );
 
     return $Output;
 }
