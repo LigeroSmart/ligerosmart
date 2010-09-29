@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderHistory.dtl - provides HTML form for AgentITSMWorkOrderHistory
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderHistory.dtl,v 1.13 2010-09-28 21:05:11 en Exp $
+# $Id: AgentITSMWorkOrderHistory.dtl,v 1.14 2010-09-29 21:46:30 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,12 +54,12 @@
                                 -
 <!-- dtl:block:NoHistoryZoom -->
 <!-- dtl:block:ShowHistoryZoom -->
-                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderHistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderHistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:ShowHistoryZoom -->
                             </td>
                             <td align="center">
 <!-- dtl:block:ShowWorkOrderZoom -->
-                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:ShowWorkOrderZoom -->
                             </td>
                             <td>
@@ -75,13 +75,5 @@
                 </table>
             </div>
         </div>
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-    $('a.LinkZoomView').bind('click', function () {
-        window.opener.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
-        window.close();
-    });
-//]]></script>
-<!--dtl:js_on_document_complete-->
     </div>
 </div>

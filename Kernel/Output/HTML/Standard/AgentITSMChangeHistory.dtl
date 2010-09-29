@@ -2,7 +2,7 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.24 2010-09-29 21:40:26 en Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.25 2010-09-29 21:46:30 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,7 +54,7 @@
                                 -
 <!-- dtl:block:NoHistoryZoom -->
 <!-- dtl:block:ShowHistoryZoom -->
-                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:ShowHistoryZoom -->
                             </td>
                             <td>
@@ -62,7 +62,7 @@
                                 -
 <!-- dtl:block:NoWorkOrderZoom -->
 <!-- dtl:block:ShowWorkOrderZoom -->
-                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:ShowWorkOrderZoom -->
                             </td>
                             <td>
