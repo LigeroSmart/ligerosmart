@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderHistoryZoom.pm - the OTRS::ITSM::ChangeManagement workorder history zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.pm,v 1.8 2010-09-29 20:38:15 en Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.pm,v 1.9 2010-09-29 21:39:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -125,9 +125,9 @@ sub Run {
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
+        Type  => 'Small',
         Title => 'WorkOrderHistoryZoom',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
@@ -141,7 +141,9 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer(
+        Type => 'Small',
+    );
 
     return $Output;
 }

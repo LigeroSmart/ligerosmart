@@ -2,21 +2,21 @@
 # AgentITSMWorkOrderHistoryZoom.dtl - provides HTML form for AgentITSMWorkOrderHistoryZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.16 2010-09-29 20:38:34 en Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.17 2010-09-29 21:39:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="MainBox ARIARoleMain">
+<div class="WidgetPopup ARIARoleMain">
 
     <div class="Header">
         <h1>
             $Text{"History of"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle","60"}
         </h1>
         <p>
-            <a href="#" class="HistoryBack">$Text{"Back"}</a>
+            <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
         </p>
     </div>
     <div class="Content">
@@ -57,13 +57,3 @@
         </fieldset>
     </div>
 </div>
-
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-$('a.HistoryBack').bind('click', function (Event) {
-    javascript:history.back();
-    return false;
-    }
-);
-//]]></script>
-<!-- dtl:js_on_document_complete -->
