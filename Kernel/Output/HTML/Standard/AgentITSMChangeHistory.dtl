@@ -2,7 +2,7 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.23 2010-09-29 20:36:46 en Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.24 2010-09-29 21:40:26 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,7 +54,7 @@
                                 -
 <!-- dtl:block:NoHistoryZoom -->
 <!-- dtl:block:ShowHistoryZoom -->
-                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"See"}</a>
+                                <a class="LinkZoomView AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
 <!-- dtl:block:ShowHistoryZoom -->
                             </td>
                             <td>
@@ -78,13 +78,5 @@
                 </table>
             </div>
         </div>
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-    $('a.LinkZoomView').bind('click', function () {
-        window.opener.Core.UI.Popup.FirePopupEvent('URL', { URL: $(this).attr('href')});
-        window.close();
-    });
-//]]></script>
-<!--dtl:js_on_document_complete-->
     </div>
 </div>
