@@ -1,107 +1,70 @@
 # --
 # AgentITSMChangeHistoryZoom.dtl - provides HTML form for AgentITSMChangeHistoryZoom
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.16 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeHistoryZoom.dtl,v 1.17 2010-09-29 20:37:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<style type="text/css">
-    .nowrap {
-        white-space: nowrap;
-    }
+<div class="MainBox ARIARoleMain">
 
-    .fieldvalues {
-        background-color: #ffffff;
-        border: 1px solid #000000;
-        padding: 4px;
-    }
-</style>
+    <div class="Header">
+        <h1>
+            $Text{"History of"} $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}: $QData{"ChangeTitle","60"}
+        </h1>
+        <p>
+            <a href="#" class="HistoryBack">$Text{"Back"}</a>
+        </p>
+    </div>
+    <div class="Content">
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"History of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"History of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
+        <h2>$Text{"Detailed history information of"} $Data{"HistoryType"}</h2>
+
+        <fieldset class="TableLike FixedLabel">
+
+            <label>$Text{"Modified"}:</label>
+            <div class="Field">
+                $QData{"Fieldname"}
             </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastScreenHistory"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody">
-            <br>
-            <table border="0" width="800" align="center" cellspacing="0" cellpadding="3">
-                <tr>
-                    <td class="contenthead">
-                        $Text{"Detailed history information of"} $Data{"HistoryType"}
-                    </td>
-                </tr>
-                <tr class="contentbody">
-                    <td>
-                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                            <colgroup>
-                                <col width="130">
-                                <col>
-                            </colgroup>
-                            <tr>
-                                <td class="contentkey nowrap">
-                                    $Text{"Modified"}:
-                                </td>
-                                <td class="contentvalue">
-                                    $QData{"Fieldname"}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey nowrap">
-                                    $Text{"Old Value"}:
-                                </td>
-                                <td class="contentvalue">
-                                    <div class="fieldvalues">$Data{"ContentOld"}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey nowrap">
-                                    $Text{"New Value"}:
-                                </td>
-                                <td class="contentvalue">
-                                    <div class="fieldvalues">$Data{"ContentNew"}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey nowrap">
-                                    $Text{"Changed"}:
-                                </td>
-                                <td class="contentvalue">
-                                    $TimeLong{"$QData{"ChangeTime"}"}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey nowrap">
-                                    $Text{"Changed by"}:
-                                </td>
-                                <td class="contentvalue">
-                                    <div title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
-                                        $Quote{"$Data{"UserLogin"}"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","40"})
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">
-                        &nbsp;
-                    </td>
-                </tr>
-            </table>
-            <br>
-        </td>
-    </tr>
-</table>
+            <div class="Clear"></div>
+
+            <label>$Text{"Old Value"}:</label>
+            <div class="Field">
+                $Data{"ContentOld"}
+            </div>
+            <div class="Clear"></div>
+
+            <label>$Text{"New Value"}:</label>
+            <div class="Field">
+                $Data{"ContentNew"}
+            </div>
+            <div class="Clear"></div>
+
+            <label>$Text{"Changed"}:</label>
+            <div class="Field">
+                $TimeLong{"$QData{"ChangeTime"}"}
+            </div>
+            <div class="Clear"></div>
+
+            <label>$Text{"Changed by"}:</label>
+            <div class="Field" title="$Quote{"$Data{"UserLogin"} ($Data{"UserFirstname"} $Data{"UserLastname"})"}">
+                $Quote{"$Data{"UserLogin"}"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","40"})
+            </div>
+            <div class="Clear"></div>
+
+        </fieldset>
+    </div>
+</div>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+$('a.HistoryBack').bind('click', function (Event) {
+    javascript:history.back();
+    return false;
+    }
+);
+//]]></script>
+<!-- dtl:js_on_document_complete -->

@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeHistoryZoom.pm - the OTRS::ITSM::ChangeManagement change history zoom module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistoryZoom.pm,v 1.7 2010-01-31 13:51:01 mae Exp $
+# $Id: AgentITSMChangeHistoryZoom.pm,v 1.8 2010-09-29 20:37:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -58,7 +58,7 @@ sub Run {
         # error page
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Can't show history zoom, no HistoryEntryID is given!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -71,7 +71,7 @@ sub Run {
     if ( !$HistoryEntry ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "HistoryEntry '$HistoryEntryID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -99,8 +99,8 @@ sub Run {
     # check error
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
-            Message => "Change '$HistoryEntry->{ChangeID}' not found in database!",
-            Comment => 'Please contact the admin.',
+            Message => "Change '$HistoryEntry->{ChangeID}' not found in the data base!",
+            Comment => 'Please contact the administrator.',
         );
     }
 
