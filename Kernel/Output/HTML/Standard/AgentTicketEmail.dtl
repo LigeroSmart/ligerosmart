@@ -2,8 +2,8 @@
 # AgentTicketEmail.dtl - provides HTML form for agent email
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.dtl,v 1.16 2010-09-03 23:17:35 dz Exp $
-# $OldId: AgentTicketEmail.dtl,v 1.125 2010/08/31 17:11:07 cg Exp $
+# $Id: AgentTicketEmail.dtl,v 1.17 2010-09-30 21:40:12 en Exp $
+# $OldId: AgentTicketEmail.dtl,v 1.126 2010/09/21 13:15:16 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -205,7 +205,7 @@ $Include{"AgentCustomerSearch"}
                         <a href="#" id="OptionSpellCheck">[ $Text{"Spell check"} ]</a>
 <!-- dtl:block:SpellCheck -->
 <!-- dtl:block:AddressBook -->
-                        <a href="#" id="OptionAdressBook">[ $Text{"Address book"} ]</a>
+                        <a href="#" id="OptionAddressBook">[ $Text{"Address book"} ]</a>
 <!-- dtl:block:AddressBook -->
 <!-- dtl:block:OptionCustomer -->
                         <a href="#" id="OptionCustomer">[ $Text{"Customer"} ]</a>

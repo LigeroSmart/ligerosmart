@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.20 2010-09-07 15:15:49 en Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.150 2010/09/07 07:38:10 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.21 2010-09-30 21:40:12 en Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.159 2010/09/30 09:33:35 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -269,7 +269,7 @@
 # ---
 #                    <fieldset class="TableLike FixedLabelSmall Tight">
 #                        <label>$Text{"CustomerID"}:</label>
-#                        <p class="Value"><a href="$Config{"CustomerDBLink"}" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
+#                        <p class="Value"><a href="$Config{"CustomerDBLink"}" class="OpenAsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
 #                        <div class="Clear"></div>
 #
 #                        <label>$Text{"Accounted time"}:</label>
@@ -380,7 +380,7 @@
                     <fieldset class="TableLike FixedLabelSmall Tight">
 
                         <label>$Text{"CustomerID"}:</label>
-                        <p class="Value"><a href="$Config{"CustomerDBLink"}" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
+                        <p class="Value"><a href="$Config{"CustomerDBLink"}" class="OpenAsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Accounted time"}:</label>
@@ -564,7 +564,20 @@ $Data{"ArticleItems"}
                             <input type="hidden" class="ArticleID" value="$QData{"ArticleID"}" />
                         </td>
                         <td class="Type"><div title="$Text{"$Data{"SenderType"}"} &ndash; $Text{"$Data{"ArticleType"}"}">$Text{"$Data{"SenderType"}"} &ndash; $Text{"$Data{"ArticleType"}"}</div></td>
-                        <td class="Direction">dir</td>
+                        <td class="Direction">
+<!-- dtl:block:TreeItemDirectionIncoming -->
+                            <span class="Direction Incoming" title="$Text{"Incoming message"}"></span>
+                            <input type="hidden" class="SortData" value="0" />
+<!-- dtl:block:TreeItemDirectionIncoming -->
+<!-- dtl:block:TreeItemDirectionOutgoing -->
+                            <span class="Direction Outgoing" title="$Text{"Outgoing message"}"></span>
+                            <input type="hidden" class="SortData" value="1" />
+<!-- dtl:block:TreeItemDirectionOutgoing -->
+<!-- dtl:block:TreeItemDirectionInternal -->
+                            <span class="Direction Internal" title="$Text{"Internal message"}"></span>
+                            <input type="hidden" class="SortData" value="2" />
+<!-- dtl:block:TreeItemDirectionInternal -->
+                        </td>
                         <td class="From"><div title="$QData{"From"}"><a href="#">$QData{"FromRealname","34"}</a></div></td>
                         <td class="Subject"><div title="$QData{"Subject"}"><a href="#">$QData{"Subject","36"}</a></div></td>
                         <td class="Created">
@@ -575,7 +588,14 @@ $Data{"ArticleItems"}
                         </td>
                         <td class="Attachments Attachment Fixed NonTextContent">
 <!-- dtl:block:TreeItemAttachment -->
-                            <a class="Attachment" title="Attachment" rel="TicketAttachment$QData{"Count"}"></a>
+<!-- dtl:block:TreeItemAttachmentIconSingle -->
+# show attachment preview data in tooltip
+                            <a class="Attachment" title="$Text{"Attachment"} $QData{"Filename"} ($QData{"Filesize"})" rel="TicketAttachment$QData{"Count"}"></a>
+<!-- dtl:block:TreeItemAttachmentIconSingle -->
+<!-- dtl:block:TreeItemAttachmentIconMultiple -->
+# no preview data in tooltip
+                            <a class="Attachment" title="$Text{"Attachments"}" rel="TicketAttachment$QData{"Count"}"></a>
+<!-- dtl:block:TreeItemAttachmentIconMultiple -->
                             <div id="TicketAttachment$QData{"Count"}" class="AttachmentData Hidden">
                                 <div class="Attachment InnerContent">
 <!-- dtl:block:TreeItemAttachmentItem -->
@@ -611,17 +631,20 @@ $Data{"ArticleItems"}
         <div class="LightRow Header">
             <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
             <h2>#$QData{"Count"} &ndash; $QData{"Subject","60"}</h2>
+            <div class="AdditionalInformation">
+                $Text{"Created"}: $TimeShort{"$Data{"Created"}"}
+            </div>
         </div>
         <div class="LightRow Bottom">
             <ul class="Actions">
 <!-- dtl:block:ArticleMenu-->
-                <li class="$QData{"Class"}">
+                <li class="AsPopup">
                     <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"Class"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                 </li>
 <!-- dtl:block:ArticleMenu-->
 
-<!-- dtl:block:ArticleReply -->
-                <li class="$QData{"Class"}">
+<!-- dtl:block:ArticleReplyAsDropdown -->
+                <li>
                     <form title="$Text{"$Data{"Name"}"}" action="$Env{"CGIHandle"}" method="get" id="$QData{"FormID"}">
                         <input type="hidden" name="Action" value="$QData{"Action"}"/>
                         <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
@@ -630,7 +653,7 @@ $Data{"ArticleItems"}
                         <label for="ResponseID" class="InvisibleText">$Text{"$Data{"Name"}"}:</label>
                         $Data{"StandardResponsesStrg"}
                     </form>
-<!-- dtl:block:ArticleReplyOnLoad -->
+<!-- dtl:block:ArticleReplyAsDropdownJSOnLoad -->
 <script type="text/javascript">//<![CDATA[
 $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
     var URL;
@@ -643,8 +666,8 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
     }
 });
 //]]></script>
-<!-- dtl:block:ArticleReplyOnLoad -->
-<!-- dtl:block:ArticleReplyStatic -->
+<!-- dtl:block:ArticleReplyAsDropdownJSOnLoad -->
+<!-- dtl:block:ArticleReplyAsDropdownJSStatic -->
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
 $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
@@ -659,13 +682,13 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
-<!-- dtl:block:ArticleReplyStatic -->
+<!-- dtl:block:ArticleReplyAsDropdownJSStatic -->
                 </li>
-<!-- dtl:block:ArticleReply -->
-
+<!-- dtl:block:ArticleReplyAsDropdown -->
             </ul>
             <div class="ClearLeft"></div>
         </div>
+
         <div class="Content">
             <div class="ArticleMailHeader">
                 <fieldset class="TableLike FixedLabelSmall Tight">
@@ -679,9 +702,6 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
                     <p class="Value" title="$QData{"Value"}">$QData{"Value","200"}</p>
                     <div class="Clear"></div>
 <!-- dtl:block:RowData -->
-                    <label>$Text{"Created"}:</label>
-                    <p class="Value" title="$TimeLong{"$Data{"Created"}"}">$TimeLong{"$Data{"Created"}"}</p>
-                    <div class="Clear"></div>
 
 # show the ArticleFreeKey1-3 and ArticleFreeText1-3
 <!-- dtl:block:ArticleFreeText -->
@@ -692,10 +712,9 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 
 # show article options like signed, crypted, ...
 <!-- dtl:block:ArticleOption -->
-                    <tr>
-                        <td class="contentkey" width="15%">$Text{"$Data{"Key"}"}:</td>
-                        <td class="contentvalue" > <div title="$QData{"Value"}" class="$QData{"Result"}">$QData{"Value","160"}</div></td>
-                    </tr>
+                    <label>$Text{"$Data{"Key"}"}:</label>
+                    <div title="$QData{"Value"}" class="$QData{"Result"}">$QData{"Value","160"}</div>
+                    <div class="Clear"></div>
 <!-- dtl:block:ArticleOption -->
 
 # show attachments
@@ -733,13 +752,20 @@ $Data{"Body"}
         </div>
     </div>
 </div>
+<!-- dtl:block:ArticleItemMarkAsSeen -->
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.TicketZoom.MarkAsSeen($QData{"TicketID"}, $QData{"ArticleID"});
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+<!-- dtl:block:ArticleItemMarkAsSeen -->
 <!-- dtl:block:ArticleItem -->
 
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
     Core.Agent.TicketZoom.Init({ ArticleTableHeight: parseInt('$Env{"UserTicketZoomArticleTableHeight"}', 10)});
-    $('ul.Actions a.AsPopup').bind('click', function (Event) {
+    $('ul.Actions a.AsPopup, .OpenAsPopup').bind('click', function (Event) {
         Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
         return false;
     });

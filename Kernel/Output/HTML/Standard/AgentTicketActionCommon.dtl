@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.7 2010-09-02 22:18:42 dz Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.8 2010-09-30 21:40:12 en Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,7 +12,7 @@
 
 <!-- dtl:block:Properties -->
 
-<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="Compose" class="Validate">
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="Compose" class="Validate PreventMultipleSubmits">
     <input type="hidden" name="Action" value="$Env{"Action"}"/>
     <input type="hidden" name="Subaction" value="Store"/>
     <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.12 2010-09-03 23:08:26 dz Exp $
-# $OldId: AgentTicketZoom.pm,v 1.117 2010/09/01 12:34:46 martin Exp $
+# $Id: AgentTicketZoom.pm,v 1.13 2010-09-30 21:40:12 en Exp $
+# $OldId: AgentTicketZoom.pm,v 1.125 2010/09/30 09:33:35 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,8 +128,20 @@ sub Run {
     );
     my %AclAction = $Self->{TicketObject}->TicketAclActionData();
 
+    # mark shown article as seen
+    if ( $Self->{Subaction} eq 'MarkAsSeen' ) {
+        my $Success = $Self->_ArticleItemSeen( ArticleID => $Self->{ArticleID} );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'text/html',
+            Content     => $Success,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
     # article update
-    if ( $Self->{Subaction} eq 'ArticleUpdate' ) {
+    elsif ( $Self->{Subaction} eq 'ArticleUpdate' ) {
         my $Count = $Self->{ParamObject}->GetParam( Param => 'Count' );
         my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Self->{ArticleID} );
         $Article{Count} = $Count;
@@ -1094,6 +1106,19 @@ sub _ArticleTree {
             );
         }
 
+        # Determine communication direction
+        if ( $Article{ArticleType} =~ /-internal$/smx ) {
+            $Self->{LayoutObject}->Block( Name => 'TreeItemDirectionInternal' );
+        }
+        else {
+            if ( $Article{SenderType} eq 'customer' ) {
+                $Self->{LayoutObject}->Block( Name => 'TreeItemDirectionIncoming' );
+            }
+            else {
+                $Self->{LayoutObject}->Block( Name => 'TreeItemDirectionOutgoing' );
+            }
+        }
+
         # show attachment info
         next if !$Article{Atms};
         next if !%{ $Article{Atms} };
@@ -1118,6 +1143,25 @@ sub _ArticleTree {
                         %Article,
                     },
                 );
+
+                if ( keys %{ $Article{Atms} } > 1 ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'TreeItemAttachmentIconMultiple',
+                        Data => {
+                            %Article,
+                        },
+                    );
+                }
+                else {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'TreeItemAttachmentIconSingle',
+                        Data => {
+                            %Article,
+                            %{ $Article{Atms}->{$Count} },
+                        },
+                    );
+                }
+
             }
             $CountShown++;
 
@@ -1144,20 +1188,26 @@ sub _ArticleTree {
     );
 }
 
+sub _ArticleItemSeen {
+    my ( $Self, %Param ) = @_;
+
+    # mark shown article as seen
+    $Self->{TicketObject}->ArticleFlagSet(
+        ArticleID => $Param{ArticleID},
+        Key       => 'Seen',
+        Value     => 1,
+        UserID    => $Self->{UserID},
+    );
+
+    return 1;
+}
+
 sub _ArticleItem {
     my ( $Self, %Param ) = @_;
 
     my %Ticket    = %{ $Param{Ticket} };
     my %Article   = %{ $Param{Article} };
     my %AclAction = %{ $Param{AclAction} };
-
-    # mark shown article as seen
-    $Self->{TicketObject}->ArticleFlagSet(
-        ArticleID => $Article{ArticleID},
-        Key       => 'Seen',
-        Value     => 1,
-        UserID    => $Self->{UserID},
-    );
 
     # cleanup subject
     $Article{Subject} = $Self->{TicketObject}->TicketSubjectClean(
@@ -1169,6 +1219,17 @@ sub _ArticleItem {
         Name => 'ArticleItem',
         Data => { %Param, %Article, %AclAction },
     );
+
+    # mark shown article as seen
+    if ( $Param{Type} eq 'OnLoad' ) {
+        $Self->_ArticleItemSeen( ArticleID => $Article{ArticleID} );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleItemMarkAsSeen',
+            Data => { %Param, %Article, %AclAction },
+        );
+    }
 
     # show article actions
 
@@ -1225,7 +1286,7 @@ sub _ArticleItem {
                 );
 
                 $Self->{LayoutObject}->Block(
-                    Name => 'ArticleReply',
+                    Name => 'ArticleReplyAsDropdown',
                     Data => {
                         %Ticket, %Article, %AclAction,
                         StandardResponsesStrg => $StandardResponsesStrg,
@@ -1236,7 +1297,7 @@ sub _ArticleItem {
                     },
                 );
                 $Self->{LayoutObject}->Block(
-                    Name => 'ArticleReply' . $Param{Type},
+                    Name => 'ArticleReplyAsDropdownJS' . $Param{Type},
                     Data => {
                         %Ticket, %Article, %AclAction,
                         FormID => 'Reply',
@@ -1253,7 +1314,7 @@ sub _ArticleItem {
                 );
 
                 $Self->{LayoutObject}->Block(
-                    Name => 'ArticleReply',
+                    Name => 'ArticleReplyAsDropdown',
                     Data => {
                         %Ticket, %Article, %AclAction,
                         StandardResponsesStrg => $StandardResponsesStrg,
@@ -1265,7 +1326,7 @@ sub _ArticleItem {
                     },
                 );
                 $Self->{LayoutObject}->Block(
-                    Name => 'ArticleReply' . $Param{Type},
+                    Name => 'ArticleReplyAsDropdownJS' . $Param{Type},
                     Data => {
                         %Ticket, %Article, %AclAction,
                         FormID => 'ReplyAll',
@@ -1505,16 +1566,17 @@ sub _ArticleItem {
             },
         );
     }
-    for my $Key (qw(Subject)) {
-        next if !$Article{$Key};
-        $Self->{LayoutObject}->Block(
-            Name => 'RowData',
-            Data => {
-                Key   => $Key,
-                Value => $Article{$Key},
-            },
-        );
-    }
+
+    #    for my $Key (qw(Subject)) {
+    #        next if !$Article{$Key};
+    #        $Self->{LayoutObject}->Block(
+    #            Name => 'RowData',
+    #            Data => {
+    #                Key   => $Key,
+    #                Value => $Article{$Key},
+    #            },
+    #        );
+    #    }
 
     # show accounted article time
     if ( $Self->{ConfigObject}->Get('Ticket::ZoomTimeDisplay') ) {
@@ -1613,7 +1675,7 @@ sub _ArticleItem {
                     $DataRef->{Result} = 'Error';
                 }
                 else {
-                    $DataRef->{Result} = 'Success';
+                    $DataRef->{Result} = 'Notice';
                 }
                 $Self->{LayoutObject}->Block(
                     Name => 'ArticleOption',

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.4 2010-09-02 16:52:03 en Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.17 2010/08/19 16:47:22 en Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.5 2010-09-30 21:40:12 en Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.18 2010/09/08 12:30:17 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1387,6 +1387,8 @@ sub _Mask {
                         || 0,
                     %Param,
                     Class => $Param{DateInvalid} || ' ',
+                    Validate             => 1,
+                    ValidateDateInFuture => 1,
                 );
                 $Self->{LayoutObject}->Block(
                     Name => 'StatePending',

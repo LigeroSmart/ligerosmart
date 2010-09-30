@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.18 2010-09-03 20:22:55 en Exp $
-# $OldId: AgentTicketPhone.pm,v 1.160 2010/09/03 13:41:19 mb Exp $
+# $Id: AgentTicketPhone.pm,v 1.19 2010-09-30 21:40:11 en Exp $
+# $OldId: AgentTicketPhone.pm,v 1.161 2010/09/08 12:30:17 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1794,8 +1794,9 @@ sub _MaskPhoneNew {
         YearPeriodPast   => 0,
         YearPeriodFuture => 5,
         DiffTime         => $Self->{ConfigObject}->Get('Ticket::Frontend::PendingDiffTime') || 0,
-        Validate         => 1,
         Class            => $Param{Errors}->{DateInvalid},
+        Validate         => 1,
+        ValidateDateInFuture => 1,
     );
 
     # show owner selection

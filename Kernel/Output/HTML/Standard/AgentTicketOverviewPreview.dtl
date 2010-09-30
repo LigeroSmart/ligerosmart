@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.6 2010-09-02 22:18:42 dz Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.51 2010/09/01 12:34:46 martin Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.7 2010-09-30 21:40:12 en Exp $
+# $OldId: AgentTicketOverviewPreview.dtl,v 1.54 2010/09/21 13:15:16 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -106,14 +106,15 @@
                         </tr>
                         <tr class="Middle">
                             <td>
-                                <label>$Text{"CustomerID"}</label><a href="$Config{"CustomerDBLink"}" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "26"}</a><br /><div title="$QData{"CustomerName"}">$QData{"CustomerName","15"}</div>
+                                <label>$Text{"CustomerID"}</label><a href="$Config{"CustomerDBLink"}" class="AsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "26"}</a><br /><div title="$QData{"CustomerName"}">$QData{"CustomerName","15"}</div>
                             </td>
+<!-- dtl:block:FirstResponseTime -->
                             <td>
                                 <label>$Text{"First Response Time"}</label>
-<!-- dtl:block:FirstResponseTime -->
+
                                 <div title="$Text{"Service Time"}: $QData{"FirstResponseTimeWorkingTime"}" class="$QData{"FirstResponseTimeClass"}">$QData{"FirstResponseTimeHuman"} / $TimeShort{"$QData{"FirstResponseTimeDestinationDate"}"}</div>
-<!-- dtl:block:FirstResponseTime -->
                             </td>
+<!-- dtl:block:FirstResponseTime -->
                         </tr>
                         <tr>
                             <td>
@@ -121,24 +122,22 @@
                                 <label>$Text{"Type"}</label><div title="$QData{"Type"}">$QData{"Type","18"}</div>
 <!-- dtl:block:Type -->
                             </td>
+<!-- dtl:block:UpdateTime -->
                             <td>
                                 <label>$Text{"Update Time"}</label>
-<!-- dtl:block:UpdateTime -->
+
                                 <div title="$Text{"Service Time"}: $QData{"UpdateTimeWorkingTime"}" class="$QData{"UpdateTimeClass"}">$QData{"UpdateTimeHuman"} / $TimeShort{"$QData{"UpdateTimeDestinationDate"}"}</div>
-<!-- dtl:block:UpdateTime -->
                             </td>
+<!-- dtl:block:UpdateTime -->
                         </tr>
+<!-- dtl:block:SolutionTime -->
                         <tr>
                             <td>
-
-                            </td>
-                            <td>
                                 <label>$Text{"Solution Time"}</label>
-<!-- dtl:block:SolutionTime -->
                                 <div title="$Text{"Service Time"}: $QData{"SolutionTimeWorkingTime"}" class="$QData{"SolutionTimeClass"}">$QData{"SolutionTimeHuman"} / $TimeShort{"$QData{"SolutionTimeDestinationDate"}"}</div>
-<!-- dtl:block:SolutionTime -->
                             </td>
                         </tr>
+<!-- dtl:block:SolutionTime -->
 # ---
 # ITSM
 # ---
@@ -187,8 +186,14 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
-        var URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
-        Core.UI.Popup.OpenPopup(URL, 'Action');
+        var URL;
+
+        if ($(this).val() > 0) {
+            var URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
+            Core.UI.Popup.OpenPopup(URL, 'Action');
+            // reset the select box so that it can be used again from the same window
+            $(this).val('0');
+        }
     });
     // make sure this click event does not bubble up to the table row and execute its click handler
     $('#$QData{"FormID"} select[name=ResponseID]').bind('click', function (Event) {
@@ -273,4 +278,11 @@ $Data{"Body"}
         Core.UI.Accordion.Init($('.Preview > ul'), 'li h3 a', '.HiddenBlock');
     //]]></script>
 <!-- dtl:block:DocumentReadyStart -->
+<!-- dtl:js_on_document_complete -->
+
+<!-- dtl:js_on_document_complete -->
+$('a.AsPopup').bind('click', function (Event) {
+Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
+return false;
+});
 <!-- dtl:js_on_document_complete -->
