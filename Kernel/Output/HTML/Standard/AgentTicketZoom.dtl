@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.21 2010-09-30 21:40:12 en Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.159 2010/09/30 09:33:35 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.22 2010-10-01 21:27:45 en Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.162 2010/10/01 14:27:19 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -541,7 +541,7 @@ $Data{"ArticleItems"}
                 <thead>
                     <tr>
                         <th class="UnreadArticles"><a class="UnreadArticles" href="#" title="$Text{"Unread articles"}"><span class="UnreadArticles"></span></a></th>
-                        <th class="No Sortable InitialSorting"><a href="#">$Text{"No."}</a></th>
+                        <th class="No Sortable"><a href="#">$Text{"No."}</a></th>
                         <th class="Type Sortable"><a href="#">$Text{"Type"}</a></th>
                         <th class="Direction Sortable"><a href="#" title="Direction"><span class="Direction"><!--Direction--></span></a></th>
                         <th class="From Sortable"><a href="#">$Text{"From"}</a></th>
@@ -562,8 +562,12 @@ $Data{"ArticleItems"}
                             $QData{"Count"}
                             <input type="hidden" class="ArticleInfo" name="Link$LQData{"Count"}" value="$Env{"Baselink"}Action=AgentTicketZoom;Subaction=ArticleUpdate;Count=$LQData{"Count"};TicketID=$QData{"TicketID"};ArticleID=$QData{"ArticleID"};"/>
                             <input type="hidden" class="ArticleID" value="$QData{"ArticleID"}" />
+                            <input type="hidden" class="SortData" value="$QData{"Count"}" />
                         </td>
-                        <td class="Type"><div title="$Text{"$Data{"SenderType"}"} &ndash; $Text{"$Data{"ArticleType"}"}">$Text{"$Data{"SenderType"}"} &ndash; $Text{"$Data{"ArticleType"}"}</div></td>
+                        <td class="Type">
+                            <div>$Text{"$Data{"SenderType"}"} &ndash; $Text{"$Data{"ArticleType"}"}</div>
+                            <input type="hidden" class="SortData" value="$Text{"$Data{"SenderType"}"} &ndash; $Text{"$Data{"ArticleType"}"}" />
+                        </td>
                         <td class="Direction">
 <!-- dtl:block:TreeItemDirectionIncoming -->
                             <span class="Direction Incoming" title="$Text{"Incoming message"}"></span>
@@ -578,8 +582,14 @@ $Data{"ArticleItems"}
                             <input type="hidden" class="SortData" value="2" />
 <!-- dtl:block:TreeItemDirectionInternal -->
                         </td>
-                        <td class="From"><div title="$QData{"From"}"><a href="#">$QData{"FromRealname","34"}</a></div></td>
-                        <td class="Subject"><div title="$QData{"Subject"}"><a href="#">$QData{"Subject","36"}</a></div></td>
+                        <td class="From">
+                            <div title="$QData{"From"}"><a href="#">$QData{"FromRealname","34"}</a></div>
+                            <input type="hidden" class="SortData" value="$QData{"From"}" />
+                        </td>
+                        <td class="Subject">
+                            <div title="$QData{"Subject"}"><a href="#">$QData{"Subject","36"}</a></div>
+                            <input type="hidden" class="SortData" value="$QData{"Subject"}" />
+                        </td>
                         <td class="Created">
                             <a href="#">$TimeShort{"$QData{"Created"}"}</a>
 # Include custom sorting information: date in ISO format.
@@ -650,7 +660,7 @@ $Data{"ArticleItems"}
                         <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
                         <input type="hidden" name="ArticleID" value="$QData{"ArticleID"}"/>
                         <input type="hidden" name="ReplyAll" value="$QData{"ReplyAll"}"/>
-                        <label for="ResponseID" class="InvisibleText">$Text{"$Data{"Name"}"}:</label>
+                        <label for="$QData{"ResponseElementID"}" class="InvisibleText">$Text{"$Data{"Name"}"}:</label>
                         $Data{"StandardResponsesStrg"}
                     </form>
 <!-- dtl:block:ArticleReplyAsDropdownJSOnLoad -->
@@ -764,7 +774,9 @@ $Data{"Body"}
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
+console.time('TIInit');
     Core.Agent.TicketZoom.Init({ ArticleTableHeight: parseInt('$Env{"UserTicketZoomArticleTableHeight"}', 10)});
+console.timeEnd('TIInit');
     $('ul.Actions a.AsPopup, .OpenAsPopup').bind('click', function (Event) {
         Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
         return false;
