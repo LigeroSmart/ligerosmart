@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.18 2010-09-14 21:25:45 dz Exp $
+# $Id: AdminImportExport.dtl,v 1.19 2010-10-01 21:59:55 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,7 +78,7 @@
 <!-- dtl:block:OverviewListRow -->
                         <tr>
                             <td>
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateEdit1&TemplateID=$QData{"TemplateID"}">
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$QData{"TemplateID"}">
                                     $QData{"Number"}
                                 </a>
                             </td>
@@ -114,15 +114,16 @@
             <div class="Content">
                 <form action="$Env{"CGIHandle"}" method="get" class="Validate">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
-                    <input type="hidden" name="Subaction" value="TemplateSave1" />
-                    <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
+                    <input type="hidden" name="Subaction" value="TemplateEdit1" />
+                    <input type="hidden" name="TemplateID" value="$Data{"TemplateID"}" />
 
                     <fieldset class="TableLike">
 
                         <label for="Name">$Text{"Name"}:</label>
                         <div class="Field">
 
-                            <input id="Name" class="Validate_Required $Data{"Class"}" type="text" name="Name" value="$QData{"Name"}" size="50" maxlength="200" />
+<!-- Validate_Required -->
+                            <input id="Name" class="$Data{"NameClass"}" type="text" name="Name" value="$QData{"Name"}" size="50" maxlength="200" />
                             <div id="NameError" class="TooltipErrorMessage">
                                 <p>$Text{"Name is required!"}</p>
                             </div>
@@ -164,9 +165,9 @@
 <!-- dtl:block:EditObjectFormat -->
                         <label>$Text{"Object"}:</label>
                         <div class="Field">
-                            $QData{"ObjectName"}
+                            <span>$QData{"ObjectName"}</span>
+                            <input type="hidden" name="Object" value="$QData{"Object"}" />
                         </div>
-                        <input type="hidden" name="Object" value="$QData{"Object"}" />
                         <div class="Clear"></div>
 
                         <label>$Text{"Format"}:</label>
@@ -176,7 +177,6 @@
                         </div>
 <!-- dtl:block:EditObjectFormat -->
 
-                        <input type="hidden" name="Format" value="$QData{"Format"}" />
                         <div class="Clear"></div>
 
                         <label for="ValidID">$Text{"Valid"}:</label>
@@ -194,7 +194,7 @@
                         <div class="Field SpacingTop">
                             <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next..."}</button>
                             $Text{"or"}
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"} </a>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction='Overview'">$Text{"Cancel"} </a>
                         </div>
                     </fieldset>
                 </form>
@@ -208,7 +208,7 @@
             <div class="Content">
                 <form action="$Env{"CGIHandle"}" method="get" class="Validate">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
-                    <input type="hidden" name="Subaction" value="TemplateSave2" />
+                    <input type="hidden" name="Subaction" value="TemplateEdit2" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
 
                     <fieldset class="TableLike">
@@ -221,7 +221,7 @@
 
                         <label>$Text{"Object"}:</label>
                         <div class="Field">
-                            $QData{"ObjectName"}
+                            $QData{"Object"}
                         </div>
                         <div class="Clear"></div>
 
@@ -240,7 +240,8 @@
                         </div>
 <!-- dtl:block:TemplateEdit2Element -->
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$QData{"TemplateID"}"><span>$Text{"Go back"}</span></a>
+                            $Text{"or"}
                             <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next..."}</button>
                         </div>
                     </fieldset>
@@ -255,7 +256,7 @@
             <div class="Content">
                 <form action="$Env{"CGIHandle"}" method="get" class="Validate">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
-                    <input type="hidden" name="Subaction" value="TemplateSave3" />
+                    <input type="hidden" name="Subaction" value="TemplateEdit3" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
 
                     <fieldset class="TableLike">
@@ -268,7 +269,7 @@
 
                         <label>$Text{"Format"}:</label>
                         <div class="Field">
-                            $QData{"FormatName"}
+                            $QData{"Format"}
                         </div>
                         <div class="Clear"></div>
 
@@ -287,7 +288,8 @@
                         </div>
 <!-- dtl:block:TemplateEdit3Element -->
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit2;TemplateID=$QData{"TemplateID"}"><span>$Text{"Go back"}</span></a>
+                            $Text{"or"}
                             <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
                         </div>
                     </fieldset>

@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_ImportExport.pm,v 1.11 2010-09-14 21:49:14 dz Exp $
+# $Id: es_ImportExport.pm,v 1.12 2010-10-01 21:59:55 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -57,6 +57,7 @@ sub Data {
     $Lang->{'No map elements found.'} = 'No se encontraron elementos de mapeo.';
     $Lang->{'Empty fields indicate that the current values are kept'} = 'Los campos vacíos indican que los valores actuales se mantienen';
     $Lang->{'Create a template in order to can import and export object information.'} = 'Agregue una plantilla nueva para poder importar y exportar.';
+    $Lang->{'Go back'}                    = 'Regresar';
 
     return 1;
 }
