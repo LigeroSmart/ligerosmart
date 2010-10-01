@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.19 2010-09-30 20:56:50 en Exp $
-# $OldId: Service.pm,v 1.44 2010/09/30 18:38:29 en Exp $
+# $Id: Service.pm,v 1.20 2010-10-01 21:22:35 en Exp $
+# $OldId: Service.pm,v 1.45 2010/10/01 20:50:48 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -1066,7 +1066,7 @@ sub CustomerUserServiceMemberList {
     }
     if ( $Param{CustomerUserLogin} && $Param{DefaultServices} && !keys(%Data) ) {
         %Data = $Self->CustomerUserServiceMemberList(
-            CustomerUserLogin => 'DEFAULT',
+            CustomerUserLogin => '<DEFAULT>',
             Result            => 'HASH',
             DefaultServices   => 0,
         );
@@ -1200,6 +1200,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2010-09-30 20:56:50 $
+$Revision: 1.20 $ $Date: 2010-10-01 21:22:35 $
 
 =cut
