@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.13 2010-04-27 20:36:57 ub Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.14 2010-10-12 03:12:10 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -215,10 +215,9 @@ sub Run {
 
         TemplateIDs => $IDsRef,
         Total       => scalar @{$IDsRef},
-
-        Filter     => $Self->{Filter},
-        Filters    => \%NavBarFilter,
-        FilterLink => $LinkFilter,
+        Filter      => $Self->{Filter},
+        Filters     => \%NavBarFilter,
+        FilterLink  => $LinkFilter,
 
         TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
             . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('Template'),
@@ -230,6 +229,8 @@ sub Run {
         LinkSort => $LinkSort,
 
         ShowColumns => \@ShowColumns,
+        OrderBy     => $OrderBy,
+        SortBy      => $SortBy,
     );
 
     $Output .= $Self->{LayoutObject}->Footer();
