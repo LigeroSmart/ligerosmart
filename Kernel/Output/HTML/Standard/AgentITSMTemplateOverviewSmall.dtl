@@ -1,129 +1,142 @@
 # --
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.8 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.9 2010-10-12 03:29:14 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="4">
-    <tr>
-        <td class="mainbody">
-            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                <tr class="contenthead" align="left">
+<div id="OverviewBody" class="Overview FixedHeader">
+    <table id="FixedTable" class="TableSmall">
+        <thead>
+            <tr>
 <!-- dtl:block:RecordTemplateIDHeader -->
-                    <th>$Text{"TemplateID"}</th>
+                <th><span>$Text{"TemplateID"}</span></th>
 <!-- dtl:block:RecordTemplateIDHeader -->
 <!-- dtl:block:RecordNameHeader -->
-                    <th>$Text{"Name"}<br/>
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Name;OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Name;OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
-                    </th>
+                <th class="Name $QData{"SortName"}">
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Name;OrderBy=$LQData{"OrderByName"}">$Text{"Name"}</a>
+                </th>
 <!-- dtl:block:RecordNameHeader -->
 <!-- dtl:block:RecordTypeHeader -->
-                    <th>$Text{"Type"}<br/>
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=TemplateTypeID;OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=TemplateTypeID;OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
-                    </th>
+                <th class="Type $QData{"SortTemplateTypeID"}">
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=TemplateTypeID;OrderBy=$LQData{"OrderByTemplateTypeID"}">$Text{"Type"}</a>
+                </th>
 <!-- dtl:block:RecordTypeHeader -->
 <!-- dtl:block:RecordCommentHeader -->
-                    <th>$Text{"Comment"}</th>
+                <th><span>$Text{"Comment"}</span></th>
 <!-- dtl:block:RecordCommentHeader -->
 <!-- dtl:block:RecordValidHeader -->
-                    <th>$Text{"Valid"}<br/>
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ValidID;OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ValidID;OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
-                    </th>
+                <th class="ValidID $QData{"SortValidID"}">
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ValidID;OrderBy=$LQData{"OrderByValidID"}">$Text{"Valid"}</a>
+                </th>
 <!-- dtl:block:RecordValidHeader -->
 <!-- dtl:block:RecordDeleteHeader -->
-                    <th align="center">$Text{"Delete"}</th>
+                <th><span>$Text{"Delete"}</span></th>
 <!-- dtl:block:RecordDeleteHeader -->
 <!-- dtl:block:RecordCreateByHeader -->
-                    <th>$Text{"CreateBy"}</th>
+                <th><span>$Text{"CreateBy"}</span></th>
 <!-- dtl:block:RecordCreateByHeader -->
 <!-- dtl:block:RecordCreateTimeHeader -->
-                    <th>$Text{"CreateTime"}<br/>
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
-                    </th>
+                <th class="CreateTime $QData{"SortCreateTime"}">
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=$LQData{"OrderByCreateTime"}">$Text{"CreateTime"}</a>
+                </th>
 <!-- dtl:block:RecordCreateTimeHeader -->
 <!-- dtl:block:RecordChangeByHeader -->
-                    <th>$Text{"ChangeBy"}</th>
+                <th><span>$Text{"ChangeBy"}</span></th>
 <!-- dtl:block:RecordChangeByHeader -->
 <!-- dtl:block:RecordChangeTimeHeader -->
-                    <th>$Text{"ChangeTime"}<br/>
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTime;OrderBy=Down" onmouseover="window.status='$JSText{"sort upward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}up-small.png" alt="$Text{"up"}"></a> /
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTime;OrderBy=Up" onmouseover="window.status='$JSText{"sort downward"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Config{"Frontend::ImagePath"}down-small.png" alt="$Text{"down"}"></a>
-                    </th>
+                <th class="ChangeTime $QData{"SortChangeTime"}">
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTime;OrderBy=$LQData{"OrderByChangeTime"}">$Text{"ChangeTime"}</a>
+                </th>
 <!-- dtl:block:RecordChangeTimeHeader -->
-                </tr>
+            </tr>
+        </thead>
+        <tbody>
 <!-- dtl:block:Record -->
-                <tr class="$QData{"CssClass"}">
+            <tr id="TemplateID_$QData{"TemplateID"}" class="MasterAction">
 <!-- dtl:block:RecordTemplateID -->
-                    <td>
-                        <div title="$QData{"TemplateID"}">$QData{"TemplateID","40"}</div>
-                    </td>
+                <td>$Text{"$Data{"TemplateID"}"}</td>
 <!-- dtl:block:RecordTemplateID -->
 <!-- dtl:block:RecordName -->
-                    <td>
-                        <a href="$Env{"Baselink"}Action=AgentITSMTemplateEdit;TemplateID=$QData{"TemplateID"}" onmouseover="window.status='$JSText{"Edit"}'; return true;" onmouseout="window.status='';" title="$QData{"Name"} (ID=$QData{"TemplateID"})">$QData{"Name"}</a>
-                    </td>
+                <td>
+                    <a href="$Env{"Baselink"}Action=AgentITSMTemplateEdit;TemplateID=$LQData{"TemplateID"}" title="$QData{"Name"} (ID=$QData{"TemplateID"})" class="MasterActionLink">$QData{"Name"}</a>
+                </td>
 <!-- dtl:block:RecordName -->
 <!-- dtl:block:RecordType -->
-                    <td>
-                        <div title="$Text{"$QData{"Type"}"} (ID=$QData{"TypeID"})">$Text{"$QData{"Type","40"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"Type"}"} (ID=$QData{"TypeID"})">
+                        $Text{"$Data{"Type"}"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordType -->
 <!-- dtl:block:RecordComment -->
-                    <td>
-                        <div title="$QData{"Comment"}">$QData{"Comment","40"}</div>
-                    </td>
+                <td>
+                    <div title="$QData{"Comment"}">
+                        $QData{"Comment"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordComment -->
 <!-- dtl:block:RecordValid -->
-                    <td>
-                        <div title="$Text{"$QData{"Valid"}"}">$Text{"$QData{"Valid","40"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"Valid"}"}">
+                        $Text{"$Data{"Valid"}"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordValid -->
 <!-- dtl:block:RecordDelete -->
-                    <td align="center">
-                        <a href="$Env{"Baselink"}Action=AgentITSMTemplateDelete;TemplateID=$QData{"TemplateID"}" onmouseover="window.status='$JSText{"Delete"}'; return true;" onmouseout="window.status='';" title="Delete: $QData{"Name"}">x</a>
-                    </td>
+                <td class="Center Last">
+                    <a class="TrashCan" href="$Env{"Baselink"}Action=AgentITSMTemplateDelete;TemplateID=$LQData{"TemplateID"}">
+                        $Text{"Delete: $QData{"Name"}"}
+                    </a>
+                </td>
 <!-- dtl:block:RecordDelete -->
 <!-- dtl:block:RecordCreateBy -->
-                    <td>
-                        <div title="$QData{"CreateByUserLogin"} $QData{"CreateByLeftParenthesis"}$QData{"CreateByUserFirstname"} $QData{"CreateByUserLastname"}$QData{"CreateByRightParenthesis"}">
-                            $QData{"CreateByUserLogin","15"} $QData{"CreateByLeftParenthesis"}$Quote{"$Data{"CreateByUserFirstname"}", "15"} $Quote{"$Data{"CreateByUserLastname"}","15"}$QData{"CreateByRightParenthesis"}
-                        </div>
-                    </td>
+                <td>
+                    <div title="$QData{"CreateByUserLogin"} $QData{"CreateByLeftParenthesis"}$QData{"CreateByUserFirstname"} $QData{"CreateByUserLastname"}$QData{"CreateByRightParenthesis"}">
+                        $QData{"CreateByUserLogin","15"} $QData{"CreateByLeftParenthesis"}$Quote{"$Data{"CreateByUserFirstname"}", "15"} $Quote{"$Data{"CreateByUserLastname"}","15"}$QData{"CreateByRightParenthesis"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordCreateBy -->
 <!-- dtl:block:RecordCreateTime -->
-                    <td>
-                        <div title="$QData{"CreateTime"}">$QData{"CreateTime","40"}</div>
-                    </td>
+                <td>
+                    <div title="$QData{"CreateTime"}">
+                        $QData{"CreateTime"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordCreateTime -->
 <!-- dtl:block:RecordChangeBy -->
-                    <td>
-                        <div title="$QData{"ChangeByUserLogin"} $QData{"ChangeByLeftParenthesis"}$QData{"ChangeByUserFirstname"} $QData{"ChangeByUserLastname"}$QData{"ChangeByRightParenthesis"}">
-                            $QData{"ChangeByUserLogin","15"} $QData{"ChangeByLeftParenthesis"}$Quote{"$Data{"ChangeByUserFirstname"}", "15"} $Quote{"$Data{"ChangeByUserLastname"}","15"}$QData{"ChangeByRightParenthesis"}
-                        </div>
-                    </td>
+                <td>
+                    <div title="$QData{"ChangeByUserLogin"} $QData{"ChangeByLeftParenthesis"}$QData{"ChangeByUserFirstname"} $QData{"ChangeByUserLastname"}$QData{"ChangeByRightParenthesis"}">
+                        $QData{"ChangeByUserLogin","15"} $QData{"ChangeByLeftParenthesis"}$Quote{"$Data{"ChangeByUserFirstname"}", "15"} $Quote{"$Data{"ChangeByUserLastname"}","15"}$QData{"ChangeByRightParenthesis"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordChangeBy -->
 <!-- dtl:block:RecordChangeTime -->
-                    <td>
-                        <div title="$QData{"ChangeTime"}">$QData{"ChangeTime","40"}</div>
-                    </td>
+                <td>
+                    <div title="$QData{"ChangeTime"}">
+                        $QData{"ChangeTime","40"}
+                    </div>
+                </td>
 <!-- dtl:block:RecordChangeTime -->
-                </tr>
+            </tr>
 <!-- dtl:block:Record -->
-                <tr class="contentfooter">
-                    <td align="left" colspan="$QData{"ColumnCount"}">
-                        &nbsp;
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+        </tbody>
+    </table>
+</div>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.UI.InitTableHead($('#FixedTable thead'), $('#FixedTable tbody'));
+    Core.UI.StaticTableControl($('#OverviewControl').add($('#OverviewBody')));
+    $('.MasterAction').bind('click', function (Event) {
+        window.location = $(this).find('.MasterActionLink').attr('href');
+    });
+    $(window).resize(function() {
+        Core.UI.AdjustTableHead($('#OverviewHeader thead'), $('#OverviewBody tbody'));
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
