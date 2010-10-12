@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm.pm
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTemplateOverviewSmall.pm,v 1.5 2010-04-27 20:36:57 ub Exp $
+# $Id: ITSMTemplateOverviewSmall.pm,v 1.6 2010-10-12 03:09:39 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -70,12 +70,35 @@ sub Run {
         @ShowColumns = @{ $Param{ShowColumns} };
     }
 
+    my @Col = (qw(Name TemplateTypeID ValidID CreateTime ChangeTime));
+    my %Order;
+    my %CSS;
+
+    for my $Key (@Col) {
+        if ( $Param{SortBy} && ( $Param{SortBy} eq $Key ) ) {
+            if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
+                $Order{ 'OrderBy' . $Key } = 'Down';
+                $CSS{ 'Sort' . $Key }      = ' SortDescending';
+            }
+            else {
+                $Order{ 'OrderBy' . $Key } = 'Up';
+                $CSS{ 'Sort' . $Key }      = ' SortAscending';
+            }
+            next;
+        }
+    }
+
     # build column header blocks
     if (@ShowColumns) {
         for my $Column (@ShowColumns) {
+
             $Self->{LayoutObject}->Block(
                 Name => 'Record' . $Column . 'Header',
-                Data => \%Param,
+                Data => {
+                    %Param,
+                    %Order,
+                    %CSS,
+                    }
             );
         }
     }
