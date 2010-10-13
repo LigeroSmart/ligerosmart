@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.8 2010-09-30 21:40:12 en Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.9 2010-10-13 08:58:54 en Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -25,7 +25,7 @@
     <input type="hidden" id="PriorityRC" name="PriorityRC" value="0"/>
 # ---
 
-    <div class="WidgetPopup ARIARoleMain">
+    <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
             <h1>
 
@@ -409,7 +409,7 @@ $Include{"RichTextEditor"}
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary" id="submitRichText" accesskey="g" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
+            <button class="Primary" id="submitRichText" accesskey="g" title="$Text{"Submit"} (g)" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
         </div>
     </div>
 </form>

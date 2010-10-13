@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.14 2010-10-01 21:27:45 en Exp $
-# $OldId: AgentTicketZoom.pm,v 1.127 2010/10/01 14:27:19 mg Exp $
+# $Id: AgentTicketZoom.pm,v 1.15 2010-10-13 08:57:01 en Exp $
+# $OldId: AgentTicketZoom.pm,v 1.129 2010/10/12 15:51:01 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ use warnings;
 
 use Kernel::System::CustomerUser;
 use Kernel::System::LinkObject;
+use Kernel::System::EmailParser;
+use Kernel::System::SystemAddress;
 # ---
 # ITSM
 # ---
@@ -24,7 +26,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,6 +84,7 @@ sub new {
     }
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{SystemAddress}      = Kernel::System::SystemAddress->new(%Param);
 # ---
 # ITSM
 # ---
@@ -578,9 +581,10 @@ sub MaskAgentZoom {
                 Config => $Menus{$Menu},
             );
             next if !$Item;
-            if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
-                $Item->{Class} = 'AsPopup';
+            if ( $Menus{$Menu}->{PopupType} ) {
+                $Item->{Class} = "AsPopup PopupType_$Menus{$Menu}->{PopupType}";
             }
+
             $Self->{LayoutObject}->Block(
                 Name => 'TicketMenu',
                 Data => $Item,
@@ -1291,7 +1295,7 @@ sub _ArticleItem {
                         %Ticket, %Article, %AclAction,
                         StandardResponsesStrg => $StandardResponsesStrg,
                         Name                  => 'Reply',
-                        Class                 => 'AsPopup',
+                        Class                 => 'AsPopup PopupType_TicketAction',
                         Action                => 'AgentTicketCompose',
                         FormID                => 'Reply',
                         ResponseElementID     => 'ResponseID',
@@ -1305,35 +1309,61 @@ sub _ArticleItem {
                     },
                 );
 
-                $Param{StandardResponses}->{0}
-                    = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -';
+                # check if reply all is needed
+                my $Recipients = '';
+                for my $Key (qw(From To Cc)) {
+                    next if !$Article{$Key};
+                    if ($Recipients) {
+                        $Recipients .= ', ';
+                    }
+                    $Recipients .= $Article{$Key};
+                }
+                my $RecipientCount = 0;
+                if ($Recipients) {
+                    my $EmailParser = Kernel::System::EmailParser->new(
+                        %{$Self},
+                        Mode => 'Standalone',
+                    );
+                    my @Addresses = $EmailParser->SplitAddressLine( Line => $Recipients );
+                    for my $Address (@Addresses) {
+                        my $IsLocal = $Self->{SystemAddress}->SystemAddressIsLocalAddress(
+                            Address => $EmailParser->GetEmailAddress( Email => $Address ),
+                        );
+                        next if $IsLocal;
+                        $RecipientCount++;
+                    }
+                }
+                if ( $RecipientCount > 1 ) {
+                    $Param{StandardResponses}->{0}
+                        = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Reply All') . ' -';
 
-                $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
-                    Name => 'ResponseID',
-                    ID   => 'ResponseIDAll',
-                    Data => $Param{StandardResponses},
-                );
+                    $StandardResponsesStrg = $Self->{LayoutObject}->BuildSelection(
+                        Name => 'ResponseID',
+                        ID   => 'ResponseIDAll',
+                        Data => $Param{StandardResponses},
+                    );
 
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleReplyAsDropdown',
-                    Data => {
-                        %Ticket, %Article, %AclAction,
-                        StandardResponsesStrg => $StandardResponsesStrg,
-                        Name                  => 'Reply All',
-                        Class                 => 'AsPopup',
-                        Action                => 'AgentTicketCompose',
-                        FormID                => 'ReplyAll',
-                        ReplyAll              => 1,
-                        ResponseElementID     => 'ResponseIDAll',
-                    },
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleReplyAsDropdownJS' . $Param{Type},
-                    Data => {
-                        %Ticket, %Article, %AclAction,
-                        FormID => 'ReplyAll',
-                    },
-                );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleReplyAsDropdown',
+                        Data => {
+                            %Ticket, %Article, %AclAction,
+                            StandardResponsesStrg => $StandardResponsesStrg,
+                            Name                  => 'Reply All',
+                            Class                 => 'AsPopup PopupType_TicketAction',
+                            Action                => 'AgentTicketCompose',
+                            FormID                => 'ReplyAll',
+                            ReplyAll              => 1,
+                            ResponseElementID     => 'ResponseIDAll',
+                        },
+                    );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleReplyAsDropdownJS' . $Param{Type},
+                        Data => {
+                            %Ticket, %Article, %AclAction,
+                            FormID => 'ReplyAll',
+                        },
+                    );
+                }
             }
         }
 
@@ -1376,7 +1406,7 @@ sub _ArticleItem {
                     Data => {
                         %Ticket, %Article, %AclAction,
                         Name  => 'Forward',
-                        Class => 'AsPopup',
+                        Class => 'AsPopup PopupType_TicketAction',
                         Link =>
                             'Action=AgentTicketForward;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
                     },
@@ -1423,7 +1453,7 @@ sub _ArticleItem {
                     Data => {
                         %Ticket, %Article, %AclAction,
                         Name  => 'Bounce',
-                        Class => 'AsPopup',
+                        Class => 'AsPopup PopupType_TicketAction',
                         Link =>
                             'Action=AgentTicketBounce;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
                     },
@@ -1478,7 +1508,7 @@ sub _ArticleItem {
                 Data => {
                     %Ticket, %Article, %AclAction,
                     Name  => 'Phone Call Outbound',
-                    Class => 'AsPopup',
+                    Class => 'AsPopup PopupType_TicketAction',
                     Link  => 'Action=AgentTicketPhoneOutbound;TicketID=$Data{"TicketID"}'
                 },
             );
@@ -1520,7 +1550,7 @@ sub _ArticleItem {
                 Data => {
                     %Ticket, %Article, %AclAction,
                     Name  => 'Print',
-                    Class => 'AsPopup',
+                    Class => 'AsPopup PopupType_TicketAction',
                     Link =>
                         'Action=AgentTicketPrint;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"}'
                 },
@@ -1549,7 +1579,7 @@ sub _ArticleItem {
                 Data => {
                     %Ticket, %Article, %AclAction,
                     Name  => 'Plain Format',
-                    Class => 'AsPopup',
+                    Class => 'AsPopup PopupType_TicketAction',
                     Link  => $Link,
                 },
             );

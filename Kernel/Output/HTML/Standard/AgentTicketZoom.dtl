@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.22 2010-10-01 21:27:45 en Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.162 2010/10/01 14:27:19 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.23 2010-10-13 09:05:25 en Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.165 2010/10/12 15:51:01 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -92,7 +92,7 @@
 # ---
 # ITSM
 # ---
-#                    <fieldset class="TableLike FixedLabelSmall Tight">
+#                    <fieldset class="TableLike FixedLabelSmall">
 #<!-- dtl:block:Type -->
 #                        <label>$Text{"Type"}:</label>
 #                        <p class="Value" title="$QData{"Type"}">$QData{"Type","18"}</p>
@@ -126,7 +126,7 @@
 #<!-- dtl:block:SLA -->
 #                    </fieldset>
 #
-                    <fieldset class="TableLike FixedLabelSmall Tight">
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:Type -->
                         <label>$Text{"Type"}:</label>
                         <p class="Value" title="$QData{"Type"}">$QData{"Type","18"}</p>
@@ -168,7 +168,7 @@
 # ---
 # ITSM
 # ---
-#                    <fieldset class="TableLike FixedLabelSmall Tight">
+#                    <fieldset class="TableLike FixedLabelSmall">
 #<!-- dtl:block:FirstResponseTime -->
 #                        <label>$Text{"First Response Time"}:</label>
 #                        <div class="Value">
@@ -204,7 +204,7 @@
 #<!-- dtl:block:SolutionTime -->
 #                    </fieldset>
 #
-                    <fieldset class="TableLike FixedLabelSmall Tight">
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:Service -->
                         <label>$Text{"Service"}:</label>
                         <p class="Value" title="$QData{"Service"}">$QData{"Service","18"}</p>
@@ -249,7 +249,8 @@
                         <div class="Clear"></div>
 <!-- dtl:block:SolutionTime -->
                     </fieldset>
-                    <fieldset class="TableLike FixedLabelSmall Tight">
+
+                    <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Criticality"}:</label>
                         <p class="Value" title="$Quote{"$Text{"$Data{"Criticality"}"}"}">$Quote{"$Text{"$Data{"Criticality"}"}","18"}</p>
                         <div class="Clear"></div>
@@ -267,9 +268,11 @@
 # ---
 # ITSM
 # ---
-#                    <fieldset class="TableLike FixedLabelSmall Tight">
+#                    <fieldset class="TableLike FixedLabelSmall">
 #                        <label>$Text{"CustomerID"}:</label>
-#                        <p class="Value"><a href="$Config{"CustomerDBLink"}" class="OpenAsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
+#                        <p class="Value">
+#                            <a href="$Config{"CustomerDBLink"}" class="AsPopup PopupType_TicketAction" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a>
+#                        </p>
 #                        <div class="Clear"></div>
 #
 #                        <label>$Text{"Accounted time"}:</label>
@@ -295,7 +298,7 @@
 #<!-- dtl:block:Responsible -->
 #                    </fieldset>
 ## show TicketFreeKey1-16 and TicketFreeText1-16
-#                    <fieldset class="TableLike FixedLabelSmall Tight">
+#                    <fieldset class="TableLike FixedLabelSmall">
 #<!-- dtl:block:TicketFreeText -->
 #                        <label>$QData{"TicketFreeKey","25"}:</label>
 #                        <p class="Value">
@@ -377,7 +380,7 @@
                         <div class="Clear"></div>
                     </fieldset>
 
-                    <fieldset class="TableLike FixedLabelSmall Tight">
+                    <fieldset class="TableLike FixedLabelSmall">
 
                         <label>$Text{"CustomerID"}:</label>
                         <p class="Value"><a href="$Config{"CustomerDBLink"}" class="OpenAsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
@@ -389,7 +392,7 @@
 
                     </fieldset>
 
-                    <fieldset class="TableLike FixedLabelSmall Tight">
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:TicketFreeText -->
                         <label>$QData{"TicketFreeKey","25"}:</label>
                         <p class="Value">
@@ -447,7 +450,7 @@
             <div class="ActionRow">
                 <ul class="Actions">
 <!-- dtl:block:TicketMenu -->
-                    <li class="$QData{"Class"}">
+                    <li>
                         <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"Class"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                     </li>
 <!-- dtl:block:TicketMenu -->
@@ -470,8 +473,8 @@
                     </li>
 <!-- dtl:block:MoveLink -->
 <!-- dtl:block:MoveForm -->
-                    <li class="AsPopup">
-                        <a href="$Env{"Baselink"}Action=AgentTicketMove;TicketID=$QData{"TicketID"};" class="AsPopup" title="$Text{"Change Queue"}">$Text{"Change Queue"}</a>
+                    <li>
+                        <a href="$Env{"Baselink"}Action=AgentTicketMove;TicketID=$LQData{"TicketID"};" class="AsTicketActionPopup" title="$Text{"Change Queue"}">$Text{"Change Queue"}</a>
                     </li>
 <!-- dtl:block:MoveForm -->
                 </ul>
@@ -648,7 +651,7 @@ $Data{"ArticleItems"}
         <div class="LightRow Bottom">
             <ul class="Actions">
 <!-- dtl:block:ArticleMenu-->
-                <li class="AsPopup">
+                <li>
                     <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"Class"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                 </li>
 <!-- dtl:block:ArticleMenu-->
@@ -670,7 +673,7 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 
     if ($(this).val() > 0) {
         URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
-        Core.UI.Popup.OpenPopup(URL, 'Action');
+        Core.UI.Popup.OpenPopup(URL, 'TicketAction');
         // reset the select box so that it can be used again from the same window
         $(this).val('0');
     }
@@ -685,7 +688,7 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 
     if ($(this).val() > 0) {
         URL = Core.Config.Get('Baselink') + $(this).parents().serialize();
-        Core.UI.Popup.OpenPopup(URL, 'Action');
+        Core.UI.Popup.OpenPopup(URL, 'TicketAction');
         // reset the select box so that it can be used again from the same window
         $(this).val('0');
     }
@@ -701,7 +704,7 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
 
         <div class="Content">
             <div class="ArticleMailHeader">
-                <fieldset class="TableLike FixedLabelSmall Tight">
+                <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:RowRecipient -->
                     <label>$Text{"$Data{"Key"}"}:</label>
                     <p class="Value" title="$QData{"Value"}">$QData{"Realname","200"}</p>
@@ -774,12 +777,6 @@ $Data{"Body"}
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-console.time('TIInit');
     Core.Agent.TicketZoom.Init({ ArticleTableHeight: parseInt('$Env{"UserTicketZoomArticleTableHeight"}', 10)});
-console.timeEnd('TIInit');
-    $('ul.Actions a.AsPopup, .OpenAsPopup').bind('click', function (Event) {
-        Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
-        return false;
-    });
 //]]></script>
 <!-- dtl:js_on_document_complete -->

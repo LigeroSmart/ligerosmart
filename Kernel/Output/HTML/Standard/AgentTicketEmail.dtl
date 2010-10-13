@@ -2,8 +2,8 @@
 # AgentTicketEmail.dtl - provides HTML form for agent email
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.dtl,v 1.17 2010-09-30 21:40:12 en Exp $
-# $OldId: AgentTicketEmail.dtl,v 1.126 2010/09/21 13:15:16 mb Exp $
+# $Id: AgentTicketEmail.dtl,v 1.18 2010-10-13 09:03:20 en Exp $
+# $OldId: AgentTicketEmail.dtl,v 1.127 2010/10/12 16:07:49 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -213,7 +213,7 @@ $Include{"AgentCustomerSearch"}
 # ---
 # ITSM
 # ---
-                        <a href="$Env{"Baselink"}Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=$QData{"FormID"};TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ $Text{"Link ticket"} ]</a>
+                        <a href="$Env{"Baselink"}Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=$LQData{"FormID"};TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ $Text{"Link ticket"} ]</a>
 # ---
                     </div>
                     <div class="Clear"></div>
@@ -388,7 +388,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:TimeUnits -->
 
                     <div class="Field SpacingTop">
-                        <button class="Primary" id="submitRichText" accesskey="g" type="submit" value="$Text{"Send mail!"}" >$Text{"Send mail!"}</button>
+                        <button class="Primary" id="submitRichText" accesskey="g" title="$Text{"Send mail!"} (g)" type="submit" value="$Text{"Send mail!"}" >$Text{"Send mail!"}</button>
                     </div>
                 </fieldset>
             </form>
