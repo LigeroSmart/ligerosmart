@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.11 2010-09-23 22:25:29 en Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.12 2010-10-13 13:40:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -271,8 +271,8 @@ sub Data {
     $Lang->{'Condition Edit'}                           = 'Editar Condición';
     $Lang->{'Add new expression'}                       = 'Agregar expresión nueva';
     $Lang->{'Add new action'}                           = 'Agregar acción nueva';
-    $Lang->{'Any expression'}                           = 'Cualquier expresión';
-    $Lang->{'All expressions'}                          = 'Todas las expresiones';
+    $Lang->{'Any expression (OR)'}                      = 'Cualquier expresión (O)';
+    $Lang->{'All expressions (AND)'}                    = 'Todas las expresiones (Y)';
     $Lang->{'any'}                                      = 'cualquiera';
     $Lang->{'all'}                                      = 'tTodo';
     $Lang->{'is'}                                       = 'es';

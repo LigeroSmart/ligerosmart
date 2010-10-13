@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.23 2010-03-22 15:55:29 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.24 2010-10-13 13:40:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,7 +39,7 @@ function submit_compose() {
     </tr>
     <tr>
         <td class="menu">
-            <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;&ChangeID=$QData{"ChangeID"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
+            <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;&ChangeID=$LQData{"ChangeID"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
         </td>
     </tr>
     <tr>
@@ -81,8 +81,8 @@ function submit_compose() {
                                             <tr>
                                                 <td class="contentkey">$Text{"Matching"}: </td>
                                                 <td class="contentvalue">
-                                                    <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"}/> $Text{"Any expression"}
-                                                    <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"}/> $Text{"All expressions"}
+                                                    <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"}/> $Text{"Any expression (OR)"}
+                                                    <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"}/> $Text{"All expressions (AND)"}
                                                 </td>
                                             </tr>
                                             <tr>
