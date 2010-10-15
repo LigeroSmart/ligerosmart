@@ -2,14 +2,14 @@
 # AgentITSMChangeHistory.dtl - provides HTML form for AgentITSMChangeHistory
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.dtl,v 1.25 2010-09-29 21:46:30 en Exp $
+# $Id: AgentITSMChangeHistory.dtl,v 1.26 2010-10-15 13:58:49 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="WidgetPopup ARIARoleMain">
+<div class="LayoutPopup ARIARoleMain">
 
     <div class="Header">
         <h1>
@@ -46,7 +46,7 @@
                             <td>
                                 $QData{"HistoryType"}
                             </td>
-                            <td>
+                            <td title="$QData{"Content"}">
                                 $QData{"Content","100"}
                             </td>
                             <td>
@@ -54,7 +54,7 @@
                                 -
 <!-- dtl:block:NoHistoryZoom -->
 <!-- dtl:block:ShowHistoryZoom -->
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Zoom view"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSM$Data{"ZoomType"}HistoryZoom;HistoryEntryID=$Data{"HistoryEntryID"}">$Text{"Show details"}</a>
 <!-- dtl:block:ShowHistoryZoom -->
                             </td>
                             <td>
@@ -62,7 +62,7 @@
                                 -
 <!-- dtl:block:NoWorkOrderZoom -->
 <!-- dtl:block:ShowWorkOrderZoom -->
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Zoom view"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$Data{"WorkOrderID"}">$Text{"Show workorder"}</a>
 <!-- dtl:block:ShowWorkOrderZoom -->
                             </td>
                             <td>
@@ -78,5 +78,7 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="Footer">
     </div>
 </div>
