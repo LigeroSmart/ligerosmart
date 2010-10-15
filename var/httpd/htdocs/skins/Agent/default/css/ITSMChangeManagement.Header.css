@@ -1,0 +1,62 @@
+/**
+ * This file containts the CSS Styles for the header
+ * with it's toolbar, the userbar and the whole main navigation
+ *
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Header
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Toolbar
+ */
+
+#ToolBar .ChangeManager a {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: 0 0;
+}
+
+#ToolBar .ChangeManager a .Gloss {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: 0 -20px;
+}
+
+#ToolBar .MyChanges a {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: -24px 0;
+}
+
+#ToolBar .MyChanges a .Gloss {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: -24px -20px;
+}
+
+#ToolBar .MyWOrkOrders a {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: -48px 0;
+}
+
+#ToolBar .MyworkOrders a .Gloss {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: -48px -20px;
+}
+
+#ToolBar .MyCABs a {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: -72px 0;
+}
+
+#ToolBar .MyCABs a .Gloss {
+    background: url(../img/ITSMChangeManagement_toolbar_sprite.png) no-repeat;
+    background-position: -72px -20px;
+}
+
+} /* end @media */
