@@ -2,14 +2,14 @@
 # AgentITSMWorkOrderHistoryZoom.dtl - provides HTML form for AgentITSMWorkOrderHistoryZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.17 2010-09-29 21:39:24 en Exp $
+# $Id: AgentITSMWorkOrderHistoryZoom.dtl,v 1.18 2010-10-15 14:05:03 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="WidgetPopup ARIARoleMain">
+<div class="LayoutPopup ARIARoleMain">
 
     <div class="Header">
         <h1>
@@ -55,5 +55,7 @@
             <div class="Clear"></div>
 
         </fieldset>
+    </div>
+    <div class="Footer">
     </div>
 </div>
