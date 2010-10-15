@@ -1,15 +1,15 @@
 # --
-# Kernel/Output/HTML/NavBarMyWorkOrders.pm
+# Kernel/Output/HTML/ToolBarMyWorkOrders.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NavBarMyWorkOrders.pm,v 1.1 2009-12-01 01:02:21 ub Exp $
+# $Id: ToolBarMyWorkOrders.pm,v 1.1 2010-10-15 09:29:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::NavBarMyWorkOrders;
+package Kernel::Output::HTML::ToolBarMyWorkOrders;
 
 use strict;
 use warnings;
@@ -43,9 +43,6 @@ sub Run {
     # define action
     my $Action = 'AgentITSMChangeMyWorkOrders';
     my $Group  = 'itsm-change';
-    my $Label  = 'My Workorders';
-    my $Image  = 'new-message.png';
-    my $Prio   = '0994000';
 
     # get config of frontend module
     my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Action");
@@ -84,22 +81,24 @@ sub Run {
         );
     }
 
-    # build icon label
-    my $Text = $Self->{LayoutObject}->{LanguageObject}->Get($Label) . " ($Count)";
+    # get ToolBar object parameters
+    my $Class        = $Param{Config}->{CssClass};
+    my $Text        = $Self->{LayoutObject}->{LanguageObject}->Get('My Work Orders');
 
-    # build icon data
-    my %Icon = (
-        $Prio => {
-            Block       => 'ItemPersonal',
+    # set ToolBar object
+    my $URL = $Self->{LayoutObject}->{Baselink};
+    my %Return;
+    if ($Count) {
+        $Return{'1000640'} = {
+            Block       => 'ToolBarItem',
             Description => $Text,
-            Name        => $Text,
-            Image       => $Image,
-            Link        => 'Action=' . $Action,
+            Count       => $Count,
+            Class       => $Class,
+            Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
-        },
-    );
-
-    return %Icon;
+        };
+    }
+    return %Return;
 }
 
 1;
