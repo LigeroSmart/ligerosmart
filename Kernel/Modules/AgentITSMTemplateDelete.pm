@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMTemplateDelete.pm - the OTRS::ITSM::ChangeManagement template delete module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateDelete.pm,v 1.2 2010-01-28 13:45:35 bes Exp $
+# $Id: AgentITSMTemplateDelete.pm,v 1.3 2010-10-15 13:57:48 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -110,22 +110,13 @@ sub Run {
         }
     }
 
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Title => 'Delete',
-    );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-
-    # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    # output content
+    my $Output = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMTemplateDelete',
         Data         => {
             %{$Template},
         },
     );
-
-    # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
 
     return $Output;
 }
