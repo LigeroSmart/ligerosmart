@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.227 2010-10-15 13:54:09 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.228 2010-10-15 15:25:31 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -728,7 +728,7 @@
                 <Item Key="Name">Create Change</Item>
                 <Item Key="Description">Create a change from this ticket!</Item>
                 <Item Key="Action">AgentITSMChangeAdd</Item>
-                <Item Key="Link">Action=AgentITSMChangeAdd&amp;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Link">Action=AgentITSMChangeAdd;TicketID=$QData{"TicketID"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>

@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/TicketMenuITSMChange.pm - ITSMChange specific module for the ticket menu
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketMenuITSMChange.pm,v 1.7 2009-11-23 13:30:43 bes Exp $
+# $Id: TicketMenuITSMChange.pm,v 1.8 2010-10-15 15:25:31 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -55,25 +55,25 @@ sub Run {
     # check if frontend module is registered, if not, do not show action
     if ( $Param{Config}->{Action} ) {
         my $Module = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} };
-        return $Param{Counter} if !$Module;
+        return if !$Module;
     }
 
     # the link is shown only for the configured ticket types,
     # so the ticket needs to have a type.
-    return $Param{Counter} if !$Param{Ticket}->{Type};
+    return if !$Param{Ticket}->{Type};
 
     # get and check the list of relevant ticket types
     my $AddChangeLinkTicketTypes
         = $Self->{ConfigObject}->Get('ITSMChange::AddChangeLinkTicketTypes');
 
-    return $Param{Counter} if !$AddChangeLinkTicketTypes;
-    return $Param{Counter} if ref $AddChangeLinkTicketTypes ne 'ARRAY';
-    return $Param{Counter} if !@{$AddChangeLinkTicketTypes};
+    return if !$AddChangeLinkTicketTypes;
+    return if ref $AddChangeLinkTicketTypes ne 'ARRAY';
+    return if !@{$AddChangeLinkTicketTypes};
 
     # check whether the ticket's type is relevant
     my %IsRelevant = map { $_ => 1 } @{$AddChangeLinkTicketTypes};
 
-    return $Param{Counter} if !$IsRelevant{ $Param{Ticket}->{Type} };
+    return if !$IsRelevant{ $Param{Ticket}->{Type} };
 
     # check permission
     my $FrontendConfig
@@ -85,27 +85,10 @@ sub Run {
             LogNo  => 1,
         );
 
-        return $Param{Counter} if !$Access;
+        return if !$Access;
     }
 
-    # display the menu item
-    $Self->{LayoutObject}->Block(
-        Name => 'Menu',
-        Data => {},
-    );
-    if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'MenuItemSplit',
-            Data => {},
-        );
-    }
-    $Self->{LayoutObject}->Block(
-        Name => 'MenuItem',
-        Data => { %{ $Param{Config} }, %{ $Param{Ticket} }, %Param, },
-    );
-    $Param{Counter}++;
-
-    return $Param{Counter};
+    return { %{ $Param{Config} }, %{ $Param{Ticket} }, %Param, };
 }
 
 1;
