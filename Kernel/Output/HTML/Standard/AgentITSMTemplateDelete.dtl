@@ -1,92 +1,33 @@
 # --
 # AgentITSMTemplateDelete.dtl - provides HTML form for AgentITSMTemplateDelete
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateDelete.dtl,v 1.5 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMTemplateDelete.dtl,v 1.6 2010-10-15 14:01:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Delete"} $Text{"Template"} $QData{"Name"} $Env{"Box1"}">
-                $Env{"Box0"} $Text{"Delete"} $Text{"Template"} $QData{"Name"} $Env{"Box1"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastScreenTemplates"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
+<fieldset class="TableLike">
+    <label>$Text{"Name"}:</label>
+    <p class="Value">
+        $QData{"Name"}
+    </p>
+    <div class="Clear"></div>
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <table border="0" width="350" align="center" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td class="contenthead">$Text{"Delete"} $Text{"Template"} $QData{"Name"}</td>
-                </tr>
-                <tr class="contentbody">
-                    <td class="contentbody">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                            <colgroup>
-                                <col width="130">
-                                <col>
-                            </colgroup>
-                            <tr>
-                                <td class="contentkey">$Text{"Name"}:</td>
-                                <td class="contentvalue">$QData{"Name"}</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey">$Text{"Type"}:</td>
-                                <td class="contentvalue">$Text{"$QData{"Type"}"}</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey">$Text{"Comment"}:</td>
-                                <td class="contentvalue">$QData{"Comment", "40"}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="contentkey">$Text{"Do you really want to delete this template?"}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="1">
-                            <colgroup>
-                                <col>
-                                <col width="10">
-                            </colgroup>
-                            <tr>
-                                <td class="contentfooter">
-                                    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="Action"    value="AgentITSMTemplateOverview">
-                                        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}"/>
-                                        <input type="hidden" name="Subaction" value="">
-                                        <input class="button" type="submit" value="$Text{"No"}"/>
-                                    </form>
-                                </td>
-                                <td class="contentfooter">
-                                    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                                        <input type="hidden" name="Subaction" value="TemplateDelete"/>
-                                        <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}"/>
-                                        <input class="button" type="submit" value="$Text{"Yes"}"/>
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+    <label>$Text{"Type"}:</label>
+    <p class="Value">
+        $Text{"$Data{"Type"}"}
+    </p>
+    <div class="Clear"></div>
+
+    <label>$Text{"Comment"}:</label>
+    <p class="Value">
+        $QData{"Comment", "40"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop">
+    $Text{"Do you really want to delete this template?"}
+</p>
