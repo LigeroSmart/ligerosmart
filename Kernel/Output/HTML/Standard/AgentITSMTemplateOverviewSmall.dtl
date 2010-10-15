@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.9 2010-10-12 03:29:14 mp Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.10 2010-10-15 14:03:57 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -89,10 +89,26 @@
 <!-- dtl:block:RecordValid -->
 <!-- dtl:block:RecordDelete -->
                 <td class="Center Last">
-                    <a class="TrashCan" href="$Env{"Baselink"}Action=AgentITSMTemplateDelete;TemplateID=$LQData{"TemplateID"}">
+                    <a id="DeleteTemplateID$QData{"TemplateID"}" class="TrashCan" href="#">
                         $Text{"Delete: $QData{"Name"}"}
                     </a>
                 </td>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementSelector:            '#DeleteTemplateID$QData{"TemplateID"}',
+        DialogContentQueryString:   'Action=AgentITSMTemplateDelete;TemplateID=$LQData{"TemplateID"}',
+        ConfirmedActionQueryString: '$Env{"Baselink"}Action=AgentITSMTemplateDelete;Subaction=TemplateDelete;TemplateID=$LQData{"TemplateID"}',
+        DialogTitle:                '$JSText{"Delete Template"} $QData{"Name"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
 <!-- dtl:block:RecordDelete -->
 <!-- dtl:block:RecordCreateBy -->
                 <td>
