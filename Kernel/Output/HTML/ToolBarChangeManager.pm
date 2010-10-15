@@ -1,15 +1,15 @@
 # --
-# Kernel/Output/HTML/NavBarChangeManager.pm
+# Kernel/Output/HTML/ToolBarChangeManager.pm
 # Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
 # --
-# $Id: NavBarChangeManager.pm,v 1.4 2010-04-27 20:39:02 ub Exp $
+# $Id: ToolBarChangeManager.pm,v 1.1 2010-10-15 09:26:52 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::NavBarChangeManager;
+package Kernel::Output::HTML::ToolBarChangeManager;
 
 use strict;
 use warnings;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,9 +43,6 @@ sub Run {
     # define action, group, label, image and prio
     my $Action = 'AgentITSMChangeManager';
     my $Group  = 'itsm-change-manager';
-    my $Label  = 'ChangeManager';
-    my $Image  = 'new-message.png';
-    my $Prio   = '0991000';
 
     # get config of frontend module
     my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Action");
@@ -84,22 +81,25 @@ sub Run {
         );
     }
 
-    # build icon label
-    my $Text = $Self->{LayoutObject}->{LanguageObject}->Get($Label) . " ($Count)";
+    # get ToolBar object parameters
+    my $Class        = $Param{Config}->{CssClass};
+    my $Text        = $Self->{LayoutObject}->{LanguageObject}->Get('Change Manager');
 
-    # build icon data
-    my %Icon = (
-        $Prio => {
-            Block       => 'ItemPersonal',
+    # set ToolBar object
+    my $URL = $Self->{LayoutObject}->{Baselink};
+    my %Return;
+    if ($Count) {
+        $Return{'1000610'} = {
+            Block       => 'ToolBarItem',
             Description => $Text,
-            Name        => $Text,
-            Image       => $Image,
-            Link        => 'Action=' . $Action,
+            Count       => $Count,
+            Class       => $Class,
+            Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
-        },
-    );
+        };
+    }
+    return %Return;
 
-    return %Icon;
 }
 
 1;
