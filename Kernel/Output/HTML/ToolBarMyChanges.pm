@@ -1,15 +1,15 @@
 # --
-# Kernel/Output/HTML/NavBarMyChanges.pm
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Kernel/Output/HTML/ToolBarMyChanges.pm
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: NavBarMyChanges.pm,v 1.1 2009-12-01 01:02:21 ub Exp $
+# $Id: ToolBarMyChanges.pm,v 1.1 2010-10-15 09:28:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::NavBarMyChanges;
+package Kernel::Output::HTML::ToolBarMyChanges;
 
 use strict;
 use warnings;
@@ -43,9 +43,6 @@ sub Run {
     # define action, group, label, image and prio
     my $Action = 'AgentITSMChangeMyChanges';
     my $Group  = 'itsm-change-builder';
-    my $Label  = 'My Changes';
-    my $Image  = 'new-message.png';
-    my $Prio   = '0993000';
 
     # get config of frontend module
     my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Action");
@@ -84,22 +81,24 @@ sub Run {
         );
     }
 
-    # build icon label
-    my $Text = $Self->{LayoutObject}->{LanguageObject}->Get($Label) . " ($Count)";
+    # get ToolBar object parameters
+    my $Class = $Param{Config}->{CssClass};
+    my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('My Changes');
 
-    # build icon data
-    my %Icon = (
-        $Prio => {
-            Block       => 'ItemPersonal',
+    # set ToolBar object
+    my $URL = $Self->{LayoutObject}->{Baselink};
+    my %Return;
+    if ($Count) {
+        $Return{'1000630'} = {
+            Block       => 'ToolBarItem',
             Description => $Text,
-            Name        => $Text,
-            Image       => $Image,
-            Link        => 'Action=' . $Action,
+            Count       => $Count,
+            Class       => $Class,
+            Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
-        },
-    );
-
-    return %Icon;
+        };
+    }
+    return %Return;
 }
 
 1;
