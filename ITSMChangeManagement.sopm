@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.198 2010-08-09 06:57:33 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.199 2010-10-15 11:42:52 cr Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -65,15 +65,15 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMWorkOrderMenuWithTakePermission.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/TicketMenuITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutITSMTemplate.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMChange.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/NavBarChangeManager.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/NavBarMyCAB.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/NavBarMyChanges.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/NavBarMyWorkOrders.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/TicketMenuITSMChange.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBarChangeManager.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBarMyCAB.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBarMyChanges.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ToolBarMyWorkOrders.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMChangeCIPAllocate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMChangeNotification.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMStateMachine.dtl"/>
@@ -166,10 +166,11 @@
         <File Permission="644" Location="scripts/test/ITSMTemplate.t"/>
         <File Permission="644" Location="scripts/test/ITSMWorkOrder.t"/>
         <File Permission="644" Location="var/cron/itsmchange_check.dist"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_change.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/itsm_change_template.png"/>
         <File Permission="644" Location="var/httpd/htdocs/js/itsm-changemanagement.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSMChangeManagement.Header.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/ITSMChangeManagement_toolbar_sprite.png"/>
         <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="doc/itsm-change-management-database.dia"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="change_item">
