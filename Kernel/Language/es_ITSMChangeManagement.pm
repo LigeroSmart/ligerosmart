@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.12 2010-10-13 13:40:25 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.13 2010-10-15 09:10:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -1018,7 +1018,10 @@ sub Data {
     $Lang->{'Admin of the state machine.'} = 'Administrar la máquina de estados.';
     $Lang->{'Admin of notification rules.'} = 'Administrar las reglas de notificación.';
     $Lang->{'Admin of the CIP matrix.'} = 'Administrar la matriz CIP.';
-
+    $Lang->{'Agent interface notification module to see the number of changes managed by the user.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de  cambios administrados por el usuario.';
+    $Lang->{'Agent interface notification module to see the number of changes.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de cambios.';
+    $Lang->{'Agent interface notification module to see the number of work orders.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de órdenes de trabajo.';
+    $Lang->{'Agent interface notification module to see the number of change advisory boards.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de change advisory boards.';
         return 1;
 }
 

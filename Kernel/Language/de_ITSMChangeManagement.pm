@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.80 2010-10-13 13:40:25 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.81 2010-10-15 09:10:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.80 $) [1];
+$VERSION = qw($Revision: 1.81 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -1019,8 +1019,11 @@ sub Data {
     $Lang->{'Admin of the state machine.'} = '';
     $Lang->{'Admin of notification rules.'} = '';
     $Lang->{'Admin of the CIP matrix.'} = '';
-
-    return 1;
+    $Lang->{'Agent interface notification module to see the number of changes managed by the user.'} = '';
+    $Lang->{'Agent interface notification module to see the number of changes.'} = '';
+    $Lang->{'Agent interface notification module to see the number of work orders.'} = '';
+    $Lang->{'Agent interface notification module to see the number of change advisory boards.'} = '';
+        return 1;
 }
 
 1;
