@@ -1,15 +1,15 @@
 # --
-# Kernel/Output/HTML/NavBarMyCAB.pm
+# Kernel/Output/HTML/ToolBarMyCAB.pm
 # Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
 # --
-# $Id: NavBarMyCAB.pm,v 1.2 2009-12-01 15:49:00 ub Exp $
+# $Id: ToolBarMyCAB.pm,v 1.1 2010-10-15 09:27:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::NavBarMyCAB;
+package Kernel::Output::HTML::ToolBarMyCAB;
 
 use strict;
 use warnings;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,9 +43,6 @@ sub Run {
     # define action, group, label, image and prio
     my $Action = 'AgentITSMChangeMyCAB';
     my $Group  = 'itsm-change';
-    my $Label  = 'My CABs';
-    my $Image  = 'new-message.png';
-    my $Prio   = '0992000';
 
     # get config of frontend module
     my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Action");
@@ -84,22 +81,24 @@ sub Run {
         );
     }
 
-    # build icon label
-    my $Text = $Self->{LayoutObject}->{LanguageObject}->Get($Label) . " ($Count)";
+    # get ToolBar object parameters
+    my $Class        = $Param{Config}->{CssClass};
+    my $Text        = $Self->{LayoutObject}->{LanguageObject}->Get('My CABs');
 
-    # build icon data
-    my %Icon = (
-        $Prio => {
-            Block       => 'ItemPersonal',
+    # set ToolBar object
+    my $URL = $Self->{LayoutObject}->{Baselink};
+    my %Return;
+    if ($Count) {
+        $Return{'1000620'} = {
+            Block       => 'ToolBarItem',
             Description => $Text,
-            Name        => $Text,
-            Image       => $Image,
-            Link        => 'Action=' . $Action,
+            Count       => $Count,
+            Class       => $Class,
+            Link        => $URL . 'Action=' . $Action,
             AccessKey   => '',
-        },
-    );
-
-    return %Icon;
+        };
+    }
+    return %Return;
 }
 
 1;
