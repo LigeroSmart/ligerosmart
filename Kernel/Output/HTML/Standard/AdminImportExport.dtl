@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.19 2010-10-01 21:59:55 dz Exp $
+# $Id: AdminImportExport.dtl,v 1.20 2010-10-15 12:10:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,7 +78,7 @@
 <!-- dtl:block:OverviewListRow -->
                         <tr>
                             <td>
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$QData{"TemplateID"}">
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$LQData{"TemplateID"}">
                                     $QData{"Number"}
                                 </a>
                             </td>
@@ -86,17 +86,17 @@
                             <td>$Text{"$Data{"FormatName"}"}</td>
                             <td>$Text{"$Data{"Valid"}"}</td>
                             <td>
-                                <a class="TrashCan" title="Delete Template" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$QData{"TemplateID"}">
+                                <a class="TrashCan" title="Delete Template" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$LQData{"TemplateID"}">
                                     $Text{"Delete Template"}
                                 </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ImportInformation&TemplateID=$QData{"TemplateID"}">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ImportInformation&TemplateID=$LQData{"TemplateID"}">
                                     $Text{"Import"}
                                 </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Export&TemplateID=$QData{"TemplateID"}">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Export&TemplateID=$LQData{"TemplateID"}">
                                     $Text{"Export"}
                                 </a>
                             </td>
@@ -192,7 +192,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next..."}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next"}</button>
                             $Text{"or"}
                             <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction='Overview'">$Text{"Cancel"} </a>
                         </div>
@@ -240,9 +240,9 @@
                         </div>
 <!-- dtl:block:TemplateEdit2Element -->
                         <div class="Field SpacingTop">
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$QData{"TemplateID"}"><span>$Text{"Go back"}</span></a>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$LQData{"TemplateID"}"><span>$Text{"Back"}</span></a>
                             $Text{"or"}
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next..."}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next"}</button>
                         </div>
                     </fieldset>
                 </form>
@@ -288,9 +288,9 @@
                         </div>
 <!-- dtl:block:TemplateEdit3Element -->
                         <div class="Field SpacingTop">
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit2;TemplateID=$QData{"TemplateID"}"><span>$Text{"Go back"}</span></a>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit2;TemplateID=$LQData{"TemplateID"}"><span>$Text{"Back"}</span></a>
                             $Text{"or"}
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
                         </div>
                     </fieldset>
                 </form>
@@ -371,8 +371,8 @@
                         <button id="MappingAdd" type="submit" name="MappingAdd" value="$Text{"Add"}">$Text{"Add"}</button>
                     </div>
                     <div class="Submit SpacingTop">
-                        <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
-                        <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
+                        <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"Back"}</button>
+                        <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
                     </div>
                 </form>
             </div>
@@ -408,8 +408,8 @@
 <!-- dtl:block:TemplateEdit5Element -->
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"...Back"}</button>
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next..."}</button>
+                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"Back"}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
                         </div>
                     </fieldset>
                 </form>

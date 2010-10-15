@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.22 2010-10-01 21:59:55 dz Exp $
+# $Id: AdminImportExport.pm,v 1.23 2010-10-15 12:10:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,19 +50,22 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # get params
-        my $TemplateData = {};
-        my $TemplateID;
-        $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
+        my $TemplateData;
+        my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
 
         my $SaveContinue;
         $SaveContinue = $Self->{ParamObject}->GetParam( Param => 'SubmitNext' );
@@ -70,8 +73,9 @@ sub Run {
         if ( !$SaveContinue ) {
 
             # if needed new form
-            return $Self->_MaskTemplateEdit1( New => 1, %Param )
-                if ( !$TemplateID );
+            if ( !$TemplateID ) {
+                return $Self->_MaskTemplateEdit1( New => 1, %Param );
+            }
 
             # if there is template id
             # get template data
@@ -80,12 +84,16 @@ sub Run {
                 UserID     => $Self->{UserID},
             );
 
-            return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-                if !$TemplateData->{TemplateID};
+            if ( !$TemplateData->{TemplateID} ) {
+                $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+                return;
+            }
 
             # if edit
-            return $Self->_MaskTemplateEdit1( %Param, %{$TemplateData} )
-                if $TemplateData->{TemplateID};
+            if ( $TemplateData->{TemplateID} ) {
+                return $Self->_MaskTemplateEdit1( %Param, %{$TemplateData} );
+            }
+
         }
 
         # if save & continue
@@ -98,26 +106,36 @@ sub Run {
 
         # is a new template?
         my $New;
-        $New = 1 if ( !$TemplateData->{TemplateID} );
+        if ( !$TemplateData->{TemplateID} ) {
+            $New = 1;
+        }
 
         # check needed fields
         # for new templates
         if ($New) {
-            $ServerError{Object} = 1 if ( !$TemplateData->{Object} );
-            $ServerError{Format} = 1 if ( !$TemplateData->{Format} );
+
+            if ( !$TemplateData->{Object} ) {
+                $ServerError{Object} = 1;
+            }
+
+            if ( !$TemplateData->{Format} ) {
+                $ServerError{Format} = 1;
+            }
+
         }
 
         #for all templates
-        $ServerError{Name} = 1 if ( !$TemplateData->{Name} );
+        if ( !$TemplateData->{Name} ) {
+            $ServerError{Name} = 1;
+        }
 
         # if some error
         if ( $ServerError{Format} || $ServerError{Object} || $ServerError{Name} ) {
-            return
-                $Self->_MaskTemplateEdit1(
+            return $Self->_MaskTemplateEdit1(
                 ServerError => \%ServerError,
                 New         => $New,
                 %{$TemplateData},
-                );
+            );
         }
 
         # save to database
@@ -138,8 +156,10 @@ sub Run {
             );
         }
 
-        return $Self->{LayoutObject}->FatalError( Message => "Can't insert/update template!" )
-            if !$Success;
+        if ( !$Success ) {
+            $Self->{LayoutObject}->FatalError( Message => "Can't insert/update template!" );
+            return;
+        }
 
         return $Self->{LayoutObject}->Redirect(
             OP =>
@@ -155,27 +175,34 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # get template id
         my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' )
-            if !$TemplateID;
+        if ( !$TemplateID ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' );
+            return;
+        }
 
         my $SubmitNext = $Self->{ParamObject}->GetParam( Param => 'SubmitNext' );
 
-        return $Self->_MaskTemplateEdit2( TemplateID => $TemplateID )
-            if ( !$SubmitNext );
+        if ( !$SubmitNext ) {
+            return $Self->_MaskTemplateEdit2( TemplateID => $TemplateID );
+        }
 
-        # save starting here
+        # save template starts here
 
         # get object attributes
         my $ObjectAttributeList = $Self->{ImportExportObject}->ObjectAttributesGet(
@@ -204,10 +231,12 @@ sub Run {
         }
 
         # reload with server errors
-        return $Self->_MaskTemplateEdit2(
-            ServerError => \%ServerError,
-            TemplateID  => $TemplateID
-        ) if ($Error);
+        if ($Error) {
+            return $Self->_MaskTemplateEdit2(
+                ServerError => \%ServerError,
+                TemplateID  => $TemplateID
+            );
+        }
 
         # save the object data
         $Self->{ImportExportObject}->ObjectDataSave(
@@ -230,25 +259,32 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # get template id
         my $TemplateID = $Self->{ParamObject}->GetParam( Param => 'TemplateID' );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' )
-            if !$TemplateID;
+        if ( !$TemplateID ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' );
+            return;
+        }
 
         my $SubmitNext = $Self->{ParamObject}->GetParam( Param => 'SubmitNext' );
 
-        return $Self->_MaskTemplateEdit3( TemplateID => $TemplateID )
-            if ( !$SubmitNext );
+        if ( !$SubmitNext ) {
+            return $Self->_MaskTemplateEdit3( TemplateID => $TemplateID );
+        }
 
         # save starting here
 
@@ -284,10 +320,12 @@ sub Run {
         }
 
         # reload with server errors
-        return $Self->_MaskTemplateEdit3(
-            ServerError => \%ServerError,
-            TemplateID  => $TemplateID
-        ) if ($Error);
+        if ($Error) {
+            return $Self->_MaskTemplateEdit3(
+                ServerError => \%ServerError,
+                TemplateID  => $TemplateID,
+            );
+        }
 
         # save the format data
         $Self->{ImportExportObject}->FormatDataSave(
@@ -309,14 +347,18 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # get params
         my $TemplateData = {};
@@ -328,8 +370,10 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-            if !$TemplateData->{TemplateID};
+        if ( !$TemplateData->{TemplateID} ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            return;
+        }
 
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -632,14 +676,18 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # get params
         my $TemplateData = {};
@@ -651,8 +699,10 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-            if !$TemplateData->{TemplateID};
+        if ( !$TemplateData->{TemplateID} ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            return;
+        }
 
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -849,14 +899,18 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # get params
         my $TemplateData = {};
@@ -868,8 +922,10 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-            if !$TemplateData->{TemplateID};
+        if ( !$TemplateData->{TemplateID} ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            return;
+        }
 
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -939,8 +995,10 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-            if !$TemplateData->{TemplateID};
+        if ( !$TemplateData->{TemplateID} ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            return;
+        }
 
         # get source file
         my %SourceFile = $Self->{ParamObject}->GetUploadAll(
@@ -957,9 +1015,12 @@ sub Run {
             UserID        => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError(
-            Message => 'Error occurred. Import impossible! See Syslog for details.',
-        ) if !$Result;
+        if ( !$Result ) {
+            $Self->{LayoutObject}->FatalError(
+                Message => 'Error occurred. Import impossible! See Syslog for details.',
+            );
+            return;
+        }
 
         return $Self->{LayoutObject}->Redirect(
             OP =>
@@ -982,8 +1043,10 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-            if !$TemplateData->{TemplateID};
+        if ( !$TemplateData->{TemplateID} ) {
+            $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+            return;
+        }
 
         # export data
         my $Result = $Self->{ImportExportObject}->Export(
@@ -991,9 +1054,12 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        return $Self->{LayoutObject}->FatalError(
-            Message => 'Error occurred. Export impossible! See Syslog for details.',
-        ) if !$Result;
+        if ( !$Result ) {
+            $Self->{LayoutObject}->FatalError(
+                Message => 'Error occurred. Export impossible! See Syslog for details.',
+            );
+            return;
+        }
 
         my $FileContent = join "\n", @{ $Result->{DestinationContent} };
 
@@ -1013,14 +1079,18 @@ sub Run {
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         # output overview
         $Self->{LayoutObject}->Block(
@@ -1116,7 +1186,11 @@ sub Run {
 
 sub _MaskTemplateEdit1 {
     my ( $Self, %Param ) = @_;
-    my %ServerError = %{ $Param{ServerError} } if ( $Param{ServerError} );
+
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
 
     # output overview
     $Self->{LayoutObject}->Block(
@@ -1137,7 +1211,11 @@ sub _MaskTemplateEdit1 {
     );
 
     my $Class = ' Validate_Required ';
-    $Class .= 'ServerError' if ( $ServerError{Name} );
+
+    if ( $ServerError{Name} ) {
+        $Class .= 'ServerError';
+    }
+
     $Self->{LayoutObject}->Block(
         Name => 'TemplateEdit1',
         Data => {
@@ -1157,22 +1235,30 @@ sub _MaskTemplateEdit1 {
                 }
         );
     }
+
     if ( $Param{New} ) {
 
         # get object list
         my $ObjectList = $Self->{ImportExportObject}->ObjectList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-            if !$ObjectList;
+        if ( !$ObjectList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' );
+            return;
+        }
 
         # get format list
         my $FormatList = $Self->{ImportExportObject}->FormatList();
 
-        return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-            if !$FormatList;
+        if ( !$FormatList ) {
+            $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' );
+            return;
+        }
 
         $Class = ' Validate_Required ';
-        $Class .= 'ServerError' if ( $ServerError{Object} );
+
+        if ( $ServerError{Object} ) {
+            $Class .= 'ServerError';
+        }
 
         # generate ObjectOptionStrg
         my $ObjectOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -1185,7 +1271,9 @@ sub _MaskTemplateEdit1 {
         );
 
         $Class = ' Validate_Required ';
-        $Class .= 'ServerError' if ( $ServerError{Format} );
+        if ( $ServerError{Format} ) {
+            $Class .= 'ServerError';
+        }
 
         # generate FormatOptionStrg
         my $FormatOptionStrg = $Self->{LayoutObject}->BuildSelection(
@@ -1202,7 +1290,7 @@ sub _MaskTemplateEdit1 {
             Data => {
                 ObjectOption => $ObjectOptionStrg,
                 FormatOption => $FormatOptionStrg,
-                }
+            },
         );
     }
 
@@ -1222,25 +1310,21 @@ sub _MaskTemplateEdit1 {
 
 sub _MaskTemplateEdit2 {
     my ( $Self, %Param ) = @_;
-    my %ServerError = %{ $Param{ServerError} } if ( $Param{ServerError} );
 
-    # get object list
-    my $ObjectList = $Self->{ImportExportObject}->ObjectList();
-
-    return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-        if !$ObjectList;
-
-    # get format list
-    my $FormatList = $Self->{ImportExportObject}->FormatList();
-
-    return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-        if !$FormatList;
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
 
     my $TemplateID;
-    $TemplateID = $Param{TemplateID} if ( $Param{TemplateID} );
+    if ( $Param{TemplateID} ) {
+        $TemplateID = $Param{TemplateID};
+    }
 
-    return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-        if !$TemplateID;
+    if ( !$TemplateID ) {
+        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        return;
+    }
 
     # get template data
     my $TemplateData;
@@ -1249,15 +1333,15 @@ sub _MaskTemplateEdit2 {
         UserID     => $Self->{UserID},
     );
 
-    return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-        if !$TemplateData->{TemplateID};
+    if ( !$TemplateData->{TemplateID} ) {
+        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        return;
+    }
 
     # output overview
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
-        Data => {
-            %Param,
-        },
+        Data => \%Param,
     );
 
     $Self->{LayoutObject}->Block( Name => 'ActionList', );
@@ -1284,9 +1368,14 @@ sub _MaskTemplateEdit2 {
     # output object attributes
     for my $Item ( @{$ObjectAttributeList} ) {
 
-        my $Class = '';
-        $Class = 'Validate_Required ' if ( $Item->{Input}->{Required} );
-        $Class .= 'ServerError' if ( $ServerError{ $Item->{Name} } );
+        my $Class = ' ';
+        if ( $Item->{Input}->{Required} ) {
+            $Class = 'Validate_Required';
+        }
+
+        if ( $ServerError{ $Item->{Name} } ) {
+            $Class .= ' ServerError';
+        }
 
         # create form input
         my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
@@ -1296,8 +1385,13 @@ sub _MaskTemplateEdit2 {
         );
 
         # build id
-        my $Id;
-        $Id = ( $Item->{Prefix} ) ? "$Item->{Prefix}$Item->{Key}" : $Item->{Key};
+        my $ID;
+        if ( $Item->{Prefix} ) {
+            $ID = "$Item->{Prefix}$Item->{Key}";
+        }
+        else {
+            $ID = $Item->{Key};
+        }
 
         # output attribute row
         $Self->{LayoutObject}->Block(
@@ -1305,7 +1399,7 @@ sub _MaskTemplateEdit2 {
             Data => {
                 Name => $Item->{Name} || '',
                 InputStrg => $InputString,
-                ID        => $Id,
+                ID        => $ID,
             },
         );
 
@@ -1315,7 +1409,7 @@ sub _MaskTemplateEdit2 {
                 Name => 'TemplateEdit2ElementRequired',
                 Data => {
                     Name => $Item->{Name} || '',
-                    ID => $Id,
+                    ID => $ID,
                 },
             );
         }
@@ -1338,25 +1432,21 @@ sub _MaskTemplateEdit2 {
 
 sub _MaskTemplateEdit3 {
     my ( $Self, %Param ) = @_;
-    my %ServerError = %{ $Param{ServerError} } if ( $Param{ServerError} );
 
-    # get object list
-    my $ObjectList = $Self->{ImportExportObject}->ObjectList();
-
-    return $Self->{LayoutObject}->FatalError( Message => 'No object backend found!' )
-        if !$ObjectList;
-
-    # get format list
-    my $FormatList = $Self->{ImportExportObject}->FormatList();
-
-    return $Self->{LayoutObject}->FatalError( Message => 'No format backend found!' )
-        if !$FormatList;
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
 
     my $TemplateID;
-    $TemplateID = $Param{TemplateID} if ( $Param{TemplateID} );
+    if ( $Param{TemplateID} ) {
+        $TemplateID = $Param{TemplateID};
+    }
 
-    return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-        if !$TemplateID;
+    if ( !$TemplateID ) {
+        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        return;
+    }
 
     # get template data
     my $TemplateData;
@@ -1365,15 +1455,15 @@ sub _MaskTemplateEdit3 {
         UserID     => $Self->{UserID},
     );
 
-    return $Self->{LayoutObject}->FatalError( Message => 'Template not found!' )
-        if !$TemplateData->{TemplateID};
+    if ( !$TemplateData->{TemplateID} ) {
+        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+        return;
+    }
 
     # output overview
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
-        Data => {
-            %Param,
-        },
+        Data => \%Param,
     );
 
     $Self->{LayoutObject}->Block( Name => 'ActionList', );
@@ -1397,16 +1487,31 @@ sub _MaskTemplateEdit3 {
         UserID     => $Self->{UserID},
     );
 
+    if ( !$FormatData ) {
+        $Self->{LayoutObject}->FatalError( Message => 'Format not found!' );
+        return;
+    }
+
     # output format attributes
     for my $Item ( @{$FormatAttributeList} ) {
 
         # build id
-        my $Id;
-        $Id = ( $Item->{Prefix} ) ? "$Item->{Prefix}$Item->{Key}" : $Item->{Key};
+        my $ID;
+        if ( $Item->{Prefix} ) {
+            $ID = "$Item->{Prefix}$Item->{Key}";
+        }
+        else {
+            $ID = "$Item->{Key}";
+        }
 
         my $Class = ' ';
-        $Class = 'Validate_Required ' if ( $Item->{Input}->{Required} );
-        $Class = 'ServerError'        if ( $ServerError{ $Item->{Name} } );
+        if ( $Item->{Input}->{Required} ) {
+            $Class = 'Validate_Required ';
+        }
+
+        if ( $ServerError{ $Item->{Name} } ) {
+            $Class = 'ServerError';
+        }
 
         # create form input
         my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
@@ -1421,7 +1526,7 @@ sub _MaskTemplateEdit3 {
             Data => {
                 Name => $Item->{Name} || '',
                 InputStrg => $InputString,
-                ID        => $Id,
+                ID        => $ID,
             },
         );
 
@@ -1431,7 +1536,7 @@ sub _MaskTemplateEdit3 {
                 Name => 'TemplateEdit3ElementRequired',
                 Data => {
                     Name => $Item->{Name} || '',
-                    ID => $Id,
+                    ID => $ID,
                 },
             );
         }
