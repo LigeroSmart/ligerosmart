@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.232 2010-10-18 20:25:25 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.233 2010-10-18 22:45:05 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -234,6 +234,9 @@
                 <Description>ITSM Change Manager Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
+            <Loader>
+                <CSS>ITSM.Agent.Default.css</CSS>
+            </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -247,6 +250,9 @@
                 <Description>ITSM MyCAB Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
+            <Loader>
+                <CSS>ITSM.Agent.Default.css</CSS>
+            </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -261,6 +267,9 @@
                 <Description>ITSM MyChanges Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
+            <Loader>
+                <CSS>ITSM.Agent.Default.css</CSS>
+            </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -275,6 +284,9 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
             </FrontendModuleReg>
+            <Loader>
+                <CSS>ITSM.Agent.Default.css</CSS>
+            </Loader>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
