@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.44 2010-06-30 21:20:11 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.45 2010-10-18 20:28:13 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 =over 4
 
@@ -423,12 +423,23 @@ sub ITSMChangeListShow {
         Param => 'StartHit',
     ) || 1;
 
+    # get personal page shown count
+    my $PageShownPreferencesKey = 'UserChangeOverview' . $View . 'PageShown';
+    my $PageShown               = $Self->{$PageShownPreferencesKey} || 10;
+    my $Group                   = 'ChangeOverview' . $View . 'PageShown';
+
     # check start option, if higher then elements available, set
     # it to the last overview page (Thanks to Stefan Schmidt!)
-    my $PageShown = $Backends->{$View}->{PageShown};
     if ( $StartHit > $Param{Total} ) {
         my $Pages = int( ( $Param{Total} / $PageShown ) + 0.99999 );
         $StartHit = ( ( $Pages - 1 ) * $PageShown ) + 1;
+    }
+
+    # get data selection
+    my %Data;
+    my $Config = $Self->{ConfigObject}->Get('PreferencesGroups');
+    if ( $Config && $Config->{$Group} && $Config->{$Group}->{Data} ) {
+        %Data = %{ $Config->{$Group}->{Data} };
     }
 
     # set page limit and build page nav
@@ -440,6 +451,16 @@ sub ITSMChangeListShow {
         AllHits   => $Param{Total} || 0,
         Action    => 'Action=' . $Env->{LayoutObject}->{Action},
         Link      => $Param{LinkPage},
+    );
+
+    # build shown ticket a page
+    $Param{RequestedURL}    = "Action=$Self->{Action}";
+    $Param{Group}           = $Group;
+    $Param{PreferencesKey}  = $PageShownPreferencesKey;
+    $Param{PageShownString} = $Self->BuildSelection(
+        Name       => $PageShownPreferencesKey,
+        SelectedID => $PageShown,
+        Data       => \%Data,
     );
 
     # build navbar content
@@ -477,17 +498,6 @@ sub ITSMChangeListShow {
         my $Count = 0;
         for my $Filter (@NavBarFilters) {
 
-            # at least a second filter is set, build split content
-            if ($Count) {
-                $Env->{LayoutObject}->Block(
-                    Name => 'OverviewNavBarFilterItemSplit',
-                    Data => {
-                        %Param,
-                        %{$Filter},
-                    },
-                );
-            }
-
             # increment filter count and build filter item
             $Count++;
             $Env->{LayoutObject}->Block(
@@ -508,16 +518,6 @@ sub ITSMChangeListShow {
                     },
                 );
 
-                # show count of elements in filter
-                if ( defined $Filter->{Count} ) {
-                    $Env->{LayoutObject}->Block(
-                        Name => 'OverviewNavBarFilterItemSelectedCount',
-                        Data => {
-                            %Param,
-                            %{$Filter},
-                        },
-                    );
-                }
             }
             else {
                 $Env->{LayoutObject}->Block(
@@ -528,16 +528,6 @@ sub ITSMChangeListShow {
                     },
                 );
 
-                # show count of elements in filter
-                if ( defined $Filter->{Count} ) {
-                    $Env->{LayoutObject}->Block(
-                        Name => 'OverviewNavBarFilterItemSelectedNotCount',
-                        Data => {
-                            %Param,
-                            %{$Filter},
-                        },
-                    );
-                }
             }
         }
     }
@@ -587,14 +577,16 @@ sub ITSMChangeListShow {
             Name => 'OverviewNavBarPageNavBar',
             Data => \%PageNav,
         );
-    }
 
-    # check if nav bar is available
-    if ( $Param{NavBar} ) {
-        if ( $Param{NavBar}->{MainName} ) {
+        # don't show context settings in AJAX case (e. g. in customer ticket history),
+        #   because the submit with page reload will not work there
+        if ( !$Param{AJAX} ) {
             $Env->{LayoutObject}->Block(
-                Name => 'OverviewNavBarMain',
-                Data => $Param{NavBar},
+                Name => 'ContextSettings',
+                Data => {
+                    %PageNav,
+                    %Param,
+                },
             );
         }
     }
@@ -650,30 +642,6 @@ sub ITSMChangeListShow {
         Name => 'OverviewNavBar',
         Data => {%Param},
     );
-
-    # check for page nav and create content
-    if (%PageNav) {
-        $Env->{LayoutObject}->Block(
-            Name => 'OverviewNavBarPageNavBar',
-            Data => {%PageNav},
-        );
-    }
-
-    # create smal nav bar
-    my $OutputNavBarSmall = $Env->{LayoutObject}->Output(
-        TemplateFile => 'AgentITSMChangeOverviewNavBarSmall',
-        Data         => {%Param},
-    );
-
-    # create output
-    if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
-            Output => \$OutputNavBarSmall,
-        );
-    }
-    else {
-        $OutputRaw .= $OutputNavBarSmall;
-    }
 
     # return content if available
     return $OutputRaw;

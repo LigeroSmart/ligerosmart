@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.12 2010-02-05 18:13:51 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.13 2010-10-18 20:25:48 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,9 +122,45 @@ sub Run {
     # build column header blocks
     if (@ShowColumns) {
         for my $Column (@ShowColumns) {
+
+            # create needed veriables
+            my $CSS = '';
+            my $OrderBy;
+
+            # remove ID if necesary
+            if ( $Param{SortBy} ) {
+                $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' )
+                    ? 'Priority'
+                    : ( $Param{SortBy} eq 'CategoryID' )       ? 'Category'
+                    : ( $Param{SortBy} eq 'ChangeBuilderID' )  ? 'ChangeBuilder'
+                    : ( $Param{SortBy} eq 'ChangeManagerID' )  ? 'ChangeManager'
+                    : ( $Param{SortBy} eq 'ChangeStateID' )    ? 'ChangeState'
+                    : ( $Param{SortBy} eq 'ImpactID' )         ? 'Impact'
+                    : ( $Param{SortBy} eq 'WorkOrderAgentID' ) ? 'WorkOrderAgent'
+                    : ( $Param{SortBy} eq 'WorkOrderStateID' ) ? 'WorkOrderState'
+                    : ( $Param{SortBy} eq 'WorkOrderTypeID' )  ? 'WorkOrderType'
+                    :                                            $Param{SortBy};
+            }
+
+            # set the correct Set CSS class and order by link
+            if ( $Param{SortBy} && ( $Param{SortBy} eq $Column ) ) {
+                if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
+                    $OrderBy = 'Down';
+                    $CSS .= ' SortDescending';
+                }
+                else {
+                    $OrderBy = 'Up';
+                    $CSS .= ' SortAscending';
+                }
+            }
+
             $Self->{LayoutObject}->Block(
                 Name => 'Record' . $Column . 'Header',
-                Data => \%Param,
+                Data => {
+                    %Param,
+                    CSS     => $CSS,
+                    OrderBy => $OrderBy,
+                },
             );
         }
     }
