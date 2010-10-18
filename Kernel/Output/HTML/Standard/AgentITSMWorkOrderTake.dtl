@@ -2,87 +2,27 @@
 # AgentITSMWorkOrderTake.dtl - provides HTML form for AgentITSMWorkOrderTake
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderTake.dtl,v 1.7 2010-05-18 15:02:44 ub Exp $
+# $Id: AgentITSMWorkOrderTake.dtl,v 1.8 2010-10-18 20:30:54 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Take Workorder"} : $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Take Workorder"} : $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastWorkOrderView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
+<fieldset class="TableLike W300px">
+    <label>$Text{"Title"}:</label>
+    <p class="Value">
+        $QData{"WorkOrderTitle"}
+    </p>
+    <div class="Clear"></div>
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <table border="0" width="400" align="center" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td class="contenthead">$Text{"Take Workorder"} : $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</td>
-                </tr>
-                <tr class="contentbody">
-                    <td class="contentbody">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                            <colgroup>
-                                <col width="130">
-                                <col>
-                            </colgroup>
-                            <tr>
-                                <td class="contentkey">$Text{"Title"}:</td>
-                                <td class="contentvalue">$QData{"WorkOrderTitle"}</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey">$Text{"Current Agent"}:</td>
-                                <td class="contentvalue">$QData{"WorkOrderAgent"}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="contentkey">$Text{"Do you really want to take this workorder?"}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="1">
-                            <colgroup>
-                                <col>
-                                <col width="10">
-                            </colgroup>
-                            <tr>
-                                <td class="contentfooter">
-                                    <form action="$Env{"CGIHandle"}" method="post">
-                                        <input type="hidden" name="Action"    value="AgentITSMWorkOrderZoom">
-                                        <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
-                                        <input type="hidden" name="Subaction" value="">
-                                        <input class="button" type="submit" value="$Text{"No"}"/>
-                                    </form>
-                                </td>
-                                <td class="contentfooter">
-                                    <form action="$Env{"CGIHandle"}" method="post">
-                                        <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                                        <input type="hidden" name="Subaction" value="WorkOrderTake"/>
-                                        <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
-                                        <input class="button" type="submit" value="$Text{"Yes"}"/>
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+    <label>$Text{"Current Agent"}:</label>
+    <p class="Value">
+        $QData{"WorkOrderAgent"}
+    </p>
+    <div class="Clear"></div>
+
+</fieldset>
+<p class="SpacingTop Center">
+    $Text{"Do you really want to take this workorder?"}
+</p>

@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderTake.pm - the OTRS::ITSM::ChangeManagement workorder take module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderTake.pm,v 1.5 2010-02-03 00:00:52 ub Exp $
+# $Id: AgentITSMWorkOrderTake.pm,v 1.6 2010-10-18 20:30:54 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,7 +105,7 @@ sub Run {
 
             # redirect to workorder, when the update was successful
             return $Self->{LayoutObject}->Redirect(
-                OP => $Self->{LastWorkOrderView},
+                OP => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
             );
         }
         else {
@@ -140,14 +140,8 @@ sub Run {
         );
     }
 
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Title => 'Take Workorder',
-    );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-
-    # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    # output content
+    my $Output = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderTake',
         Data         => {
             %Param,
@@ -156,9 +150,6 @@ sub Run {
             WorkOrderAgent => $WorkOrderAgent,
         },
     );
-
-    # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
 
     return $Output;
 }
