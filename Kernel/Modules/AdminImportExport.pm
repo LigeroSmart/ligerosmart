@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.23 2010-10-15 12:10:50 dz Exp $
+# $Id: AdminImportExport.pm,v 1.24 2010-10-18 14:26:28 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -233,8 +233,9 @@ sub Run {
         # reload with server errors
         if ($Error) {
             return $Self->_MaskTemplateEdit2(
-                ServerError => \%ServerError,
-                TemplateID  => $TemplateID
+                ServerError      => \%ServerError,
+                TemplateDataForm => \%AttributeValues,
+                TemplateID       => $TemplateID,
             );
         }
 
@@ -1320,9 +1321,8 @@ sub _MaskTemplateEdit2 {
     if ( $Param{TemplateID} ) {
         $TemplateID = $Param{TemplateID};
     }
-
-    if ( !$TemplateID ) {
-        $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
+    else {
+        $Self->{LayoutObject}->FatalError( Message => 'Needed TemplateID!' );
         return;
     }
 
@@ -1369,8 +1369,15 @@ sub _MaskTemplateEdit2 {
     for my $Item ( @{$ObjectAttributeList} ) {
 
         my $Class = ' ';
+        my $Value;
         if ( $Item->{Input}->{Required} ) {
             $Class = 'Validate_Required';
+        }
+
+        $Value = $ObjectData->{ $Item->{Key} };
+
+        if ( $Param{ServerError} ) {
+            $Value = $Param{TemplateDataForm}->{ $Item->{Key} };
         }
 
         if ( $ServerError{ $Item->{Name} } ) {
@@ -1381,7 +1388,7 @@ sub _MaskTemplateEdit2 {
         my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
             Item  => $Item,
             Class => $Class,
-            Value => $ObjectData->{ $Item->{Key} },
+            Value => $Value,
         );
 
         # build id
