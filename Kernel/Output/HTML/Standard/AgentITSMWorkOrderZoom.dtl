@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.45 2010-10-18 13:55:06 cg Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.46 2010-10-18 20:37:27 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -222,8 +222,26 @@
 <!-- dtl:block:Menu -->
 <!-- dtl:block:MenuItem -->
                     <li>
-                        <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                        <a href="$Env{"Baselink"}$Data{"Link"}" id="$QData{"MenuID"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                     </li>
+
+<!-- dtl:block:ShowConfirmationDialog -->
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementSelector:            '$Data{"ElementSelector"}',
+        DialogContentQueryString:   '$Data{"DialogContentQueryString"}',
+        ConfirmedActionQueryString: '$Data{"ConfirmedActionQueryString"}',
+        DialogTitle:                '$Data{"DialogTitle"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:ShowConfirmationDialog -->
+
 <!-- dtl:block:MenuItem -->
 <!-- dtl:block:Menu -->
                 </ul>
