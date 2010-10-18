@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.13 2010-02-08 14:28:04 bes Exp $
+# $Id: ITSMWorkOrder.pm,v 1.14 2010-10-18 17:48:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,7 +30,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject LinkObject)
+        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -38,6 +39,7 @@ sub new {
     # create additional objects
     $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
+    $Self->{LinkObject}      = Kernel::System::LinkObject->new( %{$Self} );
 
     return $Self;
 }
