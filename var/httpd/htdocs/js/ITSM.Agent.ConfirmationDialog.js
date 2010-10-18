@@ -3,7 +3,7 @@
 // confirmation dialogs
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ConfirmationDialog.js,v 1.1 2010-10-18 14:55:32 en Exp $
+// $Id: ITSM.Agent.ConfirmationDialog.js,v 1.2 2010-10-18 20:38:46 en Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -71,7 +71,7 @@ ITSM.Agent.ConfirmationDialog = (function (TargetNS) {
                         $('div.Dialog:visible div.ContentFooter button').attr('disabled', 'disabled');
 
                         // redirect to the module that does the confirmed action after pressing the Yes button
-                        location.href = DialogData.ConfirmedActionQueryString;
+                        location.href = Core.Config.Get('Baselink') + DialogData.ConfirmedActionQueryString;
                     }
                 },
                 {
