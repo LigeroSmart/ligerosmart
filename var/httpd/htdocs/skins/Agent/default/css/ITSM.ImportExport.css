@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -30,7 +30,7 @@
 
 .MapHeaderRow .Header,
 .MapHeaderRow .Field{
-    display:inline-block;
+    display:inline;
     margin-right:15px;
 }
 
@@ -59,13 +59,15 @@
     color:#666666;
 }
 
-.MapContainer label,
-.MapContainer div, 
-.MapContainer input{
-    display:inline-block;
+.MapElement,
+.MapElement label,
+.MapElement div,
+.MappingOptions{
+    display:inline;
 }
 
 .MappingOptions{
     margin-left:1px;
 }
-}
+
+} /* end @media */
