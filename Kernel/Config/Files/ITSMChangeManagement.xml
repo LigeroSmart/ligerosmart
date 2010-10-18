@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.231 2010-10-18 17:49:23 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.232 2010-10-18 20:25:25 en Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -428,9 +428,6 @@
                 <Description>Change Zoom</Description>
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
-                <Loader>
-                    <JavaScript>Core.UI.Popup.js</JavaScript>
-                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -628,7 +625,8 @@
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
-                    <JavaScript>Core.UI.Popup.js</JavaScript>
+                    <CSS>ITSM.ChangeManagement.Default.css</CSS>
+                    <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -964,7 +962,11 @@
                 <Item Key="Description">Take the workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderTake</Item>
                 <Item Key="Link">Action=AgentITSMWorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="Target">PopUp</Item>
+                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="ElementSelector">#$QData{"MenuID"}</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderTake;Subaction=WorkOrderTake;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="DialogTitle">$Text{"Take Workorder"}: $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -9239,7 +9241,7 @@
         <SubGroup>Core::Web</SubGroup>
         <Setting>
             <Array>
-                <Item>ITSMChangeManagement.Header.css</Item>
+                <Item>ITSM.ChangeManagement.Header.css</Item>
             </Array>
         </Setting>
     </ConfigItem>
