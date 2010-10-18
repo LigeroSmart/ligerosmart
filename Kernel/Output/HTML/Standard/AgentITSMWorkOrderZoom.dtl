@@ -2,306 +2,130 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.44 2010-09-28 21:04:12 en Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.45 2010-10-18 13:55:06 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
-            </div>
-        </td>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <div class="ControlRow">
-            <h2></h2>
-        </div>
-        <div class="ActionRow">
-            <ul class="Actions">
-<!-- dtl:block:Menu -->
-<!-- dtl:block:MenuItem -->
-                <li>
-                    <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
-                </li>
-<!-- dtl:block:MenuItem -->
-<!-- dtl:block:Menu -->
-            </ul>
-        </div>
-        <td align="right" width="25%" class="menu"></td>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <colgroup>
-        <col width="75%">
-        <col width="25%">
-    </colgroup>
-    <tr>
-        <td valign="top" class="mainbody">
-            <table border="0" width="100%" cellspacing="0" cellpadding="1">
-                <colgroup>
-                    <col width="30">
-                    <col>
-                </colgroup>
-                <tr>
-                    <td style="text-align:center;">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$Data{"ChangeState"}"}" alt="$Text{"$Data{"ChangeState"}"}">
-                    </td>
-                    <td>
-                        <span style="font-weight:bold;">
-                            $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}
-                            <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeZoom&amp;ChangeID=$LQData{"ChangeID"}">
-                                $QData{"ChangeTitle","70"}
-                            </a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:center;">
-                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}-small.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
-                    </td>
-                    <td>
-                        <span style="font-weight:bold; font-size:10px; font-style:italic;">
-                            $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
-                            <span style="color:#557799;">$QData{"WorkOrderTitle","70"}</span>
-                        </span>
-                    </td>
-                </tr>
-            </table>
-            <hr size="2">
-            <table border="0" width="100%" cellspacing="0" cellpadding="1">
-                <colgroup>
-                    <col width="130">
-                    <col>
-                </colgroup>
-                <tr>
-                    <td class="contentkey">
-                        <div title="$Text{"Instruction"}">
-                            $Text{"Instruction"}:&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
-                    <td class="contentvalue">
-                        $Data{"Instruction"}
-                    </td>
-                </tr>
-                <tr><td colspan="2">&nbsp;</td></tr>
-                <tr>
-                    <td class="contentkey">
-                        <div title="$Text{"Report"}">
-                            $Text{"Report"}:&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
-                    <td class="contentvalue">
-                        $Data{"Report"}
-                    </td>
-                </tr>
-                <tr><td colspan="2">&nbsp;</td></tr>
-                <tr>
-                    <td class="contentkey" style="vertical-align: top">
-                        <div title="$Text{"Attachment"}">
-                            $Text{"Attachment"}:&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
-                    <td class="contentvalue">
-                        <table>
-                            <colgroup>
-                                <col width="250">
-                                <col width="16">
-                                <col width="100">
-                                <col>
-                            </colgroup>
-<!-- dtl:block:AttachmentRow -->
-                            <tr>
-                                <td>$Data{"Filename"}</td>
-                                <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};WorkOrderID=$QData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
-                                <td>$Data{"Filesize"}</td>
-                            </tr>
-<!-- dtl:block:AttachmentRow -->
-<!-- empty row, for having a valid HTML table in the absence of attachments -->
-                            <tr><td colspan="3"></td></tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr><td colspan="2">&nbsp;</td></tr>
-            </table>
-<!-- dtl:block:LinkTableComplex -->
-            <hr size="2">
-            <br>
-            <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        $Data{"LinkTableStrg"}
-                    </td>
-                </tr>
-            </table>
-            <br>
-<!-- dtl:block:LinkTableComplex -->
-        </td>
-        <td valign="top" class="menu">
-<!-- dtl:block:Meta -->
-            <table border="0" cellspacing="1" cellpadding="0" width="100%">
-                <tr>
-                    <td><b>$Text{"WorkOrderState"}: </b></td>
-                    <td>
-                        <table border="0" cellpadding="0" cellspacing="0">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div title="$Text{"$Data{"WorkOrderState"}"}">
-                                            $Text{"$Data{"WorkOrderState"}"}&nbsp;&nbsp;
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"WorkOrderStateSignal"}.png" title="$Text{"$Data{"WorkOrderState"}"}" alt="$Text{"$Data{"WorkOrderState"}"}">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>$Text{"WorkOrderType"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyWorkOrderType -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyWorkOrderType -->
-<!-- dtl:block:WorkOrderType -->
-                        <div title="$QData{"WorkOrderType"}">
-                            $QData{"WorkOrderType"}
-                        </div>
-<!-- dtl:block:WorkOrderType -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td><b>$Text{"PlannedStartTime"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyPlannedStartTime -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyPlannedStartTime -->
-<!-- dtl:block:PlannedStartTime -->
-                        <div title="$QData{"PlannedStartTime"}">
-                            $TimeLong{"$Data{"PlannedStartTime"}"}
-                        </div>
-<!-- dtl:block:PlannedStartTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>$Text{"PlannedEndTime"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyPlannedEndTime -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyPlannedEndTime -->
-<!-- dtl:block:PlannedEndTime -->
-                        <div title="$QData{"PlannedEndTime"}">
-                            $TimeLong{"$Data{"PlannedEndTime"}"}
-                        </div>
-<!-- dtl:block:PlannedEndTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>$Text{"ActualStartTime"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyActualStartTime -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyActualStartTime -->
-<!-- dtl:block:ActualStartTime -->
-                        <div title="$QData{"ActualStartTime"}">
-                            $TimeLong{"$Data{"ActualStartTime"}"}
-                        </div>
-<!-- dtl:block:ActualStartTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>$Text{"ActualEndTime"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyActualEndTime -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyActualEndTime -->
-<!-- dtl:block:ActualEndTime -->
-                        <div title="$QData{"ActualEndTime"}">
-                            $TimeLong{"$Data{"ActualEndTime"}"}
-                        </div>
-<!-- dtl:block:ActualEndTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-<!-- dtl:block:ShowPlannedEffort -->
-                <tr>
-                    <td><b>$Text{"PlannedEffort"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyPlannedEffort -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyPlannedEffort -->
-<!-- dtl:block:PlannedEffort -->
-                        <div title="$QData{"PlannedEffort"}">
-                            $QData{"PlannedEffort"}
-                        </div>
-<!-- dtl:block:PlannedEffort -->
-                    </td>
-                </tr>
-<!-- dtl:block:ShowPlannedEffort -->
-<!-- dtl:block:ShowAccountedTime -->
-                <tr>
-                    <td><b>$Text{"AccountedTime"}: </b></td>
-                    <td>
-<!-- dtl:block:EmptyAccountedTime -->
-                        <div title="-">
-                            -
-                        </div>
-<!-- dtl:block:EmptyAccountedTime -->
-<!-- dtl:block:AccountedTime -->
-                        <div title="$QData{"AccountedTime"}">
-                            $QData{"AccountedTime"}
-                        </div>
-<!-- dtl:block:AccountedTime -->
-                    </td>
-                </tr>
-<!-- dtl:block:ShowAccountedTime -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
+<div class="MainBox ARIARoleMain">
+    <div class="ClearLeft"></div>
+    <div class="Headline">
+        <div class="Flag" title="$Text{"$Data{"WorkOrderState"}"}"><span class="$Data{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span></div>
+        <h1 title="$Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
+            $Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
+        </h1>
+    </div>
 
+    <div class="LayoutFixedSidebar SidebarLast">
+        <div class="SidebarColumn">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Workorder Information"}</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabelSmall">
+<!-- dtl:block:Meta -->
+                        <label>$Text{"WorkOrderState"}:</label>
+                        <div class="Value" title="$Text{"$Data{"WorkOrderState"}"}">
+                            <div class="Flag Small">
+                                <span class="$Data{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
+                            </div>
+                            $Text{"$Data{"WorkOrderState"}"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"WorkOrderType"}:</label>
+<!-- dtl:block:EmptyWorkOrderType -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyWorkOrderType -->
+<!-- dtl:block:WorkOrderType -->
+                        <p class="Value" title="$QData{"WorkOrderType"}">$QData{"WorkOrderType"}</p>
+<!-- dtl:block:WorkOrderType -->
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"PlannedStartTime"}:</label>
+<!-- dtl:block:EmptyPlannedStartTime -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyPlannedStartTime -->
+<!-- dtl:block:PlannedStartTime -->
+                        <p class="Value" title="$QData{"PlannedStartTime"}">$TimeLong{"$Data{"PlannedStartTime"}"}</p>
+<!-- dtl:block:PlannedStartTime -->
+                        <div class="Clear"></div>
+
+
+                        <label>$Text{"PlannedEndTime"}: </label>
+<!-- dtl:block:EmptyPlannedEndTime -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyPlannedEndTime -->
+<!-- dtl:block:PlannedEndTime -->
+                        <p class="Value" title="$QData{"PlannedEndTime"}">$TimeLong{"$Data{"PlannedEndTime"}"}</p>
+<!-- dtl:block:PlannedEndTime -->
+                        <div class="Clear"></div>
+
+                        <label>$Text{"ActualStartTime"}: </label>
+<!-- dtl:block:EmptyActualStartTime -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyActualStartTime -->
+<!-- dtl:block:ActualStartTime -->
+                        <p class="Value" title="$QData{"ActualStartTime"}">$TimeLong{"$Data{"ActualStartTime"}"}</p>
+<!-- dtl:block:ActualStartTime -->
+                        <div class="Clear"></div>
+
+                        <label>$Text{"ActualEndTime"}: </label>
+<!-- dtl:block:EmptyActualEndTime -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyActualEndTime -->
+<!-- dtl:block:ActualEndTime -->
+                        <p class="Value" title="$QData{"ActualEndTime"}">$TimeLong{"$Data{"ActualEndTime"}"}</p>
+<!-- dtl:block:ActualEndTime -->
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+<!-- dtl:block:ShowPlannedEffort -->
+                        <label>$Text{"PlannedEffort"}: </label>
+<!-- dtl:block:EmptyPlannedEffort -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyPlannedEffort -->
+<!-- dtl:block:PlannedEffort -->
+                        <p class="Value" title="$QData{"PlannedEffort"}">$QData{"PlannedEffort"}</p>
+<!-- dtl:block:PlannedEffort -->
+                        <div class="Clear"></div>
+<!-- dtl:block:ShowPlannedEffort -->
+
+<!-- dtl:block:ShowAccountedTime -->
+                        <label>$Text{"AccountedTime"}: </label>
+<!-- dtl:block:EmptyAccountedTime -->
+                        <p class="Value" title="-">-</p>
+<!-- dtl:block:EmptyAccountedTime -->
+<!-- dtl:block:AccountedTime -->
+                        <p class="Value" title="$QData{"AccountedTime"}">$QData{"AccountedTime"}</p>
+<!-- dtl:block:AccountedTime -->
+                        <div class="Clear"></div>
+<!-- dtl:block:ShowAccountedTime -->
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
 # show WorkOrderFreeKey and WorkOrderFreeText fields
 <!-- dtl:block:WorkOrderFreeText -->
-                <tr valign="top">
-                    <td class="mainkey">$QData{"WorkOrderFreeKey","25"}:</td>
-                    <td class="mainvalue">
+                        <label>$QData{"WorkOrderFreeKey","25"}: </label>
 <!-- dtl:block:WorkOrderFreeTextPlain -->
-                        <div title="$QData{"WorkOrderFreeText"}">$QData{"WorkOrderFreeText","25"}</div>
+                        <p class="Value" title="$QData{"WorkOrderFreeText"}">$QData{"WorkOrderFreeText","25"}</p>
 <!-- dtl:block:WorkOrderFreeTextPlain -->
 <!-- dtl:block:WorkOrderFreeTextLink -->
-                        <div title="$QData{"WorkOrderFreeText"}"><a href="$Data{"WorkOrderFreeTextLink"}" target="_blank">$QData{"WorkOrderFreeText","25"}</a></div>
+                        <p class="Value" title="$QData{"WorkOrderFreeText"}"><a href="$Data{"WorkOrderFreeTextLink"}" target="_blank">$QData{"WorkOrderFreeText","25"}</a></p>
 <!-- dtl:block:WorkOrderFreeTextLink -->
-                    </td>
-                </tr>
+                        <div class="Clear"></div>
 <!-- dtl:block:WorkOrderFreeText -->
+
 <!-- dtl:block:WorkOrderFreeTextSpacer -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:WorkOrderFreeTextSpacer -->
 
 # #############################################################
@@ -334,85 +158,160 @@
 #<!-- dtl:block:WorkOrderFreeText2 -->
 # ###########################################################
 
-                <tr>
-                    <td><b>$Text{"Change Builder"}:</b></td>
-                    <td>
+                        <label>$Text{"Change Builder"}:</label>
 <!-- dtl:block:EmptyChangeBuilder -->
-                        <div title="-">
-                            -
-                        </div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyChangeBuilder -->
 <!-- dtl:block:ChangeBuilder -->
-                        <div title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
+                        <p class="Value" title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
                             $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
-                        </div>
+                        </p>
 <!-- dtl:block:ChangeBuilder -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td><b>$Text{"WorkOrderAgent"}:</b></td>
-                    <td>
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"WorkOrderAgent"}:</label>
 <!-- dtl:block:EmptyWorkOrderAgent -->
-                        <div title="-">
-                            -
-                        </div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyWorkOrderAgent -->
 <!-- dtl:block:WorkOrderAgent -->
-                        <div title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
+                        <p class="Value" title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
                             $QData{"WorkOrderAgentUserLogin","15"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","15"})
-                        </div>
+                        </p>
 <!-- dtl:block:WorkOrderAgent -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Created"}:</td>
-                    <td class="mainvalue">
-                        <div title="$QData{"CreateTime"}">
-                            $TimeLong{"$Data{"CreateTime"}"}
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Created by"}:</td>
-                    <td>
-                        <div title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Created"}:</label>
+                        <p class="Value" title="$QData{"CreateTime"}">$TimeLong{"$Data{"CreateTime"}"}</p>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Created by"}:</label>
+                        <p class="Value" title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
                             $QData{"CreateUserLogin","15"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","15"})
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Last changed"}:</td>
-                    <td class="mainvalue">
-                        <div title="$QData{"ChangeTime"}">
-                            $TimeLong{"$Data{"ChangeTime"}"}
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Last changed by"}:</td>
-                    <td>
-                        <div title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
+                        </p>
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Last changed"}:</label>
+                        <p class="Value" title="$QData{"ChangeTime"}">$TimeLong{"$Data{"ChangeTime"}"}</p>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Last changed by"}:</label>
+                        <p class="Value" title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
                             $QData{"ChangeUserLogin","15"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}","15"})
-                        </div>
-                    </td>
-                </tr>
+                        </p>
+                        <div class="Clear"></div>
+
 <!-- dtl:block:LinkTableSimple -->
-                $Data{"LinkTableStrg"}
+                        $Data{"LinkTableStrg"}
 <!-- dtl:block:LinkTableSimple -->
-            </table>
+                    </fieldset>
 <!-- dtl:block:Meta -->
-        </td>
-    </tr>
-</table>
+                </div>
+            </div>
+        </div>
+
+        <div class="ContentColumn">
+            <div class="ControlRow"></div>
+            <div class="ActionRow">
+                <ul class="Actions">
+<!-- dtl:block:Menu -->
+<!-- dtl:block:MenuItem -->
+                    <li>
+                        <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                    </li>
+<!-- dtl:block:MenuItem -->
+<!-- dtl:block:Menu -->
+                </ul>
+            </div>
+
+            <div class="WidgetBox SpacingTop Expanded">
+                <div class="LightRow Header">
+                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
+                    <h2>$Text{"Workorder"} - $QData{"WorkOrderTitle","70"}</h2>
+                    <div class="AdditionalInformation">
+                        $Text{"State"}: $Text{"$Data{"WorkOrderState"}"}
+                    </div>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label><strong>$Text{"Change"}</strong></label>
+                        <div class="Value">
+                            <div class="Flag Small" title="$Text{"$Data{"ChangeState"}"}">
+                                <span class="$Data{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
+                            </div>
+                            $QData{"ChangeNumber"}
+                            <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeZoom&amp;ChangeID=$LQData{"ChangeID"}">
+                                $QData{"ChangeTitle","70"}
+                            </a>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label><strong>$Text{"Workorder"}</strong></label>
+                        <div class="Value">
+                            <div class="Flag Small" title="$Text{"$Data{"WorkOrderState"}"}">
+                                <span class="$Data{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
+                            </div>
+                            $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}
+                            <strong>$QData{"WorkOrderTitle","70"}</strong>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"Instruction"}">$Text{"Instruction"}: </label>
+                        <div class="Field">
+                            $Data{"Instruction"}
+                        </div>
+                        <div class="Clear"></div>
+                        <label title="$Text{"Report"}">$Text{"Report"}: </label>
+                        <div class="Field">
+                            $Data{"Report"}
+                        </div>
+                        <div class="Clear"></div>
+# A space is needed here
+                        <label title="$Text{"Attachment"}">$Text{"Attachment"}:</label>
+                        <div class="Field">
+                            <table>
+                                <colgroup>
+                                    <col width="250">
+                                    <col width="16">
+                                    <col width="100">
+                                    <col>
+                                </colgroup>
+<!-- dtl:block:AttachmentRow -->
+                                <tr>
+                                    <td>$Data{"Filename"}</td>
+                                    <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$LQData{"FileID"};WorkOrderID=$LQData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                    <td>$Data{"Filesize"}</td>
+                                </tr>
+<!-- dtl:block:AttachmentRow -->
+<!-- empty row, for having a valid HTML table in the absence of attachments -->
+                                <tr><td colspan="3"></td></tr>
+                            </table>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </div>
+<!-- dtl:block:LinkTableComplex -->
+                <hr size="2">
+                <br>
+                <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>
+                            $Data{"LinkTableStrg"}
+                        </td>
+                    </tr>
+                </table>
+                <br>
+<!-- dtl:block:LinkTableComplex -->
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
