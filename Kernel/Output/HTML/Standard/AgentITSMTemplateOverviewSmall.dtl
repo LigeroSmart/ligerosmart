@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.10 2010-10-15 14:03:57 en Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.11 2010-10-19 15:57:49 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -56,6 +56,13 @@
             </tr>
         </thead>
         <tbody>
+<!-- dtl:block:NoDataFoundMsg -->
+            <tr>
+                <td colspan="$QData{"TotalColumns"}">
+                    $Text{"No data found."}
+                </td>
+            </tr>
+<!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
             <tr id="TemplateID_$QData{"TemplateID"}" class="MasterAction">
 <!-- dtl:block:RecordTemplateID -->
@@ -97,9 +104,10 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'DeleteTemplateID$QData{"TemplateID"}',
         ElementSelector:            '#DeleteTemplateID$QData{"TemplateID"}',
         DialogContentQueryString:   'Action=AgentITSMTemplateDelete;TemplateID=$LQData{"TemplateID"}',
-        ConfirmedActionQueryString: '$Env{"Baselink"}Action=AgentITSMTemplateDelete;Subaction=TemplateDelete;TemplateID=$LQData{"TemplateID"}',
+        ConfirmedActionQueryString: 'Action=AgentITSMTemplateDelete;Subaction=TemplateDelete;TemplateID=$LQData{"TemplateID"}',
         DialogTitle:                '$JSText{"Delete Template"} $QData{"Name"}',
         TranslatedText:             {
             Yes: '$JSText{"Yes"}',
