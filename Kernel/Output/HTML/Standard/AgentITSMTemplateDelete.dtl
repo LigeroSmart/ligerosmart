@@ -2,14 +2,14 @@
 # AgentITSMTemplateDelete.dtl - provides HTML form for AgentITSMTemplateDelete
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateDelete.dtl,v 1.6 2010-10-15 14:01:14 en Exp $
+# $Id: AgentITSMTemplateDelete.dtl,v 1.7 2010-10-19 15:56:52 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<fieldset class="TableLike">
+<fieldset class="TableLike W300px">
     <label>$Text{"Name"}:</label>
     <p class="Value">
         $QData{"Name"}
@@ -28,6 +28,6 @@
     </p>
     <div class="Clear"></div>
 </fieldset>
-<p class="SpacingTop">
+<p class="SpacingTop Center">
     $Text{"Do you really want to delete this template?"}
 </p>
