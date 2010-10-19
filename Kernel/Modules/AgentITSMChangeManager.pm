@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeManager.pm - the OTRS::ITSM::ChangeManagement Change-Manager overview module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeManager.pm,v 1.7 2010-04-27 20:33:50 ub Exp $
+# $Id: AgentITSMChangeManager.pm,v 1.8 2010-10-19 07:19:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -207,18 +207,18 @@ sub Run {
     # show changes
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&';
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';';
     my $LinkSort = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&';
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';';
     my $LinkFilter = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&';
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';';
     $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
 
         ChangeIDs => $ChangeIDsRef,
@@ -241,6 +241,8 @@ sub Run {
         LinkSort => $LinkSort,
 
         ShowColumns => \@ShowColumns,
+        SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $SortBy ),
+        OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy ),
     );
 
     $Output .= $Self->{LayoutObject}->Footer();
