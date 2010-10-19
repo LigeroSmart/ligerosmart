@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderTake.pm - the OTRS::ITSM::ChangeManagement workorder take module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderTake.pm,v 1.6 2010-10-18 20:30:54 en Exp $
+# $Id: AgentITSMWorkOrderTake.pm,v 1.7 2010-10-19 15:54:47 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -151,7 +151,21 @@ sub Run {
         },
     );
 
-    return $Output;
+    # build the returned data structure
+    my %Data = (
+        HTML       => $Output,
+        DialogType => 'Confirmation',
+    );
+
+    # return JSON-String because of AJAX-Mode
+    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+    return $Self->{LayoutObject}->Attachment(
+        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        Content     => $OutputJSON,
+        Type        => 'inline',
+        NoCache     => 1,
+    );
 }
 
 1;

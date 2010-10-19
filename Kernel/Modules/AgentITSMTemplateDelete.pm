@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateDelete.pm - the OTRS::ITSM::ChangeManagement template delete module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateDelete.pm,v 1.3 2010-10-15 13:57:48 en Exp $
+# $Id: AgentITSMTemplateDelete.pm,v 1.4 2010-10-19 15:52:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -118,7 +118,21 @@ sub Run {
         },
     );
 
-    return $Output;
+    # build the returned data structure
+    my %Data = (
+        HTML       => $Output,
+        DialogType => 'Confirmation',
+    );
+
+    # return JSON-String because of AJAX-Mode
+    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+    return $Self->{LayoutObject}->Attachment(
+        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        Content     => $OutputJSON,
+        Type        => 'inline',
+        NoCache     => 1,
+    );
 }
 
 1;

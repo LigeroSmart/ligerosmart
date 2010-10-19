@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderDelete.pm - the OTRS::ITSM::ChangeManagement workorder delete module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderDelete.pm,v 1.10 2010-02-02 14:51:42 bes Exp $
+# $Id: AgentITSMWorkOrderDelete.pm,v 1.11 2010-10-19 15:54:30 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -59,7 +59,7 @@ sub Run {
     if ( !$WorkOrderID ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No WorkOrderID is given!',
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -73,7 +73,7 @@ sub Run {
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -104,7 +104,7 @@ sub Run {
 
             # redirect to change, when the deletion was successful
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMChangeZoom&ChangeID=$WorkOrder->{ChangeID}",
+                OP => "Action=AgentITSMChangeZoom;ChangeID=$WorkOrder->{ChangeID}",
             );
         }
         else {
@@ -112,7 +112,7 @@ sub Run {
             # show error message, when delete failed
             return $Self->{LayoutObject}->ErrorScreen(
                 Message => "Was not able to delete the workorder $WorkOrder->{WorkOrderID}!",
-                Comment => 'Please contact the admin.',
+                Comment => 'Please contact the administrator.',
             );
         }
     }
@@ -127,15 +127,9 @@ sub Run {
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
-
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Title => 'Delete',
-    );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # get affected condition ids
     my $AffectedConditionIDs = $Self->{ConditionObject}->ConditionListByObjectType(
@@ -145,8 +139,15 @@ sub Run {
         UserID     => $Self->{UserID},
     ) || [];
 
+    # set the dialog type. As default, the dialog will have 2 buttons: Yes and No
+    my $DialogType = 'Confirmation';
+
     # display list of affected conditions
     if ( @{$AffectedConditionIDs} ) {
+
+        # set the dialog type to have only 1 button: Ok
+        $DialogType = 'Message';
+
         $Self->{LayoutObject}->Block(
             Name => 'WorkOrderInCondition',
             Data => {},
@@ -180,8 +181,8 @@ sub Run {
         );
     }
 
-    # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    # output content
+    my $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderDelete',
         Data         => {
             %Param,
@@ -190,10 +191,21 @@ sub Run {
         },
     );
 
-    # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    # build the returned data structure
+    my %Data = (
+        HTML       => $Output,
+        DialogType => $DialogType,
+    );
 
-    return $Output;
+    # return JSON-String because of AJAX-Mode
+    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+    return $Self->{LayoutObject}->Attachment(
+        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        Content     => $OutputJSON,
+        Type        => 'inline',
+        NoCache     => 1,
+    );
 }
 
 1;
