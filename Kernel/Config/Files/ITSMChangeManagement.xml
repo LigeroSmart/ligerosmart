@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.233 2010-10-18 22:45:05 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.234 2010-10-19 15:49:45 en Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -490,6 +490,7 @@
                     <Prio>400</Prio>
                 </NavBar>
                 <Loader>
+                    <CSS>ITSM.ChangeManagement.Default.css</CSS>
                     <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -1052,8 +1053,12 @@
                 <Item Key="Name">Delete</Item>
                 <Item Key="Description">Delete Workorder</Item>
                 <Item Key="Action">AgentITSMWorkOrderDelete</Item>
-                <Item Key="Link">Action=AgentITSMWorkOrderDelete&amp;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="Target">PopUp</Item>
+                <Item Key="Link">Action=AgentITSMWorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="ElementSelector">#$QData{"MenuID"}</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderDelete;Subaction=WorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
+                <Item Key="DialogTitle">$Text{"Delete"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
