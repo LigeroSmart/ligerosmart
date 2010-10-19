@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.24 2010-10-18 14:26:28 dz Exp $
+# $Id: AdminImportExport.pm,v 1.25 2010-10-19 16:30:20 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -124,7 +124,7 @@ sub Run {
 
         }
 
-        #for all templates
+        # for all templates
         if ( !$TemplateData->{Name} ) {
             $ServerError{Name} = 1;
         }
@@ -214,6 +214,7 @@ sub Run {
 
         my $Error = 0;
         my %ServerError;
+        my %DataTypeError;
 
         # get attribute values from form
         for my $Item ( @{$ObjectAttributeList} ) {
@@ -223,17 +224,34 @@ sub Run {
                 Item => $Item,
             );
 
-            # reload form if value is required
+            # reload form if value is required and is not there
             if ( $Item->{Form}->{Invalid} ) {
                 $ServerError{ $Item->{Name} } = 1;
                 $Error = 1;
             }
+
+            if ( $AttributeValues{ $Item->{Key} } ) {
+
+                # look for regexp for data type allowed
+                if (
+                    $Item->{Input}->{Regex}
+                    &&
+                    !$AttributeValues{ $Item->{Key} } =~ $Item->{Input}->{Regex}
+                    )
+                {
+
+                    $DataTypeError{ $Item->{Name} } = 1;
+                    $Error = 1;
+                }
+            }
+
         }
 
         # reload with server errors
         if ($Error) {
             return $Self->_MaskTemplateEdit2(
                 ServerError      => \%ServerError,
+                DataTypeError    => \%DataTypeError,
                 TemplateDataForm => \%AttributeValues,
                 TemplateID       => $TemplateID,
             );
@@ -1317,6 +1335,11 @@ sub _MaskTemplateEdit2 {
         %ServerError = %{ $Param{ServerError} };
     }
 
+    my %DataTypeError;
+    if ( $Param{DataTypeError} ) {
+        %DataTypeError = %{ $Param{DataTypeError} };
+    }
+
     my $TemplateID;
     if ( $Param{TemplateID} ) {
         $TemplateID = $Param{TemplateID};
@@ -1337,6 +1360,8 @@ sub _MaskTemplateEdit2 {
         $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
         return;
     }
+
+    $Param{BackURL} = "Action=$Self->{Action};Subaction=TemplateEdit1;TemplateID=$TemplateID";
 
     # output overview
     $Self->{LayoutObject}->Block(
@@ -1365,22 +1390,55 @@ sub _MaskTemplateEdit2 {
         UserID     => $Self->{UserID},
     );
 
+    # javascript validation class per datatype
+    my %JSClass;
+    my %PredefinedErrorMessages;
+
+    $JSClass{Number}                = 'Validate_Number';
+    $JSClass{NumberBiggerThanZero}  = 'Validate_NumberBiggerThanZero';
+    $JSClass{Integer}               = 'Validate_NumberInteger';
+    $JSClass{IntegerBiggerThanZero} = 'Validate_NumberIntegerBiggerThanZero';
+
+    $PredefinedErrorMessages{Number}                = 'number';
+    $PredefinedErrorMessages{NumberBiggerThanZero}  = 'number bigger than zero';
+    $PredefinedErrorMessages{Integer}               = 'integer';
+    $PredefinedErrorMessages{IntegerBiggerThanZero} = 'integer bigger than zero';
+
     # output object attributes
     for my $Item ( @{$ObjectAttributeList} ) {
 
         my $Class = ' ';
         my $Value;
+
+        my $DataTypeError;
+        my $ErrorMessage;
+
         if ( $Item->{Input}->{Required} ) {
-            $Class = 'Validate_Required';
+            $Class        = 'Validate_Required';
+            $ErrorMessage = 'Element required, please insert data';
         }
 
-        $Value = $ObjectData->{ $Item->{Key} };
+        if ( $Item->{Input}->{DataType} ) {
+            $Class .= " $JSClass{ $Item->{Input}->{DataType} }";
+            $ErrorMessage = 'Invalid data, please insert a valid ';
+            $ErrorMessage .= "$PredefinedErrorMessages{$Item->{Input}->{DataType}}";
+        }
 
-        if ( $Param{ServerError} ) {
+        # get data from form or from database
+        # ServerError = show the wrong data in form
+        # !ServerError = show database data or new fields
+
+        if ( $Param{ServerError} || $Param{DataTypeError} ) {
             $Value = $Param{TemplateDataForm}->{ $Item->{Key} };
         }
+        else {
+            $Value = $ObjectData->{ $Item->{Key} };
+        }
 
-        if ( $ServerError{ $Item->{Name} } ) {
+        # error area
+
+        # prepare different data & message per error
+        if ( $ServerError{ $Item->{Name} } || $DataTypeError{ $Item->{Name} } ) {
             $Class .= ' ServerError';
         }
 
@@ -1405,21 +1463,11 @@ sub _MaskTemplateEdit2 {
             Name => 'TemplateEdit2Element',
             Data => {
                 Name => $Item->{Name} || '',
-                InputStrg => $InputString,
-                ID        => $ID,
+                InputStrg    => $InputString,
+                ID           => $ID,
+                ErrorMessage => $ErrorMessage,
             },
         );
-
-        # output required notice
-        if ( $Item->{Input}->{Required} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TemplateEdit2ElementRequired',
-                Data => {
-                    Name => $Item->{Name} || '',
-                    ID => $ID,
-                },
-            );
-        }
     }
 
     # output header and navbar
@@ -1466,6 +1514,8 @@ sub _MaskTemplateEdit3 {
         $Self->{LayoutObject}->FatalError( Message => 'Template not found!' );
         return;
     }
+
+    $Param{BackURL} = "Action=$Self->{Action};Subaction=TemplateEdit2;TemplateID=$TemplateID";
 
     # output overview
     $Self->{LayoutObject}->Block(
@@ -1517,7 +1567,7 @@ sub _MaskTemplateEdit3 {
         }
 
         if ( $ServerError{ $Item->{Name} } ) {
-            $Class = 'ServerError';
+            $Class .= ' ServerError';
         }
 
         # create form input

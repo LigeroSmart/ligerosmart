@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.21 2010-10-18 17:35:26 dz Exp $
+# $Id: AdminImportExport.dtl,v 1.22 2010-10-19 16:30:20 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -229,19 +229,16 @@
                         <label for="$Data{"ID"}">$Text{"$Data{"Name"}"}: </label>
                         <div class="Field">
                             $Data{"InputStrg"}
-<!-- dtl:block:TemplateEdit2ElementRequired -->
                             <div id="$Data{"ID"}Error" class="TooltipErrorMessage">
-                                <p>$Text{"$Data{"Name"} is required!"}</p>
+                                <p>$Text{"$Data{"ErrorMessage"}!"}</p>
                             </div>
                             <div id="$Data{"ID"}ServerError" class="TooltipErrorMessage">
-                                <p>$Text{"$Data{"Name"} is required!"}</p>
+                                <p>$Text{"$Data{"ErrorMessage"}!"}</p>
                             </div>
-<!-- dtl:block:TemplateEdit2ElementRequired -->
                         </div>
 <!-- dtl:block:TemplateEdit2Element -->
                         <div class="Field SpacingTop">
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit1;TemplateID=$LQData{"TemplateID"}"><span>$Text{"Back"}</span></a>
-                            $Text{"or"}
+                            <button class="Back" type="button" name="Back" >$Text{"Back"}</button>
                             <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next"}</button>
                         </div>
                     </fieldset>
@@ -282,14 +279,13 @@
                                 <p>$Text{"$Data{"Name"} is required!"}</p>
                             </div>
                             <div id="$Data{"ID"}ServerError" class="TooltipErrorMessage">
-                                <p>$Text{"$Data{"Name"} element is required."}</p>
+                                <p>$Text{"$Data{"Name"} is required!"}</p>
                             </div>
 <!-- dtl:block:TemplateEdit3ElementRequired -->
                         </div>
 <!-- dtl:block:TemplateEdit3Element -->
                         <div class="Field SpacingTop">
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateEdit2;TemplateID=$LQData{"TemplateID"}"><span>$Text{"Back"}</span></a>
-                            $Text{"or"}
+                            <button class="Back" type="button" name="Back" >$Text{"Back"}</button>
                             <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
                         </div>
                     </fieldset>
@@ -444,8 +440,45 @@
                 </form>
             </div>
 <!-- dtl:block:ImportInformation -->
-
         </div>
     </div>
+
+<!--dtl:js_on_document_complete-->
+    <script type="text/javascript">//<![CDATA[
+        $('button.Back').bind('click', function () {
+            location.href = "$Env{"Baselink"}$QData{"BackURL"}";
+        });
+    //]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+
+    Core.Form.Validate.AddMethod("Validate_NumberBiggerThanZero", function(Value, Element) {
+        var Number = parseInt(Value, 10);
+        if (Number === NaN) {
+            return false;
+        }
+
+        if (Number > 0) {
+            return true;
+        }
+        return false;
+
+    });
+
+    Core.Form.Validate.AddMethod("Validate_NumberInteger", function(Value, Element) {
+        return (Value.match(/^[0-9]+$/)) ? true : false;
+
+    });
+
+    Core.Form.Validate.AddRule("Validate_NumberBiggerThanZero", { Validate_NumberBiggerThanZero: true });
+    Core.Form.Validate.AddRule("Validate_NumberInteger", { Validate_NumberInteger: true });
+    Core.Form.Validate.AddRule("Validate_NumberIntegerBiggerThanZero", { Validate_NumberInteger: true, Validate_NumberBiggerThanZero: true });
+
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
 </div>
+
 <!-- dtl:block:Overview -->
