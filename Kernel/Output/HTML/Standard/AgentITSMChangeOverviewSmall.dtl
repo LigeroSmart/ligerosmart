@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.25 2010-10-18 20:33:34 cr Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.26 2010-10-19 07:21:00 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -92,7 +92,7 @@
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordImpactHeader -->
                     <th class="ImpactID $QData{"CSS"}">
-                        <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ImpactID;OrderBy=$LQData{"OrderBy"}">$Text{"Impact"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ImpactID;OrderBy=$LQData{"OrderBy"}">$Text{"Impact"}</a>
                     </th>
 <!-- dtl:block:RecordImpactHeader -->
 <!-- dtl:block:RecordPriorityHeader -->
@@ -252,17 +252,20 @@
                     <td>
                         <ul class="ITSMFlag">
 <!-- dtl:block:RecordServicesSubElement -->
-                            <div title="$Text{"$Data{"Name"}"}">
-                                <li title="$Text{"$Data{"CurInciState"}"}">
+                            <li title="$Text{"$Data{"CurInciState"}"}">
+                                <div title="$Text{"$Data{"Name"}"}">
                                     <div class="Value">
                                         <div class="Flag Small">
                                             <span class="$QData{"CurInciSignal"}">"$QData{"CurrInciState"}"</span>
                                         </div>
                                     </div>
                                     $QData{"Name"}
-                                </li>
-                            </div>
+                                </div>
+                            </li>
 <!-- dtl:block:RecordServicesSubElement -->
+<!-- dtl:block:RecordServicesSubElementEmpty -->
+                            <li>&nbsp;</li>
+<!-- dtl:block:RecordServicesSubElementEmpty -->
                         </ul>
                     </td>
 <!-- dtl:block:RecordServices -->
