@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.5 2010-01-26 14:17:24 bes Exp $
+# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.6 2010-10-19 15:55:46 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,11 +84,6 @@ sub Run {
     # output menu block
     $Self->{LayoutObject}->Block( Name => 'Menu' );
 
-    # output seperator, when this is not the first menu item
-    if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
-    }
-
     # output menu item
     $Self->{LayoutObject}->Block(
         Name => 'MenuItem',
@@ -98,6 +93,21 @@ sub Run {
             %{ $Param{Config} },
         },
     );
+
+    # check if a dialog has to be shown
+    if ( $Param{Config}->{DialogTitle} ) {
+
+        # output confirmation dialog
+        $Self->{LayoutObject}->Block(
+            Name => 'ShowConfirmationDialog',
+            Data => {
+                %Param,
+                %{ $Param{WorkOrder} },
+                %{ $Param{Config} },
+            },
+        );
+    }
+
     $Param{Counter}++;
 
     return $Param{Counter};
