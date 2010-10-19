@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.25 2010-08-12 22:58:36 cg Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.26 2010-10-19 14:58:02 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -249,7 +249,7 @@ sub Run {
                     || ref( $Preferences{$Item}->{Data} ) eq 'HASH'
                     )
                 {
-                    $ParamItem->{'Option'} = $Self->{LayoutObject}->OptionStrgHashRef(
+                    $ParamItem->{'Option'} = $Self->{LayoutObject}->BuildSelection(
                         %{ $Preferences{$Item} },
                         %{$ParamItem},
                     );
