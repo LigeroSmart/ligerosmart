@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.14 2010-10-19 07:21:00 cr Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.15 2010-10-19 11:22:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -152,6 +152,9 @@ sub Run {
                     $OrderBy = 'Up';
                     $CSS .= ' SortAscending';
                 }
+            }
+            else {
+                $OrderBy = 'Up';
             }
 
             $Self->{LayoutObject}->Block(
