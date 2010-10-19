@@ -1,128 +1,43 @@
 # --
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.21 2010-02-08 14:51:21 ub Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.22 2010-10-19 15:58:26 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Delete"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Delete"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastWorkOrderView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
+<!-- dtl:block:NoWorkOrderInCondition -->
+<fieldset class="TableLike W300px">
+    <label>$Text{"Title"}:</label>
+    <p class="Value">
+        $QData{"WorkOrderTitle"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop Center">
+    $Text{"Do you really want to delete this workorder?"}
+</p>
+<!-- dtl:block:NoWorkOrderInCondition -->
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <table border="0" width="550" align="center" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td class="contenthead">$Text{"Delete"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</td>
-                </tr>
-<!-- dtl:block:NoWorkOrderInCondition -->
-                <tr class="contentbody">
-                    <td class="contentbody">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                            <colgroup>
-                                <col width="130">
-                                <col>
-                            </colgroup>
-                            <tr>
-                                <td class="contentkey">$Text{"Title"}:</td>
-                                <td class="contentvalue">$QData{"WorkOrderTitle"}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="contentkey">$Text{"Do you really want to delete this workorder?"}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="1">
-                            <colgroup>
-                                <col>
-                                <col width="10">
-                            </colgroup>
-                            <tr>
-                                <td class="contentfooter">
-                                    <form action="$Env{"CGIHandle"}" method="post">
-                                        <input type="hidden" name="Action"    value="AgentITSMWorkOrderZoom">
-                                        <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
-                                        <input type="hidden" name="Subaction" value="">
-                                        <input class="button" type="submit" value="$Text{"No"}"/>
-                                    </form>
-                                </td>
-                                <td class="contentfooter">
-                                    <form action="$Env{"CGIHandle"}" method="post">
-                                        <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                                        <input type="hidden" name="Subaction" value="WorkOrderDelete"/>
-                                        <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
-                                        <input class="button" type="submit" value="$Text{"Yes"}"/>
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-<!-- dtl:block:NoWorkOrderInCondition -->
 <!-- dtl:block:WorkOrderInCondition -->
-                <tr class="contentbody">
-                    <td class="contentbody">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                            <colgroup>
-                                <col width="130">
-                                <col>
-                            </colgroup>
-                            <tr>
-                                <td colspan="2" class="contentkey">$Text{"You can not delete this Workorder. It is used in at least one Condition!"}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                            </tr>
-                            <tr class="contenthead">
-                                <td colspan="2" class="contenthead">$Text{"This Workorder is used in the following Condition(s)"}:</td>
-                            </tr>
+<p>
+    $Text{"You can not delete this Workorder. It is used in at least one Condition!"}
+</p>
+<p class="SpacingTop SpacingBottom">
+    $Text{"This Workorder is used in the following Condition(s)"}:
+</p>
+
+<ul>
 <!-- dtl:block:WorkOrderInConditionRow -->
-                            <tr>
-                                <td class="contentvalue">
-                                    <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}">
-                                    $QData{"Name"}
-                                    </a>
-                                </td>
-                            </tr>
+    <li class="Indent SpacingBottomSmall">
+        <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}">
+            $QData{"Name"}
+        </a>
+    </li>
 <!-- dtl:block:WorkOrderInConditionRow -->
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="1">
-                            <tr>
-                                <td class="contentfooter">&nbsp;</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+</ul>
+
 <!-- dtl:block:WorkOrderInCondition -->
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
