@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMWorkOrderMenuWithTakePermission.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrderMenuWithTakePermission.pm,v 1.2 2010-10-18 20:30:54 en Exp $
+# $Id: ITSMWorkOrderMenuWithTakePermission.pm,v 1.3 2010-10-19 15:56:15 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,11 +82,6 @@ sub Run {
 
     # output menu block
     $Self->{LayoutObject}->Block( Name => 'Menu' );
-
-    # output seperator, when this is not the first menu item
-    if ( $Param{Counter} ) {
-        $Self->{LayoutObject}->Block( Name => 'MenuItemSplit' );
-    }
 
     # output menu item
     $Self->{LayoutObject}->Block(
