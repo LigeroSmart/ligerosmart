@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTemplate.pm,v 1.12 2010-09-22 21:30:52 en Exp $
+# $Id: AgentITSMChangeTemplate.pm,v 1.13 2010-10-20 12:37:34 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -187,9 +187,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer(
-        Type => 'Small',
-    );
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
