@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - the german translation of ITSMChangeManagement
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.81 2010-10-15 09:10:19 cr Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.82 2010-10-20 08:07:31 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.81 $) [1];
+$VERSION = qw($Revision: 1.82 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -37,7 +37,7 @@ sub Data {
     $Lang->{'Save Workorder as Template'}           = 'Speichere Workorder als Vorlage';
     $Lang->{'Save Change CAB as Template'}          = 'Speichere Change CAB als Vorlage';
     $Lang->{'New time'}                             = 'Neue Zeit';
-    $Lang->{'Requested (by customer) Date'}         = 'Wunschtermin (des Kunden)';
+    $Lang->{'Requested Date'}                       = 'Wunschtermin';
     $Lang->{'The planned end time is invalid!'}     = 'Die geplante Endzeit ist ungültig!';
     $Lang->{'The planned start time is invalid!'}   = 'Die geplante Startzeit ist ungültig!';
     $Lang->{'The planned start time must be before the planned end time!'}
@@ -1023,7 +1023,8 @@ sub Data {
     $Lang->{'Agent interface notification module to see the number of changes.'} = '';
     $Lang->{'Agent interface notification module to see the number of work orders.'} = '';
     $Lang->{'Agent interface notification module to see the number of change advisory boards.'} = '';
-        return 1;
+    $Lang->{'Change search backend router of the agent interface.'} = '';
+    return 1;
 }
 
 1;

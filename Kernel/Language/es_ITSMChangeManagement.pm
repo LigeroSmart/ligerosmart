@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 Leonardo Certuche <leonardo.certuche at itcon-ltda.com>
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.13 2010-10-15 09:10:19 cr Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.14 2010-10-20 08:07:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -38,7 +38,7 @@ sub Data {
     $Lang->{'Save Workorder as Template'}           = 'Guardar Orden de Trabajo como Plantilla';
     $Lang->{'Save Change CAB as Template'}          = 'Guardar Change CAB como Plantilla';
     $Lang->{'New time'}                             = 'Nuevo intervalo de tiempo';
-    $Lang->{'Requested (by customer) Date'}         = 'Fecha solicitada (por el cliente)';
+    $Lang->{'Requested Date'}                       = 'Fecha solicitada';
     $Lang->{'The planned end time is invalid!'}     = '¡La fecha de finalización planeada es inválida!';
     $Lang->{'The planned start time is invalid!'}   = '¡La fecha de inicio planeada es inválida!';
     $Lang->{'The planned start time must be before the planned end time!'} = '¡La fecha planeada de inicio debe ser anterior a la de finalización!';
@@ -1022,7 +1022,9 @@ sub Data {
     $Lang->{'Agent interface notification module to see the number of changes.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de cambios.';
     $Lang->{'Agent interface notification module to see the number of work orders.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de órdenes de trabajo.';
     $Lang->{'Agent interface notification module to see the number of change advisory boards.'} = 'Módulo de notificación de la interface del Agente para mostrar el número de change advisory boards.';
-        return 1;
+    $Lang->{'Change search backend router of the agent interface.'} = '';
+
+    return 1;
 }
 
 1;
