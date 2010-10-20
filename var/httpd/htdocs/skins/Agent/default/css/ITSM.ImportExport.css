@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -46,6 +46,12 @@ button.ArrowUp:active,
 button.ArrowDown:active {
     margin-top: 1px;
     margin-bottom: 0;
+}
+
+button.ArrowUp[disabled="disabled"]:active,
+button.ArrowDown[disabled="disabled"]:active {
+    margin-top: 0px;
+    margin-bottom: 1px;
 }
 
 button.ArrowUp {
