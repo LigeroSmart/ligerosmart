@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.22 2010-10-19 16:30:20 dz Exp $
+# $Id: AdminImportExport.dtl,v 1.23 2010-10-20 19:26:04 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -298,73 +298,90 @@
                 <h2>$Text{"Step"} 4 $Text{"of"} 5 - $Text{"Edit mapping information"}:</h2>
             </div>
             <div class="Content">
+                <div class="MapHeaderRow SpacingTop">
+                    <div class="Header">
+                        <label>$Text{"Name"}:</label>
+                        <div class="Field">
+                            $QData{"Name"}
+                        </div>
+                    </div>
+
+                    <div class="Header">
+                        <label>$Text{"Object"}:</label>
+                        <div class="Field">
+                            $QData{"ObjectName"}
+                        </div>
+                    </div>
+
+                    <div class="Header">
+                        <label>$Text{"Format"}:</label>
+                        <div class="Field">
+                            $QData{"FormatName"}
+                        </div>
+                    </div>
+                </div>
                 <form action="$Env{"CGIHandle"}" method="get">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="TemplateSave4" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
-                    <div class="MapHeaderRow SpacingTop">
-                        <div class="Header">
-                            <label>$Text{"Name"}:</label>
-                            <div class="Field">
-                                $QData{"Name"}
-                            </div>
-                        </div>
-
-                        <div class="Header">
-                            <label>$Text{"Object"}:</label>
-                            <div class="Field">
-                                $QData{"ObjectName"}
-                            </div>
-                        </div>
-
-                        <div class="Header">
-                            <label>$Text{"Format"}:</label>
-                            <div class="Field">
-                                $QData{"FormatName"}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="MapContainer SpacingTop">
-<!-- dtl:block:TemplateEdit4Element -->
-                        <div class="MapElementContainer">
-<!-- dtl:block:TemplateEdit4ElementObject -->
-                            <div class="MapElement">
-                                <label for="$Data{"ID"}">$Text{"$Data{"Name"}"}: </label>
-                                <div>
-                                    $Data{"InputStrg"}
-                                </div>
-                            </div>
-<!-- dtl:block:TemplateEdit4ElementObject -->
-<!-- dtl:block:TemplateEdit4ElementObjectColumn -->
-                            <div class="MapElement">
-                                <label>$Text{"$Data{"Name"}"}: </label>
-                                <div>
-                                    $Data{"InputStrg"}
-                                </div>
-                            </div>
-<!-- dtl:block:TemplateEdit4ElementObjectColumn-->
-
-                            <div class="MappingOptions">
-                                <button class="Primary" type="submit" name="MappingUp::$QData{"MappingID"}" value="$Text{"Up"}"> $Text{"Up"} </button>
-                                <button class="Primary" type="submit" name="MappingDown::$QData{"MappingID"}" value="$Text{"Down"}"> $Text{"Down"}</button>
-                                <button class="Primary" type="submit" name="MappingDelete::$QData{"MappingID"}" value="$Text{"Delete"}"> $Text{"Delete"} </button>
-                            </div>
-                        </div>
-<!-- dtl:block:TemplateEdit4Element -->
+                    <table class="DataTable SpacingTop">
+                        <thead>
+                            <tr>
+<!-- dtl:block:TemplateEdit4TableHeader -->
+                                <th class="Center">$Text{"$Data{"Header"}"}</th>
+<!-- dtl:block:TemplateEdit4TableHeader -->
+                            </tr>
+                        </thead>
+                        <tbody>
 <!-- dtl:block:TemplateEdit4NoMapFound -->
-                        <div class="NoMapFound">
-                            $Text{"No map elements found."}
-                        </div>
+                            <tr>
+                                <td colspan="$Data{"Columns"}">
+                                    $Text{"No map elements found."}
+                                </td>
+                            </tr>
 <!-- dtl:block:TemplateEdit4NoMapFound -->
+
+<!-- dtl:block:TemplateEdit4Row -->
+                            <tr>
+<!-- dtl:block:TemplateEdit4Column -->
+                                <td class="Center">
+                                    $Data{"InputStrg"}
+                                </td>
+<!-- dtl:block:TemplateEdit4Column -->
+<!-- dtl:block:TemplateEdit4MapNumberColumn -->
+                                <td class="Center">
+                                    $Data{"InputStrg"}
+                                </td>
+<!-- dtl:block:TemplateEdit4MapNumberColumn-->
+                                <td class="Center">
+<!-- dtl:block:TemplateEdit4UpButton-->
+                                    <button class="ArrowUp"type="submit" name="MappingUp::$QData{"MappingID"}" value="$Text{"Up"}"> $Text{"Up"} </button>
+<!-- dtl:block:TemplateEdit4UpButton-->
+<!-- dtl:block:TemplateEdit4NoUpButton-->
+                                    <button class="ArrowUp" type="submit" disabled="disabled"> $Text{"Up"}</button>
+<!-- dtl:block:TemplateEdit4NoUpButton-->
+                                </td>
+                                <td class="Center">
+<!-- dtl:block:TemplateEdit4DownButton-->
+                                    <button class="ArrowDown" type="submit" name="MappingDown::$QData{"MappingID"}" value="$Text{"Down"}"> $Text{"Down"}</button>
+<!-- dtl:block:TemplateEdit4DownButton-->
+<!-- dtl:block:TemplateEdit4NoDownButton-->
+                                    <button class="ArrowDown" type="submit" disabled="disabled"> $Text{"Down"}</button>
+<!-- dtl:block:TemplateEdit4NoDownButton-->
+                                </td>
+                                <td class="Center">
+                                    <button class="TrashCan" type="submit" name="MappingDelete::$QData{"MappingID"}" value="$Text{"Delete"}"> $Text{"Delete"} </button>
+                                </td>
+                            </tr>
+<!-- dtl:block:TemplateEdit4Row -->
+                        </tbody>
+                    </table>
+                    <div class="W100pc SpacingTopSmall Right">
+                        <button class="CallForAction Plus" id="MappingAdd" type="submit" name="MappingAdd" value="$Text{"Add"}"><span> $Text{"Add Mapping Element"}</span> </button>
                     </div>
 
-
-                    <div class="Field SpacingTop">
-                        <button id="MappingAdd" type="submit" name="MappingAdd" value="$Text{"Add"}">$Text{"Add"}</button>
-                    </div>
-                    <div class="Submit SpacingTop">
-                        <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"Back"}</button>
+                    <div class="SpacingTop">
+                        <button type="submit" name="SubmitBack" value="SubmitBack">$Text{"Back"}</button>
                         <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
                     </div>
                 </form>
@@ -381,14 +398,14 @@
                     <input type="hidden" name="Subaction" value="TemplateSave5" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
                     <fieldset class="TableLike">
-                        <label>$Text{"Name"}:</label>
+                        <label>$Text{"Template Name"}:</label>
                         <div class="Field">
                             $QData{"Name"}
                         </div>
                         <div class="Clear"></div>
 
                         <label for="RestrictExport">$Text{"Restrict export per search"}:</label>
-                        <div class="Field">
+                        <div class="Field SpacingBottom">
                             $Data{"RestrictExportStrg"}
                         </div>
                         <div class="Clear"></div>
@@ -401,8 +418,8 @@
 <!-- dtl:block:TemplateEdit5Element -->
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitBack" value="SubmitBack">$Text{"Back"}</button>
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
+                            <button type="submit" name="SubmitBack" value="SubmitBack">$Text{"Back"}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Finish"}</button>
                         </div>
                     </fieldset>
                 </form>

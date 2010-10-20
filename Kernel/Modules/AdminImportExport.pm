@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.25 2010-10-19 16:30:20 dz Exp $
+# $Id: AdminImportExport.pm,v 1.26 2010-10-20 19:26:04 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -142,11 +142,10 @@ sub Run {
         my $Success;
 
         if ($New) {
-            $TemplateData->{TemplateID} =
-                $Self->{ImportExportObject}->TemplateAdd(
+            $TemplateData->{TemplateID} = $Self->{ImportExportObject}->TemplateAdd(
                 %{$TemplateData},
                 UserID => $Self->{UserID},
-                );
+            );
             $Success = $TemplateData->{TemplateID};
         }
         else {
@@ -422,8 +421,8 @@ sub Run {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList', );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+        $Self->{LayoutObject}->Block( Name => 'ActionList' );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
         # output headline
         $Self->{LayoutObject}->Block(
@@ -453,16 +452,40 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        my $EmptyMap = 1;
-        my $Counter  = 0;
+        # create headers for object and add common headers
+        my @Headers;
 
+        for my $Header ( @{$MappingObjectAttributes} ) {
+            push @Headers, $Header->{Name};
+        }
+
+        for my $CommonHeader ( 'Column', 'Up', 'Down', 'Delete' ) {
+            push @Headers, $CommonHeader;
+        }
+
+        for my $Header (@Headers) {
+
+            # output attribute row
+            $Self->{LayoutObject}->Block(
+                Name => 'TemplateEdit4TableHeader',
+                Data => {
+                    Header => $Header,
+                },
+            );
+        }
+
+        # to use in colspan for 'no data found' message
+        my $HeaderCounter = @Headers;
+
+        my $EmptyMap            = 1;
+        my $AtributteRowCounter = 0;
         for my $MappingID ( @{$MappingList} ) {
 
             $EmptyMap = 0;
 
             # output attribute row
             $Self->{LayoutObject}->Block(
-                Name => 'TemplateEdit4Element',
+                Name => 'TemplateEdit4Row',
                 Data => {
                     MappingID => $MappingID,
                 },
@@ -485,19 +508,19 @@ sub Run {
                 # create form input
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                     Item   => $Item,
-                    Prefix => 'Object::' . $Counter . '::',
+                    Prefix => 'Object::' . $AtributteRowCounter . '::',
                     Value  => $MappingObjectData->{ $Item->{Key} },
-                    ID     => $Item->{Key} . $Counter,
+                    ID     => $Item->{Key} . $AtributteRowCounter,
                 );
 
                 # output attribute row
                 $Self->{LayoutObject}->Block(
-                    Name => 'TemplateEdit4ElementObject',
+                    Name => 'TemplateEdit4Column',
                     Data => {
                         Name      => $Item->{Name},
-                        ID        => 'Object::' . $Counter . '::' . $Item->{Key},
+                        ID        => 'Object::' . $AtributteRowCounter . '::' . $Item->{Key},
                         InputStrg => $InputString,
-                        Counter   => $Counter,
+                        Counter   => $AtributteRowCounter,
                     },
                 );
             }
@@ -507,29 +530,66 @@ sub Run {
                 # create form input
                 my $InputString = $Self->{LayoutObject}->ImportExportFormInputCreate(
                     Item   => $Item,
-                    Prefix => 'Format::' . $Counter . '::',
+                    Prefix => 'Format::' . $AtributteRowCounter . '::',
                     Value  => $MappingFormatData->{ $Item->{Key} },
                 );
 
                 # output attribute row
                 $Self->{LayoutObject}->Block(
-                    Name => 'TemplateEdit4ElementObjectColumn',
+                    Name => 'TemplateEdit4MapNumberColumn',
                     Data => {
                         Name      => $Item->{Name},
                         InputStrg => $InputString,
-                        Counter   => $Counter,
+                        Counter   => $AtributteRowCounter,
                     },
                 );
             }
 
-            $Counter++;
+            # hide the up button for first element and down button for the last element
+            my $UpBlock;
+            my $DownBlock;
+            my $NumberOfElements = @{$MappingList};
+
+            if ( $AtributteRowCounter == 0 ) {
+                $UpBlock = 'TemplateEdit4NoUpButton';
+            }
+            else {
+                $UpBlock = 'TemplateEdit4UpButton';
+            }
+
+            # check if this is the last element
+            if ( $AtributteRowCounter == ( $NumberOfElements - 1 ) ) {
+                $DownBlock = 'TemplateEdit4NoDownButton';
+            }
+            else {
+                $DownBlock = 'TemplateEdit4DownButton';
+            }
+
+            # up button block
+            $Self->{LayoutObject}->Block(
+                Name => $UpBlock,
+                Data => { MappingID => $MappingID },
+            );
+
+            # down button block
+            $Self->{LayoutObject}->Block(
+                Name => $DownBlock,
+                Data => { MappingID => $MappingID },
+            );
+
+            $AtributteRowCounter++;
         }
 
         # output an empty list
         if ($EmptyMap) {
 
             # output list
-            $Self->{LayoutObject}->Block( Name => 'TemplateEdit4NoMapFound', );
+            $Self->{LayoutObject}->Block(
+                Name => 'TemplateEdit4NoMapFound',
+                Data => {
+                    Columns => $HeaderCounter,
+                },
+            );
         }
 
         # output header and navbar
@@ -751,8 +811,8 @@ sub Run {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList', );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+        $Self->{LayoutObject}->Block( Name => 'ActionList' );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
         # get search data
         my $SearchData = $Self->{ImportExportObject}->SearchDataGet(
@@ -974,8 +1034,8 @@ sub Run {
             },
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList', );
-        $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+        $Self->{LayoutObject}->Block( Name => 'ActionList' );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
         # output list
         $Self->{LayoutObject}->Block(
@@ -1119,8 +1179,8 @@ sub Run {
                 }
         );
 
-        $Self->{LayoutObject}->Block( Name => 'ActionList', );
-        $Self->{LayoutObject}->Block( Name => 'ActionAdd', );
+        $Self->{LayoutObject}->Block( Name => 'ActionList' );
+        $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
 
         $Self->{LayoutObject}->Block(
             Name => 'OverviewResult',
@@ -1217,8 +1277,8 @@ sub _MaskTemplateEdit1 {
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList', );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
     # generate ValidOptionStrg
     my %ValidList        = $Self->{ValidObject}->ValidList();
@@ -1369,8 +1429,8 @@ sub _MaskTemplateEdit2 {
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList', );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
     # output list
     $Self->{LayoutObject}->Block(
@@ -1523,8 +1583,8 @@ sub _MaskTemplateEdit3 {
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionList', );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
     # output list
     $Self->{LayoutObject}->Block(
