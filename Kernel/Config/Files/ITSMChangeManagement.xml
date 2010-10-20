@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.234 2010-10-19 15:49:45 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.235 2010-10-20 08:06:05 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -9286,6 +9286,16 @@
                 <Item Key="PrefKey">UserChangeOverviewSmallPageShown</Item>
                 <Item Key="Prio">8000</Item>
                 <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Search###Change" Required="0" Valid="1">
+        <Description Translatable="1">Change search backend router of the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::SearchRouter</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="^(?:Agent|Admin)ITSMChange">Action=AgentITSMChangeSearch;Subaction=AJAX</Item>
             </Hash>
         </Setting>
     </ConfigItem>
