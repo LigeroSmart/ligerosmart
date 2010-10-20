@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderTemplate.pm - the OTRS::ITSM::ChangeManagement add template module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderTemplate.pm,v 1.10 2010-06-29 13:45:17 sb Exp $
+# $Id: AgentITSMWorkOrderTemplate.pm,v 1.11 2010-10-20 12:41:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -58,7 +58,7 @@ sub Run {
     if ( !$WorkOrderID ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No WorkOrderID is given!',
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -81,7 +81,7 @@ sub Run {
     if ( !$WorkOrder ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "WorkOrder '$WorkOrderID' not found in database!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
@@ -106,19 +106,18 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # Remember the reason why saving was not attempted.
-    # The items are the names of the dtl validation error blocks.
-    my @ValidationErrors;
+    # Check required fields to look for errors.
+    my %Error;
 
     # add a template
     if ( $Self->{Subaction} eq 'AddTemplate' ) {
 
         # check validity of the template name
         if ( !$GetParam{TemplateName} ) {
-            push @ValidationErrors, 'InvalidTemplateName';
+            $Error{'TemplateNameInvalid'} = 'ServerError';
         }
 
-        if ( !@ValidationErrors ) {
+        if ( !%Error ) {
 
             # serialize the workorder
             my $TemplateContent = $Self->{TemplateObject}->TemplateSerialize(
@@ -132,7 +131,7 @@ sub Run {
             if ( !$TemplateContent ) {
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "The workorder '$WorkOrderID' could not be serialized.",
-                    Comment => 'Please contact the admin.',
+                    Comment => 'Please contact the administrator.',
                 );
             }
 
@@ -150,13 +149,13 @@ sub Run {
             if ( !$TemplateID ) {
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => "Could not add the template.",
-                    Comment => 'Please contact the admin.',
+                    Comment => 'Please contact the administrator.',
                 );
             }
 
-            # everything went well, redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => $Self->{LastWorkOrderView},
+            # load new URL in parent window and close popup
+            return $Self->{LayoutObject}->PopupClose(
+                URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
             );
         }
     }
@@ -175,15 +174,15 @@ sub Run {
     if ( !$Change ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => "Could not find Change for WorkOrder $WorkOrderID!",
-            Comment => 'Please contact the admin.',
+            Comment => 'Please contact the administrator.',
         );
     }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
+        Type  => 'Small',
         Title => 'Template',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => {
@@ -193,11 +192,6 @@ sub Run {
         SelectedID => $GetParam{ValidID} || ( $Self->{ValidObject}->ValidIDsGet() )[0],
         Sort       => 'NumericKey',
     );
-
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
 
     # set checkbox for state reset
     if ( $GetParam{StateReset} ) {
@@ -212,11 +206,12 @@ sub Run {
             %{$Change},
             %{$WorkOrder},
             ValidSelectionString => $ValidSelectionString,
+            %Error,
         },
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
