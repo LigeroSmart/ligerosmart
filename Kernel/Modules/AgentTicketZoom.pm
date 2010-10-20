@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.15 2010-10-13 08:57:01 en Exp $
-# $OldId: AgentTicketZoom.pm,v 1.129 2010/10/12 15:51:01 mg Exp $
+# $Id: AgentTicketZoom.pm,v 1.16 2010-10-20 12:44:28 en Exp $
+# $OldId: AgentTicketZoom.pm,v 1.130 2010/10/17 20:16:01 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1616,7 +1616,7 @@ sub _ArticleItem {
             ArticleID => $Article{ArticleID}
         );
         $Self->{LayoutObject}->Block(
-            Name => 'Row',
+            Name => 'ArticleAccountedTime',
             Data => {
                 Key   => 'Time',
                 Value => $ArticleTime,

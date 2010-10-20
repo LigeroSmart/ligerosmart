@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.23 2010-10-13 09:05:25 en Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.165 2010/10/12 15:51:01 mg Exp $
+# $Id: AgentTicketZoom.dtl,v 1.24 2010-10-20 12:45:04 en Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.167 2010/10/17 20:16:01 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -642,7 +642,7 @@ $Data{"ArticleItems"}
     <a name="Article$QData{"ArticleID"}"></a>
     <div class="WidgetBox SpacingTop Expanded">
         <div class="LightRow Header">
-            <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
+            <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
             <h2>#$QData{"Count"} &ndash; $QData{"Subject","60"}</h2>
             <div class="AdditionalInformation">
                 $Text{"Created"}: $TimeShort{"$Data{"Created"}"}
@@ -729,6 +729,13 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
                     <div title="$QData{"Value"}" class="$QData{"Result"}">$QData{"Value","160"}</div>
                     <div class="Clear"></div>
 <!-- dtl:block:ArticleOption -->
+
+# show article accounted time
+<!-- dtl:block:ArticleAccountedTime -->
+                    <label>$Text{"$Data{"Key"}"}:</label>
+                    <p class="Value">$QData{"Value"}</p>
+                    <div class="Clear"></div>
+<!-- dtl:block:ArticleAccountedTime -->
 
 # show attachments
 <!-- dtl:block:ArticleAttachment -->

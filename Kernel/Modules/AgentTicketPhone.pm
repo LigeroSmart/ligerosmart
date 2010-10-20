@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.19 2010-09-30 21:40:11 en Exp $
-# $OldId: AgentTicketPhone.pm,v 1.161 2010/09/08 12:30:17 mg Exp $
+# $Id: AgentTicketPhone.pm,v 1.20 2010-10-20 12:44:28 en Exp $
+# $OldId: AgentTicketPhone.pm,v 1.164 2010/10/17 13:48:23 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -829,7 +829,7 @@ sub Run {
             }
             if (
                 ( $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') )
-                && !$GetParam{TimeUnits}
+                && !defined $GetParam{TimeUnits}
                 )
             {
                 $Error{'TimeUnitsInvalid'} = ' ServerError';
@@ -1877,11 +1877,20 @@ sub _MaskPhoneNew {
 
     # show time accounting box
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
-        $Param{TimeUnitsRequired} = (
-            $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
-            ? 'Validate_Required'
-            : ''
-        );
+        if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TimeUnitsLabelMandatory',
+                Data => \%Param,
+            );
+            $Param{TimeUnitsRequired} = 'Validate_Required';
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'TimeUnitsLabel',
+                Data => \%Param,
+            );
+            $Param{TimeUnitsRequired} = '';
+        }
         $Self->{LayoutObject}->Block(
             Name => 'TimeUnits',
             Data => \%Param,
