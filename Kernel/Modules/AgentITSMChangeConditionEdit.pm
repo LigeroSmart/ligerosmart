@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.38 2010-07-05 10:42:39 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.39 2010-10-20 18:34:50 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,6 +133,7 @@ sub Run {
 
         # update only if ConditionName is given
         if ( !$GetParam{Name} ) {
+            $Param{InvalidName} = "ServerError";
             push @ValidationErrors, 'InvalidName';
         }
 
@@ -192,7 +193,7 @@ sub Run {
                 my %ExpressionData;
                 for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
                     $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
-                        Param => 'ExpressionID::' . $ExpressionID . '::' . $Field,
+                        Param => 'ExpressionID-' . $ExpressionID . '-' . $Field,
                     );
                 }
 
@@ -237,7 +238,7 @@ sub Run {
             my %ExpressionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue)) {
                 $ExpressionData{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => 'ExpressionID::NEW::' . $Field,
+                    Param => 'ExpressionID-NEW-' . $Field,
                 );
             }
 
@@ -284,7 +285,7 @@ sub Run {
                 my %ActionData;
                 for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
                     $ActionData{$Field} = $Self->{ParamObject}->GetParam(
-                        Param => 'ActionID::' . $ActionID . '::' . $Field,
+                        Param => 'ActionID-' . $ActionID . '-' . $Field,
                     );
                 }
 
@@ -329,7 +330,7 @@ sub Run {
             my %ActionData;
             for my $Field (qw(ObjectID Selector AttributeID OperatorID ActionValue)) {
                 $ActionData{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => 'ActionID::NEW::' . $Field,
+                    Param => 'ActionID-NEW-' . $Field,
                 );
             }
 
@@ -402,7 +403,7 @@ sub Run {
                 # check if the delete button of this expression was pressed
                 if (
                     $Self->{ParamObject}->GetParam(
-                        Param => 'DeleteExpressionID::' . $ExpressionID
+                        Param => 'DeleteExpressionID-' . $ExpressionID
                     )
                     )
                 {
@@ -433,7 +434,7 @@ sub Run {
             for my $ActionID ( @{$ActionIDsRef} ) {
 
                 # check if the delete button of this action was pressed
-                if ( $Self->{ParamObject}->GetParam( Param => 'DeleteActionID::' . $ActionID ) ) {
+                if ( $Self->{ParamObject}->GetParam( Param => 'DeleteActionID-' . $ActionID ) ) {
 
                     # delete the action
                     my $Success = $Self->{ConditionObject}->ActionDelete(
@@ -474,7 +475,7 @@ sub Run {
         my $JSON;
 
         # expression or action field was changed
-        if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) :: ( \d+ | NEW ) }xms )
+        if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) - ( \d+ | NEW ) }xms )
         {
 
             # get id name of the involved element ( 'ExpressionID' or 'ActionID' )
@@ -495,7 +496,7 @@ sub Run {
             # get expression or action fields
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue ActionValue)) {
                 $GetParam{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => $IDName . '::' . $ID . '::' . $Field,
+                    Param => $IDName . '-' . $ID . '-' . $Field,
                 );
             }
 
@@ -529,7 +530,7 @@ sub Run {
                 !$SelectorList
                 || !ref $SelectorList eq 'HASH'
                 || !%{$SelectorList}
-                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID'
+                || $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-ObjectID'
                 )
             {
                 $PossibleNoneSelector = 1;
@@ -541,8 +542,8 @@ sub Run {
                 !$AttributeList
                 || !ref $AttributeList eq 'HASH'
                 || !%{$AttributeList}
-                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID'
-                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::Selector'
+                || $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-ObjectID'
+                || $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-Selector'
                 )
             {
                 $PossibleNoneAttributeID = 1;
@@ -554,25 +555,25 @@ sub Run {
                 !$OperatorList
                 || !ref $OperatorList eq 'HASH'
                 || !%{$OperatorList}
-                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID'
-                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::Selector'
-                || $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::AttributeID'
+                || $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-ObjectID'
+                || $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-Selector'
+                || $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-AttributeID'
                 )
             {
                 $PossibleNoneOperatorID = 1;
             }
 
             # if object was changed, reset the attribute and operator list
-            if ( $GetParam{ElementChanged} eq $IDName . '::' . $ID . '::ObjectID' ) {
+            if ( $GetParam{ElementChanged} eq $IDName . '-' . $ID . '-ObjectID' ) {
                 $AttributeList = {};
                 $OperatorList  = {};
             }
 
             # build json
-            $JSON = $Self->{LayoutObject}->BuildJSON(
+            $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
                 [
                     {
-                        Name         => $IDName . '::' . $ID . '::ObjectID',
+                        Name         => $IDName . '-' . $ID . '-ObjectID',
                         Data         => $ObjectList,
                         SelectedID   => $GetParam{ObjectID},
                         PossibleNone => 0,
@@ -580,7 +581,7 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name         => $IDName . '::' . $ID . '::Selector',
+                        Name         => $IDName . '-' . $ID . '-Selector',
                         Data         => $SelectorList,
                         SelectedID   => $PossibleNoneSelector ? '' : $GetParam{Selector},
                         PossibleNone => $PossibleNoneSelector,
@@ -588,7 +589,7 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name         => $IDName . '::' . $ID . '::AttributeID',
+                        Name         => $IDName . '-' . $ID . '-AttributeID',
                         Data         => $AttributeList,
                         SelectedID   => $GetParam{AttributeID} || '',
                         PossibleNone => $PossibleNoneAttributeID,
@@ -596,7 +597,7 @@ sub Run {
                         Max          => 100,
                     },
                     {
-                        Name         => $IDName . '::' . $ID . '::OperatorID',
+                        Name         => $IDName . '-' . $ID . '-OperatorID',
                         Data         => $OperatorList,
                         SelectedID   => $GetParam{OperatorID} || '',
                         PossibleNone => $PossibleNoneOperatorID,
@@ -625,7 +626,7 @@ sub Run {
         my $HTMLString;
 
         # expression or action field was changed
-        if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) :: ( \d+ | NEW ) }xms )
+        if ( $GetParam{ElementChanged} =~ m{ \A ( ExpressionID | ActionID ) \- ( \d+ | NEW ) }xms )
         {
 
             # get id name of the involved element ( 'ExpressionID' or 'ActionID' )
@@ -646,7 +647,7 @@ sub Run {
             # get expression or action fields
             for my $Field (qw(ObjectID Selector AttributeID OperatorID CompareValue ActionValue)) {
                 $GetParam{$Field} = $Self->{ParamObject}->GetParam(
-                    Param => $IDName . '::' . $ID . '::' . $Field,
+                    Param => $IDName . '-' . $ID . '-' . $Field,
                 );
             }
 
@@ -675,7 +676,7 @@ sub Run {
                 # generate ValueOptionString
                 $HTMLString = $Self->{LayoutObject}->BuildSelection(
                     Data         => $CompareValueList,
-                    Name         => $IDName . '::' . $ID . '::' . $ValueFieldName,
+                    Name         => $IDName . '-' . $ID . '-' . $ValueFieldName,
                     SelectedID   => $GetParam{$ValueFieldName},
                     PossibleNone => $PossibleNone,
                     Translation  => 1,
@@ -693,9 +694,9 @@ sub Run {
                 # build an empty input field
                 $HTMLString = ''
                     . '<input type="text" '
-                    . 'id="' . $IDName . '::' . $ID . '::' . $ValueFieldName . '" '
-                    . 'name="' . $IDName . '::' . $ID . '::' . $ValueFieldName . '" '
-                    . 'value="" size="30" maxlength="250">';
+                    . 'id="' . $IDName . '-' . $ID . '-' . $ValueFieldName . '" '
+                    . 'name="' . $IDName . '-' . $ID . '-' . $ValueFieldName . '" '
+                    . 'value="" clas="W75pc" maxlength="250" />';
             }
 
             # show error for unknown field type
@@ -760,6 +761,10 @@ sub Run {
             NewAction => $GetParam{NewAction},
         );
     }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'ExpressionOverviewRowNoData' );
+        $Self->{LayoutObject}->Block( Name => 'ActionOverviewRowNoData' );
+    }
 
     # get expression conjunction from condition
     if ( !$GetParam{ExpressionConjunction} ) {
@@ -775,8 +780,7 @@ sub Run {
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $Self->{LayoutObject}->Header( Type => 'Small', );
 
     # generate ValidOptionString
     $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
@@ -801,7 +805,7 @@ sub Run {
             %ConditionData,
         },
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small', );
 
     return $Output;
 }
@@ -820,7 +824,10 @@ sub _ExpressionOverview {
         push @ExpressionIDs, 'NEW';
     }
 
-    return if !@ExpressionIDs;
+    if ( !@ExpressionIDs ) {
+        $Self->{LayoutObject}->Block( Name => 'ExpressionOverviewRowNoData' );
+        return;
+    }
 
     EXPRESSIONID:
     for my $ExpressionID ( sort { $a cmp $b } @ExpressionIDs ) {
@@ -902,7 +909,10 @@ sub _ActionOverview {
         push @ActionIDs, 'NEW';
     }
 
-    return if !@ActionIDs;
+    if ( !@ActionIDs ) {
+        $Self->{LayoutObject}->Block( Name => 'ActionOverviewRowNoData' );
+        return;
+    }
 
     ActionID:
     for my $ActionID ( sort { $a cmp $b } @ActionIDs ) {
@@ -1000,56 +1010,29 @@ sub _ShowObjectSelection {
 
     # for expression elements
     if ( $Param{ExpressionID} ) {
-        $UpdateDivName = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+        $UpdateDivName = "ExpressionID-$Param{ExpressionID}-CompareValue-Div";
         $IDName        = 'ExpressionID';
         $BlockName     = 'ExpressionOverviewRowElementObject';
     }
 
     # for action elements
     elsif ( $Param{ActionID} ) {
-        $UpdateDivName = "ActionID::$Param{ActionID}::ActionValue::Div";
+        $UpdateDivName = "ActionID-$Param{ActionID}-ActionValue-Div";
         $IDName        = 'ActionID';
         $BlockName     = 'ActionOverviewRowElementObject';
     }
 
-    # build OnChange string
-    my $OnChangeString = ''
-        . "AJAXContentUpdate('$UpdateDivName', '"
-        . '$Env{"Baselink"}'
-        . "Action=$Self->{Action}"
-        . '&Subaction=AJAXContentUpdate'
-        . "&UpdateDivName=$UpdateDivName"
-        . '&ChangeID=$QData{"ChangeID"}'
-        . '&ConditionID=$QData{"ConditionID"}'
-
-        . "&" . $IDName . "::" . $Param{$IDName} . "::ObjectID=' + "
-        . "document.getElementById('" . $IDName . "::" . $Param{$IDName} . "::ObjectID').value + '"
-
-        . "&ElementChanged=" . $IDName . "::" . $Param{$IDName} . "::ObjectID"
-        . "'); "
-
-        . "AJAXUpdate('AJAXUpdate', '" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
-        . "[ "
-        . "'ChangeID', "
-        . "'ConditionID', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
-        . "], "
-        . "[ "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::Selector', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::AttributeID', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::OperatorID', "
-        . "]); "
-        . 'return false;';
+    # parameters for ajax
+    $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-ObjectID';
+    $Param{IDName}           = $IDName;
 
     # generate ObjectOptionString
     my $ObjectOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $ObjectList,
-        Name         => $IDName . '::' . $Param{$IDName} . '::ObjectID',
+        Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{ObjectID},
         PossibleNone => $PossibleNone,
         Translation  => 1,
-        OnChange     => $OnChangeString,
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
@@ -1106,27 +1089,17 @@ sub _ShowSelectorSelection {
         $BlockName = 'ActionOverviewRowElementSelector';
     }
 
+    # parameters for ajax
+    $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-Selector';
+    $Param{IDName}           = $IDName;
+
     # generate SelectorOptionString
     my $SelectorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $SelectorList,
-        Name         => $IDName . '::' . $Param{$IDName} . '::Selector',
+        Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{Selector},
         PossibleNone => $PossibleNone,
         Translation  => 1,
-        Ajax         => {
-            Update => [
-                $IDName . '::' . $Param{$IDName} . '::Selector',
-                $IDName . '::' . $Param{$IDName} . '::AttributeID',
-                $IDName . '::' . $Param{$IDName} . '::OperatorID',
-            ],
-            Depend => [
-                'ChangeID',
-                'ConditionID',
-                $IDName . '::' . $Param{$IDName} . '::ObjectID',
-                $IDName . '::' . $Param{$IDName} . '::Selector',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
@@ -1164,7 +1137,7 @@ sub _ShowAttributeSelection {
 
     # for expression elements
     if ( $Param{ExpressionID} ) {
-        $UpdateDivName  = "ExpressionID::$Param{ExpressionID}::CompareValue::Div";
+        $UpdateDivName  = "ExpressionID-$Param{ExpressionID}-CompareValue-Div";
         $IDName         = 'ExpressionID';
         $BlockName      = 'ExpressionOverviewRowElementAttribute';
         $ValueFieldName = 'CompareValue';
@@ -1172,7 +1145,7 @@ sub _ShowAttributeSelection {
 
     # for action elements
     elsif ( $Param{ActionID} ) {
-        $UpdateDivName  = "ActionID::$Param{ActionID}::ActionValue::Div";
+        $UpdateDivName  = "ActionID-$Param{ActionID}-ActionValue-Div";
         $IDName         = 'ActionID';
         $BlockName      = 'ActionOverviewRowElementAttribute';
         $ValueFieldName = 'ActionValue';
@@ -1197,65 +1170,17 @@ sub _ShowAttributeSelection {
         $PossibleNone = 1;
     }
 
-    # build OnChange string
-    my $OnChangeString = ''
-        . "AJAXContentUpdate('$UpdateDivName', '"
-        . '$Env{"Baselink"}'
-        . "Action=$Self->{Action}"
-        . '&Subaction=AJAXContentUpdate'
-        . "&UpdateDivName=$UpdateDivName"
-        . '&ChangeID=$QData{"ChangeID"}'
-        . '&ConditionID=$QData{"ConditionID"}'
-
-        . "&" . $IDName . "::" . $Param{$IDName} . "::ObjectID=' + "
-        . "document.getElementById('" . $IDName . "::" . $Param{$IDName} . "::ObjectID').value + '"
-
-        . "&" . $IDName . "::" . $Param{$IDName} . "::Selector=' + "
-        . "document.getElementById('" . $IDName . "::" . $Param{$IDName} . "::Selector').value + '"
-
-        . "&" . $IDName . "::" . $Param{$IDName} . "::AttributeID=' "
-        . "+ document.getElementById('"
-        . $IDName . "::"
-        . $Param{$IDName}
-        . "::AttributeID').value + '"
-
-        . "&" . $IDName . "::" . $Param{$IDName} . "::OperatorID=' + "
-        . "document.getElementById('"
-        . $IDName . "::"
-        . $Param{$IDName}
-        . "::OperatorID').value + '"
-
-        . "&" . $IDName . "::" . $Param{$IDName} . "::" . $ValueFieldName . "=' + "
-        . "document.getElementById('"
-        . $IDName . "::"
-        . $Param{$IDName}
-        . "::" . $ValueFieldName . "').value + '"
-
-        . "&ElementChanged=" . $IDName . "::" . $Param{$IDName} . "::AttributeID"
-        . "'); "
-
-        . "AJAXUpdate('AJAXUpdate', '" . $IDName . "::" . $Param{$IDName} . "::AttributeID', "
-        . "[ "
-        . "'ChangeID', "
-        . "'ConditionID', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::ObjectID', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::Selector', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::AttributeID' "
-        . "], "
-        . "[ "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::AttributeID', "
-        . "'" . $IDName . "::" . $Param{$IDName} . "::OperatorID', "
-        . "]); "
-        . 'return false;';
+    # parameters for ajax
+    $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-AttributeID';
+    $Param{IDName}           = $IDName;
 
     # generate AttributeOptionString
     my $AttributeOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $AttributeList,
-        Name         => $IDName . '::' . $Param{$IDName} . '::AttributeID',
+        Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{AttributeID},
         PossibleNone => $PossibleNone,
         Translation  => 1,
-        OnChange     => $OnChangeString,
     );
 
     # remove AJAX-Loading images in date selection fields to avoid jitter effect
@@ -1316,27 +1241,17 @@ sub _ShowOperatorSelection {
         $PossibleNone = 1;
     }
 
+    # parameters for ajax
+    $Param{ObjectOptionName} = $IDName . '-' . $Param{$IDName} . '-OperatorID';
+    $Param{IDName}           = $IDName;
+
     # generate OperatorOptionString
     my $OperatorOptionString = $Self->{LayoutObject}->BuildSelection(
         Data         => $OperatorList,
-        Name         => $IDName . '::' . $Param{$IDName} . '::OperatorID',
+        Name         => $Param{ObjectOptionName},
         SelectedID   => $Param{OperatorID},
         PossibleNone => $PossibleNone,
         Translation  => 1,
-        Ajax         => {
-            Update => [
-                $IDName . '::' . $Param{$IDName} . '::OperatorID',
-            ],
-            Depend => [
-                'ChangeID',
-                'ConditionID',
-                $IDName . '::' . $Param{$IDName} . '::ObjectID',
-                $IDName . '::' . $Param{$IDName} . '::Selector',
-                $IDName . '::' . $Param{$IDName} . '::AttributeID',
-                $IDName . '::' . $Param{$IDName} . '::OperatorID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # remove AJAX-Loading images in selection field to avoid jitter effect
@@ -1420,7 +1335,7 @@ sub _ShowCompareValueField {
         # generate ValueOptionString
         my $ValueOptionString = $Self->{LayoutObject}->BuildSelection(
             Data         => $CompareValueList,
-            Name         => $IDName . '::' . $Param{$IDName} . '::' . $ValueFieldName,
+            Name         => $IDName . '-' . $Param{$IDName} . '-' . $ValueFieldName,
             SelectedID   => $Param{$ValueFieldName},
             PossibleNone => $PossibleNone,
             Translation  => 1,

@@ -1,79 +1,78 @@
 # --
 # AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeCondition.dtl,v 1.10 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeCondition.dtl,v 1.11 2010-10-20 18:31:16 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Overview"}: $Text{"Conditions and Actions"} : $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Overview"}: $Text{"Conditions and Actions"} : $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody" align="center">
-            <form action="$Env{"CGIHandle"}" method="post">
-                <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                <input type="hidden" name="Subaction" value=""/>
-                <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}"/>
-                <input type="hidden" name="ConditionID" value="$QData{"ConditionID"}"/>
-                <br/>
-                <table border="0" width="800" cellspacing="0" cellpadding="4">
-                    <tr class="contenthead">
-                        <td class="contentkey">$Text{"Conditions and Actions"}</td>
-                    </tr>
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+    <input type="hidden" name="Subaction" value=""/>
+    <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}"/>
+    <input type="hidden" name="ConditionID" value="$QData{"ConditionID"}"/>
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>
+                $Text{"Overview"}: $Text{"Conditions and Actions"} : $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $QData{"ChangeTitle","70"}
+            </h1>
+            <p>
+                <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Conditions and Actions"}</h2>
+                </div>
+                <div class="Content">
 <!-- dtl:block:Overview -->
-                    <tr class="contentbody">
-                        <td>
-                            <table width="100%" border="0" cellpadding="3" cellspacing="0">
-                                <tr class="contentbody">
-                                    <td class="contentkey" width="250">$Text{"Name"}</td>
-                                    <td class="contentkey" width="*">$Text{"Comment"}</td>
-                                    <td class="contentkey" width="100" align="center">$Text{"valid"}/$Text{"invalid"}</td>
-                                    <td class="contentkey" width="150">$Text{"Changed"}</td>
-                                    <td class="contentkey" width="10">&nbsp;</td>
-                                </tr>
+                    <table class="DataTable SpacingTopSmall">
+                        <thead>
+                            <tr>
+                                <th class="W25pc">$Text{"Name"}</th>
+                                <th>$Text{"Comment"}</th>
+                                <th class="Center">$Text{"valid"}/$Text{"invalid"}</th>
+                                <th>$Text{"Changed"}</th>
+                                <th class="Center W10pc">$Text{"Delete"}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 <!-- dtl:block:OverviewRow -->
-                                <tr class="$QData{"CssClass"}">
-                                    <td>
-                                        <a href="$Env{"Baselink"}Action=AgentITSMChangeConditionEdit;ChangeID=$QData{"ChangeID"};ConditionID=$QData{"ConditionID"}">
+                            <tr>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}">
                                         $QData{"Name"}
-                                        </a>
-                                    </td>
-                                    <td>$Text{"$QData{"Comment"}"}</td>
-                                    <td align="center">$Text{"$QData{"Valid"}"}</td>
-                                    <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
-                                    <td width="10"><input class="button" type="submit" value="$Text{"Delete"}" name="DeleteConditionID::$QData{"ConditionID"}"></td>
-                                </tr>
+                                    </a>
+                                </td>
+                                <td>$Text{"$Data{"Comment"}"}</td>
+                                <td class="Center">$Text{"$Data{"Valid"}"}</td>
+                                <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
+                                <td class="Center">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"};DeleteConditionID::$LQData{"ConditionID"}=Delete" class="TrashCan" title="$Text{"Delete"}">
+                                        $Text{"Delete Condition"}
+                                    </a>
+                                </td>
+                            </tr>
 <!-- dtl:block:OverviewRow -->
-                            </table>
-                        </td>
-                    </tr>
+                        </tbody>
+                    </table>
 <!-- dtl:block:Overview -->
-#                    <tr class="contenthead">
-#                        <td class="contentkey">$Text{"Add"}</td>
-#                    </tr>
-                    <tr class="contentfooter">
-                        <td align="right">
-                            $Text{"Add new condition and action pair"}.&nbsp;&nbsp;
-                            <input class="button" type="submit" value="$Text{"Add"}" name="AddCondition">
-                        </td>
-                    </tr>
-                </table>
-                <br/>
-            </form>
-        </td>
-    </tr>
-</table>
+                    <div class="LayoutGrid SpacingTopSmall">
+                        <div class="W100pc Right">
+                            <button type="submit" title="$Text{"Add new condition"}" value="$Text{"Add"}" name="AddCondition" class="CallForAction Plus"><span>$Text{"Add new condition"}</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="Footer"></div>
+    </div>
+    <div class="Clear"></div>
+
+</form>

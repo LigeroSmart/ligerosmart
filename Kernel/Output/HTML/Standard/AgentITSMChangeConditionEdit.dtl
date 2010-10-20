@@ -2,211 +2,272 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.24 2010-10-13 13:40:25 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.25 2010-10-20 18:34:08 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AJAX"}
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" id="NewCondition" name="NewCondition" class="Validate">
+    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+    <input type="hidden" name="Subaction" value="Save"/>
+    <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}"/>
+    <input type="hidden" name="ConditionID" value="$QData{"ConditionID"}"/>
 
-<script language="JavaScript" type="text/javascript">
-<!--
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>
+                $Text{"Edit"} $Text{"Condition"}: $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $QData{"ChangeTitle","70"}
+            </h1>
+            <p>
+                <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
+#                <input class="button" type="submit" style="display:none" value="$Text{"Save"}" name="Save" onclick="return submit_compose();">
+#                <br/>
+            <div class="WidgetSimple">
 
-function submit_compose() {
+                <div class="Header">
+                    <h2>$Text{"Condition"}</h2>
+                </div>
 
-    // check the condition name, all whitespace counts as empty
-    if (document.compose.Name.value.match(/^\s*$/)) {
-        alert('$JSText{"A condition must have a name!"}');
-        document.compose.Name.focus();
+                <div class="Content">
 
-        return false;
-    }
+                    <fieldset class="TableLike FixedLabel">
 
-    return true;
-}
-//-->
-</script>
+                        <label class="Mandatory" for="Name"><span class="Marker">*</span>$Text{"Name"}:</label>
+                        <div class="Field">
+                            <input type="text" id="Name" name="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"InvalidName"}" maxlength="250" />
+                            <div id="NameError" class="TooltipErrorMessage" ><p>$Text{"Need a valid name."}</p></div>
+                            <div id="NameServerError" class="TooltipErrorMessage"><p>$Text{"A a valid name is needed."}</p></div>
+                        </div>
+                        <div class="Clear"></div>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Condition"}: $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"Condition"}: $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
+                        <label>$Text{"Matching"}:</label>
+                        <div class="Field">
+                            <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"} title="$Text{"Any expression (OR)"}"/> $Text{"Any expression (OR)"}
+                            <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"} title="$Text{"All expressions (AND)"}"/> $Text{"All expressions (AND)"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="ValidID">$Text{"Valid"}:</label>
+                        <div class="Field">
+                            $Data{"ValidOptionString"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label  for="Comment">$Text{"Comment"}:</label>
+                        <div class="Field">
+                            <input type="text" id="Comment" name="Comment" value="$QData{"Comment"}" class="W50pc" maxlength="250" />
+                        </div>
+                        <div class="Clear"></div>
+
+                    </fieldset>
+                </div>
             </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;&ChangeID=$LQData{"ChangeID"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody" align="center">
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                <input type="hidden" name="Subaction" value="Save"/>
-                <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}"/>
-                <input type="hidden" name="ConditionID" value="$QData{"ConditionID"}"/>
-                <input class="button" type="submit" style="display:none" value="$Text{"Save"}" name="Save" onclick="return submit_compose();">
-                <br/>
-                <table border="0" width="800" cellspacing="0" cellpadding="4">
-                    <tr class="contenthead">
-                        <td class="contentkey">$Text{"Condition"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table width="100%" border="0" cellpadding="5" cellspacing="0">
-                                <tr>
-                                    <td>
-                                        <table width="100%" border="0" cellpadding="3" cellspacing="0">
-                                            <colgroup>
-                                                <col width="20%">
-                                                <col width="80%">
-                                            </colgroup>
-                                            <tr>
-                                                <td class="contentkey">
-                                                    $Text{"Name"}:
-                                                    <font color="red" title="$Text{"Required"}">*</font>
-                                                </td>
-                                                <td class="contentvalue">
-                                                    <input type="text" id="Name" name="Name" value="$QData{"Name"}" size="70" maxlength="250">
-<!-- dtl:block:InvalidName-->
-                                                    <br/>
-                                                    <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidName -->
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="contentkey">$Text{"Matching"}: </td>
-                                                <td class="contentvalue">
-                                                    <input name="ExpressionConjunction" type="radio" value="any" $Data{"anyselected"}/> $Text{"Any expression (OR)"}
-                                                    <input name="ExpressionConjunction" type="radio" value="all" $Data{"allselected"}/> $Text{"All expressions (AND)"}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="contentkey">$Text{"Valid"}: </td>
-                                                <td class="contentvalue">$Data{"ValidOptionString"}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="contentkey">$Text{"Comment"}: </td>
-                                                <td class="contentvalue">
-                                                    <input type="text" name="Comment" value="$QData{"Comment"}" size="70" maxlength="250">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr class="contenthead">
-                        <td class="contentkey">$Text{"Expressions"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table width="100%" border="0" cellpadding="3" cellspacing="0">
+
+            <div class="WidgetSimple">
+
+                <div class="Header">
+                    <h2>$Text{"Expressions"}</h2>
+                </div>
+
+                <div class="Content">
+                    <table class="DataTable">
+                        <thead>
+                            <tr>
+                                <th class="W20pc">Object</th>
+                                <th class="W20pc">Selector</th>
+                                <th class="W20pc">Attribute</th>
+                                <th class="W20pc">Operator</th>
+                                <th class="W20pc">Value</th>
+                                <th class="W20pc">$Text{"Delete"}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 <!-- dtl:block:ExpressionOverviewRow -->
-                                <tr class="contentbody">
+                            <tr>
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"ObjectOptionString"}</td>
+                                <td class="W20pc">$Data{"ObjectOptionString"}</td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ExpressionID"}-ObjectID', ['$Data{"IDName"}-$Data{"ExpressionID"}-Selector', '$Data{"IDName"}-$Data{"ExpressionID"}-AttributeID', '$Data{"IDName"}-$Data{"ExpressionID"}-OperatorID']);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
+
 <!-- dtl:block:ExpressionOverviewRowElementSelector -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"SelectorOptionString"}</td>
+                                <td class="W20pc">$Data{"SelectorOptionString"}</td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ExpressionID"}-Selector', ['$Data{"IDName"}-$Data{"ExpressionID"}-AttributeID', '$Data{"IDName"}-$Data{"ExpressionID"}-OperatorID']);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:ExpressionOverviewRowElementSelector -->
+
 <!-- dtl:block:ExpressionOverviewRowElementAttribute -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"AttributeOptionString"}</td>
+                                <td class="W20pc">$Data{"AttributeOptionString"}</td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ExpressionID"}-AttributeID', ['$Data{"IDName"}-$Data{"ExpressionID"}-OperatorID']);
+        var NotSerialize = Array;
+        NotSerialize['Subaction'] = 'Subaction';
+        var FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
+        var URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ExpressionID-$QData{"ExpressionID"}-CompareValue-Div;ElementChanged=$Data{"IDName"}-$QData{"ExpressionID"}-AttributeID';
+        Core.AJAX.ContentUpdate($('#ExpressionID-$QData{"ExpressionID"}-CompareValue-Div'), URLString, function () {});
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:ExpressionOverviewRowElementAttribute -->
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"OperatorOptionString"}</td>
+                                <td class="W20pc">$Data{"OperatorOptionString"}</td>
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
-                                    <td align="left" width="10%" class="contentvalue">
-                                        <div id="ExpressionID::$QData{"ExpressionID"}::CompareValue::Div">
+                                <td class="W20pc">
+                                    <div id="ExpressionID-$QData{"ExpressionID"}-CompareValue-Div">
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
-                                            <input type="text" id="ExpressionID::$QData{"ExpressionID"}::CompareValue" name="ExpressionID::$QData{"ExpressionID"}::CompareValue" value="$QData{"CompareValue"}" size="30" maxlength="250">
+                                        <input type="text" id="ExpressionID-$QData{"ExpressionID"}-CompareValue" name="ExpressionID-$QData{"ExpressionID"}-CompareValue" value="$QData{"CompareValue"}" class="W100pc" maxlength="250" />
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
-                                            $Data{"ValueOptionString"}
+                                        $Data{"ValueOptionString"}
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
-                                        </div>
-                                    </td>
-                                    <td width="100%" align="right">
-                                        <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteExpressionID::$QData{"ExpressionID"}" onclick="return submit_compose();">
-                                    </td>
-                                    <td align="left" width="10%" class="contentvalue">
-                                        &nbsp;
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                                <td class="W20pc Center">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"};DeleteConditionID::$LQData{"ConditionID"}=Delete" class="TrashCan" title="$Text{"Delete"}">
+                                        $Text{"Delete Condition"}
+                                    </a>
+                                </td>
+                            </tr>
 <!-- dtl:block:ExpressionOverviewRow -->
-<!-- empty row, for having a valid HTML table in the absence of expressions -->
-                                <tr><td colspan="9"></td></tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td align="right">
-                            $Text{"Add new expression"}.&nbsp;&nbsp;
-                            <input class="button" type="submit" value="$Text{"Add"}" name="AddExpression" onclick="return submit_compose();">
-                        </td>
-                    </tr>
-                    <tr class="contenthead">
-                        <td class="contentkey">$Text{"Actions"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table width="100%" border="0" cellpadding="3" cellspacing="0">
+
+<!-- dtl:block:ExpressionOverviewRowNoData -->
+                            <tr>
+                                <td class= "Center" colspan="7">
+                                    $Text{"No Expressions found."}
+                                </td>
+                            </tr>
+<!-- dtl:block:ExpressionOverviewRowNoData -->
+                        </tbody>
+                    </table>
+                    <div class="Clear"></div>
+
+                    <div class="W100pc Right SpacingTopSmall">
+                        <button type="submit" title="$Text{"Add new expression"}" value="$Text{"Add new expression"}" name="AddExpression" class="CallForAction Plus"><span>$Text{"Add new expression"}</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Actions"}</h2>
+                </div>
+                <div class="Content">
+                    <table class="DataTable">
+                        <thead>
+                            <tr>
+                                <th class="W20pc">Object</th>
+                                <th class="W20pc">Selector</th>
+                                <th class="W20pc">Attribute</th>
+                                <th class="W20pc">Operator</th>
+                                <th class="W20pc">Value</th>
+                                <th class="W20pc">$Text{"Delete"}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 <!-- dtl:block:ActionOverviewRow -->
-                                <tr class="contentbody">
+                            <tr>
 <!-- dtl:block:ActionOverviewRowElementObject -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"ObjectOptionString"}</td>
+                                <td>$Data{"ObjectOptionString"}</td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ActionID"}-ObjectID', ['$Data{"IDName"}-$Data{"ActionID"}-Selector', '$Data{"IDName"}-$Data{"ActionID"}-AttributeID', '$Data{"IDName"}-$Data{"ActionID"}-OperatorID']);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:ActionOverviewRowElementObject -->
 <!-- dtl:block:ActionOverviewRowElementSelector -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"SelectorOptionString"}</td>
+                                <td>$Data{"SelectorOptionString"}</td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ActionID"}-Selector', ['$Data{"IDName"}-$Data{"ActionID"}-AttributeID', '$Data{"IDName"}-$Data{"ActionID"}-OperatorID']);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:ActionOverviewRowElementSelector -->
 <!-- dtl:block:ActionOverviewRowElementAttribute -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"AttributeOptionString"}</td>
+                                <td>$Data{"AttributeOptionString"}</td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ActionID"}-AttributeID', ['$Data{"IDName"}-$Data{"ActionID"}-OperatorID']);
+        var NotSerialize = Array;
+        NotSerialize['Subaction'] = 'Subaction';
+        var FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
+        var URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ActionID-$QData{"ActionID"}-ActionValue-Div;ElementChanged=ActionID-$QData{"ActionID"}-AttributeID';
+        Core.AJAX.ContentUpdate($('#ActionID-$QData{"ActionID"}-ActionValue-Div'), URLString, function () {});
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:ActionOverviewRowElementAttribute -->
 <!-- dtl:block:ActionOverviewRowElementOperator -->
-                                    <td align="left" width="10%" class="contentvalue">$Data{"OperatorOptionString"}</td>
+                                <td>$Data{"OperatorOptionString"}</td>
 <!-- dtl:block:ActionOverviewRowElementOperator -->
-                                    <td align="left" width="10%" class="contentvalue">
-                                        <div id="ActionID::$QData{"ActionID"}::ActionValue::Div">
+                                <td>
+                                    <div id="ActionID-$QData{"ActionID"}-ActionValue-Div">
 <!-- dtl:block:ActionOverviewRowElementActionValueText -->
-                                            <input type="text" id="ActionID::$QData{"ActionID"}::ActionValue" name="ActionID::$QData{"ActionID"}::ActionValue" value="$QData{"ActionValue"}" size="30" maxlength="250">
+                                        <input type="text" id="ActionID-$QData{"ActionID"}-ActionValue" name="ActionID-$QData{"ActionID"}-ActionValue" value="$QData{"ActionValue"}" class="W100pc" maxlength="250" />
 <!-- dtl:block:ActionOverviewRowElementActionValueText -->
 <!-- dtl:block:ActionOverviewRowElementActionValueSelection -->
-                                            $Data{"ValueOptionString"}
+                                        $Data{"ValueOptionString"}
 <!-- dtl:block:ActionOverviewRowElementActionValueSelection -->
-                                        </div>
-                                    </td>
-                                    <td width="100%" align="right">
-                                        <input class="button" type="submit" value="$Text{"Delete"}" name="DeleteActionID::$QData{"ActionID"}" onclick="return submit_compose();">
-                                    </td>
-                                    <td align="left" width="10%" class="contentvalue">
-                                        &nbsp;
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                                <td class="Center">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"};DeleteActionID::$LQData{"ActionID"}=Delete" class="TrashCan" title="$Text{"Delete"}">
+                                        $Text{"Delete Condition"}
+                                    </a>
+                                </td>
+                            </tr>
 <!-- dtl:block:ActionOverviewRow -->
-<!-- empty row, for having a valid HTML table in the absence of actions -->
-                                <tr><td colspan="7"></td></tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td align="right">
-                            $Text{"Add new action"}.&nbsp;&nbsp;
-                            <input class="button" type="submit" value="$Text{"Add"}" name="AddAction" onclick="return submit_compose();">
-                        </td>
-                    </tr>
-                    <tr class="contentfooter">
-                        <td align="right">
-                            <input class="button" type="submit" value="$Text{"Save"}" name="Save" onclick="return submit_compose();">
-                        </td>
-                    </tr>
-                </table>
-                <br/>
-            </form>
-        </td>
-    </tr>
-</table>
+
+<!-- dtl:block:ActionOverviewRowNoData -->
+                            <tr>
+                                <td class= "Center" colspan="7">
+                                    $Text{"No Actions found."}
+                                </td>
+                            </tr>
+<!-- dtl:block:ActionOverviewRowNoData -->
+                        </tbody>
+                    </table>
+                    <div class="Clear"></div>
+
+                    <div class="W100pc Right SpacingTopSmall">
+                        <button type="submit" title="$Text{"Add new action"}" value="$Text{"Add new action"}" name="AddAction" class="CallForAction Plus"><span>$Text{"Add new action"}</span></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="Footer">
+            <button class="Primary" type="submit" value="$Text{"Save"}" name="Save">$Text{"Save"}</button>
+            <button type="button" value="$Text{"Go to overview"}" id="Cancel" name="Cancel">$Text{"Go to overview"}</button>
+        </div>
+    </div>
+</form>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#Cancel').bind('click', function (Event) {
+        var URLString = '$Env{"Baselink"}Action=AgentITSMChangeCondition;ChangeID=$QData{"ChangeID"}';
+        location.href = URLString;
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->

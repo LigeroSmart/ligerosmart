@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeCondition.pm - the OTRS::ITSM::ChangeManagement condition overview module
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeCondition.pm,v 1.5 2010-02-04 23:56:38 ub Exp $
+# $Id: AgentITSMChangeCondition.pm,v 1.6 2010-10-20 18:34:29 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -176,8 +176,8 @@ sub Run {
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Overview',
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # generate output
     $Output .= $Self->{LayoutObject}->Output(
@@ -187,7 +187,7 @@ sub Run {
             %{$ChangeData},
         },
     );
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
