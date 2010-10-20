@@ -1,0 +1,47 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Default Settings
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  table elements without highlight
+ */
+
+.DataTable tbody tr td {
+    height: 25px;
+}
+
+.DataTable tbody tr td input,
+.DataTable tbody tr td select{
+    width: 95%;
+}
+
+.DataTable tbody tr:hover td {
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.DataTable tr.Even:hover td,
+.DataTable tr.Even:hover.Last td {
+    background-color: #F5F5F5;
+}
+
+.DataTable tbody tr.Last:hover td {
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+} /* end @media */
