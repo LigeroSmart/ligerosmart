@@ -2,17 +2,248 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.40 2010-07-01 13:52:33 ub Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.41 2010-10-21 15:00:06 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AJAX"}
+<!-- dtl:block:SearchAJAX -->
+<div class="InnerContent">
+    <form action="$Env{"CGIHandle"}" method="post" id="SearchForm">
+        <input type="hidden" name="Action" value="$Env{"Action"}"/>
+        <input type="hidden" name="Subaction" value="Search"/>
+        <h2 class="Center">$Text{"Search"}</h2>
+        <fieldset class="TableLike">
+            <div class="Clear"></div>
+            <label>$Text{"Search-Template"}</label>
+            <div class="Field">
+                $Data{"ProfilesStrg"}
 
-$Include{"AgentCustomerSearch"}
-$Include{"AgentITSMUserSearch"}
+                <button id="SearchProfileNew" value="$Text{"Create New"}">$Text{"Create New"}</button>
+
+                <button id="SearchProfileDelete" class="Hidden" value="$Text{"Delete"}">$Text{"Delete"}</button>
+
+                <div id="SearchProfileAddBlock">
+                    <input type="text" name="Name" id="SearchProfileAddName"/>
+                    <button type="submit" title="$Text{"Create Template"}" id="SearchProfileAddAction">$Text{"Add"}</button>
+                    <input type="hidden" name="SaveProfile" value="1"/>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="TableLike" id="SearchInsert"></fieldset>
+        <fieldset class="TableLike">
+            <div class="Clear"></div>
+            <label>$Text{"Add another attribute"}</label>
+            <div class="Field">
+                $Data{"AttributesStrg"}
+                <button type="submit" class="Add" value="Add" title="Add entry">$Text{"Add"}</button>
+            </div>
+            <div class="Clear"></div>
+            <label>$Text{"Result Form"}:</label>
+            <div class="Field">
+                $Data{"ResultFormStrg"}
+            </div>
+        </fieldset>
+    </form>
+
+    <fieldset class="TableLike Hidden" id="SearchAttributesHidden">
+        <div class="Clear"></div>
+        <label for="Fulltext">$Text{"Fulltext"}</label>
+        <div class="Field">
+            <input type="text" name="Fulltext" value="$QData{"Fulltext"}" class="W50pc" />
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+        <div class="Clear"></div>
+        <label for="ChangeNumber">$Config{"ITSMChange::Hook"} $Text{"(e.g. 10*5155 or 105658*)"}</label>
+        <div class="Field">
+            <input type="text" name="ChangeNumber" value="$QData{"ChangeNumber"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="ChangeTitle">$Text{"ChangeTitle"}</label>
+        <div class="Field">
+            <input type="text" name="ChangeTitle" value="$QData{"ChangeTitle"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="WorkOrderTitle">$Text{"WorkOrderTitle"}</label>
+        <div class="Field">
+            <input type="text" name="WorkOrderTitle" value="$QData{"WorkOrderTitle"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="CABAgent">$Text{"CABAgent"} ($Text{"e.g."} 234231)</label>
+        <div class="Field">
+            <input type="text" name="CABAgent" value="$QData{"CABAgent"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="CABCustomer">$Text{"CABCustomer"} ($Text{"e.g."} US4231)</label>
+        <div class="Field">
+            <input type="text" name="CABCustomer" value="$QData{"CABCustomer"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="Description">$Text{"ITSM Change"} $Text{"Description"} ($Text{"e.g."} "Mar*in" $Text{"or"} "Baue*")</label>
+        <div class="Field">
+            <input type="text" name="Description" value="$QData{"Description"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="Justification">$Text{"ITSM Change"} $Text{"Justification"} ($Text{"e.g."} "Mar*in" $Text{"or"} "Baue*")</label>
+        <div class="Field">
+            <input type="text" name="Justification" value="$QData{"Justification"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="WorkOrderInstruction">$Text{"ITSM Workorder"} $Text{"Instruction"} ($Text{"e.g."} "Mar*in" $Text{"or"} "Baue*")</label>
+        <div class="Field">
+            <input type="text" name="WorkOrderInstruction" value="$QData{"WorkOrderInstruction"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="WorkOrderReport">$Text{"ITSM Workorder"} $Text{"Report"} ($Text{"e.g."} "Mar*in" $Text{"or"} "Baue*")</label>
+        <div class="Field">
+            <input type="text" name="WorkOrderReport" value="$QData{"WorkOrderReport"}" class="W50pc"/>
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+<!-- dtl:block:ChangeFreeTextArea -->
+<!-- dtl:block:ChangeFreeText -->
+        <div class="Clear"></div>
+        <label for="ChangeFreeKeyField$Data{"Number"}">$Data{"ChangeFreeKeyField"}</label>
+        <div class="Field">
+            $Data{"ChangeFreeTextField"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+<!-- dtl:block:ChangeFreeText -->
+<!-- dtl:block:ChangeFreeTextArea -->
+
+<!-- dtl:block:WorkOrderFreeTextArea -->
+<!-- dtl:block:WorkOrderFreeText -->
+        <div class="Clear"></div>
+        <label for="WorkOrderFreeKeyField$Data{"Number"}">$Data{"WorkOrderFreeKeyField"}</label>
+        <div class="Field">
+            $Data{"WorkOrderFreeTextField"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+<!-- dtl:block:WorkOrderFreeText -->
+<!-- dtl:block:WorkOrderFreeTextArea -->
+
+        <div class="Clear"></div>
+        <label for="ChangePriority">$Text{"ITSM Change"} $Text{"Priority"}</label>
+        <div class="Field">
+            $Data{"ChangePrioritySelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="ChangeImpact">$Text{"ITSM Change"} $Text{"Impact"}</label>
+        <div class="Field">
+            $Data{"ChangeImpactSelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="ChangeCategory">$Text{"Change Category"}</label>
+        <div class="Field">
+            $Data{"ChangeCategorySelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="ChangeState">$Text{"ChangeState"}</label>
+        <div class="Field">
+            $Data{"ChangeStateSelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="ChangeManager">$Text{"ChangeManager"}</label>
+        <div class="Field">
+            $Data{"ChangeManagerSelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="ChangeBuilder">$Text{"ChangeBuilder"}</label>
+        <div class="Field">
+            $Data{"ChangeBuilderSelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="CreatedBy">$Text{"Created by"}</label>
+        <div class="Field">
+            $Data{"CreateBySelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="WorkOrderState">$Text{"WorkOrderState"}</label>
+        <div class="Field">
+            $Data{"WorkOrderStateSelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="WorkOrderAgent">$Text{"WorkOrderAgent"}</label>
+        <div class="Field">
+            $Data{"WorkOrderAgentIDSelectionString"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+
+<!-- dtl:block:TimeSelection -->
+        <div class="Clear"></div>
+        <label for="$Text{"$Data{"Prefix"}"}$Text{"TimePoint"}">$Text{"$Data{"Title"}"} $Text{"(before/after)"}</label>
+        <div class="Field">
+            <input type="hidden" name=$Text{"$Data{"Prefix"}"}$Text{"TimePoint"}" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
+            $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+        <div class="Clear"></div>
+        <label for="$Text{"$Data{"Prefix"}"}$Text{"TimeSlot"}">$Text{"$Data{"Title"}"} $Text{"(between)"}</label>
+        <div class="Field">
+            <input type="hidden" name="$Text{"$Data{"Prefix"}"}$Text{"TimeSlot"}" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
+            $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
+            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+        </div>
+<!-- dtl:block:InvalidTimeSlot -->
+        <br />
+        <font color="red" size="-2">$Text{"Input invalid"}</font>
+<!-- dtl:block:InvalidTimeSlot -->
+<!-- dtl:block:TimeSelection -->
+
+        <div class="Clear"></div>
+        $Data{"AttributesOrigStrg"}
+    </fieldset>
+</div>
+
+<div class="ContentFooter Center">
+    <button id="SearchFormSubmit" class="Primary" value="Run Search">$Text{"Run Search"}</button>
+</div>
+
+<script type="text/javascript">//<![CDATA[
+    window.setTimeout(function (){
+<!-- dtl:block:SearchAJAXShow -->
+        Core.Agent.Search.SearchAttributeAdd('$QData{"Attribute"}');
+<!-- dtl:block:SearchAJAXShow -->
+        Core.Agent.Search.AdditionalAttributeSelectionRebuild();
+    }, 0);
+//]]></script>
+
+<!-- dtl:block:SearchAJAX -->
+<!-- dtl:block:Search -->
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.Search.OpenSearchDialog( '$Env{"Action"}' );
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!-- dtl:block:Search -->
+
+
+
+
+
+<!--
+
 
 <style type="text/css">
 .myAutoComplete {
@@ -22,7 +253,7 @@ $Include{"AgentITSMUserSearch"}
 </style>
 
 <script language="JavaScript" type="text/javascript">
-<!--
+
 
 // clear CABCustomer
 function clear_cab_customer() {
@@ -56,9 +287,9 @@ document.observe( "dom:loaded", function() {
             this.setValue('');
         }
     );
-
+-->
 <!-- dtl:block:TimeSelectionJS -->
-
+<!--
     // register onchange-handlers for the TimePoint dropdown menus
     var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
     TimePointElements.each(
@@ -84,262 +315,10 @@ document.observe( "dom:loaded", function() {
             );
         }
     );
-
+-->
 <!-- dtl:block:TimeSelectionJS -->
+<!--
 } );
 
-//-->
 </script>
-
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"} $Text{"Search"}: $Text{"ITSM Change"} $Env{"Box1"}
-        </td>
-    </tr>
-    <tr>
-        <td align="center" class="mainbody">
-            <br/>
-            <form action="$Env{"CGIHandle"}" method="post" name="compose">
-                <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                <input type="hidden" name="Subaction" value="Search"/>
-<!-- ## HiddenFields for CABCustomer Autocompletion ## -->
-                <input type="hidden" name="SelectedCustomerUser" value="$QData{"SelectedCustomerUser"}"/>
-<!-- ## HiddenFields for CABAgent Autocompletion ## -->
-                <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
-                <input type="hidden" name="UserSearchGroups1" value="">
-                <table width="800" border="0" cellspacing="0" cellpadding="3">
-                    <colgroup>
-                        <col width="50%">
-                        <col width="50%">
-                    </colgroup>
-                    <tr>
-                        <td colspan="2" class="contenthead">$Config{"ITSMChange::Hook"}, $Text{"ITSM Workorder"} $Text{"and"} $Text{"CAB"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="50%">
-                                    <col width="50%">
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">$Config{"ITSMChange::Hook"} $Text{"(e.g. 10*5155 or 105658*)"}</td>
-                                    <td class="contentvalue"><input type="text" name="ChangeNumber" size="30" value="$QData{"ChangeNumber"}"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"ChangeTitle"}</td>
-                                    <td class="contentvalue"><input type="text" name="ChangeTitle" size="30" value="$QData{"ChangeTitle"}"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"WorkOrderTitle"}</td>
-                                    <td class="contentvalue"><input type="text" name="WorkOrderTitle" size="30" value="$QData{"WorkOrderTitle"}"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"CABAgent"} ($Text{"e.g."} 234231)</td>
-                                    <td class="contentvalue">
-<!-- dtl:block:CABAgentSearchAutoCompleteDivStart1 -->
-                                        <div id="myAutoComplete1" class="myAutoComplete">
-<!-- dtl:block:CABAgentSearchAutoCompleteDivStart1 -->
-                                            <input id="myAutoCompleteInput1" type="text" name="CABAgent" value="$QData{"CABAgent"}" size="30"/>
-<!-- dtl:block:CABAgentSearchAutoCompleteDivEnd1 -->
-                                            <div id="myAutoCompleteContainer1"></div>
-                                        </div>
-<!-- dtl:block:CABAgentSearchAutoCompleteDivEnd1 -->
-<!-- dtl:block:InvalidCABAgent -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidCABAgent -->
-                                        <br/>
-                                        $Data{"CABAgentSelectionString"}
-<!-- dtl:block:TakeCABAgent -->
-                                        <br/><input class="button" type="submit" name="ExpandCABAgent2" value="$Text{"Take this CAB Agent"}"/>
-<!-- dtl:block:TakeCABAgent -->
-<!-- dtl:block:SearchUserButton1 -->
-                                        <input class="button" type="submit" name="ExpandCABAgent1" value="$Text{"Search"} $Text{"CAB"} $Text{"Agent"}"/>
-                                        <input class="button" type="submit" name="ClearCABAgent" value="$Text{"Clear"} $Text{"CAB"} $Text{"Agent"}" onclick="javascript:clear_cab_agent(); return false;"/>
-<!-- dtl:block:SearchUserButton1 -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"CABCustomer"} ($Text{"e.g."} US4231)</td>
-                                    <td class="contentvalue">
-<!-- dtl:block:CABCustomerSearchAutoCompleteDivStart-->
-                                        <div id="myAutoComplete" class="myAutoComplete">
-<!-- dtl:block:CABCustomerSearchAutoCompleteDivStart -->
-                                            <input id="myAutoCompleteInput" type="text" name="CABCustomer" value="$QData{"CABCustomer"}" size="30"/>
-<!-- dtl:block:CABCustomerSearchAutoCompleteDivEnd -->
-                                            <div id="myAutoCompleteContainer"></div>
-                                        </div>
-<!-- dtl:block:CABCustomerSearchAutoCompleteDivEnd -->
-<!-- dtl:block:InvalidCABCustomer -->
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-                                        <br/>
-<!-- dtl:block:InvalidCABCustomer -->
-                                        <br/>
-                                        $Data{"CABCustomerSelectionString"}
-<!-- dtl:block:TakeCABCustomer -->
-                                        <br/><input class="button" type="submit" name="ExpandCABCustomer2" value="$Text{"Take this Customer"}"/>
-<!-- dtl:block:TakeCABCustomer -->
-<!-- dtl:block:SearchCustomerButton -->
-                                        <input class="button" type="submit" name="ExpandCABCustomer1" value="$Text{"Search"} $Text{"CAB"} $Text{"Customer"}"/>
-                                        <input class="button" type="submit" name="ClearCABCustomer" value="$Text{"Clear"} $Text{"CAB"} $Text{"Customer"}" onclick="javascript:clear_cab_customer(); return false;"/>
-<!-- dtl:block:SearchCustomerButton -->
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"Full-Text Search in Change and Workorder"} ($Text{"e.g."} "Mar*in" $Text{"or"} "Baue*")</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="50%">
-                                    <col width="50%">
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">$Text{"ITSM Change"} $Text{"Description"}</td>
-                                    <td class="contentvalue"><input type="text" name="Description" size="30" value="$QData{"Description"}"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"ITSM Change"} $Text{"Justification"}</td>
-                                    <td class="contentvalue"><input type="text" name="Justification" size="30" value="$QData{"Justification"}"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"Instruction"}</td>
-                                    <td class="contentvalue"><input type="text" name="WorkOrderInstruction" size="30" value="$QData{"WorkOrderInstruction"}"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"ITSM Workorder"} $Text{"Report"}</td>
-                                    <td class="contentvalue"><input type="text" name="WorkOrderReport" size="30" value="$QData{"WorkOrderReport"}"/></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-<!-- dtl:block:ChangeFreeTextArea -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"ChangeFreeText"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="50%">
-                                    <col width="50%">
-                                </colgroup>
-                                <tr>
-<!-- dtl:block:ChangeFreeText -->
-                                    <tr>
-                                        <td class="contentkey">$Data{"ChangeFreeKeyField"}</td>
-                                        <td class="contentvalue">$Data{"ChangeFreeTextField"}</td>
-                                    </tr>
-<!-- dtl:block:ChangeFreeText -->
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-<!-- dtl:block:ChangeFreeTextArea -->
-<!-- dtl:block:WorkOrderFreeTextArea -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"WorkOrderFreeText"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <table width="100%" border="0" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="50%">
-                                    <col width="50%">
-                                </colgroup>
-                                <tr>
-<!-- dtl:block:WorkOrderFreeText -->
-                                    <tr>
-                                        <td class="contentkey">$Data{"WorkOrderFreeKeyField"}</td>
-                                        <td class="contentvalue">$Data{"WorkOrderFreeTextField"}</td>
-                                    </tr>
-<!-- dtl:block:WorkOrderFreeText -->
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-<!-- dtl:block:WorkOrderFreeTextArea -->
-                    <tr>
-                        <td class="contenthead">$Text{"ITSM Change"} $Text{"Priority"}</td>
-                        <td class="contenthead">$Text{"ITSM Change"} $Text{"Impact"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">$Data{"ChangePrioritySelectionString"}</td>
-                        <td class="contentbody">$Data{"ChangeImpactSelectionString"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contenthead">$Text{"Change Category"}</td>
-                        <td class="contenthead">$Text{"ChangeState"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">$Data{"ChangeCategorySelectionString"}</td>
-                        <td class="contentbody">$Data{"ChangeStateSelectionString"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contenthead">$Text{"ChangeManager"}</td>
-                        <td class="contenthead">$Text{"ChangeBuilder"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">$Data{"ChangeManagerSelectionString"}</td>
-                        <td class="contentbody">$Data{"ChangeBuilderSelectionString"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contenthead">$Text{"Created by"}</td>
-                        <td class="contenthead">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">$Data{"CreateBySelectionString"}</td>
-                        <td class="contentbody">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td class="contenthead">$Text{"WorkOrderState"}</td>
-                        <td class="contenthead">$Text{"WorkOrderAgent"}</td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">$Data{"WorkOrderStateSelectionString"}</td>
-                        <td class="contentbody">$Data{"WorkOrderAgentIDSelectionString"}&nbsp;</td>
-                    </tr>
-<!-- dtl:block:TimeSelection -->
-                    <tr>
-                        <td colspan="2" class="contenthead">$Text{"$Data{"Title"}"}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" id="$QData{"Prefix"}TimeSearchType::None" name="$QData{"Prefix"}TimeSearchType" value="" $Data{"TimeSearchType::None"}/>
-                            $Text{"No XXX settings", "$QData{"Title"}"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimePoint" name="$QData{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
-                            $Text{"$Data{"Title"}"} $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="contentbody">
-                            <input type="radio" id="$QData{"Prefix"}TimeSearchType::TimeSlot" name="$QData{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
-                            $Text{"$Data{"Title"}"} $Text{"between"} $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
-<!-- dtl:block:InvalidTimeSlot -->
-                            <br />
-                            <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTimeSlot -->
-                        </td>
-                    </tr>
-<!-- dtl:block:TimeSelection -->
-                    <tr>
-                        <td colspan="4" class="contentfooter">
-                            <input class="button" accesskey="g" type="submit" value="$Text{"Search"}"/>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br/>
-        </td>
-    </tr>
-</table>
+-->
