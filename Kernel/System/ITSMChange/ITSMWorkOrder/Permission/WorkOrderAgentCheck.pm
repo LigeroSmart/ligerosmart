@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm - workorder agent based permission check
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: WorkOrderAgentCheck.pm,v 1.13 2010-01-30 11:23:31 bes Exp $
+# $Id: WorkOrderAgentCheck.pm,v 1.14 2010-10-21 16:11:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -155,15 +155,11 @@ sub Run {
     # deny access, when the group is not found
     return if !$GroupID;
 
-    # Caching is turned on by default.
-    my $Cached = defined $Param{Cached} ? $Param{Cached} : 1;
-
     # get user groups, where the user has the appropriate privilege
     my %Groups = $Self->{GroupObject}->GroupMemberList(
         UserID => $Param{UserID},
         Type   => $Param{Type},
         Result => 'HASH',
-        Cached => $Cached,
     );
 
     # deny access if the agent doesn't have the appropriate type in the appropriate group
@@ -196,11 +192,11 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Id: WorkOrderAgentCheck.pm,v 1.13 2010-01-30 11:23:31 bes Exp $
+$Id: WorkOrderAgentCheck.pm,v 1.14 2010-10-21 16:11:31 ub Exp $
 
 =cut
 
