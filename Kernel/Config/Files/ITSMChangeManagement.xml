@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.236 2010-10-20 18:12:03 cg Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.237 2010-10-21 16:17:20 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -170,7 +170,7 @@
                 <Title>Condition Edit</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
-                    <CSS>ITSMChangeManagement.TableNoHightLight.css</CSS>
+                    <CSS>ITSM.ChangeManagement.TableNoHightLight.css</CSS>
                 </Loader>
             </FrontendModuleReg>
         </Setting>

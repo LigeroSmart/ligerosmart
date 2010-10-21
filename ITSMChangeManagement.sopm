@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.201 2010-10-18 20:47:00 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.202 2010-10-21 16:17:20 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -170,6 +170,7 @@
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Header.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.TableNoHightLight.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/ITSMChangeManagement_toolbar_sprite.png"/>
         <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
         <File Permission="644" Location="doc/itsm-change-management-database.dia"/>
