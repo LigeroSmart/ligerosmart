@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.45 2010-10-18 20:28:13 cr Exp $
+# $Id: LayoutITSMChange.pm,v 1.46 2010-10-21 15:06:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 =over 4
 
@@ -774,6 +774,7 @@ sub BuildFreeTextHTML {
                     Translation  => 0,
                     HTMLQuote    => 1,
                     PossibleNone => $PossibleNone,
+                    Multiple     => 1,
                 );
             }
 
@@ -827,7 +828,7 @@ sub BuildFreeTextHTML {
                     . $Type . 'FreeKey' . $Number
                     . '" value="'
                     . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeKey' . $Number } )
-                    . '" size="18"/>';
+                    . '" class = "W25pc"/>';
             }
 
             # freekey data is not defined
@@ -839,7 +840,7 @@ sub BuildFreeTextHTML {
                     . $Type
                     . 'FreeKey'
                     . $Number
-                    . '" value="" size="18"/>';
+                    . '" value="" class="W25pc"/>';
             }
         }
 
@@ -868,6 +869,7 @@ sub BuildFreeTextHTML {
                 Translation  => 0,
                 HTMLQuote    => 1,
                 PossibleNone => $PossibleNone,
+                Multiple     => 1,
             );
         }
         else {
@@ -896,7 +898,7 @@ sub BuildFreeTextHTML {
                     . $Type . 'FreeText' . $Number
                     . '" value="'
                     . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeText' . $Number } )
-                    . '" size="30"/>';
+                    . '" class="W50pc"/>';
             }
 
             # freetext data is not defined
@@ -908,7 +910,7 @@ sub BuildFreeTextHTML {
                     . $Type
                     . 'FreeText'
                     . $Number
-                    . '" value="" size="30"/>';
+                    . '" value="" class="W50pc"/>';
             }
         }
     }
