@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.56 2010-07-01 13:52:13 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.57 2010-10-21 15:05:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -252,8 +252,8 @@ sub Run {
 
             # store last queue screen
             my $URL
-                = "Action=AgentITSMChangeSearch&Subaction=Search&Profile=$Self->{Profile}&SortBy=$Self->{SortBy}"
-                . "&OrderBy=$Self->{OrderBy}&TakeLastSearch=1&StartHit=$Self->{StartHit}";
+                = "Action=AgentITSMChangeSearch;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
+                . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit}";
             $Self->{SessionObject}->UpdateSessionID(
                 SessionID => $Self->{SessionID},
                 Key       => 'LastScreenChanges',
@@ -452,22 +452,22 @@ sub Run {
                 # show changes
                 my $LinkPage = 'Filter='
                     . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                    . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                    . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
-                    . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
-                    . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
-                    . '&';
+                    . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                    . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
+                    . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
+                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1&Subaction=Search'
+                    . ';';
                 my $LinkSort = 'Filter='
                     . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                    . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                    . '&Profile=' . $Self->{Profile} . '&TakeLastSearch=1&Subaction=Search'
-                    . '&';
-                my $LinkFilter = 'TakeLastSearch=1&Subaction=Search&Profile='
+                    . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1&Subaction=Search'
+                    . ';';
+                my $LinkFilter = 'TakeLastSearch=1;Subaction=Search&Profile='
                     . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                    . '&';
-                my $LinkBack = 'Subaction=LoadProfile&Profile='
+                    . ';';
+                my $LinkBack = 'Subaction=LoadProfile;Profile='
                     . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                    . '&TakeLastSearch=1&';
+                    . ';TakeLastSearch=1;';
 
                 # find out which columns should be shown
                 my @ShowColumns;
@@ -495,6 +495,8 @@ sub Run {
                     LinkBack    => $LinkBack,
                     TitleName   => 'Change Search Result',
                     ShowColumns => \@ShowColumns,
+                    SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
+                    OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
                 );
 
                 # build footer
@@ -503,6 +505,28 @@ sub Run {
                 return $Output;
             }
         }
+    }
+    elsif ( $Self->{Subaction} eq 'AJAX' ) {
+
+        my $Output .= $Self->_MaskForm(
+            %GetParam,
+            %ExpandInfo,
+            ValidationErrors                  => \@ValidationErrors,
+            ConfiguredChangeFreeTextFields    => \@ConfiguredChangeFreeTextFields,
+            ConfiguredWorkOrderFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
+        );
+
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentITSMChangeSearch',
+            Data         => \%Param,
+        );
+        return $Self->{LayoutObject}->Attachment(
+            NoCache     => 1,
+            ContentType => 'text/html',
+            Content     => $Output,
+            Type        => 'inline'
+        );
+
     }
 
     # There was no 'SubAction', or there were validation errors, or an user or customer was searched
@@ -527,6 +551,183 @@ sub _MaskForm {
     # get configured change and workorder freetext field numbers
     my @ConfiguredChangeFreeTextFields    = @{ $Param{ConfiguredChangeFreeTextFields} };
     my @ConfiguredWorkOrderFreeTextFields = @{ $Param{ConfiguredWorkOrderFreeTextFields} };
+
+    # set attributes string
+    my @Attributes = (
+        {
+            Key   => 'ChangeNumber',
+            Value => 'Change Number',
+        },
+        {
+            Key   => 'ChangeTitle',
+            Value => 'Change Title',
+        },
+        {
+            Key   => 'WorkOrderTitle',
+            Value => 'Work Order Title',
+        },
+        {
+            Key   => 'CABAgent',
+            Value => 'CAB Agent',
+        },
+        {
+            Key   => 'CABCustomer',
+            Value => 'CAB Customer',
+        },
+
+        {
+            Key   => '',
+            Value => '-',
+        },
+        {
+            Key   => 'Description',
+            Value => 'Change Description',
+        },
+        {
+            Key   => 'Justification',
+            Value => 'Change Justification',
+        },
+        {
+            Key   => 'WorkOrderInstruction',
+            Value => 'WorkOrder Instruction',
+        },
+        {
+            Key   => 'WorkOrderReport',
+            Value => 'WorkOrder Report',
+        },
+        {
+            Key   => '',
+            Value => '-',
+        },
+    );
+
+    # get change FreeTextKeys
+    for my $Number (@ConfiguredChangeFreeTextFields) {
+        my $Config            = $Self->{ConfigObject}->Get( 'ChangeFreeKey' . $Number );
+        my $FreeTextKeyString = $Self->_GetFreeTextKeyString(
+            Number => $Number,
+            Type   => 'Change',
+            Config => $Config,
+        );
+        push @Attributes, (
+            {
+                Key   => 'ChangeFreeKeyField' . $Number,
+                Value => $FreeTextKeyString,
+            },
+        );
+    }
+
+    # get change FreeTextKeys
+    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+        my $Config            = $Self->{ConfigObject}->Get( 'WorkOrderFreeKey' . $Number );
+        my $FreeTextKeyString = $Self->_GetFreeTextKeyString(
+            Number => $Number,
+            Type   => 'WorkOrder',
+            Config => $Config,
+        );
+        push @Attributes, (
+            {
+                Key   => 'WorkOrderFreeKeyField' . $Number,
+                Value => $FreeTextKeyString,
+            },
+        );
+    }
+
+    #
+    #            ConfiguredChangeFreeTextFields    => \@ConfiguredChangeFreeTextFields,
+    #        ConfiguredWorkOrderFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
+
+    push @Attributes, (
+        {
+            Key   => '',
+            Value => '-',
+        },
+    );
+
+    push @Attributes, (
+        {
+            Key   => 'ChangePriority',
+            Value => 'Change Priority',
+        },
+        {
+            Key   => 'ChangeImpact',
+            Value => 'ChangeImpact',
+        },
+        {
+            Key   => 'ChangeCategory',
+            Value => 'Change Category',
+        },
+        {
+            Key   => 'ChangeState',
+            Value => 'Change State',
+        },
+        {
+            Key   => 'ChangeManager',
+            Value => 'Change Manager',
+        },
+        {
+            Key   => 'ChangeBuilder',
+            Value => 'Change Builder',
+        },
+        {
+            Key   => 'CreatedBy',
+            Value => 'Created By',
+        },
+        {
+            Key   => 'WorkOrderState',
+            Value => 'WorkOrder State',
+        },
+        {
+            Key   => 'ChangeManager',
+            Value => 'Change Manager',
+        },
+        {
+            Key   => 'WorkOrderAgent',
+            Value => 'WorkOrder Agent',
+        },
+        {
+            Key   => '',
+            Value => '-',
+        },
+    );
+
+    # set time attributes
+    my @TimeTypes = (
+        { Prefix => 'Requested',    Title => 'Requested Date', },
+        { Prefix => 'PlannedStart', Title => 'PlannedStartTime', },
+        { Prefix => 'PlannedEnd',   Title => 'PlannedEndTime', },
+        { Prefix => 'ActualStart',  Title => 'ActualStartTime', },
+        { Prefix => 'ActualEnd',    Title => 'ActualEndTime', },
+        { Prefix => 'Create',       Title => 'CreateTime', },
+        { Prefix => 'Change',       Title => 'ChangeTime', },
+    );
+
+    for my $TimeType (@TimeTypes) {
+        my $Prefix = $TimeType->{Prefix};
+        my $Title  = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
+        push @Attributes, (
+            {
+                Key   => $Prefix . 'TimePoint',
+                Value => $Title . ' (before/after)',
+            },
+            {
+                Key   => $Prefix . 'TimeSlot',
+                Value => $Title . ' (between)',
+            },
+
+        );
+    }
+
+    $Param{AttributesStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data     => \@Attributes,
+        Name     => 'Attribute',
+        Multiple => 0,
+    );
+    $Param{AttributesOrigStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data     => \@Attributes,
+        Name     => 'AttributeOrig',
+        Multiple => 0,
+    );
 
     # Get a complete list of users
     # for the selection 'ChangeBuilder', 'ChangeManager' and 'created by user'.
@@ -635,31 +836,37 @@ sub _MaskForm {
         SelectedID => $Param{WorkOrderStateIDs},
     );
 
+    # html search mask output
+    $Self->{LayoutObject}->Block(
+        Name => 'SearchAJAX',
+        Data => { %Param, },    #%GetParam },
+    );
+
     # number of minutes, days, weeks, months and years
     my %OneToFiftyNine = map { $_ => sprintf '%2s', $_ } ( 1 .. 59 );
 
     # time period that can be selected from the GUI
     my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
-    # setup for the time search fields
-    my @TimeTypes = (
-        { Prefix => 'Requested',    Title => 'Requested (by customer) Date', },
-        { Prefix => 'PlannedStart', Title => 'PlannedStartTime', },
-        { Prefix => 'PlannedEnd',   Title => 'PlannedEndTime', },
-        { Prefix => 'ActualStart',  Title => 'ActualStartTime', },
-        { Prefix => 'ActualEnd',    Title => 'ActualEndTime', },
-        { Prefix => 'Create',       Title => 'CreateTime', },
-        { Prefix => 'Change',       Title => 'ChangeTime', },
-    );
+    #    # setup for the time search fields
+    #    my @TimeTypes = (
+    #        { Prefix => 'Requested',    Title => 'Requested Date', },
+    #        { Prefix => 'PlannedStart', Title => 'PlannedStartTime', },
+    #        { Prefix => 'PlannedEnd',   Title => 'PlannedEndTime', },
+    #        { Prefix => 'ActualStart',  Title => 'ActualStartTime', },
+    #        { Prefix => 'ActualEnd',    Title => 'ActualEndTime', },
+    #        { Prefix => 'Create',       Title => 'CreateTime', },
+    #        { Prefix => 'Change',       Title => 'ChangeTime', },
+    #    );
 
-    TIMETYPE:
+    #    TIMETYPE:
     for my $TimeType (@TimeTypes) {
         my $Prefix = $TimeType->{Prefix};
 
-        # show RequestedTime only when enabled in SysConfig
-        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
-            next TIMETYPE;
-        }
+        #        # show RequestedTime only when enabled in SysConfig
+        #        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
+        #            next TIMETYPE;
+        #        }
 
         my $Title             = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
         my %TimeSelectionData = (
@@ -667,17 +874,17 @@ sub _MaskForm {
             Title  => $Title,
         );
 
-        # set radio button for time search types
-        my $SearchType = $Prefix . 'TimeSearchType';
-        if ( !$Param{$SearchType} ) {
-            $TimeSelectionData{'TimeSearchType::None'} = 'checked="checked"';
-        }
-        elsif ( $Param{$SearchType} eq 'TimePoint' ) {
-            $TimeSelectionData{'TimeSearchType::TimePoint'} = 'checked="checked"';
-        }
-        elsif ( $Param{$SearchType} eq 'TimeSlot' ) {
-            $TimeSelectionData{'TimeSearchType::TimeSlot'} = 'checked="checked"';
-        }
+        #        # set radio button for time search types
+        #        my $SearchType = $Prefix . 'TimeSearchType';
+        #        if ( !$Param{$SearchType} ) {
+        #            $TimeSelectionData{'TimeSearchType::None'} = 'checked="checked"';
+        #        }
+        #        elsif ( $Param{$SearchType} eq 'TimePoint' ) {
+        #            $TimeSelectionData{'TimeSearchType::TimePoint'} = 'checked="checked"';
+        #        }
+        #        elsif ( $Param{$SearchType} eq 'TimeSlot' ) {
+        #            $TimeSelectionData{'TimeSearchType::TimeSlot'} = 'checked="checked"';
+        #        }
 
         $TimeSelectionData{TimePoint} = $Self->{LayoutObject}->BuildSelection(
             Data       => \%OneToFiftyNine,
@@ -728,13 +935,13 @@ sub _MaskForm {
             Data => \%TimeSelectionData,
         );
 
-        # show time type specific validation errors
-        if ( grep { $_ eq $Prefix . 'InvalidTimeSlot' } @{ $Param{ValidationErrors} } ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'InvalidTimeSlot',
-                Data => \%TimeSelectionData,
-            );
-        }
+        #        # show time type specific validation errors
+        #        if ( grep { $_ eq $Prefix . 'InvalidTimeSlot' } @{ $Param{ValidationErrors} } ) {
+        #            $Self->{LayoutObject}->Block(
+        #                Name => 'InvalidTimeSlot',
+        #                Data => \%TimeSelectionData,
+        #            );
+        #        }
     }
 
     TIMETYPE:
@@ -746,39 +953,41 @@ sub _MaskForm {
             next TIMETYPE;
         }
 
-        # show JS code for time field
-        $Self->{LayoutObject}->Block(
-            Name => 'TimeSelectionJS',
-            Data => {
-                Prefix => $Prefix,
-            },
-        );
+        #        # show JS code for time field
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'TimeSelectionJS',
+        #            Data => {
+        #                Prefix => $Prefix,
+        #            },
+        #        );
     }
 
     # build customer search autocomplete field for CABCustomer
     my $CustomerAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CustomerSearchAutoComplete');
     if ( $CustomerAutoCompleteConfig->{Active} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'CustomerSearchAutoComplete',
-            Data => {
-                minQueryLength => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
-                queryDelay     => $CustomerAutoCompleteConfig->{QueryDelay}     || 0.1,
-                typeAhead      => $CustomerAutoCompleteConfig->{TypeAhead}      || 'false',
-                maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            },
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CABCustomerSearchAutoCompleteDivStart',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CABCustomerSearchAutoCompleteDivEnd',
-        );
+
+   #        $Self->{LayoutObject}->Block(
+   #            Name => 'CustomerSearchAutoComplete',
+   #            Data => {
+   #                minQueryLength => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
+   #                queryDelay     => $CustomerAutoCompleteConfig->{QueryDelay}     || 0.1,
+   #                typeAhead      => $CustomerAutoCompleteConfig->{TypeAhead}      || 'false',
+   #                maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+   #            },
+   #        );
+   #        $Self->{LayoutObject}->Block(
+   #            Name => 'CABCustomerSearchAutoCompleteDivStart',
+   #        );
+   #        $Self->{LayoutObject}->Block(
+   #            Name => 'CABCustomerSearchAutoCompleteDivEnd',
+   #        );
     }
     else {
-        $Self->{LayoutObject}->Block(
-            Name => 'SearchCustomerButton',
-        );
+
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'SearchCustomerButton',
+        #        );
     }
 
     # build user search autocomplete field for CABAgent
@@ -786,45 +995,45 @@ sub _MaskForm {
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
     if ( $UserAutoCompleteConfig->{Active} ) {
 
-        # general blocks
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoComplete',
-        );
+        #        # general blocks
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'UserSearchAutoComplete',
+        #        );
+
+  #        # CABAgent
+  #        $Self->{LayoutObject}->Block(
+  #            Name => 'UserSearchAutoCompleteCode',
+  #            Data => {
+  #                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
+  #                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+  #                typeAhead           => $UserAutoCompleteConfig->{TypeAhead}           || 'false',
+  #                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+  #                InputNr             => 1,
+  #            },
+  #        );
+
+        #        # return for CABAgent
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'UserSearchAutoCompleteReturnElements',
+        #            Data => {
+        #                InputNr => 1,
+        #            },
+        #        );
 
         # CABAgent
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteCode',
-            Data => {
-                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
-                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
-                typeAhead           => $UserAutoCompleteConfig->{TypeAhead}           || 'false',
-                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-                InputNr             => 1,
-            },
-        );
-
-        # return for CABAgent
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteReturnElements',
-            Data => {
-                InputNr => 1,
-            },
-        );
-
-        # CABAgent
-        $Self->{LayoutObject}->Block(
-            Name => 'CABAgentSearchAutoCompleteDivStart1',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CABAgentSearchAutoCompleteDivEnd1',
-        );
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'CABAgentSearchAutoCompleteDivStart1',
+        #        );
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'CABAgentSearchAutoCompleteDivEnd1',
+        #        );
     }
     else {
 
-        # show usersearch buttons for CABAgent
-        $Self->{LayoutObject}->Block(
-            Name => 'SearchUserButton1',
-        );
+        #        # show usersearch buttons for CABAgent
+        #        $Self->{LayoutObject}->Block(
+        #            Name => 'SearchUserButton1',
+        #        );
     }
 
     # get the change freetext config
@@ -877,6 +1086,7 @@ sub _MaskForm {
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeText',
                 Data => {
+                    Number              => $Number,
                     ChangeFreeKeyField  => $ChangeFreeTextHTML{ 'ChangeFreeKeyField' . $Number },
                     ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
                 },
@@ -934,6 +1144,7 @@ sub _MaskForm {
             $Self->{LayoutObject}->Block(
                 Name => 'WorkOrderFreeText',
                 Data => {
+                    Number => $Number,
                     WorkOrderFreeKeyField =>
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
                     WorkOrderFreeTextField =>
@@ -1160,6 +1371,39 @@ sub _GetExpandInfo {
     }
 
     return %Info;
+}
+
+sub _GetFreeTextKeyString {
+    my ( $Self, %Param ) = @_;
+
+    # get the config data
+    my %Config;
+    if ( $Param{Config} ) {
+        %Config = %{ $Param{Config} };
+    }
+    return '' if !%Config;
+
+    # to store the result HTML data
+    my $FreeTextKeyString;
+
+    # get all config keys for this field
+    my @ConfigKeys = keys %Config;
+
+    # more than one config option exists
+    if ( scalar @ConfigKeys > 1 ) {
+
+        # build dropdown list
+        $FreeTextKeyString = join " // ", @ConfigKeys;
+    }
+
+    # just one config option exists and the only key is not an empty string
+    elsif ( $ConfigKeys[0] ) {
+
+        # build just a text string
+        $FreeTextKeyString = $Config{ $ConfigKeys[0] };
+    }
+
+    return $FreeTextKeyString;
 }
 
 1;
