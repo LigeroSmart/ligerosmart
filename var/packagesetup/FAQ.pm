@@ -1,8 +1,8 @@
 # --
 # FAQ.pm - code to excecute during package installation
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.8 2009-09-01 14:59:16 ub Exp $
+# $Id: FAQ.pm,v 1.9 2010-10-23 13:02:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use Kernel::Config;
-use Kernel::System::Config;
+use Kernel::System::SysConfig;
 use Kernel::System::CSV;
 use Kernel::System::Group;
 use Kernel::System::Stats;
@@ -25,7 +25,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -99,7 +99,7 @@ sub new {
     }
 
     # create needed sysconfig object
-    $Self->{SysConfigObject} = Kernel::System::Config->new( %{$Self} );
+    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
 
     # rebuild ZZZ* files
     $Self->{SysConfigObject}->WriteDefault();
@@ -560,6 +560,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2009-09-01 14:59:16 $
+$Revision: 1.9 $ $Date: 2010-10-23 13:02:26 $
 
 =cut
