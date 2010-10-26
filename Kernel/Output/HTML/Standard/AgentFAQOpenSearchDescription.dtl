@@ -1,8 +1,8 @@
 # --
 # AgentFAQOpenSearchDescription.dtl - provides XML description for FAQ search in OpenSearch format
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOpenSearchDescription.dtl,v 1.3 2008-09-18 10:47:02 ub Exp $
+# $Id: AgentFAQOpenSearchDescription.dtl,v 1.4 2010-10-26 15:58:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -14,5 +14,5 @@
 <Description>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"} &amp; $Text{"Fulltext"})</Description>
 <InputEncoding>$Env{"UserCharset"}</InputEncoding>
 <Url type="text/html" template="$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Baselink"}Action=AgentFAQ&amp;Subaction=Search&amp;Submit=yes&amp;QuickSearch=1&amp;What={searchTerms}" />
-<Image height="16" width="16" type="image/x-icon">$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Images"}product.ico</Image>
+<Image height="16" width="16" type="image/x-icon">$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Images"}icons/product.ico</Image>
 </OpenSearchDescription>
