@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.83 2010-04-14 09:29:12 ub Exp $
+# $Id: FAQ.pm,v 1.84 2010-10-26 01:57:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.83 $) [1];
+$VERSION = qw($Revision: 1.84 $) [1];
 
 =head1 NAME
 
@@ -1834,7 +1834,7 @@ sub LanguageUpdate {
     # sql
     return $Self->{DBObject}->Do(
         SQL => 'UPDATE faq_language SET name = ? WHERE id = ?',
-        Bind => [ \$Param{Name}, \$Param{Name} ],
+        Bind => [ \$Param{Name}, \$Param{ID} ],
     );
 }
 
@@ -3166,6 +3166,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.83 $ $Date: 2010-04-14 09:29:12 $
+$Revision: 1.84 $ $Date: 2010-10-26 01:57:36 $
 
 =cut
