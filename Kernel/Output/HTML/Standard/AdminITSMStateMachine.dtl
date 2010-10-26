@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.26 2010-09-21 21:36:00 mp Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.27 2010-10-26 15:09:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,7 +62,7 @@
 <!-- dtl:block:OverviewClassesRow -->
                         <tr>
                             <td>
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"}&Class=$LQData{"Class"}">$QData{"Class"}</a>
+                                <a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Class=$LQData{"Class"}">$QData{"Class"}</a>
                             </td>
                             <td>$QData{"ClassShortName"}</td>
                         </tr>

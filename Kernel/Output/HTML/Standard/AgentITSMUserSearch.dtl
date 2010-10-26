@@ -1,8 +1,8 @@
 # --
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.6 2009-12-03 11:15:27 bes Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.7 2010-10-26 15:09:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@
 
         // define request parameters
         myAutoComp$Data{"InputNr"}.generateRequest = function(sQuery$Data{"InputNr"}) {
-          return "?Action=AgentITSMUserSearch&Search=" + sQuery$Data{"InputNr"} + "*" + "&Groups=" + UserGroup$Data{"InputNr"};
+          return "?Action=AgentITSMUserSearch;Search=" + sQuery$Data{"InputNr"} + "*" + ";Groups=" + UserGroup$Data{"InputNr"};
         };
 
         // define output format for drop down list

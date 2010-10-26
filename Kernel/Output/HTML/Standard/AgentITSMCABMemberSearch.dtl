@@ -1,8 +1,8 @@
 # --
 # AgentITSMCABMemberSearch.dtl - provides autocomplete feature for customer search
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMCABMemberSearch.dtl,v 1.4 2009-10-28 13:33:44 reb Exp $
+# $Id: AgentITSMCABMemberSearch.dtl,v 1.5 2010-10-26 15:09:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -72,7 +72,7 @@
 
         // define request parameters
         myCABAutoComp$Data{"InputNr"}.generateRequest = function(sCABQuery$Data{"InputNr"}) {
-          return "?Action=AgentITSMCABMemberSearch&Search=" + sCABQuery$Data{"InputNr"} + "*" + "&Groups=" + CABMemberGroup$Data{"InputNr"};
+          return "?Action=AgentITSMCABMemberSearch;Search=" + sCABQuery$Data{"InputNr"} + "*" + ";Groups=" + CABMemberGroup$Data{"InputNr"};
         };
 
         // define output format for drop down list

@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.47 2010-10-19 15:58:55 en Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.48 2010-10-26 15:09:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,7 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <div class="Flag" title="$Text{"$Data{"WorkOrderState"}"}"><span class="$Data{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span></div>
+        <div class="Flag" title="$Text{"$Data{"WorkOrderState"}"}"><span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span></div>
         <h1 title="$Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
             $Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
         </h1>
@@ -30,7 +30,7 @@
                         <label>$Text{"WorkOrderState"}:</label>
                         <div class="Value" title="$Text{"$Data{"WorkOrderState"}"}">
                             <div class="Flag Small">
-                                <span class="$Data{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
+                                <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
                             </div>
                             $Text{"$Data{"WorkOrderState"}"}
                         </div>
@@ -262,10 +262,10 @@
                         <label><strong>$Text{"Change"}</strong></label>
                         <div class="Value">
                             <div class="Flag Small" title="$Text{"$Data{"ChangeState"}"}">
-                                <span class="$Data{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
+                                <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
                             </div>
                             $QData{"ChangeNumber"}
-                            <a href="$Env{"Baselink"}$Data{"Link"}&amp;Action=AgentITSMChangeZoom&amp;ChangeID=$LQData{"ChangeID"}">
+                            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}">
                                 $QData{"ChangeTitle","70"}
                             </a>
                         </div>
@@ -274,7 +274,7 @@
                         <label><strong>$Text{"Workorder"}</strong></label>
                         <div class="Value">
                             <div class="Flag Small" title="$Text{"$Data{"WorkOrderState"}"}">
-                                <span class="$Data{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
+                                <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
                             </div>
                             $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}
                             <strong>$QData{"WorkOrderTitle","70"}</strong>
