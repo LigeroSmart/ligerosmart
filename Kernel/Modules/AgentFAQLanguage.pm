@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.1 2010-10-26 02:02:21 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.2 2010-10-26 16:29:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +55,7 @@ sub Run {
     # change
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
+        $GetParam{RequiredClass}  = "Validate_Required ";
         my $ID = $Self->{ParamObject}->GetParam( Param => 'ID' ) || '';
         my %Data = $Self->{FAQObject}->LanguageGet( ID => $ID );
         my $Output = $Self->{LayoutObject}->Header();
@@ -103,7 +104,7 @@ sub Run {
         }
 
         # check for duplicate name
-        if ( $Self->{FAQObject}->LanguageDuplicateCheck( Name => $GetParam{Name} ) ) {
+        if ( $Self->{FAQObject}->LanguageDuplicateCheck( Name => $GetParam{Name}, ID => $GetParam{ID} ) ) {
             $Self->_Edit(
                 Action      => 'Change',
                 ServerError => "Language '$GetParam{Name}' already exists!",
