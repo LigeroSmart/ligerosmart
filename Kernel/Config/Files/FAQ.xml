@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.33 2010-03-10 19:49:38 mb Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.34 2010-10-26 01:59:55 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -473,8 +473,8 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentFAQ" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the FAQ object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das FAQ-Objekt im Agent-Interface.</Description>
+        <Description Translatable="1">Frontend module registration for the FAQ object in the agent interface.</Description>
+       <!-- <Description Lang="de">Frontendmodul-Registration für das FAQ-Objekt im Agent-Interface.</Description> -->
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -490,18 +490,17 @@ Your OTRS Notification Master
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
                     <Name>FAQ</Name>
-                    <Image>help.png</Image>
-                    <Link>Action=AgentFAQ&amp;Nav=Normal</Link>
+                    <Link>Action=AgentFAQ;Nav=Normal</Link>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>q</AccessKey>
-                    <Prio>8300</Prio>
+                    <Prio>350</Prio>
                 </NavBar>
                 <NavBar>
                     <GroupRo>faq</GroupRo>
                     <Description>Explorer</Description>
                     <Name>Explorer</Name>
                     <Image>list.png</Image>
-                    <Link>Action=AgentFAQ&amp;Subaction=Explorer</Link>
+                    <Link>Action=AgentFAQ;Subaction=Explorer</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
@@ -513,7 +512,7 @@ Your OTRS Notification Master
                     <Description>New Article</Description>
                     <Name>New Article</Name>
                     <Image>new.png</Image>
-                    <Link>Action=AgentFAQ&amp;Subaction=Add</Link>
+                    <Link>Action=AgentFAQ;Subaction=Add</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
@@ -525,7 +524,7 @@ Your OTRS Notification Master
                     <Description>FAQ-Search</Description>
                     <Name>Search</Name>
                     <Image>search.png</Image>
-                    <Link>Action=AgentFAQ&amp;Subaction=Search</Link>
+                    <Link>Action=AgentFAQ;Subaction=Search</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
@@ -537,7 +536,7 @@ Your OTRS Notification Master
                     <Description>History</Description>
                     <Name>History</Name>
                     <Image>history.png</Image>
-                    <Link>Action=AgentFAQ&amp;Subaction=SystemHistory</Link>
+                    <Link>Action=AgentFAQ;Subaction=SystemHistory</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
@@ -546,22 +545,10 @@ Your OTRS Notification Master
                 </NavBar>
                 <NavBar>
                     <Group>faq_admin</Group>
-                    <Description>Language</Description>
-                    <Name>Language</Name>
-                    <Image>language.png</Image>
-                    <Link>Action=AgentFAQ&amp;Subaction=Language</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>FAQ</NavBar>
-                    <AccessKey>u</AccessKey>
-                    <Prio>910</Prio>
-                </NavBar>
-                <NavBar>
-                    <Group>faq_admin</Group>
                     <Description>Category</Description>
                     <Name>Category</Name>
                     <Image>category.png</Image>
-                    <Link>Action=AgentFAQ&amp;Subaction=Category</Link>
+                    <Link>Action=AgentFAQ;Subaction=Category</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
@@ -712,6 +699,33 @@ Your OTRS Notification Master
                     </Hash>
                 </Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentFAQLanguage" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>faq</Group>
+                <GroupRo>faq</GroupRo>
+                <Description>FAQ-Area</Description>
+                <NavBarName>FAQ</NavBarName>
+                <Title>FAQ</Title>
+                <NavBar>
+                    <Group>faq_admin</Group>
+                    <Description>Language</Description>
+                    <Name>Language</Name>
+                    <Link>Action=AgentFAQLanguage</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>FAQ</NavBar>
+                    <AccessKey>u</AccessKey>
+                    <Prio>910</Prio>
+                </NavBar>
+                <Loader>
+                </Loader>
+            </FrontendModuleReg>
         </Setting>
     </ConfigItem>
 </otrs_config>
