@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.49 2010-10-27 22:15:30 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.50 2010-10-27 22:46:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -253,9 +253,6 @@
                 <div class="LightRow Header">
                     <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
                     <h2>$Text{"Workorder"} - $QData{"WorkOrderTitle","70"}</h2>
-                    <div class="AdditionalInformation">
-                        $Text{"State"}: $Text{"$Data{"WorkOrderState"}"}
-                    </div>
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall">
