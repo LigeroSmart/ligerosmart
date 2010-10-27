@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMTemplate.pm - provides generic HTML output for templates
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMTemplate.pm,v 1.3 2010-10-12 03:14:07 mp Exp $
+# $Id: LayoutITSMTemplate.pm,v 1.4 2010-10-27 22:35:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use POSIX qw(ceil);
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =over 4
 
@@ -273,22 +273,6 @@ sub ITSMTemplateListShow {
         Name => 'OverviewNavBar',
         Data => {%Param},
     );
-
-    # create smal nav bar
-    my $OutputNavBarSmall = $Env->{LayoutObject}->Output(
-        TemplateFile => 'AgentITSMTemplateOverviewNavBarSmall',
-        Data         => {%Param},
-    );
-
-    # create output
-    if ( !$Param{Output} ) {
-        $Env->{LayoutObject}->Print(
-            Output => \$OutputNavBarSmall,
-        );
-    }
-    else {
-        $OutputRaw .= $OutputNavBarSmall;
-    }
 
     # return content if available
     return $OutputRaw;
