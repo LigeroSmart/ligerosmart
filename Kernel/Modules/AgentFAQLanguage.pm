@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.2 2010-10-26 16:29:04 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.3 2010-10-27 22:16:35 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,9 +55,19 @@ sub Run {
     # change
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
+
         $GetParam{RequiredClass}  = "Validate_Required ";
+
+        # check required parameters
         my $ID = $Self->{ParamObject}->GetParam( Param => 'ID' ) || '';
+        if (! $ID){
+             $Self->{LayoutObject}->FatalError( Message => "Need ID !" );
+        }
+
+        # get language data
         my %Data = $Self->{FAQObject}->LanguageGet( ID => $ID );
+
+        # output change language screen
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Self->_Edit(
@@ -120,7 +130,7 @@ sub Run {
 
         # create new language and return to overview
         if ( $Self->{FAQObject}->LanguageUpdate( %GetParam, UserID => $Self->{UserID}, ) ){
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ language changed!' );
+            $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ language updated!' );
             $Self->_Overview();
         }
         else {
