@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.1 2010-10-27 22:17:56 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.2 2010-10-27 22:21:31 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::System::Valid;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,7 +51,8 @@ sub Run {
 
     $GetParam{CategoryID} = $GetParam{ID} || '';
 
-    @{ $GetParam{PermissionGroups} } = $Self->{ParamObject}->GetArray( Param => "PermissionGroups" );
+    @{ $GetParam{PermissionGroups} }
+        = $Self->{ParamObject}->GetArray( Param => "PermissionGroups" );
 
     $GetParam{UserID} = $Self->{UserID};
 
@@ -124,7 +125,8 @@ sub Run {
         for my $ParamName (qw(Name Comment PermissionGroups)) {
             if ( !$GetParam{$ParamName} ){
                 $GetParam{ "$ParamName" . 'RequiredClass'} = 'Validate_Required ServerError';
-                $GetParam{NameServerError} = 'A category should have a name!' if $ParamName eq 'Name';
+                $GetParam{NameServerError}
+                    = 'A category should have a name!' if $ParamName eq 'Name';
 
                 # set ServerError Flag
                 $ServerError = 1;
@@ -153,7 +155,13 @@ sub Run {
 
         # check for duplicate name
         if (
-            $Self->{FAQObject}->CategoryDuplicateCheck( ID => $GetParam{ID}, Name => $GetParam{Name}, ParentID => $GetParam{ParentID} ) ) {
+            $Self->{FAQObject}->CategoryDuplicateCheck(
+                ID => $GetParam{ID},
+                Name => $GetParam{Name},
+                ParentID => $GetParam{ParentID}
+                )
+           )
+           {
 
                 # set server errors
                 $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
@@ -246,9 +254,10 @@ sub Run {
         # check for name
         my $ServerError;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
-            if ( !$GetParam{$ParamName} ){ # = $Self->{ParamObject}->GetParam( Param => $ParamName ) ) ) {
+            if ( !$GetParam{$ParamName} ){
                 $GetParam{ "$ParamName" . 'RequiredClass'} = 'Validate_Required ServerError';
-                $GetParam{NameServerError} = 'A category should have a name!' if $ParamName eq 'Name';
+                $GetParam{NameServerError}
+                    = 'A category should have a name!' if $ParamName eq 'Name';
 
                 # set ServerError Flag
                 $ServerError = 1;
@@ -277,7 +286,12 @@ sub Run {
 
         # check for duplicate name
         if (
-            $Self->{FAQObject}->CategoryDuplicateCheck( Name => $GetParam{Name}, ParentID => $GetParam{ParentID} ) ) {
+            $Self->{FAQObject}->CategoryDuplicateCheck(
+                Name => $GetParam{Name},
+                ParentID => $GetParam{ParentID}
+                )
+            )
+            {
 
                 # set server errors
                 $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
@@ -376,7 +390,9 @@ sub _Edit {
     );
 
     $Param{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList        => { %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) } },
+        CategoryList        => {
+                %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) }
+        },
         Size                => 1,
         Name                => 'ParentID',
         HTMLQuote           => 1,
