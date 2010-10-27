@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.85 2010-10-27 22:15:12 cr Exp $
+# $Id: FAQ.pm,v 1.86 2010-10-27 23:25:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,8 +24,8 @@ use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.85 $) [1];
+use vars qw($VERSION);
+$VERSION = qw($Revision: 1.86 $) [1];
 
 =head1 NAME
 
@@ -3166,6 +3166,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.85 $ $Date: 2010-10-27 22:15:12 $
+$Revision: 1.86 $ $Date: 2010-10-27 23:25:58 $
 
 =cut
