@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.53 2010-09-22 15:55:26 en Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.54 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,15 +95,16 @@ sub Run {
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # get data for attachment
-        my $FileID = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+        my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
         my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-            FileID => $FileID,
+            ChangeID => $ChangeID,
+            Filename => $Filename,
         );
 
         # return error if file does not exist
         if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
-                Message  => "No such attachment ($FileID)! May be an attack!!!",
+                Message  => "No such attachment ($Filename)! May be an attack!!!",
                 Priority => 'error',
             );
             return $Self->{LayoutObject}->ErrorScreen();
@@ -156,7 +157,7 @@ sub Run {
             if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
                 my $Object = $Menus{$Menu}->{Module}->new(
                     %{$Self},
-                    ChangeID => $Self->{ChangeID},
+                    ChangeID => $ChangeID,
                 );
 
                 # set classes
@@ -652,22 +653,23 @@ sub Run {
         );
     }
 
-    # show attachments
-    my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
-        ChangeID => $Change->{ChangeID},
+    # get attachments
+    my @Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+        ChangeID => $ChangeID,
     );
 
     # show attachments
-    ATTACHMENTID:
-    for my $AttachmentID ( keys %Attachments ) {
+    ATTACHMENT:
+    for my $Filename (@Attachments) {
 
         # get info about file
         my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-            FileID => $AttachmentID,
+            ChangeID => $ChangeID,
+            Filename => $Filename,
         );
 
         # check for attachment information
-        next ATTACHMENTID if !$AttachmentData;
+        next ATTACHMENT if !$AttachmentData;
 
         # show block
         $Self->{LayoutObject}->Block(

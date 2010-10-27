@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.48 2010-06-29 13:50:53 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.49 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -222,9 +222,11 @@ $Include{"RichTextEditorITSM"}
 <!-- dtl:block:AttachmentRow -->
                                             <tr>
                                                 <td>$QData{"Filename"}</td>
-                                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$QData{"FileID"};WorkOrderID=$QData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;Filename=$LQData{"Filename"};WorkOrderID=$LQData{"WorkOrderID"}"><img src="" border="0" alt="Download" title="Download"/></a></td>
                                                 <td>$QData{"Filesize"}</td>
-                                                <td width="100%"><input class="button" type="submit" name="DeleteAttachment$QData{"FileID"}" value="$Text{"Delete"}"></td>
+                                                <td width="100%">
+                                                    <input class="button" type="submit" name="DeleteAttachment$QData{"Filename"}" value="$Text{"Delete"}">
+                                                </td>
                                             </tr>
 <!-- dtl:block:AttachmentRow -->
                                             <tr>

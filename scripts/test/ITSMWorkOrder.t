@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.129 2010-07-03 00:39:27 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.130 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,6 +47,17 @@ $Self->Is(
     ref $Self->{WorkOrderObject},
     'Kernel::System::ITSMChange::ITSMWorkOrder',
     "Test " . $TestCount++ . ' - class of workorder object',
+);
+
+# test if change object was created successfully
+$Self->True(
+    $Self->{ChangeObject},
+    "Test " . $TestCount++ . ' - construction of change object',
+);
+$Self->Is(
+    ref $Self->{ChangeObject},
+    'Kernel::System::ITSMChange',
+    "Test " . $TestCount++ . ' - class of change object',
 );
 
 # ------------------------------------------------------------ #
@@ -583,8 +594,7 @@ continue {
 my (
     $WorkOrderAddTestID, $OrderByTestID, $StringSearchTestID,
     $TimeSearchTestID, $PermissionTestID
-    )
-    = sort keys %TestedChangeID;
+) = sort keys %TestedChangeID;
 
 # tests with only WorkOrderAdd();
 my @WorkOrderTests = (
@@ -2895,9 +2905,9 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 }
 
-# ------------------------------------------------------------ #
-# test sorting of changes (some have no workorder, others have severel workorders)
-# ------------------------------------------------------------ #
+# --------------------------------------------------------------------------------------- #
+# test sorting of changes (some have no workorder, others have several workorders)
+# --------------------------------------------------------------------------------------- #
 my %IDsToDelete = (
     Change    => [],
     WorkOrder => [],
@@ -4359,11 +4369,11 @@ my @PermissionTests = (
             },
         },
     },
-
 );
 
 my $PermissionTestCounter = 1;
 for my $Test (@PermissionTests) {
+
     my $SourceData    = $Test->{SourceData};
     my $ReferenceData = $Test->{ReferenceData};
 
@@ -4381,7 +4391,10 @@ for my $Test (@PermissionTests) {
             %{$Params},
             UserID => 1,
         );
-        $Self->True( $Success, "Permission test $PermissionTestCounter: GroupMemberAdd()", );
+        $Self->True(
+            $Success,
+            "Permission test $PermissionTestCounter: GroupMemberAdd()",
+        );
     }
 
     # check the result
@@ -4399,7 +4412,7 @@ for my $Test (@PermissionTests) {
                 if ( $Privs->{$Type} ) {
                     $Self->True(
                         $Access,
-                        "Permission test $PermissionTestCounter: User $UserIndex, with UserUD $UserIDs[$UserIndex], has $Type access",
+                        "Permission test $PermissionTestCounter: User $UserIndex, with UserID $UserIDs[$UserIndex], has $Type access",
                     );
                 }
                 else {
@@ -4496,17 +4509,18 @@ push @{ $IDsToDelete{Change} },    $ChangeIDForAttachmentTest;
 push @{ $IDsToDelete{WorkOrder} }, $WorkOrderIDForAttachmentTest;
 
 # verify that initialy no attachment exists
-my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+my @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
     WorkOrderID => $WorkOrderIDForAttachmentTest,
     UserID      => 1,
 );
 
 $Self->Is(
-    scalar( keys %AttachmentList ),
+    scalar @AttachmentList,
     0,
-    'no attachments initially',
+    'No attachments initially',
 );
 
+# define list of test attachments
 my @TestFileList = (
     {
         Filename    => 'first attachment',
@@ -4520,73 +4534,85 @@ my @TestFileList = (
     },
 );
 
-my $FileCount = 1;
-my %Filename2FileID;
+my $FileCount;
 for my $TestFile (@TestFileList) {
 
+    $FileCount++;
+
+    # add the attachment
     my $AddOk = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
         %{$TestFile},
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
         ChangeID    => $ChangeIDForAttachmentTest,
-        UserID      => 1,
-    );
-    $Self->True( $AddOk, "Attachment $FileCount: attachment added" );
-
-    my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrderIDForAttachmentTest,
         UserID      => 1,
     );
+    $Self->True(
+        $AddOk,
+        "Attachment $FileCount: attachment added",
+    );
 
+    # get attachment list
+    my @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        UserID      => 1,
+    );
     $Self->Is(
-        scalar( keys %AttachmentList ),
+        scalar @AttachmentList,
         $FileCount,
         "Attachment $FileCount: number of attachments after adding",
     );
 
-    my $FileID = max( keys %AttachmentList );
-    $Filename2FileID{ $TestFile->{Filename} } = $FileID;
+    # get the last added attachment file name
+    my %AttachmentLookup = map { $_ => 1 } @AttachmentList;
 
-    $Self->Is(
-        $AttachmentList{$FileID},
-        $TestFile->{Filename},
+    $Self->True(
+        $AttachmentLookup{ $TestFile->{Filename} },
         "Attachment $FileCount: filename from WorkOrderAttachmentList()",
     );
 
+    # get the attachment
     my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-        FileID => $FileID,
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        Filename    => $TestFile->{Filename},
     );
-    $Self->True( $Attachment, "Attachment $FileCount: WorkOrderAttachmentGet() returned true" );
+    $Self->True(
+        $Attachment,
+        "Attachment $FileCount: WorkOrderAttachmentGet() returned true",
+    );
 
-    for my $Attr (qw(Filename Content ContentType)) {
+    # check attachment file attributes
+    for my $Attribute (qw(Filename Content ContentType)) {
         $Self->Is(
-            $Attachment->{$Attr},
-            $TestFile->{$Attr},
-            "Attachment $FileCount: $Attr from WorkOrderAttachmentGet",
+            $Attachment->{$Attribute},
+            $TestFile->{$Attribute},
+            "Attachment $FileCount: $Attribute from WorkOrderAttachmentGet",
         );
     }
 
+    # check existence of attachment
     my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
-        Filename    => $TestFile->{Filename},
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
         ChangeID    => $ChangeIDForAttachmentTest,
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        Filename    => $TestFile->{Filename},
         UserID      => 1,
     );
-    $Self->True( $AttachmentExists, "Attachment $FileCount: attachment exists" );
-
-}
-continue {
-    $FileCount++;
+    $Self->True(
+        $AttachmentExists,
+        "Attachment $FileCount: attachment exists",
+    );
 }
 
 # now delete the attachments
-$FileCount = 1;
+$FileCount = 0;
+my $MaxTestFiles = scalar @TestFileList;
 for my $TestFile (@TestFileList) {
 
-    my $FileID   = $Filename2FileID{ $TestFile->{Filename} };
+    $FileCount++;
+
     my $DeleteOk = $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
-        FileID      => $FileID,
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
         ChangeID    => $ChangeIDForAttachmentTest,
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        Filename    => $TestFile->{Filename},
         UserID      => 1,
     );
     $Self->True(
@@ -4594,27 +4620,27 @@ for my $TestFile (@TestFileList) {
         "Attachment $FileCount: attachment deleted",
     );
 
-    my %AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+    my @AttachmentList = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrderIDForAttachmentTest,
         UserID      => 1,
     );
 
     $Self->Is(
-        scalar( keys %AttachmentList ),
-        2 - $FileCount,
+        scalar @AttachmentList,
+        $MaxTestFiles - $FileCount,
         "Attachment $FileCount: number of attachments after deletion",
     );
 
     my $AttachmentExists = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
-        Filename    => $TestFile->{Filename},
-        WorkOrderID => $WorkOrderIDForAttachmentTest,
         ChangeID    => $ChangeIDForAttachmentTest,
+        WorkOrderID => $WorkOrderIDForAttachmentTest,
+        Filename    => $TestFile->{Filename},
         UserID      => 1,
     );
-    $Self->False( $AttachmentExists, "Attachment $FileCount: attachment is gone" );
-}
-continue {
-    $FileCount++;
+    $Self->False(
+        $AttachmentExists,
+        "Attachment $FileCount: attachment is gone",
+    );
 }
 
 # ------------------------------------------------------------ #

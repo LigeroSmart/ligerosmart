@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.6 2010-06-29 12:56:31 sb Exp $
+# $Id: ITSMChange.pm,v 1.7 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -214,13 +214,13 @@ sub Serialize {
     my $OriginalData = { ChangeAdd => $CleanChange };
 
     # get attachments
-    my %ChangeAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
+    my @ChangeAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
         ChangeID => $Change->{ChangeID},
     );
-    for my $FileID ( keys %ChangeAttachments ) {
+    for my $Filename (@ChangeAttachments) {
 
         # save attachments to this template
-        push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
+        push @{ $OriginalData->{Children} }, { AttachmentAdd => { Filename => $Filename } };
     }
 
     # get workorders
@@ -476,8 +476,8 @@ sub _GetTimeDifference {
 
 =item _AttachmentAdd()
 
-Creates new attachments for a change or a workorder based on the given template. It
-returns a hash of information (with just one key - "Success")
+Creates new attachments for a change or a workorder based on the given template.
+It returns a hash of information (with just one key - "Success")
 
     my %Info = $TemplateObject->_AttachmentAdd(
         Data => {
@@ -504,7 +504,8 @@ sub _AttachmentAdd {
     }
 
     my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
-        FileID => $Param{Data}->{FileID},
+        ChangeID => $Param{ChangeID},
+        Filename => $Param{Data}->{Filename},
     );
 
     my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
@@ -598,6 +599,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2010-06-29 12:56:31 $
+$Revision: 1.7 $ $Date: 2010-10-27 22:15:30 $
 
 =cut

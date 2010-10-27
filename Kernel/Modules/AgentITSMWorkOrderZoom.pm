@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.43 2010-10-18 20:35:54 en Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.44 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -93,15 +93,16 @@ sub Run {
     if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
 
         # get data for attachment
-        my $FileID = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+        my $Filename = $Self->{ParamObject}->GetParam( Param => 'Filename' );
         my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            FileID => $FileID,
+            WorkOrderID => $WorkOrderID,
+            Filename    => $Filename,
         );
 
         # return error if file does not exist
         if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
-                Message  => "No such attachment ($FileID)! May be an attack!!!",
+                Message  => "No such attachment ($Filename)! May be an attack!!!",
                 Priority => 'error',
             );
             return $Self->{LayoutObject}->ErrorScreen();
@@ -476,18 +477,23 @@ sub Run {
         );
     }
 
-    # show attachments
-    my %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-        WorkOrderID => $WorkOrder->{WorkOrderID},
+    # get attachments
+    my @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        WorkOrderID => $WorkOrderID,
     );
 
     # show attachments
-    for my $AttachmentID ( keys %Attachments ) {
+    ATTACHMENT:
+    for my $Filename (@Attachments) {
 
         # get info about file
         my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            FileID => $AttachmentID,
+            WorkOrderID => $WorkOrderID,
+            Filename    => $Filename,
         );
+
+        # check for attachment information
+        next ATTACHMENT if !$AttachmentData;
 
         # show block
         $Self->{LayoutObject}->Block(

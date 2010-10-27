@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.41 2010-07-30 08:53:33 ub Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.42 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -722,22 +722,23 @@ sub _OutputChangeInfo {
 
     # value for attachments
     {
-        my %Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
+        my @Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
             ChangeID => $Change->{ChangeID},
         );
 
         my @Values;
 
-        ATTACHMENT_ID:
-        for my $AttachmentID ( keys %Attachments ) {
+        ATTACHMENT:
+        for my $Filename (@Attachments) {
 
             # get info about file
             my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-                FileID => $AttachmentID,
+                ChangeID => $Change->{ChangeID},
+                Filename => $Filename,
             );
 
             # check for attachment information
-            next ATTACHMENTID if !$AttachmentData;
+            next ATTACHMENT if !$AttachmentData;
 
             push @Values, sprintf '%s %s',
                 $AttachmentData->{Filename},
@@ -976,22 +977,23 @@ sub _OutputWorkOrderInfo {
 
     # value for attachments
     {
-        my %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+        my @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
             WorkOrderID => $WorkOrder->{WorkOrderID},
         );
 
         my @Values;
 
-        ATTACHMENT_ID:
-        for my $AttachmentID ( keys %Attachments ) {
+        ATTACHMENT:
+        for my $Filename (@Attachments) {
 
             # get info about file
             my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-                FileID => $AttachmentID,
+                WorkOrderID => $WorkOrder->{WorkOrderID},
+                Filename    => $Filename,
             );
 
             # check for attachment information
-            next ATTACHMENTID if !$AttachmentData;
+            next ATTACHMENT if !$AttachmentData;
 
             push @Values, sprintf '%s %s',
                 $AttachmentData->{Filename},

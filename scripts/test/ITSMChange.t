@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.188 2010-07-03 00:40:19 ub Exp $
+# $Id: ITSMChange.t,v 1.189 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -6054,15 +6054,14 @@ for my $Type (qw(Category Impact Priority)) {
 my ($AttachmentTestChangeID) = @{ $Label2ChangeIDs{Attachment} };
 
 # verify that initialy no attachment exists
-my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+my @AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
     ChangeID => $AttachmentTestChangeID,
-    UserID   => 1,
 );
 
 $Self->Is(
-    scalar( keys %AttachmentList ),
+    scalar @AttachmentList,
     0,
-    'no attachments initially',
+    'No attachments initially',
 );
 
 my @TestFileList = (
@@ -6078,70 +6077,81 @@ my @TestFileList = (
     },
 );
 
-my $FileCount = 1;
-my %Filename2FileID;
+my $FileCount;
 for my $TestFile (@TestFileList) {
+
+    $FileCount++;
 
     my $AddOk = $Self->{ChangeObject}->ChangeAttachmentAdd(
         %{$TestFile},
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
-    $Self->True( $AddOk, "Attachment $FileCount: attachment added" );
+    $Self->True(
+        $AddOk,
+        "Attachment $FileCount: attachment added",
+    );
 
-    my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+    my @AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
-
     $Self->Is(
-        scalar( keys %AttachmentList ),
+        scalar @AttachmentList,
         $FileCount,
         "Attachment $FileCount: number of attachments after adding",
     );
 
-    my $FileID = max( keys %AttachmentList );
-    $Filename2FileID{ $TestFile->{Filename} } = $FileID;
+    # get the last added attachment file name
+    my %AttachmentLookup = map { $_ => 1 } @AttachmentList;
 
-    $Self->Is(
-        $AttachmentList{$FileID},
-        $TestFile->{Filename},
+    $Self->True(
+        $AttachmentLookup{ $TestFile->{Filename} },
         "Attachment $FileCount: filename from ChangeAttachmentList()",
     );
 
+    # get the attachment
     my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
-        FileID => $FileID,
+        ChangeID => $AttachmentTestChangeID,
+        Filename => $TestFile->{Filename},
     );
-    $Self->True( $Attachment, "Attachment $FileCount: ChangeAttachmentGet() returned true" );
+    $Self->True(
+        $Attachment,
+        "Attachment $FileCount: ChangeAttachmentGet() returned true",
+    );
 
-    for my $Attr (qw(Filename Content ContentType)) {
+    # check attachment file attributes
+    for my $Attribute (qw(Filename Content ContentType)) {
         $Self->Is(
-            $Attachment->{$Attr},
-            $TestFile->{$Attr},
-            "Attachment $FileCount: $Attr from ChangeAttachmentGet",
+            $Attachment->{$Attribute},
+            $TestFile->{$Attribute},
+            "Attachment $FileCount: $Attribute from ChangeAttachmentGet",
         );
     }
 
+    # check existence of attachment
     my $AttachmentExists = $Self->{ChangeObject}->ChangeAttachmentExists(
-        Filename => $TestFile->{Filename},
         ChangeID => $AttachmentTestChangeID,
+        Filename => $TestFile->{Filename},
         UserID   => 1,
     );
-    $Self->True( $AttachmentExists, "Attachment $FileCount: attachment exists" );
+    $Self->True(
+        $AttachmentExists,
+        "Attachment $FileCount: attachment exists",
+    );
 
-}
-continue {
-    $FileCount++;
 }
 
 # now delete the attachments
-$FileCount = 1;
+$FileCount = 0;
+my $MaxTestFiles = scalar @TestFileList;
 for my $TestFile (@TestFileList) {
 
-    my $FileID   = $Filename2FileID{ $TestFile->{Filename} };
+    $FileCount++;
+
     my $DeleteOk = $Self->{ChangeObject}->ChangeAttachmentDelete(
-        FileID   => $FileID,
         ChangeID => $AttachmentTestChangeID,
+        Filename => $TestFile->{Filename},
         UserID   => 1,
     );
     $Self->True(
@@ -6149,14 +6159,14 @@ for my $TestFile (@TestFileList) {
         "Attachment $FileCount: attachment deleted",
     );
 
-    my %AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+    my @AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
 
     $Self->Is(
-        scalar( keys %AttachmentList ),
-        2 - $FileCount,
+        scalar @AttachmentList,
+        $MaxTestFiles - $FileCount,
         "Attachment $FileCount: number of attachments after deletion",
     );
 
@@ -6165,10 +6175,10 @@ for my $TestFile (@TestFileList) {
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
-    $Self->False( $AttachmentExists, "Attachment $FileCount: attachment is gone" );
-}
-continue {
-    $FileCount++;
+    $Self->False(
+        $AttachmentExists,
+        "Attachment $FileCount: attachment is gone",
+    );
 }
 
 # ------------------------------------------------------------ #

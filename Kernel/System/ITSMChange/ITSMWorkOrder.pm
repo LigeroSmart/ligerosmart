@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.115 2010-09-27 22:51:18 en Exp $
+# $Id: ITSMWorkOrder.pm,v 1.116 2010-10-27 22:15:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.115 $) [1];
+$VERSION = qw($Revision: 1.116 $) [1];
 
 =head1 NAME
 
@@ -583,7 +583,7 @@ sub WorkOrderUpdate {
         }
 
         # it's ok if the WorkOrderAgentID is not defined
-        elsif ( $Attribute eq 'WorkOrderAgentID' && !defined $Param{$Attribute} ) {
+        elsif ( $Attribute eq 'WorkOrderAgentID' ) {
             $SQL .= "$Attribute{$Attribute} = NULL, ";
         }
 
@@ -1542,14 +1542,14 @@ sub WorkOrderDelete {
     );
 
     # get the list of attachments and delete them
-    my %Attachments = $Self->WorkOrderAttachmentList(
+    my @Attachments = $Self->WorkOrderAttachmentList(
         WorkOrderID => $Param{WorkOrderID},
     );
-    for my $FileID ( sort keys %Attachments ) {
+    for my $Filename (@Attachments) {
         return if !$Self->WorkOrderAttachmentDelete(
-            FileID      => $FileID,
             ChangeID    => $WorkOrderData->{ChangeID},
             WorkOrderID => $Param{WorkOrderID},
+            Filename    => $Filename,
             UserID      => $Param{UserID},
         );
     }
@@ -2106,6 +2106,15 @@ the permission modules that were registered in the permission registry.
 The standard permission registry is B<ITSMWorkOrder::Permission>, but
 that can be overridden with the parameter C<PermissionRegistry>.
 
+The registered permission modules are run in the alphabetical order of
+their registry keys.
+Overall permission is granted when a permission module, which has the attribute 'Granted' set,
+grants permission. Overall permission is denied when a permission module, which has the attribute 'Required'
+set, denies permission. Overall permission is also denied when when all permission module were asked
+without coming to an conclusion.
+
+Approval is indicated by the return value 1. Denial is indicated by returning an empty list.
+
 The optional option C<LogNo> turns off logging when access was denied.
 This is useful when the method is used for checking whether a link or an action should be shown.
 
@@ -2115,8 +2124,6 @@ This is useful when the method is used for checking whether a link or an action 
         WorkOrderID        => 4444,
         PermissionRegistry => 'ITSMWorkOrder::TakePermission',
                                       # optional with default 'ITSMWorkOrder::Permission'
-        Cached             => 0,      # optional with default 1,
-                                      # passing the value 0 is useful in test scripts
         LogNo              => 1,      # optional, turns off logging when access is denied
     );
 
@@ -2276,7 +2283,7 @@ Add an attachment to the given change.
 
     my $Success = $WorkOrderObject->WorkOrderAttachmentAdd(
         ChangeID    => 123,
-        WorkOrderID => 123,         # the WorkOrderID becomes part of the file path
+        WorkOrderID => 456,         # the WorkOrderID becomes part of the file path
         Filename    => 'filename',
         Content     => 'content',
         ContentType => 'text/plain',
@@ -2344,7 +2351,7 @@ Delete the given file from the virtual filesystem.
     my $Success = $WorkOrderObject->WorkOrderAttachmentDelete(
         ChangeID    => 12345,
         WorkOrderID => 5123,
-        FileID      => 1234,     # identifies the attachment
+        Filename    => 'Projectplan.pdf',     # identifies the attachment (together with the WorkOrderID)
         UserID      => 1,
     );
 
@@ -2354,31 +2361,23 @@ sub WorkOrderAttachmentDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(ChangeID WorkOrderID FileID UserID)) {
+    for my $Needed (qw(ChangeID WorkOrderID Filename UserID)) {
         if ( !$Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
-
             return;
         }
     }
 
-    # search for attachments
-    my %Attachments = $Self->{VirtualFSObject}->Search(
-        FileID => $Param{FileID},
-    );
-
-    # get filename
-    my $Filename = $Attachments{ $Param{FileID} };
+    # add prefix
+    my $Filename = 'WorkOrder/' . $Param{WorkOrderID} . '/' . $Param{Filename};
 
     # delete file
     my $Success = $Self->{VirtualFSObject}->Delete(
         Filename => $Filename,
     );
-
-    $Filename =~ s{ \A WorkOrder / \d+ / }{}xms;
 
     # check for error
     if ($Success) {
@@ -2388,7 +2387,6 @@ sub WorkOrderAttachmentDelete {
             Event => 'WorkOrderAttachmentDeletePost',
             Data  => {
                 %Param,
-                Filename => $Filename,
             },
             UserID => $Param{UserID},
         );
@@ -2396,7 +2394,7 @@ sub WorkOrderAttachmentDelete {
     else {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "Cannot delete attachment $Param{FileID}!",
+            Message  => "Cannot delete attachment $Filename!",
         );
 
         return;
@@ -2410,12 +2408,13 @@ sub WorkOrderAttachmentDelete {
 This method returns information about one specific attachment.
 
     my $Attachment = $WorkOrderObject->WorkOrderAttachmentGet(
-        FileID => 123,
+        WorkOrderID => 4,
+        Filename    => 'test.txt',
     );
 
 returns
 
-    {
+    $Attachment = {
         Preferences => {
             AllPreferences => 'test',
         },
@@ -2424,7 +2423,7 @@ returns
         ContentType => 'text/plain',
         Filesize    => '123 KBytes',
         Type        => 'attachment',
-    }
+    };
 
 =cut
 
@@ -2432,27 +2431,31 @@ sub WorkOrderAttachmentGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{FileID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need FileID!',
-        );
-
-        return;
+    for my $Argument (qw(WorkOrderID Filename)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
     }
 
-    # search for attachments
-    my %Attachments = $Self->{VirtualFSObject}->Search(
-        FileID => $Param{FileID},
+    # add prefix
+    my $Filename = 'WorkOrder/' . $Param{WorkOrderID} . '/' . $Param{Filename};
+
+    # find all attachments of this workorder
+    my @Attachments = $Self->{VirtualFSObject}->Find(
+        Filename    => $Filename,
+        Preferences => {
+            WorkOrderID => $Param{WorkOrderID},
+        },
     );
 
-    # get filename
-    my $Filename = $Attachments{ $Param{FileID} };
-
     # return error if file does not exist
-    if ( !$Filename ) {
+    if ( !@Attachments ) {
         $Self->{LogObject}->Log(
-            Message  => "No such attachment ($Param{FileID})! May be an attack!!!",
+            Message  => "No such attachment ($Filename)! May be an attack!!!",
             Priority => 'error',
         );
         return;
@@ -2464,16 +2467,12 @@ sub WorkOrderAttachmentGet {
         Mode     => 'binary',
     );
 
-    # remove extra information from filename
-    ( my $NameDisplayed = $Filename ) =~ s{ \A WorkOrder / \d+ / }{}xms;
-
     my $AttachmentInfo = {
         %AttachmentData,
-        Filename    => $NameDisplayed,
+        Filename    => $Param{Filename},
         Content     => ${ $AttachmentData{Content} },
         ContentType => $AttachmentData{Preferences}->{ContentType},
         Type        => 'attachment',
-        FileID      => $Param{FileID},
         Filesize    => $AttachmentData{Preferences}->{Filesize},
     };
 
@@ -2482,17 +2481,18 @@ sub WorkOrderAttachmentGet {
 
 =item WorkOrderAttachmentList()
 
-Returns a hash with all attachments of the given workorder. The file id is the key
-and the filename is the value of the returned hash.
+Returns an array with all attachments of the given workorder.
 
-    my %Attachments = $WorkOrderObject->WorkOrderAttachmentList(
+    my @Attachments = $WorkOrderObject->WorkOrderAttachmentList(
         WorkOrderID => 123,
     );
 
 returns
 
-    123 => 'filename.txt',
-    435 => 'other_file.pdf',
+    @Attachments = (
+        'filename.txt',
+        'other_file.pdf',
+    );
 
 =cut
 
@@ -2509,20 +2509,20 @@ sub WorkOrderAttachmentList {
         return;
     }
 
-    # search for attachments
-    my %Attachments = $Self->{VirtualFSObject}->Find(
+    # find all attachments of this workorder
+    my @Attachments = $Self->{VirtualFSObject}->Find(
         Preferences => {
             WorkOrderID => $Param{WorkOrderID},
         },
     );
 
-    for my $FileID ( keys %Attachments ) {
+    for my $Filename (@Attachments) {
 
         # remove extra information from filename
-        $Attachments{$FileID} =~ s{ \A WorkOrder / \d+ / }{}xms;
+        $Filename =~ s{ \A WorkOrder / \d+ / }{}xms;
     }
 
-    return %Attachments;
+    return @Attachments;
 }
 
 =item WorkOrderAttachmentExists()
@@ -3407,6 +3407,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.115 $ $Date: 2010-09-27 22:51:18 $
+$Revision: 1.116 $ $Date: 2010-10-27 22:15:31 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.47 2010-06-29 13:48:06 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.48 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,7 +105,7 @@ sub Run {
         qw(
         WorkOrderTitle Instruction
         PlannedEffort
-        SaveAttachment FileID
+        SaveAttachment Filename
         )
         )
     {
@@ -145,13 +145,13 @@ sub Run {
     }
 
     # get all attachments meta data
-    my %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+    my @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrderID,
     );
 
     # check if attachment should be deleted
-    for my $AttachmentID ( keys %Attachments ) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
+    for my $Filename (@Attachments) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Filename ) ) {
             $Self->{Subaction} = 'DeleteAttachment';
         }
     }
@@ -269,15 +269,15 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
 
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => "AttachmentNew",
+            Param  => 'AttachmentNew',
             Source => 'string',
         );
 
         # check if file was already uploaded
         my $FileAlreadyUploaded = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
             Filename    => $UploadStuff{Filename},
-            UserID      => $Self->{UserID},
             WorkOrderID => $WorkOrderID,
+            UserID      => $Self->{UserID},
         );
 
         # write to virtual fs
@@ -295,7 +295,7 @@ sub Run {
             }
 
             # reload attachment list
-            %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+            @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
                 WorkOrderID => $WorkOrderID,
             );
         }
@@ -305,23 +305,21 @@ sub Run {
     }
     elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
 
-        for my $AttachmentID ( keys %Attachments ) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $AttachmentID ) ) {
+        for my $Filename (@Attachments) {
+            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Filename ) ) {
 
                 # delete attachment
                 $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
-                    FileID      => $AttachmentID,
-                    WorkOrderID => $WorkOrderID,
                     ChangeID    => $WorkOrder->{ChangeID},
+                    WorkOrderID => $WorkOrderID,
+                    Filename    => $Filename,
                     UserID      => $Self->{UserID},
                 );
 
                 # reload attachment list
-                %Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+                @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
                     WorkOrderID => $WorkOrderID,
                 );
-
-                $Self->{Subaction} = 'DeleteAttachment';
             }
         }
     }
@@ -331,13 +329,14 @@ sub Run {
 
         # get data for attachment
         my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            FileID => $GetParam{FileID},
+            WorkOrderID => $WorkOrderID,
+            Filename    => $GetParam{Filename},
         );
 
         # return error if file does not exist
         if ( !$AttachmentData ) {
             $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Message  => "No such attachment ($GetParam{Filename})! May be an attack!!!",
                 Priority => 'error',
             );
             return $Self->{LayoutObject}->ErrorScreen();
@@ -554,12 +553,17 @@ sub Run {
     }
 
     # show attachments
-    for my $AttachmentID ( keys %Attachments ) {
+    ATTACHMENT:
+    for my $Filename (@Attachments) {
 
         # get info about file
         my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            FileID => $AttachmentID,
+            WorkOrderID => $WorkOrderID,
+            Filename    => $Filename,
         );
+
+        # check for attachment information
+        next ATTACHMENT if !$AttachmentData;
 
         # show block
         $Self->{LayoutObject}->Block(

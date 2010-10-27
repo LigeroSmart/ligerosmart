@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.5 2010-06-29 12:56:31 sb Exp $
+# $Id: ITSMWorkOrder.pm,v 1.6 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -198,14 +198,14 @@ sub Serialize {
     my $OriginalData = { WorkOrderAdd => $CleanWorkOrder };
 
     # get attachments
-    my %WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+    my @WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
         WorkOrderID => $WorkOrder->{WorkOrderID},
     );
 
-    for my $FileID ( keys %WorkOrderAttachments ) {
+    for my $Filename (@WorkOrderAttachments) {
 
         # save attachments to this template
-        push @{ $OriginalData->{Children} }, { AttachmentAdd => { FileID => $FileID } };
+        push @{ $OriginalData->{Children} }, { AttachmentAdd => { Filename => $Filename } };
     }
 
     # get links to other object
@@ -484,8 +484,8 @@ sub _MoveTime {
 
 =item _AttachmentAdd()
 
-Creates new attachments for a change or a workorder based on the given template. It
-returns a hash of information (with just one key - "Success")
+Creates new attachments for a change or a workorder based on the given template.
+It returns a hash of information (with just one key - "Success")
 
     my %Info = $TemplateObject->_AttachmentAdd(
         Data => {
@@ -512,7 +512,8 @@ sub _AttachmentAdd {
     }
 
     my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-        FileID => $Param{Data}->{FileID},
+        WorkOrderID => $Param{Data}->{WorkOrderID},
+        Filename    => $Param{Data}->{Filename},
     );
 
     my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
@@ -607,6 +608,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-06-29 12:56:31 $
+$Revision: 1.6 $ $Date: 2010-10-27 22:15:30 $
 
 =cut

@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.48 2010-10-26 15:09:14 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.49 2010-10-27 22:15:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -304,7 +304,7 @@
 <!-- dtl:block:AttachmentRow -->
                                 <tr>
                                     <td>$Data{"Filename"}</td>
-                                    <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$LQData{"FileID"};WorkOrderID=$LQData{"WorkOrderID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
+                                    <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;Filename=$LQData{"Filename"};WorkOrderID=$LQData{"WorkOrderID"}"><img src="" border="0" alt="Download" title="Download"/></a></td>
                                     <td>$Data{"Filesize"}</td>
                                 </tr>
 <!-- dtl:block:AttachmentRow -->
