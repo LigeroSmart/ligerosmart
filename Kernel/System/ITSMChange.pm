@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.261 2010-10-27 22:15:30 ub Exp $
+# $Id: ITSMChange.pm,v 1.262 2010-10-27 22:27:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.261 $) [1];
+$VERSION = qw($Revision: 1.262 $) [1];
 
 =head1 NAME
 
@@ -2568,8 +2568,6 @@ This is useful when the method is used for checking whether a link or an action 
         ChangeID           => 3333,   # optional, do not pass for 'ChangeAdd'
         PermissionRegistry => 'ITSMChange::Permission',
                                       # optional with default 'ITSMChange::Permission'
-        Cached             => 0,      # optional with default 1,
-                                      # passing the value 0 is useful in test scripts
         LogNo              => 1,      # optional, turns off logging when access is denied
     );
 
@@ -3662,6 +3660,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.261 $ $Date: 2010-10-27 22:15:30 $
+$Revision: 1.262 $ $Date: 2010-10-27 22:27:30 $
 
 =cut

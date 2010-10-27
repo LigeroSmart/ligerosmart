@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Permission/ChangeAgentCheck.pm - change agent based permission check
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ChangeAgentCheck.pm,v 1.15 2009-11-19 13:48:06 bes Exp $
+# $Id: ChangeAgentCheck.pm,v 1.16 2010-10-27 22:27:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -157,15 +157,11 @@ sub Run {
     # deny access, when the group is not found
     return if !$GroupID;
 
-    # Caching is turned on by default.
-    my $Cached = defined $Param{Cached} ? $Param{Cached} : 1;
-
     # get user groups, where the user has the appropriate privilege
     my %Groups = $Self->{GroupObject}->GroupMemberList(
         UserID => $Param{UserID},
         Type   => $Param{Type},
         Result => 'HASH',
-        Cached => $Cached,
     );
 
     # deny access if the agent doesn't have the appropriate type in the appropriate group
@@ -183,11 +179,11 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Id: ChangeAgentCheck.pm,v 1.15 2009-11-19 13:48:06 bes Exp $
+$Id: ChangeAgentCheck.pm,v 1.16 2010-10-27 22:27:30 ub Exp $
 
 =cut
 
