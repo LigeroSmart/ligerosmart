@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTemplateOverviewSmall.pm,v 1.6 2010-10-12 03:09:39 mp Exp $
+# $Id: ITSMTemplateOverviewSmall.pm,v 1.7 2010-10-27 16:34:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -122,11 +122,11 @@ sub Run {
             $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
 
             # get user data for needed user types
-            USER_TYPE:
+            USERTYPE:
             for my $UserType (qw(CreateBy ChangeBy)) {
 
                 # check if UserType attribute exists in the template
-                next USER_TYPE if !$Data{$UserType};
+                next USERTYPE if !$Data{$UserType};
 
                 # get user data
                 my %User = $Self->{UserObject}->GetUserData(
