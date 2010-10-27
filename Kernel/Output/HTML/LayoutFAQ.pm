@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.7 2009-04-02 15:33:14 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.8 2010-10-27 22:14:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub AgentFAQCategoryListOption {
 
@@ -43,7 +43,7 @@ sub AgentFAQCategoryListOption {
     my %CategoryList = %{ $Param{CategoryList} };
 
     # build tree list
-    $Output .= '<select name="' . $Param{Name} . "\" $Size $Multiple $OnChangeSubmit>";
+    $Output .= '<select name="' . $Param{Name} . "\" id=\"" . $Param{Name} . "\" $Size $Multiple $OnChangeSubmit>";
 
     if ( $Param{RootElement} ) {
         $Output .= '<option value="0">-</option>';
