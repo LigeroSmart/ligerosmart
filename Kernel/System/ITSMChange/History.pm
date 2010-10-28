@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: History.pm,v 1.27 2010-06-15 01:48:53 ub Exp $
+# $Id: History.pm,v 1.28 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,8 @@ package Kernel::System::ITSMChange::History;
 use strict;
 use warnings;
 
-use Kernel::System::User;
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -85,15 +83,15 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
+    for my $Object (
+        qw(DBObject ConfigObject EncodeObject LogObject UserObject MainObject TimeObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
     # set default debug flag
     $Self->{Debug} ||= 0;
-
-    # create additional objects
-    $Self->{UserObject} = Kernel::System::User->new( %{$Self} );
 
     return $Self;
 }
@@ -916,12 +914,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2010-06-15 01:48:53 $
+$Revision: 1.28 $ $Date: 2010-10-28 12:31:07 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.12 2010-07-05 11:38:53 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.13 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject TimeObject MainObject EncodeObject)
+        qw(DBObject ConfigObject LogObject UserObject TimeObject UserObject GroupObject MainObject EncodeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";

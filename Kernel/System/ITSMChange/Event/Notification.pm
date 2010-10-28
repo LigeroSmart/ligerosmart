@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.28 2010-05-21 10:22:12 ub Exp $
+# $Id: Notification.pm,v 1.29 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,10 +19,9 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::Notification;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::LinkObject;
-use Kernel::System::Group;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -91,7 +90,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -102,7 +101,6 @@ sub new {
     $Self->{WorkOrderObject}          = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
     $Self->{ChangeNotificationObject} = Kernel::System::ITSMChange::Notification->new( %{$Self} );
     $Self->{LinkObject}               = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{GroupObject}              = Kernel::System::Group->new( %{$Self} );
 
     # TODO: find better way to look up event ids
     $Self->{HistoryObject} = Kernel::System::ITSMChange::History->new( %{$Self} );
@@ -552,12 +550,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-05-21 10:22:12 $
+$Revision: 1.29 $ $Date: 2010-10-28 12:31:07 $
 
 =cut

@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.10 2010-02-26 07:57:03 reb Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.11 2010-10-28 12:31:07 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 use Kernel::Config;
 use Kernel::System::Encode;
@@ -39,6 +39,8 @@ use Kernel::System::Time;
 use Kernel::System::Log;
 use Kernel::System::Main;
 use Kernel::System::DB;
+use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -82,6 +84,8 @@ $CommonObject{LogObject}    = Kernel::System::Log->new(
 $CommonObject{MainObject}      = Kernel::System::Main->new(%CommonObject);
 $CommonObject{TimeObject}      = Kernel::System::Time->new(%CommonObject);
 $CommonObject{DBObject}        = Kernel::System::DB->new(%CommonObject);
+$CommonObject{UserObject}      = Kernel::System::User->new(%CommonObject);
+$CommonObject{GroupObject}     = Kernel::System::Group->new(%CommonObject);
 $CommonObject{ChangeObject}    = Kernel::System::ITSMChange->new(%CommonObject);
 $CommonObject{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%CommonObject);
 $CommonObject{HistoryObject}   = Kernel::System::ITSMChange::History->new(%CommonObject);
@@ -91,7 +95,7 @@ my $MockedObject = OTRSMockObject->new(%CommonObject);
 # check args
 my $Command = shift || '--help';
 print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
-print "Copyright (C) 2003-2010 OTRS AG, http://otrs.com/\n";
+print "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 
 # if sysconfig option is disabled -> exit
 my $SysConfig = $CommonObject{ConfigObject}->Get('ITSMChange::TimeReachedNotifications');

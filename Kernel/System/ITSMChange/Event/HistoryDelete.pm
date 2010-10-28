@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryDelete.pm - HistoryDelete event module for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: HistoryDelete.pm,v 1.2 2010-07-27 10:47:06 ub Exp $
+# $Id: HistoryDelete.pm,v 1.3 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -86,7 +86,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)
+        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -192,6 +192,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-07-27 10:47:06 $
+$Revision: 1.3 $ $Date: 2010-10-28 12:31:07 $
 
 =cut

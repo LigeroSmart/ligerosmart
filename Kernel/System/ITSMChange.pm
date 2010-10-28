@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.262 2010-10-27 22:27:30 ub Exp $
+# $Id: ITSMChange.pm,v 1.263 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,8 +16,6 @@ use warnings;
 
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
-use Kernel::System::User;
-use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::ITSMChange::ITSMStateMachine;
@@ -30,7 +28,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.262 $) [1];
+$VERSION = qw($Revision: 1.263 $) [1];
 
 =head1 NAME
 
@@ -100,7 +98,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
+    for my $Object (
+        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -111,8 +112,6 @@ sub new {
     $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     $Self->{LinkObject}           = Kernel::System::LinkObject->new( %{$Self} );
-    $Self->{UserObject}           = Kernel::System::User->new( %{$Self} );
-    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
     $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{HTMLUtilsObject}      = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{StateMachineObject}   = Kernel::System::ITSMChange::ITSMStateMachine->new( %{$Self} );
@@ -3660,6 +3659,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.262 $ $Date: 2010-10-27 22:27:30 $
+$Revision: 1.263 $ $Date: 2010-10-28 12:31:07 $
 
 =cut

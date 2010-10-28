@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm - all advice functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagementHistory.pm,v 1.5 2010-02-22 10:09:10 reb Exp $
+# $Id: ITSMChangeManagementHistory.pm,v 1.6 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,7 +29,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject TimeObject MainObject EncodeObject)
+        qw(DBObject ConfigObject LogObject UserObject GroupObject TimeObject MainObject EncodeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";

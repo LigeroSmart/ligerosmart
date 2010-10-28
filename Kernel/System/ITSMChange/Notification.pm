@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.41 2010-05-21 10:22:12 ub Exp $
+# $Id: Notification.pm,v 1.42 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,13 +20,12 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Notification;
-use Kernel::System::User;
 use Kernel::System::Valid;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 =head1 NAME
 
@@ -96,7 +95,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject EncodeObject LogObject MainObject TimeObject)) {
+    for my $Object (
+        qw(DBObject ConfigObject EncodeObject LogObject UserObject GroupObject MainObject TimeObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -105,7 +107,6 @@ sub new {
 
     # create additional objects
     $Self->{NotificationObject} = Kernel::System::Notification->new( %{$Self} );
-    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
     $Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
@@ -1382,12 +1383,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2010-05-21 10:22:12 $
+$Revision: 1.42 $ $Date: 2010-10-28 12:31:07 $
 
 =cut

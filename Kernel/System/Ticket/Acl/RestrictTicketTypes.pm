@@ -4,7 +4,7 @@
 # - sysconfig option 'ITSMChange::AddChangeLinkTicketTypes' to certain groups -
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: RestrictTicketTypes.pm,v 1.6 2010-05-25 13:47:51 ub Exp $
+# $Id: RestrictTicketTypes.pm,v 1.7 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(ConfigObject DBObject TicketObject LogObject UserObject MainObject TimeObject)
+        qw(ConfigObject DBObject TicketObject LogObject UserObject GroupObject MainObject TimeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";

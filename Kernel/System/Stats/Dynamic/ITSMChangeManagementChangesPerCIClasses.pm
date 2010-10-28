@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementChangesPerCIClasses.pm - all advice functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.11 2010-02-22 10:09:10 reb Exp $
+# $Id: ITSMChangeManagementChangesPerCIClasses.pm,v 1.12 2010-10-28 12:31:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -30,7 +30,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(DBObject ConfigObject LogObject UserObject TimeObject MainObject EncodeObject)
+        qw(DBObject ConfigObject LogObject UserObject GroupObject TimeObject MainObject EncodeObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
