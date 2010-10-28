@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.3 2010-10-27 22:16:35 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.4 2010-10-28 21:23:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,14 +65,14 @@ sub Run {
         }
 
         # get language data
-        my %Data = $Self->{FAQObject}->LanguageGet( ID => $ID );
+        my %LanguageData = $Self->{FAQObject}->LanguageGet( ID => $ID );
 
         # output change language screen
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Self->_Edit(
             Action => 'Change',
-            %Data,
+            %LanguageData,
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
@@ -297,12 +297,12 @@ sub _Overview {
         for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
 
             # get languages result
-            my %Data = $Self->{FAQObject}->LanguageGet( ID => $LanguageID );
+            my %LanguageData = $Self->{FAQObject}->LanguageGet( ID => $LanguageID );
 
             #output results
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewResultRow',
-                Data => { %Data },
+                Data => { %LanguageData },
             );
         }
     }
