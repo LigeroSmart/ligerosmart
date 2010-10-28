@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.15 2010-10-19 11:22:20 cr Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.16 2010-10-28 12:23:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -219,12 +219,12 @@ sub Run {
             %Data = ( %{$Change}, %Data );
 
             # get user data for needed user types
-            USER_TYPE:
+            USERTYPE:
             for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
 
                 # check if UserType attribute exists either in change or workorder
                 if ( !$Change->{ $UserType . 'ID' } && !$Data{ $UserType . 'ID' } ) {
-                    next USER_TYPE;
+                    next USERTYPE;
                 }
 
                 # get user data
