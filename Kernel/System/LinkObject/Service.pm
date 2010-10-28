@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/Service.pm - to link service objects
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.8 2010-08-14 03:39:30 ub Exp $
+# $Id: Service.pm,v 1.9 2010-10-28 17:07:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,13 +27,11 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (
-        qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject)
-        )
-    {
+    for my $Object (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    # create additional objects
     $Self->{ServiceObject} = Kernel::System::Service->new( %{$Self} );
 
     return $Self;
@@ -86,7 +84,7 @@ sub LinkListWithData {
                     UserID    => $Param{UserID},
                 );
 
-                # remove id from hash if service can not get
+                # remove id from hash if no service data was found
                 if ( !%ServiceData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$ServiceID};
                     next SERVICEID;
@@ -107,8 +105,8 @@ return a hash of object descriptions
 
 Return
     %Description = (
-        Normal => "Service: ServiceName",
-        Long   => "Service: ParentService::ServiceName",
+        Normal => "Service ServiceName",
+        Long   => "Service ParentService::ServiceName",
     );
 
     %Description = $LinkObject->ObjectDescriptionGet(
