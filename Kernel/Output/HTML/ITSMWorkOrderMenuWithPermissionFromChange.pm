@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.6 2010-10-19 15:55:46 en Exp $
+# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.7 2010-10-28 12:51:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -26,7 +26,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject WorkOrderObject UserID)
+        qw(ConfigObject EncodeObject LogObject DBObject UserObject GroupObject LayoutObject WorkOrderObject UserID)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";

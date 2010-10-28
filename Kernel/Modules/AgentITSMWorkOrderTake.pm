@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderTake.pm - the OTRS::ITSM::ChangeManagement workorder take module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderTake.pm,v 1.7 2010-10-19 15:54:47 en Exp $
+# $Id: AgentITSMWorkOrderTake.pm,v 1.8 2010-10-28 12:56:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,7 +29,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject UserObject GroupObject)
         )
     {
         if ( !$Self->{$Object} ) {

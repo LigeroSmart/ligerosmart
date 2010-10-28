@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketMenuITSMChange.pm - ITSMChange specific module for the ticket menu
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketMenuITSMChange.pm,v 1.8 2010-10-15 15:25:31 dz Exp $
+# $Id: TicketMenuITSMChange.pm,v 1.9 2010-10-28 12:51:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 use Kernel::System::ITSMChange;
 
@@ -28,7 +28,7 @@ sub new {
 
     # get needed objects
     for my $Object (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID GroupObject TicketObject)
+        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject GroupObject TicketObject)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";

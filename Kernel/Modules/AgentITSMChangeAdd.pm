@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.65 2010-06-29 13:36:40 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.66 2010-10-28 12:56:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,7 +31,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }

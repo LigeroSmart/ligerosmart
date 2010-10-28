@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePIR.pm - the OTRS::ITSM::ChangeManagement PIR overview module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangePIR.pm,v 1.8 2010-10-18 20:23:25 cr Exp $
+# $Id: AgentITSMChangePIR.pm,v 1.9 2010-10-28 12:56:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }

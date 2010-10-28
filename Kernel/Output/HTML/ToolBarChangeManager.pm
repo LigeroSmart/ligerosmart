@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ToolBarChangeManager.pm
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarChangeManager.pm,v 1.1 2010-10-15 09:26:52 cr Exp $
+# $Id: ToolBarChangeManager.pm,v 1.2 2010-10-28 12:51:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,7 +27,10 @@ sub new {
     bless( $Self, $Type );
 
     # get needed objects
-    for (qw(ConfigObject LogObject DBObject TicketObject GroupObject LayoutObject UserID)) {
+    for (
+        qw(ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID)
+        )
+    {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
     }
 
@@ -58,7 +61,6 @@ sub Run {
         UserID => $Self->{UserID},
         Type   => $Config->{Permission},
         Result => 'HASH',
-        Cached => 1,
     );
 
     # deny access if the agent doesn't have the appropriate type in the appropriate group
@@ -82,8 +84,8 @@ sub Run {
     }
 
     # get ToolBar object parameters
-    my $Class        = $Param{Config}->{CssClass};
-    my $Text        = $Self->{LayoutObject}->{LanguageObject}->Get('Change Manager');
+    my $Class = $Param{Config}->{CssClass};
+    my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('Change Manager');
 
     # set ToolBar object
     my $URL = $Self->{LayoutObject}->{Baselink};

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.42 2010-10-27 22:15:30 ub Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.43 2010-10-28 12:56:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,7 +34,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject)
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
         )
     {
         if ( !$Self->{$Object} ) {

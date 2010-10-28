@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateEdit.pm - the template edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateEdit.pm,v 1.5 2010-09-23 17:48:51 en Exp $
+# $Id: AgentITSMTemplateEdit.pm,v 1.6 2010-10-28 12:56:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject)) {
+    for my $Object (
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
+        )
+    {
         if ( !$Self->{$Object} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }

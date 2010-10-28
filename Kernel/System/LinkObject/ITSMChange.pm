@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/ITSMChange.pm - to link change objects
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.8 2010-10-18 21:51:00 cr Exp $
+# $Id: ITSMChange.pm,v 1.9 2010-10-28 12:54:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,12 @@ package Kernel::System::LinkObject::ITSMChange;
 use strict;
 use warnings;
 
+use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +37,8 @@ sub new {
     }
 
     # create additional objects
+    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
+    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new( %{$Self} );
 
     return $Self;

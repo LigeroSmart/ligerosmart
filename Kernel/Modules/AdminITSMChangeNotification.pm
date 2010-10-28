@@ -3,7 +3,7 @@
 # notification rules for ITSM change management
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMChangeNotification.pm,v 1.14 2010-09-14 20:54:11 mp Exp $
+# $Id: AdminITSMChangeNotification.pm,v 1.15 2010-10-28 12:56:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Notification;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -30,7 +30,10 @@ sub new {
     bless( $Self, $Type );
 
     # check all needed objects
-    for my $NeededObject (qw(ParamObject DBObject LayoutObject ConfigObject LogObject)) {
+    for my $NeededObject (
+        qw(ParamObject DBObject LayoutObject UserObject GroupObject ConfigObject LogObject)
+        )
+    {
         if ( !$Self->{$NeededObject} ) {
             $Self->{LayoutObject}->FatalError( Message => "Got no $NeededObject!" );
         }
