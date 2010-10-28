@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.8 2010-10-27 22:14:27 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.9 2010-10-28 20:57:15 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub AgentFAQCategoryListOption {
 
@@ -75,6 +75,8 @@ sub AgentFAQCategoryListOptionElement {
     my $LevelCounter = $Param{LevelCounter} || 0;
     my $ParentID     = $Param{ParentID};
 
+    my %ParentNames;
+
     my %CategoryList       = %{ $Param{CategoryList} };
     my %CategoryLevelList  = %{ $CategoryList{ $ParentID } };
     my %SelectedIDs        = map { $_ => 1 } @{ $Param{SelectedIDs} };
@@ -105,10 +107,19 @@ sub AgentFAQCategoryListOptionElement {
             $Output .= ' selected';
         }
         $Output .= '>';
-        for ( my $i = 0; $i < $LevelCounter; $i++ ) {
-            $Output .= '&nbsp;&nbsp;';
+
+        # get category name
+        my $CategoryName = $CategoryLevelList{$SubCategoryID};
+
+        # append parent name to child category name
+        if ( $ParentNames{$ParentID} ) {
+            $CategoryName = $ParentNames{$ParentID} . '::' . $CategoryName;
         }
-        $Output .= $CategoryLevelList{$SubCategoryID};
+
+        # set current child complete name to ParentNames hash for further use
+        $ParentNames{$SubCategoryID} = $CategoryName;
+
+        $Output .= $CategoryName;
         $Output .= '</option>';
 
         # check if subcategory has own subcategories
