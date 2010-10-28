@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.2 2010-10-27 22:21:31 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.3 2010-10-28 18:15:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::System::Valid;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -136,7 +136,7 @@ sub Run {
         # send server error if any required parameters is missing
         if ($ServerError){
             $Self->_Edit(
-                Action      => 'Add',
+                Action      => 'Change',
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -389,10 +389,16 @@ sub _Edit {
         SelectedID => $Param{PermissionGroups},
     );
 
+    my %CategoryList = %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) };
+
+    if ( $Param{Action} eq 'Change' && $Param{CategoryID} ) {
+
+        # delete own category from parent list
+        delete $CategoryList{ $Param{ParentID} }->{ $Param{CategoryID} };
+    }
+
     $Param{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList        => {
-                %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) }
-        },
+        CategoryList        => { %CategoryList },
         Size                => 1,
         Name                => 'ParentID',
         HTMLQuote           => 1,
