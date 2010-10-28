@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.4 2010-10-28 20:53:59 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.5 2010-10-28 21:20:58 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::System::Valid;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -74,18 +74,18 @@ sub Run {
         }
 
         # get category data
-        my %Data = $Self->{FAQObject}->CategoryGet( CategoryID => $GetParam{ID} );
+        my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $GetParam{ID} );
 
-        $Data{ID} = $Data{CategoryID};
+        $CategoryData{ID} = $CategoryData{CategoryID};
 
-        $Data{PermissionGroups} = $Self->{FAQObject}->GetCategoryGroup(
+        $CategoryData{PermissionGroups} = $Self->{FAQObject}->GetCategoryGroup(
             CategoryID => $GetParam{ID},
         );
 
         # set validation class
         for my $ValidationObject ( qw(Name Comment PermissionGroups) ){
             if ( !$GetParam{ "$ValidationObject" . 'RequiredClass' } ) {
-                $GetParam{ "$ValidationObject" . 'RequiredClass' }  = "!Validate_Required ";
+                $GetParam{ "$ValidationObject" . 'RequiredClass' }  = "Validate_Required ";
             }
         }
 
@@ -99,7 +99,7 @@ sub Run {
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Self->_Edit(
             Action => 'Change',
-            %Data,
+            %CategoryData,
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
@@ -216,7 +216,7 @@ sub Run {
         # set validation class
         for my $ValidationObject ( qw(Name Comment PermissionGroups) ){
             if ( !$GetParam{ "$ValidationObject" . 'RequiredClass' } ) {
-                $GetParam{ "$ValidationObject" . 'RequiredClass' }  = "!Validate_Required ";
+                $GetParam{ "$ValidationObject" . 'RequiredClass' }  = "Validate_Required ";
             }
         }
 
@@ -488,23 +488,24 @@ sub _FAQCategoryTableOutput {
         %CategoryLevelList = %{ $CategoryList{ $ParentID } };
 
         # get category details
-        my %Data = $Self->{FAQObject}->CategoryGet( CategoryID => $SubCategoryID );
+        my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $SubCategoryID );
 
         # append parent name to child category name
         if ( $ParentNames{$ParentID} ) {
-            $Data{Name} = $ParentNames{$ParentID} . '::' . $Data{Name};
+            $CategoryData{Name} = $ParentNames{$ParentID} . '::' . $CategoryData{Name};
         }
 
         # set current child complete name to ParentNames hash for further use
-        $ParentNames{$SubCategoryID} = $Data{Name};
+        $ParentNames{$SubCategoryID} = $CategoryData{Name};
 
         # get valid string based on ValidID
-        $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
+        $CategoryData{Valid}
+            = $Self->{ValidObject}->ValidLookup( ValidID => $CategoryData{ValidID} );
 
         #output results
         $Self->{LayoutObject}->Block(
             Name => 'OverviewResultRow',
-            Data => { %Data },
+            Data => { %CategoryData },
         );
 
         # check if subcategory has own subcategories
