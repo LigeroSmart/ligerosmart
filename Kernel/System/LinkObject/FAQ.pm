@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.12 2009-10-01 18:31:45 martin Exp $
+# $Id: FAQ.pm,v 1.13 2010-10-28 17:08:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,14 +27,26 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject UserID)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(DBObject ConfigObject LogObject MainObject EncodeObject TimeObject)) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
+    # create additional objects
     $Self->{FAQObject} = Kernel::System::FAQ->new( %{$Self} );
 
     return $Self;
 }
+
+=item LinkListWithData()
+
+fill up the link list with data
+
+    $Success = $LinkObjectBackend->LinkListWithData(
+        LinkList => $HashRef,
+        UserID   => 1,
+    );
+
+=cut
 
 sub LinkListWithData {
     my ( $Self, %Param ) = @_;
@@ -63,28 +75,46 @@ sub LinkListWithData {
 
         for my $Direction ( keys %{ $Param{LinkList}->{$LinkType} } ) {
 
+            FAQID:
             for my $FAQID ( keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get faq data
-                my %Data = $Self->{FAQObject}->FAQGet(
+                my %FAQData = $Self->{FAQObject}->FAQGet(
                     FAQID  => $FAQID,
                     UserID => $Param{UserID},
                 );
 
-                # remove id from hash if faq can not get
-                if ( !%Data ) {
+                # remove id from hash if no faq data was found
+                if ( !%FAQData ) {
                     delete $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID};
-                    next;
+                    next FAQID;
                 }
 
                 # add faq data
-                $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID} = \%Data;
+                $Param{LinkList}->{$LinkType}->{$Direction}->{$FAQID} = \%FAQData;
             }
         }
     }
 
     return 1;
 }
+
+=item ObjectDescriptionGet()
+
+return a hash of object descriptions
+
+Return
+    %Description = (
+        Normal => "FAQ# 1234",
+        Long   => "FAQ# 1234: FAQName",
+    );
+
+    %Description = $LinkObject->ObjectDescriptionGet(
+        Key     => 123,
+        UserID  => 1,
+    );
+
+=cut
 
 sub ObjectDescriptionGet {
     my ( $Self, %Param ) = @_;
@@ -125,6 +155,28 @@ sub ObjectDescriptionGet {
     return %Description;
 }
 
+=item ObjectSearch()
+
+return a hash list of the search results
+
+Return
+    $SearchList = {
+        NOTLINKED => {
+            Source => {
+                12  => $DataOfItem12,
+                212 => $DataOfItem212,
+                332 => $DataOfItem332,
+            },
+        },
+    };
+
+    $SearchList = $LinkObjectBackend->ObjectSearch(
+        SearchParams => $HashRef,  # (optional)
+        UserID       => 1,
+    );
+
+=cut
+
 sub ObjectSearch {
     my ( $Self, %Param ) = @_;
 
@@ -140,42 +192,71 @@ sub ObjectSearch {
     # set default params
     $Param{SearchParams} ||= {};
 
-    # set focus
+    # add wildcards
+    my %Search;
     if ( $Param{SearchParams}->{Title} ) {
-        $Param{SearchParams}->{Title} = '*' . $Param{SearchParams}->{Title} . '*';
+        $Search{Title} = '*' . $Param{SearchParams}->{Title} . '*';
     }
     if ( $Param{SearchParams}->{Number} ) {
-        $Param{SearchParams}->{Number} = '*' . $Param{SearchParams}->{Number} . '*';
+        $Search{Number} = '*' . $Param{SearchParams}->{Number} . '*';
     }
     if ( $Param{SearchParams}->{What} ) {
-        $Param{SearchParams}->{What} = '*' . $Param{SearchParams}->{What} . '*';
+        $Search{What} = '*' . $Param{SearchParams}->{What} . '*';
     }
 
     # search the faqs
     my @FAQIDs = $Self->{FAQObject}->FAQSearch(
         %{ $Param{SearchParams} },
+        %Search,
         Order => 'Created',
         Sort  => 'down',
         Limit => 50,
     );
 
     my %SearchList;
+    FAQID:
     for my $FAQID (@FAQIDs) {
 
         # get ticket data
-        my %Data = $Self->{FAQObject}->FAQGet(
+        my %FAQData = $Self->{FAQObject}->FAQGet(
             FAQID  => $FAQID,
             UserID => $Param{UserID},
         );
 
-        next if !%Data;
+        next FAQID if !%FAQData;
 
         # add ticket data
-        $SearchList{NOTLINKED}->{Source}->{$FAQID} = \%Data;
+        $SearchList{NOTLINKED}->{Source}->{$FAQID} = \%FAQData;
     }
 
     return \%SearchList;
 }
+
+=item LinkAddPre()
+
+link add pre event module
+
+    $True = $LinkObject->LinkAddPre(
+        Key          => 123,
+        SourceObject => 'FAQ',
+        SourceKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+    or
+
+    $True = $LinkObject->LinkAddPre(
+        Key          => 123,
+        TargetObject => 'FAQ',
+        TargetKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+=cut
 
 sub LinkAddPre {
     my ( $Self, %Param ) = @_;
@@ -196,6 +277,32 @@ sub LinkAddPre {
     return 1;
 }
 
+=item LinkAddPost()
+
+link add pre event module
+
+    $True = $LinkObject->LinkAddPost(
+        Key          => 123,
+        SourceObject => 'FAQ',
+        SourceKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+    or
+
+    $True = $LinkObject->LinkAddPost(
+        Key          => 123,
+        TargetObject => 'FAQ',
+        TargetKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+=cut
+
 sub LinkAddPost {
     my ( $Self, %Param ) = @_;
 
@@ -215,6 +322,32 @@ sub LinkAddPost {
     return 1;
 }
 
+=item LinkDeletePre()
+
+link delete pre event module
+
+    $True = $LinkObject->LinkDeletePre(
+        Key          => 123,
+        SourceObject => 'FAQ',
+        SourceKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+    or
+
+    $True = $LinkObject->LinkDeletePre(
+        Key          => 123,
+        TargetObject => 'FAQ',
+        TargetKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+=cut
+
 sub LinkDeletePre {
     my ( $Self, %Param ) = @_;
 
@@ -233,6 +366,32 @@ sub LinkDeletePre {
 
     return 1;
 }
+
+=item LinkDeletePost()
+
+link delete post event module
+
+    $True = $LinkObject->LinkDeletePost(
+        Key          => 123,
+        SourceObject => 'FAQ',
+        SourceKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+    or
+
+    $True = $LinkObject->LinkDeletePost(
+        Key          => 123,
+        TargetObject => 'FAQ',
+        TargetKey    => 321,
+        Type         => 'Normal',
+        State        => 'Valid',
+        UserID       => 1,
+    );
+
+=cut
 
 sub LinkDeletePost {
     my ( $Self, %Param ) = @_;
