@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.3 2010-10-28 18:15:03 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.4 2010-10-28 20:53:59 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::System::Valid;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -462,6 +462,8 @@ sub _FAQCategoryTableOutput {
     my $LevelCounter = $Param{LevelCounter} || 0;
     my $ParentID     = $Param{ParentID};
 
+    my %ParentNames;
+
     my %CategoryList       = %{ $Param{CategoryList} };
     my %CategoryLevelList  = %{ $CategoryList{ $ParentID } };
 
@@ -488,10 +490,15 @@ sub _FAQCategoryTableOutput {
         # get category details
         my %Data = $Self->{FAQObject}->CategoryGet( CategoryID => $SubCategoryID );
 
-        # set indentation to display in the cell style based on 10 px and 15 px for each level
-        $Data{Indentation} = 10 + ($LevelCounter * 15);
+        # append parent name to child category name
+        if ( $ParentNames{$ParentID} ) {
+            $Data{Name} = $ParentNames{$ParentID} . '::' . $Data{Name};
+        }
 
-        # get valis string based on ValidID
+        # set current child complete name to ParentNames hash for further use
+        $ParentNames{$SubCategoryID} = $Data{Name};
+
+        # get valid string based on ValidID
         $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
 
         #output results
