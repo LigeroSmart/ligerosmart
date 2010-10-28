@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/FAQ.pm - faq module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.48 2009-07-18 12:45:50 ub Exp $
+# $Id: FAQ.pm,v 1.49 2010-10-28 17:42:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -327,11 +327,14 @@ sub _GetExplorerItemList {
             }
             $Frontend{CssRow}                = $CssRow;
             $Frontend{CssColumnVotingResult} = 'color:'
-                . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $Data{Result} ) . ';';
+                . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $Data{VoteResult} ) . ';';
 
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerFAQItemRow',
-                Data => { %Data, %Frontend },
+                Data => {
+                    %Data,
+                    %Frontend,
+                },
             );
         }
     }
@@ -641,7 +644,7 @@ sub GetItemView {
 
     # item view
     $Frontend{CssColumnVotingResult} = 'color:'
-        . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $ItemData{Result} ) . ';';
+        . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $ItemData{VoteResult} ) . ';';
     $Self->{LayoutObject}->Block(
         Name => 'View',
         Data => { %Param, %ItemData, %Frontend },
@@ -795,7 +798,7 @@ sub GetItemSmallView {
 
     # item view
     $Frontend{CssColumnVotingResult} = 'color:'
-        . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $ItemData{Result} ) . ';';
+        . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $ItemData{VoteResult} ) . ';';
     $Frontend{ItemFieldValues} = $Self->_GetItemFieldValues( ItemData => \%ItemData );
 
     # only convert html to plain text if rich text editor is not used
@@ -1299,12 +1302,15 @@ sub GetItemSearch {
                 $Data{CssRow} = $CssRow;
                 $Frontend{CssColumnVotingResult}
                     = 'color:'
-                    . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $Data{Result} )
+                    . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $Data{VoteResult} )
                     . ';';
 
                 $Self->{LayoutObject}->Block(
                     Name => 'SearchResultRow',
-                    Data => { %Data, %Frontend },
+                    Data => {
+                        %Data,
+                        %Frontend,
+                    },
                 );
             }
         }

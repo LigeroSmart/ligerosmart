@@ -1,8 +1,8 @@
 # --
 # AgentFAQ.dtl - provides HTML view for faq articles
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.dtl,v 1.51 2009-07-30 19:23:32 ub Exp $
+# $Id: AgentFAQ.dtl,v 1.52 2010-10-28 17:42:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -137,8 +137,8 @@ $Include{"RichTextEditorFAQ"}
         </tr>
 <!-- dtl:block:ViewApproval -->
         <tr>
-          <td class="contentkey">$Text{"Result"}:</td>
-          <td style="$Data{"CssColumnVotingResult"}"> $QData{"Result"} &#37;</td>
+          <td class="contentkey">$Text{"VoteResult"}:</td>
+          <td style="$Data{"CssColumnVotingResult"}"> $QData{"VoteResult"} &#37;</td>
         </tr>
         <tr>
           <td class="contentkey">$Text{"Votes"}:</td>
@@ -354,8 +354,8 @@ function updateMessage()
           </tr>
 <!-- dtl:block:FAQItemViewAttachmentSmall -->
           <tr valign="top">
-            <td class="contentkey">$Text{"Result"}:</td>
-            <td style="$Data{"CssColumnVotingResult"}"> $QData{"Result"} &#37;</td>
+            <td class="contentkey">$Text{"VoteResult"}:</td>
+            <td style="$Data{"CssColumnVotingResult"}"> $QData{"VoteResult"} &#37;</td>
           </tr>
           <tr valign="top">
             <td class="contentkey">$Text{"Votes"}:</td>

@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.86 2010-10-27 23:25:58 ub Exp $
+# $Id: FAQ.pm,v 1.87 2010-10-28 17:41:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.86 $) [1];
+$VERSION = qw($Revision: 1.87 $) [1];
 
 =head1 NAME
 
@@ -113,11 +113,12 @@ sub FAQGet {
     }
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return {};
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => "Need ItemID!",
+        );
+        return;
     }
 
     return if !$Self->{DBObject}->Prepare(
@@ -132,14 +133,21 @@ sub FAQGet {
             ' FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l ' .
             ' WHERE i.state_id = s.id AND s.type_id = st.id AND i.category_id = c.id AND ' .
             ' i.f_language_id = l.id AND i.id = ?',
-        Bind => [
-            \$Param{ItemID},
-        ],
+        Bind => [ \$Param{ItemID} ],
     );
+
+    # get vote data for this FAQ item
+    my $VoteData = $Self->ItemVoteDataGet( ItemID => $Param{ItemID} );
+
+    # get number of decimal places from config
+    my $DecimalPlaces = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultDecimalPlaces') || 0;
+
+    # format the vote result
+    my $VoteResult = sprintf( "%0." . $DecimalPlaces . "f", $VoteData->{Result} || 0 );
 
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        my %VoteData = %{ $Self->ItemVoteDataGet( ItemID => $Param{ItemID} ) };
+
         %Data = (
 
             # var for old versions
@@ -179,19 +187,17 @@ sub FAQGet {
             Number        => $Row[28],
             StateTypeID   => $Row[29],
             StateTypeName => $Row[30],
-            Result        => sprintf(
-                "%0."
-                    . $Self->{ConfigObject}->Get(
-                    "FAQ::Explorer::ItemList::VotingResultDecimalPlaces"
-                    )
-                    . "f",
-                $VoteData{Result} || 0
-            ),
-            Votes => $VoteData{Votes},
+            VoteResult    => $VoteResult,
+            Votes         => $VoteData->{Votes},
         );
     }
+
+    # check error
     if ( !%Data ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "No such ItemID $Param{ItemID}!" );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => "No such ItemID $Param{ItemID}!",
+        );
         return;
     }
 
@@ -223,42 +229,43 @@ sub ItemVoteDataGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return 0;
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => "Need ItemID!",
+        );
+        return;
     }
 
     # check cache
     my $CacheKey = 'ItemVoteDataGet::' . $Param{ItemID};
-    my $Cache    = $Self->{CacheObject}->Get(
+    my $Cache = $Self->{CacheObject}->Get(
         Type => 'FAQ',
         Key  => $CacheKey,
     );
     return $Cache if $Cache;
 
-    # real database query
+    # get vote from db
     return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = ?',
         Bind  => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
-    my %Hash;
-    if ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        $Hash{Votes}  = $Data[0];
-        $Hash{Result} = $Data[1];
+    my %Data;
+    if ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Data{Votes}  = $Row[0];
+        $Data{Result} = $Row[1];
     }
 
     # cache result
     $Self->{CacheObject}->Set(
         Type  => 'FAQ',
         Key   => $CacheKey,
-        Value => \%Hash,
+        Value => \%Data,
         TTL   => 60 * 60 * 24 * 2,
     );
 
-    return \%Hash;
+    return \%Data;
 }
 
 =item FAQAdd()
@@ -331,8 +338,8 @@ sub FAQAdd {
             \$Param{Field4},     \$Param{Field5},    \$Param{Field6},
             \$Param{FreeKey1},   \$Param{FreeText1}, \$Param{FreeKey2},   \$Param{FreeText2},
             \$Param{FreeKey3},   \$Param{FreeText3}, \$Param{FreeKey4},   \$Param{FreeText4},
-            \$Self->{UserID}, \$Self->{UserID},
-            ]
+            \$Self->{UserID},    \$Self->{UserID},
+        ],
     );
 
     # get id
@@ -349,7 +356,7 @@ sub FAQAdd {
     my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $ID;
     return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
-        Bind => [ \$Number, \$ID, ],
+        Bind => [ \$Number, \$ID ],
     );
 
     # add history
@@ -369,8 +376,10 @@ sub FAQAdd {
             StateID    => $Param{StateID},
         );
         if ( !$Ok ) {
-            $Self->{LogObject}
-                ->Log( Priority => 'error', Message => "Could not create approval ticket!" );
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Could not create approval ticket!",
+            );
         }
     }
 
@@ -427,10 +436,11 @@ sub FAQUpdate {
             \$Param{Field3},   \$Param{Field4},     \$Param{Field5},   \$Param{Field6},
             \$Param{FreeKey1}, \$Param{FreeText1},  \$Param{FreeKey2}, \$Param{FreeText2},
             \$Param{FreeKey3}, \$Param{FreeText3},  \$Param{FreeKey4}, \$Param{FreeText4},
-            \$Self->{UserID}, \$Param{ItemID},
+            \$Self->{UserID},  \$Param{ItemID},
         ],
     );
 
+    # check if history entry should be added
     return 1 if $Param{HistoryOff};
 
     $Self->FAQHistoryAdd(
@@ -605,8 +615,10 @@ sub AttachmentIndex {
     }
 
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, filename, content_type, content_size, inlineattachment FROM '
-            . 'faq_attachment WHERE faq_id = ? ORDER BY created',
+        SQL => 'SELECT id, filename, content_type, content_size, inlineattachment '
+            . 'FROM faq_attachment '
+            . 'WHERE faq_id = ? '
+            . 'ORDER BY created',
         Bind  => [ \$Param{ItemID} ],
         Limit => 100,
     );
@@ -672,9 +684,10 @@ sub FAQCount {
         }
     }
 
-    my $SQL = 'SELECT COUNT(*) FROM faq_item i, faq_state s' .
-        " WHERE i.category_id IN (${\(join ', ', @{$Param{CategoryIDs}})})" .
-        ' AND i.state_id = s.id';
+    my $SQL = 'SELECT COUNT(*) '
+        . 'FROM faq_item i, faq_state s '
+        . "WHERE i.category_id IN (${\(join ', ', @{$Param{CategoryIDs}})}) "
+        . 'AND i.state_id = s.id';
 
     # count only approved articles
     if ( $Param{OnlyApproved} ) {
@@ -688,7 +701,10 @@ sub FAQCount {
     $Ext .= ' GROUP BY category_id';
     $SQL .= $Ext;
 
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+    return if !$Self->{DBObject}->Prepare(
+        SQL => $SQL,
+        Limit => 200,
+    );
 
     my $Count = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -1075,7 +1091,7 @@ sub HistoryGet {
 
 get the category list as hash
 
-    my %Categories = %{$FAQObject->CategoryList(
+    my %Categories = $FAQObject->CategoryList(
         Valid => 1,
     )};
 
@@ -3166,6 +3182,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.86 $ $Date: 2010-10-27 23:25:58 $
+$Revision: 1.87 $ $Date: 2010-10-28 17:41:58 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # FAQ.dtl - provides HTML view for faq articles
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.dtl,v 1.22 2009-12-09 10:24:11 ub Exp $
+# $Id: FAQ.dtl,v 1.23 2010-10-28 17:42:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -95,8 +95,8 @@
           <td class="contentvalue"> <div title="$QData{"Language"}">$QData{"Language"}</div></td>
         </tr>
         <tr>
-          <td class="contentkey">$Text{"Result"}:</td>
-          <td style="$Data{"CssColumnVotingResult"}"> $QData{"Result"} &#37;</td>
+          <td class="contentkey">$Text{"VoteResult"}:</td>
+          <td style="$Data{"CssColumnVotingResult"}"> $QData{"VoteResult"} &#37;</td>
         </tr>
         <tr>
           <td class="contentkey">$Text{"Votes"}:</td>
@@ -203,8 +203,8 @@
           <td class="contentvalue"> $QData{"Votes"}</td>
         </tr>
         <tr>
-          <td class="contentkey">$Text{"Result"}: </td>
-          <td class="contentvalue"> $QData{"Result"} &#37;</td>
+          <td class="contentkey">$Text{"VoteResult"}: </td>
+          <td class="contentvalue"> $QData{"VoteResult"} &#37;</td>
         </tr>
 
         <tr>
@@ -439,7 +439,7 @@
             <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=State&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
           </td>
           <td class="contentkey">
-            $Text{"Result"} (&#37;)
+            $Text{"VoteResult"} (&#37;)
             <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Result&Sort=up"><img border="0" src="$Env{"Images"}up-small.png" alt="$Text{"up"}"></a>&nbsp;/
             <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Explorer&CategoryID=$QData{"CategoryID"}&Order=Result&Sort=down"><img border="0" src="$Env{"Images"}down-small.png" alt="$Text{"down"}"></a>
           </td>
@@ -461,7 +461,7 @@
           </td>
           <td class="$QData{"CssRow"}">$QData{"Language"}</td>
           <td class="$QData{"CssRow"}">$QData{"State"}</td>
-          <td class="$QData{"CssRow"}" style="$Data{"CssColumnVotingResult"}">$QData{"Result"}</td>
+          <td class="$QData{"CssRow"}" style="$Data{"CssColumnVotingResult"}">$QData{"VoteResult"}</td>
           <td class="$QData{"CssRow"}">$QData{"Votes"}</td>
         </tr>
 <!-- dtl:block:ExplorerFAQItemRow -->
