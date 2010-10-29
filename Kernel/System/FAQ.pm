@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.94 2010-10-29 20:07:58 ub Exp $
+# $Id: FAQ.pm,v 1.95 2010-10-29 21:39:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.94 $) [1];
+$VERSION = qw($Revision: 1.95 $) [1];
 
 =head1 NAME
 
@@ -1892,8 +1892,8 @@ sub LanguageList {
 update a language
 
     my $Success = $FAQObject->LanguageUpdate(
-        ID   => 1,
-        Name => 'Some Category',
+        LanguageID => 1,
+        Name       => 'de',
     );
 
 =cut
@@ -1902,7 +1902,7 @@ sub LanguageUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ID Name)) {
+    for my $Argument (qw(LanguageID Name)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1915,7 +1915,7 @@ sub LanguageUpdate {
     # sql
     return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_language SET name = ? WHERE id = ?',
-        Bind => [ \$Param{Name}, \$Param{ID} ],
+        Bind => [ \$Param{Name}, \$Param{LanguageID} ],
     );
 
     return 1;
@@ -1926,8 +1926,8 @@ sub LanguageUpdate {
 check a language
 
     my $Exists = $FAQObject->LanguageDuplicateCheck(
-        Name => 'Some Name',
-        ID   => 1, # for update
+        Name       => 'Some Name',
+        LanguageID => 1, # for update
     );
 
 =cut
@@ -1936,16 +1936,16 @@ sub LanguageDuplicateCheck {
     my ( $Self, %Param ) = @_;
 
     # db quote
-    $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} ) || '';
-    $Param{ID} = $Self->{DBObject}->Quote( $Param{ID}, 'Integer' );
+    $Param{Name}       = $Self->{DBObject}->Quote( $Param{Name} ) || '';
+    $Param{LanguageID} = $Self->{DBObject}->Quote( $Param{LanguageID}, 'Integer' );
 
     # sql
     my $SQL = 'SELECT id FROM faq_language WHERE ';
     if ( defined $Param{Name} ) {
         $SQL .= "name = '$Param{Name}' ";
     }
-    if ( defined $Param{ID} ) {
-        $SQL .= "AND id != '$Param{ID}' ";
+    if ( defined $Param{LanguageID} ) {
+        $SQL .= "AND id != '$Param{LanguageID}' ";
     }
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
     my $Exists = 0;
@@ -1990,7 +1990,7 @@ sub LanguageAdd {
 get a language as hash
 
     my %Language = $FAQObject->LanguageGet(
-        ID => 1,
+        LanguageID => 1,
     );
 
 =cut
@@ -1999,10 +1999,10 @@ sub LanguageGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ID} ) {
+    if ( !$Param{LanguageID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => 'Need ID!',
+            Message => 'Need LanguageID!',
         );
         return;
     }
@@ -2010,13 +2010,13 @@ sub LanguageGet {
     # sql
     return if !$Self->{DBObject}->Prepare(
         SQL  => 'SELECT id, name FROM faq_language WHERE id = ?',
-        Bind => [ \$Param{ID} ],
+        Bind => [ \$Param{LanguageID} ],
     );
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
-            ID   => $Row[0],
-            Name => $Row[1],
+            LanguageID => $Row[0],
+            Name       => $Row[1],
         );
     }
     return %Data;
@@ -3376,6 +3376,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.94 $ $Date: 2010-10-29 20:07:58 $
+$Revision: 1.95 $ $Date: 2010-10-29 21:39:32 $
 
 =cut
