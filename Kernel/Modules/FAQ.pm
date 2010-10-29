@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.49 2010-10-28 17:42:43 ub Exp $
+# $Id: FAQ.pm,v 1.50 2010-10-29 12:18:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -186,6 +186,8 @@ sub GetExplorer {
     if ( exists( $ShowTop10{ $Self->{Interface}{Name} } ) ) {
         $Self->_GetExplorerTop10Items(
             Mode => $Param{Mode},
+            CategoryID   => $GetParam{CategoryID},
+            CustomerUser => $Param{CustomerUser},
         );
     }
 }
@@ -512,6 +514,15 @@ sub _GetExplorerLastCreateItems {
 sub _GetExplorerTop10Items {
     my ( $Self, %Param ) = @_;
 
+    my $Top10ItemIDsRef;
+
+    # check needed parameters
+    for my $ParamName (qw(CategoryID)) {
+        if ( !defined( $Param{$ParamName} ) ) {
+            $Self->{LayoutObject}->FatalError( Message => "Need parameter $ParamName!" )
+        }
+    }
+
     if ( $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show') ) {
 
         # show top 10 block
@@ -527,11 +538,53 @@ sub _GetExplorerTop10Items {
             );
         }
 
-        # get the top 10 articles
-        my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
-            Interface => $Self->{Interface}{Name},
-            Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
-        );
+        if ( defined( $Param{CategoryID} ) ) {
+
+            # add current categoryID
+            my @CategoryIDs = ();
+
+            if ( $Param{CategoryID} ) {
+                push( @CategoryIDs, ( $Param{CategoryID} ) );
+            }
+            if ( !defined( $Param{Mode} ) ) {
+                $Param{Mode} = '';
+            }
+            if ( !defined( $Param{CustomerUser} ) ) {
+                $Param{CustomerUser} = '';
+            }
+
+            # add subcategoryIDs
+            if ( $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::ShowSubCategoryItems') ) {
+                my @SubCategoryIDs = @{
+                    $Self->{FAQObject}->CategorySubCategoryIDList(
+                        ParentID     => $Param{CategoryID},
+                        ItemStates   => $Self->{InterfaceStates},
+                        Mode         => $Param{Mode},
+                        CustomerUser => $Param{CustomerUser},
+                        UserID       => $Self->{UserID},
+                        )
+                    };
+                push( @CategoryIDs, @SubCategoryIDs );
+            }
+
+            if (@CategoryIDs) {
+
+                # get the top 10 articles for categories with at least ro permissions
+                $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
+                    Interface => $Self->{Interface}{Name},
+                    CategoryIDs => \@CategoryIDs,
+                    Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+                );
+            }
+        }
+        else {
+
+            # get the top 10 articles
+               $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
+                Interface => $Self->{Interface}{Name},
+                Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+            );
+        }
 
         # show each top 10 entry
         my $Number;

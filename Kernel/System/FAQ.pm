@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.87 2010-10-28 17:41:58 ub Exp $
+# $Id: FAQ.pm,v 1.88 2010-10-29 12:18:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.87 $) [1];
+$VERSION = qw($Revision: 1.88 $) [1];
 
 =head1 NAME
 
@@ -1091,7 +1091,7 @@ sub HistoryGet {
 
 get the category list as hash
 
-    my %Categories = $FAQObject->CategoryList(
+    my %Categories = %{$FAQObject->CategoryList(
         Valid => 1,
     )};
 
@@ -2854,6 +2854,7 @@ returns an array with the top 10 faq article ids
 
     my $Top10IDsRef = $FAQObject->FAQTop10Get(
         Interface => 'public',
+        CategoryIDs => \@CategoryIds,
         Limit     => 10,
     );
 
@@ -2877,6 +2878,21 @@ sub FAQTop10Get {
         . 'WHERE faq_log.item_id = faq_item.id '
         . 'AND faq_item.state_id = faq_state.id '
         . 'AND faq_state.type_id = faq_state_type.id ';
+
+    # filter just categories with at least ro permission
+    if ( $Param{CategoryIDs} ){
+
+       $SQL .= "AND faq_item.category_id IN (";
+
+       for my $Category ( @{ $Param{CategoryIDs} } ){
+           $SQL .= " '$Category'";
+           if ($Category ne $Param{CategoryIDs}->[-1]){
+               $SQL .= ',';
+           }
+       }
+
+       $SQL .= ")";
+    }
 
     # filter results for public and customer interface
     if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
@@ -3182,6 +3198,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.87 $ $Date: 2010-10-28 17:41:58 $
+$Revision: 1.88 $ $Date: 2010-10-29 12:18:53 $
 
 =cut
