@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.89 2010-10-29 16:57:50 ub Exp $
+# $Id: FAQ.pm,v 1.90 2010-10-29 18:15:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.89 $) [1];
+$VERSION = qw($Revision: 1.90 $) [1];
 
 =head1 NAME
 
@@ -208,12 +208,15 @@ sub FAQGet {
         my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
         $Self->{DBObject}->Do(
             SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
-            Bind => [ \$Number, \$Data{ItemID}, ],
+            Bind => [ \$Number, \$Data{ItemID} ],
         );
         $Data{Number} = $Number;
     }
-    my $Hash = $Self->GetCategoryTree();
-    $Data{CategoryName} = $Hash->{ $Data{CategoryID} };
+
+    # get the catgory long name
+    my $CategoryTree = $Self->GetCategoryTree();
+    $Data{CategoryName} = $CategoryTree->{ $Data{CategoryID} };
+
     return %Data;
 }
 
@@ -1340,7 +1343,7 @@ sub CategorySubCategoryIDList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ParentID} ) {
+    if ( !defined $Param{ParentID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message => 'Need ParentID!',
@@ -2681,6 +2684,7 @@ sub AgentCategorySearch {
         return;
     }
 
+    # set default parent id
     if ( !defined $Param{ParentID} ) {
         $Param{ParentID} = 0;
     }
@@ -2719,9 +2723,11 @@ sub CustomerCategorySearch {
         return;
     }
 
+    # set default parent id
     if ( !defined $Param{ParentID} ) {
         $Param{ParentID} = 0;
     }
+
     my $Categories = $Self->GetCustomerCategories(
         CustomerUser => $Param{CustomerUser},
         Type         => 'ro',
@@ -2740,12 +2746,11 @@ sub CustomerCategorySearch {
     }
     else {
 
-        my $SQL;
-        $SQL = 'SELECT faq_item.id, faq_item.category_id ';
-        $SQL .= 'FROM faq_item, faq_state_type ';
-        $SQL .= 'WHERE faq_state_type.id = faq_item.state_id ';
-        $SQL .= "AND faq_state_type.name != 'internal' ";
-        $SQL .= 'AND approved = 1';
+        my $SQL = 'SELECT faq_item.id, faq_item.category_id '
+            . 'FROM faq_item, faq_state_type '
+            . 'WHERE faq_state_type.id = faq_item.state_id '
+            . "AND faq_state_type.name != 'internal' "
+            . 'AND approved = 1';
 
         return if !$Self->{DBObject}->Prepare(
             SQL => $SQL,
@@ -2824,12 +2829,11 @@ sub PublicCategorySearch {
 
         # check if category contains articles with state public
         my $FoundArticle = 0;
-        my $SQL;
-        $SQL = 'SELECT faq_item.id FROM faq_item, faq_state_type ';
-        $SQL .= 'WHERE faq_item.category_id = ? ';
-        $SQL .= 'AND faq_state_type.id = faq_item.state_id ';
-        $SQL .= "AND faq_state_type.name = 'public' ";
-        $SQL .= 'AND approved = 1';
+        my $SQL = 'SELECT faq_item.id FROM faq_item, faq_state_type '
+            . 'WHERE faq_item.category_id = ? '
+            . 'AND faq_state_type.id = faq_item.state_id '
+            . "AND faq_state_type.name = 'public' "
+            . 'AND approved = 1';
 
         ID:
         for my $ID (@IDs) {
@@ -3072,8 +3076,10 @@ sub FAQApprovalUpdate {
             StateID    => $Data{StateID},
         );
         if ( !$Ok ) {
-            $Self->{LogObject}
-                ->Log( Priority => 'error', Message => "Could not create approval ticket!" );
+            $Self->{LogObject}->Log(
+            	Priority => 'error',
+            	Message => 'Could not create approval ticket!',
+            );
         }
     }
 
@@ -3156,7 +3162,7 @@ sub FAQApprovalTicketCreate {
             UserID      => 1,
             HistoryType => 'SystemRequest',
             HistoryComment =>
-                $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment},
+                $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment} || '',
         );
         return 1;
     }
@@ -3289,6 +3295,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.89 $ $Date: 2010-10-29 16:57:50 $
+$Revision: 1.90 $ $Date: 2010-10-29 18:15:39 $
 
 =cut
