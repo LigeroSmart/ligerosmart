@@ -2,7 +2,7 @@
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.1 2010-10-26 02:01:59 cr Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.2 2010-10-29 21:40:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -66,7 +66,7 @@
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:OverviewResultRow -->
   <tr>
-    <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Change;ID=$LQData{"ID"}">$QData{"Name"}</a></td>
+    <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Change;LanguageID=$LQData{"LanguageID"}">$QData{"Name"}</a></td>
   </tr>
 <!-- dtl:block:OverviewResultRow -->
   </tbody>
@@ -88,7 +88,7 @@
 <form action="$Env{"CGIHandle"}" method="post" class="Validate">
   <input type="hidden" name="Action" value="$Env{"Action"}"/>
   <input type="hidden" name="Subaction" value="$LQData{"Action"}Action"/>
-  <input type="hidden" name="ID" value="$QData{"ID"}"/>
+  <input type="hidden" name="LanguageID" value="$QData{"LanguageID"}"/>
   <fieldset class="TableLike">
   <label class="Mandatory" for="Name"><span class="Marker">*</span> $Text{"Name"}:</label>
   <div class="Field">

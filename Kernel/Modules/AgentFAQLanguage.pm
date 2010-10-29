@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.4 2010-10-28 21:23:29 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.5 2010-10-29 21:40:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,7 +33,7 @@ sub new {
         }
     }
 
-    # create needed objects
+    # create additional objects
     $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
 
     return $Self;
@@ -42,13 +42,17 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my %GetParam = ();
+    my %GetParam;
 
+    # set the user id
     $GetParam{UserID} = $Self->{UserID};
 
     # permission check
     if ( !$Self->{AccessRw} ) {
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need rw permission!",
+            WithHeader => 'yes',
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -56,16 +60,22 @@ sub Run {
     # ------------------------------------------------------------ #
     if ( $Self->{Subaction} eq 'Change' ) {
 
-        $GetParam{RequiredClass}  = "Validate_Required ";
+        # get the LanguageID
+        my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
 
         # check required parameters
-        my $ID = $Self->{ParamObject}->GetParam( Param => 'ID' ) || '';
-        if (! $ID){
-             $Self->{LayoutObject}->FatalError( Message => "Need ID !" );
+        if ( !$LanguageID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'No LanguageID is given!',
+                Comment => 'Please contact the administrator.',
+            );
         }
 
         # get language data
-        my %LanguageData = $Self->{FAQObject}->LanguageGet( ID => $ID );
+        my %LanguageData = $Self->{FAQObject}->LanguageGet( LanguageID => $LanguageID );
+
+        # set class for server validation errors
+        $GetParam{RequiredClass}  = "Validate_Required ";
 
         # output change language screen
         my $Output = $Self->{LayoutObject}->Header();
@@ -73,10 +83,13 @@ sub Run {
         $Self->_Edit(
             Action => 'Change',
             %LanguageData,
+            %GetParam,
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data         => \%Param,
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -91,14 +104,18 @@ sub Run {
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
         # set class for server validation errors
-        $GetParam{RequiredClass}  = "Validate_Required ServerError";
+        $GetParam{RequiredClass} = "Validate_Required ServerError";
 
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # check for name
-        for my $ParamName (qw(ID Name)) {
-            if (! ( $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName ) ) ) {
+        # check for name and language id
+        for my $ParamName (qw(LanguageID Name)) {
+
+            # store needed parameters in %GetParam to make it reloadable
+            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
+
+            if ( !$GetParam{$ParamName} ) {
                 $Self->_Edit(
                     Action      => 'Change',
                     ServerError => 'The name is required',
@@ -113,8 +130,14 @@ sub Run {
             }
         }
 
-        # check for duplicate name
-        if ( $Self->{FAQObject}->LanguageDuplicateCheck( Name => $GetParam{Name}, ID => $GetParam{ID} ) ) {
+        # check for duplicate language name
+        my $LanguageExistsAlready = $Self->{FAQObject}->LanguageDuplicateCheck(
+            Name       => $GetParam{Name},
+            LanguageID => $GetParam{LanguageID},
+        );
+
+        # show the edit screen again
+        if ( $LanguageExistsAlready ) {
             $Self->_Edit(
                 Action      => 'Change',
                 ServerError => "Language '$GetParam{Name}' already exists!",
@@ -128,15 +151,19 @@ sub Run {
             return $Output;
         }
 
-        # create new language and return to overview
-        if ( $Self->{FAQObject}->LanguageUpdate( %GetParam, UserID => $Self->{UserID}, ) ){
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ language updated!' );
-            $Self->_Overview();
-        }
-        else {
+        # update the language
+        my $LanguageUpdateSuccessful = $Self->{FAQObject}->LanguageUpdate(%GetParam);
+
+        # check error
+        if ( !$LanguageUpdateSuccessful ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
+        # show overview
+        $Self->_Overview();
+        $Output .= $Self->{LayoutObject}->Notify(
+            Info => 'FAQ language updated!',
+         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => \%Param,
@@ -149,10 +176,13 @@ sub Run {
     # add
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Add' ) {
+
+        # set class for server validation errors
         $GetParam{RequiredClass}  = "Validate_Required ";
-        for my $ParamName (qw(Name)) {
-            $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
-        }
+
+        # get the new name
+        $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
+
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Self->_Edit(
@@ -161,7 +191,9 @@ sub Run {
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data         => \%Param,
+            Data => {
+                %Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -176,30 +208,36 @@ sub Run {
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
         # set class for server validation errors
-        $GetParam{RequiredClass}  = "Validate_Required ServerError";
+        $GetParam{RequiredClass} = "Validate_Required ServerError";
 
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
+        # get the name
+        $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
+
         # check for name
-        for my $ParamName (qw(Name)) {
-            if (! ( $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName ) ) ) {
-                $Self->_Edit(
-                    Action      => 'Add',
-                    ServerError => 'The name is required',
-                    %GetParam,
-                );
-                $Output .= $Self->{LayoutObject}->Output(
-                    TemplateFile => 'AgentFAQLanguage',
-                    Data         => \%Param,
-                );
-                $Output .= $Self->{LayoutObject}->Footer();
-                return $Output;
-            }
+        if ( !$GetParam{Name} ) {
+            $Self->_Edit(
+                Action      => 'Add',
+                ServerError => 'The name is required',
+                %GetParam,
+            );
+            $Output .= $Self->{LayoutObject}->Output(
+                TemplateFile => 'AgentFAQLanguage',
+                Data         => \%Param,
+            );
+            $Output .= $Self->{LayoutObject}->Footer();
+            return $Output;
         }
 
-        # check for duplicate name
-        if ( $Self->{FAQObject}->LanguageDuplicateCheck( Name => $GetParam{Name} ) ) {
+        # check for duplicate language name
+        my $LanguageExistsAlready = $Self->{FAQObject}->LanguageDuplicateCheck(
+            Name => $GetParam{Name},
+        );
+
+        # show the edit screen again
+        if ( $LanguageExistsAlready ) {
             $Self->_Edit(
                 Action      => 'Add',
                 ServerError => "Language '$GetParam{Name}' already exists!",
@@ -213,18 +251,24 @@ sub Run {
             return $Output;
         }
 
-        # create new language and return to overview
-        if ( $Self->{FAQObject}->LanguageAdd( %GetParam, UserID => $Self->{UserID}, ) ){
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ language added!' );
-            $Self->_Overview();
-        }
-        else {
+        # add the new language
+        my $LanguageAddSuccessful = $Self->{FAQObject}->LanguageAdd(%GetParam);
+
+        # check error
+        if ( !$LanguageAddSuccessful ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
+        # show overview
+        $Output .= $Self->{LayoutObject}->Notify(
+            Info => 'FAQ language added!',
+        );
+        $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data         => \%Param,
+            Data => {
+            	%Param,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -239,7 +283,7 @@ sub Run {
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data         => {
+            Data => {
                 %Param,
                 %GetParam,
             },
@@ -257,7 +301,9 @@ sub _Edit {
         Data => \%Param,
     );
 
-    $Param{ServerError} = 'No Error' if (! $Param{ServerError} );
+    if ( !$Param{ServerError} ) {
+        $Param{ServerError} = 'No Error';
+    }
 
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
     $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
@@ -293,11 +339,11 @@ sub _Overview {
     my %Languages = $Self->{FAQObject}->LanguageList( UserID => $Self->{UserID} );
 
     # if there are any languages, they are shown
-    if (%Languages){
+    if (%Languages) {
         for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
 
             # get languages result
-            my %LanguageData = $Self->{FAQObject}->LanguageGet( ID => $LanguageID );
+            my %LanguageData = $Self->{FAQObject}->LanguageGet( LanguageID => $LanguageID );
 
             #output results
             $Self->{LayoutObject}->Block(
@@ -312,4 +358,5 @@ sub _Overview {
         $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
     }
 }
+
 1;
