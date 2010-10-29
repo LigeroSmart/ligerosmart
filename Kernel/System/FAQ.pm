@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.93 2010-10-29 19:45:22 ub Exp $
+# $Id: FAQ.pm,v 1.94 2010-10-29 20:07:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.93 $) [1];
+$VERSION = qw($Revision: 1.94 $) [1];
 
 =head1 NAME
 
@@ -2022,6 +2022,77 @@ sub LanguageGet {
     return %Data;
 }
 
+=item LanguageLookup()
+
+This method does a lookup for a faq language.
+If a language id is given, it returns the name of the language.
+If the name of the language is given, the language id is returned.
+
+    my $LanguageName = $FAQObject->LanguageLookup(
+        LanguageID => 1,
+    );
+
+    my $LanguageID = $FAQObject->LanguageLookup(
+        Name => 'en',
+    );
+
+=cut
+
+sub LanguageLookup {
+    my ( $Self, %Param ) = @_;
+
+    # check if both parameters are given
+    if ( $Param{LanguageID} && $Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need LanguageID or Name - not both!',
+        );
+        return;
+    }
+
+    # check if both parameters are not given
+    if ( !$Param{LanguageID} && !$Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need LanguageID or Name - none is given!',
+        );
+        return;
+    }
+
+    # check if LanguageID is a number
+    if ( $Param{LanguageID} && $Param{LanguageID} !~ m{ \A \d+ \z }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "LanguageID must be a number! (LanguageID: $Param{LanguageID})",
+        );
+        return;
+    }
+
+    # prepare SQL statements
+    if ( $Param{LanguageID} ) {
+        return if !$Self->{DBObject}->Prepare(
+            SQL   => 'SELECT name FROM faq_language WHERE id = ?',
+            Bind  => [ \$Param{LanguageID} ],
+            Limit => 1,
+        );
+    }
+    elsif ( $Param{Name} ) {
+        return if !$Self->{DBObject}->Prepare(
+            SQL   => 'SELECT id FROM faq_language WHERE name = ?',
+            Bind  => [ \$Param{Name} ],
+            Limit => 1,
+        );
+    }
+
+    # fetch the result
+    my $Lookup;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Lookup = $Row[0];
+    }
+
+    return $Lookup;
+}
+
 =item FAQSearch()
 
 search in articles
@@ -3305,6 +3376,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.93 $ $Date: 2010-10-29 19:45:22 $
+$Revision: 1.94 $ $Date: 2010-10-29 20:07:58 $
 
 =cut

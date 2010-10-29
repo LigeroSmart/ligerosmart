@@ -2,18 +2,21 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.10 2010-02-11 16:22:55 mb Exp $
+# $Id: FAQ.t,v 1.11 2010-10-29 20:07:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+use strict;
+use warnings;
+
 use Kernel::System::FAQ;
 
-$Self->{FAQObject} = Kernel::System::FAQ->new( %{$Self}, UserID => 1 );
+my $FAQObject = Kernel::System::FAQ->new( %{$Self}, UserID => 1);
 
-my $FAQID = $Self->{FAQObject}->FAQAdd(
+my $FAQID = $FAQObject->FAQAdd(
     Title      => 'Some Text',
     CategoryID => 1,
     StateID    => 1,
@@ -36,7 +39,7 @@ $Self->True(
     "FAQAdd() - 1",
 );
 
-my %FAQ = $Self->{FAQObject}->FAQGet(
+my %FAQ = $FAQObject->FAQGet(
     ItemID => $FAQID,
 );
 
@@ -66,7 +69,7 @@ for my $Test ( sort keys %FAQTest ) {
     );
 }
 
-my $FAQUpdate = $Self->{FAQObject}->FAQUpdate(
+my $FAQUpdate = $FAQObject->FAQUpdate(
     ItemID     => $FAQID,
     CategoryID => 1,
     StateID    => 2,
@@ -85,7 +88,7 @@ my $FAQUpdate = $Self->{FAQObject}->FAQUpdate(
     FreeText4  => 'Value42',
 );
 
-%FAQ = $Self->{FAQObject}->FAQGet(
+%FAQ = $FAQObject->FAQGet(
     ItemID => $FAQID,
 );
 
@@ -115,7 +118,7 @@ for my $Test ( sort keys %FAQTest ) {
     );
 }
 
-my $Ok = $Self->{FAQObject}->VoteAdd(
+my $Ok = $FAQObject->VoteAdd(
     CreatedBy => 'Some Text',
     ItemID    => $FAQID,
     IP        => '54.43.30.1',
@@ -128,7 +131,7 @@ $Self->True(
     "VoteAdd()",
 );
 
-my $Vote = $Self->{FAQObject}->VoteGet(
+my $Vote = $FAQObject->VoteGet(
     CreateBy  => 'Some Text',
     ItemID    => $FAQID,
     IP        => '54.43.30.1',
@@ -141,7 +144,7 @@ $Self->Is(
     "VoteGet() - IP",
 );
 
-my $FAQID2 = $Self->{FAQObject}->FAQAdd(
+my $FAQID2 = $FAQObject->FAQAdd(
     Title      => 'Title',
     CategoryID => 1,
     StateID    => 1,
@@ -179,7 +182,7 @@ for my $AttachmentTest (@AttachmentTests) {
     my $ContentSCALARRef = $Self->{MainObject}->FileRead(
         Location => $Home . '/scripts/test/sample/' . $AttachmentTest->{File},
     );
-    my $Add = $Self->{FAQObject}->AttachmentAdd(
+    my $Add = $FAQObject->AttachmentAdd(
         ItemID      => $FAQID2,
         Content     => ${$ContentSCALARRef},
         ContentType => 'text/xml',
@@ -189,10 +192,10 @@ for my $AttachmentTest (@AttachmentTests) {
         $Add || 0,
         "AttachmentAdd() - $AttachmentTest->{File}",
     );
-    my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+    my @AttachmentIndex = $FAQObject->AttachmentIndex(
         ItemID => $FAQID2,
     );
-    my %File = $Self->{FAQObject}->AttachmentGet(
+    my %File = $FAQObject->AttachmentGet(
         ItemID => $FAQID2,
         FileID => $AttachmentIndex[0]->{FileID},
     );
@@ -210,7 +213,7 @@ for my $AttachmentTest (@AttachmentTests) {
         "AttachmentGet() - MD5 $AttachmentTest->{File}",
     );
 
-    my $Delete = $Self->{FAQObject}->AttachmentDelete(
+    my $Delete = $FAQObject->AttachmentDelete(
         ItemID => $FAQID2,
         FileID => $AttachmentIndex[0]->{FileID},
     );
@@ -221,7 +224,7 @@ for my $AttachmentTest (@AttachmentTests) {
 
 }
 
-my @FAQIDs = $Self->{FAQObject}->FAQSearch(
+my @FAQIDs = $FAQObject->FAQSearch(
     Number  => '*',
     What    => '*s*',
     Keyword => 'some*',
@@ -250,7 +253,7 @@ $Self->False(
     "FAQSearch() - $FAQID2",
 );
 
-@FAQIDs = $Self->{FAQObject}->FAQSearch(
+@FAQIDs = $FAQObject->FAQSearch(
     Number => '*',
     Title  => 'tITLe',
     What   => 'l',
@@ -279,7 +282,7 @@ $Self->True(
     "FAQSearch() - $FAQID2",
 );
 
-@FAQIDs = $Self->{FAQObject}->FAQSearch(
+@FAQIDs = $FAQObject->FAQSearch(
     Number => '*',
     Title  => '',
     What   => 'solution found',
@@ -308,7 +311,7 @@ $Self->False(
     "FAQSearch() literal text - $FAQID2",
 );
 
-@FAQIDs = $Self->{FAQObject}->FAQSearch(
+@FAQIDs = $FAQObject->FAQSearch(
     Number => '*',
     Title  => '',
     What   => 'solution+found',
@@ -338,13 +341,13 @@ $Self->True(
 );
 
 my @VoteIDs = @{
-    $Self->{FAQObject}->VoteSearch(
+    $FAQObject->VoteSearch(
         ItemID => $FAQID,
         )
     };
 
 for my $VoteID (@VoteIDs) {
-    my $VoteDelete = $Self->{FAQObject}->VoteDelete(
+    my $VoteDelete = $FAQObject->VoteDelete(
         VoteID => 1,
     );
     $Self->True(
@@ -354,7 +357,7 @@ for my $VoteID (@VoteIDs) {
 }
 
 # add FAQ article to log
-my $Success = $Self->{FAQObject}->FAQLogAdd(
+my $Success = $FAQObject->FAQLogAdd(
     ItemID    => $FAQID,
     Interface => 'internal',
 );
@@ -364,7 +367,7 @@ $Self->True(
 );
 
 # try to add same FAQ article to log again (must return false)
-$Success = $Self->{FAQObject}->FAQLogAdd(
+$Success = $FAQObject->FAQLogAdd(
     ItemID    => $FAQID,
     Interface => 'internal',
 );
@@ -374,7 +377,7 @@ $Self->False(
 );
 
 # add another FAQ article to log
-$Success = $Self->{FAQObject}->FAQLogAdd(
+$Success = $FAQObject->FAQLogAdd(
     ItemID    => $FAQID2,
     Interface => 'internal',
 );
@@ -384,7 +387,7 @@ $Self->True(
 );
 
 # get FAQ Top10
-my $Top10IDsRef = $Self->{FAQObject}->FAQTop10Get(
+my $Top10IDsRef = $FAQObject->FAQTop10Get(
     Interface => 'internal',
     Limit     => 10,
 );
@@ -393,7 +396,25 @@ $Self->True(
     "FAQTop10Get()",
 );
 
-my $FAQDelete = $Self->{FAQObject}->FAQDelete(
+# test LanguageLookup()
+my $LanguageName = $FAQObject->LanguageLookup(
+    LanguageID => 1,
+);
+$Self->True(
+    $LanguageName,
+    "LanguageLookup() for LanguageID '1' is '$LanguageName'",
+);
+
+my $LanguageID = $FAQObject->LanguageLookup(
+    Name => $LanguageName,
+);
+$Self->Is(
+    $LanguageID,
+    1,
+    "LanguageLookup() for LanguageName '$LanguageName'",
+);
+
+my $FAQDelete = $FAQObject->FAQDelete(
     ItemID => $FAQID,
     UserID => 1,
 );
@@ -402,7 +423,7 @@ $Self->True(
     "FAQDelete()",
 );
 
-my $FAQDelete2 = $Self->{FAQObject}->FAQDelete(
+my $FAQDelete2 = $FAQObject->FAQDelete(
     ItemID => $FAQID2,
     UserID => 1,
 );
