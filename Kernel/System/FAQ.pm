@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.90 2010-10-29 18:15:39 ub Exp $
+# $Id: FAQ.pm,v 1.91 2010-10-29 19:01:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.90 $) [1];
+$VERSION = qw($Revision: 1.91 $) [1];
 
 =head1 NAME
 
@@ -206,7 +206,7 @@ sub FAQGet {
     # update number
     if ( !$Data{Number} ) {
         my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
-        $Self->{DBObject}->Do(
+        return if !$Self->{DBObject}->Do(
             SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
             Bind => [ \$Number, \$Data{ItemID} ],
         );
@@ -674,7 +674,7 @@ sub AttachmentIndex {
             next ATTACHMENT;
         }
 
-        # human readable file size
+        # convert to human readable file size
         my $FileSizeRaw = $Filesize;
         if ($Filesize) {
             if ( $Filesize > ( 1024 * 1024 ) ) {
@@ -724,9 +724,12 @@ sub FAQCount {
         }
     }
 
+    # build category id string
+    my $CategoryIDString = join ', ', @{ $Param{CategoryIDs} };
+
     my $SQL = 'SELECT COUNT(*) '
         . 'FROM faq_item i, faq_state s '
-        . "WHERE i.category_id IN (${\(join ', ', @{$Param{CategoryIDs}})}) "
+        . "WHERE i.category_id IN ($CategoryIDString) "
         . 'AND i.state_id = s.id';
 
     # count only approved articles
@@ -736,7 +739,8 @@ sub FAQCount {
 
     my $Ext = '';
     if ( $Param{ItemStates} && ref $Param{ItemStates} eq 'HASH' && %{ $Param{ItemStates} } ) {
-        $Ext .= " AND s.type_id IN (${\(join ', ', keys(%{$Param{ItemStates}}))})";
+        my $StatesString = join ', ', keys %{ $Param{ItemStates} };
+        $Ext .= " AND s.type_id IN ($StatesString )";
     }
     $Ext .= ' GROUP BY category_id';
     $SQL .= $Ext;
@@ -1114,15 +1118,25 @@ get the system history
 sub HistoryGet {
     my ( $Self, %Param ) = @_;
 
-    # query
+    # build SQL query
     my $SQL = 'SELECT i.id, h.name, h.created, h.created_by, c.name, i.f_subject, i.f_number FROM' .
         ' faq_item i, faq_state s, faq_history h, faq_category c WHERE' .
         ' s.id = i.state_id AND h.item_id = i.id AND i.category_id = c.id';
+
+    # add states confition
     if ( $Param{States} && ref $Param{States} eq 'ARRAY' && @{ $Param{States} } ) {
-        $SQL .= " AND s.name IN ('${\(join '\', \'', @{$Param{States}})}') ";
+        my $StatesString = join ', ', @{ $Param{States} };
+        $SQL .= " AND s.name IN ($StatesString)";
     }
+
+    # add order by clause
     $SQL .= ' ORDER BY created DESC';
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+
+    # get the data from db
+    return if !$Self->{DBObject}->Prepare(
+        SQL => $SQL,
+        Limit => 200,
+    );
     my @Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %Record = (
@@ -1284,7 +1298,7 @@ sub CategoryGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{CategoryID} ) {
+    if ( !defined $Param{CategoryID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message => 'Need CategoryID!',
@@ -1420,7 +1434,7 @@ sub CategoryAdd {
 
     # check needed stuff
     for my $Argument (qw(ParentID Name)) {
-        if ( !$Param{$Argument} ) {
+        if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message => "Need $Argument!",
@@ -1477,7 +1491,7 @@ sub CategoryUpdate {
 
     # check needed stuff
     for my $Argument (qw(CategoryID ParentID Name)) {
-        if ( !$Param{$Argument} ) {
+        if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message => "Need $Argument!",
@@ -1563,7 +1577,7 @@ sub CategoryCount {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ParentIDs} ) {
+    if ( !defined $Param{ParentIDs} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message => 'Need ParentIDs!',
@@ -1601,9 +1615,9 @@ sub CategoryCount {
 
 get a list of keywords as a hash, with their count as the value:
 
-    my %Keywords = %{$FAQObject->KeywordList(
+    my %Keywords = $FAQObject->KeywordList(
         Valid => 1,
-    )};
+    );
 
 Returns:
 
@@ -1625,27 +1639,25 @@ sub KeywordList {
         $Valid = $Param{Valid};
     }
 
-    # check cache
-    if ( $Self->{Cache}->{KeywordList}->{$Valid} ) {
-        return $Self->{Cache}->{KeywordList}->{$Valid};
-    }
-
-    # sql
-    my $SQL = 'SELECT f_keywords FROM faq_item ';
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    # get keywords from db
+    return if !$Self->{DBObject}->Prepare(
+    	SQL => 'SELECT f_keywords FROM faq_item',
+    );
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        for my $Keyword (split(/,/,lc($Row[0]))) {
-        # remove leading/tailing spaces
-        $Keyword =~ s/^\s+//g;
-        $Keyword =~ s/\s+$//g;
 
-        $Data{$Keyword}++;
+        my $KeywordList = lc $Row[0];
+
+        for my $Keyword ( split /,/, $KeywordList ) {
+
+            # remove leading/tailing spaces
+            $Keyword =~ s{ \A \s+ }{}xmsg;
+            $Keyword =~ s{ \s+ \z }{}xmsg;
+
+            # increase keyword counter
+            $Data{$Keyword}++;
         }
     }
-
-    # cache
-#    $Self->{Cache}->{CategoryList}->{$Valid} = \%Data;
 
     return %Data;
 }
@@ -2937,7 +2949,8 @@ returns an array with the top 10 faq article ids
 
     my $Top10IDsRef = $FAQObject->FAQTop10Get(
         Interface => 'public',
-        Limit     => 10,
+        CategoryIDs => [ 1, 2, 3 ],  # (optional) Only show the Top10 articles from these categories
+        Limit     => 10,             # (optional, default 10)
     );
 
 =cut
@@ -2963,31 +2976,28 @@ sub FAQTop10Get {
         . 'AND faq_state.type_id = faq_state_type.id ';
 
     # filter just categories with at least ro permission
-    if ( $Param{CategoryIDs} ){
+    if ( $Param{CategoryIDs} && ref $Param{CategoryIDs} eq 'ARRAY' && @{ $Param{CategoryIDs} } ) {
 
-       $SQL .= "AND faq_item.category_id IN (";
-
-       for my $Category ( @{ $Param{CategoryIDs} } ){
-           $SQL .= " '$Category'";
-           if ($Category ne $Param{CategoryIDs}->[-1]){
-               $SQL .= ',';
-           }
-       }
-
-       $SQL .= ")";
+        # build category id string
+        my $CategoryIDString = join ', ', @{ $Param{CategoryIDs} };
+        $SQL .= "AND faq_item.category_id IN ($CategoryIDString)";
     }
 
     # filter results for public and customer interface
     if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
 
+        # only show approved articles
+        $SQL .= 'AND approved = 1 ';
+
+        # only show the public articles
         $SQL .= "AND ( ( faq_state_type.name = 'public' ) ";
 
+        # customers can additionally see the external articles
         if ( $Param{Interface} eq 'external' ) {
             $SQL .= "OR ( faq_state_type.name = 'external' ) ";
         }
-        $SQL .= ') ';
 
-        $SQL .= 'AND approved = 1 ';
+        $SQL .= ') ';
     }
 
     # filter results for defined time period
@@ -3004,7 +3014,7 @@ sub FAQTop10Get {
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Bind  => \@Bind,
-        Limit => $Param{Limit},
+        Limit => $Param{Limit} || 10,
     );
 
     my @Result;
@@ -3077,8 +3087,8 @@ sub FAQApprovalUpdate {
         );
         if ( !$Ok ) {
             $Self->{LogObject}->Log(
-            	Priority => 'error',
-            	Message => 'Could not create approval ticket!',
+                Priority => 'error',
+                Message => 'Could not create approval ticket!',
             );
         }
     }
@@ -3295,6 +3305,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.90 $ $Date: 2010-10-29 18:15:39 $
+$Revision: 1.91 $ $Date: 2010-10-29 19:01:27 $
 
 =cut
