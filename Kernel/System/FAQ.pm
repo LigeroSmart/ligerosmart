@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.88 2010-10-29 12:18:53 cr Exp $
+# $Id: FAQ.pm,v 1.89 2010-10-29 16:57:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.88 $) [1];
+$VERSION = qw($Revision: 1.89 $) [1];
 
 =head1 NAME
 
@@ -81,9 +81,11 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(DBObject ConfigObject LogObject EncodeObject MainObject TimeObject UserID)) {
-        $Self->{$_} = $Param{$_} || die "Got no $_!";
+    for my $Object (qw(DBObject ConfigObject LogObject EncodeObject MainObject TimeObject UserID)) {
+        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    # create additional objects
     $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
     $Self->{CacheObject}         = Kernel::System::Cache->new( %{$Self} );
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
@@ -116,10 +118,19 @@ sub FAQGet {
     if ( !$Param{ItemID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => "Need ItemID!",
+            Message => 'Need ItemID!',
         );
         return;
     }
+
+    # get vote data for this FAQ item
+    my $VoteData = $Self->ItemVoteDataGet( ItemID => $Param{ItemID} );
+
+    # get number of decimal places from config
+    my $DecimalPlaces = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultDecimalPlaces') || 0;
+
+    # format the vote result
+    my $VoteResult = sprintf( "%0." . $DecimalPlaces . "f", $VoteData->{Result} || 0 );
 
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT i.f_name, i.f_language_id, i.f_subject, ' .
@@ -136,15 +147,6 @@ sub FAQGet {
         Bind => [ \$Param{ItemID} ],
     );
 
-    # get vote data for this FAQ item
-    my $VoteData = $Self->ItemVoteDataGet( ItemID => $Param{ItemID} );
-
-    # get number of decimal places from config
-    my $DecimalPlaces = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultDecimalPlaces') || 0;
-
-    # format the vote result
-    my $VoteResult = sprintf( "%0." . $DecimalPlaces . "f", $VoteData->{Result} || 0 );
-
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
@@ -154,7 +156,7 @@ sub FAQGet {
             ID    => $Param{ItemID},
             FAQID => $Param{ItemID},
 
-            #
+            # get data attributes
             ItemID        => $Param{ItemID},
             Name          => $Row[0],
             LanguageID    => $Row[1],
@@ -232,7 +234,7 @@ sub ItemVoteDataGet {
     if ( !$Param{ItemID} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => "Need ItemID!",
+            Message => 'Need ItemID!',
         );
         return;
     }
@@ -294,9 +296,12 @@ sub FAQAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CategoryID StateID LanguageID Title)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CategoryID StateID LanguageID Title)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -344,8 +349,15 @@ sub FAQAdd {
 
     # get id
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM faq_item WHERE f_name = ? AND f_language_id = ? AND f_subject = ?',
-        Bind => [ \$Param{Name}, \$Param{LanguageID}, \$Param{Title}, ],
+        SQL => 'SELECT id FROM faq_item '
+            . 'WHERE f_name = ? '
+            . 'AND f_language_id = ? '
+            . 'AND f_subject = ?',
+        Bind => [
+            \$Param{Name},
+            \$Param{LanguageID},
+            \$Param{Title},
+        ],
     );
     my $ID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -365,8 +377,10 @@ sub FAQAdd {
         ItemID => $ID,
     );
 
-    # create new approval ticket
+    # check if approval feature is enabled
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
+
+        # create new approval ticket
         my $Ok = $Self->FAQApprovalTicketCreate(
             ItemID     => $ID,
             CategoryID => $Param{CategoryID},
@@ -375,10 +389,12 @@ sub FAQAdd {
             UserID     => $Self->{UserID},
             StateID    => $Param{StateID},
         );
+
+        # check error
         if ( !$Ok ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message => "Could not create approval ticket!",
+                Message => 'Could not create approval ticket!',
             );
         }
     }
@@ -410,9 +426,12 @@ sub FAQUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID CategoryID StateID LanguageID Title)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID CategoryID StateID LanguageID Title)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -424,12 +443,14 @@ sub FAQUpdate {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_item SET f_name = ?, f_language_id = ?, f_subject = ?, ' .
-            ' category_id = ?, state_id = ?, f_keywords = ?, f_field1 = ?, ' .
-            ' f_field2 = ?, f_field3 = ?, f_field4 = ?, f_field5 = ?, f_field6 = ?, ' .
-            ' free_key1 = ?, free_value1 = ?, free_key2 = ?, free_value2 = ?, ' .
-            ' free_key3 = ?, free_value3 = ?, free_key4 = ?, free_value4 = ?, ' .
-            ' changed = current_timestamp, changed_by = ? WHERE id = ?',
+        SQL => 'UPDATE faq_item '
+            . 'SET f_name = ?, f_language_id = ?, f_subject = ?, '
+            . 'category_id = ?, state_id = ?, f_keywords = ?, f_field1 = ?, '
+            . 'f_field2 = ?, f_field3 = ?, f_field4 = ?, f_field5 = ?, f_field6 = ?, '
+            . 'free_key1 = ?, free_value1 = ?, free_key2 = ?, free_value2 = ?, '
+            . 'free_key3 = ?, free_value3 = ?, free_key4 = ?, free_value4 = ?, '
+            . 'changed = current_timestamp, changed_by = ? '
+            . 'WHERE id = ?',
         Bind => [
             \$Param{Name},     \$Param{LanguageID}, \$Param{Title},    \$Param{CategoryID},
             \$Param{StateID},  \$Param{Keywords},   \$Param{Field1},   \$Param{Field2},
@@ -443,6 +464,7 @@ sub FAQUpdate {
     # check if history entry should be added
     return 1 if $Param{HistoryOff};
 
+    # write history entry
     $Self->FAQHistoryAdd(
         Name   => 'Updated',
         ItemID => $Param{ItemID},
@@ -469,9 +491,12 @@ sub AttachmentAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID Content ContentType Filename)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID Content ContentType Filename)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -532,16 +557,21 @@ sub AttachmentGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID FileID)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID FileID)) {
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
 
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT filename, content_type, content_size, content '
-            . 'FROM faq_attachment WHERE id = ? AND faq_id = ? ORDER BY created',
+            . 'FROM faq_attachment '
+            . 'WHERE id = ? AND faq_id = ? '
+            . 'ORDER BY created',
         Bind => [ \$Param{FileID}, \$Param{ItemID} ],
         Encode => [ 1, 1, 1, 0 ],
         Limit => 1,
@@ -579,9 +609,12 @@ sub AttachmentDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID FileID)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID FileID)) {
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -607,11 +640,12 @@ sub AttachmentIndex {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ItemID!',
+        );
+        return;
     }
 
     return if !$Self->{DBObject}->Prepare(
@@ -677,9 +711,12 @@ sub FAQCount {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CategoryIDs ItemStates)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CategoryIDs ItemStates)) {
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -731,9 +768,12 @@ sub VoteAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CreatedBy ItemID IP Interface)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CreatedBy ItemID IP Interface)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -774,40 +814,38 @@ sub VoteGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CreateBy ItemID Interface IP)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return {};
+    for my $Argument (qw(CreateBy ItemID Interface IP)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
+            return;
         }
     }
 
     # db quote
-    for (qw(CreatedBy Interface IP)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} );
+    for my $Argument (qw(CreatedBy Interface IP)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
     }
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
+    $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
 
     my $Ext = "";
     my $SQL = " SELECT created_by, item_id, interface, ip, created, rate FROM faq_voting WHERE";
 
     # public
     if ( $Param{Interface} eq '3' ) {
-        $Ext .= " ip = '$Param{IP}' AND" .
-            " item_id = $Param{ItemID}";
-
-        # customer
+        $Ext .= " ip = '$Param{IP}' AND item_id = $Param{ItemID}";
     }
+
+    # customer
     elsif ( $Param{Interface} eq '2' ) {
-        $Ext .= " created_by = '$Param{CreateBy}' AND" .
-            " item_id = $Param{ItemID}";
-
-        # internal
+        $Ext .= " created_by = '$Param{CreateBy}' AND item_id = $Param{ItemID}";
     }
+
+    # internal
     elsif ( $Param{Interface} eq '1' ) {
-        $Ext .= " created_by = '$Param{CreateBy}' AND" .
-            " item_id = $Param{ItemID}";
+        $Ext .= " created_by = '$Param{CreateBy}' AND item_id = $Param{ItemID}";
     }
     $SQL .= $Ext;
 
@@ -831,7 +869,7 @@ sub VoteGet {
 
 =item VoteSearch()
 
-returns a array with VoteIDs
+returns an array with VoteIDs
 
     my @VoteIDs = @{$FAQObject->VoteSearch(
         ItemID => 1,
@@ -843,29 +881,24 @@ sub VoteSearch {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return [];
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ItemID!',
+        );
+        return [];
     }
 
-    # db quote
-    for (qw(ItemID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
-
-    my $SQL = 'SELECT id FROM faq_voting WHERE';
-    if ( defined $Param{ItemID} ) {
-        $SQL .= ' item_id = ' . $Param{ItemID};
-    }
-
-    my @List;
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id FROM faq_voting WHERE item_id = ?',
+        Bind => [ \$Param{ItemID} ],
+        Limit => $Param{Limit} || 500,
+    );
+    my @VoteIDs;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @List, $Row[0];
+        push @VoteIDs, $Row[0];
     }
-    return \@List;
+    return \@VoteIDs;
 }
 
 =item VoteDelete()
@@ -882,17 +915,20 @@ sub VoteDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(VoteID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return 0;
-        }
+    if ( !$Param{VoteID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need VoteID!',
+        );
+        return;
     }
 
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM faq_voting WHERE id = ?',
         Bind => [ \$Param{VoteID} ],
     );
+
+    return 1;
 }
 
 =item FAQDelete()
@@ -910,9 +946,12 @@ sub FAQDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID UserID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -922,15 +961,17 @@ sub FAQDelete {
         ItemID => $Param{ItemID},
     );
     for my $FileID (@Index) {
-        return if !$Self->AttachmentDelete( %Param, FileID => $FileID->{FileID} );
+        my $DeleteSuccess = $Self->AttachmentDelete(
+            %Param,
+            FileID => $FileID->{FileID},
+       );
+       return if !$DeleteSuccess;
     }
 
     # delete votes
-    my @VoteIDs = @{ $Self->VoteSearch( ItemID => $Param{ItemID} ) };
-    for my $TmpVoteID (@VoteIDs) {
-        if ( !$Self->VoteDelete( VoteID => $TmpVoteID ) ) {
-            return;
-        }
+    my $VoteIDsRef = $Self->VoteSearch( ItemID => $Param{ItemID} );
+    for my $VoteID ( @{$VoteIDsRef} ) {
+        return if !$Self->VoteDelete( VoteID => $VoteID );
     }
 
     # delete faq links
@@ -971,9 +1012,12 @@ sub FAQHistoryAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID Name)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID Name)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -1002,11 +1046,12 @@ sub FAQHistoryGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return [];
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ItemID!',
+        );
+        return [];
     }
 
     return if !$Self->{DBObject}->Prepare(
@@ -1039,16 +1084,20 @@ sub FAQHistoryDelete {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return 0;
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ItemID!',
+        );
+        return;
     }
-    return $Self->{DBObject}->Do(
+
+    return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM faq_history WHERE item_id = ?',
         Bind => [ \$Param{ItemID} ],
     );
+
+    return 1;
 }
 
 =item HistoryGet()
@@ -1091,7 +1140,7 @@ sub HistoryGet {
 
 get the category list as hash
 
-    my %Categories = %{$FAQObject->CategoryList(
+    my %Categories = $FAQObject->CategoryList(
         Valid => 1,
     )};
 
@@ -1232,11 +1281,12 @@ sub CategoryGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CategoryID)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{CategoryID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need CategoryID!',
+        );
+        return;
     }
 
     # check cache
@@ -1290,11 +1340,12 @@ sub CategorySubCategoryIDList {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ParentID)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return [];
-        }
+    if ( !$Param{ParentID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ParentID!',
+        );
+        return;
     }
 
     my $Categories = {};
@@ -1352,8 +1403,8 @@ sub CategorySubCategoryIDList {
 add a category
 
     my $ID = $FAQObject->CategoryAdd(
-        Name     => 'Some Category',
-        Comment  => 'some comment ...',
+        Name     => 'CategoryA',
+        Comment  => 'Some comment',
         ParentID => 2,
         ValidID  => 1,
         UserID   => 1,
@@ -1365,9 +1416,12 @@ sub CategoryAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ParentID Name)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ParentID Name)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -1419,9 +1473,12 @@ sub CategoryUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CategoryID ParentID Name)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CategoryID ParentID Name)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -1470,12 +1527,8 @@ sub CategoryDuplicateCheck {
     my ( $Self, %Param ) = @_;
 
     # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(ID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
+    $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} ) || '';
+    $Param{ID}   = $Self->{DBObject}->Quote( $Param{ID}, 'Integer' );
 
     # sql
     my $SQL = 'SELECT id FROM faq_category WHERE ';
@@ -1507,11 +1560,12 @@ sub CategoryCount {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ParentIDs)) {
-        if ( !defined $Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{ParentIDs} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ParentIDs!',
+        );
+        return;
     }
 
     my $SQL = 'SELECT COUNT(*) FROM faq_category WHERE valid_id = 1';
@@ -1528,7 +1582,10 @@ sub CategoryCount {
     $Ext .= ' GROUP BY parent_id';
 
     $SQL .= $Ext;
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 200 );
+    return if !$Self->{DBObject}->Prepare(
+        SQL => $SQL,
+        Limit => 200,
+    );
 
     my $Count = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -1559,14 +1616,6 @@ Returns:
 
 sub KeywordList {
     my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for (qw()) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return {};
-        }
-    }
 
     my $Valid = 0;
     if ( defined $Param{Valid} ) {
@@ -1667,9 +1716,12 @@ sub StateUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ID Name TypeID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ID Name TypeID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -1696,9 +1748,12 @@ sub StateAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Name TypeID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(Name TypeID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -1723,11 +1778,12 @@ sub StateGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{ID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ID!',
+        );
+        return;
     }
 
     # sql
@@ -1840,9 +1896,12 @@ sub LanguageUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ID Name)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ID Name)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -1869,12 +1928,8 @@ sub LanguageDuplicateCheck {
     my ( $Self, %Param ) = @_;
 
     # db quote
-    for (qw(Name)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-    for (qw(ID)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_}, 'Integer' );
-    }
+    $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} ) || '';
+    $Param{ID} = $Self->{DBObject}->Quote( $Param{ID}, 'Integer' );
 
     # sql
     my $SQL = 'SELECT id FROM faq_language WHERE ';
@@ -1906,11 +1961,12 @@ sub LanguageAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Name)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{Name} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need Name!',
+        );
+        return;
     }
 
     return $Self->{DBObject}->Do(
@@ -1933,11 +1989,12 @@ sub LanguageGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{ID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ID!',
+        );
+        return;
     }
 
     # sql
@@ -2282,9 +2339,12 @@ sub SetCategoryGroup {
     my $SQL = '';
 
     # check needed stuff
-    for (qw(CategoryID GroupIDs)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CategoryID GroupIDs)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -2326,11 +2386,12 @@ sub GetCategoryGroup {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CategoryID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{CategoryID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need CategoryID!',
+        );
+        return;
     }
 
     # get groups
@@ -2391,9 +2452,12 @@ sub GetUserCategories {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID Type)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(UserID Type)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -2475,9 +2539,12 @@ sub GetCustomerCategories {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CustomerUser Type)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CustomerUser Type)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -2524,9 +2591,12 @@ sub CheckCategoryUserPermission {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID CategoryID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(UserID CategoryID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -2562,16 +2632,19 @@ sub CheckCategoryCustomerPermission {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CustomerUser CategoryID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(CustomerUser CategoryID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
     for my $Permission (qw(rw ro)) {
         my $Hash = $Self->GetCustomerCategories(
             CustomerUser => $Param{CustomerUser},
-            Type         => 'ro'
+            Type         => 'ro',
         );
         for my $ParentID ( keys %{$Hash} ) {
             my $CategoryHash = $Hash->{$ParentID};
@@ -2600,11 +2673,12 @@ sub AgentCategorySearch {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(UserID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need UserID!',
+        );
+        return;
     }
 
     if ( !defined $Param{ParentID} ) {
@@ -2637,12 +2711,14 @@ sub CustomerCategorySearch {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(CustomerUser)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return ();
-        }
+    if ( !$Param{CustomerUser} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need CustomerUser!',
+        );
+        return;
     }
+
     if ( !defined $Param{ParentID} ) {
         $Param{ParentID} = 0;
     }
@@ -2793,9 +2869,12 @@ sub FAQLogAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID Interface)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID Interface)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -2854,7 +2933,6 @@ returns an array with the top 10 faq article ids
 
     my $Top10IDsRef = $FAQObject->FAQTop10Get(
         Interface => 'public',
-        CategoryIDs => \@CategoryIds,
         Limit     => 10,
     );
 
@@ -2864,11 +2942,12 @@ sub FAQTop10Get {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(Interface)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{Interface} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need Interface!',
+        );
+        return;
     }
 
     # prepare SQL
@@ -2914,8 +2993,8 @@ sub FAQTop10Get {
     }
 
     # complete SQL statement
-    $SQL .= 'GROUP BY item_id, faq_state_type.name, approved  '
-        . 'ORDER BY 2 DESC ';
+    $SQL .= 'GROUP BY item_id, faq_state_type.name, approved '
+        . 'ORDER BY 2 DESC';
 
     # get the top 10 article ids from database
     return if !$Self->{DBObject}->Prepare(
@@ -2951,21 +3030,27 @@ sub FAQApprovalUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
-            return;
-        }
+    if ( !$Param{ItemID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ItemID!',
+        );
+        return;
     }
+
     if ( !defined $Param{Approved} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => "Need Approved param!" );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need Approved parameter!',
+        );
         return;
     }
 
     # update database
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_item SET approved = ?, changed = current_timestamp, '
-            . 'changed_by = ? WHERE id = ?',
+        SQL => 'UPDATE faq_item '
+            . 'SET approved = ?, changed = current_timestamp, changed_by = ? '
+            . 'WHERE id = ?',
         Bind => [
             \$Param{Approved}, \$Self->{UserID}, \$Param{ItemID},
         ],
@@ -3014,9 +3099,12 @@ sub FAQApprovalTicketCreate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID CategoryID FAQNumber Title UserID StateID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID CategoryID FAQNumber Title UserID StateID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -3097,9 +3185,12 @@ sub FAQPictureUploadAdd {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(ItemID FormID)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $Argument (qw(ItemID FormID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
             return;
         }
     }
@@ -3198,6 +3289,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.88 $ $Date: 2010-10-29 12:18:53 $
+$Revision: 1.89 $ $Date: 2010-10-29 16:57:50 $
 
 =cut
