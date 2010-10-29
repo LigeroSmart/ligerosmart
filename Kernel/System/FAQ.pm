@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.91 2010-10-29 19:01:27 ub Exp $
+# $Id: FAQ.pm,v 1.92 2010-10-29 19:40:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.91 $) [1];
+$VERSION = qw($Revision: 1.92 $) [1];
 
 =head1 NAME
 
@@ -808,12 +808,12 @@ sub VoteAdd {
 
 get a vote
 
-    my %VoteData = %{$FAQObject->VoteGet(
+    my %VoteData = $FAQObject->VoteGet(
         CreateBy  => 'Some Text',
         ItemID    => '123456',
         IP        => '127.0.0.1',
         Interface => 'Some Text',
-    )};
+    );
 
 =cut
 
@@ -1123,7 +1123,7 @@ sub HistoryGet {
         ' faq_item i, faq_state s, faq_history h, faq_category c WHERE' .
         ' s.id = i.state_id AND h.item_id = i.id AND i.category_id = c.id';
 
-    # add states confition
+    # add states condition
     if ( $Param{States} && ref $Param{States} eq 'ARRAY' && @{ $Param{States} } ) {
         my $StatesString = join ', ', @{ $Param{States} };
         $SQL .= " AND s.name IN ($StatesString)";
@@ -1197,14 +1197,14 @@ sub CategoryList {
 
 get the category search as hash
 
-    my @CategoryIDs = @{$FAQObject->CategorySearch(
+    my $CategoryIDArrayRef = $FAQObject->CategorySearch(
         Name        => 'Test',
         ParentID    => 3,
         ParentIDs   => [ 1, 3, 8],
         CategoryIDs => [ 2, 5, 7 ],
         Order       => 'Name',
         Sort        => 'down',
-    )};
+    );
 
 =cut
 
@@ -1220,15 +1220,10 @@ sub CategorySearch {
         $Ext .= " AND name LIKE '%" . $Self->{DBObject}->Quote( $Param{Name} ) . "%'";
     }
     elsif ( defined $Param{ParentID} ) {
-        $Ext
-            .= " AND parent_id = '" . $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' ) . "'";
+        $Ext .= ' AND parent_id = '
+            . $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
     }
-    elsif (
-        defined $Param{ParentIDs}
-        && ref $Param{ParentIDs} eq 'ARRAY'
-        && @{ $Param{ParentIDs} }
-        )
-    {
+    elsif ( defined $Param{ParentIDs} && ref $Param{ParentIDs} eq 'ARRAY' && @{ $Param{ParentIDs} } ) {
         $Ext = " AND parent_id IN (";
         for my $ParentID ( @{ $Param{ParentIDs} } ) {
             $Ext .= $Self->{DBObject}->Quote( $ParentID, 'Integer' ) . ",";
@@ -1236,12 +1231,7 @@ sub CategorySearch {
         $Ext = substr( $Ext, 0, -1 );
         $Ext .= ")";
     }
-    elsif (
-        defined $Param{CategoryIDs}
-        && ref $Param{CategoryIDs} eq 'ARRAY'
-        && @{ $Param{CategoryIDs} }
-        )
-    {
+    elsif ( defined $Param{CategoryIDs} && ref $Param{CategoryIDs} eq 'ARRAY' && @{ $Param{CategoryIDs} } ) {
         $Ext = " AND id IN (";
         for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
             $Ext .= $Self->{DBObject}->Quote( $CategoryID, 'Integer' ) . ",";
@@ -1345,7 +1335,7 @@ sub CategoryGet {
 
 get all subcategory ids of of a category
 
-    my @SubCategoryIDs = $FAQObject->CategorySubCategoryIDList(
+    my $SubCategoryIDArrayRef = $FAQObject->CategorySubCategoryIDList(
         ParentID     => 1,
         Mode         => 'Public', # (Agent, Customer, Public)
         CustomerUser => 'tt',
@@ -1419,7 +1409,7 @@ sub CategorySubCategoryIDList {
 
 add a category
 
-    my $ID = $FAQObject->CategoryAdd(
+    my $CategoryID = $FAQObject->CategoryAdd(
         Name     => 'CategoryA',
         Comment  => 'Some comment',
         ParentID => 2,
@@ -1459,29 +1449,30 @@ sub CategoryAdd {
         SQL  => 'SELECT id FROM faq_category WHERE name = ?',
         Bind => [ \$Param{Name} ],
     );
-    my $ID;
+    my $CategoryID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $ID = $Row[0];
+        $CategoryID = $Row[0];
     }
 
     # log notice
     $Self->{LogObject}->Log(
         Priority => 'notice',
         Message =>
-            "FAQCategory: '$Param{Name}' ID: '$ID' created successfully ($Self->{UserID})!",
+            "FAQCategory: '$Param{Name}' CategoryID: '$CategoryID' created successfully ($Self->{UserID})!",
     );
-    return $ID;
+
+    return $CategoryID;
 }
 
 =item CategoryUpdate()
 
 update a category
 
-    $FAQObject->CategoryUpdate(
+    my $Success = $FAQObject->CategoryUpdate(
         CategoryID => 2,
         ParentID   => 1,
         Name       => 'Some Category',
-        Comment    => 'some comment ...',
+        Comment    => 'some comment',
     );
 
 =cut
@@ -1514,8 +1505,8 @@ sub CategoryUpdate {
     # log notice
     $Self->{LogObject}->Log(
         Priority => 'notice',
-        Message =>
-            "FAQCategory: '$Param{Name}' ID: '$Param{CategoryID}' updated successfully ($Self->{UserID})!",
+        Message => "FAQCategory: '$Param{Name}' "
+            . "ID: '$Param{CategoryID}' updated successfully ($Self->{UserID})!",
     );
 
     # delete cache
@@ -1532,7 +1523,7 @@ sub CategoryUpdate {
 
 check a category
 
-    $FAQObject->CategoryDuplicateCheck(
+    my $Exists = $FAQObject->CategoryDuplicateCheck(
         ID       => 1, # or
         Name     => 'Some Name',
         ParentID => 1,
@@ -1556,19 +1547,20 @@ sub CategoryDuplicateCheck {
         }
     }
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
-    my $Exists = 0;
+    my $Exists;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Exists = 1;
     }
+
     return $Exists;
 }
 
 =item CategoryCount()
 
-count an article
+Count the number of categories.
 
     $FAQObject->CategoryCount(
-        ParentIDs => [1,2,3,4],
+        ParentIDs => [ 1,2,3,4 ],
     );
 
 =cut
@@ -1641,7 +1633,7 @@ sub KeywordList {
 
     # get keywords from db
     return if !$Self->{DBObject}->Prepare(
-    	SQL => 'SELECT f_keywords FROM faq_item',
+        SQL => 'SELECT f_keywords FROM faq_item',
     );
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -1664,9 +1656,9 @@ sub KeywordList {
 
 =item StateTypeList()
 
-get the state type list as hash
+get the state type list as hashref
 
-    my %StateTypes = $FAQObject->StateTypeList();
+    my $StateTypeHashRef = $FAQObject->StateTypeList();
 
 =cut
 
@@ -1742,10 +1734,12 @@ sub StateUpdate {
     }
 
     # sql
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_state SET name = ?, type_id = ?, WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{TypeID}, \$Param{ID} ],
     );
+
+    return 1;
 }
 
 =item StateAdd()
@@ -1773,10 +1767,12 @@ sub StateAdd {
         }
     }
 
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO faq_state (name, type_id) VALUES ( ?, ? )',
         Bind => [ \$Param{Name}, \$Param{TypeID}, ],
     );
+
+    return 1;
 }
 
 =item StateGet()
@@ -1900,7 +1896,7 @@ sub LanguageList {
 
 update a language
 
-    $FAQObject->LanguageUpdate(
+    my $Success = $FAQObject->LanguageUpdate(
         ID   => 1,
         Name => 'Some Category',
     );
@@ -1922,17 +1918,19 @@ sub LanguageUpdate {
     }
 
     # sql
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_language SET name = ? WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{ID} ],
     );
+
+    return 1;
 }
 
 =item LanguageDuplicateCheck()
 
 check a language
 
-    $FAQObject->LanguageDuplicateCheck(
+    my $Exists = $FAQObject->LanguageDuplicateCheck(
         Name => 'Some Name',
         ID   => 1, # for update
     );
@@ -1966,7 +1964,7 @@ sub LanguageDuplicateCheck {
 
 add a language
 
-    my $ID = $FAQObject->LanguageAdd(
+    my $Success = $FAQObject->LanguageAdd(
         Name => 'Some Category',
     );
 
@@ -1984,10 +1982,12 @@ sub LanguageAdd {
         return;
     }
 
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL  => 'INSERT INTO faq_language (name) VALUES (?)',
         Bind => [ \$Param{Name} ],
     );
+
+    return 1;
 }
 
 =item LanguageGet()
@@ -2250,9 +2250,9 @@ sub FAQSearch {
 
 =item FAQPathListGet()
 
-returns a category array
+returns a category array reference
 
-    my @IDs = $FAQObject->FAQPathListGet(
+    my $CategoryIDArrayRef = $FAQObject->FAQPathListGet(
         CategoryID => 150,
     );
 
@@ -2341,17 +2341,15 @@ sub GetCategoryTree {
 
 set groups to a category
 
-    $FAQObject->SetCategoryGroup(
+    my $Success = $FAQObject->SetCategoryGroup(
         CategoryID => 3,
-        GroupIDs   => [2,4,1,5,77],
+        GroupIDs   => [ 2,4,1,5,77 ],
     );
 
 =cut
 
 sub SetCategoryGroup {
     my ( $Self, %Param ) = @_;
-
-    my $SQL = '';
 
     # check needed stuff
     for my $Argument (qw(CategoryID GroupIDs)) {
@@ -2372,26 +2370,28 @@ sub SetCategoryGroup {
 
     # insert groups
     $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
-    for my $Key ( @{ $Param{GroupIDs} } ) {
-        my $GroupID = $Self->{DBObject}->Quote( $Key, 'Integer' );
-        $SQL = "INSERT INTO faq_category_group " .
+    for my $GroupID ( @{ $Param{GroupIDs} } ) {
+
+        # db quote
+        $GroupID = $Self->{DBObject}->Quote( $GroupID, 'Integer' );
+
+        my $SQL = "INSERT INTO faq_category_group " .
             " (category_id, group_id, changed, changed_by, created, created_by) VALUES" .
             " ($Param{CategoryID}, $GroupID, current_timestamp, $Self->{UserID}, " .
             " current_timestamp, $Self->{UserID})";
 
         # write attachment to db
-        if ( !$Self->{DBObject}->Do( SQL => $SQL ) ) {
-            return 0;
-        }
+        return if !$Self->{DBObject}->Do( SQL => $SQL );
     }
+
     return 1;
 }
 
 =item GetCategoryGroup()
 
-get groups from a category
+get groups of a category
 
-    $FAQObject->GetCategoryGroup(
+    my $GroupArrayRef = $FAQObject->GetCategoryGroup(
         CategoryID => 3,
     );
 
@@ -2425,7 +2425,7 @@ sub GetCategoryGroup {
 
 get all category-groups
 
-    $FAQObject->GetAllCategoryGroup();
+    my $AllCategoryGroupHashRef = $FAQObject->GetAllCategoryGroup();
 
 =cut
 
@@ -2454,9 +2454,9 @@ sub GetAllCategoryGroup {
 
 =item GetUserCategories()
 
-get all category-groups
+get user category-groups
 
-    my $Hashref = $FAQObject->GetUserCategories(
+    my $UserCategoryGroupHashRef = $FAQObject->GetUserCategories(
         UserID => '123456',
         Type   => 'rw'
     );
@@ -2541,9 +2541,9 @@ sub _UserCategories {
 
 =item GetCustomerCategories()
 
-get all category-groups
+get customer user categories
 
-    my $Hashref = $FAQObject->GetCustomerCategories(
+    my $CustomerUserCategoryHashRef = $FAQObject->GetCustomerCategories(
         CustomerUser => 'hans',
         Type => 'rw'
     );
@@ -2593,9 +2593,9 @@ sub GetCustomerCategories {
 
 =item CheckCategoryUserPermission()
 
-get userpermission from a category
+get user permission for a category
 
-    $FAQObject->CheckCategoryUserPermission(
+    my $PermissionString = $FAQObject->CheckCategoryUserPermission(
         UserID => '123456',
         CategoryID => '123',
     );
@@ -2634,9 +2634,9 @@ sub CheckCategoryUserPermission {
 
 =item CheckCategoryCustomerPermission()
 
-get userpermission from a category
+get customer user permission for a category
 
-    $FAQObject->CheckCategoryCustomerPermission(
+    my $PermissionString $FAQObject->CheckCategoryCustomerPermission(
         UserID => '123456',
         CategoryID => '123',
     );
@@ -2677,10 +2677,10 @@ sub CheckCategoryCustomerPermission {
 
 get the category search as hash
 
-    my @CategoryIDs = @{$FAQObject->AgentCategorySearch(
+    my $CategoryIDArrayRef = $FAQObject->AgentCategorySearch(
         UserID   => 1,
         ParentID => 3,   # (optional, default 0)
-    )};
+    );
 
 =cut
 
@@ -2803,10 +2803,10 @@ sub CustomerCategorySearch {
 
 get the category search as hash
 
-    my @CategorieIDs = @{$FAQObject->PublicCategorySearch(
+    my $CategoryIDArrayRef = $FAQObject->PublicCategorySearch(
         ParentID      => 3,   # (optional, default 0)
         Mode          => 'Public',
-    )};
+    );
 
 =cut
 
@@ -3033,7 +3033,7 @@ sub FAQTop10Get {
 
 update the approval state of an article
 
-    $FAQObject->FAQApprovalUpdate(
+    my $Success = $FAQObject->FAQApprovalUpdate(
         ItemID     => 123,
         Approved   => 1,    # 0|1 (default 0)
     );
@@ -3070,21 +3070,25 @@ sub FAQApprovalUpdate {
         ],
     );
 
-    # create new approval ticket
+    # approval feature is activated and faq article is not appproved yet
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
 
-        my %Data = $Self->FAQGet(
+        # get faq data
+        my %FAQData = $Self->FAQGet(
             ItemID => $Param{ItemID},
         );
 
+        # create new approval ticket
         my $Ok = $Self->FAQApprovalTicketCreate(
             ItemID     => $Param{ItemID},
-            CategoryID => $Data{CategoryID},
-            FAQNumber  => $Data{Number},
-            Title      => $Data{Title},
+            CategoryID => $FAQData{CategoryID},
+            FAQNumber  => $FAQData{Number},
+            Title      => $FAQData{Title},
+            StateID    => $FAQData{StateID},
             UserID     => $Self->{UserID},
-            StateID    => $Data{StateID},
         );
+
+        # check error
         if ( !$Ok ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -3100,7 +3104,7 @@ sub FAQApprovalUpdate {
 
 creates an approval ticket
 
-    $FAQObject->FAQApprovalTicketCreate(
+    my $Success = $FAQObject->FAQApprovalTicketCreate(
         ItemID     => 123,
         CategoryID => 2,
         FAQNumber  => 10211,
@@ -3174,7 +3178,8 @@ sub FAQApprovalTicketCreate {
             HistoryComment =>
                 $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment} || '',
         );
-        return 1;
+
+        return $ArticleID;
     }
 
     return;
@@ -3184,7 +3189,7 @@ sub FAQApprovalTicketCreate {
 
 stores uploaded pictures as faq attachments
 
-    $FAQObject->FAQPictureUploadAdd(
+    my %Success = $FAQObject->FAQPictureUploadAdd(
         ItemID => 12,
         FormID => 12345,
         Field1 => 'some text',
@@ -3305,6 +3310,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.91 $ $Date: 2010-10-29 19:01:27 $
+$Revision: 1.92 $ $Date: 2010-10-29 19:40:13 $
 
 =cut
