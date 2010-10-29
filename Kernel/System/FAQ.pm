@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.92 2010-10-29 19:40:13 ub Exp $
+# $Id: FAQ.pm,v 1.93 2010-10-29 19:45:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.92 $) [1];
+$VERSION = qw($Revision: 1.93 $) [1];
 
 =head1 NAME
 
@@ -91,6 +91,7 @@ sub new {
     $Self->{CustomerGroupObject} = Kernel::System::CustomerGroup->new( %{$Self} );
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
+    $Self->{LinkObject}          = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
 
     return $Self;
@@ -981,14 +982,8 @@ sub FAQDelete {
         return if !$Self->VoteDelete( VoteID => $VoteID );
     }
 
-    # delete faq links
-    my $LinkObject = Kernel::System::LinkObject->new(
-        %Param,
-        %{$Self},
-        TicketObject => $Self,
-    );
-
-    $LinkObject->LinkDeleteAll(
+    # delete all faq links of this faq article
+    $Self->{LinkObject}->LinkDeleteAll(
         Object => 'FAQ',
         Key    => $Param{ItemID},
         UserID => $Param{UserID},
@@ -3310,6 +3305,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.92 $ $Date: 2010-10-29 19:40:13 $
+$Revision: 1.93 $ $Date: 2010-10-29 19:45:22 $
 
 =cut
