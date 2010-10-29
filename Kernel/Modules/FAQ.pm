@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.51 2010-10-29 18:45:57 ub Exp $
+# $Id: FAQ.pm,v 1.52 2010-10-29 19:03:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -380,15 +380,6 @@ sub _GetExplorerLastChangeItems {
                         UserID       => $Self->{UserID},
                     )
                 };
-
-#                $Self->{FAQObject}->CategorySubCategoryIDList(
-#                    ParentID     => $Param{CategoryID},
-#                    ItemStates   => $Self->{InterfaceStates},
-#                    Mode         => $Param{Mode},
-#                    CustomerUser => $Param{CustomerUser},
-#                    UserID       => $Self->{UserID},
-#                );
-
                 push( @CategoryIDs, @SubCategoryIDs );
             }
             $Self->{LayoutObject}->Block(
