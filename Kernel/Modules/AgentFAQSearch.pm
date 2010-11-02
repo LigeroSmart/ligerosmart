@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.3 2010-11-02 18:46:22 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.4 2010-11-02 20:24:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -127,7 +127,7 @@ sub Run {
     else {
 
         # get scalar search params
-        for my $ParamName ( qw( Number Title Keyword FullText ResultForm ) ) {
+        for my $ParamName ( qw( Number Title Keyword Fulltext ResultForm ) ) {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             # remove whitespace on the start and end
@@ -204,9 +204,7 @@ sub Run {
         # prepare fulltext search
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
-            for my $Attribute ( qw( Number Title What Keyword ) ) {
-                $GetParam{$Attribute} = $GetParam{Fulltext};
-            }
+            $GetParam{What} = $GetParam{Fulltext};
         }
 
         # perform FAQ search
@@ -612,6 +610,10 @@ sub _MaskForm {
         {
             Key   => 'Number',
             Value => 'FAQ Number',
+        },
+        {
+            Key   => 'Fulltext',
+            Value => 'Fulltext',
         },
         {
             Key   => 'Title',
