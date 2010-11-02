@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.55 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.56 2010-11-02 17:55:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -364,6 +364,7 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeTextLink',
                 Data => {
+                    %{$Change},
                     ChangeFreeTextLink => $Self->{ConfigObject}->Get(
                         'ChangeFreeText' . $Number . '::Link'
                     ),
