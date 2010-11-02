@@ -2,7 +2,7 @@
 # AgentFAQSearchResultPrint.dtl - html for ticket status view (all tickets)
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchResultPrint.dtl,v 1.1 2010-11-02 13:13:54 cr Exp $
+# $Id: AgentFAQSearchResultPrint.dtl,v 1.2 2010-11-02 20:54:35 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@
     <td class="contentbody">
       <table border="0" width="100%" cellspacing="0" cellpadding="3">
         <tr>
-          <td width="10%" class="contentkey">$Text{"FAQ#"}</td>
+          <td width="10%" class="contentkey">$Config{"FAQ::FAQHook"}</td>
           <td width="35%" class="contentkey">$Text{"Title"}</td>
           <td width="10%" class="contentkey">$Text{"Category"}</td>
           <td width="10%" class="contentkey">$Text{"Language"}</td>
