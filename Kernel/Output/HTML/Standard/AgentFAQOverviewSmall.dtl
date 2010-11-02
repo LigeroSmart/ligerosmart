@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.1 2010-11-02 13:12:58 cr Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.2 2010-11-02 18:45:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,18 +33,18 @@
                     </th>
 <!-- dtl:block:RecordTitleHeader -->
 <!-- dtl:block:RecordCategoryHeader -->
-                    <th class="CategoryID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CategoryID;OrderBy=$LQData{"OrderBy"}">$Text{"Category"}</a>
+                    <th class="Category $QData{"CSS"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Category;OrderBy=$LQData{"OrderBy"}">$Text{"Category"}</a>
                     </th>
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordLanguageHeader -->
                     <th class="Language $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=LanguageID;OrderBy=$LQData{"OrderBy"}">$Text{"Language"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Language;OrderBy=$LQData{"OrderBy"}">$Text{"Language"}</a>
                     </th>
 <!-- dtl:block:RecordLanguageHeader -->
 <!-- dtl:block:RecordStateHeader -->
-                    <th class="PriorityID $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=StateID;OrderBy=$LQData{"OrderBy"}">$Text{"State"}</a>
+                    <th class="State $QData{"CSS"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=State;OrderBy=$LQData{"OrderBy"}">$Text{"State"}</a>
                     </th>
 <!-- dtl:block:RecordStateHeader -->
 <!-- dtl:block:RecordChangedHeader -->
