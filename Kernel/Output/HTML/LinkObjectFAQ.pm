@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.7 2008-08-29 15:40:47 mh Exp $
+# $Id: LinkObjectFAQ.pm,v 1.8 2010-11-02 22:26:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,29 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
+
+=head1 NAME
+
+Kernel::Output::HTML::LinkObjectFAQ - layout backend module
+
+=head1 SYNOPSIS
+
+All layout functions of link object (FAQ)
+
+=over 4
+
+=cut
+
+=item new()
+
+create an object
+
+    $BackendObject = Kernel::Output::HTML::LinkObjectFAQ->new(
+        %Param,
+    );
+
+=cut
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -45,6 +67,87 @@ sub new {
 
     return $Self;
 }
+
+=item TableCreateComplex()
+
+return an array with the block data
+
+    my @BlockData = $LinkObject->TableCreateComplex(
+        ObjectLinkListWithData => $ObjectLinkListRef,
+    );
+
+a result could be
+
+    %BlockData = (
+        {
+            Object    => 'FAQ',
+            Blockname => 'FAQ',
+            Headline  => [
+                {
+                    Content => 'FAQ#',
+                    Width   => 130,
+                },
+                {
+                    Content => 'Title',
+                },
+                {
+                    Content => 'State',
+                    Width   => 110,
+                },
+                {
+                    Content => 'Created',
+                    Width   => 110,
+                },
+            ],
+            ItemList => [
+                [
+                    {
+                        Type    => 'Link',
+                        Key     => $FAQID,
+                        Content => '123123123',
+                        Css     => 'style="text-decoration: line-through"',
+                    },
+                    {
+                        Type      => 'Text',
+                        Content   => 'The title',
+                        MaxLength => 50,
+                    },
+                    {
+                        Type      => 'Text',
+                        Content   => 'internal (agent)',
+                        Translate => 1,
+                    },
+                    {
+                        Type    => 'TimeLong',
+                        Content => '2008-01-01 12:12:00',
+                    },
+                ],
+                [
+                    {
+                        Type    => 'Link',
+                        Key     => $FAQID,
+                        Content => '434234',
+                    },
+                    {
+                        Type      => 'Text',
+                        Content   => 'The title of FAQ 2',
+                        MaxLength => 50,
+                    },
+                    {
+                        Type      => 'Text',
+                        Content   => 'public (all)',
+                        Translate => 1,
+                    },
+                    {
+                        Type    => 'TimeLong',
+                        Content => '2008-01-01 12:12:00',
+                    },
+                ],
+            ],
+        },
+    );
+
+=cut
 
 sub TableCreateComplex {
     my ( $Self, %Param ) = @_;
@@ -89,7 +192,7 @@ sub TableCreateComplex {
                 Type    => 'Link',
                 Key     => $FAQID,
                 Content => $FAQ->{Number},
-                Link    => '$Env{"Baselink"}Action=AgentFAQ&ItemID=' . $FAQID,
+                Link    => '$Env{"Baselink"}Action=AgentFAQZoom;ItemID=' . $FAQID,
             },
             {
                 Type      => 'Text',
@@ -140,6 +243,44 @@ sub TableCreateComplex {
     return ( \%Block );
 }
 
+=item TableCreateSimple()
+
+return a hash with the link output data
+
+    my %LinkOutputData = $LinkObject->TableCreateSimple(
+        ObjectLinkListWithData => $ObjectLinkListRef,
+    );
+
+a result coul be Return
+
+    %LinkOutputData = (
+        Normal::Source => {
+            Ticket => [
+                {
+                    Type    => 'Link',
+                    Content => 'F:55555',
+                    Title   => 'FAQ#555555: The FAQ title',
+                },
+                {
+                    Type    => 'Link',
+                    Content => 'F:22222',
+                    Title   => 'FAQ#22222: Title of FAQ 22222',
+                },
+            ],
+        },
+        ParentChild::Target => {
+            Ticket => [
+                {
+                    Type    => 'Link',
+                    Content => 'F:77777',
+                    Title   => 'FAQ#77777: FAQ title',
+                },
+            ],
+        },
+    );
+
+=cut
+
 sub TableCreateSimple {
     my ( $Self, %Param ) = @_;
 
@@ -175,7 +316,7 @@ sub TableCreateSimple {
                     Type    => 'Link',
                     Content => 'F:' . $FAQ->{Number},
                     Title   => "$FAQHook$FAQ->{Number}: $FAQ->{Title}",
-                    Link    => '$Env{"Baselink"}Action=AgentFAQ&ItemID=' . $FAQID,
+                    Link    => '$Env{"Baselink"}Action=AgentFAQZoom;ItemID=' . $FAQID,
                 );
                 push @ItemList, \%Item;
             }
@@ -188,6 +329,16 @@ sub TableCreateSimple {
     return %LinkOutputData;
 }
 
+=item ContentStringCreate()
+
+return a output string
+
+    my $String = $LayoutObject->ContentStringCreate(
+        ContentData => $HashRef,
+    );
+
+=cut
+
 sub ContentStringCreate {
     my ( $Self, %Param ) = @_;
 
@@ -199,6 +350,25 @@ sub ContentStringCreate {
 
     return;
 }
+
+=item SelectableObjectList()
+
+return an array hash with selectable objects
+
+    my @SelectableObjectList = $LinkObject->SelectableObjectList(
+        Selected => $Identifier,  # (optional)
+    );
+
+a result could be
+
+    @SelectableObjectList = (
+        {
+            Key   => 'FAQ',
+            Value => 'FAQ',
+        },
+    );
+
+=cut
 
 sub SelectableObjectList {
     my ( $Self, %Param ) = @_;
@@ -219,6 +389,33 @@ sub SelectableObjectList {
 
     return @ObjectSelectList;
 }
+
+=item SearchOptionList()
+
+return an array hash with search options
+
+    my @SearchOptionList = $LinkObject->SearchOptionList(
+        SubObject => 'Bla',  # (optional)
+    );
+
+a result could be
+
+    @SearchOptionList = (
+        {
+            Key       => 'Number',
+            Name      => 'FAQ#',
+            InputStrg => $FormString,
+            FormData  => '1234',
+        },
+        {
+            Key       => 'Title',
+            Name      => 'Title',
+            InputStrg => $FormString,
+            FormData  => 'BlaBla',
+        },
+    );
+
+=cut
 
 sub SearchOptionList {
     my ( $Self, %Param ) = @_;
@@ -308,3 +505,21 @@ sub SearchOptionList {
 }
 
 1;
+
+=back
+
+=head1 TERMS AND CONDITIONS
+
+This software is part of the OTRS project (http://otrs.org/).
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see
+the enclosed file COPYING for license information (AGPL). If you
+did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+
+=cut
+
+=head1 VERSION
+
+$Revision: 1.8 $ $Date: 2010-11-02 22:26:38 $
+
+=cut
