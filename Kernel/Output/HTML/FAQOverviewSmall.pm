@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.1 2010-11-02 13:12:00 cr Exp $
+# $Id: FAQOverviewSmall.pm,v 1.2 2010-11-02 14:01:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,7 +53,7 @@ sub Run {
     if ( !$Param{FAQIDs} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Need the ChangeIDs or the WorkOrderIDs!',
+            Message  => 'Need the FAQIDs!',
         );
         return;
     }
