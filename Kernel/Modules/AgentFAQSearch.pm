@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.2 2010-11-02 15:38:35 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.3 2010-11-02 18:46:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,20 +65,12 @@ sub Run {
     # get confid data
     $Self->{StartHit} = int ($Self->{ ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
-
     $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
-        || '';
+        || 'Title';
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
-        || '';
-
-#    $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
-#        || $Self->{Config}->{'SortBy::Default'}
-#        || 'Title';
-#    $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
-#        || $Self->{Config}->{'Order::Default'}
-#        || 'Down';
+        || 'Down';
     $Self->{Profile}        = $Self->{ParamObject}->GetParam( Param => 'Profile' )        || '';
     $Self->{SaveProfile}    = $Self->{ParamObject}->GetParam( Param => 'SaveProfile' )    || '';
     $Self->{TakeLastSearch} = $Self->{ParamObject}->GetParam( Param => 'TakeLastSearch' ) || '';
@@ -219,8 +211,8 @@ sub Run {
 
         # perform FAQ search
         my @ViewableFAQIDs = $Self->{FAQObject}->FAQSearch(
-            SortBy              => $Self->{SortBy},
-            OrderBy             => $Self->{OrderBy},
+            OrderBy          => [ $Self->{SortBy} ],
+            OrderByDirection => [ $Self->{OrderBy} ],
             Limit               => $Self->{SearchLimit},
             UserID              => $Self->{UserID},
             States              => $Self->{InterfaceStates  },
@@ -429,7 +421,7 @@ sub Run {
                 }
 
                 # return the pdf document
-                my $Filename = 'ticket_search';
+                my $Filename = 'FAQ_search';
                 my ( $s, $m, $h, $D, $M, $Y )
                     = $Self->{TimeObject}->SystemTime2Date(
                     SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -586,19 +578,7 @@ sub Run {
             Content     => $Output,
             Type        => 'inline'
         );
-
     }
-
-#    # There was no 'SubAction', or there were validation errors, or an user or customer was searched
-#    # generate search mask
-#    my $Output = $Self->{LayoutObject}->Header();
-#    $Output .= $Self->{LayoutObject}->NavigationBar();
-#    $Output .= $Self->_MaskForm(
-#        %GetParam,
-#    );
-#    $Output .= $Self->{LayoutObject}->Footer();
-#
-#    return $Output;
 
     # show default search screen
     $Output = $Self->{LayoutObject}->Header();
