@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.4 2010-11-02 20:24:29 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.5 2010-11-02 20:56:11 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -229,6 +229,11 @@ sub Run {
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(FAQID => $FAQID);
 
+                my $Changed = $Self->{LayoutObject}->Output(
+                    Template => '$TimeLong{"$Data{"Changed"}"}',
+                    Data     => \%FAQData,
+                );
+
                 # get info fo CSV output
                 my %CSVInfo;
                 $CSVInfo{FAQNumber} = $FAQData{Number};
@@ -236,7 +241,7 @@ sub Run {
                 $CSVInfo{Category}  = $FAQData{CategoryName};
                 $CSVInfo{Language}  = $FAQData{Language};
                 $CSVInfo{State}     = $FAQData{State};
-                $CSVInfo{Changed}   = $FAQData{Changed};
+                $CSVInfo{Changed}   = $Changed;
 
                 # csv quote
                 if ( !@CSVHead ) {
@@ -249,6 +254,10 @@ sub Run {
                 push @CSVData, \@Data;
             }
 
+            # replace FAQNumber header with the current FAQHook from config
+            $CSVHead[0] =  $Self->{ConfigObject}->Get('FAQ::FAQHook');
+
+            # assable CSV data
             my $CSV = $Self->{CSVObject}->Array2CSV(
                 Head      => \@CSVHead,
                 Data      => \@CSVData,
@@ -280,7 +289,7 @@ sub Run {
 
                 # create PDFObject
                 use Kernel::System::PDF;
-                $Self->{PDFObjecte} = Kernel::System::PDF->new( %{$Self} );
+                $Self->{PDFObject} = Kernel::System::PDF->new( %{$Self} );
 
                 # set change date to long format
                 if ( $Self->{PDFObject} ) {
@@ -332,8 +341,7 @@ sub Run {
 
                 # create the header
                 my $CellData;
-                $CellData->[0]->[0]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ#');
+                $CellData->[0]->[0]->{Content} = $Self->{ConfigObject}->Get('FAQ::FAQHook');
                 $CellData->[0]->[0]->{Font}    = 'ProportionalBold';
                 $CellData->[0]->[1]->{Content}
                     = $Self->{LayoutObject}->{LanguageObject}->Get('Title');
