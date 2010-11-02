@@ -2,7 +2,7 @@
 # AgentFAQOverviewNavBar.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewNavBar.dtl,v 1.1 2010-11-02 13:12:38 cr Exp $
+# $Id: AgentFAQOverviewNavBar.dtl,v 1.2 2010-11-02 14:01:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@ $Data{"DataInTheMiddle"}
                         <input type="hidden" name="Group" value="$QData{"Group"}"/>
                         <input type="hidden" name="RedirectURL" value="$QData{"RequestedURL"}"/>
                         <fieldset class="TableLike">
-                            <label for="$QData{"PreferencesKey"}">$Text{"Max. shown Changes a page"}:</label>
+                            <label for="$QData{"PreferencesKey"}">$Text{"Max. shown FAQ items a page"}:</label>
                             <div class="Field">
                                 $Data{"PageShownString"}
                             </div>
