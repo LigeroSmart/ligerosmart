@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.1 2010-11-02 13:11:38 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.2 2010-11-02 15:38:35 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -619,10 +619,10 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
-    my $Profile = $Self->{ParamObject}->GetParam( Param => 'Profile' );
+    my $Profile = $Self->{Profile};
 
     my %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
-        Base      => 'TicketSearch',
+        Base      => 'FAQSearch',
         Name      => $Profile,
         UserLogin => $Self->{UserLogin},
     );
@@ -723,6 +723,32 @@ sub _MaskForm {
             %GetParam
         },
     );
+
+        # show attributes
+        my $AttributeIsUsed = 0;
+        for my $Key ( sort keys %GetParam ) {
+            next if !$Key;
+            next if !defined $GetParam{$Key};
+            next if $GetParam{$Key} eq '';
+
+            $AttributeIsUsed = 1;
+            $Self->{LayoutObject}->Block(
+                Name => 'SearchAJAXShow',
+                Data => {
+                    Attribute => $Key,
+                },
+            );
+        }
+
+        # if no attribute is shown, show fulltext search
+        if ( !$AttributeIsUsed ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'SearchAJAXShow',
+                Data => {
+                    Attribute => 'Fulltext',
+                },
+            );
+        }
 
     # build output
     my $Output = $Self->{LayoutObject}->Output(
