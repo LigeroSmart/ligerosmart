@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.204 2010-10-27 22:35:01 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.205 2010-11-02 18:43:15 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -87,7 +87,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeHistoryZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeInvolvedPersons.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeOverviewNavBar.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeOverviewNavBarSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeOverviewSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangePrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeSearch.dtl"/>
