@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.16 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.17 2010-11-02 18:45:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -96,9 +96,6 @@ sub Run {
     $Self->{LayoutObject}->Print( Output => \$Output );
     $Output = '';
 
-    # length for the "No data found" msg, if needed
-    my $TotalColumns;
-
     # find out which columns should be shown
     my @ShowColumns;
     if ( $Self->{Config}->{ShowColumns} ) {
@@ -108,7 +105,6 @@ sub Run {
 
         # get the column names that should be shown
         @ShowColumns = grep { $PossibleColumn{$_} } keys %PossibleColumn;
-        $TotalColumns = @ShowColumns;
     }
 
     # to store the filters
@@ -121,11 +117,11 @@ sub Run {
         my $PrioCounter = 1000;
 
         # get all template types that should be used as filters
-        TEMPLATE_TYPE:
+        TEMPLATETYPE:
         for my $TemplateType ( @{ $Self->{Config}->{'Filter::TemplateTypes'} } ) {
 
             # do not use empty template types
-            next TEMPLATE_TYPE if !$TemplateType;
+            next TEMPLATETYPE if !$TemplateType;
 
             # check if the template type is valid by looking up the id
             my $TemplateTypeID = $Self->{TemplateObject}->TemplateTypeLookup(
@@ -133,7 +129,7 @@ sub Run {
             );
 
             # do not use invalid template types
-            next TEMPLATE_TYPE if !$TemplateTypeID;
+            next TEMPLATETYPE if !$TemplateTypeID;
 
             # increase the PrioCounter
             $PrioCounter++;
@@ -191,7 +187,9 @@ sub Run {
     if ( !scalar @$IDsRef ) {
         $Self->{LayoutObject}->Block(
             Name => 'NoDataFoundMsg',
-            Data => { TotalColumns => $TotalColumns },
+            Data => {
+                TotalColumns => scalar @ShowColumns,
+            },
         );
     }
 
