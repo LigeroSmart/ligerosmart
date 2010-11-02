@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.95 2010-10-29 21:39:32 ub Exp $
+# $Id: FAQ.pm,v 1.96 2010-11-02 13:04:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.95 $) [1];
+$VERSION = qw($Revision: 1.96 $) [1];
 
 =head1 NAME
 
@@ -1197,8 +1197,8 @@ get the category search as hash
         ParentID    => 3,
         ParentIDs   => [ 1, 3, 8],
         CategoryIDs => [ 2, 5, 7 ],
-        Order       => 'Name',
-        Sort        => 'down',
+        OrderBy       => 'Name',
+        SortBy        => 'down',
     );
 
 =cut
@@ -1236,9 +1236,9 @@ sub CategorySearch {
     }
 
     # ORDER BY
-    if ( $Param{Order} ) {
+    if ( $Param{OrderBy} ) {
         $Ext .= " ORDER BY ";
-        if ( $Param{Order} eq 'Name' ) {
+        if ( $Param{OrderBy} eq 'Name' ) {
             $Ext .= "name";
         }
 
@@ -1248,11 +1248,11 @@ sub CategorySearch {
         }
 
         # SORT
-        if ( $Param{Sort} ) {
-            if ( $Param{Sort} eq 'up' ) {
+        if ( $Param{SortBy} ) {
+            if ( $Param{SortBy} eq 'up' ) {
                 $Ext .= " ASC";
             }
-            elsif ( $Param{Sort} eq 'down' ) {
+            elsif ( $Param{SortBy} eq 'down' ) {
                 $Ext .= " DESC";
             }
         }
@@ -2103,8 +2103,8 @@ search in articles
         What      => '*some text*', # is searching in Number, Title, Keyword and Field1-6
         Keyword   => '*webserver*',
         States    => ['public', 'internal'],
-        Order     => 'Changed',     # Title|Language|State|Votes|Result|Created|Changed
-        Sort      => 'up',          # up|down
+        OrderBy     => 'Changed',     # Title|Language|State|Votes|Result|Created|Changed
+        SortBy      => 'up',          # up|down
         Limit     => 150,
         Interface => 'public',      # public|external|internal (default internal)
     );
@@ -2258,49 +2258,49 @@ sub FAQSearch {
         $Ext = ' WHERE' . $Ext;
     }
     $Ext .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id';
-    if ( $Param{Order} ) {
+    if ( $Param{OrderBy} ) {
         $Ext .= ' ORDER BY ';
 
         # title
-        if ( $Param{Order} eq 'Title' ) {
+        if ( $Param{OrderBy} eq 'Title' ) {
             $Ext .= 'i.f_subject';
         }
 
         # language
-        elsif ( $Param{Order} eq 'Language' ) {
+        elsif ( $Param{OrderBy} eq 'Language' ) {
             $Ext .= 'i.f_language_id';
         }
 
         # state
-        elsif ( $Param{Order} eq 'State' ) {
+        elsif ( $Param{OrderBy} eq 'State' ) {
             $Ext .= 's.name';
         }
 
         # votes
-        elsif ( $Param{Order} eq 'Votes' ) {
+        elsif ( $Param{OrderBy} eq 'Votes' ) {
             $Ext .= 'votes';
         }
 
         # rates
-        elsif ( $Param{Order} eq 'Result' ) {
+        elsif ( $Param{OrderBy} eq 'Result' ) {
             $Ext .= 'vrate';
         }
 
         # changed
-        elsif ( $Param{Order} eq 'Created' ) {
+        elsif ( $Param{OrderBy} eq 'Created' ) {
             $Ext .= 'i.created';
         }
 
         # created
-        elsif ( $Param{Order} eq 'Changed' ) {
+        elsif ( $Param{OrderBy} eq 'Changed' ) {
             $Ext .= 'i.changed';
         }
 
-        if ( $Param{Sort} ) {
-            if ( $Param{Sort} eq 'up' ) {
+        if ( $Param{SortBy} ) {
+            if ( $Param{SortBy} eq 'up' ) {
                 $Ext .= ' ASC';
             }
-            elsif ( $Param{Sort} eq 'down' ) {
+            elsif ( $Param{SortBy} eq 'down' ) {
                 $Ext .= ' DESC';
             }
         }
@@ -3376,6 +3376,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.95 $ $Date: 2010-10-29 21:39:32 $
+$Revision: 1.96 $ $Date: 2010-11-02 13:04:12 $
 
 =cut

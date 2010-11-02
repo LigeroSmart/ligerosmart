@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.52 2010-10-29 19:03:09 ub Exp $
+# $Id: FAQ.pm,v 1.53 2010-11-02 13:07:06 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -65,12 +65,12 @@ sub GetExplorer {
 
     my %Frontend = ();
     my %GetParam = ();
-    my @Params   = qw(Order Sort);
+    my @Params   = qw(OrderBy SortBy);
 
     # manage parameters
     $GetParam{CategoryID} = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
-    $GetParam{Order}      = $Self->{ParamObject}->GetParam( Param => 'Order' )      || 'Title';
-    $GetParam{Sort}       = $Self->{ParamObject}->GetParam( Param => 'Sort' )       || 'up';
+    $GetParam{OrderBy}      = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )      || 'Title';
+    $GetParam{SortBy}       = $Self->{ParamObject}->GetParam( Param => 'SortBy' )       || 'up';
     for (@Params) {
         if ( !$GetParam{$_} && !( $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) ) )
         {
@@ -131,8 +131,8 @@ sub GetExplorer {
     if ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
         $Self->_GetExplorerCategoryList(
             CategoryID   => $GetParam{CategoryID},
-            Order        => 'Name',
-            Sort         => 'up',
+            OrderBy        => 'Name',
+            SortBy         => 'up',
             Mode         => $Param{Mode},
             CustomerUser => $Param{CustomerUser},
         );
@@ -140,8 +140,8 @@ sub GetExplorer {
     else {
         $Self->_GetExplorerCategoryList(
             CategoryID => $GetParam{CategoryID},
-            Order      => 'Name',
-            Sort       => 'up',
+            OrderBy      => 'Name',
+            SortBy       => 'up',
             Mode       => $Param{Mode},
         );
     }
@@ -149,8 +149,8 @@ sub GetExplorer {
     # explorer item list
     $Self->_GetExplorerItemList(
         CategoryID => $GetParam{CategoryID},
-        Order      => $GetParam{Order} || 'Title',
-        Sort       => $GetParam{Sort} || 'up',
+        OrderBy      => $GetParam{OrderBy} || 'Title',
+        SortBy       => $GetParam{SortBy} || 'up',
     );
 
     # quicksearch
@@ -224,7 +224,7 @@ sub _GetExplorerCategoryList {
     $Frontend{CssRow} = '';
 
     # check needed parameters
-    for (qw(Order Sort)) {
+    for (qw(OrderBy SortBy)) {
         if ( !$Param{$_} ) {
             $Self->{LayoutObject}->FatalError( Message => "Need parameter $_!" )
         }
@@ -295,7 +295,7 @@ sub _GetExplorerItemList {
     my ( $Self, %Param ) = @_;
 
     # check needed parameters
-    for (qw(Order Sort)) {
+    for (qw(OrderBy SortBy)) {
         if ( !$Param{$_} ) {
             $Self->{LayoutObject}->FatalError( Message => "Need parameter $_!" )
         }
@@ -305,8 +305,8 @@ sub _GetExplorerItemList {
     my @ItemIDs = $Self->{FAQObject}->FAQSearch(
         CategoryIDs => [ $Param{CategoryID} ],
         States      => $Self->{InterfaceStates},
-        Order       => $Param{Order},
-        Sort        => $Param{Sort},
+        OrderBy       => $Param{OrderBy},
+        SortBy        => $Param{SortBy},
         Interface   => $Self->{Interface}{Name},
         Limit       => 300,
     );
@@ -395,8 +395,8 @@ sub _GetExplorerLastChangeItems {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
                     States      => $Self->{InterfaceStates},
-                    Order       => 'Changed',
-                    Sort        => 'down',
+                    OrderBy       => 'Changed',
+                    SortBy        => 'down',
                     Interface   => $Self->{Interface}{Name},
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
                 );
@@ -408,8 +408,8 @@ sub _GetExplorerLastChangeItems {
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
                 States    => $Self->{InterfaceStates},
-                Order     => 'Changed',
-                Sort      => 'down',
+                OrderBy     => 'Changed',
+                SortBy      => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
             );
@@ -478,8 +478,8 @@ sub _GetExplorerLastCreateItems {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
                     States      => $Self->{InterfaceStates},
-                    Order       => 'Created',
-                    Sort        => 'down',
+                    OrderBy       => 'Created',
+                    SortBy        => 'down',
                     Interface   => $Self->{Interface}{Name},
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
                 );
@@ -491,8 +491,8 @@ sub _GetExplorerLastCreateItems {
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
                 States    => $Self->{InterfaceStates},
-                Order     => 'Created',
-                Sort      => 'down',
+                OrderBy     => 'Created',
+                SortBy      => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
             );
