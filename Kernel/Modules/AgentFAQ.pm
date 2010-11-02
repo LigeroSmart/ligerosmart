@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.34 2010-02-23 18:39:51 ub Exp $
+# $Id: AgentFAQ.pm,v 1.35 2010-11-02 13:06:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.34 $) [1];
+$VERSION = qw($Revision: 1.35 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -87,7 +87,7 @@ sub Run {
     # manage parameters
     # ********************************************************** #
     @Params = qw(ItemID ID Number Name Comment CategoryID ParentID StateID LanguageID Title UserID
-        Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeKey2 FreeKey3 Keywords Order Sort Nav);
+        Field1 Field2 Field3 Field4 Field5 Field6 FreeKey1 FreeKey2 FreeKey3 Keywords OrderBy SortBy Nav);
     for (@Params) {
         $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
     }
@@ -585,12 +585,20 @@ sub Run {
         # check parameters
 
         # dtl
-        $Frontend{LanguageOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+
+        $Frontend{LanguageOption} = $Self->{LayoutObject}->BuildSelection(
             Data                => { $Self->{FAQObject}->LanguageList() },
             Name                => 'LanguageID',
             LanguageTranslation => 0,
-            Selected            => $Self->{UserLanguage},
+            SelectedID            => $Self->{UserLanguage},
         );
+
+#        $Frontend{LanguageOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+#            Data                => { $Self->{FAQObject}->LanguageList() },
+#            Name                => 'LanguageID',
+#            LanguageTranslation => 0,
+#            Selected            => $Self->{UserLanguage},
+#        );
 
         # find out the category id of the last viewed category
         my $CategoryID;
@@ -609,11 +617,17 @@ sub Run {
             SelectedID          => $CategoryID || '',
         );
 
-        $Frontend{StateOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+        $Frontend{StateOption} = $Self->{LayoutObject}->BuildSelection(
             Data     => { $Self->{FAQObject}->StateList() },
             Name     => 'StateID',
-            Selected => $Self->{ConfigObject}->Get('FAQ::Default::State') || 'internal (agent)',
+            SelectedID  => $Self->{ConfigObject}->Get('FAQ::Default::State') || 'internal (agent)',
         );
+
+#        $Frontend{StateOption} = $Self->{LayoutObject}->OptionStrgHashRef(
+#            Data     => { $Self->{FAQObject}->StateList() },
+#            Name     => 'StateID',
+#            Selected => $Self->{ConfigObject}->Get('FAQ::Default::State') || 'internal (agent)',
+#        );
 
         $Frontend{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
 
@@ -694,8 +708,8 @@ sub Run {
         my @IDs = $Self->{FAQObject}->FAQSearch(
             Title     => $ParamData{Title},
             Keyword   => $ParamData{Keywords},
-            Order     => 'Changed',
-            Sort      => 'down',
+            OrderBy     => 'Changed',
+            SortBy      => 'down',
             Limit     => 1,
         );
         if ( @IDs ) {
