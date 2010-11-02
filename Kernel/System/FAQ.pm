@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.97 2010-11-02 18:44:32 cr Exp $
+# $Id: FAQ.pm,v 1.98 2010-11-02 22:28:39 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.97 $) [1];
+$VERSION = qw($Revision: 1.98 $) [1];
 
 =head1 NAME
 
@@ -81,7 +81,7 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(DBObject ConfigObject LogObject EncodeObject MainObject TimeObject UserID)) {
+    for my $Object (qw(DBObject ConfigObject LogObject EncodeObject MainObject TimeObject )) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -3469,6 +3469,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.97 $ $Date: 2010-11-02 18:44:32 $
+$Revision: 1.98 $ $Date: 2010-11-02 22:28:39 $
 
 =cut
