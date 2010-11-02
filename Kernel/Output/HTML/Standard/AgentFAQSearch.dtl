@@ -1,0 +1,119 @@
+# --
+# AgentFAQSearch.dtl - provides HTML form for AgentITSMChangeSearch
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentFAQSearch.dtl,v 1.1 2010-11-02 13:13:40 cr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:SearchAJAX -->
+<div class="InnerContent">
+<form action="$Env{"CGIHandle"}" method="post" id="SearchForm">
+  <input type="hidden" name="Action" value="$Env{"Action"}"/>
+  <input type="hidden" name="Subaction" value="Search"/>
+  <h2 class="Center">$Text{"Search"}</h2>
+  <fieldset class="TableLike">
+  <div class="Clear"></div>
+  <label>$Text{"Search-Template"}</label>
+  <div class="Field">
+  $Data{"ProfilesStrg"}
+
+  <button id="SearchProfileNew" value="$Text{"Create New"}">$Text{"Create New"}</button>
+
+  <button id="SearchProfileDelete" class="Hidden" value="$Text{"Delete"}">$Text{"Delete"}</button>
+
+  <div id="SearchProfileAddBlock">
+  <input type="text" name="Name" id="SearchProfileAddName"/>
+  <button type="submit" title="$Text{"Create Template"}" id="SearchProfileAddAction">$Text{"Add"}</button>
+  <input type="hidden" name="SaveProfile" value="1"/>
+  </div>
+  </div>
+  </fieldset>
+  <fieldset class="TableLike" id="SearchInsert"></fieldset>
+  <fieldset class="TableLike">
+  <div class="Clear"></div>
+  <label>$Text{"Add another attribute"}</label>
+  <div class="Field">
+  $Data{"AttributesStrg"}
+  <button type="submit" class="Add" value="Add" title="Add entry">$Text{"Add"}</button>
+  </div>
+  <div class="Clear"></div>
+  <label>$Text{"Result Form"}:</label>
+  <div class="Field">
+  $Data{"ResultFormStrg"}
+  </div>
+  </fieldset>
+</form>
+
+<fieldset class="TableLike Hidden" id="SearchAttributesHidden">
+<div class="Clear"></div>
+<label for="Fulltext">$Text{"Fulltext"}</label>
+<div class="Field">
+<input type="text" name="Fulltext" value="$QData{"Fulltext"}" class="W50pc" />
+<button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+</div>
+
+<div class="Clear"></div>
+<label for="Number">$Text{"FAQ#"} $Text{"(e.g. 10*5155 or 105658*)"}</label>
+<div class="Field">
+<input type="text" name="Number" value="$QData{"Number"}" class="W50pc"/>
+<button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+</div>
+<div class="Clear"></div>
+<label for="Title">$Text{"Title"}</label>
+<div class="Field">
+<input type="text" name="Title" value="$QData{"Title"}" class="W50pc"/>
+<button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+</div>
+<div class="Clear"></div>
+<label for="Keyword">$Text{"Keyword"}</label>
+<div class="Field">
+<input type="text" name="Keyword" value="$QData{"Keywords"}" class="W50pc"/>
+<button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+</div>
+
+<div class="Clear"></div>
+<label for="LanguageIDs">$Text{"Language"}</label>
+<div class="Field">
+$Data{"LanguagesSelectionString"}
+<button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+</div>
+<div class="Clear"></div>
+<label for="CategoryIDs">$Text{"Category"}</label>
+<div class="Field">
+$Data{"CategoriesSelectionString"}
+<button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+</div>
+
+<div class="Clear"></div>
+$Data{"AttributesOrigStrg"}
+</fieldset>
+</div>
+
+<div class="ContentFooter Center">
+<button id="SearchFormSubmit" class="Primary" value="Run Search">$Text{"Run Search"}</button>
+</div>
+
+<script type="text/javascript">//<![CDATA[
+    window.setTimeout(function (){
+<!-- dtl:block:SearchAJAXShow -->
+        Core.Agent.Search.SearchAttributeAdd('$QData{"Attribute"}');
+<!-- dtl:block:SearchAJAXShow -->
+        Core.Agent.Search.AdditionalAttributeSelectionRebuild();
+    }, 0);
+//]]></script>
+
+<!-- dtl:block:SearchAJAX -->
+
+<!-- dtl:block:Search -->
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.Search.OpenSearchDialog( '$Env{"Action"}' );
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!-- dtl:block:Search -->
