@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.96 2010-11-02 13:04:12 cr Exp $
+# $Id: FAQ.pm,v 1.97 2010-11-02 18:44:32 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.96 $) [1];
+$VERSION = qw($Revision: 1.97 $) [1];
 
 =head1 NAME
 
@@ -2103,8 +2103,21 @@ search in articles
         What      => '*some text*', # is searching in Number, Title, Keyword and Field1-6
         Keyword   => '*webserver*',
         States    => ['public', 'internal'],
-        OrderBy     => 'Changed',     # Title|Language|State|Votes|Result|Created|Changed
-        SortBy      => 'up',          # up|down
+
+        OrderBy => [ 'FAQID', 'Title' ],                             # (optional)
+        # default: [ 'FAQID' ],
+        # (FAQID, FAQNumber, Title, Language, Category, Created,
+        # Changed, State, Votes, Result)
+
+        # Additional information for OrderBy:
+        # The OrderByDirection can be specified for each OrderBy attribute.
+        # The pairing is made by the array indices.
+
+        OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
+        # ignored when the result type is 'COUNT'
+        # default: [ 'Down' ]
+        # (Down | Up)
+
         Limit     => 150,
         Interface => 'public',      # public|external|internal (default internal)
     );
@@ -2117,6 +2130,117 @@ sub FAQSearch {
     # set default
     if ( !$Param{Interface} ) {
         $Param{Interface} = 'internal';
+    }
+
+    # verify that all passed array parameters contain an arrayref
+    ARGUMENT:
+    for my $Argument (
+        qw(
+        OrderBy
+        OrderByDirection
+        )
+        )
+    {
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} ||= [];
+
+            next ARGUMENT;
+        }
+
+        if ( ref $Param{$Argument} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be an array reference!",
+            );
+            return;
+        }
+    }
+
+    # define order table
+    my %OrderByTable = (
+
+        # FAQ item attributes
+        FAQID     => 'i.id',
+        FAQNumber => 'i.f_number',
+        Title     => 'i.f_subject',
+        Language  => 'i.f_language_id',
+        Category  => 'i.category_id',
+        Created   => 'i.created',
+        Changed   => 'i.changed',
+
+        # State attributes
+        State     => 's.name',
+
+        # Vote attributes
+        Votes     => 'votes',
+        Result    => 'vrate',
+    );
+
+    # check if OrderBy contains only unique valid values
+    my %OrderBySeen;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
+
+            # found an error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "OrderBy contains invalid value '$OrderBy' "
+                    . 'or the value is used more than once!',
+            );
+            return;
+        }
+
+        # remember the value to check if it appears more than once
+        $OrderBySeen{$OrderBy} = 1;
+
+    }
+
+    # check if OrderByDirection array contains only 'Up' or 'Down'
+    DIRECTION:
+    for my $Direction ( @{ $Param{OrderByDirection} } ) {
+
+        # only 'Up' or 'Down' allowed
+        next DIRECTION if $Direction eq 'Up';
+        next DIRECTION if $Direction eq 'Down';
+
+        # found an error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+        );
+        return;
+    }
+
+    # assemble the ORDER BY clause
+    my @SQLOrderBy;
+    my $Count = 0;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        # set the default order direction
+        my $Direction = 'DESC';
+
+        # add the given order direction
+        if ( $Param{OrderByDirection}->[$Count] ) {
+            if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+                $Direction = 'ASC';
+            }
+            elsif ( $Param{OrderByDirection}->[$Count] eq 'Down' ) {
+                $Direction = 'DESC';
+            }
+        }
+
+        # add SQL
+        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+    }
+    continue {
+        $Count++;
+    }
+
+   # if there is a possibility that the ordering is not determined
+    # we add an descending ordering by id
+    if ( !grep { $_ eq 'FAQID' } ( @{ $Param{OrderBy} } ) ) {
+        push @SQLOrderBy, "$OrderByTable{FAQID} DESC";
     }
 
     # sql
@@ -2257,56 +2381,25 @@ sub FAQSearch {
     if ($Ext) {
         $Ext = ' WHERE' . $Ext;
     }
-    $Ext .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id';
-    if ( $Param{OrderBy} ) {
-        $Ext .= ' ORDER BY ';
 
-        # title
-        if ( $Param{OrderBy} eq 'Title' ) {
-            $Ext .= 'i.f_subject';
-        }
+    $Ext .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id ';
 
-        # language
-        elsif ( $Param{OrderBy} eq 'Language' ) {
-            $Ext .= 'i.f_language_id';
-        }
-
-        # state
-        elsif ( $Param{OrderBy} eq 'State' ) {
-            $Ext .= 's.name';
-        }
-
-        # votes
-        elsif ( $Param{OrderBy} eq 'Votes' ) {
-            $Ext .= 'votes';
-        }
-
-        # rates
-        elsif ( $Param{OrderBy} eq 'Result' ) {
-            $Ext .= 'vrate';
-        }
-
-        # changed
-        elsif ( $Param{OrderBy} eq 'Created' ) {
-            $Ext .= 'i.created';
-        }
-
-        # created
-        elsif ( $Param{OrderBy} eq 'Changed' ) {
-            $Ext .= 'i.changed';
-        }
-
-        if ( $Param{SortBy} ) {
-            if ( $Param{SortBy} eq 'up' ) {
-                $Ext .= ' ASC';
-            }
-            elsif ( $Param{SortBy} eq 'down' ) {
-                $Ext .= ' DESC';
-            }
-        }
+   # add the ORDER BY clause
+    if (@SQLOrderBy) {
+        $Ext .= 'ORDER BY ';
+        $Ext .= join ', ', @SQLOrderBy;
+        $Ext .= ' ';
     }
+
     $SQL .= $Ext;
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => $Param{Limit} || 500 );
+
+    # ask database
+    return if !$Self->{DBObject}->Prepare(
+        SQL => $SQL,
+        Limit => $Param{Limit} || 500
+    );
+
+    # fetch the result
     my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @List, $Row[0];
@@ -3376,6 +3469,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.96 $ $Date: 2010-11-02 13:04:12 $
+$Revision: 1.97 $ $Date: 2010-11-02 18:44:32 $
 
 =cut
