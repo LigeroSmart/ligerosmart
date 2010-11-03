@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.10 2010-11-03 18:23:12 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.11 2010-11-03 23:50:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -400,7 +400,7 @@ sub _Edit {
     );
 
     # get all valid groups
-    my %Groups = $Self->{GroupObject}->GroupList ( Valid => 1 );
+    my %Groups = $Self->{GroupObject}->GroupList( Valid => 1 );
 
     # build the group selection
     $Param{GroupOption} = $Self->{LayoutObject}->BuildSelection(
@@ -457,96 +457,49 @@ sub _Overview {
     $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
     $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
-    # get categories list
-    my $CategoryListRef = $Self->{FAQObject}->CategoryList(
+    # get all categories with their long names
+    my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
+        Valid  => 0,
         UserID => $Self->{UserID},
     );
 
     # if there are any categories, they are shown
-    if ( $CategoryListRef && ref $CategoryListRef eq 'HASH' && %{$CategoryListRef} ){
-        $Self->_FAQCategoryTableOutput(
-            CategoryList => $CategoryListRef,
-            LevelCounter => 0,
-            ParentID     => 0,
-        );
+    if ( $CategoryTree && ref $CategoryTree eq 'HASH' && %{$CategoryTree} ) {
+
+        # get the valid list
+        my %ValidList = $Self->{ValidObject}->ValidList();
+
+        # sort the category ids by the long category name
+        my @CategoryIDsSorted = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
+
+        # show all categories
+        for my $CategoryID (@CategoryIDsSorted) {
+
+            # get category data
+            my %CategoryData = $Self->{FAQObject}->CategoryGet(
+                CategoryID => $CategoryID,
+                UserID     => $Self->{UserID},
+            );
+
+            # get valid string based on ValidID
+            $CategoryData{Valid} = $ValidList{ $CategoryData{ValidID} };
+
+            # overwrite the name with the long name
+            $CategoryData{Name} = $CategoryTree->{$CategoryID};
+
+            # output the category data
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewResultRow',
+                Data => { %CategoryData },
+            );
+        }
     }
 
-    # otherwise a no data found msg is displayed
+    # otherwise a no data found message is displayed
     else {
-        $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
-    }
-}
-
-sub _FAQCategoryTableOutput {
-    my ( $Self, %Param ) = @_;
-
-    # based on Kernel::Output::HTML::LayoutFAQ::AgentFAQCategoryListOptionElement()
-    my $LevelCounter = $Param{LevelCounter} || 0;
-    my $ParentID     = $Param{ParentID};
-
-    my %ParentNames;
-
-    my %CategoryList       = %{ $Param{CategoryList} };
-    my %CategoryLevelList  = %{ $CategoryList{ $ParentID } };
-
-    my @TempSubCategoryIDs = map  { "Level:$LevelCounter" . "ParentID:$ParentID", $_ }
-                             sort { $CategoryLevelList{$a} cmp $CategoryLevelList{$b} }
-                             keys %CategoryLevelList;
-
-    SUBCATEGORYID:
-    while ( @TempSubCategoryIDs ) {
-
-        # add level counter id to subcategory array
-        if ( $TempSubCategoryIDs[0] =~ m{ Level : ( \d+ ) ParentID : ( \d+ ) }xms ) {
-            $LevelCounter = $1;
-            $ParentID     = $2;
-            shift @TempSubCategoryIDs;
-        }
-
-        # get next subcategory id
-        my $SubCategoryID = shift @TempSubCategoryIDs;
-
-        # get new category level list
-        %CategoryLevelList = %{ $CategoryList{ $ParentID } };
-
-        # get category details
-        my %CategoryData = $Self->{FAQObject}->CategoryGet(
-            CategoryID => $SubCategoryID,
-            UserID     => $Self->{UserID},
-        );
-
-        # append parent name to child category name
-        if ( $ParentNames{$ParentID} ) {
-            $CategoryData{Name} = $ParentNames{$ParentID} . '::' . $CategoryData{Name};
-        }
-
-        # set current child complete name to ParentNames hash for further use
-        $ParentNames{$SubCategoryID} = $CategoryData{Name};
-
-        # get valid string based on ValidID
-        $CategoryData{Valid}
-            = $Self->{ValidObject}->ValidLookup( ValidID => $CategoryData{ValidID} );
-
-        #output results
         $Self->{LayoutObject}->Block(
-            Name => 'OverviewResultRow',
-            Data => { %CategoryData },
+            Name => 'NoDataFoundMsg',
         );
-
-        # check if subcategory has own subcategories
-        next SUBCATEGORYID if !$CategoryList{ $SubCategoryID };
-
-        # increase level
-        my $NextLevel = $LevelCounter + 1;
-
-        # get new subcategory ids
-        my %NewCategoryLevelList = %{ $CategoryList{ $SubCategoryID } };
-        my @NewSubcategoryIDs = map  { "Level:$NextLevel" . "ParentID:$SubCategoryID", $_ }
-                                sort { $NewCategoryLevelList{$a} cmp $NewCategoryLevelList{$b} }
-                                keys %NewCategoryLevelList;
-
-        # add new subcategory ids at beginning of temp array
-        unshift @TempSubCategoryIDs, @NewSubcategoryIDs;
     }
 }
 
