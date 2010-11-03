@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.37 2010-11-02 14:02:10 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.38 2010-11-03 20:24:34 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -611,7 +611,7 @@ Your OTRS Notification Master
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::HeaderMetaFAQSearch</Item>
-                <Item Key="Action">AgentFAQ</Item>
+                <Item Key="Action">AgentFAQSearch</Item>
             </Hash>
         </Setting>
     </ConfigItem>
