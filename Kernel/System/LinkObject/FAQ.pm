@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.13 2010-10-28 17:08:10 ub Exp $
+# $Id: FAQ.pm,v 1.14 2010-11-03 18:22:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -141,15 +141,19 @@ sub ObjectDescriptionGet {
     # get faq
     my %FAQ = $Self->{FAQObject}->FAQGet(
         FAQID  => $Param{Key},
-        UserID => 1,
+        UserID => $Param{UserID},
     );
 
     return if !%FAQ;
 
+    # define description text
+    my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my $DescriptionText = "$FAQHook $FAQ{Number}";
+
     # create description
     %Description = (
-        Normal => "FAQ# $FAQ{Number}",
-        Long   => "FAQ# $FAQ{Number}: $FAQ{Name}",
+        Normal => $DescriptionText,
+        Long   => "$DescriptionText: $FAQ{Name}",
     );
 
     return %Description;
@@ -208,9 +212,10 @@ sub ObjectSearch {
     my @FAQIDs = $Self->{FAQObject}->FAQSearch(
         %{ $Param{SearchParams} },
         %Search,
-        Order => 'Created',
-        Sort  => 'down',
-        Limit => 50,
+        Order  => 'Created',
+        Sort   => 'down',
+        Limit  => 50,
+        UserID => $Param{UserID},
     );
 
     my %SearchList;
