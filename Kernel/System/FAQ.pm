@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.103 2010-11-03 19:10:34 ub Exp $
+# $Id: FAQ.pm,v 1.104 2010-11-03 19:34:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.103 $) [1];
+$VERSION = qw($Revision: 1.104 $) [1];
 
 =head1 NAME
 
@@ -2980,62 +2980,6 @@ sub GetUserCategories {
     return $UserCategories;
 }
 
-=item _UserCategories()
-
-....
-....
-
-=cut
-
-sub _UserCategories {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(Categories UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    my %UserCategories = ();
-
-    PARENTID:
-    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{Categories} } ) {
-
-        my %SubCategories = ();
-
-        CATEGORYID:
-        for my $CategoryID ( keys %{ $Param{Categories}->{$ParentID} } ) {
-
-            # check category groups
-            next CATEGORYID if !defined $Param{CategoryGroups}->{$CategoryID};
-
-            # check user groups
-            GROUPID:
-            for my $GroupID ( keys %{ $Param{CategoryGroups}->{$CategoryID} } ) {
-
-                next GROUPID if !defined $Param{UserGroups}->{$GroupID};
-
-                # add category
-                $SubCategories{$CategoryID} = $Param{Categories}->{$ParentID}{$CategoryID};
-
-                # add empty hash if category has no subcategories
-                if ( !$UserCategories{$CategoryID} ) {
-                    $UserCategories{$CategoryID} = {};
-                }
-
-                last GROUPID;
-            }
-        }
-        $UserCategories{$ParentID} = \%SubCategories;
-    }
-    return \%UserCategories;
-}
-
 =item GetCustomerCategories()
 
 get customer user categories
@@ -3836,7 +3780,67 @@ sub FAQPictureUploadAdd {
     return $Ok;
 }
 
+=begin Internal:
+
+=item _UserCategories()
+
+....
+....
+
+=cut
+
+sub _UserCategories {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Categories UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    my %UserCategories = ();
+
+    PARENTID:
+    for my $ParentID ( sort { $a <=> $b } keys %{ $Param{Categories} } ) {
+
+        my %SubCategories = ();
+
+        CATEGORYID:
+        for my $CategoryID ( keys %{ $Param{Categories}->{$ParentID} } ) {
+
+            # check category groups
+            next CATEGORYID if !defined $Param{CategoryGroups}->{$CategoryID};
+
+            # check user groups
+            GROUPID:
+            for my $GroupID ( keys %{ $Param{CategoryGroups}->{$CategoryID} } ) {
+
+                next GROUPID if !defined $Param{UserGroups}->{$GroupID};
+
+                # add category
+                $SubCategories{$CategoryID} = $Param{Categories}->{$ParentID}{$CategoryID};
+
+                # add empty hash if category has no subcategories
+                if ( !$UserCategories{$CategoryID} ) {
+                    $UserCategories{$CategoryID} = {};
+                }
+
+                last GROUPID;
+            }
+        }
+        $UserCategories{$ParentID} = \%SubCategories;
+    }
+    return \%UserCategories;
+}
+
 1;
+
+=end Internal:
 
 =back
 
@@ -3852,6 +3856,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.103 $ $Date: 2010-11-03 19:10:34 $
+$Revision: 1.104 $ $Date: 2010-11-03 19:34:02 $
 
 =cut
