@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.6 2010-11-03 10:53:11 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.7 2010-11-03 11:10:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,7 +53,8 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    $GetParam{CategoryID} = $GetParam{ID} || '';
+    # set default
+    $GetParam{CategoryID} ||= '';
 
     @{ $GetParam{PermissionGroups} }
         = $Self->{ParamObject}->GetArray( Param => "PermissionGroups" );
@@ -72,18 +73,15 @@ sub Run {
     if ( $Self->{Subaction} eq 'Change' ) {
 
         # check required parameters
-        if ( !$GetParam{ID} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Need ID!" );
+        if ( !$GetParam{CategoryID} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Need CategoryID!" );
         }
 
         # get category data
-        my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $GetParam{ID} );
-
-        # TODO: change ID to CategoryID
-        $CategoryData{ID} = $CategoryData{CategoryID};
+        my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $GetParam{CategoryID} );
 
         $CategoryData{PermissionGroups} = $Self->{FAQObject}->GetCategoryGroup(
-            CategoryID => $GetParam{ID},
+            CategoryID => $GetParam{CategoryID},
         );
 
         # set validation class
@@ -162,9 +160,9 @@ sub Run {
 
         # check for duplicate category name with the same parent category
         my $CategoryExistsAlready = $Self->{FAQObject}->CategoryDuplicateCheck(
-            ID       => $GetParam{ID},
-            Name     => $GetParam{Name},
-            ParentID => $GetParam{ParentID},
+            CategoryID => $GetParam{CategoryID},
+            Name       => $GetParam{Name},
+            ParentID   => $GetParam{ParentID},
         );
 
         # show the edit screen again
@@ -197,7 +195,7 @@ sub Run {
 
         # set category group
         $Self->{FAQObject}->SetCategoryGroup(
-            CategoryID => $GetParam{ID},
+            CategoryID => $GetParam{CategoryID},
             GroupIDs   => $GetParam{PermissionGroups},
         );
 
@@ -293,9 +291,9 @@ sub Run {
 
         # check for duplicate category name with the same parent category
         my $CategoryExistsAlready = $Self->{FAQObject}->CategoryDuplicateCheck(
-            ID       => $GetParam{ID},
-            Name     => $GetParam{Name},
-            ParentID => $GetParam{ParentID},
+            CategoryID => $GetParam{CategoryID},
+            Name       => $GetParam{Name},
+            ParentID   => $GetParam{ParentID},
         );
 
         # show the edit screen again

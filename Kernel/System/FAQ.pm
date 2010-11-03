@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.99 2010-11-03 10:51:11 ub Exp $
+# $Id: FAQ.pm,v 1.100 2010-11-03 11:10:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.99 $) [1];
+$VERSION = qw($Revision: 1.100 $) [1];
 
 =head1 NAME
 
@@ -1154,7 +1154,7 @@ get the category list as hash
 
     my %Categories = $FAQObject->CategoryList(
         Valid => 1,
-    )};
+    );
 
 =cut
 
@@ -1171,12 +1171,15 @@ sub CategoryList {
         return $Self->{Cache}->{CategoryList}->{$Valid};
     }
 
-    # sql
+    # build sql
     my $SQL = 'SELECT id, parent_id, name FROM faq_category ';
     if ($Valid) {
         $SQL .= 'WHERE valid_id = 1';
     }
+    # prepare sql statement
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Data{ $Row[1] }->{ $Row[0] } = $Row[2];
@@ -1242,7 +1245,7 @@ sub CategorySearch {
             $Ext .= "name";
         }
 
-        #default
+        # default
         else {
             $Ext .= "name";
         }
@@ -1262,10 +1265,12 @@ sub CategorySearch {
     $SQL .= $Ext;
 
     return if !$Self->{DBObject}->Prepare( SQL => $SQL, Limit => 500 );
+
     my @List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @List, $Row[0];
     }
+
     return \@List;
 }
 
@@ -1519,9 +1524,9 @@ sub CategoryUpdate {
 check a category
 
     my $Exists = $FAQObject->CategoryDuplicateCheck(
-        ID       => 1, # or
-        Name     => 'Some Name',
-        ParentID => 1,
+        CategoryID => 1, # or
+        Name       => 'Some Name',
+        ParentID   => 1,
     );
 
 =cut
@@ -1530,18 +1535,22 @@ sub CategoryDuplicateCheck {
     my ( $Self, %Param ) = @_;
 
     # db quote
-    $Param{Name} = $Self->{DBObject}->Quote( $Param{Name} ) || '';
-    $Param{ID}   = $Self->{DBObject}->Quote( $Param{ID}, 'Integer' );
+    $Param{Name}       = $Self->{DBObject}->Quote( $Param{Name} ) || '';
+    $Param{CategoryID} = $Self->{DBObject}->Quote( $Param{CategoryID}, 'Integer' );
 
-    # sql
+    # build sql
     my $SQL = 'SELECT id FROM faq_category WHERE ';
     if ( defined $Param{Name} ) {
         $SQL .= "name = '$Param{Name}' AND parent_id = $Param{ParentID} ";
         if ( defined $Param{ID} ) {
-            $SQL .= "AND id != '$Param{ID}' ";
+            $SQL .= "AND id != '$Param{CategoryID}' ";
         }
     }
+
+    # prepare sql statement
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetct the result
     my $Exists;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Exists = 1;
@@ -1878,12 +1887,15 @@ get the language list as hash
 sub LanguageList {
     my ( $Self, %Param ) = @_;
 
-    # sql
+    # build sql
     return if !$Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_language' );
+
+    # fetch the result
     my %List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
+
     return %List;
 }
 
@@ -1912,7 +1924,7 @@ sub LanguageUpdate {
         }
     }
 
-    # sql
+    # build sql
     return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_language SET name = ? WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{LanguageID} ],
@@ -1939,7 +1951,7 @@ sub LanguageDuplicateCheck {
     $Param{Name}       = $Self->{DBObject}->Quote( $Param{Name} ) || '';
     $Param{LanguageID} = $Self->{DBObject}->Quote( $Param{LanguageID}, 'Integer' );
 
-    # sql
+    # build sql
     my $SQL = 'SELECT id FROM faq_language WHERE ';
     if ( defined $Param{Name} ) {
         $SQL .= "name = '$Param{Name}' ";
@@ -1947,11 +1959,16 @@ sub LanguageDuplicateCheck {
     if ( defined $Param{LanguageID} ) {
         $SQL .= "AND id != '$Param{LanguageID}' ";
     }
+
+    # prepare sql statement
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
-    my $Exists = 0;
+
+    # fetch the result
+    my $Exists;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Exists = 1;
     }
+
     return $Exists;
 }
 
@@ -3469,6 +3486,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.99 $ $Date: 2010-11-03 10:51:11 $
+$Revision: 1.100 $ $Date: 2010-11-03 11:10:39 $
 
 =cut
