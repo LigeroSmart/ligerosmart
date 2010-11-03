@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.6 2010-11-03 10:50:39 ub Exp $
+# $Id: AgentFAQLanguage.pm,v 1.7 2010-11-03 18:23:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,7 +72,10 @@ sub Run {
         }
 
         # get language data
-        my %LanguageData = $Self->{FAQObject}->LanguageGet( LanguageID => $LanguageID );
+        my %LanguageData = $Self->{FAQObject}->LanguageGet(
+            LanguageID => $LanguageID,
+            UserID     => $Self->{UserID},
+        );
 
         # set class for server validation errors
         $GetParam{RequiredClass} = "Validate_Required ";
@@ -134,6 +137,7 @@ sub Run {
         my $LanguageExistsAlready = $Self->{FAQObject}->LanguageDuplicateCheck(
             Name       => $GetParam{Name},
             LanguageID => $GetParam{LanguageID},
+            UserID     => $Self->{UserID},
         );
 
         # show the edit screen again
@@ -152,7 +156,10 @@ sub Run {
         }
 
         # update the language
-        my $LanguageUpdateSuccessful = $Self->{FAQObject}->LanguageUpdate(%GetParam);
+        my $LanguageUpdateSuccessful = $Self->{FAQObject}->LanguageUpdate(
+            %GetParam,
+            UserID => $Self->{UserID},
+        );
 
         # check error
         if ( !$LanguageUpdateSuccessful ) {
@@ -233,7 +240,8 @@ sub Run {
 
         # check for duplicate language name
         my $LanguageExistsAlready = $Self->{FAQObject}->LanguageDuplicateCheck(
-            Name => $GetParam{Name},
+            Name   => $GetParam{Name},
+            UserID => $Self->{UserID},
         );
 
         # show the edit screen again
@@ -252,7 +260,10 @@ sub Run {
         }
 
         # add the new language
-        my $LanguageAddSuccessful = $Self->{FAQObject}->LanguageAdd(%GetParam);
+        my $LanguageAddSuccessful = $Self->{FAQObject}->LanguageAdd(
+            %GetParam,
+            UserID => $Self->{UserID},
+        );
 
         # check error
         if ( !$LanguageAddSuccessful ) {
@@ -267,7 +278,7 @@ sub Run {
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data => {
-            	%Param,
+                %Param,
             },
         );
         $Output .= $Self->{LayoutObject}->Footer();
@@ -336,14 +347,19 @@ sub _Overview {
     $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
     # get languages list
-    my %Languages = $Self->{FAQObject}->LanguageList( UserID => $Self->{UserID} );
+    my %Languages = $Self->{FAQObject}->LanguageList(
+        UserID => $Self->{UserID},
+    );
 
     # if there are any languages, they are shown
     if (%Languages) {
         for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
 
             # get languages result
-            my %LanguageData = $Self->{FAQObject}->LanguageGet( LanguageID => $LanguageID );
+            my %LanguageData = $Self->{FAQObject}->LanguageGet(
+                LanguageID => $LanguageID,
+                UserID => $Self->{UserID},
+            );
 
             #output results
             $Self->{LayoutObject}->Block(

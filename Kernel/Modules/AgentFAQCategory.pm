@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.9 2010-11-03 14:32:08 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.10 2010-11-03 18:23:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,10 +78,15 @@ sub Run {
         }
 
         # get category data
-        my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $GetParam{CategoryID} );
+        my %CategoryData = $Self->{FAQObject}->CategoryGet(
+            CategoryID => $GetParam{CategoryID},
+            UserID     => $Self->{UserID},
+        );
 
+        # get permission groups
         $CategoryData{PermissionGroups} = $Self->{FAQObject}->GetCategoryGroup(
             CategoryID => $GetParam{CategoryID},
+            UserID     => $Self->{UserID},
         );
 
         # set validation class
@@ -163,6 +168,7 @@ sub Run {
             CategoryID => $GetParam{CategoryID},
             Name       => $GetParam{Name},
             ParentID   => $GetParam{ParentID},
+            UserID     => $Self->{UserID},
         );
 
         # show the edit screen again
@@ -186,7 +192,10 @@ sub Run {
         }
 
         # update category
-        my $CategoryUpdateSuccessful = $Self->{FAQObject}->CategoryUpdate(%GetParam);
+        my $CategoryUpdateSuccessful = $Self->{FAQObject}->CategoryUpdate(
+            %GetParam,
+            UserID => $Self->{UserID},
+        );
 
         # check error
         if ( !$CategoryUpdateSuccessful ) {
@@ -197,6 +206,7 @@ sub Run {
         $Self->{FAQObject}->SetCategoryGroup(
             CategoryID => $GetParam{CategoryID},
             GroupIDs   => $GetParam{PermissionGroups},
+            UserID     => $Self->{UserID},
         );
 
         # show overview
@@ -294,6 +304,7 @@ sub Run {
             CategoryID => $GetParam{CategoryID},
             Name       => $GetParam{Name},
             ParentID   => $GetParam{ParentID},
+            UserID     => $Self->{UserID},
         );
 
         # show the edit screen again
@@ -317,7 +328,10 @@ sub Run {
         }
 
         # add new category
-        my $CategoryID = $Self->{FAQObject}->CategoryAdd(%GetParam);
+        my $CategoryID = $Self->{FAQObject}->CategoryAdd(
+            %GetParam,
+            UserID => $Self->{UserID},
+        );
 
         # check error
         if ( !$CategoryID ) {
@@ -328,6 +342,7 @@ sub Run {
         $Self->{FAQObject}->SetCategoryGroup(
             CategoryID => $CategoryID,
             GroupIDs   => $GetParam{PermissionGroups},
+            UserID     => $Self->{UserID},
         );
 
         # show overview
@@ -398,7 +413,8 @@ sub _Edit {
 
     # get all categories with their long names
     my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
-        Valid => 0,
+        Valid  => 0,
+        UserID => $Self->{UserID},
     );
 
     # build the catogory selection
@@ -442,7 +458,9 @@ sub _Overview {
     $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
     # get categories list
-    my $CategoryListRef = $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} );
+    my $CategoryListRef = $Self->{FAQObject}->CategoryList(
+        UserID => $Self->{UserID},
+    );
 
     # if there are any categories, they are shown
     if ( $CategoryListRef && ref $CategoryListRef eq 'HASH' && %{$CategoryListRef} ){
@@ -492,7 +510,10 @@ sub _FAQCategoryTableOutput {
         %CategoryLevelList = %{ $CategoryList{ $ParentID } };
 
         # get category details
-        my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $SubCategoryID );
+        my %CategoryData = $Self->{FAQObject}->CategoryGet(
+            CategoryID => $SubCategoryID,
+            UserID     => $Self->{UserID},
+        );
 
         # append parent name to child category name
         if ( $ParentNames{$ParentID} ) {

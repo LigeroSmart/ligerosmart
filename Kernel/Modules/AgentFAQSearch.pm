@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.5 2010-11-02 20:56:11 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.6 2010-11-03 18:23:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,10 +54,12 @@ sub Run {
 
     # set interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name => 'internal'
+        Name   => 'internal',
+        UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => [ 'internal', 'external', 'public' ]
+        Types  => [ 'internal', 'external', 'public' ],
+        UserID => $Self->{UserID},
     );
 
     my $Output;
@@ -218,6 +220,7 @@ sub Run {
             ContentSearchPrefix => '*',
             ContentSearchSuffix => '*',
             %GetParam,
+            UserID => $Self->{UserID},
         );
 
         # CSV output
@@ -227,7 +230,10 @@ sub Run {
             for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
-                my %FAQData = $Self->{FAQObject}->FAQGet(FAQID => $FAQID);
+                my %FAQData = $Self->{FAQObject}->FAQGet(
+                    FAQID => $FAQID,
+                    UserID => $Self->{UserID},
+                );
 
                 my $Changed = $Self->{LayoutObject}->Output(
                     Template => '$TimeLong{"$Data{"Changed"}"}',
@@ -255,7 +261,7 @@ sub Run {
             }
 
             # replace FAQNumber header with the current FAQHook from config
-            $CSVHead[0] =  $Self->{ConfigObject}->Get('FAQ::FAQHook');
+            $CSVHead[0] = $Self->{ConfigObject}->Get('FAQ::FAQHook');
 
             # assable CSV data
             my $CSV = $Self->{CSVObject}->Array2CSV(
@@ -285,7 +291,10 @@ sub Run {
             for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
-                my %FAQData = $Self->{FAQObject}->FAQGet(FAQID => $FAQID);
+                my %FAQData = $Self->{FAQObject}->FAQGet(
+                    FAQID  => $FAQID,
+                    UserID => $Self->{UserID},
+                );
 
                 # create PDFObject
                 use Kernel::System::PDF;
@@ -654,7 +663,9 @@ sub _MaskForm {
     );
 
     # get languages list
-    my %Languages = $Self->{FAQObject}->LanguageList( UserID => $Self->{UserID} );
+    my %Languages = $Self->{FAQObject}->LanguageList(
+        UserID => $Self->{UserID},
+    );
 
     # dropdown menu for 'languages'
     $Param{'LanguagesSelectionString'} = $Self->{LayoutObject}->BuildSelection(
@@ -667,8 +678,8 @@ sub _MaskForm {
 
     # get categories where user has rights
     my $Categories = $Self->{FAQObject}->GetUserCategories(
-            UserID => $Self->{UserID},
             Type   => 'rw',
+            UserID => $Self->{UserID},
         );
 
     # dropdown menu for 'categories'
