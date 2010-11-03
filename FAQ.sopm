@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.75 2010-06-25 08:50:27 mb Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.76 2010-11-03 20:24:56 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -28,19 +28,32 @@
         <File Permission="644" Location="Kernel/Language/uk_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQLanguage.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PictureUploadFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewNavBar.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearch.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.dtl.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescription.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/RichTextEditorFAQ.dtl"/>
         <File Permission="644" Location="Kernel/System/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
