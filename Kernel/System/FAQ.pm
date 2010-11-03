@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.102 2010-11-03 18:20:47 ub Exp $
+# $Id: FAQ.pm,v 1.103 2010-11-03 19:10:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.102 $) [1];
+$VERSION = qw($Revision: 1.103 $) [1];
 
 =head1 NAME
 
@@ -1688,8 +1688,9 @@ sub CategoryDuplicateCheck {
         return;
     }
 
-    # set default
-    $Param{ParentID} ||= 0;
+    # set defaults
+    $Param{CategoryID} ||= 0;
+    $Param{ParentID}   ||= 0;
 
     # db quote
     $Param{Name}       = $Self->{DBObject}->Quote( $Param{Name} ) || '';
@@ -3851,6 +3852,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.102 $ $Date: 2010-11-03 18:20:47 $
+$Revision: 1.103 $ $Date: 2010-11-03 19:10:34 $
 
 =cut
