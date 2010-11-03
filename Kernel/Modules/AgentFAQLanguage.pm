@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.5 2010-10-29 21:40:45 ub Exp $
+# $Id: AgentFAQLanguage.pm,v 1.6 2010-11-03 10:50:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -75,7 +75,7 @@ sub Run {
         my %LanguageData = $Self->{FAQObject}->LanguageGet( LanguageID => $LanguageID );
 
         # set class for server validation errors
-        $GetParam{RequiredClass}  = "Validate_Required ";
+        $GetParam{RequiredClass} = "Validate_Required ";
 
         # output change language screen
         my $Output = $Self->{LayoutObject}->Header();
