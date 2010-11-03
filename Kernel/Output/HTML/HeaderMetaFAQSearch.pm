@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/HeaderMetaFAQSearch.pm
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: HeaderMetaFAQSearch.pm,v 1.4 2009-12-09 15:04:32 mb Exp $
+# $Id: HeaderMetaFAQSearch.pm,v 1.5 2010-11-03 20:16:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,14 +37,11 @@ sub Run {
 
     my $Session = '';
     if ( !$Self->{LayoutObject}->{SessionIDCookie} ) {
-        $Session = '&' . $Self->{LayoutObject}->{SessionName} . '='
+        $Session = ';' . $Self->{LayoutObject}->{SessionName} . '='
             . $Self->{LayoutObject}->{SessionID};
     }
-
-    my $Fulltext = $Self->{LayoutObject}->{LanguageObject}->Get('Fulltext');
     my $Title = $Self->{ConfigObject}->Get('ProductName');
-    $Title .= ' (' . $Self->{ConfigObject}->Get('FAQ::FAQHook') . ' & ' . $Fulltext . ')';
-
+    $Title .= '(' . $Self->{ConfigObject}->Get('FAQ::FAQHook') . ')';
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
@@ -52,7 +49,21 @@ sub Run {
             Type  => 'application/opensearchdescription+xml',
             Title => $Title,
             Href  => '$Env{"Baselink"}Action=' . $Param{Config}->{Action}
-                . ';Subaction=OpenSearchDescription' . $Session,
+                . ';Subaction=OpenSearchDescriptionFAQNumber' . $Session,
+        },
+    );
+
+    my $Fulltext = $Self->{LayoutObject}->{LanguageObject}->Get('FAQFulltext');
+    $Title = $Self->{ConfigObject}->Get('ProductName');
+    $Title .= '(' . $Fulltext . ')';
+    $Self->{LayoutObject}->Block(
+        Name => 'MetaLink',
+        Data => {
+            Rel   => 'search',
+            Type  => 'application/opensearchdescription+xml',
+            Title => $Title,
+            Href  => '$Env{"Baselink"}Action=' . $Param{Config}->{Action}
+                . ';Subaction=OpenSearchDescriptionFulltext' . $Session,
         },
     );
     return 1;
