@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.8 2010-11-03 14:00:51 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.9 2010-11-03 14:32:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -396,30 +396,19 @@ sub _Edit {
         SelectedID => $Param{PermissionGroups},
     );
 
-    # get category list
-    my $CategoryListRef = $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} );
+    # get all categories with their long names
+    my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
+        Valid => 0,
+    );
 
-    # check if this is te category edit screen
-    if ( $Param{Action} eq 'Change' && $Param{CategoryID} ) {
-
-        # delete own category from parent list
-        delete $CategoryListRef->{ $Param{ParentID} }->{ $Param{CategoryID} };
-    }
-
-    # TODO : Replace this with build selection if possible,
-    # and remove AgentFAQCategoryListOption() from LayoutFAQ.pm
-    # hint: GetCategoryTree() gives us what we want
-    #
-    #
     # build the catogory selection
-    $Param{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList        => $CategoryListRef,
-        Size                => 1,
-        Name                => 'ParentID',
-        HTMLQuote           => 1,
-        LanguageTranslation => 0,
-        RootElement         => 1,
-        SelectedID          => $Param{ParentID},
+    $Param{CategoryOption} = $Self->{LayoutObject}->BuildSelection(
+        Data           => $CategoryTree,
+        Name           => 'ParentID',
+        SelectedID     => $Param{ParentID},
+        PossibleNone   => 1,
+        DisabledBranch => $CategoryTree->{ $Param{CategoryID} } || '',
+        Translation    => 0,
     );
 
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
