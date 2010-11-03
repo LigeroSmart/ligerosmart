@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Static/FAQAccess.pm.pm
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQAccess.pm,v 1.1 2008-09-25 12:23:37 ub Exp $
+# $Id: FAQAccess.pm,v 1.2 2010-11-03 18:40:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Days_in_Month);
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my $Type = shift;
@@ -28,8 +28,8 @@ sub new {
     bless( $Self, $Type );
 
     # check all needed objects
-    foreach (qw(DBObject ConfigObject LogObject)) {
-        die "Got no $_" if (!$Self->{$_});
+    for my $Object (qw(DBObject ConfigObject LogObject UserID)) {
+        die "Got no $Object" if !$Self->{$Object};
     }
 
     # create needed object
@@ -158,6 +158,7 @@ sub Run {
         Interface => 'internal',
         StartDate => $StartDate,
         EndDate   => $EndDate,
+        UserID    => $Self->{UserID},
     );
 
     # build result table
@@ -165,11 +166,15 @@ sub Run {
     for my $ItemIDRef ( @{ $Top10ItemIDsRef } ) {
 
         # get faq data
-        my %FAQData = $Self->{FAQObject}->FAQGet( ItemID => $ItemIDRef->{ItemID} );
+        my %FAQData = $Self->{FAQObject}->FAQGet(
+            ItemID => $ItemIDRef->{ItemID},
+            UserID => $Self->{UserID},
+        );
 
         # get vote data
         my $VoteData = $Self->{FAQObject}->ItemVoteDataGet(
             ItemID => $ItemIDRef->{ItemID},
+            UserID => $Self->{UserID},
         );
         my $VoteResult = sprintf(
             "%0."
@@ -202,7 +207,9 @@ sub Run {
         'Votes',
     );
 
-    return ( [$Title],[@HeadData], @Data );
+    my @Result = ( [$Title],[@HeadData], @Data );
+
+    return @Result;
 }
 
 1;
