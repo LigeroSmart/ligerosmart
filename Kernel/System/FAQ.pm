@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.104 2010-11-03 19:34:02 ub Exp $
+# $Id: FAQ.pm,v 1.105 2010-11-03 19:40:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.104 $) [1];
+$VERSION = qw($Revision: 1.105 $) [1];
 
 =head1 NAME
 
@@ -1918,10 +1918,10 @@ sub StateList {
 update a state
 
     $FAQObject->StateUpdate(
-        ID     => 1,
-        Name   => 'public',
-        TypeID => 1,
-        UserID => 1,
+        StateID => 1,
+        Name    => 'public',
+        TypeID  => 1,
+        UserID  => 1,
     );
 
 =cut
@@ -1930,7 +1930,7 @@ sub StateUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ID Name TypeID UserID)) {
+    for my $Argument (qw(StateID Name TypeID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1943,7 +1943,7 @@ sub StateUpdate {
     # sql
     return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_state SET name = ?, type_id = ?, WHERE id = ?',
-        Bind => [ \$Param{Name}, \$Param{TypeID}, \$Param{ID} ],
+        Bind => [ \$Param{Name}, \$Param{TypeID}, \$Param{StateID} ],
     );
 
     return 1;
@@ -1977,7 +1977,7 @@ sub StateAdd {
 
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO faq_state (name, type_id) VALUES ( ?, ? )',
-        Bind => [ \$Param{Name}, \$Param{TypeID}, ],
+        Bind => [ \$Param{Name}, \$Param{TypeID} ],
     );
 
     return 1;
@@ -1988,8 +1988,8 @@ sub StateAdd {
 get a state as hash
 
     my %State = $FAQObject->StateGet(
-        ID     => 1,
-        UserID => 1,
+        StateID => 1,
+        UserID  => 1,
     );
 
 =cut
@@ -1998,7 +1998,7 @@ sub StateGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ID UserID)) {
+    for my $Argument (qw(StateID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -2011,12 +2011,12 @@ sub StateGet {
     # sql
     return if !$Self->{DBObject}->Prepare(
         SQL  => 'SELECT id, name FROM faq_state WHERE id = ?',
-        Bind => [ \$Param{ID} ],
+        Bind => [ \$Param{StateID} ],
     );
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
-            ID      => $Row[0],
+            StateID => $Row[0],
             Name    => $Row[1],
             Comment => $Row[2],
         );
@@ -2029,9 +2029,9 @@ sub StateGet {
 get a state as hashref
 
     my $StateTypeHashRef = $FAQObject->StateTypeGet(
-        ID   => 1, # or
-        Name => 'internal',
-        UserID => 1,
+        StateID => 1, # or
+        Name    => 'internal',
+        UserID  => 1,
     );
 
 =cut
@@ -2051,10 +2051,10 @@ sub StateTypeGet {
     my $SQL = 'SELECT id, name FROM faq_state_type WHERE ';
     my @Bind;
     my $CacheKey = 'StateTypeGet::';
-    if ( defined $Param{ID} ) {
+    if ( defined $Param{StateID} ) {
         $SQL .= 'id = ?';
-        push @Bind, \$Param{ID};
-        $CacheKey .= 'ID::' . $Param{ID};
+        push @Bind, \$Param{StateID};
+        $CacheKey .= 'ID::' . $Param{StateID};
     }
     elsif ( defined $Param{Name} ) {
         $SQL .= 'name = ?';
@@ -2077,8 +2077,8 @@ sub StateTypeGet {
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
-            ID   => $Row[0],
-            Name => $Row[1],
+            StateID => $Row[0],
+            Name    => $Row[1],
         );
     }
 
@@ -3634,8 +3634,8 @@ sub FAQApprovalTicketCreate {
 
         # get faq state
         my %State = $Self->StateGet(
-            ID     => $Param{StateID},
-            UserID => $Param{UserID},
+            StateID => $Param{StateID},
+            UserID  => $Param{UserID},
         );
 
         # get body from config
@@ -3856,6 +3856,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.104 $ $Date: 2010-11-03 19:34:02 $
+$Revision: 1.105 $ $Date: 2010-11-03 19:40:57 $
 
 =cut
