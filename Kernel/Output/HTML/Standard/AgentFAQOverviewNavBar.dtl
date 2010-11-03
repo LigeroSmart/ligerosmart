@@ -2,7 +2,7 @@
 # AgentFAQOverviewNavBar.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewNavBar.dtl,v 1.2 2010-11-02 14:01:10 cr Exp $
+# $Id: AgentFAQOverviewNavBar.dtl,v 1.3 2010-11-03 20:17:25 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,7 +45,7 @@ $Data{"DataInTheMiddle"}
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#TicketSearch').bind('click', function (Event) {
-        Core.Agent.Search.OpenSearchDialog( 'AgentTicketSearch', '$QData{"Profile"}' );
+        Core.Agent.Search.OpenSearchDialog( 'AgentFAQSearch', '$QData{"Profile"}' );
         return false;
     });
 //]]></script>
