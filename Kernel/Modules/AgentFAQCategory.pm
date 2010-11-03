@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.5 2010-10-28 21:20:58 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.6 2010-11-03 10:53:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,8 +16,9 @@ use warnings;
 
 use Kernel::System::FAQ;
 use Kernel::System::Valid;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,7 +34,7 @@ sub new {
         }
     }
 
-    # create needed objects
+    # create additional objects
     $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
     $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
@@ -43,7 +44,10 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my %GetParam = ();
+    my %GetParam;
+
+    # set the user id
+    $GetParam{UserID} = $Self->{UserID};
 
     for my $ParamName (qw(ID Name ParentID Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -54,11 +58,12 @@ sub Run {
     @{ $GetParam{PermissionGroups} }
         = $Self->{ParamObject}->GetArray( Param => "PermissionGroups" );
 
-    $GetParam{UserID} = $Self->{UserID};
-
     # permission check
     if ( !$Self->{AccessRw} ) {
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => "You need rw permission!",
+            WithHeader => 'yes',
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -67,15 +72,14 @@ sub Run {
     if ( $Self->{Subaction} eq 'Change' ) {
 
         # check required parameters
-        for my $ParamName (qw(ID)) {
-            if ( !$GetParam{$ParamName} ) {
-                $Self->{LayoutObject}->FatalError( Message => "Need $ParamName !" );
-            }
+        if ( !$GetParam{ID} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Need ID!" );
         }
 
         # get category data
         my %CategoryData = $Self->{FAQObject}->CategoryGet( CategoryID => $GetParam{ID} );
 
+        # TODO: change ID to CategoryID
         $CategoryData{ID} = $CategoryData{CategoryID};
 
         $CategoryData{PermissionGroups} = $Self->{FAQObject}->GetCategoryGroup(
@@ -85,11 +89,11 @@ sub Run {
         # set validation class
         for my $ValidationObject ( qw(Name Comment PermissionGroups) ){
             if ( !$GetParam{ "$ValidationObject" . 'RequiredClass' } ) {
-                $GetParam{ "$ValidationObject" . 'RequiredClass' }  = "Validate_Required ";
+                $GetParam{ "$ValidationObject" . 'RequiredClass' } = "Validate_Required ";
             }
         }
 
-        # set default "No Error"" to field Name as server error string
+        # set default "No Error" to field Name as server error string
         if (! $GetParam{NameServerError} ) {
             $GetParam{NameServerError} = 'No Error';
         }
@@ -125,18 +129,21 @@ sub Run {
         for my $ParamName (qw(Name Comment PermissionGroups)) {
             if ( !$GetParam{$ParamName} ){
                 $GetParam{ "$ParamName" . 'RequiredClass'} = 'Validate_Required ServerError';
-                $GetParam{NameServerError}
-                    = 'A category should have a name!' if $ParamName eq 'Name';
+
+                # add server error string for category name field
+                if ( $ParamName eq 'Name' ) {
+                    $GetParam{NameServerError} = 'A category should have a name!';
+                }
 
                 # set ServerError Flag
                 $ServerError = 1;
             }
         }
 
-        # send server error if any required parameters is missing
+        # send server error if any required parameter is missing
         if ($ServerError){
             $Self->_Edit(
-                Action      => 'Change',
+                Action => 'Change',
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -147,59 +154,56 @@ sub Run {
             return $Output;
         }
 
-        for my $ParamName ( qw(ParentID ValidID)) {
-            if ( !defined( $GetParam{$ParamName} ) ) {
+        for my $ParamName (qw(ParentID ValidID)) {
+            if ( !defined $GetParam{$ParamName} ) {
                 return $Self->{LayoutObject}->FatalError( Message => "Need $ParamName" );
             }
         }
 
-        # check for duplicate name
-        if (
-            $Self->{FAQObject}->CategoryDuplicateCheck(
-                ID => $GetParam{ID},
-                Name => $GetParam{Name},
-                ParentID => $GetParam{ParentID}
-                )
-           )
-           {
+        # check for duplicate category name with the same parent category
+        my $CategoryExistsAlready = $Self->{FAQObject}->CategoryDuplicateCheck(
+            ID       => $GetParam{ID},
+            Name     => $GetParam{Name},
+            ParentID => $GetParam{ParentID},
+        );
 
-                # set server errors
-                $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
-                $GetParam{NameServerError} = "Category '$GetParam{Name}' already exists!";
+        # show the edit screen again
+        if ( $CategoryExistsAlready ) {
 
-                # output add category screen
-                $Self->_Edit(
-                    Action      => 'Change',
-                    %GetParam,
-                );
-                $Output .= $Self->{LayoutObject}->Output(
-                    TemplateFile => 'AgentFAQCategory',
-                    Data         => \%Param,
-                );
-                $Output .= $Self->{LayoutObject}->Footer();
-                return $Output;
+            # set server errors
+            $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
+            $GetParam{NameServerError} = "Category '$GetParam{Name}' already exists!";
+
+            # output add category screen
+            $Self->_Edit(
+                Action => 'Change',
+                %GetParam,
+            );
+            $Output .= $Self->{LayoutObject}->Output(
+                TemplateFile => 'AgentFAQCategory',
+                Data         => \%Param,
+            );
+            $Output .= $Self->{LayoutObject}->Footer();
+            return $Output;
         }
 
         # update category
-        my $Success
-                = $Self->{FAQObject}->CategoryUpdate( %GetParam, UserID => $Self->{UserID} );
+        my $CategoryUpdateSuccessful = $Self->{FAQObject}->CategoryUpdate(%GetParam);
 
-        if ($Success) {
-
-            # set category group
-            $Self->{FAQObject}->SetCategoryGroup(
-                CategoryID => $GetParam{ID},
-                GroupIDs   => $GetParam{PermissionGroups},
-            );
-
-            # retrun to overview
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ category updated!' );
-            $Self->_Overview();
-        }
-        else {
+        # check error
+        if ( !$CategoryUpdateSuccessful ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
+        # set category group
+        $Self->{FAQObject}->SetCategoryGroup(
+            CategoryID => $GetParam{ID},
+            GroupIDs   => $GetParam{PermissionGroups},
+        );
+
+        # show overview
+        $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ category updated!' );
+        $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
@@ -214,9 +218,9 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Add' ) {
 
         # set validation class
-        for my $ValidationObject ( qw(Name Comment PermissionGroups) ){
+        for my $ValidationObject (qw(Name Comment PermissionGroups)) {
             if ( !$GetParam{ "$ValidationObject" . 'RequiredClass' } ) {
-                $GetParam{ "$ValidationObject" . 'RequiredClass' }  = "Validate_Required ";
+                $GetParam{ "$ValidationObject" . 'RequiredClass' } = "Validate_Required ";
             }
         }
 
@@ -256,8 +260,11 @@ sub Run {
         for my $ParamName (qw(Name Comment PermissionGroups)) {
             if ( !$GetParam{$ParamName} ){
                 $GetParam{ "$ParamName" . 'RequiredClass'} = 'Validate_Required ServerError';
-                $GetParam{NameServerError}
-                    = 'A category should have a name!' if $ParamName eq 'Name';
+
+                # add server error string for category name field
+                if ( $ParamName eq 'Name' ) {
+                    $GetParam{NameServerError} = 'A category should have a name!';
+                }
 
                 # set ServerError Flag
                 $ServerError = 1;
@@ -267,7 +274,7 @@ sub Run {
         # send server error if any required parameters is missing
         if ($ServerError){
             $Self->_Edit(
-                Action      => 'Add',
+                Action => 'Add',
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -278,58 +285,56 @@ sub Run {
             return $Output;
         }
 
-        for my $ParamName ( qw(ParentID ValidID)) {
-            if ( !defined( $GetParam{$ParamName} ) ) {
+        for my $ParamName (qw(ParentID ValidID)) {
+            if ( !defined $GetParam{$ParamName} ) {
                 return $Self->{LayoutObject}->FatalError( Message => "Need $ParamName" );
             }
         }
 
-        # check for duplicate name
-        if (
-            $Self->{FAQObject}->CategoryDuplicateCheck(
-                Name => $GetParam{Name},
-                ParentID => $GetParam{ParentID}
-                )
-            )
-            {
+        # check for duplicate category name with the same parent category
+        my $CategoryExistsAlready = $Self->{FAQObject}->CategoryDuplicateCheck(
+            ID       => $GetParam{ID},
+            Name     => $GetParam{Name},
+            ParentID => $GetParam{ParentID},
+        );
 
-                # set server errors
-                $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
-                $GetParam{NameServerError} = "Category '$GetParam{Name}' already exists!";
+        # show the edit screen again
+        if ( $CategoryExistsAlready ) {
 
-                #output add category screen
-                $Self->_Edit(
-                    Action      => 'Add',
-                    %GetParam,
-                );
-                $Output .= $Self->{LayoutObject}->Output(
-                    TemplateFile => 'AgentFAQCategory',
-                    Data         => \%Param,
-                );
-                $Output .= $Self->{LayoutObject}->Footer();
-                return $Output;
+            # set server errors
+            $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
+            $GetParam{NameServerError} = "Category '$GetParam{Name}' already exists!";
+
+            # output add category screen
+            $Self->_Edit(
+                Action => 'Add',
+                %GetParam,
+            );
+            $Output .= $Self->{LayoutObject}->Output(
+                TemplateFile => 'AgentFAQCategory',
+                Data         => \%Param,
+            );
+            $Output .= $Self->{LayoutObject}->Footer();
+            return $Output;
         }
 
         # add new category
-        my $CategoryID
-                = $Self->{FAQObject}->CategoryAdd( %GetParam, UserID => $Self->{UserID} );
+        my $CategoryID = $Self->{FAQObject}->CategoryAdd(%GetParam);
 
-        if ($CategoryID) {
-
-            # set category group
-            $Self->{FAQObject}->SetCategoryGroup(
-                CategoryID => $CategoryID,
-                GroupIDs   => $GetParam{PermissionGroups},
-            );
-
-            # retrun to overview
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ category added!' );
-            $Self->_Overview();
-        }
-        else {
+        # check error
+        if ( !$CategoryID ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
+        # set category group
+        $Self->{FAQObject}->SetCategoryGroup(
+            CategoryID => $CategoryID,
+            GroupIDs   => $GetParam{PermissionGroups},
+        );
+
+        # show overview
+        $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ category added!' );
+        $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
@@ -347,7 +352,7 @@ sub Run {
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
-            Data         => {
+            Data => {
                 %Param,
                 %GetParam,
             },
@@ -370,17 +375,21 @@ sub _Edit {
         $Param{NameServerError} = 'No Error';
     }
 
+    # get the valid list
     my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
 
+    # build the valid selection
     $Param{ValidOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
     );
 
+    # get all valid groups
     my %Groups = $Self->{GroupObject}->GroupList ( Valid => 1 );
 
+    # build the group selection
     $Param{GroupOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Groups,
         Name       => 'PermissionGroups',
@@ -389,16 +398,24 @@ sub _Edit {
         SelectedID => $Param{PermissionGroups},
     );
 
-    my %CategoryList = %{ $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} ) };
+    # get category list
+    my $CategoryListRef = $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} );
 
+    # check if this is te category edit screen
     if ( $Param{Action} eq 'Change' && $Param{CategoryID} ) {
 
         # delete own category from parent list
-        delete $CategoryList{ $Param{ParentID} }->{ $Param{CategoryID} };
+        delete $CategoryListRef->{ $Param{ParentID} }->{ $Param{CategoryID} };
     }
 
+    # TODO : Replace this with build selection if possible,
+    # and remove AgentFAQCategoryListOption() from LayoutFAQ.pm
+    # hint: GetCategoryTree() gives us what we want
+    #
+    #
+    # build the catogory selection
     $Param{CategoryOption} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList        => { %CategoryList },
+        CategoryList        => $CategoryListRef,
         Size                => 1,
         Name                => 'ParentID',
         HTMLQuote           => 1,
@@ -415,7 +432,7 @@ sub _Edit {
         Data => \%Param,
     );
 
-    # shows header
+    # show header
     if ( $Param{Action} eq 'Change' ) {
         $Self->{LayoutObject}->Block( Name => 'HeaderEdit' );
     }
@@ -431,19 +448,19 @@ sub _Overview {
 
     my $Output = '';
 
-    #output overview blocks
+    # output overview blocks
     $Self->{LayoutObject}->Block( Name => 'Overview' );
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
     $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
     $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
     # get categories list
-    my %CategoryList = %{$Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} )};
+    my $CategoryListRef = $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} );
 
     # if there are any categories, they are shown
-    if (%CategoryList){
+    if ( $CategoryListRef && ref $CategoryListRef eq 'HASH' && %{$CategoryListRef} ){
         $Self->_FAQCategoryTableOutput(
-            CategoryList => \%CategoryList,
+            CategoryList => $CategoryListRef,
             LevelCounter => 0,
             ParentID     => 0,
         );
