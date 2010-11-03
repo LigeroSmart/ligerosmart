@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.105 2010-11-03 19:40:57 ub Exp $
+# $Id: FAQ.pm,v 1.106 2010-11-03 23:47:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.105 $) [1];
+$VERSION = qw($Revision: 1.106 $) [1];
 
 =head1 NAME
 
@@ -225,7 +225,7 @@ sub FAQGet {
         UserID => $Param{UserID},
     );
 
-    # get the catgory long name
+    # get the category long name
     $Data{CategoryName} = $CategoryTree->{ $Data{CategoryID} };
 
     return %Data;
@@ -2766,11 +2766,16 @@ sub GetCategoryTree {
 
     # fetch result
     my %CategoryMap;
+    my %CategoryNameLookup;
+    my %ParentIDLookup;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $CategoryMap{ $Row[1] }->{ $Row[0] } = $Row[2];
+        $CategoryNameLookup{ $Row[0] } = $Row[2];
+        $ParentIDLookup{ $Row[0] } = $Row[1];
     }
 
-    my $CategoryTree = {};
+    # tp store the category tree
+    my %CategoryTree;
 
     # check all parent ids
     for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
@@ -2778,20 +2783,28 @@ sub GetCategoryTree {
         # get subcategories and names for this parent id
         while ( my ( $CategoryID, $CategoryName ) = each %{ $CategoryMap{$ParentID} } ) {
 
-            # prepend parents category name
-            if ( $CategoryTree->{$ParentID} ) {
-                $CategoryName = $CategoryTree->{$ParentID} . '::' . $CategoryName;
+            # lookup the parents name
+            my $NewParentID = $ParentID;
+            while ($NewParentID) {
+
+                # prepend parents category name
+                if ( $CategoryNameLookup{$NewParentID} ) {
+                    $CategoryName = $CategoryNameLookup{$NewParentID} . '::' . $CategoryName;
+                }
+
+                # get up one parent level
+                $NewParentID = $ParentIDLookup{$NewParentID} || 0;
             }
 
             # add category to tree
-            $CategoryTree->{$CategoryID} = $CategoryName;
+            $CategoryTree{$CategoryID} = $CategoryName;
         }
     }
 
     # cache
-    $Self->{Cache}->{GetCategoryTree}->{$Valid} = $CategoryTree;
+    $Self->{Cache}->{GetCategoryTree}->{$Valid} = \%CategoryTree;
 
-    return $CategoryTree;
+    return \%CategoryTree;
 }
 
 =item SetCategoryGroup()
@@ -3856,6 +3869,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.105 $ $Date: 2010-11-03 19:40:57 $
+$Revision: 1.106 $ $Date: 2010-11-03 23:47:23 $
 
 =cut
