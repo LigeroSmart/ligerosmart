@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.8 2010-11-02 22:26:38 cr Exp $
+# $Id: LinkObjectFAQ.pm,v 1.9 2010-11-03 19:46:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -344,7 +344,10 @@ sub ContentStringCreate {
 
     # check needed stuff
     if ( !$Param{ContentData} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ContentData!' );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => 'Need ContentData!',
+        );
         return;
     }
 
@@ -520,6 +523,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-11-02 22:26:38 $
+$Revision: 1.9 $ $Date: 2010-11-03 19:46:26 $
 
 =cut
