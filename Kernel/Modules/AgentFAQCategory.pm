@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.7 2010-11-03 11:10:00 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.8 2010-11-03 14:00:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,7 +49,7 @@ sub Run {
     # set the user id
     $GetParam{UserID} = $Self->{UserID};
 
-    for my $ParamName (qw(ID Name ParentID Comment ValidID)) {
+    for my $ParamName (qw(CategoryID Name ParentID Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
@@ -92,7 +92,7 @@ sub Run {
         }
 
         # set default "No Error" to field Name as server error string
-        if (! $GetParam{NameServerError} ) {
+        if ( !$GetParam{NameServerError} ) {
             $GetParam{NameServerError} = 'No Error';
         }
 
