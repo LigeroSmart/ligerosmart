@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.4 2010-11-03 22:44:51 cr Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.5 2010-11-03 23:34:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,6 +20,7 @@
         $Text{"No FAQ data found."}
     </div>
 <!-- dtl:block:NoFAQFound -->
+<!-- dtl:block:RecordForm -->
     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
         <input type="hidden" name="Action" value="AgentTicketBulk"/>
         <input type="hidden" name="TicketID" value=""/>
@@ -101,6 +102,7 @@
             </tbody>
         </table>
     </form>
+<!-- dtl:block:RecordForm -->
 </div>
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
