@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.100 2010-11-03 11:10:39 ub Exp $
+# $Id: FAQ.pm,v 1.101 2010-11-03 14:03:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.100 $) [1];
+$VERSION = qw($Revision: 1.101 $) [1];
 
 =head1 NAME
 
@@ -2454,7 +2454,7 @@ sub FAQPathListGet {
 
 =item GetCategoryTree()
 
-get all categories as tree
+get all categories as tree (with their long names)
 
     my $CategoryTree = $FAQObject->GetCategoryTree(
         Valid => 0, # if 1 then check valid category
@@ -2475,16 +2475,21 @@ sub GetCategoryTree {
         return $Self->{Cache}->{GetCategoryTree}->{$Valid};
     }
 
-    # sql
+    # build sql
     my $SQL = 'SELECT id, parent_id, name FROM faq_category';
+
+    # add where clause for valid categories
     if ($Valid) {
         $SQL .= ' WHERE valid_id = 1';
     }
+
+    # prepare sql
     return if !$Self->{DBObject}->Prepare(
         SQL => $SQL,
     );
 
-    my %CategoryMap = ();
+    # fetch result
+    my %CategoryMap;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $CategoryMap{ $Row[1] }->{ $Row[0] } = $Row[2];
     }
@@ -2495,7 +2500,7 @@ sub GetCategoryTree {
     for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
 
         # get subcategories and names for this parent id
-        while ( my ( $CategoryID, $CategoryName ) = each( %{ $CategoryMap{$ParentID} } ) ) {
+        while ( my ( $CategoryID, $CategoryName ) = each %{ $CategoryMap{$ParentID} } ) {
 
             # prepend parents category name
             if ( $CategoryTree->{$ParentID} ) {
@@ -3486,6 +3491,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.100 $ $Date: 2010-11-03 11:10:39 $
+$Revision: 1.101 $ $Date: 2010-11-03 14:03:37 $
 
 =cut
