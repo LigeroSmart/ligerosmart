@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.7 2010-11-03 18:42:53 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.8 2010-11-03 19:31:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -668,29 +668,51 @@ sub _MaskForm {
     );
 
     # dropdown menu for 'languages'
-    $Param{'LanguagesSelectionString'} = $Self->{LayoutObject}->BuildSelection(
-        Data                => \%Languages,
-        Name                => 'LanguageIDs',
-        Size                => 5,
-        Multiple            => 1,
-        SelectedID          => $GetParam{LanguageIDs} || [],
+    $Param{LanguagesSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%Languages,
+        Name       => 'LanguageIDs',
+        Size       => 5,
+        Multiple   => 1,
+        SelectedID => $GetParam{LanguageIDs} || [],
     );
 
     # get categories where user has rights
-    my $Categories = $Self->{FAQObject}->GetUserCategories(
-            Type   => 'rw',
-            UserID => $Self->{UserID},
-        );
+    my $UserCategories = $Self->{FAQObject}->GetUserCategories(
+        Type   => 'rw',
+        UserID => $Self->{UserID},
+    );
 
-    # dropdown menu for 'categories'
-    $Param{'CategoriesSelectionString'} = $Self->{LayoutObject}->AgentFAQCategoryListOption(
-        CategoryList        => $Categories,
-        Size                => 5,
-        Name                => 'CategoryIDs',
-        HTMLQuote           => 1,
-        LanguageTranslation => 0,
-        SelectedIDs         => $GetParam{CategoryIDs} || [],
-        Multiple            => 1,
+    # get all categories with their long names
+    my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
+        Valid  => 0,
+        UserID => $Self->{UserID},
+    );
+
+    # to store the user categories with their long names
+    my %UserCategoriesLongNames;
+
+    # get the long names of the categories where user has rights
+    PARENTID:
+    for my $ParentID ( keys %{$UserCategories} ) {
+
+        next PARENTID if !$UserCategories->{$ParentID};
+        next PARENTID if ref $UserCategories->{$ParentID} ne 'HASH';
+        next PARENTID if !%{ $UserCategories->{$ParentID} };
+
+        for my $CategoryID ( keys %{ $UserCategories->{$ParentID} } ) {
+            $UserCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
+        }
+    }
+
+    # build the catogory selection
+    $Param{CategoriesSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data           => \%UserCategoriesLongNames,
+        Name           => 'CategoryIDs',
+        SelectedIDs    => $GetParam{CategoryIDs} || [],
+        Size           => 5,
+        PossibleNone   => 1,
+        Translation    => 0,
+        Multiple       => 1,
     );
 
     my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(
