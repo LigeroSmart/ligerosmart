@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.3 2010-11-03 18:28:08 ub Exp $
+# $Id: FAQOverviewSmall.pm,v 1.4 2010-11-03 22:44:51 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,6 +37,9 @@ sub new {
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    my $Output;
+    my @ShowColumns;
 
     # check needed stuff
     for my $Needed (qw(PageShown StartHit)) {
@@ -64,127 +67,132 @@ sub Run {
         @IDs = @{ $Param{FAQIDs} };
     }
 
-    # check ShowColumns parameter
-    my @ShowColumns;
-    if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
-        @ShowColumns = @{ $Param{ShowColumns} };
-    }
+    my $FAQData = scalar @IDs;
+    if ($FAQData){
 
-    # build column header blocks
-    if (@ShowColumns) {
-        for my $Column (@ShowColumns) {
+        # check ShowColumns parameter
+        if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
+            @ShowColumns = @{ $Param{ShowColumns} };
+        }
 
-            # create needed veriables
-            my $CSS = '';
-            my $OrderBy;
+        # build column header blocks
+        if (@ShowColumns) {
+            for my $Column (@ShowColumns) {
 
-            # remove ID if necesary
-            if ( $Param{SortBy} ) {
-                $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' )
-                    ? 'Priority'
-                    : ( $Param{SortBy} eq 'CategoryID' ) ? 'Category'
-                    : ( $Param{SortBy} eq 'LanguageID' ) ? 'Language'
-                    : ( $Param{SortBy} eq 'StateID' )    ? 'State'
-                    :                                    $Param{SortBy};
-            }
+                # create needed veriables
+                my $CSS = '';
+                my $OrderBy;
 
-            # set the correct Set CSS class and order by link
-            if ( $Param{SortBy} && ( $Param{SortBy} eq $Column ) ) {
-                if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
-                    $OrderBy = 'Down';
-                    $CSS .= ' SortDescending';
+                # remove ID if necesary
+                if ( $Param{SortBy} ) {
+                    $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' )
+                        ? 'Priority'
+                        : ( $Param{SortBy} eq 'CategoryID' ) ? 'Category'
+                        : ( $Param{SortBy} eq 'LanguageID' ) ? 'Language'
+                        : ( $Param{SortBy} eq 'StateID' )    ? 'State'
+                        :                                    $Param{SortBy};
+                }
+
+                # set the correct Set CSS class and order by link
+                if ( $Param{SortBy} && ( $Param{SortBy} eq $Column ) ) {
+                    if ( $Param{OrderBy} && ( $Param{OrderBy} eq 'Up' ) ) {
+                        $OrderBy = 'Down';
+                        $CSS .= ' SortDescending';
+                    }
+                    else {
+                        $OrderBy = 'Up';
+                        $CSS .= ' SortAscending';
+                    }
                 }
                 else {
                     $OrderBy = 'Up';
-                    $CSS .= ' SortAscending';
+                }
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'Record' . $Column . 'Header',
+                    Data => {
+                        %Param,
+                        CSS     => $CSS,
+                        OrderBy => $OrderBy,
+                    },
+                );
+            }
+        }
+
+        my $Counter  = 0;
+        my $CssClass = '';
+        ID:
+        for my $ID (@IDs) {
+            $Counter++;
+            if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
+
+                # to store all data
+                my %Data;
+
+                # get FAQ data
+                my %FAQ = $Self->{FAQObject}->FAQGet(
+                    FAQID   => $ID,
+                    UserID => $Self->{UserID},
+                );
+
+                next ID if !%FAQ;
+
+                # add FAQ data
+                %Data = ( %Data, %FAQ );
+
+                # set css class of the row
+                $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
+
+                # build record block
+                $Self->{LayoutObject}->Block(
+                    Name => 'Record',
+                    Data => {
+                        %Param,
+                        %Data,
+                        CssClass => $CssClass,
+                    },
+                );
+
+                # build column record blocks
+                if (@ShowColumns) {
+                    COLUMN:
+                    for my $Column (@ShowColumns) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Record' . $Column,
+                            Data => {
+                                %Param,
+                                %Data,
+                                CssClass => $CssClass,
+                            },
+                        );
+
+                        # do not display columns as links in the customer frontend
+                        next COLUMN if $Param{Frontend} eq 'Customer';
+
+                        # show links if available
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Record' . $Column . 'LinkStart',
+                            Data => {
+                                %Param,
+                                %Data,
+                                CssClass => $CssClass,
+                            },
+                        );
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Record' . $Column . 'LinkEnd',
+                            Data => {
+                                %Param,
+                                %Data,
+                                CssClass => $CssClass,
+                            },
+                        );
+                    }
                 }
             }
-            else {
-                $OrderBy = 'Up';
-            }
-
-            $Self->{LayoutObject}->Block(
-                Name => 'Record' . $Column . 'Header',
-                Data => {
-                    %Param,
-                    CSS     => $CSS,
-                    OrderBy => $OrderBy,
-                },
-            );
         }
     }
-
-    my $Output   = '';
-    my $Counter  = 0;
-    my $CssClass = '';
-    ID:
-    for my $ID (@IDs) {
-        $Counter++;
-        if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
-
-            # to store all data
-            my %Data;
-
-            # get FAQ data
-            my %FAQ = $Self->{FAQObject}->FAQGet(
-                FAQID   => $ID,
-                UserID => $Self->{UserID},
-            );
-
-            next ID if !%FAQ;
-
-            # add FAQ data
-            %Data = ( %Data, %FAQ );
-
-            # set css class of the row
-            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
-
-            # build record block
-            $Self->{LayoutObject}->Block(
-                Name => 'Record',
-                Data => {
-                    %Param,
-                    %Data,
-                    CssClass => $CssClass,
-                },
-            );
-
-            # build column record blocks
-            if (@ShowColumns) {
-                COLUMN:
-                for my $Column (@ShowColumns) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Record' . $Column,
-                        Data => {
-                            %Param,
-                            %Data,
-                            CssClass => $CssClass,
-                        },
-                    );
-
-                    # do not display columns as links in the customer frontend
-                    next COLUMN if $Param{Frontend} eq 'Customer';
-
-                    # show links if available
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Record' . $Column . 'LinkStart',
-                        Data => {
-                            %Param,
-                            %Data,
-                            CssClass => $CssClass,
-                        },
-                    );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Record' . $Column . 'LinkEnd',
-                        Data => {
-                            %Param,
-                            %Data,
-                            CssClass => $CssClass,
-                        },
-                    );
-                }
-            }
-        }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'NoFAQFound' );
     }
 
     # use template
