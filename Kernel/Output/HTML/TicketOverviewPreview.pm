@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.6 2010-10-13 08:57:18 en Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.38 2010/10/12 15:51:01 mg Exp $
+# $Id: TicketOverviewPreview.pm,v 1.7 2010-11-04 13:46:11 ub Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.42 2010/11/04 12:13:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::SystemAddress;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -141,6 +141,7 @@ sub Run {
         Name => 'DocumentHeader',
         Data => \%Param,
     );
+
     my $OutputMeta = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketOverviewPreview',
         Data         => \%Param,
@@ -156,26 +157,39 @@ sub Run {
     my $Counter       = 0;
     my $CounterOnSite = 0;
     my @TicketIDsShown;
-    for my $TicketID ( @{ $Param{TicketIDs} } ) {
-        $Counter++;
-        if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
-            push @TicketIDsShown, $TicketID;
-            my $Output = $Self->_Show(
-                TicketID => $TicketID,
-                Counter  => $CounterOnSite,
-                Bulk     => $BulkFeature,
-                Config   => $Param{Config},
-                Output   => $Param{Output} || '',
-            );
-            $CounterOnSite++;
-            if ( !$Param{Output} ) {
-                $Self->{LayoutObject}->Print( Output => $Output );
-            }
-            else {
-                $OutputRaw .= ${$Output};
+
+    # check if there are tickets to show
+    if ( scalar @{ $Param{TicketIDs} } ) {
+
+        for my $TicketID ( @{ $Param{TicketIDs} } ) {
+            $Counter++;
+            if (
+                $Counter >= $Param{StartHit}
+                && $Counter < ( $Param{PageShown} + $Param{StartHit} )
+                )
+            {
+                push @TicketIDsShown, $TicketID;
+                my $Output = $Self->_Show(
+                    TicketID => $TicketID,
+                    Counter  => $CounterOnSite,
+                    Bulk     => $BulkFeature,
+                    Config   => $Param{Config},
+                    Output   => $Param{Output} || '',
+                );
+                $CounterOnSite++;
+                if ( !$Param{Output} ) {
+                    $Self->{LayoutObject}->Print( Output => $Output );
+                }
+                else {
+                    $OutputRaw .= ${$Output};
+                }
             }
         }
     }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'NoTicketFound' );
+    }
+
     if ($BulkFeature) {
         $Self->{LayoutObject}->Block(
             Name => 'DocumentFooter',
@@ -566,6 +580,21 @@ sub _Show {
         if ( $Article{SLA} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'SLA',
+                Data => { %Param, %Article },
+            );
+        }
+    }
+
+    # CustomerID and CustomerName
+    if ( defined $Article{CustomerID} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'CustomerID',
+            Data => { %Param, %Article },
+        );
+
+        if ( defined $Article{CutomerName} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'CustomerName',
                 Data => { %Param, %Article },
             );
         }

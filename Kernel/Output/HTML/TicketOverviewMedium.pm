@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.6 2010-10-13 08:57:18 en Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.32 2010/10/12 15:51:01 mg Exp $
+# $Id: TicketOverviewMedium.pm,v 1.7 2010-11-04 13:46:11 ub Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.35 2010/11/04 13:13:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -145,6 +145,7 @@ sub Run {
         Name => 'DocumentHeader',
         Data => \%Param,
     );
+
     my $OutputMeta = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketOverviewMedium',
         Data         => \%Param,
@@ -160,24 +161,36 @@ sub Run {
     my $Counter       = 0;
     my $CounterOnSite = 0;
     my @TicketIDsShown;
-    for my $TicketID ( @{ $Param{TicketIDs} } ) {
-        $Counter++;
-        if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
-            push @TicketIDsShown, $TicketID;
-            my $Output = $Self->_Show(
-                TicketID => $TicketID,
-                Counter  => $CounterOnSite,
-                Bulk     => $BulkFeature,
-                Config   => $Param{Config},
-            );
-            $CounterOnSite++;
-            if ( !$Param{Output} ) {
-                $Self->{LayoutObject}->Print( Output => $Output );
-            }
-            else {
-                $OutputRaw .= ${$Output};
+
+    # check if there are tickets to show
+    if ( scalar @{ $Param{TicketIDs} } ) {
+
+        for my $TicketID ( @{ $Param{TicketIDs} } ) {
+            $Counter++;
+            if (
+                $Counter >= $Param{StartHit}
+                && $Counter < ( $Param{PageShown} + $Param{StartHit} )
+                )
+            {
+                push @TicketIDsShown, $TicketID;
+                my $Output = $Self->_Show(
+                    TicketID => $TicketID,
+                    Counter  => $CounterOnSite,
+                    Bulk     => $BulkFeature,
+                    Config   => $Param{Config},
+                );
+                $CounterOnSite++;
+                if ( !$Param{Output} ) {
+                    $Self->{LayoutObject}->Print( Output => $Output );
+                }
+                else {
+                    $OutputRaw .= ${$Output};
+                }
             }
         }
+    }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'NoTicketFound' );
     }
 
     # check if bulk feature is enabled

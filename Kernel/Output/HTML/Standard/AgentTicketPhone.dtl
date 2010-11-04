@@ -2,8 +2,8 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.17 2010-10-20 12:45:04 en Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.115 2010/10/13 09:29:03 cg Exp $
+# $Id: AgentTicketPhone.dtl,v 1.18 2010-11-04 13:46:11 ub Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.117 2010/10/29 18:29:47 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,41 +11,40 @@
 # --
 
 $Include{"AgentCustomerSearch"}
-<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="NewPhoneTicket" class="Validate PreventMultipleSubmits">
-    <input type="hidden" name="Action" value="$Env{"Action"}"/>
-    <input type="hidden" name="Subaction" value="StoreNew"/>
-    <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
-    <input type="hidden" name="ExpandCustomerName" id="ExpandCustomerName" value="0"/>
+<div class="MainBox ARIARoleMain">
+
+    <h1>$Text{"Create New Phone Ticket"}</h1>
+
+    <div class="LayoutFixedSidebar SidebarLast">
+<!-- dtl:block:CustomerTable -->
+        <div id="CustomerInfo" class="SidebarColumn WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Customer Information"}</h2>
+            </div>
+            <div class="Content">
+                $Data{"CustomerTable"}
+            </div>
+        </div>
+<!-- dtl:block:CustomerTable -->
+
+        <div class="ContentColumn">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="NewPhoneTicket" class="Validate PreventMultipleSubmits">
+                <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                <input type="hidden" name="Subaction" value="StoreNew"/>
+                <input type="hidden" name="FormID" value="$QData{"FormID"}"/>
+                <input type="hidden" name="ExpandCustomerName" id="ExpandCustomerName" value="0"/>
 # ---
 # ITSM
 # ---
-    <input type="hidden" name="ImpactRC" value="0"/>
-    <input type="hidden" name="PriorityRC" value="0"/>
+                <input type="hidden" name="ImpactRC" value="0"/>
+                <input type="hidden" name="PriorityRC" value="0"/>
 # ---
-    <input type="hidden" name="OwnerAll" id="OwnerAll" value="$QData{"OwnerAll"}"/>
-    <input type="hidden" name="ResponsibleAll" id="ResponsibleAll" value="$QData{"ResponsibleAll"}"/>
-    <input type="hidden" name="PreSelectedCustomerUser" id="PreSelectedCustomerUser" value=""/>
-    <input type="hidden" name="SelectedCustomerUser" id="SelectedCustomerUser" value="$QData{"CustomerUser"}"/>
-    <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
-    <input type="hidden" name="LinkTicketID" value="$QData{"LinkTicketID"}"/>
-
-    <div class="MainBox ARIARoleMain">
-
-        <h1>$Text{"Create New Phone Ticket"}</h1>
-
-        <div class="LayoutFixedSidebar SidebarLast">
-<!-- dtl:block:CustomerTable -->
-            <div id="CustomerInfo" class="SidebarColumn WidgetSimple">
-                <div class="Header">
-                    <h2>$Text{"Customer Information"}</h2>
-                </div>
-                <div class="Content">
-                    $Data{"CustomerTable"}
-                </div>
-            </div>
-<!-- dtl:block:CustomerTable -->
-
-            <div class="ContentColumn">
+                <input type="hidden" name="OwnerAll" id="OwnerAll" value="$QData{"OwnerAll"}"/>
+                <input type="hidden" name="ResponsibleAll" id="ResponsibleAll" value="$QData{"ResponsibleAll"}"/>
+                <input type="hidden" name="PreSelectedCustomerUser" id="PreSelectedCustomerUser" value=""/>
+                <input type="hidden" name="SelectedCustomerUser" id="SelectedCustomerUser" value="$QData{"CustomerUser"}"/>
+                <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
+                <input type="hidden" name="LinkTicketID" value="$QData{"LinkTicketID"}"/>
 
                 <fieldset class="TableLike">
 
@@ -59,8 +58,8 @@ $Include{"AgentCustomerSearch"}
                     <label class="Mandatory" for="TypeID"><span class="Marker">*</span>$Text{"Type"}:</label>
                     <div class="Field">
                         $Data{"TypeStrg"}
-                        <div id="TypeIDError" class="TooltipErrorMessage"><p>$Text{"A ticket should have a type!"}</p></div>
-                        <div id="TypeIDServerError" class="TooltipErrorMessage"><p>$Text{"Ticket type is required."}</p></div>
+                        <div id="TypeIDError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        <div id="TypeIDServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#TypeID').bind('change', function (Event) {
@@ -77,10 +76,10 @@ $Include{"AgentCustomerSearch"}
 
                         <input id="CustomerAutoComplete" type="text" name="From" value="$QData{"From"}" class="W75pc AutocompleteOff Validate_Required $QData{"FromInvalid"}"/>
                         <div id="CustomerAutoCompleteError" class="TooltipErrorMessage">
-                            <p>$Text{"A message should have a customer!"}</p>
+                            <p>$Text{"This field is required."}</p>
                         </div>
                         <div id="CustomerAutoCompleteServerError" class="TooltipErrorMessage">
-                            <p>$Text{"The customer is required."}</p>
+                            <p>$Text{"This field is required."}</p>
                         </div>
                     </div>
                     <div class="Clear"></div>
@@ -88,8 +87,8 @@ $Include{"AgentCustomerSearch"}
                     <label class="Mandatory" for="Dest"><span class="Marker">*</span>$Text{"To queue"}:</label>
                     <div class="Field">
                         $Data{"ToStrg"}
-                        <div id="DestError" class="TooltipErrorMessage" ><p>$Text{"A ticket should be associated with a queue!"}</p></div>
-                        <div id="DestServerError" class="TooltipErrorMessage"><p>$Text{"Queue is required."}</p></div>
+                        <div id="DestError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
+                        <div id="DestServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#Dest').bind('change', function (Event) {
@@ -175,10 +174,10 @@ $Include{"AgentCustomerSearch"}
                     <div class="Field">
                         <input class="W75pc Validate_Required $QData{"SubjectInvalid"}" type="text" name="Subject" id="Subject" value="$QData{"Subject"}"/>
                         <div id="SubjectError" class="TooltipErrorMessage">
-                            <p>$Text{"A message should have a subject!"}</p>
+                            <p>$Text{"This field is required."}</p>
                         </div>
                         <div id="SubjectServerError" class="TooltipErrorMessage">
-                            <p>$Text{"The subject is required."}</p>
+                            <p>$Text{"This field is required."}</p>
                         </div>
                     </div>
                     <div class="Clear"></div>
@@ -210,10 +209,10 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
                         <textarea id="RichText" class="RichText Validate_RequiredRichText $QData{"RichTextInvalid"}" name="Body" title="Message body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
                         <div id="RichTextError" class="TooltipErrorMessage">
-                            <p>$Text{"A message should have a body!"}</p>
+                            <p>$Text{"This field is required."}</p>
                         </div>
                         <div id="RichTextServerError" class="TooltipErrorMessage">
-                            <p>$Text{"The text is required."}</p>
+                            <p>$Text{"This field is required."}</p>
                         </div>
                     </div>
                     <div class="Clear"></div>
@@ -323,7 +322,7 @@ $Include{"RichTextEditor"}
                     <label for="TicketFreeTime$Data{"Count"}Used">$Data{"TicketFreeTimeKey"}:</label>
                     <div class="Field">
                         $Data{"TicketFreeTime"}
-                        <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"Required!"}</p></div>
+                        <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                     </div>
                     <div class="Clear"></div>
 <!-- dtl:block:TicketFreeTime -->
@@ -378,7 +377,7 @@ $Include{"RichTextEditor"}
                     <div class="Field">
                         <input type="text" class="W25pc Validate_TimeUnits $QData{"TimeUnitsRequired"} $QData{"TimeUnitsInvalid"}" name="TimeUnits" id="TimeUnits" value="$QData{"TimeUnits"}" />
                         <div id="TimeUnitsError" class="TooltipErrorMessage"><p>$Text{"Invalid time!"}</p></div>
-                        <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>$Text{"Time units is a required field."}</p></div>
+                        <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                     </div>
                     <div class="Clear"></div>
 <!-- dtl:block:TimeUnits -->
@@ -386,11 +385,11 @@ $Include{"RichTextEditor"}
                         <button class="Primary" id="submitRichText" accesskey="g" title="$Text{"Create"} (g)" type="submit" value="$Text{"Create"}">$Text{"Create"}</button>
                     </div>
                 </fieldset>
-            </div>
+            </form>
         </div>
-        <div id="CustomerTickets"></div>
     </div>
-</form>
+    <div id="CustomerTickets"></div>
+</div>
 
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[

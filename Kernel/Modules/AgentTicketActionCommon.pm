@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.6 2010-10-20 12:44:28 en Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.20 2010/10/17 13:48:23 mb Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.7 2010-11-04 13:46:11 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.22 2010/11/02 13:42:43 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -479,9 +479,11 @@ sub Run {
                 $Error{'ServiceInvalid'} = ' ServerError';
             }
 
-            # check time units
+            # check time units, but only if the current screen has a note
+            #   (accounted time can only be stored if and article is generated)
             if (
-                ( $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') )
+                $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
+                && $Self->{Config}->{Note}
                 && !defined $GetParam{TimeUnits}
                 )
             {
@@ -913,7 +915,9 @@ sub Run {
 
             # redirect parent window to last screen overview on closed tickets
             if ( $StateData{TypeName} =~ /^close/i ) {
-                return $Self->{LayoutObject}->PopupClose( URL => $Self->{LastScreenOverview} );
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => ( $Self->{LastScreenOverview} || 'Action=AgentDashboard' ),
+                );
             }
         }
 

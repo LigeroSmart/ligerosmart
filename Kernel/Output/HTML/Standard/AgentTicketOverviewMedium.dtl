@@ -2,8 +2,8 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.8 2010-09-02 22:18:42 dz Exp $
-# $OldId: AgentTicketOverviewMedium.dtl,v 1.43 2010/09/01 12:34:46 martin Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.9 2010-11-04 13:46:11 ub Exp $
+# $OldId: AgentTicketOverviewMedium.dtl,v 1.47 2010/11/03 13:32:17 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -43,6 +43,12 @@
 <ul id="TicketOverviewMedium" class="Overview OverviewMedium">
 <!-- dtl:block:DocumentHeader -->
 
+<!-- dtl:block:NoTicketFound -->
+    <li id="EmptyMessageMedium">
+        $Text{"No ticket data found."}
+    </li>
+<!-- dtl:block:NoTicketFound -->
+
 <!-- dtl:block:DocumentContent -->
     <li id="TicketID_$QData{"TicketID"}" class="MasterAction">
         <div class="Content">
@@ -80,7 +86,7 @@
 # ITSM
 # ---
 #                        <td>
-#                            <label>$Text{"CustomerID"}</label><a href="$Config{"CustomerDBLink"}" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "26"}</a><br /><div title="$QData{"CustomerName"}">$QData{"CustomerName","15"}</div>
+#                            <label>$Text{"CustomerID"}</label><a href="$Config{"CustomerDBLink"}" class="AsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "26"}</a><br /><div title="$QData{"CustomerName"}">$QData{"CustomerName","15"}</div>
 #                        </td>
 # ---
 #                        <td>
@@ -288,4 +294,11 @@
     });
 //]]></script>
 <!-- dtl:block:DocumentReadyStart -->
+<!-- dtl:js_on_document_complete -->
+
+<!-- dtl:js_on_document_complete -->
+$('a.AsPopup').bind('click', function (Event) {
+Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
+return false;
+});
 <!-- dtl:js_on_document_complete -->

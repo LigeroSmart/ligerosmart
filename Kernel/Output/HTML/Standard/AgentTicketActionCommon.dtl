@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.10 2010-10-20 12:45:04 en Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.11 2010-11-04 13:46:11 ub Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -96,8 +96,8 @@
                 <label class="Mandatory" for="Title"><span class="Marker">*</span>$Text{"Title"}:</label>
                 <div class="Field">
                     <input type="text" id="Title" name="Title" value="$QData{"Title"}" class="W75pc Validate_Required $QData{"TitleInvalid"}" />
-                    <div id="TitleError" class="TooltipErrorMessage" ><p>$Text{"Title is required."}</p></div>
-                    <div id="TitleServerError" class="TooltipErrorMessage"><p>$Text{"Title is required."}</p></div>
+                    <div id="TitleError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
+                    <div id="TitleServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:Title -->
@@ -106,8 +106,8 @@
                 <label class="Mandatory" for="TypeID"><span class="Marker">*</span>$Text{"Type"}:</label>
                 <div class="Field">
                     $Data{"TypeStrg"}
-                    <div id="TypeIDError" class="TooltipErrorMessage"><p>$Text{"A ticket should have a type!"}</p></div>
-                    <div id="TypeIDServerError" class="TooltipErrorMessage"><p>$Text{"Ticket type is required."}</p></div>
+                    <div id="TypeIDError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="TypeIDServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:Type -->
@@ -209,8 +209,8 @@
                 <label class="Mandatory" for="Subject"><span class="Marker">*</span>$Text{"Subject"}:</label>
                 <div class="Field">
                     <input type="text" id="Subject" name="Subject" value="$QData{"Subject"}" class="W75pc Validate_Required $Data{"SubjectInvalid"}"/>
-                    <div id="SubjectError" class="TooltipErrorMessage"><p>$Text{"A message should have a subject!"}</p></div>
-                    <div id="SubjectServerError" class="TooltipErrorMessage"><p>$Text{"The subject is required."}</p></div>
+                    <div id="SubjectError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="SubjectServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 
@@ -230,8 +230,8 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
 
                     <textarea id="RichText" class="RichText Validate_RequiredRichText $Data{"BodyInvalid"}" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
-                    <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"A message should have a body!"}</p></div>
-                    <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"The text is required."}</p></div>
+                    <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 
@@ -351,7 +351,7 @@ $Include{"RichTextEditor"}
                 <label for="TicketFreeTime$QData{"Count"}Used">$Data{"TicketFreeTimeKey"} :</label>
                 <div class="Field">
                     $Data{"TicketFreeTime"}
-                    <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"Required!"}</p></div>
+                    <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:TicketFreeTime -->
@@ -406,7 +406,7 @@ $Include{"RichTextEditor"}
                 <div class="Field">
                     <input type="text" name="TimeUnits" id="TimeUnits" value="$QData{"TimeUnits"}" class="Validate_TimeUnits $QData{"TimeUnitsRequired"} $QData{"TimeUnitsInvalid"}"/>
                     <div id="TimeUnitsError" class="TooltipErrorMessage"><p>$Text{"Invalid time!"}</p></div>
-                    <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>$Text{"Time units is a required field."}</p></div>
+                    <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:TimeUnits -->

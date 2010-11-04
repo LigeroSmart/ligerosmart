@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.24 2010-10-20 12:45:04 en Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.167 2010/10/17 20:16:01 mb Exp $
+# $Id: AgentTicketZoom.dtl,v 1.25 2010-11-04 13:46:11 ub Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.170 2010/11/04 09:02:03 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -474,7 +474,7 @@
 <!-- dtl:block:MoveLink -->
 <!-- dtl:block:MoveForm -->
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentTicketMove;TicketID=$LQData{"TicketID"};" class="AsTicketActionPopup" title="$Text{"Change Queue"}">$Text{"Change Queue"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentTicketMove;TicketID=$LQData{"TicketID"};" class="AsPopup PopupType_TicketAction" title="$Text{"Change Queue"}">$Text{"Change Queue"}</a>
                     </li>
 <!-- dtl:block:MoveForm -->
                 </ul>
@@ -546,7 +546,7 @@ $Data{"ArticleItems"}
                         <th class="UnreadArticles"><a class="UnreadArticles" href="#" title="$Text{"Unread articles"}"><span class="UnreadArticles"></span></a></th>
                         <th class="No Sortable"><a href="#">$Text{"No."}</a></th>
                         <th class="Type Sortable"><a href="#">$Text{"Type"}</a></th>
-                        <th class="Direction Sortable"><a href="#" title="Direction"><span class="Direction"><!--Direction--></span></a></th>
+                        <th class="Direction Sortable"><a href="#" title="$Text{"Direction"}"><span class="Direction"><!--Direction--></span></a></th>
                         <th class="From Sortable"><a href="#">$Text{"From"}</a></th>
                         <th class="Subject Sortable"><a href="#">$Text{"Subject"}</a></th>
                         <th class="Created Sortable"><a href="#">$Text{"Created"}</a></th>
@@ -560,6 +560,9 @@ $Data{"ArticleItems"}
 <!-- dtl:block:TreeItemNewArticle -->
                             <span class="$QData{"Class"}" title="$Text{"Unread Article!"}">$Text{"Unread Article!"}</span>
 <!-- dtl:block:TreeItemNewArticle -->
+<!-- dtl:block:TreeItemNoNewArticle -->
+                            <span class="NoContent"></span>
+<!-- dtl:block:TreeItemNoNewArticle -->
                         </td>
                         <td class="No">
                             $QData{"Count"}
@@ -624,6 +627,9 @@ $Data{"ArticleItems"}
                                 </div>
                             </div>
 <!-- dtl:block:TreeItemAttachment -->
+<!-- dtl:block:TreeItemNoAttachment -->
+                            <span class="NoContent"></span>
+<!-- dtl:block:TreeItemNoAttachment -->
                         </td>
                     </tr>
 <!-- dtl:block:TreeItem -->
@@ -765,7 +771,7 @@ $Data{"Body"}
 <!-- dtl:block:BodyHTML -->
                 <div class="message">
 # execute IFrame JS asynchronously. Otherwise it could happen before our API was loaded
-                    <iframe width="100%" height="250" frameborder="0" id="Iframe$QData{"ArticleID"}" onload="window.setTimeout( function (){ if (typeof Core === 'object' && typeof Core.Agent === 'object' && typeof Core.Agent.TicketZoom === 'object') { Core.Agent.TicketZoom.IframeAutoHeight($('#Iframe$QData{"ArticleID"}')); } }, 500);" src="$Env{"Baselink"}Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
+                    <iframe width="100%" frameborder="0" id="Iframe$QData{"ArticleID"}" onload="window.setTimeout( function (){ if (typeof Core === 'object' && typeof Core.Agent === 'object' && typeof Core.Agent.TicketZoom === 'object') { Core.Agent.TicketZoom.IframeAutoHeight($('#Iframe$QData{"ArticleID"}')); } }, 500);" src="$Env{"Baselink"}Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
                 </div>
 <!-- dtl:block:BodyHTML -->
             </div>

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.20 2010-10-20 12:44:28 en Exp $
-# $OldId: AgentTicketPhone.pm,v 1.164 2010/10/17 13:48:23 mb Exp $
+# $Id: AgentTicketPhone.pm,v 1.21 2010-11-04 13:46:11 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.167 2010/10/28 21:56:09 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -798,19 +798,16 @@ sub Run {
                 $Error{'FromInvalid'} = ' ServerError';
             }
         }
-        if ( !$IsUpload ) {
-            if (
-                !$GetParam{From}
-                && $ExpandCustomerName != 1
-                && $ExpandCustomerName == 0
-                )
+
+        if ( !$IsUpload && !$ExpandCustomerName ) {
+            if ( !$GetParam{From} )
             {
                 $Error{'FromInvalid'} = ' ServerError';
             }
-            if ( !$GetParam{Subject} && $ExpandCustomerName == 0 ) {
+            if ( !$GetParam{Subject} ) {
                 $Error{'SubjectInvalid'} = ' ServerError';
             }
-            if ( !$NewQueueID && $ExpandCustomerName == 0 ) {
+            if ( !$NewQueueID ) {
                 $Error{'DestinationInvalid'} = ' ServerError';
             }
             if (
@@ -824,7 +821,7 @@ sub Run {
             if ( ( !$GetParam{TypeID} ) && ( $Self->{ConfigObject}->Get('Ticket::Type') ) ) {
                 $Error{'TypeIDInvalid'} = ' ServerError';
             }
-            if ( !$GetParam{Body} && $ExpandCustomerName == 0 ) {
+            if ( !$GetParam{Body} ) {
                 $Error{'RichTextInvalid'} = ' ServerError';
             }
             if (

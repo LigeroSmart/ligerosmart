@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.18 2010-10-20 12:44:28 en Exp $
-# $OldId: AgentTicketEmail.pm,v 1.146 2010/10/17 20:17:20 mb Exp $
+# $Id: AgentTicketEmail.pm,v 1.19 2010-11-04 13:46:11 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.150 2010/11/03 10:18:53 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -468,11 +468,9 @@ sub Run {
         }
 
         # get sender queue from
-        my %Queue;
         my $Signature = '';
         if ($NewQueueID) {
             $Signature = $Self->_GetSignature( QueueID => $NewQueueID );
-            %Queue = $Self->{QueueObject}->GetSystemAddress( QueueID => $NewQueueID );
         }
         my $CustomerUser = $Self->{ParamObject}->GetParam( Param => 'CustomerUser' )
             || $Self->{ParamObject}->GetParam( Param => 'PreSelectedCustomerUser' )
@@ -483,7 +481,6 @@ sub Run {
             || '';
         my $ExpandCustomerName = $Self->{ParamObject}->GetParam( Param => 'ExpandCustomerName' )
             || 0;
-        $GetParam{From}               = $Queue{Email};
         $GetParam{QueueID}            = $NewQueueID;
         $GetParam{ExpandCustomerName} = $ExpandCustomerName;
 
@@ -1051,16 +1048,21 @@ sub Run {
             $GetParam{Body} .= "\n\n" . $Signature;
         }
 
+        # lookup sender
+        my $TemplateGenerator = Kernel::System::TemplateGenerator->new( %{$Self} );
+        my $Sender            = $TemplateGenerator->Sender(
+            QueueID => $NewQueueID,
+            UserID  => $Self->{UserID},
+        );
+
         # send email
         my $ArticleID = $Self->{TicketObject}->ArticleSend(
             NoAgentNotify  => $NoAgentNotify,
             Attachment     => \@Attachments,
-            ArticleType    => 'email-external',
-            SenderType     => 'agent',
             TicketID       => $TicketID,
             ArticleType    => $Self->{Config}->{ArticleType},
             SenderType     => $Self->{Config}->{SenderType},
-            From           => "$Queue{RealName} <$Queue{Email}>",
+            From           => $Sender,
             To             => $GetParam{To},
             Cc             => $GetParam{Cc},
             Bcc            => $GetParam{Bcc},
@@ -1094,7 +1096,7 @@ sub Run {
             }
         }
 
-        # remove pre submited attachments
+        # remove pre-submitted attachments
         $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
 
         # set owner (if new user id is given)
@@ -1246,8 +1248,6 @@ sub Run {
         my $QueueID = '';
         if ( $Dest =~ /^(\d{1,100})\|\|.+?$/ ) {
             $QueueID = $1;
-            my %Queue = $Self->{QueueObject}->GetSystemAddress( QueueID => $QueueID );
-            $GetParam{From} = $Queue{Email};
         }
 
         # get list type
@@ -1967,8 +1967,12 @@ sub _MaskEmailNew {
         );
     }
 
-    # show address book
-    if ( $Self->{LayoutObject}->{BrowserJavaScriptSupport} ) {
+    # show address book if the module is registered and java script support is available
+    if (
+        $Self->{ConfigObject}->Get('Frontend::Module')->{AgentBook}
+        && $Self->{LayoutObject}->{BrowserJavaScriptSupport}
+        )
+    {
         $Self->{LayoutObject}->Block(
             Name => 'AddressBook',
             Data => {},
