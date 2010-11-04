@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectService.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectService.pm,v 1.8 2010-08-18 17:24:12 en Exp $
+# $Id: LinkObjectService.pm,v 1.9 2010-11-04 11:59:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -109,7 +109,7 @@ Return
                 {
                     Type      => 'Link',
                     Content   => 'Service Bla',
-                    Link      => 'Action=AgentITSMServiceZoom&ServiceID=123',
+                    Link      => 'Action=AgentITSMServiceZoom;ServiceID=123',
                     MaxLength => 70,
                 },
                 {
@@ -137,7 +137,7 @@ Return
                 {
                     Type      => 'Link',
                     Content   => 'Service Bla',
-                    Link      => 'Action=AgentITSMServiceZoom&ServiceID=321',
+                    Link      => 'Action=AgentITSMServiceZoom;ServiceID=321',
                     MaxLength => 70,
                 },
                 {
@@ -529,6 +529,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-08-18 17:24:12 $
+$Revision: 1.9 $ $Date: 2010-11-04 11:59:21 $
 
 =cut
