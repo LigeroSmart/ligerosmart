@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.106 2010-11-03 23:47:23 ub Exp $
+# $Id: FAQ.pm,v 1.107 2010-11-04 00:00:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.106 $) [1];
+$VERSION = qw($Revision: 1.107 $) [1];
 
 =head1 NAME
 
@@ -221,7 +221,7 @@ sub FAQGet {
     }
 
     # get all category long names
-    my $CategoryTree = $Self->GetCategoryTree(
+    my $CategoryTree = $Self->CategoryTreeList(
         UserID => $Param{UserID},
     );
 
@@ -1776,6 +1776,175 @@ sub CategoryCount {
     return $Count;
 }
 
+=item CategoryTreeList()
+
+get all categories as tree (with their long names)
+
+    my $CategoryTree = $FAQObject->CategoryTreeList(
+        Valid  => 0,  # (0|1, optional)
+        UserID => 1,
+    );
+
+=cut
+
+sub CategoryTreeList {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => "Need UserID!",
+        );
+        return;
+    }
+
+    # set default
+    my $Valid = 0;
+    if ( $Param{Valid} ) {
+        $Valid = $Param{Valid};
+    }
+
+    # check cache
+    if ( $Self->{Cache}->{GetCategoryTree}->{$Valid} ) {
+        return $Self->{Cache}->{GetCategoryTree}->{$Valid};
+    }
+
+    # build sql
+    my $SQL = 'SELECT id, parent_id, name FROM faq_category';
+
+    # add where clause for valid categories
+    if ($Valid) {
+        $SQL .= ' WHERE valid_id = 1';
+    }
+
+    # prepare sql
+    return if !$Self->{DBObject}->Prepare(
+        SQL => $SQL,
+    );
+
+    # fetch result
+    my %CategoryMap;
+    my %CategoryNameLookup;
+    my %ParentIDLookup;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $CategoryMap{ $Row[1] }->{ $Row[0] } = $Row[2];
+        $CategoryNameLookup{ $Row[0] } = $Row[2];
+        $ParentIDLookup{ $Row[0] } = $Row[1];
+    }
+
+    # to store the category tree
+    my %CategoryTree;
+
+    # check all parent ids
+    for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
+
+        # get subcategories and names for this parent id
+        while ( my ( $CategoryID, $CategoryName ) = each %{ $CategoryMap{$ParentID} } ) {
+
+            # lookup the parents name
+            my $NewParentID = $ParentID;
+            while ($NewParentID) {
+
+                # prepend parents category name
+                if ( $CategoryNameLookup{$NewParentID} ) {
+                    $CategoryName = $CategoryNameLookup{$NewParentID} . '::' . $CategoryName;
+                }
+
+                # get up one parent level
+                $NewParentID = $ParentIDLookup{$NewParentID} || 0;
+            }
+
+            # add category to tree
+            $CategoryTree{$CategoryID} = $CategoryName;
+        }
+    }
+
+    # cache
+    $Self->{Cache}->{GetCategoryTree}->{$Valid} = \%CategoryTree;
+
+    return \%CategoryTree;
+}
+
+=item CategoryGroupGet()
+
+get groups of a category
+
+    my $GroupArrayRef = $FAQObject->CategoryGroupGet(
+        CategoryID => 3,
+        UserID     => 1,
+    );
+
+=cut
+
+sub CategoryGroupGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(CategoryID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get groups
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT group_id FROM faq_category_group WHERE category_id = ?',
+        Bind => [ \$Param{CategoryID} ],
+    );
+    my @Groups;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @Groups, $Row[0];
+    }
+    return \@Groups;
+}
+
+=item CategoryGroupGetAll()
+
+get all category-groups
+
+    my $AllCategoryGroupHashRef = $FAQObject->CategoryGroupGetAll(
+        UserID => 1,
+    );
+
+=cut
+
+sub CategoryGroupGetAll {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message => "Need UserID!",
+        );
+        return;
+    }
+
+    # check cache
+    if ( $Self->{Cache}->{CategoryGroupGetAll} ) {
+        return $Self->{Cache}->{CategoryGroupGetAll};
+    }
+
+    # get groups
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT group_id, category_id FROM faq_category_group',
+    );
+    my %Groups;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Groups{ $Row[1] }->{ $Row[0] } = 1;
+    }
+
+    # cache
+    $Self->{Cache}->{CategoryGroupGetAll} = \%Groups;
+
+    return \%Groups;
+}
+
 =item KeywordList()
 
 get a list of keywords as a hash, with their count as the value:
@@ -2717,96 +2886,6 @@ sub FAQPathListGet {
 
 }
 
-=item GetCategoryTree()
-
-get all categories as tree (with their long names)
-
-    my $CategoryTree = $FAQObject->GetCategoryTree(
-        Valid  => 0, # if 1 then check valid category
-        UserID => 1,
-    );
-
-=cut
-
-sub GetCategoryTree {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message => "Need UserID!",
-        );
-        return;
-    }
-
-    # set default
-    my $Valid = 0;
-    if ( $Param{Valid} ) {
-        $Valid = $Param{Valid};
-    }
-
-    # check cache
-    if ( $Self->{Cache}->{GetCategoryTree}->{$Valid} ) {
-        return $Self->{Cache}->{GetCategoryTree}->{$Valid};
-    }
-
-    # build sql
-    my $SQL = 'SELECT id, parent_id, name FROM faq_category';
-
-    # add where clause for valid categories
-    if ($Valid) {
-        $SQL .= ' WHERE valid_id = 1';
-    }
-
-    # prepare sql
-    return if !$Self->{DBObject}->Prepare(
-        SQL => $SQL,
-    );
-
-    # fetch result
-    my %CategoryMap;
-    my %CategoryNameLookup;
-    my %ParentIDLookup;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $CategoryMap{ $Row[1] }->{ $Row[0] } = $Row[2];
-        $CategoryNameLookup{ $Row[0] } = $Row[2];
-        $ParentIDLookup{ $Row[0] } = $Row[1];
-    }
-
-    # tp store the category tree
-    my %CategoryTree;
-
-    # check all parent ids
-    for my $ParentID ( sort { $a <=> $b } keys %CategoryMap ) {
-
-        # get subcategories and names for this parent id
-        while ( my ( $CategoryID, $CategoryName ) = each %{ $CategoryMap{$ParentID} } ) {
-
-            # lookup the parents name
-            my $NewParentID = $ParentID;
-            while ($NewParentID) {
-
-                # prepend parents category name
-                if ( $CategoryNameLookup{$NewParentID} ) {
-                    $CategoryName = $CategoryNameLookup{$NewParentID} . '::' . $CategoryName;
-                }
-
-                # get up one parent level
-                $NewParentID = $ParentIDLookup{$NewParentID} || 0;
-            }
-
-            # add category to tree
-            $CategoryTree{$CategoryID} = $CategoryName;
-        }
-    }
-
-    # cache
-    $Self->{Cache}->{GetCategoryTree}->{$Valid} = \%CategoryTree;
-
-    return \%CategoryTree;
-}
-
 =item SetCategoryGroup()
 
 set groups to a category
@@ -2858,85 +2937,6 @@ sub SetCategoryGroup {
     return 1;
 }
 
-=item GetCategoryGroup()
-
-get groups of a category
-
-    my $GroupArrayRef = $FAQObject->GetCategoryGroup(
-        CategoryID => 3,
-        UserID     => 1,
-    );
-
-=cut
-
-sub GetCategoryGroup {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(CategoryID UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get groups
-    return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT group_id FROM faq_category_group WHERE category_id = ?',
-        Bind => [ \$Param{CategoryID} ],
-    );
-    my @Groups;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        push @Groups, $Row[0];
-    }
-    return \@Groups;
-}
-
-=item GetAllCategoryGroup()
-
-get all category-groups
-
-    my $AllCategoryGroupHashRef = $FAQObject->GetAllCategoryGroup(
-        UserID => 1,
-    );
-
-=cut
-
-sub GetAllCategoryGroup {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message => "Need UserID!",
-        );
-        return;
-    }
-
-    # check cache
-    if ( $Self->{Cache}->{GetAllCategoryGroup} ) {
-        return $Self->{Cache}->{GetAllCategoryGroup};
-    }
-
-    # get groups
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT group_id, category_id FROM faq_category_group',
-    );
-    my %Groups;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Groups{ $Row[1] }->{ $Row[0] } = 1;
-    }
-
-    # cache
-    $Self->{Cache}->{GetAllCategoryGroup} = \%Groups;
-
-    return \%Groups;
-}
-
 =item GetUserCategories()
 
 get user category-groups
@@ -2967,7 +2967,7 @@ sub GetUserCategories {
         UserID => $Param{UserID},
     );
 
-    my $CategoryGroups = $Self->GetAllCategoryGroup(
+    my $CategoryGroups = $Self->CategoryGroupGetAll(
         UserID => $Param{UserID},
     );
     my %UserGroups     = ();
@@ -3031,7 +3031,7 @@ sub GetCustomerCategories {
         UserID => $Param{UserID},
     );
 
-    my $CategoryGroups = $Self->GetAllCategoryGroup(
+    my $CategoryGroups = $Self->CategoryGroupGetAll(
         UserID => $Param{UserID},
     );
 
@@ -3869,6 +3869,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.106 $ $Date: 2010-11-03 23:47:23 $
+$Revision: 1.107 $ $Date: 2010-11-04 00:00:27 $
 
 =cut

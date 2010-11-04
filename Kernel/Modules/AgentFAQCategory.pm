@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.11 2010-11-03 23:50:30 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.12 2010-11-04 00:01:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,7 +84,7 @@ sub Run {
         );
 
         # get permission groups
-        $CategoryData{PermissionGroups} = $Self->{FAQObject}->GetCategoryGroup(
+        $CategoryData{PermissionGroups} = $Self->{FAQObject}->CategoryGroupGet(
             CategoryID => $GetParam{CategoryID},
             UserID     => $Self->{UserID},
         );
@@ -412,7 +412,7 @@ sub _Edit {
     );
 
     # get all categories with their long names
-    my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
+    my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
         Valid  => 0,
         UserID => $Self->{UserID},
     );
@@ -458,7 +458,7 @@ sub _Overview {
     $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
     # get all categories with their long names
-    my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
+    my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
         Valid  => 0,
         UserID => $Self->{UserID},
     );

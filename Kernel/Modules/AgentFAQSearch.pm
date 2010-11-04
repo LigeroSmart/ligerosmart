@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.9 2010-11-03 20:23:37 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.10 2010-11-04 00:01:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -683,7 +683,7 @@ sub _MaskForm {
     );
 
     # get all categories with their long names
-    my $CategoryTree = $Self->{FAQObject}->GetCategoryTree(
+    my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
         Valid  => 0,
         UserID => $Self->{UserID},
     );

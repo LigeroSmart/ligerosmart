@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQ.pm,v 1.35 2010-11-02 13:06:10 cr Exp $
+# $Id: AgentFAQ.pm,v 1.36 2010-11-04 00:01:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION @ISA);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 @ISA = qw(Kernel::Modules::FAQ);
 
@@ -373,7 +373,7 @@ sub Run {
             Name       => 'ValidID',
             SelectedID => $CategoryData{ValidID},
         );
-        my $SelectedGroups = $Self->{FAQObject}->GetCategoryGroup(
+        my $SelectedGroups = $Self->{FAQObject}->CategoryGroupGet(
             CategoryID => $ParamData{CategoryID},
         );
         my %Groups = $Self->{GroupObject}->GroupList( Valid => 1 );
