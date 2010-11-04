@@ -2,7 +2,7 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.25 2010-11-04 13:46:11 ub Exp $
+# $Id: AgentTicketZoom.dtl,v 1.26 2010-11-04 15:13:13 ub Exp $
 # $OldId: AgentTicketZoom.dtl,v 1.170 2010/11/04 09:02:03 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -434,7 +434,6 @@
                     <h2>$Text{"Linked Objects"}</h2>
                 </div>
                 <div class="Content">
-# object links
                     $Data{"LinkTableStrg"}
                 </div>
             </div>
@@ -490,14 +489,8 @@ $Data{"ArticleItems"}
             </div>
 
 <!-- dtl:block:LinkTableComplex -->
-            <div class="WidgetSimple DontPrint SpacingTop">
-                <div class="Header">
-                    <h2>$Text{"Linked Objects"}</h2>
-                </div>
-                <div class="Content">
-# object links
-                    $Data{"LinkTableStrg"}
-                </div>
+            <div class="Content">
+                $Data{"LinkTableStrg"}
             </div>
 <!-- dtl:block:LinkTableComplex -->
 
