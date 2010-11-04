@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMChange.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectITSMChange.pm,v 1.10 2010-06-16 15:46:00 ub Exp $
+# $Id: LinkObjectITSMChange.pm,v 1.11 2010-11-04 12:00:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -116,7 +116,7 @@ Return
                 {
                     Type    => 'Link',
                     Content => '2009100112345778',
-                    Link    => 'Action=AgentITSMChangeZoom&ChangeID=123',
+                    Link    => 'Action=AgentITSMChangeZoom;ChangeID=123',
                 },
                 {
                     Type      => 'Text',
@@ -142,7 +142,7 @@ Return
                 {
                     Type    => 'Link',
                     Content => '2009100112345774',
-                    Link    => 'Action=AgentITSMChangeZoom&ChangeID=456',
+                    Link    => 'Action=AgentITSMChangeZoom;ChangeID=456',
                 },
                 {
                     Type      => 'Text',
@@ -220,7 +220,7 @@ sub TableCreateComplex {
             {
                 Type    => 'Link',
                 Content => $Change->{ChangeNumber},
-                Link    => '$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=' . $ChangeID,
+                Link    => '$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=' . $ChangeID,
             },
             {
                 Type      => 'Text',
@@ -356,7 +356,7 @@ sub TableCreateSimple {
                     Title =>
                         "$Self->{ChangeHook} $Change->{ChangeNumber}: $Change->{ChangeTitle}",
                     Link =>
-                        '$Env{"Baselink"}Action=AgentITSMChangeZoom&ChangeID=' . $ChangeID,
+                        '$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=' . $ChangeID,
                     MaxLength => 20,
                 );
 
@@ -548,12 +548,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-06-16 15:46:00 $
+$Revision: 1.11 $ $Date: 2010-11-04 12:00:14 $
 
 =cut
