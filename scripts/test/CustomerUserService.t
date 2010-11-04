@@ -2,8 +2,8 @@
 # CustomerUserService.t - CustomerUserService tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerUserService.t,v 1.4 2010-08-20 18:00:28 dz Exp $
-# $OldId: CustomerUserService.t,v 1.6 2010/06/22 22:00:52 dz Exp $
+# $Id: CustomerUserService.t,v 1.5 2010-11-04 14:06:53 ub Exp $
+# $OldId: CustomerUserService.t,v 1.8 2010/10/29 07:28:48 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,12 +13,13 @@
 use strict;
 use warnings;
 use vars (qw($Self));
+
 use Kernel::System::Service;
 
-$Self->{ServiceObject} = Kernel::System::Service->new( %{$Self} );
+my $ServiceObject = Kernel::System::Service->new( %{$Self} );
 
 # save all original default services
-my @OriginalDefaultServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @OriginalDefaultServices = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => '<DEFAULT>',
     Result            => 'ID',
     DefaultServices   => 0,
@@ -26,7 +27,7 @@ my @OriginalDefaultServices = $Self->{ServiceObject}->CustomerUserServiceMemberL
 
 # delete all default services
 for my $ServiceID (@OriginalDefaultServices) {
-    $Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+    $ServiceObject->CustomerUserServiceMemberAdd(
         CustomerUserLogin => '<DEFAULT>',
         ServiceID         => $ServiceID,
         Active            => 0,
@@ -36,7 +37,7 @@ for my $ServiceID (@OriginalDefaultServices) {
 
 # add service1
 my $ServiceRand1 = 'SomeService' . int( rand(1000000) );
-my $ServiceID1   = $Self->{ServiceObject}->ServiceAdd(
+my $ServiceID1   = $ServiceObject->ServiceAdd(
     Name    => $ServiceRand1,
     Comment => 'Some Comment',
     ValidID => 1,
@@ -56,7 +57,7 @@ $Self->True(
 
 # add service2
 my $ServiceRand2 = 'SomeService' . int( rand(1000000) );
-my $ServiceID2   = $Self->{ServiceObject}->ServiceAdd(
+my $ServiceID2   = $ServiceObject->ServiceAdd(
     Name    => $ServiceRand2,
     Comment => 'Some Comment',
     ValidID => 1,
@@ -78,7 +79,7 @@ my $CustomerUser1 = 'SomeUser' . int( rand(1000000) );
 my $CustomerUser2 = 'SomeUser' . int( rand(1000000) );
 
 # allocation test 1
-my @Allocation1 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation1 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -90,7 +91,7 @@ $Self->False(
 );
 
 # allocation test 2
-my @Allocation2 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation2 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
 );
@@ -101,7 +102,7 @@ $Self->False(
 );
 
 # allocation test 3
-my @Allocation3 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation3 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -113,7 +114,7 @@ $Self->False(
 );
 
 # allocation test 4
-my @Allocation4 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation4 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
 );
@@ -124,7 +125,7 @@ $Self->False(
 );
 
 # set allocation 1
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => '<DEFAULT>',
     ServiceID         => $ServiceID1,
     Active            => 1,
@@ -132,7 +133,7 @@ $Self->{ServiceObject}->CustomerUserServiceMemberAdd(
 );
 
 # allocation test 5
-my @Allocation5 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation5 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -144,7 +145,7 @@ $Self->False(
 );
 
 # allocation test 6
-my @Allocation6 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation6 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
 );
@@ -161,7 +162,7 @@ $Self->True(
 );
 
 # allocation test 7
-my @Allocation7 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation7 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -173,7 +174,7 @@ $Self->False(
 );
 
 # allocation test 8
-my @Allocation8 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation8 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
 );
@@ -190,7 +191,7 @@ $Self->True(
 );
 
 # set allocation 2
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser1,
     ServiceID         => $ServiceID2,
     Active            => 1,
@@ -198,7 +199,7 @@ $Self->{ServiceObject}->CustomerUserServiceMemberAdd(
 );
 
 # allocation test 9
-my @Allocation9 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation9 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -216,7 +217,7 @@ $Self->True(
 );
 
 # allocation test 10
-my @Allocation10 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation10 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
 );
@@ -233,7 +234,7 @@ $Self->True(
 );
 
 # allocation test 11
-my @Allocation11 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation11 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -245,7 +246,7 @@ $Self->False(
 );
 
 # allocation test 12
-my @Allocation12 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation12 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
 );
@@ -262,13 +263,13 @@ $Self->True(
 );
 
 # set allocation 3
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser2,
     ServiceID         => $ServiceID1,
     Active            => 1,
     UserID            => 1,
 );
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser2,
     ServiceID         => $ServiceID2,
     Active            => 1,
@@ -276,7 +277,7 @@ $Self->{ServiceObject}->CustomerUserServiceMemberAdd(
 );
 
 # allocation test 13
-my @Allocation13 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation13 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -294,7 +295,7 @@ $Self->True(
 );
 
 # allocation test 14
-my @Allocation14 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation14 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser1,
     Result            => 'ID',
 );
@@ -311,7 +312,7 @@ $Self->True(
 );
 
 # allocation test 15
-my @Allocation15 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation15 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
     DefaultServices   => 0,
@@ -335,7 +336,7 @@ $Self->True(
 );
 
 # allocation test 16
-my @Allocation16 = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+my @Allocation16 = $ServiceObject->CustomerUserServiceMemberList(
     CustomerUserLogin => $CustomerUser2,
     Result            => 'ID',
 );
@@ -358,37 +359,37 @@ $Self->True(
 );
 
 # delete all test allocations to clean system
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => '<DEFAULT>',
     ServiceID         => $ServiceID1,
     Active            => 0,
     UserID            => 1,
 );
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => '<DEFAULT>',
     ServiceID         => $ServiceID2,
     Active            => 0,
     UserID            => 1,
 );
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser1,
     ServiceID         => $ServiceID1,
     Active            => 0,
     UserID            => 1,
 );
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser1,
     ServiceID         => $ServiceID2,
     Active            => 0,
     UserID            => 1,
 );
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser2,
     ServiceID         => $ServiceID1,
     Active            => 0,
     UserID            => 1,
 );
-$Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+$ServiceObject->CustomerUserServiceMemberAdd(
     CustomerUserLogin => $CustomerUser2,
     ServiceID         => $ServiceID2,
     Active            => 0,
@@ -397,7 +398,7 @@ $Self->{ServiceObject}->CustomerUserServiceMemberAdd(
 
 # restore all original default services
 for my $ServiceID (@OriginalDefaultServices) {
-    $Self->{ServiceObject}->CustomerUserServiceMemberAdd(
+    $ServiceObject->CustomerUserServiceMemberAdd(
         CustomerUserLogin => '<DEFAULT>',
         ServiceID         => $ServiceID,
         Active            => 1,
@@ -406,7 +407,7 @@ for my $ServiceID (@OriginalDefaultServices) {
 }
 
 # set service1 invalid
-my $ServiceUpdate1 = $Self->{ServiceObject}->ServiceUpdate(
+my $ServiceUpdate1 = $ServiceObject->ServiceUpdate(
     ServiceID => $ServiceID1,
     Name      => $ServiceRand1,
     ValidID   => 2,
@@ -425,7 +426,7 @@ $Self->True(
 );
 
 # set service2 invalid
-my $ServiceUpdate2 = $Self->{ServiceObject}->ServiceUpdate(
+my $ServiceUpdate2 = $ServiceObject->ServiceUpdate(
     ServiceID => $ServiceID2,
     Name      => $ServiceRand2,
     ValidID   => 2,

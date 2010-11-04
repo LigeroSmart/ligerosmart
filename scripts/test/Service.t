@@ -2,8 +2,8 @@
 # Service.t - Service tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.3 2010-08-13 17:57:28 en Exp $
-# $OldId: Service.t,v 1.13 2010/06/22 22:00:52 dz Exp $
+# $Id: Service.t,v 1.4 2010-11-04 14:06:53 ub Exp $
+# $OldId: Service.t,v 1.14 2010/10/29 22:16:59 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,9 +19,18 @@ use vars qw($Self);
 
 use Kernel::System::Service;
 use Kernel::System::User;
+use Kernel::Config;
 
-$Self->{ServiceObject} = Kernel::System::Service->new( %{$Self} );
-$Self->{UserObject}    = Kernel::System::User->new( %{$Self} );
+# create local objects
+my $ConfigObject  = Kernel::Config->new();
+my $ServiceObject = Kernel::System::Service->new(
+    %{$Self},
+    ConfigObject => $ConfigObject,
+);
+my $UserObject = Kernel::System::User->new(
+    %{$Self},
+    ConfigObject => $ConfigObject,
+);
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -32,8 +41,8 @@ my @UserIDs;
 {
 
     # disable email checks to create new user
-    my $CheckEmailAddressesOrg = $Self->{ConfigObject}->Get('CheckEmailAddresses') || 1;
-    $Self->{ConfigObject}->Set(
+    my $CheckEmailAddressesOrg = $ConfigObject->Get('CheckEmailAddresses') || 1;
+    $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
         Value => 0,
     );
@@ -41,7 +50,7 @@ my @UserIDs;
     for my $Counter ( 1 .. 2 ) {
 
         # create new users for the tests
-        my $UserID = $Self->{UserObject}->UserAdd(
+        my $UserID = $UserObject->UserAdd(
             UserFirstname => 'Service' . $Counter,
             UserLastname  => 'UnitTest',
             UserLogin     => 'UnitTest-Service-' . $Counter . int rand 1_000_000,
@@ -54,7 +63,7 @@ my @UserIDs;
     }
 
     # restore original email check param
-    $Self->{ConfigObject}->Set(
+    $ConfigObject->Set(
         Key   => 'CheckEmailAddresses',
         Value => $CheckEmailAddressesOrg,
     );
@@ -67,7 +76,7 @@ for my $Counter ( 1 .. 11 ) {
 }
 
 # get original service list for later checks
-my %ServiceListOriginal = $Self->{ServiceObject}->ServiceList(
+my %ServiceListOriginal = $ServiceObject->ServiceList(
     Valid  => 0,
     UserID => 1,
 );
@@ -758,7 +767,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # add new service
-        my $ServiceID = $Self->{ServiceObject}->ServiceAdd(
+        my $ServiceID = $ServiceObject->ServiceAdd(
             %{ $Item->{Add} },
         );
 
@@ -782,9 +791,7 @@ for my $Item ( @{$ItemData} ) {
             if ($ServiceID) {
 
                 # lookup service name
-                my $ServiceName = $Self->{ServiceObject}->ServiceLookup(
-                    ServiceID => $ServiceID,
-                );
+                my $ServiceName = $ServiceObject->ServiceLookup( ServiceID => $ServiceID );
 
                 # lookup test
                 $Self->Is(
@@ -794,9 +801,7 @@ for my $Item ( @{$ItemData} ) {
                 );
 
                 # reverse lookup the service id
-                my $ServiceIDNew = $Self->{ServiceObject}->ServiceLookup(
-                    Name => $ServiceName || '',
-                );
+                my $ServiceIDNew = $ServiceObject->ServiceLookup( Name => $ServiceName || '' );
 
                 # reverse lookup test
                 $Self->Is(
@@ -821,7 +826,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # get service data to check the values after creation of the service
-        my %ServiceGet = $Self->{ServiceObject}->ServiceGet(
+        my %ServiceGet = $ServiceObject->ServiceGet(
             ServiceID => $ServiceID,
             UserID    => $Item->{Add}->{UserID},
         );
@@ -858,7 +863,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # update the service
-        my $UpdateSucess = $Self->{ServiceObject}->ServiceUpdate(
+        my $UpdateSucess = $ServiceObject->ServiceUpdate(
             %{ $Item->{Update} },
             ServiceID => $LastAddedServiceID,
         );
@@ -890,7 +895,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # get service data to check the values after the update
-        my %ServiceGet2 = $Self->{ServiceObject}->ServiceGet(
+        my %ServiceGet2 = $ServiceObject->ServiceGet(
             ServiceID => $LastAddedServiceID,
             UserID    => $Item->{Update}->{UserID},
         );
@@ -905,9 +910,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # lookup service name
-        my $ServiceName = $Self->{ServiceObject}->ServiceLookup(
-            ServiceID => $ServiceGet2{ServiceID},
-        );
+        my $ServiceName = $ServiceObject->ServiceLookup( ServiceID => $ServiceGet2{ServiceID} );
 
         # lookup test
         $Self->Is(
@@ -917,9 +920,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # reverse lookup the service id
-        my $ServiceIDNew = $Self->{ServiceObject}->ServiceLookup(
-            Name => $ServiceName || '',
-        );
+        my $ServiceIDNew = $ServiceObject->ServiceLookup( Name => $ServiceName || '' );
 
         # reverse lookup test
         $Self->Is(
@@ -939,7 +940,7 @@ for my $Item ( @{$ItemData} ) {
 {
 
     # get a service by using the service name
-    my %ServiceGet = $Self->{ServiceObject}->ServiceGet(
+    my %ServiceGet = $ServiceObject->ServiceGet(
         Name   => $ServiceName[0],
         UserID => 1,
     );
@@ -951,7 +952,7 @@ for my $Item ( @{$ItemData} ) {
     );
 
     # get the same service by using the service id
-    %ServiceGet = $Self->{ServiceObject}->ServiceGet(
+    %ServiceGet = $ServiceObject->ServiceGet(
         ServiceID => $ServiceGet{ServiceID},
         UserID    => 1,
     );
@@ -968,7 +969,7 @@ for my $Item ( @{$ItemData} ) {
 # ServiceList test 1 (check general functionality)
 # ------------------------------------------------------------ #
 
-my %ServiceList1 = $Self->{ServiceObject}->ServiceList(
+my %ServiceList1 = $ServiceObject->ServiceList(
     Valid  => 0,
     UserID => 1,
 );
@@ -999,12 +1000,12 @@ $TestCount++;
 # ServiceList test 2 (check cache)
 # ------------------------------------------------------------ #
 
-my %ServiceList2 = $Self->{ServiceObject}->ServiceList(
+my %ServiceList2 = $ServiceObject->ServiceList(
     Valid  => 0,
     UserID => 1,
 );
 
-my $ServiceList2ServiceID = $Self->{ServiceObject}->ServiceAdd(
+my $ServiceList2ServiceID = $ServiceObject->ServiceAdd(
     Name    => $ServiceName[9],
     ValidID => 1,
     UserID  => 1,
@@ -1016,7 +1017,7 @@ my $ServiceList2ServiceID = $Self->{ServiceObject}->ServiceAdd(
 # ---
 );
 
-my %ServiceList2b = $Self->{ServiceObject}->ServiceList(
+my %ServiceList2b = $ServiceObject->ServiceList(
     Valid  => 0,
     UserID => 1,
 );
@@ -1053,13 +1054,9 @@ $TestCount++;
 # ServiceSearch test 1 (check general functionality)
 # ------------------------------------------------------------ #
 
-my @ServiceSearch1Search = $Self->{ServiceObject}->ServiceSearch(
-    UserID => 1,
-);
+my @ServiceSearch1Search = $ServiceObject->ServiceSearch( UserID => 1 );
 
-my %ServiceSearch1List = $Self->{ServiceObject}->ServiceList(
-    UserID => 1,
-);
+my %ServiceSearch1List = $ServiceObject->ServiceList( UserID => 1 );
 
 SERVICEID:
 for my $ServiceID (@ServiceSearch1Search) {
@@ -1093,7 +1090,7 @@ my %ServiceSearch2ServiceID;
 my $Counter1 = 0;
 for my $ServiceName (@ServiceNames) {
 
-    $ServiceSearch2ServiceID{$Counter1} = $Self->{ServiceObject}->ServiceAdd(
+    $ServiceSearch2ServiceID{$Counter1} = $ServiceObject->ServiceAdd(
         Name    => $ServiceName,
         ValidID => 1,
         UserID  => 1,
@@ -1127,7 +1124,7 @@ for my $ServiceName (@ServiceNames) {
 
     for my $PreparedName (@PreparedNames) {
 
-        my @ServiceList = $Self->{ServiceObject}->ServiceSearch(
+        my @ServiceList = $ServiceObject->ServiceSearch(
             Name   => $ServiceName,
             UserID => 1,
         );

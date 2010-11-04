@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.20 2010-10-01 21:22:35 en Exp $
-# $OldId: Service.pm,v 1.45 2010/10/01 20:50:48 en Exp $
+# $Id: Service.pm,v 1.21 2010-11-04 14:06:53 ub Exp $
+# $OldId: Service.pm,v 1.46 2010/10/26 03:58:49 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -186,7 +186,7 @@ sub ServiceList {
         INVALIDNAME:
         for my $InvalidName ( keys %ServiceInvalidList ) {
 
-            if ( $ServiceList{$ServiceID} =~ m{ \A $InvalidName :: }xms ) {
+            if ( $ServiceList{$ServiceID} =~ m{ \A \Q$InvalidName\E :: }xms ) {
                 delete $ServiceList{$ServiceID};
                 last INVALIDNAME;
             }
@@ -1200,6 +1200,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2010-10-01 21:22:35 $
+$Revision: 1.21 $ $Date: 2010-11-04 14:06:53 $
 
 =cut
