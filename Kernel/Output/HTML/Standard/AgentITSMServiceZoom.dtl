@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.8 2010-08-23 16:15:50 dz Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.9 2010-11-04 17:32:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -122,7 +122,7 @@
                         <tbody>
 <!-- dtl:block:SLARow -->
                             <tr>
-                                <td><a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$QData{"SLAID"}">$QData{"Name"}</a></td>
+                                <td><a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"}">$LQData{"Name"}</a></td>
                                 <td>$Text{"$Data{"Type"}"}</td>
                                 <td>$TimeLong{"$QData{"ChangeTime"}"}</td>
                             </tr>
@@ -135,13 +135,8 @@
 <!-- dtl:block:SLA -->
 
 <!-- dtl:block:LinkTableComplex -->
-            <div class="WidgetSimple DontPrint SpacingTop">
-                <div class="Header">
-                    <h2>$Text{"Linked Objects"}</h2>
-                </div>
-                <div class="Content">
-                    $Data{"LinkTableStrg"}
-                </div>
+            <div class="Content">
+                $Data{"LinkTableStrg"}
             </div>
 <!-- dtl:block:LinkTableComplex -->
 
