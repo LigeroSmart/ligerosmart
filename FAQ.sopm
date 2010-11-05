@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.76 2010-11-03 20:24:56 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.77 2010-11-05 04:42:24 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>2.4.x</Framework>
@@ -31,11 +31,13 @@
         <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQLanguage.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PictureUploadFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FAQMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
@@ -50,6 +52,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.dtl.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchResultPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
@@ -67,6 +70,8 @@
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"/>
         <File Permission="644" Location="var/httpd/htdocs/js/yui-image-uploader-faq.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.FAQDetail.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Widget.css"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
     </Filelist>
