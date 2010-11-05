@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.7 2010-11-03 18:23:12 ub Exp $
+# $Id: AgentFAQLanguage.pm,v 1.8 2010-11-05 16:17:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,9 +43,6 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     my %GetParam;
-
-    # set the user id
-    $GetParam{UserID} = $Self->{UserID};
 
     # permission check
     if ( !$Self->{AccessRw} ) {
@@ -340,7 +337,7 @@ sub _Overview {
 
     my $Output = '';
 
-    #output overview blocks
+    # output overview blocks
     $Self->{LayoutObject}->Block( Name => 'Overview' );
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
     $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
