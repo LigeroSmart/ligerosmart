@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.13 2010-11-03 23:49:27 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.14 2010-11-05 13:36:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 # TODO: check if this can be deletd by finding another solution
 
@@ -45,7 +45,7 @@ Returns a list of FAQ items as sortable list with pagination.
 This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow()>
 in F<Kernel/Output/HTML/LayoutTicket.pm>.
 
-    my $Output = $LayoutObject->ITSMChangeListShow(
+    my $Output = $LayoutObject->FAQListShow(
         FAQIDs  => $FAQIDsRef,                            # total list of FAQIDs, that can be listed
         Total      => scalar @{ $FAQIDsRef },          # total number of list items, in this case
         View       => $Self->{View},                      # optional, the default value is 'Small'

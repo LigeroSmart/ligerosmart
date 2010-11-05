@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.40 2010-11-05 04:44:58 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.41 2010-11-05 13:35:28 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -773,7 +773,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::Overview###Small" Required="0" Valid="1">
         <Description Translatable="1">Defines an overview module to show the small view of a FAQ list.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::FAQChangeOverview</SubGroup>
+        <SubGroup>Frontend::Agent::FAQOverview</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQOverviewSmall</Item>
@@ -785,7 +785,7 @@ Your OTRS Notification Master
     <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###ShowColumns" Required="1" Valid="1">
         <Description Translatable="1">Defines the shown columns in the FAQ search. This option has no effect on the position of the column.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
+        <SubGroup>Frontend::Agent::ViewFAQSearch</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="FAQNumber">1</Item>
@@ -852,7 +852,7 @@ Your OTRS Notification Master
                 <Item Key="Name">Back</Item>
                 <Item Key="Description">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">$Env{"LastScreenChanges"}</Item>
+                <Item Key="Link">$Env{"LastScreenFAQ"}</Item>
                 <Item Key="Target">Back</Item>
             </Hash>
         </Setting>
@@ -888,7 +888,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::MenuModule###030-Print" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu to print a change in the its zoom view of the agent interface.</Description>
+        <Description Translatable="1">Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
@@ -920,7 +920,7 @@ Your OTRS Notification Master
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::MenuModule###050-Delete" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.</Description>
-        <Group>ITSM Change Management</Group>
+        <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
         <Setting>
             <Hash>
