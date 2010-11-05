@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.41 2010-11-05 13:35:28 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.42 2010-11-05 15:28:05 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -683,8 +683,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group>faq_admin</Group>
                 <Description>FAQ-Area</Description>
                 <NavBarName>FAQ</NavBarName>
                 <Title>FAQ</Title>
@@ -710,8 +709,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Group>faq</Group>
-                <GroupRo>faq</GroupRo>
+                <Group>faq_admin</Group>
                 <Description>FAQ-Area</Description>
                 <NavBarName>FAQ</NavBarName>
                 <Title>FAQ</Title>
@@ -911,7 +909,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link another object to the workorder</Item>
+                <Item Key="Description">Link another object to the faq</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=FAQ&amp;SourceKey=$QData{"FAQID"}</Item>
                 <Item Key="Target">PopUp</Item>
