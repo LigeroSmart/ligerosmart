@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.39 2010-11-03 23:38:06 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.40 2010-11-05 04:44:58 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -821,6 +821,115 @@ Your OTRS Notification Master
                 <Item Key="PrefKey">UserFAQOverviewSmallPageShown</Item>
                 <Item Key="Prio">8000</Item>
                 <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentFAQZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>faq</Group>
+                <GroupRo>faq</GroupRo>
+                <Description>FAQ-Area</Description>
+                <Title>FAQ</Title>
+                <NavBarName>FAQ</NavBarName>
+                <Loader>
+                    <CSS>FAQ.FAQDetail.css</CSS>
+                    <CSS>FAQ.Widget.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::MenuModule###000-Back" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to go back in the FAQ zoom view of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
+                <Item Key="Name">Back</Item>
+                <Item Key="Description">Back</Item>
+                <Item Key="Action"></Item>
+                <Item Key="Link">$Env{"LastScreenChanges"}</Item>
+                <Item Key="Target">Back</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::MenuModule###010-Edit" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
+                <Item Key="Name">Edit</Item>
+                <Item Key="Description">Edit the FAQ</Item>
+                <Item Key="Action">AgentFAQEdit</Item>
+                <Item Key="Link">Action=AgentFAQEdit;FAQID=$QData{"FAQID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::MenuModule###020-History" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
+                <Item Key="Name">History</Item>
+                <Item Key="Description">History</Item>
+                <Item Key="Action">AgentFAQHistory</Item>
+                <Item Key="Link">Action=AgentFAQHistory;FAQID=$QData{"FAQID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::MenuModule###030-Print" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to print a change in the its zoom view of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
+                <Item Key="Name">Print</Item>
+                <Item Key="Description">Print the FAQ</Item>
+                <Item Key="Action">AgentFAQPrint</Item>
+                <Item Key="Link">Action=AgentFAQPrint;FAQID=$QData{"FAQID"}</Item>
+                <Item Key="LinkParam">target="print_FAQ"</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::MenuModule###040-Link" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
+                <Item Key="Name">Link</Item>
+                <Item Key="Description">Link another object to the workorder</Item>
+                <Item Key="Action">AgentLinkObject</Item>
+                <Item Key="Link">Action=AgentLinkObject&amp;SourceObject=FAQ&amp;SourceKey=$QData{"FAQID"}</Item>
+                <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::MenuModule###050-Delete" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::FAQ::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
+                <Item Key="Name">Delete</Item>
+                <Item Key="Description">Delete this FAQ</Item>
+                <Item Key="Action">AgentFAQDelete</Item>
+                <Item Key="Link">Action=AgentFAQDelete;FAQID=$QData{"FAQID"}</Item>
+                <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>
     </ConfigItem>
