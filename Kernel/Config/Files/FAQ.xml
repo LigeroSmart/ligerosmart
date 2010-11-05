@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.42 2010-11-05 15:28:05 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.43 2010-11-05 16:20:46 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -505,19 +505,7 @@ Your OTRS Notification Master
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>e</AccessKey>
-                    <Prio>100</Prio>
-                </NavBar>
-                <NavBar>
-                    <Group>faq</Group>
-                    <Description>New Article</Description>
-                    <Name>New Article</Name>
-                    <Image>new.png</Image>
-                    <Link>Action=AgentFAQ;Subaction=Add</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>FAQ</NavBar>
-                    <AccessKey>n</AccessKey>
-                    <Prio>200</Prio>
+                    <Prio>910</Prio>
                 </NavBar>
                 <NavBar>
                     <GroupRo>faq</GroupRo>
@@ -529,7 +517,7 @@ Your OTRS Notification Master
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>o</AccessKey>
-                    <Prio>310</Prio>
+                    <Prio>940</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -677,6 +665,32 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentFAQAdd" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>faq</Group>
+                <Description>FAQ-Area</Description>
+                <NavBarName>FAQ</NavBarName>
+                <Title>FAQ</Title>
+                <NavBar>
+                    <Group>faq</Group>
+                    <Description>New Article</Description>
+                    <Name>New Article</Name>
+                    <Link>Action=AgentFAQAdd</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>FAQ</NavBar>
+                    <AccessKey>n</AccessKey>
+                    <Prio>920</Prio>
+                </NavBar>
+                <Loader>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentFAQLanguage" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>FAQ</Group>
@@ -685,18 +699,18 @@ Your OTRS Notification Master
             <FrontendModuleReg>
                 <Group>faq_admin</Group>
                 <Description>FAQ-Area</Description>
-                <NavBarName>FAQ</NavBarName>
                 <Title>FAQ</Title>
+                <NavBarName>FAQ</NavBarName>
                 <NavBar>
                     <Group>faq_admin</Group>
-                    <Description>Language</Description>
-                    <Name>Language</Name>
+                    <Description Translatable="1">Language</Description>
+                    <Name Translatable="1">Language</Name>
                     <Link>Action=AgentFAQLanguage</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>u</AccessKey>
-                    <Prio>910</Prio>
+                    <Prio>950</Prio>
                 </NavBar>
                 <Loader>
                 </Loader>
@@ -711,18 +725,18 @@ Your OTRS Notification Master
             <FrontendModuleReg>
                 <Group>faq_admin</Group>
                 <Description>FAQ-Area</Description>
-                <NavBarName>FAQ</NavBarName>
                 <Title>FAQ</Title>
+                <NavBarName>FAQ</NavBarName>
                 <NavBar>
                     <Group>faq_admin</Group>
-                    <Description>Category</Description>
-                    <Name>Category</Name>
+                    <Description Translatable="1">Category</Description>
+                    <Name Translatable="1">Category</Name>
                     <Link>Action=AgentFAQCategory</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>c</AccessKey>
-                    <Prio>920</Prio>
+                    <Prio>960</Prio>
                 </NavBar>
                 <Loader>
                 </Loader>
@@ -737,27 +751,24 @@ Your OTRS Notification Master
             <FrontendModuleReg>
                 <Group>faq</Group>
                 <GroupRo>faq</GroupRo>
-                <Description>FAQ-Area</Description>
-                <NavBarName>FAQ</NavBarName>
                 <Title>FAQ</Title>
+                <NavBarName>FAQ</NavBarName>
                 <NavBar>
                     <GroupRo>faq</GroupRo>
-                    <Description>FAQ-Search</Description>
-                    <Name>Search</Name>
-                    <Image>search.png</Image>
+                    <Description Translatable="1">FAQ-Search</Description>
+                    <Name Translatable="1">Search</Name>
                     <Link>Action=AgentFAQSearch</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>s</AccessKey>
-                    <Prio>300</Prio>
+                    <Prio>930</Prio>
                 </NavBar>
                 <Loader>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="Frontend::Search###FAQ" Required="0" Valid="1">
         <Description Translatable="1">FAQ search backend router of the agent interface.</Description>
         <Group>FAQ</Group>
