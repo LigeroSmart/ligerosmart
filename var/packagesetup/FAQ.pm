@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.9 2010-10-23 13:02:26 cr Exp $
+# $Id: FAQ.pm,v 1.10 2010-11-05 15:52:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -170,6 +170,12 @@ sub CodeInstall {
         Description => 'faq admin users',
     );
 
+    # add the group faq_approval
+    $Self->_GroupAdd(
+        Name        => 'faq_approval',
+        Description => 'faq approval users',
+    );
+
     # install stats
     $Self->{StatsObject}->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
@@ -203,6 +209,13 @@ sub CodeReinstall {
         Name        => 'faq_admin',
         Description => 'faq admin users',
     );
+
+    # add the group faq_approval
+    $Self->_GroupAdd(
+        Name        => 'faq_approval',
+        Description => 'faq approval users',
+    );
+
     # install stats
     $Self->{StatsObject}->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
@@ -269,6 +282,11 @@ sub CodeUninstall {
     # deactivate the group faq_admin
     $Self->_GroupDeactivate(
         Name => 'faq_admin',
+    );
+
+    # deactivate the group faq_approval
+    $Self->_GroupDeactivate(
+        Name => 'faq_approval',
     );
 
     # uninstall stats
@@ -560,6 +578,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-10-23 13:02:26 $
+$Revision: 1.10 $ $Date: 2010-11-05 15:52:36 $
 
 =cut
