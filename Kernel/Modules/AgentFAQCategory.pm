@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.13 2010-11-05 16:17:54 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.14 2010-11-06 15:58:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -375,6 +375,8 @@ sub Run {
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
+    my %Data;
+
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
         Data => \%Param,
@@ -390,7 +392,7 @@ sub _Edit {
     my %ValidListReverse = reverse %ValidList;
 
     # build the valid selection
-    $Param{ValidOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{ValidOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%ValidList,
         Name       => 'ValidID',
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
@@ -400,7 +402,7 @@ sub _Edit {
     my %Groups = $Self->{GroupObject}->GroupList( Valid => 1 );
 
     # build the group selection
-    $Param{GroupOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{GroupOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Groups,
         Name       => 'PermissionGroups',
         Multiple   => 1,
@@ -415,13 +417,14 @@ sub _Edit {
     );
 
     # build the catogory selection
-    $Param{CategoryOption} = $Self->{LayoutObject}->BuildSelection(
+    $Data{CategoryOption} = $Self->{LayoutObject}->BuildSelection(
         Data           => $CategoryTree,
         Name           => 'ParentID',
         SelectedID     => $Param{ParentID},
         PossibleNone   => 1,
         DisabledBranch => $CategoryTree->{ $Param{CategoryID} } || '',
         Translation    => 0,
+        TreeView       => 1,
     );
 
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
@@ -429,7 +432,10 @@ sub _Edit {
 
     $Self->{LayoutObject}->Block(
         Name => 'OverviewUpdate',
-        Data => \%Param,
+        Data => {
+            %Param,
+            %Data,
+        },
     );
 
     # show header
