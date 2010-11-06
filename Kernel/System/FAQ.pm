@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.107 2010-11-04 00:00:27 ub Exp $
+# $Id: FAQ.pm,v 1.108 2010-11-06 15:57:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.107 $) [1];
+$VERSION = qw($Revision: 1.108 $) [1];
 
 =head1 NAME
 
@@ -1224,8 +1224,8 @@ sub HistoryGet {
 
 get the category list as hash
 
-    my %Categories = $FAQObject->CategoryList(
-        Valid  => 1, (optional)
+    my $CategoryHashRef = $FAQObject->CategoryList(
+        Valid  => 1,   # (optional)
         UserID => 1,
     );
 
@@ -3869,6 +3869,6 @@ did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 
 =head1 VERSION
 
-$Revision: 1.107 $ $Date: 2010-11-04 00:00:27 $
+$Revision: 1.108 $ $Date: 2010-11-06 15:57:12 $
 
 =cut
