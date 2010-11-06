@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.14 2010-11-05 13:36:20 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.15 2010-11-06 03:21:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 # TODO: check if this can be deletd by finding another solution
 
@@ -28,11 +28,12 @@ sub GetFAQItemVotingRateColor {
         );
     }
     my $CssTmp = '';
-    my %VotingResultColors
-        = %{ $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultColors') };
-    for my $Key ( sort( { $b <=> $a } keys(%VotingResultColors) ) ) {
+    my $VotingResultColors
+        = $Self->{ConfigObject}->Get('FAQ::Explorer::ItemList::VotingResultColors');
+
+    for my $Key ( sort { $b <=> $a } keys(%{$VotingResultColors} ) ) {
         if ( $Param{Rate} <= $Key ) {
-            $CssTmp = $VotingResultColors{$Key};
+            $CssTmp = $VotingResultColors->{$Key};
         }
     }
     return $CssTmp;
