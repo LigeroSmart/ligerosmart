@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/en_FAQ.pm - the english translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.15 2009-12-09 10:24:11 ub Exp $
+# $Id: en_FAQ.pm,v 1.16 2010-11-06 03:19:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -31,7 +31,7 @@ sub Data {
     $Lang->{'LatestChangedItems'}                = 'latest changed article';
     $Lang->{'LatestCreatedItems'}                = 'latest created article';
     $Lang->{'Top10Items'}                        = 'Top 10 articles';
-    $Lang->{'ArticleVotingQuestion'}             = 'Did this article help?';
+    $Lang->{'ArticleVotingQuestion'}             = 'How helpful was this aticle? Please give us your rating and help to improve the FAQ Database. Thank You.';
     $Lang->{'SubCategoryOf'}                     = 'Subcategory of';
     $Lang->{'QuickSearch'}                       = 'Quick Search';
     $Lang->{'DetailSearch'}                      = 'Detail Search';
