@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.44 2010-11-06 03:29:30 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.45 2010-11-06 17:52:50 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -943,4 +943,17 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+       <ConfigItem Name="Frontend::Module###AgentFAQAttachment" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Title></Title>
+                <NavBarName>FAQ</NavBarName>
+                <Description>To download attachments</Description>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
 </otrs_config>
