@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.16 2010-11-08 15:47:22 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.17 2010-11-08 17:40:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -433,7 +433,6 @@ sub _Edit {
         PossibleNone   => 1,
         DisabledBranch => $CategoryTree->{ $Param{CategoryID} } || '',
         Translation    => 0,
-        TreeView       => 1,
     );
 
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
