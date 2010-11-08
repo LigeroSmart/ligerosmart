@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.11 2010-10-29 20:07:58 ub Exp $
+# $Id: FAQ.t,v 1.12 2010-11-08 19:01:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,9 +12,11 @@
 use strict;
 use warnings;
 
+use vars qw($Self);
+
 use Kernel::System::FAQ;
 
-my $FAQObject = Kernel::System::FAQ->new( %{$Self}, UserID => 1);
+my $FAQObject = Kernel::System::FAQ->new( %{$Self} );
 
 my $FAQID = $FAQObject->FAQAdd(
     Title      => 'Some Text',
