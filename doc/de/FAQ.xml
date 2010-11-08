@@ -1,7 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.5 2010-11-08 18:42:48 ub Exp $ -->
+<!-- $Id: FAQ.xml,v 1.6 2010-11-08 18:46:59 ub Exp $ -->
 
 <book lang='de'>
 
@@ -173,7 +173,7 @@
 <chapter>
     <title>Konfiguration</title>
     <para>In der SysConfig im Admin-Bereich gibt es eine Gruppe "FAQ".
-          Hier finden sich einige Konfigurations-Optionen zum FAQ-Modul, die weitestgehend selbsterklärend sind.
+        Hier finden sich einige Konfigurations-Optionen zum FAQ-Modul, die weitestgehend selbsterklärend sind.
     </para>
 </chapter>
 
