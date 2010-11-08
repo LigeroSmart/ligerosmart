@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.77 2010-11-05 04:42:24 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.78 2010-11-08 18:47:35 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
-    <Framework>2.4.x</Framework>
+    <Framework>3.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU GENERAL PUBLIC LICENSE Version 2, June 1991</License>
