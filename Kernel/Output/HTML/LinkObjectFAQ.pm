@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.10 2010-11-08 19:15:23 ub Exp $
+# $Id: LinkObjectFAQ.pm,v 1.11 2010-11-08 19:15:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -505,7 +505,6 @@ sub SearchOptionList {
     }
 
     return @SearchOptionList;
-
 }
 
 1;
@@ -524,6 +523,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-11-08 19:15:23 $
+$Revision: 1.11 $ $Date: 2010-11-08 19:15:56 $
 
 =cut
