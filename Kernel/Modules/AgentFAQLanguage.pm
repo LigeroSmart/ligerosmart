@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.8 2010-11-05 16:17:54 ub Exp $
+# $Id: AgentFAQLanguage.pm,v 1.9 2010-11-08 16:22:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -74,9 +74,6 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # set class for server validation errors
-        $GetParam{RequiredClass} = "Validate_Required ";
-
         # output change language screen
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
@@ -103,9 +100,6 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
-        # set class for server validation errors
-        $GetParam{RequiredClass} = "Validate_Required ServerError";
-
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -117,8 +111,9 @@ sub Run {
 
             if ( !$GetParam{$ParamName} ) {
                 $Self->_Edit(
-                    Action      => 'Change',
-                    ServerError => 'The name is required',
+                    Action                 => 'Change',
+                    NameServerError        => 'ServerError',
+                    NameServerErrorMessage => 'The name is required!',
                     %GetParam,
                 );
                 $Output .= $Self->{LayoutObject}->Output(
@@ -140,8 +135,9 @@ sub Run {
         # show the edit screen again
         if ( $LanguageExistsAlready ) {
             $Self->_Edit(
-                Action      => 'Change',
-                ServerError => "Language '$GetParam{Name}' already exists!",
+                Action                 => 'Change',
+                NameServerError        => 'ServerError',
+                NameServerErrorMessage => "Language '$GetParam{Name}' already exists!",
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -181,9 +177,6 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Add' ) {
 
-        # set class for server validation errors
-        $GetParam{RequiredClass}  = "Validate_Required ";
-
         # get the new name
         $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
 
@@ -211,9 +204,6 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
-        # set class for server validation errors
-        $GetParam{RequiredClass} = "Validate_Required ServerError";
-
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -223,8 +213,9 @@ sub Run {
         # check for name
         if ( !$GetParam{Name} ) {
             $Self->_Edit(
-                Action      => 'Add',
-                ServerError => 'The name is required',
+                Action                 => 'Add',
+                NameServerError        => 'ServerError',
+                NameServerErrorMessage => 'The name is required!',
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -244,8 +235,9 @@ sub Run {
         # show the edit screen again
         if ( $LanguageExistsAlready ) {
             $Self->_Edit(
-                Action      => 'Add',
-                ServerError => "Language '$GetParam{Name}' already exists!",
+                Action                 => 'Add',
+                NameServerError        => 'ServerError',
+                NameServerErrorMessage => "Language '$GetParam{Name}' already exists!",
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -308,10 +300,6 @@ sub _Edit {
         Name => 'Overview',
         Data => \%Param,
     );
-
-    if ( !$Param{ServerError} ) {
-        $Param{ServerError} = 'No Error';
-    }
 
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
     $Self->{LayoutObject}->Block( Name => 'ActionOverview' );

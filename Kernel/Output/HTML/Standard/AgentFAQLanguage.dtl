@@ -2,7 +2,7 @@
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.3 2010-11-08 12:01:44 ub Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.4 2010-11-08 16:22:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -90,12 +90,12 @@
   <fieldset class="TableLike">
   <label class="Mandatory" for="Name"><span class="Marker">*</span> $Text{"Name"}:</label>
   <div class="Field">
-  <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc $Data{"RequiredClass"}" maxlength="50"/>
+  <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"NameServerError"}" maxlength="50"/>
   <div id="NameError" class="TooltipErrorMessage">
-  <p>$Text{"A language should have a name!"}</p>
+  <p>$Text{"The name is required!"}</p>
   </div>
   <div id="NameServerError" class="TooltipErrorMessage">
-  <p>$Text{"$Data{"ServerError"}"}</p>
+  <p>$Text{"$Data{"NameServerErrorMessage"}"}</p>
   </div>
   </div>
 
