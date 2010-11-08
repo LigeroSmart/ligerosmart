@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.5 2010-11-03 23:35:59 cr Exp $
+# $Id: FAQOverviewSmall.pm,v 1.6 2010-11-08 19:07:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,7 +68,7 @@ sub Run {
     }
 
     my $FAQData = scalar @IDs;
-    if ($FAQData){
+    if ($FAQData) {
 
         # check ShowColumns parameter
         if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
@@ -94,7 +94,7 @@ sub Run {
                         : ( $Param{SortBy} eq 'CategoryID' ) ? 'Category'
                         : ( $Param{SortBy} eq 'LanguageID' ) ? 'Language'
                         : ( $Param{SortBy} eq 'StateID' )    ? 'State'
-                        :                                    $Param{SortBy};
+                        :                                      $Param{SortBy};
                 }
 
                 # set the correct Set CSS class and order by link
@@ -128,14 +128,18 @@ sub Run {
         ID:
         for my $ID (@IDs) {
             $Counter++;
-            if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
+            if (
+                $Counter >= $Param{StartHit}
+                && $Counter < ( $Param{PageShown} + $Param{StartHit} )
+                )
+            {
 
                 # to store all data
                 my %Data;
 
                 # get FAQ data
                 my %FAQ = $Self->{FAQObject}->FAQGet(
-                    FAQID   => $ID,
+                    FAQID  => $ID,
                     UserID => $Self->{UserID},
                 );
 
