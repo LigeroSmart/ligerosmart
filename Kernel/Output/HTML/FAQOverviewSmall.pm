@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.6 2010-11-08 19:07:07 ub Exp $
+# $Id: FAQOverviewSmall.pm,v 1.7 2010-11-08 19:15:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

@@ -2,11 +2,11 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.9 2010-11-03 19:46:26 ub Exp $
+# $Id: LinkObjectFAQ.pm,v 1.10 2010-11-08 19:15:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Output::HTML::LinkObjectFAQ;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -346,7 +346,7 @@ sub ContentStringCreate {
     if ( !$Param{ContentData} ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message => 'Need ContentData!',
+            Message  => 'Need ContentData!',
         );
         return;
     }
@@ -505,6 +505,7 @@ sub SearchOptionList {
     }
 
     return @SearchOptionList;
+
 }
 
 1;
@@ -517,12 +518,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-11-03 19:46:26 $
+$Revision: 1.10 $ $Date: 2010-11-08 19:15:23 $
 
 =cut
