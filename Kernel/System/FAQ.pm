@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.110 2010-11-08 18:54:57 ub Exp $
+# $Id: FAQ.pm,v 1.111 2010-11-08 18:57:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.110 $) [1];
+$VERSION = qw($Revision: 1.111 $) [1];
 
 =head1 NAME
 
@@ -49,6 +49,7 @@ create a faq object
     use Kernel::System::Log;
     use Kernel::System::Main;
     use Kernel::System::DB;
+    use Kernel::System::Time;
     use Kernel::System::FAQ;
 
     my $ConfigObject = Kernel::Config->new();
@@ -64,6 +65,10 @@ create a faq object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
     );
+    my $TimeObject = Kernel::System::Time->new(
+        ConfigObject => $ConfigObject,
+        LogObject    => $LogObject,
+    );
     my $DBObject = Kernel::System::DB->new(
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
@@ -75,6 +80,7 @@ create a faq object
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
         DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
         MainObject   => $MainObject,
     );
 
@@ -3890,6 +3896,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.110 $ $Date: 2010-11-08 18:54:57 $
+$Revision: 1.111 $ $Date: 2010-11-08 18:57:19 $
 
 =cut
