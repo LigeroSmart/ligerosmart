@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.15 2010-11-08 14:35:12 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.16 2010-11-08 15:47:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,15 +46,16 @@ sub Run {
 
     my %GetParam;
 
+    # get parameters
     for my $ParamName (qw(CategoryID Name ParentID Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # set default
+    # set default category id
     $GetParam{CategoryID} ||= '';
 
-    @{ $GetParam{PermissionGroups} }
-        = $Self->{ParamObject}->GetArray( Param => "PermissionGroups" );
+    # get array parameters
+    @{ $GetParam{PermissionGroups} } = $Self->{ParamObject}->GetArray( Param => 'PermissionGroups' );
 
     # permission check
     if ( !$Self->{AccessRw} ) {
@@ -71,7 +72,7 @@ sub Run {
 
         # check required parameters
         if ( !$GetParam{CategoryID} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Need CategoryID!" );
+            $Self->{LayoutObject}->FatalError( Message => 'Need CategoryID!' );
         }
 
         # get category data
@@ -86,34 +87,20 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # set validation class
-        for my $ValidationObject (qw(Name Comment)) {
-            if ( !$GetParam{ $ValidationObject . 'RequiredClass' } ) {
-                $GetParam{ $ValidationObject . 'RequiredClass' } = 'Validate_Required ';
-            }
-        }
-
-        # set validation class
-        if ( !$GetParam{PermissionGroupsRequiredClass} ) {
-            $GetParam{PermissionGroupsRequiredClass} = 'Validate_RequiredDropdown ';
-        }
-
-        # set default "No Error" to field Name as server error string
-        if ( !$GetParam{NameServerError} ) {
-            $GetParam{NameServerError} = 'No Error';
-        }
-
         # output change screen
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
         $Self->_Edit(
             Action => 'Change',
             %CategoryData,
         );
+
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
+
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
     }
@@ -129,22 +116,26 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # check for name
+        # check required parameters
+        for my $ParamName (qw(ParentID ValidID)) {
+            if ( !defined $GetParam{$ParamName} ) {
+                return $Self->{LayoutObject}->FatalError( Message => "Need $ParamName!" );
+            }
+        }
+
+        # check required parameters
         my $ServerError;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
+
+            # if required field is not given
             if ( !$GetParam{$ParamName} ) {
 
-                # add validation class and server error error class
-                $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_Required ServerError';
-
-                # add validation class and server error error class
-                if ( $ParamName eq 'PermissionGroups' ) {
-                    $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_RequiredDropdown ServerError';
-                }
+                # add server error error class
+                $GetParam{ $ParamName . 'ServerError'} = 'ServerError';
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
-                    $GetParam{NameServerError} = 'A category should have a name!';
+                    $GetParam{NameServerErrorMessage} = 'A category should have a name!';
                 }
 
                 # set ServerError Flag
@@ -153,23 +144,21 @@ sub Run {
         }
 
         # send server error if any required parameter is missing
-        if ($ServerError){
+        if ($ServerError) {
+
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
             );
+
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
-            $Output .= $Self->{LayoutObject}->Footer();
-            return $Output;
-        }
 
-        for my $ParamName (qw(ParentID ValidID)) {
-            if ( !defined $GetParam{$ParamName} ) {
-                return $Self->{LayoutObject}->FatalError( Message => "Need $ParamName" );
-            }
+            $Output .= $Self->{LayoutObject}->Footer();
+
+            return $Output;
         }
 
         # check for duplicate category name with the same parent category
@@ -181,22 +170,25 @@ sub Run {
         );
 
         # show the edit screen again
-        if ( $CategoryExistsAlready ) {
+        if ($CategoryExistsAlready) {
 
             # set server errors
-            $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
-            $GetParam{NameServerError} = "Category '$GetParam{Name}' already exists!";
+            $GetParam{NameServerError} = 'ServerError';
+            $GetParam{NameServerErrorMessage} = "Category '$GetParam{Name}' already exists!";
 
             # output add category screen
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
             );
+
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
+
             $Output .= $Self->{LayoutObject}->Footer();
+
             return $Output;
         }
 
@@ -234,35 +226,22 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Add' ) {
 
-        # set validation class
-        for my $ValidationObject (qw(Name Comment)) {
-            if ( !$GetParam{ $ValidationObject . 'RequiredClass' } ) {
-                $GetParam{ $ValidationObject . 'RequiredClass' } = 'Validate_Required ';
-            }
-        }
-
-        # set validation class
-        if ( !$GetParam{PermissionGroupsRequiredClass} ) {
-            $GetParam{PermissionGroupsRequiredClass} = 'Validate_RequiredDropdown ';
-        }
-
-        # set default "No Error"" to field Name as server error string
-        if ( !$GetParam{NameServerError} ) {
-            $GetParam{NameServerError} = 'No Error';
-        }
-
-        # output Add screen
+        # output add screen
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
         );
+
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
+
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -277,22 +256,28 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # check for required parameters
+        # check required parameters
+        for my $ParamName (qw(ParentID ValidID)) {
+            if ( !defined $GetParam{$ParamName} ) {
+                return $Self->{LayoutObject}->FatalError( Message => "Need $ParamName!" );
+            }
+        }
+
+        # check required parameters
         my $ServerError;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
+
+            # if required field is not given
             if ( !$GetParam{$ParamName} ) {
 
                 # add validation class and server error error class
-                $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_Required ServerError';
-
-                # add validation class and server error error class
                 if ( $ParamName eq 'PermissionGroups' ) {
-                    $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_RequiredDropdown ServerError';
+                    $GetParam{ $ParamName . 'ServerError'} = 'ServerError';
                 }
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
-                    $GetParam{NameServerError} = 'A category should have a name!';
+                    $GetParam{NameServerErrorMessage} = 'A category should have a name!';
                 }
 
                 # set ServerError Flag
@@ -300,24 +285,22 @@ sub Run {
             }
         }
 
-        # send server error if any required parameters is missing
-        if ($ServerError){
+        # send server error if any required parameters are missing
+        if ($ServerError) {
+
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
             );
+
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
-            $Output .= $Self->{LayoutObject}->Footer();
-            return $Output;
-        }
 
-        for my $ParamName (qw(ParentID ValidID)) {
-            if ( !defined $GetParam{$ParamName} ) {
-                return $Self->{LayoutObject}->FatalError( Message => "Need $ParamName" );
-            }
+            $Output .= $Self->{LayoutObject}->Footer();
+
+            return $Output;
         }
 
         # check for duplicate category name with the same parent category
@@ -332,19 +315,22 @@ sub Run {
         if ( $CategoryExistsAlready ) {
 
             # set server errors
-            $GetParam{NameRequiredClass} = 'Validate_Required ServerError';
-            $GetParam{NameServerError} = "Category '$GetParam{Name}' already exists!";
+            $GetParam{NameServerError} = 'ServerError';
+            $GetParam{NameServerErrorMessage} = "Category '$GetParam{Name}' already exists!";
 
             # output add category screen
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
             );
+
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
+
             $Output .= $Self->{LayoutObject}->Footer();
+
             return $Output;
         }
 
@@ -374,6 +360,7 @@ sub Run {
             Data         => \%Param,
         );
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -406,11 +393,6 @@ sub _Edit {
         Data => \%Param,
     );
 
-    # set default "No Error"" to field Name as server error string
-    if ( !$Param{NameServerError} ) {
-        $Param{NameServerError} = 'No Error';
-    }
-
     # get the valid list
     my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
@@ -425,12 +407,15 @@ sub _Edit {
     # get all valid groups
     my %Groups = $Self->{GroupObject}->GroupList( Valid => 1 );
 
+    # set no server error class as default
+    $Param{PermissionGroupsServerError} ||= '';
+
     # build the group selection
     $Data{GroupOption} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Groups,
         Name       => 'PermissionGroups',
         Multiple   => 1,
-        Class      => $Param{PermissionGroupsRequiredClass},
+        Class      => 'Validate_RequiredDropdown ' . $Param{PermissionGroupsServerError},
         SelectedID => $Param{PermissionGroups},
     );
 

@@ -2,13 +2,12 @@
 # AgentFAQCategory.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.dtl,v 1.5 2010-11-08 12:01:44 ub Exp $
+# $Id: AgentFAQCategory.dtl,v 1.6 2010-11-08 15:47:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 # --
-
 
 <!-- dtl:block:Overview -->
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
@@ -90,12 +89,12 @@
 
   <label class="Mandatory" for="Name"><span class="Marker">*</span> $Text{"Name"}:</label>
   <div class="Field">
-  <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc $Data{"NameRequiredClass"}" maxlength="50"/>
+  <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"NameServerError"}" maxlength="50"/>
   <div id="NameError" class="TooltipErrorMessage">
   <p>$Text{"A category should have a name!"}</p>
   </div>
   <div id="NameServerError" class="TooltipErrorMessage">
-  <p>$Text{"$Data{"NameServerError"}"}</p>
+  <p>$Text{"$Data{"NameServerErrorMessage"}"}</p>
   </div>
   </div>
   <div class="Clear"></div>
@@ -108,7 +107,7 @@
 
   <label class="Mandatory" for="Comment"><span class="Marker">*</span> $Text{"Comment"}:</label>
   <div class="Field">
-  <input type="text" name="Comment" id="Comment" value="$QData{"Comment"}" class="W50pc $Data{"CommentRequiredClass"}" maxlength="80"/>
+  <input type="text" name="Comment" id="Comment" value="$QData{"Comment"}" class="W50pc Validate_Required $QData{"CommentServerError"}" maxlength="80"/>
   <div id="CommentError" class="TooltipErrorMessage">
   <p>$Text{"A category should have a comment!"}</p>
   </div>
@@ -129,10 +128,10 @@
   <div class="Field">
   $Data{"GroupOption"}
   <div id="PermissionGroupsError" class="TooltipErrorMessage">
-  <p>$Text{"A category needs min. one permission group!"}</p>
+  <p>$Text{"A category needs at least one permission group!"}</p>
   </div>
   <div id="PermissionGroupsServerError" class="TooltipErrorMessage">
-  <p>$Text{"A category needs min. one permission group!"}</p>
+  <p>$Text{"A category needs at least one permission group!"}</p>
   </div>
   <div class="FieldExplanation">($Text{"Agent groups which can access this category."})</div>
   </div>
