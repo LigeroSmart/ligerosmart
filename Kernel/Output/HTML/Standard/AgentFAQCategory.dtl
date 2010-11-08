@@ -2,7 +2,7 @@
 # AgentFAQCategory.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.dtl,v 1.4 2010-11-03 15:21:24 ub Exp $
+# $Id: AgentFAQCategory.dtl,v 1.5 2010-11-08 12:01:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -13,9 +13,7 @@
 <!-- dtl:block:Overview -->
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
 <h1>$Text{"FAQ Category Management"}</h1>
-
 <div class="SidebarColumn">
-
 <!-- dtl:block:ActionList -->
 <div class="WidgetSimple">
 <div class="Header">
@@ -40,7 +38,6 @@
 </div>
 <!-- dtl:block:ActionList -->
 </div>
-
 <div class="ContentColumn">
 <div class="WidgetSimple">
 
@@ -49,7 +46,6 @@
 <h2>$Text{"List"}</h2>
 </div>
 <div class="Content">
-
 <table class="DataTable" summary="FAQ languages">
   <thead>
   <tr>
@@ -86,12 +82,12 @@
 <!-- dtl:block:HeaderEdit -->
 </div>
 <div class="Content">
-
 <form action="$Env{"CGIHandle"}" method="post" class="Validate">
   <input type="hidden" name="Action" value="$Env{"Action"}"/>
   <input type="hidden" name="Subaction" value="$LQData{"Action"}Action"/>
   <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
   <fieldset class="TableLike">
+
   <label class="Mandatory" for="Name"><span class="Marker">*</span> $Text{"Name"}:</label>
   <div class="Field">
   <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc $Data{"NameRequiredClass"}" maxlength="50"/>
@@ -103,12 +99,13 @@
   </div>
   </div>
   <div class="Clear"></div>
+
   <label for="ParentID">$Text{"SubCategoryOf"}:</label>
   <div class="Field">
   $Data{"CategoryOption"}
   </div>
-
   <div class="Clear"></div>
+
   <label class="Mandatory" for="Comment"><span class="Marker">*</span> $Text{"Comment"}:</label>
   <div class="Field">
   <input type="text" name="Comment" id="Comment" value="$QData{"Comment"}" class="W50pc $Data{"CommentRequiredClass"}" maxlength="80"/>
@@ -120,14 +117,14 @@
   </div>
   <div class="FieldExplanation">($Text{"Will be shown as comment in Explorer."})</div>
   </div>
-
   <div class="Clear"></div>
+
   <label for="ValidID">$Text{"Valid"}:</label>
   <div class="Field">
   $Data{"ValidOption"}
   </div>
-
   <div class="Clear"></div>
+
   <label class="Mandatory" for="PermissionGroups"><span class="Marker">*</span> $Text{"Permission"}:</label>
   <div class="Field">
   $Data{"GroupOption"}
@@ -137,7 +134,6 @@
   <div id="PermissionGroupsServerError" class="TooltipErrorMessage">
   <p>$Text{"A category needs min. one permission group!"}</p>
   </div>
-
   <div class="FieldExplanation">($Text{"Agent groups which can access this category."})</div>
   </div>
 
@@ -147,11 +143,11 @@
   <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"}</a>
   </div>
   <div class="Clear"></div>
+
   </fieldset>
 </form>
 </div>
 <!-- dtl:block:OverviewUpdate -->
-
 </div>
 </div>
 <div class="Clear"></div>
