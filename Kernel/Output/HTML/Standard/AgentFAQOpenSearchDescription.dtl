@@ -2,11 +2,11 @@
 # AgentFAQOpenSearchDescription.dtl - provides XML description for FAQ search in OpenSearch format
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOpenSearchDescription.dtl,v 1.4 2010-10-26 15:58:30 ub Exp $
+# $Id: AgentFAQOpenSearchDescription.dtl,v 1.5 2010-11-08 18:59:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 <?xml version="1.0" encoding="utf-8" ?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
@@ -14,5 +14,5 @@
 <Description>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"} &amp; $Text{"Fulltext"})</Description>
 <InputEncoding>$Env{"UserCharset"}</InputEncoding>
 <Url type="text/html" template="$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Baselink"}Action=AgentFAQ&amp;Subaction=Search&amp;Submit=yes&amp;QuickSearch=1&amp;What={searchTerms}" />
-<Image height="16" width="16" type="image/x-icon">$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Images"}icons/product.ico</Image>
+<Image height="16" width="16" type="image/x-icon">$Config{"HttpType"}://$Env{"HTTP_HOST"}$Config{"Frontend::ImagePath"}icons/product.ico</Image>
 </OpenSearchDescription>
