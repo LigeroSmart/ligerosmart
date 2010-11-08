@@ -1,7 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.4 2009-08-11 13:57:39 ub Exp $ -->
+<!-- $Id: FAQ.xml,v 1.5 2010-11-08 18:42:48 ub Exp $ -->
 
 <book lang='de'>
 
@@ -132,8 +132,8 @@
     <sect1>
         <title>Admin Interface</title>
         <para>
-Mittels folgender URL kann das Paket über das Admin Interface installiert, gegebenenfalls auch aktualisiert oder deinstalliert werden
- (bitte vorher prüfen, ob der Benutzer auch in der Admin-Gruppe ist).
+            Mittels folgender URL kann das Paket über das Admin Interface installiert, gegebenenfalls auch aktualisiert oder deinstalliert werden
+            (bitte vorher prüfen, ob der Benutzer auch in der Admin-Gruppe ist).
         </para>
         <para>
 <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">http://localhost/otrs/index.pl?Action=AdminPackageManager</ulink>
@@ -142,12 +142,12 @@ Mittels folgender URL kann das Paket über das Admin Interface installiert, gege
     <sect1>
         <title>Command-Line</title>
         <para>
-Ist es nicht möglich, das Admin-Interface zu benutzen, kann folgendes
-Command-Line-Tool ("bin/opm.pl") benutzt werden.
+            Ist es nicht möglich, das Admin-Interface zu benutzen, kann folgendes
+            Command-Line-Tool ("bin/opm.pl") benutzt werden.
         </para>
         <para>
         <screen>
-shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
+            shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
         </screen>
         </para>
     </sect1>
@@ -180,7 +180,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
 <chapter>
     <title>Kontakt</title>
     <para>
-Kontakt für Fragen rund um das FAQ-Modul.
+        Kontakt für Fragen rund um das FAQ-Modul.
     </para>
     <sect1>
         <title>OTRS AG/OTRS Inc.</title>
@@ -193,7 +193,7 @@ Kontakt für Fragen rund um das FAQ-Modul.
 <chapter>
     <title>Änderungsliste</title>
     <para>
-    $ChangeLog
+        $ChangeLog
     </para>
 </chapter>
 
