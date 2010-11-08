@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.4 2009-12-09 10:24:11 ub Exp $
+# $Id: zh_CN_FAQ.pm,v 1.5 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -55,7 +55,7 @@ sub Data {
 
     $Lang->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = '没有归类到目录. 要创建一篇文章需要归类到目录里, 请在 -目录菜单- 里选择您有权限创建文章的目录';
     $Lang->{'Agent groups which can access this category.'} = '哪一个群组可以访问此目录.';
-    $Lang->{'A category needs min. one permission group!'}   = '一个目录至少要分配一个权限群组';
+    $Lang->{'A category needs at least one permission group!'}   = '一个目录至少要分配一个权限群组';
     $Lang->{'Will be shown as comment in Explorer.'}         = '注释将浏览时显示.';
 
     return 1;

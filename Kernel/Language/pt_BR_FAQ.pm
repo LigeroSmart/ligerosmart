@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/pt_BR_FAQ.pm - the portuguese brazillian translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Ronaldo Richieri <richieri@gmail.com>
 # --
-# $Id: pt_BR_FAQ.pm,v 1.3 2009-12-09 10:24:11 ub Exp $
+# $Id: pt_BR_FAQ.pm,v 1.4 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -55,7 +55,7 @@ sub Data {
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         } = 'Você está sem acesso a nenhuma categoria. Para criar um artigo, você precisa ter acesso a pelo menos uma categoria. Por favor, confira as permissões de seu grupo no menu Categoria!';
     $Lang->{'Agent groups which can access this category.'} = 'Grupo de agentes que podem acessar esta categoria.';
-    $Lang->{'A category needs min. one permission group!'}   = 'Selecione pelo menos um grupo que poderá acessar esta categoria!';
+    $Lang->{'A category needs at least one permission group!'}   = 'Selecione pelo menos um grupo que poderá acessar esta categoria!';
     $Lang->{'Will be shown as comment in Explorer.'}         = 'Será exibido como comentário no Explorer';
 
     return 1;

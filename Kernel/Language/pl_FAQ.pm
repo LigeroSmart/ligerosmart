@@ -1,10 +1,10 @@
 # --
 # Kernel/Language/pl_FAQ.pm - the polish translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Patryk ¦ciborek <patryk@sciborek.com>
 # Copyright (C) 2009 Artur Skalski <skal.ar at wp.pl>
 # --
-# $Id: pl_FAQ.pm,v 1.5 2009-12-09 10:24:11 ub Exp $
+# $Id: pl_FAQ.pm,v 1.6 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -60,7 +60,7 @@ sub Data {
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         } = 'Brak zdefiniowanych kategorii. Abu utworzyæ artyku³ musi istnieæ co najmniej jedna kategoria. Sprawd¼ proszê swoje uprawnienia w menu Kategorie.';
     $Lang->{'Agent groups which can access this category.'}  = 'Grupy agentów, które maj± dostêp do tej kategorii';
-    $Lang->{'A category needs min. one permission group!'}   = 'Kategoria wymaga co najmniej jednej grupy uprawnieñ!';
+    $Lang->{'A category needs at least one permission group!'}   = 'Kategoria wymaga co najmniej jednej grupy uprawnieñ!';
     $Lang->{'Will be shown as comment in Explorer.'}         = 'Zostanie pokazany jako komentarz w eksplorerze.';
 
     return 1;

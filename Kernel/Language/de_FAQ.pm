@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.16 2009-12-09 10:24:11 ub Exp $
+# $Id: de_FAQ.pm,v 1.17 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -57,8 +57,8 @@ sub Data {
         = 'Keine Kategorie-Auswahl möglich. Um einen Artikel erstellen zu können, muss man min. Zugriff auf eine Kategorie haben. Bitte überprüfen Sie die Gruppen/Kategorie Berechtigung im Menupunkt -Kategorie-!';
     $Lang->{'Agent groups which can access this category.'}
         = 'Agenten Gruppe welche auf diese Kategorie Zugriff hat.';
-    $Lang->{'A category needs min. one permission group!'}
-        = 'Eine Kategorie muss min. eine Berechtigungs-Gruppe haben.';
+    $Lang->{'A category needs at least one permission group!'}
+        = 'Eine Kategorie muss mindestens eine Berechtigungs-Gruppe haben.';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Wird im Explorer als Kommentar angezeigt.';
 
     return 1;

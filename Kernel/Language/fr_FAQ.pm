@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/fr_FAQ.pm - the french translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Jonathan Peyrot
 # --
-# $Id: fr_FAQ.pm,v 1.2 2009-12-09 10:24:11 ub Exp $
+# $Id: fr_FAQ.pm,v 1.3 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -58,7 +58,7 @@ sub Data {
         = 'Aucun catégorie accessible. Pour créer une question, vous devez avoir accès à au moins une catégorie. SVP vérifiez les permissions de votre groupe/catégorie via le menu -catégorie- !';
     $Lang->{'Agent groups which can access this category.'}
         = 'Groupes d\'Agents pouvant accéder à cette catégorie';
-    $Lang->{'A category needs min. one permission group!'}
+    $Lang->{'A category needs at least one permission group!'}
         = 'Une catégorie nécessite au minimum une permission de groupe !';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Sera affiché comme un commentaire dans l\'Explorer.';
 

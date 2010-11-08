@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/fa_FAQ.pm - the persian (farsi) translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Translated/Updated into Persian (Farsi) by Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_FAQ.pm,v 1.4 2009-12-09 10:24:11 ub Exp $
+# $Id: fa_FAQ.pm,v 1.5 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -58,7 +58,7 @@ sub Data {
         = 'دسترسی به هیچ کدام از دسته‌بندی‌ها مقدور نیست. برای ایجاد یک نوشته جدید اقلا به یک دسته‌بندی باید دسترسی داشته باشید. لطفا از طریق منوی category دسترسی‌های گروه/دسته را بررسی فرمایید!';
     $Lang->{'Agent groups which can access this category.'}
         = 'گروه‌های کارشناسی که به این دسته‌بندی دسترسی دارند.';
-    $Lang->{'A category needs min. one permission group!'}
+    $Lang->{'A category needs at least one permission group!'}
         = 'یک دسته‌بندی اقلا نیاز به دسترسی به یک گروه را دارد!';
     $Lang->{'Will be shown as comment in Explorer.'} = 'در Explorer به صورت یک متن توضیحی نمایش داده خواهند شد.';
 

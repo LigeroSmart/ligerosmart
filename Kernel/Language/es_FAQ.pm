@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/es_FAQ.pm - the spanish translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.11 2009-12-09 10:24:11 ub Exp $
+# $Id: es_FAQ.pm,v 1.12 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -58,7 +58,7 @@ sub Data {
         = 'No se puede acceder a ninguna categoría. Para crear un articulo usted debe tener acceso a mínimo una categoría. Por favor revise sus permisos de grupo/categoría en el -menú categoría-!';
     $Lang->{'Agent groups which can access this category.'}
         = 'Los grupos agentes pueden acceder a esta categoría';
-    $Lang->{'A category needs min. one permission group!'}
+    $Lang->{'A category needs at least one permission group!'}
         = 'Una categoria necesita minimo un permiso de grupo!';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Seran mostrados como comentarios en Explorer.';
 

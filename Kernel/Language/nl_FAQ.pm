@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/nl_FAQ.pm - the Dutch translation of FAQ
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_FAQ.pm,v 1.3 2009-12-09 10:24:11 ub Exp $
+# $Id: nl_FAQ.pm,v 1.4 2010-11-08 15:41:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -60,7 +60,7 @@ sub Data {
         = 'Geen categorie toegankelijk. Om een artikel te kunnen aanmaken moet u toegan hebben tot tenminste een categorie. Controleer uw groep/categorie rechten';
     $Lang->{'Agent groups which can access this category.'}
         = 'Behandelgroepen met toegang tot deze categorie';
-    $Lang->{'A category needs min. one permission group!'}
+    $Lang->{'A category needs at least one permission group!'}
         = 'Voeg tenminste een permissiegroep toe per categorie.';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Wordt in webinterface getoond';
 
