@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.14 2010-11-06 15:58:31 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.15 2010-11-08 14:35:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,10 +87,15 @@ sub Run {
         );
 
         # set validation class
-        for my $ValidationObject ( qw(Name Comment PermissionGroups) ){
-            if ( !$GetParam{ "$ValidationObject" . 'RequiredClass' } ) {
-                $GetParam{ "$ValidationObject" . 'RequiredClass' } = "Validate_Required ";
+        for my $ValidationObject (qw(Name Comment)) {
+            if ( !$GetParam{ $ValidationObject . 'RequiredClass' } ) {
+                $GetParam{ $ValidationObject . 'RequiredClass' } = 'Validate_Required ';
             }
+        }
+
+        # set validation class
+        if ( !$GetParam{PermissionGroupsRequiredClass} ) {
+            $GetParam{PermissionGroupsRequiredClass} = 'Validate_RequiredDropdown ';
         }
 
         # set default "No Error" to field Name as server error string
@@ -127,8 +132,15 @@ sub Run {
         # check for name
         my $ServerError;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
-            if ( !$GetParam{$ParamName} ){
-                $GetParam{ "$ParamName" . 'RequiredClass'} = 'Validate_Required ServerError';
+            if ( !$GetParam{$ParamName} ) {
+
+                # add validation class and server error error class
+                $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_Required ServerError';
+
+                # add validation class and server error error class
+                if ( $ParamName eq 'PermissionGroups' ) {
+                    $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_RequiredDropdown ServerError';
+                }
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
@@ -223,10 +235,15 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Add' ) {
 
         # set validation class
-        for my $ValidationObject (qw(Name Comment PermissionGroups)) {
-            if ( !$GetParam{ "$ValidationObject" . 'RequiredClass' } ) {
-                $GetParam{ "$ValidationObject" . 'RequiredClass' } = "Validate_Required ";
+        for my $ValidationObject (qw(Name Comment)) {
+            if ( !$GetParam{ $ValidationObject . 'RequiredClass' } ) {
+                $GetParam{ $ValidationObject . 'RequiredClass' } = 'Validate_Required ';
             }
+        }
+
+        # set validation class
+        if ( !$GetParam{PermissionGroupsRequiredClass} ) {
+            $GetParam{PermissionGroupsRequiredClass} = 'Validate_RequiredDropdown ';
         }
 
         # set default "No Error"" to field Name as server error string
@@ -260,11 +277,18 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # check for name
+        # check for required parameters
         my $ServerError;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
-            if ( !$GetParam{$ParamName} ){
-                $GetParam{ "$ParamName" . 'RequiredClass'} = 'Validate_Required ServerError';
+            if ( !$GetParam{$ParamName} ) {
+
+                # add validation class and server error error class
+                $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_Required ServerError';
+
+                # add validation class and server error error class
+                if ( $ParamName eq 'PermissionGroups' ) {
+                    $GetParam{ $ParamName . 'RequiredClass'} = 'Validate_RequiredDropdown ServerError';
+                }
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
