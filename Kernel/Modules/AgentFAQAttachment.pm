@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAttachment.pm - to get the attachments
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAttachment.pm,v 1.1 2010-11-06 17:52:04 cr Exp $
+# $Id: AgentFAQAttachment.pm,v 1.2 2010-11-08 22:23:39 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FileTemp;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,7 +35,7 @@ sub new {
     }
 
     # create needed objects
-    $Self->{FAQObject}  = Kernel::System::FAQ->new(%Param);
+    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
 
     return $Self;
 }
@@ -53,10 +53,10 @@ sub Run {
         || 0;
 
     # check params
-    for my $ParamName (qw(FileID ItemID)){
-        if (!$GetParam{$ParamName}){
+    for my $ParamName (qw(FileID ItemID)) {
+        if ( !$GetParam{$ParamName} ) {
             $Self->{LogObject}->Log(
-                Message  => 'Need $ParamName!',
+                Message  => "Need $ParamName!",
                 Priority => 'error',
             );
             return $Self->{LayoutObject}->ErrorScreen();
@@ -146,6 +146,43 @@ sub Run {
             Content     => $Content,
             Type        => 'inline'
         );
+    }
+
+    # view attachment for html email
+    if ( $Self->{Subaction} eq 'HTMLView' ) {
+
+        # set download type to inline
+        $Self->{ConfigObject}->Set( Key => 'AttachmentDownloadType', Value => 'inline' );
+
+        # just return for non-html attachment (e. g. images)
+        if ( $Data{ContentType} !~ /text\/html/i ) {
+            return $Self->{LayoutObject}->Attachment(%Data);
+        }
+
+        # set filename for inline viewing
+        $Data{Filename} = "FAQ-ItemID-$FAQData{ItemID}.html";
+
+        # generate base url
+        my $URL = 'Action=AgentFAQAttachment;Subaction=HTMLView'
+            . ";itemID=$FAQData{ItemID};FileID=";
+
+        # replace links to inline images in html content
+        my %AtmBox = $Self->{FAQObject}->ArticleAttachmentIndex(
+            ItemID => $FAQData{ItemID},
+            UserID => $Self->{UserID},
+        );
+
+        # reformat rich text document to have correct charset and links to
+        # inline documents
+        %Data = $Self->{LayoutObject}->RichTextDocumentServe(
+            Data              => \%Data,
+            URL               => $URL,
+            Attachments       => \%AtmBox,
+            LoadInlineContent => $Self->{LoadInlineContent},
+        );
+
+        # return html attachment
+        return $Self->{LayoutObject}->Attachment(%Data);
     }
 
     # download it AttachmentDownloadType is configured
