@@ -1,13 +1,13 @@
 # --
 # Kernel/Language/fa_FAQ.pm - the persian (farsi) translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Translated/Updated into Persian (Farsi) by Afshar Mohebbi <afshar.mohebbi at gmail.com>
+# Copyright (C) 2001-2010 Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_FAQ.pm,v 1.5 2010-11-08 15:41:12 ub Exp $
+# $Id: fa_FAQ.pm,v 1.6 2010-11-08 18:58:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Language::fa_FAQ;
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
