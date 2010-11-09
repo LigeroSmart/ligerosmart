@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.1 2010-11-09 00:06:32 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.2 2010-11-09 17:23:51 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -207,19 +207,11 @@ $Data{"FAQVoting"}
 
         <div class="ArticleFAQContent">
 
-<!-- dtl:block:FAQContentBodyPlain -->
+<!-- dtl:block:FAQContentBody -->
             <div class="message">
                 $Data{"Body"}
             </div>
-<!-- dtl:block:FAQContentBodyPlain -->
-
-<!-- dtl:block:FAQContentBodyHTML -->
-            <div class="message">
-# execute IFrame JS asynchronously. Otherwise it could happen before our API was loaded
-# this fuctionality is not yet implemented in the pm
-                <iframe width="100%" frameborder="0" id="Iframe$QData{"ItemID"}" onload="window.setTimeout( function (){ if (typeof Core === 'object' && typeof Core.Agent === 'object' && typeof Core.Agent.TicketZoom === 'object') { Core.Agent.TicketZoom.IframeAutoHeight($('#Iframe$QData{"ItemID"}')); } }, 500);" src="$Env{"Baselink"}Action=AgentFAQAttachment;Subaction=HTMLView;ItemID=$QData{"ItemID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
-            </div>
-<!-- dtl:block:FAQContentBodyHTML -->
+<!-- dtl:block:FAQContentBody -->
 
         </div>
     </div>
