@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.1 2010-11-09 00:07:00 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.2 2010-11-09 17:25:06 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -135,28 +135,41 @@ sub Run {
 
         # set the vote if any
         elsif ( defined $GetParam{Rate} ) {
-            $Self->{FAQObject}->VoteAdd(
-                CreatedBy => $Self->{UserID},
-                ItemID    => $GetParam{ItemID},
-                IP        => $ENV{'REMOTE_ADDR'},
-                Interface => $Self->{Interface}{StateID},
-                Rate      => $GetParam{Rate},
-                UserID    => $Self->{UserID},
-            );
 
-            # do not show the voting form
-            $AlreadyVoted = 1;
+            # get rates config
+            my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
+            my $Rate        = $GetParam{Rate};
 
-            # refresh FAQ item data
-            %FAQData = $Self->{FAQObject}->FAQGet(
-                ItemID => $GetParam{ItemID},
-                UserID => $Self->{UserID},
-            );
-            if ( !%FAQData ) {
-                return $Self->{LayoutObject}->ErrorScreen();
+            # send error if rate is not defined in config
+            if ( !$VotingRates->{$Rate} ) {
+                $Self->{LayoutObject}->FatalError( Message => "The vote rate is not defined!" );
             }
 
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'Thanks for your vote!' );
+            # otherwise add the vote
+            else {
+                $Self->{FAQObject}->VoteAdd(
+                    CreatedBy => $Self->{UserID},
+                    ItemID    => $GetParam{ItemID},
+                    IP        => $ENV{'REMOTE_ADDR'},
+                    Interface => $Self->{Interface}{StateID},
+                    Rate      => $GetParam{Rate},
+                    UserID    => $Self->{UserID},
+                );
+
+                # do not show the voting form
+                $AlreadyVoted = 1;
+
+                # refresh FAQ item data
+                %FAQData = $Self->{FAQObject}->FAQGet(
+                    ItemID => $GetParam{ItemID},
+                    UserID => $Self->{UserID},
+                );
+                if ( !%FAQData ) {
+                    return $Self->{LayoutObject}->ErrorScreen();
+                }
+
+                $Output .= $Self->{LayoutObject}->Notify( Info => 'Thanks for your vote!' );
+            }
         }
 
         # user is able to vote but no rate has been selected
@@ -424,7 +437,7 @@ sub _FAQContent {
             },
         );
         $Self->{LayoutObject}->Block(
-            Name => 'FAQContentBodyPlain',
+            Name => 'FAQContentBody',
             Data => {
                 Body => $FAQData{$Key} || '',
             },
@@ -450,18 +463,14 @@ sub _FAQVoting {
         Data => {%FAQData},
     );
 
-    my $FieldCount;
-
     # get Voting rates setting
     my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
     for my $key ( sort { $a <=> $b } keys( %{$VotingRates} ) ) {
-        $FieldCount++;
 
         # create data strucure for output
         my %Data = (
-            Value      => $key,
-            Title      => $VotingRates->{$key},
-            FieldCount => $FieldCount,
+            Value => $key,
+            Title => $VotingRates->{$key},
         );
 
         # output vote rating row block
