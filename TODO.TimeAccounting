@@ -1,8 +1,8 @@
 # --
 # TODO - todo list of TimeAccounting
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TODO.TimeAccounting,v 1.24 2009-03-23 08:26:15 tr Exp $
+# $Id: TODO.TimeAccounting,v 1.25 2010-11-09 19:11:51 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -57,9 +57,22 @@ Performance
 3.0
 -
 
-misc (not scheduled yet - nobody is working on it yet)
--
+misc (not scheduled yet - nobody is working on it yet).
+- First beta release on Dec. 15th, 2010.
 
-ideas (just ideas - nobody is working on it)
 
-- include working hours per week into the overview
+
+ideas for improvement
+
+- Include working hours per week into the overview.
+- Add a label to the day, month and year.
+- Use always the same format for the date.
+- Move the check boxes from the bottom the top (on sick time leave... ).
+- Add the days without entry on a drop-down list, instead of in a continuous row.
+- Show the most selected options at the beginning of the list in the task drop down list (like in the project).
+- Change the calendar to get the data with jQuery, instead of opening a pop-up.
+- Load the form for the days without entry with ajax.
+- Make the delete screen a confirmation dialog (like in ITSM).
+- When a lot of days have missing entries, it is not possible to access the system until you add the entry
+  for all the days. Add a log out or close button to this screen, to exit the system in a proper way, without
+  using the X button of the browser.
