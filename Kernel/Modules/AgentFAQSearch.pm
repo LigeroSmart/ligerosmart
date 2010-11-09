@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.11 2010-11-05 13:35:59 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.12 2010-11-09 16:19:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -58,14 +58,14 @@ sub Run {
         UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => [ 'internal', 'external', 'public' ],
+        Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
 
     my $Output;
 
     # get confid data
-    $Self->{StartHit} = int ($Self->{ ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
+    $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
     $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
@@ -129,7 +129,7 @@ sub Run {
     else {
 
         # get scalar search params
-        for my $ParamName ( qw( Number Title Keyword Fulltext ResultForm ) ) {
+        for my $ParamName (qw( Number Title Keyword Fulltext ResultForm )) {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             # remove whitespace on the start and end
@@ -140,7 +140,7 @@ sub Run {
         }
 
         # get array search params
-        for my $SearchParam ( qw( CategoryIDs LanguageIDs ) ) {
+        for my $SearchParam (qw( CategoryIDs LanguageIDs )) {
             my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
@@ -206,7 +206,7 @@ sub Run {
         # prepare fulltext search
         if ( $GetParam{Fulltext} ) {
             $GetParam{ContentSearch} = 'OR';
-            $GetParam{What} = $GetParam{Fulltext};
+            $GetParam{What}          = $GetParam{Fulltext};
         }
 
         # perform FAQ search
@@ -215,12 +215,12 @@ sub Run {
             OrderByDirection    => [ $Self->{OrderBy} ],
             Limit               => $Self->{SearchLimit},
             UserID              => $Self->{UserID},
-            States              => $Self->{InterfaceStates  },
+            States              => $Self->{InterfaceStates},
             Interface           => $Self->{Interface},
             ContentSearchPrefix => '*',
             ContentSearchSuffix => '*',
             %GetParam,
-            UserID              => $Self->{UserID},
+            UserID => $Self->{UserID},
         );
 
         # CSV output
@@ -231,7 +231,7 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID => $FAQID,
+                    FAQID  => $FAQID,
                     UserID => $Self->{UserID},
                 );
 
@@ -322,7 +322,7 @@ sub Run {
                     # add table block
                     $Self->{LayoutObject}->Block(
                         Name => 'Record',
-                        Data => { %FAQData },
+                        Data => {%FAQData},
                     );
                 }
             }
@@ -526,7 +526,7 @@ sub Run {
 
             $Output .= $Self->{LayoutObject}->FAQListShow(
                 FAQIDs => \@ViewableFAQIDs,
-                Total     => scalar @ViewableFAQIDs,
+                Total  => scalar @ViewableFAQIDs,
 
                 View => $Self->{View},
 
@@ -676,43 +676,20 @@ sub _MaskForm {
         SelectedID => $GetParam{LanguageIDs} || [],
     );
 
-    # get categories where user has rights
-    my $UserCategories = $Self->{FAQObject}->GetUserCategories(
+    # get categories (with category long names) where user has rights
+    my $UserCategoriesLongNames = $Self->{FAQObject}->GetUserCategoriesLongNames(
         Type   => 'rw',
         UserID => $Self->{UserID},
     );
 
-    # get all categories with their long names
-    my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
-        Valid  => 0,
-        UserID => $Self->{UserID},
-    );
-
-    # to store the user categories with their long names
-    my %UserCategoriesLongNames;
-
-    # get the long names of the categories where user has rights
-    PARENTID:
-    for my $ParentID ( keys %{$UserCategories} ) {
-
-        next PARENTID if !$UserCategories->{$ParentID};
-        next PARENTID if ref $UserCategories->{$ParentID} ne 'HASH';
-        next PARENTID if !%{ $UserCategories->{$ParentID} };
-
-        for my $CategoryID ( keys %{ $UserCategories->{$ParentID} } ) {
-            $UserCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
-        }
-    }
-
     # build the catogory selection
     $Param{CategoriesSelectionString} = $Self->{LayoutObject}->BuildSelection(
-        Data           => \%UserCategoriesLongNames,
-        Name           => 'CategoryIDs',
-        SelectedIDs    => $GetParam{CategoryIDs} || [],
-        Size           => 5,
-        PossibleNone   => 1,
-        Translation    => 0,
-        Multiple       => 1,
+        Data        => $UserCategoriesLongNames,
+        Name        => 'CategoryIDs',
+        SelectedIDs => $GetParam{CategoryIDs} || [],
+        Size        => 5,
+        Translation => 0,
+        Multiple    => 1,
     );
 
     my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(
@@ -747,31 +724,31 @@ sub _MaskForm {
         },
     );
 
-        # show attributes
-        my $AttributeIsUsed = 0;
-        for my $Key ( sort keys %GetParam ) {
-            next if !$Key;
-            next if !defined $GetParam{$Key};
-            next if $GetParam{$Key} eq '';
+    # show attributes
+    my $AttributeIsUsed = 0;
+    for my $Key ( sort keys %GetParam ) {
+        next if !$Key;
+        next if !defined $GetParam{$Key};
+        next if $GetParam{$Key} eq '';
 
-            $AttributeIsUsed = 1;
-            $Self->{LayoutObject}->Block(
-                Name => 'SearchAJAXShow',
-                Data => {
-                    Attribute => $Key,
-                },
-            );
-        }
+        $AttributeIsUsed = 1;
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchAJAXShow',
+            Data => {
+                Attribute => $Key,
+            },
+        );
+    }
 
-        # if no attribute is shown, show fulltext search
-        if ( !$AttributeIsUsed ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'SearchAJAXShow',
-                Data => {
-                    Attribute => 'Fulltext',
-                },
-            );
-        }
+    # if no attribute is shown, show fulltext search
+    if ( !$AttributeIsUsed ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchAJAXShow',
+            Data => {
+                Attribute => 'Fulltext',
+            },
+        );
+    }
 
     # build output
     my $Output = $Self->{LayoutObject}->Output(

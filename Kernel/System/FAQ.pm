@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.112 2010-11-08 22:16:00 cr Exp $
+# $Id: FAQ.pm,v 1.113 2010-11-09 16:19:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.112 $) [1];
+$VERSION = qw($Revision: 1.113 $) [1];
 
 =head1 NAME
 
@@ -3019,6 +3019,62 @@ sub GetUserCategories {
     return $UserCategories;
 }
 
+=item GetUserCategoriesLongNames()
+
+get user category-groups (show category long names)
+
+    my $UserCategoryGroupHashRef = $FAQObject->GetUserCategoriesLongNames(
+        Type   => 'rw',
+        UserID => 1,
+    );
+
+=cut
+
+sub GetUserCategoriesLongNames {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get categories where user has rights
+    my $UserCategories = $Self->GetUserCategories(
+        Type   => $Param{Type},
+        UserID => $Param{UserID},
+    );
+
+    # get all categories with their long names
+    my $CategoryTree = $Self->CategoryTreeList(
+        Valid  => 1,
+        UserID => $Param{UserID},
+    );
+
+    # to store the user categories with their long names
+    my %UserCategoriesLongNames;
+
+    # get the long names of the categories where user has rights
+    PARENTID:
+    for my $ParentID ( keys %{$UserCategories} ) {
+
+        next PARENTID if !$UserCategories->{$ParentID};
+        next PARENTID if ref $UserCategories->{$ParentID} ne 'HASH';
+        next PARENTID if !%{ $UserCategories->{$ParentID} };
+
+        for my $CategoryID ( keys %{ $UserCategories->{$ParentID} } ) {
+            $UserCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
+        }
+    }
+
+    return \%UserCategoriesLongNames;
+}
+
 =item GetCustomerCategories()
 
 get customer user categories
@@ -3896,6 +3952,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.112 $ $Date: 2010-11-08 22:16:00 $
+$Revision: 1.113 $ $Date: 2010-11-09 16:19:11 $
 
 =cut
