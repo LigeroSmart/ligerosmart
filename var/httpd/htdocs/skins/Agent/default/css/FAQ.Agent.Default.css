@@ -1,0 +1,62 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Default Settings
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Flag
+ */
+
+fieldset.TableLike div.Value .Flag {
+    float: left;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+ul.FAQFlag {
+    margin-top: 5px;
+}
+
+ul.FAQFlag div.Value .Flag {
+    float: left;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+.RTL fieldset.TableLike div.Value .Flag {
+    float: right;
+    margin-left: 5px;
+}
+
+.Flag span.FAQgray {
+    background-color:#cdcdcd;
+}
+
+.Flag span.FAQgreen {
+    background-color: #8bef4d;
+}
+
+.Flag span.FAQyellow {
+    background-color: #ffdd50;
+}
+
+.Flag span.FAQorange {
+    background-color: #ff9922;
+}
+
+.Flag span.FAQred {
+    background-color:#ff505e;
+}
+
+}
+
+

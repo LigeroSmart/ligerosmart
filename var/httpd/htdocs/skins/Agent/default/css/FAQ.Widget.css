@@ -1,0 +1,29 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Widgets
+ */
+
+@media screen,projection,tv,handheld {
+
+
+/**
+ * @subsection  WidgetBox
+ */
+
+.WidgetBox > .FAQContent {
+    background: url(../img/gradient_lightdark.png) repeat-x;
+    min-height: 100px;
+    border-bottom: 1px solid #C6C5C4;
+}
+.WidgetBox > .FAQVoting {
+    background: url(../img/gradient_lightdark.png) repeat-x;
+    min-height: 100px;
+}
+}
