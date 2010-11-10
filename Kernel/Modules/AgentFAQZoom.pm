@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.3 2010-11-10 11:54:38 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.4 2010-11-10 13:18:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -419,10 +419,6 @@ sub _FAQContent {
         }
     }
     for my $Key ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields ) {
-        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Key}->{Show},
-            UserID => $Self->{UserID},
-        );
 
         # show yes /no
         $Self->{LayoutObject}->Block(
