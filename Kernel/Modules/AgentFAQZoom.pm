@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.2 2010-11-09 17:25:06 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.3 2010-11-10 11:54:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,10 +49,6 @@ sub new {
     # set default interfase parameters
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
         Name   => 'internal',
-        UserID => $Self->{UserID},
-    );
-    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
 
@@ -107,7 +103,7 @@ sub Run {
     my $VoteData = $Self->{FAQObject}->VoteGet(
         CreateBy  => $Self->{UserID},
         ItemID    => $FAQData{ItemID},
-        Interface => $Self->{Interface}{StateID},
+        Interface => $Self->{Interface}->{StateID},
         IP        => $ENV{'REMOTE_ADDR'},
         UserID    => $Self->{UserID},
     );
@@ -151,7 +147,7 @@ sub Run {
                     CreatedBy => $Self->{UserID},
                     ItemID    => $GetParam{ItemID},
                     IP        => $ENV{'REMOTE_ADDR'},
-                    Interface => $Self->{Interface}{StateID},
+                    Interface => $Self->{Interface}->{StateID},
                     Rate      => $GetParam{Rate},
                     UserID    => $Self->{UserID},
                 );
@@ -178,7 +174,7 @@ sub Run {
         }
     }
 
-    #prepare fields data
+    # prepare fields data
     KEY:
     for my $Key (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next KEY if !$FAQData{$Key};
@@ -204,7 +200,7 @@ sub Run {
     );
     $Param{CreatedByLogin} = $UserInfo{UserLogin};
 
-    #get user infor (ChangedBy)
+    # get user info (ChangedBy)
     %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $FAQData{ChangedBy}
     );
@@ -240,7 +236,7 @@ sub Run {
         },
     );
 
-    # run config item menu modules
+    # run faq menu modules
     if ( ref $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
         my %Menus   = %{ $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') };
         my $Counter = 0;
@@ -257,6 +253,8 @@ sub Run {
                 if ( $Menus{$Menu}->{Target} ) {
 
                     if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+
+                        # TODO: Check if TicketAction is correct here!
                         $Menus{$Menu}->{Class} = 'AsPopup PopupType_TicketAction';
                     }
                     elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
@@ -391,7 +389,7 @@ sub Run {
     # log access to this FAQ item
     $Self->{FAQObject}->FAQLogAdd(
         ItemID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
-        Interface => $Self->{Interface}{Name},
+        Interface => $Self->{Interface}->{Name},
         UserID    => $Self->{UserID},
     );
 
@@ -420,9 +418,9 @@ sub _FAQContent {
             $ItemFields{ "Field" . $Count } = $ItemConfig;
         }
     }
-    for my $Key ( sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields) ) ) {
+    for my $Key ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields ) {
         my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Key}{Show},
+            Name   => $ItemFields{$Key}->{Show},
             UserID => $Self->{UserID},
         );
 
@@ -465,17 +463,17 @@ sub _FAQVoting {
 
     # get Voting rates setting
     my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
-    for my $key ( sort { $a <=> $b } keys( %{$VotingRates} ) ) {
+    for my $Key ( sort { $a <=> $b } keys %{$VotingRates} ) {
 
         # create data strucure for output
         my %Data = (
-            Value => $key,
-            Title => $VotingRates->{$key},
+            Value => $Key,
+            Title => $VotingRates->{$Key},
         );
 
         # output vote rating row block
         $Self->{LayoutObject}->Block(
-            Name => "FAQVotingRateRow",
+            Name => 'FAQVotingRateRow',
             Data => {%Data},
         );
     }
@@ -526,23 +524,20 @@ sub _FAQRatingStars {
     my $VoteResult = $Param{VoteResult};
     my $Votes      = $Param{Votes};
 
-    # get stars by mutiply by 100 and divide by 5
+    # get stars by mutiply by 5 and divide by 100
     # 100 because Vote result is a %
     # 5 because we have only 5 stars
-    my $StarCounter = $VoteResult * .05;
-    if ( $StarCounter lt 5 ) {
+    my $StarCounter = int( $VoteResult * 0.05 );
+    if ( $StarCounter < 5 ) {
 
         # add 1 because lowest value should be 1
         $StarCounter++;
     }
 
     # the number of stars can't be grater that 5
-    elsif ( $StarCounter gt 5 ) {
+    elsif ( $StarCounter > 5 ) {
         $StarCounter = 5;
     }
-
-    # get the integer part
-    $StarCounter = int $StarCounter;
 
     # do not output any star if this FAQ has been not voted
     if ( $Votes eq '0' ) {
