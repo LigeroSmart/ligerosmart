@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.18 2010-11-11 15:33:53 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.19 2010-11-11 16:00:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -48,7 +48,7 @@ in F<Kernel/Output/HTML/LayoutTicket.pm>.
 
     my $Output = $LayoutObject->FAQListShow(
         FAQIDs  => $FAQIDsRef,                            # total list of FAQIDs, that can be listed
-        Total      => scalar @{ $FAQIDsRef },          # total number of list items, in this case
+        Total      => scalar @{ $FAQIDsRef },             # total number of list items, in this case
         View       => $Self->{View},                      # optional, the default value is 'Small'
         Filter     => 'All',
         Filters    => \%NavBarFilter,
@@ -58,7 +58,7 @@ in F<Kernel/Output/HTML/LayoutTicket.pm>.
         Env        => $Self,
         LinkPage   => $LinkPage,
         LinkSort   => $LinkSort,
-        Frontend   => 'Agent',                           # optional (Agent|Customer|Public), default: Agent, indicates from which frontend this function was called
+        Frontend   => 'Agent',                            # optional (Agent|Customer|Public), default: Agent, indicates from which frontend this function was called
     );
 
 =cut
