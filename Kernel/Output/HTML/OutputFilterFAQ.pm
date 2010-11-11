@@ -1,12 +1,12 @@
 # --
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.5 2009-07-21 14:57:10 ub Exp $
+# $Id: OutputFilterFAQ.pm,v 1.6 2010-11-11 15:33:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Output::HTML::OutputFilterFAQ;
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.5 $';
+$VERSION = '$Revision: 1.6 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -22,7 +22,7 @@ sub new {
 
     # allocate new hash for object
     my $Self = {};
-    bless ($Self, $Type);
+    bless( $Self, $Type );
 
     # get needed objects
     for my $Object (qw(ConfigObject MainObject LogObject LayoutObject)) {
@@ -68,20 +68,20 @@ function FAQSubmit() {
 </script>
 END
 
-    ${$Param{Data}} =~ s{ $Search }{$Replace}ixms;
+    ${ $Param{Data} } =~ s{ $Search }{$Replace}ixms;
 
     # add FAQ link
     my $Search1 = '<!-- [ ] dtl:block:SpellCheck [ ] --> .+?';
     my $Search2 = '</td>';
-    $Replace    = <<'END';
+    $Replace = <<'END';
     $Env{"Box0"}<a href="" onclick="FAQSubmit(); return false;" onmouseover="window.status='$JSText{"FAQ"}'; return true;" onmouseout="window.status='';"><img border="0" src="$Env{"Images"}help-small.png">$Text{"FAQ"}</a>$Env{"Box1"}
                   </td>
 END
 
-    ${$Param{Data}} =~ s{ ($Search1) $Search2 }{$1$Replace}ixms;
+    ${ $Param{Data} } =~ s{ ($Search1) $Search2 }{$1$Replace}ixms;
 
     # add FAQ form
-    $Search = '<form [^<>]+ target="spelling"> .+? </form>';
+    $Search  = '<form [^<>]+ target="spelling"> .+? </form>';
     $Replace = <<'END';
 
       <form action="$Env{"CGIHandle"}" method="post" name="faq" target="faq">
@@ -93,7 +93,7 @@ END
       </form>
 END
 
-    ${$Param{Data}} =~ s{ ($Search) }{$1$Replace}ixms;
+    ${ $Param{Data} } =~ s{ ($Search) }{$1$Replace}ixms;
 
     return 1;
 }

@@ -2,11 +2,11 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.1 2010-11-11 02:38:58 cr Exp $
+# $Id: CustomerFAQZoom.pm,v 1.2 2010-11-11 15:33:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::CustomerFAQZoom;
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

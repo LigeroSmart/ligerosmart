@@ -2,11 +2,11 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.53 2010-11-02 13:07:06 cr Exp $
+# $Id: FAQ.pm,v 1.54 2010-11-11 15:33:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::FAQ;
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,8 +69,8 @@ sub GetExplorer {
 
     # manage parameters
     $GetParam{CategoryID} = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
-    $GetParam{OrderBy}      = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )      || 'Title';
-    $GetParam{SortBy}       = $Self->{ParamObject}->GetParam( Param => 'SortBy' )       || 'up';
+    $GetParam{OrderBy}    = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )    || 'Title';
+    $GetParam{SortBy}     = $Self->{ParamObject}->GetParam( Param => 'SortBy' )     || 'up';
     for (@Params) {
         if ( !$GetParam{$_} && !( $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) ) )
         {
@@ -131,8 +131,8 @@ sub GetExplorer {
     if ( $Param{Mode} && $Param{Mode} eq 'Customer' ) {
         $Self->_GetExplorerCategoryList(
             CategoryID   => $GetParam{CategoryID},
-            OrderBy        => 'Name',
-            SortBy         => 'up',
+            OrderBy      => 'Name',
+            SortBy       => 'up',
             Mode         => $Param{Mode},
             CustomerUser => $Param{CustomerUser},
         );
@@ -140,8 +140,8 @@ sub GetExplorer {
     else {
         $Self->_GetExplorerCategoryList(
             CategoryID => $GetParam{CategoryID},
-            OrderBy      => 'Name',
-            SortBy       => 'up',
+            OrderBy    => 'Name',
+            SortBy     => 'up',
             Mode       => $Param{Mode},
         );
     }
@@ -149,8 +149,8 @@ sub GetExplorer {
     # explorer item list
     $Self->_GetExplorerItemList(
         CategoryID => $GetParam{CategoryID},
-        OrderBy      => $GetParam{OrderBy} || 'Title',
-        SortBy       => $GetParam{SortBy} || 'up',
+        OrderBy    => $GetParam{OrderBy} || 'Title',
+        SortBy     => $GetParam{SortBy} || 'up',
     );
 
     # quicksearch
@@ -185,7 +185,7 @@ sub GetExplorer {
     my %ShowTop10 = %{ $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show') };
     if ( exists( $ShowTop10{ $Self->{Interface}{Name} } ) ) {
         $Self->_GetExplorerTop10Items(
-            Mode => $Param{Mode},
+            Mode         => $Param{Mode},
             CategoryID   => $GetParam{CategoryID},
             CustomerUser => $Param{CustomerUser},
         );
@@ -305,8 +305,8 @@ sub _GetExplorerItemList {
     my @ItemIDs = $Self->{FAQObject}->FAQSearch(
         CategoryIDs => [ $Param{CategoryID} ],
         States      => $Self->{InterfaceStates},
-        OrderBy       => $Param{OrderBy},
-        SortBy        => $Param{SortBy},
+        OrderBy     => $Param{OrderBy},
+        SortBy      => $Param{SortBy},
         Interface   => $Self->{Interface}{Name},
         Limit       => 300,
     );
@@ -314,7 +314,7 @@ sub _GetExplorerItemList {
     if (@ItemIDs) {
         $Self->{LayoutObject}->Block(
             Name => 'ExplorerFAQItemList',
-            Data => { %Param },
+            Data => {%Param},
         );
         for (@ItemIDs) {
             my %Frontend = ();
@@ -329,7 +329,8 @@ sub _GetExplorerItemList {
             }
             $Frontend{CssRow}                = $CssRow;
             $Frontend{CssColumnVotingResult} = 'color:'
-                . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $Data{VoteResult} ) . ';';
+                . $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $Data{VoteResult} )
+                . ';';
 
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerFAQItemRow',
@@ -378,8 +379,8 @@ sub _GetExplorerLastChangeItems {
                         Mode         => $Param{Mode},
                         CustomerUser => $Param{CustomerUser},
                         UserID       => $Self->{UserID},
-                    )
-                };
+                        )
+                    };
                 push( @CategoryIDs, @SubCategoryIDs );
             }
             $Self->{LayoutObject}->Block(
@@ -395,8 +396,8 @@ sub _GetExplorerLastChangeItems {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
                     States      => $Self->{InterfaceStates},
-                    OrderBy       => 'Changed',
-                    SortBy        => 'down',
+                    OrderBy     => 'Changed',
+                    SortBy      => 'down',
                     Interface   => $Self->{Interface}{Name},
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
                 );
@@ -408,8 +409,8 @@ sub _GetExplorerLastChangeItems {
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
                 States    => $Self->{InterfaceStates},
-                OrderBy     => 'Changed',
-                SortBy      => 'down',
+                OrderBy   => 'Changed',
+                SortBy    => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
             );
@@ -478,8 +479,8 @@ sub _GetExplorerLastCreateItems {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
                     States      => $Self->{InterfaceStates},
-                    OrderBy       => 'Created',
-                    SortBy        => 'down',
+                    OrderBy     => 'Created',
+                    SortBy      => 'down',
                     Interface   => $Self->{Interface}{Name},
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
                 );
@@ -491,8 +492,8 @@ sub _GetExplorerLastCreateItems {
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
                 States    => $Self->{InterfaceStates},
-                OrderBy     => 'Created',
-                SortBy      => 'down',
+                OrderBy   => 'Created',
+                SortBy    => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
             );
@@ -503,7 +504,7 @@ sub _GetExplorerLastCreateItems {
             my %Data = $Self->{FAQObject}->FAQGet( ItemID => $_ );
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreateFAQItemRow',
-                Data => { %Data },
+                Data => {%Data},
             );
         }
         return 1;
@@ -571,24 +572,24 @@ sub _GetExplorerTop10Items {
 
                 # get the top 10 articles for categories with at least ro permissions
                 $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
-                    Interface => $Self->{Interface}{Name},
+                    Interface   => $Self->{Interface}{Name},
                     CategoryIDs => \@CategoryIDs,
-                    Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+                    Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
                 );
             }
         }
         else {
 
             # get the top 10 articles
-               $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
+            $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
                 Interface => $Self->{Interface}{Name},
-                Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+                Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
             );
         }
 
         # show each top 10 entry
         my $Number;
-        for my $ItemIDRef ( @{ $Top10ItemIDsRef } ) {
+        for my $ItemIDRef ( @{$Top10ItemIDsRef} ) {
             $Number++;
             my %Data = $Self->{FAQObject}->FAQGet( ItemID => $ItemIDRef->{ItemID} );
             $Self->{LayoutObject}->Block(
@@ -656,7 +657,8 @@ sub GetItemView {
 
         # rewrite links to embedded images for customer and public interface
         if ( $Self->{Interface}{Name} eq 'external' ) {
-            $ItemData{$Key} =~ s{ index[.]pl [?] Action=AgentFAQ }{customer.pl?Action=CustomerFAQ}gxms;
+            $ItemData{$Key}
+                =~ s{ index[.]pl [?] Action=AgentFAQ }{customer.pl?Action=CustomerFAQ}gxms;
         }
         elsif ( $Self->{Interface}{Name} eq 'public' ) {
             $ItemData{$Key} =~ s{ index[.]pl [?] Action=AgentFAQ }{public.pl?Action=PublicFAQ}gxms;
@@ -718,7 +720,7 @@ sub GetItemView {
         $Frontend{Approval} = $ItemData{Approved} ? 'Yes' : 'No';
         $Self->{LayoutObject}->Block(
             Name => 'ViewApproval',
-            Data => { %Frontend },
+            Data => {%Frontend},
         );
     }
 
@@ -732,7 +734,7 @@ sub GetItemView {
 
     # item attachment
     my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
-        ItemID => $GetParam{ItemID},
+        ItemID     => $GetParam{ItemID},
         ShowInline => 0,
     );
     if (@AttachmentIndex) {
@@ -769,7 +771,7 @@ sub GetItemView {
         $ItemData{Keywords} =~ s/;/ /g;
 
         my @Keywords = split /\s+/, $ItemData{Keywords};
-        for my $Keyword ( @Keywords ) {
+        for my $Keyword (@Keywords) {
             $Self->{LayoutObject}->Block(
                 Name => 'Keywords',
                 Data => {
@@ -881,7 +883,7 @@ sub GetItemSmallView {
         $ItemData{Keywords} =~ s/;/ /g;
 
         my @Keywords = split /\s+/, $ItemData{Keywords};
-        for my $Keyword ( @Keywords ) {
+        for my $Keyword (@Keywords) {
             $Self->{LayoutObject}->Block(
                 Name => 'Keywords',
                 Data => {
@@ -962,12 +964,16 @@ sub GetItemPrint {
     );
 
     # approval state
-    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && $Self->{Interface}{Name} eq 'internal' ) {
+    if (
+        $Self->{ConfigObject}->Get('FAQ::ApprovalRequired')
+        && $Self->{Interface}{Name} eq 'internal'
+        )
+    {
         my %Data;
         $Data{Approval} = $ItemData{Approved} ? 'Yes' : 'No';
         $Self->{LayoutObject}->Block(
             Name => 'PrintApproval',
-            Data => { %Data },
+            Data => {%Data},
         );
     }
 
@@ -1051,8 +1057,8 @@ sub _GetItemFieldValues {
         my %StateTypeData = %{
             $Self->{FAQObject}->StateTypeGet(
                 Name => $ItemFields{$Key}{Show},
-            )
-        };
+                )
+            };
 
         # show yes /no
         if ( exists( $Self->{InterfaceStates}{ $StateTypeData{ID} } ) ) {
@@ -1083,8 +1089,8 @@ sub _GetItemVoting {
             ItemID    => $ItemData{ItemID},
             Interface => $Self->{Interface}{ID},
             IP        => $ENV{'REMOTE_ADDR'},
-        )
-    };
+            )
+        };
 
     my $Flag = 0;
 
@@ -1207,13 +1213,13 @@ sub GetItemSearch {
             }
             my @SubCategoryIDs = @{
                 $Self->{FAQObject}->CategorySubCategoryIDList(
-                    ParentID     => $GetParam{CategoryIDs}->[0] || 0,
+                    ParentID => $GetParam{CategoryIDs}->[0] || 0,
                     ItemStates   => $Self->{InterfaceStates},
                     CustomerUser => $Param{CustomerUser},
                     UserID       => $Param{User},
                     Mode         => $Param{Mode},
-                )
-            };
+                    )
+                };
             push( @{ $GetParam{CategoryIDs} }, @SubCategoryIDs );
         }
     }
@@ -1257,8 +1263,8 @@ sub GetItemSearch {
                     ParentID     => $CategoryID,
                     CustomerUser => $Param{CustomerUser},
                     Mode         => $Param{Mode},
-                )
-            };
+                    )
+                };
         }
 
         # build customer category hash
@@ -1288,8 +1294,8 @@ sub GetItemSearch {
                 $Self->{FAQObject}->PublicCategorySearch(
                     ParentID => $CategoryID,
                     Mode     => $Param{Mode},
-                )
-            };
+                    )
+                };
         }
 
         # build public category hash

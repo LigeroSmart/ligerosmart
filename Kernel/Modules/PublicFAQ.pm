@@ -2,11 +2,11 @@
 # Kernel/Modules/PublicFAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.12 2010-11-02 13:07:30 cr Exp $
+# $Id: PublicFAQ.pm,v 1.13 2010-11-11 15:33:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::PublicFAQ;
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -144,18 +144,19 @@ sub Run {
 
         my @IDs;
         if ( $Type eq 'Top10' ) {
+
             # get the top 10 articles
             my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit'),
             );
-            @IDs = map { $_->{ItemID} } @{ $Top10ItemIDsRef };
+            @IDs = map { $_->{ItemID} } @{$Top10ItemIDsRef};
         }
         else {
             @IDs = $Self->{FAQObject}->FAQSearch(
                 States    => $States,
-                OrderBy     => $Type,
-                SortBy      => 'down',
+                OrderBy   => $Type,
+                SortBy    => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => 20,
             );
@@ -266,7 +267,7 @@ sub Run {
 
         # log access to this FAQ item
         $Self->{FAQObject}->FAQLogAdd(
-            ItemID    => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+            ItemID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
             Interface => $Self->{Interface}{Name},
         );
     }

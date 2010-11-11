@@ -1,12 +1,12 @@
 # --
 # Kernel/Modules/CustomerFAQ.pm - faq module
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.10 2008-09-23 21:15:25 ub Exp $
+# $Id: CustomerFAQ.pm,v 1.11 2010-11-11 15:33:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Modules::CustomerFAQ;
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -173,7 +173,7 @@ sub Run {
             CustomerUser => $Self->{UserLogin},
             CategoryID   => $FAQArticle{CategoryID},
         );
-        if ( $Permission eq ''  || !$FAQArticle{Approved} ) {
+        if ( $Permission eq '' || !$FAQArticle{Approved} ) {
             $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
         }
 
@@ -200,7 +200,7 @@ sub Run {
             CustomerUser => $Self->{UserLogin},
             CategoryID   => $FAQArticle{CategoryID},
         );
-        if ( $Permission eq ''  || !$FAQArticle{Approved} ) {
+        if ( $Permission eq '' || !$FAQArticle{Approved} ) {
             $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
         }
 
@@ -221,7 +221,7 @@ sub Run {
 
         # log access to this FAQ item
         $Self->{FAQObject}->FAQLogAdd(
-            ItemID    => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+            ItemID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
             Interface => $Self->{Interface}{Name},
         );
     }
