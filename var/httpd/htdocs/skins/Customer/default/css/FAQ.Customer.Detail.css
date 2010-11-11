@@ -1,0 +1,95 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     FAQDetails
+ */
+
+@media screen,projection,tv,handheld {
+
+
+/**
+ * @subsection  Article table body
+ */
+
+.RateChecked {
+    background: transparent url(../img/rate-button-checked.png) no-repeat scroll 0 0;
+    display: block;
+    height: 16px;
+    margin-right: 2px;
+    cursor: pointer;
+    float: left;
+    padding-top: 15px;
+    padding-left: 4px;
+    padding-right: 15px;
+    color: #000000;
+
+}
+
+.RateUnChecked {
+    background: transparent url(../img/rate-button-unchecked.png) no-repeat scroll 0 0;
+    display: block;
+    height: 16px;
+    margin-right: 2px;
+    cursor: pointer;
+    float: left;
+    padding-top: 15px;
+    padding-left: 4px;
+    padding-right: 15px;
+    color: #000000;
+
+}
+
+.RateStar {
+    background: transparent url(../img/rate-indicator.png) no-repeat scroll 0 0;
+    display: block;
+    height: 16px;
+    cursor: pointer;
+    text-indent: -9999px;
+    float: left;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-top: 2px;
+}
+
+.RateStarText {
+    text-indent:5px;
+    float: left;
+
+}
+
+
+.RateLabelBefore {
+    float: left;
+    padding-right: 15px;
+    margin-left: 10px;
+    color: Gray;
+}
+
+.RateLabelAfter {
+    float: left;
+    margin-left: 5px;
+    margin-right: 25px;
+    color: Gray;
+}
+
+.RatingLabel {
+    float: left;
+}
+
+.SpacingTop {
+    margin-top: 13px;
+}
+
+.VotingQuestion {
+    margin-left: 10px;
+    margin-right:10px;
+    color: #000000;
+}
+
+}

@@ -1,0 +1,42 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Default Settings
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Flag
+ */
+
+
+ span.FAQgray {
+    background-color:#cdcdcd;
+}
+
+ span.FAQgreen {
+    background-color: #8bef4d;
+}
+
+ span.FAQyellow {
+    background-color: #ffdd50;
+}
+
+ span.FAQorange {
+    background-color: #ff9922;
+}
+
+ span.FAQred {
+    background-color:#ff505e;
+}
+
+}
+
+
