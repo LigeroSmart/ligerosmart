@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.5 2010-11-11 14:50:12 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.6 2010-11-11 16:05:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -232,7 +232,7 @@ $Data{"FAQVoting"}
             <div class="SpacingTop">
                 <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote">
                     <div>
-                        <span class="RateLabelBefore">$Text{"not hepful"}</span>
+                        <span class="RateLabelBefore">$Text{"not helpful"}</span>
                     </div>
 
 <!-- dtl:block:FAQVotingRateRow -->
@@ -242,7 +242,7 @@ $Data{"FAQVoting"}
 <!-- dtl:block:FAQVotingRateRow -->
 
                     <div>
-                        <span class="RateLabelAfter">$Text{"very hepful"}</span>
+                        <span class="RateLabelAfter">$Text{"very helpful"}</span>
                     </div>
                     <button type="submit" class="Hidden" id="RateSubmitButton" name="btn" value="$Text{"Submit"}">$Text{"Submit"}</button>
                     <input type="hidden" name="Action" value="AgentFAQZoom"/>
