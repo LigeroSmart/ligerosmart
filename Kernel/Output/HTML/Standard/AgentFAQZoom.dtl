@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.4 2010-11-11 02:37:07 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.5 2010-11-11 14:50:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -237,7 +237,7 @@ $Data{"FAQVoting"}
 
 <!-- dtl:block:FAQVotingRateRow -->
                     <div id="RateButton$Data{"Value"}">
-                        <span class="RateButton RateUnChecked" href="">$QData{"Title"}</span>
+                        <span class="RateButton RateUnChecked">$QData{"Title"}</span>
                     </div>
 <!-- dtl:block:FAQVotingRateRow -->
 
