@@ -2,7 +2,7 @@
 # Kernel/Modules/FAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.54 2010-11-11 15:33:17 ub Exp $
+# $Id: FAQ.pm,v 1.55 2010-11-11 21:03:16 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,10 +48,12 @@ sub new {
 
     # interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name => 'public'
+        Name   => 'public',
+        UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => ['public']
+        Types  => ['public'],
+        UserID => $Self->{UserID},
     );
 
     # global output vars
@@ -204,8 +206,12 @@ sub _GetFAQPath {
     );
 
     if ( $Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show') ) {
-        my @CategoryList
-            = @{ $Self->{FAQObject}->FAQPathListGet( CategoryID => $Param{CategoryID} ) };
+        my @CategoryList = @{
+            $Self->{FAQObject}->FAQPathListGet(
+                CategoryID => $Param{CategoryID},
+                UserID     => $Self->{UserID}
+                )
+            };
         for my $Data (@CategoryList) {
             $Self->{LayoutObject}->Block(
                 Name => 'FAQPathCategoryElement',
@@ -244,6 +250,7 @@ sub _GetExplorerCategoryList {
                 ParentID     => $Param{CategoryID},
                 CustomerUser => $Param{CustomerUser},
                 Mode         => $Param{Mode},
+                UserID       => $Self->{UserID},
                 )
             };
     }
@@ -261,9 +268,13 @@ sub _GetExplorerCategoryList {
             Name => 'ExplorerCategoryList',
         );
         for (@CategoryIDs) {
-            my %Data = $Self->{FAQObject}->CategoryGet( CategoryID => $_ );
+            my %Data = $Self->{FAQObject}->CategoryGet(
+                CategoryID => $_,
+                UserID     => $Self->{UserID},
+            );
             $Data{CategoryNumber} = $Self->{FAQObject}->CategoryCount(
                 ParentIDs => [$_],
+                UserID    => $Self->{UserID},
             );
             my $OnlyApproved = 1;
             if ( $Param{Mode} eq 'Agent' ) {
@@ -273,6 +284,7 @@ sub _GetExplorerCategoryList {
                 CategoryIDs  => [$_],
                 ItemStates   => $Self->{InterfaceStates},
                 OnlyApproved => $OnlyApproved,
+                UserID       => $Self->{UserID},
             );
 
             # css configuration
@@ -305,10 +317,11 @@ sub _GetExplorerItemList {
     my @ItemIDs = $Self->{FAQObject}->FAQSearch(
         CategoryIDs => [ $Param{CategoryID} ],
         States      => $Self->{InterfaceStates},
-        OrderBy     => $Param{OrderBy},
+        OrderBy     => [ $Param{OrderBy} ],
         SortBy      => $Param{SortBy},
         Interface   => $Self->{Interface}{Name},
         Limit       => 300,
+        UserID      => $Self->{UserID},
     );
 
     if (@ItemIDs) {
@@ -396,10 +409,11 @@ sub _GetExplorerLastChangeItems {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
                     States      => $Self->{InterfaceStates},
-                    OrderBy     => 'Changed',
+                    OrderBy     => ['Changed'],
                     SortBy      => 'down',
                     Interface   => $Self->{Interface}{Name},
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
+                    UserID      => $Self->{UserID},
                 );
             }
         }
@@ -409,14 +423,17 @@ sub _GetExplorerLastChangeItems {
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
                 States    => $Self->{InterfaceStates},
-                OrderBy   => 'Changed',
+                OrderBy   => ['Changed'],
                 SortBy    => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastChange::Limit'),
             );
         }
         for (@ItemIDs) {
-            my %Data = $Self->{FAQObject}->FAQGet( ItemID => $_ );
+            my %Data = $Self->{FAQObject}->FAQGet(
+                ItemID => $_,
+                UserID => $Self->{UserID},
+            );
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestChangeFAQItemRow',
                 Data => {%Data},
@@ -479,10 +496,11 @@ sub _GetExplorerLastCreateItems {
                 @ItemIDs = $Self->{FAQObject}->FAQSearch(
                     CategoryIDs => \@CategoryIDs,
                     States      => $Self->{InterfaceStates},
-                    OrderBy     => 'Created',
+                    OrderBy     => ['Created'],
                     SortBy      => 'down',
                     Interface   => $Self->{Interface}{Name},
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
+                    UserID      => $Self->{UserID},
                 );
             }
         }
@@ -492,16 +510,21 @@ sub _GetExplorerLastCreateItems {
             );
             @ItemIDs = $Self->{FAQObject}->FAQSearch(
                 States    => $Self->{InterfaceStates},
-                OrderBy   => 'Created',
+                OrderBy   => ['Created'],
                 SortBy    => 'down',
                 Interface => $Self->{Interface}{Name},
                 Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::LastCreate::Limit'),
+                UserID    => $Self->{UserID},
+
             );
         }
 
         # dtl block
         for (@ItemIDs) {
-            my %Data = $Self->{FAQObject}->FAQGet( ItemID => $_ );
+            my %Data = $Self->{FAQObject}->FAQGet(
+                ItemID => $_,
+                UserID => $Self->{UserID},
+            );
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerLatestCreateFAQItemRow',
                 Data => {%Data},
@@ -575,6 +598,7 @@ sub _GetExplorerTop10Items {
                     Interface   => $Self->{Interface}{Name},
                     CategoryIDs => \@CategoryIDs,
                     Limit       => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+                    UserID      => $Self->{UserID},
                 );
             }
         }
@@ -583,7 +607,8 @@ sub _GetExplorerTop10Items {
             # get the top 10 articles
             $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
                 Interface => $Self->{Interface}{Name},
-                Limit => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+                Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+                UserID    => $Self->{UserID},
             );
         }
 
@@ -591,7 +616,10 @@ sub _GetExplorerTop10Items {
         my $Number;
         for my $ItemIDRef ( @{$Top10ItemIDsRef} ) {
             $Number++;
-            my %Data = $Self->{FAQObject}->FAQGet( ItemID => $ItemIDRef->{ItemID} );
+            my %Data = $Self->{FAQObject}->FAQGet(
+                ItemID => $ItemIDRef->{ItemID},
+                UserID => $Self->{UserID},
+            );
             $Self->{LayoutObject}->Block(
                 Name => 'ExplorerTop10FAQItemRow',
                 Data => {
@@ -736,6 +764,7 @@ sub GetItemView {
     my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
         ItemID     => $GetParam{ItemID},
         ShowInline => 0,
+        UserID     => $Self->{UserID},
     );
     if (@AttachmentIndex) {
         $Self->{LayoutObject}->Block(
@@ -1008,12 +1037,13 @@ sub _GetItemFields {
     for my $Key ( sort( { $ItemFields{$a}{Prio} <=> $ItemFields{$b}{Prio} } keys(%ItemFields) ) ) {
         my %StateTypeData = %{
             $Self->{FAQObject}->StateTypeGet(
-                Name => $ItemFields{$Key}{Show}
+                Name   => $ItemFields{$Key}{Show},
+                UserID => $Self->{UserID},
                 )
             };
 
         # show yes /no
-        if ( exists( $Self->{InterfaceStates}{ $StateTypeData{ID} } ) ) {
+        if ( exists( $Self->{InterfaceStates}->{ $StateTypeData{StateID} } ) ) {
             $Self->{LayoutObject}->Block(
                 Name => 'FAQItemField',
                 Data => {
@@ -1056,7 +1086,8 @@ sub _GetItemFieldValues {
         }
         my %StateTypeData = %{
             $Self->{FAQObject}->StateTypeGet(
-                Name => $ItemFields{$Key}{Show},
+                Name   => $ItemFields{$Key}{Show},
+                UserID => $Self->{UserID},
                 )
             };
 
@@ -1083,25 +1114,26 @@ sub _GetItemVoting {
     $Self->{LayoutObject}->Block(
         Name => "Voting",
     );
-    my %VoteData = %{
-        $Self->{FAQObject}->VoteGet(
-            CreateBy  => $Self->{UserID},
-            ItemID    => $ItemData{ItemID},
-            Interface => $Self->{Interface}{ID},
-            IP        => $ENV{'REMOTE_ADDR'},
-            )
-        };
+    my $VoteData = $Self->{FAQObject}->VoteGet(
+        CreateBy  => $Self->{UserID},
+        ItemID    => $ItemData{ItemID},
+        Interface => $Self->{Interface}{StateID},
+        IP        => $ENV{'REMOTE_ADDR'},
+        UserID    => $Self->{UserID},
+    );
 
     my $Flag = 0;
 
     # already voted?
-    if (%VoteData) {
+    if ($VoteData) {
 
         # item/change_time > voting/create_time
-        my $ItemChangedSystemTime
-            = $Self->{TimeObject}->TimeStamp2SystemTime( String => $ItemData{Changed} || '' );
-        my $VoteCreatedSystemTime
-            = $Self->{TimeObject}->TimeStamp2SystemTime( String => $VoteData{Created} || '' );
+        my $ItemChangedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $ItemData{Changed} || '',
+        );
+        my $VoteCreatedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $VoteData->{Created} || '',
+        );
 
         if ( $ItemChangedSystemTime > $VoteCreatedSystemTime ) {
             $Flag = 1;
@@ -1137,6 +1169,7 @@ sub _GetItemVoting {
                 IP        => $ENV{'REMOTE_ADDR'},
                 Interface => $Self->{Interface}{ID},
                 Rate      => $GetParam{Rate},
+                UserID    => $Self->{UserID},
             );
             push( @{ $Self->{Notify} }, [ 'Info', 'Thanks for your vote!' ] );
             return;
@@ -1231,6 +1264,7 @@ sub GetItemSearch {
         SelectedIDRefArray  => $GetParam{LanguageIDs} || [],
         HTMLQuote           => 1,
         LanguageTranslation => 0,
+        UserID              => $Self->{UserID},
     );
     my $Categories = {};
     if ( $Param{Mode} && $Param{Mode} eq 'Agent' ) {
@@ -1270,14 +1304,17 @@ sub GetItemSearch {
         # build customer category hash
         $Categories = {};
         for my $CategoryID (@CustomerCategoryIDs) {
-            my %Category = $Self->{FAQObject}->CategoryGet( CategoryID => $CategoryID );
+            my %Category = $Self->{FAQObject}->CategoryGet(
+                CategoryID => $CategoryID,
+                UserID     => $Self->{UserID},
+            );
             $Categories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
         }
     }
     else {
 
         # get all categories
-        $Categories = $Self->{FAQObject}->CategoryList();
+        $Categories = $Self->{FAQObject}->CategoryList( UserID => $Self->{UserID} );
 
         # extract category ids
         my %AllCategoryIDs = ();
@@ -1301,7 +1338,10 @@ sub GetItemSearch {
         # build public category hash
         $Categories = {};
         for my $CategoryID (@PublicCategoryIDs) {
-            my %Category = $Self->{FAQObject}->CategoryGet( CategoryID => $CategoryID );
+            my %Category = $Self->{FAQObject}->CategoryGet(
+                CategoryID => $CategoryID,
+                UserID     => $Self->{UserID},
+            );
             $Categories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
         }
     }

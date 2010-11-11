@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQ.pm - faq module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQ.pm,v 1.11 2010-11-11 15:33:17 ub Exp $
+# $Id: CustomerFAQ.pm,v 1.12 2010-11-11 21:06:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::Modules::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 our @ISA = qw(Kernel::Modules::FAQ);
 
@@ -33,10 +33,12 @@ sub new {
     # interface settings
     # ********************************************************** #
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
-        Name => 'external',
+        Name   => 'external',
+        UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
         Types => [ 'external', 'public' ],
+        UserID => $Self->{UserID},
     );
 
     # check needed Objects
@@ -195,10 +197,12 @@ sub Run {
     elsif ( $Self->{ParamObject}->GetParam( Param => 'ItemID' ) ) {
         my %FAQArticle = $Self->{FAQObject}->FAQGet(
             FAQID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
+            UserID => $Self->{UserID},
         );
         my $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
             CustomerUser => $Self->{UserLogin},
             CategoryID   => $FAQArticle{CategoryID},
+            UserID       => $Self->{UserID},
         );
         if ( $Permission eq '' || !$FAQArticle{Approved} ) {
             $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
@@ -223,6 +227,7 @@ sub Run {
         $Self->{FAQObject}->FAQLogAdd(
             ItemID => $Self->{ParamObject}->GetParam( Param => 'ItemID' ),
             Interface => $Self->{Interface}{Name},
+            UserID    => $Self->{UserID},
         );
     }
 
