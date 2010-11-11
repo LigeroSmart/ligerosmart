@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.4 2010-11-10 13:18:28 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.5 2010-11-11 02:36:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,6 +49,10 @@ sub new {
     # set default interfase parameters
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
         Name   => 'internal',
+        UserID => $Self->{UserID},
+    );
+    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
+        Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
 
@@ -89,7 +93,8 @@ sub Run {
         UserID     => $Self->{UserID},
         CategoryID => $FAQData{CategoryID},
     );
-    if ( $Permission eq '' ) {
+
+    if ( $Permission eq '' || !$FAQData{Approved} ) {
         $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
     }
 
@@ -126,7 +131,10 @@ sub Run {
 
         # user can vote only once per FAQ revision
         if ($AlreadyVoted) {
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'You have already voted!' );
+            $Output .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info     => 'You have already voted!'
+            );
         }
 
         # set the vote if any
@@ -170,7 +178,10 @@ sub Run {
 
         # user is able to vote but no rate has been selected
         else {
-            $Output .= $Self->{LayoutObject}->Notify( Info => 'No rate selected!' );
+            $Output .= $Self->{LayoutObject}->Notify(
+                Priority => 'Error',
+                Info     => 'No rate selected!',
+            );
         }
     }
 
@@ -190,6 +201,11 @@ sub Run {
             HTMLResultMode => 1,
             LinkFeature    => 1,
         );
+    }
+
+    # permission check
+    if ( !exists( $Self->{InterfaceStates}{ $FAQData{StateTypeID} } ) ) {
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
     }
 
     my %UserInfo;
@@ -212,10 +228,14 @@ sub Run {
     );
 
     # show FAQ Voting
-    if ( !$AlreadyVoted ) {
-        $Param{FAQVoting} = $Self->_FAQVoting(
-            FAQData => {%FAQData},
-        );
+    # check config
+    my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
+    if ( $ShowVotingConfig->{ $Self->{Interface}{Name} } ) {
+
+        # check if the user already voted after last change
+        if ( !$AlreadyVoted ) {
+            $Param{FAQVoting} = $Self->_FAQVoting( FAQData => {%FAQData} );
+        }
     }
 
     # set voting results
@@ -275,6 +295,18 @@ sub Run {
                 return $Self->{LayoutObject}->FatalError();
             }
         }
+    }
+
+    #output Flaq title block
+    $Self->{ShowFlag} = 0;
+    if ( $Self->{ShowFlag} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Flag',
+            Data => {
+                %FAQData,
+                %Param,
+            },
+        );
     }
 
     # output approval state
@@ -419,23 +451,30 @@ sub _FAQContent {
         }
     }
     for my $Key ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields ) {
+        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
+            Name   => $ItemFields{$Key}->{Show},
+            UserID => $Self->{UserID},
+        );
 
         # show yes /no
-        $Self->{LayoutObject}->Block(
-            Name => 'FAQContent',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'FAQContentHeader',
-            Data => {
-                Key => $ItemFields{$Key}->{'Caption'},
-            },
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'FAQContentBody',
-            Data => {
-                Body => $FAQData{$Key} || '',
-            },
-        );
+        if ( exists( $Self->{InterfaceStates}{ $StateTypeData->{StateID} } ) ) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'FAQContent',
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'FAQContentHeader',
+                Data => {
+                    Key => $ItemFields{$Key}->{'Caption'},
+                },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'FAQContentBody',
+                Data => {
+                    Body => $FAQData{$Key} || '',
+                },
+            );
+        }
     }
 
     # return output
