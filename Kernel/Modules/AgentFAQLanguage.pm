@@ -2,11 +2,11 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.9 2010-11-08 16:22:03 ub Exp $
+# $Id: AgentFAQLanguage.pm,v 1.10 2010-11-11 12:34:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Modules::AgentFAQLanguage;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -42,15 +42,15 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my %GetParam;
-
     # permission check
     if ( !$Self->{AccessRw} ) {
         return $Self->{LayoutObject}->NoPermission(
-            Message    => "You need rw permission!",
+            Message    => 'You need rw permission!',
             WithHeader => 'yes',
         );
     }
+
+    my %GetParam;
 
     # ------------------------------------------------------------ #
     # change
@@ -74,9 +74,11 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # output change language screen
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # output change language screen
         $Self->_Edit(
             Action => 'Change',
             %LanguageData,
@@ -84,11 +86,14 @@ sub Run {
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data => {
+            Data         => {
                 %Param,
             },
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -100,6 +105,7 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -110,6 +116,8 @@ sub Run {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             if ( !$GetParam{$ParamName} ) {
+
+                # html output
                 $Self->_Edit(
                     Action                 => 'Change',
                     NameServerError        => 'ServerError',
@@ -120,7 +128,10 @@ sub Run {
                     TemplateFile => 'AgentFAQLanguage',
                     Data         => \%Param,
                 );
+
+                # footer
                 $Output .= $Self->{LayoutObject}->Footer();
+
                 return $Output;
             }
         }
@@ -133,7 +144,9 @@ sub Run {
         );
 
         # show the edit screen again
-        if ( $LanguageExistsAlready ) {
+        if ($LanguageExistsAlready) {
+
+            # html output
             $Self->_Edit(
                 Action                 => 'Change',
                 NameServerError        => 'ServerError',
@@ -144,7 +157,10 @@ sub Run {
                 TemplateFile => 'AgentFAQLanguage',
                 Data         => \%Param,
             );
+
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
+
             return $Output;
         }
 
@@ -163,12 +179,15 @@ sub Run {
         $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Notify(
             Info => 'FAQ language updated!',
-         );
+        );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
             Data         => \%Param,
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -180,19 +199,25 @@ sub Run {
         # get the new name
         $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
 
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # html output
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
         );
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data => {
+            Data         => {
                 %Param,
             },
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -204,6 +229,7 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -212,6 +238,8 @@ sub Run {
 
         # check for name
         if ( !$GetParam{Name} ) {
+
+            # html output
             $Self->_Edit(
                 Action                 => 'Add',
                 NameServerError        => 'ServerError',
@@ -222,7 +250,10 @@ sub Run {
                 TemplateFile => 'AgentFAQLanguage',
                 Data         => \%Param,
             );
+
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
+
             return $Output;
         }
 
@@ -233,7 +264,7 @@ sub Run {
         );
 
         # show the edit screen again
-        if ( $LanguageExistsAlready ) {
+        if ($LanguageExistsAlready) {
             $Self->_Edit(
                 Action                 => 'Add',
                 NameServerError        => 'ServerError',
@@ -244,7 +275,10 @@ sub Run {
                 TemplateFile => 'AgentFAQLanguage',
                 Data         => \%Param,
             );
+
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
+
             return $Output;
         }
 
@@ -266,11 +300,14 @@ sub Run {
         $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data => {
+            Data         => {
                 %Param,
             },
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -278,17 +315,24 @@ sub Run {
     # overview
     # ---------------------------------------------------------- #
     else {
-        $Self->_Overview();
+
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # html output
+        $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQLanguage',
-            Data => {
+            Data         => {
                 %Param,
                 %GetParam,
             },
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 }
@@ -343,13 +387,13 @@ sub _Overview {
             # get languages result
             my %LanguageData = $Self->{FAQObject}->LanguageGet(
                 LanguageID => $LanguageID,
-                UserID => $Self->{UserID},
+                UserID     => $Self->{UserID},
             );
 
             #output results
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewResultRow',
-                Data => { %LanguageData },
+                Data => {%LanguageData},
             );
         }
     }

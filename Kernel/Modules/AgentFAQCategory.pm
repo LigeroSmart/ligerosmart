@@ -2,11 +2,11 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.17 2010-11-08 17:40:14 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.18 2010-11-11 12:32:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Modules::AgentFAQCategory;
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,7 +35,7 @@ sub new {
     }
 
     # create additional objects
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
+    $Self->{FAQObject}   = Kernel::System::FAQ->new(%Param);
     $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     return $Self;
@@ -44,9 +44,16 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my %GetParam;
+    # permission check
+    if ( !$Self->{AccessRw} ) {
+        return $Self->{LayoutObject}->NoPermission(
+            Message    => 'You need rw permission!',
+            WithHeader => 'yes',
+        );
+    }
 
     # get parameters
+    my %GetParam;
     for my $ParamName (qw(CategoryID Name ParentID Comment ValidID)) {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
@@ -55,15 +62,8 @@ sub Run {
     $GetParam{CategoryID} ||= '';
 
     # get array parameters
-    @{ $GetParam{PermissionGroups} } = $Self->{ParamObject}->GetArray( Param => 'PermissionGroups' );
-
-    # permission check
-    if ( !$Self->{AccessRw} ) {
-        return $Self->{LayoutObject}->NoPermission(
-            Message    => "You need rw permission!",
-            WithHeader => 'yes',
-        );
-    }
+    @{ $GetParam{PermissionGroups} }
+        = $Self->{ParamObject}->GetArray( Param => 'PermissionGroups' );
 
     # ------------------------------------------------------------ #
     # change
@@ -87,21 +87,23 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # output change screen
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
+        # html output
         $Self->_Edit(
             Action => 'Change',
             %CategoryData,
         );
-
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
 
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -113,6 +115,7 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -131,7 +134,7 @@ sub Run {
             if ( !$GetParam{$ParamName} ) {
 
                 # add server error error class
-                $GetParam{ $ParamName . 'ServerError'} = 'ServerError';
+                $GetParam{ $ParamName . 'ServerError' } = 'ServerError';
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
@@ -146,16 +149,17 @@ sub Run {
         # send server error if any required parameter is missing
         if ($ServerError) {
 
+            # html output
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
             );
-
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
 
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
 
             return $Output;
@@ -173,20 +177,20 @@ sub Run {
         if ($CategoryExistsAlready) {
 
             # set server errors
-            $GetParam{NameServerError} = 'ServerError';
+            $GetParam{NameServerError}        = 'ServerError';
             $GetParam{NameServerErrorMessage} = "Category '$GetParam{Name}' already exists!";
 
-            # output add category screen
+            # html output
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
             );
-
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
 
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
 
             return $Output;
@@ -210,14 +214,19 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # show overview
+        # show notification
         $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ category updated!' );
+
+        # show overview
         $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 
@@ -226,20 +235,21 @@ sub Run {
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Add' ) {
 
-        # output add screen
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
+        # html output
         $Self->_Edit(
             Action => 'Add',
             %GetParam,
         );
-
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
 
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
 
         return $Output;
@@ -253,6 +263,7 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
@@ -272,7 +283,7 @@ sub Run {
 
                 # add validation class and server error error class
                 if ( $ParamName eq 'PermissionGroups' ) {
-                    $GetParam{ $ParamName . 'ServerError'} = 'ServerError';
+                    $GetParam{ $ParamName . 'ServerError' } = 'ServerError';
                 }
 
                 # add server error string for category name field
@@ -288,16 +299,17 @@ sub Run {
         # send server error if any required parameters are missing
         if ($ServerError) {
 
+            # html output
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
             );
-
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
 
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
 
             return $Output;
@@ -312,23 +324,23 @@ sub Run {
         );
 
         # show the edit screen again
-        if ( $CategoryExistsAlready ) {
+        if ($CategoryExistsAlready) {
 
             # set server errors
-            $GetParam{NameServerError} = 'ServerError';
+            $GetParam{NameServerError}        = 'ServerError';
             $GetParam{NameServerErrorMessage} = "Category '$GetParam{Name}' already exists!";
 
-            # output add category screen
+            # html output
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
             );
-
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
                 Data         => \%Param,
             );
 
+            # footer
             $Output .= $Self->{LayoutObject}->Footer();
 
             return $Output;
@@ -352,13 +364,17 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        # show overview
+        # show notification
         $Output .= $Self->{LayoutObject}->Notify( Info => 'FAQ category added!' );
+
+        # show overview
         $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
             Data         => \%Param,
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
 
         return $Output;
@@ -368,17 +384,24 @@ sub Run {
     # overview
     # ---------------------------------------------------------- #
     else {
-        $Self->_Overview();
+
+        # header
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # html output
+        $Self->_Overview();
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQCategory',
-            Data => {
+            Data         => {
                 %Param,
                 %GetParam,
             },
         );
+
+        # footer
         $Output .= $Self->{LayoutObject}->Footer();
+
         return $Output;
     }
 }
@@ -386,16 +409,21 @@ sub Run {
 sub _Edit {
     my ( $Self, %Param ) = @_;
 
-    my %Data;
-
+    # show overview
     $Self->{LayoutObject}->Block(
         Name => 'Overview',
         Data => \%Param,
     );
 
+    # output overview blocks
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+
     # get the valid list
     my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
+
+    my %Data;
 
     # build the valid selection
     $Data{ValidOption} = $Self->{LayoutObject}->BuildSelection(
@@ -434,9 +462,6 @@ sub _Edit {
         DisabledBranch => $CategoryTree->{ $Param{CategoryID} } || '',
         Translation    => 0,
     );
-
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
     $Self->{LayoutObject}->Block(
         Name => 'OverviewUpdate',
@@ -481,7 +506,8 @@ sub _Overview {
         my %ValidList = $Self->{ValidObject}->ValidList();
 
         # sort the category ids by the long category name
-        my @CategoryIDsSorted = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
+        my @CategoryIDsSorted
+            = sort { $CategoryTree->{$a} cmp $CategoryTree->{$b} } keys %{$CategoryTree};
 
         # show all categories
         for my $CategoryID (@CategoryIDsSorted) {
@@ -501,7 +527,7 @@ sub _Overview {
             # output the category data
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewResultRow',
-                Data => { %CategoryData },
+                Data => {%CategoryData},
             );
         }
     }
