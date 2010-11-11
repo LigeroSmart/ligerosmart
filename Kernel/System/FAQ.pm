@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.113 2010-11-09 16:19:11 ub Exp $
+# $Id: FAQ.pm,v 1.114 2010-11-11 14:20:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.113 $) [1];
+$VERSION = qw($Revision: 1.114 $) [1];
 
 =head1 NAME
 
@@ -306,20 +306,29 @@ sub ItemVoteDataGet {
 add an article
 
     my $ItemID = $FAQObject->FAQAdd(
-        Number     => '13402',
         Title      => 'Some Text',
         CategoryID => 1,
         StateID    => 1,
         LanguageID => 1,
-        Keywords   => 'some keywords',
-        Field1     => 'Problem...',
-        Field2     => 'Solution...',
+        Number     => '13402',          # (optional)
+        Keywords   => 'some keywords',  # (optional)
+        Field1     => 'Symptom...',     # (optional)
+        Field2     => 'Problem...',     # (optional)
+        Field3     => 'Solution...',    # (optional)
+        Field4     => 'Field4...',      # (optional)
+        Field5     => 'Field5...',      # (optional)
+        Field6     => 'Comment...',     # (optional)
+        Approved   => 1,                # (optional)
+        UserID     => 1,
+
+        # TODO:
+        # Remove freetext fields from everywhere in the system,
+        # take care of packageupdate too!
+        #
         FreeKey1   => 'Software',
         FreeText1  => 'Apache 3.4.2',
         FreeKey2   => 'OS',
         FreeText2  => 'OpenBSD 4.2.2',
-        Approved   => 1,
-        UserID     => 1,
     );
 
 =cut
@@ -3952,6 +3961,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.113 $ $Date: 2010-11-09 16:19:11 $
+$Revision: 1.114 $ $Date: 2010-11-11 14:20:45 $
 
 =cut
