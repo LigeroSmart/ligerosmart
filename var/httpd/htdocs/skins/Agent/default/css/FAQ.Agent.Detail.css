@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -45,7 +45,7 @@
     padding-top: 15px;
     padding-left: 4px;
     padding-right: 15px;
-
+    color: #000000;
 }
 
 .RateUnChecked {
@@ -58,6 +58,7 @@
     padding-top: 15px;
     padding-left: 4px;
     padding-right: 15px;
+    color: #000000;
 }
 
 .RateStar {
