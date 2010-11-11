@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.46 2010-11-08 18:57:59 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.47 2010-11-11 02:40:49 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -534,8 +534,7 @@ Your OTRS Notification Master
                 <Title></Title>
                 <NavBar>
                     <Description>FAQ-Area</Description>
-                    <Name>FAQ-Area</Name>
-                    <Image>help.png</Image>
+                    <Name>FAQ</Name>
                     <Link>Action=CustomerFAQ</Link>
                     <Type></Type>
                     <Block></Block>
@@ -955,5 +954,20 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="CustomerFrontend::Module###CustomerFAQZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Title></Title>
+                <Description>Customer FAQ-Zoom</Description>
+                <NavBarName>FAQ</NavBarName>
+                <Loader>
+                    <CSS>FAQ.Customer.Detail.css</CSS>
+                    <CSS>FAQ.Customer.Default.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
