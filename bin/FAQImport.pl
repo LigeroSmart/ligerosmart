@@ -1,23 +1,24 @@
 #!/usr/bin/perl -w
 # --
 # FAQImport.pl - FAQ import script
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQImport.pl,v 1.3 2008-11-07 09:24:50 ub Exp $
+# $Id: FAQImport.pl,v 1.4 2010-11-11 15:03:17 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# it under the terms of the GNU AFFERO General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# any later version.
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
+# You should have received a copy of the GNU Affero General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# or see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 use strict;
@@ -40,7 +41,7 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 # get options
 my %Opts;
@@ -49,7 +50,7 @@ getopt( 'hisq', \%Opts );
 if ( exists $Opts{h} ) {
     print STDOUT "\n";
     print STDOUT "FAQImport.pl <Revision $VERSION> - a FAQ import tool\n";
-    print STDOUT "Copyright (c) 2001-2008 OTRS AG, http://otrs.org/\n";
+    print STDOUT "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
     print STDOUT "   usage: \n";
     print STDOUT "      FAQImport.pl -i <ImportFile> [-s <separator>] [-q <quote>]\n";
     print STDOUT "\n";
@@ -72,19 +73,19 @@ if ( !$Opts{i} ) {
 
 # create common objects
 my %CommonObject;
-$CommonObject{UserID} = 1;
+$CommonObject{UserID}       = 1;
 $CommonObject{ConfigObject} = Kernel::Config->new();
 $CommonObject{LogObject}    = Kernel::System::Log->new(
     LogPrefix => 'OTRS-FAQImport',
     %CommonObject,
 );
-$CommonObject{CSVObject}          = Kernel::System::CSV->new(%CommonObject);
-$CommonObject{EncodeObject}       = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{MainObject}         = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}           = Kernel::System::DB->new(%CommonObject);
-$CommonObject{TimeObject}         = Kernel::System::Time->new(%CommonObject);
-$CommonObject{GroupObject}        = Kernel::System::Group->new(%CommonObject);
-$CommonObject{FAQObject}          = Kernel::System::FAQ->new(%CommonObject);
+$CommonObject{CSVObject}    = Kernel::System::CSV->new(%CommonObject);
+$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
+$CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
+$CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
+$CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
+$CommonObject{GroupObject}  = Kernel::System::Group->new(%CommonObject);
+$CommonObject{FAQObject}    = Kernel::System::FAQ->new(%CommonObject);
 
 print STDOUT "Read File $Opts{i}.\n";
 
@@ -123,18 +124,22 @@ for my $RowRef ( @{$DataRef} ) {
 
     $LineCounter++;
 
-    my ( $Title, $CategoryString, $Language, $StateType,
-        $Field1, $Field2, $Field3, $Field4, $Field5, $Field6, $Keywords ) = @{ $RowRef };
+    my (
+        $Title, $CategoryString, $Language, $StateType,
+        $Field1, $Field2, $Field3, $Field4, $Field5, $Field6, $Keywords
+    ) = @{$RowRef};
 
     # check language
     if ( !$LanguageID{$Language} ) {
-        print STDOUT "Error: Could not import line $LineCounter. Language '$Language' does not exist.\n";
+        print STDOUT
+            "Error: Could not import line $LineCounter. Language '$Language' does not exist.\n";
         next ROW;
     }
 
     # check state type
     if ( !$StateTypeID{$StateType} ) {
-        print STDOUT "Error: Could not import line $LineCounter. State '$StateType' does not exist.\n";
+        print STDOUT
+            "Error: Could not import line $LineCounter. State '$StateType' does not exist.\n";
         next ROW;
     }
 
@@ -144,13 +149,13 @@ for my $RowRef ( @{$DataRef} ) {
     # check each sub-category if it exists
     my $CategoryID;
     my $ParentID = 0;
-    for my $Category ( @CategoryArray ) {
+    for my $Category (@CategoryArray) {
 
         # get the category id
         $CommonObject{DBObject}->Prepare(
             SQL => 'SELECT id FROM faq_category '
                 . 'WHERE valid_id = 1 AND name = ? AND parent_id = ?',
-            Bind  => [ \$Category, \$ParentID ],
+            Bind => [ \$Category, \$ParentID ],
             Limit => 1,
         );
         my @Result;
@@ -167,24 +172,27 @@ for my $RowRef ( @{$DataRef} ) {
                 ValidID  => 1,
                 UserID   => 1,
             );
+
             # add new category to faq group
             $CommonObject{FAQObject}->SetCategoryGroup(
                 CategoryID => $CategoryID,
-                GroupIDs   => [ $FAQGroupID ],
+                GroupIDs   => [$FAQGroupID],
             );
         }
+
         # set new parent id
         $ParentID = $CategoryID;
     }
 
     # check category
     if ( !$CategoryID ) {
-        print STDOUT "Error: Could not import line $LineCounter. Category '$CategoryString' could not be created.\n";
+        print STDOUT
+            "Error: Could not import line $LineCounter. Category '$CategoryString' could not be created.\n";
         next ROW;
     }
 
     # add FAQ article
-    my $ItemID = $CommonObject{FAQObject}->FAQAdd(
+    my $FAQID = $CommonObject{FAQObject}->FAQAdd(
         Title      => $Title,
         CategoryID => $CategoryID,
         StateID    => $StateTypeID{$StateType},
@@ -198,8 +206,9 @@ for my $RowRef ( @{$DataRef} ) {
         Keywords   => $Keywords || '',
         Approved   => 1,
     );
+
     # check success
-    if ( !$ItemID ) {
+    if ( !$FAQID ) {
         print STDOUT "Error: Could not import line $LineCounter.\n";
         next ROW;
     }
@@ -223,6 +232,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2008-11-07 09:24:50 $
+$Revision: 1.4 $ $Date: 2010-11-11 15:03:17 $
 
 =cut
