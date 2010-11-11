@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.18 2010-11-11 12:32:14 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.19 2010-11-11 14:12:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -127,32 +127,30 @@ sub Run {
         }
 
         # check required parameters
-        my $ServerError;
+        my %Error;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
 
             # if required field is not given
             if ( !$GetParam{$ParamName} ) {
 
                 # add server error error class
-                $GetParam{ $ParamName . 'ServerError' } = 'ServerError';
+                $Error{ $ParamName . 'ServerError' } = 'ServerError';
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
-                    $GetParam{NameServerErrorMessage} = 'A category should have a name!';
+                    $Error{NameServerErrorMessage} = 'A category should have a name!';
                 }
-
-                # set ServerError Flag
-                $ServerError = 1;
             }
         }
 
         # send server error if any required parameter is missing
-        if ($ServerError) {
+        if (%Error) {
 
             # html output
             $Self->_Edit(
                 Action => 'Change',
                 %GetParam,
+                %Error,
             );
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
@@ -275,7 +273,7 @@ sub Run {
         }
 
         # check required parameters
-        my $ServerError;
+        my %Error;
         for my $ParamName (qw(Name Comment PermissionGroups)) {
 
             # if required field is not given
@@ -283,26 +281,24 @@ sub Run {
 
                 # add validation class and server error error class
                 if ( $ParamName eq 'PermissionGroups' ) {
-                    $GetParam{ $ParamName . 'ServerError' } = 'ServerError';
+                    $Error{ $ParamName . 'ServerError' } = 'ServerError';
                 }
 
                 # add server error string for category name field
                 if ( $ParamName eq 'Name' ) {
-                    $GetParam{NameServerErrorMessage} = 'A category should have a name!';
+                    $Error{NameServerErrorMessage} = 'A category should have a name!';
                 }
-
-                # set ServerError Flag
-                $ServerError = 1;
             }
         }
 
         # send server error if any required parameters are missing
-        if ($ServerError) {
+        if (%Error) {
 
             # html output
             $Self->_Edit(
                 Action => 'Add',
                 %GetParam,
+                %Error,
             );
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'AgentFAQCategory',
