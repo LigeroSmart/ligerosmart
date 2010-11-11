@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.25 2010-06-02 15:56:22 mh Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.26 2010-11-11 18:23:50 mh Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
-    <Framework>2.4.x</Framework>
+    <Framework>3.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
