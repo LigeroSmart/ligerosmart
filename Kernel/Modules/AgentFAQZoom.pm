@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.9 2010-11-12 18:28:03 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.10 2010-11-12 20:08:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -403,11 +403,6 @@ sub Run {
                 },
             );
         }
-    }
-
-    # otherwise output "none" label
-    else {
-        $Self->{LayoutObject}->Block( Name => 'AttachmentNone' );
     }
 
     # get linked objects
