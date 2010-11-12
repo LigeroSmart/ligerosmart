@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.114 2010-11-11 14:20:45 ub Exp $
+# $Id: FAQ.pm,v 1.115 2010-11-12 18:28:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.114 $) [1];
+$VERSION = qw($Revision: 1.115 $) [1];
 
 =head1 NAME
 
@@ -565,13 +565,21 @@ sub AttachmentAdd {
         no bytes;
     }
 
-    # double check
+    # get all existing attachments
     my @Index = $Self->AttachmentIndex(
         ItemID => $Param{ItemID},
         UserID => $Param{UserID},
     );
+
+    # check if an attachment with same filename and size exists already
     for my $File (@Index) {
         if ( $File->{Filename} eq $Param{Filename} && $Param{Filesize} == $File->{FilesizeRaw} ) {
+
+            # show error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "File '$Param{Filename}' exists already!",
+            );
             return;
         }
     }
@@ -3961,6 +3969,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.114 $ $Date: 2010-11-11 14:20:45 $
+$Revision: 1.115 $ $Date: 2010-11-12 18:28:09 $
 
 =cut
