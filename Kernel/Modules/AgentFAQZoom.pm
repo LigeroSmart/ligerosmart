@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.8 2010-11-11 15:32:09 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.9 2010-11-12 18:28:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -70,14 +70,10 @@ sub Run {
         );
     }
 
-    # create default variables
-    my %GetParam;
-    my $AlreadyVoted;
-    my $Output;
-
     # get params
-    $GetParam{ItemID} = $Self->{ParamObject}->GetParam( Param => "ItemID" );
-    $GetParam{Rate}   = $Self->{ParamObject}->GetParam( Param => "Rate" );
+    my %GetParam;
+    $GetParam{ItemID} = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
+    $GetParam{Rate}   = $Self->{ParamObject}->GetParam( Param => 'Rate' );
 
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
@@ -102,12 +98,42 @@ sub Run {
         CategoryID => $FAQData{CategoryID},
     );
 
-    if ( $Permission eq '' || !$FAQData{Approved} ) {
+    if ( !$Permission ) {
         $Self->{LayoutObject}->FatalError( Message => "Permission denied!" );
     }
 
+    # ---------------------------------------------------------- #
+    # DownloadAttachment Subaction
+    # ---------------------------------------------------------- #
+    if ( $Self->{Subaction} eq 'DownloadAttachment' ) {
+
+        # manage parameters
+        $GetParam{FileID} = $Self->{ParamObject}->GetParam( Param => 'FileID' );
+
+        if ( !defined $GetParam{FileID} ) {
+            return $Self->{LayoutObject}->FatalError( Message => 'Need FileID' );
+        }
+
+        # get attachments
+        my %File = $Self->{FAQObject}->AttachmentGet(
+            ItemID => $GetParam{ItemID},
+            FileID => $GetParam{FileID},
+            UserID => $Self->{UserID},
+        );
+        if (%File) {
+            return $Self->{LayoutObject}->Attachment(%File);
+        }
+        else {
+            $Self->{LogObject}->Log(
+                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
+                Priority => 'error',
+            );
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+    }
+
     # output header
-    $Output = $Self->{LayoutObject}->Header(
+    my $Output = $Self->{LayoutObject}->Header(
         Value => $FAQData{Title},
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
@@ -122,19 +148,24 @@ sub Run {
     );
 
     # check if user already voted this FAQ item
+    my $AlreadyVoted;
     if ($VoteData) {
 
         # item/change_time > voting/create_time
-        my $ItemChangedSystemTime
-            = $Self->{TimeObject}->TimeStamp2SystemTime( String => $FAQData{Changed} || '' );
-        my $VoteCreatedSystemTime
-            = $Self->{TimeObject}->TimeStamp2SystemTime( String => $VoteData->{Created} || '' );
-
+        my $ItemChangedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $FAQData{Changed} || '',
+        );
+        my $VoteCreatedSystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
+            String => $VoteData->{Created} || '',
+        );
         if ( $ItemChangedSystemTime <= $VoteCreatedSystemTime ) {
             $AlreadyVoted = 1;
         }
     }
 
+    # ---------------------------------------------------------- #
+    # Vote Subaction
+    # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
 
         # user can vote only once per FAQ revision
@@ -194,32 +225,25 @@ sub Run {
     }
 
     # prepare fields data
-    KEY:
-    for my $Key (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
-        next KEY if !$FAQData{$Key};
+    FIELD:
+    for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
+        next FIELD if !$FAQData{$Field};
 
         # no quoting if html view is enabled
-        next KEY if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
+        next FIELD if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
 
         # html quoting
-        $FAQData{$Key} = $Self->{LayoutObject}->Ascii2Html(
+        $FAQData{$Field} = $Self->{LayoutObject}->Ascii2Html(
             NewLine        => 0,
-            Text           => $FAQData{$Key},
+            Text           => $FAQData{$Field},
             VMax           => 5000,
             HTMLResultMode => 1,
             LinkFeature    => 1,
         );
     }
 
-    # permission check
-    if ( !exists( $Self->{InterfaceStates}{ $FAQData{StateTypeID} } ) ) {
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
-    }
-
-    my %UserInfo;
-
     # get user info (CreatedBy)
-    %UserInfo = $Self->{UserObject}->GetUserData(
+    my %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $FAQData{CreatedBy}
     );
     $Param{CreatedByLogin} = $UserInfo{UserLogin};
@@ -230,25 +254,10 @@ sub Run {
     );
     $Param{ChangedByLogin} = $UserInfo{UserLogin};
 
-    # show FAQ Content
-    $Param{FAQContent} = $Self->_FAQContent(
-        FAQData => {%FAQData},
-    );
-
-    # show FAQ Voting
-    # check config
-    my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
-    if ( $ShowVotingConfig->{ $Self->{Interface}{Name} } ) {
-
-        # check if the user already voted after last change
-        if ( !$AlreadyVoted ) {
-            $Param{FAQVoting} = $Self->_FAQVoting( FAQData => {%FAQData} );
-        }
-    }
-
     # set voting results
-    $Param{VotingResultColor}
-        = $Self->{LayoutObject}->GetFAQItemVotingRateColor( Rate => $FAQData{VoteResult} );
+    $Param{VotingResultColor} = $Self->{LayoutObject}->GetFAQItemVotingRateColor(
+        Rate => $FAQData{VoteResult},
+    );
 
     if ( !$Param{VotingResultColor} || $FAQData{Votes} eq '0' ) {
         $Param{VotingResultColor} = 'Gray';
@@ -281,9 +290,7 @@ sub Run {
                 if ( $Menus{$Menu}->{Target} ) {
 
                     if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
-
-                        # TODO: Check if TicketAction is correct here!
-                        $Menus{$Menu}->{Class} = 'AsPopup PopupType_TicketAction';
+                        $Menus{$Menu}->{Class} = 'AsPopup';
                     }
                     elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
                         $Menus{$Menu}->{Class} = 'HistoryBack';
@@ -340,7 +347,11 @@ sub Run {
     }
 
     # show FAQ path
-    if ( $Self->_GetFAQPath( CategoryID => $FAQData{CategoryID} ) ) {
+    my $ShowFAQPath = $Self->{LayoutObject}->FAQPathShow(
+        FAQObject  => $Self->{FAQObject},
+        CategoryID => $FAQData{CategoryID},
+    );
+    if ($ShowFAQPath) {
         $Self->{LayoutObject}->Block(
             Name => 'FAQPathItemElement',
             Data => {%FAQData},
@@ -366,7 +377,7 @@ sub Run {
     }
 
     # output rating stars
-    $Self->_FAQRatingStars(
+    $Self->{LayoutObject}->FAQRatingStarsShow(
         VoteResult => $FAQData{VoteResult},
         Votes      => $FAQData{Votes}
     );
@@ -407,6 +418,24 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
+    # show FAQ Content
+    $Self->{LayoutObject}->FAQContentShow(
+        FAQObject       => $Self->{FAQObject},
+        InterfaceStates => $Self->{InterfaceStates},
+        FAQData         => {%FAQData},
+    );
+
+    # show FAQ Voting
+    # check config
+    my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
+    if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+
+        # check if the user already voted after last change
+        if ( !$AlreadyVoted ) {
+            $Self->_FAQVoting( FAQData => {%FAQData} );
+        }
+    }
+
     # get link table view mode
     my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
 
@@ -445,54 +474,6 @@ sub Run {
     return $Output;
 }
 
-sub _FAQContent {
-    my ( $Self, %Param ) = @_;
-
-    my %FAQData = %{ $Param{FAQData} };
-
-    # config values
-    my %ItemFields = ();
-    for my $Count ( 1 .. 6 ) {
-        my $ItemConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Count );
-        if ( $ItemConfig->{Show} ) {
-            $ItemFields{ "Field" . $Count } = $ItemConfig;
-        }
-    }
-    for my $Key ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields ) {
-        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Key}->{Show},
-            UserID => $Self->{UserID},
-        );
-
-        # show yes /no
-        if ( exists( $Self->{InterfaceStates}{ $StateTypeData->{StateID} } ) ) {
-
-            $Self->{LayoutObject}->Block(
-                Name => 'FAQContent',
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'FAQContentHeader',
-                Data => {
-                    Key => $ItemFields{$Key}->{'Caption'},
-                },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'FAQContentBody',
-                Data => {
-                    Body => $FAQData{$Key} || '',
-                },
-            );
-        }
-    }
-
-    # return output
-    return $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentFAQZoom',
-        Data         => {%Param},
-    );
-
-}
-
 sub _FAQVoting {
     my ( $Self, %Param ) = @_;
 
@@ -506,12 +487,12 @@ sub _FAQVoting {
 
     # get Voting rates setting
     my $VotingRates = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Rates');
-    for my $Key ( sort { $a <=> $b } keys %{$VotingRates} ) {
+    for my $RateValue ( sort { $a <=> $b } keys %{$VotingRates} ) {
 
         # create data strucure for output
         my %Data = (
-            Value => $Key,
-            Title => $VotingRates->{$Key},
+            Value => $RateValue,
+            Title => $VotingRates->{$RateValue},
         );
 
         # output vote rating row block
@@ -520,89 +501,6 @@ sub _FAQVoting {
             Data => {%Data},
         );
     }
-
-    # return output
-    return $Self->{LayoutObject}->Output( TemplateFile => 'AgentFAQZoom' );
-}
-
-sub _GetFAQPath {
-    my ( $Self, %Param ) = @_;
-
-    # output category root
-    $Self->{LayoutObject}->Block(
-        Name => 'FAQPathCategoryElement',
-        Data => {
-            'Name'       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
-            'CategoryID' => '0',
-        },
-    );
-
-    # get Show FAQ Path setting
-    my $ShowPath = $Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show');
-
-    # do not diplay the path if setting is off
-    if ( !$ShowPath ) {
-        return;
-    }
-
-    # get category list to construct the path
-    my $CategoryList = $Self->{FAQObject}->FAQPathListGet(
-        CategoryID => $Param{CategoryID},
-        UserID     => $Self->{UserID},
-    );
-
-    # output subcategories
-    for my $CategoryData ( @{$CategoryList} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'FAQPathCategoryElement',
-            Data => { %{$CategoryData} },
-        );
-    }
-    return 1;
-}
-
-sub _FAQRatingStars {
-    my ( $Self, %Param ) = @_;
-
-    my $VoteResult = $Param{VoteResult};
-    my $Votes      = $Param{Votes};
-
-    # get stars by mutiply by 5 and divide by 100
-    # 100 because Vote result is a %
-    # 5 because we have only 5 stars
-    my $StarCounter = int( $VoteResult * 0.05 );
-    if ( $StarCounter < 5 ) {
-
-        # add 1 because lowest value should be 1
-        $StarCounter++;
-    }
-
-    # the number of stars can't be grater that 5
-    elsif ( $StarCounter > 5 ) {
-        $StarCounter = 5;
-    }
-
-    # do not output any star if this FAQ has been not voted
-    if ( $Votes eq '0' ) {
-        $StarCounter = 0;
-    }
-
-    # show stars only if the FAQ item has been voted at least once even if the $VoteResult is 0
-    else {
-
-        # output stars
-        for ( 1 .. $StarCounter ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'RateStars',
-            );
-        }
-    }
-
-    # output stars text
-    $Self->{LayoutObject}->Block(
-        Name => 'RateStarsCount',
-        Data => { Stars => $StarCounter },
-    );
 }
 
 1;
