@@ -2,7 +2,7 @@
 # AgentFAQSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.2 2010-11-08 19:10:55 ub Exp $
+# $Id: AgentFAQSearch.dtl,v 1.3 2010-11-12 22:37:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,34 +14,39 @@
     <form action="$Env{"CGIHandle"}" method="post" id="SearchForm">
         <input type="hidden" name="Action" value="$Env{"Action"}"/>
         <input type="hidden" name="Subaction" value="Search"/>
-        <h2 class="Center">$Text{"Search"}</h2>
+        <input type="hidden" name="EmptySearch" value="$QData{"EmptySearch"}" id="EmptySearch"/>
         <fieldset class="TableLike">
             <div class="Clear"></div>
-            <label>$Text{"Search-Template"}</label>
+            <label>$Text{"Search template"}:</label>
             <div class="Field">
                 $Data{"ProfilesStrg"}
 
                 <button id="SearchProfileNew" value="$Text{"Create New"}">$Text{"Create New"}</button>
 
                 <button id="SearchProfileDelete" class="Hidden" value="$Text{"Delete"}">$Text{"Delete"}</button>
-
                 <div id="SearchProfileAddBlock">
                     <input type="text" name="Name" id="SearchProfileAddName"/>
-                    <button type="submit" title="$Text{"Create Template"}" id="SearchProfileAddAction">$Text{"Add"}</button>
-                    <input type="hidden" name="SaveProfile" value="1"/>
+                    <button type="button" title="$Text{"Create Template"}" id="SearchProfileAddAction">$Text{"Add"}</button>
                 </div>
             </div>
+<!-- dtl:block:SearchAJAXStoreInTemplate -->
+            <div class="Clear"></div>
+            <label>$Text{"Save changes in template"}:</label>
+            <div class="Field">
+                <input type="checkbox" name="SaveProfile" id="SaveProfile" value="1"/>
+            </div>
+<!-- dtl:block:SearchAJAXStoreInTemplate -->
         </fieldset>
         <fieldset class="TableLike" id="SearchInsert"></fieldset>
         <fieldset class="TableLike">
             <div class="Clear"></div>
-            <label>$Text{"Add another attribute"}</label>
+            <label>$Text{"Add another attribute"}:</label>
             <div class="Field">
                 $Data{"AttributesStrg"}
-                <button type="submit" class="Add" value="Add" title="Add entry">$Text{"Add"}</button>
+                <button type="button" class="Add" value="Add" title="Add entry">$Text{"Add"}</button>
             </div>
             <div class="Clear"></div>
-            <label>$Text{"Result Form"}:</label>
+            <label>$Text{"Output"}:</label>
             <div class="Field">
                 $Data{"ResultFormStrg"}
             </div>
@@ -50,42 +55,42 @@
 
     <fieldset class="TableLike Hidden" id="SearchAttributesHidden">
         <div class="Clear"></div>
-        <label for="Fulltext">$Text{"Fulltext"}</label>
+        <label for="Fulltext">$Text{"Fulltext"}:</label>
         <div class="Field">
             <input type="text" name="Fulltext" value="$QData{"Fulltext"}" class="W50pc" />
-            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
-        <label for="Number">$Text{"FAQ#"} $Text{"(e.g. 10*5155 or 105658*)"}</label>
+        <label for="Number">$Text{"FAQ#"} $Text{"(e.g. 10*5155 or 105658*)"}:</label>
         <div class="Field">
             <input type="text" name="Number" value="$QData{"Number"}" class="W50pc"/>
-            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="Title">$Text{"Title"}</label>
+        <label for="Title">$Text{"Title"}:</label>
         <div class="Field">
             <input type="text" name="Title" value="$QData{"Title"}" class="W50pc"/>
-            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="Keyword">$Text{"Keyword"}</label>
+        <label for="Keyword">$Text{"Keyword"}:</label>
         <div class="Field">
             <input type="text" name="Keyword" value="$QData{"Keywords"}" class="W50pc"/>
-            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
-        <label for="LanguageIDs">$Text{"Language"}</label>
+        <label for="LanguageIDs">$Text{"Language"}:</label>
         <div class="Field">
 $Data{"LanguagesSelectionString"}
-            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="CategoryIDs">$Text{"Category"}</label>
+        <label for="CategoryIDs">$Text{"Category"}:</label>
         <div class="Field">
 $Data{"CategoriesSelectionString"}
-            <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
+            <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
