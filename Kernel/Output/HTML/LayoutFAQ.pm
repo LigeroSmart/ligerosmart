@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.19 2010-11-11 16:00:18 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.20 2010-11-12 18:13:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -336,6 +336,194 @@ sub FAQListShow {
 
     # return content if available
     return $OutputRaw;
+}
+
+=item FAQContentShow()
+
+Outputs the necessary DTL blocks to display the FAQ item fields for the supplied FAQ item ID.
+The fields displayed are also restricted by the permissions represented by the supplied interface
+
+    $LayoutObject->FAQContentShow(
+        FAQObject       => $FAQObject,                 # needed for core module insteraction
+        FAQData         => %{ $FAQData },
+        InterfaceStates => $Self->{InterfaceStates},
+    );
+
+=cut
+
+sub FAQContentShow {
+    my ( $Self, %Param ) = @_;
+
+    # check parameters
+    for my $ParamName (qw(FAQObject FAQData InterfaceStates)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
+            return;
+        }
+    }
+
+    # store FAQ object locally
+    $Self->{FAQObject} = $Param{FAQObject};
+
+    my %FAQData = %{ $Param{FAQData} };
+
+    # config values
+    my %ItemFields;
+    FIELD:
+    for my $Count ( 1 .. 6 ) {
+        my $ItemConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Count );
+
+        # get only the fields that are configured to be show (by any interface)
+        next FIELD if ( !$ItemConfig->{Show} );
+        $ItemFields{ "Field" . $Count } = $ItemConfig;
+    }
+
+    for my $Field ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields )
+    {
+        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
+            Name   => $ItemFields{$Field}->{Show},
+            UserID => $Self->{UserID},
+        );
+
+        # show yes /no
+        if ( exists( $Param{InterfaceStates}->{ $StateTypeData->{StateID} } ) ) {
+            $Self->Block(
+                Name => 'FAQContent',
+                Data => {
+                    FieldName => $ItemFields{$Field}->{'Caption'},
+                    StateName => $StateTypeData->{Name},
+                    Body      => $FAQData{$Field} || '',
+                    }
+            );
+        }
+    }
+}
+
+=item FAQPathShow()
+
+if its allowd by the configuration, outputs the necessary DTL blocks to display the FAQ item path,
+and returns the value 1.
+
+    my ShowPath = $LayoutObject->FAQPathShow(
+        FAQObject       => $FAQObject,                 # needed for core module insteraction
+        CategoryID      => $FAQData{CategoryID},
+    );
+
+=cut
+
+sub FAQPathShow {
+    my ( $Self, %Param ) = @_;
+
+    # check parameters
+    for my $ParamName (qw(FAQObject CategoryID)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
+            return;
+        }
+    }
+
+    # store FAQ object locally
+    $Self->{FAQObject} = $Param{FAQObject};
+
+    # output category root
+    $Self->Block(
+        Name => 'FAQPathCategoryElement',
+        Data => {
+            'Name'       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
+            'CategoryID' => '0',
+        },
+    );
+
+    # get Show FAQ Path setting
+    my $ShowPath = $Self->{ConfigObject}->Get('FAQ::Explorer::Path::Show');
+
+    # do not diplay the path if setting is off
+    return if !$ShowPath;
+
+    # get category list to construct the path
+    my $CategoryList = $Self->{FAQObject}->FAQPathListGet(
+        CategoryID => $Param{CategoryID},
+        UserID     => $Self->{UserID},
+    );
+
+    # output subcategories
+    for my $CategoryData ( @{$CategoryList} ) {
+        $Self->Block(
+            Name => 'FAQPathCategoryElement',
+            Data => { %{$CategoryData} },
+        );
+    }
+    return 1;
+}
+
+=item FAQRatingStarsShow()
+
+Outputs the necessary DTL blocks to represent the FAQ item rating as "Stars" in the scale from
+1 to 5
+
+    $LayoutObject->FAQRatingStarsShow(
+        VoteResult => $FAQData->{VoteResult},
+        Votes      => $FAQData ->{Votes},
+    );
+
+=cut
+
+sub FAQRatingStarsShow {
+    my ( $Self, %Param ) = @_;
+
+    # check parameters
+    for my $ParamName (qw(VoteResult Votes)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
+            return;
+        }
+    }
+
+    # get stars by mutiply by 5 and divide by 100
+    # 100 because Vote result is a %
+    # 5 because we have only 5 stars
+    my $StarCounter = int( $Param{VoteResult} * 0.05 );
+    if ( $StarCounter < 5 ) {
+
+        # add 1 because lowest value should be 1
+        $StarCounter++;
+    }
+
+    # the number of stars can't be grater that 5
+    elsif ( $StarCounter > 5 ) {
+        $StarCounter = 5;
+    }
+
+    # do not output any star if this FAQ has been not voted
+    if ( $Param{Votes} eq '0' ) {
+        $StarCounter = 0;
+    }
+
+    # show stars only if the FAQ item has been voted at least once even if the $VoteResult is 0
+    else {
+
+        # output stars
+        for ( 1 .. $StarCounter ) {
+            $Self->Block(
+                Name => 'RateStars',
+            );
+        }
+    }
+
+    # output stars text
+    $Self->Block(
+        Name => 'RateStarsCount',
+        Data => { Stars => $StarCounter },
+    );
 }
 
 1;
