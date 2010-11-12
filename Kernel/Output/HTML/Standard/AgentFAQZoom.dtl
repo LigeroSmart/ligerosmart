@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.6 2010-11-11 16:05:59 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.7 2010-11-12 18:18:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -108,20 +108,9 @@
                 </div>
             </div>
 
-<!-- dtl:block:LinkTableSimple -->
             <div class="WidgetSimple DontPrint">
                 <div class="Header">
-                    <h2>$Text{"Linked Objects"}</h2>
-                </div>
-                <div class="Content">
-                    $Data{"LinkTableStrg"}
-                </div>
-            </div>
-<!-- dtl:block:LinkTableSimple -->
-
-            <div class="WidgetSimple DontPrint">
-                <div class="Header">
-                    <h2>$Text{"Attachments"}:</h2>
+                    <h2>$Text{"Attachments"}</h2>
                 </div>
                 <div class="Content">
 
@@ -138,7 +127,7 @@
 <!-- dtl:block:AttachmentRow -->
                             <tr>
                                 <td>
-                                    <a href="$Env{"Baselink"}Action=AgentFAQAttachment;ItemID=$LQData{"ItemID"};FileID=$LQData{"FileID"}">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;ItemID=$LQData{"ItemID"};FileID=$LQData{"FileID"}">
                                         $QData{"Filename"}
                                     </a>
                                 </td>
@@ -158,6 +147,18 @@
 
                 </div>
             </div>
+
+<!-- dtl:block:LinkTableSimple -->
+            <div class="WidgetSimple DontPrint">
+                <div class="Header">
+                    <h2>$Text{"Linked Objects"}</h2>
+                </div>
+                <div class="Content">
+                    $Data{"LinkTableStrg"}
+                </div>
+            </div>
+<!-- dtl:block:LinkTableSimple -->
+
         </div>
         <div class="ContentColumn">
             <div class="ControlRow">
@@ -178,12 +179,61 @@
                 <div class="Clear"></div>
             </div>
             <div id="FAQBody">
+<!-- dtl:block:FAQContent -->
+                <div class="WidgetBox">
+                    <div class="FAQContent">
+                        <div class="ArticleFAQHeader">
+                            <label>$Text{"$Data{"FieldName"}"}:</label>
+                            <span class="FAQStateName">($Text{"$Data{"StateName"}"})</span>
+                            <div class="Clear"></div>
+                        </div>
+                        <div class="ArticleFAQContent">
+                            <div class="message">
+                                $Data{"Body"}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- dtl:block:FAQContent -->
+<!-- dtl:block:FAQVoting -->
+                <div class="WidgetBox">
+                    <div class="FAQVoting">
+                        <div class="ArticleFAQHeader">
+                            <label>$Text{"Rating"}:</label>
+                            <div class="Clear"></div>
+                        </div>
+                        <div class="ArticleFAQContent">
+                            <h3>$Text{"$Config{"FAQ::Item::Voting::QuestionLangKey"}"}</h3>
+                            <div class="SpacingTop">
+                                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote">
+                                    <div>
+                                        <span class="RateLabelBefore">$Text{"not helpful"}</span>
+                                    </div>
 
-$Data{"FAQContent"}
-$Data{"FAQVoting"}
+<!-- dtl:block:FAQVotingRateRow -->
+                                    <div id="RateButton$Data{"Value"}">
+                                        <span class="RateButton RateUnChecked">$QData{"Title"}</span>
+                                    </div>
+<!-- dtl:block:FAQVotingRateRow -->
+
+                                    <div>
+                                        <span class="RateLabelAfter">$Text{"very helpful"}</span>
+                                    </div>
+                                    <button type="submit" class="Hidden" id="RateSubmitButton" name="btn" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                                    <input type="hidden" name="Action" value="AgentFAQZoom"/>
+                                    <input type="hidden" name="Subaction" value="Vote"/>
+                                    <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
+                                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
+                                    <input type="hidden" name="Rate" value=""id="RateValue"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- dtl:block:FAQVoting -->
 
             </div>
-
+            <div class="Clear"></div>
 <!-- dtl:block:LinkTableComplex -->
             <div class="Content">
                 $Data{"LinkTableStrg"}
@@ -195,67 +245,6 @@ $Data{"FAQVoting"}
     </div>
 </div>
 <!-- dtl:block:Header -->
-
-<!-- dtl:block:FAQContent -->
-<div class="WidgetBox">
-    <div class="FAQContent">
-
-<!-- dtl:block:FAQContentHeader -->
-        <div class="ArticleFAQHeader">
-            <label>$Text{"$Data{"Key"}"}:</label>
-            <div class="Clear"></div>
-        </div>
-<!-- dtl:block:FAQContentHeader -->
-
-        <div class="ArticleFAQContent">
-
-<!-- dtl:block:FAQContentBody -->
-            <div class="message">
-                $Data{"Body"}
-            </div>
-<!-- dtl:block:FAQContentBody -->
-
-        </div>
-    </div>
-</div>
-<!-- dtl:block:FAQContent -->
-
-<!-- dtl:block:FAQVoting -->
-<div class="WidgetBox">
-    <div id="FAQVoting">
-        <div class="ArticleFAQHeader">
-            <label>$Text{"Rating"}:</label>
-            <div class="Clear"></div>
-        </div>
-        <div class="ArticleFAQContent">
-            <h3>$Text{"$Config{"FAQ::Item::Voting::QuestionLangKey"}"}</h3>
-            <div class="SpacingTop">
-                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote">
-                    <div>
-                        <span class="RateLabelBefore">$Text{"not helpful"}</span>
-                    </div>
-
-<!-- dtl:block:FAQVotingRateRow -->
-                    <div id="RateButton$Data{"Value"}">
-                        <span class="RateButton RateUnChecked">$QData{"Title"}</span>
-                    </div>
-<!-- dtl:block:FAQVotingRateRow -->
-
-                    <div>
-                        <span class="RateLabelAfter">$Text{"very helpful"}</span>
-                    </div>
-                    <button type="submit" class="Hidden" id="RateSubmitButton" name="btn" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                    <input type="hidden" name="Action" value="AgentFAQZoom"/>
-                    <input type="hidden" name="Subaction" value="Vote"/>
-                    <input type="hidden" name="CategoryID" value="$QData{"CategoryID"}"/>
-                    <input type="hidden" name="ItemID" value="$QData{"ItemID"}"/>
-                    <input type="hidden" name="Rate" value=""id="RateValue"/>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- dtl:block:FAQVoting -->
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
