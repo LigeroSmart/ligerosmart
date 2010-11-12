@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.20 2010-11-12 18:13:21 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.21 2010-11-12 19:16:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -479,7 +479,7 @@ sub FAQRatingStarsShow {
 
     # check parameters
     for my $ParamName (qw(VoteResult Votes)) {
-        if ( !$Param{$ParamName} ) {
+        if ( !defined $Param{$ParamName} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $ParamName!",
