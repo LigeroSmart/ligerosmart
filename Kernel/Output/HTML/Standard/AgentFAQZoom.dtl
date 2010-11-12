@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.7 2010-11-12 18:18:30 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.8 2010-11-12 20:07:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -102,49 +102,9 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
-                        <p class="Value" title="$TimeLong{"$Data{"Chaged"}"} ($Data{"CreatedByLogin"})">$TimeShort{"$Data{"Changed"}"}  ($Data{"CreatedByLogin"})</p>
+                        <p class="Value" title="$TimeLong{"$Data{"Changed"}"} ($Data{"CreatedByLogin"})">$TimeShort{"$Data{"Changed"}"}  ($Data{"CreatedByLogin"})</p>
                         <div class="Clear"></div>
                     </fieldset>
-                </div>
-            </div>
-
-            <div class="WidgetSimple DontPrint">
-                <div class="Header">
-                    <h2>$Text{"Attachments"}</h2>
-                </div>
-                <div class="Content">
-
-<!-- dtl:block:AttachmentHeader -->
-                    <table class="DataTable SpacingTopSmall" summary="Table for all attachments in this FAQ article">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Size</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-<!-- dtl:block:AttachmentRow -->
-                            <tr>
-                                <td>
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;ItemID=$LQData{"ItemID"};FileID=$LQData{"FileID"}">
-                                        $QData{"Filename"}
-                                    </a>
-                                </td>
-                                <td>
-                                    $QData{"Filesize"}
-                                </td>
-                            </tr>
-<!-- dtl:block:AttachmentRow -->
-
-                        </tbody>
-                    </table>
-<!-- dtl:block:AttachmentHeader -->
-
-<!-- dtl:block:AttachmentNone -->
-                    none
-<!-- dtl:block:AttachmentNone -->
-
                 </div>
             </div>
 
@@ -179,6 +139,33 @@
                 <div class="Clear"></div>
             </div>
             <div id="FAQBody">
+
+<!-- dtl:block:AttachmentHeader -->
+                <div class="WidgetBox">
+                    <div class="FAQContent">
+                        <div class="ArticleFAQHeader">
+                            <label>$Text{"Attachments"}:</label>
+                            <div class="Clear"></div>
+                        </div>
+                        <div class="ArticleFAQContent">
+                            <div class="message">
+
+<!-- dtl:block:AttachmentRow -->
+                                <span class="DownloadAttachment" title="$Text{"Download Attachment"}">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;ItemID=$LQData{"ItemID"};FileID=$LQData{"FileID"}">
+                                        $QData{"Filename"}
+                                    </a>
+                                    , $QData{"Filesize"}
+                                </span>
+                                <br/>
+<!-- dtl:block:AttachmentRow -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- dtl:block:AttachmentHeader -->
+
 <!-- dtl:block:FAQContent -->
                 <div class="WidgetBox">
                     <div class="FAQContent">
