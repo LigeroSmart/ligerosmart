@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
-    <CVS>$Id: SystemMonitoring.sopm,v 1.14 2010-06-23 15:46:52 mb Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.sopm,v 1.15 2010-11-12 12:40:38 mb Exp $</CVS>
     <Name>SystemMonitoring</Name>
     <Version>0.0.0</Version>
-    <Framework>2.4.x</Framework>
+    <Framework>3.0.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
