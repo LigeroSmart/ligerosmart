@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.115 2010-11-12 18:28:09 ub Exp $
+# $Id: FAQ.pm,v 1.116 2010-11-12 18:39:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.115 $) [1];
+$VERSION = qw($Revision: 1.116 $) [1];
 
 =head1 NAME
 
@@ -571,18 +571,29 @@ sub AttachmentAdd {
         UserID => $Param{UserID},
     );
 
-    # check if an attachment with same filename and size exists already
-    for my $File (@Index) {
-        if ( $File->{Filename} eq $Param{Filename} && $Param{Filesize} == $File->{FilesizeRaw} ) {
+    # get the filename
+    my $NewFileName = $Param{Filename};
 
-            # show error
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "File '$Param{Filename}' exists already!",
-            );
-            return;
+    # build a lookup hash of all existing file names
+    my %UsedFile;
+    for my $File (@Index) {
+        $UsedFile{ $File->{Filename} } = 1;
+    }
+
+    # try to modify the the file name by adding a number if it exists already
+    for ( my $Count = 1; $Count <= 50; $Count++ ) {
+        if ( exists $UsedFile{$NewFileName} ) {
+            if ( $Param{Filename} =~ m{ \A (.*) \. (.+?) \z }xms ) {
+                $NewFileName = "$1-$Count.$2";
+            }
+            else {
+                $NewFileName = "$Param{Filename}-$Count";
+            }
         }
     }
+
+    # store the new filename
+    $Param{Filename} = $NewFileName;
 
     # encode attachment if it's a postgresql backend!!!
     if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
@@ -3969,6 +3980,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.115 $ $Date: 2010-11-12 18:28:09 $
+$Revision: 1.116 $ $Date: 2010-11-12 18:39:24 $
 
 =cut
