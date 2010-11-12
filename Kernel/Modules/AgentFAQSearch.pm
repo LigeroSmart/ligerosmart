@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.13 2010-11-11 15:27:40 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.14 2010-11-12 22:40:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -113,7 +113,7 @@ sub Run {
         );
     }
 
-    # get single parameters
+    # get single params
     my %GetParam;
 
     # load profiles string params (press load profile)
@@ -167,7 +167,7 @@ sub Run {
             . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit}";
         $Self->{SessionObject}->UpdateSessionID(
             SessionID => $Self->{SessionID},
-            Key       => 'LastScreenFAQ',
+            Key       => 'LastScreenOverview',
             Value     => $URL,
         );
         $Self->{SessionObject}->UpdateSessionID(
@@ -227,6 +227,7 @@ sub Run {
         if ( $GetParam{ResultForm} eq 'CSV' ) {
             my @CSVHead;
             my @CSVData;
+
             for my $FAQID (@ViewableFAQIDs) {
 
                 # get FAQ data details
@@ -583,13 +584,10 @@ sub Run {
             %GetParam,
         );
 
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentFAQSearch',
-            Data         => \%Param,
-        );
         return $Self->{LayoutObject}->Attachment(
             NoCache     => 1,
             ContentType => 'text/html',
+            Charset     => $Self->{LayoutObject}->{UserCharset},
             Content     => $Output,
             Type        => 'inline'
         );
@@ -615,12 +613,27 @@ sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
     my $Profile = $Self->{Profile};
+    my $EmptySearch = $Self->{ParamObject}->GetParam( Param => 'EmptySearch' );
+    if ( !$Profile ) {
+        $EmptySearch = 1;
+    }
 
     my %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
         Base      => 'FAQSearch',
         Name      => $Profile,
         UserLogin => $Self->{UserLogin},
     );
+
+    # if no profile is used, set default params of default attributes
+    if ( !$Profile ) {
+        if ( $Self->{Config}->{Defaults} ) {
+            ATTRIBUTE:
+            for my $Attribute ( sort keys %{ $Self->{Config}->{Defaults} } ) {
+                next ATTRIBUTE if !$Self->{Config}->{Defaults}->{$Attribute};
+                $GetParam{$Attribute} = $Self->{Config}->{Defaults}->{$Attribute};
+            }
+        }
+    }
 
     # set attributes string
     my @Attributes = (
@@ -697,7 +710,13 @@ sub _MaskForm {
         UserLogin => $Self->{UserLogin},
     );
     delete $Profiles{''};
-    $Profiles{'last-search'} = '-';
+    delete $Profiles{'last-search'};
+    if ($EmptySearch) {
+        $Profiles{''} = '-';
+    }
+    else {
+        $Profiles{'last-search'} = '-';
+    }
     $Param{ProfilesStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => \%Profiles,
         Name       => 'Profile',
@@ -720,18 +739,31 @@ sub _MaskForm {
         Name => 'SearchAJAX',
         Data => {
             %Param,
-            %GetParam
+            %GetParam,
+            EmptySearch => $EmptySearch,
         },
     );
 
+    if ( $Self->{Profile} ne '' && $Self->{Profile} ne 'last-search' ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchAJAXStoreInTemplate',
+            Data => {
+                %Param,
+                %GetParam,
+            },
+        );
+    }
+
     # show attributes
-    my $AttributeIsUsed = 0;
-    for my $Key ( sort keys %GetParam ) {
+    my %AlreadyShown;
+    for my $Item (@Attributes) {
+        my $Key = $Item->{Key};
         next if !$Key;
         next if !defined $GetParam{$Key};
         next if $GetParam{$Key} eq '';
 
-        $AttributeIsUsed = 1;
+        next if $AlreadyShown{$Key};
+        $AlreadyShown{$Key} = 1;
         $Self->{LayoutObject}->Block(
             Name => 'SearchAJAXShow',
             Data => {
@@ -741,19 +773,33 @@ sub _MaskForm {
     }
 
     # if no attribute is shown, show fulltext search
-    if ( !$AttributeIsUsed ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'SearchAJAXShow',
-            Data => {
-                Attribute => 'Fulltext',
-            },
-        );
+    if ( !$Profile ) {
+        if ( $Self->{Config}->{Defaults} ) {
+            for my $Key ( sort keys %{ $Self->{Config}->{Defaults} } ) {
+                next if $AlreadyShown{$Key};
+                $AlreadyShown{$Key} = 1;
+                $Self->{LayoutObject}->Block(
+                    Name => 'SearchAJAXShow',
+                    Data => {
+                        Attribute => $Key,
+                    },
+                );
+            }
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'SearchAJAXShow',
+                Data => {
+                    Attribute => 'Fulltext',
+                },
+            );
+        }
     }
 
     # build output
     my $Output = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQSearch',
-        Data         => \%Param,
+        Data         => {%Param},
     );
 
     return $Output;
