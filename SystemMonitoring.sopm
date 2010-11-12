@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
-    <CVS>$Id: SystemMonitoring.sopm,v 1.15 2010-11-12 12:40:38 mb Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.sopm,v 1.16 2010-11-12 12:44:09 mb Exp $</CVS>
     <Name>SystemMonitoring</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -19,7 +19,7 @@
         <File Permission="644" Location="scripts/test/sample/SystemMonitoring1.box"/>
         <File Permission="644" Location="scripts/test/sample/SystemMonitoring2.box"/>
     </Filelist>
-    <IntroInstallPost Title="Using the SystemMonitoring Module" Lang="en">For configuration instructions please refer to the information in doc/SystemMonitoring.txt.</IntroInstallPost>
+    <IntroInstallPost Title="Using the SystemMonitoring Module" Lang="en">For configuration instructions please refer to the enclosed PDF documentation.</IntroInstallPost>
     <IntroInstallPost Title="Konfiguration des SystemMonitoring Moduls" Lang="de">Eine Anleitung zur Konfiguration des SystemMonitoring Moduls findet sich in der Datei doc/SystemMonitoring.txt.</IntroInstallPost>
     <CodeUpgrade Type="pre">
 
