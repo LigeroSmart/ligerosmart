@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.3 2010-11-11 18:21:18 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.4 2010-11-12 19:04:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,6 +83,11 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
+        # TODO
+        # find out the category id of the last viewed category
+        # get it from the session, the Exlorer must write it there
+        # and give it to the _MaskNew function
+
         # html output
         $Output .= $Self->_MaskNew(
             %Param,
@@ -117,11 +122,66 @@ sub Run {
             }
         }
 
+        # check if an attachment must be deleted
+        ATTACHMENT:
+        for my $Count ( 1 .. 32 ) {
+
+            # check if the delete button was pressed for this attachment
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
+
+            # check next attachment if it was not pressed
+            next ATTACHMENT if !$Delete;
+
+            # remember that we need to show the page again
+            $Error{Attachment} = 1;
+
+            # remove the attachment from the upload cache
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Count,
+            );
+        }
+
+        # check if there was an attachment upload
+        if ( $Self->{ParamObject}->GetParam( Param => 'AttachmentUpload' ) ) {
+
+            # remember that we need to show the page again
+            $Error{Attachment} = 1;
+
+            # get the uploaded attachment
+            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+                Param  => 'FileUpload',
+                Source => 'string',
+            );
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+        }
+
         # send server error if any required parameter is missing
+        # or an attachment was deleted or uploaded
         if (%Error) {
+
+            # if there was an attachment delete or upload
+            # we do not want to show validation errors for other fields
+            if ( $Error{Attachment} ) {
+                %Error = ();
+            }
+
+            # get all attachments meta data
+            my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+                FormID => $Self->{FormID},
+            );
+
+            # TODO: remove debug code!
+            # $Self->{LogObject}->Dum_per( '', '@Attachments', \@Attachments );
 
             # html output
             $Output .= $Self->_MaskNew(
+                Attachments => \@Attachments,
                 %GetParam,
                 %Error,
                 FormID => $Self->{FormID},
@@ -143,6 +203,48 @@ sub Run {
         if ( !$FAQID ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
+
+        # get all attachments from upload cache
+        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+            FormID => $Self->{FormID},
+        );
+
+        # write attachments
+        for my $Attachment (@Attachments) {
+
+            # TODO: rewrite this for FAQ
+
+            #            # skip, deleted not used inline images
+            #            my $ContentID = $Attachment->{ContentID};
+            #            if ($ContentID) {
+            #                my $ContentIDHTMLQuote = $Self->{LayoutObject}->Ascii2Html(
+            #                    Text => $ContentID,
+            #                );
+            #                next if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
+            #            }
+
+            # check if attachment is an inline attachment
+            my $Inline = 0;
+            if ( $Attachment->{ContentID} ) {
+                $Inline = 1;
+            }
+
+            # add attachment
+            my $Success = $Self->{FAQObject}->AttachmentAdd(
+                %{$Attachment},
+                ItemID => $FAQID,
+                Inline => $Inline,
+                UserID => $Self->{UserID},
+            );
+
+            # check error
+            if ( !$Success ) {
+                return $Self->{LayoutObject}->FatalError();
+            }
+        }
+
+        # remove pre submited attachments
+        $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
 
         # TODO: Replace with AgentFAQExplorer
         # redirect to FAQ explorer
@@ -286,6 +388,22 @@ sub _MaskNew {
         Name => 'AttachmentUpload',
         Data => {%Param},
     );
+
+    # show attachments
+    ATTACHMENT:
+    for my $Attachment ( @{ $Param{Attachments} } ) {
+
+        # do not show inline images as attachments
+        # (they have a content id)
+        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+            next ATTACHMENT;
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'Attachment',
+            Data => $Attachment,
+        );
+    }
 
     # add rich text editor javascript (in general)
     # only if activated and the browser can handle it
