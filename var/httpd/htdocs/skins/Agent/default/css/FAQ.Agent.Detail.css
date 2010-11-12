@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -27,6 +27,12 @@
 .ArticleFAQContent {
     padding: 11px 12px;
     line-height: 1.3;
+}
+
+.FAQStateName {
+    float: right;
+    font-size: 80%;
+    font-style: italic;
 }
 
 /*
