@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.53 2010-10-28 12:31:07 ub Exp $
+# $Id: ITSMCondition.pm,v 1.54 2010-11-14 12:35:10 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 =head1 NAME
 
@@ -765,19 +765,19 @@ sub ConditionMatchExecute {
     # to store if the condition matches
     my $ConditionMatch;
 
+    # normally give the list of changed attributes to ExpressionMatch() function
+    my $AttributesChanged = $Param{AttributesChanged};
+
+    # expression conjunction is 'all' and there is more than one expresion
+    if ( $ConditionData->{ExpressionConjunction} eq 'all' && $ExpressionIDCount > 1 ) {
+
+        # do not give the list of changed attributes to ExpressionMatch()
+        $AttributesChanged = undef;
+    }
+
     # try to match each expression
     EXPRESSIONID:
     for my $ExpressionID ( @{$ExpressionIDsRef} ) {
-
-        # normally give the list of changed attributes to ExpressionMatch() function
-        my $AttributesChanged = $Param{AttributesChanged};
-
-        # expression conjunction is 'all' and there is more than one expresion
-        if ( $ConditionData->{ExpressionConjunction} eq 'all' && $ExpressionIDCount > 1 ) {
-
-            # do not give the list of changed attributes to ExpressionMatch()
-            $AttributesChanged = undef;
-        }
 
         # match expression
         my $ExpressionMatch = $Self->ExpressionMatch(
@@ -1377,6 +1377,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.54 $ $Date: 2010-11-14 12:35:10 $
 
 =cut
