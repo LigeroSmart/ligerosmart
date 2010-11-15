@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: SystemMonitoring.xml,v 1.2 2010-11-15 20:46:05 mb Exp $ -->
+<!-- $Id: SystemMonitoring.xml,v 1.3 2010-11-15 20:48:31 mb Exp $ -->
 <book lang="en">
     <bookinfo>
         <title>$Name</title>
@@ -38,7 +38,7 @@
     configurable using the regular expressions given by the parameters listed
     above.
 </para>
-            <screen><![CDATA[
+<para><screen><![CDATA[
 Mail matches 'FromAddress'?
 |
 +-> NO  --> Continue with regular mail processing
@@ -61,7 +61,7 @@ Mail matches 'FromAddress'?
                         |
                         +-> YES -> Change ticket type as configured in
                                     'CloseActionState']]>
-</screen>
+</screen></para>
 <para>Besides of a few additional sanity checks this is how the
     SystemMonitoring module treats incoming mails. By changing the regular
     expressions it should be possible to adopt it to different monitoring
