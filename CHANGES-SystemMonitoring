@@ -1,0 +1,20 @@
+# --
+# CHANGES - change log of the SystemMonitoring module for OTRS
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: CHANGES-SystemMonitoring,v 1.1 2010-11-15 20:56:22 mb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+2.2.2 2010-??-??
+ - 2010-11-15 Fixed bug#6292 - Included documentation does not show the diagram on page 2.
+ - 2010-11-15 Fixed bug#6293 - Included documentation indicates Change Management instead
+    of Configuration Management integration.
+
+2.2.1 2010-11-12
+ - Init release for OTRS 3.0.
+
+EOF
