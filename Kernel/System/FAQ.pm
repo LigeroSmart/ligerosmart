@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.119 2010-11-15 22:33:11 ub Exp $
+# $Id: FAQ.pm,v 1.120 2010-11-15 23:01:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.119 $) [1];
+$VERSION = qw($Revision: 1.120 $) [1];
 
 =head1 NAME
 
@@ -723,10 +723,12 @@ sub AttachmentDelete {
         }
     }
 
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM faq_attachment WHERE id = ? AND faq_id = ? ',
         Bind => [ \$Param{FileID}, \$Param{ItemID} ],
     );
+
+    return 1;
 }
 
 =item AttachmentIndex()
@@ -1117,10 +1119,12 @@ sub FAQDelete {
     );
 
     # delete article
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL  => 'DELETE FROM faq_item WHERE id = ?',
         Bind => [ \$Param{ItemID} ],
     );
+
+    return 1;
 }
 
 =item FAQHistoryAdd()
@@ -1149,7 +1153,7 @@ sub FAQHistoryAdd {
         }
     }
 
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO faq_history (name, item_id, ' .
             ' created, created_by, changed, changed_by)' .
             ' VALUES ( ?, ?, current_timestamp, ?, current_timestamp, ?)',
@@ -1157,6 +1161,8 @@ sub FAQHistoryAdd {
             \$Param{Name}, \$Param{ItemID}, \$Param{UserID}, \$Param{UserID},
         ],
     );
+
+    return 1;
 }
 
 =item FAQHistoryGet()
@@ -3994,6 +4000,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.119 $ $Date: 2010-11-15 22:33:11 $
+$Revision: 1.120 $ $Date: 2010-11-15 23:01:11 $
 
 =cut
