@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.82 2010-11-12 19:01:16 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.83 2010-11-15 23:12:16 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -35,7 +35,6 @@
         <File Permission="644" Location="Kernel/Modules/AgentFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
-        <File Permission="644" Location="Kernel/Modules/PictureUploadFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQMenuGeneric.pm"/>
@@ -59,7 +58,6 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescription.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/RichTextEditorFAQ.dtl"/>
         <File Permission="644" Location="Kernel/System/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
