@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangePrint.dtl - provides HTML print view
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangePrint.dtl,v 1.13 2010-04-27 20:42:35 ub Exp $
+# $Id: AgentITSMChangePrint.dtl,v 1.14 2010-11-15 12:25:35 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -111,11 +111,11 @@
                 <tr>
                     <td class="contentkey">$QData{"WorkOrderNumber"}</td>
                     <td class="contentkey">$QData{"WrappedWorkOrderTitle"}</td>
-                    <td class="contentkey">$QData{"WorkOrderState"}</td>
-                    <td class="contentkey">$QData{"PlannedStartTime"}</td>
-                    <td class="contentkey">$QData{"PlannedEndTime"}</td>
-                    <td class="contentkey">$QData{"ActualStartTime"}</td>
-                    <td class="contentkey">$QData{"ActualEndTim"}</td>
+                    <td class="contentkey">$Text{"$Data{"WorkOrderState"}"}</td>
+                    <td class="contentkey">$TimeLong{"$Data{"PlannedStartTime"}"}</td>
+                    <td class="contentkey">$TimeLong{"$Data{"PlannedEndTime"}"}</td>
+                    <td class="contentkey">$TimeLong{"$Data{"ActualStartTime"}"}</td>
+                    <td class="contentkey">$TimeLong{"$Data{"ActualEndTime"}"}</td>
                 </tr>
 <!-- dtl:block:WorkOrderRow -->
             </table>
