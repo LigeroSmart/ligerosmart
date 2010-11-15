@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.118 2010-11-12 18:51:41 ub Exp $
+# $Id: FAQ.pm,v 1.119 2010-11-15 22:33:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@ package Kernel::System::FAQ;
 use strict;
 use warnings;
 
-use MIME::Base64;
+use MIME::Base64 qw();
 use Kernel::System::Cache;
 use Kernel::System::User;
 use Kernel::System::Group;
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.118 $) [1];
+$VERSION = qw($Revision: 1.119 $) [1];
 
 =head1 NAME
 
@@ -526,7 +526,7 @@ sub FAQUpdate {
 
 =item AttachmentAdd()
 
-add article attachments
+add article attachments, returns the attachment id
 
     my $Ok = $FAQObject->AttachmentAdd(
         ItemID      => 123,
@@ -606,11 +606,11 @@ sub AttachmentAdd {
     # encode attachment if it's a postgresql backend!!!
     if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
         $Self->{EncodeObject}->EncodeOutput( \$Param{Content} );
-        $Param{Content} = encode_base64( $Param{Content} );
+        $Param{Content} = MIME::Base64::encode_base64( $Param{Content} );
     }
 
     # write attachment to db
-    return $Self->{DBObject}->Do(
+    return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO faq_attachment ' .
             ' (faq_id, filename, content_type, content_size, content, inlineattachment, ' .
             ' created, created_by, changed, changed_by) VALUES ' .
@@ -620,6 +620,28 @@ sub AttachmentAdd {
             \$Param{Content}, \$Param{Inline},   \$Param{UserID},      \$Param{UserID},
         ],
     );
+
+    # get the attachment id
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id '
+            . 'FROM faq_attachment '
+            . 'WHERE faq_id = ? AND filename = ? '
+            . 'AND content_type = ? AND content_size = ? '
+            . 'AND content = ? AND inlineattachment = ? '
+            . 'AND created_by = ? AND changed_by = ?',
+        Bind => [
+            \$Param{ItemID},  \$Param{Filename}, \$Param{ContentType}, \$Param{Filesize},
+            \$Param{Content}, \$Param{Inline},   \$Param{UserID},      \$Param{UserID},
+        ],
+        Limit => 1,
+    );
+
+    my $AttachmentID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $AttachmentID = $Row[0];
+    }
+
+    return $AttachmentID;
 }
 
 =item AttachmentGet()
@@ -663,7 +685,7 @@ sub AttachmentGet {
 
         # decode attachment if it's a postgresql backend and not BLOB
         if ( !$Self->{DBObject}->GetDatabaseFunction('DirectBlob') ) {
-            $Row[3] = decode_base64( $Row[3] );
+            $Row[3] = MIME::Base64::decode_base64( $Row[3] );
         }
 
         $File{Filename}    = $Row[0];
@@ -3799,29 +3821,25 @@ sub FAQApprovalTicketCreate {
     return;
 }
 
-=item FAQPictureUploadAdd()
+=item FAQInlineAttachmentURLUpdate()
 
-stores uploaded pictures as faq attachments
+Updates the URLs of uploaded inline attachments.
 
-    my %Success = $FAQObject->FAQPictureUploadAdd(
-        ItemID => 12,
-        FormID => 12345,
-        Field1 => 'some text',
-        Field2 => 'some text',
-        Field3 => 'some text',
-        Field4 => 'some text',
-        Field5 => 'some text',
-        Field6 => 'some text',
-        UserID => 1,
+    my %Success = $FAQObject->FAQInlineAttachmentURLUpdate(
+        ItemID     => 12,
+        FormID     => 456,
+        FileID     => 5,
+        Attachment => \%Attachment,
+        UserID     => 1,
     );
 
 =cut
 
-sub FAQPictureUploadAdd {
+sub FAQInlineAttachmentURLUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Argument (qw(ItemID FormID UserID)) {
+    for my $Argument (qw(ItemID Attachment FormID FileID UserID)) {
         if ( !$Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -3831,85 +3849,73 @@ sub FAQPictureUploadAdd {
         }
     }
 
-    # get uploaded pictures from upload cache
-    my @AttachmentData = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
-        FormID => $Param{FormID},
-    );
-
-    # if no new pictures were uploaded
-    return 1 if !@AttachmentData;
-
-    ATTACHMENT:
-    for my $Attachment (@AttachmentData) {
-
-        # store picture as attachment of faq article
-        my $Ok = $Self->AttachmentAdd(
-            ItemID      => $Param{ItemID},
-            Content     => $Attachment->{Content},
-            ContentType => $Attachment->{ContentType},
-            Filename    => $Attachment->{Filename},
-            Inline      => 1,
-            UserID      => $Param{UserID},
+    # check if attachment is a hash reference
+    if ( ref $Param{Attachment} ne 'HASH' && !%{ $Param{Attachment} } ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Attachment must be a hash reference!",
         );
-        if ( !$Ok ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Could not store attachment '$Attachment->{Filename}'"
-                    . " with FAQ Item# '$Param{ItemID}'!",
-            );
-        }
+        return;
     }
 
-    # get all attachments for this faq article
-    my @AttachmentIndex = $Self->AttachmentIndex(
+    # only consider inline attachments here (they have a content id)
+    return 1 if !$Param{Attachment}->{ContentID};
+
+    # get faq data
+    my %FAQData = $Self->FAQGet(
         ItemID => $Param{ItemID},
         UserID => $Param{UserID},
     );
 
-    # rewrite url to picture if it was successfully stored
-    ATTACHMENT:
-    for my $Attachment (@AttachmentIndex) {
+    #
+    # TODO
+    # Do not delete this old ULR style below now,
+    # as we need it to write the migration code in packagesetup!!!
+    #
 
-        # picture url in upload cache
-        my $Search = "Action=PictureUploadFAQ .+ FormID=$Param{FormID} .+ "
-            . "Filename=$Attachment->{Filename}";
+    #    # picture url in faq atttachment
+    #    my $Replace = "Action=AgentFAQ&Subaction=Download&"
+    #        . "ItemID=$Param{ItemID}&FileID=$Attachment->{FileID}";
 
-        # picture url in faq atttachment
-        my $Replace = "Action=AgentFAQ&Subaction=Download&"
-            . "ItemID=$Param{ItemID}&FileID=$Attachment->{FileID}";
+    # picture url in upload cache
+    my $Search = "Action=PictureUpload .+ FormID=$Param{FormID} .+ "
+        . "ContentID=$Param{Attachment}->{ContentID}";
 
-        # rewrite picture urls
-        FIELD:
-        for my $Number ( 1 .. 6 ) {
-            next FIELD if !$Param{"Field$Number"};
+    # picture url in faq atttachment
+    my $Replace = "Action=AgentFAQZoom;Subaction=DownloadAttachment;"
+        . "ItemID=$Param{ItemID};FileID=$Param{FileID}";
 
-            # remove newlines
-            $Param{"Field$Number"} =~ s{ [\n\r]+ }{}gxms;
+    # rewrite picture urls
+    FIELD:
+    for my $Number ( 1 .. 6 ) {
 
-            # replace url
-            $Param{"Field$Number"} =~ s{$Search}{$Replace}xms;
-        }
+        # check if field contains something
+        next FIELD if !$FAQData{"Field$Number"};
+
+        # remove newlines
+        $FAQData{"Field$Number"} =~ s{ [\n\r]+ }{}gxms;
+
+        # replace url
+        $FAQData{"Field$Number"} =~ s{$Search}{$Replace}xms;
     }
 
     # update FAQ article without writing a history entry
     my $Ok = $Self->FAQUpdate(
-        %Param,
+        %FAQData,
         HistoryOff => 1,
         UserID     => $Param{UserID},
     );
+
+    # check if update was successful
     if ( !$Ok ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Could not update FAQ Item# '$Param{ItemID}'!",
         );
+        return;
     }
 
-    # delete all attachments from upload cache for this FormID
-    $Self->{UploadCacheObject}->FormIDRemove(
-        FormID => $Param{FormID},
-    );
-
-    return $Ok;
+    return 1;
 }
 
 =begin Internal:
@@ -3988,6 +3994,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.118 $ $Date: 2010-11-12 18:51:41 $
+$Revision: 1.119 $ $Date: 2010-11-15 22:33:11 $
 
 =cut
