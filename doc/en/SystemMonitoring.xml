@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: SystemMonitoring.xml,v 1.1 2010-06-23 15:43:15 mb Exp $ -->
+<!-- $Id: SystemMonitoring.xml,v 1.2 2010-11-15 20:46:05 mb Exp $ -->
 <book lang="en">
     <bookinfo>
         <title>$Name</title>
@@ -213,7 +213,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
             <para>Default: 'note-report'</para>
         </sect1>
         <sect1>
-            <title>Integration with OTRS Change Management</title>
+            <title>Integration with OTRS Configuration Management</title>
             <para>If the OTRS::ITSM Configuration Management module is installed and
     the configuration option 'SystemMonitoring::SetIncidentState' is set
     to 'Yes', a CI with the given host name is searched in the CI database.
