@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.15 2010-11-15 22:30:50 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.16 2010-11-15 23:33:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -242,13 +242,14 @@ sub Run {
                 );
 
                 # get info fo CSV output
-                my %CSVInfo;
-                $CSVInfo{FAQNumber} = $FAQData{Number};
-                $CSVInfo{Title}     = $FAQData{Title};
-                $CSVInfo{Category}  = $FAQData{CategoryName};
-                $CSVInfo{Language}  = $FAQData{Language};
-                $CSVInfo{State}     = $FAQData{State};
-                $CSVInfo{Changed}   = $Changed;
+                my %CSVInfo = (
+                    FAQNumber => $FAQData{Number},
+                    Title     => $FAQData{Title},
+                    Category  => $FAQData{CategoryName},
+                    Language  => $FAQData{Language},
+                    State     => $FAQData{State},
+                    Changed   => $Changed,
+                );
 
                 # csv quote
                 if ( !@CSVHead ) {
@@ -756,13 +757,14 @@ sub _MaskForm {
 
     # show attributes
     my %AlreadyShown;
+    ITEM:
     for my $Item (@Attributes) {
         my $Key = $Item->{Key};
-        next if !$Key;
-        next if !defined $GetParam{$Key};
-        next if $GetParam{$Key} eq '';
+        next ITEM if !$Key;
+        next ITEM if !defined $GetParam{$Key};
+        next ITEM if $GetParam{$Key} eq '';
 
-        next if $AlreadyShown{$Key};
+        next ITEM if $AlreadyShown{$Key};
         $AlreadyShown{$Key} = 1;
         $Self->{LayoutObject}->Block(
             Name => 'SearchAJAXShow',
@@ -775,8 +777,9 @@ sub _MaskForm {
     # if no attribute is shown, show fulltext search
     if ( !$Profile ) {
         if ( $Self->{Config}->{Defaults} ) {
+            KEY:
             for my $Key ( sort keys %{ $Self->{Config}->{Defaults} } ) {
-                next if $AlreadyShown{$Key};
+                next KEY if $AlreadyShown{$Key};
                 $AlreadyShown{$Key} = 1;
                 $Self->{LayoutObject}->Block(
                     Name => 'SearchAJAXShow',
