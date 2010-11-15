@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.22 2010-11-15 22:31:09 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.23 2010-11-15 23:34:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -389,14 +389,14 @@ sub FAQContentShow {
         );
 
         # show yes /no
-        if ( exists( $Param{InterfaceStates}->{ $StateTypeData->{StateID} } ) ) {
+        if ( exists $Param{InterfaceStates}->{ $StateTypeData->{StateID} } ) {
             $Self->Block(
                 Name => 'FAQContent',
                 Data => {
                     FieldName => $ItemFields{$Field}->{'Caption'},
                     StateName => $StateTypeData->{Name},
                     Body      => $FAQData{$Field} || '',
-                    }
+                },
             );
         }
     }

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.3 2010-11-12 18:30:26 cr Exp $
+# $Id: CustomerFAQZoom.pm,v 1.4 2010-11-15 23:33:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -367,14 +367,14 @@ sub Run {
     # output rating stars
     $Self->{LayoutObject}->FAQRatingStarsShow(
         VoteResult => $FAQData{VoteResult},
-        Votes      => $FAQData{Votes}
+        Votes      => $FAQData{Votes},
     );
 
     # output attachments if any
     my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
         ItemID     => $GetParam{ItemID},
         ShowInline => 0,
-        UserID     => $Self->{UserID}
+        UserID     => $Self->{UserID},
     );
 
     # output attachments
