@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.4 2010-11-12 19:04:33 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.5 2010-11-15 22:34:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,14 +83,11 @@ sub Run {
         my $Output = $Self->{LayoutObject}->Header();
         $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # TODO
-        # find out the category id of the last viewed category
-        # get it from the session, the Exlorer must write it there
-        # and give it to the _MaskNew function
-
         # html output
         $Output .= $Self->_MaskNew(
             %Param,
+            CategoryID => $Self->{LastViewedCategory}
+            ,    # last viewed category from session (written by faq explorer)
             FormID => $Self->{FormID},
         );
 
@@ -124,10 +121,10 @@ sub Run {
 
         # check if an attachment must be deleted
         ATTACHMENT:
-        for my $Count ( 1 .. 32 ) {
+        for my $Number ( 1 .. 32 ) {
 
             # check if the delete button was pressed for this attachment
-            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
 
             # check next attachment if it was not pressed
             next ATTACHMENT if !$Delete;
@@ -138,7 +135,7 @@ sub Run {
             # remove the attachment from the upload cache
             $Self->{UploadCacheObject}->FormIDRemoveFile(
                 FormID => $Self->{FormID},
-                FileID => $Count,
+                FileID => $Number,
             );
         }
 
@@ -176,9 +173,6 @@ sub Run {
                 FormID => $Self->{FormID},
             );
 
-            # TODO: remove debug code!
-            # $Self->{LogObject}->Dum_per( '', '@Attachments', \@Attachments );
-
             # html output
             $Output .= $Self->_MaskNew(
                 Attachments => \@Attachments,
@@ -210,27 +204,46 @@ sub Run {
         );
 
         # write attachments
+        ATTACHMENT:
         for my $Attachment (@Attachments) {
-
-            # TODO: rewrite this for FAQ
-
-            #            # skip, deleted not used inline images
-            #            my $ContentID = $Attachment->{ContentID};
-            #            if ($ContentID) {
-            #                my $ContentIDHTMLQuote = $Self->{LayoutObject}->Ascii2Html(
-            #                    Text => $ContentID,
-            #                );
-            #                next if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
-            #            }
 
             # check if attachment is an inline attachment
             my $Inline = 0;
             if ( $Attachment->{ContentID} ) {
+
+                # remember that it is inline
                 $Inline = 1;
+
+                # rember if this inline attachment is used in any faq article
+                my $ContentIDFound;
+
+                # check all fields for content id
+                FIELD:
+                for my $Number ( 1 .. 6 ) {
+
+                    # get faq field
+                    my $Field = $GetParam{ 'Field' . $Number };
+
+                    # skip empty fields
+                    next FIELD if !$Field;
+
+                    # skip fields that do not contain the content id
+                    next FIELD if $Field !~ m{ $Attachment->{ContentID} }xms;
+
+                    # found the content id
+                    $ContentIDFound = 1;
+
+                    # we do not need to search further
+                    last FIELD;
+                }
+
+                # we do not want to keep this attachment,
+                # because it was deleted in the richt text editor
+                next ATTACHMENT if !$ContentIDFound;
             }
 
             # add attachment
-            my $Success = $Self->{FAQObject}->AttachmentAdd(
+            my $FileID = $Self->{FAQObject}->AttachmentAdd(
                 %{$Attachment},
                 ItemID => $FAQID,
                 Inline => $Inline,
@@ -238,12 +251,33 @@ sub Run {
             );
 
             # check error
-            if ( !$Success ) {
+            if ( !$FileID ) {
                 return $Self->{LayoutObject}->FatalError();
+            }
+
+            next ATTACHMENT if !$Inline;
+            next ATTACHMENT if !$Self->{LayoutObject}->{BrowserRichText};
+
+            # rewrite the URLs of the inline images for the uploaded pictures
+            my $Ok = $Self->{FAQObject}->FAQInlineAttachmentURLUpdate(
+                Attachment => $Attachment,
+                FormID     => $Self->{FormID},
+                ItemID     => $FAQID,
+                FileID     => $FileID,
+                UserID     => $Self->{UserID},
+            );
+
+            # check error
+            if ( !$Ok ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not update the inline image URLs "
+                        . "for FAQ Item# '$Param{ItemID}'!",
+                );
             }
         }
 
-        # remove pre submited attachments
+        # delete the upload cache
         $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
 
         # TODO: Replace with AgentFAQExplorer
@@ -405,7 +439,7 @@ sub _MaskNew {
         );
     }
 
-    # add rich text editor javascript (in general)
+    # add rich text editor javascript
     # only if activated and the browser can handle it
     # otherwise just a textarea is shown
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
@@ -415,28 +449,27 @@ sub _MaskNew {
         );
     }
 
-    # get the config of faq fields that should be shown
-    my %ItemFields;
+    # get the config of FAQ fields that should be shown
+    my %Fields;
     FIELD:
-    for my $Count ( 1 .. 6 ) {
+    for my $Number ( 1 .. 6 ) {
 
         # get config of FAQ field
-        my $ItemConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Count );
+        my $Config = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number );
 
         # skip over not shown fields
-        next FIELD if !$ItemConfig->{Show};
+        next FIELD if !$Config->{Show};
 
         # store only the config of fields that should be shown
-        $ItemFields{ "Field" . $Count } = $ItemConfig;
+        $Fields{ "Field" . $Number } = $Config;
     }
 
     # sort shown fields by priority
-    for my $Field ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields )
-    {
+    for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
 
         # get the state type data of this field
         my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Field}->{Show},
+            Name   => $Fields{$Field}->{Show},
             UserID => $Self->{UserID},
         );
 
@@ -445,7 +478,7 @@ sub _MaskNew {
             Name => 'FAQItemField',
             Data => {
                 Field     => $Field,
-                Caption   => $ItemFields{$Field}->{'Caption'},
+                Caption   => $Fields{$Field}->{'Caption'},
                 StateName => $StateTypeData->{Name},
                 Content   => $Param{$Field} || '',
             },
