@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.12 2010-11-08 19:01:20 ub Exp $
+# $Id: FAQ.t,v 1.13 2010-11-15 23:10:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,15 +34,17 @@ my $FAQID = $FAQObject->FAQAdd(
     FreeText3  => 'Value3',
     FreeKey4   => 'Key4',
     FreeText4  => 'Value4',
+    UserID     => 1,
 );
 
 $Self->True(
-    $FAQID || 0,
+    $FAQID,
     "FAQAdd() - 1",
 );
 
 my %FAQ = $FAQObject->FAQGet(
     ItemID => $FAQID,
+    UserID => 1,
 );
 
 my %FAQTest = (
@@ -65,8 +67,8 @@ my %FAQTest = (
 
 for my $Test ( sort keys %FAQTest ) {
     $Self->Is(
-        $FAQ{$Test}     || 0,
-        $FAQTest{$Test} || '',
+        $FAQ{$Test},
+        $FAQTest{$Test},
         "FAQGet() - $Test",
     );
 }
@@ -88,10 +90,12 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
     FreeText3  => 'Value32',
     FreeKey4   => 'Key42',
     FreeText4  => 'Value42',
+    UserID     => 1,
 );
 
 %FAQ = $FAQObject->FAQGet(
     ItemID => $FAQID,
+    UserID => 1,
 );
 
 %FAQTest = (
@@ -114,8 +118,8 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
 
 for my $Test ( sort keys %FAQTest ) {
     $Self->Is(
-        $FAQTest{$Test} || '',
-        $FAQ{$Test}     || 0,
+        $FAQTest{$Test},
+        $FAQ{$Test},
         "FAQGet() - $Test",
     );
 }
@@ -126,10 +130,11 @@ my $Ok = $FAQObject->VoteAdd(
     IP        => '54.43.30.1',
     Interface => '2',
     Rate      => 100,
+    UserID    => 1,
 );
 
 $Self->True(
-    $Ok || 0,
+    $Ok,
     "VoteAdd()",
 );
 
@@ -138,10 +143,11 @@ my $Vote = $FAQObject->VoteGet(
     ItemID    => $FAQID,
     IP        => '54.43.30.1',
     Interface => '2',
+    UserID    => 1,
 );
 
 $Self->Is(
-    $Vote->{IP} || 0,
+    $Vote->{IP},
     '54.43.30.1',
     "VoteGet() - IP",
 );
@@ -162,10 +168,11 @@ my $FAQID2 = $FAQObject->FAQAdd(
     FreeText3  => 'Value3',
     FreeKey4   => 'Key4',
     FreeText4  => 'Value4',
+    UserID     => 1,
 );
 
 $Self->True(
-    $FAQID2 || 0,
+    $FAQID2,
     "FAQAdd() - 2",
 );
 
@@ -189,20 +196,23 @@ for my $AttachmentTest (@AttachmentTests) {
         Content     => ${$ContentSCALARRef},
         ContentType => 'text/xml',
         Filename    => $AttachmentTest->{File},
+        UserID      => 1,
     );
     $Self->True(
-        $Add || 0,
+        $Add,
         "AttachmentAdd() - $AttachmentTest->{File}",
     );
     my @AttachmentIndex = $FAQObject->AttachmentIndex(
         ItemID => $FAQID2,
+        UserID => 1,
     );
     my %File = $FAQObject->AttachmentGet(
         ItemID => $FAQID2,
         FileID => $AttachmentIndex[0]->{FileID},
+        UserID => 1,
     );
     $Self->Is(
-        $File{Filename} || '',
+        $File{Filename},
         $AttachmentTest->{File},
         "AttachmentGet() - Filename $AttachmentTest->{File}",
     );
@@ -210,7 +220,7 @@ for my $AttachmentTest (@AttachmentTests) {
         String => \$File{Content},
     );
     $Self->Is(
-        $MD5 || '',
+        $MD5,
         $AttachmentTest->{MD5},
         "AttachmentGet() - MD5 $AttachmentTest->{File}",
     );
@@ -218,9 +228,10 @@ for my $AttachmentTest (@AttachmentTests) {
     my $Delete = $FAQObject->AttachmentDelete(
         ItemID => $FAQID2,
         FileID => $AttachmentIndex[0]->{FileID},
+        UserID => 1,
     );
     $Self->True(
-        $Delete || 0,
+        $Delete,
         "AttachmentDelete() - $AttachmentTest->{File}",
     );
 
@@ -234,6 +245,7 @@ my @FAQIDs = $FAQObject->FAQSearch(
     Order   => 'Votes',
     Sort    => 'ASC',
     Limit   => 150,
+    UserID  => 1,
 );
 
 my $FAQSearchFound  = 0;
@@ -263,6 +275,7 @@ $Self->False(
     Order  => 'Created',
     Sort   => 'ASC',
     Limit  => 150,
+    UserID => 1,
 );
 
 $FAQSearchFound  = 0;
@@ -292,6 +305,7 @@ $Self->True(
     Order  => 'Created',
     Sort   => 'ASC',
     Limit  => 150,
+    UserID => 1,
 );
 
 $FAQSearchFound  = 0;
@@ -321,6 +335,7 @@ $Self->False(
     Order  => 'Created',
     Sort   => 'ASC',
     Limit  => 150,
+    UserID => 1,
 );
 
 $FAQSearchFound  = 0;
@@ -342,18 +357,18 @@ $Self->True(
     "FAQSearch() AND - $FAQID2",
 );
 
-my @VoteIDs = @{
-    $FAQObject->VoteSearch(
-        ItemID => $FAQID,
-        )
-    };
+my $VoteIDsRef = $FAQObject->VoteSearch(
+    ItemID => $FAQID,
+    UserID => 1,
+);
 
-for my $VoteID (@VoteIDs) {
+for my $VoteID ( @{$VoteIDsRef} ) {
     my $VoteDelete = $FAQObject->VoteDelete(
         VoteID => 1,
+        UserID => 1,
     );
     $Self->True(
-        $VoteDelete || 0,
+        $VoteDelete,
         "VoteDelete()",
     );
 }
@@ -362,6 +377,7 @@ for my $VoteID (@VoteIDs) {
 my $Success = $FAQObject->FAQLogAdd(
     ItemID    => $FAQID,
     Interface => 'internal',
+    UserID    => 1,
 );
 $Self->True(
     $Success,
@@ -372,6 +388,7 @@ $Self->True(
 $Success = $FAQObject->FAQLogAdd(
     ItemID    => $FAQID,
     Interface => 'internal',
+    UserID    => 1,
 );
 $Self->False(
     $Success,
@@ -382,6 +399,7 @@ $Self->False(
 $Success = $FAQObject->FAQLogAdd(
     ItemID    => $FAQID2,
     Interface => 'internal',
+    UserID    => 1,
 );
 $Self->True(
     $Success,
@@ -392,6 +410,7 @@ $Self->True(
 my $Top10IDsRef = $FAQObject->FAQTop10Get(
     Interface => 'internal',
     Limit     => 10,
+    UserID    => 1,
 );
 $Self->True(
     scalar @{$Top10IDsRef},
@@ -401,6 +420,7 @@ $Self->True(
 # test LanguageLookup()
 my $LanguageName = $FAQObject->LanguageLookup(
     LanguageID => 1,
+    UserID     => 1,
 );
 $Self->True(
     $LanguageName,
@@ -408,7 +428,8 @@ $Self->True(
 );
 
 my $LanguageID = $FAQObject->LanguageLookup(
-    Name => $LanguageName,
+    Name   => $LanguageName,
+    UserID => 1,
 );
 $Self->Is(
     $LanguageID,
@@ -421,8 +442,8 @@ my $FAQDelete = $FAQObject->FAQDelete(
     UserID => 1,
 );
 $Self->True(
-    $FAQDelete || 0,
-    "FAQDelete()",
+    $FAQDelete,
+    "FAQDelete() - FAQID: $FAQID",
 );
 
 my $FAQDelete2 = $FAQObject->FAQDelete(
@@ -430,8 +451,8 @@ my $FAQDelete2 = $FAQObject->FAQDelete(
     UserID => 1,
 );
 $Self->True(
-    $FAQDelete2 || 0,
-    "FAQDelete()",
+    $FAQDelete2,
+    "FAQDelete() - FAQID: $FAQID2",
 );
 
 1;
