@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.49 2010-11-12 22:59:18 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.50 2010-11-16 14:25:44 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -90,7 +90,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Path::Seperator" Required="1" Valid="1">
-        <Description Lang="en">FAQ path seperator.</Description>
+        <Description Lang="en">FAQ path separator.</Description>
         <Description Lang="de">Trennzeichen im FAQ Pfad.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
@@ -600,18 +600,6 @@ Your OTRS Notification Master
                 <Item Key="Module">Kernel::Output::HTML::HeaderMetaFAQSearch</Item>
                 <Item Key="Action">AgentFAQSearch</Item>
             </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Frontend::Module###PictureUploadFAQ" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the PictureUploadFAQ object in the agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration des PictureUploadFAQ-Objekts im Agenten-Interface.</Description>
-        <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <Description>Ticket picture upload module</Description>
-                <Title>Picture-Upload-FAQ</Title>
-            </FrontendModuleReg>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::FilterElementPre###FAQ" Required="0" Valid="1">
