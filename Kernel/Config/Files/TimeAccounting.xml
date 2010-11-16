@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.13 2010-06-24 12:35:59 jp Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.14 2010-11-16 21:33:37 en Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
-        <Description Lang="en">FrontendModuleRegistration for TimeAccountingModule  to define the registration settings in the program and to set rights and positions of icons in the navigation bar.</Description>
-        <Description Lang="de">FrontendModulRegistration für das ZeiterfassungsModul.  Hier
-können Sie die Angaben für die Registrierung des Moduls im Programm tätigen. Ferner
-können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt werden.</Description>
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <Group>time_accounting</Group>
                 <GroupRo>time_accounting</GroupRo>
-                <Description>TimeAccounting</Description>
+                <Description Translatable="1">Time accounting.</Description>
                 <NavBarName>TimeAccounting</NavBarName>
                 <Title>TimeAccounting</Title>
                 <NavBar>
-                    <Description>TimeAccounting</Description>
+                    <Description Translatable="1">Time accounting.</Description>
                     <Name>TimeAccounting</Name>
                     <Image>time_accounting.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Edit</Link>
@@ -28,7 +25,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                 <GroupRo>time_accounting</GroupRo>
-                    <Description>Overview</Description>
+                    <Description Translatable="1">Overview</Description>
                     <Name>Overview</Name>
                     <Image>overview.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Overview</Link>
@@ -40,7 +37,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                 <GroupRo>time_accounting</GroupRo>
-                    <Description>Edit time record</Description>
+                    <Description Translatable="1">Edit time record</Description>
                     <Name>Edit</Name>
                     <Image>new.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Edit</Link>
@@ -52,7 +49,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                 <Group>time_accounting</Group>
-                    <Description>Project time reporting</Description>
+                    <Description Translatable="1">Project time reporting</Description>
                     <Name>Reporting</Name>
                     <Image>reporting.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Reporting</Link>
@@ -64,7 +61,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
                 </NavBar>
                 <NavBar>
                     <Group>time_accounting</Group>
-                    <Description>Edit time accounting settings</Description>
+                    <Description Translatable="1">Edit time accounting settings</Description>
                     <Name>Setting</Name>
                     <Image>module_setting.png</Image>
                     <Link>Action=AgentTimeAccounting&amp;Subaction=Setting</Link>
@@ -78,8 +75,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultProjectName" Required="1" Valid="1">
-        <Description Lang="en">Default name for new projects.</Description>
-        <Description Lang="de">Initialer Projektname beim Erstellen eines neuen Projekts in der Zeiterfassung.</Description>
+        <Description Translatable="1">Default name for new projects.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -87,8 +83,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultProjectStatus" Required="1" Valid="1">
-        <Description Lang="en">Default status of an new project.</Description>
-        <Description Lang="de">Anfangsstatus eines neuen Projekts.</Description>
+        <Description Translatable="1">Default status for new projects.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -99,8 +94,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultActionName" Required="1" Valid="1">
-        <Description Lang="en">Default name for new actions.</Description>
-        <Description Lang="de">Initialer Name einer neuen Tätigkeit in der Zeiterfassung.</Description>
+        <Description Translatable="1">Default name for new actions.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -108,8 +102,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultActionStatus" Required="1" Valid="1">
-        <Description Lang="en">Default status of an new action.</Description>
-        <Description Lang="de">Anfangsstatus einer neuen Tätigkeit.</Description>
+        <Description Translatable="1">Default status for new actions.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -120,8 +113,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserWeeklyHours" Required="1" Valid="1">
-        <Description Lang="en">Default setting for the standard weekly hours.</Description>
-        <Description Lang="de">Standard Wochenarbeitszeit.</Description>
+        <Description Translatable="1">Default setting for the standard weekly hours.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -129,8 +121,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserLeaveDays" Required="1" Valid="1">
-        <Description Lang="en">Default setting for leave days.</Description>
-        <Description Lang="de">Standard Urlaubstage.</Description>
+        <Description Translatable="1">Default setting for leave days.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -138,8 +129,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserOvertime" Required="1" Valid="1">
-        <Description Lang="en">Default setting for overtime.</Description>
-        <Description Lang="de">Eventuell vorhandener Überstundenübertrag.</Description>
+        <Description Translatable="1">Default setting for overtime.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -147,8 +137,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDateStart" Required="1" Valid="1">
-        <Description Lang="en">Default setting for date start.</Description>
-        <Description Lang="de">Startdatum für die Eingaben.</Description>
+        <Description Translatable="1">Default setting for date start.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -156,8 +145,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDateEnd" Required="1" Valid="1">
-        <Description Lang="en">Default setting for date end.</Description>
-        <Description Lang="de">Enddatum für die Eingaben.</Description>
+        <Description Translatable="1">Default setting for date end.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -165,8 +153,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
-        <Description Lang="en">Default status of an new user.</Description>
-        <Description Lang="de">Anfangsstatus eines neuen Benutzers.</Description>
+        <Description Translatable="1">Default status for new users.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -177,8 +164,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDays" Required="1" Valid="1">
-        <Description Lang="en">Working days after at the latest working units have to insert.</Description>
-        <Description Lang="de">Legt fest, nach wievielen Werktagen spätestens die Arbeitsstunden eingetragen werden müssen.</Description>
+        <Description Translatable="1">Maximum number of working days after which the working units have to be inserted.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -186,8 +172,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning" Required="1" Valid="1">
-        <Description Lang="en">Show warning, if to much incomplete working days.</Description>
-        <Description Lang="de">Zeigt eine Warnung, wenn zuviele Arbeitstage nicht eingetragen wurden.</Description>
+        <Description Translatable="1">Maximum number of working days withouth working units entry after which a warning will be shown.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -195,8 +180,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::NotifyModule###888-TimeAccounting" Required="1" Valid="1">
-        <Description Lang="en">This notification module gives a warning if to much incomplete working days available.</Description>
-        <Description Lang="de">Modul, das den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.</Description>
+        <Description Translatable="1">This notification module gives a warning if there are too many incomplete working days.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent::ModuleNotify</SubGroup>
         <Setting>
@@ -206,8 +190,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::MaxAllowedInsertDays" Required="1" Valid="1">
-        <Description Lang="en">For how many days ago you can insert working units.</Description>
-        <Description Lang="de">Legt fest, bis wann man in ältere Zeiteinträge bearbeiten kann (z. B. 10 Tage zurückliegend).</Description>
+        <Description Translatable="1">For how many days ago you can insert working units.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -215,8 +198,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::ReduceTime" Required="0" Valid="1">
-        <Description Lang="en">To use, if some actions acount reduced working hours(Key =&gt; traveling; Content =&gt; 50).</Description>
-        <Description Lang="de">Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50).</Description>
+        <Description Translatable="1">To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key =&gt; traveling; Content =&gt; 50).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -226,8 +208,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::InputHoursWithoutStartEndTime" Required="0" Valid="1">
-        <Description Lang="en">Setting, if working hours can insert without start- and endtime.</Description>
-        <Description Lang="de">Legt fest, ob man Arbeitsstunden auch ohne Anfangs- und Endzeit eingeben kann.</Description>
+        <Description Translatable="1">Specifies if working hours can be inserted without start and end times.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -238,8 +219,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PreApplicationModule###AgentTimeAccounting" Required="0" Valid="1">
-        <Description Lang="en">This module you can force inserts in the TimeAccounting.</Description>
-        <Description Lang="de">Mit Hilfe dieses Moduls können Einträge in die Zeiterfassung erzwungen werden, in dem beim Einloggen das Portal geblockt wird und nur das Zeiterfassungsfenster erscheint.</Description>
+        <Description Translatable="1">This module forces inserts in TimeAccounting.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -247,8 +227,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::Project2RemarkRegExp" Required="0" Valid="1">
-        <Description Lang="en">For which projects is a remark required. If the RegExp match on the project, you have to insert a remark too. The RegExp use the smx parameter.</Description>
-        <Description Lang="de">Innerhalb dieser Konfigurationsoption kann eine RegExp definiert werden, die festlegt, bei welchen Projekten eine Bemerkung eingetragen werden muss (die RegExp arbeitet mit smx-Parametern).</Description>
+        <Description Translatable="1">Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -256,8 +235,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::ProjectListConstraints" Required="0" Valid="1">
-        <Description Lang="en">Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</Description>
-        <Description Lang="de">Reguläre Ausdrücke zur Einschränkung der Projektliste abhängig von Gruppenzuordnung des Benutzers. Schlüssel enthält RegExp für Projekt(e), Inhalt enthält kommaseparierte Liste von Gruppen.</Description>
+        <Description Translatable="1">Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -266,8 +244,7 @@ können die Rechte und die Positionen der Icons in der Navigationsleiste gesetzt 
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::ActionListConstraints" Required="0" Valid="1">
-        <Description Lang="en">Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</Description>
-        <Description Lang="de">Reguläre Ausdrücke zur Einschränkung der Tätigkeitenliste abhängig vom gewählten Projekt. Schlüssel enthält RegExp für Projekt, Inhalt enthält RegExp für Tätigkeit(en).</Description>
+        <Description Translatable="1">Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).</Description>
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
