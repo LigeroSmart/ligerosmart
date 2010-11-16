@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.121 2010-11-15 23:09:36 ub Exp $
+# $Id: FAQ.pm,v 1.122 2010-11-16 12:47:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.121 $) [1];
+$VERSION = qw($Revision: 1.122 $) [1];
 
 =head1 NAME
 
@@ -2659,7 +2659,7 @@ sub FAQSearch {
         return;
     }
 
-    # set default
+    # set default interface
     if ( !$Param{Interface} ) {
         $Param{Interface} = 'internal';
     }
@@ -2775,48 +2775,79 @@ sub FAQSearch {
         . 'FROM faq_item i '
         . 'LEFT JOIN faq_voting v ON v.item_id = i.id '
         . 'LEFT JOIN faq_state s ON s.id = i.state_id';
+
+    # extended SQL
     my $Ext = '';
 
+    # fulltext search
     if ( $Param{What} && $Param{What} ne '*' ) {
+
+        # define the search fields for fulltext search
         my @SearchFields = ( 'i.f_number', 'i.f_subject', 'i.f_keywords' );
+
+        # used from the agent interface (internal)
         if ( $Param{Interface} eq 'internal' ) {
+
             for my $Number ( 1 .. 6 ) {
+
+                # get the state of the field (internal, external, public)
+                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show}
+                    || '';
+
+                # add all internal, external and public fields
                 if (
-                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ||
-                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'internal' ||
-                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'external'
+                    $FieldState    eq 'internal'
+                    || $FieldState eq 'external'
+                    || $FieldState eq 'public'
                     )
                 {
-                    push @SearchFields, "i.f_field$Number";
-                }
-            }
-        }
-        elsif ( $Param{Interface} eq 'external' ) {
-            for my $Number ( 1 .. 6 ) {
-                if (
-                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ||
-                    $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'external'
-                    )
-                {
-                    push @SearchFields, "i.f_field$Number";
-                }
-            }
-        }
-        else {
-            for my $Number ( 1 .. 6 ) {
-                if ( $Self->{ConfigObject}->Get("FAQ::Item::Field$Number")->{Show} eq 'public' ) {
-                    push @SearchFields, "i.f_field$Number";
+                    push @SearchFields, 'i.f_field' . $Number;
                 }
             }
         }
 
+        # used from the customer interface (external)
+        elsif ( $Param{Interface} eq 'external' ) {
+
+            for my $Number ( 1 .. 6 ) {
+
+                # get the state of the field (internal, external, public)
+                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show}
+                    || '';
+
+                # add all external and public fields
+                if ( $FieldState eq 'external' || $FieldState eq 'public' ) {
+                    push @SearchFields, 'i.f_field' . $Number;
+                }
+            }
+        }
+
+        # used from the public interface (public)
+        else {
+            for my $Number ( 1 .. 6 ) {
+
+                # get the state of the field (internal, external, public)
+                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show}
+                    || '';
+
+                # add all public fields
+                if ( $FieldState eq 'public' ) {
+                    push @SearchFields, 'i.f_field' . $Number;
+                }
+            }
+        }
+
+        # add the SQL for the fulltext search
         $Ext .= $Self->{DBObject}->QueryCondition(
             Key          => \@SearchFields,
             Value        => $Param{What},
             SearchPrefix => '*',
             SearchSuffix => '*',
-        ) . ' ';
+        );
+        $Ext .= ' ';
     }
+
+    # search for the number
     if ( $Param{Number} ) {
         $Param{Number} =~ s/\*/%/g;
         $Param{Number} =~ s/%%/%/g;
@@ -2826,6 +2857,8 @@ sub FAQSearch {
         }
         $Ext .= " LOWER(i.f_number) LIKE LOWER('$Param{Number}')";
     }
+
+    # search for the title
     if ( $Param{Title} ) {
         $Param{Title} = "\%$Param{Title}\%";
         $Param{Title} =~ s/\*/%/g;
@@ -2836,6 +2869,8 @@ sub FAQSearch {
         }
         $Ext .= " LOWER(i.f_subject) LIKE LOWER('" . $Param{Title} . "')";
     }
+
+    # search for languages
     if ( $Param{LanguageIDs} && ref $Param{LanguageIDs} eq 'ARRAY' && @{ $Param{LanguageIDs} } ) {
         if ($Ext) {
             $Ext .= ' AND';
@@ -2847,8 +2882,9 @@ sub FAQSearch {
         $Ext = substr( $Ext, 0, -1 );
         $Ext .= ')';
     }
-    if ( $Param{CategoryIDs} && ref $Param{CategoryIDs} eq 'ARRAY' && @{ $Param{CategoryIDs} } )
-    {
+
+    # search for categories
+    if ( $Param{CategoryIDs} && ref $Param{CategoryIDs} eq 'ARRAY' && @{ $Param{CategoryIDs} } ) {
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -2866,6 +2902,8 @@ sub FAQSearch {
         $Ext = substr( $Ext, 0, -1 );
         $Ext .= '))';
     }
+
+    # search for states
     if ( $Param{States} && ref $Param{States} eq 'HASH' && %{ $Param{States} } ) {
         if ($Ext) {
             $Ext .= ' AND';
@@ -2877,6 +2915,8 @@ sub FAQSearch {
         $Ext = substr( $Ext, 0, -1 );
         $Ext .= ')';
     }
+
+    # search for keywords
     if ( $Param{Keyword} ) {
         if ($Ext) {
             $Ext .= ' AND';
@@ -2909,6 +2949,7 @@ sub FAQSearch {
         $Ext = ' WHERE' . $Ext;
     }
 
+    # add grouping
     $Ext
         .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id ';
 
@@ -2919,6 +2960,7 @@ sub FAQSearch {
         $Ext .= ' ';
     }
 
+    # add extended SQL
     $SQL .= $Ext;
 
     # ask database
@@ -4000,6 +4042,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.121 $ $Date: 2010-11-15 23:09:36 $
+$Revision: 1.122 $ $Date: 2010-11-16 12:47:47 $
 
 =cut
