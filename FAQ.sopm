@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.83 2010-11-15 23:12:16 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.84 2010-11-16 17:06:30 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -30,6 +30,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentFAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQLanguage.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQZoom.pm"/>
@@ -45,6 +46,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQAdd.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQEdit.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewNavBar.dtl"/>
