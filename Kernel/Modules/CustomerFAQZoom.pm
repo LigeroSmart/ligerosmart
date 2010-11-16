@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.4 2010-11-15 23:33:51 ub Exp $
+# $Id: CustomerFAQZoom.pm,v 1.5 2010-11-16 00:25:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,14 +62,6 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    # permission check
-    if ( !$Self->{AccessRo} ) {
-        return $Self->{LayoutObject}->NoPermission(
-            Message    => 'You need ro permission!',
-            WithHeader => 'yes',
-        );
-    }
-
     # get params
     my %GetParam;
     $GetParam{ItemID} = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
@@ -77,10 +69,7 @@ sub Run {
 
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
-        return $Self->{LayoutObject}->CustomerError(
-            Message => 'No ItemID is given!',
-            Comment => 'Please contact the admin.',
-        );
+        return $Self->{LayoutObject}->CustomerFatalError( Message => 'Need ItemID!' );
     }
 
     # get FAQ item data
@@ -89,9 +78,10 @@ sub Run {
         UserID => $Self->{UserID},
     );
     if ( !%FAQData ) {
-        return $Self->{LayoutObject}->CustomerError();
+        return $Self->{LayoutObject}->CustomerFatalError();
     }
 
+    # store the last screen in session
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
         Key       => 'LastScreenView',
@@ -105,8 +95,9 @@ sub Run {
         UserID       => $Self->{UserID},
     );
 
-    if ( $Permission eq '' || !$FAQData{Approved} ) {
-        $Self->{LayoutObject}->CustomerFatalError( Message => "Permission denied!" );
+    # show no permission error
+    if ( !$Permission || !$FAQData{Approved} ) {
+        return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'yes' );
     }
 
     # ---------------------------------------------------------- #
@@ -134,7 +125,7 @@ sub Run {
                 Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
                 Priority => 'error',
             );
-            return $Self->{LayoutObject}->CustomerError();
+            return $Self->{LayoutObject}->CustomerFatalError();
         }
     }
 
@@ -216,7 +207,7 @@ sub Run {
                     UserID => $Self->{UserID},
                 );
                 if ( !%FAQData ) {
-                    return $Self->{LayoutObject}->CustomerError();
+                    return $Self->{LayoutObject}->CustomerFatalError();
                 }
 
                 $Output .= $Self->{LayoutObject}->Notify( Info => 'Thanks for your vote!' );
