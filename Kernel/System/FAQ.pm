@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.123 2010-11-16 14:03:02 ub Exp $
+# $Id: FAQ.pm,v 1.124 2010-11-16 17:55:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.123 $) [1];
+$VERSION = qw($Revision: 1.124 $) [1];
 
 =head1 NAME
 
@@ -3279,6 +3279,95 @@ sub GetCustomerCategories {
     return $CustomerCategories;
 }
 
+=item GetCustomerCategoriesLongNames()
+
+get customer category-groups (show category long names)
+
+    my $CustomerCategoryGroupHashRef = $FAQObject->GetCustomerCategoriesLongNames(
+        CustomerUser => 'hans',
+        Type   => 'rw',
+        UserID => 1,
+    );
+
+=cut
+
+sub GetCustomerCategoriesLongNames {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(CustomerUser Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get categories where user has rights
+    my $CustomerCategories = $Self->GetCustomerCategories(
+        CustomerUser => $Param{CustomerUser},
+        Type         => $Param{Type},
+        UserID       => $Param{UserID},
+    );
+
+    # extract category ids
+    my %AllCategoryIDs = ();
+    for my $ParentID ( keys %{$CustomerCategories} ) {
+        for my $CategoryID ( keys %{ $CustomerCategories->{$ParentID} } ) {
+            $AllCategoryIDs{$CategoryID} = 1;
+        }
+    }
+
+    # get all customer category ids
+    my @CustomerCategoryIDs = ();
+    for my $CategoryID ( 0, keys %AllCategoryIDs ) {
+        push @CustomerCategoryIDs, @{
+            $Self->CustomerCategorySearch(
+                ParentID     => $CategoryID,
+                CustomerUser => $Param{CustomerUser},
+                Mode         => 'Customer',
+                UserID       => $Param{UserID},
+                )
+            };
+    }
+
+    # build customer category hash
+    $CustomerCategories = {};
+    for my $CategoryID (@CustomerCategoryIDs) {
+        my %Category = $Self->CategoryGet(
+            CategoryID => $CategoryID,
+            UserID     => $Param{UserID},
+        );
+        $CustomerCategories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
+    }
+
+    # get all categories with their long names
+    my $CategoryTree = $Self->CategoryTreeList(
+        Valid  => 1,
+        UserID => $Param{UserID},
+    );
+
+    # to store the user categories with their long names
+    my %CustomerCategoriesLongNames;
+
+    # get the long names of the categories where user has rights
+    PARENTID:
+    for my $ParentID ( keys %{$CustomerCategories} ) {
+
+        next PARENTID if !$CustomerCategories->{$ParentID};
+        next PARENTID if ref $CustomerCategories->{$ParentID} ne 'HASH';
+        next PARENTID if !%{ $CustomerCategories->{$ParentID} };
+
+        for my $CategoryID ( keys %{ $CustomerCategories->{$ParentID} } ) {
+            $CustomerCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
+        }
+    }
+
+    return \%CustomerCategoriesLongNames;
+}
+
 =item CheckCategoryUserPermission()
 
 get user permission for a category
@@ -4079,6 +4168,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.123 $ $Date: 2010-11-16 14:03:02 $
+$Revision: 1.124 $ $Date: 2010-11-16 17:55:30 $
 
 =cut
