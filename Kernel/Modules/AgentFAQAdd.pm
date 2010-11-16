@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.6 2010-11-15 23:16:21 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.7 2010-11-16 15:13:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -85,7 +85,6 @@ sub Run {
 
         # html output
         $Output .= $Self->_MaskNew(
-            %Param,
             FormID => $Self->{FormID},
 
             # last viewed category from session (written by faq explorer)
