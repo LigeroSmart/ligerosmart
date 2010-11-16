@@ -1,0 +1,102 @@
+# --
+# CustomerFAQSearchResultShort.dtl - html for ticket status view (all tickets)
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: CustomerFAQSearchResultShort.dtl,v 1.1 2010-11-16 22:53:51 cr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div id="MainBox" class="TicketView ARIARoleMain SearchResults $Config{"Ticket::Frontend::CustomerTicketOverviewSortable"} Sortable">
+    <div class="ActionRow">
+        <ul class="Tabs">
+            <li>
+                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=LoadProfile;$LQData{"Link"}">
+                    &larr; $Text{"Change search options"}
+                </a>
+            </li>
+        </ul>
+<!-- dtl:block:Pagination -->
+        <div class="Tabs Pagination">
+            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+        </div>
+<!-- dtl:block:Pagination -->
+        <div class="Clear"></div>
+        <div class="SearchTerms">
+            <h2>$Text{"Search Results for"}:</h2>
+<!-- dtl:block:SearchTerms -->
+            <span>
+                $Data{"Attribute"}: $Data{"Value"}
+# hide remove link, functionality is not yet implemented
+#                <a title="$Text{"Remove this Search Term."}" href="$Data{"SearchValue"}">&times;</a>
+            </span>
+<!-- dtl:block:SearchTerms -->
+        </div>
+    </div>
+    <div class="Content">
+        <table class="Overview">
+            <thead>
+                <tr>
+                    <th class="FAQNumber">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=FAQID;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                            $Config{"FAQ::FAQHook"}
+                        </a>
+                    </th>
+                    <th class="Title">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Title;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                            $Text{"Title"}
+                        </a>
+                    </th>
+                    <th class="Category">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Category;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                            $Text{"Category"}
+                        </a>
+                    </th>
+                    <th class="Language">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Language;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                            $Text{"Language"}
+                        </a>
+                    </th>
+                    <th class="State">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=State;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                            $Text{"State"}
+                        </a>
+                    </th>
+                    <th class="Created">
+                        $Text{"Created"}
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+<!-- dtl:block:Record -->
+                <tr title="$QData{"TicketNumber"}">
+                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                    <td class="Title"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$QData{"Title","60"}</a></td>
+                    <td class="Category"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$QData{"CategoryName","60"}</a></td>
+                    <td class="Language"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$QData{"Language","5"}</a></td>
+                    <td class="State"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$QData{"State","21"}</a></td>
+                    <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
+                </tr>
+<!-- dtl:block:Record -->
+            </tbody>
+        </table>
+    </div>
+<!-- dtl:block:BottomSubNavigation -->
+    <div id="BottomActionRow" class="ActionRow BigButtons">
+        <ul class="Tabs">
+            <li>
+                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=LoadProfile;$LQData{"Link"}">
+                    &larr; $Text{"Change search options"}
+                </a>
+            </li>
+        </ul>
+        <div class="Tabs Pagination">
+            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+        </div>
+        <div class="Clear"></div>
+    </div>
+<!-- dtl:block:BottomSubNavigation -->
+</div>
