@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.122 2010-11-16 12:47:47 ub Exp $
+# $Id: FAQ.pm,v 1.123 2010-11-16 14:03:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.122 $) [1];
+$VERSION = qw($Revision: 1.123 $) [1];
 
 =head1 NAME
 
@@ -1385,52 +1385,65 @@ sub CategorySearch {
     my $SQL = "SELECT id FROM faq_category WHERE valid_id = 1 ";
     my $Ext = '';
 
-    # WHERE
+    # search for name
     if ( defined $Param{Name} ) {
-        $Ext .= " AND name LIKE '%" . $Self->{DBObject}->Quote( $Param{Name} ) . "%'";
+
+        # db like quote
+        $Param{Name} = $Self->{DBObject}->Quote( $Param{Name}, 'Like' );
+
+        $Ext .= " AND name LIKE '%" . $Param{Name} . "%'";
     }
+
+    # search for parent id
     elsif ( defined $Param{ParentID} ) {
-        $Ext .= ' AND parent_id = '
-            . $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
+
+        # db integer quote
+        $Param{ParentID} = $Self->{DBObject}->Quote( $Param{ParentID}, 'Integer' );
+
+        $Ext .= ' AND parent_id = ' . $Param{ParentID};
     }
+
+    # search for parent ids
     elsif (
         defined $Param{ParentIDs}
         && ref $Param{ParentIDs} eq 'ARRAY'
         && @{ $Param{ParentIDs} }
         )
     {
-        $Ext = " AND parent_id IN (";
+
+        # integer quote the parent ids
         for my $ParentID ( @{ $Param{ParentIDs} } ) {
-            $Ext .= $Self->{DBObject}->Quote( $ParentID, 'Integer' ) . ",";
+            $ParentID = $Self->{DBObject}->Quote( $ParentID, 'Integer' );
         }
-        $Ext = substr( $Ext, 0, -1 );
-        $Ext .= ")";
+
+        # create string
+        my $InString = join ', ', @{ $Param{ParentIDs} };
+
+        $Ext = ' AND parent_id IN (' . $InString . ')';
     }
+
+    # search for category ids
     elsif (
         defined $Param{CategoryIDs}
         && ref $Param{CategoryIDs} eq 'ARRAY'
         && @{ $Param{CategoryIDs} }
         )
     {
-        $Ext = " AND id IN (";
+
+        # integer quote the category ids
         for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
-            $Ext .= $Self->{DBObject}->Quote( $CategoryID, 'Integer' ) . ",";
+            $CategoryID = $Self->{DBObject}->Quote( $CategoryID, 'Integer' );
         }
-        $Ext = substr( $Ext, 0, -1 );
-        $Ext .= ")";
+
+        # create string
+        my $InString = join ', ', @{ $Param{CategoryIDs} };
+
+        $Ext = ' AND id IN (' . $InString . ')';
     }
 
     # ORDER BY
     if ( $Param{OrderBy} ) {
-        $Ext .= " ORDER BY ";
-        if ( $Param{OrderBy} eq 'Name' ) {
-            $Ext .= "name";
-        }
-
-        # default
-        else {
-            $Ext .= "name";
-        }
+        $Ext .= " ORDER BY name";
 
         # set the default sort order
         $Param{SortBy} ||= 'up';
@@ -1812,7 +1825,7 @@ sub CategoryDuplicateCheck {
 Count the number of categories.
 
     $FAQObject->CategoryCount(
-        ParentIDs => [ 1,2,3,4 ],
+        ParentIDs => [ 1, 2, 3, 4 ],
         UserID    => 1,
     );
 
@@ -1839,20 +1852,26 @@ sub CategoryCount {
         return;
     }
 
+    # build SQL
     my $SQL = 'SELECT COUNT(*) FROM faq_category WHERE valid_id = 1';
 
-    my $Ext = '';
+    # parent ids are given
     if ( defined $Param{ParentIDs} ) {
-        $Ext = ' AND parent_id IN (';
-        for my $ParentID ( @{ $Param{ParentIDs} } ) {
-            $Ext .= $Self->{DBObject}->Quote( $ParentID, 'Integer' ) . ",";
-        }
-        $Ext = substr( $Ext, 0, -1 );
-        $Ext .= ')';
-    }
-    $Ext .= ' GROUP BY parent_id';
 
-    $SQL .= $Ext;
+        # integer quote the parent ids
+        for my $ParentID ( @{ $Param{ParentIDs} } ) {
+            $ParentID = $Self->{DBObject}->Quote( $ParentID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{ParentIDs} };
+
+        $SQL .= ' AND parent_id IN (' . $InString . ')';
+    }
+
+    # add group by
+    $SQL .= ' GROUP BY parent_id';
+
     return if !$Self->{DBObject}->Prepare(
         SQL   => $SQL,
         Limit => 200,
@@ -2118,25 +2137,33 @@ sub StateTypeList {
         return;
     }
 
-    my $Ext = '';
+    # build SQL
     my $SQL = 'SELECT id, name FROM faq_state_type';
 
+    # types are given
     if ( $Param{Types} ) {
-        my @States = @{ $Param{Types} };
-        $Ext = ' WHERE';
-        for my $State (@States) {
-            $Ext .= " name = '" . $Self->{DBObject}->Quote($State) . "' OR";
-        }
-        $Ext = substr( $Ext, 0, -3 );
-    }
-    $SQL .= $Ext;
 
-    # sql
-    my %List = ();
+        # quote the types and add single quotes around them
+        for my $Type ( @{ $Param{Types} } ) {
+            $Type = "'" . $Self->{DBObject}->Quote($Type) . "'";
+
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{Types} };
+
+        $SQL .= ' WHERE name IN (' . $InString . ')';
+    }
+
+    # prepare SQL
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+
+    # fetch the result
+    my %List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
+
     return \%List;
 }
 
@@ -2620,13 +2647,22 @@ sub LanguageLookup {
 search in articles
 
     my @IDs = $FAQObject->FAQSearch(
-        Number    => '*134*',
-        Title     => '*some title*',
-        What      => '*some text*', # is searching in Number, Title, Keyword and Field1-6
-        Keyword   => '*webserver*',
-        States    => ['public', 'internal'],
 
-        OrderBy => [ 'FAQID', 'Title' ],                             # (optional)
+        Number    => '*134*',                                         # (optional)
+        Title     => '*some title*',                                  # (optional)
+
+        # is searching in Number, Title, Keyword and Field1-6
+        What      => '*some text*',                                   # (optional)
+
+        Keyword   => '*webserver*',                                   # (optional)
+        States    => {                                                # (optional)
+            1 => 'internal',
+            2 => 'external',
+        },
+        LanguageIDs => [ 4, 5, 6 ],                                   # (optional)
+        CategoryIDs => [ 7, 8, 9 ],                                   # (optional)
+
+        OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
         # default: [ 'FAQID' ],
         # (FAQID, FAQNumber, Title, Language, Category, Created,
         # Changed, State, Votes, Result)
@@ -2635,8 +2671,7 @@ search in articles
         # The OrderByDirection can be specified for each OrderBy attribute.
         # The pairing is made by the array indices.
 
-        OrderByDirection => [ 'Down', 'Up' ],                          # (optional)
-        # ignored when the result type is 'COUNT'
+        OrderByDirection => [ 'Down', 'Up' ],                         # (optional)
         # default: [ 'Down' ]
         # (Down | Up)
 
@@ -2791,8 +2826,7 @@ sub FAQSearch {
             for my $Number ( 1 .. 6 ) {
 
                 # get the state of the field (internal, external, public)
-                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show}
-                    || '';
+                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show};
 
                 # add all internal, external and public fields
                 if (
@@ -2812,8 +2846,7 @@ sub FAQSearch {
             for my $Number ( 1 .. 6 ) {
 
                 # get the state of the field (internal, external, public)
-                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show}
-                    || '';
+                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show};
 
                 # add all external and public fields
                 if ( $FieldState eq 'external' || $FieldState eq 'public' ) {
@@ -2827,8 +2860,7 @@ sub FAQSearch {
             for my $Number ( 1 .. 6 ) {
 
                 # get the state of the field (internal, external, public)
-                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show}
-                    || '';
+                my $FieldState = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number )->{Show};
 
                 # add all public fields
                 if ( $FieldState eq 'public' ) {
@@ -2844,7 +2876,6 @@ sub FAQSearch {
             SearchPrefix => '*',
             SearchSuffix => '*',
         );
-        $Ext .= ' ';
     }
 
     # search for the number
@@ -2855,7 +2886,7 @@ sub FAQSearch {
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= " LOWER(i.f_number) LIKE LOWER('$Param{Number}')";
+        $Ext .= " LOWER(i.f_number) LIKE LOWER('" . $Param{Number} . "')";
     }
 
     # search for the title
@@ -2872,48 +2903,53 @@ sub FAQSearch {
 
     # search for languages
     if ( $Param{LanguageIDs} && ref $Param{LanguageIDs} eq 'ARRAY' && @{ $Param{LanguageIDs} } ) {
+
+        # integer quote the language ids
+        for my $LanguageID ( @{ $Param{LanguageIDs} } ) {
+            $LanguageID = $Self->{DBObject}->Quote( $LanguageID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{LanguageIDs} };
+
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= ' i.f_language_id IN (';
-        for my $LanguageID ( @{ $Param{LanguageIDs} } ) {
-            $Ext .= $Self->{DBObject}->Quote( $LanguageID, 'Integer' ) . ',';
-        }
-        $Ext = substr( $Ext, 0, -1 );
-        $Ext .= ')';
+        $Ext .= ' i.f_language_id IN (' . $InString . ')';
     }
 
     # search for categories
     if ( $Param{CategoryIDs} && ref $Param{CategoryIDs} eq 'ARRAY' && @{ $Param{CategoryIDs} } ) {
+
+        # integer quote the category ids
+        for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
+            $CategoryID = $Self->{DBObject}->Quote( $CategoryID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{CategoryIDs} };
+
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= ' (i.category_id IN  (';
-        my $Counter = 0;
-        for my $CategoryID ( @{ $Param{CategoryIDs} } ) {
-            $Ext .= $Self->{DBObject}->Quote( $CategoryID, 'Integer' ) . ',';
-            $Counter++;
-            if ( !( $Counter % 500 ) ) {
-                $Ext = substr( $Ext, 0, -1 );
-                $Ext .= ')';
-                $Ext .= ' OR i.category_id IN  (';
-            }
-        }
-        $Ext = substr( $Ext, 0, -1 );
-        $Ext .= '))';
+        $Ext .= ' i.category_id IN (' . $InString . ')';
     }
 
     # search for states
     if ( $Param{States} && ref $Param{States} eq 'HASH' && %{ $Param{States} } ) {
+
+        # integer quote the state ids
+        for my $StateTypeID ( keys %{ $Param{States} } ) {
+            $StateTypeID = $Self->{DBObject}->Quote( $StateTypeID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', keys %{ $Param{States} };
+
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= ' s.type_id IN (';
-        for my $StateID ( keys( %{ $Param{States} } ) ) {
-            $Ext .= $Self->{DBObject}->Quote( $StateID, 'Integer' ) . ',';
-        }
-        $Ext = substr( $Ext, 0, -1 );
-        $Ext .= ')';
+        $Ext .= ' s.type_id IN (' . $InString . ')';
     }
 
     # search for keywords
@@ -2938,18 +2974,19 @@ sub FAQSearch {
     }
 
     # show only approved faq articles for public and customer interface
-    if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
+    if ( $Param{Interface} eq 'public' || $Param{Interface} eq 'external' ) {
         if ($Ext) {
             $Ext .= ' AND';
         }
         $Ext .= ' i.approved = 1';
     }
 
+    # add WHERE statement
     if ($Ext) {
-        $Ext = ' WHERE' . $Ext;
+        $Ext = ' WHERE ' . $Ext;
     }
 
-    # add grouping
+    # add GROUP BY
     $Ext
         .= ' GROUP BY i.id, i.f_subject, i.f_language_id, i.created, i.changed, s.name, v.item_id ';
 
@@ -4042,6 +4079,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.122 $ $Date: 2010-11-16 12:47:47 $
+$Revision: 1.123 $ $Date: 2010-11-16 14:03:02 $
 
 =cut
