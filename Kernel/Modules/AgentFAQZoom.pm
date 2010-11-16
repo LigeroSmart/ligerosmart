@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.13 2010-11-16 15:13:01 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.14 2010-11-16 18:14:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -98,6 +98,7 @@ sub Run {
         CategoryID => $FAQData{CategoryID},
     );
 
+    # show error message
     if ( !$Permission ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => 'You have no permission for this category!',
