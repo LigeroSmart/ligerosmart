@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.17 2010-11-16 22:48:34 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.18 2010-11-17 12:25:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -64,12 +64,12 @@ sub Run {
 
     my $Output;
 
-    # get confid data
+    # get config data
     $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
     $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
-        || 'Title';
+        || 'FAQID';
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
@@ -79,7 +79,7 @@ sub Run {
     $Self->{SelectTemplate} = $Self->{ParamObject}->GetParam( Param => 'SelectTemplate' ) || '';
     $Self->{EraseTemplate}  = $Self->{ParamObject}->GetParam( Param => 'EraseTemplate' )  || '';
 
-    # check request
+    # build output for open search description by FAQ number
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFAQNumber' ) {
         my $Output = $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQSearchOpenSearchDescriptionFAQNumber',
@@ -92,6 +92,8 @@ sub Run {
             Type        => 'inline',
         );
     }
+
+    # build output for open search description by fulltext
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
         my $Output = $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQSearchOpenSearchDescriptionFulltext',
@@ -105,7 +107,7 @@ sub Run {
         );
     }
 
-    # check request
+    # search with a saved saved template
     if ( $Self->{ParamObject}->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
         return $Self->{LayoutObject}->Redirect(
             OP =>
@@ -129,7 +131,7 @@ sub Run {
     else {
 
         # get scalar search params
-        for my $ParamName (qw( Number Title Keyword Fulltext ResultForm )) {
+        for my $ParamName (qw(Number Title Keyword Fulltext ResultForm)) {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
 
             # remove whitespace on the start and end
