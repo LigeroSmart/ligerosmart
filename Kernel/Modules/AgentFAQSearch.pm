@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.18 2010-11-17 12:25:43 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.19 2010-11-17 12:47:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,7 +107,7 @@ sub Run {
         );
     }
 
-    # search with a saved saved template
+    # search with a saved template
     if ( $Self->{ParamObject}->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
         return $Self->{LayoutObject}->Redirect(
             OP =>
