@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.8 2010-11-12 20:07:33 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.9 2010-11-17 15:49:06 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -184,7 +184,7 @@
 <!-- dtl:block:FAQContent -->
 <!-- dtl:block:FAQVoting -->
                 <div class="WidgetBox">
-                    <div class="FAQVoting">
+                    <div class="FAQVoting" id="FAQVoting">
                         <div class="ArticleFAQHeader">
                             <label>$Text{"Rating"}:</label>
                             <div class="Clear"></div>
