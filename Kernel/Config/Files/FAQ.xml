@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.54 2010-11-17 12:46:42 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.55 2010-11-17 13:24:40 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -814,7 +814,7 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ViewFAQSearch</SubGroup>
         <Setting>
-            <Option SelectedID="Number">
+            <Option SelectedID="FAQID">
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
@@ -1039,7 +1039,7 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ViewFAQSearch</SubGroup>
         <Setting>
-            <Option SelectedID="Number">
+            <Option SelectedID="FAQID">
                 <Item Key="Title">Title</Item>
                 <Item Key="FAQID">Number</Item>
                 <Item Key="Category">Category</Item>
