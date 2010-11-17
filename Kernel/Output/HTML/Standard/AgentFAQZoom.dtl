@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.9 2010-11-17 15:49:06 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.10 2010-11-17 15:55:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,7 +60,7 @@
                     </fieldset>
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"State"}:</label>
-                        <p class="Value" title="$Quote{"$Text{"$Data{"State"}"}"}">$Quote{"$Text{"$Data{"State"}"}","18"}</p>
+                        <p class="Value" title="$Quote{"$Text{"$Data{"State"}"}"}">$Quote{"$Text{"$Data{"State"}"}","25"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Language"}:</label>
