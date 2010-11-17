@@ -2,7 +2,7 @@
 # CustomerFAQSearch.dtl - provides HTML form for CustomerTicketSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.dtl,v 1.1 2010-11-16 22:53:51 cr Exp $
+# $Id: CustomerFAQSearch.dtl,v 1.2 2010-11-17 13:02:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@
                 <h2>$Config{"FAQ::FAQHook"}</h2>
                 <div>
                     <label for="Number">$Config{"FAQ::FAQHook"}</label>
-                    <input title="$Config{"FAQ::FAQHook"}" type="text" name="Number"id="Number" size="30" value="$QData{"Number"}"/>
+                    <input title="$Config{"FAQ::FAQHook"}" type="text" name="Number" id="Number" size="30" value="$QData{"Number"}"/>
                     <p>$Text{"e. g. 10*5155 or 105658*"}</p>
                 </div>
             </fieldset>
