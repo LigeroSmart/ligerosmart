@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -28,6 +28,22 @@
     padding: 11px 12px;
     line-height: 1.3;
 }
+
+.ArticleFAQContent .message ol {
+    list-style: decimal;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+
+}
+
+.ArticleFAQContent .message ul {
+    list-style: disc;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
 
 .FAQStateName {
     float: right;
@@ -95,6 +111,8 @@ text-indent:5px;
     margin-right: 25px;
     color: Gray;
 }
+
+
 
 
 /*
