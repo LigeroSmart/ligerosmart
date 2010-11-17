@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - Utilities for tickets
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.1 2010-11-16 22:53:51 cr Exp $
+# $Id: CustomerFAQSearch.pm,v 1.2 2010-11-17 12:47:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,6 +40,7 @@ sub new {
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{CSVObject}           = Kernel::System::CSV->new(%Param);
 
+    # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
 
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
@@ -61,15 +62,13 @@ sub Run {
 
     # get confid data
     $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
-    $Self->{SearchLimit} = $Self->{ConfigObject}->Get('FAQ::CustomerFAQSearch::SearchLimit')
-        || 200;
-    $Self->{SearchPageShown}
-        = $Self->{ConfigObject}->Get('FAQ::CustomerFAQSearch::SearchPageShown') || 40;
+    $Self->{SearchLimit}     = $Self->{Config}->{SearchLimit}     || 200;
+    $Self->{SearchPageShown} = $Self->{Config}->{SearchPageShown} || 40;
     $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
-        || $Self->{ConfigObject}->Get('FAQ::CustomerFAQSearch::SortBy::Default')
-        || 'Title';
+        || $Self->{Config}->{'SortBy::Default'}
+        || 'FAQID';
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'Order' )
-        || $Self->{ConfigObject}->Get('FAQ::CustomerFAQSearch::Order::Default')
+        || $Self->{Config}->{'Order::Default'}
         || 'Down';
 
     $Self->{Profile}        = $Self->{ParamObject}->GetParam( Param => 'Profile' )        || '';
@@ -78,7 +77,7 @@ sub Run {
     $Self->{SelectTemplate} = $Self->{ParamObject}->GetParam( Param => 'SelectTemplate' ) || '';
     $Self->{EraseTemplate}  = $Self->{ParamObject}->GetParam( Param => 'EraseTemplate' )  || '';
 
-    # check request
+    # search with a saved template
     if ( $Self->{ParamObject}->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
         return $Self->{LayoutObject}->Redirect(
             OP =>
