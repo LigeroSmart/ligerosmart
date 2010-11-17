@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.2 2010-11-17 14:40:39 ub Exp $
+# $Id: AgentFAQEdit.pm,v 1.3 2010-11-17 15:57:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -87,6 +87,8 @@ sub Run {
         ItemID => $GetParam{ItemID},
         UserID => $Self->{UserID},
     );
+
+    # check error
     if ( !%FAQData ) {
         return $Self->{LayoutObject}->ErrorScreen();
     }
@@ -105,6 +107,13 @@ sub Run {
         );
     }
 
+    # get existing attachments
+    my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
+        ItemID     => $GetParam{ItemID},
+        ShowInline => 0,
+        UserID     => $Self->{UserID},
+    );
+
     # ------------------------------------------------------------ #
     # show the faq edit screen
     # ------------------------------------------------------------ #
@@ -116,7 +125,8 @@ sub Run {
         # html output
         $Output .= $Self->_MaskNew(
             %FAQData,
-            FormID => $Self->{FormID},
+            ExistingAttachments => \@ExistingAttachments,
+            FormID              => $Self->{FormID},
         );
 
         # footer
@@ -299,7 +309,7 @@ sub Run {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
                     Message  => "Could not update the inline image URLs "
-                        . "for FAQ Item# '$Param{ItemID}'!",
+                        . "for FAQ Item# ' $GetParam{ItemID}'!",
                 );
             }
         }
@@ -309,7 +319,7 @@ sub Run {
 
         # reload the parent window and close popup
         return $Self->{LayoutObject}->PopupClose(
-            Reload => 1,
+            URL => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
         );
     }
 }
