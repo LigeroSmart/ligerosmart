@@ -2,7 +2,7 @@
 # CustomerFAQSearchResultShort.dtl - html for ticket status view (all tickets)
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearchResultShort.dtl,v 1.2 2010-11-17 12:29:16 ub Exp $
+# $Id: CustomerFAQSearchResultShort.dtl,v 1.3 2010-11-17 13:03:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@
             <thead>
                 <tr>
                     <th class="FAQNumber">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Number;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=FAQID;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Config{"FAQ::FAQHook"}
                         </a>
                     </th>
