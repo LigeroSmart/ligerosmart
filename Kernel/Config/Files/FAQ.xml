@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.52 2010-11-16 22:55:18 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.53 2010-11-17 12:34:21 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -800,13 +800,38 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ViewFAQSearch</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="FAQNumber">1</Item>
+                <Item Key="Number">1</Item>
                 <Item Key="Title">1</Item>
                 <Item Key="Category">1</Item>
                 <Item Key="Language">1</Item>
                 <Item Key="State">1</Item>
                 <Item Key="Changed">1</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="Number">
+                <Item Key="Title">Title</Item>
+                <Item Key="FAQID">Number</Item>
+                <Item Key="Category">Category</Item>
+                <Item Key="Language">Laguage</Item>
+                <Item Key="State">State</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQSearch###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="Down">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PreferencesGroups###FAQOverviewSmallPageShown" Required="0" Valid="1">
@@ -985,28 +1010,28 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::CustomerFAQSearch::SearchLimit" Required="1" Valid="1">
+    <ConfigItem Name="FAQ::CustomerFAQSearch###SearchLimit" Required="1" Valid="1">
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::ViewFAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">5000</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::CustomerFAQSearch::SearchPageShown" Required="1" Valid="1">
+    <ConfigItem Name="FAQ::CustomerFAQSearch###SearchPageShown" Required="1" Valid="1">
         <Description Translatable="1">Number of FAQ articles to be displayed in each page of a search result in the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::ViewFAQSearch</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,3}$">40</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::CustomerFAQSearch::SortBy::Default" Required="1" Valid="1">
+    <ConfigItem Name="FAQ::CustomerFAQSearch###SortBy::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::ViewFAQSearch</SubGroup>
         <Setting>
-            <Option SelectedID="Title">
+            <Option SelectedID="Number">
                 <Item Key="Title">Title</Item>
                 <Item Key="Number">Number</Item>
                 <Item Key="Category">Category</Item>
@@ -1015,10 +1040,10 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::CustomerFAQSearch::Order::Default" Required="1" Valid="1">
+    <ConfigItem Name="FAQ::CustomerFAQSearch###Order::Default" Required="1" Valid="1">
         <Description Translatable="1">Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
-        <SubGroup>Frontend::Customer::FAQ::ViewSearch</SubGroup>
+        <SubGroup>Frontend::Customer::ViewFAQSearch</SubGroup>
         <Setting>
             <Option SelectedID="Down">
                 <Item Key="Down">Down</Item>
