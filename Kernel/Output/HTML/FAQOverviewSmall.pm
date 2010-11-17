@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.9 2010-11-15 14:19:33 ub Exp $
+# $Id: FAQOverviewSmall.pm,v 1.10 2010-11-17 09:55:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -67,8 +67,7 @@ sub Run {
         @IDs = @{ $Param{FAQIDs} };
     }
 
-    my $FAQData = scalar @IDs;
-    if ($FAQData) {
+    if (@IDs) {
 
         # check ShowColumns parameter
         if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
@@ -89,12 +88,13 @@ sub Run {
 
                 # remove ID if necesary
                 if ( $Param{SortBy} ) {
-                    $Param{SortBy} = ( $Param{SortBy} eq 'PriorityID' )
+                    $Param{SortBy}
+                        = $Param{SortBy} eq 'PriorityID'
                         ? 'Priority'
-                        : ( $Param{SortBy} eq 'CategoryID' ) ? 'Category'
-                        : ( $Param{SortBy} eq 'LanguageID' ) ? 'Language'
-                        : ( $Param{SortBy} eq 'StateID' )    ? 'State'
-                        :                                      $Param{SortBy};
+                        : $Param{SortBy} eq 'CategoryID' ? 'Category'
+                        : $Param{SortBy} eq 'LanguageID' ? 'Language'
+                        : $Param{SortBy} eq 'StateID'    ? 'State'
+                        :                                  $Param{SortBy};
                 }
 
                 # set the correct Set CSS class and order by link
