@@ -2,7 +2,7 @@
 # AgentFAQSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.3 2010-11-12 22:37:36 cr Exp $
+# $Id: AgentFAQSearch.dtl,v 1.4 2010-11-17 12:28:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,18 +83,18 @@
         <div class="Clear"></div>
         <label for="LanguageIDs">$Text{"Language"}:</label>
         <div class="Field">
-$Data{"LanguagesSelectionString"}
+            $Data{"LanguagesSelectionString"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
         <label for="CategoryIDs">$Text{"Category"}:</label>
         <div class="Field">
-$Data{"CategoriesSelectionString"}
+            $Data{"CategoriesSelectionString"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
-$Data{"AttributesOrigStrg"}
+        $Data{"AttributesOrigStrg"}
     </fieldset>
 </div>
 
