@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.7 2010-11-08 19:03:37 ub Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.8 2010-11-17 10:15:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@
                 <tr>
 <!-- dtl:block:RecordFAQNumberHeader -->
                     <th class="FAQNumber $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=FAQNumber;OrderBy=$LQData{"OrderBy"}">$Config{"FAQ::FAQHook"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=FAQID;OrderBy=$LQData{"OrderBy"}">$Config{"FAQ::FAQHook"}</a>
                     </th>
 <!-- dtl:block:RecordFAQNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
