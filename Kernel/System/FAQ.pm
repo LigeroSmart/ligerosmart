@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.124 2010-11-16 17:55:30 cr Exp $
+# $Id: FAQ.pm,v 1.125 2010-11-17 12:30:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.124 $) [1];
+$VERSION = qw($Revision: 1.125 $) [1];
 
 =head1 NAME
 
@@ -2664,7 +2664,7 @@ search in articles
 
         OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
         # default: [ 'FAQID' ],
-        # (FAQID, FAQNumber, Title, Language, Category, Created,
+        # (FAQID, Number, Title, Language, Category, Created,
         # Changed, State, Votes, Result)
 
         # Additional information for OrderBy:
@@ -2722,13 +2722,13 @@ sub FAQSearch {
     my %OrderByTable = (
 
         # FAQ item attributes
-        FAQID     => 'i.id',
-        FAQNumber => 'i.f_number',
-        Title     => 'i.f_subject',
-        Language  => 'i.f_language_id',
-        Category  => 'i.category_id',
-        Created   => 'i.created',
-        Changed   => 'i.changed',
+        FAQID    => 'i.id',
+        Number   => 'i.f_number',
+        Title    => 'i.f_subject',
+        Language => 'i.f_language_id',
+        Category => 'i.category_id',
+        Created  => 'i.created',
+        Changed  => 'i.changed',
 
         # State attributes
         State => 's.name',
@@ -4168,6 +4168,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.124 $ $Date: 2010-11-16 17:55:30 $
+$Revision: 1.125 $ $Date: 2010-11-17 12:30:03 $
 
 =cut

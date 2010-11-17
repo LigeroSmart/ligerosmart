@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.8 2010-11-17 10:15:05 ub Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.9 2010-11-17 12:28:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,11 +29,11 @@
         <table id="FixedTable" class="TableSmall" summary="A generic ITSM Change table">
             <thead>
                 <tr>
-<!-- dtl:block:RecordFAQNumberHeader -->
+<!-- dtl:block:RecordNumberHeader -->
                     <th class="FAQNumber $QData{"CSS"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=FAQID;OrderBy=$LQData{"OrderBy"}">$Config{"FAQ::FAQHook"}</a>
                     </th>
-<!-- dtl:block:RecordFAQNumberHeader -->
+<!-- dtl:block:RecordNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
                     <th class="Title $QData{"CSS"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Title;OrderBy=$LQData{"OrderBy"}">$Text{"Title"}</a>
@@ -62,17 +62,17 @@
             <tbody>
 <!-- dtl:block:Record -->
                 <tr>
-<!-- dtl:block:RecordFAQNumber -->
+<!-- dtl:block:RecordNumber -->
                     <td>
-<!-- dtl:block:RecordFAQNumberLinkStart -->
+<!-- dtl:block:RecordNumberLinkStart -->
                         <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"FAQID"}" title="$LQData{"Number"}">
-<!-- dtl:block:RecordFAQNumberLinkStart -->
+<!-- dtl:block:RecordNumberLinkStart -->
                             $QData{"Number"}
-<!-- dtl:block:RecordFAQNumberLinkEnd -->
+<!-- dtl:block:RecordNumberLinkEnd -->
                         </a>
-<!-- dtl:block:RecordFAQNumberLinkEnd -->
+<!-- dtl:block:RecordNumberLinkEnd -->
                     </td>
-<!-- dtl:block:RecordFAQNumber -->
+<!-- dtl:block:RecordNumber -->
 <!-- dtl:block:RecordTitle -->
                     <td>
                         <div title="$QData{"Title"}">$QData{"Title","40"}</div>

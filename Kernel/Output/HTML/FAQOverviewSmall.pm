@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.10 2010-11-17 09:55:01 ub Exp $
+# $Id: FAQOverviewSmall.pm,v 1.11 2010-11-17 12:27:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -82,7 +82,7 @@ sub Run {
 
             for my $Column (@ShowColumns) {
 
-                # create needed veriables
+                # create needed variables
                 my $CSS = '';
                 my $OrderBy;
 
@@ -94,6 +94,7 @@ sub Run {
                         : $Param{SortBy} eq 'CategoryID' ? 'Category'
                         : $Param{SortBy} eq 'LanguageID' ? 'Language'
                         : $Param{SortBy} eq 'StateID'    ? 'State'
+                        : $Param{SortBy} eq 'FAQID'      ? 'Number'
                         :                                  $Param{SortBy};
                 }
 
