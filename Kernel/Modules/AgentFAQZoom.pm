@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.14 2010-11-16 18:14:45 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.15 2010-11-17 15:54:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -386,7 +386,7 @@ sub Run {
         Votes      => $FAQData{Votes},
     );
 
-    # output attachments if any
+    # output existing attachments
     my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
         ItemID     => $GetParam{ItemID},
         ShowInline => 0,
