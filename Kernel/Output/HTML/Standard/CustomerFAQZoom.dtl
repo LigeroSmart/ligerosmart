@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.3 2010-11-12 18:20:13 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.4 2010-11-18 17:46:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -181,3 +181,11 @@
     </div>
 </div>
 <!-- dtl:block:Header -->
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">
+    $('a.AsPopup').bind('click', function (Event) {
+        Core.UI.Popup.OpenPopup($(this).attr('href'), 'TicketAction');
+        return false;
+    });
+</script>
+<!-- dtl:js_on_document_complete -->
