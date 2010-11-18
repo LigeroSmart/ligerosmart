@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.18 2010-11-04 11:48:21 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.135 2010/11/04 11:44:16 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.19 2010-11-18 12:55:19 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.138 2010/11/10 15:37:53 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,12 +36,12 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (
+    for my $Needed (
         qw(ParamObject DBObject TicketObject LayoutObject LogObject QueueObject ConfigObject UserObject SessionObject)
         )
     {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+        if ( !$Self->{$Needed} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
         }
     }
 
@@ -177,6 +177,7 @@ sub Run {
         }
         return $Self->{LayoutObject}->Attachment(
             ContentType => 'text/html',
+            Charset     => $Self->{LayoutObject}->{UserCharset},
             Content     => $Content,
             Type        => 'inline',
             NoCache     => 1,
@@ -310,6 +311,7 @@ sub Run {
         );
         $Ticket{Criticality} = $CriticalityList->{$Ticket{TicketFreeText13}};
     }
+
     # lookup impact
     $Ticket{Impact} = '-';
     if ($Ticket{TicketFreeText14}) {
@@ -416,7 +418,7 @@ sub MaskAgentZoom {
                 ArticleID => $Article->{ArticleID},
                 UserID    => $Self->{UserID},
             );
-            next ARTICLE if $ArticleFlag{Seen} || $ArticleFlag{seen};
+            next ARTICLE if $ArticleFlag{Seen};
             $ArticleID = $Article->{ArticleID};
             last ARTICLE;
         }
@@ -941,7 +943,7 @@ sub MaskAgentZoom {
         );
 
         # last if article was not shown
-        if ( !$ArticleFlag{Seen} && !$ArticleFlag{seen} ) {
+        if ( !$ArticleFlag{Seen} ) {
             $ArticleAllSeen = 0;
             last ARTICLE;
         }
@@ -1056,7 +1058,7 @@ sub _ArticleTree {
             ArticleID => $Article{ArticleID},
             UserID    => $Self->{UserID},
         );
-        if ( !$ArticleFlag{Seen} && !$ArticleFlag{seen} ) {
+        if ( !$ArticleFlag{Seen} ) {
             $NewArticle = 1;
 
             # show ticket flags
