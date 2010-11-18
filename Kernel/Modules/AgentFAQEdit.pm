@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.5 2010-11-18 12:04:38 ub Exp $
+# $Id: AgentFAQEdit.pm,v 1.6 2010-11-18 12:06:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -273,8 +273,9 @@ sub Run {
         for my $Attachment (@Attachments) {
 
             # the key is the filename + filesize + content type
-            my $Key
-                = $Attachment->{Filename} . $Attachment->{Filesize} . $Attachment->{ContentType};
+            my $Key = $Attachment->{Filename}
+                . $Attachment->{Filesize}
+                . $Attachment->{ContentType};
 
             # append content id if available (for new inline images)
             if ( $Attachment->{ContentID} ) {
@@ -298,8 +299,9 @@ sub Run {
 
             # the key is the filename + filesize + content type
             # (no content id, as existing attachments don't have it)
-            my $Key
-                = $Attachment->{Filename} . $Attachment->{Filesize} . $Attachment->{ContentType};
+            my $Key = $Attachment->{Filename}
+                . $Attachment->{Filesize}
+                . $Attachment->{ContentType};
 
             # attachment is already existing, we can delete it from the new attachment hash
             if ( $NewAttachment{$Key} ) {
