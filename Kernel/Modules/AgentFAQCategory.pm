@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.20 2010-11-11 15:32:09 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.21 2010-11-18 12:39:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -439,7 +439,7 @@ sub _Edit {
         Data       => \%Groups,
         Name       => 'PermissionGroups',
         Multiple   => 1,
-        Class      => 'Validate_RequiredDropdown ' . $Param{PermissionGroupsServerError},
+        Class      => 'Validate_Required ' . $Param{PermissionGroupsServerError},
         SelectedID => $Param{PermissionGroups},
     );
 
