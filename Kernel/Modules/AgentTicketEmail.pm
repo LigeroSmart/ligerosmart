@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.20 2010-11-18 12:52:34 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.150 2010/11/03 10:18:53 mb Exp $
+# $Id: AgentTicketEmail.pm,v 1.21 2010-11-18 16:06:52 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.154 2010/11/17 21:32:53 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1727,11 +1727,11 @@ sub _MaskEmailNew {
 
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionType') eq 'Queue' ) {
         $Param{FromStrg} = $Self->{LayoutObject}->AgentQueueListOption(
-            Data     => \%NewTo,
-            Multiple => 0,
-            Size     => 0,
-            Class => 'Validate_Required' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
-            Name  => 'Dest',
+            Data           => \%NewTo,
+            Multiple       => 0,
+            Size           => 0,
+            Class          => 'Validate_Required' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
+            Name           => 'Dest',
             SelectedID     => $Param{FromSelected},
             OnChangeSubmit => 0,
         );
@@ -1911,7 +1911,7 @@ sub _MaskEmailNew {
         $Self->{LayoutObject}->Block(
             Name => 'TicketFreeTime',
             Data => {
-                TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
+                TicketFreeTimeKey => $Param{ 'TicketFreeTimeKey' . $Count },
                 TicketFreeTime    => $Param{ 'TicketFreeTime' . $Count },
                 Count             => $Count,
             },

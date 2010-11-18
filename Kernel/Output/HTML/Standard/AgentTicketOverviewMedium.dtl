@@ -2,8 +2,8 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.9 2010-11-04 13:46:11 ub Exp $
-# $OldId: AgentTicketOverviewMedium.dtl,v 1.47 2010/11/03 13:32:17 mb Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.10 2010-11-18 16:06:52 ub Exp $
+# $OldId: AgentTicketOverviewMedium.dtl,v 1.51 2010/11/17 10:09:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,12 +27,6 @@
 <!-- dtl:block:DocumentActionRowItem -->
 </ul>
 <!-- dtl:block:DocumentActionRow -->
-
-
-<!-- dtl:block:DocumentSortOrderBar -->
-# nothing to show
-<!-- dtl:block:DocumentSortOrderBar -->
-
 
 <!-- dtl:block:DocumentHeader -->
 <!-- dtl:js_on_document_complete -->
@@ -65,11 +59,9 @@
             <h2>
                 <a href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$LQData{"TicketID"}" class="MasterActionLink">$Config{"Ticket::Hook"}: $Data{"TicketNumber"} &ndash; $QData{"Title","60"}</a>
             </h2>
-#        <div>
 <!-- dtl:block:MenuItem -->
             <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
 <!-- dtl:block:MenuItem -->
-#        </div>
             <table class="Infos">
                 <tbody>
                     <tr>
@@ -263,7 +255,7 @@
 <!-- dtl:block:DocumentMenuItem -->
 <!-- dtl:block:DocumentMenuItemMoveForm -->
 <li class="$QData{"Class"}">
-    <form title="$Text{"Move ticket to a different queue"}" action="$Env{"CGIHandle"}" method="get">
+    <form title="$Text{"Move ticket to a different queue"}" action="$Env{"CGIHandle"}" method="post">
         <input type="hidden" name="Action" value="AgentTicketMove"/>
         <input type="hidden" name="QueueID" value="$QData{"QueueID"}"/>
         <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
@@ -297,8 +289,10 @@
 <!-- dtl:js_on_document_complete -->
 
 <!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
 $('a.AsPopup').bind('click', function (Event) {
-Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
-return false;
+    Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
+    return false;
 });
+//]]></script>
 <!-- dtl:js_on_document_complete -->

@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.9 2010-11-04 13:46:11 ub Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.58 2010/11/04 10:30:47 mn Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.10 2010-11-18 16:06:52 ub Exp $
+# $OldId: AgentTicketOverviewPreview.dtl,v 1.61 2010/11/17 10:09:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,12 +27,6 @@
 <!-- dtl:block:DocumentActionRowItem -->
 </ul>
 <!-- dtl:block:DocumentActionRow -->
-
-
-<!-- dtl:block:DocumentSortOrderBar -->
-# nothing to show
-<!-- dtl:block:DocumentSortOrderBar -->
-
 
 <!-- dtl:block:DocumentHeader -->
 <!-- dtl:js_on_document_complete -->
@@ -66,11 +60,9 @@
                 <h2>
                     <a href="$Env{"Baselink"}Action=AgentTicketZoom;TicketID=$LQData{"TicketID"}" title="$QData{"Title","60"}" class="MasterActionLink">$Config{"Ticket::Hook"}: $Data{"TicketNumber"} &ndash; $QData{"Title","60"}</a>
                 </h2>
-#               <div>
 <!-- dtl:block:MenuItem -->
                 <a href="$Env{"Baselink"}$Data{"Link"}" $Data{"LinkParam"} class="menuitem" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
 <!-- dtl:block:MenuItem -->
-#               </div>
                 <table>
                     <tbody>
                         <tr>
@@ -185,7 +177,7 @@
                                 <ul class="Actions">
 <!-- dtl:block:ArticlePreviewActionRowItem -->
                                     <li class="$QData{"Class"}">
-                                        <form title="$Text{"$Data{"Name"}"}" action="$Env{"CGIHandle"}" method="get" id="$QData{"FormID"}">
+                                        <form title="$Text{"$Data{"Name"}"}" action="$Env{"CGIHandle"}" method="post" id="$QData{"FormID"}">
                                             <input type="hidden" name="Action" value="$QData{"Action"}"/>
                                             <input type="hidden" name="TicketID" value="$QData{"TicketID"}"/>
                                             <input type="hidden" name="ArticleID" value="$QData{"ArticleID"}"/>
