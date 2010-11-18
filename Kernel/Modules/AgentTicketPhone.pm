@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.21 2010-11-04 13:46:11 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.22 2010-11-18 12:52:34 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.167 2010/10/28 21:56:09 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1670,7 +1670,7 @@ sub _MaskPhoneNew {
     }
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionType') eq 'Queue' ) {
         $Param{ToStrg} = $Self->{LayoutObject}->AgentQueueListOption(
-            Class          => 'Validate_RequiredDropdown',
+            Class          => 'Validate_Required',
             Data           => \%NewTo,
             Multiple       => 0,
             Size           => 0,
@@ -1681,7 +1681,7 @@ sub _MaskPhoneNew {
     }
     else {
         $Param{ToStrg} = $Self->{LayoutObject}->BuildSelection(
-            Class       => 'Validate_RequiredDropdown',
+            Class       => 'Validate_Required',
             Data        => \%NewTo,
             Name        => 'Dest',
             SelectedID  => $Param{ToSelected},
@@ -1712,7 +1712,7 @@ sub _MaskPhoneNew {
     # build type string
     if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
         $Param{TypeStrg} = $Self->{LayoutObject}->BuildSelection(
-            Class => 'Validate_RequiredDropdown' . ( $Param{Errors}->{TypeIDInvalid} || ' ' ),
+            Class => 'Validate_Required' . ( $Param{Errors}->{TypeIDInvalid} || ' ' ),
             Data  => $Param{Types},
             Name  => 'TypeID',
             SelectedID   => $Param{TypeID},

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.19 2010-11-04 13:46:11 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.20 2010-11-18 12:52:34 ub Exp $
 # $OldId: AgentTicketEmail.pm,v 1.150 2010/11/03 10:18:53 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1730,7 +1730,7 @@ sub _MaskEmailNew {
             Data     => \%NewTo,
             Multiple => 0,
             Size     => 0,
-            Class => 'Validate_RequiredDropdown' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
+            Class => 'Validate_Required' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
             Name  => 'Dest',
             SelectedID     => $Param{FromSelected},
             OnChangeSubmit => 0,
@@ -1739,7 +1739,7 @@ sub _MaskEmailNew {
     else {
         $Param{FromStrg} = $Self->{LayoutObject}->BuildSelection(
             Data       => \%NewTo,
-            Class      => 'Validate_RequiredDropdown' . $Param{Errors}->{DestinationInvalid} || ' ',
+            Class      => 'Validate_Required' . $Param{Errors}->{DestinationInvalid} || ' ',
             Name       => 'Dest',
             SelectedID => $Param{FromSelected},
         );
@@ -1769,7 +1769,7 @@ sub _MaskEmailNew {
         $Param{TypeStrg} = $Self->{LayoutObject}->BuildSelection(
             Data         => $Param{Types},
             Name         => 'TypeID',
-            Class        => 'Validate_RequiredDropdown' . ( $Param{Errors}->{TypeInvalid} || ' ' ),
+            Class        => 'Validate_Required' . ( $Param{Errors}->{TypeInvalid} || ' ' ),
             SelectedID   => $Param{TypeID},
             PossibleNone => 1,
             Sort         => 'AlphanumericValue',

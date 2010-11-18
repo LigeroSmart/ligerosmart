@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.7 2010-11-04 13:46:11 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.8 2010-11-18 12:52:34 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.22 2010/11/02 13:42:43 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1177,7 +1177,7 @@ sub _Mask {
             UserID => $Self->{UserID},
         );
         $Param{TypeStrg} = $Self->{LayoutObject}->BuildSelection(
-            Class => 'Validate_RequiredDropdown' . ( $Param{Errors}->{TypeIDInvalid} || ' ' ),
+            Class => 'Validate_Required' . ( $Param{Errors}->{TypeIDInvalid} || ' ' ),
             Data  => \%Type,
             Name  => 'TypeID',
             SelectedID   => $Param{TypeID},
