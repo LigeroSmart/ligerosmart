@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.55 2010-11-17 13:24:40 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.56 2010-11-18 18:13:29 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -1059,4 +1059,29 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentFAQPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>FAQ Print</Description>
+                <Title>Print</Title>
+                <NavBarName>FAQ</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="CustomerFrontend::Module###CustomerFAQPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Title></Title>
+                <Description>Customer FAQ-Print</Description>
+                <NavBarName>FAQ</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
 </otrs_config>
