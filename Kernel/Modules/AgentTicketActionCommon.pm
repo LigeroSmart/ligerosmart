@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.8 2010-11-18 12:52:34 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.22 2010/11/02 13:42:43 mg Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.9 2010-11-18 15:11:40 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.26 2010/11/17 21:32:53 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1602,7 +1602,7 @@ sub _Mask {
         $Self->{LayoutObject}->Block(
             Name => 'TicketFreeTime',
             Data => {
-                TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
+                TicketFreeTimeKey => $Param{ 'TicketFreeTimeKey' . $Count },
                 TicketFreeTime    => $Param{ 'TicketFreeTime' . $Count },
                 Count             => $Count,
             },
