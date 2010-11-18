@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.26 2010-09-21 21:38:59 mp Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.27 2010-11-18 12:50:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,7 +107,7 @@ sub Run {
         Name         => 'Class',
         Data         => \@ArrHashRef,
         SelectedID   => $GetParam{Class},
-        Class        => 'Validate_RequiredDropdown W100pc ' . ( $Error{ClassInvalid} || '' ),
+        Class        => 'Validate_Required W100pc ' . ( $Error{ClassInvalid} || '' ),
         PossibleNone => 1,
         Translation  => 0,
     );
@@ -135,7 +135,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'StateTransitionAddAction' ) {
 
         my $IsValid = 1;
-        %Error = '';
+        %Error = ();
 
         # we need to distinguish between empty string '' and the string '0'.
         # '' indicates that no value was selected, which is invalid
@@ -252,7 +252,10 @@ sub _StateTransitionAddPageGet {
     );
 
     # Add the special final state
-    push @{$AllStatesArrayHashRef}, { Key => '0', Value => '*START*' };
+    push @{$AllStatesArrayHashRef}, {
+        Key   => '0',
+        Value => '*START*',
+    };
 
     # dropdown menu, where the state can be selected for addition
     $Param{StateSelectionString} = $Self->{LayoutObject}->BuildSelection(
@@ -260,17 +263,20 @@ sub _StateTransitionAddPageGet {
         Name         => 'StateID',
         SelectedID   => $Param{StateID},
         PossibleNone => 1,
-        Class        => 'Validate_RequiredDropdown ' . ( $Param{StateInvalid} || '' ),
+        Class        => 'Validate_Required ' . ( $Param{StateInvalid} || '' ),
     );
 
     # dropdown menu, where the next state can be selected for addition
-    $AllStatesArrayHashRef->[-1] = { Key => '0', Value => '*END*' };
+    $AllStatesArrayHashRef->[-1] = {
+        Key   => '0',
+        Value => '*END*',
+    };
     $Param{NextStateSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data         => $AllStatesArrayHashRef,
         Name         => 'NextStateID',
         SelectedID   => $Param{NextStateID},
         PossibleNone => 1,
-        Class        => 'Validate_RequiredDropdown ' . ( $Param{NextStateInvalid} || '' ),
+        Class        => 'Validate_Required ' . ( $Param{NextStateInvalid} || '' ),
     );
 
     $Self->{LayoutObject}->Block(
@@ -278,7 +284,7 @@ sub _StateTransitionAddPageGet {
         Data => \%Param,
     );
 
-    $Self->{LayoutObject}->Block( Name => 'ActionOverview', );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
     $Self->{LayoutObject}->Block(
         Name => 'StateTransitionAdd',
