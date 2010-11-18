@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.85 2010-11-18 16:12:29 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.86 2010-11-18 19:47:32 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -31,9 +31,13 @@
         <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQLanguage.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQPrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
@@ -47,15 +51,21 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQEdit.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOpenSearchDescription.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewNavBar.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchOpenSearchDescriptionFulltext.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearch.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescription.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultShort.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescription.dtl"/>
@@ -77,6 +87,11 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-checked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-unchecked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-indicator.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-checked.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-unchecked.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-indicator.png"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
     </Filelist>
