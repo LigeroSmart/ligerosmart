@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.4 2010-11-17 16:01:11 ub Exp $
+# $Id: AgentFAQEdit.pm,v 1.5 2010-11-18 12:04:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,13 +107,6 @@ sub Run {
         );
     }
 
-    # get existing attachments
-    my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
-        ItemID     => $GetParam{ItemID},
-        ShowInline => 0,
-        UserID     => $Self->{UserID},
-    );
-
     # ------------------------------------------------------------ #
     # show the faq edit screen
     # ------------------------------------------------------------ #
@@ -122,11 +115,46 @@ sub Run {
         # header
         my $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
 
+        # get all existing attachments (without inline attachments)
+        my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
+            ItemID     => $GetParam{ItemID},
+            ShowInline => 0,
+            UserID     => $Self->{UserID},
+        );
+
+        # copy all existing attachments to upload cache
+        for my $Attachment (@ExistingAttachments) {
+
+            # get the existing attachment data
+            my %File = $Self->{FAQObject}->AttachmentGet(
+                ItemID => $GetParam{ItemID},
+                FileID => $Attachment->{FileID},
+                UserID => $Self->{UserID},
+            );
+
+            # get content disposition (if its an inline attachment)
+            my $Disposition = $Attachment->{Inline} ? 'inline' : '';
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID      => $Self->{FormID},
+                Filename    => $File{Filename},
+                Content     => $File{Content},
+                ContentType => $File{ContentType},
+                Disposition => $Disposition,
+            );
+        }
+
+        # get all attachments meta data from upload cache
+        my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+            FormID => $Self->{FormID},
+        );
+
         # html output
         $Output .= $Self->_MaskNew(
             %FAQData,
-            ExistingAttachments => \@ExistingAttachments,
-            FormID              => $Self->{FormID},
+            Attachments => \@Attachments,
+            FormID      => $Self->{FormID},
         );
 
         # footer
@@ -225,13 +253,13 @@ sub Run {
         }
 
         # update the new faq article
-        my $Success = $Self->{FAQObject}->FAQUpdate(
+        my $UpdateSuccess = $Self->{FAQObject}->FAQUpdate(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
         # show error if faq could not be updated
-        if ( !$Success ) {
+        if ( !$UpdateSuccess ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
 
@@ -240,9 +268,64 @@ sub Run {
             FormID => $Self->{FormID},
         );
 
-        # write attachments
-        ATTACHMENT:
+        # build a lookup lookup hash of the new attachments
+        my %NewAttachment;
         for my $Attachment (@Attachments) {
+
+            # the key is the filename + filesize + content type
+            my $Key
+                = $Attachment->{Filename} . $Attachment->{Filesize} . $Attachment->{ContentType};
+
+            # append content id if available (for new inline images)
+            if ( $Attachment->{ContentID} ) {
+                $Key .= $Attachment->{ContentID};
+            }
+
+            # store all of the new attachment data
+            $NewAttachment{$Key} = $Attachment;
+        }
+
+        # get all existing attachments, without inline attachments
+        my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
+            ItemID     => $GetParam{ItemID},
+            ShowInline => 0,
+            UserID     => $Self->{UserID},
+        );
+
+        # check the existing attachments
+        ATTACHMENT:
+        for my $Attachment (@ExistingAttachments) {
+
+            # the key is the filename + filesize + content type
+            # (no content id, as existing attachments don't have it)
+            my $Key
+                = $Attachment->{Filename} . $Attachment->{Filesize} . $Attachment->{ContentType};
+
+            # attachment is already existing, we can delete it from the new attachment hash
+            if ( $NewAttachment{$Key} ) {
+                delete $NewAttachment{$Key};
+            }
+
+            # existing attachment is no longer in new attachments hash
+            else {
+
+                # delete the existing attachment
+                my $DeleteSuccessful = $Self->{FAQObject}->AttachmentDelete(
+                    ItemID => $GetParam{ItemID},
+                    FileID => $Attachment->{FileID},
+                    UserID => $Self->{UserID},
+                );
+
+                # check error
+                if ( !$DeleteSuccessful ) {
+                    return $Self->{LayoutObject}->FatalError();
+                }
+            }
+        }
+
+        # write the new attachments
+        ATTACHMENT:
+        for my $Attachment ( values %NewAttachment ) {
 
             # check if attachment is an inline attachment
             my $Inline = 0;
