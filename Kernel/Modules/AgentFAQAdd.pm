@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.9 2010-11-18 12:39:28 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.10 2010-11-19 11:47:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,6 +50,16 @@ sub new {
     if ( !$Self->{FormID} ) {
         $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
     }
+
+    # set default interface settings
+    $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
+        Name   => 'internal',
+        UserID => $Self->{UserID},
+    );
+    $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
+        Types => [ 'internal', 'external', 'public' ],
+        UserID => $Self->{UserID},
+    );
 
     return $Self;
 }
@@ -449,41 +459,12 @@ sub _MaskNew {
         );
     }
 
-    # get the config of FAQ fields that should be shown
-    my %Fields;
-    FIELD:
-    for my $Number ( 1 .. 6 ) {
-
-        # get config of FAQ field
-        my $Config = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number );
-
-        # skip over not shown fields
-        next FIELD if !$Config->{Show};
-
-        # store only the config of fields that should be shown
-        $Fields{ "Field" . $Number } = $Config;
-    }
-
-    # sort shown fields by priority
-    for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
-
-        # get the state type data of this field
-        my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $Fields{$Field}->{Show},
-            UserID => $Self->{UserID},
-        );
-
-        # show the field
-        $Self->{LayoutObject}->Block(
-            Name => 'FAQItemField',
-            Data => {
-                Field     => $Field,
-                Caption   => $Fields{$Field}->{'Caption'},
-                StateName => $StateTypeData->{Name},
-                Content   => $Param{$Field} || '',
-            },
-        );
-    }
+    # show FAQ Content
+    $Self->{LayoutObject}->FAQContentShow(
+        FAQObject       => $Self->{FAQObject},
+        InterfaceStates => $Self->{InterfaceStates},
+        FAQData         => {%Param},
+    );
 
     # generate output
     return $Self->{LayoutObject}->Output(
