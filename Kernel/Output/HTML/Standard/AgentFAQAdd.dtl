@@ -2,7 +2,7 @@
 # AgentFAQAdd.dtl - provides HTML form for AgentFAQAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.dtl,v 1.3 2010-11-19 10:34:02 ub Exp $
+# $Id: AgentFAQAdd.dtl,v 1.4 2010-11-19 10:35:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -145,7 +145,6 @@ $Include{"RichTextEditor"}
         var $Form = $('#FileUpload').closest('form');
         Core.Form.Validate.DisableValidation($Form);
         $Form.find('#AttachmentUpload').val('1').end().submit();
-
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
