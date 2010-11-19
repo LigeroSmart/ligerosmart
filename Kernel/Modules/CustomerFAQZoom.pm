@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.6 2010-11-19 11:47:57 ub Exp $
+# $Id: CustomerFAQZoom.pm,v 1.7 2010-11-19 18:57:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,8 +95,13 @@ sub Run {
         UserID       => $Self->{UserID},
     );
 
-    # show no permission error
-    if ( !$Permission || !$FAQData{Approved} ) {
+    # permission check
+    if (
+        !$Permission
+        || !$FAQData{Approved}
+        || !$Self->{InterfaceStates}->{ $FAQData{StateTypeID} }
+        )
+    {
         return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'yes' );
     }
 
@@ -247,20 +252,6 @@ sub Run {
         );
     }
 
-    # permission check
-    if ( !exists( $Self->{InterfaceStates}{ $FAQData{StateTypeID} } ) ) {
-        return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'yes' );
-    }
-    if (
-        ( $Self->{Interface}->{Name} eq 'public' )
-        || ( $Self->{Interface}->{Name} eq 'external' )
-        )
-    {
-        if ( !$FAQData{Approved} ) {
-            return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'yes' );
-        }
-    }
-
     # get user info (CreatedBy)
     my %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $FAQData{CreatedBy}
@@ -298,7 +289,7 @@ sub Run {
         Data => \%Param,
     );
 
-    #output Flaq title block
+    # output flag title block
     $Self->{ShowFlag} = 0;
     if ( $Self->{ShowFlag} ) {
         $Self->{LayoutObject}->Block(
@@ -307,15 +298,6 @@ sub Run {
                 %FAQData,
                 %Param,
             },
-        );
-    }
-
-    # output approval state
-    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
-        $Param{Approval} = $FAQData{Approved} ? 'Yes' : 'No';
-        $Self->{LayoutObject}->Block(
-            Name => 'ViewApproval',
-            Data => {%Param},
         );
     }
 
