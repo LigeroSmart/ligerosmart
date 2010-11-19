@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.15 2010-11-17 15:54:41 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.16 2010-11-19 11:48:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,7 +46,7 @@ sub new {
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
 
-    # set default interface parameters
+    # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
         Name   => 'internal',
         UserID => $Self->{UserID},

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQPrint.pm,v 1.1 2010-11-18 18:15:19 cr Exp $
+# $Id: CustomerFAQPrint.pm,v 1.2 2010-11-19 11:47:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::User;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,7 +47,7 @@ sub new {
     $Self->{UserObject}      = Kernel::System::User->new(%Param);
     $Self->{FAQObject}       = Kernel::System::FAQ->new(%Param);
 
-    # set default interface parameters
+    # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
         Name   => 'external',
         UserID => $Self->{UserID},
