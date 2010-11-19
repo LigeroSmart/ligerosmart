@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.127 2010-11-19 14:04:43 ub Exp $
+# $Id: FAQ.pm,v 1.128 2010-11-19 19:00:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.127 $) [1];
+$VERSION = qw($Revision: 1.128 $) [1];
 
 =head1 NAME
 
@@ -2761,8 +2761,8 @@ sub FAQSearch {
     }
 
     # set default interface
-    if ( !$Param{Interface} ) {
-        $Param{Interface} = 'internal';
+    if ( !$Param{Interface} || !$Param{Interface}->{Name} ) {
+        $Param{Interface}->{Name} = 'internal';
     }
 
     # verify that all passed array parameters contain an arrayref
@@ -3040,7 +3040,7 @@ sub FAQSearch {
     }
 
     # show only approved faq articles for public and customer interface
-    if ( $Param{Interface} eq 'public' || $Param{Interface} eq 'external' ) {
+    if ( $Param{Interface}->{Name} eq 'public' || $Param{Interface}->{Name} eq 'external' ) {
         if ($Ext) {
             $Ext .= ' AND';
         }
@@ -3432,6 +3432,89 @@ sub GetCustomerCategoriesLongNames {
     }
 
     return \%CustomerCategoriesLongNames;
+}
+
+=item GetPublicCategoriesLongNames()
+
+get public category-groups (show category long names)
+
+    my $PublicCategoryGroupHashRef = $FAQObject->GetPublicCategoriesLongNames(
+        Type   => 'rw',
+        UserID => 1,
+    );
+
+=cut
+
+sub GetPublicCategoriesLongNames {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Type UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get all categories
+    my $PublicCategories = $Self->CategoryList( UserID => $Param{UserID} );
+
+    # extract category ids
+    my %AllCategoryIDs = ();
+    for my $ParentID ( keys %{$PublicCategories} ) {
+        for my $CategoryID ( keys %{ $PublicCategories->{$ParentID} } ) {
+            $AllCategoryIDs{$CategoryID} = 1;
+        }
+    }
+
+    # get all public category ids
+    my @PublicCategoryIDs = ();
+    for my $CategoryID ( 0, keys %AllCategoryIDs ) {
+        push @PublicCategoryIDs, @{
+            $Self->PublicCategorySearch(
+                ParentID => $CategoryID,
+                Mode     => 'Public',
+                UserID   => $Param{UserID},
+                )
+            };
+    }
+
+    # build public category hash
+    $PublicCategories = {};
+    for my $CategoryID (@PublicCategoryIDs) {
+        my %Category = $Self->CategoryGet(
+            CategoryID => $CategoryID,
+            UserID     => $Param{UserID},
+        );
+        $PublicCategories->{ $Category{ParentID} }->{ $Category{CategoryID} } = $Category{Name};
+    }
+
+    # get all categories with their long names
+    my $CategoryTree = $Self->CategoryTreeList(
+        Valid  => 1,
+        UserID => $Param{UserID},
+    );
+
+    # to store the user categories with their long names
+    my %PublicCategoriesLongNames;
+
+    # get the long names of the categories where user has rights
+    PARENTID:
+    for my $ParentID ( keys %{$PublicCategories} ) {
+
+        next PARENTID if !$PublicCategories->{$ParentID};
+        next PARENTID if ref $PublicCategories->{$ParentID} ne 'HASH';
+        next PARENTID if !%{ $PublicCategories->{$ParentID} };
+
+        for my $CategoryID ( keys %{ $PublicCategories->{$ParentID} } ) {
+            $PublicCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
+        }
+    }
+
+    return \%PublicCategoriesLongNames;
 }
 
 =item CheckCategoryUserPermission()
@@ -4234,6 +4317,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.127 $ $Date: 2010-11-19 14:04:43 $
+$Revision: 1.128 $ $Date: 2010-11-19 19:00:28 $
 
 =cut
