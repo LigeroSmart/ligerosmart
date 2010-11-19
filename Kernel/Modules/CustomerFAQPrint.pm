@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQPrint.pm,v 1.3 2010-11-19 11:55:17 ub Exp $
+# $Id: CustomerFAQPrint.pm,v 1.4 2010-11-19 12:29:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::User;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -486,88 +486,97 @@ sub _PDFOuputFAQContent {
     my %FAQData = %{ $Param{FAQData} };
     my %Page    = %{ $Param{PageData} };
 
-    # config values
-    my %ItemFields;
+    # get the config of FAQ fields that should be shown
+    my %Fields;
     FIELD:
-    for my $Count ( 1 .. 6 ) {
-        my $ItemConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Count );
+    for my $Number ( 1 .. 6 ) {
 
-        # get only the fields that are configured to be show (by any interface)
-        next FIELD if ( !$ItemConfig->{Show} );
-        $ItemFields{ "Field" . $Count } = $ItemConfig;
+        # get config of FAQ field
+        my $Config = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number );
+
+        # skip over not shown fields
+        next FIELD if !$Config->{Show};
+
+        # store only the config of fields that should be shown
+        $Fields{ "Field" . $Number } = $Config;
     }
 
-    for my $Field ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields )
-    {
+    # sort shown fields by priority
+    FIELD:
+    for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
+
+        # get the state type data of this field
         my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Field}->{Show},
+            Name   => $Fields{$Field}->{Show},
             UserID => $Self->{UserID},
         );
 
-        # show yes /no
-        if ( exists $Param{InterfaceStates}->{ $StateTypeData->{StateID} } ) {
+        # do not show fields that are not allowed in the given interface
+        next FIELD if !$Param{InterfaceStates}->{ $StateTypeData->{StateID} };
 
-            my %TableParam;
+        my %TableParam;
 
-            # convert HTML to ascii
-            my $AsciiField = $Self->{HTMLUtilsObject}->ToAscii( String => $FAQData{$Field} );
+        # convert HTML to ascii
+        my $AsciiField = $Self->{HTMLUtilsObject}->ToAscii( String => $FAQData{$Field} );
 
-            $TableParam{CellData}[0][0]{Content} = $AsciiField || '';
-            $TableParam{ColumnData}[0]{Width} = 511;
+        $TableParam{CellData}[0][0]{Content} = $AsciiField || '';
+        $TableParam{ColumnData}[0]{Width} = 511;
 
-            # set new position
-            $Self->{PDFObject}->PositionSet(
-                Move => 'relativ',
-                Y    => -15,
-            );
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -15,
+        );
 
-            my $FieldName = $Self->{LayoutObject}->{LanguageObject}->Get(
-                $ItemFields{$Field}->{'Caption'} . '  (' . $StateTypeData->{Name} . ')'
-            );
+        # translate the field name and state
+        my $FieldName = $Self->{LayoutObject}->{LanguageObject}->Get( $Fields{$Field}->{'Caption'} )
+            . ' ('
+            . $Self->{LayoutObject}->{LanguageObject}->Get( $StateTypeData->{Name} )
+            . ')';
 
-            # output headline
-            $Self->{PDFObject}->Text(
-                Text     => $FieldName,
-                Height   => 7,
-                Type     => 'Cut',
-                Font     => 'ProportionalBoldItalic',
-                FontSize => 7,
-                Color    => '#666666',
-            );
+        # output headline
+        $Self->{PDFObject}->Text(
+            Text     => $FieldName,
+            Height   => 7,
+            Type     => 'Cut',
+            Font     => 'ProportionalBoldItalic',
+            FontSize => 7,
+            Color    => '#666666',
+        );
 
-            # set new position
-            $Self->{PDFObject}->PositionSet(
-                Move => 'relativ',
-                Y    => -4,
-            );
+        # set new position
+        $Self->{PDFObject}->PositionSet(
+            Move => 'relativ',
+            Y    => -4,
+        );
 
-            # table params
-            $TableParam{Type}            = 'Cut';
-            $TableParam{Border}          = 0;
-            $TableParam{FontSize}        = 6;
-            $TableParam{BackgroundColor} = '#DDDDDD';
-            $TableParam{Padding}         = 1;
-            $TableParam{PaddingTop}      = 3;
-            $TableParam{PaddingBottom}   = 3;
+        # table params
+        $TableParam{Type}            = 'Cut';
+        $TableParam{Border}          = 0;
+        $TableParam{FontSize}        = 6;
+        $TableParam{BackgroundColor} = '#DDDDDD';
+        $TableParam{Padding}         = 1;
+        $TableParam{PaddingTop}      = 3;
+        $TableParam{PaddingBottom}   = 3;
 
-            # output table
-            for ( $Page{PageCount} .. $Page{MaxPages} ) {
+        # output table
+        for ( $Page{PageCount} .. $Page{MaxPages} ) {
 
-                # output table (or a fragment of it)
-                %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+            # output table (or a fragment of it)
+            %TableParam = $Self->{PDFObject}->Table( %TableParam, );
 
-                # stop output or output next page
-                if ( $TableParam{State} ) {
-                    last;
-                }
-                else {
-                    $Self->{PDFObject}->PageNew(
-                        %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
-                    );
-                    $Page{PageCount}++;
-                }
+            # stop output or output next page
+            if ( $TableParam{State} ) {
+                last;
+            }
+            else {
+                $Self->{PDFObject}->PageNew(
+                    %Page, FooterRight => $Page{PageText} . ' ' . $Page{PageCount},
+                );
+                $Page{PageCount}++;
             }
         }
+
     }
     return 1;
 }

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.pm,v 1.3 2010-11-19 11:55:17 ub Exp $
+# $Id: AgentFAQPrint.pm,v 1.4 2010-11-19 12:29:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -643,21 +643,28 @@ sub _PDFOuputFAQContent {
     my %FAQData = %{ $Param{FAQData} };
     my %Page    = %{ $Param{PageData} };
 
-    # config values
-    my %ItemFields;
+    # get the config of FAQ fields that should be shown
+    my %Fields;
     FIELD:
-    for my $Count ( 1 .. 6 ) {
-        my $ItemConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Count );
+    for my $Number ( 1 .. 6 ) {
 
-        # get only the fields that are configured to be show (by any interface)
-        next FIELD if ( !$ItemConfig->{Show} );
-        $ItemFields{ "Field" . $Count } = $ItemConfig;
+        # get config of FAQ field
+        my $Config = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number );
+
+        # skip over not shown fields
+        next FIELD if !$Config->{Show};
+
+        # store only the config of fields that should be shown
+        $Fields{ "Field" . $Number } = $Config;
     }
 
-    for my $Field ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields )
-    {
+    # sort shown fields by priority
+    FIELD:
+    for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
+
+        # get the state type data of this field
         my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Field}->{Show},
+            Name   => $Fields{$Field}->{Show},
             UserID => $Self->{UserID},
         );
 
@@ -675,9 +682,11 @@ sub _PDFOuputFAQContent {
             Y    => -15,
         );
 
-        my $FieldName = $Self->{LayoutObject}->{LanguageObject}->Get(
-            $ItemFields{$Field}->{'Caption'} . '  (' . $StateTypeData->{Name} . ')'
-        );
+        # translate the field name and state
+        my $FieldName = $Self->{LayoutObject}->{LanguageObject}->Get( $Fields{$Field}->{'Caption'} )
+            . ' ('
+            . $Self->{LayoutObject}->{LanguageObject}->Get( $StateTypeData->{Name} )
+            . ')';
 
         # output headline
         $Self->{PDFObject}->Text(
