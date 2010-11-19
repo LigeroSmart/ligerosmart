@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.13 2010-11-19 10:34:46 ub Exp $
+# $Id: es_FAQ.pm,v 1.14 2010-11-19 15:16:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -38,8 +38,8 @@ sub Data {
     $Lang->{'DetailSearch'}                      = 'Busqueda detallada';
     $Lang->{'Categories'}                        = 'Categorias';
     $Lang->{'SubCategories'}                     = 'Subcategorias';
-    $Lang->{'New FAQ Article'}                   = '';
-    $Lang->{'FAQ Category'}                      = '';
+    $Lang->{'New FAQ Article'}                   = 'Nuevo FAQ';
+    $Lang->{'FAQ Category'}                      = 'Categoría de FAQ';
     $Lang->{'A category should have a name!'}    = 'Cada categoría debe tener un nombre!';
     $Lang->{'A category should have a comment!'} = 'Cada categoria debe tener un comentario';
     $Lang->{'FAQ Articles (new created)'}        = 'Noticias FAQ (creado nuevo)';
@@ -52,9 +52,9 @@ sub Data {
     $Lang->{'EndMonth'}                          = 'End month';
     $Lang->{'EndYear'}                           = 'End year';
     $Lang->{'Approval'}                          = 'Approval';
-    $Lang->{'internal'}                          = '';
-    $Lang->{'external'}                          = '';
-    $Lang->{'public'}                            = '';
+    $Lang->{'internal'}                          = 'interno';
+    $Lang->{'external'}                          = 'externo';
+    $Lang->{'public'}                            = 'público';
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }
