@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.126 2010-11-17 19:12:58 ub Exp $
+# $Id: FAQ.pm,v 1.127 2010-11-19 14:04:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.126 $) [1];
+$VERSION = qw($Revision: 1.127 $) [1];
 
 =head1 NAME
 
@@ -357,12 +357,27 @@ sub FAQAdd {
         $Param{Number} = $Self->{ConfigObject}->Get('SystemID') . rand(100);
     }
 
-    # set default to not approved
+    # check if approval feature is used
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
-        if ( !defined $Param{Approved} ) {
+
+        # check permission
+        my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
+            UserID => $Param{UserID},
+            Type   => 'ro',
+            Result => 'HASH',
+        );
+
+        # get the approval group
+        my $ApprovalGroup = $Self->{ConfigObject}->Get('FAQ::ApprovalGroup');
+
+        # set default to 0 if approved param is not given
+        # or if user does not have the rights to approve
+        if ( !defined $Param{Approved} || !$Groups{$ApprovalGroup} ) {
             $Param{Approved} = 0;
         }
     }
+
+    # if approval feature is not activated, a new faq item is always approved
     else {
         $Param{Approved} = 1;
     }
@@ -391,13 +406,27 @@ sub FAQAdd {
     # get id
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM faq_item '
-            . 'WHERE f_name = ? '
+            . 'WHERE f_number = ? '
+            . 'AND f_name = ? '
             . 'AND f_language_id = ? '
-            . 'AND f_subject = ?',
+            . 'AND f_subject = ? '
+            . 'AND category_id = ? '
+            . 'AND state_id = ? '
+            . 'AND f_keywords = ? '
+            . 'AND approved = ? '
+            . 'AND created_by = ? '
+            . 'AND changed_by = ?',
         Bind => [
+            \$Param{Number},
             \$Param{Name},
             \$Param{LanguageID},
             \$Param{Title},
+            \$Param{CategoryID},
+            \$Param{StateID},
+            \$Param{Keywords},
+            \$Param{Approved},
+            \$Param{UserID},
+            \$Param{UserID},
         ],
     );
     my $ID;
@@ -423,7 +452,7 @@ sub FAQAdd {
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
 
         # create new approval ticket
-        my $Ok = $Self->FAQApprovalTicketCreate(
+        my $Ok = $Self->_FAQApprovalTicketCreate(
             ItemID     => $ID,
             CategoryID => $Param{CategoryID},
             FAQNumber  => $Number,
@@ -453,6 +482,7 @@ update an article
         CategoryID => 1,
         StateID    => 1,
         LanguageID => 1,
+        Approved   => 1,
         Title      => 'Some Text',
         Field1     => 'Problem...',
         Field2     => 'Solution...',
@@ -510,6 +540,41 @@ sub FAQUpdate {
             \$Param{UserID},   \$Param{ItemID},
         ],
     );
+
+    # update approval
+    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+
+        # check permission
+        my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
+            UserID => $Param{UserID},
+            Type   => 'ro',
+            Result => 'HASH',
+        );
+
+        # get the approval group
+        my $ApprovalGroup = $Self->{ConfigObject}->Get('FAQ::ApprovalGroup');
+
+        # set approval to 0 if user does not have the rights to approve
+        if ( !$Groups{$ApprovalGroup} ) {
+            $Param{Approved} = 0;
+        }
+
+        # update the approval
+        my $UpdateSuccess = $Self->_FAQApprovalUpdate(
+            ItemID   => $Param{ItemID},
+            Approved => $Param{Approved},
+            UserID   => $Param{UserID},
+        );
+
+        # check error
+        if ( !$UpdateSuccess ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Could not update approval for ItemID $Param{ItemID}!",
+            );
+            return;
+        }
+    }
 
     # check if history entry should be added
     return 1 if $Param{HistoryOff};
@@ -3834,168 +3899,6 @@ sub FAQTop10Get {
     return \@Result;
 }
 
-=item FAQApprovalUpdate()
-
-update the approval state of an article
-
-    my $Success = $FAQObject->FAQApprovalUpdate(
-        ItemID     => 123,
-        Approved   => 1,    # 0|1 (default 0)
-        UserID     => 1,
-    );
-
-=cut
-
-sub FAQApprovalUpdate {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(ItemID UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    if ( !defined $Param{Approved} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Need Approved parameter!',
-        );
-        return;
-    }
-
-    # update database
-    return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_item '
-            . 'SET approved = ?, changed = current_timestamp, changed_by = ? '
-            . 'WHERE id = ?',
-        Bind => [
-            \$Param{Approved}, \$Param{UserID}, \$Param{ItemID},
-        ],
-    );
-
-    # approval feature is activated and faq article is not appproved yet
-    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
-
-        # get faq data
-        my %FAQData = $Self->FAQGet(
-            ItemID => $Param{ItemID},
-            UserID => $Param{UserID},
-        );
-
-        # create new approval ticket
-        my $Ok = $Self->FAQApprovalTicketCreate(
-            ItemID     => $Param{ItemID},
-            CategoryID => $FAQData{CategoryID},
-            FAQNumber  => $FAQData{Number},
-            Title      => $FAQData{Title},
-            StateID    => $FAQData{StateID},
-            UserID     => $Param{UserID},
-        );
-
-        # check error
-        if ( !$Ok ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => 'Could not create approval ticket!',
-            );
-        }
-    }
-
-    return 1;
-}
-
-=item FAQApprovalTicketCreate()
-
-creates an approval ticket
-
-    my $Success = $FAQObject->FAQApprovalTicketCreate(
-        ItemID     => 123,
-        CategoryID => 2,
-        FAQNumber  => 10211,
-        Title      => 'Some Title',
-        StateID    => 1,
-        UserID     => 1,
-    );
-
-=cut
-
-sub FAQApprovalTicketCreate {
-    my ( $Self, %Param ) = @_;
-
-    # check needed stuff
-    for my $Argument (qw(ItemID CategoryID FAQNumber Title StateID UserID)) {
-        if ( !$Param{$Argument} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Need $Argument!",
-            );
-            return;
-        }
-    }
-
-    # get subject
-    my $Subject = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketSubject');
-    $Subject =~ s{ <OTRS_FAQ_NUMBER> }{$Param{FAQNumber}}xms;
-
-    # create ticket
-    my $TicketID = $Self->{TicketObject}->TicketCreate(
-        Title    => $Subject,
-        Queue    => $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || 'Raw',
-        Lock     => 'unlock',
-        Priority => $Self->{ConfigObject}->Get('FAQ::ApprovalTicketPriority') || '3 normal',
-        State    => $Self->{ConfigObject}->Get('FAQ::ApprovalTicketDefaultState') || 'new',
-        OwnerID  => 1,
-        UserID   => 1,
-    );
-
-    if ($TicketID) {
-
-        # get UserName
-        my $UserName = $Self->{UserObject}->UserName(
-            UserID => $Param{UserID},
-        );
-
-        # get faq state
-        my %State = $Self->StateGet(
-            StateID => $Param{StateID},
-            UserID  => $Param{UserID},
-        );
-
-        # get body from config
-        my $Body = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketBody');
-        $Body =~ s{ <OTRS_FAQ_CATEGORYID> }{$Param{CategoryID}}xms;
-        $Body =~ s{ <OTRS_FAQ_ITEMID>     }{$Param{ItemID}}xms;
-        $Body =~ s{ <OTRS_FAQ_NUMBER>     }{$Param{FAQNumber}}xms;
-        $Body =~ s{ <OTRS_FAQ_TITLE>      }{$Param{Title}}xms;
-        $Body =~ s{ <OTRS_FAQ_AUTHOR>     }{$UserName}xms;
-        $Body =~ s{ <OTRS_FAQ_STATE>      }{$State{Name}}xms;
-
-        # create article
-        my $ArticleID = $Self->{TicketObject}->ArticleCreate(
-            TicketID    => $TicketID,
-            ArticleType => 'note-internal',
-            SenderType  => 'system',
-            Subject     => $Subject,
-            Body        => $Body,
-            ContentType => "text/plain; charset=$Self->{ConfigObject}->Get('DefaultCharset')",
-            UserID      => 1,
-            HistoryType => 'SystemRequest',
-            HistoryComment =>
-                $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment}
-                || '',
-        );
-
-        return $ArticleID;
-    }
-
-    return;
-}
-
 =item FAQInlineAttachmentURLUpdate()
 
 Updates the URLs of uploaded inline attachments.
@@ -4151,6 +4054,168 @@ sub _UserCategories {
     return \%UserCategories;
 }
 
+=item _FAQApprovalUpdate()
+
+update the approval state of an article
+
+    my $Success = $FAQObject->_FAQApprovalUpdate(
+        ItemID     => 123,
+        Approved   => 1,    # 0|1 (default 0)
+        UserID     => 1,
+    );
+
+=cut
+
+sub _FAQApprovalUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ItemID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    if ( !defined $Param{Approved} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need Approved parameter!',
+        );
+        return;
+    }
+
+    # update database
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE faq_item '
+            . 'SET approved = ?, changed = current_timestamp, changed_by = ? '
+            . 'WHERE id = ?',
+        Bind => [
+            \$Param{Approved}, \$Param{UserID}, \$Param{ItemID},
+        ],
+    );
+
+    # approval feature is activated and faq article is not appproved yet
+    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
+
+        # get faq data
+        my %FAQData = $Self->FAQGet(
+            ItemID => $Param{ItemID},
+            UserID => $Param{UserID},
+        );
+
+        # create new approval ticket
+        my $Ok = $Self->_FAQApprovalTicketCreate(
+            ItemID     => $Param{ItemID},
+            CategoryID => $FAQData{CategoryID},
+            FAQNumber  => $FAQData{Number},
+            Title      => $FAQData{Title},
+            StateID    => $FAQData{StateID},
+            UserID     => $Param{UserID},
+        );
+
+        # check error
+        if ( !$Ok ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Could not create approval ticket!',
+            );
+        }
+    }
+
+    return 1;
+}
+
+=item _FAQApprovalTicketCreate()
+
+creates an approval ticket
+
+    my $Success = $FAQObject->_FAQApprovalTicketCreate(
+        ItemID     => 123,
+        CategoryID => 2,
+        FAQNumber  => 10211,
+        Title      => 'Some Title',
+        StateID    => 1,
+        UserID     => 1,
+    );
+
+=cut
+
+sub _FAQApprovalTicketCreate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ItemID CategoryID FAQNumber Title StateID UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get subject
+    my $Subject = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketSubject');
+    $Subject =~ s{ <OTRS_FAQ_NUMBER> }{$Param{FAQNumber}}xms;
+
+    # create ticket
+    my $TicketID = $Self->{TicketObject}->TicketCreate(
+        Title    => $Subject,
+        Queue    => $Self->{ConfigObject}->Get('FAQ::ApprovalQueue') || 'Raw',
+        Lock     => 'unlock',
+        Priority => $Self->{ConfigObject}->Get('FAQ::ApprovalTicketPriority') || '3 normal',
+        State    => $Self->{ConfigObject}->Get('FAQ::ApprovalTicketDefaultState') || 'new',
+        OwnerID  => 1,
+        UserID   => 1,
+    );
+
+    if ($TicketID) {
+
+        # get UserName
+        my $UserName = $Self->{UserObject}->UserName(
+            UserID => $Param{UserID},
+        );
+
+        # get faq state
+        my %State = $Self->StateGet(
+            StateID => $Param{StateID},
+            UserID  => $Param{UserID},
+        );
+
+        # get body from config
+        my $Body = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketBody');
+        $Body =~ s{ <OTRS_FAQ_CATEGORYID> }{$Param{CategoryID}}xms;
+        $Body =~ s{ <OTRS_FAQ_ITEMID>     }{$Param{ItemID}}xms;
+        $Body =~ s{ <OTRS_FAQ_NUMBER>     }{$Param{FAQNumber}}xms;
+        $Body =~ s{ <OTRS_FAQ_TITLE>      }{$Param{Title}}xms;
+        $Body =~ s{ <OTRS_FAQ_AUTHOR>     }{$UserName}xms;
+        $Body =~ s{ <OTRS_FAQ_STATE>      }{$State{Name}}xms;
+
+        # create article
+        my $ArticleID = $Self->{TicketObject}->ArticleCreate(
+            TicketID    => $TicketID,
+            ArticleType => 'note-internal',
+            SenderType  => 'system',
+            Subject     => $Subject,
+            Body        => $Body,
+            ContentType => "text/plain; charset=$Self->{ConfigObject}->Get('DefaultCharset')",
+            UserID      => 1,
+            HistoryType => 'SystemRequest',
+            HistoryComment =>
+                $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketNote')->{HistoryComment}
+                || '',
+        );
+
+        return $ArticleID;
+    }
+
+    return;
+}
+
 1;
 
 =end Internal:
@@ -4169,6 +4234,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.126 $ $Date: 2010-11-17 19:12:58 $
+$Revision: 1.127 $ $Date: 2010-11-19 14:04:43 $
 
 =cut
