@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.86 2010-11-18 19:47:32 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.87 2010-11-19 10:13:11 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -80,7 +80,6 @@
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/yui-image-uploader-faq.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Widget.css"/>
