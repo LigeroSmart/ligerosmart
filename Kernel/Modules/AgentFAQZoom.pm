@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.16 2010-11-19 11:48:09 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.17 2010-11-19 11:51:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -409,14 +409,6 @@ sub Run {
         }
     }
 
-    # get linked objects
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'FAQ',
-        Key    => $GetParam{ItemID},
-        State  => 'Valid',
-        UserID => $Self->{UserID},
-    );
-
     # show FAQ Content
     $Self->{LayoutObject}->FAQContentShow(
         FAQObject       => $Self->{FAQObject},
@@ -434,6 +426,14 @@ sub Run {
             $Self->_FAQVoting( FAQData => {%FAQData} );
         }
     }
+
+    # get linked objects
+    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+        Object => 'FAQ',
+        Key    => $GetParam{ItemID},
+        State  => 'Valid',
+        UserID => $Self->{UserID},
+    );
 
     # get link table view mode
     my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
