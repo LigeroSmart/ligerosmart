@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.23 2010-11-15 23:34:04 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.24 2010-11-19 10:12:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -344,7 +344,7 @@ Outputs the necessary DTL blocks to display the FAQ item fields for the supplied
 The fields displayed are also restricted by the permissions represented by the supplied interface
 
     $LayoutObject->FAQContentShow(
-        FAQObject       => $FAQObject,                 # needed for core module insteraction
+        FAQObject       => $FAQObject,                 # needed for core module interaction
         FAQData         => %{ $FAQData },
         InterfaceStates => $Self->{InterfaceStates},
     );
