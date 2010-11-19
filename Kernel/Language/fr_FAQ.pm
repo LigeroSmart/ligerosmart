@@ -3,11 +3,11 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Jonathan Peyrot
 # --
-# $Id: fr_FAQ.pm,v 1.3 2010-11-08 15:41:12 ub Exp $
+# $Id: fr_FAQ.pm,v 1.4 2010-11-19 10:34:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Language::fr_FAQ;
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -52,6 +52,9 @@ sub Data {
     $Lang->{'EndMonth'}                          = 'Mois Fin';
     $Lang->{'EndYear'}                           = 'Année Fin';
     $Lang->{'Approval'}                          = 'Autorisation';
+    $Lang->{'internal'}                          = '';
+    $Lang->{'external'}                          = '';
+    $Lang->{'public'}                            = '';
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }

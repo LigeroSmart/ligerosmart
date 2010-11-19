@@ -4,11 +4,11 @@
 # Copyright (C) 2008 Patryk ¦ciborek <patryk@sciborek.com>
 # Copyright (C) 2009 Artur Skalski <skal.ar at wp.pl>
 # --
-# $Id: pl_FAQ.pm,v 1.6 2010-11-08 15:41:12 ub Exp $
+# $Id: pl_FAQ.pm,v 1.7 2010-11-19 10:34:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Language::pl_FAQ;
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -53,8 +53,11 @@ sub Data {
     $Lang->{'EndMonth'}                          = 'Miesi±c koñcowy';
     $Lang->{'EndYear'}                           = 'Rok koñcowy';
     $Lang->{'Approval'}                          = 'Zatwierdzone';
-    $Lang->{'FAQ-Area'}                 = 'FAQ: czêsto zadawane pytania';
-    $Lang->{'Result'}                 = 'Ocena';
+    $Lang->{'FAQ-Area'}                          = 'FAQ: czêsto zadawane pytania';
+    $Lang->{'Result'}                            = 'Ocena';
+    $Lang->{'internal'}                          = '';
+    $Lang->{'external'}                          = '';
+    $Lang->{'public'}                            = '';
 
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'

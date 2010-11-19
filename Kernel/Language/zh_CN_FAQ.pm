@@ -2,11 +2,11 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.5 2010-11-08 15:41:12 ub Exp $
+# $Id: zh_CN_FAQ.pm,v 1.6 2010-11-19 10:34:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Language::zh_CN_FAQ;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -52,6 +52,9 @@ sub Data {
     $Lang->{'EndMonth'}                          = '开始月份';
     $Lang->{'EndYear'}                           = '结束年份';
     $Lang->{'Approval'}                          = '认可度';
+    $Lang->{'internal'}                          = '';
+    $Lang->{'external'}                          = '';
+    $Lang->{'public'}                            = '';
 
     $Lang->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = '没有归类到目录. 要创建一篇文章需要归类到目录里, 请在 -目录菜单- 里选择您有权限创建文章的目录';
     $Lang->{'Agent groups which can access this category.'} = '哪一个群组可以访问此目录.';

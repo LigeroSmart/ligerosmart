@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2001-2010 Afshar Mohebbi <afshar.mohebbi at gmail.com>
 # --
-# $Id: fa_FAQ.pm,v 1.6 2010-11-08 18:58:16 ub Exp $
+# $Id: fa_FAQ.pm,v 1.7 2010-11-19 10:34:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -52,6 +52,9 @@ sub Data {
     $Lang->{'EndMonth'}                          = 'ماه پایان';
     $Lang->{'EndYear'}                           = 'سال پایان';
     $Lang->{'Approval'}                          = 'تایید';
+    $Lang->{'internal'}                          = '';
+    $Lang->{'external'}                          = '';
+    $Lang->{'public'}                            = '';
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }
