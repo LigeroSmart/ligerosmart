@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.25 2010-11-19 11:44:34 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.26 2010-11-19 21:53:40 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -347,6 +347,8 @@ The fields displayed are also restricted by the permissions represented by the s
         FAQObject       => $FAQObject,                 # needed for core module interaction
         FAQData         => %{ $FAQData },
         InterfaceStates => $Self->{InterfaceStates},
+        UserID          => $Self->{UserID},            # optional, required only for the public
+                                                       #inerface
     );
 
 =cut
@@ -363,6 +365,18 @@ sub FAQContentShow {
             );
             return;
         }
+    }
+
+    # set UserID for the public interface
+    if ( !$Self->{UserID} && !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+    else {
+        $Self->{UserID} = $Param{UserID};
     }
 
     # store FAQ object locally
@@ -415,8 +429,9 @@ if its allowd by the configuration, outputs the necessary DTL blocks to display 
 and returns the value 1.
 
     my ShowPath = $LayoutObject->FAQPathShow(
-        FAQObject       => $FAQObject,                 # needed for core module insteraction
-        CategoryID      => $FAQData{CategoryID},
+        FAQObject   => $FAQObject,           # needed for core module insteraction
+        CategoryID  => $FAQData{CategoryID},
+        UserID      => $Self->{UserID},      # optional, required only for the public inerface
     );
 
 =cut
@@ -433,6 +448,18 @@ sub FAQPathShow {
             );
             return;
         }
+    }
+
+    # set UserID for the public interface
+    if ( !$Self->{UserID} && !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+    else {
+        $Self->{UserID} = $Param{UserID};
     }
 
     # store FAQ object locally
