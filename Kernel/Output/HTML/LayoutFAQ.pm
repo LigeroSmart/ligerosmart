@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.24 2010-11-19 10:12:53 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.25 2010-11-19 11:44:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -368,37 +368,44 @@ sub FAQContentShow {
     # store FAQ object locally
     $Self->{FAQObject} = $Param{FAQObject};
 
-    my %FAQData = %{ $Param{FAQData} };
-
-    # config values
-    my %ItemFields;
+    # get the config of FAQ fields that should be shown
+    my %Fields;
     FIELD:
-    for my $Count ( 1 .. 6 ) {
-        my $ItemConfig = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Count );
+    for my $Number ( 1 .. 6 ) {
 
-        # get only the fields that are configured to be show (by any interface)
-        next FIELD if ( !$ItemConfig->{Show} );
-        $ItemFields{ "Field" . $Count } = $ItemConfig;
+        # get config of FAQ field
+        my $Config = $Self->{ConfigObject}->Get( 'FAQ::Item::Field' . $Number );
+
+        # skip over not shown fields
+        next FIELD if !$Config->{Show};
+
+        # store only the config of fields that should be shown
+        $Fields{ "Field" . $Number } = $Config;
     }
 
-    for my $Field ( sort { $ItemFields{$a}->{Prio} <=> $ItemFields{$b}->{Prio} } keys %ItemFields )
-    {
+    # sort shown fields by priority
+    FIELD:
+    for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
+
+        # get the state type data of this field
         my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
-            Name   => $ItemFields{$Field}->{Show},
+            Name   => $Fields{$Field}->{Show},
             UserID => $Self->{UserID},
         );
 
-        # show yes /no
-        if ( exists $Param{InterfaceStates}->{ $StateTypeData->{StateID} } ) {
-            $Self->Block(
-                Name => 'FAQContent',
-                Data => {
-                    FieldName => $ItemFields{$Field}->{'Caption'},
-                    StateName => $StateTypeData->{Name},
-                    Body      => $FAQData{$Field} || '',
-                },
-            );
-        }
+        # do not show fields that are not allowed in the given interface
+        next FIELD if !$Param{InterfaceStates}->{ $StateTypeData->{StateID} };
+
+        # show the field
+        $Self->Block(
+            Name => 'FAQContent',
+            Data => {
+                Field     => $Field,
+                Caption   => $Fields{$Field}->{'Caption'},
+                StateName => $StateTypeData->{Name},
+                Content   => $Param{FAQData}->{$Field} || '',
+            },
+        );
     }
 }
 
