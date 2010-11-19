@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.5 2010-11-19 10:01:08 ub Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.6 2010-11-19 11:45:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -122,13 +122,13 @@
 <!-- dtl:block:FAQContent -->
             <li class="Customer Visible">
                 <div class="MessageHeader">
-                    <h3>$Text{"$Data{"FieldName"}"}:</h3>
+                    <h3>$Text{"$Data{"Caption"}"}:</h3>
                     <div class="Clear"></div>
                 </div>
                 <div class="MessageBody">
                     <div class="MessageContent">
                         <div class="message">
-                            $Data{"Body"}
+                            $Data{"Content"}
                         </div>
                     </div>
                 </div>

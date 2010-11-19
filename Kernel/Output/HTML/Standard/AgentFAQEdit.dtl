@@ -2,7 +2,7 @@
 # AgentFAQEdit.dtl - provides HTML form for AgentFAQEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.dtl,v 1.4 2010-11-19 10:35:37 ub Exp $
+# $Id: AgentFAQEdit.dtl,v 1.5 2010-11-19 11:45:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -112,13 +112,13 @@
 $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
 
-<!-- dtl:block:FAQItemField -->
+<!-- dtl:block:FAQContent -->
                 <label for="$QData{"Field"}">$Text{"$Data{"Caption"}"}:<br/><span class="FAQStateName">($Text{"$Data{"StateName"}"})</span></label>
                 <div class="RichTextField">
                     <textarea id="$QData{"Field"}" class="RichText" name="$QData{"Field"}" rows="15" cols="70">$QData{"Content"}</textarea>
                 </div>
                 <div class="Clear"></div>
-<!-- dtl:block:FAQItemField -->
+<!-- dtl:block:FAQContent -->
 
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[

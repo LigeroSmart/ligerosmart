@@ -2,7 +2,7 @@
 # AgentFAQPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.dtl,v 1.1 2010-11-18 18:15:19 cr Exp $
+# $Id: AgentFAQPrint.dtl,v 1.2 2010-11-19 11:45:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,10 +81,10 @@
 <!-- dtl:block:FAQContent -->
     <tr>
         <td class="contentkey">
-            $Text{"$Data{"FieldName"}"}:  <span class="small">($Text{"$Data{"StateName"}"}) </span>
+            $Text{"$Data{"Caption"}"}:  <span class="small">($Text{"$Data{"StateName"}"}) </span>
             <table border="0" cellspacing="10" cellPadding="0" width="100%">
                 <tr>
-                    <td class="contentvalue">$Data{"Body"}</td>
+                    <td class="contentvalue">$Data{"Content"}</td>
                 </tr>
             </table>
         </td>
