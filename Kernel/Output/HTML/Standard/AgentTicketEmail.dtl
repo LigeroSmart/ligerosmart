@@ -2,7 +2,7 @@
 # AgentTicketEmail.dtl - provides HTML form for agent email
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.dtl,v 1.21 2010-11-18 16:06:52 ub Exp $
+# $Id: AgentTicketEmail.dtl,v 1.22 2010-11-19 15:48:33 ub Exp $
 # $OldId: AgentTicketEmail.dtl,v 1.134 2010/11/17 21:32:53 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -324,12 +324,7 @@ $('#FileUpload').bind('change', function () {
 #<!-- dtl:block:TicketFreeText2 -->
 
 <!-- dtl:block:TicketFreeTime -->
-# ---
-# ITSM
-# ---
                     $Data{"TicketFreeTimeKey"}
-#                    $Text{"$Data{"TicketFreeTimeKey"}"}
-# ---
                     <div class="Field">
                         $Data{"TicketFreeTime"}
                         <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.21 2010-11-18 16:06:52 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.22 2010-11-19 15:48:44 ub Exp $
 # $OldId: AgentTicketEmail.pm,v 1.154 2010/11/17 21:32:53 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1908,6 +1908,30 @@ sub _MaskEmailNew {
     }
     for my $Count ( 1 .. 6 ) {
         next if !$Self->{Config}->{TicketFreeTime}->{$Count};
+# ---
+# ITSM
+# ---
+        # find the html string for the free time field label
+        if ( $Param{ 'TicketFreeTimeKey' . $Count } =~ m{
+                ( <label  [^<>]* >                 \s*
+                (?: <span [^<>]* >\*</span> )? )   \s*
+                ( [^<>]* )                         \s*
+                ( </label> )
+            }xms
+        ) {
+
+            # get the label and the enclosing html code
+            my $TagStart  = $1;
+            my $LabelText = $2;
+            my $TagEnd    = $3;
+
+            # translate the label
+            $LabelText = $Self->{LayoutObject}->{LanguageObject}->Get( $LabelText );
+
+            # write the translated string back
+            $Param{ 'TicketFreeTimeKey' . $Count } = $TagStart . $LabelText . $TagEnd;
+        }
+# ---
         $Self->{LayoutObject}->Block(
             Name => 'TicketFreeTime',
             Data => {
