@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.19 2010-11-17 12:47:01 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.20 2010-11-19 11:48:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,13 +46,7 @@ sub new {
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
 
-    return $Self;
-}
-
-sub Run {
-    my ( $Self, %Param ) = @_;
-
-    # set interface settings
+    # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
         Name   => 'internal',
         UserID => $Self->{UserID},
@@ -61,6 +55,12 @@ sub Run {
         Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    return $Self;
+}
+
+sub Run {
+    my ( $Self, %Param ) = @_;
 
     my $Output;
 
