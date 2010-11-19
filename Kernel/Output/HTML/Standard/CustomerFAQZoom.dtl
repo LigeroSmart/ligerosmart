@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.6 2010-11-19 11:45:18 ub Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.7 2010-11-19 18:56:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,10 +39,6 @@
                 <li><span class="Key">$Text{"Category"}:</span> <span title="$Quote{"$Text{"$Data{"CategoryName"}"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>
                 <li><span class="Key">$Text{"State"}:</span> <span title="$Quote{"$Text{"$Data{"State"}"}"}">$Quote{"$Text{"$Data{"State"}"}","25"}</span></li>
                 <li><span class="Key">$Text{"Language"}:</span> <span title="$Quote{"$Text{"$Data{"Language"}"}"}">$Quote{"$Text{"$Data{"Language"}"}","18"}</span></li>
-
-<!-- dtl:block:ViewApproval -->
-                <li><span class="Key">$Text{"Approval"}:</span> <span title="$Quote{"$Text{"$Data{Approval"}"}"}">$Quote{"$Text{"$Data{"Approval"}"}","18"}</span></li>
-<!-- dtl:block:ViewApproval -->
                 <li>
                     <span class="Key RatingLabel">$Text{"Rating"}:</span>
 <!-- dtl:block:RateStars -->
