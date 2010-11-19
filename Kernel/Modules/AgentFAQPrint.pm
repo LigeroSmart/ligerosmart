@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.pm,v 1.2 2010-11-19 11:48:22 ub Exp $
+# $Id: AgentFAQPrint.pm,v 1.3 2010-11-19 11:55:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -572,7 +572,7 @@ sub _PDFOutputKeywords {
     my %Page    = %{ $Param{PageData} };
     my %TableParam;
 
-    $TableParam{CellData}[$0][0]{Content} = $FAQData{Keywords} || '';
+    $TableParam{CellData}[0][0]{Content} = $FAQData{Keywords} || '';
     $TableParam{ColumnData}[0]{Width} = 511;
 
     # set new position
@@ -666,7 +666,7 @@ sub _PDFOuputFAQContent {
         # convert HTML to ascii
         my $AsciiField = $Self->{HTMLUtilsObject}->ToAscii( String => $FAQData{$Field} );
 
-        $TableParam{CellData}[$0][0]{Content} = $AsciiField || '';
+        $TableParam{CellData}[0][0]{Content} = $AsciiField || '';
         $TableParam{ColumnData}[0]{Width} = 511;
 
         # set new position
