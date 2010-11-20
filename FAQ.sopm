@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.87 2010-11-19 10:13:11 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.88 2010-11-20 00:32:10 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -40,6 +40,9 @@
         <File Permission="644" Location="Kernel/Modules/CustomerFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PublicFAQPrint.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PublicFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PublicFAQZoom.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
@@ -68,7 +71,11 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescription.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.dtl"/>
         <File Permission="644" Location="Kernel/System/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
