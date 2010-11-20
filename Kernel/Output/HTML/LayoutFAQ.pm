@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.26 2010-11-19 21:53:40 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.27 2010-11-20 00:17:07 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -368,14 +368,7 @@ sub FAQContentShow {
     }
 
     # set UserID for the public interface
-    if ( !$Self->{UserID} && !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
-    }
-    else {
+    if ( !$Self->{UserID} && $Param{UserID} ) {
         $Self->{UserID} = $Param{UserID};
     }
 
@@ -451,14 +444,7 @@ sub FAQPathShow {
     }
 
     # set UserID for the public interface
-    if ( !$Self->{UserID} && !$Param{UserID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Need UserID!",
-        );
-        return;
-    }
-    else {
+    if ( !$Self->{UserID} && $Param{UserID} ) {
         $Self->{UserID} = $Param{UserID};
     }
 
