@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.7 2010-11-19 18:57:16 ub Exp $
+# $Id: CustomerFAQZoom.pm,v 1.8 2010-11-20 10:39:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,12 +14,11 @@ package Kernel::Modules::CustomerFAQZoom;
 use strict;
 use warnings;
 
-use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -30,7 +29,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject GroupObject)
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject)
         )
     {
         if ( !$Self->{$Object} ) {
@@ -39,9 +38,7 @@ sub new {
     }
 
     # create needed objects
-    $Self->{LinkObject} = Kernel::System::LinkObject->new(%Param);
-    $Self->{FAQObject}  = Kernel::System::FAQ->new(%Param);
-    $Self->{UserObject} = Kernel::System::User->new(%Param);
+    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
@@ -251,18 +248,6 @@ sub Run {
             LinkFeature    => 1,
         );
     }
-
-    # get user info (CreatedBy)
-    my %UserInfo = $Self->{UserObject}->GetUserData(
-        UserID => $FAQData{CreatedBy}
-    );
-    $Param{CreatedByLogin} = $UserInfo{UserLogin};
-
-    # get user info (ChangedBy)
-    %UserInfo = $Self->{UserObject}->GetUserData(
-        UserID => $FAQData{ChangedBy}
-    );
-    $Param{ChangedByLogin} = $UserInfo{UserLogin};
 
     # set voting results
     $Param{VotingResultColor} = $Self->{LayoutObject}->GetFAQItemVotingRateColor(

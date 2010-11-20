@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQPrint.pm,v 1.6 2010-11-19 21:58:41 cr Exp $
+# $Id: CustomerFAQPrint.pm,v 1.7 2010-11-20 10:39:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,13 +15,12 @@ use strict;
 use warnings;
 
 use Kernel::System::HTMLUtils;
-use Kernel::System::LinkObject;
 use Kernel::System::PDF;
 use Kernel::System::User;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -32,7 +31,7 @@ sub new {
 
     # check needed objects
     for my $Needed (
-        qw(ParamObject DBObject LayoutObject LogObject ConfigObject UserObject MainObject)
+        qw(ParamObject DBObject LayoutObject LogObject ConfigObject MainObject)
         )
     {
         if ( !$Self->{$Needed} ) {
@@ -42,9 +41,7 @@ sub new {
 
     # create aditional objects
     $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
     $Self->{PDFObject}       = Kernel::System::PDF->new(%Param);
-    $Self->{UserObject}      = Kernel::System::User->new(%Param);
     $Self->{FAQObject}       = Kernel::System::FAQ->new(%Param);
 
     # set default interface settings
@@ -134,18 +131,6 @@ sub Run {
             LinkFeature    => 1,
         );
     }
-
-    # get user info (CreatedBy)
-    my %UserInfo = $Self->{UserObject}->GetUserData(
-        UserID => $FAQData{CreatedBy}
-    );
-    $Param{CreatedByLogin} = $UserInfo{UserLogin};
-
-    # get user info (ChangedBy)
-    %UserInfo = $Self->{UserObject}->GetUserData(
-        UserID => $FAQData{ChangedBy}
-    );
-    $Param{ChangedByLogin} = $UserInfo{UserLogin};
 
     # generate pdf output
     if ( $Self->{PDFObject} ) {
@@ -277,7 +262,6 @@ sub Run {
         $Output .= $Self->_HTMLMask(
             FAQID => $GetParam{FAQID},
             %Param,
-            %UserInfo,
             %FAQData,
         );
 
