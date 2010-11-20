@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQPrint.pm,v 1.2 2010-11-20 10:39:58 ub Exp $
+# $Id: PublicFAQPrint.pm,v 1.3 2010-11-20 11:09:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::User;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,9 +121,8 @@ sub Run {
 
     # generate pdf output
     if ( $Self->{PDFObject} ) {
-        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-        my $Url       = ' ';
+        my $Time = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+        my $Url = ' ';
         if ( $ENV{REQUEST_URI} ) {
             $Url = $Self->{ConfigObject}->Get('HttpType') . '://'
                 . $Self->{ConfigObject}->Get('FQDN')
@@ -144,21 +143,16 @@ sub Run {
             $Title .= ' / ' . $FAQData{Title};
         }
 
-        $Page{MarginTop}    = 30;
-        $Page{MarginRight}  = 40;
-        $Page{MarginBottom} = 40;
-        $Page{MarginLeft}   = 40;
-        $Page{HeaderRight}  = $HeaderRight;
-        $Page{HeadlineLeft} = $HeadlineLeft;
-        $Page{HeadlineRight}
-            = $PrintedBy . ' '
-            . $Self->{UserFirstname} . ' '
-            . $Self->{UserLastname} . ' ('
-            . $Self->{UserEmail} . ') '
-            . $Time;
-        $Page{FooterLeft} = $Url;
-        $Page{PageText}   = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
-        $Page{PageCount}  = 1;
+        $Page{MarginTop}     = 30;
+        $Page{MarginRight}   = 40;
+        $Page{MarginBottom}  = 40;
+        $Page{MarginLeft}    = 40;
+        $Page{HeaderRight}   = $HeaderRight;
+        $Page{HeadlineLeft}  = $HeadlineLeft;
+        $Page{HeadlineRight} = $Time;
+        $Page{FooterLeft}    = $Url;
+        $Page{PageText}      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+        $Page{PageCount}     = 1;
 
         # create new pdf document
         $Self->{PDFObject}->DocumentNew(
