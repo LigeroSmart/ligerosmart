@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.27 2010-11-20 00:17:07 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.28 2010-11-20 10:57:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -347,8 +347,7 @@ The fields displayed are also restricted by the permissions represented by the s
         FAQObject       => $FAQObject,                 # needed for core module interaction
         FAQData         => %{ $FAQData },
         InterfaceStates => $Self->{InterfaceStates},
-        UserID          => $Self->{UserID},            # optional, required only for the public
-                                                       #inerface
+        UserID          => 1,
     );
 
 =cut
@@ -357,7 +356,7 @@ sub FAQContentShow {
     my ( $Self, %Param ) = @_;
 
     # check parameters
-    for my $ParamName (qw(FAQObject FAQData InterfaceStates)) {
+    for my $ParamName (qw(FAQObject FAQData InterfaceStates UserID)) {
         if ( !$Param{$ParamName} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -365,11 +364,6 @@ sub FAQContentShow {
             );
             return;
         }
-    }
-
-    # set UserID for the public interface
-    if ( !$Self->{UserID} && $Param{UserID} ) {
-        $Self->{UserID} = $Param{UserID};
     }
 
     # store FAQ object locally
@@ -397,7 +391,7 @@ sub FAQContentShow {
         # get the state type data of this field
         my $StateTypeData = $Self->{FAQObject}->StateTypeGet(
             Name   => $Fields{$Field}->{Show},
-            UserID => $Self->{UserID},
+            UserID => $Param{UserID},
         );
 
         # do not show fields that are not allowed in the given interface
@@ -422,9 +416,9 @@ if its allowd by the configuration, outputs the necessary DTL blocks to display 
 and returns the value 1.
 
     my ShowPath = $LayoutObject->FAQPathShow(
-        FAQObject   => $FAQObject,           # needed for core module insteraction
+        FAQObject   => $FAQObject,                   # needed for core module interaction
         CategoryID  => $FAQData{CategoryID},
-        UserID      => $Self->{UserID},      # optional, required only for the public inerface
+        UserID      => 1,
     );
 
 =cut
@@ -433,7 +427,7 @@ sub FAQPathShow {
     my ( $Self, %Param ) = @_;
 
     # check parameters
-    for my $ParamName (qw(FAQObject CategoryID)) {
+    for my $ParamName (qw(FAQObject CategoryID UserID)) {
         if ( !$Param{$ParamName} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -441,11 +435,6 @@ sub FAQPathShow {
             );
             return;
         }
-    }
-
-    # set UserID for the public interface
-    if ( !$Self->{UserID} && $Param{UserID} ) {
-        $Self->{UserID} = $Param{UserID};
     }
 
     # store FAQ object locally
@@ -469,7 +458,7 @@ sub FAQPathShow {
     # get category list to construct the path
     my $CategoryList = $Self->{FAQObject}->FAQPathListGet(
         CategoryID => $Param{CategoryID},
-        UserID     => $Self->{UserID},
+        UserID     => $Param{UserID},
     );
 
     # output subcategories

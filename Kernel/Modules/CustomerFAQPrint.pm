@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQPrint.pm,v 1.7 2010-11-20 10:39:58 ub Exp $
+# $Id: CustomerFAQPrint.pm,v 1.8 2010-11-20 10:58:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::User;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -256,6 +256,7 @@ sub Run {
             FAQObject       => $Self->{FAQObject},
             InterfaceStates => $Self->{InterfaceStates},
             FAQData         => {%FAQData},
+            UserID          => $Self->{UserID},
         );
 
         # show ticket
