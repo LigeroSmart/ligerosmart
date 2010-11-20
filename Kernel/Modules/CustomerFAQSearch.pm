@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - Utilities for tickets
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.3 2010-11-19 11:47:57 ub Exp $
+# $Id: CustomerFAQSearch.pm,v 1.4 2010-11-20 00:19:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -157,6 +157,18 @@ sub Run {
 
     # show result page
     if ( $Self->{Subaction} eq 'Search' && !$Self->{EraseTemplate} ) {
+
+        # store last screen
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenView',
+            Value     => $Self->{RequestedURL},
+        );
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenOverview',
+            Value     => $Self->{RequestedURL},
+        );
 
         # fill up profile name (e.g. with last-search)
         if ( !$Self->{Profile} || !$Self->{SaveProfile} ) {
