@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.58 2010-11-19 10:51:55 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.59 2010-11-20 00:22:31 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -561,13 +561,12 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Customer faq</Description>
+                <Description>Public faq</Description>
                 <NavBarName>FAQ</NavBarName>
                 <Title></Title>
                 <NavBar>
                     <Description>FAQ-Area</Description>
-                    <Name>FAQ-Area</Name>
-                    <Image>help.png</Image>
+                    <Name>FAQ</Name>
                     <Link>Action=CustomerFAQ</Link>
                     <Type></Type>
                     <Block></Block>
@@ -1088,5 +1087,95 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="PublicFrontend::Module###PublicFAQSearch" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Public FAQ search</Description>
+                <NavBarName>FAQ</NavBarName>
+                <Title>Search FAQ</Title>
+                <NavBar>
+                    <Description Translatable="1">FAQ-Area</Description>
+                    <Name Translatable="1">Search FAQ</Name>
+                    <Block></Block>
+                    <Type></Type>
+                    <NavBar></NavBar>
+                    <Link>Action=PublicFAQSearch</Link>
+                    <LinkOption></LinkOption>
+                    <AccessKey></AccessKey>
+                    <Prio>600</Prio>
+                </NavBar>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::PublicFAQSearch###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQSearch</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,8}$">200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::PublicFAQSearch###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed in each page of a search result in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQSearch</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">40</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::PublicFAQSearch###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="FAQID">
+                <Item Key="Title">Title</Item>
+                <Item Key="FAQID">Number</Item>
+                <Item Key="Category">Category</Item>
+                <Item Key="Language">Laguage</Item>
+                <Item Key="State">State</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::PublicFAQSearch###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQSearch</SubGroup>
+        <Setting>
+            <Option SelectedID="Down">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PublicFrontend::Module###PublicFAQZoom" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Title></Title>
+                <Description>Public FAQ-Zoom</Description>
+                <NavBarName>FAQ</NavBarName>
+                <Loader>
+                    <CSS>FAQ.Customer.Detail.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PublicFrontend::Module###PublicFAQPrint" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Title></Title>
+                <Description>Public FAQ-Print</Description>
+                <NavBarName>FAQ</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
