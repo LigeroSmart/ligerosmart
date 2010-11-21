@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.15 2010-10-21 16:11:31 ub Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.16 2010-11-21 12:16:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -157,7 +157,7 @@ sub Run {
     # the check is based upon the change builder
     my $GroupID = $Self->{GroupObject}->GroupLookup( Group => 'itsm-change-builder' );
 
-    # deny access, when the group is not found
+    # do not grant access, when the group is not found
     return if !$GroupID;
 
     # get user groups, where the user has the appropriate privilege
@@ -167,7 +167,7 @@ sub Run {
         Result => 'HASH',
     );
 
-    # deny access if the agent doesn't have the appropriate type in the appropriate group
+    # do not grant access if the agent doesn't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
 
     # there already is a workorder. e.g. AgentITSMWorkOrderEdit
@@ -176,7 +176,7 @@ sub Run {
         WorkOrderID => $Param{WorkOrderID},
     );
 
-    # deny access, when no workorder was found
+    # do not grant access, when no workorder was found
     return if !$WorkOrder || !%{$WorkOrder} || !$WorkOrder->{ChangeID};
 
     # for checking the change builder, we need information on the change
@@ -185,13 +185,13 @@ sub Run {
         ChangeID => $WorkOrder->{ChangeID},
     );
 
-    # deny access, when no change was found
+    # do not grant access, when no change was found
     return if !$Change || !%{$Change} || !$Change->{ChangeBuilderID};
 
     # allow access, when the agent is the change builder of the change
     return 1 if $Change->{ChangeBuilderID} == $Param{UserID};
 
-    # deny access otherwise
+    # do not grant access otherwise
     return;
 }
 
@@ -207,7 +207,7 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.15 2010-10-21 16:11:31 ub Exp $
+$Id: ChangeBuilderCheck.pm,v 1.16 2010-11-21 12:16:55 bes Exp $
 
 =cut
 

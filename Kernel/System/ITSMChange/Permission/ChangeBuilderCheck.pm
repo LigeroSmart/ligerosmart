@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Permission/ChangeBuilderCheck.pm - change builder based permission check
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ChangeBuilderCheck.pm,v 1.17 2010-10-27 22:27:30 ub Exp $
+# $Id: ChangeBuilderCheck.pm,v 1.18 2010-11-21 12:16:55 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -152,7 +152,7 @@ sub Run {
     # the check is based upon the change builder
     my $GroupID = $Self->{GroupObject}->GroupLookup( Group => 'itsm-change-builder' );
 
-    # deny access, when the group is not found
+    # do not grant access, when the group is not found
     return if !$GroupID;
 
     # get user groups, where the user has the appropriate privilege
@@ -162,7 +162,7 @@ sub Run {
         Result => 'HASH',
     );
 
-    # deny access if the agent doesn't have the appropriate type in the appropriate group
+    # do not grant access if the agent doesn't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
 
     # Allow a change builder to create a change, when there isn't a change yet.
@@ -174,13 +174,13 @@ sub Run {
         ChangeID => $Param{ChangeID},
     );
 
-    # deny access, when no change was found
+    # do not grant access, when no change was found
     return if !$Change || !%{$Change} || !$Change->{ChangeBuilderID};
 
     # allow access, when the agent is the change builder of the change
     return 1 if $Change->{ChangeBuilderID} == $Param{UserID};
 
-    # deny access otherwise
+    # do not grant access otherwise
     return;
 }
 
@@ -196,7 +196,7 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Id: ChangeBuilderCheck.pm,v 1.17 2010-10-27 22:27:30 ub Exp $
+$Id: ChangeBuilderCheck.pm,v 1.18 2010-11-21 12:16:55 bes Exp $
 
 =cut
 
