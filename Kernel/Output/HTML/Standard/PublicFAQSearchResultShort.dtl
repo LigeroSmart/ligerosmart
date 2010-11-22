@@ -2,7 +2,7 @@
 # PublicFAQSearchResultShort.dtl - html for ticket status view (all tickets)
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearchResultShort.dtl,v 1.1 2010-11-20 00:36:50 cr Exp $
+# $Id: PublicFAQSearchResultShort.dtl,v 1.2 2010-11-22 16:13:49 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -73,11 +73,11 @@
             <tbody>
 <!-- dtl:block:Record -->
                 <tr title="$QData{"TicketNumber"}">
-                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;BackLink=$Data{"BackLink"};ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
-                    <td class="Title"><a href="$Env{"Baselink"}Action=PublicFAQZoom;BackLink=$Data{"BackLink"};ItemID=$Data{"FAQID"}">$QData{"Title","60"}</a></td>
-                    <td class="Category"><a href="$Env{"Baselink"}Action=PublicFAQZoom;BackLink=$Data{"BackLink"};ItemID=$Data{"FAQID"}">$QData{"CategoryName","60"}</a></td>
-                    <td class="Language"><a href="$Env{"Baselink"}Action=PublicFAQZoom;BackLink=$Data{"BackLink"};ItemID=$Data{"FAQID"}">$QData{"Language","5"}</a></td>
-                    <td class="State"><a href="$Env{"Baselink"}Action=PublicFAQZoom;BackLink=$Data{"BackLink"};ItemID=$Data{"FAQID"}">$QData{"State","21"}</a></td>
+                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                    <td class="Title"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$QData{"Title","60"}</a></td>
+                    <td class="Category"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$QData{"CategoryName","60"}</a></td>
+                    <td class="Language"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$QData{"Language","5"}</a></td>
+                    <td class="State"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$QData{"State","21"}</a></td>
                     <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
                 </tr>
 <!-- dtl:block:Record -->
