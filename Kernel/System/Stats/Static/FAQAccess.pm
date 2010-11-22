@@ -2,11 +2,11 @@
 # Kernel/System/Stats/Static/FAQAccess.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQAccess.pm,v 1.2 2010-11-03 18:40:56 ub Exp $
+# $Id: FAQAccess.pm,v 1.3 2010-11-22 14:48:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::System::Stats::Static::FAQAccess;
@@ -17,14 +17,13 @@ use Date::Pcalc qw(Days_in_Month);
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
-    my $Type = shift;
-    my %Param = @_;
+    my ( $Type, %Param ) = @_;
 
     # allocate new hash for object
-    my $Self = { %Param };
+    my $Self = {%Param};
     bless( $Self, $Type );
 
     # check all needed objects
@@ -40,84 +39,96 @@ sub new {
 
 sub Param {
 
-    my $Self = shift;
+    my $Self   = shift;
     my @Params = ();
 
     # get current time
-    my ($s,$m,$h, $D,$M,$Y) = $Self->{TimeObject}->SystemTime2Date(
+    my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
         SystemTime => $Self->{TimeObject}->SystemTime(),
     );
-    $D = sprintf("%02d", $D);
-    $M = sprintf("%02d", $M);
-    $Y = sprintf("%02d", $Y);
+    $D = sprintf( "%02d", $D );
+    $M = sprintf( "%02d", $M );
+    $Y = sprintf( "%02d", $Y );
 
     # create possible time selections
-    my %Year  = map { $_, $_ } ( $Y-10..$Y+1 );
-    my %Month = map { sprintf("%02d", $_), sprintf("%02d", $_) } ( 1..12 );
-    my %Day   = map { sprintf("%02d", $_), sprintf("%02d", $_) } ( 1..31 );
+    my %Year = map { $_, $_ } ( $Y - 10 .. $Y + 1 );
+    my %Month = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 12 );
+    my %Day   = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 31 );
 
-    push (@Params, {
-            Frontend => 'StartDay',
-            Name => 'StartDay',
-            Multiple => 0,
-            Size => 0,
+    push(
+        @Params,
+        {
+            Frontend   => 'StartDay',
+            Name       => 'StartDay',
+            Multiple   => 0,
+            Size       => 0,
             SelectedID => '01',
-            Data => {
+            Data       => {
                 %Day,
             },
         },
     );
-    push (@Params, {
-            Frontend => 'StartMonth',
-            Name => 'StartMonth',
-            Multiple => 0,
-            Size => 0,
+    push(
+        @Params,
+        {
+            Frontend   => 'StartMonth',
+            Name       => 'StartMonth',
+            Multiple   => 0,
+            Size       => 0,
             SelectedID => $M,
-            Data => {
+            Data       => {
                 %Month,
             },
         },
     );
-    push (@Params, {
-            Frontend => 'StartYear',
-            Name => 'StartYear',
-            Multiple => 0,
-            Size => 0,
+    push(
+        @Params,
+        {
+            Frontend   => 'StartYear',
+            Name       => 'StartYear',
+            Multiple   => 0,
+            Size       => 0,
             SelectedID => $Y,
-            Data => {
+            Data       => {
                 %Year,
             },
         },
     );
-    push (@Params, {
-            Frontend => 'EndDay',
-            Name => 'EndDay',
-            Multiple => 0,
-            Size => 0,
+    push(
+        @Params,
+        {
+            Frontend   => 'EndDay',
+            Name       => 'EndDay',
+            Multiple   => 0,
+            Size       => 0,
             SelectedID => $D,
-            Data => {
+            Data       => {
                 %Day,
             },
         },
     );
-    push (@Params, {
-            Frontend => 'EndMonth',
-            Name => 'EndMonth',
-            Multiple => 0,
-            Size => 0,
+    push(
+        @Params,
+        {
+            Frontend   => 'EndMonth',
+            Name       => 'EndMonth',
+            Multiple   => 0,
+            Size       => 0,
             SelectedID => $M,
-            Data => {
+            Data       => {
                 %Month,
             },
         },
     );
-    push (@Params, {
-            Frontend => 'EndYear',
-            Name => 'EndYear',
-            Multiple => 0,
-            Size => 0,
+    push(
+        @Params,
+        {
+            Frontend   => 'EndYear',
+            Name       => 'EndYear',
+            Multiple   => 0,
+            Size       => 0,
             SelectedID => $Y,
-            Data => {
+            Data       => {
                 %Year,
             },
         },
@@ -130,9 +141,12 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(StartYear StartMonth StartDay EndYear EndMonth EndDay)) {
-        if ( !$Param{$_} ) {
-            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
+    for my $ParamName (qw(StartYear StartMonth StartDay EndYear EndMonth EndDay)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
             return;
         }
     }
@@ -163,7 +177,7 @@ sub Run {
 
     # build result table
     my @Data;
-    for my $ItemIDRef ( @{ $Top10ItemIDsRef } ) {
+    for my $ItemIDRef ( @{$Top10ItemIDsRef} ) {
 
         # get faq data
         my %FAQData = $Self->{FAQObject}->FAQGet(
@@ -178,10 +192,10 @@ sub Run {
         );
         my $VoteResult = sprintf(
             "%0."
-            . $Self->{ConfigObject}->Get(
+                . $Self->{ConfigObject}->Get(
                 "FAQ::Explorer::ItemList::VotingResultDecimalPlaces"
-            )
-            . "f", $VoteData->{Result} || 0
+                )
+                . "f", $VoteData->{Result} || 0
         );
         my $Votes = $VoteData->{Votes} || 0;
 
@@ -196,7 +210,8 @@ sub Run {
     }
 
     # set report title
-    my $Title = "$Param{StartYear}-$Param{StartMonth}-$StartDay - $Param{EndYear}-$Param{EndMonth}-$EndDay";
+    my $Title
+        = "$Param{StartYear}-$Param{StartMonth}-$StartDay - $Param{EndYear}-$Param{EndMonth}-$EndDay";
 
     # table headlines
     my @HeadData = (
@@ -207,7 +222,7 @@ sub Run {
         'Votes',
     );
 
-    my @Result = ( [$Title],[@HeadData], @Data );
+    my @Result = ( [$Title], [@HeadData], @Data );
 
     return @Result;
 }
