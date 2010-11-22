@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.60 2010-11-22 21:14:53 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.61 2010-11-22 22:54:30 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -1176,6 +1176,93 @@ Your OTRS Notification Master
                 <Description>Public FAQ-Print</Description>
                 <NavBarName>FAQ</NavBarName>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentFAQJournal" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>faq</Group>
+                <GroupRo>faq</GroupRo>
+                <Title>FAQ</Title>
+                <NavBarName>FAQ</NavBarName>
+                <NavBar>
+                    <GroupRo>faq</GroupRo>
+                    <Description Translatable="1">Journal FAQ</Description>
+                    <Name Translatable="1">Journal</Name>
+                    <Link>Action=AgentFAQJournal</Link>
+                    <Type></Type>
+                    <Block></Block>
+                    <NavBar>FAQ</NavBar>
+                    <AccessKey>j</AccessKey>
+                    <Prio>940</Prio>
+                </NavBar>
+                <Loader>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###ShowColumns" Required="1" Valid="1">
+        <Description Translatable="1">Defines the shown columns in the FAQ journal. This option has no effect on the position of the column.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQJournal</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Number">1</Item>
+                <Item Key="Title">1</Item>
+                <Item Key="Category">1</Item>
+                <Item Key="Name">1</Item>
+                <Item Key="Time">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###JournalLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in journal in the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQJournal</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,8}$">200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PreferencesGroups###FAQJournalOverviewSmallPageShown" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::Preferences</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::PreferencesGeneric</Item>
+                <Item Key="Column">Other Settings</Item>
+                <Item Key="Label" Translatable="1">FAQ Journal Overview "Small" Limit</Item>
+                <Item Key="Key" Translatable="1">FAQ limit per page for FAQ Journal Overview "Small"</Item>
+                <Item Key="Data">
+                    <Hash>
+                        <Item Key="10">10</Item>
+                        <Item Key="15">15</Item>
+                        <Item Key="20">20</Item>
+                        <Item Key="25">25</Item>
+                        <Item Key="30">30</Item>
+                        <Item Key="35">35</Item>
+                    </Hash>
+                </Item>
+                <Item Key="DataSelected">25</Item>
+                <Item Key="PrefKey">UserFAQJournalOverviewSmallPageShown</Item>
+                <Item Key="Prio">8000</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::JournalOverview###Small" Required="0" Valid="1">
+        <Description Translatable="1">Defines an overview module to show the small view of a FAQ journal.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQJournalOverview</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::FAQJournalOverviewSmall</Item>
+                <Item Key="Name">Small</Item>
+                <Item Key="NameShort">S</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
