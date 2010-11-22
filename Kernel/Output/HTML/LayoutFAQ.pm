@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.30 2010-11-22 20:51:28 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.31 2010-11-22 22:32:32 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -47,7 +47,7 @@ This function is similar to L<Kernel::Output::HTML::LayoutTicket::TicketListShow
 in F<Kernel/Output/HTML/LayoutTicket.pm>.
 
     my $Output = $LayoutObject->FAQListShow(
-        FAQIDs  => $FAQIDsRef,                            # total list of FAQIDs, that can be listed
+        FAQIDs     => $FAQIDsRef,                         # total list of FAQIDs, that can be listed
         Total      => scalar @{ $FAQIDsRef },             # total number of list items, in this case
         View       => $Self->{View},                      # optional, the default value is 'Small'
         Filter     => 'All',
