@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.13 2010-11-22 21:06:13 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.14 2010-11-22 21:15:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,13 +24,13 @@
     </div>
     <h3>
 <!-- dtl:block:FAQPathCategoryElement -->
-        $Config{"FAQ::Explorer::Path::Seperator"}
+        $Config{"FAQ::Explorer::Path::Separator"}
         <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"}">
             $QData{"Name"}
         </a>
 <!-- dtl:block:FAQPathCategoryElement -->
 <!-- dtl:block:FAQPathItemElement -->
-        $Config{"FAQ::Explorer::Path::Seperator"}
+        $Config{"FAQ::Explorer::Path::Separator"}
         <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};ItemID=$LQData{"ItemID"}">
             $QData{"Title"}
         </a>

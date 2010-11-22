@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.59 2010-11-20 00:22:31 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.60 2010-11-22 21:14:53 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -89,7 +89,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::Explorer::Path::Seperator" Required="1" Valid="1">
+    <ConfigItem Name="FAQ::Explorer::Path::Separator" Required="1" Valid="1">
         <Description Lang="en">FAQ path separator.</Description>
         <Description Lang="de">Trennzeichen im FAQ Pfad.</Description>
         <Group>FAQ</Group>
