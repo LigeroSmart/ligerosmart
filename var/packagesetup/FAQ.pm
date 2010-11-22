@@ -2,11 +2,11 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.10 2010-11-05 15:52:36 ub Exp $
+# $Id: FAQ.pm,v 1.11 2010-11-22 14:35:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package var::packagesetup::FAQ;
@@ -25,7 +25,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -51,6 +51,7 @@ create an object
     use Kernel::System::Time;
     use Kernel::System::DB;
     use Kernel::System::XML;
+    use var::packagesetup::FAQ;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject    = Kernel::System::Log->new(
@@ -94,7 +95,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject EncodeObject)) {
+    for my $Object (
+        qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject EncodeObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
 
@@ -129,11 +133,8 @@ sub new {
     $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
     $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
     $Self->{LinkObject}   = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{FAQObject}    = Kernel::System::FAQ->new( %{$Self} );
     $Self->{StatsObject}  = Kernel::System::Stats->new(
-        %{$Self},
-        UserID => 1,
-    );
-    $Self->{FAQObject}    = Kernel::System::FAQ->new(
         %{$Self},
         UserID => 1,
     );
@@ -318,17 +319,19 @@ sub _InsertFAQStates {
         'public'   => 'public (all)',
     );
 
-    for my $Type ( qw( internal external public ) ) {
+    for my $Type (qw( internal external public )) {
 
         # get the state type
         my $StateTypeRef = $Self->{FAQObject}->StateTypeGet(
-            Name => $Type,
+            Name   => $Type,
+            UserID => 1,
         );
 
         # add the state
         $Self->{FAQObject}->StateAdd(
             Name   => $State{$Type},
             TypeID => $StateTypeRef->{ID},
+            UserID => 1,
         );
     }
 
@@ -359,11 +362,12 @@ sub _ConvertNewlines {
     }
 
     ID:
-    for my $ItemID ( @FAQIDs ) {
+    for my $ItemID (@FAQIDs) {
 
         # get FAQ data
         my %FAQ = $Self->{FAQObject}->FAQGet(
             ItemID => $ItemID,
+            UserID => 1,
         );
 
         # get FAQ article fields 1-6
@@ -382,6 +386,7 @@ sub _ConvertNewlines {
         # update FAQ data
         $Self->{FAQObject}->FAQUpdate(
             %FAQ,
+            UserID => 1,
         );
     }
 
@@ -551,7 +556,7 @@ sub _LinkDelete {
     return if !@FAQIDs;
 
     # delete the faq article links
-    for my $FAQID ( @FAQIDs ) {
+    for my $FAQID (@FAQIDs) {
         $Self->{LinkObject}->LinkDeleteAll(
             Object => 'FAQ',
             Key    => $FAQID,
@@ -578,6 +583,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-11-05 15:52:36 $
+$Revision: 1.11 $ $Date: 2010-11-22 14:35:36 $
 
 =cut
