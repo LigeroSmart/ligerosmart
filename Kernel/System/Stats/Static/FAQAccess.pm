@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Static/FAQAccess.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQAccess.pm,v 1.3 2010-11-22 14:48:53 ub Exp $
+# $Id: FAQAccess.pm,v 1.4 2010-11-22 14:52:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Days_in_Month);
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,84 +55,66 @@ sub Param {
     my %Month = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 12 );
     my %Day   = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 31 );
 
-    push(
-        @Params,
-        {
-            Frontend   => 'StartDay',
-            Name       => 'StartDay',
-            Multiple   => 0,
-            Size       => 0,
-            SelectedID => '01',
-            Data       => {
-                %Day,
-            },
+    push @Params, {
+        Frontend   => 'StartDay',
+        Name       => 'StartDay',
+        Multiple   => 0,
+        Size       => 0,
+        SelectedID => '01',
+        Data       => {
+            %Day,
         },
-    );
-    push(
-        @Params,
-        {
-            Frontend   => 'StartMonth',
-            Name       => 'StartMonth',
-            Multiple   => 0,
-            Size       => 0,
-            SelectedID => $M,
-            Data       => {
-                %Month,
-            },
+    };
+    push @Params, {
+        Frontend   => 'StartMonth',
+        Name       => 'StartMonth',
+        Multiple   => 0,
+        Size       => 0,
+        SelectedID => $M,
+        Data       => {
+            %Month,
         },
-    );
-    push(
-        @Params,
-        {
-            Frontend   => 'StartYear',
-            Name       => 'StartYear',
-            Multiple   => 0,
-            Size       => 0,
-            SelectedID => $Y,
-            Data       => {
-                %Year,
-            },
+    };
+    push @Params, {
+        Frontend   => 'StartYear',
+        Name       => 'StartYear',
+        Multiple   => 0,
+        Size       => 0,
+        SelectedID => $Y,
+        Data       => {
+            %Year,
         },
-    );
-    push(
-        @Params,
-        {
-            Frontend   => 'EndDay',
-            Name       => 'EndDay',
-            Multiple   => 0,
-            Size       => 0,
-            SelectedID => $D,
-            Data       => {
-                %Day,
-            },
+    };
+    push @Params, {
+        Frontend   => 'EndDay',
+        Name       => 'EndDay',
+        Multiple   => 0,
+        Size       => 0,
+        SelectedID => $D,
+        Data       => {
+            %Day,
         },
-    );
-    push(
-        @Params,
-        {
-            Frontend   => 'EndMonth',
-            Name       => 'EndMonth',
-            Multiple   => 0,
-            Size       => 0,
-            SelectedID => $M,
-            Data       => {
-                %Month,
-            },
+    };
+    push @Params, {
+        Frontend   => 'EndMonth',
+        Name       => 'EndMonth',
+        Multiple   => 0,
+        Size       => 0,
+        SelectedID => $M,
+        Data       => {
+            %Month,
         },
-    );
-    push(
-        @Params,
-        {
-            Frontend   => 'EndYear',
-            Name       => 'EndYear',
-            Multiple   => 0,
-            Size       => 0,
-            SelectedID => $Y,
-            Data       => {
-                %Year,
-            },
+    };
+    push @Params, {
+        Frontend   => 'EndYear',
+        Name       => 'EndYear',
+        Multiple   => 0,
+        Size       => 0,
+        SelectedID => $Y,
+        Data       => {
+            %Year,
         },
-    );
+    };
 
     return @Params;
 }
