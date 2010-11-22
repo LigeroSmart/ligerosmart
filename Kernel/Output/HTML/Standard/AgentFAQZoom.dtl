@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.12 2010-11-19 11:45:18 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.13 2010-11-22 21:06:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -246,11 +246,11 @@
     });
 
     $('.RateButton').bind('click', function (Event) {
-    var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''),10);
-    $('#RateValue').val(RateNumber);
-    $('#RateSubmitButton').removeClass('Hidden');
-        $('#FAQVoting').find('.RateButton').each(function(){
-            var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''),10);
+        var RateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
+        $('#RateValue').val(RateNumber);
+        $('#RateSubmitButton').removeClass('Hidden');
+        $('#FAQVoting').find('.RateButton').each(function() {
+            var ItemRateNumber = parseInt($(this).closest('div').attr('id').replace(/RateButton/, ''), 10);
             if ( ItemRateNumber <= RateNumber ) {
                 $(this).addClass('RateChecked');
                 $(this).removeClass('RateUnChecked');
