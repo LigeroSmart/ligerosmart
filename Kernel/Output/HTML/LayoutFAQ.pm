@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.29 2010-11-22 14:03:48 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.30 2010-11-22 20:51:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -417,7 +417,7 @@ and returns the value 1.
 
     my $ShowPathOk = $LayoutObject->FAQPathShow(
         FAQObject   => $FAQObject,                   # needed for core module interaction
-        CategoryID  => $FAQData{CategoryID},
+        CategoryID  => 5,
         UserID      => 1,
     );
 
@@ -427,7 +427,7 @@ sub FAQPathShow {
     my ( $Self, %Param ) = @_;
 
     # check parameters
-    for my $ParamName (qw(FAQObject CategoryID UserID)) {
+    for my $ParamName (qw(FAQObject UserID)) {
         if ( !$Param{$ParamName} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -437,6 +437,15 @@ sub FAQPathShow {
         }
     }
 
+    # check parameters
+    if ( !defined $Param{CategoryID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need CategoryID!',
+        );
+        return;
+    }
+
     # store FAQ object locally
     $Self->{FAQObject} = $Param{FAQObject};
 
@@ -444,8 +453,8 @@ sub FAQPathShow {
     $Self->Block(
         Name => 'FAQPathCategoryElement',
         Data => {
-            'Name'       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
-            'CategoryID' => '0',
+            Name       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
+            CategoryID => 0,
         },
     );
 
