@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.28 2010-11-20 10:57:40 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.29 2010-11-22 14:03:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -412,10 +412,10 @@ sub FAQContentShow {
 
 =item FAQPathShow()
 
-if its allowd by the configuration, outputs the necessary DTL blocks to display the FAQ item path,
+if its allowed by the configuration, outputs the necessary DTL blocks to display the FAQ item path,
 and returns the value 1.
 
-    my ShowPath = $LayoutObject->FAQPathShow(
+    my $ShowPathOk = $LayoutObject->FAQPathShow(
         FAQObject   => $FAQObject,                   # needed for core module interaction
         CategoryID  => $FAQData{CategoryID},
         UserID      => 1,
