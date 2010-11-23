@@ -2,7 +2,7 @@
 # CustomerFAQSearch.dtl - provides HTML form for CustomerTicketSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.dtl,v 1.3 2010-11-23 10:39:23 ub Exp $
+# $Id: CustomerFAQSearch.dtl,v 1.4 2010-11-23 11:10:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -53,13 +53,13 @@
             </fieldset>
             <fieldset class="Columns">
                 <div class="Column">
-                    <h2><label for="LanguageIds">$Text{"Language"}:</label></h2>
+                    <h2><label for="LanguageIDs">$Text{"Language"}:</label></h2>
                     <div>
                         $Data{"LanguagesStrg"}
                     </div>
                 </div>
                 <div class="Column">
-                    <h2><label for="CategoryIds">$Text{"Category"}:</label></h2>
+                    <h2><label for="CategoryIDs">$Text{"Category"}:</label></h2>
                     <div>
                         $Data{"CategoriesStrg"}
                     </div>
