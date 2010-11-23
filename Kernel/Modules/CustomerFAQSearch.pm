@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - Utilities for tickets
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.4 2010-11-20 00:19:42 cr Exp $
+# $Id: CustomerFAQSearch.pm,v 1.5 2010-11-23 11:03:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -468,14 +468,14 @@ sub MaskForm {
         SelectedID => $Param{LanguageIDs},
     );
 
-    # get categoies list
+    # get categories list
     my $Categories = $Self->{FAQObject}->GetCustomerCategoriesLongNames(
         CustomerUser => $Self->{UserLogin},
         Type         => 'rw',
         UserID       => $Self->{UserID},
     );
 
-    #build categoies output list
+    # build categories output list
     $Param{CategoriesStrg} = $Self->{LayoutObject}->BuildSelection(
         Data       => $Categories,
         Name       => 'CategoryIDs',
