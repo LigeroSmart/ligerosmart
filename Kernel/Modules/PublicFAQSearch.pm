@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - Utilities for tickets
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.3 2010-11-23 11:10:23 ub Exp $
+# $Id: PublicFAQSearch.pm,v 1.4 2010-11-23 12:21:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -178,12 +178,13 @@ sub Run {
                     UserID => $Self->{UserID},
                 );
 
+                # format the change time
                 my $Changed = $Self->{LayoutObject}->Output(
                     Template => '$TimeLong{"$Data{"Changed"}"}',
                     Data     => \%FAQData,
                 );
 
-                # get info fo CSV output
+                # get info for CSV output
                 my %CSVInfo = (
                     FAQNumber => $FAQData{Number},
                     Title     => $FAQData{Title},
@@ -266,13 +267,8 @@ sub Run {
 
         my $Counter = 0;
         for my $FAQID (@ViewableFAQIDs) {
-            $Counter++;
 
-            # get FAQ data details
-            my %FAQData = $Self->{FAQObject}->FAQGet(
-                FAQID  => $FAQID,
-                UserID => $Self->{UserID},
-            );
+            $Counter++;
 
             # build search result
             if (
@@ -280,6 +276,12 @@ sub Run {
                 && $Counter < ( $Self->{SearchPageShown} + $Self->{StartHit} )
                 )
             {
+
+                # get FAQ data details
+                my %FAQData = $Self->{FAQObject}->FAQGet(
+                    FAQID  => $FAQID,
+                    UserID => $Self->{UserID},
+                );
 
                 # add blocks to template
                 $Self->{LayoutObject}->Block(
