@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.7 2010-11-23 14:14:23 ub Exp $
+# $Id: CustomerFAQSearch.pm,v 1.8 2010-11-23 22:26:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -348,6 +348,11 @@ sub Run {
             }
         }
 
+        my $Link = 'Profile=' . $Self->{LayoutObject}->LinkEncode( $Self->{Profile} ) . ';';
+        $Link .= 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} ) . ';';
+        $Link .= 'Order=' . $Self->{LayoutObject}->LinkEncode( $Self->{Order} ) . ';';
+        $Link .= 'TakeLastSearch=1;';
+
         # build search navigation bar
         my %PageNav = $Self->{LayoutObject}->PageNavBar(
             Limit     => $Self->{SearchLimit},
@@ -355,9 +360,8 @@ sub Run {
             PageShown => $Self->{SearchPageShown},
             AllHits   => $Counter,
             Action    => "Action=CustomerFAQSearch;Subaction=Search",
-            Link =>
-                "Profile=$Self->{Profile};SortBy=$Self->{SortBy};Order=$Self->{OrderBy};TakeLastSearch=1;",
-            IDPrefix => "CustomerFAQSearch",
+            Link      => $Link,
+            IDPrefix  => "CustomerFAQSearch",
         );
 
         # show footer filter - show only if more the one page is available
@@ -483,6 +487,7 @@ sub MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{CategoryIDs},
+        Class      => 'FAQW100pc',
     );
 
     # html search mask output
