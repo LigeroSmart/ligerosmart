@@ -1,8 +1,8 @@
 # --
-# PublicFAQSearch.dtl - provides HTML form for CustomerTicketSearch.pm
+# PublicFAQSearch.dtl - provides HTML form for PublicFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.dtl,v 1.3 2010-11-23 11:10:43 ub Exp $
+# $Id: PublicFAQSearch.dtl,v 1.4 2010-11-23 11:30:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,14 +25,14 @@
                 </div>
             </fieldset>
             <fieldset>
-                <h2>$Text{"Fulltext search in tickets (e. g. "John*n" or "Will*")"}</h2>
+                <h2>$Text{"Fulltext search in FAQ articles (e. g. "John*n" or "Will*")"}</h2>
                 <div>
                     <label for="Title">$Text{"Title"}</label>
                     <input title="$Text{"Title"}" type="text" id="Title" name="Title" value="$QData{"Title"}" size="20" />
                 </div>
                 <div>
                     <label for="Keyword">$Text{"Keyword"}</label>
-                    <input title="$Text{"Keyword"}" type="text" id="Keyword" name="To" value="$QData{"Keyword"}" size="20" />
+                    <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" size="20" />
                 </div>
             </fieldset>
             <fieldset class="Columns">
