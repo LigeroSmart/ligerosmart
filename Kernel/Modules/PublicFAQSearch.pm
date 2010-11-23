@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.5 2010-11-23 14:13:35 ub Exp $
+# $Id: PublicFAQSearch.pm,v 1.6 2010-11-23 22:28:46 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -297,7 +297,7 @@ sub Run {
             StartHit  => $Self->{StartHit},
             PageShown => $Self->{SearchPageShown},
             AllHits   => $Counter,
-            Action    => "Action=PublicFAQSearch",
+            Action    => "Action=PublicFAQSearch;Subaction=Search",
             Link =>
                 "$Self->{Profile}SortBy=$Self->{SortBy};Order=$Self->{OrderBy};",
             IDPrefix => "PublicFAQSearch",
@@ -397,6 +397,7 @@ sub MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{CategoryIDs},
+        Class      => 'FAQW100pc',
     );
 
     # html search mask output
