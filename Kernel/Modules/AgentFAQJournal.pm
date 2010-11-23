@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/AgentFAQJournal.pm - module for FAQ search
+# Kernel/Modules/AgentFAQJournal.pm - module for FAQ journal
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournal.pm,v 1.1 2010-11-22 22:58:56 cr Exp $
+# $Id: AgentFAQJournal.pm,v 1.2 2010-11-23 10:38:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
