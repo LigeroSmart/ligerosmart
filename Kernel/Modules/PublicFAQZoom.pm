@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.pm,v 1.2 2010-11-20 10:39:58 ub Exp $
+# $Id: PublicFAQZoom.pm,v 1.3 2010-11-23 14:12:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -169,7 +169,10 @@ sub Run {
     # show back link
     $Self->{LayoutObject}->Block(
         Name => 'Back',
-        Data => \%Param,
+        Data => {
+            %Param,
+            %FAQData,
+        },
     );
 
     # output flag title block
