@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.9 2010-11-20 10:58:58 ub Exp $
+# $Id: CustomerFAQZoom.pm,v 1.10 2010-11-23 16:00:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -230,10 +230,17 @@ sub Run {
     for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next FIELD if !$FAQData{$Field};
 
-        # rewrite links to embedded images for customer and public interface
+        # rewrite links to embedded images for customer interface
         if ( $Self->{Interface}{Name} eq 'external' ) {
+
+            # rewrite handle and action
             $FAQData{$Field}
                 =~ s{ index[.]pl [?] Action=AgentFAQZoom }{customer.pl?Action=CustomerFAQZoom}gxms;
+
+            # take care of old style before FAQ 2.0.x
+            $FAQData{$Field} =~ s{
+                index[.]pl [?] Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
+            }{customer.pl?Action=CustomerFAQZoom;Subaction=DownloadAttachment;}gxms;
         }
 
         # no quoting if html view is enabled

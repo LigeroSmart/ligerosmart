@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.20 2010-11-22 16:50:03 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.21 2010-11-23 16:00:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -231,6 +231,11 @@ sub Run {
     FIELD:
     for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next FIELD if !$FAQData{$Field};
+
+        # rewrite handle and action, take care of old style before FAQ 2.0.x
+        $FAQData{$Field} =~ s{
+            Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
+        }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
 
         # no quoting if html view is enabled
         next FIELD if $Self->{ConfigObject}->Get('FAQ::Item::HTML');
