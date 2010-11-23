@@ -1,8 +1,8 @@
 # --
-# AgentFAQSearch.dtl - provides HTML form for AgentITSMChangeSearch
+# AgentFAQSearch.dtl - provides HTML form for AgentFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.4 2010-11-17 12:28:44 ub Exp $
+# $Id: AgentFAQSearch.dtl,v 1.5 2010-11-23 22:25:32 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,7 @@
 <!-- dtl:block:SearchAJAX -->
 <div class="InnerContent">
     <form action="$Env{"CGIHandle"}" method="post" id="SearchForm">
-        <input type="hidden" name="Action" value="$Env{"Action"}"/>
+        <input type="hidden" name="Action" value="$Env{"Action"}" id="SearchAction"/>
         <input type="hidden" name="Subaction" value="Search"/>
         <input type="hidden" name="EmptySearch" value="$QData{"EmptySearch"}" id="EmptySearch"/>
         <fieldset class="TableLike">
@@ -29,13 +29,11 @@
                     <button type="button" title="$Text{"Create Template"}" id="SearchProfileAddAction">$Text{"Add"}</button>
                 </div>
             </div>
-<!-- dtl:block:SearchAJAXStoreInTemplate -->
             <div class="Clear"></div>
             <label>$Text{"Save changes in template"}:</label>
             <div class="Field">
                 <input type="checkbox" name="SaveProfile" id="SaveProfile" value="1"/>
             </div>
-<!-- dtl:block:SearchAJAXStoreInTemplate -->
         </fieldset>
         <fieldset class="TableLike" id="SearchInsert"></fieldset>
         <fieldset class="TableLike">
