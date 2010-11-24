@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.21 2010-11-23 16:00:42 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.22 2010-11-24 10:27:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -271,16 +271,6 @@ sub Run {
         $Param{VotingResultColor} = 'Gray';
     }
 
-    #output main (Header) block
-    $Self->{LayoutObject}->Block(
-        Name => 'Header',
-        Data => {
-            %FAQData,
-            %GetParam,
-            %Param,
-        },
-    );
-
     # run faq menu modules
     if ( ref $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
         my %Menus   = %{ $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') };
@@ -470,7 +460,11 @@ sub Run {
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentFAQZoom',
-        Data         => {},
+        Data         => {
+            %FAQData,
+            %GetParam,
+            %Param,
+        },
     );
 
     # add footer
