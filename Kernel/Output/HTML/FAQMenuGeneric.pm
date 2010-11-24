@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQMenuGeneric.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQMenuGeneric.pm,v 1.2 2010-11-08 18:50:51 ub Exp $
+# $Id: FAQMenuGeneric.pm,v 1.3 2010-11-24 21:55:09 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -103,6 +103,20 @@ sub Run {
             %{ $Param{Config} },
         },
     );
+
+    # check if a dialog has to be shown
+    if ( $Param{Config}->{DialogTitle} ) {
+
+        # output confirmation dialog
+        $Self->{LayoutObject}->Block(
+            Name => 'ShowConfirmationDialog',
+            Data => {
+                %Param,
+                %{ $Param{FAQItem} },
+                %{ $Param{Config} },
+            },
+        );
+    }
 
     $Param{Counter}++;
 
