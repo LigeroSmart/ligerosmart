@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.6 2010-11-23 22:28:46 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.7 2010-11-24 17:16:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -246,7 +246,7 @@ sub Run {
 
             # output header
             my $Output = $Self->{LayoutObject}->PrintHeader( Width => 800 );
-            if ( @ViewableFAQIDs == $Self->{SearchLimit} ) {
+            if ( scalar @ViewableFAQIDs == $Self->{SearchLimit} ) {
                 $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
                     . $Self->{SearchLimit} . '"}';
             }
