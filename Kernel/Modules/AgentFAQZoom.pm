@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.22 2010-11-24 10:27:14 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.23 2010-11-24 21:53:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -293,6 +293,9 @@ sub Run {
                     elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
                         $Menus{$Menu}->{Class} = 'HistoryBack';
                     }
+                    elsif ( $Menus{$Menu}->{Target} eq 'ConfirmationDialog' ) {
+                        $Menus{$Menu}->{Class} = 'AsConfirmationDialog';
+                    }
 
                 }
 
@@ -302,6 +305,7 @@ sub Run {
                     FAQItem => {%FAQData},
                     Counter => $Counter,
                     Config  => $Menus{$Menu},
+                    MenuID  => 'Menu' . $Menu,
                 );
             }
             else {
