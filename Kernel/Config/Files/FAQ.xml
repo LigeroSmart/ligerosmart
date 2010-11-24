@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.64 2010-11-24 16:39:15 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.65 2010-11-24 17:43:46 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -841,6 +841,54 @@ Your OTRS Notification Master
         <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ViewFAQSearch</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,8}$">200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###ShowColumns" Required="1" Valid="1">
+        <Description Translatable="1">Defines the shown columns in the FAQ Explorer. This option has no effect on the position of the column.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Number">1</Item>
+                <Item Key="Title">1</Item>
+                <Item Key="Category">1</Item>
+                <Item Key="Language">1</Item>
+                <Item Key="State">1</Item>
+                <Item Key="Changed">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="FAQID">
+                <Item Key="Title">Title</Item>
+                <Item Key="FAQID">Number</Item>
+                <Item Key="Category">Category</Item>
+                <Item Key="Language">Laguage</Item>
+                <Item Key="State">State</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="Down">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###ExplorerLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,8}$">200</String>
         </Setting>
