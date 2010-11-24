@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.15 2010-11-24 10:27:14 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.16 2010-11-24 21:51:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -130,8 +130,28 @@
 
 <!-- dtl:block:MenuItem -->
                     <li>
-                        <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"Class"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                        <a href="$Env{"Baselink"}$Data{"Link"}" id="$QData{"MenuID"}" class="$QData{"Class"}" $Data{"LinkParam"} title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                     </li>
+
+<!-- dtl:block:ShowConfirmationDialog -->
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    FAQ.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  '$Data{"MenuID"}',
+        ElementSelector:            '$Data{"ElementSelector"}',
+        DialogContentQueryString:   '$Data{"DialogContentQueryString"}',
+        ConfirmedActionQueryString: '$Data{"ConfirmedActionQueryString"}',
+        DialogTitle:                '$Data{"DialogTitle"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}',
+            Ok:  '$JSText{"Ok"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:ShowConfirmationDialog -->
+
 <!-- dtl:block:MenuItem -->
 
                 </ul>
