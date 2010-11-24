@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.62 2010-11-23 22:34:56 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.63 2010-11-24 10:26:17 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -472,9 +472,9 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentFAQ" Required="0" Valid="1">
-        <Description Translatable="1">Frontend module registration for the FAQ object in the agent interface.</Description>
-        <!-- <Description Lang="de">Frontendmodul-Registration für das FAQ-Objekt im Agent-Interface.</Description> -->
+    <ConfigItem Name="Frontend::Module###AgentFAQExplorer" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the FAQExplorer object in the agent interface.</Description>
+        <!-- <Description Lang="de">Frontendmodul-Registration für das FAQExplorer-Objekt im Agent-Interface.</Description> -->
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -490,7 +490,7 @@ Your OTRS Notification Master
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
                     <Name>FAQ</Name>
-                    <Link>Action=AgentFAQ;Nav=Normal</Link>
+                    <Link>Action=AgentFAQExplorer</Link>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>q</AccessKey>
                     <Prio>350</Prio>
@@ -500,7 +500,7 @@ Your OTRS Notification Master
                     <Description>Explorer</Description>
                     <Name>Explorer</Name>
                     <Image>list.png</Image>
-                    <Link>Action=AgentFAQ;Subaction=Explorer</Link>
+                    <Link>Action=AgentFAQExplorer</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
