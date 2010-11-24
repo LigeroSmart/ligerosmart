@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.10 2010-11-23 16:00:42 ub Exp $
+# $Id: CustomerFAQZoom.pm,v 1.11 2010-11-24 13:20:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -265,16 +265,6 @@ sub Run {
         $Param{VotingResultColor} = 'Gray';
     }
 
-    #output main (Header) block
-    $Self->{LayoutObject}->Block(
-        Name => 'Header',
-        Data => {
-            %FAQData,
-            %GetParam,
-            %Param,
-        },
-    );
-
     # show back link
     $Self->{LayoutObject}->Block(
         Name => 'Back',
@@ -388,7 +378,11 @@ sub Run {
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'CustomerFAQZoom',
-        Data         => {},
+        Data         => {
+            %FAQData,
+            %GetParam,
+            %Param,
+        },
     );
 
     # add footer
