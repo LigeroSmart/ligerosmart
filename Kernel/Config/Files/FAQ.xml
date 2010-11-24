@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.65 2010-11-24 17:43:46 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.66 2010-11-24 22:05:15 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -935,6 +935,7 @@ Your OTRS Notification Master
                     <CSS>FAQ.Agent.Detail.css</CSS>
                     <CSS>FAQ.Agent.Default.css</CSS>
                     <CSS>FAQ.Widget.css</CSS>
+                    <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1026,7 +1027,11 @@ Your OTRS Notification Master
                 <Item Key="Description">Delete this FAQ</Item>
                 <Item Key="Action">AgentFAQDelete</Item>
                 <Item Key="Link">Action=AgentFAQDelete;ItemID=$QData{"ItemID"}</Item>
-                <Item Key="Target">PopUp</Item>
+                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="ElementSelector">#$QData{"MenuID"}</Item>
+                <Item Key="DialogContentQueryString">Action=AgentFAQDelete;ItemID=$QData{"ItemID"}</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentFAQDelete;Subaction=Delete;ItemID=$QData{"ItemID"}</Item>
+                <Item Key="DialogTitle">$Text{"Delete"} $Config{"FAQ::FAQHook"} $QData{"Number"}: $QData{"Title"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1328,6 +1333,19 @@ Your OTRS Notification Master
                 <Group>faq</Group>
                 <GroupRo>faq</GroupRo>
                 <Title>History</Title>
+                <NavBarName>FAQ</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentFAQDelete" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>faq</GroupRo>
+                <Description>FAQ Delete</Description>
+                <Title>Delete</Title>
                 <NavBarName>FAQ</NavBarName>
             </FrontendModuleReg>
         </Setting>
