@@ -1,0 +1,21 @@
+# --
+# AgentFAQDelete.dtl - provides HTML form for AgentFAQDelete
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentFAQDelete.dtl,v 1.1 2010-11-24 22:00:58 cr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<fieldset class="TableLike W300px">
+    <label>$Text{"Title"}:</label>
+    <p class="Value">
+        $QData{"Title"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop Center">
+    $Text{"Do you really want to delete this FAQ article?"}
+</p>
