@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQJournal.pm - module for FAQ journal
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournal.pm,v 1.2 2010-11-23 10:38:54 ub Exp $
+# $Id: AgentFAQJournal.pm,v 1.3 2010-11-25 23:17:07 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -239,7 +239,7 @@ sub _FAQJournalShow {
             Data => \%PageNav,
         );
 
-        # don't show context settings in AJAX case (e. g. in customer ticket history),
+        # don't show context settings in AJAX case (e. g. in customer FAQ history),
         # because the submit with page reload will not work there
         if ( !$Param{AJAX} ) {
             $Self->{LayoutObject}->Block(

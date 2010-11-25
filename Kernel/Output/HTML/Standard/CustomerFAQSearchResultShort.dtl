@@ -1,8 +1,8 @@
 # --
-# CustomerFAQSearchResultShort.dtl - html for ticket status view (all tickets)
+# CustomerFAQSearchResultShort.dtl - html for FAQ search results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearchResultShort.dtl,v 1.5 2010-11-23 22:26:34 cr Exp $
+# $Id: CustomerFAQSearchResultShort.dtl,v 1.6 2010-11-25 23:17:07 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

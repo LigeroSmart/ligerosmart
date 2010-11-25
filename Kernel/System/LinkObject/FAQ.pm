@@ -2,11 +2,11 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.14 2010-11-03 18:22:14 ub Exp $
+# $Id: FAQ.pm,v 1.15 2010-11-25 23:17:07 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::System::LinkObject::FAQ;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -147,7 +147,7 @@ sub ObjectDescriptionGet {
     return if !%FAQ;
 
     # define description text
-    my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+    my $FAQHook         = $Self->{ConfigObject}->Get('FAQ::FAQHook');
     my $DescriptionText = "$FAQHook $FAQ{Number}";
 
     # create description
@@ -222,7 +222,7 @@ sub ObjectSearch {
     FAQID:
     for my $FAQID (@FAQIDs) {
 
-        # get ticket data
+        # get FAQ data
         my %FAQData = $Self->{FAQObject}->FAQGet(
             FAQID  => $FAQID,
             UserID => $Param{UserID},
@@ -230,7 +230,7 @@ sub ObjectSearch {
 
         next FAQID if !%FAQData;
 
-        # add ticket data
+        # add FAQ data
         $SearchList{NOTLINKED}->{Source}->{$FAQID} = \%FAQData;
     }
 

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.31 2010-11-22 22:32:32 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.32 2010-11-25 23:17:07 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -269,7 +269,7 @@ sub FAQListShow {
             Data => \%PageNav,
         );
 
-        # don't show context settings in AJAX case (e. g. in customer ticket history),
+        # don't show context settings in AJAX case (e. g. in customer FAQ history),
         # because the submit with page reload will not work there
         if ( !$Param{AJAX} ) {
             $Env->{LayoutObject}->Block(
