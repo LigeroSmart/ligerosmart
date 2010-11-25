@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.66 2010-11-24 22:05:15 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.67 2010-11-25 11:47:40 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -853,10 +853,10 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Number">1</Item>
                 <Item Key="Title">1</Item>
-                <Item Key="Category">1</Item>
+                <Item Key="Category">0</Item>
                 <Item Key="Language">1</Item>
                 <Item Key="State">1</Item>
-                <Item Key="Changed">1</Item>
+                <Item Key="Changed">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -1343,7 +1343,7 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <GroupRo>faq</GroupRo>
+                <Group>faq</Group>
                 <Description>FAQ Delete</Description>
                 <Title>Delete</Title>
                 <NavBarName>FAQ</NavBarName>
