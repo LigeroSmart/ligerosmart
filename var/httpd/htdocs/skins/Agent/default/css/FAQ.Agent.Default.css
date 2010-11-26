@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -20,6 +20,18 @@ fieldset.TableLike div.Value .Flag {
     float: left;
     margin-right: 5px;
     margin-top: 3px;
+}
+
+.LayoutFixedSidebar.SidebarLast > .SidebarColumn.Large {
+    width: 350px;
+    float: right;
+    margin-left: 16px;
+    margin-right: 0;
+}
+
+ul.FAQMiniList span {
+    display: block;
+    font-size: 10px;
 }
 
 ul.FAQFlag {
