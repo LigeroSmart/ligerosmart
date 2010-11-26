@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -95,7 +95,7 @@
 }
 
 .RateStarText {
-text-indent:5px;
+    text-indent:5px;
 }
 
 
@@ -111,9 +111,6 @@ text-indent:5px;
     margin-right: 25px;
     color: Gray;
 }
-
-
-
 
 /*
  .FAQRateButtonChecked {
