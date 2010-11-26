@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.12 2010-11-20 10:58:58 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.13 2010-11-26 11:39:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -290,8 +290,7 @@ sub Run {
         # delete the upload cache
         $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
 
-        # TODO: Replace with AgentFAQExplorer
-        # redirect to FAQ explorer
+        # redirect to FAQ zoom
         return $Self->{LayoutObject}->Redirect( OP => 'Action=AgentFAQZoom;ItemID=' . $FAQID );
     }
 }
