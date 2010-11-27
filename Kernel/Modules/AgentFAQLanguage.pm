@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.11 2010-11-11 15:32:09 ub Exp $
+# $Id: AgentFAQLanguage.pm,v 1.12 2010-11-27 15:55:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -309,6 +309,157 @@ sub Run {
         $Output .= $Self->{LayoutObject}->Footer();
 
         return $Output;
+    }
+
+    # ------------------------------------------------------------ #
+    # delete
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'Delete' ) {
+
+        # get the LanguageID
+        my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
+
+        # check required parameters
+        if ( !$LanguageID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'No LanguageID is given!',
+                Comment => 'Please contact the administrator.',
+            );
+        }
+
+        # get language data
+        my %LanguageData = $Self->{FAQObject}->LanguageGet(
+            LanguageID => $LanguageID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ( !%LanguageData ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        my @AffectedItems = $Self->{FAQObject}->FAQSearch(
+            LanguageIDs => [$LanguageID],
+            UserID      => 1,
+        );
+
+        # call Delete block
+        $Self->{LayoutObject}->Block(
+            Name => 'Delete',
+            Data => {%LanguageData},
+        );
+
+        # set the dialog type. As default, the dialog will have 2 buttons: Yes and No
+        my $DialogType = 'Confirmation';
+
+        # display list of affected FAQ articles
+        if (@AffectedItems) {
+
+            # set the dialog type to have only 1 button: Ok
+            $DialogType = 'Message';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'AffectedItems',
+                Data => {},
+            );
+
+            ITEMID:
+            for my $ItemID (@AffectedItems) {
+
+                # get faq article
+                my %FAQData = $Self->{FAQObject}->FAQGet(
+                    ItemID => $ItemID,
+                    UserID => $Self->{UserID},
+                );
+
+                # check faq article
+                next ITEMID if !%FAQData;
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'AffectedItemsRow',
+                    Data => {
+                        %FAQData,
+                        %Param,
+                    },
+                );
+            }
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'NoAffectedItems',
+                Data => {%LanguageData},
+            );
+        }
+
+        # output content
+        my $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentFAQLanguage',
+            Data         => {},
+        );
+
+        # build the returned data structure
+        my %Data = (
+            HTML       => $Output,
+            DialogType => $DialogType,
+        );
+
+        # return JSON-String because of AJAX-Mode
+        my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $OutputJSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
+    # ------------------------------------------------------------ #
+    # delete action
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'DeleteAction' ) {
+
+        # get the LanguageID
+        my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
+
+        # check required parameters
+        if ( !$LanguageID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'No LanguageID is given!',
+                Comment => 'Please contact the administrator.',
+            );
+        }
+
+        # get language data
+        my %LanguageData = $Self->{FAQObject}->LanguageGet(
+            LanguageID => $LanguageID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ( !%LanguageData ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # delete the language
+        my $CouldDeleteLanguage = $Self->{FAQObject}->LanguageDelete(
+            LanguageID => $LanguageID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ($CouldDeleteLanguage) {
+
+            # redirect to explorer, when the deletion was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentFAQLanguage",
+            );
+        }
+        else {
+
+            # show error message, when delete failed
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to delete the language $LanguageID!",
+                Comment => 'Please contact the administrator.',
+            );
+        }
     }
 
     # ---------------------------------------------------------- #

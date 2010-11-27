@@ -2,7 +2,7 @@
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.6 2010-11-11 15:35:59 ub Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.7 2010-11-27 15:55:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -52,6 +52,7 @@
                     <thead>
                         <tr>
                             <th>$Text{"Name"}</th>
+                            <th class="W10pc">$Text{"Delete"}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +66,27 @@
 <!-- dtl:block:OverviewResultRow -->
                         <tr>
                             <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Change;LanguageID=$LQData{"LanguageID"}">$QData{"Name"}</a></td>
+                            <td class="Center Last">
+                                <a id="DeleteLanguageID$QData{"LanguageID"}" class="TrashCan" href="#">
+                                    $Text{"Delete: $QData{"Name"}"}
+                                </a>
+                            </td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    FAQ.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'DeleteLanguageID$QData{"LanguageID"}',
+        ElementSelector:            '#DeleteLanguageID$QData{"LanguageID"}',
+        DialogContentQueryString:   'Action=AgentFAQLanguage;Subaction=Delete;LanguageID=$LQData{"LanguageID"}',
+        ConfirmedActionQueryString: 'Action=AgentFAQLanguage;Subaction=DeleteAction;LanguageID=$LQData{"LanguageID"}',
+        DialogTitle:                '$JSText{"Delete Language"} $QData{"Name"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}',
+            Ok:  '$JSText{"Ok"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
                         </tr>
 <!-- dtl:block:OverviewResultRow -->
                     </tbody>
@@ -113,3 +135,38 @@
     <div class="Clear"></div>
 </div>
 <!-- dtl:block:Overview -->
+
+<!-- dtl:block:Delete -->
+<!-- dtl:block:NoAffectedItems -->
+<fieldset class="TableLike W300px">
+    <label>$Text{"Language"}:</label>
+    <p class="Value">
+        $QData{"Name"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop Center">
+    $Text{"Do you really want to delete this Language?"}
+</p>
+<!-- dtl:block:NoAffectedItems -->
+
+<!-- dtl:block:AffectedItems -->
+<p>
+    $Text{"You can not delete this Language. It is used in at least one FAQ Article!"}
+</p>
+<p class="SpacingTop SpacingBottom">
+    $Text{"This Language is used in the following FAQ Artice(s)"}:
+</p>
+
+<ul>
+<!-- dtl:block:AffectedItemsRow -->
+    <li class="Indent SpacingBottomSmall">
+        <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}">
+            $Config{"FAQ::FAQHook"}:$QData{"Number"}<span>&nbsp;&mdash;</span> $QData{"Title", "60"}
+        </a>
+    </li>
+<!-- dtl:block:AffectedItemsRow -->
+</ul>
+
+<!-- dtl:block:AffectedItems -->
+<!-- dtl:block:Delete -->
