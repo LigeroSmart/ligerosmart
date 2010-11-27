@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.70 2010-11-26 18:07:41 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.71 2010-11-27 15:52:09 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -713,7 +713,7 @@ Your OTRS Notification Master
                 <NavBar>
                     <Group>faq_admin</Group>
                     <Description Translatable="1">Language</Description>
-                    <Name Translatable="1">Language</Name>
+                    <Name Translatable="1">Language Management</Name>
                     <Link>Action=AgentFAQLanguage</Link>
                     <Type></Type>
                     <Block></Block>
@@ -722,6 +722,7 @@ Your OTRS Notification Master
                     <Prio>950</Prio>
                 </NavBar>
                 <Loader>
+                    <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
