@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.129 2010-11-26 18:08:39 ub Exp $
+# $Id: FAQ.pm,v 1.130 2010-11-27 15:53:32 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.129 $) [1];
+$VERSION = qw($Revision: 1.130 $) [1];
 
 =head1 NAME
 
@@ -2711,9 +2711,43 @@ sub LanguageLookup {
     return $Lookup;
 }
 
+=item LanguageDelete()
+
+Delete a language.
+
+    my $Success = $FAQObject->LanguageDelete(
+        LanguageID => 123,
+        UserID      => 1,
+    );
+
+=cut
+
+sub LanguageDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(LanguageID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # delete the language
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM faq_language WHERE id = ? ',
+        Bind => [ \$Param{LanguageID} ],
+    );
+
+    return 1;
+}
+
 =item FAQSearch()
 
-search in articles
+search in FAQ articles
 
     my @IDs = $FAQObject->FAQSearch(
 
@@ -4320,6 +4354,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.129 $ $Date: 2010-11-26 18:08:39 $
+$Revision: 1.130 $ $Date: 2010-11-27 15:53:32 $
 
 =cut
