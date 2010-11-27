@@ -2,7 +2,7 @@
 # AgentFAQSearch.dtl - provides HTML form for AgentFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.5 2010-11-23 22:25:32 cr Exp $
+# $Id: AgentFAQSearch.dtl,v 1.6 2010-11-27 00:49:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -74,7 +74,7 @@
         <div class="Clear"></div>
         <label for="Keyword">$Text{"Keyword"}:</label>
         <div class="Field">
-            <input type="text" name="Keyword" value="$QData{"Keywords"}" class="W50pc"/>
+            <input type="text" name="Keyword" value="$QData{"Keyword"}" class="W50pc"/>
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
