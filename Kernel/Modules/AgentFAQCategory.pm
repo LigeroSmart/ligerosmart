@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.21 2010-11-18 12:39:28 ub Exp $
+# $Id: AgentFAQCategory.pm,v 1.22 2010-11-27 19:14:15 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -374,6 +374,212 @@ sub Run {
         $Output .= $Self->{LayoutObject}->Footer();
 
         return $Output;
+    }
+
+    # ------------------------------------------------------------ #
+    # delete
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'Delete' ) {
+
+        # get the CategoryID
+        my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || '';
+
+        # check required parameters
+        if ( !$CategoryID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'No CategoryID is given!',
+                Comment => 'Please contact the administrator.',
+            );
+        }
+
+        # get category data
+        my %CategoryData = $Self->{FAQObject}->CategoryGet(
+            CategoryID => $CategoryID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ( !%CategoryData ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # get all affected FAQ articles
+        my @AffectedItems = $Self->{FAQObject}->FAQSearch(
+            CategoryIDs => [$CategoryID],
+            UserID      => 1,
+        );
+
+        # get all affected SubCcategories
+        my $AffectedSubCategories = $Self->{FAQObject}->CategorySubCategoryIDList(
+            ParentID => $CategoryID,
+            Mode     => 'Agent',
+            UserID   => 1,
+        );
+
+        # call Delete block
+        $Self->{LayoutObject}->Block(
+            Name => 'Delete',
+            Data => {%CategoryData},
+        );
+
+        # set the dialog type. As default, the dialog will have 2 buttons: Yes and No
+        my $DialogType = 'Confirmation';
+
+        # display list of affected FAQ articles or SubCategories
+        if ( @AffectedItems || @{$AffectedSubCategories} ) {
+
+            # set the dialog type to have only 1 button: Ok
+            $DialogType = 'Message';
+
+            $Self->{LayoutObject}->Block(
+                Name => 'Affected',
+                Data => {},
+            );
+
+            # display Affected FAQ articles
+            if (@AffectedItems) {
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'AffectedItems',
+                    Data => {},
+                );
+
+                ITEMID:
+                for my $ItemID (@AffectedItems) {
+
+                    # get faq article
+                    my %FAQData = $Self->{FAQObject}->FAQGet(
+                        ItemID => $ItemID,
+                        UserID => $Self->{UserID},
+                    );
+
+                    # check faq article
+                    next ITEMID if !%FAQData;
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'AffectedItemsRow',
+                        Data => {
+                            %FAQData,
+                            %Param,
+                        },
+                    );
+                }
+            }
+
+            # display Affected Subcategories
+            if ( @{$AffectedSubCategories} ) {
+
+                # get categoies long names
+                my $CategoryLongNames = $Self->{FAQObject}->GetUserCategoriesLongNames(
+                    Type   => 'ro',
+                    UserID => 1,
+                );
+                $Self->{LayoutObject}->Block(
+                    Name => 'AffectedSubCategories',
+                    Data => {},
+                );
+                CATEGORYID:
+                for my $CategoryID ( @{$AffectedSubCategories} ) {
+
+                    # get category
+                    my %CategoryData = $Self->{FAQObject}->CategoryGet(
+                        CategoryID => $CategoryID,
+                        UserID     => $Self->{UserID},
+                    );
+
+                    # set category long name
+                    $CategoryData{LongName} = $CategoryLongNames->{$CategoryID};
+
+                    # check category
+                    next CATEGORYID if !%CategoryData;
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'AffectedSubCategoriesRow',
+                        Data => {
+                            %CategoryData,
+                            %Param,
+                        },
+                    );
+                }
+            }
+
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'NoAffected',
+                Data => {%CategoryData},
+            );
+        }
+
+        # output content
+        my $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentFAQCategory',
+            Data         => {},
+        );
+
+        # build the returned data structure
+        my %Data = (
+            HTML       => $Output,
+            DialogType => $DialogType,
+        );
+
+        # return JSON-String because of AJAX-Mode
+        my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $OutputJSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
+    }
+
+    # ------------------------------------------------------------ #
+    # delete action
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'DeleteAction' ) {
+
+        # get the CategoryID
+        my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || '';
+
+        # check required parameters
+        if ( !$CategoryID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'No CategoryID is given!',
+                Comment => 'Please contact the administrator.',
+            );
+        }
+
+        # get category data
+        my %CategoryData = $Self->{FAQObject}->CategoryGet(
+            CategoryID => $CategoryID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ( !%CategoryData ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+
+        # delete the category
+        my $CouldDeleteCategory = $Self->{FAQObject}->CategoryDelete(
+            CategoryID => $CategoryID,
+            UserID     => $Self->{UserID},
+        );
+
+        if ($CouldDeleteCategory) {
+
+            # redirect to explorer, when the deletion was successful
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentFAQCategory",
+            );
+        }
+        else {
+
+            # show error message, when delete failed
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "Was not able to delete the category $CategoryID!",
+                Comment => 'Please contact the administrator.',
+            );
+        }
     }
 
     # ---------------------------------------------------------- #

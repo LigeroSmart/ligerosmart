@@ -2,7 +2,7 @@
 # AgentFAQCategory.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.dtl,v 1.9 2010-11-25 17:34:48 ub Exp $
+# $Id: AgentFAQCategory.dtl,v 1.10 2010-11-27 19:14:15 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -50,6 +50,7 @@
                         <tr>
                             <th>$Text{"Name"}</th>
                             <th>$Text{"Valid"}</th>
+                            <th class="W10pc">$Text{"Delete"}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,6 +65,28 @@
                         <tr>
                             <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Change;CategoryID=$LQData{"CategoryID"}">$QData{"Name"}</a></td>
                             <td>$Text{"$Data{"Valid"}"}</td>
+                            <td class="Center Last">
+                                <a id="DeleteCategoryID$QData{"CategoryID"}" class="TrashCan" href="#">
+                                    $Text{"Delete: $QData{"Name"}"}
+                                </a>
+                            </td>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    FAQ.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'DeleteCategoryID$QData{"CategoryID"}',
+        ElementSelector:            '#DeleteCategoryID$QData{"CategoryID"}',
+        DialogContentQueryString:   'Action=AgentFAQCategory;Subaction=Delete;CategoryID=$LQData{"CategoryID"}',
+        ConfirmedActionQueryString: 'Action=AgentFAQCategory;Subaction=DeleteAction;CategoryID=$LQData{"CategoryID"}',
+        DialogTitle:                '$JSText{"Delete Category"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}',
+            Ok:  '$JSText{"Ok"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
                         </tr>
 <!-- dtl:block:OverviewResultRow -->
                     </tbody>
@@ -153,3 +176,57 @@
     <div class="Clear"></div>
 </div>
 <!-- dtl:block:Overview -->
+
+
+<!-- dtl:block:Delete -->
+
+<!-- dtl:block:NoAffected -->
+<fieldset class="TableLike W300px">
+    <label>$Text{"Category"}:</label>
+    <p class="Value">
+        $QData{"Name"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop Center">
+    $Text{"Do you really want to delete this Category?"}
+</p>
+<!-- dtl:block:NoAffected -->
+
+<!-- dtl:block:Affected -->
+<p>
+    $Text{"You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category"}
+</p>
+<!-- dtl:block:Affected -->
+
+<!-- dtl:block:AffectedItems -->
+<p class="SpacingTop SpacingBottom">
+    $Text{"This Category is used in the following FAQ Artice(s)"}:
+</p>
+<ul>
+<!-- dtl:block:AffectedItemsRow -->
+    <li class="Indent SpacingBottomSmall">
+        <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}">
+            $Config{"FAQ::FAQHook"}:$QData{"Number"}<span>&nbsp;&mdash;</span> $QData{"Title", "60"}
+        </a>
+    </li>
+<!-- dtl:block:AffectedItemsRow -->
+</ul>
+<!-- dtl:block:AffectedItems -->
+
+<!-- dtl:block:AffectedSubCategories -->
+<p class="SpacingTop SpacingBottom">
+    $Text{"This Category is parent of the following SubCategories"}:
+</p>
+<ul>
+<!-- dtl:block:AffectedSubCategoriesRow -->
+    <li class="Indent SpacingBottomSmall">
+        <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"}">
+            $QData{"LongName"}
+        </a>
+    </li>
+<!-- dtl:block:AffectedSubCategoriesRow -->
+</ul>
+<!-- dtl:block:AffectedSubCategories -->
+
+<!-- dtl:block:Delete -->
