@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.130 2010-11-27 15:53:32 cr Exp $
+# $Id: FAQ.pm,v 1.131 2010-11-27 19:11:51 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.130 $) [1];
+$VERSION = qw($Revision: 1.131 $) [1];
 
 =head1 NAME
 
@@ -2120,6 +2120,46 @@ sub CategoryGroupGetAll {
     $Self->{Cache}->{CategoryGroupGetAll} = \%Groups;
 
     return \%Groups;
+}
+
+=item CategoryDelete()
+
+Delete a category.
+
+    my $Success = $FAQObject->CategoryDelete(
+        CategoryID => 123,
+        UserID      => 1,
+    );
+
+=cut
+
+sub CategoryDelete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Attribute (qw(CategoryID UserID)) {
+        if ( !$Param{$Attribute} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Attribute!",
+            );
+            return;
+        }
+    }
+
+    # delete the category
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM faq_category WHERE id = ? ',
+        Bind => [ \$Param{CategoryID} ],
+    );
+
+    # delete the category groups
+    return if !$Self->{DBObject}->Do(
+        SQL  => 'DELETE FROM faq_category_group WHERE category_id = ? ',
+        Bind => [ \$Param{CategoryID} ],
+    );
+
+    return 1;
 }
 
 =item KeywordList()
@@ -4354,6 +4394,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.130 $ $Date: 2010-11-27 15:53:32 $
+$Revision: 1.131 $ $Date: 2010-11-27 19:11:51 $
 
 =cut
