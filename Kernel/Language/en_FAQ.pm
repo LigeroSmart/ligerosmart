@@ -2,11 +2,11 @@
 # Kernel/Language/en_FAQ.pm - the english translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.17 2010-11-08 15:41:12 ub Exp $
+# $Id: en_FAQ.pm,v 1.18 2010-11-29 21:38:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Language::en_FAQ;
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,9 +28,9 @@ sub Data {
     $Lang->{'No rate selected!'}                 = 'No rate selected!';
     $Lang->{'Thanks for your vote!'}             = '';
     $Lang->{'Votes'}                             = '';
-    $Lang->{'LatestChangedItems'}                = 'latest changed article';
-    $Lang->{'LatestCreatedItems'}                = 'latest created article';
-    $Lang->{'Top10Items'}                        = 'Top 10 articles';
+    $Lang->{'LatestChangedItems'}                = 'Latest updated FAQ articles';
+    $Lang->{'LatestCreatedItems'}                = 'Latest created FAQ articles';
+    $Lang->{'Top10Items'}                        = 'Top 10 FAQ articles';
     $Lang->{'ArticleVotingQuestion'}             = 'How helpful was this aticle? Please give us your rating and help to improve the FAQ Database. Thank You.';
     $Lang->{'SubCategoryOf'}                     = 'Subcategory of';
     $Lang->{'QuickSearch'}                       = 'Quick Search';

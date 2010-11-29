@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.19 2010-11-22 16:58:22 ub Exp $
+# $Id: de_FAQ.pm,v 1.20 2010-11-29 21:38:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -28,9 +28,9 @@ sub Data {
     $Lang->{'No rate selected!'}       = 'Keine Bewertung auswählt!';
     $Lang->{'Thanks for your vote!'}   = 'Danke für Ihre Bewertung!';
     $Lang->{'Votes'}                   = 'Bewertungen';
-    $Lang->{'LatestChangedItems'}      = 'zuletzt geänderte Artikel';
-    $Lang->{'LatestCreatedItems'}      = 'zuletzt erstellte Artikel';
-    $Lang->{'Top10Items'}              = 'Top 10 Artikel';
+    $Lang->{'LatestChangedItems'}      = 'Zuletzt geänderte FAQ Artikel';
+    $Lang->{'LatestCreatedItems'}      = 'Zuletzt erstellte FAQ Artikel';
+    $Lang->{'Top10Items'}              = 'Top 10 FAQ Artikel';
     $Lang->{'ArticleVotingQuestion'}   = 'Wie gut wurde mit diesem Artikel Ihre Frage beantwortet?';
     $Lang->{'SubCategoryOf'}           = 'Unterkategorie von';
     $Lang->{'QuickSearch'}             = 'Schnellsuche';
@@ -41,9 +41,9 @@ sub Data {
     $Lang->{'FAQ Category'}            = 'FAQ Kategorie';
     $Lang->{'A category should have a name!'}        = 'Eine Kategorien sollte einen Namen haben!';
     $Lang->{'A category should have a comment!'}     = 'Eine Kategorien sollte einen Kommentar haben!';
-    $Lang->{'FAQ Articles (new created)'}            = 'FAQ Articles (neu erstellte)';
-    $Lang->{'FAQ Articles (recently changed)'}       = 'FAQ Articles (zuletzt geänderte)';
-    $Lang->{'FAQ Articles (Top 10)'}                 = 'FAQ Articles (Top 10)';
+    $Lang->{'FAQ Articles (new created)'}            = 'FAQ Artikel (neu erstellte)';
+    $Lang->{'FAQ Articles (recently changed)'}       = 'FAQ Artikel (zuletzt geänderte)';
+    $Lang->{'FAQ Articles (Top 10)'}                 = 'FAQ Artikel (Top 10)';
     $Lang->{'StartDay'}                              = 'Start Tag';
     $Lang->{'StartMonth'}                            = 'Start Monat';
     $Lang->{'StartYear'}                             = 'Start Jahr';
