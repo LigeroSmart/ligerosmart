@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.1 2010-11-26 18:12:47 ub Exp $
+# $Id: AgentFAQExplorer.pm,v 1.2 2010-11-29 21:42:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -261,20 +261,39 @@ sub Run {
         },
     );
 
-    # show last added articles
-    $Self->_ShowFAQInfoBox(
-        CategoryID => $CategoryID,
-        Type       => 'LastCreate',
-    );
+    # show last added and last updated articles
+    for my $Type (qw(LastCreate LastChange)) {
 
-    # show last updated articles
-    $Self->_ShowFAQInfoBox(
-        CategoryID => $CategoryID,
-        Type       => 'LastChange',
-    );
+        my $ShowOk = $Self->{LayoutObject}->FAQShowLatestNewsBox(
+            FAQObject       => $Self->{FAQObject},
+            Type            => $Type,
+            Mode            => 'Agent',
+            CategoryID      => $CategoryID,
+            Interface       => $Self->{Interface},
+            InterfaceStates => $Self->{InterfaceStates},
+            UserID          => $Self->{UserID},
+        );
 
-    # TODO
+        # check error
+        if ( !$ShowOk ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
+    }
+
     # show top ten articles
+    my $ShowOk = $Self->{LayoutObject}->FAQShowTop10(
+        FAQObject       => $Self->{FAQObject},
+        Mode            => 'Agent',
+        CategoryID      => $CategoryID,
+        Interface       => $Self->{Interface},
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => $Self->{UserID},
+    );
+
+    # check error
+    if ( !$ShowOk ) {
+        return $Self->{LayoutObject}->ErrorScreen();
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
@@ -290,117 +309,6 @@ sub Run {
     $Output .= $Self->{LayoutObject}->Footer();
 
     return $Output;
-}
-
-sub _ShowFAQInfoBox {
-    my ( $Self, %Param ) = @_;
-
-    if ( !$Param{Type} ) {
-        $Self->{LayoutObject}->ErrorScreen(
-            Message => 'No Type is given!',
-            Comment => 'Please contact the admin.',
-        );
-        return;
-    }
-
-    # check needed stuff
-    if ( !defined $Param{CategoryID} ) {
-        $Self->{LayoutObject}->ErrorScreen(
-            Message => 'No CategoryID is given!',
-            Comment => 'Please contact the admin.',
-        );
-        return;
-    }
-
-    # check needed stuff
-    if ( $Param{Type} !~ m{ LastCreate | LastChange }xms ) {
-        $Self->{LayoutObject}->ErrorScreen(
-            Message => 'Type must be either LastCreate or LastChange!',
-            Comment => 'Please contact the admin.',
-        );
-        return;
-    }
-
-    # set order by search parameter and header based on type
-    my $OrderBy;
-    my $Header;
-    if ( $Param{Type} eq 'LastCreate' ) {
-        $OrderBy = 'Created';
-        $Header  = 'Last added FAQ articles';
-    }
-    elsif ( $Param{Type} eq 'LastChange' ) {
-        $OrderBy = 'Changed';
-        $Header  = 'Last updated FAQ articles';
-    }
-
-    # show last added articles
-    my $Show = $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Show");
-    if ( $Show->{ $Self->{Interface}->{Name} } ) {
-
-        # to store search param for categories
-        my %CategorySearchParam;
-
-        # if subcategories should also be shown
-        if ( $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::ShowSubCategoryItems") ) {
-
-            # find the subcategories of this category
-            my $SubCategoryIDsRef = $Self->{FAQObject}->CategorySubCategoryIDList(
-                ParentID => $Param{CategoryID},
-                Mode     => 'Agent',
-                UserID   => $Self->{UserID},
-            );
-
-            # search in the given category and add the sub-category
-            $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID}, @{$SubCategoryIDsRef} ];
-        }
-
-        # a category is given and subcategories should not be shown
-        elsif ( $Param{CategoryID} ) {
-
-            # search only in the given category
-            $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID} ];
-        }
-
-        # search the FAQ articles
-        my @ItemIDs = $Self->{FAQObject}->FAQSearch(
-            States           => $Self->{InterfaceStates},
-            OrderBy          => [$OrderBy],
-            OrderByDirection => ['Down'],
-            Interface        => $Self->{Interface},
-            Limit  => $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Limit") || 5,
-            UserID => $Self->{UserID},
-            %CategorySearchParam,
-        );
-
-        # there is something to show
-        if (@ItemIDs) {
-
-            # show the info box
-            $Self->{LayoutObject}->Block(
-                Name => 'InfoBoxFAQMiniList',
-                Data => {
-                    Header => $Header,
-                },
-            );
-
-            for my $ItemID (@ItemIDs) {
-
-                # get FAQ data
-                my %FAQData = $Self->{FAQObject}->FAQGet(
-                    ItemID => $ItemID,
-                    UserID => $Self->{UserID},
-                );
-
-                # show the article row
-                $Self->{LayoutObject}->Block(
-                    Name => 'InfoBoxFAQMiniListItemRow',
-                    Data => {%FAQData},
-                );
-            }
-        }
-    }
-
-    return 1;
 }
 
 1;
