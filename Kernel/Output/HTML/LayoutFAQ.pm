@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.32 2010-11-25 23:17:07 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.33 2010-11-29 21:39:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -542,6 +542,322 @@ sub FAQRatingStarsShow {
         Name => 'RateStarsCount',
         Data => { Stars => $StarCounter },
     );
+}
+
+=item FAQShowLatestNewsBox()
+
+Shows an info box wih the last updated or last created FAQ articles.
+Depending on the uses interface (agent, customer, public) only the appropriate
+articles are shown here.
+
+    $LayoutObject->FAQShowLatestNewsBox(
+        FAQObject       => $FAQObject,                 # needed for core module interaction
+        Type            => 'LastCreate',               # (LastCreate | LastChange)
+        Mode            => 'Public',                   # (Agent, Customer, Public)
+        CategoryID      => 5,
+        Interface       => $Self->{Interface},
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => 1,
+    );
+
+=cut
+
+sub FAQShowLatestNewsBox {
+    my ( $Self, %Param ) = @_;
+
+    # check parameters
+    for my $ParamName (qw(FAQObject Type Mode Interface InterfaceStates UserID)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
+            return;
+        }
+    }
+
+    # check needed stuff
+    if ( !defined $Param{CategoryID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need CategoryID!",
+        );
+        return;
+    }
+
+    # store FAQ object locally
+    $Self->{FAQObject} = $Param{FAQObject};
+
+    # check type
+    if ( $Param{Type} !~ m{ LastCreate | LastChange }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Type must be either LastCreate or LastChange!',
+        );
+        return;
+    }
+
+    # check mode
+    if ( $Param{Mode} !~ m{ Agent | Customer | Public }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Mode must be either Agent, Customer or Public!',
+        );
+        return;
+    }
+
+    # check CustomerUser
+    if ( $Param{Mode} eq 'Customer' && !$Param{CustomerUser} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need CustomerUser!',
+        );
+        return;
+    }
+
+    # set order by search parameter and header based on type
+    my $OrderBy;
+    my $Header;
+    if ( $Param{Type} eq 'LastCreate' ) {
+        $OrderBy = 'Created';
+        $Header  = 'LatestCreatedItems';
+    }
+    elsif ( $Param{Type} eq 'LastChange' ) {
+        $OrderBy = 'Changed';
+        $Header  = 'LatestChangedItems';
+    }
+
+    # show last added/updated articles
+    my $Show = $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Show");
+    if ( $Show->{ $Param{Interface}->{Name} } ) {
+
+        # to store search param for categories
+        my %CategorySearchParam;
+
+        # if subcategories should also be shown
+        if ( $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::ShowSubCategoryItems") ) {
+
+            # find the subcategories of this category
+            my $SubCategoryIDsRef = $Self->{FAQObject}->CategorySubCategoryIDList(
+                ParentID     => $Param{CategoryID},
+                Mode         => $Param{Mode},
+                ItemStates   => $Param{InterfaceStates},
+                CustomerUser => $Param{CustomerUser} || '',
+                UserID       => $Param{UserID},
+            );
+
+            # search in the given category and add the sub-category
+            $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID}, @{$SubCategoryIDsRef} ];
+        }
+
+        # a category is given and subcategories should not be shown
+        elsif ( $Param{CategoryID} ) {
+
+            # search only in the given category
+            $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID} ];
+        }
+
+        # search the FAQ articles
+        my @ItemIDs = $Self->{FAQObject}->FAQSearch(
+            States           => $Param{InterfaceStates},
+            OrderBy          => [$OrderBy],
+            OrderByDirection => ['Down'],
+            Interface        => $Param{Interface},
+            Limit  => $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Limit") || 5,
+            UserID => $Param{UserID},
+            %CategorySearchParam,
+        );
+
+        # there is something to show
+        if (@ItemIDs) {
+
+            # show the info box
+            $Self->Block(
+                Name => 'InfoBoxFAQMiniList',
+                Data => {
+                    Header => $Header,
+                },
+            );
+
+            # TODO
+            # show the RSS Feed icon
+            if ( $Param{Mode} eq 'Public' ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InfoBoxFAQMiniListNewsRSS',
+                    Data => {
+                        Type  => '',
+                        Title => '',
+                    },
+                );
+            }
+
+            for my $ItemID (@ItemIDs) {
+
+                # get FAQ data
+                my %FAQData = $Self->{FAQObject}->FAQGet(
+                    ItemID => $ItemID,
+                    UserID => $Param{UserID},
+                );
+
+                # show the article row
+                $Self->Block(
+                    Name => 'InfoBoxFAQMiniListItemRow',
+                    Data => {%FAQData},
+                );
+            }
+        }
+    }
+
+    return 1;
+}
+
+=item FAQShowTop10()
+
+Shows an info box wih the Top 10 FAQ articles.
+Depending on the uses interface (agent, customer, public) only the appropriate
+articles are shown here.
+
+    $LayoutObject->FAQShowTop10(
+        FAQObject       => $FAQObject,                 # needed for core module interaction
+        Mode            => 'Public',                   # (Agent, Customer, Public)
+        CategoryID      => 5,
+        Interface       => $Self->{Interface},
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => 1,
+    );
+
+=cut
+
+sub FAQShowTop10 {
+    my ( $Self, %Param ) = @_;
+
+    # check parameters
+    for my $ParamName (qw(FAQObject Mode Interface InterfaceStates UserID)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
+            return;
+        }
+    }
+
+    # check needed stuff
+    if ( !defined $Param{CategoryID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need CategoryID!",
+        );
+        return;
+    }
+
+    # check mode
+    if ( $Param{Mode} !~ m{ Agent | Customer | Public }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Mode must be either Agent, Customer or Public!',
+        );
+        return;
+    }
+
+    # check CustomerUser
+    if ( $Param{Mode} eq 'Customer' && !$Param{CustomerUser} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need CustomerUser!',
+        );
+        return;
+    }
+
+    # store FAQ object locally
+    $Self->{FAQObject} = $Param{FAQObject};
+
+    # show last added/updated articles
+    my $Show = $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show');
+    if ( $Show->{ $Param{Interface}->{Name} } ) {
+
+        # to store search param for categories
+        my %CategorySearchParam;
+
+        # if subcategories should also be shown
+        if ( $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::ShowSubCategoryItems') ) {
+
+            # find the subcategories of this category
+            my $SubCategoryIDsRef = $Self->{FAQObject}->CategorySubCategoryIDList(
+                ParentID     => $Param{CategoryID},
+                Mode         => $Param{Mode},
+                ItemStates   => $Param{InterfaceStates},
+                CustomerUser => $Param{CustomerUser} || '',
+                UserID       => $Param{UserID},
+            );
+
+            # search in the given category and add the sub-category
+            $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID}, @{$SubCategoryIDsRef} ];
+        }
+
+        # get the top 10 articles for categories with at least ro permissions
+        my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
+            Interface => $Param{Interface}->{Name},
+            Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
+            UserID    => $Param{UserID},
+            %CategorySearchParam,
+        );
+
+        # there is something to show
+        if ( @{$Top10ItemIDsRef} ) {
+
+            # show the info box
+            $Self->Block(
+                Name => 'InfoBoxFAQMiniList',
+                Data => {
+                    Header => 'Top10Items',
+                },
+            );
+
+            # TODO
+            # show the RSS Feed icon
+            if ( $Param{Mode} eq 'Public' ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InfoBoxFAQMiniListNewsRSS',
+                    Data => {
+                        Type  => '',
+                        Title => '',
+                    },
+                );
+            }
+
+            my $Number;
+            for my $Top10Item ( @{$Top10ItemIDsRef} ) {
+
+                # increase the number
+                $Number++;
+
+                # get FAQ data
+                my %FAQData = $Self->{FAQObject}->FAQGet(
+                    ItemID => $Top10Item->{ItemID},
+                    UserID => $Param{UserID},
+                );
+
+                # show the article row
+                $Self->Block(
+                    Name => 'InfoBoxFAQMiniListItemRow',
+                    Data => {
+                        %FAQData,
+                    },
+                );
+
+                # show the Top10 position number
+                $Self->Block(
+                    Name => 'InfoBoxFAQMiniListItemRowPositionNumber',
+                    Data => {
+                        Number => $Number,
+                    },
+                );
+            }
+        }
+    }
+
+    return 1;
 }
 
 1;
