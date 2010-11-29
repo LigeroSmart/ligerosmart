@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.1 2010-11-26 18:12:47 ub Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.2 2010-11-29 14:40:33 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,7 +42,6 @@
                                 ($QData{"CategoryShortName","15"}) ($QData{"Language"}) $TimeShort{"$Data{"Created"}"}
                             </span>
                         </li>
-                        <div class="Clear"></div>
 <!-- dtl:block:InfoBoxFAQMiniListItemRow -->
                     </ul>
                 </div>
