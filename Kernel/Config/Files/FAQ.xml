@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.72 2010-11-27 19:13:04 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.73 2010-11-29 15:34:00 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -1254,7 +1254,7 @@ Your OTRS Notification Master
                 <NavBarName>FAQ</NavBarName>
                 <NavBar>
                     <GroupRo>faq</GroupRo>
-                    <Description Translatable="1">Journal FAQ</Description>
+                    <Description Translatable="1">FAQ Journal</Description>
                     <Name Translatable="1">Journal</Name>
                     <Link>Action=AgentFAQJournal</Link>
                     <Type></Type>
