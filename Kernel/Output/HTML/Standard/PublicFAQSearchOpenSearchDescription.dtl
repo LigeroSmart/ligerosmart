@@ -2,13 +2,12 @@
 # PublicFAQSearchOpenSearchDescription.dtl - provides opensearch form for CustomerFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearchOpenSearchDescription.dtl,v 1.2 2010-11-08 19:03:37 ub Exp $
+# $Id: PublicFAQSearchOpenSearchDescription.dtl,v 1.3 2010-11-29 12:57:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-
 <?xml version="1.0" encoding="utf-8" ?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
 <ShortName>$Quote{"$Config{"ProductName"}"} - $Text{"Public"} ($Quote{"$Config{"FAQ::FAQHook"}"})</ShortName>
