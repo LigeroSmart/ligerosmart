@@ -2,7 +2,7 @@
 # AgentFAQJournalOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournalOverviewSmall.dtl,v 1.1 2010-11-22 22:58:56 cr Exp $
+# $Id: AgentFAQJournalOverviewSmall.dtl,v 1.2 2010-11-29 12:54:14 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,79 +22,74 @@
     </div>
 <!-- dtl:block:NoFAQFound -->
 <!-- dtl:block:RecordForm -->
-    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
-        <input type="hidden" name="Action" value="AgentTicketBulk"/>
-        <input type="hidden" name="TicketID" value=""/>
-
-        <table id="FixedTable" class="TableSmall" summary="A generic FAQ table">
-            <thead>
-                <tr>
+    <table id="FixedTable" class="TableSmall" summary="A generic FAQ table">
+        <thead>
+            <tr>
 <!-- dtl:block:RecordNumberHeader -->
-                    <th class="FAQNumber">
-                        <span>$Config{"FAQ::FAQHook"}</span>
-                    </th>
+                <th class="FAQNumber">
+                    <span>$Config{"FAQ::FAQHook"}</span>
+                </th>
 <!-- dtl:block:RecordNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
-                    <th class="Title">
-                        <span>$Text{"Title"}</span>
-                    </th>
+                <th class="Title">
+                    <span>$Text{"Title"}</span>
+                </th>
 <!-- dtl:block:RecordTitleHeader -->
 <!-- dtl:block:RecordCategoryHeader -->
-                    <th class="Category">
-                        <span>$Text{"Category"}</span>
-                    </th>
+                <th class="Category">
+                    <span>$Text{"Category"}</span>
+                </th>
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordNameHeader -->
-                    <th class="Name">
-                        <span>$Text{"Name"}</span>
-                    </th>
+                <th class="Name">
+                    <span>$Text{"Name"}</span>
+                </th>
 <!-- dtl:block:RecordNameHeader -->
 <!-- dtl:block:RecordTimeHeader -->
-                    <th class="Time">
-                        <span>$Text{"Time"}</span>
-                    </th>
+                <th class="Time">
+                    <span>$Text{"Time"}</span>
+                </th>
 <!-- dtl:block:RecordTimeHeader -->
-                </tr>
-            </thead>
-            <tbody>
+            </tr>
+        </thead>
+        <tbody>
 <!-- dtl:block:Record -->
-                <tr id="ItemID_$QData{"ItemID"}_$QData{"Counter"}" class="MasterAction">
+            <tr id="ItemID_$QData{"ItemID"}_$QData{"Counter"}" class="MasterAction">
 <!-- dtl:block:RecordNumber -->
-                    <td>
+                <td>
 <!-- dtl:block:RecordNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}" title="$LQData{"Number"}" class="MasterActionLink">
+                    <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}" title="$LQData{"Number"}" class="MasterActionLink">
 <!-- dtl:block:RecordNumberLinkStart -->
-                            $QData{"Number"}
+                        $QData{"Number"}
 <!-- dtl:block:RecordNumberLinkEnd -->
-                        </a>
+                    </a>
 <!-- dtl:block:RecordNumberLinkEnd -->
-                    </td>
+                </td>
 <!-- dtl:block:RecordNumber -->
 <!-- dtl:block:RecordTitle -->
-                    <td>
-                        <div title="$QData{"Subject"}">$QData{"Subject","40"}</div>
-                    </td>
+                <td>
+                    <div title="$QData{"Subject"}">$QData{"Subject","40"}</div>
+                </td>
 <!-- dtl:block:RecordTitle -->
 <!-- dtl:block:RecordCategory -->
-                    <td>
-                        <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
+                </td>
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordName -->
-                    <td>
-                        <div title="$Text{"$Data{"Action"}"}">$Text{"$Data{"Action"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"Action"}"}">$Text{"$Data{"Action"}"}</div>
+                </td>
 <!-- dtl:block:RecordName -->
 <!-- dtl:block:RecordTime -->
-                    <td>
-                        <div title="$TimeLong{"$QData{"Created"}"}">$TimeLong{"$QData{"Created"}"}</div>
-                    </td>
+                <td>
+                    <div title="$TimeLong{"$QData{"Created"}"}">$TimeLong{"$QData{"Created"}"}</div>
+                </td>
 <!-- dtl:block:RecordTime -->
-                </tr>
+            </tr>
 <!-- dtl:block:Record -->
-            </tbody>
-        </table>
-    </form>
+        </tbody>
+    </table>
 <!-- dtl:block:RecordForm -->
 </div>
 <!-- dtl:js_on_document_complete -->

@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.12 2010-11-25 23:17:07 cr Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.13 2010-11-29 12:54:14 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,89 +22,84 @@
     </div>
 <!-- dtl:block:NoFAQFound -->
 <!-- dtl:block:RecordForm -->
-    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
-        <input type="hidden" name="Action" value="AgentTicketBulk"/>
-        <input type="hidden" name="TicketID" value=""/>
-
-        <table id="FixedTable" class="TableSmall" summary="A generic FAQ table">
-            <thead>
-                <tr>
+    <table id="FixedTable" class="TableSmall" summary="A generic FAQ table">
+        <thead>
+            <tr>
 <!-- dtl:block:RecordNumberHeader -->
-                    <th class="FAQNumber $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=FAQID;OrderBy=$LQData{"OrderBy"}">$Config{"FAQ::FAQHook"}</a>
-                    </th>
+                <th class="FAQNumber $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=FAQID;OrderBy=$LQData{"OrderBy"}">$Config{"FAQ::FAQHook"}</a>
+                </th>
 <!-- dtl:block:RecordNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
-                    <th class="Title $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Title;OrderBy=$LQData{"OrderBy"}">$Text{"Title"}</a>
-                    </th>
+                <th class="Title $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Title;OrderBy=$LQData{"OrderBy"}">$Text{"Title"}</a>
+                </th>
 <!-- dtl:block:RecordTitleHeader -->
 <!-- dtl:block:RecordCategoryHeader -->
-                    <th class="Category $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Category;OrderBy=$LQData{"OrderBy"}">$Text{"Category"}</a>
-                    </th>
+                <th class="Category $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Category;OrderBy=$LQData{"OrderBy"}">$Text{"Category"}</a>
+                </th>
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordLanguageHeader -->
-                    <th class="Language $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Language;OrderBy=$LQData{"OrderBy"}">$Text{"Language"}</a>
-                    </th>
+                <th class="Language $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Language;OrderBy=$LQData{"OrderBy"}">$Text{"Language"}</a>
+                </th>
 <!-- dtl:block:RecordLanguageHeader -->
 <!-- dtl:block:RecordStateHeader -->
-                    <th class="State $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=State;OrderBy=$LQData{"OrderBy"}">$Text{"State"}</a>
-                    </th>
+                <th class="State $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=State;OrderBy=$LQData{"OrderBy"}">$Text{"State"}</a>
+                </th>
 <!-- dtl:block:RecordStateHeader -->
 <!-- dtl:block:RecordChangedHeader -->
-                    <th class="Changed $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Changed;OrderBy=$LQData{"OrderBy"}">$Text{"changed"}</a>
-                    </th>
+                <th class="Changed $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Changed;OrderBy=$LQData{"OrderBy"}">$Text{"changed"}</a>
+                </th>
 <!-- dtl:block:RecordChangedHeader -->
-                </tr>
-            </thead>
-            <tbody>
+            </tr>
+        </thead>
+        <tbody>
 <!-- dtl:block:Record -->
-                <tr id="ItemID_$QData{"ItemID"}_$QData{"Counter"}" class="MasterAction">
+            <tr id="ItemID_$QData{"ItemID"}_$QData{"Counter"}" class="MasterAction">
 <!-- dtl:block:RecordNumber -->
-                    <td>
+                <td>
 <!-- dtl:block:RecordNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}" title="$LQData{"Number"}" class="MasterActionLink">
+                    <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}" title="$LQData{"Number"}" class="MasterActionLink">
 <!-- dtl:block:RecordNumberLinkStart -->
-                            $QData{"Number"}
+                        $QData{"Number"}
 <!-- dtl:block:RecordNumberLinkEnd -->
-                        </a>
+                    </a>
 <!-- dtl:block:RecordNumberLinkEnd -->
-                    </td>
+                </td>
 <!-- dtl:block:RecordNumber -->
 <!-- dtl:block:RecordTitle -->
-                    <td>
-                        <div title="$QData{"Title"}">$QData{"Title","40"}</div>
-                    </td>
+                <td>
+                    <div title="$QData{"Title"}">$QData{"Title","40"}</div>
+                </td>
 <!-- dtl:block:RecordTitle -->
 <!-- dtl:block:RecordCategory -->
-                    <td>
-                        <div title="$Text{"$Data{"CategoryName"}"}">$Text{"$Data{"CategoryName"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"CategoryName"}"}">$Text{"$Data{"CategoryName"}"}</div>
+                </td>
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordLanguage -->
-                    <td>
-                        <div title="$Text{"$Data{"Language"}"}">$Text{"$Data{"Language"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"Language"}"}">$Text{"$Data{"Language"}"}</div>
+                </td>
 <!-- dtl:block:RecordLanguage -->
 <!-- dtl:block:RecordState -->
-                    <td>
-                        <div title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</div>
-                    </td>
+                <td>
+                    <div title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</div>
+                </td>
 <!-- dtl:block:RecordState -->
 <!-- dtl:block:RecordChanged -->
-                    <td>
-                        <div title="$TimeLong{"$QData{"Changed"}"}">$TimeLong{"$QData{"Changed"}"}</div>
-                    </td>
+                <td>
+                    <div title="$TimeLong{"$QData{"Changed"}"}">$TimeLong{"$QData{"Changed"}"}</div>
+                </td>
 <!-- dtl:block:RecordChanged -->
-                </tr>
+            </tr>
 <!-- dtl:block:Record -->
-            </tbody>
-        </table>
-    </form>
+        </tbody>
+    </table>
 <!-- dtl:block:RecordForm -->
 </div>
 <!-- dtl:js_on_document_complete -->
