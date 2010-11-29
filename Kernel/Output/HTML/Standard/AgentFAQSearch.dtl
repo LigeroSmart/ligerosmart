@@ -2,7 +2,7 @@
 # AgentFAQSearch.dtl - provides HTML form for AgentFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.6 2010-11-27 00:49:43 cr Exp $
+# $Id: AgentFAQSearch.dtl,v 1.7 2010-11-29 15:58:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -53,39 +53,39 @@
 
     <fieldset class="TableLike Hidden" id="SearchAttributesHidden">
         <div class="Clear"></div>
-        <label for="Fulltext">$Text{"Fulltext"}:</label>
+        <label for="Fulltext"id="LabelFulltext">$Text{"Fulltext"}:</label>
         <div class="Field">
             <input type="text" name="Fulltext" value="$QData{"Fulltext"}" class="W50pc" />
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
-        <label for="Number">$Text{"FAQ#"} $Text{"(e.g. 10*5155 or 105658*)"}:</label>
+        <label for="Number" id="LabelNumber">$Text{"FAQ#"} $Text{"(e.g. 10*5155 or 105658*)"}:</label>
         <div class="Field">
             <input type="text" name="Number" value="$QData{"Number"}" class="W50pc"/>
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="Title">$Text{"Title"}:</label>
+        <label for="Title" id="LabelTitle">$Text{"Title"}:</label>
         <div class="Field">
             <input type="text" name="Title" value="$QData{"Title"}" class="W50pc"/>
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="Keyword">$Text{"Keyword"}:</label>
+        <label for="Keyword" id="LabelKeyword">$Text{"Keyword"}:</label>
         <div class="Field">
             <input type="text" name="Keyword" value="$QData{"Keyword"}" class="W50pc"/>
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
         <div class="Clear"></div>
-        <label for="LanguageIDs">$Text{"Language"}:</label>
+        <label for="LanguageIDs" id="LabelLanguageIDs">$Text{"Language"}:</label>
         <div class="Field">
             $Data{"LanguagesSelectionString"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="CategoryIDs">$Text{"Category"}:</label>
+        <label for="CategoryIDs" id="LabelCategoryIDs">$Text{"Category"}:</label>
         <div class="Field">
             $Data{"CategoriesSelectionString"}
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
