@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.74 2010-11-29 21:38:02 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.75 2010-11-30 10:22:36 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Lang="en">Default category name.</Description>
         <Description Lang="de">Root Kategorie Name.</Description>
@@ -538,20 +538,20 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="CustomerFrontend::Module###CustomerFAQ" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the CustomerFAQ object in the customer interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das CustomerFAQ-Objekt im Customer-Interface.</Description>
+    <ConfigItem Name="CustomerFrontend::Module###CustomerFAQExplorer" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the CustomerFAQExplorer object in the customer interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration für das CustomerFAQExplorer-Objekt im Customer-Interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Customer faq</Description>
+                <Description>Customer FAQ</Description>
                 <NavBarName>FAQ</NavBarName>
                 <Title></Title>
                 <NavBar>
                     <Description>FAQ-Area</Description>
                     <Name>FAQ</Name>
-                    <Link>Action=CustomerFAQ</Link>
+                    <Link>Action=CustomerFAQExplorer</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar></NavBar>
@@ -567,12 +567,12 @@ Your OTRS Notification Master
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public</SubGroup>
         <Setting>
-            <String>PublicFAQ</String>
+            <String>PublicFAQExplorer</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="PublicFrontend::Module###PublicFAQ" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the PublicFAQ object in the public FAQ area.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das PublicFAQ-Objekt im öffentlichen FAQ-Bereich.</Description>
+    <ConfigItem Name="PublicFrontend::Module###PublicFAQExplorer" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the PublicFAQExplorer object in the public FAQ area.</Description>
+        <Description Lang="de">Frontendmodul-Registration für das PublicFAQExplorer-Objekt im öffentlichen FAQ-Bereich.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
         <Setting>
@@ -583,7 +583,7 @@ Your OTRS Notification Master
                 <NavBar>
                     <Description>FAQ-Area</Description>
                     <Name>FAQ</Name>
-                    <Link>Action=CustomerFAQ</Link>
+                    <Link>Action=PublicFAQExplorer</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar></NavBar>
