@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.2 2010-11-29 21:42:40 ub Exp $
+# $Id: AgentFAQExplorer.pm,v 1.3 2010-11-30 10:48:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,9 @@ use strict;
 use warnings;
 
 use Kernel::System::FAQ;
-use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

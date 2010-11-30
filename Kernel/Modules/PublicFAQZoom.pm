@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.pm,v 1.5 2010-11-24 13:20:43 ub Exp $
+# $Id: PublicFAQZoom.pm,v 1.6 2010-11-30 10:48:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,9 @@ use strict;
 use warnings;
 
 use Kernel::System::FAQ;
-use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
