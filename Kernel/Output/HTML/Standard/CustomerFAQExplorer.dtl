@@ -1,0 +1,228 @@
+# --
+# CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: CustomerFAQExplorer.dtl,v 1.1 2010-11-30 19:17:37 ub Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div id="MainBox" class="TicketZoom ARIARoleMain">
+
+    <div class="Content">
+        <div class="TicketHeader">
+            <h2 title="$QData{"Title"}">
+                $QData{"Title","40"}
+                <span class="TicketHook">$QData{"Number"}</span>
+            </h2>
+            <div class="Clear"></div>
+        </div>
+
+        <div class="FAQPathCategory">
+            <h3>
+<!-- dtl:block:FAQPathCategoryElement -->
+                $Config{"FAQ::Explorer::Path::Separator"}
+                <a href="$Env{"Baselink"}Action=CustomerFAQExplorer;CategoryID=$LQData{"CategoryID"}">
+                    $QData{"Name"}
+                </a>
+<!-- dtl:block:FAQPathCategoryElement -->
+            </h3>
+        </div>
+        <div class="Clear"></div>
+
+        <div class="LayoutFixedSidebar SidebarLast">
+            <div class="SidebarColumn Large">
+
+<!-- dtl:block:InfoBoxFAQMiniList -->
+                <div>
+                    <ul id="Messages">
+                        <li class="Customer Visible">
+                            <div class="MessageHeader">
+                                <h3>$Text{"$Data{"Header"}"}</h3>
+<!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=RSS&Type=$QData{"Type"}" title="$Text{"$Data{"Title"}"}"><img src="$Env{"Images"}/rss.png" border="0"></a>
+<!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
+                                <div class="Clear"></div>
+                            </div>
+                            <div class="MessageBody">
+                                <div class="MessageContent">
+                                    <div class="message">
+                                        <ul class="Tablelike FAQMiniList">
+<!-- dtl:block:InfoBoxFAQMiniListItemRow -->
+                                            <li>
+<!-- dtl:block:InfoBoxFAQMiniListItemRowPositionNumber -->
+                                                $QData{"Number"}.
+<!-- dtl:block:InfoBoxFAQMiniListItemRowPositionNumber -->
+                                                <a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
+                                                    $QData{"Title","50"}
+                                                </a>
+                                                <span>
+                                                    ($QData{"CategoryShortName","15"}) ($QData{"Language"}) $TimeShort{"$Data{"Created"}"}
+                                                </span>
+                                            </li>
+<!-- dtl:block:InfoBoxFAQMiniListItemRow -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:InfoBoxFAQMiniList -->
+
+            </div>
+            <div class="ContentColumn">
+                <ul id="Messages">
+
+<!-- dtl:block:Subcategories -->
+                    <li class="Customer Visible">
+<!-- dtl:block:OverviewResult -->
+                        <div class="MessageHeader">
+                            <h3>$Text{"Sub-Categories"}</h3>
+                            <div class="Clear"></div>
+                        </div>
+                        <div class="MessageBody">
+                            <div class="MessageContent">
+                                <div class="message">
+
+                                    <table class="DataTable" summary="FAQ categories">
+                                        <thead>
+                                            <tr>
+                                                <th>$Text{"Name"}</th>
+                                                <th>$Text{"Comment"}</th>
+                                                <th>$Text{"Subcategories"}</th>
+                                                <th>$Text{"Articles"}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+<!-- dtl:block:NoDataFoundMsg -->
+                                            <tr>
+                                                <td colspan="4">
+                                                    $Text{"No subcategories found."}
+                                                </td>
+                                            </tr>
+<!-- dtl:block:NoDataFoundMsg -->
+<!-- dtl:block:OverviewResultRow -->
+                                            <tr>
+                                                <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"}">$QData{"Name"}</a></td>
+                                                <td>$QData{"Comment"}</td>
+                                                <td>$QData{"SubCategoryCount"}</td>
+                                                <td>$QData{"ArticleCount"}</td>
+                                            </tr>
+<!-- dtl:block:OverviewResultRow -->
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+<!-- dtl:block:OverviewResult -->
+                    </li>
+<!-- dtl:block:Subcategories -->
+
+
+<!-- dtl:block:FAQItemList -->
+                    <li class="Customer Visible">
+
+                        <div class="SearchResults">
+                            <div class="ActionRow">
+<!-- dtl:block:Pagination -->
+                                <div class="Tabs Pagination">
+                                    <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                                </div>
+<!-- dtl:block:Pagination -->
+                                <div class="Clear"></div>
+#                                <div class="SearchTerms">
+#                                    <h2>$Text{"Search Results for"}:</h2>
+#                                </div>
+
+                                <div class="MessageHeader">
+                                    <h3>$Text{"Articles"}</h3>
+                                    <div class="Clear"></div>
+                                </div>
+
+                            </div>
+                            <div class="Content">
+                                <table class="Overview">
+                                    <thead>
+                                        <tr>
+                                            <th class="FAQNumber">
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=FAQID;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                                    $Config{"FAQ::FAQHook"}
+                                                </a>
+                                            </th>
+                                            <th class="Title">
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Title;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                                    $Text{"Title"}
+                                                </a>
+                                            </th>
+                                            <th class="Category">
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Category;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                                    $Text{"Category"}
+                                                </a>
+                                            </th>
+                                            <th class="Language">
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Language;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                                    $Text{"Language"}
+                                                </a>
+                                            </th>
+                                            <th class="State">
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=State;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                                    $Text{"State"}
+                                                </a>
+                                            </th>
+                                            <th class="Changed">
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Changed;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                                    $Text{"Changed"}
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<!-- dtl:block:Record -->
+                                        <tr title="$QData{"TicketNumber"}">
+                                            <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                                            <td class="Title">$QData{"Title","60"}</td>
+                                            <td class="Category">$QData{"CategoryName","60"}</td>
+                                            <td class="Language">$QData{"Language","5"}</td>
+                                            <td class="State">$QData{"State","21"}</td>
+                                            <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
+                                        </tr>
+<!-- dtl:block:Record -->
+                                    </tbody>
+                                </table>
+                            </div>
+<!-- dtl:block:BottomSubNavigation -->
+                            <div id="BottomActionRow" class="ActionRow BigButtons">
+                                <ul class="Tabs">
+                                    <li>
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=LoadProfile;$LQData{"Link"}">
+                                            &larr; $Text{"Change search options"}
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="Tabs Pagination">
+                                    <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                                </div>
+                                <div class="Clear"></div>
+                            </div>
+<!-- dtl:block:BottomSubNavigation -->
+                        </div>
+                    </li>
+<!-- dtl:block:FAQItemList -->
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">
+    Core.Customer.ClickableRow();
+</script>
+<!-- dtl:js_on_document_complete -->
