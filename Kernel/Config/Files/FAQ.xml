@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.76 2010-11-30 15:55:38 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.77 2010-11-30 17:13:52 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
-        <Description Lang="en">Default category name.</Description>
-        <Description Lang="de">Root Kategorie Name.</Description>
+        <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -11,8 +10,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Default::RootCategoryComment" Required="1" Valid="1">
-        <Description Lang="en">Default category name.</Description>
-        <Description Lang="de">Root Kategorie Name.</Description>
+        <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -20,8 +18,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::Rates" Required="1" Valid="1">
-        <Description Lang="en">Rates for voting. Key must be in percent.</Description>
-        <Description Lang="de">Gewichtung für die Bewertung. Der Key muss in Prozent angegeben werden.</Description>
+        <Description Translatable="1">Rates for voting. Key must be in percent.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
         <Setting>
@@ -35,8 +32,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::Show" Required="1" Valid="1">
-        <Description Lang="en">Show voting in defined interfaces.</Description>
-        <Description Lang="de">Interfaces in denen das Voting Feature angezeigt werden soll.</Description>
+        <Description Translatable="1">Show voting in defined interfaces.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
         <Setting>
@@ -47,8 +43,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Voting::QuestionLangKey" Required="1" Valid="1">
-        <Description Lang="en">Languagekey which is defined in the language file *_FAQ.pm.</Description>
-        <Description Lang="de">LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.</Description>
+        <Description Translatable="1">Languagekey which is defined in the language file *_FAQ.pm.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item::Voting</SubGroup>
         <Setting>
@@ -56,8 +51,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">
-        <Description Lang="en">Show FAQ path yes/no.</Description>
-        <Description Lang="de">FAQ Pfad anzeigen ja/nein.</Description>
+        <Description Translatable="1">Show FAQ path yes/no.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -68,8 +62,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultDecimalPlaces" Required="1" Valid="1">
-        <Description Lang="en">Decimal places of the voting result.</Description>
-        <Description Lang="de">Dezimalstellen des Ergebnisses bei der Artikelbewertung.</Description>
+        <Description Translatable="1">Decimal places of the voting result.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -77,8 +70,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
-        <Description Lang="en">CSS color for the voting result.</Description>
-        <Description Lang="de">Farben für die Anzeige des Ergebnises.</Description>
+        <Description Translatable="1">CSS color for the voting flag.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -90,14 +82,14 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Path::Separator" Required="1" Valid="1">
-        <Description Lang="en">FAQ path separator.</Description>
-        <Description Lang="de">Trennzeichen im FAQ Pfad.</Description>
+        <Description Translatable="1">FAQ path separator.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
             <String>»</String>
         </Setting>
     </ConfigItem>
+<!--
     <ConfigItem Name="FAQ::Category::Icon" Required="1" Valid="1">
         <Description Lang="en">Category icon.</Description>
         <Description Lang="de">Kategorie Icon in der FAQ.</Description>
@@ -116,9 +108,9 @@
             <String>faq-item-small.png</String>
         </Setting>
     </ConfigItem>
+-->
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
-        <Description Lang="en">Interfaces where the quicksearch should be shown.</Description>
-        <Description Lang="de">Interfaces in denen das QuickSearch Feature angezeigt wird.</Description>
+        <Description Translatable="1">Interfaces where the quicksearch should be shown.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -130,8 +122,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::QuickSearch::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">Show items of subcategories.</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
+        <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -142,8 +133,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::Show" Required="1" Valid="1">
-        <Description Lang="en">Show last change items in defined interfaces.</Description>
-        <Description Lang="de">Interfaces in denen das LastChange Feature angezeigt werden soll.</Description>
+        <Description Translatable="1">Show last change items in defined interfaces.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -155,8 +145,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">Show items of subcategories.</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
+        <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -167,8 +156,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastChange::Limit" Required="1" Valid="1">
-        <Description Lang="en">Number of shown items in last changes.</Description>
-        <Description Lang="de">Anzahl der zu anzeigenden Artikel in letzten Änderungen.</Description>
+        <Description Translatable="1">Number of shown items in last changes.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -176,8 +164,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::Show" Required="1" Valid="1">
-        <Description Lang="en">Show last created items in defined interfaces.</Description>
-        <Description Lang="de">Interfaces in denen das LastCreate Feature angezeigt werden soll.</Description>
+        <Description Translatable="1">Show last created items in defined interfaces.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -189,8 +176,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">Show items of subcategories.</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
+        <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -201,8 +187,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::LastCreate::Limit" Required="1" Valid="1">
-        <Description Lang="en">Number of shown items in last created.</Description>
-        <Description Lang="de">Anzahl der anzuzeigenden Artikel in zuletzt erstellte Artikel.</Description>
+        <Description Translatable="1">Number of shown items in last created.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -210,8 +195,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Top10::Show" Required="1" Valid="1">
-        <Description Lang="en">Show top 10 items in defined interfaces.</Description>
-        <Description Lang="de">Interfaces in denen das Top 10 Feature angezeigt werden soll.</Description>
+        <Description Translatable="1">Show top 10 items in defined interfaces.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -223,8 +207,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Top10::Limit" Required="1" Valid="1">
-        <Description Lang="en">Number of shown items in the top 10 feature.</Description>
-        <Description Lang="de">Anzahl der anzuzeigenden Artikel im Top 10 Feature.</Description>
+        <Description Translatable="1">Number of shown items in the top 10 feature.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -232,8 +215,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Top10::ShowSubCategoryItems" Required="1" Valid="1">
-        <Description Lang="en">Show items of subcategories.</Description>
-        <Description Lang="de">Artikel aus Subkategorien anzeigen ja/nein.</Description>
+        <Description Translatable="1">Show items of subcategories.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
@@ -244,8 +226,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::FAQHook" Required="1" Valid="1">
-        <Description Lang="en">Default hook for FAQ.</Description>
-        <Description Lang="de">Standard Bezeichner für eine FAQ.</Description>
+        <Description Translatable="1">The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -253,8 +234,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Default::State" Required="1" Valid="1">
-        <Description Lang="en">Default state for FAQ entry.</Description>
-        <Description Lang="de">Standard Status eines FAQ-Eintrags.</Description>
+        <Description Translatable="1">Default state for FAQ entry.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -262,8 +242,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::WYSIWYGEditor" Required="1" Valid="1">
-        <Description Lang="en">Show WYSIWYG editor in agent interface.</Description>
-        <Description Lang="de">Anzeige eines WYSIWYG Editors im Agenten-Interface.</Description>
+        <Description Translatable="1">Show WYSIWYG editor in agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -274,8 +253,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalRequired" Required="1" Valid="1">
-        <Description Lang="en">New FAQ articles need approval before they get published.</Description>
-        <Description Lang="de">Neue FAQ Artikel benötigen eine Freigabe vor der Veröffentlichung.</Description>
+        <Description Translatable="1">New FAQ articles need approval before they get published.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -286,8 +264,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalGroup" Required="1" Valid="1">
-        <Description Lang="en">Group for the approval of FAQ articles.</Description>
-        <Description Lang="de">Gruppe für die Freigabe von FAQ Artikeln.</Description>
+        <Description Translatable="1">Group for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -295,8 +272,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalQueue" Required="1" Valid="1">
-        <Description Lang="en">Queue for the approval of FAQ articles.</Description>
-        <Description Lang="de">Queue für die Freigabe von FAQ Artikeln.</Description>
+        <Description Translatable="1">Queue for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -305,8 +281,7 @@
     </ConfigItem>
 
     <ConfigItem Name="FAQ::ApprovalTicketSubject" Required="1" Valid="1">
-        <Description Lang="en">Ticket subject for approval of FAQ article.</Description>
-        <Description Lang="de">Betreff des Tickets zur Freigabe eines FAQ Artikels.</Description>
+        <Description Translatable="1">Ticket subject for approval of FAQ article.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -314,8 +289,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalTicketBody" Required="1" Valid="1">
-        <Description Lang="en">Ticket body for approval of FAQ article.</Description>
-        <Description Lang="de">Body des Tickets zur Freigabe eines FAQ Artikels.</Description>
+        <Description Translatable="1">Ticket body for approval of FAQ article.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -337,8 +311,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalTicketPriority" Required="1" Valid="1">
-        <Description Lang="en">Default priority of tickets for the approval of FAQ articles.</Description>
-        <Description Lang="de">Standard Priorität von Tickets für die Freigabe von FAQ Artikeln.</Description>
+        <Description Translatable="1">Default priority of tickets for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -346,8 +319,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalTicketDefaultState" Required="1" Valid="1">
-        <Description Lang="en">Default state of tickets for the approval of FAQ articles.</Description>
-        <Description Lang="de">Standard Status von Tickets für die Freigabe von FAQ Artikeln.</Description>
+        <Description Translatable="1">Default state of tickets for the approval of FAQ articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Approval</SubGroup>
         <Setting>
@@ -355,8 +327,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field1" Required="1" Valid="1">
-        <Description Lang="en">Definition of FAQ item free text field.</Description>
-        <Description Lang="de">Definition der freien Textfelder.</Description>
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -368,8 +339,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field2" Required="1" Valid="1">
-        <Description Lang="en">Definition of FAQ item free text field.</Description>
-        <Description Lang="de">Definition der freien Textfelder.</Description>
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -381,8 +351,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field3" Required="1" Valid="1">
-        <Description Lang="en">Definition of FAQ item free text field.</Description>
-        <Description Lang="de">Definition der freien Textfelder.</Description>
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -394,8 +363,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field4" Required="1" Valid="1">
-        <Description Lang="en">Definition of FAQ item free text field.</Description>
-        <Description Lang="de">Definition der freien Textfelder.</Description>
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -407,8 +375,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field5" Required="1" Valid="1">
-        <Description Lang="en">Definition of FAQ item free text field.</Description>
-        <Description Lang="de">Definition der freien Textfelder.</Description>
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -420,8 +387,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::Field6" Required="1" Valid="1">
-        <Description Lang="en">Definition of FAQ item free text field.</Description>
-        <Description Lang="de">Definition der freien Textfelder.</Description>
+        <Description Translatable="1">Definition of FAQ item free text field.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -433,8 +399,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8301" Required="0" Valid="1">
-        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'Normal' mit anderen 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'Normal' link type.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -446,8 +411,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8302" Required="0" Valid="1">
-        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'ParentChild' mit anderen 'FAQ'-Objekten verlinkt werden kann.</Description>
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'FAQ' objects using the 'ParentChild' link type.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -459,8 +423,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8303" Required="0" Valid="1">
-        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'Normal' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'Normal' link type.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -472,8 +435,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::PossibleLink###8304" Required="0" Valid="1">
-        <Description Lang="en">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</Description>
-        <Description Lang="de">Definiert, dass ein 'FAQ'-Objekte mit dem Linktyp 'ParentChild' mit anderen 'Ticket'-Objekten verlinkt werden kann.</Description>
+        <Description Translatable="1">This setting defines that a 'FAQ' object can be linked with other 'Ticket' objects using the 'ParentChild' link type.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::LinkObject</SubGroup>
         <Setting>
@@ -485,8 +447,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentFAQExplorer" Required="0" Valid="1">
-        <Description Translatable="1">Frontend module registration for the FAQExplorer object in the agent interface.</Description>
-        <!-- <Description Lang="de">Frontendmodul-Registration für das FAQExplorer-Objekt im Agent-Interface.</Description> -->
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -507,6 +468,7 @@ Your OTRS Notification Master
                     <AccessKey>q</AccessKey>
                     <Prio>350</Prio>
                 </NavBar>
+<!--
                 <NavBar>
                     <GroupRo>faq</GroupRo>
                     <Description>Explorer</Description>
@@ -531,6 +493,7 @@ Your OTRS Notification Master
                     <AccessKey>o</AccessKey>
                     <Prio>940</Prio>
                 </NavBar>
+-->
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
                     <CSS>FAQ.Agent.Default.css</CSS>
@@ -538,9 +501,8 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="CustomerFrontend::Module###CustomerFAQExplorer" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the CustomerFAQExplorer object in the customer interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das CustomerFAQExplorer-Objekt im Customer-Interface.</Description>
+    <ConfigItem Name="CustomerFrontend::Module###CustomerFAQ" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
@@ -566,17 +528,15 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PublicFrontend::CommonParam###Action" Required="1" Valid="1">
-        <Description Lang="en">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
-        <Description Lang="de">Standardwert des Action-Parameters für den öffentlichen FAQ-Bereich. Der Action-Parameter wird von den Skripten des Systems benutzt.</Description>
+        <Description Translatable="1">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public</SubGroup>
         <Setting>
             <String>PublicFAQExplorer</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="PublicFrontend::Module###PublicFAQExplorer" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the PublicFAQExplorer object in the public FAQ area.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das PublicFAQExplorer-Objekt im öffentlichen FAQ-Bereich.</Description>
+    <ConfigItem Name="PublicFrontend::Module###PublicFAQ" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
         <Setting>
@@ -598,8 +558,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Item::HTML" Required="1" Valid="1">
-        <Description Lang="en">Show FAQ Article with HTML.</Description>
-        <Description Lang="de">HTML Darstellung der FAQ Artikel einschalten.</Description>
+        <Description Translatable="1">Show FAQ Article with HTML.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Item</SubGroup>
         <Setting>
@@ -610,8 +569,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::HeaderMetaModule###3-FAQSearch" Required="0" Valid="1">
-        <Description Lang="en">Module to generate html OpenSearch profile for short faq search.</Description>
-        <Description Lang="de">Modul zum Generieren des HTML "OpenSearch" Profils zur FAQ-Suche über das Browser-Suchfeld.</Description>
+        <Description Translatable="1">Module to generate html OpenSearch profile for short faq search.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ModuleMetaHead</SubGroup>
         <Setting>
@@ -622,8 +580,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::FilterElementPre###FAQ" Required="0" Valid="1">
-        <Description Lang="en">Defines where the 'Insert FAQ' link will be displayed.</Description>
-        <Description Lang="de">Definiert wo der Link 'FAQ einfügen' angezeigt werden soll.</Description>
+        <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -649,8 +606,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
-        <Description Lang="en">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
-        <Description Lang="de">Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Graphikverzeichnis des OTRS zugegriffen. Als zweite Möglichkeit kann man aber auch den direkten Link zur Grafik angeben (z. B. http://otrs.org/faq.png).</Description>
+        <Description Translatable="1">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Web</SubGroup>
         <Setting>
@@ -1299,7 +1255,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::AgentFAQJournal###JournalLimit" Required="1" Valid="1">
-        <Description Translatable="1">Maximum number of FAQ articles to be displayed in journal in the agent interface.</Description>
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ViewFAQJournal</SubGroup>
         <Setting>
