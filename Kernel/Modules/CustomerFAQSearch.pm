@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.10 2010-11-25 23:55:06 cr Exp $
+# $Id: CustomerFAQSearch.pm,v 1.11 2010-11-30 18:15:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -234,6 +234,7 @@ sub Run {
                     UserID => $Self->{UserID},
                 );
 
+                # format the change time
                 my $Changed = $Self->{LayoutObject}->Output(
                     Template => '$TimeLong{"$Data{"Changed"}"}',
                     Data     => \%FAQData,
@@ -321,36 +322,45 @@ sub Run {
         }
 
         my $Counter = 0;
-        for my $FAQID (@ViewableFAQIDs) {
 
-            $Counter++;
+        # if there are results to show
+        if (@ViewableFAQIDs) {
+            for my $FAQID (@ViewableFAQIDs) {
 
-            # build search result
-            if (
-                $Counter >= $Self->{StartHit}
-                && $Counter < ( $Self->{SearchPageShown} + $Self->{StartHit} )
-                )
-            {
+                $Counter++;
 
-                # get FAQ data details
-                my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
-                );
+                # build search result
+                if (
+                    $Counter >= $Self->{StartHit}
+                    && $Counter < ( $Self->{SearchPageShown} + $Self->{StartHit} )
+                    )
+                {
 
-                # add blocks to template
-                $Self->{LayoutObject}->Block(
-                    Name => 'Record',
-                    Data => {
-                        %FAQData,
-                    },
-                );
+                    # get FAQ data details
+                    my %FAQData = $Self->{FAQObject}->FAQGet(
+                        FAQID  => $FAQID,
+                        UserID => $Self->{UserID},
+                    );
+
+                    # add blocks to template
+                    $Self->{LayoutObject}->Block(
+                        Name => 'Record',
+                        Data => {
+                            %FAQData,
+                        },
+                    );
+                }
             }
+        }
+
+        # otherwise show a no data found msg
+        else {
+            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
         }
 
         my $Link = 'Profile=' . $Self->{LayoutObject}->LinkEncode( $Self->{Profile} ) . ';';
         $Link .= 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} ) . ';';
-        $Link .= 'Order=' . $Self->{LayoutObject}->LinkEncode( $Self->{Order} ) . ';';
+        $Link .= 'Order=' . $Self->{LayoutObject}->LinkEncode( $Self->{OrderBy} ) . ';';
         $Link .= 'TakeLastSearch=1;';
 
         # build search navigation bar
@@ -379,6 +389,22 @@ sub Run {
         my $Output = $Self->{LayoutObject}->CustomerHeader();
         $Output .= $Self->{LayoutObject}->CustomerNavigationBar();
 
+        #Set the SortBy Class
+        my $SortClass;
+
+        # this sets the opposit to the OrderBy parameter
+        if ( $Self->{OrderBy} eq 'Down' ) {
+            $SortClass = 'SortAscending';
+        }
+        elsif ( $Self->{OrderBy} eq 'Up' ) {
+            $SortClass = 'SortDescending';
+        }
+
+        # set the SortBy Class to the correct field
+        my %CSSSort;
+        my $SortBy = $Self->{SortBy} . 'Sort';
+        $CSSSort{$SortBy} = $SortClass;
+
         my %NewOrder = (
             Down => 'Up',
             Up   => 'Down',
@@ -389,6 +415,7 @@ sub Run {
             Data         => {
                 %Param,
                 %PageNav,
+                %CSSSort,
                 Order   => $NewOrder{ $Self->{OrderBy} },
                 Profile => $Self->{Profile},
             },

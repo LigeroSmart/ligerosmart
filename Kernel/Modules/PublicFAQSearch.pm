@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.8 2010-11-25 23:55:06 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.9 2010-11-30 18:15:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -264,31 +264,40 @@ sub Run {
         }
 
         my $Counter = 0;
-        for my $FAQID (@ViewableFAQIDs) {
 
-            $Counter++;
+        # if there are results to show
+        if (@ViewableFAQIDs) {
+            for my $FAQID (@ViewableFAQIDs) {
 
-            # build search result
-            if (
-                $Counter >= $Self->{StartHit}
-                && $Counter < ( $Self->{SearchPageShown} + $Self->{StartHit} )
-                )
-            {
+                $Counter++;
 
-                # get FAQ data details
-                my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
-                );
+                # build search result
+                if (
+                    $Counter >= $Self->{StartHit}
+                    && $Counter < ( $Self->{SearchPageShown} + $Self->{StartHit} )
+                    )
+                {
 
-                # add blocks to template
-                $Self->{LayoutObject}->Block(
-                    Name => 'Record',
-                    Data => {
-                        %FAQData,
-                    },
-                );
+                    # get FAQ data details
+                    my %FAQData = $Self->{FAQObject}->FAQGet(
+                        FAQID  => $FAQID,
+                        UserID => $Self->{UserID},
+                    );
+
+                    # add blocks to template
+                    $Self->{LayoutObject}->Block(
+                        Name => 'Record',
+                        Data => {
+                            %FAQData,
+                        },
+                    );
+                }
             }
+        }
+
+        # otherwise show a no data found msg
+        else {
+            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
         }
 
         # build search navigation bar
@@ -317,6 +326,22 @@ sub Run {
         # start html page
         my $Output = $Self->{LayoutObject}->CustomerHeader();
 
+        #Set the SortBy Class
+        my $SortClass;
+
+        # this sets the opposit to the OrderBy parameter
+        if ( $Self->{OrderBy} eq 'Down' ) {
+            $SortClass = 'SortAscending';
+        }
+        elsif ( $Self->{OrderBy} eq 'Up' ) {
+            $SortClass = 'SortDescending';
+        }
+
+        # set the SortBy Class to the correct field
+        my %CSSSort;
+        my $SortBy = $Self->{SortBy} . 'Sort';
+        $CSSSort{$SortBy} = $SortClass;
+
         my %NewOrder = (
             Down => 'Up',
             Up   => 'Down',
@@ -327,6 +352,7 @@ sub Run {
             Data         => {
                 %Param,
                 %PageNav,
+                %CSSSort,
                 Order   => $NewOrder{ $Self->{OrderBy} },
                 Profile => $Self->{Profile},
             },

@@ -2,7 +2,7 @@
 # PublicFAQSearchResultShort.dtl - html for FAQ search results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearchResultShort.dtl,v 1.6 2010-11-30 13:34:40 ub Exp $
+# $Id: PublicFAQSearchResultShort.dtl,v 1.7 2010-11-30 18:15:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,40 +39,46 @@
         <table class="Overview">
             <thead>
                 <tr>
-                    <th class="FAQNumber">
+                    <th class="FAQNumber $Data{"FAQIDSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=FAQID;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Config{"FAQ::FAQHook"}
                         </a>
                     </th>
-                    <th class="Title">
+                    <th class="Title $Data{"TitleSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Title;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Title"}
                         </a>
                     </th>
-                    <th class="Category">
+                    <th class="Category $Data{"CategorySort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Category;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Category"}
                         </a>
                     </th>
-                    <th class="Language">
+                    <th class="Language $Data{"LanguageSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Language;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Language"}
                         </a>
                     </th>
-                    <th class="State">
+                    <th class="State $Data{"StateSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=State;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"State"}
                         </a>
                     </th>
-                    <th class="Changed">
+                    <th class="Changed $Data{"ChangedSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;;$Data{"Profile"}SortBy=Changed;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Changed"}
                         </a>
                     </th>
-
                 </tr>
             </thead>
             <tbody>
+<!-- dtl:block:NoDataFoundMsg -->
+                <tr id="EmptyMessage">
+                    <td colspan="6">
+                        $Text{"No data found."}
+                    </td>
+                </tr>
+<!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
                 <tr title="$QData{"TicketNumber"}">
                     <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
