@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.78 2010-11-30 17:52:20 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.79 2010-11-30 18:23:32 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -468,7 +468,6 @@ Your OTRS Notification Master
                     <AccessKey>q</AccessKey>
                     <Prio>350</Prio>
                 </NavBar>
-<!--
                 <NavBar>
                     <GroupRo>faq</GroupRo>
                     <Description>Explorer</Description>
@@ -481,6 +480,7 @@ Your OTRS Notification Master
                     <AccessKey>e</AccessKey>
                     <Prio>910</Prio>
                 </NavBar>
+<!--
                 <NavBar>
                     <GroupRo>faq</GroupRo>
                     <Description>History</Description>
