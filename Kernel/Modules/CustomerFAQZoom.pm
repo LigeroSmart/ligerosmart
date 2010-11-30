@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.12 2010-11-30 10:48:48 ub Exp $
+# $Id: CustomerFAQZoom.pm,v 1.13 2010-11-30 12:16:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -77,13 +77,6 @@ sub Run {
         return $Self->{LayoutObject}->CustomerFatalError();
     }
 
-    # store the last screen in session
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key       => 'LastScreenView',
-        Value     => $Self->{RequestedURL},
-    );
-
     # check user permission
     my $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
         CustomerUser => $Self->{UserLogin},
@@ -100,6 +93,13 @@ sub Run {
     {
         return $Self->{LayoutObject}->CustomerNoPermission( WithHeader => 'yes' );
     }
+
+    # store the last screen in session
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenView',
+        Value     => $Self->{RequestedURL},
+    );
 
     # ---------------------------------------------------------- #
     # DownloadAttachment Subaction
