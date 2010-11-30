@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -13,27 +13,103 @@
 @media screen,projection,tv,handheld {
 
 /**
+ * @subsection  LayoutFixedSidebar
+ */
+
+.LayoutFixedSidebar {
+    display: block;
+}
+
+.LayoutFixedSidebar > .ContentColumn {
+    /**
+     * @note    force own Block Formatting Context for nested floats
+     */
+    overflow: hidden;
+}
+
+.LayoutFixedSidebar > .SidebarColumn {
+    overflow-x: hidden;
+}
+
+.LayoutFixedSidebar.SidebarLast > .SidebarColumn {
+    width: 270px;
+    float: right;
+    margin-left: 16px;
+    margin-right: 0;
+}
+
+.RTL .LayoutFixedSidebar.SidebarLast > .SidebarColumn {
+    float: left;
+    margin-left: 0;
+    margin-right: 16px;
+}
+
+.LayoutFixedSidebar.SidebarFirst > .SidebarColumn {
+    width: 270px;
+    float: left;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.RTL .LayoutFixedSidebar.SidebarFirst > .SidebarColumn {
+    float: right;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+/**
+ * @subsection  table elements without highlight
+ */
+
+.DataTable tbody tr td {
+    height: 25px;
+}
+
+.DataTable tbody tr td input,
+.DataTable tbody tr td select{
+    width: 85%;
+}
+
+.DataTable tbody tr:hover td {
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.DataTable tr.Even:hover td,
+.DataTable tr.Even:hover.Last td {
+    background-color: #F5F5F5;
+}
+
+.DataTable tbody tr.Last:hover td {
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+/**
  * @subsection  Flag
  */
 
-
- span.FAQgray {
+span.FAQgray {
     background-color:#cdcdcd;
 }
 
- span.FAQgreen {
+span.FAQgreen {
     background-color: #8bef4d;
 }
 
- span.FAQyellow {
+span.FAQyellow {
     background-color: #ffdd50;
 }
 
- span.FAQorange {
+span.FAQorange {
     background-color: #ff9922;
 }
 
- span.FAQred {
+span.FAQred {
     background-color:#ff505e;
 }
 

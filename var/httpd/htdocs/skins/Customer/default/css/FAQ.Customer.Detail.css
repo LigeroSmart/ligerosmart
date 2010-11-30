@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -25,8 +25,9 @@
 }
 
 .MessageContent .message ul {
-    list-style: disc;
-    padding-left: 40px;
+/*    list-style: disc; */
+/*    padding-left: 40px; */
+    padding-left: 5px;
     margin-bottom: 12px;
     margin-top: 12px;
 }
