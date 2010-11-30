@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -30,8 +30,6 @@
     margin-bottom: 12px;
     margin-top: 12px;
 }
-
-
 
 .RateChecked {
     background: transparent url(../img/rate-button-checked.png) no-repeat scroll 0 0;
@@ -78,7 +76,6 @@
     float: left;
 
 }
-
 
 .RateLabelBefore {
     float: left;
