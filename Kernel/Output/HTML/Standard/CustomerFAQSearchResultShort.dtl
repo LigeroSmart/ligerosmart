@@ -2,7 +2,7 @@
 # CustomerFAQSearchResultShort.dtl - html for FAQ search results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearchResultShort.dtl,v 1.8 2010-11-30 18:15:04 cr Exp $
+# $Id: CustomerFAQSearchResultShort.dtl,v 1.9 2010-11-30 18:35:35 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -75,7 +75,7 @@
 <!-- dtl:block:NoDataFoundMsg -->
                 <tr id="EmptyMessage">
                     <td colspan="6">
-                        $Text{"No data found."}
+                        $Text{"No FAQ data found."}
                     </td>
                 </tr>
 <!-- dtl:block:NoDataFoundMsg -->
