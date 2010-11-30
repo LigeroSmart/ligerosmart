@@ -1,9 +1,9 @@
 # --
-# Kernel/Language/es_MX_FAQ.pm - the spanish translation of FAQ
+# Kernel/Language/es_MX_FAQ.pm - the spanish (Mexico) translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_MX_FAQ.pm,v 1.1 2010-11-30 17:19:18 cr Exp $
+# $Id: es_MX_FAQ.pm,v 1.2 2010-11-30 17:20:08 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
