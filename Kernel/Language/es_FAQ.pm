@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.19 2010-12-01 10:18:19 ub Exp $
+# $Id: es_FAQ.pm,v 1.20 2010-12-01 12:57:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -183,7 +183,6 @@ sub Data {
 
     # template: AgentFAQAdd
     $Lang->{'Add FAQ Article'}         = 'Agregar FAQ.';
-    $Lang->{'Actions'}                 = 'Acciones';
     $Lang->{'The title is required.'}  = 'El título es requerido.';
     $Lang->{'A category is required.'} = 'La categoría es requerida.';
 
@@ -192,7 +191,6 @@ sub Data {
 
     # template: AgentFAQLanguage
     $Lang->{'FAQ Language Management'}                               = 'Administración de Idiomas de FAQ';
-    $Lang->{'Add FAQ language'}                                      = 'Agregar idioma de FAQ';
     $Lang->{'Add Language'}                                          = 'Agregar Idioma';
     $Lang->{'Edit Language'}                                         = 'Editar Idioma';
     $Lang->{'Delete Language'}                                       = 'Borrar Idioma';
@@ -208,7 +206,6 @@ sub Data {
 
     # template: AgentFAQCategory
     $Lang->{'FAQ Category Management'}                         = 'Administración de Categorías de FAQ';
-    $Lang->{'Add FAQ category'}                                = 'Agregar categoría de FAQ';
     $Lang->{'Add Category'}                                    = 'Agregar Categoría';
     $Lang->{'Edit Category'}                                   = 'Editar Categoría';
     $Lang->{'Delete Category'}                                 = 'Borrar Categoría';
