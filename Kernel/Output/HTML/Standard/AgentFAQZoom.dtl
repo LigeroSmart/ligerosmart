@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.16 2010-11-24 21:51:34 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.17 2010-12-01 03:23:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,7 +81,7 @@
 <!-- dtl:block:RateStars -->
 <!-- dtl:block:RateStarsCount -->
                             <div class="RateStarText">
-                                $Text{"$Data{"Stars"} out of 5"}
+                                $QData{"Stars"} $Text{"out of 5"}
                             </div>
 <!-- dtl:block:RateStarsCount -->
                         </div>
