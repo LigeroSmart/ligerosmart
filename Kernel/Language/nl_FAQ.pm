@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_FAQ.pm,v 1.11 2010-12-01 12:57:04 ub Exp $
+# $Id: nl_FAQ.pm,v 1.12 2010-12-01 17:47:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -73,7 +73,7 @@ sub Data {
     $Lang->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
     $Lang->{'Show FAQ path yes/no.'}                                       = '';
     $Lang->{'Decimal places of the voting result.'}                        = '';
-    $Lang->{'CSS color for the voting flag.'}                              = '';
+    $Lang->{'CSS color for the voting result.'}                            = '';
     $Lang->{'FAQ path separator.'}                                         = '';
     $Lang->{'Interfaces where the quicksearch should be shown.'}           = '';
     $Lang->{'Show items of subcategories.'}                                = '';

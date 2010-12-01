@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.26 2010-12-01 12:57:25 ub Exp $
+# $Id: de_FAQ.pm,v 1.27 2010-12-01 17:47:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -72,7 +72,7 @@ sub Data {
         = 'LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.';
     $Lang->{'Show FAQ path yes/no.'}                             = 'FAQ Pfad anzeigen ja/nein.';
     $Lang->{'Decimal places of the voting result.'}              = 'Dezimalstellen des Ergebnisses bei der Artikelbewertung.';
-    $Lang->{'CSS color for the voting flag.'}                    = '';
+    $Lang->{'CSS color for the voting result.'}                  = '';
     $Lang->{'FAQ path separator.'}                               = 'Trennzeichen im FAQ Pfad.';
     $Lang->{'Interfaces where the quicksearch should be shown.'} = 'Interfaces in denen das QuickSearch Feature angezeigt wird.';
     $Lang->{'Show items of subcategories.'}                      = 'Artikel aus Subkategorien anzeigen ja/nein.';

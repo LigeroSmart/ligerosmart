@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.20 2010-12-01 12:57:04 ub Exp $
+# $Id: es_FAQ.pm,v 1.21 2010-12-01 17:47:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -72,7 +72,7 @@ sub Data {
         = 'La clave se encuentra definida en el archivo de idioma *_FAQ.pm.';
     $Lang->{'Show FAQ path yes/no.'}                             = '¿Mostrar la ruta del FAQ? si/no.';
     $Lang->{'Decimal places of the voting result.'}              = 'Número de decimales para el resultado de la votación';
-    $Lang->{'CSS color for the voting flag.'}                    = 'Color CSS para la bandera de votación.';
+    $Lang->{'CSS color for the voting result.'}                  = 'Color CSS para el resultado de la votación.';
     $Lang->{'FAQ path separator.'}                               = 'Separador de la ruta del FAQ.';
     $Lang->{'Interfaces where the quicksearch should be shown.'} = 'Interfaces donde la Busqueda Rápida debe ser mostrada.';
     $Lang->{'Show items of subcategories.'}                      = '¿Mostrar los artículos de las subcategorías? si/no.';
