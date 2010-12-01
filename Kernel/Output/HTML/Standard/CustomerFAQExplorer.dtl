@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.2 2010-12-01 10:14:17 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.3 2010-12-01 15:54:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -75,52 +75,48 @@
 
             </div>
             <div class="ContentColumn">
-                <ul id="Messages">
 
 <!-- dtl:block:Subcategories -->
-                    <li class="Customer Visible">
+                <div class="WidgetSimple">
 <!-- dtl:block:OverviewResult -->
-                        <div class="MessageHeader">
-                            <h3>$Text{"Subcategories"}</h3>
-                            <div class="Clear"></div>
-                        </div>
-                        <div class="MessageBody">
-                            <div class="MessageContent">
-                                <div class="message">
+                    <div class="Header">
+                        <h3>$Text{"Subcategories"}</h3>
+                        <div class="Clear"></div>
+                    </div>
 
-                                    <table class="DataTable" summary="FAQ categories">
-                                        <thead>
-                                            <tr>
-                                                <th>$Text{"Name"}</th>
-                                                <th>$Text{"Comment"}</th>
-                                                <th>$Text{"Subcategories"}</th>
-                                                <th>$Text{"Articles"}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                    <div class="Content">
+
+                        <table class="DataTable" summary="FAQ categories">
+                            <thead>
+                                <tr>
+                                    <th>$Text{"Name"}</th>
+                                    <th>$Text{"Comment"}</th>
+                                    <th>$Text{"Subcategories"}</th>
+                                    <th>$Text{"Articles"}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 <!-- dtl:block:NoDataFoundMsg -->
-                                            <tr>
-                                                <td colspan="4">
-                                                    $Text{"No subcategories found."}
-                                                </td>
-                                            </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        $Text{"No subcategories found."}
+                                    </td>
+                                </tr>
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:OverviewResultRow -->
-                                            <tr>
-                                                <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"}">$QData{"Name"}</a></td>
-                                                <td>$QData{"Comment"}</td>
-                                                <td>$QData{"SubCategoryCount"}</td>
-                                                <td>$QData{"ArticleCount"}</td>
-                                            </tr>
+                                <tr>
+                                    <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"}">$QData{"Name"}</a></td>
+                                    <td>$QData{"Comment"}</td>
+                                    <td>$QData{"SubCategoryCount"}</td>
+                                    <td>$QData{"ArticleCount"}</td>
+                                </tr>
 <!-- dtl:block:OverviewResultRow -->
-                                        </tbody>
-                                    </table>
+                            </tbody>
+                        </table>
+                    </div>
 
-                                </div>
-                            </div>
-                        </div>
 <!-- dtl:block:OverviewResult -->
-                    </li>
+
 <!-- dtl:block:Subcategories -->
 
 
@@ -135,10 +131,6 @@
                                 </div>
 <!-- dtl:block:Pagination -->
                                 <div class="Clear"></div>
-#                                <div class="SearchTerms">
-#                                    <h2>$Text{"Search Results for"}:</h2>
-#                                </div>
-
                                 <div class="MessageHeader">
                                     <h3>$Text{"Articles"}</h3>
                                     <div class="Clear"></div>
@@ -215,7 +207,7 @@
 <!-- dtl:block:FAQItemList -->
 
 
-                </ul>
+                </div>
             </div>
         </div>
     </div>
