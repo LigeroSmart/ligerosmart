@@ -2,7 +2,7 @@
 # CustomerFAQSearch.dtl - provides HTML form for CustomerFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.dtl,v 1.6 2010-11-25 23:55:07 cr Exp $
+# $Id: CustomerFAQSearch.dtl,v 1.7 2010-12-01 20:27:13 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@
             <fieldset>
                 <h2>$Text{"Profile"}</h2>
                 <div>
-                    <label for="Profile">$Text{"Search-Template"}</label>
+                    <label for="Profile">$Text{"Search template"}</label>
                     $Data{"ProfilesStrg"}
                 </div>
             </fieldset>
