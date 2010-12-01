@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.21 2010-11-30 17:15:09 cr Exp $
+# $Id: de_FAQ.pm,v 1.22 2010-12-01 03:27:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -31,7 +31,7 @@ sub Data {
     $Lang->{'LatestChangedItems'}      = 'Zuletzt geänderte FAQ Artikel';
     $Lang->{'LatestCreatedItems'}      = 'Zuletzt erstellte FAQ Artikel';
     $Lang->{'Top10Items'}              = 'Top 10 FAQ Artikel';
-    $Lang->{'ArticleVotingQuestion'}   = 'Wie gut wurde mit diesem Artikel Ihre Frage beantwortet?';
+    $Lang->{'ArticleVotingQuestion'}   = '';
     $Lang->{'SubCategoryOf'}           = 'Unterkategorie von';
     $Lang->{'QuickSearch'}             = 'Schnellsuche';
     $Lang->{'DetailSearch'}            = 'Detailsuche';
@@ -173,6 +173,83 @@ sub Data {
         = '';
     $Lang->{'Defines an overview module to show the small view of a FAQ journal.'}
         = '';
+
+    # template: AgentFAQExplorer
+    $Lang->{'FAQ Explorer'}             = '';
+    $Lang->{'Sub-Categories'}           = '';
+    $Lang->{'Subcategories'}            = '';
+    $Lang->{'Articles'}                 = '';
+    $Lang->{'No subcategories found.'}  = '';
+    $Lang->{'No FAQ data found.'}       = '';
+
+    # template: AgentFAQAdd
+    $Lang->{'Add FAQ'}                 = '';
+    $Lang->{'Actions'}                 = '';
+    $Lang->{'Go to explorer'}          = '';
+    $Lang->{'The title is required.'}  = '';
+    $Lang->{'A category is required.'} = '';
+
+   # template: AgentFAQJournal
+    $Lang->{'FAQ Journal'} = '';
+
+    # template: AgentFAQLanguage
+    $Lang->{'FAQ Language Management'}                               = '';
+    $Lang->{'Add FAQ language'}                                      = '';
+    $Lang->{'Add Language'}                                          = '';
+    $Lang->{'Edit Language'}                                         = '';
+    $Lang->{'Delete Language'}                                       = '';
+    $Lang->{'The name is required!'}                                 = '';
+    $Lang->{'This language already exists!'}                         = '';
+    $Lang->{'This language already exists!'}                         = '';
+    $Lang->{'FAQ language added!'}                                   = '';
+    $Lang->{'FAQ language updated!'}                                 = '';
+    $Lang->{'Do you really want to delete this Language?'}           = '';
+    $Lang->{'This Language is used in the following FAQ Article(s)'} = '';
+    $Lang->{'You can not delete this Language. It is used in at least one FAQ Article!'}
+        = '';
+
+    # template: AgentFAQCategory
+    $Lang->{'FAQ Category Management'}                         = '';
+    $Lang->{'Add FAQ category'}                                = '';
+    $Lang->{'Add Category'}                                    = '';
+    $Lang->{'Edit Category'}                                   = '';
+    $Lang->{'Delete Category'}                                 = '';
+    $Lang->{'A category should have a name!'}                  = '';
+    $Lang->{'A category should have a comment!'}                = '';
+    $Lang->{'A category needs at least one permission group!'} = '';
+    $Lang->{'This category already exists!'}                   = '';
+    $Lang->{'FAQ category updated!'}                           = '';
+    $Lang->{'FAQ category added!'}                             = '';
+    $Lang->{'Do you really want to delete this Category?'}     = '';
+    $Lang->{'This Category is used in the following FAQ Artice(s)'}
+        = '';
+    $Lang->{'This Category is parent of the following SubCategories'}
+        = '';
+    $Lang->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'}
+        = '';
+
+    # template: AgentFAQZoom
+    $Lang->{'FAQ Information'}                      = '';
+    $Lang->{'Rating'}                               = '';
+    $Lang->{'No votes found!'}                      = '';
+    $Lang->{'Details'}                              = '';
+    $Lang->{'Edit this FAQ'}                        = '';
+    $Lang->{'History of this FAQ'}                  = '';
+    $Lang->{'Print this FAQ'}                       = '';
+    $Lang->{'Link another object to this FAQ item'} = '';
+    $Lang->{'Delete this FAQ'}                      = '';
+    $Lang->{'not helpful'}                          = '';
+    $Lang->{'very helpful'}                         = '';
+    $Lang->{'out of 5'}                             = '';
+    $Lang->{'No votes found! Be the first one to rate this FAQ article.'}
+         = '';
+
+    # template: AgentFAQHistory
+    $Lang->{'History Content'} = '';
+    $Lang->{'Updated'}         = '';
+
+    # template: AgentFAQDelete
+    $Lang->{'Do you really want to delete this FAQ article?'} = '';
 
     return 1;
 }

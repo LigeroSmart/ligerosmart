@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.15 2010-11-30 17:15:09 cr Exp $
+# $Id: es_FAQ.pm,v 1.16 2010-12-01 03:27:17 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -29,10 +29,10 @@ sub Data {
     $Lang->{'No rate selected!'}                 = 'No selecciono puntaje!';
     $Lang->{'Thanks for your vote!'}             = 'Gracias por su voto!';
     $Lang->{'Votes'}                             = 'Votos';
-    $Lang->{'LatestChangedItems'}                = 'ultimo articulo modificado';
-    $Lang->{'LatestCreatedItems'}                = 'ultimos articulo creado';
-    $Lang->{'Top10Items'}                        = 'Top 10 articulos';
-    $Lang->{'ArticleVotingQuestion'}             = 'Lo ayudo este articulo?';
+    $Lang->{'LatestChangedItems'}                = 'Ultimos artículos modificados';
+    $Lang->{'LatestCreatedItems'}                = 'Ultimos artículos creados';
+    $Lang->{'Top10Items'}                        = 'Top 10 artículos';
+    $Lang->{'ArticleVotingQuestion'}             = '¿Qué tan útil fue este artículo? Por favor, dénos su valoración y ayude a mejorar la base de datos de FAQ. Gracias.';
     $Lang->{'SubCategoryOf'}                     = 'Sub Categoria de';
     $Lang->{'QuickSearch'}                       = 'Busqueda rápida';
     $Lang->{'DetailSearch'}                      = 'Busqueda detallada';
@@ -173,6 +173,83 @@ sub Data {
         = 'Parámetros de las páginas (donde se muestran los artículos FAQ) de la vista tipo resumen corto de la bitácora de FAQ.';
     $Lang->{'Defines an overview module to show the small view of a FAQ journal.'}
         = 'Define un módulo de tipo resumen para mostrar la vista corta de la bitácora de FAQ';
+
+    # template: AgentFAQExplorer
+    $Lang->{'FAQ Explorer'}             = 'Explorador FAQ';
+    $Lang->{'Sub-Categories'}           = 'Sub-Categorías';
+    $Lang->{'Subcategories'}            = 'Subcategorías';
+    $Lang->{'Articles'}                 = 'Artículos';
+    $Lang->{'No subcategories found.'}  = 'No se encontraron subcategorías.';
+    $Lang->{'No FAQ data found.'}       = 'No se encontraron registros FAQ.';
+
+    # template: AgentFAQAdd
+    $Lang->{'Add FAQ'}                 = 'Agregar FAQ.';
+    $Lang->{'Actions'}                 = 'Acciones';
+    $Lang->{'Go to explorer'}          = 'Ir al explorador';
+    $Lang->{'The title is required.'}  = 'El título es requerido.';
+    $Lang->{'A category is required.'} = 'La categoría es requerida.';
+
+    # template: AgentFAQJournal
+    $Lang->{'FAQ Journal'} = 'Bitácora de FAQ';
+
+    # template: AgentFAQLanguage
+    $Lang->{'FAQ Language Management'}                               = 'Administración de Idiomas de FAQ';
+    $Lang->{'Add FAQ language'}                                      = 'Agregar idioma de FAQ';
+    $Lang->{'Add Language'}                                          = 'Agregar Idioma';
+    $Lang->{'Edit Language'}                                         = 'Editar Idioma';
+    $Lang->{'Delete Language'}                                       = 'Borrar Idioma';
+    $Lang->{'The name is required!'}                                 = 'El nombre es requerido';
+    $Lang->{'This language already exists!'}                         = 'Este idioma ya existe!';
+    $Lang->{'FAQ language added!'}                                   = 'Idioma de FAQ agregado';
+    $Lang->{'FAQ language updated!'}                                 = 'Idioma de FAQ actualizado!';
+
+    $Lang->{'Do you really want to delete this Language?'}           = '¿Está seguro de querer borrar este Idioma?';
+    $Lang->{'This Language is used in the following FAQ Article(s)'} = 'Este Idioma esta siendo usado por los siguientes Artículos FAQ';
+    $Lang->{'You can not delete this Language. It is used in at least one FAQ Article!'}
+        = 'No puede borrar este Idioma. Está siendo usado por al menos un Artículo FAQ';
+
+    # template: AgentFAQCategory
+    $Lang->{'FAQ Category Management'}                         = 'Administración de Categorías de FAQ';
+    $Lang->{'Add FAQ category'}                                = 'Agregar categoría de FAQ';
+    $Lang->{'Add Category'}                                    = 'Agregar Categoría';
+    $Lang->{'Edit Category'}                                   = 'Editar Categoría';
+    $Lang->{'Delete Category'}                                 = 'Borrar Categoría';
+    $Lang->{'A category should have a name!'}                  = 'Una categoría debe tener un nombre!';
+    $Lang->{'A category should have a comment!'}               = 'Una categoría debe tener un comentario!';
+    $Lang->{'A category needs at least one permission group!'} = 'Una categoría debe tener al menos un grupo de permisos';
+    $Lang->{'This category already exists!'}                   = 'Esta categoría ya existe';
+    $Lang->{'FAQ category updated!'}                           = 'Categoría de FAQ actualizada';
+    $Lang->{'FAQ category added!'}                             = 'Categoría de FAQ agregada';
+    $Lang->{'Do you really want to delete this Category?'}     = '¿Está seguro de querer borrar esta Categoría?';
+    $Lang->{'This Category is used in the following FAQ Artice(s)'}
+        = 'Esta Categoría esta siendo usada por los siguientes Artículos FAQ';
+    $Lang->{'This Category is parent of the following SubCategories'}
+        = 'Esta Categoría es padre de las siguientes SubCategorías';
+    $Lang->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'}
+        = 'No puede borrar esta Categoría. Está siendo usada por al menos un Artículo FAQ y/o es padre de al menos otra Categoría';
+
+    # template: AgentFAQZoom
+    $Lang->{'FAQ Information'}                      = 'Información del Artículo FAQ';
+    $Lang->{'Rating'}                               = 'Valoración';
+    $Lang->{'No votes found!'}                      = 'No se encontraron votos!';
+    $Lang->{'Details'}                              = 'Detalles';
+    $Lang->{'Edit this FAQ'}                        = 'Editar este artículo FAQ';
+    $Lang->{'History of this FAQ'}                  = 'Historia de este artículo FAQ';
+    $Lang->{'Print this FAQ'}                       = 'Imprimir este artículo FAQ';
+    $Lang->{'Link another object to this FAQ item'} = 'Vincular otro objecto a este artículo FAQ';
+    $Lang->{'Delete this FAQ'}                      = 'Borrar este artículo FAQ';
+    $Lang->{'not helpful'}                          = 'poco útil';
+    $Lang->{'very helpful'}                         = 'muy útil';
+    $Lang->{'out of 5'}                             = 'de 5';
+    $Lang->{'No votes found! Be the first one to rate this FAQ article.'}
+         = 'No se encontraron votos! Sea el primero en valorar este artículo FAQ';
+
+    # template: AgentFAQHistory
+    $Lang->{'History Content'} = 'Historial';
+    $Lang->{'Updated'}         = 'Actualizado';
+
+    # template: AgentFAQDelete
+    $Lang->{'Do you really want to delete this FAQ article?'} = '¿Está seguro de querer borrar este artículo FAQ?';
 
     return 1;
 }
