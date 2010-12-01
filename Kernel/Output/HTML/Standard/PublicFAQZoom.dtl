@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.10 2010-12-01 18:08:02 ub Exp $
+# $Id: PublicFAQZoom.dtl,v 1.11 2010-12-01 20:30:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,8 +35,8 @@
                     <span class="RateStar">Star</span>
 <!-- dtl:block:RateStars -->
 <!-- dtl:block:RateStarsCount -->
-                    <span class="RateStarText" title="$Text{"$Data{"Stars"} out of 5"}">
-                        $Text{"$Data{"Stars"} out of 5"}
+                    <span class="RateStarText" title="$QData{"Stars"} $Text{"out of 5"}">
+                        $QData{"Stars"} $Text{"out of 5"}
                     </span>
 <!-- dtl:block:RateStarsCount -->
                 </li>
@@ -69,7 +69,7 @@
         <ul id="Messages">
             <li class="Customer Visible">
                 <div class="MessageHeader">
-                    <h3>Details:</h3>
+                    <h3>$Text{"Details"}:</h3>
                     <div class="Clear"></div>
                 </div>
                 <div class="MessageBody">
