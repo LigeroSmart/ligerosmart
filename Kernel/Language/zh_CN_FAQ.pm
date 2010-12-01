@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.13 2010-12-01 17:47:27 cr Exp $
+# $Id: zh_CN_FAQ.pm,v 1.14 2010-12-01 18:07:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -185,6 +185,7 @@ sub Data {
     # template: AgentFAQLanguage
     $Lang->{'FAQ Language Management'}                               = '';
     $Lang->{'Add Language'}                                          = '';
+    $Lang->{'Add language'}                                          = '';
     $Lang->{'Edit Language'}                                         = '';
     $Lang->{'Delete Language'}                                       = '';
     $Lang->{'The name is required!'}                                 = '';
@@ -199,6 +200,7 @@ sub Data {
     # template: AgentFAQCategory
     $Lang->{'FAQ Category Management'}                         = '';
     $Lang->{'Add Category'}                                    = '';
+    $Lang->{'Add category'}                                    = '';
     $Lang->{'Edit Category'}                                   = '';
     $Lang->{'Delete Category'}                                 = '';
     $Lang->{'A category should have a name!'}                  = '';

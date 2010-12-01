@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.27 2010-12-01 17:47:27 cr Exp $
+# $Id: de_FAQ.pm,v 1.28 2010-12-01 18:07:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -192,6 +192,7 @@ sub Data {
     # template: AgentFAQLanguage
     $Lang->{'FAQ Language Management'}                               = 'FAQ Sprachen Verwaltung';
     $Lang->{'Add Language'}                                          = 'Sprache Hinzufügen';
+    $Lang->{'Add language'}                                          = 'Sprache Hinzufügen';
     $Lang->{'Edit Language'}                                         = 'Sprache Bearbeiten';
     $Lang->{'Delete Language'}                                       = 'Sprache Löschen';
     $Lang->{'The name is required!'}                                 = '';
@@ -207,6 +208,7 @@ sub Data {
     $Lang->{'FAQ Category Management'}                         = '';
     $Lang->{'Add Category'}                                    = '';
     $Lang->{'Edit Category'}                                   = '';
+    $Lang->{'Edit category'}                                   = '';
     $Lang->{'Delete Category'}                                 = '';
     $Lang->{'A category should have a name!'}                  = '';
     $Lang->{'A category should have a comment!'}                = '';
