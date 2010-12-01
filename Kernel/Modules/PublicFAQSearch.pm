@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.9 2010-11-30 18:15:04 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.10 2010-12-01 20:24:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -203,8 +203,17 @@ sub Run {
                 push @CSVData, \@Data;
             }
 
-            # replace FAQNumber header with the current FAQHook from config
-            $CSVHead[0] = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+            # translate headers
+            for my $Header (@CSVHead) {
+
+                # replace FAQNumber header with the current FAQHook from config
+                if ( $Header eq 'FAQNumber' ) {
+                    $Header = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+                }
+                else {
+                    $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                }
+            }
 
             # assable CSV data
             my $CSV = $Self->{CSVObject}->Array2CSV(
