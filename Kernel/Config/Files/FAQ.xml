@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.80 2010-12-01 03:13:24 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.81 2010-12-01 13:00:23 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -70,7 +70,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::ItemList::VotingResultColors" Required="1" Valid="1">
-        <Description Translatable="1">CSS color for the voting flag.</Description>
+        <Description Translatable="1">CSS color for the voting result.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::Explorer</SubGroup>
         <Setting>
