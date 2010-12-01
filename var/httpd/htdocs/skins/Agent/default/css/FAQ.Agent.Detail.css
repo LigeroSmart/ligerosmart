@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -51,12 +51,6 @@
     font-style: italic;
 }
 
-/*
-.Flag span.grayled {
-    background-color:#cdcdcd;
-}
-*/
-
 .RateChecked {
     background: transparent url(../img/rate-button-checked.png) no-repeat scroll 0 0;
     display: block;
@@ -97,7 +91,6 @@
 .RateStarText {
     text-indent:5px;
 }
-
 
 .RateLabelBefore {
     float: left;
