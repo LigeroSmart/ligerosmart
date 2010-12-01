@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.24 2010-11-30 10:48:48 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.25 2010-12-01 13:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -311,18 +311,6 @@ sub Run {
                 return $Self->{LayoutObject}->FatalError();
             }
         }
-    }
-
-    # output flag title block
-    $Self->{ShowFlag} = 0;
-    if ( $Self->{ShowFlag} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'Flag',
-            Data => {
-                %FAQData,
-                %Param,
-            },
-        );
     }
 
     # output approval state

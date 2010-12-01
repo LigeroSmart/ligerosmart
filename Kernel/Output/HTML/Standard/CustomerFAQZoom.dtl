@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for CustomerFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.12 2010-12-01 03:23:42 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.13 2010-12-01 13:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,16 +23,8 @@
     <div class="Content">
         <div class="TicketHeader">
             <h2 title="$QData{"Title"}">
-
-<!-- dtl:block:Flag -->
-                <span title="$Text{"Rating $Data{"VoteResult"}%"}" id="Flag" class="FAQ$QData{"VotingResultColor"}">
-                    <span>$Text{"Rating $Data{"VoteResult"}%"}</span>
-                </span>
-<!-- dtl:block:Flag -->
-
                 $QData{"Title","40"}
                 <span class="TicketHook">$QData{"Number"}</span>
-
             </h2>
             <ul id="Metadata">
                 <li><span class="Key">$Text{"Category"}:</span> <span title="$Quote{"$Text{"$Data{"CategoryName"}"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>

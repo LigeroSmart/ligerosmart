@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.pm,v 1.6 2010-11-30 10:48:48 ub Exp $
+# $Id: PublicFAQZoom.pm,v 1.7 2010-12-01 13:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -170,18 +170,6 @@ sub Run {
             %FAQData,
         },
     );
-
-    # output flag title block
-    $Self->{ShowFlag} = 0;
-    if ( $Self->{ShowFlag} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'Flag',
-            Data => {
-                %FAQData,
-                %Param,
-            },
-        );
-    }
 
     # always diplays Votes result even if its 0
     $Self->{LayoutObject}->Block(

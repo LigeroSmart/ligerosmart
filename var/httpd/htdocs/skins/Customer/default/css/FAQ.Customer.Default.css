@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -86,31 +86,6 @@
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
-}
-
-
-/**
- * @subsection  Flag
- */
-
-span.FAQgray {
-    background-color:#cdcdcd;
-}
-
-span.FAQgreen {
-    background-color: #8bef4d;
-}
-
-span.FAQyellow {
-    background-color: #ffdd50;
-}
-
-span.FAQorange {
-    background-color: #ff9922;
-}
-
-span.FAQred {
-    background-color:#ff505e;
 }
 
 }

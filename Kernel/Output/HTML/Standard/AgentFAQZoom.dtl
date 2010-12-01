@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.17 2010-12-01 03:23:18 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.18 2010-12-01 13:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,13 +12,8 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-<!-- dtl:block:Flag -->
-        <div class="Flag" title="$Text{"Rating $Data{"VoteResult"}%"}">
-            <span class="FAQ$QData{"VotingResultColor"}">$Text{"Rating $Data{"VoteResult"}%"}</span>
-        </div>
-<!-- dtl:block:Flag -->
         <h1 title="$Text{"Zoom"} $Config{"FAQ::FAQHook"}: $QData{"Number"} &ndash; $QData{"Title", "40"}">
-            #$Data{"Number"} <span>&mdash;</span> $QData{"Title", "60"}
+            $Config{"FAQ::FAQHook"}: $Data{"Number"} <span>&mdash;</span> $QData{"Title", "60"}
         </h1>
     </div>
     <h3>

@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.7 2010-11-30 11:58:50 ub Exp $
+# $Id: PublicFAQZoom.dtl,v 1.8 2010-12-01 13:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,16 +23,8 @@
     <div class="Content">
         <div class="TicketHeader">
             <h2 title="$QData{"Title"}">
-
-<!-- dtl:block:Flag -->
-                <span title="$Text{"Rating $Data{"VoteResult"}%"}" id="Flag" class="FAQ$QData{"VotingResultColor"}">
-                    <span>$Text{"Rating $Data{"VoteResult"}%"}</span>
-                </span>
-<!-- dtl:block:Flag -->
-
                 $QData{"Title","40"}
                 <span class="TicketHook">$QData{"Number"}</span>
-
             </h2>
             <ul id="Metadata">
                 <li><span class="Key">$Text{"Category"}:</span> <span title="$Quote{"$Text{"$Data{"CategoryName"}"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>
