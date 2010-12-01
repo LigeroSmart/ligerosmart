@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -12,16 +12,6 @@
 
 @media screen,projection,tv,handheld {
 
-/**
- * @subsection  Flag
- */
-
-fieldset.TableLike div.Value .Flag {
-    float: left;
-    margin-right: 5px;
-    margin-top: 3px;
-}
-
 .LayoutFixedSidebar.SidebarLast > .SidebarColumn.Large {
     width: 350px;
     float: right;
@@ -32,6 +22,17 @@ fieldset.TableLike div.Value .Flag {
 ul.FAQMiniList span {
     display: block;
     font-size: 10px;
+}
+
+
+/**
+ * @subsection  Flag
+ */
+
+fieldset.TableLike div.Value .Flag {
+    float: left;
+    margin-right: 5px;
+    margin-top: 3px;
 }
 
 ul.FAQFlag {
