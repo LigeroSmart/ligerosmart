@@ -2,7 +2,7 @@
 # AgentFAQSearch.dtl - provides HTML form for AgentFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.7 2010-11-29 15:58:18 cr Exp $
+# $Id: AgentFAQSearch.dtl,v 1.8 2010-12-01 03:22:35 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,7 +60,7 @@
         </div>
 
         <div class="Clear"></div>
-        <label for="Number" id="LabelNumber">$Text{"FAQ#"} $Text{"(e.g. 10*5155 or 105658*)"}:</label>
+        <label for="Number" id="LabelNumber">$Config{"FAQ::FAQHook"} $Text{"(e. g. 10*5155 or 105658*)"}:</label>
         <div class="Field">
             <input type="text" name="Number" value="$QData{"Number"}" class="W50pc"/>
             <button type="button" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
