@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.25 2010-12-01 10:18:19 ub Exp $
+# $Id: de_FAQ.pm,v 1.26 2010-12-01 12:57:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -175,27 +175,25 @@ sub Data {
         = '';
 
     # template: AgentFAQExplorer
-    $Lang->{'FAQ Explorer'}             = '';
-    $Lang->{'Subcategories'}            = '';
-    $Lang->{'Articles'}                 = '';
-    $Lang->{'No subcategories found.'}  = '';
-    $Lang->{'No FAQ data found.'}       = '';
+    $Lang->{'FAQ Explorer'}             = 'FAQ Explorer';
+    $Lang->{'Subcategories'}            = 'Unter-Kategorien';
+    $Lang->{'Articles'}                 = 'Artikel';
+    $Lang->{'No subcategories found.'}  = 'Keine Unter-Kategorien gefunden.';
+    $Lang->{'No FAQ data found.'}       = 'Keine FAQ Daten gefunden.';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ Article'}         = '';
-    $Lang->{'Actions'}                 = '';
-    $Lang->{'The title is required.'}  = '';
-    $Lang->{'A category is required.'} = '';
+    $Lang->{'Add FAQ Article'}          = 'FAQ Artikel Hinzufügen';
+    $Lang->{'The title is required.'}   = 'Ein Titel ist erforderlich.';
+    $Lang->{'A category is required.'}  = 'Eine Kategorie ist erforderlich.';
 
-   # template: AgentFAQJournal
-    $Lang->{'FAQ Journal'} = '';
+    # template: AgentFAQJournal
+    $Lang->{'FAQ Journal'}              = 'FAQ Journal';
 
     # template: AgentFAQLanguage
-    $Lang->{'FAQ Language Management'}                               = '';
-    $Lang->{'Add FAQ language'}                                      = '';
-    $Lang->{'Add Language'}                                          = '';
-    $Lang->{'Edit Language'}                                         = '';
-    $Lang->{'Delete Language'}                                       = '';
+    $Lang->{'FAQ Language Management'}                               = 'FAQ Sprachen Verwaltung';
+    $Lang->{'Add Language'}                                          = 'Sprache Hinzufügen';
+    $Lang->{'Edit Language'}                                         = 'Sprache Bearbeiten';
+    $Lang->{'Delete Language'}                                       = 'Sprache Löschen';
     $Lang->{'The name is required!'}                                 = '';
     $Lang->{'This language already exists!'}                         = '';
     $Lang->{'FAQ language added!'}                                   = '';
@@ -207,7 +205,6 @@ sub Data {
 
     # template: AgentFAQCategory
     $Lang->{'FAQ Category Management'}                         = '';
-    $Lang->{'Add FAQ category'}                                = '';
     $Lang->{'Add Category'}                                    = '';
     $Lang->{'Edit Category'}                                   = '';
     $Lang->{'Delete Category'}                                 = '';
