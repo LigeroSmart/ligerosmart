@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.14 2010-12-01 18:07:45 cr Exp $
+# $Id: zh_CN_FAQ.pm,v 1.15 2010-12-01 20:14:02 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -239,6 +239,13 @@ sub Data {
 
     # template: AgentFAQDelete
     $Lang->{'Do you really want to delete this FAQ article?'} = '';
+
+    # template: AgentFAQPrint
+    $Lang->{'FAQ Article Print'} = '';
+
+    # template: CustomerFAQSearch
+    $Lang->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'}
+         = '';
 
     return 1;
 }

@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_MX_FAQ.pm,v 1.9 2010-12-01 18:07:45 cr Exp $
+# $Id: es_MX_FAQ.pm,v 1.10 2010-12-01 20:14:02 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -247,6 +247,13 @@ sub Data {
 
     # template: AgentFAQDelete
     $Lang->{'Do you really want to delete this FAQ article?'} = '¿Está seguro de querer borrar este artículo FAQ?';
+
+    # template: AgentFAQPrint
+    $Lang->{'FAQ Article Print'} = 'Imprimir Artículo FAQ';
+
+    # template: CustomerFAQSearch
+    $Lang->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'}
+         = 'Búsqueda de texto completo en artículos FAQ (ej: "John*n" o "Will*")';
 
     return 1;
 }
