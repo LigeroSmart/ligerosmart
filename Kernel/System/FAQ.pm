@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.131 2010-11-27 19:11:51 cr Exp $
+# $Id: FAQ.pm,v 1.132 2010-12-01 11:28:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.131 $) [1];
+$VERSION = qw($Revision: 1.132 $) [1];
 
 =head1 NAME
 
@@ -250,9 +250,9 @@ sub FAQGet {
 
 =item ItemVoteDataGet()
 
-returns a hash with number and result of a item
+Returns a hash reference with the number of votes and the vote result.
 
-    my %Flag = $FAQObject->ItemVoteDataGet(
+    my $VoteDataHashRef = $FAQObject->ItemVoteDataGet(
         ItemID => 123,
         UserID => 1,
     );
@@ -4394,6 +4394,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.131 $ $Date: 2010-11-27 19:11:51 $
+$Revision: 1.132 $ $Date: 2010-12-01 11:28:00 $
 
 =cut
