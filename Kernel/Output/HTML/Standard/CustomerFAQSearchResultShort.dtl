@@ -2,7 +2,7 @@
 # CustomerFAQSearchResultShort.dtl - html for FAQ search results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearchResultShort.dtl,v 1.9 2010-11-30 18:35:35 cr Exp $
+# $Id: CustomerFAQSearchResultShort.dtl,v 1.10 2010-12-01 17:47:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,11 +59,6 @@
                             $Text{"Language"}
                         </a>
                     </th>
-                    <th class="State $Data{"StateSort"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=State;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
-                            $Text{"State"}
-                        </a>
-                    </th>
                     <th class="Changed $Data{"ChangedSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Changed;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Changed"}
@@ -85,7 +80,6 @@
                     <td class="Title">$QData{"Title","60"}</td>
                     <td class="Category">$QData{"CategoryName","60"}</td>
                     <td class="Language">$QData{"Language","5"}</td>
-                    <td class="State">$QData{"State","21"}</td>
                     <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
                 </tr>
 <!-- dtl:block:Record -->
