@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2009 Belskii Artem
 # --
-# $Id: uk_FAQ.pm,v 1.6 2010-12-01 10:05:15 ub Exp $
+# $Id: uk_FAQ.pm,v 1.7 2010-12-01 10:14:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -175,7 +175,6 @@ sub Data {
 
     # template: AgentFAQExplorer
     $Lang->{'FAQ Explorer'}             = '';
-    $Lang->{'Sub-Categories'}           = '';
     $Lang->{'Subcategories'}            = '';
     $Lang->{'Articles'}                 = '';
     $Lang->{'No subcategories found.'}  = '';

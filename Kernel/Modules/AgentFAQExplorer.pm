@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.3 2010-11-30 10:48:48 ub Exp $
+# $Id: AgentFAQExplorer.pm,v 1.4 2010-12-01 10:14:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -127,20 +127,20 @@ sub Run {
         UserID     => $Self->{UserID},
     );
 
-    # get all direct sub-categories of the selected category
+    # get all direct subcategories of the selected category
     my $CategoryIDsRef = $Self->{FAQObject}->AgentCategorySearch(
         ParentID => $CategoryID,
         UserID   => $Self->{UserID},
     );
 
-    # show sub-categories list
+    # show subcategories list
     $Self->{LayoutObject}->Block( Name => 'Subcategories' );
     $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
-    # check if there are sub-categories
+    # check if there are subcategories
     if ( $CategoryIDsRef && ref $CategoryIDsRef eq 'ARRAY' && @{$CategoryIDsRef} ) {
 
-        # show data for each sub-category
+        # show data for each subcategory
         for my $SubCategoryID ( @{$CategoryIDsRef} ) {
 
             # get the category data
@@ -149,7 +149,7 @@ sub Run {
                 UserID     => $Self->{UserID},
             );
 
-            # get the number of sub-categories of this sub-category
+            # get the number of subcategories of this subcategory
             $SubCategoryData{SubCategoryCount} = $Self->{FAQObject}->CategoryCount(
                 ParentIDs => [$SubCategoryID],
                 UserID    => $Self->{UserID},

@@ -4,7 +4,7 @@
 # Copyright (C) 2008 Patryk ¦ciborek <patryk@sciborek.com>
 # Copyright (C) 2009 Artur Skalski <skal.ar at wp.pl>
 # --
-# $Id: pl_FAQ.pm,v 1.10 2010-12-01 10:05:15 ub Exp $
+# $Id: pl_FAQ.pm,v 1.11 2010-12-01 10:14:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -174,7 +174,6 @@ sub Data {
 
     # template: AgentFAQExplorer
     $Lang->{'FAQ Explorer'}             = '';
-    $Lang->{'Sub-Categories'}           = '';
     $Lang->{'Subcategories'}            = '';
     $Lang->{'Articles'}                 = '';
     $Lang->{'No subcategories found.'}  = '';

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.33 2010-11-29 21:39:22 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.34 2010-12-01 10:14:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 # TODO: check if this can be deleted by finding another solution
 
@@ -646,7 +646,7 @@ sub FAQShowLatestNewsBox {
                 UserID       => $Param{UserID},
             );
 
-            # search in the given category and add the sub-category
+            # search in the given category and add the subcategory
             $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID}, @{$SubCategoryIDsRef} ];
         }
 
@@ -791,7 +791,7 @@ sub FAQShowTop10 {
                 UserID       => $Param{UserID},
             );
 
-            # search in the given category and add the sub-category
+            # search in the given category and add the subcategory
             $CategorySearchParam{CategoryIDs} = [ $Param{CategoryID}, @{$SubCategoryIDsRef} ];
         }
 

@@ -3,7 +3,7 @@
 # FAQImport.pl - FAQ import script
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQImport.pl,v 1.4 2010-11-11 15:03:17 ub Exp $
+# $Id: FAQImport.pl,v 1.5 2010-12-01 10:14:17 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -41,7 +41,7 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 # get options
 my %Opts;
@@ -143,10 +143,10 @@ for my $RowRef ( @{$DataRef} ) {
         next ROW;
     }
 
-    # get sub-categories
+    # get subcategories
     my @CategoryArray = split /::/, $CategoryString;
 
-    # check each sub-category if it exists
+    # check each subcategory if it exists
     my $CategoryID;
     my $ParentID = 0;
     for my $Category (@CategoryArray) {
@@ -232,6 +232,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2010-11-11 15:03:17 $
+$Revision: 1.5 $ $Date: 2010-12-01 10:14:17 $
 
 =cut
