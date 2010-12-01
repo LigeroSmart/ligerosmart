@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.23 2010-11-29 12:53:29 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.24 2010-12-01 03:18:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -263,8 +263,17 @@ sub Run {
                 push @CSVData, \@Data;
             }
 
-            # replace FAQNumber header with the current FAQHook from config
-            $CSVHead[0] = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+            # translate headers
+            for my $Header (@CSVHead) {
+
+                # replace FAQNumber header with the current FAQHook from config
+                if ( $Header eq 'FAQNumber' ) {
+                    $Header = $Self->{ConfigObject}->Get('FAQ::FAQHook');
+                }
+                else {
+                    $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                }
+            }
 
             # assable CSV data
             my $CSV = $Self->{CSVObject}->Array2CSV(
