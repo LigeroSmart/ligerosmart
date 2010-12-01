@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.22 2010-12-01 03:27:18 cr Exp $
+# $Id: de_FAQ.pm,v 1.23 2010-12-01 10:05:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -183,7 +183,7 @@ sub Data {
     $Lang->{'No FAQ data found.'}       = '';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ'}                 = '';
+    $Lang->{'Add FAQ Article'}         = '';
     $Lang->{'Actions'}                 = '';
     $Lang->{'Go to explorer'}          = '';
     $Lang->{'The title is required.'}  = '';
@@ -199,7 +199,6 @@ sub Data {
     $Lang->{'Edit Language'}                                         = '';
     $Lang->{'Delete Language'}                                       = '';
     $Lang->{'The name is required!'}                                 = '';
-    $Lang->{'This language already exists!'}                         = '';
     $Lang->{'This language already exists!'}                         = '';
     $Lang->{'FAQ language added!'}                                   = '';
     $Lang->{'FAQ language updated!'}                                 = '';

@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.16 2010-12-01 03:27:17 cr Exp $
+# $Id: es_FAQ.pm,v 1.17 2010-12-01 10:05:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -183,7 +183,7 @@ sub Data {
     $Lang->{'No FAQ data found.'}       = 'No se encontraron registros FAQ.';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ'}                 = 'Agregar FAQ.';
+    $Lang->{'Add FAQ Article'}         = 'Agregar FAQ.';
     $Lang->{'Actions'}                 = 'Acciones';
     $Lang->{'Go to explorer'}          = 'Ir al explorador';
     $Lang->{'The title is required.'}  = 'El título es requerido.';

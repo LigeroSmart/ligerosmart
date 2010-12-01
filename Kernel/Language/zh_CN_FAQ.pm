@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.8 2010-12-01 03:27:17 cr Exp $
+# $Id: zh_CN_FAQ.pm,v 1.9 2010-12-01 10:05:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -176,7 +176,7 @@ sub Data {
     $Lang->{'No FAQ data found.'}       = '';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ'}                 = '';
+    $Lang->{'Add FAQ Article'}         = '';
     $Lang->{'Actions'}                 = '';
     $Lang->{'Go to explorer'}          = '';
     $Lang->{'The title is required.'}  = '';
@@ -193,7 +193,6 @@ sub Data {
     $Lang->{'Delete Language'}                                       = '';
     $Lang->{'The name is required!'}                                 = '';
     $Lang->{'This language already exists!'}                         = '';
-    $Lang->{'This language already exists!'}                         = '';
     $Lang->{'FAQ language added!'}                                   = '';
     $Lang->{'FAQ language updated!'}                                 = '';
     $Lang->{'Do you really want to delete this Language?'}           = '';
@@ -208,7 +207,7 @@ sub Data {
     $Lang->{'Edit Category'}                                   = '';
     $Lang->{'Delete Category'}                                 = '';
     $Lang->{'A category should have a name!'}                  = '';
-    $Lang->{'A category should have a comment!'}                = '';
+    $Lang->{'A category should have a comment!'}               = '';
     $Lang->{'A category needs at least one permission group!'} = '';
     $Lang->{'This category already exists!'}                   = '';
     $Lang->{'FAQ category updated!'}                           = '';

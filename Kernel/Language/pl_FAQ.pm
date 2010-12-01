@@ -4,7 +4,7 @@
 # Copyright (C) 2008 Patryk ¦ciborek <patryk@sciborek.com>
 # Copyright (C) 2009 Artur Skalski <skal.ar at wp.pl>
 # --
-# $Id: pl_FAQ.pm,v 1.9 2010-12-01 03:27:18 cr Exp $
+# $Id: pl_FAQ.pm,v 1.10 2010-12-01 10:05:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -181,7 +181,7 @@ sub Data {
     $Lang->{'No FAQ data found.'}       = '';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ'}                 = '';
+    $Lang->{'Add FAQ Article'}         = '';
     $Lang->{'Actions'}                 = '';
     $Lang->{'Go to explorer'}          = '';
     $Lang->{'The title is required.'}  = '';
@@ -197,7 +197,6 @@ sub Data {
     $Lang->{'Edit Language'}                                         = '';
     $Lang->{'Delete Language'}                                       = '';
     $Lang->{'The name is required!'}                                 = '';
-    $Lang->{'This language already exists!'}                         = '';
     $Lang->{'This language already exists!'}                         = '';
     $Lang->{'FAQ language added!'}                                   = '';
     $Lang->{'FAQ language updated!'}                                 = '';
