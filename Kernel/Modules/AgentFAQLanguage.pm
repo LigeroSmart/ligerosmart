@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.12 2010-11-27 15:55:19 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.13 2010-12-01 03:14:51 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -150,7 +150,7 @@ sub Run {
             $Self->_Edit(
                 Action                 => 'Change',
                 NameServerError        => 'ServerError',
-                NameServerErrorMessage => "Language '$GetParam{Name}' already exists!",
+                NameServerErrorMessage => 'This language already exists!',
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(
@@ -268,7 +268,7 @@ sub Run {
             $Self->_Edit(
                 Action                 => 'Add',
                 NameServerError        => 'ServerError',
-                NameServerErrorMessage => "Language '$GetParam{Name}' already exists!",
+                NameServerErrorMessage => "This language already exists!",
                 %GetParam,
             );
             $Output .= $Self->{LayoutObject}->Output(

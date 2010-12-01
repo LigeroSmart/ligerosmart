@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.22 2010-11-27 19:14:15 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.23 2010-12-01 03:14:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -176,7 +176,7 @@ sub Run {
 
             # set server errors
             $GetParam{NameServerError}        = 'ServerError';
-            $GetParam{NameServerErrorMessage} = "Category '$GetParam{Name}' already exists!";
+            $GetParam{NameServerErrorMessage} = 'This category already exists';
 
             # html output
             $Self->_Edit(
@@ -324,7 +324,7 @@ sub Run {
 
             # set server errors
             $GetParam{NameServerError}        = 'ServerError';
-            $GetParam{NameServerErrorMessage} = "Category '$GetParam{Name}' already exists!";
+            $GetParam{NameServerErrorMessage} = 'This category already exists!';
 
             # html output
             $Self->_Edit(
