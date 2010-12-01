@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -145,6 +145,26 @@
 
 .WidgetSimple .Pagination {
     font-size: 11px;
+}
+
+/**
+ * @subsection FAQHeader
+ */
+
+.FAQHeader h2 {
+    margin: 3px 0 0;
+    font-size: 24px;
+    line-height: 24px;
+    position: relative;
+    float: left;
+}
+.RTL .FAQHeader h2 {
+    float: right;
+}
+
+.FAQHeader .FAQHook {
+    color: #666;
+    font-size: 12px;
 }
 
 }
