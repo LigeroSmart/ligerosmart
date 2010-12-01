@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQPrint.pm,v 1.10 2010-11-30 10:48:48 ub Exp $
+# $Id: CustomerFAQPrint.pm,v 1.11 2010-12-01 20:26:31 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -185,11 +185,7 @@ sub Run {
         $Page{PageCount}++;
 
         # type of print tag
-        my $PrintTag = '';
-
-        $PrintTag = 'FAQ Article';
-        $PrintTag = ( $Self->{LayoutObject}->{LanguageObject}->Get($PrintTag) ) . ' ' .
-            ( $Self->{LayoutObject}->{LanguageObject}->Get('Print') );
+        my $PrintTag = $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Article Print');
 
         # output headline
         $Self->{PDFObject}->Text(
@@ -314,7 +310,7 @@ sub _PDFOutputFAQHeaderInfo {
         },
 
         {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last Update') . ':',
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last update') . ':',
             Value => $Self->{LayoutObject}->Output(
                 Template => '$TimeLong{"$Data{"Changed"}"}',
                 Data     => \%FAQData,
