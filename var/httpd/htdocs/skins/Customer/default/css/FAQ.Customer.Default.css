@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -141,6 +141,10 @@
     padding: 13px 8px;
     background: #FFF;
     border-bottom: 1px solid #E9E9E9;
+}
+
+.WidgetSimple .Pagination {
+    font-size: 11px;
 }
 
 }
