@@ -1,0 +1,198 @@
+# --
+# PublicFAQExplorer.dtl.dtl - provides HTML for PublicFAQExplorer.pm
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: PublicFAQExplorer.dtl,v 1.1 2010-12-02 16:20:27 ub Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div id="MainBox" class="ARIARoleMain">
+
+    <div class="Content">
+        <div class="FAQHeader">
+            <h2 title="$QData{"Title"}">
+                $QData{"Title","40"}
+            </h2>
+            <div class="Clear"></div>
+        </div>
+
+        <div class="FAQPathCategory">
+            <h3>
+<!-- dtl:block:FAQPathCategoryElement -->
+                $Config{"FAQ::Explorer::Path::Separator"}
+                <a href="$Env{"Baselink"}Action=PublicFAQExplorer;CategoryID=$LQData{"CategoryID"}">
+                    $QData{"Name"}
+                </a>
+<!-- dtl:block:FAQPathCategoryElement -->
+            </h3>
+        </div>
+        <div class="Clear"></div>
+
+        <div class="LayoutFixedSidebar SidebarLast">
+            <div class="SidebarColumn Large">
+
+<!-- dtl:block:InfoBoxFAQMiniList -->
+                <div class="WidgetSimple">
+
+                    <div class="Header">
+                        <h3>$Text{"$Data{"Header"}"}</h3>
+<!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=RSS&Type=$QData{"Type"}" title="$Text{"$Data{"Title"}"}"><img src="$Env{"Images"}/rss.png" border="0"></a>
+<!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
+                        <div class="Clear"></div>
+                    </div>
+
+                    <div class="Content">
+                        <ul class="Tablelike FAQMiniList">
+<!-- dtl:block:InfoBoxFAQMiniListItemRow -->
+                            <li>
+<!-- dtl:block:InfoBoxFAQMiniListItemRowPositionNumber -->
+                                $QData{"Number"}.
+<!-- dtl:block:InfoBoxFAQMiniListItemRowPositionNumber -->
+                                <a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$QData{"ItemID"}" title="$QData{"Title"} ($QData{"CategoryName"})">
+                                    $QData{"Title","50"}
+                                </a>
+                                <span>
+                                    $QData{"CategoryShortName","15"} $QData{"Language"} $QData{"State"} $TimeShort{"$Data{"Created"}"}
+                                </span>
+                            </li>
+<!-- dtl:block:InfoBoxFAQMiniListItemRow -->
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:InfoBoxFAQMiniList -->
+
+            </div>
+            <div class="ContentColumn">
+
+<!-- dtl:block:Subcategories -->
+                <div class="WidgetSimple">
+<!-- dtl:block:OverviewResult -->
+                    <div class="Header">
+                        <h3>$Text{"Subcategories"}</h3>
+                        <div class="Clear"></div>
+                    </div>
+
+                    <div class="Content">
+
+                        <table class="Overview" summary="FAQ categories">
+                            <thead>
+                                <tr>
+                                    <th><a href="#">$Text{"Name"}</a></th>
+                                    <th><a href="#">$Text{"Comment"}</a></th>
+                                    <th><a href="#">$Text{"Subcategories"}</a></th>
+                                    <th><a href="#">$Text{"Articles"}</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<!-- dtl:block:NoCategoryDataFoundMsg -->
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="#">$Text{"No subcategories found."}</a>
+                                    </td>
+                                </tr>
+<!-- dtl:block:NoCategoryDataFoundMsg -->
+<!-- dtl:block:OverviewResultRow -->
+                                <tr>
+                                    <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"}">$QData{"Name"}</a></td>
+                                    <td>$QData{"Comment"}</td>
+                                    <td>$QData{"SubCategoryCount"}</td>
+                                    <td>$QData{"ArticleCount"}</td>
+                                </tr>
+<!-- dtl:block:OverviewResultRow -->
+                            </tbody>
+                        </table>
+                    </div>
+<!-- dtl:block:OverviewResult -->
+                </div>
+<!-- dtl:block:Subcategories -->
+
+
+<!-- dtl:block:FAQItemList -->
+                <div class="WidgetSimple">
+
+                    <div class="Header">
+                        <h3>$Text{"Articles"}</h3>
+<!-- dtl:block:Pagination -->
+                        <div class="Pagination">
+                            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                        </div>
+<!-- dtl:block:Pagination -->
+                        <div class="Clear"></div>
+                    </div>
+
+                    <div class="Content">
+                        <table class="Overview">
+                            <thead>
+                                <tr>
+                                    <th class="FAQNumber $Data{"FAQIDSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=FAQID;Order=$LQData{"Order"}">
+                                            $Config{"FAQ::FAQHook"}
+                                        </a>
+                                    </th>
+                                    <th class="Title $Data{"TitleSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Title;Order=$LQData{"Order"}">
+                                            $Text{"Title"}
+                                        </a>
+                                    </th>
+                                    <th class="Category $Data{"CategorySort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Category;Order=$LQData{"Order"}">
+                                            $Text{"Category"}
+                                        </a>
+                                    </th>
+                                    <th class="Language $Data{"LanguageSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Language;Order=$LQData{"Order"}">
+                                            $Text{"Language"}
+                                        </a>
+                                    </th>
+                                    <th class="State">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};State=$LQData{"CategoryID"};SortBy=State;Order=$LQData{"Order"}">
+                                            $Text{"State"}
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<!-- dtl:block:NoFAQDataFoundMsg -->
+                                <tr>
+                                    <td colspan="5">
+                                        <a href="#">$Text{"No FAQ articles found."}</a>
+                                    </td>
+                                </tr>
+<!-- dtl:block:NoFAQDataFoundMsg -->
+<!-- dtl:block:Record -->
+                                <tr>
+                                    <td class="FAQNumber" title="$QData{"Number"}"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                                    <td class="Title" title="$QData{"Title"}">$QData{"Title","60"}</td>
+                                    <td class="Category" title="$QData{"CategoryName"}">$QData{"CategoryName","45"}</td>
+                                    <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
+                                    <td class="State" title="$QData{"State"}">$QData{"State","21"}</td>
+                                </tr>
+<!-- dtl:block:Record -->
+                            </tbody>
+                        </table>
+<!-- dtl:block:BottomSubNavigation -->
+                        <div class="Pagination">
+                            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                        </div>
+                        <div class="Clear"></div>
+<!-- dtl:block:BottomSubNavigation -->
+                    </div>
+                </div>
+<!-- dtl:block:FAQItemList -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">
+    Core.Customer.ClickableRow();
+</script>
+<!-- dtl:js_on_document_complete -->
