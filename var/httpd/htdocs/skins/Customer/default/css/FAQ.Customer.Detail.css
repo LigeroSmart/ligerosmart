@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -12,25 +12,6 @@
 
 @media screen,projection,tv,handheld {
 
-
-/**
- * @subsection  Article table body
- */
-
-.MessageContent .message ol {
-    list-style: decimal;
-    padding-left: 40px;
-    margin-bottom: 12px;
-    margin-top: 12px;
-}
-
-.MessageContent .message ul {
-/*    list-style: disc; */
-/*    padding-left: 40px; */
-    padding-left: 5px;
-    margin-bottom: 12px;
-    margin-top: 12px;
-}
 
 .RateChecked {
     background: transparent url(../img/rate-button-checked.png) no-repeat scroll 0 0;
@@ -104,27 +85,6 @@
     margin-left: 10px;
     margin-right:10px;
     color: #000000;
-}
-
-/**
- * @subsection  Category path
- */
-.FAQPathCategory {
-    padding: 4px 8px 4px;
-    color: #6A6A6A;
-    background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 0;
-    border-bottom: 1px solid #D6D6D6;
-    text-shadow: 0 1px 0 #FFF;
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-
-.FAQPathCategory h3 {
-    font-weight: bold;
 }
 
 }

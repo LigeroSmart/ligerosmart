@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -67,41 +67,6 @@
     margin-left: 16px;
     margin-right: 0;
 }
-
-/**
- * @subsection  table elements without highlight
- */
-
-/*
-
-.DataTable tbody tr td {
-    height: 25px;
-}
-
-.DataTable tbody tr td input,
-.DataTable tbody tr td select{
-    width: 85%;
-}
-
-.DataTable tbody tr:hover td {
-    background: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-.DataTable tr.Even:hover td,
-.DataTable tr.Even:hover.Last td {
-    background-color: #F5F5F5;
-}
-
-.DataTable tbody tr.Last:hover td {
-    background: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-/*
 
 /**
  * @subsection  Customer WidgetSimple
@@ -198,6 +163,27 @@
 ul.FAQMiniList span {
     display: block;
     font-size: 10px;
+}
+
+/**
+ * @subsection Category path
+ */
+.FAQPathCategory {
+    padding: 4px 8px 4px;
+    color: #6A6A6A;
+    background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 0;
+    border-bottom: 1px solid #D6D6D6;
+    text-shadow: 0 1px 0 #FFF;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.FAQPathCategory h3 {
+    font-weight: bold;
 }
 
 }
