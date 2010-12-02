@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.10 2010-12-02 16:18:36 ub Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.11 2010-12-02 19:29:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@
     <div class="ClearLeft"></div>
     <h1>$Text{"FAQ Explorer"}</h1>
 
-    <div class="ControlRow FAQPathCategory">
+    <div class="FAQPathCategory">
         <h3>
 <!-- dtl:block:FAQPathCategoryElement -->
             $Config{"FAQ::Explorer::Path::Separator"}
