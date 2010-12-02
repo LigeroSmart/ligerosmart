@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.12 2010-11-23 17:15:47 ub Exp $
+# $Id: FAQ.pm,v 1.13 2010-12-02 22:11:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,7 @@ use strict;
 use warnings;
 
 use Kernel::Config;
+use Kernel::System::Cache;
 use Kernel::System::SysConfig;
 use Kernel::System::CSV;
 use Kernel::System::Group;
@@ -25,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -134,6 +135,7 @@ sub new {
     $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
     $Self->{LinkObject}   = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{FAQObject}    = Kernel::System::FAQ->new( %{$Self} );
+    $Self->{CacheObject}  = Kernel::System::Cache->new( %{$Self} );
     $Self->{StatsObject}  = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
@@ -239,6 +241,11 @@ sub CodeUpgrade {
     # install stats
     $Self->{StatsObject}->StatsInstall(
         FilePrefix => $Self->{FilePrefix},
+    );
+
+    # delete the FAQ cache (to avoid old data from previous FAQ modules)
+    $Self->{CacheObject}->CleanUp(
+        Type => 'FAQ',
     );
 
     return 1;
@@ -583,6 +590,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2010-11-23 17:15:47 $
+$Revision: 1.13 $ $Date: 2010-12-02 22:11:32 $
 
 =cut
