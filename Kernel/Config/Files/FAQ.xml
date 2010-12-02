@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.83 2010-12-02 15:51:12 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.84 2010-12-02 20:50:39 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -583,6 +583,11 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+
+<!--
+
+    TODO: Enable again if functionality is complete.
+
     <ConfigItem Name="Frontend::Output::FilterElementPre###FAQ" Required="0" Valid="1">
         <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed.</Description>
         <Group>FAQ</Group>
@@ -609,6 +614,8 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
+-->
+
     <ConfigItem Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
         <Description Translatable="1">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
         <Group>Framework</Group>
