@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -51,7 +51,17 @@ ul.FAQMiniList span {
 
 .FAQPathCategory {
     margin-bottom: 13px !important;
+/*
     text-shadow: 0 1px 0 #FFFFFF;
+*/
+}
+
+/**
+ * @subsection Category path (used in agent faq zoom)
+ */
+
+.FAQPathCategory.NoMarginBottom {
+    margin-bottom: 0 !important;;
 }
 
 .FAQPathCategory h3 {

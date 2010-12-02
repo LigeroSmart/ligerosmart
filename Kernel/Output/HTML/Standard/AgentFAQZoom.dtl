@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.18 2010-12-01 13:05:37 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.19 2010-12-02 17:10:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,21 +16,7 @@
             $Config{"FAQ::FAQHook"}: $Data{"Number"} <span>&mdash;</span> $QData{"Title", "60"}
         </h1>
     </div>
-    <h3>
-<!-- dtl:block:FAQPathCategoryElement -->
-        $Config{"FAQ::Explorer::Path::Separator"}
-        <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"}">
-            $QData{"Name"}
-        </a>
-<!-- dtl:block:FAQPathCategoryElement -->
-<!-- dtl:block:FAQPathItemElement -->
-        $Config{"FAQ::Explorer::Path::Separator"}
-        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};ItemID=$LQData{"ItemID"}">
-            $QData{"Title"}
-        </a>
-<!-- dtl:block:FAQPathItemElement -->
-    </h3>
-    <div class="Clear"></div>
+
     <div class="LayoutFixedSidebar SidebarLast">
         <div class="SidebarColumn">
             <div class="WidgetSimple">
@@ -115,11 +101,17 @@
 
         </div>
         <div class="ContentColumn">
-            <div class="ControlRow">
-                <h2>$Text{"Details"}</h2>
-                <div class="AdditionalInformation">
-                </div>
+            <div class="ControlRow FAQPathCategory NoMarginBottom">
+                <h3>
+<!-- dtl:block:FAQPathCategoryElement -->
+                    $Config{"FAQ::Explorer::Path::Separator"}
+                    <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">
+                        $QData{"Name"}
+                    </a>
+<!-- dtl:block:FAQPathCategoryElement -->
+                </h3>
             </div>
+
             <div class="ActionRow">
                 <ul class="Actions">
 
