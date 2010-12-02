@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.84 2010-12-02 20:50:39 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.85 2010-12-02 22:02:57 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -89,26 +89,6 @@
             <String>»</String>
         </Setting>
     </ConfigItem>
-<!--
-    <ConfigItem Name="FAQ::Category::Icon" Required="1" Valid="1">
-        <Description Lang="en">Category icon.</Description>
-        <Description Lang="de">Kategorie Icon in der FAQ.</Description>
-        <Group>FAQ</Group>
-        <SubGroup>Core::Category</SubGroup>
-        <Setting>
-            <String>faq-category-small.png</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="FAQ::Item::Icon" Required="1" Valid="1">
-        <Description Lang="en">Item icon.</Description>
-        <Description Lang="de">Artikel Icon in der FAQ.</Description>
-        <Group>FAQ</Group>
-        <SubGroup>Core::Item</SubGroup>
-        <Setting>
-            <String>faq-item-small.png</String>
-        </Setting>
-    </ConfigItem>
--->
     <ConfigItem Name="FAQ::Explorer::QuickSearch::Show" Required="1" Valid="1">
         <Description Translatable="1">Interfaces where the quicksearch should be shown.</Description>
         <Group>FAQ</Group>
@@ -480,20 +460,6 @@ Your OTRS Notification Master
                     <AccessKey>e</AccessKey>
                     <Prio>910</Prio>
                 </NavBar>
-<!--
-                <NavBar>
-                    <GroupRo>faq</GroupRo>
-                    <Description>History</Description>
-                    <Name>History</Name>
-                    <Image>history.png</Image>
-                    <Link>Action=AgentFAQ;Subaction=SystemHistory</Link>
-                    <Type></Type>
-                    <Block></Block>
-                    <NavBar>FAQ</NavBar>
-                    <AccessKey>o</AccessKey>
-                    <Prio>940</Prio>
-                </NavBar>
--->
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
                     <CSS>FAQ.Agent.Default.css</CSS>
@@ -533,6 +499,17 @@ Your OTRS Notification Master
         <SubGroup>Frontend::Public</SubGroup>
         <Setting>
             <String>PublicFAQExplorer</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Loader::Customer::CommonCSS###500-FAQ" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the customer interface.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>FAQ.Customer.Detail.css</Item>
+                <Item>FAQ.Customer.Default.css</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PublicFrontend::Module###PublicFAQExplorer" Required="0" Valid="1">
