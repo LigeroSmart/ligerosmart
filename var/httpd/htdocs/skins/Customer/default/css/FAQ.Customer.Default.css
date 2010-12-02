@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -54,6 +54,17 @@
 .RTL .LayoutFixedSidebar.SidebarFirst > .SidebarColumn {
     float: right;
     margin-left: 10px;
+    margin-right: 0;
+}
+
+/**
+ * @subsection Large SidebarColumn
+ */
+
+.LayoutFixedSidebar.SidebarLast > .SidebarColumn.Large {
+    width: 350px;
+    float: right;
+    margin-left: 16px;
     margin-right: 0;
 }
 
@@ -178,6 +189,15 @@
 .Overview thead {
     background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 -31px;
     display: table-header-group;
+}
+
+/**
+ * @subsection FAQMiniList
+ */
+
+ul.FAQMiniList span {
+    display: block;
+    font-size: 10px;
 }
 
 }
