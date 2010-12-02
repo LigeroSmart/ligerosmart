@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.7 2010-12-02 10:05:38 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.8 2010-12-02 11:22:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -108,79 +108,77 @@
                             </tbody>
                         </table>
                     </div>
-
 <!-- dtl:block:OverviewResult -->
-
+                </div>
 <!-- dtl:block:Subcategories -->
 
 
 <!-- dtl:block:FAQItemList -->
-                    <div class="WidgetSimple">
+                <div class="WidgetSimple">
 
-                        <div class="Header">
-                            <h3>$Text{"Articles"}</h3>
+                    <div class="Header">
+                        <h3>$Text{"Articles"}</h3>
 <!-- dtl:block:Pagination -->
-                            <div class="Pagination">
-                                <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
-                            </div>
+                        <div class="Pagination">
+                            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                        </div>
 <!-- dtl:block:Pagination -->
-                            <div class="Clear"></div>
-                        </div>
-
-                        <div class="Content">
-                            <table class="Overview">
-                                <thead>
-                                    <tr>
-                                        <th class="FAQNumber $Data{"FAQIDSort"}">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=FAQID;Order=$LQData{"Order"}">
-                                                $Config{"FAQ::FAQHook"}
-                                            </a>
-                                        </th>
-                                        <th class="Title $Data{"TitleSort"}">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Title;Order=$LQData{"Order"}">
-                                                $Text{"Title"}
-                                            </a>
-                                        </th>
-                                        <th class="Category $Data{"CategorySort"}">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Category;Order=$LQData{"Order"}">
-                                                $Text{"Category"}
-                                            </a>
-                                        </th>
-                                        <th class="Language $Data{"LanguageSort"}">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Language;Order=$LQData{"Order"}">
-                                                $Text{"Language"}
-                                            </a>
-                                        </th>
-                                        <th class="Changed $Data{"ChangedSort"}">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Changed;Order=$LQData{"Order"}">
-                                                $Text{"Changed"}
-                                            </a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-<!-- dtl:block:Record -->
-                                    <tr title="$QData{"TicketNumber"}">
-                                        <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
-                                        <td class="Title">$QData{"Title","60"}</td>
-                                        <td class="Category">$QData{"CategoryName","60"}</td>
-                                        <td class="Language">$QData{"Language","5"}</td>
-                                        <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
-                                    </tr>
-<!-- dtl:block:Record -->
-                                </tbody>
-                            </table>
-<!-- dtl:block:BottomSubNavigation -->
-                            <div class="Pagination">
-                                <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
-                            </div>
-                            <div class="Clear"></div>
-<!-- dtl:block:BottomSubNavigation -->
-                        </div>
+                        <div class="Clear"></div>
                     </div>
+
+                    <div class="Content">
+                        <table class="Overview">
+                            <thead>
+                                <tr>
+                                    <th class="FAQNumber $Data{"FAQIDSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=FAQID;Order=$LQData{"Order"}">
+                                            $Config{"FAQ::FAQHook"}
+                                        </a>
+                                    </th>
+                                    <th class="Title $Data{"TitleSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Title;Order=$LQData{"Order"}">
+                                            $Text{"Title"}
+                                        </a>
+                                    </th>
+                                    <th class="Category $Data{"CategorySort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Category;Order=$LQData{"Order"}">
+                                            $Text{"Category"}
+                                        </a>
+                                    </th>
+                                    <th class="Language $Data{"LanguageSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Language;Order=$LQData{"Order"}">
+                                            $Text{"Language"}
+                                        </a>
+                                    </th>
+                                    <th class="Changed $Data{"ChangedSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Changed;Order=$LQData{"Order"}">
+                                            $Text{"Changed"}
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+<!-- dtl:block:Record -->
+                                <tr title="$QData{"TicketNumber"}">
+                                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                                    <td class="Title">$QData{"Title","60"}</td>
+                                    <td class="Category">$QData{"CategoryName","60"}</td>
+                                    <td class="Language">$QData{"Language","5"}</td>
+                                    <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
+                                </tr>
+<!-- dtl:block:Record -->
+                            </tbody>
+                        </table>
+<!-- dtl:block:BottomSubNavigation -->
+                        <div class="Pagination">
+                            <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
+                        </div>
+                        <div class="Clear"></div>
+<!-- dtl:block:BottomSubNavigation -->
+                    </div>
+                </div>
 <!-- dtl:block:FAQItemList -->
 
-                </div>
             </div>
         </div>
     </div>
