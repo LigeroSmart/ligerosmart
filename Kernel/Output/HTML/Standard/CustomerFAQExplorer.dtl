@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.5 2010-12-01 18:58:05 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.6 2010-12-02 09:27:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -136,28 +136,28 @@
                             <table class="Overview">
                                 <thead>
                                     <tr>
-                                        <th class="FAQNumber">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=FAQID;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                        <th class="FAQNumber $Data{"FAQIDSort"}">
+                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=FAQID;Order=$LQData{"Order"}">
                                                 $Config{"FAQ::FAQHook"}
                                             </a>
                                         </th>
-                                        <th class="Title">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Title;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                        <th class="Title $Data{"TitleSort"}">
+                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Title;Order=$LQData{"Order"}">
                                                 $Text{"Title"}
                                             </a>
                                         </th>
-                                        <th class="Category">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Category;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                        <th class="Category $Data{"CategorySort"}">
+                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Category;Order=$LQData{"Order"}">
                                                 $Text{"Category"}
                                             </a>
                                         </th>
-                                        <th class="Language">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Language;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                        <th class="Language $Data{"LanguageSort"}">
+                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Language;Order=$LQData{"Order"}">
                                                 $Text{"Language"}
                                             </a>
                                         </th>
-                                        <th class="Changed">
-                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;SortBy=Changed;Order=$LQData{"Order"};Profile=$LQData{"Profile"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                                        <th class="Changed $Data{"ChangedSort"}">
+                                            <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Changed;Order=$LQData{"Order"}">
                                                 $Text{"Changed"}
                                             </a>
                                         </th>

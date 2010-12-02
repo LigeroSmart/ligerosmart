@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQExplorer.pm - customer FAQ explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.pm,v 1.2 2010-12-01 10:14:17 ub Exp $
+# $Id: CustomerFAQExplorer.pm,v 1.3 2010-12-02 09:26:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,6 +62,12 @@ sub Run {
     $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit}     = $Self->{Config}->{SearchLimit}     || 200;
     $Self->{SearchPageShown} = $Self->{Config}->{SearchPageShown} || 3;
+    $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+        || $Self->{Config}->{'SortBy::Default'}
+        || 'FAQID';
+    $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'Order' )
+        || $Self->{Config}->{'Order::Default'}
+        || 'Down';
 
     # get category id
     my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
@@ -167,8 +173,8 @@ sub Run {
 
     # search all FAQ articles within the given category
     my @ViewableFAQIDs = $Self->{FAQObject}->FAQSearch(
-        OrderBy          => ['FAQID'],
-        OrderByDirection => ['Down'],
+        OrderBy          => [ $Self->{SortBy} ],
+        OrderByDirection => [ $Self->{OrderBy} ],
         Limit            => $Self->{SearchLimit},
         UserID           => $Self->{UserID},
         States           => $Self->{InterfaceStates},
@@ -176,10 +182,35 @@ sub Run {
         CategoryIDs      => [$CategoryID],
     );
 
+    # set the SortBy Class
+    my $SortClass;
+
+    # this sets the opposit to the OrderBy parameter
+    if ( $Self->{OrderBy} eq 'Down' ) {
+        $SortClass = 'SortAscending';
+    }
+    elsif ( $Self->{OrderBy} eq 'Up' ) {
+        $SortClass = 'SortDescending';
+    }
+
+    # set the SortBy Class to the correct field
+    my %CSSSort;
+    my $SortBy = $Self->{SortBy} . 'Sort';
+    $CSSSort{$SortBy} = $SortClass;
+
+    my %NewOrder = (
+        Down => 'Up',
+        Up   => 'Down',
+    );
+
     # show the FAQ article list
     $Self->{LayoutObject}->Block(
         Name => 'FAQItemList',
-        Data => {},
+        Data => {
+            CategoryID => $CategoryID,
+            %CSSSort,
+            Order => $NewOrder{ $Self->{OrderBy} },
+        },
     );
 
     my $Counter = 0;
@@ -210,6 +241,9 @@ sub Run {
         }
     }
 
+    my $Link = 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} ) . ';';
+    $Link .= 'Order=' . $Self->{LayoutObject}->LinkEncode( $Self->{OrderBy} ) . ';';
+
     # build search navigation bar
     my %PageNav = $Self->{LayoutObject}->PageNavBar(
         Limit     => $Self->{SearchLimit},
@@ -217,7 +251,7 @@ sub Run {
         PageShown => $Self->{SearchPageShown},
         AllHits   => $Counter,
         Action    => "Action=CustomerFAQExplorer;CategoryID=$CategoryID",
-        Link      => '',
+        Link      => $Link,
         IDPrefix  => "CustomerFAQExplorer",
     );
 
@@ -262,6 +296,11 @@ sub Run {
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => $Self->{UserID},
     );
+
+    # check error
+    if ( !$ShowOk ) {
+        return $Self->{LayoutObject}->ErrorScreen();
+    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
