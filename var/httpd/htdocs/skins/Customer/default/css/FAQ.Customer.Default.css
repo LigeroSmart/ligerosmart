@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -87,6 +87,7 @@
     position: relative;
     width: auto;
     z-index: 10;
+    margin-bottom: 10px;
 }
 
 .WidgetSimple .Header {
