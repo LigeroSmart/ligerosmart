@@ -2,18 +2,18 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.8 2010-12-02 11:39:16 ub Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.9 2010-12-02 12:31:30 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="MainBox ARIARoleMain">
+<div class="MainBox ARIARoleMain FAQ">
     <div class="ClearLeft"></div>
     <h1>$Text{"FAQ Explorer"}</h1>
 
-    <div class="FAQPathCategory">
+    <div class="ControlRow FAQPathCategory">
         <h3>
 <!-- dtl:block:FAQPathCategoryElement -->
             $Config{"FAQ::Explorer::Path::Separator"}
