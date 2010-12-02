@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.14 2010-12-02 20:22:10 ub Exp $
+# $Id: FAQ.t,v 1.15 2010-12-02 20:27:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,6 +62,7 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
     CategoryID => 1,
     StateID    => 2,
     LanguageID => 2,
+    Approved   => 1,
     Title      => 'Some Text2',
     Keywords   => 'some keywords2',
     Field1     => 'Problem...2',
