@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.35 2010-12-01 12:58:10 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.36 2010-12-02 05:17:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -451,6 +451,7 @@ sub FAQPathShow {
         Data => {
             Name       => $Self->{ConfigObject}->Get('FAQ::Default::RootCategoryName'),
             CategoryID => 0,
+            Nav        => $Param{Nav},
         },
     );
 
@@ -470,7 +471,10 @@ sub FAQPathShow {
     for my $CategoryData ( @{$CategoryList} ) {
         $Self->Block(
             Name => 'FAQPathCategoryElement',
-            Data => { %{$CategoryData} },
+            Data => {
+                Nav => $Param{Nav},
+                %{$CategoryData},
+            },
         );
     }
     return 1;
