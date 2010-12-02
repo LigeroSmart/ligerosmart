@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.11 2010-12-02 12:57:28 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.12 2010-12-02 16:19:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -56,7 +56,7 @@
                                     $QData{"Title","50"}
                                 </a>
                                 <span>
-                                    ($QData{"CategoryShortName","15"}) ($QData{"Language"}) $TimeShort{"$Data{"Created"}"}
+                                    $QData{"CategoryShortName","15"} $QData{"Language"} $QData{"State"} $TimeShort{"$Data{"Created"}"}
                                 </span>
                             </li>
 <!-- dtl:block:InfoBoxFAQMiniListItemRow -->
@@ -93,7 +93,7 @@
 <!-- dtl:block:NoCategoryDataFoundMsg -->
                                 <tr>
                                     <td colspan="4">
-                                        $Text{"No subcategories found."}
+                                        <a href="#">$Text{"No subcategories found."}</a>
                                     </td>
                                 </tr>
 <!-- dtl:block:NoCategoryDataFoundMsg -->
@@ -150,9 +150,9 @@
                                             $Text{"Language"}
                                         </a>
                                     </th>
-                                    <th class="Changed $Data{"ChangedSort"}">
-                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Changed;Order=$LQData{"Order"}">
-                                            $Text{"Changed"}
+                                    <th class="State $Data{"StateSort"}">
+                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=State;Order=$LQData{"Order"}">
+                                            $Text{"State"}
                                         </a>
                                     </th>
                                 </tr>
@@ -161,7 +161,7 @@
 <!-- dtl:block:NoFAQDataFoundMsg -->
                                 <tr>
                                     <td colspan="5">
-                                        $Text{"No FAQ articles found."}
+                                        <a href="#">$Text{"No FAQ articles found."}</a>
                                     </td>
                                 </tr>
 <!-- dtl:block:NoFAQDataFoundMsg -->
@@ -171,7 +171,7 @@
                                     <td class="Title" title="$QData{"Title"}">$QData{"Title","60"}</td>
                                     <td class="Category" title="$QData{"CategoryName"}">$QData{"CategoryName","45"}</td>
                                     <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
-                                    <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
+                                    <td class="State" title="$QData{"State"}">$QData{"State","21"}</td>
                                 </tr>
 <!-- dtl:block:Record -->
                             </tbody>
