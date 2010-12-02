@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.6 2010-12-02 05:15:48 cr Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.7 2010-12-02 10:39:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -60,9 +60,11 @@
 <!-- dtl:block:Subcategories -->
             <div class="WidgetSimple">
 <!-- dtl:block:OverviewResult -->
+
                 <div class="Header">
                     <h2>$Text{"Subcategories"}</h2>
                 </div>
+
                 <div class="Content">
                     <table class="DataTable" summary="FAQ categories">
                         <thead>
