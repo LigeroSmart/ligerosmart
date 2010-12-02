@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.13 2010-11-15 23:10:08 ub Exp $
+# $Id: FAQ.t,v 1.14 2010-12-02 20:22:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,14 +26,6 @@ my $FAQID = $FAQObject->FAQAdd(
     Keywords   => 'some keywords',
     Field1     => 'Problem...',
     Field2     => 'Solution...',
-    FreeKey1   => 'Software',
-    FreeText1  => 'Apache 3.4.2',
-    FreeKey2   => 'OS',
-    FreeText2  => 'OpenBSD 4.2.2',
-    FreeKey3   => 'Key3',
-    FreeText3  => 'Value3',
-    FreeKey4   => 'Key4',
-    FreeText4  => 'Value4',
     UserID     => 1,
 );
 
@@ -55,14 +47,6 @@ my %FAQTest = (
     Keywords   => 'some keywords',
     Field1     => 'Problem...',
     Field2     => 'Solution...',
-    FreeKey1   => 'Software',
-    FreeText1  => 'Apache 3.4.2',
-    FreeKey2   => 'OS',
-    FreeText2  => 'OpenBSD 4.2.2',
-    FreeKey3   => 'Key3',
-    FreeText3  => 'Value3',
-    FreeKey4   => 'Key4',
-    FreeText4  => 'Value4',
 );
 
 for my $Test ( sort keys %FAQTest ) {
@@ -82,14 +66,6 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
     Keywords   => 'some keywords2',
     Field1     => 'Problem...2',
     Field2     => 'Solution found...2',
-    FreeKey1   => 'Software2',
-    FreeText1  => 'Apache 3.4.22',
-    FreeKey2   => 'OS2',
-    FreeText2  => 'OpenBSD 4.2.22',
-    FreeKey3   => 'Key32',
-    FreeText3  => 'Value32',
-    FreeKey4   => 'Key42',
-    FreeText4  => 'Value42',
     UserID     => 1,
 );
 
@@ -106,14 +82,6 @@ my $FAQUpdate = $FAQObject->FAQUpdate(
     Keywords   => 'some keywords2',
     Field1     => 'Problem...2',
     Field2     => 'Solution found...2',
-    FreeKey1   => 'Software2',
-    FreeText1  => 'Apache 3.4.22',
-    FreeKey2   => 'OS2',
-    FreeText2  => 'OpenBSD 4.2.22',
-    FreeKey3   => 'Key32',
-    FreeText3  => 'Value32',
-    FreeKey4   => 'Key42',
-    FreeText4  => 'Value42',
 );
 
 for my $Test ( sort keys %FAQTest ) {
@@ -160,14 +128,6 @@ my $FAQID2 = $FAQObject->FAQAdd(
     Keywords   => '',
     Field1     => 'Problem Description 1...',
     Field2     => 'Solution not found1...',
-    FreeKey1   => 'Software1',
-    FreeText1  => 'Apache 3.4.2',
-    FreeKey2   => 'OS',
-    FreeText2  => 'OpenBSD 4.2.2',
-    FreeKey3   => 'Key3',
-    FreeText3  => 'Value3',
-    FreeKey4   => 'Key4',
-    FreeText4  => 'Value4',
     UserID     => 1,
 );
 
@@ -238,14 +198,14 @@ for my $AttachmentTest (@AttachmentTests) {
 }
 
 my @FAQIDs = $FAQObject->FAQSearch(
-    Number  => '*',
-    What    => '*s*',
-    Keyword => 'some*',
-    States  => [ 'public', 'internal' ],
-    Order   => 'Votes',
-    Sort    => 'ASC',
-    Limit   => 150,
-    UserID  => 1,
+    Number           => '*',
+    What             => '*s*',
+    Keyword          => 'some*',
+    States           => [ 'public', 'internal' ],
+    OrderBy          => ['Votes'],
+    OrderByDirection => ['Up'],
+    Limit            => 150,
+    UserID           => 1,
 );
 
 my $FAQSearchFound  = 0;
@@ -268,14 +228,14 @@ $Self->False(
 );
 
 @FAQIDs = $FAQObject->FAQSearch(
-    Number => '*',
-    Title  => 'tITLe',
-    What   => 'l',
-    States => [ 'public', 'internal' ],
-    Order  => 'Created',
-    Sort   => 'ASC',
-    Limit  => 150,
-    UserID => 1,
+    Number           => '*',
+    Title            => 'tITLe',
+    What             => 'l',
+    States           => [ 'public', 'internal' ],
+    OrderBy          => ['Created'],
+    OrderByDirection => ['Up'],
+    Limit            => 150,
+    UserID           => 1,
 );
 
 $FAQSearchFound  = 0;
@@ -298,14 +258,14 @@ $Self->True(
 );
 
 @FAQIDs = $FAQObject->FAQSearch(
-    Number => '*',
-    Title  => '',
-    What   => 'solution found',
-    States => [ 'public', 'internal' ],
-    Order  => 'Created',
-    Sort   => 'ASC',
-    Limit  => 150,
-    UserID => 1,
+    Number           => '*',
+    Title            => '',
+    What             => 'solution found',
+    States           => [ 'public', 'internal' ],
+    OrderBy          => ['Created'],
+    OrderByDirection => ['Up'],
+    Limit            => 150,
+    UserID           => 1,
 );
 
 $FAQSearchFound  = 0;
@@ -328,14 +288,14 @@ $Self->False(
 );
 
 @FAQIDs = $FAQObject->FAQSearch(
-    Number => '*',
-    Title  => '',
-    What   => 'solution+found',
-    States => [ 'public', 'internal' ],
-    Order  => 'Created',
-    Sort   => 'ASC',
-    Limit  => 150,
-    UserID => 1,
+    Number           => '*',
+    Title            => '',
+    What             => 'solution+found',
+    States           => [ 'public', 'internal' ],
+    OrderBy          => ['Created'],
+    OrderByDirection => ['Up'],
+    Limit            => 150,
+    UserID           => 1,
 );
 
 $FAQSearchFound  = 0;
