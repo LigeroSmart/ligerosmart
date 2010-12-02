@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - the german translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.29 2010-12-01 20:14:02 cr Exp $
+# $Id: de_FAQ.pm,v 1.30 2010-12-02 20:57:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -211,7 +211,7 @@ sub Data {
     $Lang->{'Edit category'}                                   = '';
     $Lang->{'Delete Category'}                                 = '';
     $Lang->{'A category should have a name!'}                  = '';
-    $Lang->{'A category should have a comment!'}                = '';
+    $Lang->{'A category should have a comment!'}               = '';
     $Lang->{'A category needs at least one permission group!'} = '';
     $Lang->{'This category already exists!'}                   = '';
     $Lang->{'FAQ category updated!'}                           = '';
@@ -225,34 +225,34 @@ sub Data {
         = '';
 
     # template: AgentFAQZoom
-    $Lang->{'FAQ Information'}                      = '';
-    $Lang->{'Rating'}                               = '';
-    $Lang->{'No votes found!'}                      = '';
-    $Lang->{'Details'}                              = '';
-    $Lang->{'Edit this FAQ'}                        = '';
-    $Lang->{'History of this FAQ'}                  = '';
-    $Lang->{'Print this FAQ'}                       = '';
+    $Lang->{'FAQ Information'}                      = 'FAQ Information';
+    $Lang->{'Rating'}                               = 'Bewertung';
+    $Lang->{'No votes found!'}                      = 'Keine Bewertungen gefunden!';
+    $Lang->{'Details'}                              = 'Details';
+    $Lang->{'Edit this FAQ'}                        = 'FAQ bearbeiten';
+    $Lang->{'History of this FAQ'}                  = 'Historie dieser FAQ';
+    $Lang->{'Print this FAQ'}                       = 'FAQ drucken';
     $Lang->{'Link another object to this FAQ item'} = '';
-    $Lang->{'Delete this FAQ'}                      = '';
-    $Lang->{'not helpful'}                          = '';
-    $Lang->{'very helpful'}                         = '';
-    $Lang->{'out of 5'}                             = '';
+    $Lang->{'Delete this FAQ'}                      = 'FAQ löschen';
+    $Lang->{'not helpful'}                          = 'nicht hilfreich';
+    $Lang->{'very helpful'}                         = 'sehr hilfreich';
+    $Lang->{'out of 5'}                             = 'von 5';
     $Lang->{'No votes found! Be the first one to rate this FAQ article.'}
-         = '';
+         = 'Keine Bewertungen gefunden! Seien Sie der erste der diesen FAQ Artikel bewertet.';
 
     # template: AgentFAQHistory
     $Lang->{'History Content'} = '';
-    $Lang->{'Updated'}         = '';
+    $Lang->{'Updated'}         = 'Aktualisiert';
 
     # template: AgentFAQDelete
-    $Lang->{'Do you really want to delete this FAQ article?'} = '';
+    $Lang->{'Do you really want to delete this FAQ article?'} = 'Wollen Sie diesen FAQ-Artikel wirklich löschen?';
 
     # template: AgentFAQPrint
-    $Lang->{'FAQ Article Print'} = '';
+    $Lang->{'FAQ Article Print'} = 'FAQ Artikel Drucken';
 
     # template: CustomerFAQSearch
     $Lang->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'}
-         = '';
+         = 'Volltext-Suche in FAQ-Artikeln (z. B. "John*n" or "Will*")';
 
     return 1;
 }
