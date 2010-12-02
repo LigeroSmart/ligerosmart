@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.7 2010-12-02 10:39:42 ub Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.8 2010-12-02 11:39:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,14 +13,17 @@
     <div class="ClearLeft"></div>
     <h1>$Text{"FAQ Explorer"}</h1>
 
-    <h3>
+    <div class="FAQPathCategory">
+        <h3>
 <!-- dtl:block:FAQPathCategoryElement -->
-        $Config{"FAQ::Explorer::Path::Separator"}
-        <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">
-            $QData{"Name"}
-        </a>
+            $Config{"FAQ::Explorer::Path::Separator"}
+            <a href="$Env{"Baselink"}Action=AgentFAQExplorer;CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">
+                $QData{"Name"}
+            </a>
 <!-- dtl:block:FAQPathCategoryElement -->
-    </h3>
+        </h3>
+    </div>
+
     <div class="Clear"></div>
 
     <div class="LayoutFixedSidebar SidebarLast">
