@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.89 2010-11-22 14:04:53 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.90 2010-12-02 13:24:56 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -19,6 +19,7 @@
         <File Permission="644" Location="Kernel/Language/de_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/en_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/es_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_MX_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/nl_FAQ.pm"/>
@@ -31,7 +32,11 @@
 -->
         <File Permission="644" Location="Kernel/Modules/AgentFAQAdd.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQCategory.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQDelete.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQEdit.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQExplorer.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQHistory.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentFAQJournal.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQLanguage.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentFAQSearch.pm"/>
@@ -39,6 +44,7 @@
 <!--
         <File Permission="644" Location="Kernel/Modules/CustomerFAQ.pm"/>
 -->
+        <File Permission="644" Location="Kernel/Modules/CustomerFAQExplorer.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerFAQZoom.pm"/>
@@ -46,11 +52,14 @@
         <File Permission="644" Location="Kernel/Modules/FAQ.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQ.pm"/>
 -->
+        <File Permission="644" Location="Kernel/Modules/PublicFAQExplorer.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQPrint.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQZoom.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
+
+        <File Permission="644" Location="Kernel/Output/HTML/FAQJournalOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQMenuGeneric.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
@@ -60,7 +69,12 @@
 -->
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQAdd.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQExplorer.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQHistory.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQJournalOverviewSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQLanguage.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewNavBar.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQOverviewSmall.dtl"/>
@@ -73,6 +87,7 @@
 <!--
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQ.dtl"/>
 -->
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQExplorer.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescription.dtl"/>
@@ -83,24 +98,20 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/FAQ.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQ.dtl"/>
 -->
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQExplorer.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescription.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQZoom.dtl"/>
         <File Permission="644" Location="Kernel/System/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
         <File Permission="644" Location="scripts/test/FAQ.t"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.doc"/>
         <File Permission="644" Location="scripts/test/sample/FAQ-Test1.pdf"/>
-<!--
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/category.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-category-small.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/faq-item-small.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/language.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/rss.png"/>
--->
+        <File Permission="644" Location="var/httpd/htdocs/js/FAQ.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Agent.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/FAQ.Widget.css"/>
@@ -112,6 +123,7 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-checked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-unchecked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-indicator.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rss.png"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
     </Filelist>
