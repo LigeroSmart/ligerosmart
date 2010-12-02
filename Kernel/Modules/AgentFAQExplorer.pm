@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.4 2010-12-01 10:14:17 ub Exp $
+# $Id: AgentFAQExplorer.pm,v 1.5 2010-12-02 05:15:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,6 +81,9 @@ sub Run {
     # get category id
     my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
 
+    # get navigation bar option
+    my $Nav = $Self->{ParamObject}->GetParam( Param => 'Nav' ) || '';
+
     # save category id to session, to be used in FAQ add screen
     $Self->{SessionObject}->UpdateSessionID(
         SessionID => $Self->{SessionID},
@@ -116,15 +119,25 @@ sub Run {
         }
     }
 
-    # output header and navigation bar
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output;
+    if ( $Nav eq 'None' ) {
+
+        # output header small and no Navbar
+        $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+    }
+    else {
+
+        # output header and navigation bar
+        $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+    }
 
     # show FAQ path
     $Self->{LayoutObject}->FAQPathShow(
         FAQObject  => $Self->{FAQObject},
         CategoryID => $CategoryID,
         UserID     => $Self->{UserID},
+        Nav        => $Nav,
     );
 
     # get all direct subcategories of the selected category
@@ -166,7 +179,10 @@ sub Run {
             # output the category data
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewResultRow',
-                Data => {%SubCategoryData},
+                Data => {
+                    Nav => $Nav,
+                    %SubCategoryData,
+                },
             );
         }
     }
@@ -305,7 +321,12 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    if ( $Nav eq 'None' ) {
+        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    }
+    else {
+        $Output .= $Self->{LayoutObject}->Footer();
+    }
 
     return $Output;
 }
