@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQExplorer.pm.pm - public FAQ explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.1 2010-12-02 16:20:15 ub Exp $
+# $Id: PublicFAQExplorer.pm,v 1.2 2010-12-02 21:39:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -93,7 +93,6 @@ sub Run {
     my $Output = $Self->{LayoutObject}->CustomerHeader(
         Value => '',
     );
-    $Output .= $Self->{LayoutObject}->CustomerNavigationBar();
 
     # show FAQ path
     $Self->{LayoutObject}->FAQPathShow(
