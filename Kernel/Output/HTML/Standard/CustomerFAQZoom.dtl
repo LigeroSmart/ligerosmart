@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for CustomerFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.16 2010-12-01 20:30:41 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.17 2010-12-02 16:05:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,8 +27,9 @@
                 <span class="FAQHook">$QData{"Number"}</span>
             </h2>
             <ul id="Metadata">
-                <li><span class="Key">$Text{"Category"}:</span> <span title="$Quote{"$Text{"$Data{"CategoryName"}"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>
-                <li><span class="Key">$Text{"Language"}:</span> <span title="$Quote{"$Text{"$Data{"Language"}"}"}">$Quote{"$Text{"$Data{"Language"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Category"}:</span> <span title="$Text{"$Data{"CategoryName"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Quote{"$Text{"$Data{"State"}"}","25"}</span></li>
+                <li><span class="Key">$Text{"Language"}:</span> <span title="$Text{"$Data{"Language"}"}">$Quote{"$Text{"$Data{"Language"}"}","18"}</span></li>
                 <li>
                     <span class="Key RatingLabel">$Text{"Rating"}:</span>
 <!-- dtl:block:RateStars -->
@@ -42,7 +43,7 @@
                 </li>
 
 <!-- dtl:block:ViewVotes -->
-                <li><span class="Key">$Text{"Votes"}:</span> <span title="$Quote{"$Text{"$Data{"Votes"}"}"}">$Quote{"$Text{"$Data{"Votes"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Votes"}:</span> <span title="$Text{"$Data{"Votes"}"}">$Quote{"$Text{"$Data{"Votes"}"}","18"}</span></li>
 <!-- dtl:block:ViewVotes -->
                 <li><a href="$Env{"Baselink"}Action=CustomerFAQPrint;ItemID=$LQData{"ItemID"}" class="Print AsPopup" title="$Text{"Print"}">$Text{"Print"}</a></li>
             </ul>
