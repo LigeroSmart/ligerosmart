@@ -2,14 +2,14 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.8 2010-12-02 11:22:46 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.9 2010-12-02 11:28:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div id="MainBox" class="TicketZoom ARIARoleMain">
+<div id="MainBox" class="ARIARoleMain">
 
     <div class="Content">
         <div class="FAQHeader">
@@ -159,11 +159,11 @@
                             </thead>
                             <tbody>
 <!-- dtl:block:Record -->
-                                <tr title="$QData{"TicketNumber"}">
-                                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
-                                    <td class="Title">$QData{"Title","60"}</td>
-                                    <td class="Category">$QData{"CategoryName","60"}</td>
-                                    <td class="Language">$QData{"Language","5"}</td>
+                                <tr>
+                                    <td class="FAQNumber" title="$QData{"Number"}"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                                    <td class="Title" title="$QData{"Title"}">$QData{"Title","60"}</td>
+                                    <td class="Category" title="$QData{"CategoryName"}">$QData{"CategoryName","45"}</td>
+                                    <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
                                     <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
                                 </tr>
 <!-- dtl:block:Record -->
