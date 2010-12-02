@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.12 2010-12-02 16:19:21 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.13 2010-12-02 21:40:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@
                     <div class="Header">
                         <h3>$Text{"$Data{"Header"}"}</h3>
 <!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=RSS&Type=$QData{"Type"}" title="$Text{"$Data{"Title"}"}"><img src="$Env{"Images"}/rss.png" border="0"></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=RSS;Type=$QData{"Type"}" title="$Text{"$Data{"Title"}"}"><img src="$Env{"Images"}rss.png" border="0"></a>
 <!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
                         <div class="Clear"></div>
                     </div>
