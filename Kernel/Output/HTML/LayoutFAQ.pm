@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.37 2010-12-02 15:16:11 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.38 2010-12-02 21:40:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -682,13 +682,14 @@ sub FAQShowLatestNewsBox {
             # TODO
             # show the RSS Feed icon
             if ( $Param{Mode} eq 'Public' ) {
-                $Self->Block(
-                    Name => 'InfoBoxFAQMiniListNewsRSS',
-                    Data => {
-                        Type  => '',
-                        Title => '',
-                    },
-                );
+
+                #                $Self->Block(
+                #                    Name => 'InfoBoxFAQMiniListNewsRSS',
+                #                    Data => {
+                #                        Type  => 'AAA',
+                #                        Title => 'BBB',
+                #                    },
+                #                );
             }
 
             for my $ItemID (@ItemIDs) {
@@ -817,13 +818,14 @@ sub FAQShowTop10 {
             # TODO
             # show the RSS Feed icon
             if ( $Param{Mode} eq 'Public' ) {
-                $Self->Block(
-                    Name => 'InfoBoxFAQMiniListNewsRSS',
-                    Data => {
-                        Type  => '',
-                        Title => '',
-                    },
-                );
+
+                #                $Self->Block(
+                #                    Name => 'InfoBoxFAQMiniListNewsRSS',
+                #                    Data => {
+                #                        Type  => '',
+                #                        Title => '',
+                #                    },
+                #                );
             }
 
             my $Number;
