@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.133 2010-12-01 11:30:03 ub Exp $
+# $Id: FAQ.pm,v 1.134 2010-12-02 20:21:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.133 $) [1];
+$VERSION = qw($Revision: 1.134 $) [1];
 
 =head1 NAME
 
@@ -154,17 +154,18 @@ sub FAQGet {
     my $VoteResult = sprintf( "%0." . $DecimalPlaces . "f", $VoteData->{Result} || 0 );
 
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT i.f_name, i.f_language_id, i.f_subject, ' .
-            ' i.f_field1, i.f_field2, i.f_field3, ' .
-            ' i.f_field4, i.f_field5, i.f_field6, ' .
-            ' i.free_key1, i.free_value1, i.free_key2, i.free_value2, ' .
-            ' i.free_key3, i.free_value3, i.free_key4, i.free_value4, ' .
-            ' i.created, i.created_by, i.changed, i.changed_by, ' .
-            ' i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approved, ' .
-            ' i.f_number, st.id, st.name ' .
-            ' FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l ' .
-            ' WHERE i.state_id = s.id AND s.type_id = st.id AND i.category_id = c.id AND ' .
-            ' i.f_language_id = l.id AND i.id = ?',
+        SQL => 'SELECT i.f_name, i.f_language_id, i.f_subject, '
+            . 'i.f_field1, i.f_field2, i.f_field3, '
+            . 'i.f_field4, i.f_field5, i.f_field6, '
+            . 'i.created, i.created_by, i.changed, i.changed_by, '
+            . 'i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approved, '
+            . 'i.f_number, st.id, st.name '
+            . 'FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l '
+            . 'WHERE i.state_id = s.id '
+            . 'AND s.type_id = st.id '
+            . 'AND i.category_id = c.id '
+            . 'AND i.f_language_id = l.id '
+            . 'AND i.id = ?',
         Bind => [ \$Param{ItemID} ],
     );
 
@@ -188,28 +189,20 @@ sub FAQGet {
             Field4        => $Row[6],
             Field5        => $Row[7],
             Field6        => $Row[8],
-            FreeKey1      => $Row[9],
-            FreeText1     => $Row[10],
-            FreeKey2      => $Row[11],
-            FreeText2     => $Row[12],
-            FreeKey3      => $Row[13],
-            FreeText3     => $Row[14],
-            FreeKey4      => $Row[15],
-            FreeText4     => $Row[16],
-            Created       => $Row[17],
-            CreatedBy     => $Row[18],
-            Changed       => $Row[19],
-            ChangedBy     => $Row[20],
-            CategoryID    => $Row[21],
-            StateID       => $Row[22],
-            CategoryName  => $Row[23],
-            State         => $Row[24],
-            Language      => $Row[25],
-            Keywords      => $Row[26],
-            Approved      => $Row[27],
-            Number        => $Row[28],
-            StateTypeID   => $Row[29],
-            StateTypeName => $Row[30],
+            Created       => $Row[9],
+            CreatedBy     => $Row[10],
+            Changed       => $Row[11],
+            ChangedBy     => $Row[12],
+            CategoryID    => $Row[13],
+            StateID       => $Row[14],
+            CategoryName  => $Row[15],
+            State         => $Row[16],
+            Language      => $Row[17],
+            Keywords      => $Row[18],
+            Approved      => $Row[19],
+            Number        => $Row[20],
+            StateTypeID   => $Row[21],
+            StateTypeName => $Row[22],
             VoteResult    => $VoteResult,
             Votes         => $VoteData->{Votes},
         );
@@ -323,15 +316,6 @@ add an article
         Field6     => 'Comment...',     # (optional)
         Approved   => 1,                # (optional)
         UserID     => 1,
-
-        # TODO:
-        # Remove freetext fields from everywhere in the system,
-        # take care of packageupdate too!
-        #
-        FreeKey1   => 'Software',
-        FreeText1  => 'Apache 3.4.2',
-        FreeKey2   => 'OS',
-        FreeText2  => 'OpenBSD 4.2.2',
     );
 
 =cut
@@ -386,22 +370,21 @@ sub FAQAdd {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => 'INSERT INTO faq_item (f_number, f_name, f_language_id, f_subject, ' .
-            ' category_id, state_id, f_keywords, approved, ' .
-            ' f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, ' .
-            ' free_key1, free_value1, free_key2, free_value2, ' .
-            ' free_key3, free_value3, free_key4, free_value4, ' .
-            ' created, created_by, changed, changed_by)' .
-            ' VALUES ' .
-            ' (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ' .
-            ' ?, ?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
+        SQL => 'INSERT INTO faq_item '
+            . '(f_number, f_name, f_language_id, f_subject, '
+            . 'category_id, state_id, f_keywords, approved, '
+            . 'f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, '
+            . 'created, created_by, changed, changed_by)'
+            . 'VALUES ('
+            . '?, ?, ?, ?, '
+            . '?, ?, ?, ?, '
+            . '?, ?, ?, ?, ?, ?, '
+            . 'current_timestamp, ?, current_timestamp, ?)',
         Bind => [
-            \$Param{Number},     \$Param{Name},      \$Param{LanguageID}, \$Param{Title},
-            \$Param{CategoryID}, \$Param{StateID},   \$Param{Keywords},   \$Param{Approved},
-            \$Param{Field1},     \$Param{Field2},    \$Param{Field3},
-            \$Param{Field4},     \$Param{Field5},    \$Param{Field6},
-            \$Param{FreeKey1},   \$Param{FreeText1}, \$Param{FreeKey2},   \$Param{FreeText2},
-            \$Param{FreeKey3},   \$Param{FreeText3}, \$Param{FreeKey4},   \$Param{FreeText4},
+            \$Param{Number},     \$Param{Name},    \$Param{LanguageID}, \$Param{Title},
+            \$Param{CategoryID}, \$Param{StateID}, \$Param{Keywords},   \$Param{Approved},
+            \$Param{Field1},     \$Param{Field2},  \$Param{Field3},
+            \$Param{Field4},     \$Param{Field5},  \$Param{Field6},
             \$Param{UserID},     \$Param{UserID},
         ],
     );
@@ -489,10 +472,6 @@ update an article
         Title      => 'Some Text',
         Field1     => 'Problem...',
         Field2     => 'Solution...',
-        FreeKey1   => 'Software',
-        FreeText1  => 'Apache 3.4.2',
-        FreeKey2   => 'OS',
-        FreeText2  => 'OpenBSD 4.2.2',
         UserID     => 1,
     );
 
@@ -526,21 +505,25 @@ sub FAQUpdate {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_item '
-            . 'SET f_name = ?, f_language_id = ?, f_subject = ?, '
-            . 'category_id = ?, state_id = ?, f_keywords = ?, f_field1 = ?, '
-            . 'f_field2 = ?, f_field3 = ?, f_field4 = ?, f_field5 = ?, f_field6 = ?, '
-            . 'free_key1 = ?, free_value1 = ?, free_key2 = ?, free_value2 = ?, '
-            . 'free_key3 = ?, free_value3 = ?, free_key4 = ?, free_value4 = ?, '
-            . 'changed = current_timestamp, changed_by = ? '
+        SQL => 'UPDATE faq_item SET '
+            . 'f_name = ?, f_language_id = ?, '
+            . 'f_subject = ?, category_id = ?, '
+            . 'state_id = ?, f_keywords = ?, '
+            . 'f_field1 = ?, f_field2 = ?, '
+            . 'f_field3 = ?, f_field4 = ?, '
+            . 'f_field5 = ?, f_field6 = ?, '
+            . 'changed = current_timestamp, '
+            . 'changed_by = ? '
             . 'WHERE id = ?',
         Bind => [
-            \$Param{Name},     \$Param{LanguageID}, \$Param{Title},    \$Param{CategoryID},
-            \$Param{StateID},  \$Param{Keywords},   \$Param{Field1},   \$Param{Field2},
-            \$Param{Field3},   \$Param{Field4},     \$Param{Field5},   \$Param{Field6},
-            \$Param{FreeKey1}, \$Param{FreeText1},  \$Param{FreeKey2}, \$Param{FreeText2},
-            \$Param{FreeKey3}, \$Param{FreeText3},  \$Param{FreeKey4}, \$Param{FreeText4},
-            \$Param{UserID},   \$Param{ItemID},
+            \$Param{Name},    \$Param{LanguageID},
+            \$Param{Title},   \$Param{CategoryID},
+            \$Param{StateID}, \$Param{Keywords},
+            \$Param{Field1},  \$Param{Field2},
+            \$Param{Field3},  \$Param{Field4},
+            \$Param{Field5},  \$Param{Field6},
+            \$Param{UserID},
+            \$Param{ItemID},
         ],
     );
 
@@ -4250,11 +4233,15 @@ sub _FAQApprovalUpdate {
 
     # update database
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_item '
-            . 'SET approved = ?, changed = current_timestamp, changed_by = ? '
+        SQL => 'UPDATE faq_item SET '
+            . 'approved = ?, '
+            . 'changed = current_timestamp, '
+            . 'changed_by = ? '
             . 'WHERE id = ?',
         Bind => [
-            \$Param{Approved}, \$Param{UserID}, \$Param{ItemID},
+            \$Param{Approved},
+            \$Param{UserID},
+            \$Param{ItemID},
         ],
     );
 
@@ -4394,6 +4381,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.133 $ $Date: 2010-12-01 11:30:03 $
+$Revision: 1.134 $ $Date: 2010-12-02 20:21:02 $
 
 =cut
