@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.40 2010-07-29 08:40:16 jp Exp $
+# $Id: TimeAccounting.pm,v 1.41 2010-12-03 09:39:45 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -979,6 +979,15 @@ sub WorkingUnitsCompletnessCheck {
                     = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
                 my $DayStopTime
                     = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
+
+                # add time zone to calculation
+                my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $Calendar );
+                if ($Zone) {
+                    my $ZoneSeconds = $Zone * 60 * 60;
+                    $DayStartTime = $DayStartTime - $ZoneSeconds;
+                    $DayStopTime  = $DayStopTime - $ZoneSeconds;
+                }
+
                 my $ThisDayWorkingTime = $Self->{TimeObject}->WorkingTime(
                     StartTime => $DayStartTime,
                     StopTime  => $DayStopTime,
@@ -1498,6 +1507,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2010-07-29 08:40:16 $
+$Revision: 1.41 $ $Date: 2010-12-03 09:39:45 $
 
 =cut
