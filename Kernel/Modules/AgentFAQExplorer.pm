@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.5 2010-12-02 05:15:20 cr Exp $
+# $Id: AgentFAQExplorer.pm,v 1.6 2010-12-04 01:44:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -120,7 +120,7 @@ sub Run {
     }
 
     my $Output;
-    if ( $Nav eq 'None' ) {
+    if ( $Nav && $Nav eq 'None' ) {
 
         # output header small and no Navbar
         $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
@@ -266,6 +266,7 @@ sub Run {
         SortBy      => $Self->{SortBy},
         ShowColumns => \@ShowColumns,
         Output      => 1,
+        Nav         => $Nav,
     );
 
     # show the FAQ article list
@@ -287,6 +288,7 @@ sub Run {
             Interface       => $Self->{Interface},
             InterfaceStates => $Self->{InterfaceStates},
             UserID          => $Self->{UserID},
+            Nav             => $Nav,
         );
 
         # check error
@@ -303,6 +305,7 @@ sub Run {
         Interface       => $Self->{Interface},
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => $Self->{UserID},
+        Nav             => $Nav,
     );
 
     # check error
@@ -321,7 +324,7 @@ sub Run {
     );
 
     # add footer
-    if ( $Nav eq 'None' ) {
+    if ( $Nav && $Nav eq 'None' ) {
         $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
     }
     else {
