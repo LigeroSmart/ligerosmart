@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.39 2010-12-04 01:40:33 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.40 2010-12-04 15:30:06 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -384,8 +384,8 @@ sub FAQContentShow {
     # get the internal state type ID
     my $InternalStateID = $InternalStateType->{StateID};
 
-    # get configuration option to return Internal fields
-    my $IncludeInternal = $Self->{ConfigObject}->Get('FAQ::TicketCompose::IncludeInternal');
+    # get configuration options for Ticket Compose
+    my $TicketComposeConfig = $Self->{ConfigObject}->Get('FAQ::TicketCompose');
 
     # get the config of FAQ fields that should be shown
     my %Fields;
@@ -441,8 +441,13 @@ sub FAQContentShow {
             }
 
             # Check if field should be part of the returning string
-            if ( $IncludeInternal || !$IsInternal ) {
-                $FullContent .= $Caption . ' <br/> ' . $Content . ' <br/> ';
+            if ( $TicketComposeConfig->{IncludeInternal} || !$IsInternal ) {
+
+                # Check if field name should be returned
+                if ( $TicketComposeConfig->{ShowFieldNames} ) {
+                    $FullContent .= $Caption . ' <br/> ';
+                }
+                $FullContent .= $Content . ' <br/> ';
             }
         }
     }
