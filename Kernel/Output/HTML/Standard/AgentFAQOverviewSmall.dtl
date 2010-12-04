@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.14 2010-12-02 16:33:14 ub Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.15 2010-12-04 01:35:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,7 +63,7 @@
 <!-- dtl:block:RecordNumber -->
                 <td>
 <!-- dtl:block:RecordNumberLinkStart -->
-                    <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"ItemID"}" title="$LQData{"Number"}" class="MasterActionLink">
+                    <a href="$Env{"Baselink"}Action=AgentFAQZoom;ItemID=$LQData{"ItemID"};Nav=$LQData{"Nav"}" title="$LQData{"Number"}" class="MasterActionLink">
 <!-- dtl:block:RecordNumberLinkStart -->
                         $QData{"Number"}
 <!-- dtl:block:RecordNumberLinkEnd -->
