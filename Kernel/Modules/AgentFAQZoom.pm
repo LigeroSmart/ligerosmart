@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.25 2010-12-01 13:05:37 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.26 2010-12-04 01:43:00 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,6 +72,9 @@ sub Run {
     my %GetParam;
     $GetParam{ItemID} = $Self->{ParamObject}->GetParam( Param => 'ItemID' );
     $GetParam{Rate}   = $Self->{ParamObject}->GetParam( Param => 'Rate' );
+
+    # get navigation bar option
+    my $Nav = $Self->{ParamObject}->GetParam( Param => 'Nav' ) || '';
 
     # check needed stuff
     if ( !$GetParam{ItemID} ) {
@@ -134,11 +137,20 @@ sub Run {
         }
     }
 
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Value => $FAQData{Title},
-    );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output;
+    if ( $Nav eq 'None' ) {
+
+        # output header small and no Navbar
+        $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+    }
+    else {
+
+        # output header and navigation bar
+        $Output = $Self->{LayoutObject}->Header(
+            Value => $FAQData{Title},
+        );
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+    }
 
     # get FAQ vote information
     my $VoteData = $Self->{FAQObject}->VoteGet(
@@ -270,45 +282,48 @@ sub Run {
         $Param{VotingResultColor} = 'Gray';
     }
 
-    # run faq menu modules
-    if ( ref $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
-        my %Menus   = %{ $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') };
-        my $Counter = 0;
-        for my $Menu ( sort keys %Menus ) {
+    if ( !$Nav eq 'None' ) {
 
-            # load module
-            if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
-                my $Object = $Menus{$Menu}->{Module}->new(
-                    %{$Self},
-                    ItemID => $FAQData{ItemID},
-                );
+        # run faq menu modules
+        if ( ref $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
+            my %Menus   = %{ $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') };
+            my $Counter = 0;
+            for my $Menu ( sort keys %Menus ) {
 
-                # set classes
-                if ( $Menus{$Menu}->{Target} ) {
+                # load module
+                if ( $Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+                    my $Object = $Menus{$Menu}->{Module}->new(
+                        %{$Self},
+                        ItemID => $FAQData{ItemID},
+                    );
 
-                    if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
-                        $Menus{$Menu}->{Class} = 'AsPopup';
+                    # set classes
+                    if ( $Menus{$Menu}->{Target} ) {
+
+                        if ( $Menus{$Menu}->{Target} eq 'PopUp' ) {
+                            $Menus{$Menu}->{Class} = 'AsPopup';
+                        }
+                        elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
+                            $Menus{$Menu}->{Class} = 'HistoryBack';
+                        }
+                        elsif ( $Menus{$Menu}->{Target} eq 'ConfirmationDialog' ) {
+                            $Menus{$Menu}->{Class} = 'AsConfirmationDialog';
+                        }
+
                     }
-                    elsif ( $Menus{$Menu}->{Target} eq 'Back' ) {
-                        $Menus{$Menu}->{Class} = 'HistoryBack';
-                    }
-                    elsif ( $Menus{$Menu}->{Target} eq 'ConfirmationDialog' ) {
-                        $Menus{$Menu}->{Class} = 'AsConfirmationDialog';
-                    }
 
+                    # run module
+                    $Counter = $Object->Run(
+                        %Param,
+                        FAQItem => {%FAQData},
+                        Counter => $Counter,
+                        Config  => $Menus{$Menu},
+                        MenuID  => 'Menu' . $Menu,
+                    );
                 }
-
-                # run module
-                $Counter = $Object->Run(
-                    %Param,
-                    FAQItem => {%FAQData},
-                    Counter => $Counter,
-                    Config  => $Menus{$Menu},
-                    MenuID  => 'Menu' . $Menu,
-                );
-            }
-            else {
-                return $Self->{LayoutObject}->FatalError();
+                else {
+                    return $Self->{LayoutObject}->FatalError();
+                }
             }
         }
     }
@@ -340,11 +355,13 @@ sub Run {
         FAQObject  => $Self->{FAQObject},
         CategoryID => $FAQData{CategoryID},
         UserID     => $Self->{UserID},
+        Nav        => $Nav,
     );
     if ($ShowFAQPath) {
         $Self->{LayoutObject}->Block(
             Name => 'FAQPathItemElement',
             Data => {%FAQData},
+            Nav  => $Nav,
         );
     }
 
@@ -372,73 +389,80 @@ sub Run {
         Votes      => $FAQData{Votes},
     );
 
-    # output existing attachments
-    my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
-        ItemID     => $GetParam{ItemID},
-        ShowInline => 0,
-        UserID     => $Self->{UserID},
-    );
+    if ( !$Nav eq 'None' ) {
 
-    # output header and all attachments
-    if (@AttachmentIndex) {
-        $Self->{LayoutObject}->Block(
-            Name => 'AttachmentHeader',
+        # output existing attachments
+        my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
+            ItemID     => $GetParam{ItemID},
+            ShowInline => 0,
+            UserID     => $Self->{UserID},
         );
-        for my $Attachment (@AttachmentIndex) {
+
+        # output header and all attachments
+        if (@AttachmentIndex) {
             $Self->{LayoutObject}->Block(
-                Name => 'AttachmentRow',
-                Data => {
-                    %FAQData,
-                    %{$Attachment},
-                },
+                Name => 'AttachmentHeader',
             );
+            for my $Attachment (@AttachmentIndex) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'AttachmentRow',
+                    Data => {
+                        %FAQData,
+                        %{$Attachment},
+                    },
+                );
+            }
         }
     }
 
     # show FAQ Content
-    $Self->{LayoutObject}->FAQContentShow(
+    my $FAQBody = $Self->{LayoutObject}->FAQContentShow(
         FAQObject       => $Self->{FAQObject},
         InterfaceStates => $Self->{InterfaceStates},
         FAQData         => {%FAQData},
         UserID          => $Self->{UserID},
+        ReturnContent   => 1,
     );
 
-    # show FAQ Voting
-    # check config
-    my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
-    if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+    if ( !$Nav eq 'None' ) {
 
-        # check if the user already voted after last change
-        if ( !$AlreadyVoted ) {
-            $Self->_FAQVoting( FAQData => {%FAQData} );
+        # show FAQ Voting
+        # check config
+        my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
+        if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+
+            # check if the user already voted after last change
+            if ( !$AlreadyVoted ) {
+                $Self->_FAQVoting( FAQData => {%FAQData} );
+            }
         }
-    }
 
-    # get linked objects
-    my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-        Object => 'FAQ',
-        Key    => $GetParam{ItemID},
-        State  => 'Valid',
-        UserID => $Self->{UserID},
-    );
-
-    # get link table view mode
-    my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
-
-    # create the link table
-    my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
-        LinkListWithData => $LinkListWithData,
-        ViewMode         => $LinkTableViewMode,
-    );
-
-    # output the link table
-    if ($LinkTableStrg) {
-        $Self->{LayoutObject}->Block(
-            Name => 'LinkTable' . $LinkTableViewMode,
-            Data => {
-                LinkTableStrg => $LinkTableStrg,
-            },
+        # get linked objects
+        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+            Object => 'FAQ',
+            Key    => $GetParam{ItemID},
+            State  => 'Valid',
+            UserID => $Self->{UserID},
         );
+
+        # get link table view mode
+        my $LinkTableViewMode = $Self->{ConfigObject}->Get('LinkObject::ViewMode');
+
+        # create the link table
+        my $LinkTableStrg = $Self->{LayoutObject}->LinkObjectTableCreate(
+            LinkListWithData => $LinkListWithData,
+            ViewMode         => $LinkTableViewMode,
+        );
+
+        # output the link table
+        if ($LinkTableStrg) {
+            $Self->{LayoutObject}->Block(
+                Name => 'LinkTable' . $LinkTableViewMode,
+                Data => {
+                    LinkTableStrg => $LinkTableStrg,
+                },
+            );
+        }
     }
 
     # log access to this FAQ item
@@ -449,17 +473,49 @@ sub Run {
     );
 
     # start template output
-    $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentFAQZoom',
-        Data         => {
-            %FAQData,
-            %GetParam,
-            %Param,
-        },
-    );
+    if ( $Nav && $Nav eq 'None' ) {
+
+        # only convert html to plain text if rich text editor is not used
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+            $FAQData{FullBody} = $FAQBody;
+        }
+        else {
+            $FAQData{FullBody} = $Self->{LayoutObject}->{HTMLUtilsObject}->ToAscii(
+                String => $FAQBody,
+            );
+        }
+
+        # remove inline image links to faq images
+        $FAQData{FullBody}
+            =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
+
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentFAQZoomSmall',
+            Data         => {
+                %FAQData,
+                %GetParam,
+                %Param,
+            },
+        );
+    }
+    else {
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentFAQZoom',
+            Data         => {
+                %FAQData,
+                %GetParam,
+                %Param,
+            },
+        );
+    }
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    if ( $Nav && $Nav eq 'None' ) {
+        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    }
+    else {
+        $Output .= $Self->{LayoutObject}->Footer();
+    }
 
     return $Output;
 }
