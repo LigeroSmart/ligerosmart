@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.38 2010-12-02 21:40:59 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.39 2010-12-04 01:40:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -312,6 +312,7 @@ sub FAQListShow {
         PageShown => $PageShown,
         AllHits   => $Param{Total} || 0,
         Frontend  => $Frontend,
+        Nav       => $Param{Nav} || '',
     );
 
     # create output
@@ -339,6 +340,8 @@ sub FAQListShow {
 Outputs the necessary DTL blocks to display the FAQ item fields for the supplied FAQ item ID.
 The fields displayed are also restricted by the permissions represented by the supplied interface
 
+If exist ReturnContent parameter it returns the FAQ items fields on a HTML formated string
+
     $LayoutObject->FAQContentShow(
         FAQObject       => $FAQObject,                 # needed for core module interaction
         FAQData         => %{ $FAQData },
@@ -346,6 +349,13 @@ The fields displayed are also restricted by the permissions represented by the s
         UserID          => 1,
     );
 
+    my $Content = $LayoutObject->FAQContentShow(
+        FAQObject       => $FAQObject,                 # needed for core module interaction
+        FAQData         => %{ $FAQData },
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => 1,
+        ReturnContent   => 1,
+    );
 =cut
 
 sub FAQContentShow {
@@ -365,6 +375,18 @@ sub FAQContentShow {
     # store FAQ object locally
     $Self->{FAQObject} = $Param{FAQObject};
 
+    # get the internal state type
+    my $InternalStateType = $Self->{FAQObject}->StateTypeGet(
+        Name   => 'internal',
+        UserID => $Param{UserID},
+    );
+
+    # get the internal state type ID
+    my $InternalStateID = $InternalStateType->{StateID};
+
+    # get configuration option to return Internal fields
+    my $IncludeInternal = $Self->{ConfigObject}->Get('FAQ::TicketCompose::IncludeInternal');
+
     # get the config of FAQ fields that should be shown
     my %Fields;
     FIELD:
@@ -380,6 +402,8 @@ sub FAQContentShow {
         $Fields{ "Field" . $Number } = $Config;
     }
 
+    my $FullContent;
+
     # sort shown fields by priority
     FIELD:
     for my $Field ( sort { $Fields{$a}->{Prio} <=> $Fields{$b}->{Prio} } keys %Fields ) {
@@ -393,17 +417,41 @@ sub FAQContentShow {
         # do not show fields that are not allowed in the given interface
         next FIELD if !$Param{InterfaceStates}->{ $StateTypeData->{StateID} };
 
+        my $Caption = $Fields{$Field}->{'Caption'};
+        my $Content = $Param{FAQData}->{$Field} || '';
+
         # show the field
         $Self->Block(
             Name => 'FAQContent',
             Data => {
                 Field     => $Field,
-                Caption   => $Fields{$Field}->{'Caption'},
+                Caption   => $Caption,
                 StateName => $StateTypeData->{Name},
-                Content   => $Param{FAQData}->{$Field} || '',
+                Content   => $Content,
             },
         );
+
+        # store the field to return all FAQ Body
+        if ( $Param{ReturnContent} && $Content ) {
+
+            # check if current field is internal
+            my $IsInternal;
+            if ( $StateTypeData->{StateID} == $InternalStateID ) {
+                $IsInternal = 1;
+            }
+
+            # Check if field should be part of the returning string
+            if ( $IncludeInternal || !$IsInternal ) {
+                $FullContent .= $Caption . ' <br/> ' . $Content . ' <br/> ';
+            }
+        }
     }
+
+    # retrun all the (permited) FAQ body
+    if ( $Param{ReturnContent} ) {
+        return $FullContent;
+    }
+    return
 }
 
 =item FAQPathShow()
@@ -415,6 +463,7 @@ and returns the value 1.
         FAQObject   => $FAQObject,                   # needed for core module interaction
         CategoryID  => 5,
         UserID      => 1,
+        Nav         => 'none'                        # optional
     );
 
 =cut
@@ -558,6 +607,7 @@ articles are shown here.
         Interface       => $Self->{Interface},
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => 1,
+        Nav             => 'none'                      # optional
     );
 
 =cut
@@ -703,7 +753,10 @@ sub FAQShowLatestNewsBox {
                 # show the article row
                 $Self->Block(
                     Name => 'InfoBoxFAQMiniListItemRow',
-                    Data => {%FAQData},
+                    Data => {
+                        Nav => $Param{Nav},
+                        %FAQData,
+                    },
                 );
             }
         }
@@ -725,6 +778,7 @@ articles are shown here.
         Interface       => $Self->{Interface},
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => 1,
+        Nav             => 'none'                      # optional
     );
 
 =cut
@@ -844,6 +898,7 @@ sub FAQShowTop10 {
                 $Self->Block(
                     Name => 'InfoBoxFAQMiniListItemRow',
                     Data => {
+                        Nav => $Param{Nav},
                         %FAQData,
                     },
                 );
