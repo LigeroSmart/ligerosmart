@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -105,14 +105,8 @@
     color: Gray;
 }
 
-/*
- .FAQRateButtonChecked {
-    background: url(../img/rate-button-checked.png);
+.ZoomSmallButton{
+    margin-left: 12px;
 }
-
- .FAQRateButtonUnchecked {
-    background: url(../img/rate-button-unchecked.png);
-}
-*/
 
 }
