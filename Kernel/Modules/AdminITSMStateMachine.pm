@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMStateMachine.pm - to add/update/delete state transitions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.pm,v 1.27 2010-11-18 12:50:48 ub Exp $
+# $Id: AdminITSMStateMachine.pm,v 1.28 2010-12-06 12:28:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange::ITSMStateMachine;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -360,7 +360,6 @@ sub _OverviewStateTransitionsPageGet {
     );
 
     # lookup for state names
-    my $CssClass = 'searchactive';
     my %NextStateIDs
         = %{ $Self->{StateMachineObject}->StateTransitionList( Class => $Param{Class} ) || {} };
 
@@ -368,9 +367,6 @@ sub _OverviewStateTransitionsPageGet {
     for my $StateID ( sort keys %NextStateIDs ) {
 
         for my $NextStateID ( @{ $NextStateIDs{$StateID} } ) {
-
-            # set output class
-            $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
 
             # state names
             my $StateName = $Self->{StateMachineObject}->StateLookup(
@@ -386,7 +382,6 @@ sub _OverviewStateTransitionsPageGet {
                 Name => 'StateTransitionRow',
                 Data => {
                     %Param,
-                    CssClass      => $CssClass,
                     StateID       => $StateID,
                     StateName     => $StateName,
                     NextStateID   => $NextStateID,
@@ -400,7 +395,6 @@ sub _OverviewStateTransitionsPageGet {
                     Name => 'StateTransitionDeleteButton',
                     Data => {
                         %Param,
-                        CssClass      => $CssClass,
                         StateID       => $StateID,
                         StateName     => $StateName,
                         NextStateID   => $NextStateID,
@@ -443,13 +437,10 @@ sub _OverviewClassesPageGet {
         Data => \%Param,
     );
 
-    my $CssClass = 'searchactive';
     for my $Class ( sort keys %{ $Self->{ConfigByClass} } ) {
-        $CssClass = $CssClass eq 'searchactive' ? 'searchpassive' : 'searchactive';
         $Self->{LayoutObject}->Block(
             Name => 'OverviewClassesRow',
             Data => {
-                CssClass       => $CssClass,
                 ClassShortName => $Self->{ConfigByClass}->{$Class}->{Name},
                 Class          => $Class,
             },

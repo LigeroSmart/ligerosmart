@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.16 2010-10-28 12:23:18 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.17 2010-12-06 12:29:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -168,9 +168,8 @@ sub Run {
         }
     }
 
-    my $Output   = '';
-    my $Counter  = 0;
-    my $CssClass = '';
+    my $Output  = '';
+    my $Counter = 0;
     ID:
     for my $ID (@IDs) {
         $Counter++;
@@ -368,16 +367,12 @@ sub Run {
             # store services data
             $SubElementData{Services} = \@ServicesData;
 
-            # set css class of the row
-            $CssClass = $CssClass eq 'searchpassive' ? 'searchactive' : 'searchpassive';
-
             # build record block
             $Self->{LayoutObject}->Block(
                 Name => 'Record',
                 Data => {
                     %Param,
                     %Data,
-                    CssClass => $CssClass,
                 },
             );
 
@@ -390,7 +385,6 @@ sub Run {
                         Data => {
                             %Param,
                             %Data,
-                            CssClass => $CssClass,
                         },
                     );
 
@@ -406,7 +400,6 @@ sub Run {
                                     %Param,
                                     %Data,
                                     %{$SubElement},
-                                    CssClass => $CssClass,
                                 },
                             );
                         }
@@ -428,7 +421,6 @@ sub Run {
                         Data => {
                             %Param,
                             %Data,
-                            CssClass => $CssClass,
                         },
                     );
                     $Self->{LayoutObject}->Block(
@@ -436,7 +428,6 @@ sub Run {
                         Data => {
                             %Param,
                             %Data,
-                            CssClass => $CssClass,
                         },
                     );
                 }
