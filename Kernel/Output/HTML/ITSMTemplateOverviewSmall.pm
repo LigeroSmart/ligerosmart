@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMTemplateOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTemplateOverviewSmall.pm,v 1.9 2010-12-06 12:22:36 ub Exp $
+# $Id: ITSMTemplateOverviewSmall.pm,v 1.10 2010-12-06 12:37:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -105,64 +105,83 @@ sub Run {
 
     my $Output  = '';
     my $Counter = 0;
-    ID:
-    for my $ID (@IDs) {
-        $Counter++;
-        if ( $Counter >= $Param{StartHit} && $Counter < ( $Param{PageShown} + $Param{StartHit} ) ) {
 
-            # display the template data
-            my $Template = $Self->{TemplateObject}->TemplateGet(
-                TemplateID => $ID,
-                UserID     => $Self->{UserID},
-            );
-            my %Data = %{$Template};
+    # show templates if there are some
+    if (@IDs) {
 
-            # human readable validity
-            $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
+        ID:
+        for my $ID (@IDs) {
+            $Counter++;
+            if (
+                $Counter >= $Param{StartHit}
+                && $Counter < ( $Param{PageShown} + $Param{StartHit} )
+                )
+            {
 
-            # get user data for needed user types
-            USERTYPE:
-            for my $UserType (qw(CreateBy ChangeBy)) {
+                # display the template data
+                my $Template = $Self->{TemplateObject}->TemplateGet(
+                    TemplateID => $ID,
+                    UserID     => $Self->{UserID},
+                );
+                my %Data = %{$Template};
 
-                # check if UserType attribute exists in the template
-                next USERTYPE if !$Data{$UserType};
+                # human readable validity
+                $Data{Valid} = $Self->{ValidObject}->ValidLookup( ValidID => $Data{ValidID} );
 
-                # get user data
-                my %User = $Self->{UserObject}->GetUserData(
-                    UserID => $Data{$UserType},
-                    Cached => 1,
+                # get user data for needed user types
+                USERTYPE:
+                for my $UserType (qw(CreateBy ChangeBy)) {
+
+                    # check if UserType attribute exists in the template
+                    next USERTYPE if !$Data{$UserType};
+
+                    # get user data
+                    my %User = $Self->{UserObject}->GetUserData(
+                        UserID => $Data{$UserType},
+                        Cached => 1,
+                    );
+
+                    # set user data
+                    $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                    $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                    $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                    $Data{ $UserType . 'LeftParenthesis' }  = '(';
+                    $Data{ $UserType . 'RightParenthesis' } = ')';
+                }
+
+                # build record block
+                $Self->{LayoutObject}->Block(
+                    Name => 'Record',
+                    Data => {
+                        %Param,
+                        %Data,
+                    },
                 );
 
-                # set user data
-                $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
-                $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
-                $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
-                $Data{ $UserType . 'LeftParenthesis' }  = '(';
-                $Data{ $UserType . 'RightParenthesis' } = ')';
-            }
-
-            # build record block
-            $Self->{LayoutObject}->Block(
-                Name => 'Record',
-                Data => {
-                    %Param,
-                    %Data,
-                },
-            );
-
-            # build column record blocks
-            if (@ShowColumns) {
-                for my $Column (@ShowColumns) {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'Record' . $Column,
-                        Data => {
-                            %Param,
-                            %Data,
-                        },
-                    );
+                # build column record blocks
+                if (@ShowColumns) {
+                    for my $Column (@ShowColumns) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Record' . $Column,
+                            Data => {
+                                %Param,
+                                %Data,
+                            },
+                        );
+                    }
                 }
             }
         }
+    }
+
+    # if there are no templates to show, a no data found message is displayed in the table
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'NoDataFoundMsg',
+            Data => {
+                TotalColumns => scalar @ShowColumns,
+            },
+        );
     }
 
     # use template

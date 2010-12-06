@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMTemplateOverview.pm - the template overview module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverview.pm,v 1.17 2010-11-02 18:45:52 ub Exp $
+# $Id: AgentITSMTemplateOverview.pm,v 1.18 2010-12-06 12:36:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::Template;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -182,16 +182,6 @@ sub Run {
     my $IDsRef = $Self->{TemplateObject}->TemplateSearch(
         %{ $Filters{ $Self->{Filter} }->{Search} },
     );
-
-    # if there are no templates to show, a no data found message is displayed in the table
-    if ( !scalar @$IDsRef ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'NoDataFoundMsg',
-            Data => {
-                TotalColumns => scalar @ShowColumns,
-            },
-        );
-    }
 
     # display all navbar filters
     my %NavBarFilter;
