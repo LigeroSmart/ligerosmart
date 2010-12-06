@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.26 2010-10-19 07:21:00 cr Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.27 2010-12-06 12:58:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -138,6 +138,13 @@
                 </tr>
             </thead>
             <tbody>
+<!-- dtl:block:NoDataFoundMsg -->
+                <tr>
+                    <td colspan="$QData{"TotalColumns"}">
+                        $Text{"No data found."}
+                    </td>
+                </tr>
+<!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
                 <tr>
 <!-- dtl:block:RecordChangeStateSignal -->
