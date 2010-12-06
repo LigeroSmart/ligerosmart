@@ -2,7 +2,7 @@
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.10 2010-12-06 21:06:08 mb Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.11 2010-12-06 21:15:18 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,16 +146,16 @@
     <div class="Clear"></div>
 </fieldset>
 <p class="SpacingTop Center">
-    $Text{"Do you really want to delete this Language?"}
+    $Text{"Do you really want to delete this language?"}
 </p>
 <!-- dtl:block:NoAffectedItems -->
 
 <!-- dtl:block:AffectedItems -->
 <p>
-    $Text{"You can not delete this Language. It is used in at least one FAQ Article!"}
+    $Text{"You can not delete this language. It is used in at least one FAQ article!"}
 </p>
 <p class="SpacingTop SpacingBottom">
-    $Text{"This Language is used in the following FAQ Article(s)"}:
+    $Text{"This kanguage is used in the following FAQ Article(s)"}:
 </p>
 
 <ul>
