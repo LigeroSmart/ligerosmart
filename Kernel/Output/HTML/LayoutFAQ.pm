@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.40 2010-12-04 15:30:06 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.41 2010-12-06 10:00:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -452,11 +452,12 @@ sub FAQContentShow {
         }
     }
 
-    # retrun all the (permited) FAQ body
+    # return all the (permited) FAQ body
     if ( $Param{ReturnContent} ) {
         return $FullContent;
     }
-    return
+
+    return 1;
 }
 
 =item FAQPathShow()
@@ -468,7 +469,7 @@ and returns the value 1.
         FAQObject   => $FAQObject,                   # needed for core module interaction
         CategoryID  => 5,
         UserID      => 1,
-        Nav         => 'none'                        # optional
+        Nav         => 'none',                       # optional
     );
 
 =cut
@@ -612,7 +613,7 @@ articles are shown here.
         Interface       => $Self->{Interface},
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => 1,
-        Nav             => 'none'                      # optional
+        Nav             => 'none',                     # optional
     );
 
 =cut
@@ -783,7 +784,7 @@ articles are shown here.
         Interface       => $Self->{Interface},
         InterfaceStates => $Self->{InterfaceStates},
         UserID          => 1,
-        Nav             => 'none'                      # optional
+        Nav             => 'none',                     # optional
     );
 
 =cut
