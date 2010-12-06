@@ -2,7 +2,7 @@
 # AgentFAQZoomSmall.dtl - provides HTML small for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoomSmall.dtl,v 1.1 2010-12-04 01:33:56 cr Exp $
+# $Id: AgentFAQZoomSmall.dtl,v 1.2 2010-12-06 10:46:44 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -142,12 +142,10 @@ $('#Cancel').bind('click', function (event) {
 });
 
 $('#Return').bind('click', function (event) {
-
     if ($('#Subject', parent.document).length && $('#RichText', parent.document).length) {
-
-        var
-        $ParentSubject = $('#Subject', parent.document);
-        $ParentBody    = $('#RichText', parent.document);
+        var $ParentSubject = $('#Subject', parent.document),
+            $ParentBody    = $('#RichText', parent.document),
+            NewHTML;
 
         /* copy subject */
         if ($ParentSubject.val() == '') {
@@ -157,20 +155,23 @@ $('#Return').bind('click', function (event) {
             $ParentSubject.val($ParentSubject.val() + ' - ' + $('#FAQTitle').val());
         }
 
-//        // add FAQ text to WYSIWYG editor in parent window
-//        if ( parent.CKEDITOR && parent.CKEDITOR.instances.RichText ) {
-//            parent.CKEDITOR.instances.RichText.insertHtml($('#FAQBody').val());
-//            parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
-//            return;
-//        }
+        // add FAQ text to WYSIWYG editor in parent window
+        if (parent.CKEDITOR && parent.CKEDITOR.instances.RichText) {
+            NewHTML = parent.CKEDITOR.instances.RichText.getData();
+            NewHTML += $('#FAQBody').val();
+            parent.CKEDITOR.instances.RichText.setData(NewHTML);
+            window.setTimeout(function () {
+                parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
+            }, 50);
+            return;
+        }
 
         /* insert body on top */
-//        else {
+        else {
             $ParentBody.val( $('#FAQBody').val() + $ParentBody.val());
             parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
             return;
-//        }
-
+        }
     }
     else {
         alert('$JSText{"This window must be called from compose window"}');
@@ -178,12 +179,5 @@ $('#Return').bind('click', function (event) {
         return;
     }
 });
-
-
-
-
-
-
-
 //]]></script>
 <!--dtl:js_on_document_complete-->
