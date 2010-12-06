@@ -2,7 +2,7 @@
 # AgentFAQCategory.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.dtl,v 1.11 2010-12-01 12:56:42 ub Exp $
+# $Id: AgentFAQCategory.dtl,v 1.12 2010-12-06 21:06:08 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@
             <div class="Header">
                 <h2>$Text{"Actions"}</h2>
             </div>
-            <div class="Content">
+            <div class="ConVtent">
                 <ul class="ActionList">
 <!-- dtl:block:ActionOverview -->
                     <li>
@@ -114,7 +114,7 @@
                         <div class="Field">
                             <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"NameServerError"}" maxlength="50"/>
                             <div id="NameError" class="TooltipErrorMessage">
-                                <p>$Text{"A category should have a name!"}</p>
+                                <p>$Text{"This field is required."}</p>
                             </div>
                             <div id="NameServerError" class="TooltipErrorMessage">
                                 <p>$Text{"$Data{"NameServerErrorMessage"}"}</p>
@@ -132,10 +132,10 @@
                         <div class="Field">
                             <input type="text" name="Comment" id="Comment" value="$QData{"Comment"}" class="W50pc Validate_Required $QData{"CommentServerError"}" maxlength="80"/>
                             <div id="CommentError" class="TooltipErrorMessage">
-                                <p>$Text{"A category should have a comment!"}</p>
+                                <p>$Text{"This field is required."}</p>
                             </div>
                             <div id="CommentServerError" class="TooltipErrorMessage">
-                                <p>$Text{"A category should have a comment!"}</p>
+                                <p>$Text{"This field is required."}</p>
                             </div>
                             <div class="FieldExplanation">($Text{"Will be shown as comment in Explorer."})</div>
                         </div>
@@ -151,10 +151,10 @@
                         <div class="Field">
                             $Data{"GroupOption"}
                             <div id="PermissionGroupsError" class="TooltipErrorMessage">
-                                <p>$Text{"A category needs at least one permission group!"}</p>
+                                <p>$Text{"Please select at least one permission group."}</p>
                             </div>
                             <div id="PermissionGroupsServerError" class="TooltipErrorMessage">
-                                <p>$Text{"A category needs at least one permission group!"}</p>
+                                <p>$Text{"Please select at least one permission group."}</p>
                             </div>
                             <div class="FieldExplanation">($Text{"Agent groups which can access this category."})</div>
                         </div>

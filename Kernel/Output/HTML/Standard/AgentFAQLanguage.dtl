@@ -2,7 +2,7 @@
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.9 2010-12-01 12:56:42 ub Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.10 2010-12-06 21:06:08 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -113,7 +113,7 @@
                         <div class="Field">
                             <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"NameServerError"}" maxlength="50"/>
                             <div id="NameError" class="TooltipErrorMessage">
-                                <p>$Text{"The name is required!"}</p>
+                                <p>$Text{"This field is required."}</p>
                             </div>
                             <div id="NameServerError" class="TooltipErrorMessage">
                                 <p>$Text{"$Data{"NameServerErrorMessage"}"}</p>

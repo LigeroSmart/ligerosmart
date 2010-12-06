@@ -2,7 +2,7 @@
 # AgentFAQEdit.dtl - provides HTML form for AgentFAQEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.dtl,v 1.6 2010-11-26 11:39:26 ub Exp $
+# $Id: AgentFAQEdit.dtl,v 1.7 2010-12-06 21:06:08 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,8 +33,8 @@
                 <label class="Mandatory" for="Title"><span class="Marker">* </span>$Text{"Title"}:</label>
                 <div class="Field">
                     <input type="text" name="Title" id="Title" value="$QData{"Title"}" class="W50pc Validate_Required $QData{"TitleServerError"}" maxlength="200"/>
-                    <div id="TitleError" class="TooltipErrorMessage"><p>$Text{"The title is required."}</p></div>
-                    <div id="TitleServerError" class="TooltipErrorMessage"><p>$Text{"The title is required."}</p></div>
+                    <div id="TitleError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="TitleServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
                 <div class="Clear"></div>
 
