@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.89 2010-12-06 18:33:45 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.90 2010-12-06 23:45:17 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -878,6 +878,7 @@ Your OTRS Notification Master
                     <CSS>FAQ.Agent.Default.css</CSS>
                     <CSS>FAQ.Widget.css</CSS>
                     <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
+                    <JavaScript>FAQ.Agent.TicketCompose.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1314,5 +1315,37 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextButton" Required="1" Valid="1">
+        <Description Translatable="1">Show "Insert Text" Button in AgentFAQZoomSmall.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::TicketCompose</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::TicketCompose###ShowInsertLinkButton" Required="1" Valid="1">
+        <Description Translatable="1">Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::TicketCompose</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextAndLinkButton" Required="1" Valid="1">
+        <Description Translatable="1">Show "Insert Text &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::TicketCompose</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
 </otrs_config>

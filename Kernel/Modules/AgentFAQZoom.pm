@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.26 2010-12-04 01:43:00 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.27 2010-12-06 23:45:17 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -282,7 +282,7 @@ sub Run {
         $Param{VotingResultColor} = 'Gray';
     }
 
-    if ( !$Nav eq 'None' ) {
+    if ( $Nav ne 'None' ) {
 
         # run faq menu modules
         if ( ref $Self->{ConfigObject}->Get('FAQ::Frontend::MenuModule') eq 'HASH' ) {
@@ -389,7 +389,7 @@ sub Run {
         Votes      => $FAQData{Votes},
     );
 
-    if ( !$Nav eq 'None' ) {
+    if ( $Nav ne 'None' ) {
 
         # output existing attachments
         my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
@@ -424,7 +424,7 @@ sub Run {
         ReturnContent   => 1,
     );
 
-    if ( !$Nav eq 'None' ) {
+    if ( $Nav ne 'None' ) {
 
         # show FAQ Voting
         # check config
@@ -485,9 +485,75 @@ sub Run {
             );
         }
 
+        # get the public state type
+        my $PublicStateType = $Self->{FAQObject}->StateTypeGet(
+            Name   => 'public',
+            UserID => $Self->{UserID},
+        );
+
         # remove inline image links to faq images
         $FAQData{FullBody}
             =~ s{ <img [^<>]+ Action=(Agent|Customer|Public)FAQ [^<>]+ > }{}gxms;
+
+        # get configuration options for Ticket Compose
+        my $TicketComposeConfig = $Self->{ConfigObject}->Get('FAQ::TicketCompose');
+
+        my $ShowOrBlock;
+
+        # show "Insert Text" button
+        if ( $TicketComposeConfig->{ShowInsertTextButton} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'InsertText',
+                Data => {},
+            );
+            $ShowOrBlock = 1;
+        }
+
+        # check if FAQ article is public
+        if ( $FAQData{StateTypeID} == $PublicStateType->{StateID} ) {
+
+            my $HTTPType = $Self->{ConfigObject}->Get('HttpType');
+            my $FQDN     = $Self->{ConfigObject}->Get('FQDN');
+            my $Baselink = $Self->{LayoutObject}->{Baselink};
+
+            # rewrite handle
+            $Baselink
+                =~ s{ index[.]pl [?] }{public.pl?}gxms;
+
+            $FAQData{Publiclink} = $HTTPType . '://' . $FQDN . $Baselink
+                . "Action=PublicFAQZoom;ItemID=$FAQData{ItemID}";
+
+            # show "Insert Link" button
+            if ( $TicketComposeConfig->{ShowInsertLinkButton} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InsertLink',
+                    Data => {},
+                );
+                $ShowOrBlock = 1;
+            }
+
+            # show "Insert Text and Link" button
+            if ( $TicketComposeConfig->{ShowInsertTextAndLinkButton} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InsertBoth',
+                    Data => {},
+                );
+                $ShowOrBlock = 1
+            }
+        }
+
+        my $CancelButtonClass = 'ZoomSmallButton';
+
+        # show the "Or" block beteen the buttons and the Cancel & close window label
+        if ($ShowOrBlock) {
+            $Self->{LayoutObject}->Block(
+                Name => 'Or',
+                Data => {},
+            );
+
+            # set the $CancelButtonClass to '';
+            $CancelButtonClass = '';
+        }
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentFAQZoomSmall',
@@ -495,6 +561,7 @@ sub Run {
                 %FAQData,
                 %GetParam,
                 %Param,
+                CancelButtonClass => $CancelButtonClass || '',
             },
         );
     }
