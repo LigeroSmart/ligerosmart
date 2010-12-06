@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/HeaderMetaFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: HeaderMetaFAQSearch.pm,v 1.8 2010-11-11 15:33:53 ub Exp $
+# $Id: HeaderMetaFAQSearch.pm,v 1.9 2010-12-06 16:08:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,6 +40,8 @@ sub Run {
         $Session = ';' . $Self->{LayoutObject}->{SessionName} . '='
             . $Self->{LayoutObject}->{SessionID};
     }
+
+    # build open search description for FAQ number
     my $Title = $Self->{ConfigObject}->Get('ProductName');
 
     $Title .= '(' . $Self->{ConfigObject}->Get('FAQ::FAQHook') . ')';
@@ -54,6 +56,7 @@ sub Run {
         },
     );
 
+    # build open search description for FAQ fulltext
     my $Fulltext = $Self->{LayoutObject}->{LanguageObject}->Get('FAQFulltext');
     $Title = $Self->{ConfigObject}->Get('ProductName');
     $Title .= '(' . $Fulltext . ')';
