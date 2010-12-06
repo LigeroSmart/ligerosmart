@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.13 2010-12-04 01:36:32 cr Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.14 2010-12-06 18:33:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@
     <div class="Clear"></div>
 
     <div class="LayoutFixedSidebar SidebarLast">
-        <div class="SidebarColumn Large">
+        <div class="SidebarColumn $QData{"SidebarClass"}">
 
 <!-- dtl:block:InfoBoxFAQMiniList -->
             <div class="WidgetSimple">

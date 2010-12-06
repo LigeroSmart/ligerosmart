@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.88 2010-12-04 15:30:06 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.89 2010-12-06 18:33:45 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -549,13 +549,8 @@ Your OTRS Notification Master
             </Hash>
         </Setting>
     </ConfigItem>
-
-<!--
-
-    TODO: Enable again if functionality is complete.
-
     <ConfigItem Name="Frontend::Output::FilterElementPre###FAQ" Required="0" Valid="1">
-        <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed.</Description>
+        <Description Translatable="1">Defines where the 'Insert FAQ' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
@@ -568,20 +563,12 @@ Your OTRS Notification Master
                         <Item Key="AgentTicketEmail">1</Item>
                         <Item Key="AgentTicketCompose">1</Item>
                         <Item Key="AgentTicketForward">1</Item>
-                        <Item Key="AgentTicketNote">1</Item>
-                        <Item Key="AgentTicketClose">0</Item>
-                        <Item Key="AgentTicketFreeText">0</Item>
-                        <Item Key="AgentTicketOwner">0</Item>
-                        <Item Key="AgentTicketPending">0</Item>
-                        <Item Key="AgentTicketPriority">0</Item>
-                        <Item Key="AgentTicketResponsible">0</Item>
+                        <Item Key="AgentTicketActionCommon">1</Item>
                     </Hash>
                 </Item>
             </Hash>
         </Setting>
     </ConfigItem>
--->
-
     <ConfigItem Name="Frontend::Output::OutputFilterTextAutoLink###FAQ" Required="0" Valid="0">
         <Description Translatable="1">A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.</Description>
         <Group>Framework</Group>
