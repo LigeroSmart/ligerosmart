@@ -1,9 +1,8 @@
 # --
 # Kernel/Language/nl_FAQ.pm - the Dutch translation of FAQ
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Copyright (C) 2009 Michiel Beijen <michiel 'at' beefreeit.nl>
 # --
-# $Id: nl_FAQ.pm,v 1.14 2010-12-01 20:14:02 cr Exp $
+# $Id: nl_FAQ.pm,v 1.15 2010-12-06 20:11:04 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -27,9 +26,9 @@ sub Data {
 
     $Lang->{'FAQ'} = 'FAQ';
     $Lang->{'FAQ-Area'} = 'Knowledge Base';
-    $Lang->{'You have already voted!'} = 'U heeft al gestemd!';
-    $Lang->{'No rate selected!'}       = 'Geen beoordeling geselecteerd!';
-    $Lang->{'Thanks for your vote!'}   = 'Dank voor uw stem!';
+    $Lang->{'You have already voted!'} = 'U heeft al gestemd.';
+    $Lang->{'No rate selected!'}       = 'Geen beoordeling geselecteerd.';
+    $Lang->{'Thanks for your vote!'}   = 'Dank voor uw stem.';
     $Lang->{'Votes'}                   = 'Stemmen';
     $Lang->{'LatestChangedItems'}      = 'Laatst veranderde artikelen';
     $Lang->{'LatestCreatedItems'}      = 'Nieuwste artikel';
@@ -46,7 +45,7 @@ sub Data {
     $Lang->{'A category should have a comment!'} = 'Geef een beschrijving op voor de categorie';
     $Lang->{'FAQ Articles (new created)'}        = 'FAQ artikelen (nieuw aangemaakt)';
     $Lang->{'FAQ Articles (recently changed)'}   = 'FAQ artikelen (laatst veranderd)';
-    $Lang->{'FAQ Articles (Top 10)'}             = 'FAQ artikelen (Top 10)';
+    $Lang->{'FAQ Articles (Top 10)'}             = 'FAQ artikelen (top 10)';
     $Lang->{'StartDay'}                          = 'Eerste dag';
     $Lang->{'StartMonth'}                        = 'Eerste maand';
     $Lang->{'StartYear'}                         = 'Eerste jaar';
@@ -54,9 +53,9 @@ sub Data {
     $Lang->{'EndMonth'}                          = 'Laatste maand';
     $Lang->{'EndYear'}                           = 'Laatste jaar';
     $Lang->{'Approval'}                          = 'Goedkeuring';
-    $Lang->{'internal'}                          = '';
-    $Lang->{'external'}                          = '';
-    $Lang->{'public'}                            = '';
+    $Lang->{'internal'}                          = 'intern';
+    $Lang->{'external'}                          = 'extern';
+    $Lang->{'public'}                            = 'publiek';
     $Lang->{
         'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'
         }
@@ -67,11 +66,11 @@ sub Data {
         = 'Voeg tenminste een permissiegroep toe per categorie.';
     $Lang->{'Will be shown as comment in Explorer.'} = 'Wordt in webinterface getoond';
 
-    $Lang->{'Default category name.'}                                      = '';
+    $Lang->{'Default category name.'}                                      = 'Standaard categorie';
     $Lang->{'Rates for voting. Key must be in percent.'}                   = '';
-    $Lang->{'Show voting in defined interfaces.'}                          = '';
-    $Lang->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
-    $Lang->{'Show FAQ path yes/no.'}                                       = '';
+    $Lang->{'Show voting in defined interfaces.'}                          = 'Toon stem-feature';
+    $Lang->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'Taal zoals gedefiniëerd in de language file *_FAQ.pm';
+    $Lang->{'Show FAQ path yes/no.'}                                       = 'Toon FAQ pad ja/nee';
     $Lang->{'Decimal places of the voting result.'}                        = '';
     $Lang->{'CSS color for the voting result.'}                            = '';
     $Lang->{'FAQ path separator.'}                                         = '';
@@ -174,85 +173,84 @@ sub Data {
         = '';
 
     # template: AgentFAQExplorer
-    $Lang->{'FAQ Explorer'}             = '';
-    $Lang->{'Subcategories'}            = '';
-    $Lang->{'Articles'}                 = '';
-    $Lang->{'No subcategories found.'}  = '';
-    $Lang->{'No FAQ data found.'}       = '';
+    $Lang->{'FAQ Explorer'}             = 'FAQ verkenner';
+    $Lang->{'Subcategories'}            = 'Subcategoriën';
+    $Lang->{'Articles'}                 = 'Artikelen';
+    $Lang->{'No subcategories found.'}  = 'Geen subcategoriën gevonden.';
+    $Lang->{'No FAQ data found.'}       = 'Geen FAQ data gevonden.';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ Article'}         = '';
-    $Lang->{'The title is required.'}  = '';
-    $Lang->{'A category is required.'} = '';
+    $Lang->{'Add FAQ Article'}         = 'Artikel toevoegen';
+    $Lang->{'The title is required.'}  = 'Vul een titel in.';
+    $Lang->{'A category is required.'} = 'Kies een categorie.';
 
    # template: AgentFAQJournal
-    $Lang->{'FAQ Journal'} = '';
+    $Lang->{'FAQ Journal'} = 'FAQ journaal';
 
     # template: AgentFAQLanguage
-    $Lang->{'FAQ Language Management'}                               = '';
-    $Lang->{'Add Language'}                                          = '';
-    $Lang->{'Add language'}                                          = '';
-    $Lang->{'Edit Language'}                                         = '';
-    $Lang->{'Delete Language'}                                       = '';
-    $Lang->{'The name is required!'}                                 = '';
-    $Lang->{'This language already exists!'}                         = '';
-    $Lang->{'FAQ language added!'}                                   = '';
-    $Lang->{'FAQ language updated!'}                                 = '';
-    $Lang->{'Do you really want to delete this Language?'}           = '';
-    $Lang->{'This Language is used in the following FAQ Article(s)'} = '';
+    $Lang->{'FAQ Language Management'}                               = 'Beheer talen';
+    $Lang->{'Add Language'}                                          = 'Taal toevoegen';
+    $Lang->{'Add language'}                                          = 'Taal toevoegen';
+    $Lang->{'Edit Language'}                                         = 'Taal bewerken';
+    $Lang->{'Delete Language'}                                       = 'Taal verwijderen';
+    $Lang->{'The name is required!'}                                 = 'De naam is verplicht.';
+    $Lang->{'This language already exists!'}                         = 'Deze taal bestaat al.';
+    $Lang->{'FAQ language added!'}                                   = 'Taal toegevoegd.';
+    $Lang->{'FAQ language updated!'}                                 = 'Taal bijgewerkt.';
+    $Lang->{'Do you really want to delete this Language?'}           = 'Wil je deze taal verwijderen?';
+    $Lang->{'This Language is used in the following FAQ Article(s)'} = 'Deze taal is gebruikt in de volgende artikel(en)';
     $Lang->{'You can not delete this Language. It is used in at least one FAQ Article!'}
-        = '';
+        = 'U kunt deze taal niet verwijderen. Hij is gebruikt in tenminste één artikel.';
 
     # template: AgentFAQCategory
-    $Lang->{'FAQ Category Management'}                         = '';
-    $Lang->{'Add Category'}                                    = '';
-    $Lang->{'Add category'}                                    = '';
-    $Lang->{'Edit Category'}                                   = '';
-    $Lang->{'Delete Category'}                                 = '';
-    $Lang->{'A category should have a name!'}                  = '';
-    $Lang->{'A category should have a comment!'}                = '';
-    $Lang->{'A category needs at least one permission group!'} = '';
-    $Lang->{'This category already exists!'}                   = '';
-    $Lang->{'FAQ category updated!'}                           = '';
-    $Lang->{'FAQ category added!'}                             = '';
-    $Lang->{'Do you really want to delete this Category?'}     = '';
+    $Lang->{'FAQ Category Management'}                         = 'FAQ categoriebeheer';
+    $Lang->{'Add Category'}                                    = 'Categorie toevoegen';
+    $Lang->{'Add category'}                                    = 'Categorie toevoegen';
+    $Lang->{'Edit Category'}                                   = 'Categorie bewerken';
+    $Lang->{'Delete Category'}                                 = 'Categorie verwijderen';
+    $Lang->{'A category should have a name!'}                  = 'Vul een naam in.';
+    $Lang->{'A category should have a comment!'}                = 'Vul een opmerking in.';
+    $Lang->{'A category needs at least one permission group!'} = 'Kies tenminste één permissiegroep';
+    $Lang->{'This category already exists!'}                   = 'Deze categorie bestaat al.';
+    $Lang->{'FAQ category updated!'}                           = 'Categorie bijgewerkt.';
+    $Lang->{'FAQ category added!'}                             = 'Categorie toegevoegd.';
+    $Lang->{'Do you really want to delete this Category?'}     = 'Wilt u deze categorie verwijderen?';
     $Lang->{'This Category is used in the following FAQ Artice(s)'}
-        = '';
+        = 'Deze categorie is gebruikt in de volgende artikelen';
     $Lang->{'This Category is parent of the following SubCategories'}
-        = '';
+        = 'Deze categorie is ouder van de volgende subcategoriën';
     $Lang->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'}
-        = '';
+        = 'U kunt deze taal niet verwijderen. Hij is gebruikt in tenminste één artikel en/of is ouder in teminste één andere categorie';
 
     # template: AgentFAQZoom
-    $Lang->{'FAQ Information'}                      = '';
-    $Lang->{'Rating'}                               = '';
-    $Lang->{'No votes found!'}                      = '';
-    $Lang->{'Details'}                              = '';
-    $Lang->{'Edit this FAQ'}                        = '';
-    $Lang->{'History of this FAQ'}                  = '';
-    $Lang->{'Print this FAQ'}                       = '';
-    $Lang->{'Link another object to this FAQ item'} = '';
-    $Lang->{'Delete this FAQ'}                      = '';
-    $Lang->{'not helpful'}                          = '';
-    $Lang->{'very helpful'}                         = '';
-    $Lang->{'out of 5'}                             = '';
+    $Lang->{'FAQ Information'}                      = 'Informatie';
+    $Lang->{'Rating'}                               = 'Beoordeling';
+    $Lang->{'No votes found!'}                      = 'Geen stemmen gevonden';
+    $Lang->{'Details'}                              = 'Details';
+    $Lang->{'Edit this FAQ'}                        = 'Bewerk dit artikel';
+    $Lang->{'History of this FAQ'}                  = 'Geschiedenis van dit artikel';
+    $Lang->{'Print this FAQ'}                       = 'Print dit artikel';
+    $Lang->{'Link another object to this FAQ item'} = 'Koppel een object aan dit artikel';
+    $Lang->{'Delete this FAQ'}                      = 'Verwijder dit artikel';
+    $Lang->{'not helpful'}                          = 'niet behulpzaam';
+    $Lang->{'very helpful'}                         = 'heel behulpzaam';
+    $Lang->{'out of 5'}                             = 'van 5';
     $Lang->{'No votes found! Be the first one to rate this FAQ article.'}
-         = '';
+         = 'Geen stemmen gevonden. Wees de eerste om dit artikel te beoordelen.';
 
     # template: AgentFAQHistory
-    $Lang->{'History Content'} = '';
-    $Lang->{'Updated'}         = '';
+    $Lang->{'History Content'} = 'Geschiedenis';
+    $Lang->{'Updated'}         = 'Bijgewerkt';
 
     # template: AgentFAQDelete
-    $Lang->{'Do you really want to delete this FAQ article?'} = '';
+    $Lang->{'Do you really want to delete this FAQ article?'} = 'Wilt u dit artikel verwijderen?';
 
     # template: AgentFAQPrint
-    $Lang->{'FAQ Article Print'} = '';
+    $Lang->{'FAQ Article Print'} = 'FAQ afdrukken';
 
     # template: CustomerFAQSearch
     $Lang->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'}
-         = '';
-
+         = 'Zoeken in tekst van artikelen (bijv. "Jans*en" of "Print*")';
     return 1;
 }
 
