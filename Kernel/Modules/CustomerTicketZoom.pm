@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.12 2010-08-30 20:24:41 en Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.71 2010/08/30 19:01:45 en Exp $
+# $Id: CustomerTicketZoom.pm,v 1.13 2010-12-06 19:33:09 en Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.75 2010/11/26 21:16:50 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -575,7 +575,7 @@ sub _Mask {
     for my $ArticleTmp (@ArticleBox) {
         my %Article = %$ArticleTmp;
 
-        # check if last article to make it Visible
+        # check if article should be expanded (visible)
         if ( $SelectedArticleID eq $Article{ArticleID} ) {
             $Article{Class} = 'Visible';
         }
@@ -588,14 +588,30 @@ sub _Mask {
 
         $Article{Subject} = $Self->{TicketObject}->TicketSubjectClean(
             TicketNumber => $Article{TicketNumber},
-            Subject => $Article{Subject} || '',
+            Subject      => $Article{Subject} || '',
+            Size         => 150,
         );
+
         $LastSenderType = $Article{SenderType};
 
         $Self->{LayoutObject}->Block(
             Name => 'Article',
             Data => \%Article,
         );
+
+        # show the correct title: "expand article..." or the article's subject
+        if ( $SelectedArticleID eq $Article{ArticleID} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleExpanded',
+                Data => \%Article,
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleContracted',
+                Data => \%Article,
+            );
+        }
 
         # do some strips && quoting
         for my $Key (qw(From To Cc)) {
@@ -606,6 +622,19 @@ sub _Mask {
                     Key      => $Key,
                     Value    => $Article{$Key},
                     Realname => $Article{ $Key . 'Realname' },
+                },
+            );
+        }
+
+        # show article free text
+        for my $Count ( 1 .. 3 ) {
+            next if !$Article{ 'ArticleFreeText' . $Count };
+            next if !$Self->{Config}->{AttributesView}->{ 'ArticleFreeText' . $Count };
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleFreeText',
+                Data => {
+                    Key   => $Article{ 'ArticleFreeKey' . $Count },
+                    Value => $Article{ 'ArticleFreeText' . $Count },
                 },
             );
         }

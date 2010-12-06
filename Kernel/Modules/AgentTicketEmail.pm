@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.22 2010-11-19 15:48:44 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.154 2010/11/17 21:32:53 cg Exp $
+# $Id: AgentTicketEmail.pm,v 1.23 2010-12-06 19:33:08 en Exp $
+# $OldId: AgentTicketEmail.pm,v 1.157 2010/11/25 18:12:23 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -45,9 +45,12 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # check needed objects
-    for (qw(ParamObject DBObject TicketObject LayoutObject LogObject QueueObject ConfigObject)) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+    for my $Needed (
+        qw(ParamObject DBObject TicketObject LayoutObject LogObject QueueObject ConfigObject)
+        )
+    {
+        if ( !$Self->{$Needed} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
         }
     }
 
@@ -174,20 +177,20 @@ sub Run {
     }
 
     # get ticket free time params
-    for ( 1 .. 6 ) {
+    for my $Number ( 1 .. 6 ) {
         for my $Type (qw(Used Year Month Day Hour Minute)) {
-            $GetParam{ 'TicketFreeTime' . $_ . $Type } = $Self->{ParamObject}->GetParam(
-                Param => 'TicketFreeTime' . $_ . $Type,
+            $GetParam{ 'TicketFreeTime' . $Number . $Type } = $Self->{ParamObject}->GetParam(
+                Param => 'TicketFreeTime' . $Number . $Type,
             );
         }
-        $GetParam{ 'TicketFreeTime' . $_ . 'Optional' }
-            = $Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $_ ) || 0;
-        if ( !$Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $_ ) ) {
-            $GetParam{ 'TicketFreeTime' . $_ . 'Used' } = 1;
+        $GetParam{ 'TicketFreeTime' . $Number . 'Optional' }
+            = $Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $Number ) || 0;
+        if ( !$Self->{ConfigObject}->Get( 'TicketFreeTimeOptional' . $Number ) ) {
+            $GetParam{ 'TicketFreeTime' . $Number . 'Used' } = 1;
         }
 
-        if ( $Self->{Config}->{TicketFreeTime}->{$_} == 2 ) {
-            $GetParam{ 'TicketFreeTime' . $_ . 'Required' } = 1;
+        if ( $Self->{Config}->{TicketFreeTime}->{$Number} == 2 ) {
+            $GetParam{ 'TicketFreeTime' . $Number . 'Required' } = 1;
         }
     }
 
@@ -354,8 +357,9 @@ sub Run {
 
                     # get params
                     my %GetParam;
-                    for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
-                        $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+                    for my $Parameter ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
+                        $GetParam{$Parameter}
+                            = $Self->{ParamObject}->GetParam( Param => $Parameter );
                     }
 
                     # run module
@@ -496,18 +500,45 @@ sub Run {
             $GetParam{To} = '';
             $ExpandCustomerName = 3;
         }
-        for ( 1 .. 2 ) {
-            my $Item = $Self->{ParamObject}->GetParam( Param => "ExpandCustomerName$_" ) || 0;
-            if ( $_ == 1 && $Item ) {
+        for my $Number ( 1 .. 2 ) {
+            my $Item = $Self->{ParamObject}->GetParam( Param => "ExpandCustomerName$Number" ) || 0;
+            if ( $Number == 1 && $Item ) {
                 $ExpandCustomerName = 1;
             }
-            elsif ( $_ == 2 && $Item ) {
+            elsif ( $Number == 2 && $Item ) {
                 $ExpandCustomerName = 2;
             }
         }
 
         # If is an action about attachments
         my $IsUpload = 0;
+
+        # attachment delete
+        for my $Count ( 1 .. 32 ) {
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
+            next if !$Delete;
+            $Error{AttachmentDelete} = 1;
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Count,
+            );
+            $IsUpload = 1;
+        }
+
+        # attachment upload
+        if ( $Self->{ParamObject}->GetParam( Param => 'AttachmentUpload' ) ) {
+            $IsUpload                = 1;
+            %Error                   = ();
+            $Error{AttachmentUpload} = 1;
+            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+                Param  => 'FileUpload',
+                Source => 'string',
+            );
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+        }
 
         # get free text config options
         my %TicketFreeText;
@@ -593,33 +624,6 @@ sub Run {
             Article => \%GetParam,
         );
 
-        # attachment delete
-        for my $Count ( 1 .. 32 ) {
-            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Count" );
-            next if !$Delete;
-            $Error{AttachmentDelete} = 1;
-            $Self->{UploadCacheObject}->FormIDRemoveFile(
-                FormID => $Self->{FormID},
-                FileID => $Count,
-            );
-            $IsUpload = 1;
-        }
-
-        # attachment upload
-        if ( $Self->{ParamObject}->GetParam( Param => 'AttachmentUpload' ) ) {
-            $IsUpload                = 1;
-            %Error                   = ();
-            $Error{AttachmentUpload} = 1;
-            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
-            );
-            $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID => $Self->{FormID},
-                %UploadStuff,
-            );
-        }
-
         # get all attachments meta data
         my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
             FormID => $Self->{FormID},
@@ -638,10 +642,10 @@ sub Run {
             # check if just one customer user exists
             # if just one, fillup CustomerUserID and CustomerID
             $Param{CustomerUserListCount} = 0;
-            for ( keys %CustomerUserList ) {
+            for my $CustomerUserKey ( keys %CustomerUserList ) {
                 $Param{CustomerUserListCount}++;
-                $Param{CustomerUserListLast}     = $CustomerUserList{$_};
-                $Param{CustomerUserListLastUser} = $_;
+                $Param{CustomerUserListLast}     = $CustomerUserList{$CustomerUserKey};
+                $Param{CustomerUserListLastUser} = $CustomerUserKey;
             }
             if ( $Param{CustomerUserListCount} == 1 ) {
                 $GetParam{To}              = $Param{CustomerUserListLast};
@@ -682,8 +686,8 @@ sub Run {
             my %CustomerUserList = $Self->{CustomerUserObject}->CustomerSearch(
                 UserLogin => $CustomerUser,
             );
-            for ( keys %CustomerUserList ) {
-                $GetParam{To} = $CustomerUserList{$_};
+            for my $CustomerUserKey ( keys %CustomerUserList ) {
+                $GetParam{To} = $CustomerUserList{$CustomerUserKey};
             }
             if ( $CustomerUserData{UserCustomerID} ) {
                 $CustomerID = $CustomerUserData{UserCustomerID};
@@ -703,9 +707,9 @@ sub Run {
         # show customer info
         my %CustomerData;
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoCompose') ) {
-            if ($CustomerUser) {
+            if ( $CustomerUser || $SelectedCustomerUser ) {
                 %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                    User => $CustomerUser,
+                    User => $CustomerUser || $SelectedCustomerUser,
                 );
             }
             elsif ($CustomerID) {
@@ -715,41 +719,32 @@ sub Run {
             }
         }
 
-        # check some values
-        for my $Param (qw(To Cc Bcc)) {
-            next if !$GetParam{$Param};
-            for my $Email ( Mail::Address->parse( $GetParam{$Param} ) ) {
+        # check email address
+        for my $Parameter (qw(To Cc Bcc)) {
+            next if !$GetParam{$Parameter};
+            for my $Email ( Mail::Address->parse( $GetParam{$Parameter} ) ) {
                 if ( !$Self->{CheckItemObject}->CheckEmail( Address => $Email->address() ) ) {
-                    if ( !$IsUpload ) {
-                        $Error{ $Param . "Invalid" } = 'ServerError';
-                    }
-                }
-                my $IsLocal = $Self->{SystemAddress}->SystemAddressIsLocalAddress(
-                    Address => $Email->address()
-                );
-                if ( !$IsUpload && $IsLocal ) {
-                    $Error{ $Param . "Invalid" } = 'ServerError';
+                    $Error{ $Parameter . 'ErrorType' }
+                        = $Parameter
+                        . $Self->{CheckItemObject}->CheckErrorType()
+                        . 'ServerErrorMsg';
+                    $Error{ $Parameter . 'Invalid' } = 'ServerError';
                 }
             }
         }
 
         # if it is not a subaction about attachments, check for server errors
-        if ( !$IsUpload ) {
-            if (
-                !$GetParam{To}
-                && $ExpandCustomerName != 1
-                && $ExpandCustomerName == 0
-                )
-            {
+        if ( !$IsUpload && !$ExpandCustomerName ) {
+            if ( !$GetParam{To} ) {
                 $Error{'ToInvalid'} = 'ServerError';
             }
-            if ( !$GetParam{Subject} && $ExpandCustomerName == 0 ) {
+            if ( !$GetParam{Subject} ) {
                 $Error{'SubjectInvalid'} = 'ServerError';
             }
-            if ( !$NewQueueID && $ExpandCustomerName == 0 ) {
+            if ( !$NewQueueID ) {
                 $Error{'DestinationInvalid'} = 'ServerError';
             }
-            if ( !$GetParam{Body} && $ExpandCustomerName == 0 ) {
+            if ( !$GetParam{Body} ) {
                 $Error{'BodyInvalid'} = 'ServerError';
             }
 
@@ -802,8 +797,8 @@ sub Run {
                 my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
 
                 # get params
-                for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
-                    $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+                for my $Parameter ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
+                    $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
                 }
 
                 # run module
@@ -1248,6 +1243,8 @@ sub Run {
         my $QueueID = '';
         if ( $Dest =~ /^(\d{1,100})\|\|.+?$/ ) {
             $QueueID = $1;
+            my %Queue = $Self->{QueueObject}->GetSystemAddress( QueueID => $QueueID );
+            $GetParam{From} = $Queue{Email};
         }
 
         # get list type
@@ -1346,8 +1343,8 @@ sub Run {
                 my $Object = $Jobs{$Job}->{Module}->new( %{$Self}, Debug => $Self->{Debug}, );
 
                 # get params
-                for ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
-                    $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+                for my $Parameter ( $Object->Option( %GetParam, Config => $Jobs{$Job} ) ) {
+                    $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
                 }
 
                 # run module
@@ -1488,15 +1485,15 @@ sub _GetUsers {
     # just show only users with selected custom queue
     if ( $Param{QueueID} && !$Param{AllUsers} ) {
         my @UserIDs = $Self->{TicketObject}->GetSubscribedUserIDsByQueueID(%Param);
-        for ( keys %AllGroupsMembers ) {
+        for my $GroupMemberKey ( keys %AllGroupsMembers ) {
             my $Hit = 0;
             for my $UID (@UserIDs) {
-                if ( $UID eq $_ ) {
+                if ( $UID eq $GroupMemberKey ) {
                     $Hit = 1;
                 }
             }
             if ( !$Hit ) {
-                delete $AllGroupsMembers{$_};
+                delete $AllGroupsMembers{$GroupMemberKey};
             }
         }
     }
@@ -1514,9 +1511,9 @@ sub _GetUsers {
             Type    => 'rw',
             Result  => 'HASH',
         );
-        for ( keys %MemberList ) {
-            if ( $AllGroupsMembers{$_} ) {
-                $ShownUsers{$_} = $AllGroupsMembers{$_};
+        for my $MemberKey ( keys %MemberList ) {
+            if ( $AllGroupsMembers{$MemberKey} ) {
+                $ShownUsers{$MemberKey} = $AllGroupsMembers{$MemberKey};
             }
         }
     }
@@ -1720,8 +1717,8 @@ sub _MaskEmailNew {
     # build to string
     my %NewTo;
     if ( $Param{FromList} ) {
-        for ( keys %{ $Param{FromList} } ) {
-            $NewTo{"$_||$Param{FromList}->{$_}"} = $Param{FromList}->{$_};
+        for my $FromKey ( keys %{ $Param{FromList} } ) {
+            $NewTo{"$FromKey||$Param{FromList}->{$FromKey}"} = $Param{FromList}->{$FromKey};
         }
     }
 
@@ -1759,9 +1756,26 @@ sub _MaskEmailNew {
 
     # prepare errors!
     if ( $Param{Errors} ) {
-        for ( keys %{ $Param{Errors} } ) {
-            $Param{$_} = $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$_} );
+        for my $ErrorKey ( keys %{ $Param{Errors} } ) {
+            $Param{$ErrorKey}
+                = $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$ErrorKey} );
         }
+
+        # display server error msg according with the occurred email (cc or bcc) error type
+        for my $Parameter (qw(Cc Bcc)) {
+            if ( $Param{Errors}->{ $Parameter . 'ErrorType' } ) {
+                $Self->{LayoutObject}
+                    ->Block( Name => $Param{Errors}->{ $Parameter . 'ErrorType' } );
+            }
+        }
+    }
+
+    # display server error msg according with the occurred email (to) error type
+    if ( $Param{Errors} && $Param{Errors}->{ToErrorType} ) {
+        $Self->{LayoutObject}->Block( Name => $Param{Errors}->{ToErrorType} );
+    }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'ToGenericServerErrorMsg' );
     }
 
     # build type string
@@ -1912,13 +1926,14 @@ sub _MaskEmailNew {
 # ITSM
 # ---
         # find the html string for the free time field label
-        if ( $Param{ 'TicketFreeTimeKey' . $Count } =~ m{
-                ( <label  [^<>]* >                 \s*
-                (?: <span [^<>]* >\*</span> )? )   \s*
-                ( [^<>]* )                         \s*
-                ( </label> )
-            }xms
-        ) {
+        if (
+            $Param{ 'TicketFreeTimeKey' . $Count }
+            && $Param{ 'TicketFreeTimeKey' . $Count } =~ m{
+            ( <label  [^<>]* >                 \s*
+            (?: <span [^<>]* >\*</span> )? )   \s*
+            ( [^<>]* )                         \s*
+            ( </label> )
+        }xms ) {
 
             # get the label and the enclosing html code
             my $TagStart  = $1;
@@ -1931,6 +1946,7 @@ sub _MaskEmailNew {
             # write the translated string back
             $Param{ 'TicketFreeTimeKey' . $Count } = $TagStart . $LabelText . $TagEnd;
         }
+
 # ---
         $Self->{LayoutObject}->Block(
             Name => 'TicketFreeTime',

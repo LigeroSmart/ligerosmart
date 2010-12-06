@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.10 2010-11-18 16:06:52 ub Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.61 2010/11/17 10:09:16 ub Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.11 2010-12-06 19:33:09 en Exp $
+# $OldId: AgentTicketOverviewPreview.dtl,v 1.64 2010/12/02 13:38:19 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,7 +45,27 @@
 
 <!-- dtl:block:DocumentContent -->
     <li id="TicketID_$QData{"TicketID"}" class="MasterAction">
-        <div class="Content">
+        <div class="Content $QData{"AdditionalClasses"}">
+<!-- dtl:block:InlineActionRow -->
+            <ul class="Actions InlineActions">
+<!-- dtl:block:InlineActionRowItem -->
+                <li><a class="$QData{"Class"}" href="$QData{"Link"}" title="$QData{"Description"}">$QData{"Name"}</a></li>
+<!-- dtl:block:InlineActionRowItem -->
+<!-- dtl:block:InlineActionRowItemHTML -->
+                $Data{"HTML"}
+<!-- dtl:block:InlineActionRowItemHTML -->
+            </ul>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('ul.InlineActions').click(function (Event) {
+        Event.cancelBubble = true;
+        if (Event.stopPropagation) {
+            Event.stopPropagation();
+        }
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+<!-- dtl:block:InlineActionRow -->
 <!-- dtl:block:Bulk -->
             <input class="Checkbox AutocompleteOff" type="checkbox" name="TicketID" value="$QData{"TicketID"}" />
 <!-- dtl:block:Bulk -->
@@ -55,6 +75,9 @@
                 <span class="$QData{"ClassSpan"}">$Text{"$Data{"Title"}"}</span>
             </div>
 <!-- dtl:block:MetaIcon -->
+<!--[if IE 7]>
+            <div class="ReallyStupidIE7Hack">&nbsp;</div>
+            <![endif]-->
 <!-- dtl:block:Meta -->
             <div class="Infos">
                 <h2>
@@ -284,9 +307,17 @@ $Data{"Body"}
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-$('a.AsPopup').bind('click', function (Event) {
-    Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
-    return false;
-});
+    $('a.AsPopup').bind('click', function (Event) {
+        var Matches,
+            PopupType = 'TicketAction';
+
+        Matches = $(this).attr('class').match(/PopupType_(\w+)/);
+        if (Matches) {
+            PopupType = Matches[1];
+        }
+
+        Core.UI.Popup.OpenPopup($(this).attr('href'), PopupType);
+        return false;
+    });
 //]]></script>
 <!-- dtl:js_on_document_complete -->

@@ -2,8 +2,8 @@
 # CustomerTicketPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.dtl,v 1.4 2010-09-06 15:36:36 en Exp $
-# $OldId: CustomerTicketPrint.dtl,v 1.14 2010/09/06 10:31:09 mg Exp $
+# $Id: CustomerTicketPrint.dtl,v 1.5 2010-12-06 19:33:09 en Exp $
+# $OldId: CustomerTicketPrint.dtl,v 1.16 2010/11/26 13:29:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,13 @@
     <tr>
         <td class="mainhead">$Config{"Ticket::Hook"}: $QData{"TicketNumber"} / $QData{"Title"}</td>
     </tr>
+    <tr>
+        <td align="right"><small>$Text{"Ticket Print"}</small></td>
+    </tr>
 </table>
 <table border="0" cellspacing="1" cellpadding="10" width="100%">
     <tr>
         <td class="contentkey">
-            $Text{"Ticket-Info"}:
             <table border="0" cellspacing="0" cellpadding="0" width="100%">
                 <tr>
                     <td width="50%" valign="top">
@@ -106,6 +108,11 @@
                 </tr>
 
 # use this if you want to show TicketFreeKey1-16 and TicketFreeText1-16
+<!-- dtl:block:TicketFreeTextHeader -->
+                <tr>
+                    <td colspan="4"><b><i>TicketFreeText</i></b></td>
+                </tr>
+<!-- dtl:block:TicketFreeTextHeader -->
 <!-- dtl:block:TicketFreeText -->
                 <tr>
                     <td class="contentkey">$QData{"TicketFreeKey","20"}:</td>
@@ -130,8 +137,21 @@
 #          </td>
 #        </tr>
 #<!-- dtl:block:TicketFreeText2 -->
+            </table>
+            <table border="0" cellspacing="3" cellpadding="0" width="100%">
+                <tr>
+                    <td width="20%"></td>
+                    <td width="30%"></td>
+                    <td width="20%"></td>
+                    <td width="30%"></td>
+                </tr>
 
 # use this if you want to show TicketFreeTime1-6
+<!-- dtl:block:TicketFreeTimeHeader -->
+                <tr>
+                    <td colspan="4"><b><i>TicketFreeTime</i></b></td>
+                </tr>
+<!-- dtl:block:TicketFreeTimeHeader -->
 <!-- dtl:block:TicketFreeTime -->
                 <tr>
                     <td class="contentkey">$Text{"$Data{"TicketFreeTimeKey"}"}:</td>
@@ -181,7 +201,7 @@
 <!-- dtl:block:Row -->
                                         <tr>
                                             <td class="contentkey">$Text{"Created"}:</td>
-                                            <td class="contentvalue"> $TimeLong{"$Data{"Created"}"} $Text{"by"} $QData{"SenderType"}</td>
+                                            <td class="contentvalue"> $TimeLong{"$Data{"Created"}"} $Text{"by"} $Text{"$Data{"SenderType"}"}</td>
                                         </tr>
 # show the Article::FreeKey1-3 and Article::FreeText1-3
 <!-- dtl:block:ArticleFreeText -->
@@ -192,7 +212,7 @@
 <!-- dtl:block:ArticleFreeText -->
                                         <tr>
                                             <td class="contentkey">$Text{"Type"}:</td>
-                                            <td class="contentvalue"> $QData{"ArticleType"}</td>
+                                            <td class="contentvalue"> $Text{"$Data{"ArticleType"}"}</td>
                                         </tr>
                                         <tr>
                                             <td class="contentkey">$Text{"Attachment"}:</td>

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.19 2010-11-18 12:55:19 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.138 2010/11/10 15:37:53 martin Exp $
+# $Id: AgentTicketZoom.pm,v 1.20 2010-12-06 19:33:09 en Exp $
+# $OldId: AgentTicketZoom.pm,v 1.141 2010/11/30 10:00:03 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -414,6 +414,13 @@ sub MaskAgentZoom {
         # find latest not seen article
         ARTICLE:
         for my $Article (@ArticleBox) {
+
+            # ignore system sender type
+            next ARTICLE
+                if $Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
+                    && $Article->{SenderType} eq 'system';
+
+            # get article flags
             my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
                 ArticleID => $Article->{ArticleID},
                 UserID    => $Self->{UserID},
@@ -937,6 +944,13 @@ sub MaskAgentZoom {
     my $ArticleAllSeen = 1;
     ARTICLE:
     for my $Article (@ArticleBox) {
+
+        # ignore system sender type
+        next ARTICLE
+            if $Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
+                && $Article->{SenderType} eq 'system';
+
+        # get article flags
         my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
             ArticleID => $Article->{ArticleID},
             UserID    => $Self->{UserID},
@@ -1058,7 +1072,17 @@ sub _ArticleTree {
             ArticleID => $Article{ArticleID},
             UserID    => $Self->{UserID},
         );
-        if ( !$ArticleFlag{Seen} ) {
+
+        # ignore system sender types
+        if (
+            !$ArticleFlag{Seen}
+            && (
+                !$Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
+                || $Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
+                && $Article{SenderType} ne 'system'
+            )
+            )
+        {
             $NewArticle = 1;
 
             # show ticket flags
@@ -1363,8 +1387,10 @@ sub _ArticleItem {
                     my @Addresses = $EmailParser->SplitAddressLine( Line => $Recipients );
                     ADDRESS:
                     for my $Address (@Addresses) {
+                        my $Email = $EmailParser->GetEmailAddress( Email => $Address );
+                        next if !$Email;
                         my $IsLocal = $Self->{SystemAddress}->SystemAddressIsLocalAddress(
-                            Address => $EmailParser->GetEmailAddress( Email => $Address ),
+                            Address => $Email,
                         );
                         next ADDRESS if $IsLocal;
                         $RecipientCount++;
@@ -1743,6 +1769,13 @@ sub _ArticleItem {
                     Name => 'ArticleOption',
                     Data => $DataRef,
                 );
+
+                for my $Warning ( @{ $DataRef->{Warnings} } ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleOption',
+                        Data => $Warning,
+                    );
+                }
             }
 
             # filter option

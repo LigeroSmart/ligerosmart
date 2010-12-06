@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.6 2010-09-02 16:52:03 en Exp $
-# $OldId: AgentTicketPrint.pm,v 1.74 2010/07/27 18:11:28 en Exp $
+# $Id: AgentTicketPrint.pm,v 1.7 2010-12-06 19:33:09 en Exp $
+# $OldId: AgentTicketPrint.pm,v 1.76 2010/11/29 11:39:07 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -843,7 +843,8 @@ sub _PDFOutputTicketFreeTime {
                 || '';
             my $TicketFreeTime = $Ticket{"TicketFreeTime$Count"};
 
-            $TableParam{CellData}[$Row][0]{Content} = $TicketFreeTimeKey . ':';
+            $TableParam{CellData}[$Row][0]{Content}
+                = $Self->{LayoutObject}->{LanguageObject}->Get($TicketFreeTimeKey) . ':';
             $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
             $TableParam{CellData}[$Row][1]{Content} = $Self->{LayoutObject}->Output(
                 Template => '$TimeLong{"$Data{"TicketFreeTime"}"}',
@@ -1098,7 +1099,8 @@ sub _PDFOutputArticles {
         );
         $TableParam1{CellData}[$Row][1]{Content}
             .= ' ' . $Self->{LayoutObject}->{LanguageObject}->Get('by');
-        $TableParam1{CellData}[$Row][1]{Content} .= ' ' . $Article{SenderType};
+        $TableParam1{CellData}[$Row][1]{Content}
+            .= ' ' . $Self->{LayoutObject}->{LanguageObject}->Get( $Article{SenderType} );
         $Row++;
         for my $Count ( 1 .. 3 ) {
 
@@ -1112,8 +1114,9 @@ sub _PDFOutputArticles {
 
         $TableParam1{CellData}[$Row][0]{Content}
             = $Self->{LayoutObject}->{LanguageObject}->Get('Type') . ':';
-        $TableParam1{CellData}[$Row][0]{Font}    = 'ProportionalBold';
-        $TableParam1{CellData}[$Row][1]{Content} = $Article{ArticleType};
+        $TableParam1{CellData}[$Row][0]{Font} = 'ProportionalBold';
+        $TableParam1{CellData}[$Row][1]{Content}
+            = $Self->{LayoutObject}->{LanguageObject}->Get( $Article{ArticleType} );
         $Row++;
 
         if ($Attachments) {

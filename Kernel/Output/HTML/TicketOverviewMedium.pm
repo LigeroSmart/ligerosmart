@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.7 2010-11-04 13:46:11 ub Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.35 2010/11/04 13:13:05 ub Exp $
+# $Id: TicketOverviewMedium.pm,v 1.8 2010-12-06 19:33:09 en Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.40 2010/12/02 11:32:30 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -333,6 +333,14 @@ sub _Show {
                 );
             }
 
+            # add session id if needed
+            if ( !$Self->{LayoutObject}->{SessionIDCookie} && $Item->{Link} ) {
+                $Item->{Link}
+                    .= ';'
+                    . $Self->{LayoutObject}->{SessionName} . '='
+                    . $Self->{LayoutObject}->{SessionID};
+            }
+
             # create id
             $Item->{ID} = $Item->{Name};
             $Item->{ID} =~ s/(\s|&|;)//ig;
@@ -352,10 +360,12 @@ sub _Show {
             push @ActionItems, {
                 HTML        => $Output,
                 ID          => $Item->{ID},
+                Name        => $Item->{Name},
                 Link        => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
                 Target      => $Item->{Target},
-                PopupType   => $Menus{$Menu}->{PopupType},
+                PopupType   => $Item->{PopupType},
                 Description => $Item->{Description},
+                Block       => $Item->{Block} || 'DocumentMenuItem',
             };
         }
     }
@@ -370,6 +380,54 @@ sub _Show {
         Name => 'DocumentContent',
         Data => { %Param, %Article },
     );
+
+    # if "Actions per Ticket" (Inline Action Row) is active
+    if ( $Param{Config}->{TicketActionsPerTicket} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'InlineActionRow',
+            Data => \%Param,
+        );
+
+        # Add list entries for every action
+        for my $Item (@ActionItems) {
+            my $Link = $Item->{Link};
+            if ( $Item->{Target} ) {
+                $Link = '#';
+            }
+
+            my $Class = '';
+            if ( $Item->{PopupType} ) {
+                $Class = 'AsPopup PopupType_' . $Item->{PopupType};
+            }
+
+            if ( $Item->{Block} eq 'DocumentMenuItem' ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InlineActionRowItem',
+                    Data => {
+                        TicketID    => $Param{TicketID},
+                        QueueID     => $Article{QueueID},
+                        ID          => $Item->{ID},
+                        Name        => $Item->{Name},
+                        Description => $Item->{Description},
+                        Class       => $Class,
+                        Link        => $Link,
+                    },
+                );
+            }
+            else {
+                my $TicketID   = $Param{TicketID};
+                my $SelectHTML = $Item->{HTML};
+                $SelectHTML =~ s/id="DestQueueID"/id="DestQueueID$TicketID"/xmig;
+                $SelectHTML =~ s/for="DestQueueID"/for="DestQueueID$TicketID"/xmig;
+                $Self->{LayoutObject}->Block(
+                    Name => 'InlineActionRowItemHTML',
+                    Data => {
+                        HTML => $SelectHTML,
+                    },
+                );
+            }
+        }
+    }
 
     # check if bulk feature is enabled
     if ( $Param{Bulk} ) {
@@ -691,7 +749,7 @@ sub _Show {
     }
 
     # add action items as js
-    if (@ActionItems) {
+    if ( @ActionItems && !$Param{Config}->{TicketActionsPerTicket} ) {
         my $JSON = $Self->{LayoutObject}->JSONEncode(
             Data => \@ActionItems,
         );

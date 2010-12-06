@@ -2,8 +2,8 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.19 2010-11-18 16:06:52 ub Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.120 2010/11/17 21:32:53 cg Exp $
+# $Id: AgentTicketPhone.dtl,v 1.20 2010-12-06 19:33:09 en Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.122 2010/11/24 18:54:05 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -55,7 +55,7 @@ $Include{"AgentCustomerSearch"}
 #                    </div>
 #                    <div class="Clear"></div>
 <!-- dtl:block:TicketType -->
-                    <label class="Mandatory" for="TypeID"><span class="Marker">*</span>$Text{"Type"}:</label>
+                    <label class="Mandatory" for="TypeID"><span class="Marker">*</span> $Text{"Type"}:</label>
                     <div class="Field">
                         $Data{"TypeStrg"}
                         <div id="TypeIDError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
@@ -71,7 +71,7 @@ $Include{"AgentCustomerSearch"}
                     <div class="Clear"></div>
 <!-- dtl:block:TicketType -->
 
-                    <label class="Mandatory" for="CustomerAutoComplete"><span class="Marker">*</span>$Text{"From customer"}:</label>
+                    <label class="Mandatory" for="CustomerAutoComplete"><span class="Marker">*</span> $Text{"From customer"}:</label>
                     <div class="Field">
 
                         <input id="CustomerAutoComplete" type="text" name="From" value="$QData{"From"}" class="W75pc AutocompleteOff Validate_Required $QData{"FromInvalid"}"/>
@@ -79,12 +79,23 @@ $Include{"AgentCustomerSearch"}
                             <p>$Text{"This field is required."}</p>
                         </div>
                         <div id="CustomerAutoCompleteServerError" class="TooltipErrorMessage">
+<!-- dtl:block:GenericServerErrorMsg -->
                             <p>$Text{"This field is required."}</p>
+<!-- dtl:block:GenericServerErrorMsg -->
+<!-- dtl:block:EmailInvalidConfigServerErrorMsg -->
+                            <p>$Text{"This email address is not allowed due to the system configuration."}</p>
+<!-- dtl:block:EmailInvalidConfigServerErrorMsg -->
+<!-- dtl:block:EmailInvalidMXServerErrorMsg -->
+                            <p>$Text{"This email address failed MX check."}</p>
+<!-- dtl:block:EmailInvalidMXServerErrorMsg -->
+<!-- dtl:block:EmailInvalidSyntaxServerErrorMsg -->
+                            <p>$Text{"The syntax of this email address is incorrect."}</p>
+<!-- dtl:block:EmailInvalidSyntaxServerErrorMsg -->
                         </div>
                     </div>
                     <div class="Clear"></div>
 
-                    <label class="Mandatory" for="Dest"><span class="Marker">*</span>$Text{"To queue"}:</label>
+                    <label class="Mandatory" for="Dest"><span class="Marker">*</span> $Text{"To queue"}:</label>
                     <div class="Field">
                         $Data{"ToStrg"}
                         <div id="DestError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
@@ -170,7 +181,7 @@ $Include{"AgentCustomerSearch"}
                     <div class="Clear"></div>
 <!-- dtl:block:ResponsibleSelection -->
 
-                    <label class="Mandatory" for="Subject"><span class="Marker">*</span>$Text{"Subject"}:</label>
+                    <label class="Mandatory" for="Subject"><span class="Marker">*</span> $Text{"Subject"}:</label>
                     <div class="Field">
                         <input class="W75pc Validate_Required $QData{"SubjectInvalid"}" type="text" name="Subject" id="Subject" value="$QData{"Subject"}"/>
                         <div id="SubjectError" class="TooltipErrorMessage">
@@ -201,7 +212,7 @@ $Include{"AgentCustomerSearch"}
                     </div>
                     <div class="Clear"></div>
 
-                    <label class="Mandatory" for="RichText"><span class="Marker">*</span>$Text{"Text"}:</label>
+                    <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Text"}:</label>
                     <div class="RichTextField">
 
 <!-- dtl:block:RichText -->
@@ -371,7 +382,7 @@ $Include{"RichTextEditor"}
                     <label for="TimeUnits">$Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</label>
 <!-- dtl:block:TimeUnitsLabel -->
 <!-- dtl:block:TimeUnitsLabelMandatory -->
-                    <label class="Mandatory" for="TimeUnits"><span class="Marker">*</span>$Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</label>
+                    <label class="Mandatory" for="TimeUnits"><span class="Marker">*</span> $Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</label>
 <!-- dtl:block:TimeUnitsLabelMandatory -->
 <!-- dtl:block:TimeUnits -->
                     <div class="Field">
