@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - the Chinese simple translation for FAQ
 # Copyright (C) 2009 Never Min <never at qnofae.org>
 # --
-# $Id: zh_CN_FAQ.pm,v 1.15 2010-12-01 20:14:02 cr Exp $
+# $Id: zh_CN_FAQ.pm,v 1.16 2010-12-06 09:51:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -52,44 +52,44 @@ sub Data {
     $Lang->{'EndMonth'}                          = '开始月份';
     $Lang->{'EndYear'}                           = '结束年份';
     $Lang->{'Approval'}                          = '认可度';
-    $Lang->{'internal'}                          = '';
-    $Lang->{'external'}                          = '';
-    $Lang->{'public'}                            = '';
+    $Lang->{'internal'}                          = '内部';
+    $Lang->{'external'}                          = '外部';
+    $Lang->{'public'}                            = '公开';
 
     $Lang->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = '没有归类到目录. 要创建一篇文章需要归类到目录里, 请在 -目录菜单- 里选择您有权限创建文章的目录';
     $Lang->{'Agent groups which can access this category.'} = '哪一个群组可以访问此目录.';
     $Lang->{'A category needs at least one permission group!'}   = '一个目录至少要分配一个权限群组';
     $Lang->{'Will be shown as comment in Explorer.'}         = '注释将浏览时显示.';
 
-    $Lang->{'Default category name.'}                                      = '';
-    $Lang->{'Rates for voting. Key must be in percent.'}                   = '';
-    $Lang->{'Show voting in defined interfaces.'}                          = '';
+    $Lang->{'Default category name.'}                                      = '默认的目录名.';
+    $Lang->{'Rates for voting. Key must be in percent.'}                   = '好评率, 键值必须在百分比以内.';
+    $Lang->{'Show voting in defined interfaces.'}                          = '定义显示评分的介面.';
     $Lang->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
-    $Lang->{'Show FAQ path yes/no.'}                                       = '';
-    $Lang->{'Decimal places of the voting result.'}                        = '';
-    $Lang->{'CSS color for the voting result.'}                            = '';
-    $Lang->{'FAQ path separator.'}                                         = '';
-    $Lang->{'Interfaces where the quicksearch should be shown.'}           = '';
-    $Lang->{'Show items of subcategories.'}                                = '';
-    $Lang->{'Show last change items in defined interfaces.'}               = '';
-    $Lang->{'Number of shown items in last changes.'}                      = '';
-    $Lang->{'Show last created items in defined interfaces.'}              = '';
-    $Lang->{'Number of shown items in last created.'}                      = '';
-    $Lang->{'Show top 10 items in defined interfaces.'}                    = '';
-    $Lang->{'Number of shown items in the top 10 feature.'}                = '';
+    $Lang->{'Show FAQ path yes/no.'}                                       = '是/否显示 FAQ 路径.';
+    $Lang->{'Decimal places of the voting result.'}                        = '以十分制显示评分结果.';
+    $Lang->{'CSS color for the voting flag.'}                              = '评分标记的 CSS 颜色.';
+    $Lang->{'FAQ path separator.'}                                         = 'FAQ 路径分隔符.';
+    $Lang->{'Interfaces where the quicksearch should be shown.'}           = '在介面的那里显示快速搜索.';
+    $Lang->{'Show items of subcategories.'}                                = '显示子目录的数量.';
+    $Lang->{'Show last change items in defined interfaces.'}               = '在介面上显示最近更改的项目.';
+    $Lang->{'Number of shown items in last changes.'}                      = '显示最近更改项目的数量.';
+    $Lang->{'Show last created items in defined interfaces.'}              = '在介面上显示最新创建的项目.';
+    $Lang->{'Number of shown items in last created.'}                      = '显示最新创建项目的数量.';
+    $Lang->{'Show top 10 items in defined interfaces.'}                    = '在介面上显示点击量前十位.';
+    $Lang->{'Number of shown items in the top 10 feature.'}                = '显示点击量前十位项目的数量.';
     $Lang->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'}
-        = '';
-    $Lang->{'Default state for FAQ entry.'}                                = '';
-    $Lang->{'Show WYSIWYG editor in agent interface.'}                     = '';
-    $Lang->{'New FAQ articles need approval before they get published.'}   = '';
-    $Lang->{'Group for the approval of FAQ articles.'}                     = '';
-    $Lang->{'Queue for the approval of FAQ articles.'}                     = '';
-    $Lang->{'Ticket subject for approval of FAQ article.'}                 = '';
-    $Lang->{'Ticket body for approval of FAQ article.'}                    = '';
+        = 'FAQ 的标识符, 例如 (常见问题)FAQ#, (知识库)KB#, 默认为 FAQ#';
+    $Lang->{'Default state for FAQ entry.'}                                = '默认的 FAQ 统计条目.';
+    $Lang->{'Show WYSIWYG editor in agent interface.'}                     = '在服务人员介面显示 WYSIWYG(所见即所得)编辑器.';
+    $Lang->{'New FAQ articles need approval before they get published.'}   = '新的 FAQ 文章在发布前需要批准.';
+    $Lang->{'Group for the approval of FAQ articles.'}                     = '批准 FAQ 文章请求的群组.';
+    $Lang->{'Queue for the approval of FAQ articles.'}                     = '批准 FAQ 文章请求的队列.';
+    $Lang->{'Ticket subject for approval of FAQ article.'}                 = 'FAQ 文章批准请求的 Ticket 主题.';
+    $Lang->{'Ticket body for approval of FAQ article.'}                    = 'FAQ 文章批准请求的 Ticket 内容.';
     $Lang->{'Default priority of tickets for the approval of FAQ articles.'}
-        = '';
-    $Lang->{'Default state of tickets for the approval of FAQ articles.'}  = '';
-    $Lang->{'Definition of FAQ item free text field.'}                     = '';
+        = 'FAQ 文章批准请求的 Ticket 的优先级.';
+    $Lang->{'Default state of tickets for the approval of FAQ articles.'}  = 'FAQ 文章批准请求的 Ticket 的默认状态.';
+    $Lang->{'Definition of FAQ item free text field.'}                     = '定义 FAQ 项目的不受限文字字段.';
     $Lang->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'}
         = '';
     $Lang->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'ParentChild\' link type.'}
@@ -168,84 +168,75 @@ sub Data {
         = '';
 
     # template: AgentFAQExplorer
-    $Lang->{'FAQ Explorer'}             = '';
-    $Lang->{'Subcategories'}            = '';
-    $Lang->{'Articles'}                 = '';
-    $Lang->{'No subcategories found.'}  = '';
-    $Lang->{'No FAQ data found.'}       = '';
+    $Lang->{'FAQ Explorer'}             = 'FAQ 浏览器';
+    $Lang->{'Subcategories'}            = '子目录';
+    $Lang->{'Articles'}                 = '文章';
+    $Lang->{'No subcategories found.'}  = '没有找到子目录.';
+    $Lang->{'No FAQ data found.'}       = '没有找到 FAQ 数据.';
 
     # template: AgentFAQAdd
-    $Lang->{'Add FAQ Article'}         = '';
-    $Lang->{'The title is required.'}  = '';
-    $Lang->{'A category is required.'} = '';
+    $Lang->{'Add FAQ Article'}         = '增加 FAQ 文章';
+    $Lang->{'The title is required.'}  = '标题是必须的.';
+    $Lang->{'A category is required.'} = '目录是必须的.';
 
    # template: AgentFAQJournal
-    $Lang->{'FAQ Journal'} = '';
+    $Lang->{'FAQ Journal'} = 'FAQ 日志';
 
     # template: AgentFAQLanguage
-    $Lang->{'FAQ Language Management'}                               = '';
-    $Lang->{'Add Language'}                                          = '';
-    $Lang->{'Add language'}                                          = '';
-    $Lang->{'Edit Language'}                                         = '';
-    $Lang->{'Delete Language'}                                       = '';
-    $Lang->{'The name is required!'}                                 = '';
-    $Lang->{'This language already exists!'}                         = '';
-    $Lang->{'FAQ language added!'}                                   = '';
-    $Lang->{'FAQ language updated!'}                                 = '';
-    $Lang->{'Do you really want to delete this Language?'}           = '';
-    $Lang->{'This Language is used in the following FAQ Article(s)'} = '';
+    $Lang->{'FAQ Language Management'}                               = 'FAQ 语言管理';
+    $Lang->{'Add Language'}                                          = '增加语言';
+    $Lang->{'Edit Language'}                                         = '编辑语言';
+    $Lang->{'Delete Language'}                                       = '删除语言';
+    $Lang->{'The name is required!'}                                 = '必须要有一个语言名称!';
+    $Lang->{'This language already exists!'}                         = '该语言已经存在!';
+    $Lang->{'FAQ language added!'}                                   = 'FAQ 语言已经增加!';
+    $Lang->{'FAQ language updated!'}                                 = 'FAQ 语言已经更新!';
+    $Lang->{'Do you really want to delete this Language?'}           = '真的要删除该语言吗?';
+    $Lang->{'This Language is used in the following FAQ Article(s)'} = '该语言正被以下的 FAQ 文章所使用';
     $Lang->{'You can not delete this Language. It is used in at least one FAQ Article!'}
-        = '';
+        = '不能删除该语言. 它至少还被一篇 FAQ 文章所使用!';
 
     # template: AgentFAQCategory
-    $Lang->{'FAQ Category Management'}                         = '';
-    $Lang->{'Add Category'}                                    = '';
-    $Lang->{'Add category'}                                    = '';
-    $Lang->{'Edit Category'}                                   = '';
-    $Lang->{'Delete Category'}                                 = '';
-    $Lang->{'A category should have a name!'}                  = '';
-    $Lang->{'A category should have a comment!'}               = '';
-    $Lang->{'A category needs at least one permission group!'} = '';
-    $Lang->{'This category already exists!'}                   = '';
-    $Lang->{'FAQ category updated!'}                           = '';
-    $Lang->{'FAQ category added!'}                             = '';
-    $Lang->{'Do you really want to delete this Category?'}     = '';
+    $Lang->{'FAQ Category Management'}                         = 'FAQ 目录管理';
+    $Lang->{'Add Category'}                                    = '增加目录';
+    $Lang->{'Edit Category'}                                   = '编辑目录';
+    $Lang->{'Delete Category'}                                 = '删除目录';
+    $Lang->{'A category should have a name!'}                  = '目录应该要有一个名称!';
+    $Lang->{'A category should have a comment!'}               = '目录应该要有一个注释!';
+    $Lang->{'A category needs at least one permission group!'} = '至少要指定一个群组对该目录拥有权限!';
+    $Lang->{'This category already exists!'}                   = '该目录已经在存在!';
+    $Lang->{'FAQ category updated!'}                           = 'FAQ 目录已更新!';
+    $Lang->{'FAQ category added!'}                             = 'FAQ 目录已增加!';
+    $Lang->{'Do you really want to delete this Category?'}     = '真的要删除该目录吗?';
     $Lang->{'This Category is used in the following FAQ Artice(s)'}
-        = '';
+        = '该目录正被以下的 FAQ 文章所使用';
     $Lang->{'This Category is parent of the following SubCategories'}
-        = '';
+        = '该目录是以下子目录的父目录';
     $Lang->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'}
-        = '';
+        = '不能删除该目录. 它至少还被一篇 FAQ 文章所使用 并/或 它是其中目录的父目录!';
 
     # template: AgentFAQZoom
-    $Lang->{'FAQ Information'}                      = '';
-    $Lang->{'Rating'}                               = '';
-    $Lang->{'No votes found!'}                      = '';
-    $Lang->{'Details'}                              = '';
-    $Lang->{'Edit this FAQ'}                        = '';
-    $Lang->{'History of this FAQ'}                  = '';
-    $Lang->{'Print this FAQ'}                       = '';
-    $Lang->{'Link another object to this FAQ item'} = '';
-    $Lang->{'Delete this FAQ'}                      = '';
-    $Lang->{'not helpful'}                          = '';
-    $Lang->{'very helpful'}                         = '';
-    $Lang->{'out of 5'}                             = '';
+    $Lang->{'FAQ Information'}                      = 'FAQ 详细信息';
+    $Lang->{'Rating'}                               = '评分';
+    $Lang->{'No votes found!'}                      = '没有找到评分!';
+    $Lang->{'Details'}                              = '详细';
+    $Lang->{'Edit this FAQ'}                        = '编辑';
+    $Lang->{'History of this FAQ'}                  = '历史';
+    $Lang->{'Print this FAQ'}                       = '打印';
+    $Lang->{'Link another object to this FAQ item'} = '链接';
+    $Lang->{'Delete this FAQ'}                      = '删除';
+    $Lang->{'not helpful'}                          = '没有帮助';
+    $Lang->{'very helpful'}                         = '很有帮助';
+    $Lang->{'out of 5'}                             = '超过五星';
     $Lang->{'No votes found! Be the first one to rate this FAQ article.'}
-         = '';
+         = '没有找到评分! 这将是该 FAQ 文章的第一个评分.';
 
     # template: AgentFAQHistory
-    $Lang->{'History Content'} = '';
-    $Lang->{'Updated'}         = '';
+    $Lang->{'History Content'} = '历史';
+    $Lang->{'Updated'}         = '更新';
 
     # template: AgentFAQDelete
-    $Lang->{'Do you really want to delete this FAQ article?'} = '';
-
-    # template: AgentFAQPrint
-    $Lang->{'FAQ Article Print'} = '';
-
-    # template: CustomerFAQSearch
-    $Lang->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'}
-         = '';
+    $Lang->{'Do you really want to delete this FAQ article?'} = '真的要删除该 FAQ 文章吗?';
 
     return 1;
 }
