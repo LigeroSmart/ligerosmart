@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.46 2010-10-21 15:06:56 cr Exp $
+# $Id: LayoutITSMChange.pm,v 1.47 2010-12-07 15:19:08 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 =over 4
 
@@ -967,10 +967,10 @@ sub _ITSMChangeGetChangeScale {
     my %ScaleName = (
         StartTime => $Param{StartTime},
         EndTime   => $Param{EndTime},
-        scale_15  => ( $Param{StartTime} + 20 * $Param{Ticks} ),
-        scale_35  => ( $Param{StartTime} + 40 * $Param{Ticks} ),
-        scale_55  => ( $Param{StartTime} + 60 * $Param{Ticks} ),
-        scale_75  => ( $Param{StartTime} + 80 * $Param{Ticks} ),
+        Scale15   => ( $Param{StartTime} + 20 * $Param{Ticks} ),
+        Scale35   => ( $Param{StartTime} + 40 * $Param{Ticks} ),
+        Scale55   => ( $Param{StartTime} + 60 * $Param{Ticks} ),
+        Scale75   => ( $Param{StartTime} + 80 * $Param{Ticks} ),
     );
 
     # translate timestamps in date format
@@ -1129,7 +1129,7 @@ sub _ITSMChangeGetWorkOrderGraph {
 
     # set workorder as inactive if it is not started jet
     if ( !$WorkOrderInformation{ActualStartTime} ) {
-        $WorkOrderInformation{WorkOrderOpacity} = 'inactive';
+        $WorkOrderInformation{WorkOrderOpacity} = 'WorkorderInactive';
     }
 
     # set workorder agent

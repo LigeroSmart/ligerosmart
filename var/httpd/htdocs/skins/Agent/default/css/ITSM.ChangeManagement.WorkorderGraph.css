@@ -1,0 +1,186 @@
+/**
+ * This file containts the CSS Styles for the workorder graph.
+ * Other parts of that are dynamically created within the dtl.
+ *
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Workorder Graph
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  Workorder Graph
+ */
+
+div.WorkorderGraphBox {
+    margin-right: 5px;
+    margin-bottom: 30px;
+    padding: 1px;
+}
+
+div.WorkorderGraph {
+    position: relative;
+    padding-bottom: 5px;
+    height: 1%; /* hasLayout fix */
+}
+
+div.LinesScaleBox {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+div.LinesScale {
+    height: 100%;
+    position: relative;
+}
+
+div.Timeline {
+    position: absolute;
+    height: 100%;
+    font-size: 1px;
+    z-index: 2;
+}
+
+div.ScaleVerticalLine {
+    position: absolute;
+    background-color: lightgrey;
+    height: 100%;
+    width: 1px;
+    font-size: 1px;
+    z-index: 1;
+}
+
+div.WorkorderLabel {
+    margin-right: 2px;
+    float: left;
+    text-align: left;
+    position: relative;
+}
+
+div.Workorder a {
+    text-decoration: none;
+    display: block;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+div.Workorder a span {
+    display: block;
+    width: 100%;
+    height: 5px;
+    margin: 1px auto 2px;
+    position: relative;
+}
+
+div.Workorder a span > span {
+    display: block;
+    height: 5px;
+    position: absolute;
+    top: 0px;
+    font-size: 3px;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.WorkorderInactive {
+    filter: alpha(opacity = 50);
+    opacity: 0.5;
+}
+
+div.WorkorderDetails {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    display: none;
+    z-index: 5;
+}
+
+div.Workorder a:hover + div.WorkorderDetails {
+    display: block;
+}
+
+div.WorkorderDetails table {
+    border: 1px solid black;
+    background-color: #FFFFFF;
+    margin:2px;
+    padding:4px;
+}
+
+div.ScaleHorizontal {
+    border-top: 1px solid lightgrey;
+    padding-top: 5px;
+    position: relative;
+    width: 100%;
+}
+
+div.ScaleEntry {
+    position: absolute;
+    top: 3px;
+    text-align: center;
+    font-size: 8pt;
+    width: 10%;
+}
+
+div.ScaleEntryTail {
+    text-align: left;
+}
+
+div.ScaleEntryTrail {
+    text-align: right;
+}
+
+div.Scale0 {
+    left: 0%;
+}
+
+div.Scale15 {
+    left: 15%;
+}
+
+div.Scale20 {
+    left: 20%;
+}
+
+div.Scale35 {
+    left: 35%;
+}
+
+div.Scale40 {
+    left: 40%;
+}
+
+div.Scale55 {
+    left: 55%;
+}
+
+div.Scale60 {
+    left: 60%;
+}
+
+div.Scale75 {
+    left: 75%;
+}
+
+div.Scale80 {
+    left: 80%;
+}
+
+div.Scale90 {
+    left: 90%;
+}
+
+div.Scale100 {
+    left: 99.9%;
+}
+
+} /* end @media */
