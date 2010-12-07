@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # faq.pl - the global CGI handle file for OTRS
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: faq.pl,v 1.3 2008-09-17 15:50:45 ub Exp $
+# $Id: faq.pl,v 1.4 2010-12-07 19:04:42 cr Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# or see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+use strict;
+use warnings;
 
 # use ../../ as lib location
 use FindBin qw($Bin);
@@ -29,7 +33,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION @INC);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 # 0=off;1=on;
 my $Debug = 0;
@@ -37,6 +41,6 @@ my $Debug = 0;
 # check @INC for mod_perl (add lib path for "require module"!)
 push( @INC, "$Bin/../..", "$Bin/../../Kernel/cpan-lib" );
 
-print "location: public.pl?Action=PublicFAQ\n";
+print "location: public.pl?Action=PublicFAQExplorer\n";
 print "\n";
-print "<a href='public.pl?Action=PublicFAQ'>moved</a>\n";
+print "<a href='public.pl?Action=PublicFAQExplorer'>moved</a>\n";
