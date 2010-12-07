@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.10 2010-12-07 05:33:04 dz Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.11 2010-12-07 18:41:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -154,7 +154,7 @@
     });
 
     $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-        javascript:history.back();
+        history.back();
         return false;
     });
 //]]></script>
