@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/PublicFAQExplorer.pm.pm - public FAQ explorer
+# Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.2 2010-12-02 21:39:15 ub Exp $
+# $Id: PublicFAQExplorer.pm,v 1.3 2010-12-07 01:27:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,10 +89,42 @@ sub Run {
         }
     }
 
-    # output header
-    my $Output = $Self->{LayoutObject}->CustomerHeader(
-        Value => '',
+    # add rss feed link for new FAQ articles in the browser URL bar
+    $Self->{LayoutObject}->Block(
+        Name => 'MetaLink',
+        Data => {
+            Rel   => 'alternate',
+            Type  => 'application/rss+xml',
+            Title => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (new created)'),
+            Href  => '$Env{"Baselink"}Action=PublicFAQRSS;Type=Created',
+        },
     );
+
+    # add rss feed link for changed FAQ articles in the browser URL bar
+    $Self->{LayoutObject}->Block(
+        Name => 'MetaLink',
+        Data => {
+            Rel  => 'alternate',
+            Type => 'application/rss+xml',
+            Title =>
+                $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (recently changed)'),
+            Href => '$Env{"Baselink"}Action=PublicFAQRSS;Type=Changed',
+        },
+    );
+
+    # add rss feed link for Top10 FAQ articles in the browser URL bar
+    $Self->{LayoutObject}->Block(
+        Name => 'MetaLink',
+        Data => {
+            Rel   => 'alternate',
+            Type  => 'application/rss+xml',
+            Title => $Self->{LayoutObject}->{LanguageObject}->Get('FAQ Articles (Top 10)'),
+            Href  => '$Env{"Baselink"}Action=PublicFAQRSS;Type=Top10',
+        },
+    );
+
+    # output header
+    my $Output = $Self->{LayoutObject}->CustomerHeader();
 
     # show FAQ path
     $Self->{LayoutObject}->FAQPathShow(

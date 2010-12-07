@@ -2,7 +2,7 @@
 # PublicFAQExplorer.dtl.dtl - provides HTML for PublicFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.dtl,v 1.4 2010-12-02 21:40:34 ub Exp $
+# $Id: PublicFAQExplorer.dtl,v 1.5 2010-12-07 01:29:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,9 @@
                     <div class="Header">
                         <h3>$Text{"$Data{"Header"}"}</h3>
 <!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=RSS;Type=$QData{"Type"}" title="$Text{"$Data{"Title"}"}"><img src="$Env{"Images"}rss.png" border="0"></a>
+                        <div class="RSSIcon">
+                            <a href="$Env{"Baselink"}Action=PublicFAQRSS;Type=$QData{"Type"}" title="$Text{"$Data{"Title"}"}">RSS</a>
+                        </div>
 <!-- dtl:block:InfoBoxFAQMiniListNewsRSS -->
                         <div class="Clear"></div>
                     </div>

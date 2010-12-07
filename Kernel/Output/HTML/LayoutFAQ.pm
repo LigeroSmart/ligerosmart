@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.41 2010-12-06 10:00:53 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.42 2010-12-07 01:28:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -537,8 +537,8 @@ sub FAQPathShow {
 
 =item FAQRatingStarsShow()
 
-Outputs the necessary DTL blocks to represent the FAQ item rating as "Stars" in the scale from
-1 to 5
+Outputs the necessary DTL blocks to represent the FAQ item rating
+as "Stars" in the scale from 1 to 5.
 
     $LayoutObject->FAQRatingStarsShow(
         VoteResult => $FAQData->{VoteResult},
@@ -674,13 +674,16 @@ sub FAQShowLatestNewsBox {
     # set order by search parameter and header based on type
     my $OrderBy;
     my $Header;
+    my $RSSTitle;
     if ( $Param{Type} eq 'LastCreate' ) {
-        $OrderBy = 'Created';
-        $Header  = 'LatestCreatedItems';
+        $OrderBy  = 'Created';
+        $Header   = 'LatestCreatedItems';
+        $RSSTitle = 'FAQ Articles (new created)';
     }
     elsif ( $Param{Type} eq 'LastChange' ) {
-        $OrderBy = 'Changed';
-        $Header  = 'LatestChangedItems';
+        $OrderBy  = 'Changed';
+        $Header   = 'LatestChangedItems';
+        $RSSTitle = 'FAQ Articles (recently changed)';
     }
 
     # show last added/updated articles
@@ -735,17 +738,16 @@ sub FAQShowLatestNewsBox {
                 },
             );
 
-            # TODO
             # show the RSS Feed icon
             if ( $Param{Mode} eq 'Public' ) {
 
-                #                $Self->Block(
-                #                    Name => 'InfoBoxFAQMiniListNewsRSS',
-                #                    Data => {
-                #                        Type  => 'AAA',
-                #                        Title => 'BBB',
-                #                    },
-                #                );
+                $Self->Block(
+                    Name => 'InfoBoxFAQMiniListNewsRSS',
+                    Data => {
+                        Type  => $OrderBy,
+                        Title => $RSSTitle,
+                    },
+                );
             }
 
             for my $ItemID (@ItemIDs) {
@@ -875,17 +877,16 @@ sub FAQShowTop10 {
                 },
             );
 
-            # TODO
             # show the RSS Feed icon
             if ( $Param{Mode} eq 'Public' ) {
 
-                #                $Self->Block(
-                #                    Name => 'InfoBoxFAQMiniListNewsRSS',
-                #                    Data => {
-                #                        Type  => '',
-                #                        Title => '',
-                #                    },
-                #                );
+                $Self->Block(
+                    Name => 'InfoBoxFAQMiniListNewsRSS',
+                    Data => {
+                        Type  => 'Top10',
+                        Title => 'FAQ Articles (Top 10)',
+                    },
+                );
             }
 
             my $Number;

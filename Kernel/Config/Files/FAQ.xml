@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.90 2010-12-06 23:45:17 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.91 2010-12-07 01:35:17 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -523,6 +523,19 @@ Your OTRS Notification Master
                 <Loader>
                     <CSS>FAQ.Customer.Detail.css</CSS>
                     <CSS>FAQ.Customer.Default.css</CSS>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PublicFrontend::Module###PublicFAQRSS" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Public faq</Description>
+                <NavBarName>FAQ</NavBarName>
+                <Loader>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
