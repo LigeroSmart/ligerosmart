@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.15 2010-12-04 01:35:50 cr Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.16 2010-12-07 15:52:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -52,7 +52,7 @@
 <!-- dtl:block:RecordStateHeader -->
 <!-- dtl:block:RecordChangedHeader -->
                 <th class="Changed $QData{"CSS"}">
-                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Changed;OrderBy=$LQData{"OrderBy"}">$Text{"changed"}</a>
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Changed;OrderBy=$LQData{"OrderBy"}">$Text{"Changed"}</a>
                 </th>
 <!-- dtl:block:RecordChangedHeader -->
             </tr>
