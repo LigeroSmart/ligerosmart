@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.23 2010-12-06 19:33:08 en Exp $
-# $OldId: AgentTicketEmail.pm,v 1.157 2010/11/25 18:12:23 en Exp $
+# $Id: AgentTicketEmail.pm,v 1.24 2010-12-07 18:54:20 en Exp $
+# $OldId: AgentTicketEmail.pm,v 1.159 2010/12/06 19:48:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1999,8 +1999,22 @@ sub _MaskEmailNew {
         );
     }
 
+    my $ShownOptionsBlock;
+
     # show spell check
     if ( $Self->{LayoutObject}->{BrowserSpellChecker} ) {
+
+        # check if need to call Options block
+        if ( !$ShownOptionsBlock ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketOptions',
+                Data => {},
+            );
+
+            # set flag to "true" in order to prevent calling the Options block again
+            $ShownOptionsBlock = 1;
+        }
+
         $Self->{LayoutObject}->Block(
             Name => 'SpellCheck',
             Data => {},
@@ -2013,6 +2027,18 @@ sub _MaskEmailNew {
         && $Self->{LayoutObject}->{BrowserJavaScriptSupport}
         )
     {
+
+        # check if need to call Options block
+        if ( !$ShownOptionsBlock ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketOptions',
+                Data => {},
+            );
+
+            # set flag to "true" in order to prevent calling the Options block again
+            $ShownOptionsBlock = 1;
+        }
+
         $Self->{LayoutObject}->Block(
             Name => 'AddressBook',
             Data => {},
@@ -2025,6 +2051,18 @@ sub _MaskEmailNew {
         Type   => 'rw',
     );
     if ($OptionCustomer) {
+
+        # check if need to call Options block
+        if ( !$ShownOptionsBlock ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketOptions',
+                Data => {},
+            );
+
+            # set flag to "true" in order to prevent calling the Options block again
+            $ShownOptionsBlock = 1;
+        }
+
         $Self->{LayoutObject}->Block(
             Name => 'OptionCustomer',
             Data => {},

@@ -2,8 +2,8 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.20 2010-12-06 19:33:09 en Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.122 2010/11/24 18:54:05 en Exp $
+# $Id: AgentTicketPhone.dtl,v 1.21 2010-12-07 18:54:20 en Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.124 2010/12/07 17:47:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -193,8 +193,11 @@ $Include{"AgentCustomerSearch"}
                     </div>
                     <div class="Clear"></div>
 
+<!-- dtl:block:TicketOptions -->
                     <label>$Text{"Options"}:</label>
                     <div class="Field">
+
+<!-- OutputFilterHook_TicketOptionsBegin -->
 
 <!-- dtl:block:SpellCheck -->
                         <a href="#" id="OptionSpellCheck">[ $Text{"Spell check"} ]</a>
@@ -209,8 +212,11 @@ $Include{"AgentCustomerSearch"}
                         <a href="$Env{"Baselink"}Action=AgentLinkObject;Mode=Temporary;SourceObject=Ticket;SourceKey=$LQData{"FormID"};TargetIdentifier=ITSMConfigItem" id="OptionLinkTicket" class="AsPopup">[ $Text{"Link ticket"} ]</a>
 # ---
 
+<!-- OutputFilterHook_TicketOptionsEnd -->
+
                     </div>
                     <div class="Clear"></div>
+<!-- dtl:block:TicketOptions -->
 
                     <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Text"}:</label>
                     <div class="RichTextField">

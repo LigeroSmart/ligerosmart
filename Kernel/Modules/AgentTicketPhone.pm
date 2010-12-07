@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.24 2010-12-06 19:33:09 en Exp $
-# $OldId: AgentTicketPhone.pm,v 1.172 2010/11/24 18:54:04 en Exp $
+# $Id: AgentTicketPhone.pm,v 1.25 2010-12-07 18:54:19 en Exp $
+# $OldId: AgentTicketPhone.pm,v 1.174 2010/12/06 19:48:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1902,8 +1902,22 @@ sub _MaskPhoneNew {
         );
     }
 
+    my $ShownOptionsBlock;
+
     # show spell check
     if ( $Self->{LayoutObject}->{BrowserSpellChecker} ) {
+
+        # check if need to call Options block
+        if ( !$ShownOptionsBlock ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketOptions',
+                Data => {},
+            );
+
+            # set flag to "true" in order to prevent calling the Options block again
+            $ShownOptionsBlock = 1;
+        }
+
         $Self->{LayoutObject}->Block(
             Name => 'SpellCheck',
             Data => {},
@@ -1916,6 +1930,18 @@ sub _MaskPhoneNew {
         Type   => 'rw',
     );
     if ($OptionCustomer) {
+
+        # check if need to call Options block
+        if ( !$ShownOptionsBlock ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketOptions',
+                Data => {},
+            );
+
+            # set flag to "true" in order to prevent calling the Options block again
+            $ShownOptionsBlock = 1;
+        }
+
         $Self->{LayoutObject}->Block(
             Name => 'OptionCustomer',
             Data => {},

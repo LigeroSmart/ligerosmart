@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.12 2010-11-18 16:06:52 ub Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.13 2010-12-07 18:54:20 en Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -214,13 +214,21 @@
                 </div>
                 <div class="Clear"></div>
 
-<!-- dtl:block:SpellCheck -->
+<!-- dtl:block:TicketOptions -->
                 <label>$Text{"Options"}:</label>
                 <div class="Field">
+
+<!-- OutputFilterHook_TicketOptionsBegin -->
+
+<!-- dtl:block:SpellCheck -->
                     <a href="#" id="OptionSpellCheck">[ $Text{"Spell check"} ]</a>
+<!-- dtl:block:SpellCheck -->
+
+<!-- OutputFilterHook_TicketOptionsEnd -->
+
                 </div>
                 <div class="Clear"></div>
-<!-- dtl:block:SpellCheck -->
+<!-- dtl:block:TicketOptions -->
 
                 <label class="Mandatory" for="RichText"><span class="Marker">*</span>$Text{"Text"}:</label>
                 <div class="RichTextField">
