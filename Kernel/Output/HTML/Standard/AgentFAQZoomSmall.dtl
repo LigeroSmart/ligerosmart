@@ -2,7 +2,7 @@
 # AgentFAQZoomSmall.dtl - provides HTML small for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoomSmall.dtl,v 1.4 2010-12-06 23:45:17 cr Exp $
+# $Id: AgentFAQZoomSmall.dtl,v 1.5 2010-12-07 09:27:39 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -157,32 +157,27 @@ $('#Cancel').bind('click', function (event) {
 });
 
 $('#InsertText').bind('click', function (event) {
-    var FAQTitle = $('#FAQTitle').val();
-        FAQContent = $('#FAQBody').val();
+    var FAQTitle = $('#FAQTitle').val(),
+        FAQContent = $('#FAQBody').val(),
         FAQHTMLContent = FAQContent;
 
     FAQ.Agent.TicketCompose.SetData(FAQTitle, FAQContent, FAQHTMLContent);
-
 });
 
 $('#InsertLink').bind('click', function (event) {
-    var FAQTitle = $('#FAQTitle').val();
-        FAQContent = $('#FAQPublicLink').val();
-        FAQHTMLContent = '<a href="' + $('#FAQPublicLink').val() + '>' + $('#FAQTitle').val() + '</a>';
+    var FAQTitle = $('#FAQTitle').val(),
+        FAQContent = $('#FAQPublicLink').val(),
+        FAQHTMLContent = '<a href="' + $('#FAQPublicLink').val() + '">' + $('#FAQTitle').val() + '</a>';
 
     FAQ.Agent.TicketCompose.SetData(FAQTitle, FAQContent, FAQHTMLContent);
-
 });
 
 $('#InsertBoth').bind('click', function (event) {
-    var FAQTitle = $('#FAQTitle').val();
-        FAQContent = $('#FAQBody').val() + "\n" + $('#FAQPublicLink').val();
-        FAQHTMLContent = $('#FAQBody').val() + '<br/>' + '<a href="' + $('#FAQPublicLink').val() + '>' + $('#FAQTitle').val() + '</a>';
+    var FAQTitle = $('#FAQTitle').val(),
+        FAQContent = $('#FAQBody').val() + "\n" + $('#FAQPublicLink').val(),
+        FAQHTMLContent = $('#FAQBody').val() + '<br/>' + '<a href="' + $('#FAQPublicLink').val() + '">' + $('#FAQTitle').val() + '</a>';
 
     FAQ.Agent.TicketCompose.SetData(FAQTitle, FAQContent, FAQHTMLContent);
-
 });
-
-
 //]]></script>
 <!--dtl:js_on_document_complete-->
