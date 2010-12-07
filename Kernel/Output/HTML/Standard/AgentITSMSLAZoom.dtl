@@ -2,7 +2,7 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.6 2010-08-23 16:48:34 dz Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.7 2010-12-07 05:54:31 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -72,7 +72,6 @@
                             <tr>
                                 <th>$Text{"SLA"}</th>
                                 <th>$Text{"Type"}</th>
-                                <th>$Text{"Criticality"}</th>
                                 <th>$Text{"Calendar"}</th>
                                 <th>$Text{"First Response Time"}</th>
                                 <th>$Text{"Update Time"}</th>
@@ -84,7 +83,6 @@
                             <tr>
                                 <td>$Text{"$Data{"Name"}"}</td>
                                 <td>$Text{"$Data{"Type"}"}</td>
-                                <td>$Text{"$Data{"Criticality"}"}</td>
                                 <td>$Text{"$Data{"CalendarName"}"}</td>
                                 <td>$QData{"FirstResponseTime"} $Text{"minutes"}</td>
                                 <td>$QData{"UpdateTime"} $Text{"minutes"}</td>
