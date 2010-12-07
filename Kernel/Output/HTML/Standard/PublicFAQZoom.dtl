@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.13 2010-12-07 15:05:27 mb Exp $
+# $Id: PublicFAQZoom.dtl,v 1.14 2010-12-07 15:23:38 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -79,7 +79,7 @@
                             <div class="Label">$Text{"Keywords"}:</div>
 
 <!-- dtl:block:Keywords -->
-                            <span class="DownloadAttachment" title="$Text{"Search for articles with keyword: $QData{"Keyword"}"}">
+                            <span class="DownloadAttachment" title="$Text{"Search for articles with keyword"}: $QData{"Keyword"}">
                                 <a href="$Env{"Baselink"}Action=PublicFAQSearch;Subaction=Search;Keyword=$LQData{"Keyword"}">$QData{"Keyword"}</a>
                             </span>
 <!-- dtl:block:Keywords -->
