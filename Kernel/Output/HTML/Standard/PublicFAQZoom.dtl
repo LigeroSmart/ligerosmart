@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.14 2010-12-07 15:23:38 mb Exp $
+# $Id: PublicFAQZoom.dtl,v 1.15 2010-12-07 17:44:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -73,37 +73,35 @@
                     <h3>$Text{"Details"}:</h3>
                     <div class="Clear"></div>
                 </div>
-                <div class="MessageBody">
-                    <div class="Details">
-                        <div>
-                            <div class="Label">$Text{"Keywords"}:</div>
+                <div class="Details">
+                    <div>
+                        <div class="Label">$Text{"Keywords"}:</div>
 
 <!-- dtl:block:Keywords -->
-                            <span class="DownloadAttachment" title="$Text{"Search for articles with keyword"}: $QData{"Keyword"}">
-                                <a href="$Env{"Baselink"}Action=PublicFAQSearch;Subaction=Search;Keyword=$LQData{"Keyword"}">$QData{"Keyword"}</a>
-                            </span>
+                        <span class="DownloadAttachment" title="$Text{"Search for articles with keyword"}: $QData{"Keyword"}">
+                            <a href="$Env{"Baselink"}Action=PublicFAQSearch;Subaction=Search;Keyword=$LQData{"Keyword"}">$QData{"Keyword"}</a>
+                        </span>
 <!-- dtl:block:Keywords -->
 
-                            <div class="Clear"></div>
-                        </div>
+                        <div class="Clear"></div>
+                    </div>
 
 <!-- dtl:block:AttachmentHeader -->
-                        <div class="Attachments">
-                            <div class="Label">$Text{"Attachment"}:</div>
+                    <div class="Attachments">
+                        <div class="Label">$Text{"Attachment"}:</div>
 
 <!-- dtl:block:AttachmentRow -->
-                            <span class="DownloadAttachment" title="$Text{"Download Attachment"}">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;ItemID=$LQData{"ItemID"};FileID=$LQData{"FileID"}">
-                                    $QData{"Filename"}
-                                </a>
-                                , $QData{"Filesize"}
-                            </span>
+                        <span class="DownloadAttachment" title="$Text{"Download Attachment"}">
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;ItemID=$LQData{"ItemID"};FileID=$LQData{"FileID"}">
+                                $QData{"Filename"}
+                            </a>
+                            , $QData{"Filesize"}
+                        </span>
 <!-- dtl:block:AttachmentRow -->
-
-                        </div>
-<!-- dtl:block:AttachmentHeader -->
 
                     </div>
+<!-- dtl:block:AttachmentHeader -->
+
                 </div>
             </li>
 
@@ -113,11 +111,9 @@
                     <h3>$Text{"$Data{"Caption"}"}:</h3>
                     <div class="Clear"></div>
                 </div>
-                <div class="MessageBody">
-                    <div class="MessageContent">
-                        <div class="message">
-                            $Data{"Content"}
-                        </div>
+                <div class="ArticleFAQContent">
+                    <div class="message">
+                        $Data{"Content"}
                     </div>
                 </div>
             </li>
