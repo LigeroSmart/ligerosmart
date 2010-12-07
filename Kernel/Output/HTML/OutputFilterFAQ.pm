@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.8 2010-12-06 18:33:45 cr Exp $
+# $Id: OutputFilterFAQ.pm,v 1.9 2010-12-07 17:48:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.8 $';
+$VERSION = '$Revision: 1.9 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -53,7 +53,7 @@ sub Run {
 
     # add FAQ link
     #$FinishPattern will be replaced by $Replace
-    my $StartPattern  = '<!-- [ ] OutputFilterHook_OptionsEnd [ ] --> .+?';
+    my $StartPattern  = '<!-- [ ] OutputFilterHook_TicketOptionsEnd [ ] --> .+?';
     my $FinishPattern = '</div>';
 
     # TODO replace the class Customer another class with the same effect but different name
