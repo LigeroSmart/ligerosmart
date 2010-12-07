@@ -3,7 +3,7 @@
 // confirmation dialogs
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ConfirmationDialog.js,v 1.3 2010-10-19 16:07:17 en Exp $
+// $Id: ITSM.Agent.ConfirmationDialog.js,v 1.4 2010-12-07 17:31:10 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -48,24 +48,29 @@ ITSM.Agent.ConfirmationDialog = (function (TargetNS) {
      */
     TargetNS.ShowConfirmationDialog = function (Event) {
 
+        var LocalDialogData,
+            PositionTop,
+            Data,
+            Buttons;
+
         // get global saved DialogData for this function
-        var LocalDialogData = DialogData[$(Event.target).attr('id')];
+        LocalDialogData = DialogData[$(Event.target).attr('id')];
 
         // define the position of the dialog
-        var PositionTop = $(window).scrollTop() + ($(window).height() * 0.3);
+        PositionTop = $(window).scrollTop() + ($(window).height() * 0.3);
 
         // show waiting dialog
         ShowWaitingDialog(PositionTop);
 
         // ajax call to the module that deletes the template
-        var Data = LocalDialogData.DialogContentQueryString;
+        Data = LocalDialogData.DialogContentQueryString;
         Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
 
             // 'Confirmation' opens a dialog with 2 buttons: Yes and No
-            if (Response.DialogType == 'Confirmation') {
+            if (Response.DialogType === 'Confirmation') {
 
                 // define yes and no buttons
-                var Buttons = [{
+                Buttons = [{
                     Label: LocalDialogData.TranslatedText.Yes,
                     Class: "Primary",
 
@@ -85,10 +90,10 @@ ITSM.Agent.ConfirmationDialog = (function (TargetNS) {
             }
 
             // 'Message' opens a dialog with 1 button: Ok
-            else if (Response.DialogType == 'Message') {
+            else if (Response.DialogType === 'Message') {
 
                 // define Ok button
-                var Buttons = [{
+                Buttons = [{
                     Label: LocalDialogData.TranslatedText.Ok,
                     Class: "Primary",
                     Type: "Close"

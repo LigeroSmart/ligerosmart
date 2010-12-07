@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.56 2010-10-27 22:15:30 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.57 2010-12-07 17:27:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -450,7 +450,7 @@
     });
 
     $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-        javascript:history.back();
+        history.back();
         return false;
     });
 //]]></script>

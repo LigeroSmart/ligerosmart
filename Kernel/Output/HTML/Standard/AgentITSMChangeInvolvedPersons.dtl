@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.35 2010-05-28 17:53:06 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.36 2010-12-07 17:27:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -145,7 +145,7 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:TakeChangeManager -->
 <!-- dtl:block:SearchUserButton1 -->
                                         <input class="button" type="submit" name="ExpandManager1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field1(); return false;"/>
+                                        <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear"} $Text{"User"}" onclick="clear_field1(); return false;"/>
 <!-- dtl:block:SearchUserButton1 -->
                                     </td>
                                 </tr>

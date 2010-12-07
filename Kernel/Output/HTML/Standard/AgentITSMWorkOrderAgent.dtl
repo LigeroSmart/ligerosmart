@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.25 2010-04-27 20:45:04 ub Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.26 2010-12-07 17:27:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -102,7 +102,7 @@ document.observe( "dom:loaded", function() {
 <!-- dtl:block:TakeUser -->
 <!-- dtl:block:SearchUserButton -->
                                         <input class="button" type="submit" name="ExpandUserName1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field(); return false;"/>
+                                        <input class="button" type="submit" name="ClearUser" value="$Text{"Clear"} $Text{"User"}" onclick="clear_field(); return false;"/>
 <!-- dtl:block:SearchUserButton -->
                                     </td>
                                 </tr>
