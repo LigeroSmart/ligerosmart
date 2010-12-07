@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.20 2010-12-02 19:29:42 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.21 2010-12-07 17:14:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -252,7 +252,7 @@
     });
 
     $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-        javascript:history.back();
+        history.back();
         return false;
     });
 
