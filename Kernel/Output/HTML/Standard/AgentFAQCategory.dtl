@@ -2,7 +2,7 @@
 # AgentFAQCategory.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.dtl,v 1.14 2010-12-06 22:05:46 ub Exp $
+# $Id: AgentFAQCategory.dtl,v 1.15 2010-12-07 15:31:43 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@
                             <td>$Text{"$Data{"Valid"}"}</td>
                             <td class="Center Last">
                                 <a id="DeleteCategoryID$QData{"CategoryID"}" class="TrashCan" href="#">
-                                    $Text{"Delete: $QData{"Name"}"}
+                                    $Text{"Delete"}: $QData{"Name"}
                                 </a>
                             </td>
 <!--dtl:js_on_document_complete-->
@@ -137,7 +137,7 @@
                             <div id="CommentServerError" class="TooltipErrorMessage">
                                 <p>$Text{"This field is required."}</p>
                             </div>
-                            <div class="FieldExplanation">($Text{"Will be shown as comment in Explorer."})</div>
+                            <div class="FieldExplanation">$Text{"Will be shown as comment in Explorer."}</div>
                         </div>
                         <div class="Clear"></div>
 
@@ -156,7 +156,7 @@
                             <div id="PermissionGroupsServerError" class="TooltipErrorMessage">
                                 <p>$Text{"Please select at least one permission group."}</p>
                             </div>
-                            <div class="FieldExplanation">($Text{"Agent groups that can access articles in this category."})</div>
+                            <div class="FieldExplanation">$Text{"Agent groups that can access articles in this category."}</div>
                         </div>
                         <div class="Clear"></div>
 
