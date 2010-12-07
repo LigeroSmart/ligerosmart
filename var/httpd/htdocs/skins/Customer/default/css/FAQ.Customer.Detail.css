@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -108,6 +108,9 @@
 .RSSIcon {
     background: url(../img/rss.png) no-repeat;
     float: right;
+    text-indent: -9999px;
+    height: 16px;
+    width: 28px;
 }
 
 }
