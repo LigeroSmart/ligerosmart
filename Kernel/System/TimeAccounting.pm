@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.41 2010-12-03 09:39:45 mn Exp $
+# $Id: TimeAccounting.pm,v 1.42 2010-12-08 23:14:37 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -390,6 +390,49 @@ sub ProjectSettingsGet {
     return %Data;
 }
 
+=item ProjectGet()
+
+returns a hash with project data
+
+    my %ProjectData = $TimeAccountingObject->ProjectGet( ID => 2 );
+
+This returns something like:
+
+    $TimeAccountingObject = (
+        Project            => 'internal',
+        ProjectDescription => 'description',
+        ProjectStatus      => 1,
+    );
+
+=cut
+
+sub ProjectGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID!' );
+        return;
+    }
+
+    # sql
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT project, description, status '
+            . 'FROM time_accounting_project WHERE id = ?',
+        Bind => [ \$Param{ID} ],
+    );
+    my %Project;
+    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+        %Project = (
+            ID                 => $Param{ID},
+            Project            => $Data[0],
+            ProjectDescription => $Data[1],
+            ProjectStatus      => $Data[2],
+        );
+    }
+    return %Project;
+}
+
 =item ProjectSettingsInsert()
 
 insert new project data in the db
@@ -407,10 +450,12 @@ insert new project data in the db
 sub ProjectSettingsInsert {
     my ( $Self, %Param ) = @_;
 
-    $Param{Project} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectName') || '';
-    $Param{ProjectStatus} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus')
-        || 0;
+    $Param{Project} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectName');
     $Param{ProjectDescription} ||= '';
+
+    if ( $Param{ProjectStatus} ne '0' && $Param{ProjectStatus} ne '1' ) {
+        $Param{ProjectStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultProjectStatus');
+    }
 
     # insert project record
     my $Result = $Self->{DBObject}->Do(
@@ -505,6 +550,42 @@ sub ProjectSettingsUpdate {
         # db insert
         return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     }
+    return 1;
+}
+
+=item ProjectUpdate()
+
+update of a project
+
+    my $Success = = $TimeAccountingObject->ProjectUpdate(
+        ID                 => 123,
+        Project            => 'internal',
+        ProjectDescription => 'description',
+        ProjectStatus      => 1,
+    );
+
+=cut
+
+sub ProjectUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(ID Project)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    # sql
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE time_accounting_project SET project = ?, description = ?, status = ?'
+            . ' WHERE id = ?',
+        Bind => [
+            \$Param{Project}, \$Param{ProjectDescription}, \$Param{ProjectStatus}, \$Param{ID}
+        ],
+    );
+
     return 1;
 }
 
@@ -1507,6 +1588,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.41 $ $Date: 2010-12-03 09:39:45 $
+$Revision: 1.42 $ $Date: 2010-12-08 23:14:37 $
 
 =cut
