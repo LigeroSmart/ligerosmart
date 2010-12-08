@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.29 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.30 2010-12-08 22:45:49 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -306,8 +306,8 @@ sub Run {
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => $WorkOrder->{WorkOrderTitle},
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # add rich text editor
     if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
@@ -366,16 +366,6 @@ sub Run {
                 },
             );
 
-            # show workorder freetext validation error for single workorder freetext field
-            if ( $WorkOrderFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidWorkOrderFreeText' . $Number,
-                    Data => {
-                        %WorkOrderFreeTextHTML,
-                    },
-                );
-            }
-
             # show all workorder freetext fields
             $Self->{LayoutObject}->Block(
                 Name => 'WorkOrderFreeText',
@@ -384,33 +374,10 @@ sub Run {
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
                     WorkOrderFreeTextField =>
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeTextField' . $Number },
+                    Number => $Number,
                 },
             );
-
-            # show all workorder freetext validation errors
-            if ( $WorkOrderFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidWorkOrderFreeText',
-                    Data => {
-                        %WorkOrderFreeTextHTML,
-                    },
-                );
-            }
         }
-    }
-
-    # show space before and after workorder freetext fields
-    if ($WorkOrderFreeTextShown) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeTextSpacerTop',
-            Data => {},
-        );
-
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeTextSpacerBottom',
-            Data => {},
-        );
     }
 
     # build workorder freetext java script check
@@ -504,7 +471,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
