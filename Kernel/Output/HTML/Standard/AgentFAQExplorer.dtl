@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.17 2010-12-08 17:02:47 cr Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.18 2010-12-08 19:02:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -48,13 +48,22 @@
                             <p class="FieldExplanation">
                                 $Text{"Wildcards are allowed."}
                             </p>
-                            <a  class="CallForAction FAQSearchButton SpacingTop" href="$Env{"Baselink"}Action=$LQData{"Action"};Nav=None">
+                            <a  class="CallForAction FAQSearchButton SpacingTop" id="$LQData{"Action"}" href="$Env{"Baselink"}Action=$LQData{"Action"};Nav=$LQData{"Nav"}">
                                 <span>$Text{"Advanced Search"}</span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#AgentFAQSearch').bind('click', function (Event) {
+        Core.Agent.Search.OpenSearchDialog('AgentFAQSearch');
+        return false;
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
 <!-- dtl:block:QuickSearch -->
 
 <!-- dtl:block:InfoBoxFAQMiniList -->
