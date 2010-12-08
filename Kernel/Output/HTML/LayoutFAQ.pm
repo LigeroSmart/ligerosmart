@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.43 2010-12-08 17:02:47 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.44 2010-12-08 17:21:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -969,7 +969,7 @@ sub FAQShowQuickSearch {
         return;
     }
 
-    #set action module
+    # set action module
     my $Action;
     if ( $Param{Mode} eq 'AgentSmall' ) {
         $Action = 'AgentFAQSearchSmall';
