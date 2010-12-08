@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.47 2010-12-07 15:19:08 mn Exp $
+# $Id: LayoutITSMChange.pm,v 1.48 2010-12-08 22:46:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =over 4
 
@@ -824,11 +824,13 @@ sub BuildFreeTextHTML {
 
                 # build input field with freekey data
                 $Data{ $Type . 'FreeKeyField' . $Number }
-                    = '<input type="text" name="'
+                    = '<input type="text" id="'
+                    . $Type . 'FreeKey' . $Number
+                    . '" name="'
                     . $Type . 'FreeKey' . $Number
                     . '" value="'
                     . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeKey' . $Number } )
-                    . '" class = "W25pc"/>';
+                    . '" />';
             }
 
             # freekey data is not defined
@@ -836,11 +838,11 @@ sub BuildFreeTextHTML {
 
                 # build empty input field
                 $Data{ $Type . 'FreeKeyField' . $Number }
-                    = '<input type="text" name="'
-                    . $Type
-                    . 'FreeKey'
-                    . $Number
-                    . '" value="" class="W25pc"/>';
+                    = '<input type="text" id="'
+                    . $Type . 'FreeKey' . $Number
+                    . '" name="'
+                    . $Type . 'FreeKey' . $Number
+                    . '" value="" />';
             }
         }
 
@@ -894,11 +896,13 @@ sub BuildFreeTextHTML {
 
                 # build input field with freetext data
                 $Data{ $Type . 'FreeTextField' . $Number }
-                    = '<input type="text" name="'
+                    = '<input type="text" id="'
+                    . $Type . 'FreeText' . $Number
+                    . '" name="'
                     . $Type . 'FreeText' . $Number
                     . '" value="'
                     . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeText' . $Number } )
-                    . '" class="W50pc"/>';
+                    . '" class="W75pc"/>';
             }
 
             # freetext data is not defined
@@ -906,11 +910,11 @@ sub BuildFreeTextHTML {
 
                 # build empty input field
                 $Data{ $Type . 'FreeTextField' . $Number }
-                    = '<input type="text" name="'
-                    . $Type
-                    . 'FreeText'
-                    . $Number
-                    . '" value="" class="W50pc"/>';
+                    = '<input type="text" id="'
+                    . $Type . 'FreeText' . $Number
+                    . '" name="'
+                    . $Type . 'FreeText' . $Number
+                    . '" value="" class="W75pc"/>';
             }
         }
     }
