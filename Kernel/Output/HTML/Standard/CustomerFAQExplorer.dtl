@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.14 2010-12-07 01:29:56 ub Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.15 2010-12-08 12:41:43 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,7 +83,7 @@
                                     <th><a href="#">$Text{"Name"}</a></th>
                                     <th><a href="#">$Text{"Comment"}</a></th>
                                     <th><a href="#">$Text{"Subcategories"}</a></th>
-                                    <th><a href="#">$Text{"Articles"}</a></th>
+                                    <th><a href="#">$Text{"FAQ Articles"}</a></th>
                                 </tr>
                             </thead>
                             <tbody>

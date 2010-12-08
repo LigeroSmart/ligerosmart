@@ -2,7 +2,12 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.16 2010-12-07 15:25:49 mb Exp $
+# $Id: nl_FAQ.pm,v 1.17 2010-12-08 12:41:43 mb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
 
 package Kernel::Language::nl_FAQ;
 
@@ -10,6 +15,26 @@ use strict;
 
 sub Data {
     my $Self = shift;
+
+        # Template: AAAFAQ
+    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ categorie bijgewerkt.';
+    $Self->{Translation}->{'FAQ category added!'} = 'FAQ categorie toegevoegd.';
+    $Self->{Translation}->{'internal'} = 'intern';
+    $Self->{Translation}->{'public'} = 'publiek';
+    $Self->{Translation}->{'FAQ Number'} = 'FAQ nummer';
+    $Self->{Translation}->{'LatestChangedItems'} = 'Laatst gewijzigde artikelen';
+    $Self->{Translation}->{'LatestCreatedItems'} = 'Laatst aangemaakte artikelen';
+    $Self->{Translation}->{'Top10Items'} = 'Meest populaire artikelen';
+    $Self->{Translation}->{'SubCategoryOf'} = 'Subcategorie van';
+    $Self->{Translation}->{'public (all)'} = 'publiek';
+    $Self->{Translation}->{'external (customer)'} = 'extern (klanten)';
+    $Self->{Translation}->{'internal (agent)'} = 'intern (gebruikers)';
+    $Self->{Translation}->{'StartDay'} = 'Start dag';
+    $Self->{Translation}->{'StartMonth'} = '';
+    $Self->{Translation}->{'StartYear'} = '';
+    $Self->{Translation}->{'EndDay'} = '';
+    $Self->{Translation}->{'EndMonth'} = '';
+    $Self->{Translation}->{'EndYear'} = '';
 
         # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Artikel toevoegen';
@@ -19,15 +44,13 @@ sub Data {
         # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ categoriebeheer';
     $Self->{Translation}->{'Add category'} = 'Categorie toevoegen';
-    $Self->{Translation}->{'Delete: '} = '';
     $Self->{Translation}->{'Delete Category'} = 'Categorie verwijderen';
     $Self->{Translation}->{'Ok'} = '';
     $Self->{Translation}->{'Add Category'} = 'Categorie toevoegen';
     $Self->{Translation}->{'Edit Category'} = 'Categorie bewerken';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Subcategorie van';
-    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wordt in webinterface getoond';
-    $Self->{Translation}->{'Please select at least one permission group.'} = '';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '';
+    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wordt in webinterface getoond.';
+    $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer tenminste één permissiegroep.';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Gebruikers met rechten op artikelen in deze categorie.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = '';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = '';
     $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '';
@@ -52,6 +75,7 @@ sub Data {
         # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Beheer talen';
     $Self->{Translation}->{'Add language'} = 'Taal toevoegen';
+    $Self->{Translation}->{'Delete: '} = '';
     $Self->{Translation}->{'Delete Language'} = 'Taal verwijderen';
     $Self->{Translation}->{'Add Language'} = 'Taal toevoegen';
     $Self->{Translation}->{'Edit Language'} = 'Taal bewerken';
@@ -64,7 +88,6 @@ sub Data {
 
         # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Geen FAQ data gevonden.';
-    $Self->{Translation}->{'changed'} = '';
 
         # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = '';

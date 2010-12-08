@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.15 2010-12-07 01:29:56 ub Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.16 2010-12-08 12:41:43 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -72,7 +72,7 @@
                                 <th>$Text{"Name"}</th>
                                 <th>$Text{"Comment"}</th>
                                 <th>$Text{"Subcategories"}</th>
-                                <th>$Text{"Articles"}</th>
+                                <th>$Text{"FAQ Articles"}</th>
                             </tr>
                         </thead>
                         <tbody>
