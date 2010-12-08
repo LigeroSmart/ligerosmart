@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.32 2010-06-29 13:52:06 ub Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.33 2010-12-08 22:47:23 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,162 +62,110 @@ function submit_compose() {
 //-->
 </script>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastWorkOrderView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
+<form action="$Env{"CGIHandle"}" method="post" name="compose">
+    <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+    <input type="hidden" name="Subaction" value="Save"/>
+    <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Save">
-                <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Report"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130">
-                                    <col>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">$Text{"Report"}:</td>
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>$Text{"Edit"} $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle","70"}</h1>
+            <p>
+                <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
+            <h2>$Text{"Options"}</h2>
 
-                                    <td class="contentvalue">
-                                        <div>
+            <fieldset class="TableLike FixedLabel">
+                <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Report"}:</label>
+                <div class="RichTextField">
+
 <!-- dtl:block:RichText -->
-$Include{"RichTextEditorITSM"}
+$Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
-                                            <textarea id="RichText1" name="Report" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Report"}</textarea>
-                                        </div>
-                                    </td>
-                                </tr>
+
+                    <textarea id="RichText" class="RichText Validate_Required $Data{"ReportInvalid"}" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Report"}</textarea>
+                    <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                </div>
+                <div class="Clear"></div>
+
 <!-- dtl:block:State -->
-                                <tr>
-                                    <td width="25%" class="contentkey">$Text{"State"}:</td>
-                                    <td width="75%" class="contentvalue">$Data{"StateSelect"}</td>
-                                </tr>
+                <label for="WorkOrderStateID">$Text{"State"}:</label>
+                <div class="Field">
+                    $Data{"StateSelect"}
+                </div>
+                <div class="Clear"></div>
 <!-- dtl:block:State -->
-<!-- dtl:block:WorkOrderFreeTextSpacerTop -->
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-<!-- dtl:block:WorkOrderFreeTextSpacerTop -->
+
 <!-- dtl:block:WorkOrderFreeText -->
-                                <tr>
-                                    <td class="contentkey">$Data{"WorkOrderFreeKeyField"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"WorkOrderFreeTextField"}
-<!-- dtl:block:InvalidWorkOrderFreeText -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidWorkOrderFreeText -->
-                                    </td>
-                                </tr>
+                <label id="LabelWorkOrderFreeText$Data{"Number"}">
+                    $Data{"WorkOrderFreeKeyField"}:
+                </label>
+                <div class="Field">
+                    $Data{"WorkOrderFreeTextField"}
+                </div>
+                <div class="Clear"></div>
 <!-- dtl:block:WorkOrderFreeText -->
-<!-- dtl:block:WorkOrderFreeTextSpacerBottom -->
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-<!-- dtl:block:WorkOrderFreeTextSpacerBottom -->
+
 # #############################################################
 # example for customization of single workorder freetext fields
 # #############################################################
 #<!-- dtl:block:WorkOrderFreeText1 -->
-#                                <tr>
-#                                  <td class="contentkey">$Data{"WorkOrderFreeKeyField1"}:</td>
-#                                   <td class="contentvalue">
-#                                       $Data{"WorkOrderFreeTextField1"}
-#<!-- dtl:block:InvalidWorkOrderFreeText1 -->
-#                                       <br />
-#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
-#<!-- dtl:block:InvalidWorkOrderFreeText1 -->
-#                                  </td>
-#                                </tr>
+#                <label id="LabelWorkOrderFreeText1">
+#                    $Data{"WorkOrderFreeKeyField1"}:
+#                </label>
+#                <div class="Field">
+#                    $Data{"WorkOrderFreeTextField1"}
+#                </div>
+#                <div class="Clear"></div>
 #<!-- dtl:block:WorkOrderFreeText1 -->
 #
-#
 #<!-- dtl:block:WorkOrderFreeText2 -->
-#                                <tr>
-#                                  <td colspan="2" class="contentkey">$Data{"WorkOrderFreeKeyField2"}:</td>
-#                                  <td class="contentvalue">
-#                                      $Data{"WorkOrderFreeTextField2"}
-#<!-- dtl:block:InvalidWorkOrderFreeText2 -->
-#                                       <br />
-#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
-#<!-- dtl:block:InvalidWorkOrderFreeText2 -->
-#                                  </td>
-#                                </tr>
+#                <label id="LabelWorkOrderFreeText2">
+#                    $Data{"WorkOrderFreeKeyField2"}:
+#                </label>
+#                <div class="Field">
+#                    $Data{"WorkOrderFreeTextField2"}
+#                </div>
+#                <div class="Clear"></div>
 #<!-- dtl:block:WorkOrderFreeText2 -->
 # ####################################################
-<!-- dtl:block:ActualStartTime -->
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"ActualStartTime"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"ActualStartTimeSelectionString"}
-<!-- dtl:block:InvalidActualStartTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidActualStartTime -->
-                                    </td>
-                                </tr>
-<!-- dtl:block:ActualStartTime -->
-<!-- dtl:block:ActualEndTime -->
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"ActualEndTime"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"ActualEndTimeSelectionString"}
-<!-- dtl:block:InvalidActualEndTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidActualEndTime -->
-                                    </td>
-                                </tr>
-<!-- dtl:block:ActualEndTime -->
-<!-- dtl:block:ShowAccountedTime -->
-                                <tr>
-                                    <td class="contentkey">$Text{"AccountedTime"}:</td>
 
-                                    <td class="contentvalue">
-                                        <div>
-                                            <input type="text" name="AccountedTime" value="$QData{"AccountedTime"}" size="11" maxlength="11">
-<!-- dtl:block:InvalidAccountedTime -->
-                                            <br />
-                                            <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidAccountedTime -->
-                                        </div>
-                                    </td>
-                                </tr>
+<!-- dtl:block:ActualStartTime -->
+                <label for="ActualStartTime">$Text{"ActualStartTime"}:</label>
+                <div class="Field">
+                    $Data{"ActualStartTimeSelectionString"}
+                    <div id="ActualStartTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
+                    <div id="ActualStartTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:ActualStartTime -->
+
+<!-- dtl:block:ActualEndTime -->
+                <label for="ActualEndTime">$Text{"ActualEndTime"}:</label>
+                <div class="Field">
+                    $Data{"ActualEndTimeSelectionString"}
+                    <div id="ActualEndTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
+                    <div id="ActualEndTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:ActualEndTime -->
+
 <!-- dtl:block:ShowAccountedTime -->
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" id="submitWorkOrderReport" accesskey="g" type="submit" name="WorkOrderReport" value="$Text{"Save"}" onclick="return submit_compose();">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
-        </td>
-    </tr>
-</table>
+                <label for="AccountedTime">$Text{"AccountedTime"}:</label>
+                <div class="Field">
+                    <input type="text" id="AccountedTime" name="AccountedTime" value="$QData{"AccountedTime"}" class="25pc" maxlength="11"/>
+                    <div id="AccountedTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
+                    <div id="AccountedTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                </div>
+                <div class="Clear"></div>
+<!-- dtl:block:ShowAccountedTime -->
+            </fieldset>
+        </div>
+        <div class="Footer">
+            <button class="Primary" id="submitWorkOrderReport" name="WorkOrderReport" accesskey="g" title="$Text{"Save"} (g)" type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+        </div>
+    </div>
+</form>
