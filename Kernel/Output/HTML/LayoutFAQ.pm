@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.42 2010-12-07 01:28:18 ub Exp $
+# $Id: LayoutFAQ.pm,v 1.43 2010-12-08 17:02:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -156,11 +156,19 @@ sub FAQListShow {
         Data => \%Param,
     );
 
+    my $LinkBackID = 'FAQSearch';
+    if ( $Param{Nav} && $Param{Nav} eq 'None' ) {
+        $LinkBackID .= 'Small';
+    }
+
     # back link
     if ( $Param{LinkBack} ) {
         $Env->{LayoutObject}->Block(
             Name => 'OverviewNavBarPageBack',
-            Data => \%Param,
+            Data => {
+                LinkBackID => $LinkBackID,
+                %Param,
+            },
         );
     }
 
@@ -919,6 +927,78 @@ sub FAQShowTop10 {
                 );
             }
         }
+    }
+
+    return 1;
+}
+
+=item FAQShowQuickSearch()
+
+Shows an info box wih the Quick Search.
+
+    $LayoutObject->FAQShowQuickSearch(
+        Mode            => 'Public',                   # (Agent, Customer, Public)
+        Interface       => $Self->{Interface},
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => 1,
+        Nav             => 'none',                     # optional
+    );
+
+=cut
+
+sub FAQShowQuickSearch {
+    my ( $Self, %Param ) = @_;
+
+    # check parameters
+    for my $ParamName (qw(Mode Interface InterfaceStates UserID)) {
+        if ( !$Param{$ParamName} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $ParamName!",
+            );
+            return;
+        }
+    }
+
+    # check mode
+    if ( $Param{Mode} !~ m{ Agent | AgentSmall | Customer | Public }xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Mode must be either Agent, Customer or Public!',
+        );
+        return;
+    }
+
+    #set action module
+    my $Action;
+    if ( $Param{Mode} eq 'AgentSmall' ) {
+        $Action = 'AgentFAQSearchSmall';
+    }
+    else {
+        $Action = $Param{Mode} . 'FAQSearch';
+    }
+
+    # check CustomerUser
+    if ( $Param{Mode} eq 'Customer' && !$Param{CustomerUser} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need CustomerUser!',
+        );
+        return;
+    }
+
+    # show quick search
+    my $Show = $Self->{ConfigObject}->Get('FAQ::Explorer::QuickSearch::Show');
+    if ( $Show->{ $Param{Interface}->{Name} } || $Param{Mode} eq 'AgentSmall' ) {
+
+        # call QuickSearch block
+        $Self->Block(
+            Name => 'QuickSearch',
+            Data => {
+                Action => $Action,
+                Nav => $Param{Nav} || '',
+            },
+        );
     }
 
     return 1;

@@ -1,0 +1,103 @@
+# --
+# AgentFAQSearchSmall.dtl - provides HTML form for CustomerFAQSearch.pm
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentFAQSearchSmall.dtl,v 1.1 2010-12-08 17:02:47 cr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:Search -->
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>$Text{"FAQ Search"}</h1>
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Profile"}</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <form action="$Env{"CGIHandle"}" method="post" name="compose">
+                            <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                            <input type="hidden" name="Subaction" value="LoadProfile"/>
+                            <input type="hidden" name="Nav" value="$QData{"Nav"}"/>
+                            <label for="Profile">$Text{"Search template"}</label>
+                            $Data{"ProfilesStrg"}
+                            <button class="CallForAction SpacingTop" name="SelectTemplate" type="submit" value="$Text{"Select"}">
+                                <span>$Text{"Select"}</span>
+                            </button>
+                            <button class="CallForAction SpacingTop" name="EraseTemplate" type="submit" value="$Text{"Delete"}">
+                                <span>$Text{"Delete"}</span>
+                            </button>
+                            <button class="CallForAction SpacingTop" name="SearchTemplate" type="submit" value="$Text{"Search"}">
+                                <span>$Text{"Search"}</span>
+                            </button>
+                            <div class="Clear"></div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <form action="$Env{"CGIHandle"}" method="post" name="compose">
+            <input type="hidden" name="Action" value="$Env{"Action"}"/>
+            <input type="hidden" name="Subaction" value="Search"/>
+            <input type="hidden" name="Nav" value="$QData{"Nav"}"/>
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Search-Profile as Template?"}</h2>
+                </div>
+                <div class="Content">
+                    <fieldset>
+                        <label for="SaveProfile">$Text{"Save as Template?"}</label>
+                        <input title="Save as Template" type="checkbox" id="SaveProfile" name="SaveProfile" />
+                        <div class="SpacingTop"></div>
+                        <label for="Profile">$Text{"Template Name"}</label>
+                        <input title="Pick a profile name" type="text" id="Profile" name="Profile" value="$QData{"Profile"}" />
+                    </fieldset>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ContentColumn">
+            <fieldset class="TableLike">
+                <label for="Fulltext"id="LabelFulltext">$Text{"Fulltext"}:</label>
+                <div class="Field">
+                    <input type="text" name="Fulltext" value="$QData{"Fulltext"}" class="W50pc" />
+                </div>
+                <div class="SpacingTopSmall Clear"></div>
+                <label for="Number">$Config{"FAQ::FAQHook"} $Text{"(e. g. 10*5155 or 105658*)"}</label>
+                <div class="Field">
+                    <input title="$Config{"FAQ::FAQHook"}" type="text" name="Number" id="Number" class="W50pc" value="$QData{"Number"}"/>
+                </div>
+                <div class="SpacingTopSmall Clear"></div>
+                <label for="Title">$Text{"Title"}</label>
+                <div class="Field">
+                    <input title="$Text{"Title"}" type="text" id="Title" name="Title" value="$QData{"Title"}" class="W50pc" />
+                </div>
+                <div class="SpacingTopSmall Clear"></div>
+                <label for="Keyword">$Text{"Keyword"}</label>
+                <div class= "Field">
+                    <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" class="W50pc" />
+                </div>
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="LanguageIDs">$Text{"Language"}</label>
+                <div class="Field">
+                    $Data{"LanguagesStrg"}
+                </div>
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="CategoryIDs">$Text{"Category"}:</label>
+                <div class="Field">
+                    $Data{"CategoriesStrg"}
+                </div>
+                <div class='Clear'></div>
+            </fieldset>
+            <div id="BottomActionRow" class="Center SpacingTopSmall">
+                <button id="Submit" type="submit" value="$Text{"Search"}">$Text{"Search"}</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- dtl:block:Search -->

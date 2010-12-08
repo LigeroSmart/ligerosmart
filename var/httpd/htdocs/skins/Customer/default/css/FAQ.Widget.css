@@ -1,0 +1,166 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Widgets
+ */
+
+@media screen,projection,tv,handheld {
+
+
+/**
+ * @subsection  WidgetBox
+ */
+
+.CallForAction {
+    padding: 0;
+    background: #F3F3F3 url(../img/SmallDarkGradient.png) repeat-x;
+    border: 1px solid #999;
+    border-bottom: 1px solid #888;
+    box-shadow: 0 1px 0 #E6E6E6;
+    -moz-box-shadow: 0 1px 0 #E6E6E6;
+    -webkit-box-shadow: 0 1px 0 #E6E6E6;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/**
+ * @css-for     Firefox
+ * @note        bug: button containing an element has an hidden padding
+ */
+
+.CallForAction::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+.CallForAction:hover {
+    color: #000;
+    border-color: #696969;
+}
+
+.CallForAction span {
+    height: 12px;
+    padding: 3px 7px 6px;
+    line-height: 14px;
+    vertical-align: middle;
+    color: #333;
+    font: bold 11px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 1px solid #FFF;
+    border-bottom: none;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    display: block;
+    text-shadow: 0 1px 0 #FFF;
+    cursor: pointer;
+    background: #DDDDDD url("../img/button_bg.png") repeat-x;
+
+}
+
+.CallForAction:active {
+    background-color: #DDD;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.CallForAction:active span {
+    padding: 4px 7px 5px;
+    border-color: #DDD;
+    border-bottom: none;
+    text-shadow: 0 1px 0 #DDD;
+    background: #E4E4E4 url(../img/SmallDarkGradient.png) repeat-x;
+
+}
+
+.SearchBox {
+    position: relative;
+}
+
+.SearchBox input[type='text'] {
+    height: 15px;
+    margin: 0;
+    padding: 4px 5px;
+    font: normal 12px/15px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    border-color: #999;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-radius: 3px 0 0 3px;
+    border-right: none;
+    vertical-align: bottom;
+    width: 10pc;
+}
+
+.RTL .SearchBox input[type='text']{
+    border-left: none;
+    border-right: 1px solid #999;
+    -moz-border-radius: 0 3px 3px 0;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-radius: 0 3px 3px 0;
+    width: 10pc;
+}
+
+.SearchBox input:focus {
+    border-color: #666;
+    border-right: none;
+}
+.RTL .SearchBox input:focus {
+    border-color: #666;
+    border-left: none;
+}
+
+.SearchBox button {
+    height: 25px;
+    margin: 0 0 0 -4px;
+    padding: 3px 3px 4px;
+    color: #333;
+    font: bold 11px/14px "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: #DDDDDD url("../img/button_bg.png") repeat-x;
+    border: 1px solid #888;
+    -moz-border-radius: 0 3px 3px 0;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-radius: 0 3px 3px 0;
+    text-shadow: 0 1px 0 #FFF;
+    vertical-align: baseline;
+}
+
+.RTL .SearchBox button {
+    height: 25px;
+    margin: 0 -4px 0 0;
+    -moz-border-radius: 3px 0 0 3px;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 3px;
+    border-radius: 3px 0 0 3px;
+    text-shadow: 0 1px 0 #FFF;
+    vertical-align: baseline;
+    border-right: 1px solid #888;
+}
+
+.SearchBox button:hover {
+    border-color: #696969;
+    cursor: pointer;
+}
+
+.SearchBox button:active {
+    padding: 4px 3px 3px;
+    background: #E4E4E4 url(../img/SmallDarkGradient.png) repeat-x;
+    outline: none;
+}
+
+}

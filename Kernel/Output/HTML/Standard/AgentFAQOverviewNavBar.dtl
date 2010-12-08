@@ -2,7 +2,7 @@
 # AgentFAQOverviewNavBar.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewNavBar.dtl,v 1.5 2010-11-08 19:03:37 ub Exp $
+# $Id: AgentFAQOverviewNavBar.dtl,v 1.6 2010-12-08 17:02:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@ $Data{"DataInTheMiddle"}
 <!-- dtl:block:OverviewNavBarPageBack -->
                 <ul class="Tabs">
                     <li>
-                        <a id="FAQSearch" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkBack"}">$Text{"Change search options"}</a>
+                        <a id="$LQData{"LinkBackID"}" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkBack"}">$Text{"Change search options"}</a>
                     </li>
                 </ul>
 <!--dtl:js_on_document_complete-->

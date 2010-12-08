@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.8 2010-12-08 12:41:43 mb Exp $
+# $Id: AgentFAQExplorer.pm,v 1.9 2010-12-08 17:02:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -275,6 +275,21 @@ sub Run {
         Data => {
             FAQItemListHTML => $FAQItemListHTML,
         },
+    );
+
+    # set QuickSearch mode
+    my $Mode = 'Agent';
+    if ( $Nav eq 'None' ) {
+        $Mode = 'AgentSmall'
+    }
+
+    # show QuickSearch
+    $Self->{LayoutObject}->FAQShowQuickSearch(
+        Mode            => $Mode,
+        Interface       => $Self->{Interface},
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => $Self->{UserID},
+        Nav             => $Nav,
     );
 
     # show last added and last updated articles

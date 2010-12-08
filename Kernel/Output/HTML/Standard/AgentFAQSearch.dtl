@@ -2,7 +2,7 @@
 # AgentFAQSearch.dtl - provides HTML form for AgentFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.dtl,v 1.8 2010-12-01 03:22:35 cr Exp $
+# $Id: AgentFAQSearch.dtl,v 1.9 2010-12-08 17:02:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,7 @@
         <input type="hidden" name="Action" value="$Env{"Action"}" id="SearchAction"/>
         <input type="hidden" name="Subaction" value="Search"/>
         <input type="hidden" name="EmptySearch" value="$QData{"EmptySearch"}" id="EmptySearch"/>
+        <input type="hidden" name="Nav" value="$QData{"Nav"}"/>
         <fieldset class="TableLike">
             <div class="Clear"></div>
             <label>$Text{"Search template"}:</label>

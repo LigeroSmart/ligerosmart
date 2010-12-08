@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQExplorer.pm - customer FAQ explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.pm,v 1.4 2010-12-02 12:57:28 ub Exp $
+# $Id: CustomerFAQExplorer.pm,v 1.5 2010-12-08 17:02:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -275,6 +275,15 @@ sub Run {
             },
         );
     }
+
+    # show QuickSearch
+    $Self->{LayoutObject}->FAQShowQuickSearch(
+        Mode            => 'Customer',
+        CustomerUser    => $Self->{UserLogin},
+        Interface       => $Self->{Interface},
+        InterfaceStates => $Self->{InterfaceStates},
+        UserID          => $Self->{UserID},
+    );
 
     # show last added and last updated articles
     for my $Type (qw(LastCreate LastChange)) {
