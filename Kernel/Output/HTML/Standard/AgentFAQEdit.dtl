@@ -2,7 +2,7 @@
 # AgentFAQEdit.dtl - provides HTML form for AgentFAQEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.dtl,v 1.7 2010-12-06 21:06:08 mb Exp $
+# $Id: AgentFAQEdit.dtl,v 1.8 2010-12-08 16:08:39 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@
     <div class="Header">
         <h1>$Text{"Edit"}: $Text{"FAQ"}: $QData{"Number"}</h1>
         <p>
-            <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
         </p>
     </div>
 
@@ -129,16 +129,13 @@ $Include{"RichTextEditor"}
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
-
-                <div class="Field SpacingTop">
-                    <button class="Primary" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                    $Text{"or"}
-                    <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"}</a>
-                </div>
-                <div class="Clear"></div>
             </fieldset>
 
         </form>
+    </div>
+
+    <div class="Footer">
+        <button class="Primary" id="submitRichText" accesskey="g" title="$Text{"Submit"} (g)" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
     </div>
 <!-- dtl:block:FAQEdit -->
 
