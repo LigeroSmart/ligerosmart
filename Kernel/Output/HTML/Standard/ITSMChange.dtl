@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.33 2010-12-07 15:19:08 mn Exp $
+# $Id: ITSMChange.dtl,v 1.34 2010-12-08 09:36:40 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -73,61 +73,47 @@
                 </span>
             </a>
             <div class="WorkorderDetails">
-                <table width="400" cellpadding="3" cellspacing="0">
-                    <colgroup>
-                        <col width="130">
-                        <col width="270">
-                    </colgroup>
-                    <tr class="contenthead">
-                        <td colspan="2">$Text{"Workorder Information"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"Title"}:</td>
-                        <td class="contentvalue">$QData{"WorkOrderTitle","40"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"State"}:</td>
-                        <td class="contentvalue">$Text{"$Data{"WorkOrderState"}"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"Type"}:</td>
-                        <td class="contentvalue">$Text{"$Data{"WorkOrderType"}"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"WorkOrderAgent"}:</td>
-                        <td class="contentvalue">
+                <h3>$Text{"Workorder Information"}</h3>
+                <fieldset class="TableLike">
+                    <label>$Text{"Title"}:</label>
+                    <p class="Value">$QData{"WorkOrderTitle","40"}</p>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"State"}:</label>
+                    <p class="Value">$Text{"$Data{"WorkOrderState"}"}</p>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"Type"}:</label>
+                    <p class="Value">$Text{"$Data{"WorkOrderType"}"}</p>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"WorkOrderAgent"}:</label>
 <!-- dtl:block:EmptyWorkOrderAgent -->
-                            <div title="-">
-                                -
-                            </div>
+                    <p class="Value">-</p>
 <!-- dtl:block:EmptyWorkOrderAgent -->
 <!-- dtl:block:WorkOrderAgent -->
-                            <div title="$QData{"WorkOrderAgentUserLogin"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}"})">
-                                $QData{"WorkOrderAgentUserLogin","20"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","20"})
-                            </div>
+                    <p class="Value">
+                        $QData{"WorkOrderAgentUserLogin","20"} ($Quote{"$Data{"WorkOrderAgentUserFirstname"} $Data{"WorkOrderAgentUserLastname"}","20"})
+                    </p>
 <!-- dtl:block:WorkOrderAgent -->
-                        </td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"PlannedStartTime"}:</td>
-                        <td class="contentvalue">$TimeLong{"$QData{"PlannedStartTime"}"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"PlannedEndTime"}:</td>
-                        <td class="contentvalue">$TimeLong{"$QData{"PlannedEndTime"}"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"ActualStartTime"}:</td>
-                        <td class="contentvalue">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="contentkey">$Text{"ActualEndTime"}:</td>
-                        <td class="contentvalue">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</td>
-                    </tr>
-                    <tr class="contenthead">
-                        <td colspan="2">&nbsp;</td>
-                    </tr>
-                </table>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"PlannedStartTime"}:</label>
+                    <p class="Value">$TimeLong{"$QData{"PlannedStartTime"}"}</p>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"PlannedEndTime"}:</label>
+                    <p class="Value">$TimeLong{"$QData{"PlannedEndTime"}"}</p>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"ActualStartTime"}:</label>
+                    <p class="Value">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</p>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"ActualEndTime"}:</label>
+                    <p class="Value">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</p>
+                    <div class="Clear"></div>
+                </fieldset>
             </div>
         </div>
 <!-- dtl:block:WorkOrderItemGraph -->
@@ -147,4 +133,9 @@
     </div>
 <!-- dtl:block:Scale -->
 </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    ITSM.Agent.ChangeManagement.WorkorderGraph.Init();
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:WorkOrderGraph -->
