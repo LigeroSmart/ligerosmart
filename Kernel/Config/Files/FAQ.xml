@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.91 2010-12-07 01:35:17 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.92 2010-12-08 12:07:59 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -493,6 +493,47 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the explorer in the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,8}$">200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed in the explorer in the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">40</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="FAQID">
+                <Item Key="Title">Title</Item>
+                <Item Key="FAQID">Number</Item>
+                <Item Key="Category">Category</Item>
+                <Item Key="Language">Laguage</Item>
+                <Item Key="State">State</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="Down">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="PublicFrontend::CommonParam###Action" Required="1" Valid="1">
         <Description Translatable="1">Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.</Description>
         <Group>FAQ</Group>
@@ -525,6 +566,47 @@ Your OTRS Notification Master
                     <CSS>FAQ.Customer.Default.css</CSS>
                 </Loader>
             </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the explorer in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,8}$">200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SearchPageShown" Required="1" Valid="1">
+        <Description Translatable="1">Number of FAQ articles to be displayed in the explorer in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,3}$">40</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SortBy::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="FAQID">
+                <Item Key="Title">Title</Item>
+                <Item Key="FAQID">Number</Item>
+                <Item Key="Category">Category</Item>
+                <Item Key="Language">Laguage</Item>
+                <Item Key="State">State</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###Order::Default" Required="1" Valid="1">
+        <Description Translatable="1">Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
+        <Setting>
+            <Option SelectedID="Down">
+                <Item Key="Down">Down</Item>
+                <Item Key="Up">Up</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PublicFrontend::Module###PublicFAQRSS" Required="0" Valid="1">
