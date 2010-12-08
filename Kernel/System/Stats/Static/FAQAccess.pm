@@ -2,11 +2,11 @@
 # Kernel/System/Stats/Static/FAQAccess.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQAccess.pm,v 1.4 2010-11-22 14:52:11 ub Exp $
+# $Id: FAQAccess.pm,v 1.5 2010-12-08 12:01:29 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::System::Stats::Static::FAQAccess;
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Days_in_Month);
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
