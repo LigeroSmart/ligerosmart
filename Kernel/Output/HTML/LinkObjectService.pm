@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectService.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectService.pm,v 1.9 2010-11-04 11:59:21 ub Exp $
+# $Id: LinkObjectService.pm,v 1.10 2010-12-08 23:29:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -246,7 +246,7 @@ sub TableCreateComplex {
         Blockname => $Self->{ObjectData}->{Realname},
         Headline  => [
             {
-                Content => '',
+                Content => 'Incident State',
                 Width   => 20,
             },
             {
@@ -529,6 +529,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-11-04 11:59:21 $
+$Revision: 1.10 $ $Date: 2010-12-08 23:29:00 $
 
 =cut
