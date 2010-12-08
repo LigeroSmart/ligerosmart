@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.41 2010-07-02 09:45:46 jp Exp $
+# $Id: AgentTimeAccounting.pm,v 1.42 2010-12-08 23:12:40 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -29,12 +29,12 @@ sub new {
     bless( $Self, $Type );
 
     # check needed Objects
-    for (
+    for my $Needed (
         qw(ParamObject DBObject ModuleReg LogObject UserObject
         ConfigObject TicketObject TimeObject GroupObject)
         )
     {
-        $Self->{LayoutObject}->FatalError( Message => "Got no $_!" ) if !$Self->{$_};
+        $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" ) if !$Self->{$Needed};
     }
 
     # create required objects...
@@ -95,8 +95,8 @@ sub Run {
             );
 
         # get params
-        for (qw(Status Year Month Day)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(Status Year Month Day)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
 
         # Check Date
@@ -138,8 +138,8 @@ sub Run {
             );
 
         # get params
-        for (qw(Status Year Month Day)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(Status Year Month Day)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
 
         # Check Date
@@ -213,8 +213,9 @@ sub Run {
 
             ID:
             for my $ID ( 1 .. 16 ) {
-                for (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
-                    $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ . '[' . $ID . ']' );
+                for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
+                    $Param{$Parameter}
+                        = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
                 }
 
                 next ID if !$Param{ProjectID} && !$Param{ActionID};
@@ -241,7 +242,6 @@ sub Run {
 
                 push @{ $Data{WorkingUnits} }, \%WorkingUnit;
 
-                #if ($Param{StartTime} && $Param{EndTime} && !$Param{Period}) {
                 #overwrite Period when Start and Endtime is given...
                 next ID if !$Param{StartTime} || !$Param{EndTime};
 
@@ -421,8 +421,9 @@ sub Run {
 
             my $Period = $UnitRef->{Period} || '';
 
-            for (qw(StartTime EndTime)) {
-                $Param{$_} = !$UnitRef->{$_} || $UnitRef->{$_} eq '00:00' ? '' : $UnitRef->{$_};
+            for my $TimePeriod (qw(StartTime EndTime)) {
+                $Param{$TimePeriod} = !$UnitRef->{$TimePeriod}
+                    || $UnitRef->{$TimePeriod} eq '00:00' ? '' : $UnitRef->{$TimePeriod};
             }
 
             # Define if the input fields are visible or not
@@ -713,7 +714,7 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
-    # view older day insterts
+    # view older day inserts
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'View' ) {
 
@@ -721,14 +722,14 @@ sub Run {
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
         # get params
-        for (qw(Day Month Year UserID)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(Day Month Year UserID)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
 
         # check needed params
-        for (qw(Day Month Year)) {
-            if ( !$Param{$_} ) {
-                return $Self->{LayoutObject}->ErrorScreen( Message => "View: Need $_" );
+        for my $Needed (qw(Day Month Year)) {
+            if ( !$Param{$Needed} ) {
+                return $Self->{LayoutObject}->ErrorScreen( Message => "View: Need $Needed" );
             }
         }
 
@@ -851,8 +852,8 @@ sub Run {
     # delete object from database
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Delete' ) {
-        for (qw(Day Month Year)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(Day Month Year)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
 
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
@@ -885,8 +886,8 @@ sub Run {
         # permission check
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
-        for (qw(Status Day Month Year UserID ProjectStatusShow)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(Status Day Month Year UserID ProjectStatusShow)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
         $Param{Subaction} = 'Edit';
 
@@ -991,14 +992,15 @@ sub Run {
             Year  => $Param{Year},
             Month => $Param{Month},
         );
-        for (
+        for my $ReportElement (
             qw(TargetState TargetStateTotal WorkingHoursTotal WorkingHours
             Overtime OvertimeTotal OvertimeUntil LeaveDay LeaveDayTotal
             LeaveDayRemaining Sick SickTotal SickRemaining)
             )
         {
-            $UserReport{ $Param{UserID} }{$_} ||= 0;
-            $Param{$_} = sprintf( "%.2f", $UserReport{ $Param{UserID} }{$_} );
+            $UserReport{ $Param{UserID} }{$ReportElement} ||= 0;
+            $Param{$ReportElement}
+                = sprintf( "%.2f", $UserReport{ $Param{UserID} }{$ReportElement} );
         }
 
         if ( $UserData{ShowOvertime} ) {
@@ -1130,8 +1132,8 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Setting' ) {
         my %Data = ();
 
-        for (qw(ActionAction ActionUser NewAction NewUser)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(ActionAction ActionUser NewAction NewUser)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
 
         # permission check
@@ -1151,9 +1153,10 @@ sub Run {
             my $ActionEmpty = 0;
             my %ActionCheck = ();
             for my $ActionID ( keys %Action ) {
-                for (qw(Action ActionStatus)) {
-                    $Data{$ActionID}{$_}
-                        = $Self->{ParamObject}->GetParam( Param => $_ . '[' . $ActionID . ']' );
+                for my $Parameter (qw(Action ActionStatus)) {
+                    $Data{$ActionID}{$Parameter}
+                        = $Self->{ParamObject}
+                        ->GetParam( Param => $Parameter . '[' . $ActionID . ']' );
                 }
                 if ( !$Data{$ActionID}{Action} ) {
                     $ActionEmpty = 1;
@@ -1216,9 +1219,10 @@ sub Run {
                 USERID:
                 for my $UserID ( keys %User ) {
 
-                    for (qw( ShowOvertime CreateProject Calendar )) {
-                        $Data{$UserID}{$_}
-                            = $Self->{ParamObject}->GetParam( Param => $_ . '[' . $UserID . ']' );
+                    for my $Parameter (qw( ShowOvertime CreateProject Calendar )) {
+                        $Data{$UserID}{$Parameter}
+                            = $Self->{ParamObject}
+                            ->GetParam( Param => $Parameter . '[' . $UserID . ']' );
                     }
 
                     my $Break = '';
@@ -1251,9 +1255,12 @@ sub Run {
                             next USERID;
                         }
 
-                        for (qw(WeeklyHours LeaveDays UserStatus DateStart DateEnd Overtime)) {
-                            $Data{$UserID}{$Period}{$_} = $Self->{ParamObject}->GetParam(
-                                Param => $_ . '[' . $UserID . '][' . $Period . ']'
+                        for my $Parameter (
+                            qw(WeeklyHours LeaveDays UserStatus DateStart DateEnd Overtime)
+                            )
+                        {
+                            $Data{$UserID}{$Period}{$Parameter} = $Self->{ParamObject}->GetParam(
+                                Param => $Parameter . '[' . $UserID . '][' . $Period . ']'
                             );
                         }
                         $Data{$UserID}{$Period}{UserID} = $UserID;
@@ -1283,11 +1290,11 @@ sub Run {
                         Type   => 'ro',
                         Result => 'HASH',
                     );
-                    for ( keys %Groups ) {
-                        if ( $Groups{$_} eq 'time_accounting' && !$GroupData{$_} ) {
+                    for my $GroupKey ( keys %Groups ) {
+                        if ( $Groups{$GroupKey} eq 'time_accounting' && !$GroupData{$GroupKey} ) {
 
                             $Self->{GroupObject}->GroupMemberAdd(
-                                GID        => $_,
+                                GID        => $GroupKey,
                                 UID        => $Data{UserID},
                                 Permission => {
                                     ro        => 1,
@@ -1438,96 +1445,12 @@ sub Run {
     # settings for handling time accounting
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'ProjectSetting' ) {
-        my %Project = ();
-        my %Data    = ();
-
-        for (qw(ActionProject NewProject)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
-        }
 
         # permission check
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
 
-        $Self->{LayoutObject}->Block( Name => 'ProjectSetting', );
-
-        # Edit TimeAccounting Preferences
-        if ( $Param{ActionProject} || $Param{NewProject} ) {
-            %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-            my $ProjectEmpty = 0;
-            my %ProjectCheck = ();
-            for my $ProjectID ( keys %{ $Project{Project} } ) {
-                for (qw(Project ProjectStatus ProjectDescription)) {
-                    $Data{$ProjectID}{$_}
-                        = $Self->{ParamObject}->GetParam( Param => $_ . '[' . $ProjectID . ']' );
-                }
-                if ( !$Data{$ProjectID}{Project} ) {
-                    $ProjectEmpty = 1;
-                }
-                if (
-                    $Data{$ProjectID}{Project}
-                    && $ProjectCheck{ $Data{$ProjectID}{Project} }
-                    && $ProjectCheck{ $Data{$ProjectID}{Project} } == 1
-                    )
-                {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => 'The projectnaming must be unique!'
-                    );
-                }
-                else {
-                    if ( $Data{$ProjectID}{Project} ) {
-                        $ProjectCheck{ $Data{$ProjectID}{Project} } = 1;
-                    }
-                }
-            }
-            if ( !$Self->{TimeAccountingObject}->ProjectSettingsUpdate(%Data) ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Can\'t update project data!'
-                );
-            }
-            if ( $Param{NewProject} && !$ProjectEmpty ) {
-                if ( !$Self->{TimeAccountingObject}->ProjectSettingsInsert() ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => 'Can\'t insert project data!'
-                    );
-                }
-            }
-        }
-
-        # Show TimeAccounting Preferences
-        my %StatusList = (
-            1 => 'valid',
-            0 => 'invalid',
-        );
-
-        # Show project data
-        %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-        my $ProjectEmpty = 0;
-        for my $ProjectID (
-            sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
-            keys %{ $Project{Project} }
-            )
-        {
-
-            $Param{Project}            = $Project{Project}{$ProjectID};
-            $Param{ProjectDescription} = $Project{ProjectDescription}{$ProjectID};
-            $Param{ProjectID}          = $ProjectID;
-
-            my $StatusOption = $Self->{LayoutObject}->BuildSelection(
-                Data       => \%StatusList,
-                SelectedID => $Project{ProjectStatus}{$ProjectID},
-                Name       => "ProjectStatus[$Param{ProjectID}]",
-            );
-
-            $Self->{LayoutObject}->Block(
-                Name => 'Project',
-                Data => {
-                    %Param,
-                    StatusOption => $StatusOption,
-                },
-            );
-        }
-
         # build output
+        $Self->_Overview();
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
@@ -1552,8 +1475,8 @@ sub Run {
         # permission check
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRw};
 
-        for (qw(Status Month Year ProjectStatusShow)) {
-            $Param{$_} = $Self->{ParamObject}->GetParam( Param => $_ );
+        for my $Parameter (qw(Status Month Year ProjectStatusShow)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
         }
 
         # Check Date
@@ -1615,9 +1538,12 @@ sub Run {
         for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
             next USERID if !$UserReport{$UserID};
 
-            for (qw(LeaveDay Overtime WorkingHours Sick LeaveDayRemaining OvertimeTotal)) {
-                $Param{$_} = sprintf( "%.2f", $UserReport{$UserID}{$_} );
-                $Param{ 'Total' . $_ } += $Param{$_};
+            for my $Parameter (
+                qw(LeaveDay Overtime WorkingHours Sick LeaveDayRemaining OvertimeTotal)
+                )
+            {
+                $Param{$Parameter} = sprintf( "%.2f", $UserReport{$UserID}{$Parameter} );
+                $Param{ 'Total' . $Parameter } += $Param{$Parameter};
             }
 
             # Show Overtime if allowed
@@ -1634,12 +1560,12 @@ sub Run {
             );
         }
 
-        for (
+        for my $Parameter (
             qw(TotalLeaveDay TotalOvertime TotalWorkingHours
             TotalSick TotalLeaveDayRemaining TotalOvertimeTotal)
             )
         {
-            $Param{$_} = sprintf( "%.2f", $Param{$_} );
+            $Param{$Parameter} = sprintf( "%.2f", $Param{$Parameter} );
         }
 
         # show the report sort by projects
@@ -1888,6 +1814,189 @@ sub Run {
     }
 
     # ---------------------------------------------------------- #
+    # add project
+    # ---------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'AddProject' ) {
+        my %Data = ();
+
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Self->_Edit( Action => 'AddProject' );
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentTimeAccountingSetting',
+            Data         => \%Param,
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ---------------------------------------------------------- #
+    # add project action
+    # ---------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'AddProjectAction' ) {
+
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
+        my $Note = '';
+        my $ProjectID;
+        my ( %GetParam, %Errors );
+
+        # get parameters
+        for my $Parameter (qw(Project ProjectDescription)) {
+            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
+        }
+        $GetParam{ProjectStatus} = $Self->{ParamObject}->GetParam( Param => 'ProjectStatus' )
+            || '0';
+
+        # check for needed data
+        if ( !$GetParam{Project} ) {
+            $Errors{ProjectInvalid} = 'ServerError';
+        }
+
+        # if no errors occurred
+        if ( !%Errors ) {
+
+            # add project
+            $ProjectID = $Self->{TimeAccountingObject}->ProjectSettingsInsert(%GetParam);
+
+            if ($ProjectID) {
+                $Self->_Overview();
+                my $Output = $Self->{LayoutObject}->Header();
+                $Output .= $Self->{LayoutObject}->NavigationBar();
+                $Output .= $Self->{LayoutObject}->Notify( Info => 'Project added!' );
+                $Output .= $Self->{LayoutObject}->Output(
+                    TemplateFile => 'AgentTimeAccountingSetting',
+                    Data         => {},
+                );
+                $Output .= $Self->{LayoutObject}->Footer();
+                return $Output;
+            }
+            else {
+                $Note = $Self->{LogObject}->GetLogEntry(
+                    Type => 'Error',
+                    What => 'Message',
+                );
+            }
+        }
+
+        # something went wrong
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output .= $Note
+            ? $Self->{LayoutObject}->Notify(
+            Priority => 'Error',
+            Info     => $Note,
+            )
+            : '';
+        $Self->_Edit(
+            Action => 'AddProject',
+            %GetParam,
+            %Errors,
+        );
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentTimeAccountingSetting',
+            Data         => \%Param,
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ---------------------------------------------------------- #
+    # edit project
+    # ---------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'EditProject' ) {
+        my $ID = $Self->{ParamObject}->GetParam( Param => 'ID' );
+
+        # get project data
+        my %Project = $Self->{TimeAccountingObject}->ProjectGet( ID => $ID );
+
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Self->_Edit(
+            Action => 'EditProject',
+            %Project,
+        );
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentTimeAccountingSetting',
+            Data         => \%Param,
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ---------------------------------------------------------- #
+    # edit project action
+    # ---------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'EditProjectAction' ) {
+
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
+        my $Note = '';
+        my ( %GetParam, %Errors );
+
+        # get parameters
+        $GetParam{ID} = $Self->{ParamObject}->GetParam( Param => 'ID' ) || '';
+        $GetParam{ProjectStatus} = $Self->{ParamObject}->GetParam( Param => 'ProjectStatus' )
+            || '0';
+        for my $Parameter (qw(Project ProjectDescription)) {
+            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
+        }
+
+        # check for needed data
+        if ( !$GetParam{Project} ) {
+            $Errors{ProjectInvalid} = 'ServerError';
+        }
+
+        # if no errors occurred
+        if ( !%Errors ) {
+
+            # edit project
+            if ( $Self->{TimeAccountingObject}->ProjectUpdate(%GetParam) ) {
+                $Self->_Overview();
+                my $Output = $Self->{LayoutObject}->Header();
+                $Output .= $Self->{LayoutObject}->NavigationBar();
+                $Output .= $Self->{LayoutObject}->Notify( Info => 'Project updated!' );
+                $Output .= $Self->{LayoutObject}->Output(
+                    TemplateFile => 'AgentTimeAccountingSetting',
+                    Data         => \%Param,
+                );
+                $Output .= $Self->{LayoutObject}->Footer();
+                return $Output;
+            }
+            else {
+                $Note = $Self->{LogObject}->GetLogEntry(
+                    Type => 'Error',
+                    What => 'Message',
+                );
+            }
+        }
+
+        # something went wrong
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output .= $Note
+            ? $Self->{LayoutObject}->Notify(
+            Priority => 'Error',
+            Info     => $Note,
+            )
+            : '';
+        $Self->_Edit(
+            Action => 'EditProject',
+            %GetParam,
+            %Param,
+            %Errors,
+        );
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentTimeAccountingSetting',
+            Data         => \%Param,
+        );
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
+    }
+
+    # ---------------------------------------------------------- #
     # show error screen
     # ---------------------------------------------------------- #
     return $Self->{LayoutObject}->ErrorScreen( Message => 'Invalid Subaction process!' );
@@ -1904,8 +2013,8 @@ sub _FirstUserRedirect {
         Type   => 'rw',
         Result => 'HASH',
     );
-    for ( keys %GroupList ) {
-        if ( $GroupList{$_} eq 'time_accounting' ) {
+    for my $GroupKey ( keys %GroupList ) {
+        if ( $GroupList{$GroupKey} eq 'time_accounting' ) {
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentTimeAccounting&" . "Subaction=Setting"
             );
@@ -2148,5 +2257,95 @@ sub _Project2RemarkRegExp {
     }
 
     return join '|', @Projects2Remark;
+}
+
+sub _Overview {
+    my ( $Self, %Param ) = @_;
+
+    my %Project = ();
+    my %Data    = ();
+
+    $Self->{LayoutObject}->Block( Name => 'Overview', );
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
+
+    # Show project data
+    %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
+
+    $Self->{LayoutObject}->Block(
+        Name => 'OverviewResult',
+        Data => \%Param,
+    );
+
+    # define status list
+    my %StatusList = (
+        1 => 'valid',
+        0 => 'invalid',
+    );
+
+    # show list of available projects (if any)
+    if ( $Project{Project} ) {
+        for my $ProjectID (
+            sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
+            keys %{ $Project{Project} }
+            )
+        {
+            $Param{Project}            = $Project{Project}{$ProjectID};
+            $Param{ProjectDescription} = $Project{ProjectDescription}{$ProjectID};
+            $Param{ProjectID}          = $ProjectID;
+            $Param{Status}             = $StatusList{ $Project{ProjectStatus}{$ProjectID} };
+
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewResultRow',
+                Data => {%Param},
+            );
+        }
+    }
+
+    # otherwise, show a no data found msg
+    else {
+        $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
+    }
+
+    return 1;
+}
+
+sub _Edit {
+    my ( $Self, %Param ) = @_;
+
+    $Self->{LayoutObject}->Block(
+        Name => 'Overview',
+        Data => \%Param,
+    );
+
+    $Self->{LayoutObject}->Block( Name => 'ActionList' );
+    $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
+
+    # define status list
+    my %StatusList = (
+        1 => 'valid',
+        0 => 'invalid',
+    );
+
+    $Param{StatusOption} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%StatusList,
+        SelectedID => $Param{SelectedStatus} || 1,
+        Name       => 'ProjectStatus',
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => 'OverviewUpdate',
+        Data => \%Param,
+    );
+
+    # shows header
+    if ( $Param{Action} eq 'ChangeProject' ) {
+        $Self->{LayoutObject}->Block( Name => 'HeaderEdit' );
+    }
+    else {
+        $Self->{LayoutObject}->Block( Name => 'HeaderAdd' );
+    }
+
+    return 1;
 }
 1;
