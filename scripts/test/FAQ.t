@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.15 2010-12-02 20:27:21 ub Exp $
+# $Id: FAQ.t,v 1.16 2010-12-09 04:24:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -414,6 +414,95 @@ my $FAQDelete2 = $FAQObject->FAQDelete(
 $Self->True(
     $FAQDelete2,
     "FAQDelete() - FAQID: $FAQID2",
+);
+
+my $CategoryID = $FAQObject->CategoryAdd(
+    Name     => 'TestCategory',
+    Comment  => 'Category for testing',
+    ParentID => '0',
+    ValidID  => 1,
+    UserID   => 1,
+);
+
+$Self->True(
+    $CategoryID,
+    "CategoryAdd() - Root Category",
+);
+
+# set ParentID to empty to make it fail
+my $CategoryIDFail = $FAQObject->CategoryAdd(
+    Name     => 'TestCategory',
+    Comment  => 'Category for testing',
+    ParentID => '',
+    ValidID  => 1,
+    UserID   => 1,
+);
+
+$Self->False(
+    $CategoryIDFail,
+    "CategoryAdd() - Root Category",
+);
+
+my $CategoryUpdate = $FAQObject->CategoryUpdate(
+    CategoryID => $CategoryID,
+    ParentID   => '0',
+    Name       => 'RootCategory',
+    Comment    => 'Root Category for testing',
+    ValidID    => 1,
+    UserID     => 1,
+);
+
+$Self->True(
+    $CategoryUpdate,
+    "CategoryUpdate() - Root Category",
+);
+
+# set ParentID to empty to make it fail
+my $CategoryUpdateFail = $FAQObject->CategoryUpdate(
+    CategoryID => $CategoryID,
+    ParentID   => '',
+    Name       => 'RootCategory',
+    Comment    => 'Root Category for testing',
+    ValidID    => 1,
+    UserID     => 1,
+);
+
+$Self->False(
+    $CategoryUpdateFail,
+    "CategoryUpdate() - Root Category",
+);
+
+my $ChildCategoryID = $FAQObject->CategoryAdd(
+    Name     => 'ChildCategory',
+    Comment  => 'Child Category for testing',
+    ParentID => $CategoryID,
+    ValidID  => 1,
+    UserID   => 1,
+);
+
+$Self->True(
+    $ChildCategoryID,
+    "CategoryAdd() - Child Category",
+);
+
+my $ChildCategoryDelete = $FAQObject->CategoryDelete(
+    CategoryID => $ChildCategoryID,
+    UserID     => 1,
+);
+
+$Self->True(
+    $ChildCategoryDelete,
+    "CategoryDelete() - Child Category",
+);
+
+my $CategoryDelete = $FAQObject->CategoryDelete(
+    CategoryID => $CategoryID,
+    UserID     => 1,
+);
+
+$Self->True(
+    $CategoryDelete,
+    "CategoryDelete() - Root Category",
 );
 
 1;
