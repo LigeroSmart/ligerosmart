@@ -2,81 +2,27 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.33 2010-12-08 22:47:23 en Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.34 2010-12-09 22:36:43 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
-<script language="JavaScript" type="text/javascript">
-<!--
-
-function submit_compose() {
-
-<!-- dtl:block:ActualTimeSpanJS -->
-
-    // check the actual start time
-    if ( document.compose.ActualStartTimeUsed.checked && !CheckTime( 'ActualStartTime' ) ) {
-        alert('$JSText{"The actual start time is invalid!"}');
-
-        return false;
-    }
-
-    // check the actual end time
-    if ( document.compose.ActualEndTimeUsed.checked && !CheckTime( 'ActualEndTime' ) ) {
-        alert('$JSText{"The actual end time is invalid!"}');
-
-        return false;
-    }
-
-    if ( document.compose.ActualEndTimeUsed.checked && !document.compose.ActualStartTimeUsed.checked ) {
-        alert('$JSText{"The actual start time must be set, when the actual end time is set!"}');
-
-        return false;
-    }
-
-    // check whether the planned start time is before the planned end time
-    if ( document.compose.ActualEndTimeUsed.checked && document.compose.ActualEndTimeUsed.checked ) {
-        var StartAfterEndMsg = '$JSText{"The actual start time must be before the actual end time!"}';
-        if ( !CheckStartBeforeEnd( 'ActualStartTime', 'ActualEndTime', StartAfterEndMsg ) ) {
-            return false;
-        }
-    }
-
-<!-- dtl:block:ActualTimeSpanJS -->
-
-<!-- dtl:block:WorkOrderFreeTextCheckJs -->
-    // check the required freetext fields
-    if (document.compose.$Data{"WorkOrderFreeTextField"}.value == "") {
-        alert('$JSText{"A required field is:"} ' + document.compose.$Data{"WorkOrderFreeKeyField"}.value + '!');
-        document.compose.$Data{"WorkOrderFreeTextField"}.focus();
-
-        return false;
-    }
-<!-- dtl:block:WorkOrderFreeTextCheckJs -->
-
-    return true;
-}
-//-->
-</script>
-
-<form action="$Env{"CGIHandle"}" method="post" name="compose">
+# TODO. Add validation for the actual start and end times in the client side.
+<form action="$Env{"CGIHandle"}" method="post" name="compose" class="Validate PreventMultipleSubmits">
     <input type="hidden" name="Action"    value="$Env{"Action"}"/>
     <input type="hidden" name="Subaction" value="Save"/>
     <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>$Text{"Edit"} $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle","70"}</h1>
+            <h1>$Text{"Edit"}: $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle","70"}</h1>
             <p>
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>
         </div>
         <div class="Content">
-            <h2>$Text{"Options"}</h2>
-
             <fieldset class="TableLike FixedLabel">
                 <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Report"}:</label>
                 <div class="RichTextField">
@@ -85,7 +31,7 @@ function submit_compose() {
 $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
 
-                    <textarea id="RichText" class="RichText Validate_Required $Data{"ReportInvalid"}" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Report"}</textarea>
+                    <textarea id="RichText" class="RichText Validate_RequiredRichText $Data{"ReportInvalid"}" name="Report" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Report"}</textarea>
                     <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                     <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
@@ -100,9 +46,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:State -->
 
 <!-- dtl:block:WorkOrderFreeText -->
-                <label id="LabelWorkOrderFreeText$Data{"Number"}">
-                    $Data{"WorkOrderFreeKeyField"}:
-                </label>
+                $Data{"WorkOrderFreeKeyField"}
                 <div class="Field">
                     $Data{"WorkOrderFreeTextField"}
                 </div>
@@ -113,9 +57,7 @@ $Include{"RichTextEditor"}
 # example for customization of single workorder freetext fields
 # #############################################################
 #<!-- dtl:block:WorkOrderFreeText1 -->
-#                <label id="LabelWorkOrderFreeText1">
-#                    $Data{"WorkOrderFreeKeyField1"}:
-#                </label>
+#                $Data{"WorkOrderFreeKeyField1"}
 #                <div class="Field">
 #                    $Data{"WorkOrderFreeTextField1"}
 #                </div>
@@ -123,9 +65,7 @@ $Include{"RichTextEditor"}
 #<!-- dtl:block:WorkOrderFreeText1 -->
 #
 #<!-- dtl:block:WorkOrderFreeText2 -->
-#                <label id="LabelWorkOrderFreeText2">
-#                    $Data{"WorkOrderFreeKeyField2"}:
-#                </label>
+#                $Data{"WorkOrderFreeKeyField2"}
 #                <div class="Field">
 #                    $Data{"WorkOrderFreeTextField2"}
 #                </div>
@@ -134,21 +74,35 @@ $Include{"RichTextEditor"}
 # ####################################################
 
 <!-- dtl:block:ActualStartTime -->
-                <label for="ActualStartTime">$Text{"ActualStartTime"}:</label>
+                <label>$Text{"ActualStartTime"}:</label>
                 <div class="Field">
                     $Data{"ActualStartTimeSelectionString"}
-                    <div id="ActualStartTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
-                    <div id="ActualStartTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="ActualStartTimeDayError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                    <div id="ActualStartTimeHourError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:ActualStartTimeGenericServerError -->
+                    <div id="ActualStartTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                    <div id="ActualStartTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:ActualStartTimeGenericServerError -->
+<!-- dtl:block:ActualStartTimeBeforeThanEndTimeServerError -->
+                    <div id="ActualStartTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"The actual start time must be before the actual end time!"}</p></div>
+                    <div id="ActualStartTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"The actual start time must be before the actual end time!"}</p></div>
+<!-- dtl:block:ActualStartTimeBeforeThanEndTimeServerError -->
+<!-- dtl:block:ActualStartTimeSetServerError -->
+                    <div id="ActualStartTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"The actual start time must be set, when the actual end time is set!"}</p></div>
+                    <div id="ActualStartTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"The actual start time must be set, when the actual end time is set!"}</p></div>
+<!-- dtl:block:ActualStartTimeSetServerError -->
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:ActualStartTime -->
 
 <!-- dtl:block:ActualEndTime -->
-                <label for="ActualEndTime">$Text{"ActualEndTime"}:</label>
+                <label>$Text{"ActualEndTime"}:</label>
                 <div class="Field">
                     $Data{"ActualEndTimeSelectionString"}
-                    <div id="ActualEndTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
-                    <div id="ActualEndTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <div id="ActualEndTimeDayError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                    <div id="ActualEndTimeHourError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                    <div id="ActualEndTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                    <div id="ActualEndTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:ActualEndTime -->
@@ -156,7 +110,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:ShowAccountedTime -->
                 <label for="AccountedTime">$Text{"AccountedTime"}:</label>
                 <div class="Field">
-                    <input type="text" id="AccountedTime" name="AccountedTime" value="$QData{"AccountedTime"}" class="25pc" maxlength="11"/>
+                    <input type="text" id="AccountedTime" name="AccountedTime" value="$QData{"AccountedTime"}" class="25pc $Data{AccountedTimeInvalid}" maxlength="11"/>
                     <div id="AccountedTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
                     <div id="AccountedTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>

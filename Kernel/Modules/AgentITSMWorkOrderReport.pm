@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.30 2010-12-08 22:45:49 en Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.31 2010-12-09 22:36:43 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -129,9 +129,6 @@ sub Run {
     # The entries are the names of the dtl validation error blocks.
     my %ValidationError;
 
-    # remember the numbers of the workorder freetext fields with validation errors
-    my %WorkOrderFreeTextValidationErrors;
-
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
@@ -168,21 +165,39 @@ sub Run {
 
                     # do not save when time is invalid
                     if ( !$SystemTime ) {
-                        $ValidationError{ 'Invalid' . $TimeType } = 1;
+                        $ValidationError{ $TimeType . 'Invalid' } = 'ServerError';
+                    }
+                    else {
+                        $GetParam{ 'System' . $TimeType } = $SystemTime;
                     }
                 }
                 else {
 
                     # it was indicated that the time should be set,
                     # but at least one of the required time params is missing
-                    $ValidationError{ 'Invalid' . $TimeType } = 1;
+                    $ValidationError{ $TimeType . 'Invalid' }   = 'ServerError';
+                    $ValidationError{ $TimeType . 'ErrorType' } = 'GenericServerError';
                 }
+            }
+
+            # check validity of the actual start and end times
+            if ( $GetParam{SystemActualEndTime} && !$GetParam{SystemActualStartTime} ) {
+                $ValidationError{ActualStartTimeInvalid}   = 'ServerError';
+                $ValidationError{ActualStartTimeErrorType} = 'SetServerError';
+            }
+            elsif (
+                ( $GetParam{SystemActualEndTime} && $GetParam{SystemActualStartTime} )
+                && ( $GetParam{SystemActualEndTime} < $GetParam{SystemActualStartTime} )
+                )
+            {
+                $ValidationError{ActualStartTimeInvalid}   = 'ServerError';
+                $ValidationError{ActualStartTimeErrorType} = 'BeforeThanEndTimeServerError';
             }
         }
 
         # validate format of accounted time
         if ( $GetParam{AccountedTime} !~ m{ \A -? \d* (?: [.] \d{1,2} )? \z }xms ) {
-            $ValidationError{'InvalidAccountedTime'} = 1;
+            $ValidationError{'AccountedTimeInvalid'} = 'ServerError';
         }
 
         # check for required workorder freetext fields (if configured)
@@ -193,14 +208,13 @@ sub Run {
                 && $WorkOrderFreeTextParam{ 'WorkOrderFreeText' . $Number } eq ''
                 )
             {
-
-                # remember the workorder freetext field number with validation errors
-                $WorkOrderFreeTextValidationErrors{$Number}++;
+                $WorkOrderFreeTextParam{Error}->{$Number} = 1;
+                $ValidationError{ 'WorkOrderFreeText' . $Number } = 'ServerError';
             }
         }
 
         # update only when there are no input validation errors
-        if ( !%ValidationError && !%WorkOrderFreeTextValidationErrors ) {
+        if ( !%ValidationError ) {
 
             # the actual time related fields are configurable
             my %AdditionalParam;
@@ -225,9 +239,9 @@ sub Run {
             # if workorder update was successful
             if ($CouldUpdateWorkOrder) {
 
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => $Self->{LastWorkOrderView},
+                # load new URL in parent window and close popup
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrder->{WorkOrderID}",
                 );
             }
             else {
@@ -339,6 +353,15 @@ sub Run {
             # store the workorder freetext config
             $WorkOrderFreeTextConfig{ $Type . $Number } = $Config;
         }
+
+        # add required entry in the hash (if configured for this free text field)
+        if (
+            $Self->{Config}->{WorkOrderFreeText}->{$Number}
+            && $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2
+            )
+        {
+            $WorkOrderFreeTextConfig{Required}->{$Number} = 1;
+        }
     }
 
     # build the workorder freetext HTML
@@ -380,33 +403,8 @@ sub Run {
         }
     }
 
-    # build workorder freetext java script check
-    NUMBER:
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
-
-        next NUMBER if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
-
-        # java script check for required workorder free text fields by form submit
-        if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeTextCheckJs',
-                Data => {
-                    WorkOrderFreeKeyField  => 'WorkOrderFreeKey' . $Number,
-                    WorkOrderFreeTextField => 'WorkOrderFreeText' . $Number,
-                },
-            );
-        }
-    }
-
     if ( $Self->{Config}->{ActualTimeSpan} ) {
-
-        # enable the time checks, only when ActualStartTime and ActualEndTime are selectable
-        $Self->{LayoutObject}->Block(
-            Name => 'ActualTimeSpanJS',
-            Data => {},
-        );
-
-        for my $TimeType (qw(ActualStartTime ActualEndTime)) {
+        for my $TimeType (qw(ActualEndTime ActualStartTime)) {
 
             # time period that can be selected from the GUI
             my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
@@ -417,6 +415,8 @@ sub Run {
                 Format                => 'DateInputFormatLong',
                 Prefix                => $TimeType,
                 "${TimeType}Optional" => 1,
+                $TimeType . 'Class' => $ValidationError{ $TimeType . 'Invalid' } || '',
+                Validate => 1,
                 %TimePeriod,
             );
 
@@ -427,16 +427,13 @@ sub Run {
                     $TimeType . 'SelectionString' => $TimeSelectionString,
                 },
             );
-
-            # show time validation error
-            if ( $ValidationError{ 'Invalid' . $TimeType } ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'Invalid' . $TimeType,
-                );
-
-                delete $ValidationError{ 'Invalid' . $TimeType };
-            }
         }
+
+        # add server error messages for the actual start time
+        $Self->{LayoutObject}->Block(
+            Name => 'ActualStartTime'
+                . ( $ValidationError{ActualStartTimeErrorType} || 'GenericServerError' )
+        );
     }
 
     # show accounted time only when form was submitted
@@ -452,13 +449,6 @@ sub Run {
         $AccountedTime = $GetParam{AccountedTime};
     }
 
-    # show validation errors
-    for my $Error ( keys %ValidationError ) {
-        $Self->{LayoutObject}->Block(
-            Name => $Error,
-        );
-    }
-
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMWorkOrderReport',
@@ -466,6 +456,7 @@ sub Run {
             %Param,
             %{$Change},
             %{$WorkOrder},
+            %ValidationError,
             AccountedTime => $AccountedTime,
         },
     );
