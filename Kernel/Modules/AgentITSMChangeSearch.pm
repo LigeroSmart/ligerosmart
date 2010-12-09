@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.58 2010-12-09 03:01:04 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.59 2010-12-09 20:40:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1061,6 +1061,7 @@ sub _MaskForm {
         ChangeData               => \%Param,
         ConfiguredFreeTextFields => \@ConfiguredChangeFreeTextFields,
         NullOption               => 1,
+        Multiple                 => 1,
     );
 
     # show change freetext area if freetext fields are configured
