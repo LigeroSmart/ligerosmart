@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.56 2010-12-09 15:12:57 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.57 2010-12-09 21:18:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -311,17 +311,12 @@
                         <div class="Clear"></div>
                     </fieldset>
                 </div>
-<!-- dtl:block:LinkTableComplex -->
-                <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td>
-                            $Data{"LinkTableStrg"}
-                        </td>
-                    </tr>
-                </table>
-                <br>
-<!-- dtl:block:LinkTableComplex -->
             </div>
+<!-- dtl:block:LinkTableComplex -->
+            <div class="Content">
+                $Data{"LinkTableStrg"}
+            </div>
+<!-- dtl:block:LinkTableComplex -->
         </div>
     </div>
 </div>
