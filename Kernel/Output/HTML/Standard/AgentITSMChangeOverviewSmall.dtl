@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.27 2010-12-06 12:58:06 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.28 2010-12-09 01:21:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,7 +146,7 @@
                 </tr>
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
-                <tr>
+                <tr class="MasterAction">
 <!-- dtl:block:RecordChangeStateSignal -->
                     <td title="$Text{"$Data{"ChangeState"}"}">
                         <div class="Flag Small">
@@ -164,7 +164,7 @@
 <!-- dtl:block:RecordChangeNumber -->
                     <td>
 <!-- dtl:block:RecordChangeNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$LQData{"ChangeNumber"}">
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$LQData{"ChangeNumber"}" class="MasterActionLink">
 <!-- dtl:block:RecordChangeNumberLinkStart -->
                             $QData{"ChangeNumber"}
 <!-- dtl:block:RecordChangeNumberLinkEnd -->
