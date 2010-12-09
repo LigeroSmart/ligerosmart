@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.26 2010-12-09 03:19:09 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.27 2010-12-09 20:47:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -116,11 +116,14 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        var NotSerialize,
+            FormSerialized,
+            URLString;
         Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ExpressionID"}-AttributeID', ['$Data{"IDName"}-$Data{"ExpressionID"}-OperatorID']);
-        var NotSerialize = Array;
-        NotSerialize['Subaction'] = 'Subaction';
-        var FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
-        var URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ExpressionID-$QData{"ExpressionID"}-CompareValue-Div;ElementChanged=$Data{"IDName"}-$QData{"ExpressionID"}-AttributeID';
+        NotSerialize = Array;
+        NotSerialize.Subaction = 'Subaction';
+        FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
+        URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ExpressionID-$QData{"ExpressionID"}-CompareValue-Div;ElementChanged=$Data{"IDName"}-$QData{"ExpressionID"}-AttributeID';
         Core.AJAX.ContentUpdate($('#ExpressionID-$QData{"ExpressionID"}-CompareValue-Div'), URLString, function () {});
     });
 //]]></script>
@@ -208,11 +211,14 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
+        var NotSerialize,
+            FormSerialized,
+            URLString;
         Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ActionID"}-AttributeID', ['$Data{"IDName"}-$Data{"ActionID"}-OperatorID']);
-        var NotSerialize = Array;
-        NotSerialize['Subaction'] = 'Subaction';
-        var FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
-        var URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ActionID-$QData{"ActionID"}-ActionValue-Div;ElementChanged=ActionID-$QData{"ActionID"}-AttributeID';
+        NotSerialize = Array;
+        NotSerialize.Subaction = 'Subaction';
+        FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
+        URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ActionID-$QData{"ActionID"}-ActionValue-Div;ElementChanged=ActionID-$QData{"ActionID"}-AttributeID';
         Core.AJAX.ContentUpdate($('#ActionID-$QData{"ActionID"}-ActionValue-Div'), URLString, function () {});
     });
 //]]></script>
