@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.242 2010-12-09 03:16:49 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.243 2010-12-09 15:11:38 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -444,6 +444,7 @@
                 <Title>Zoom</Title>
                 <NavBarName>ITSM Change</NavBarName>
                 <Loader>
+                    <CSS>ITSM.Agent.Default.css</CSS>
                     <CSS>ITSM.ChangeManagement.WorkorderGraph.css</CSS>
                     <JavaScript>ITSM.Agent.ChangeManagement.WorkorderGraph.js</JavaScript>
                 </Loader>
