@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectITSMWorkOrder.pm - layout backend module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectITSMWorkOrder.pm,v 1.24 2010-11-04 14:29:05 ub Exp $
+# $Id: LinkObjectITSMWorkOrder.pm,v 1.25 2010-12-09 02:30:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Output::HTML::Layout;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -429,8 +429,8 @@ sub ContentStringCreate {
 
     # build html for signal LED
     my $String = $Self->{LayoutObject}->Output(
-        Template => '<img border="0" src="$Env{"Images"}$QData{"WorkOrderStateSignal"}.png" '
-            . 'title="$Text{"$QData{"WorkOrderState"}"}" alt="$Text{"$QData{"WorkOrderState"}"}"/>',
+        Template => '<div class="Flag Small" title="$QData{"WorkOrderState"}"> '
+            . '<span class="$QData{"WorkOrderStateSignal"}"></span> </div>',
         Data => {
             WorkOrderStateSignal => $Content->{Content},
             WorkOrderState => $Content->{WorkOrderState} || '',
@@ -591,6 +591,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2010-11-04 14:29:05 $
+$Revision: 1.25 $ $Date: 2010-12-09 02:30:22 $
 
 =cut
