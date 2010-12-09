@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.136 2010-12-09 04:23:25 cr Exp $
+# $Id: FAQ.pm,v 1.137 2010-12-09 08:30:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.136 $) [1];
+$VERSION = qw($Revision: 1.137 $) [1];
 
 =head1 NAME
 
@@ -1717,7 +1717,8 @@ sub CategoryAdd {
         return;
     }
 
-    if ( defined $Param{ParentID} && $Param{ParentID} eq '' ) {
+    # check that ParentID is not an empty string but number 0 is allowed
+    if ( $Param{ParentID} eq '' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "ParentID cannot be empty!",
@@ -1795,7 +1796,8 @@ sub CategoryUpdate {
         }
     }
 
-    if ( defined $Param{ParentID} && $Param{ParentID} eq '' ) {
+    # check that ParentID is not an empty string but number 0 is allowed
+    if ( $Param{ParentID} eq '' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "ParentID cannot be empty!",
@@ -4397,6 +4399,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.136 $ $Date: 2010-12-09 04:23:25 $
+$Revision: 1.137 $ $Date: 2010-12-09 08:30:31 $
 
 =cut
