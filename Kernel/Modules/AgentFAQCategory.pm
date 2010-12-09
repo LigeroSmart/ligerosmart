@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQCategory.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQCategory.pm,v 1.23 2010-12-01 03:14:27 cr Exp $
+# $Id: AgentFAQCategory.pm,v 1.24 2010-12-09 02:29:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -59,7 +59,10 @@ sub Run {
     }
 
     # set default category id
-    $GetParam{CategoryID} ||= '';
+    $GetParam{CategoryID} ||= 0;
+
+    # set default parent id
+    $GetParam{ParentID} ||= 0;
 
     # get array parameters
     @{ $GetParam{PermissionGroups} }
