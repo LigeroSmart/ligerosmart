@@ -1,36 +1,36 @@
 # --
 # AgentITSMChangeTimeSlot.dtl - provides HTML form for AgentITSMChangeTimeSlot
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.dtl,v 1.15 2010-02-04 12:04:56 bes Exp $
+# $Id: AgentITSMChangeTimeSlot.dtl,v 1.16 2010-12-09 20:38:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AJAX"}
+#$Include{"AJAX"}
 
-<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
-<script type="text/javascript">
-<!--
-
-function submit_compose() {
-
-    // check sanity of move time
-    // 2010-01-32 is rejected, but 2010-02-31 is allowed
-    // an exact time check is performed on the serverside
-    if ( !CheckTime( 'MoveTime' ) ) {
-        alert('$JSText{"The planned time is invalid!"}');
-
-        return false;
-    }
-
-    return true;
-}
-
-//-->
-</script>
+#<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
+#<script type="text/javascript">
+#<!--
+#
+#function submit_compose() {
+#
+#    // check sanity of move time
+#    // 2010-01-32 is rejected, but 2010-02-31 is allowed
+#    // an exact time check is performed on the serverside
+#    if ( !CheckTime( 'MoveTime' ) ) {
+#        alert('$JSText{"The planned time is invalid!"}');
+#
+#        return false;
+#    }
+#
+#    return true;
+#}
+#
+#//-->
+#</script>
 
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
