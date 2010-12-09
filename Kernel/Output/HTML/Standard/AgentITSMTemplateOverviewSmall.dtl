@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.13 2010-12-09 08:20:32 ub Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.14 2010-12-09 11:55:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -103,6 +103,7 @@
 
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+/*global ITSM: true */
     ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  'DeleteTemplateID$QData{"TemplateID"}',
         ElementSelector:            '#DeleteTemplateID$QData{"TemplateID"}',

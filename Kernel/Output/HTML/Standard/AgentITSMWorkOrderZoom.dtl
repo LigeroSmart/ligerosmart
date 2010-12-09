@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.54 2010-12-09 03:16:49 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.55 2010-12-09 11:55:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -228,6 +228,7 @@
 <!-- dtl:block:ShowConfirmationDialog -->
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+/*global ITSM: true */
     ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  'Menu$Data{"MenuID"}',
         ElementSelector:            '$Data{"ElementSelector"}',
