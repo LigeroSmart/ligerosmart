@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -61,26 +61,35 @@ ul.ITSMFlag div.Value .Flag {
  *           that are inside a Field Div .
  */
 
-fieldset.TableLike > .ContentField {
-    line-height: 1.2em;
-    margin-left: 18%;
-    margin-right: 0;
-    padding-top: 3px;
-    padding-left: 10px;
-    padding-right: 0;
-    padding-bottom: 5px;
-}
-fieldset.TableLike > .ContentField > label {
-    color: #929292;
-    width: 25%;
-    float: left;
-    text-align: right;
-    padding-top: 3px;
+fieldset.FieldContainer {
+    margin: 25px 0 ;
+    padding: 5px 0;
 }
 
-fieldset.TableLike > .ContentField > .Field{
-    line-height: 1.2em;
-    margin-left: 25%;
-    padding-left: 10px;
-    padding-bottom: 0px;
+fieldset.FieldContainer > .SubField {
+        margin-left:30%;
+        padding: 3px 0 3px 10px;
+        width:35%;
+}
+
+fieldset.FieldContainer > .SubField > label {
+    color:#929292;
+    display:block;
+    float:left;
+    line-height:1.3em;
+    padding-bottom:3px;
+    padding-top:3px;
+    text-align:right;
+    text-shadow:0 1px 0 #FAFAFA;
+    width:30%;
+}
+
+fieldset.FieldContainer > .SubField > .Field {
+    line-height:1.2em;
+    margin-left:31%;
+    margin-right:0;
+}
+
+fieldset.FieldContainer > .SubField > .Field input {
+    width:70%;
 }
