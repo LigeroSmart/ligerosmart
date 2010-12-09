@@ -2,7 +2,7 @@
 # AgentITSMSLA.dtl - provides HTML form for AgentITSMSLA
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.dtl,v 1.5 2010-08-24 22:33:21 dz Exp $
+# $Id: AgentITSMSLA.dtl,v 1.6 2010-12-09 02:31:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,9 +27,9 @@
                     </thead>
                     <tbody>
 <!-- dtl:block:OverviewRow -->
-                        <tr>
+                        <tr class="MasterAction">
                             <td>
-                                <a class="AsBlock" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$QData{"SLAID"}">
+                                <a class="MasterActionLink" href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$QData{"SLAID"}">
                                     $QData{"Name"}
                                 </a>
                             </td>
@@ -51,3 +51,11 @@
     </div>
 </div>
 <!-- dtl:block:Overview -->
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('.MasterAction').bind('click', function (Event) {
+        window.location = $(this).find('.MasterActionLink').attr('href');
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
