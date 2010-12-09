@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.24 2010-12-09 22:22:47 ub Exp $
+# $Id: AdminImportExport.dtl,v 1.25 2010-12-09 22:33:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -86,17 +86,17 @@
                             <td>$Text{"$Data{"FormatName"}"}</td>
                             <td>$Text{"$Data{"Valid"}"}</td>
                             <td>
-                                <a class="TrashCan" title="Delete Template" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=TemplateDelete&TemplateID=$LQData{"TemplateID"}">
+                                <a class="TrashCan" title="Delete Template" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=TemplateDelete;TemplateID=$LQData{"TemplateID"}">
                                     $Text{"Delete Template"}
                                 </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ImportInformation&TemplateID=$LQData{"TemplateID"}">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ImportInformation;TemplateID=$LQData{"TemplateID"}">
                                     $Text{"Import"}
                                 </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Export&TemplateID=$LQData{"TemplateID"}">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Export;TemplateID=$LQData{"TemplateID"}">
                                     $Text{"Export"}
                                 </a>
                             </td>
@@ -112,7 +112,7 @@
                 <h2>$Text{"Step"} 1 $Text{"of"} 5 - $Text{"Edit common information"}:</h2>
             </div>
             <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                <form action="$Env{"CGIHandle"}" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="TemplateEdit1" />
                     <input type="hidden" name="TemplateID" value="$Data{"TemplateID"}" />
@@ -206,7 +206,7 @@
                 <h2>$Text{"Step"} 2 $Text{"of"} 5 - $Text{"Edit object information"}:</h2>
             </div>
             <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                <form action="$Env{"CGIHandle"}" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="TemplateEdit2" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
@@ -251,7 +251,7 @@
                 <h2>$Text{"Step"} 3 $Text{"of"} 5 - $Text{"Edit format information"}:</h2>
             </div>
             <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="get" class="Validate">
+                <form action="$Env{"CGIHandle"}" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="TemplateEdit3" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
@@ -320,7 +320,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="$Env{"CGIHandle"}" method="get">
+                <form action="$Env{"CGIHandle"}" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="TemplateSave4" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
@@ -393,7 +393,7 @@
                 <h2>$Text{"Step"} 5 $Text{"of"} 5 - $Text{"Edit search information"}:</h2>
             </div>
             <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="get">
+                <form action="$Env{"CGIHandle"}" method="post" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="TemplateSave5" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
@@ -431,7 +431,7 @@
                 <h2>$Text{"Import information"}:</h2>
             </div>
             <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="Import" />
                     <input type="hidden" name="TemplateID" value="$QData{"TemplateID"}" />
