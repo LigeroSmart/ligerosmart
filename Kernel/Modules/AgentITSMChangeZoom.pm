@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.56 2010-11-02 17:55:52 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.57 2010-12-09 21:46:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -181,6 +181,7 @@ sub Run {
                     Change  => $Change,
                     Counter => $Counter,
                     Config  => $Menus{$Menu},
+                    MenuID  => $Menu,
                 );
             }
             else {
@@ -256,14 +257,7 @@ sub Run {
     );
 
     # show values or dash ('-')
-    my @AdditionalBlockNames;
-    if ( $Self->{Config}->{RequestedTime} ) {
-        push @AdditionalBlockNames, 'RequestedTime';
-    }
-    for my $BlockName (
-        @AdditionalBlockNames, qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)
-        )
-    {
+    for my $BlockName (qw(PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime)) {
         if ( $Change->{$BlockName} ) {
             $Self->{LayoutObject}->Block(
                 Name => $BlockName,
@@ -281,7 +275,7 @@ sub Run {
 
     # show configurable blocks
     BLOCKNAME:
-    for my $BlockName (qw(PlannedEffort AccountedTime)) {
+    for my $BlockName (qw(RequestedTime PlannedEffort AccountedTime)) {
 
         # skip if block is switched off in SysConfig
         next BLOCKNAME if !$Self->{Config}->{$BlockName};
@@ -324,7 +318,7 @@ sub Run {
         # as we do not want to show empty fields in the zoom view
         if ( $Attribute =~ m{ \A ChangeFreeText ( \d+ ) }xms ) {
 
-            # do not show empty freetext values
+            # do not show empty freetext values (number zero is allowed)
             next ATTRIBUTE if $Change->{$Attribute} eq '';
 
             # get the freetext number
@@ -333,6 +327,15 @@ sub Run {
             # remember the freetext number
             $ChangeFreeTextFields{$Number}++;
         }
+    }
+
+    # show change freetext fields block
+    if (%ChangeFreeTextFields) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ChangeFreeTextFields',
+            Data => {},
+        );
     }
 
     # show the change freetext fields
@@ -391,15 +394,6 @@ sub Run {
                 },
             );
         }
-    }
-
-    # show space between change freetext fields and the following fields
-    if (%ChangeFreeTextFields) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeTextSpacer',
-            Data => {},
-        );
     }
 
     # get change manager data
