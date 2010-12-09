@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.23 2010-10-20 19:26:04 dz Exp $
+# $Id: AdminImportExport.dtl,v 1.24 2010-12-09 22:22:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -192,7 +192,7 @@
                         <div class="Clear"></div>
 
                         <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext" >$Text{"Next"}</button>
+                            <button class="Primary" type="submit" name="SubmitNext" value="SubmitNext">$Text{"Next"}</button>
                             $Text{"or"}
                             <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction='Overview'">$Text{"Cancel"} </a>
                         </div>
@@ -473,7 +473,7 @@
 
     Core.Form.Validate.AddMethod("Validate_NumberBiggerThanZero", function(Value, Element) {
         var Number = parseInt(Value, 10);
-        if (Number === NaN) {
+        if (isNaN(Number)) {
             return false;
         }
 
