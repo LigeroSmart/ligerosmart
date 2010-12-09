@@ -1,20 +1,20 @@
 # --
-# Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
+# Kernel/Output/HTML/OutputFilterFAQPre.pm - Output filter "Pre" for FAQ module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.9 2010-12-07 17:48:23 cr Exp $
+# $Id: OutputFilterFAQPre.pm,v 1.1 2010-12-09 19:20:24 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::OutputFilterFAQ;
+package Kernel::Output::HTML::OutputFilterFAQPre;
 
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.9 $';
+$VERSION = '$Revision: 1.1 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -46,20 +46,17 @@ sub Run {
 
     # get allowed template names
     my $ValidTemplates
-        = $Self->{ConfigObject}->Get('Frontend::Output::FilterElementPre')->{FAQ}->{Templates};
+        = $Self->{ConfigObject}->Get('Frontend::Output::FilterElement')->{FAQ};
 
     # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
 
-    # add FAQ link
-    #$FinishPattern will be replaced by $Replace
-    my $StartPattern  = '<!-- [ ] OutputFilterHook_TicketOptionsEnd [ ] --> .+?';
-    my $FinishPattern = '</div>';
+    # add Javascript outsise TicketOptions block (no matter if the block is called or not)
+    my $StartPattern = '<!-- [ ] OutputFilterHook_NoTicketOptionsFallback [ ] --> .+?';
 
-    # TODO replace the class Customer another class with the same effect but different name
     my $Replace = <<'END';
-                        <a  href="#" id="OptionFAQ">[ $Text{"FAQ"} ]</a>
 
+<!-- OutputFilterHook_NoTicketOptionsFallback -->
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
 $('#OptionFAQ').bind('click', function (event) {
@@ -69,13 +66,8 @@ $('#OptionFAQ').bind('click', function (event) {
 });
 //]]></script>
 <!--dtl:js_on_document_complete-->
-
-<!-- OutputFilterHook_OptionsEnd -->
-
-                    </div>
 END
-
-    ${ $Param{Data} } =~ s{ ($StartPattern) $FinishPattern }{$1$Replace}ixms;
+    ${ $Param{Data} } =~ s{ ($StartPattern) }{$Replace}ixms;
 
     return 1;
 }
