@@ -2,445 +2,342 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.57 2010-12-07 17:27:28 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.58 2010-12-09 21:46:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Zoom"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Zoom"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
-            </div>
-        </td>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <div class="ControlRow">
-            <h2></h2>
+<div class="MainBox ARIARoleMain">
+    <div class="ClearLeft"></div>
+    <div class="Headline">
+        <div class="Flag" title="$Text{"$Data{"ChangeState"}"}">
+            <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
         </div>
-        <div class="ActionRow">
-            <ul class="Actions">
-<!-- dtl:block:Menu -->
-<!-- dtl:block:MenuItem -->
-                <li>
-                    <a href="$Env{"Baselink"}$Data{"Link"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
-                </li>
-<!-- dtl:block:MenuItem -->
-<!-- dtl:block:Menu -->
-            </ul>
-        </div>
-    </tr>
-</table>
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <colgroup>
-        <col width="75%">
-        <col width="25%">
-    </colgroup>
-    <tr>
-        <td valign="top" class="mainbody">
-            <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-<!-- dtl:block:WorkOrderGraph -->
-                <tr>
-                    <td>
-                        $Data{"WorkOrderGraph"}
-                    </td>
-                </tr>
-<!-- dtl:block:WorkOrderGraph -->
-            </table>
-            <hr size="2">
-            <table border="0" width="100%" cellspacing="0" cellpadding="1">
-                <colgroup>
-                    <col width="130">
-                    <col>
-                </colgroup>
-                <tr>
-                    <td class="contentkey">
-                        <div title="$Text{"Description"}">
-                            $Text{"Description"}:&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
-                    <td class="contentvalue">
-                        $Data{"Description"}
-                    </td>
-                </tr>
-                <tr><td colspan="2">&nbsp;</td></tr>
-                <tr>
-                    <td class="contentkey">
-                        <div title="$Text{"Justification"}">
-                            $Text{"Justification"}:&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
-                    <td class="contentvalue">
-                        $Data{"Justification"}
-                    </td>
-                </tr>
-                <tr><td colspan="2">&nbsp;</td></tr>
-                <tr>
-                    <td class="contentkey" style="vertical-align: top">
-                        <div title="$Text{"Attachment"}">
-                            $Text{"Attachment"}:&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </td>
-                    <td class="contentvalue">
-                        <table>
-                            <colgroup>
-                                <col width="250">
-                                <col width="16">
-                                <col width="100">
-                                <col>
-                            </colgroup>
-<!-- dtl:block:AttachmentRow -->
-                            <tr>
-                                <td>$Data{"Filename"}</td>
-                                <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;Filename=$LQData{"Filename"};ChangeID=$LQData{"ChangeID"}"><img src="" border="0" alt="Download" title="Download"/></a></td>
-                                <td>$Data{"Filesize"}</td>
-                            </tr>
-<!-- dtl:block:AttachmentRow -->
-<!-- empty row, for having a valid HTML table in the absence of attachments -->
-                            <tr><td colspan="3"></td></tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr><td colspan="2">&nbsp;</td></tr>
-            </table>
-<!-- dtl:block:LinkTableComplex -->
-            <hr size="2">
-            <br>
-            <table width="98%" align="center" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        $Data{"LinkTableStrg"}
-                    </td>
-                </tr>
-            </table>
-            <br>
-<!-- dtl:block:LinkTableComplex -->
-        </td>
-        <td valign="top" class="menu">
+        <h1 title="$Text{"Zoom"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} &ndash; $QData{"ChangeTitle"}">
+            $Text{"Zoom"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} <span>&mdash;</span> $QData{"ChangeTitle","70"}
+        </h1>
+    </div>
+
+    <div class="LayoutFixedSidebar SidebarLast">
+        <div class="SidebarColumn">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Change Information"}</h2>
+                </div>
+
+                <div class="Content">
 <!-- dtl:block:Meta -->
-            <table border="0" cellspacing="1" cellpadding="0" width="100%">
-                <tr>
-                    <td><b>$Text{"ChangeState"}: </b></td>
-                    <td>
-                        <table border="0" cellpadding="0" cellspacing="0">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div title="$Text{"$Data{"ChangeState"}"}">
-                                            $Text{"$Data{"ChangeState"}"}&nbsp;&nbsp;
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <img border="0" src="$Config{"Frontend::ImagePath"}$QData{"ChangeStateSignal"}.png" title="$Text{"$Data{"ChangeState"}"}" alt="$Text{"$Data{"ChangeState"}"}">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"PlannedStartTime"}:</td>
-                    <td class="mainvalue">
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"ChangeState"}:</label>
+                        <div class="Value" title="$Text{"$Data{"ChangeState"}"}">
+                            <div class="Flag Small">
+                                <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
+                            </div>
+                            $Text{"$Data{"ChangeState"}"}
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"PlannedStartTime"}:</label>
 <!-- dtl:block:EmptyPlannedStartTime -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedStartTime -->
 <!-- dtl:block:PlannedStartTime -->
-                        <div title="$QData{"PlannedStartTime"}">
-                            $TimeLong{"$Data{"PlannedStartTime"}"}
-                        </div>
+                        <p class="Value" title="$QData{"PlannedStartTime"}">$TimeLong{"$Data{"PlannedStartTime"}"}</p>
 <!-- dtl:block:PlannedStartTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"PlannedEndTime"}:</td>
-                    <td class="mainvalue">
+                        <div class="Clear"></div>
+
+                        <label>$Text{"PlannedEndTime"}: </label>
 <!-- dtl:block:EmptyPlannedEndTime -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedEndTime -->
 <!-- dtl:block:PlannedEndTime -->
-                        <div title="$QData{"PlannedEndTime"}">
-                            $TimeLong{"$Data{"PlannedEndTime"}"}
-                        </div>
+                        <p class="Value" title="$QData{"PlannedEndTime"}">$TimeLong{"$Data{"PlannedEndTime"}"}</p>
 <!-- dtl:block:PlannedEndTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"ActualStartTime"}:</td>
-                    <td class="mainvalue">
+                        <div class="Clear"></div>
+
+                        <label>$Text{"ActualStartTime"}: </label>
 <!-- dtl:block:EmptyActualStartTime -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyActualStartTime -->
 <!-- dtl:block:ActualStartTime -->
-                        <div title="$QData{"ActualStartTime"}">
-                            $TimeLong{"$Data{"ActualStartTime"}"}
-                        </div>
+                        <p class="Value" title="$QData{"ActualStartTime"}">$TimeLong{"$Data{"ActualStartTime"}"}</p>
 <!-- dtl:block:ActualStartTime -->
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"ActualEndTime"}:</td>
-                    <td class="mainvalue">
+                        <div class="Clear"></div>
+
+                        <label>$Text{"ActualEndTime"}: </label>
 <!-- dtl:block:EmptyActualEndTime -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyActualEndTime -->
 <!-- dtl:block:ActualEndTime -->
-                        <div title="$QData{"ActualEndTime"}">
-                            $TimeLong{"$Data{"ActualEndTime"}"}
-                        </div>
+                        <p class="Value" title="$QData{"ActualEndTime"}">$TimeLong{"$Data{"ActualEndTime"}"}</p>
 <!-- dtl:block:ActualEndTime -->
-                    </td>
-                </tr>
-<!-- dtl:block:RequestedTime -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Requested Date"}:</td>
-                    <td class="mainvalue">
-                        <div title="$QData{"RequestedTime"}">$TimeLong{"$Data{"RequestedTime"}"}</div>
-                    </td>
-                </tr>
-<!-- dtl:block:RequestedTime -->
+                        <div class="Clear"></div>
+                    </fieldset>
+
+<!-- dtl:block:ShowRequestedTime -->
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Requested Date"}: </label>
 <!-- dtl:block:EmptyRequestedTime -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Requested Date"}:</td>
-                    <td class="mainvalue">
-                        <div title="-">-</div>
-                    </td>
-                </tr>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyRequestedTime -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
+<!-- dtl:block:RequestedTime -->
+                        <p class="Value" title="$QData{"RequestedTime"}">$TimeLong{"$Data{"RequestedTime"}"}</p>
+<!-- dtl:block:RequestedTime -->
+                        <div class="Clear"></div>
+                    </fieldset>
+<!-- dtl:block:ShowRequestedTime -->
+
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:ShowPlannedEffort -->
-                <tr>
-                    <td><b>$Text{"PlannedEffort"}: </b></td>
-                    <td>
+                        <label>$Text{"PlannedEffort"}: </label>
 <!-- dtl:block:EmptyPlannedEffort -->
-                        <div title="-">
-                            -
-                        </div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedEffort -->
 <!-- dtl:block:PlannedEffort -->
-                        <div title="$QData{"PlannedEffort"}">
-                            $QData{"PlannedEffort"}
-                        </div>
+                        <p class="Value" title="$QData{"PlannedEffort"}">$QData{"PlannedEffort"}</p>
 <!-- dtl:block:PlannedEffort -->
-                    </td>
-                </tr>
+                        <div class="Clear"></div>
 <!-- dtl:block:ShowPlannedEffort -->
+
 <!-- dtl:block:ShowAccountedTime -->
-                <tr>
-                    <td><b>$Text{"AccountedTime"}: </b></td>
-                    <td>
+                        <label>$Text{"AccountedTime"}: </label>
 <!-- dtl:block:EmptyAccountedTime -->
-                        <div title="-">
-                            -
-                        </div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyAccountedTime -->
 <!-- dtl:block:AccountedTime -->
-                        <div title="$QData{"AccountedTime"}">
-                            $QData{"AccountedTime"}
-                        </div>
+                        <p class="Value" title="$QData{"AccountedTime"}">$QData{"AccountedTime"}</p>
 <!-- dtl:block:AccountedTime -->
-                    </td>
-                </tr>
+                        <div class="Clear"></div>
 <!-- dtl:block:ShowAccountedTime -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
+                    </fieldset>
+
+
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:Category -->
-                <tr valign="top">
-                    <td class="mainkey">$Text{"Category"}:</td>
-                    <td class="mainvalue">
-                        <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
-                    </td>
-                </tr>
+                        <label>$Text{"Category"}:</label>
+                        <p class="Value" title="$QData{"Category"}">$Text{"$Data{"Category"}"}</p>
+                        <div class="Clear"></div>
 <!-- dtl:block:Category -->
+
 <!-- dtl:block:Impact -->
-                <tr valign="top">
-                    <td class="mainkey">$Text{"Impact"}:</td>
-                    <td class="mainvalue">
-                        <div title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</div>
-                    </td>
-                </tr>
+                        <label>$Text{"Impact"}:</label>
+                        <p class="Value" title="$QData{"Impact"}">$Text{"$Data{"Impact"}"}</p>
+                        <div class="Clear"></div>
 <!-- dtl:block:Impact -->
+
 <!-- dtl:block:Priority -->
-                <tr valign="top">
-                    <td class="mainkey">$Text{"Priority"}:</td>
-                    <td class="mainvalue">
-                        <div title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</div>
-                    </td>
-                </tr>
+                        <label>$Text{"Priority"}:</label>
+                        <p class="Value" title="$QData{"Priority"}">$Text{"$Data{"Priority"}"}</p>
+                        <div class="Clear"></div>
 <!-- dtl:block:Priority -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
+                    </fieldset>
 
 # show ChangeFreeKey and ChangeFreeText fields
+<!-- dtl:block:ChangeFreeTextFields -->
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:ChangeFreeText -->
-                <tr valign="top">
-                    <td class="mainkey">$QData{"ChangeFreeKey","25"}:</td>
-                    <td class="mainvalue">
+                        <label>$QData{"ChangeFreeKey","25"}: </label>
 <!-- dtl:block:ChangeFreeTextPlain -->
-                        <div title="$QData{"ChangeFreeText"}">$QData{"ChangeFreeText","25"}</div>
+                        <p class="Value" title="$QData{"ChangeFreeText"}">$QData{"ChangeFreeText","25"}</p>
 <!-- dtl:block:ChangeFreeTextPlain -->
 <!-- dtl:block:ChangeFreeTextLink -->
-                        <div title="$QData{"ChangeFreeText"}"><a href="$Data{"ChangeFreeTextLink"}" target="_blank">$QData{"ChangeFreeText","25"}</a></div>
+                        <p class="Value" title="$QData{"ChangeFreeText"}"><a href="$Data{"ChangeFreeTextLink"}" target="_blank">$QData{"ChangeFreeText","25"}</a></p>
 <!-- dtl:block:ChangeFreeTextLink -->
-                    </td>
-                </tr>
+                        <div class="Clear"></div>
 <!-- dtl:block:ChangeFreeText -->
-<!-- dtl:block:ChangeFreeTextSpacer -->
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-<!-- dtl:block:ChangeFreeTextSpacer -->
+                    </fieldset>
+<!-- dtl:block:ChangeFreeTextFields -->
 
-# ###########################################################
+# #############################################################
 # example for customization of single change freetext fields
-# ###########################################################
+# #############################################################
+#                    <fieldset class="TableLike FixedLabelSmall">
 #<!-- dtl:block:ChangeFreeText1 -->
-#          <tr valign="top">
-#            <td class="mainkey">$QData{"ChangeFreeKey1","25"}:</td>
-#            <td class="mainvalue">
+#                        <label>$QData{"ChangeFreeKey1","25"}:  </label>
 #<!-- dtl:block:ChangeFreeTextPlain1 -->
-#              <div title="$QData{"ChangeFreeText1"}">$QData{"ChangeFreeText1","25"}</div>
+#                        <p class="Value" title="$QData{"ChangeFreeText1"}">$QData{"ChangeFreeText1","25"}</p>
 #<!-- dtl:block:ChangeFreeTextPlain1 -->
 #<!-- dtl:block:ChangeFreeTextLink1 -->
-#              <div title="$QData{"ChangeFreeText1"}"><a href="$Config{"ChangeFreeTextLink1"}" target="_blank">$QData{"ChangeFreeText1","25"}</a></div>
+#                        <p class="Value" title="$QData{"ChangeFreeText1"}"><a href="$Data{"ChangeFreeTextLink1"}" target="_blank">$QData{"ChangeFreeText1","25"}</a></p>
 #<!-- dtl:block:ChangeFreeTextLink1 -->
-#          </tr>
+#                        <div class="Clear"></div>
 #<!-- dtl:block:ChangeFreeText1 -->
 #
 #<!-- dtl:block:ChangeFreeText2 -->
-#          <tr valign="top">
-#            <td class="mainkey">$QData{"ChangeFreeKey2","25"}:</td>
-#            <td class="mainvalue">
+#                        <label>$QData{"ChangeFreeKey2","25"}:  </label>
 #<!-- dtl:block:ChangeFreeTextPlain2 -->
-#              <div title="$QData{"ChangeFreeText2"}">$QData{"ChangeFreeText2","25"}</div>
+#                        <p class="Value" title="$QData{"ChangeFreeText2"}">$QData{"ChangeFreeText2","25"}</p>
 #<!-- dtl:block:ChangeFreeTextPlain2 -->
 #<!-- dtl:block:ChangeFreeTextLink2 -->
-#              <div title="$QData{"ChangeFreeText2"}"><a href="$Config{"ChangeFreeTextLink2"}" target="_blank">$QData{"ChangeFreeText2","25"}</a></div>
+#                        <p class="Value" title="$QData{"ChangeFreeText2"}"><a href="$Data{"ChangeFreeTextLink2"}" target="_blank">$QData{"ChangeFreeText2","25"}</a></p>
 #<!-- dtl:block:ChangeFreeTextLink2 -->
-#          </tr>
+#                        <div class="Clear"></div>
 #<!-- dtl:block:ChangeFreeText2 -->
+#                    </fieldset>
 # ###########################################################
 
-                <tr>
-                    <td class="mainkey">$Text{"Change Initiator(s)"}:</td>
-                    <td class="mainvalue">
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Change Initiator(s)"}:</label>
 <!-- dtl:block:EmptyChangeInitiators -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyChangeInitiators -->
 <!-- dtl:block:ChangeInitiatorExists -->
-                        <div title="$QData{"Change Initiators"}">
 <!-- dtl:block:ChangeInitiator -->
-                            <div title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">
-                                $QData{"UserLogin","15"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","15"})
-                            </div>
+                        <p class="Value" title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">
+                            $QData{"UserLogin","15"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","15"})
+                        </p>
 <!-- dtl:block:ChangeInitiator -->
-                        </div>
 <!-- dtl:block:ChangeInitiatorExists -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"ChangeManager"}:</td>
-                    <td class="mainvalue">
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Change Manager"}:</label>
 <!-- dtl:block:EmptyChangeManager -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyChangeManager -->
 <!-- dtl:block:ChangeManager -->
-                        <div title="$QData{"ChangeManagerUserLogin"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}"})">
+                        <p class="Value" title="$QData{"ChangeManagerUserLogin"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}"})">
                             $QData{"ChangeManagerUserLogin","15"} ($Quote{"$Data{"ChangeManagerUserFirstname"} $Data{"ChangeManagerUserLastname"}","15"})
-                        </div>
+                        </p>
 <!-- dtl:block:ChangeManager -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"ChangeBuilder"}:</td>
-                    <td class="mainvalue">
-                        <div title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Change Builder"}:</label>
+                        <p class="Value" title="$QData{"ChangeBuilderUserLogin"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}"})">
                             $QData{"ChangeBuilderUserLogin","15"} ($Quote{"$Data{"ChangeBuilderUserFirstname"} $Data{"ChangeBuilderUserLastname"}","15"})
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"CAB"}:</td>
-                    <td class="mainvalue">
+                        </p>
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"CAB"}:</label>
 <!-- dtl:block:EmptyCAB -->
-                        <div title="-">-</div>
+                        <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyCAB -->
 <!-- dtl:block:CAB -->
-                        <div title="$QData{"Change Advisory Board"}">
 <!-- dtl:block:CABAgent -->
-                            <div title="$QData{"CABAgentUserLogin"} ($Quote{"$Data{"CABAgentUserFirstname"} $Data{"CABAgentUserLastname"}"})">$QData{"CABAgentUserLogin","15"} ($Quote{"$Data{"CABAgentUserFirstname"} $Data{"CABAgentUserLastname"}","15"})</div>
+                        <p class="Value" title="$QData{"CABAgentUserLogin"} ($Quote{"$Data{"CABAgentUserFirstname"} $Data{"CABAgentUserLastname"}"})">
+                            $QData{"CABAgentUserLogin","15"} ($Quote{"$Data{"CABAgentUserFirstname"} $Data{"CABAgentUserLastname"}","15"})
+                        </p>
 <!-- dtl:block:CABAgent -->
 <!-- dtl:block:CABCustomer -->
-                            <div title="$QData{"CABCustomerUserLogin"} ($Quote{"$Data{"CABCustomerUserFirstname"} $Data{"CABCustomerUserLastname"}"})">$QData{"CABCustomerUserLogin","15"} ($Quote{"$Data{"CABCustomerUserFirstname"} $Data{"CABCustomerUserLastname"}","15"})</div>
+                        <p class="Value" title="$QData{"CABCustomerUserLogin"} ($Quote{"$Data{"CABCustomerUserFirstname"} $Data{"CABCustomerUserLastname"}"})">
+                            $QData{"CABCustomerUserLogin","15"} ($Quote{"$Data{"CABCustomerUserFirstname"} $Data{"CABCustomerUserLastname"}","15"})
+                        </p>
 <!-- dtl:block:CABCustomer -->
-                        </div>
 <!-- dtl:block:CAB -->
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Created"}:</td>
-                    <td class="mainvalue">$TimeLong{"$Data{"CreateTime"}"}</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Created by"}:</td>
-                    <td>
-                        <div title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Created"}:</label>
+                        <p class="Value" title="$QData{"CreateTime"}">$TimeLong{"$Data{"CreateTime"}"}</p>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Created by"}:</label>
+                        <p class="Value" title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
                             $QData{"CreateUserLogin","15"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","15"})
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Last changed"}:</td>
-                    <td class="mainvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Last changed by"}:</td>
-                    <td>
-                        <div title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
+                        </p>
+                        <div class="Clear"></div>
+                    </fieldset>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label>$Text{"Last changed"}:</label>
+                        <p class="Value" title="$QData{"ChangeTime"}">$TimeLong{"$Data{"ChangeTime"}"}</p>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Last changed by"}:</label>
+                        <p class="Value" title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
                             $QData{"ChangeUserLogin","15"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}","15"})
-                        </div>
-                    </td>
-                </tr>
+                        </p>
+                        <div class="Clear"></div>
+
 <!-- dtl:block:LinkTableSimple -->
-                $Data{"LinkTableStrg"}
+                        $Data{"LinkTableStrg"}
 <!-- dtl:block:LinkTableSimple -->
-            </table>
+                    </fieldset>
 <!-- dtl:block:Meta -->
-        </td>
-    </tr>
-</table>
+                </div>
+            </div>
+        </div>
+
+        <div class="ContentColumn">
+            <div class="ControlRow"></div>
+            <div class="ActionRow">
+                <ul class="Actions">
+<!-- dtl:block:Menu -->
+<!-- dtl:block:MenuItem -->
+                    <li>
+                        <a href="$Env{"Baselink"}$Data{"Link"}" id="Menu$QData{"MenuID"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
+                    </li>
+<!-- dtl:block:MenuItem -->
+<!-- dtl:block:Menu -->
+                </ul>
+            </div>
+
+<!-- dtl:block:WorkOrderGraph -->
+            <div>
+                $Data{"WorkOrderGraph"}
+            </div>
+<!-- dtl:block:WorkOrderGraph -->
+
+            <div class="WidgetBox SpacingTop Expanded">
+                <div class="LightRow Header">
+                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
+                    <h2>$Text{"ITSMChange"} - $QData{"ChangeTitle","70"}</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabelSmall">
+
+                        <label title="$Text{"Description"}">$Text{"Description"}: </label>
+                        <div class="Field">
+                            $Data{"Description"}
+                        </div>
+                        <div class="Clear"></div>
+                        <label title="$Text{"Justification"}">$Text{"Justification"}: </label>
+                        <div class="Field">
+                            $Data{"Justification"}
+                        </div>
+                        <div class="Clear"></div>
+# A space is needed here
+                        <label title="$Text{"Attachment"}">$Text{"Attachment"}:</label>
+                        <div class="Field">
+                            <table>
+                                <colgroup>
+                                    <col width="250"/>
+                                    <col width="16"/>
+                                    <col width="100"/>
+                                </colgroup>
+<!-- dtl:block:AttachmentRow -->
+                                <tr>
+                                    <td>$Data{"Filename"}</td>
+                                    <td><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;Filename=$LQData{"Filename"};WorkOrderID=$LQData{"WorkOrderID"}"><img src="" border="0" alt="Download" title="Download"/></a></td>
+                                    <td>$Data{"Filesize"}</td>
+                                </tr>
+<!-- dtl:block:AttachmentRow -->
+<!-- empty row, for having a valid HTML table in the absence of attachments -->
+                                <tr><td colspan="3"></td></tr>
+                            </table>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </div>
+            </div>
+<!-- dtl:block:LinkTableComplex -->
+            <div class="Content">
+                $Data{"LinkTableStrg"}
+            </div>
+<!-- dtl:block:LinkTableComplex -->
+        </div>
+    </div>
+</div>
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
