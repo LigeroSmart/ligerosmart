@@ -2,7 +2,7 @@
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.18 2010-12-08 19:02:18 cr Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.19 2010-12-09 11:23:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -121,8 +121,8 @@
                             </tr>
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:OverviewResultRow -->
-                            <tr>
-                                <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">$QData{"Name"}</a></td>
+                            <tr class="MasterAction">
+                                <td><a class="AsBlock MasterActionLink" href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};Nav=$LQData{"Nav"}">$QData{"Name"}</a></td>
                                 <td>$QData{"Comment"}</td>
                                 <td>$QData{"SubCategoryCount"}</td>
                                 <td>$QData{"ArticleCount"}</td>
@@ -145,3 +145,11 @@ $Data{"FAQItemListHTML"}
         <div class="Clear"></div>
     </div>
 </div>
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('.MasterAction').bind('click', function (Event) {
+        window.location = $(this).find('.MasterActionLink').attr('href');
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
