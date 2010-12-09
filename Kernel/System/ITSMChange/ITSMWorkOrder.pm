@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.118 2010-12-08 21:59:56 en Exp $
+# $Id: ITSMWorkOrder.pm,v 1.119 2010-12-09 00:03:45 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.118 $) [1];
+$VERSION = qw($Revision: 1.119 $) [1];
 
 =head1 NAME
 
@@ -2678,16 +2678,19 @@ sub WorkOrderGetConfiguredFreeTextFields {
     # get maximum number of workorder freetext fields
     my $MaxNumber = $Self->{ConfigObject}->Get('ITSMWorkOrder::FreeText::MaxNumber');
 
-    my $Configuration
-        = $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::AgentITSMWorkOrderReport');
-
     # get all configured workorder freekey and freetext numbers
     my @ConfiguredWorkOrderFreeTextFields = ();
     FREETEXTNUMBER:
     for my $Number ( 1 .. $MaxNumber ) {
 
+        # check workorder freekey config
+        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeKey' . $Number ) ) {
+            push @ConfiguredWorkOrderFreeTextFields, $Number;
+            next FREETEXTNUMBER;
+        }
+
         # check workorder freetext config
-        if ( $Configuration->{WorkOrderFreeText}->{$Number} ) {
+        if ( $Self->{ConfigObject}->Get( 'WorkOrderFreeText' . $Number ) ) {
             push @ConfiguredWorkOrderFreeTextFields, $Number;
             next FREETEXTNUMBER;
         }
@@ -3403,6 +3406,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.118 $ $Date: 2010-12-08 21:59:56 $
+$Revision: 1.119 $ $Date: 2010-12-09 00:03:45 $
 
 =cut
