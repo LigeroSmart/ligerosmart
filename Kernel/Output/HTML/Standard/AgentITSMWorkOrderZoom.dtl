@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.55 2010-12-09 11:55:37 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.56 2010-12-09 15:12:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,9 +12,11 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <div class="Flag" title="$Text{"$Data{"WorkOrderState"}"}"><span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span></div>
-        <h1 title="$Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-            $Env{"Box0"} $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
+        <div class="Flag" title="$Text{"$Data{"WorkOrderState"}"}">
+            <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
+        </div>
+        <h1 title="$Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} &ndash; $QData{"WorkOrderTitle"}">
+            $Text{"Zoom"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} <span>&mdash;</span> $QData{"WorkOrderTitle","70"}
         </h1>
     </div>
 
@@ -25,8 +27,8 @@
                     <h2>$Text{"Workorder Information"}</h2>
                 </div>
                 <div class="Content">
-                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:Meta -->
+                    <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"WorkOrderState"}:</label>
                         <div class="Value" title="$Text{"$Data{"WorkOrderState"}"}">
                             <div class="Flag Small">
@@ -109,8 +111,9 @@
 <!-- dtl:block:ShowAccountedTime -->
                     </fieldset>
 
-                    <fieldset class="TableLike FixedLabelSmall">
 # show WorkOrderFreeKey and WorkOrderFreeText fields
+<!-- dtl:block:WorkOrderFreeTextFields -->
+                    <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:WorkOrderFreeText -->
                         <label>$QData{"WorkOrderFreeKey","25"}: </label>
 <!-- dtl:block:WorkOrderFreeTextPlain -->
@@ -121,43 +124,39 @@
 <!-- dtl:block:WorkOrderFreeTextLink -->
                         <div class="Clear"></div>
 <!-- dtl:block:WorkOrderFreeText -->
-
-<!-- dtl:block:WorkOrderFreeTextSpacer -->
                     </fieldset>
+<!-- dtl:block:WorkOrderFreeTextFields -->
 
-                    <fieldset class="TableLike FixedLabelSmall">
-<!-- dtl:block:WorkOrderFreeTextSpacer -->
 
 # #############################################################
 # example for customization of single workorder freetext fields
 # #############################################################
+#                    <fieldset class="TableLike FixedLabelSmall">
 #<!-- dtl:block:WorkOrderFreeText1 -->
-#          <tr valign="top">
-#            <td class="mainkey">$QData{"WorkOrderFreeKey1","25"}:</td>
-#            <td class="mainvalue">
+#                        <label>$QData{"WorkOrderFreeKey1","25"}:  </label>
 #<!-- dtl:block:WorkOrderFreeTextPlain1 -->
-#              <div title="$QData{"WorkOrderFreeText1"}">$QData{"WorkOrderFreeText1","25"}</div>
+#                        <p class="Value" title="$QData{"WorkOrderFreeText1"}">$QData{"WorkOrderFreeText1","25"}</p>
 #<!-- dtl:block:WorkOrderFreeTextPlain1 -->
 #<!-- dtl:block:WorkOrderFreeTextLink1 -->
-#              <div title="$QData{"WorkOrderFreeText1"}"><a href="$Config{"WorkOrderFreeTextLink1"}" target="_blank">$QData{"WorkOrderFreeText1","25"}</a></div>
+#                        <p class="Value" title="$QData{"WorkOrderFreeText1"}"><a href="$Data{"WorkOrderFreeTextLink1"}" target="_blank">$QData{"WorkOrderFreeText1","25"}</a></p>
 #<!-- dtl:block:WorkOrderFreeTextLink1 -->
-#          </tr>
+#                        <div class="Clear"></div>
 #<!-- dtl:block:WorkOrderFreeText1 -->
 #
 #<!-- dtl:block:WorkOrderFreeText2 -->
-#          <tr valign="top">
-#            <td class="mainkey">$QData{"WorkOrderFreeKey2","25"}:</td>
-#            <td class="mainvalue">
+#                        <label>$QData{"WorkOrderFreeKey2","25"}:  </label>
 #<!-- dtl:block:WorkOrderFreeTextPlain2 -->
-#              <div title="$QData{"WorkOrderFreeText2"}">$QData{"WorkOrderFreeText2","25"}</div>
+#                        <p class="Value" title="$QData{"WorkOrderFreeText2"}">$QData{"WorkOrderFreeText2","25"}</p>
 #<!-- dtl:block:WorkOrderFreeTextPlain2 -->
 #<!-- dtl:block:WorkOrderFreeTextLink2 -->
-#              <div title="$QData{"WorkOrderFreeText2"}"><a href="$Config{"WorkOrderFreeTextLink2"}" target="_blank">$QData{"WorkOrderFreeText2","25"}</a></div>
+#                        <p class="Value" title="$QData{"WorkOrderFreeText2"}"><a href="$Data{"WorkOrderFreeTextLink2"}" target="_blank">$QData{"WorkOrderFreeText2","25"}</a></p>
 #<!-- dtl:block:WorkOrderFreeTextLink2 -->
-#          </tr>
+#                        <div class="Clear"></div>
 #<!-- dtl:block:WorkOrderFreeText2 -->
+#                    </fieldset>
 # ###########################################################
 
+                    <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Change Builder"}:</label>
 <!-- dtl:block:EmptyChangeBuilder -->
                         <p class="Value" title="-">-</p>
@@ -210,8 +209,8 @@
                         $Data{"LinkTableStrg"}
 <!-- dtl:block:LinkTableSimple -->
                     </fieldset>
-<!-- dtl:block:Meta -->
                 </div>
+<!-- dtl:block:Meta -->
             </div>
         </div>
 

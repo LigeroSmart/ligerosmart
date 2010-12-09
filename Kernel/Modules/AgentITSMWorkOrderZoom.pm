@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.46 2010-11-02 17:55:52 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.47 2010-12-09 15:12:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -321,6 +321,15 @@ sub Run {
         }
     }
 
+    # show workorder freetext fields block
+    if (%WorkOrderFreeTextFields) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'WorkOrderFreeTextFields',
+            Data => {},
+        );
+    }
+
     # show the workorder freetext fields
     for my $Number ( sort { $a <=> $b } keys %WorkOrderFreeTextFields ) {
 
@@ -377,15 +386,6 @@ sub Run {
                 },
             );
         }
-    }
-
-    # show space between workorder freetext fields and the following fields
-    if (%WorkOrderFreeTextFields) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeTextSpacer',
-            Data => {},
-        );
     }
 
     # get change builder user
