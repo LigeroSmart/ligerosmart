@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.57 2010-12-09 21:18:47 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.58 2010-12-09 22:08:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -256,7 +256,7 @@
                 </div>
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label><strong>$Text{"Change"}</strong></label>
+                        <label><strong>$Text{"ITSMChange"}</strong></label>
                         <div class="Value">
                             <div class="Flag Small" title="$Text{"$Data{"ChangeState"}"}">
                                 <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
