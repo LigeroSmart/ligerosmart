@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.14 2010-12-09 11:55:37 ub Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.15 2010-12-09 22:30:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -64,13 +64,13 @@
             </tr>
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
-            <tr id="TemplateID_$QData{"TemplateID"}" class="MasterAction">
+            <tr id="TemplateID_$QData{"TemplateID"}">
 <!-- dtl:block:RecordTemplateID -->
                 <td>$Text{"$Data{"TemplateID"}"}</td>
 <!-- dtl:block:RecordTemplateID -->
 <!-- dtl:block:RecordName -->
                 <td>
-                    <a href="$Env{"Baselink"}Action=AgentITSMTemplateEdit;TemplateID=$LQData{"TemplateID"}" title="$QData{"Name"} (ID=$QData{"TemplateID"})" class="AsBlock AsPopup MasterActionLink">$QData{"Name"}</a>
+                    <a href="$Env{"Baselink"}Action=AgentITSMTemplateEdit;TemplateID=$LQData{"TemplateID"}" title="$QData{"Name"} (ID=$QData{"TemplateID"})" class="AsBlock AsPopup">$QData{"Name"}</a>
                 </td>
 <!-- dtl:block:RecordName -->
 <!-- dtl:block:RecordType -->
@@ -157,9 +157,6 @@
 <script type="text/javascript">//<![CDATA[
     Core.UI.InitTableHead($('#FixedTable thead'), $('#FixedTable tbody'));
     Core.UI.StaticTableControl($('#OverviewControl').add($('#OverviewBody')));
-    $('.MasterAction').bind('click', function (Event) {
-        window.location = $(this).find('.MasterActionLink').attr('href');
-    });
     $(window).resize(function() {
         Core.UI.AdjustTableHead($('#OverviewHeader thead'), $('#OverviewBody tbody'));
     });
