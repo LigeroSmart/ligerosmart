@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.63 2010-12-09 19:23:51 mb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.64 2010-12-09 19:25:42 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 =head1 NAME
 
@@ -1240,7 +1240,7 @@ sub _AddSystemNotifications {
         . "Change-titel: <OTRS_CHANGE_ChangeTitle>\n"
         . "Actuele change-status: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
-        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
         . "\n";
 
     # Change info for Customers (nl)
@@ -1840,7 +1840,7 @@ sub _AddSystemNotifications {
                 . "Actie-ID: <OTRS_CONDITION_ActionID>\n"
                 . "Actie resultaat: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
-                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n",
         ],
 
@@ -2710,6 +2710,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.63 $ $Date: 2010-12-09 19:23:51 $
+$Revision: 1.64 $ $Date: 2010-12-09 19:25:42 $
 
 =cut
