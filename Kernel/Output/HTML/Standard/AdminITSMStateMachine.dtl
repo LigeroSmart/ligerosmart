@@ -2,7 +2,7 @@
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.27 2010-10-26 15:09:14 ub Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.28 2010-12-09 03:01:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -174,7 +174,7 @@
                         <div class="Field SpacingTop">
                             <button class="Primary" type="submit" id="SubmitUpdate" value="$Text{"Save"}">$Text{"Save"}</button>
                             $Text{"or"}
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Class=$LQData{"Class"}&">$Text{"Cancel"}</a>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Class=$LQData{"Class"}">$Text{"Cancel"}</a>
                         </div>
                         <div class="Clear"></div>
 
@@ -195,10 +195,10 @@
 
                 <fieldset class="TableLike">
                     <div class="Field">
-                        <a class="CallForAction" href="$Env{"Baselink"}Action=$Env{"Action"}&Class=$LQData{"Class"}">
+                        <a class="CallForAction" href="$Env{"Baselink"}Action=$Env{"Action"};Class=$LQData{"Class"}">
                             <span>$Text{"No"}</span>
                         </a>
-                        <a class="CallForAction" href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$LQData{"Action"}Action&Class=$LQData{"Class"}&StateID=$LQData{"StateID"}&NextStateID=$LQData{"NextStateID"}">
+                        <a class="CallForAction" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=$LQData{"Action"}Action;Class=$LQData{"Class"};StateID=$LQData{"StateID"};NextStateID=$LQData{"NextStateID"}">
                             <span>$Text{"Yes"}</span>
                         </a>
                     </div>

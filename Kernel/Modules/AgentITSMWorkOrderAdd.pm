@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.60 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.61 2010-12-09 03:01:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -338,7 +338,7 @@ sub Run {
 
                 # redirect to zoom mask of the new workorder, when adding was successful
                 return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
+                    OP => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
                 );
             }
             else {
@@ -429,7 +429,7 @@ sub Run {
 
             # redirect to zoom mask of the new workorder, when adding was successful
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentITSMWorkOrderZoom&WorkOrderID=$WorkOrderID",
+                OP => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
             );
         }
     }

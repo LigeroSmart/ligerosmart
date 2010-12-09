@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.61 2010-08-09 06:57:07 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.62 2010-12-09 02:59:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 =head1 NAME
 
@@ -1204,7 +1204,7 @@ sub _AddSystemNotifications {
         . "Change title: <OTRS_CHANGE_ChangeTitle>\n"
         . "Current change state: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
-        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
         . "\n"
         . "Your OTRS Notification Master\n";
 
@@ -1222,7 +1222,7 @@ sub _AddSystemNotifications {
         . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
         . "Aktueller Change Status: <OTRS_CHANGE_ChangeState>\n"
         . "\n"
-        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
@@ -1244,7 +1244,7 @@ sub _AddSystemNotifications {
         . "Workorder type: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Current workorder state: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
-        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom&WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
         . "\n"
         . "Your OTRS Notification Master\n";
 
@@ -1270,7 +1270,7 @@ sub _AddSystemNotifications {
         . "Workorder Typ: <OTRS_WORKORDER_WorkOrderType>\n"
         . "Aktueller Workorder Status: <OTRS_WORKORDER_WorkOrderState>\n"
         . "\n"
-        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom&WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
+        . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMWorkOrderZoom;WorkOrderID=<OTRS_WORKORDER_WorkOrderID>\n"
         . "\n"
         . "Ihr OTRS Notification Master\n";
 
@@ -1616,7 +1616,7 @@ sub _AddSystemNotifications {
                 . "Action ID: <OTRS_CONDITION_ActionID>\n"
                 . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
-                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
                 . "Ihr OTRS Notification Master\n",
         ],
@@ -1636,7 +1636,7 @@ sub _AddSystemNotifications {
                 . "Action ID: <OTRS_CONDITION_ActionID>\n"
                 . "Action execution: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
-                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
                 . "Your OTRS Notification Master\n",
         ],
@@ -2142,7 +2142,7 @@ sub _AddSystemNotificationsNewIn_2_0_3 {
                 . "Action ID: <OTRS_CONDITION_ActionID>\n"
                 . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
-                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
                 . "Ihr OTRS Notification Master\n",
         ],
@@ -2162,7 +2162,7 @@ sub _AddSystemNotificationsNewIn_2_0_3 {
                 . "Action ID: <OTRS_CONDITION_ActionID>\n"
                 . "Action execution: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
-                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom&ChangeID=<OTRS_CHANGE_ChangeID>\n"
+                . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
                 . "Your OTRS Notification Master\n",
         ],
@@ -2306,6 +2306,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.61 $ $Date: 2010-08-09 06:57:07 $
+$Revision: 1.62 $ $Date: 2010-12-09 02:59:24 $
 
 =cut

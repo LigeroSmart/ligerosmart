@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.57 2010-10-21 15:05:56 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.58 2010-12-09 03:01:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -455,14 +455,14 @@ sub Run {
                     . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
                     . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
                     . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
-                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1&Subaction=Search'
+                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
                     . ';';
                 my $LinkSort = 'Filter='
                     . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
                     . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1&Subaction=Search'
+                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
                     . ';';
-                my $LinkFilter = 'TakeLastSearch=1;Subaction=Search&Profile='
+                my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
                     . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
                     . ';';
                 my $LinkBack = 'Subaction=LoadProfile;Profile='

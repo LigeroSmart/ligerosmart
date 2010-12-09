@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSchedule.pm - the OTRS::ITSM::ChangeManagement change schedule overview module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSchedule.pm,v 1.2 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangeSchedule.pm,v 1.3 2010-12-09 03:01:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -208,18 +208,18 @@ sub Run {
     # show changes
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&';
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';';
     my $LinkSort = 'Filter='
         . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&';
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';';
     my $LinkFilter = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . '&OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . '&View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . '&';
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';';
     $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
 
         ChangeIDs => $ChangeIDsRef,
