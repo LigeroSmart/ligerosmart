@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.50 2010-12-09 20:36:17 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.51 2010-12-09 20:39:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =over 4
 
@@ -689,7 +689,7 @@ or
         Config                   => \%WorkOrderFreeTextConfig,
         WorkOrderData            => \%WorkOrderFreeTextParam,
         Multiple                 => 1,                             # optional (0|1) default 0
-        ConfiguredFreeTextFields =>  [ 4, 5, 6 ],
+        ConfiguredFreeTextFields => [ 4, 5, 6 ],
     );
 
 =cut
