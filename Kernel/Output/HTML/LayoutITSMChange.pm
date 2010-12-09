@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.49 2010-12-09 19:10:01 en Exp $
+# $Id: LayoutITSMChange.pm,v 1.50 2010-12-09 20:36:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =over 4
 
@@ -679,6 +679,7 @@ Returns the a hash with HTML code for all defined change or workorder freetext f
     my %ChangeFreeTextHTML = $LayoutObject->BuildFreeTextHTML(
         Config                   => \%ChangeFreeTextConfig,
         ChangeData               => \%ChangeFreeTextParam,
+        Multiple                 => 1,                             # optional (0|1) default 0
         ConfiguredFreeTextFields => [ 1, 2, 3 ],
     );
 
@@ -687,6 +688,7 @@ or
     my %WorkOrderFreeTextHTML = $LayoutObject->BuildFreeTextHTML(
         Config                   => \%WorkOrderFreeTextConfig,
         WorkOrderData            => \%WorkOrderFreeTextParam,
+        Multiple                 => 1,                             # optional (0|1) default 0
         ConfiguredFreeTextFields =>  [ 4, 5, 6 ],
     );
 
@@ -774,7 +776,7 @@ sub BuildFreeTextHTML {
                     Translation  => 0,
                     HTMLQuote    => 1,
                     PossibleNone => $PossibleNone,
-                    Multiple     => 1,
+                    Multiple     => $Param{Multiple} || 0,
                 );
             }
 
@@ -914,7 +916,7 @@ sub BuildFreeTextHTML {
                 Translation  => 0,
                 HTMLQuote    => 1,
                 PossibleNone => $PossibleNone,
-                Multiple     => 1,
+                Multiple     => $Param{Multiple} || 0,
                 Class        => $ClassParam,
             );
         }
