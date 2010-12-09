@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.51 2010-12-09 20:39:34 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.52 2010-12-09 22:37:13 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 =over 4
 
@@ -919,6 +919,8 @@ sub BuildFreeTextHTML {
                 Multiple     => $Param{Multiple} || 0,
                 Class        => $ClassParam,
             );
+
+            $Data{ $Type . 'FreeTextField' . $Number } .= $DataParam;
         }
         else {
 
@@ -951,6 +953,8 @@ sub BuildFreeTextHTML {
                     . '" value="'
                     . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeText' . $Number } )
                     . '" />';
+
+                $Data{ $Type . 'FreeTextField' . $Number } .= $DataParam;
             }
 
             # freetext data is not defined
@@ -965,6 +969,8 @@ sub BuildFreeTextHTML {
                     . '" name="'
                     . $Type . 'FreeText' . $Number
                     . '" value="" />';
+
+                $Data{ $Type . 'FreeTextField' . $Number } .= $DataParam;
             }
         }
     }
