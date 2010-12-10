@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.64 2010-12-09 19:25:42 mb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.65 2010-12-10 10:05:33 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 =head1 NAME
 
@@ -1397,8 +1397,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeCABDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB gelï¿½scht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelï¿½schtem CAB.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.'
                 . $ChangeInfoAgentDe,
         ],
         [
@@ -1419,8 +1419,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeLinkAdd',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknï¿½pft',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknï¿½pft.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknüpft',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.'
                 . $ChangeInfoAgentDe,
         ],
         [
@@ -1442,7 +1442,7 @@ sub _AddSystemNotifications {
             'Agent::Change::ChangeLinkDelete',
             'de',
             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> entfernt',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknï¿½pft.'
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknüpft.'
                 . $ChangeInfoAgentDe,
         ],
         [
@@ -1463,8 +1463,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gelï¿½scht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde gelï¿½scht.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gelöscht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
         ],
         [
             'Agent::Change::ChangeDelete',
@@ -1526,8 +1526,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelï¿½scht',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelï¿½scht.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
         ],
         [
             'Agent::WorkOrder::WorkOrderDelete',
@@ -1545,8 +1545,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] <OTRS_LINK_Object> verknï¿½pft',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem <OTRS_LINK_Object> verknï¿½pft.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] <OTRS_LINK_Object> verknüpft',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.'
                 . $WorkOrderInfoAgentDe,
         ],
         [
@@ -1568,7 +1568,7 @@ sub _AddSystemNotifications {
             'Agent::WorkOrder::WorkOrderLinkDelete',
             'de',
             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] <OTRS_LINK_Object> entfernt',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknï¿½pft.'
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknüpft.'
                 . $WorkOrderInfoAgentDe,
         ],
         [
@@ -1611,8 +1611,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeAttachmentDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Anhang gelï¿½scht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelï¿½schtem Anhang.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.'
                 . $ChangeInfoAgentDe,
         ],
         [
@@ -1655,8 +1655,8 @@ sub _AddSystemNotifications {
         [
             'Agent::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelï¿½scht',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelï¿½schtem Anhang.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
                 . $WorkOrderInfoAgentDe,
         ],
         [
@@ -1765,8 +1765,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ChangeRequestedTimeReached',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewï¿½nschte Fertigstellungszeit erreicht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewï¿½nschte Fertigstellungszeit erreicht.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.'
                 . $ChangeInfoAgentDe,
         ],
         [
@@ -1787,8 +1787,8 @@ sub _AddSystemNotifications {
         [
             'Agent::Change::ActionExecute',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausfï¿½hrung <OTRS_CONDITION_ActionResult>',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausfï¿½hrung <OTRS_CONDITION_ActionResult>.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
                 . "\n"
                 . "\n"
                 . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
@@ -1798,7 +1798,7 @@ sub _AddSystemNotifications {
                 . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
                 . "\n"
                 . "Action ID: <OTRS_CONDITION_ActionID>\n"
-                . "Aktions-Ausfï¿½hrung: <OTRS_CONDITION_ActionResult>\n"
+                . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
                 . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
@@ -2006,8 +2006,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeCABDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB gelï¿½scht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelï¿½schtem CAB.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] CAB gelöscht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelöschtem CAB.'
                 . $ChangeInfoCustomerDe,
         ],
         [
@@ -2028,8 +2028,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeLinkAdd',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknï¿½ft',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknï¿½pft.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> verknüft',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.'
                 . $ChangeInfoCustomerDe,
         ],
         [
@@ -2051,7 +2051,7 @@ sub _AddSystemNotifications {
             'Customer::Change::ChangeLinkDelete',
             'de',
             '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] <OTRS_LINK_Object> entfernt',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknï¿½pft.'
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknüpft.'
                 . $ChangeInfoCustomerDe,
         ],
         [
@@ -2072,8 +2072,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gelï¿½scht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde gelï¿½scht.',
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] gelöscht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> wurde gelöscht.',
         ],
         [
             'Customer::Change::ChangeDelete',
@@ -2135,8 +2135,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelï¿½scht',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelï¿½scht.',
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde gelöscht.',
         ],
         [
             'Customer::WorkOrder::WorkOrderDelete',
@@ -2154,8 +2154,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderLinkAdd',
             'de',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] <OTRS_LINK_Object> verknï¿½pft',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem <OTRS_LINK_Object> verknï¿½pft.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] <OTRS_LINK_Object> verknüpft',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> wurde mit einem <OTRS_LINK_Object> verknüpft.'
                 . $WorkOrderInfoCustomerDe,
         ],
         [
@@ -2177,7 +2177,7 @@ sub _AddSystemNotifications {
             'Customer::WorkOrder::WorkOrderLinkDelete',
             'de',
             '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] <OTRS_LINK_Object> entfernt',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknï¿½pft.'
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> ist mit einem <OTRS_LINK_Object> nicht mehr verknüpft.'
                 . $WorkOrderInfoCustomerDe,
         ],
         [
@@ -2220,8 +2220,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeAttachmentDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Anhang gelï¿½scht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelï¿½schtem Anhang.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> mit gelöschtem Anhang.'
                 . $ChangeInfoCustomerDe,
         ],
         [
@@ -2264,8 +2264,8 @@ sub _AddSystemNotifications {
         [
             'Customer::WorkOrder::WorkOrderAttachmentDelete',
             'de',
-            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelï¿½scht',
-            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelï¿½schtem Anhang.'
+            '[<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber>] Anhang gelöscht',
+            '<OTRS_CONFIG_ITSMWorkOrder::Hook><OTRS_CHANGE_ChangeNumber>-<OTRS_WORKORDER_WorkOrderNumber> mit gelöschtem Anhang.'
                 . $WorkOrderInfoCustomerDe,
         ],
         [
@@ -2374,8 +2374,8 @@ sub _AddSystemNotifications {
         [
             'Customer::Change::ChangeRequestedTimeReached',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewï¿½nschte Fertigstellungszeit erreicht',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewï¿½nschte Fertigstellungszeit erreicht.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Gewünschte Fertigstellungszeit erreicht',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> hat die gewünschte Fertigstellungszeit erreicht.'
                 . $ChangeInfoCustomerDe,
         ],
         [
@@ -2533,8 +2533,8 @@ sub _AddSystemNotificationsNewIn_2_0_3 {
         [
             'Agent::Change::ActionExecute',
             'de',
-            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausfï¿½hrung <OTRS_CONDITION_ActionResult>',
-            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausfï¿½hrung <OTRS_CONDITION_ActionResult>.'
+            '[<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber>] Aktions-Ausführung <OTRS_CONDITION_ActionResult>',
+            '<OTRS_CONFIG_ITSMChange::Hook><OTRS_CHANGE_ChangeNumber> Aktions-Ausführung <OTRS_CONDITION_ActionResult>.'
                 . "\n"
                 . "\n"
                 . "Change Titel: <OTRS_CHANGE_ChangeTitle>\n"
@@ -2544,7 +2544,7 @@ sub _AddSystemNotificationsNewIn_2_0_3 {
                 . "Condition Name: <OTRS_CONDITION_ConditionName>\n"
                 . "\n"
                 . "Action ID: <OTRS_CONDITION_ActionID>\n"
-                . "Aktions-Ausfï¿½hrung: <OTRS_CONDITION_ActionResult>\n"
+                . "Aktions-Ausführung: <OTRS_CONDITION_ActionResult>\n"
                 . "\n"
                 . "<OTRS_CONFIG_HttpType>://<OTRS_CONFIG_FQDN>/<OTRS_CONFIG_ScriptAlias>index.pl?Action=AgentITSMChangeZoom;ChangeID=<OTRS_CHANGE_ChangeID>\n"
                 . "\n"
@@ -2710,6 +2710,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2010-12-09 19:25:42 $
+$Revision: 1.65 $ $Date: 2010-12-10 10:05:33 $
 
 =cut
