@@ -1,20 +1,20 @@
 # --
-# Kernel/Output/HTML/OutputFilterFAQPost.pm - Output filter "Post" for FAQ module
+# Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQPost.pm,v 1.1 2010-12-09 19:20:24 cr Exp $
+# $Id: OutputFilterFAQ.pm,v 1.11 2010-12-10 13:32:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::OutputFilterFAQPost;
+package Kernel::Output::HTML::OutputFilterFAQ;
 
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.1 $';
+$VERSION = '$Revision: 1.11 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -46,7 +46,7 @@ sub Run {
 
     # get allowed template names
     my $ValidTemplates
-        = $Self->{ConfigObject}->Get('Frontend::Output::FilterElement')->{FAQ};
+        = $Self->{ConfigObject}->Get('Frontend::Output::FilterElementPost')->{FAQ}->{Templates};
 
     # check template name
     return if !$ValidTemplates->{ $Param{TemplateFile} };
@@ -60,6 +60,16 @@ sub Run {
         my $FinishPattern = '</div>';
         my $Replace       = <<"END";
                         <a  href=\"#\" id=\"OptionFAQ\">[ $FAQTranslatable ]</a>
+
+<!--dtl:js_on_document_complete-->
+<script type=\"text/javascript\">//<![CDATA[
+\$('#OptionFAQ').bind('click', function (event) {
+    var FAQIFrame = '<iframe class=\"TextOption Customer\" src=\"' + Core.Config.Get('CGIHandle') + '?Action=AgentFAQExplorer;Nav=None;Subject=;What=\"></iframe>';
+    Core.UI.Dialog.ShowContentDialog(FAQIFrame, '', '10px', 'Center', true);
+    return false;
+});
+//]]></script>
+<!--dtl:js_on_document_complete-->
 
                     </div>
 END
@@ -75,6 +85,18 @@ END
                     <label>$OptionsTranslatable:</label>
                     <div class="Field">
                         <a  href=\"#\" id=\"OptionFAQ\">[ $FAQTranslatable ]</a>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+\$('#OptionFAQ').bind('click', function (event) {
+    var FAQIFrame = '<iframe class="TextOption Customer" src="' + Core.Config.Get('CGIHandle') + '?Action=AgentFAQExplorer;Nav=None;Subject=;What="></iframe>';
+    Core.UI.Dialog.ShowContentDialog(FAQIFrame, '', '10px', 'Center', true);
+    return false;
+});
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+
                     </div>
                     <div class=\"Clear\"></div>
 END
