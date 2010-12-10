@@ -3,7 +3,7 @@
 // workorder graph
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ChangeManagement.WorkorderGraph.js,v 1.1 2010-12-08 09:36:39 mn Exp $
+// $Id: ITSM.Agent.ChangeManagement.WorkorderGraph.js,v 1.2 2010-12-10 11:42:20 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -31,30 +31,44 @@ ITSM.Agent.ChangeManagement.WorkorderGraph = (function (TargetNS) {
      *      This function initializes the workorder graph
      */
     TargetNS.Init = function () {
-        $('div.Workorder a')
-        .unbind('mouseenter').bind('mouseenter', function (Event) {
-            var $Details = $(this).next('.WorkorderDetails'),
+        function GetDetailPosition(Element, Event) {
+            var $Details = $(Element).next('.WorkorderDetails'),
                 MousePositionLeft = parseInt(Event.pageX, 10),
                 MousePositionTop = parseInt(Event.pageY, 10),
-                BoxPosition = $(this).closest('div.WorkorderGraph').offset();
+                BoxPosition = $(Element).closest('div.WorkorderGraph').offset(),
+                BoxWidth = $(Element).closest('div.WorkorderGraph').width(),
+                DetailWidth = $Details.width(),
+                DetailPositionLeft = MousePositionLeft - parseInt(BoxPosition.left, 10) + 15,
+                DetailPositionTop = MousePositionTop - parseInt(BoxPosition.top, 10) + 15;
 
-            $Details
-                .css('left', MousePositionLeft - parseInt(BoxPosition.left, 10) + 15)
-                .css('top', MousePositionTop - parseInt(BoxPosition.top, 10) + 15)
+            // if there is not enough space to the right to show the detail box,
+            // show it on the left side of the mouse cursor
+            if (DetailPositionLeft + DetailWidth + 15 > BoxWidth) {
+                DetailPositionLeft = DetailPositionLeft - 400 - 30; // 30 because we added 15 to the right and now want 15 to the left
+            }
+
+            return {
+                Left: DetailPositionLeft,
+                Top: DetailPositionTop
+            }
+        }
+
+        $('div.Workorder a')
+        .unbind('mouseenter').bind('mouseenter', function (Event) {
+            var DetailPosition = GetDetailPosition(this, Event);
+            $(this).next('.WorkorderDetails')
+                .css('left', DetailPosition.Left)
+                .css('top', DetailPosition.Top)
                 .show();
         })
         .unbind('mouseleave').bind('mouseleave', function (Event) {
             $(this).next('.WorkorderDetails').hide();
         })
         .unbind('mousemove').bind('mousemove', function (Event) {
-            var $Details = $(this).next('.WorkorderDetails'),
-                MousePositionLeft = parseInt(Event.pageX, 10),
-                MousePositionTop = parseInt(Event.pageY, 10),
-                BoxPosition = $(this).closest('div.WorkorderGraph').offset();
-
-            $Details
-                .css('left', MousePositionLeft - parseInt(BoxPosition.left, 10) + 15)
-                .css('top', MousePositionTop - parseInt(BoxPosition.top, 10) + 15);
+            var DetailPosition = GetDetailPosition(this, Event);
+            $(this).next('.WorkorderDetails')
+                .css('left', DetailPosition.Left)
+                .css('top', DetailPosition.Top);
         });
     };
 

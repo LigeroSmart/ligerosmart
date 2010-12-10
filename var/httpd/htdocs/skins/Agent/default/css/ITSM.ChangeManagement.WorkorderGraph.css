@@ -3,7 +3,7 @@
  * Other parts of that are dynamically created within the dtl.
  *
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -20,7 +20,7 @@
  */
 
 div.WorkorderGraphBox {
-    margin-right: 5px;
+    margin-top: 10px;
     margin-bottom: 30px;
     padding: 1px;
 }
@@ -28,7 +28,6 @@ div.WorkorderGraphBox {
 div.WorkorderGraph {
     position: relative;
     padding-bottom: 5px;
-    height: 1%; /* hasLayout fix */
 }
 
 div.LinesScaleBox {
