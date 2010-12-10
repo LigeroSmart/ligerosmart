@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.28 2010-12-10 17:34:57 en Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.29 2010-12-10 17:38:47 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,8 +25,6 @@
             </p>
         </div>
         <div class="Content">
-#                <input class="button" type="submit" style="display:none" value="$Text{"Save"}" name="Save" onclick="return submit_compose();">
-#                <br/>
             <div class="WidgetSimple">
 
                 <div class="Header">
