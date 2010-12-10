@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.97 2010-12-10 13:32:50 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.98 2010-12-10 18:36:19 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -437,7 +437,7 @@ Your OTRS Notification Master
                 </NavBar>
                 <NavBar>
                     <GroupRo>faq</GroupRo>
-                    <Description>Explorer</Description>
+                    <Description Translatable="1">FAQ Explorer</Description>
                     <Name>Explorer</Name>
                     <Image>list.png</Image>
                     <Link>Action=AgentFAQExplorer</Link>
@@ -688,7 +688,7 @@ Your OTRS Notification Master
                 <NavBar>
                     <Group>faq</Group>
                     <Description Translatable="1">New FAQ Article</Description>
-                    <Name>New FAQ Article</Name>
+                    <Name>New</Name>
                     <Link>Action=AgentFAQAdd</Link>
                     <Type></Type>
                     <Block></Block>
@@ -739,7 +739,7 @@ Your OTRS Notification Master
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>u</AccessKey>
-                    <Prio>950</Prio>
+                    <Prio>940</Prio>
                 </NavBar>
                 <Loader>
                     <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
@@ -766,7 +766,7 @@ Your OTRS Notification Master
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>c</AccessKey>
-                    <Prio>960</Prio>
+                    <Prio>950</Prio>
                 </NavBar>
                 <Loader>
                     <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
@@ -794,7 +794,7 @@ Your OTRS Notification Master
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>s</AccessKey>
-                    <Prio>930</Prio>
+                    <Prio>960</Prio>
                 </NavBar>
                 <Loader>
                 </Loader>
@@ -1296,7 +1296,7 @@ Your OTRS Notification Master
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
                     <AccessKey>j</AccessKey>
-                    <Prio>940</Prio>
+                    <Prio>930</Prio>
                 </NavBar>
                 <Loader>
                 </Loader>
