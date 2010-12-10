@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.31 2010-12-09 22:36:43 en Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.32 2010-12-10 14:16:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -226,6 +226,7 @@ sub Run {
                 }
             }
 
+            # update the workorder
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
                 WorkOrderID      => $WorkOrder->{WorkOrderID},
                 Report           => $GetParam{Report},
@@ -403,7 +404,9 @@ sub Run {
         }
     }
 
+    # check if actual times should be shown
     if ( $Self->{Config}->{ActualTimeSpan} ) {
+
         for my $TimeType (qw(ActualEndTime ActualStartTime)) {
 
             # time period that can be selected from the GUI
