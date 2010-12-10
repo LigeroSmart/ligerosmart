@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.243 2010-12-09 15:11:38 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.244 2010-12-10 19:18:27 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -128,7 +128,7 @@
                     <Block></Block>
                     <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>600</Prio>
+                    <Prio>200</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -311,7 +311,7 @@
                     <Block></Block>
                     <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>300</Prio>
+                    <Prio>400</Prio>
                 </NavBar>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
@@ -351,7 +351,7 @@
                     <Block></Block>
                     <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>250</Prio>
+                    <Prio>350</Prio>
                 </NavBar>
                 <Loader>
                     <CSS>ITSM.Agent.Default.css</CSS>
@@ -378,7 +378,7 @@
                     <Block></Block>
                     <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
-                    <Prio>200</Prio>
+                    <Prio>300</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
@@ -398,11 +398,12 @@
                     <Name>Search</Name>
                     <Image>search.png</Image>
                     <Link>Action=AgentITSMChangeSearch</Link>
+                    <LinkOption>onclick="Core.Agent.Search.OpenSearchDialog('AgentITSMChangeSearch'); event.stopPropagation(); return false;"</LinkOption>
                     <NavBar>ITSM Change</NavBar>
                     <Type></Type>
                     <Block></Block>
                     <AccessKey></AccessKey>
-                    <Prio>500</Prio>
+                    <Prio>600</Prio>
                 </NavBar>
             </FrontendModuleReg>
         </Setting>
