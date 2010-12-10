@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.42 2010-12-08 23:14:37 en Exp $
+# $Id: TimeAccounting.pm,v 1.43 2010-12-10 23:59:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -404,31 +404,67 @@ This returns something like:
         ProjectStatus      => 1,
     );
 
+    or
+
+    my %ProjectData = $TimeAccountingObject->ProjectGet( Project => 'internal; );
+
+This returns something like:
+
+    $TimeAccountingObject = (
+        ID                 => 2,
+        ProjectDescription => 'description',
+        ProjectStatus      => 1,
+    );
+
 =cut
 
 sub ProjectGet {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    if ( !$Param{ID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID!' );
+    if ( !$Param{ID} && !$Param{Project} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID or project name!' );
         return;
     }
 
-    # sql
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT project, description, status '
-            . 'FROM time_accounting_project WHERE id = ?',
-        Bind => [ \$Param{ID} ],
-    );
     my %Project;
-    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
-        %Project = (
-            ID                 => $Param{ID},
-            Project            => $Data[0],
-            ProjectDescription => $Data[1],
-            ProjectStatus      => $Data[2],
+
+    # look for the task data with the ID
+    if ( $Param{ID} ) {
+
+        # sql
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT project, description, status '
+                . 'FROM time_accounting_project WHERE id = ?',
+            Bind => [ \$Param{ID} ],
         );
+        while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+            %Project = (
+                ID                 => $Param{ID},
+                Project            => $Data[0],
+                ProjectDescription => $Data[1],
+                ProjectStatus      => $Data[2],
+            );
+        }
+    }
+
+    # look for the task data with the task name
+    else {
+
+        # sql
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id, description, status '
+                . 'FROM time_accounting_project WHERE project = ?',
+            Bind => [ \$Param{Project} ],
+        );
+        while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+            %Project = (
+                Project            => $Param{Project},
+                ID                 => $Data[0],
+                ProjectDescription => $Data[1],
+                ProjectStatus      => $Data[2],
+            );
+        }
     }
     return %Project;
 }
@@ -557,7 +593,7 @@ sub ProjectSettingsUpdate {
 
 update of a project
 
-    my $Success = = $TimeAccountingObject->ProjectUpdate(
+    my $Success = $TimeAccountingObject->ProjectUpdate(
         ID                 => 123,
         Project            => 'internal',
         ProjectDescription => 'description',
@@ -613,6 +649,81 @@ sub ActionSettingsGet {
     return %Data;
 }
 
+=item ActionGet()
+
+returns a hash with action (task) data
+
+    my %ActionData = $TimeAccountingObject->ActionGet( ID => 2 );
+
+This returns something like:
+
+    $TimeAccountingObject = (
+        Action       => 'My task',
+        ActionStatus => 1,
+    );
+
+    or
+
+    my %ActionData = $TimeAccountingObject->ActionGet( Action => 'My task; );
+
+This returns something like:
+
+    $TimeAccountingObject = (
+        ID           => 2,
+        ActionStatus => 1,
+    );
+
+=cut
+
+sub ActionGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{ID} && !$Param{Action} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID or Action!' );
+        return;
+    }
+
+    my %Task;
+
+    # look for the task data with the ID
+    if ( $Param{ID} ) {
+
+        # sql
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT action, status '
+                . 'FROM time_accounting_action WHERE id = ?',
+            Bind => [ \$Param{ID} ],
+        );
+        while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+            %Task = (
+                ID           => $Param{ID},
+                Action       => $Data[0],
+                ActionStatus => $Data[1],
+            );
+        }
+    }
+
+    # look for the task data with the task name
+    else {
+
+        # sql
+        return if !$Self->{DBObject}->Prepare(
+            SQL => 'SELECT id, status '
+                . 'FROM time_accounting_action WHERE action = ?',
+            Bind => [ \$Param{Action} ],
+        );
+        while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+            %Task = (
+                Action       => $Param{Action},
+                ID           => $Data[0],
+                ActionStatus => $Data[1],
+            );
+        }
+    }
+    return %Task;
+}
+
 =item ActionSettingsInsert()
 
 insert new action data in the db
@@ -633,8 +744,9 @@ sub ActionSettingsInsert {
     }
 
     $Param{Action} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionName') || '';
-    $Param{ActionStatus} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionStatus')
-        || '0';
+    if ( $Param{ActionStatus} ne '0' && $Param{ActionStatus} ne '1' ) {
+        $Param{ActionStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionStatus');
+    }
 
     # build sql
     my $SQL
@@ -678,6 +790,41 @@ sub ActionSettingsUpdate {
         # db insert
         return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     }
+    return 1;
+}
+
+=item ActionUpdate()
+
+update of an action (task)
+
+    my $Success = $TimeAccountingObject->ActionUpdate(
+        ActionID     => 123,
+        Action       => 'internal',
+        ActionStatus => 1,
+    );
+
+=cut
+
+sub ActionUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(ActionID Action)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    # sql
+    return if !$Self->{DBObject}->Do(
+        SQL => 'UPDATE time_accounting_action SET action = ?, status = ?'
+            . ' WHERE id = ?',
+        Bind => [
+            \$Param{Action}, \$Param{ActionStatus}, \$Param{ActionID}
+        ],
+    );
+
     return 1;
 }
 
@@ -1588,6 +1735,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2010-12-08 23:14:37 $
+$Revision: 1.43 $ $Date: 2010-12-10 23:59:53 $
 
 =cut
