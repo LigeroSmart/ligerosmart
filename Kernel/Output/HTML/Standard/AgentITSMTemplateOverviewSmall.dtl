@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.15 2010-12-09 22:30:22 ub Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.16 2010-12-10 17:40:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -160,7 +160,7 @@
     $(window).resize(function() {
         Core.UI.AdjustTableHead($('#OverviewHeader thead'), $('#OverviewBody tbody'));
     });
-    $('#FixedTable tbody tr td:first a.AsPopup').bind('click', function (Event) {
+    $('#FixedTable tbody tr td a.AsPopup').bind('click', function (Event) {
         Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action');
         return false;
     });
