@@ -3,7 +3,7 @@
 // workorder graph
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ChangeManagement.WorkorderGraph.js,v 1.2 2010-12-10 11:42:20 mn Exp $
+// $Id: ITSM.Agent.ChangeManagement.WorkorderGraph.js,v 1.3 2010-12-10 13:42:41 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -50,7 +50,7 @@ ITSM.Agent.ChangeManagement.WorkorderGraph = (function (TargetNS) {
             return {
                 Left: DetailPositionLeft,
                 Top: DetailPositionTop
-            }
+            };
         }
 
         $('div.Workorder a')
