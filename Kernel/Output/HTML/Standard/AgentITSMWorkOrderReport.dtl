@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.34 2010-12-09 22:36:43 en Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.35 2010-12-10 14:18:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>$Text{"Edit"}: $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle","70"}</h1>
+            <h1>$Text{"Edit"}: $Text{"Report"} $Text{"of"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle","60"}</h1>
             <p>
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>
@@ -119,7 +119,7 @@ $Include{"RichTextEditor"}
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary" id="submitWorkOrderReport" name="WorkOrderReport" accesskey="g" title="$Text{"Save"} (g)" type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+            <button class="Primary" id="SubmitWorkOrderReport" name="WorkOrderReport" accesskey="g" title="$Text{"Save"} (g)" type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
         </div>
     </div>
 </form>
