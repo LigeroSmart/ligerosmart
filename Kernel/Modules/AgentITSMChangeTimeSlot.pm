@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.32 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.33 2010-12-10 19:08:29 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,38 +121,36 @@ sub Run {
     }
 
     # Remember the reason why saving was not attempted.
-    # The items are the names of the dtl validation error blocks.
-    my @ValidationErrors;
+    my %ValidationErrors;
 
     # move time slot of change
     if ( $Self->{Subaction} eq 'MoveTimeSlot' ) {
 
         # check validity of the time type
         my $MoveTimeType = $GetParam{MoveTimeType};
-        if (
-            !defined $MoveTimeType
-            || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
-            )
+        if ( !defined $MoveTimeType )
         {
-            push @ValidationErrors, 'InvalidTimeType';
+            $ValidationErrors{MoveTimeInvalid} = 'ServerError';
         }
+        else {
 
-        # check the completeness of the time parameter list,
-        # only hour and minute are allowed to be '0'
-        if (
-            !$GetParam{MoveTimeYear}
-            || !$GetParam{MoveTimeMonth}
-            || !$GetParam{MoveTimeDay}
-            || !defined $GetParam{MoveTimeHour}
-            || !defined $GetParam{MoveTimeMinute}
-            )
-        {
-            push @ValidationErrors, 'InvalidMoveTime';
+            # check the completeness of the time parameter list,
+            # only hour and minute are allowed to be '0'
+            if (
+                !$GetParam{MoveTimeYear}
+                || !$GetParam{MoveTimeMonth}
+                || !$GetParam{MoveTimeDay}
+                || !defined $GetParam{MoveTimeHour}
+                || !defined $GetParam{MoveTimeMinute}
+                )
+            {
+                $ValidationErrors{MoveTimeInvalid} = 'ServerError';
+            }
         }
 
         # get the system time from the input, if it can't be determined we have a validation error
         my $PlannedSystemTime;
-        if ( !@ValidationErrors ) {
+        if ( !%ValidationErrors ) {
 
             # format as timestamp
             my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
@@ -168,12 +166,12 @@ sub Run {
             );
 
             if ( !$PlannedSystemTime ) {
-                push @ValidationErrors, 'InvalidMoveTime';
+                $ValidationErrors{MoveTimeInvalid} = 'ServerError';
             }
         }
 
         # move time slot only when there are no validation errors
-        if ( !@ValidationErrors ) {
+        if ( !%ValidationErrors ) {
 
             # Determine the difference in seconds
             my $CurrentPlannedTime = $Change->{$MoveTimeType};
@@ -204,9 +202,9 @@ sub Run {
                 return $MoveError;
             }
 
-            # everything went well, redirect to zoom mask
-            return $Self->{LayoutObject}->Redirect(
-                OP => $Self->{LastChangeView},
+            # load new URL in parent window and close popup
+            return $Self->{LayoutObject}->PopupClose(
+                URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
             );
         }
     }
@@ -229,7 +227,7 @@ sub Run {
         my $EndYear    = $Year + $TimePeriod->{YearPeriodFuture};
 
         # assemble the data that will be returned
-        my $JSON = $Self->{LayoutObject}->BuildJSON(
+        my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
                 {
                     Name       => 'MoveTimeMinute',
@@ -294,20 +292,6 @@ sub Run {
         ],
         Name       => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType},
-        Ajax       => {
-            Update => [
-                'MoveTimeMinute',
-                'MoveTimeHour',
-                'MoveTimeDay',
-                'MoveTimeMonth',
-                'MoveTimeYear',
-            ],
-            Depend => [
-                'ChangeID',
-                'MoveTimeType',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # time period that can be selected from the GUI
@@ -316,8 +300,10 @@ sub Run {
     # add selection for the time
     my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
-        Format => 'DateInputFormatLong',
-        Prefix => 'MoveTime',
+        Format        => 'DateInputFormatLong',
+        Prefix        => 'MoveTime',
+        Validate      => 1,
+        MoveTimeClass => $ValidationErrors{MoveTimeInvalid} || '',
         %TimePeriod,
     );
 
@@ -329,26 +315,22 @@ sub Run {
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Move Time Slot',
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-
-    # Show the validation error messages.
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeTimeSlot',
         Data         => {
             %{$Change},
+            %ValidationErrors,
             MoveTimeTypeSelectionString => $MoveTimeTypeSelectionString,
             MoveTimeSelectionString     => $MoveTimeSelectionString,
         },
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
@@ -379,16 +361,14 @@ sub _MoveWorkOrders {
 
             next TYPE if !$WorkOrder->{$Type};
 
-            my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
-                String => $WorkOrder->{$Type},
-            );
+            my $SystemTime
+                = $Self->{TimeObject}->TimeStamp2SystemTime( String => $WorkOrder->{$Type} );
             next TYPE if !$SystemTime;
 
             # add the number of seconds that the time slot should be moved
             $SystemTime += $Param{DiffSeconds};
-            $UpdateParams{$Type} = $Self->{TimeObject}->SystemTime2TimeStamp(
-                SystemTime => $SystemTime,
-            );
+            $UpdateParams{$Type}
+                = $Self->{TimeObject}->SystemTime2TimeStamp( SystemTime => $SystemTime );
         }
 
         next WORKORDERID if !%UpdateParams;

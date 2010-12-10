@@ -2,98 +2,51 @@
 # AgentITSMChangeTimeSlot.dtl - provides HTML form for AgentITSMChangeTimeSlot
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.dtl,v 1.16 2010-12-09 20:38:03 ub Exp $
+# $Id: AgentITSMChangeTimeSlot.dtl,v 1.17 2010-12-10 19:08:29 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-#$Include{"AJAX"}
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="MoveTimeSlotForm" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action"    value="$Env{"Action"}" />
+    <input type="hidden" name="Subaction" value="MoveTimeSlot" />
+    <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}" />
 
-#<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
-#<script type="text/javascript">
-#<!--
-#
-#function submit_compose() {
-#
-#    // check sanity of move time
-#    // 2010-01-32 is rejected, but 2010-02-31 is allowed
-#    // an exact time check is performed on the serverside
-#    if ( !CheckTime( 'MoveTime' ) ) {
-#        alert('$JSText{"The planned time is invalid!"}');
-#
-#        return false;
-#    }
-#
-#    return true;
-#}
-#
-#//-->
-#</script>
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>$Text{"Move Time Slot"} $Config{"ITSMChange::Hook"} $Data{"ChangeNumber"}</h1>
+            <p>
+                <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
+            <fieldset class="TableLike FixedLabel">
+                <label for="MoveTimeType">$Text{"Time type"}:</label>
+                <div class="Field">
+                    $Data{"MoveTimeTypeSelectionString"}
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#MoveTimeType').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#MoveTimeSlotForm'), 'AJAXUpdate', 'MoveTimeType', ['MoveTimeMinute', 'MoveTimeHour', 'MoveTimeDay', 'MoveTimeMonth', 'MoveTimeYear']);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+                </div>
+                <div class="Clear"></div>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Move Time Slot"} $Config{"ITSMChange::Hook"}: $Data{"ChangeNumber"} $Env{"Box1"}">
-                $Env{"Box0"} $Text{"Move Time Slot"} $Config{"ITSMChange::Hook"}: $Data{"ChangeNumber"} $Env{"Box1"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="MoveTimeSlot">
-                <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Move Time Slot"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130"/>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">$Text{"Time type"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"MoveTimeTypeSelectionString"}
-<!-- dtl:block:InvalidTimeType -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTimeType -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"New time"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"MoveTimeSelectionString"}
-<!-- dtl:block:InvalidMoveTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidMoveTime -->
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" id="submitMoveTimeSlot" accesskey="g" type="submit" name="MoveTimeSlot" value="$Text{"Move"}" onclick="return submit_compose();"/>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
-        </td>
-    </tr>
-</table>
+                <label>$Text{"New time"}:</label>
+                <div class="Field">
+                    $Data{"MoveTimeSelectionString"}
+                    <div id="MoveTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                    <div id="MoveTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                </div>
+                <div class="Clear"></div>
+            </fieldset>
+        </div>
+        <div class="Footer">
+            <button class="Primary" id="SubmitMoveTimeSlot" accesskey="g" title="$Text{"Move"} (g)" type="submit" value="$Text{"Move"}">$Text{"Move"}</button>
+        </div>
+    </div>
+</form>
