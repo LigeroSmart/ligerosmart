@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.13 2010-12-07 18:54:20 en Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.14 2010-12-10 16:42:57 en Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -152,7 +152,7 @@
 <!-- dtl:block:Owner -->
                 <label for="NewOwnerID">$Text{"New Owner"}:</label>
                 <div class="Field">
-                    <input type="radio" name="NewOwnerType" value="New" title ="Select new owner" $QData{"NewOwnerType::New"} />
+                    <input type="radio" name="NewOwnerType" value="New" title="Select new owner" $Data{"NewOwnerType::New"} />
                     $Data{"OwnerStrg"}
                     <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>$Text{"Please set a new owner!"}</p></div>
 <!--dtl:js_on_document_complete-->
@@ -167,7 +167,7 @@
 
                 <label for="OldOwnerID">$Text{"Previous Owner"}:</label>
                 <div class="Field">
-                    <input type="radio" name="NewOwnerType" value="Old" title="Select old owner" $QData{"NewOwnerType::Old"} />
+                    <input type="radio" name="NewOwnerType" value="Old" title="Select old owner" $Data{"NewOwnerType::Old"} />
                     $Data{"OldOwnerStrg"}
                     <div id="OldOwnerIDServerError" class="TooltipErrorMessage"><p>$Text{"Please set a new owner!"}</p></div>
 <!--dtl:js_on_document_complete-->
@@ -229,6 +229,8 @@
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:TicketOptions -->
+
+<!-- OutputFilterHook_NoTicketOptionsFallback -->
 
                 <label class="Mandatory" for="RichText"><span class="Marker">*</span>$Text{"Text"}:</label>
                 <div class="RichTextField">

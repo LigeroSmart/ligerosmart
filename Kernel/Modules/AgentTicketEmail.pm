@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.24 2010-12-07 18:54:20 en Exp $
-# $OldId: AgentTicketEmail.pm,v 1.159 2010/12/06 19:48:29 cr Exp $
+# $Id: AgentTicketEmail.pm,v 1.25 2010-12-10 16:42:57 en Exp $
+# $OldId: AgentTicketEmail.pm,v 1.160 2010/12/08 22:25:44 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -574,6 +574,7 @@ sub Run {
                 )
             {
                 $TicketFreeText{Error}->{$Count} = 1;
+                $Error{$Text} = 'ServerError';
             }
 
         }
@@ -617,6 +618,7 @@ sub Run {
                 )
             {
                 $ArticleFreeText{Error}->{$Count} = 1;
+                $Error{$Text} = 'ServerError';
             }
         }
         my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(

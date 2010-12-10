@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.9 2010-11-18 15:11:40 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.26 2010/11/17 21:32:53 cg Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.10 2010-12-10 16:42:57 en Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.28 2010/12/08 19:46:59 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -497,88 +497,92 @@ sub Run {
             $Error{Expand} = 1;
         }
 
+        # ticket free text
+        my %TicketFreeText;
+        for my $Count ( 1 .. 16 ) {
+            my $Key  = 'TicketFreeKey' . $Count;
+            my $Text = 'TicketFreeText' . $Count;
+            $TicketFreeText{$Key} = $Self->{TicketObject}->TicketFreeTextGet(
+                TicketID => $Self->{TicketID},
+                Type     => $Key,
+                Action   => $Self->{Action},
+                UserID   => $Self->{UserID},
+            );
+            $TicketFreeText{$Text} = $Self->{TicketObject}->TicketFreeTextGet(
+                TicketID => $Self->{TicketID},
+                Type     => $Text,
+                Action   => $Self->{Action},
+                UserID   => $Self->{UserID},
+            );
+
+            # If Key has value 2, this means that the freetextfield is required
+            if ( $Self->{Config}->{TicketFreeText}->{$Count} == 2 ) {
+                $TicketFreeText{Required}->{$Count} = 1;
+            }
+
+            # check required FreeTextField (if configured)
+            if (
+                $Self->{Config}->{TicketFreeText}->{$Count} == 2
+                && $GetParam{$Text} eq ''
+                && $IsUpload == 0
+                )
+            {
+                $TicketFreeText{Error}->{$Count} = 1;
+                $Error{$Text} = 'ServerError';
+            }
+        }
+
+        my %TicketFreeTextHTML = $Self->{LayoutObject}->AgentFreeText(
+            Config => \%TicketFreeText,
+            Ticket => \%GetParam,
+        );
+
+        # ticket free time
+        my %TicketFreeTimeHTML = $Self->{LayoutObject}->AgentFreeDate( Ticket => \%GetParam );
+
+        # article free text
+        my %ArticleFreeText;
+        for my $Count ( 1 .. 3 ) {
+            my $Key  = 'ArticleFreeKey' . $Count;
+            my $Text = 'ArticleFreeText' . $Count;
+            $ArticleFreeText{$Key} = $Self->{TicketObject}->ArticleFreeTextGet(
+                TicketID => $Self->{TicketID},
+                Type     => $Key,
+                Action   => $Self->{Action},
+                UserID   => $Self->{UserID},
+            );
+            $ArticleFreeText{$Text} = $Self->{TicketObject}->ArticleFreeTextGet(
+                TicketID => $Self->{TicketID},
+                Type     => $Text,
+                Action   => $Self->{Action},
+                UserID   => $Self->{UserID},
+            );
+
+            # If Key has value 2, this means that the field is required
+            if ( $Self->{Config}->{ArticleFreeText}->{$Count} == 2 ) {
+                $ArticleFreeText{Required}->{$Count} = 1;
+            }
+
+            # check required ArticleTextField (if configured)
+            if (
+                $Self->{Config}->{ArticleFreeText}->{$Count} == 2
+                && $GetParam{$Text} eq ''
+                && $IsUpload == 0
+                )
+            {
+                $ArticleFreeText{Error}->{$Count} = 1;
+                $Error{$Text} = 'ServerError';
+            }
+        }
+
+        my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(
+            Config  => \%ArticleFreeText,
+            Article => \%GetParam,
+        );
+
         # check errors
         if (%Error) {
 
-            # ticket free text
-            my %TicketFreeText;
-            for my $Count ( 1 .. 16 ) {
-                my $Key  = 'TicketFreeKey' . $Count;
-                my $Text = 'TicketFreeText' . $Count;
-                $TicketFreeText{$Key} = $Self->{TicketObject}->TicketFreeTextGet(
-                    TicketID => $Self->{TicketID},
-                    Type     => $Key,
-                    Action   => $Self->{Action},
-                    UserID   => $Self->{UserID},
-                );
-                $TicketFreeText{$Text} = $Self->{TicketObject}->TicketFreeTextGet(
-                    TicketID => $Self->{TicketID},
-                    Type     => $Text,
-                    Action   => $Self->{Action},
-                    UserID   => $Self->{UserID},
-                );
-
-                # If Key has value 2, this means that the freetextfield is required
-                if ( $Self->{Config}->{TicketFreeText}->{$Count} == 2 ) {
-                    $TicketFreeText{Required}->{$Count} = 1;
-                }
-
-                # check required FreeTextField (if configured)
-                if (
-                    $Self->{Config}->{TicketFreeText}->{$Count} == 2
-                    && $GetParam{$Text} eq ''
-                    && $IsUpload == 0
-                    )
-                {
-                    $TicketFreeText{Error}->{$Count} = 1;
-                }
-            }
-
-            my %TicketFreeTextHTML = $Self->{LayoutObject}->AgentFreeText(
-                Config => \%TicketFreeText,
-                Ticket => \%GetParam,
-            );
-
-            # ticket free time
-            my %TicketFreeTimeHTML = $Self->{LayoutObject}->AgentFreeDate( Ticket => \%GetParam );
-
-            # article free text
-            my %ArticleFreeText;
-            for my $Count ( 1 .. 3 ) {
-                my $Key  = 'ArticleFreeKey' . $Count;
-                my $Text = 'ArticleFreeText' . $Count;
-                $ArticleFreeText{$Key} = $Self->{TicketObject}->ArticleFreeTextGet(
-                    TicketID => $Self->{TicketID},
-                    Type     => $Key,
-                    Action   => $Self->{Action},
-                    UserID   => $Self->{UserID},
-                );
-                $ArticleFreeText{$Text} = $Self->{TicketObject}->ArticleFreeTextGet(
-                    TicketID => $Self->{TicketID},
-                    Type     => $Text,
-                    Action   => $Self->{Action},
-                    UserID   => $Self->{UserID},
-                );
-
-                # If Key has value 2, this means that the field is required
-                if ( $Self->{Config}->{ArticleFreeText}->{$Count} == 2 ) {
-                    $ArticleFreeText{Required}->{$Count} = 1;
-                }
-
-                # check required ArticleTextField (if configured)
-                if (
-                    $Self->{Config}->{ArticleFreeText}->{$Count} == 2
-                    && $GetParam{$Text} eq ''
-                    && $IsUpload == 0
-                    )
-                {
-                    $ArticleFreeText{Error}->{$Count} = 1;
-                }
-            }
-            my %ArticleFreeTextHTML = $Self->{LayoutObject}->TicketArticleFreeText(
-                Config  => \%ArticleFreeText,
-                Article => \%GetParam,
-            );
             my $Output = $Self->{LayoutObject}->Header(
                 Type  => 'Small',
                 Value => $Ticket{TicketNumber},
@@ -1303,10 +1307,10 @@ sub _Mask {
 
         );
         if ( $Param{NewOwnerType} && $Param{NewOwnerType} eq 'Old' ) {
-            $Param{'NewOwnerType::Old'} = 'checked';
+            $Param{'NewOwnerType::Old'} = 'checked = "checked"';
         }
         else {
-            $Param{'NewOwnerType::New'} = 'checked';
+            $Param{'NewOwnerType::New'} = 'checked = "checked"';
         }
 
         $Self->{LayoutObject}->Block(
@@ -1517,6 +1521,10 @@ sub _Mask {
 
         # show spell check
         if ( $Self->{LayoutObject}->{BrowserSpellChecker} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketOptions',
+                Data => {},
+            );
             $Self->{LayoutObject}->Block(
                 Name => 'SpellCheck',
                 Data => {},
