@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.59 2010-12-09 20:40:47 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.60 2010-12-11 01:47:24 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -533,12 +533,14 @@ sub Run {
     # generate search mask
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();
-    $Output .= $Self->_MaskForm(
-        %GetParam,
-        %ExpandInfo,
-        ValidationErrors                  => \@ValidationErrors,
-        ConfiguredChangeFreeTextFields    => \@ConfiguredChangeFreeTextFields,
-        ConfiguredWorkOrderFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
+
+    $Self->{LayoutObject}->Block(
+        Name => 'Search',
+        Data => \%Param,
+    );
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentITSMChangeSearch',
+        Data         => \%Param,
     );
     $Output .= $Self->{LayoutObject}->Footer();
 
@@ -611,7 +613,7 @@ sub _MaskForm {
         );
         push @Attributes, (
             {
-                Key   => 'ChangeFreeKeyField' . $Number,
+                Key   => 'ChangeFreeText' . $Number,
                 Value => $FreeTextKeyString,
             },
         );
@@ -627,7 +629,7 @@ sub _MaskForm {
         );
         push @Attributes, (
             {
-                Key   => 'WorkOrderFreeKeyField' . $Number,
+                Key   => 'WorkOrderFreeText' . $Number,
                 Value => $FreeTextKeyString,
             },
         );
