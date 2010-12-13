@@ -2,7 +2,7 @@
 # AgentITSMChangeTimeSlot.dtl - provides HTML form for AgentITSMChangeTimeSlot
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.dtl,v 1.17 2010-12-10 19:08:29 en Exp $
+# $Id: AgentITSMChangeTimeSlot.dtl,v 1.18 2010-12-13 15:23:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,7 +30,10 @@
 <script type="text/javascript">//<![CDATA[
     $('#MoveTimeType').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#MoveTimeSlotForm'), 'AJAXUpdate', 'MoveTimeType', ['MoveTimeMinute', 'MoveTimeHour', 'MoveTimeDay', 'MoveTimeMonth', 'MoveTimeYear']);
+        $('#AJAXLoaderMoveTimeDay, #AJAXLoaderMoveTimeMonth, #AJAXLoaderMoveTimeYear, #AJAXLoaderMoveTimeHour').removeClass('AJAXLoader');
     });
+
+
 //]]></script>
 <!--dtl:js_on_document_complete-->
                 </div>
