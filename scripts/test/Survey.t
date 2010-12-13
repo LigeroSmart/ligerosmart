@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.15 2010-06-02 15:40:48 mh Exp $
+# $Id: Survey.t,v 1.16 2010-12-13 16:59:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,12 +36,17 @@ $Self->{ConfigObject}->Set(
     Value => 'Kernel::System::Email::DoNotSendEmail',
 );
 
+# cleanup system
+$Self->{DBObject}->Do(
+    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
+);
+
 # create survey
 my %SurveyData = (
     Title               => 'A Title',
     Introduction        => 'The introduction of the survey',
     Description         => 'The internal description of the survey',
-    NotificationSender  => 'quality@example.com',
+    NotificationSender  => 'quality@unittest.com',
     NotificationSubject => 'Help us with your feedback! ÄÖÜ',
     NotificationBody    => 'Dear customer... äöü',
 );
@@ -109,18 +114,18 @@ my @Tests = (
             Priority     => '3 normal',
             State        => 'open',
             CustomerNo   => '123465',
-            CustomerUser => 'customer@example.com',
+            CustomerUser => 'customer@unittest.com',
             OwnerID      => 1,
             UserID       => 1,
         },
         Article => {
             ArticleType    => 'email-external',
             SenderType     => 'customer',
-            From           => 'Some Customer <some@example.com>',
-            To             => 'Some To <to@example.com>',
+            From           => 'Some Customer <some@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@example.com>',
+            MessageID      => '<asdasdasd.123@unittest.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
@@ -142,18 +147,18 @@ my @Tests = (
             Priority     => '3 normal',
             State        => 'open',
             CustomerNo   => '123465',
-            CustomerUser => 'customer@example.com',
+            CustomerUser => 'customer@unittest.com',
             OwnerID      => 1,
             UserID       => 1,
         },
         Article => {
             ArticleType    => 'email-external',
             SenderType     => 'customer',
-            From           => 'Some Customer <SOME@example.com>',
-            To             => 'Some To <to@example.com>',
+            From           => 'Some Customer <SOME@unittest.com>',
+            To             => 'Some To <to@unittest.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@example.com>',
+            MessageID      => '<asdasdasd.123@unittest.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
@@ -175,18 +180,18 @@ my @Tests = (
             Priority     => '3 normal',
             State        => 'open',
             CustomerNo   => '123465',
-            CustomerUser => 'customer@example.com',
+            CustomerUser => 'customer@unittest.com',
             OwnerID      => 1,
             UserID       => 1,
         },
         Article => {
             ArticleType    => 'email-external',
             SenderType     => 'customer',
-            From           => 'SOME@example.com',
-            To             => 'Some To <to@example.com>',
+            From           => 'SOME@unittest.com',
+            To             => 'Some To <to@unittest.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@example.com>',
+            MessageID      => '<asdasdasd.123@unittest.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
@@ -209,18 +214,18 @@ my @Tests = (
             Priority     => '3 normal',
             State        => 'open',
             CustomerNo   => '123465',
-            CustomerUser => 'customer@example.com',
+            CustomerUser => 'customer@unittest.com',
             OwnerID      => 1,
             UserID       => 1,
         },
         Article => {
             ArticleType    => 'email-external',
             SenderType     => 'customer',
-            From           => 'SOME@example.com',
-            To             => 'Some To <to@example.com>',
+            From           => 'SOME@unittest.com',
+            To             => 'Some To <to@unittest.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@example.com>',
+            MessageID      => '<asdasdasd.123@unittest.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
@@ -243,18 +248,18 @@ my @Tests = (
             Priority     => '3 normal',
             State        => 'open',
             CustomerNo   => '123465',
-            CustomerUser => 'customer@example.com',
+            CustomerUser => 'customer@unittest.com',
             OwnerID      => 1,
             UserID       => 1,
         },
         Article => {
             ArticleType    => 'email-external',
             SenderType     => 'customer',
-            From           => 'SOME@example.com',
-            To             => 'Some To <to@example.com>',
+            From           => 'SOME@unittest.com',
+            To             => 'Some To <to@unittest.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@example.com>',
+            MessageID      => '<asdasdasd.123@unittest.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
@@ -275,7 +280,7 @@ my @Tests = (
             Priority     => '3 normal',
             State        => 'open',
             CustomerNo   => '123465',
-            CustomerUser => 'customer@example.com',
+            CustomerUser => 'customer@unittest.com',
             OwnerID      => 1,
             UserID       => 1,
         },
@@ -283,10 +288,10 @@ my @Tests = (
             ArticleType    => 'email-external',
             SenderType     => 'customer',
             From           => 'My Name',
-            To             => 'Some To <to@example.com>',
+            To             => 'Some To <to@unittest.com>',
             Subject        => 'Some Subject',
             Body           => 'the message text',
-            MessageID      => '<asdasdasd.123@example.com>',
+            MessageID      => '<asdasdasd.123@unittest.com>',
             ContentType    => 'text/plain; charset=ISO-8859-15',
             HistoryType    => 'OwnerUpdate',
             HistoryComment => 'Some free text!',
@@ -403,8 +408,9 @@ rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
     );
 }
 
+# cleanup system
 $Self->{DBObject}->Do(
-    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@example.com\%'",
+    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
 );
 
 # restore original sendmail config
