@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.52 2010-12-09 22:37:13 en Exp $
+# $Id: LayoutITSMChange.pm,v 1.53 2010-12-13 17:01:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =over 4
 
@@ -849,8 +849,8 @@ sub BuildFreeTextHTML {
         }
 
         # Add Validate and Error classes
-        my $ClassParam = "";
-        my $DataParam  = "";
+        my $ClassParam = '';
+        my $DataParam  = '';
         if ( $Config{Required}->{$Number} ) {
             $ClassParam .= 'Validate_Required';
             if ( ref $Config{ $Type . 'FreeText' . $Number } eq 'HASH' ) {
@@ -866,17 +866,19 @@ sub BuildFreeTextHTML {
                 . 'Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>';
 
             # for FreeKeyFields
-            $Data{ $Type . 'FreeKeyField' . $Number } =
-                '<label id="Label' . $Type . 'FreeText' . $Number
-                . '" class="Mandatory"><span class="Marker">*</span> '
+            $Data{ $Type . 'FreeKeyField' . $Number }
+                = '<label id="Label' . $Type . 'FreeText' . $Number . '" '
+                . 'for="' . $Type . 'FreeText' . $Number . '" '
+                . 'class="Mandatory"><span class="Marker">*</span> '
                 . $Data{ $Type . 'FreeKeyField' . $Number }
                 . ':</label>';
         }
         else {
 
             # for FreeKeyFields
-            $Data{ $Type . 'FreeKeyField' . $Number } =
-                '<label id="Label' . $Type . 'FreeText' . $Number . '">'
+            $Data{ $Type . 'FreeKeyField' . $Number }
+                = '<label id="Label' . $Type . 'FreeText' . $Number . '" '
+                . 'for="' . $Type . 'FreeText' . $Number . '" '
                 . $Data{ $Type . 'FreeKeyField' . $Number }
                 . ':</label>';
         }
