@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewNavBar.dtl - html for template overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewNavBar.dtl,v 1.7 2010-10-12 02:53:26 mp Exp $
+# $Id: AgentITSMTemplateOverviewNavBar.dtl,v 1.8 2010-12-13 12:43:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,21 +46,6 @@
 <!-- dtl:block:OverviewNavBarFilterItem -->
                     </ul>
 <!-- dtl:block:OverviewNavBarFilter -->
-<!-- dtl:block:OverviewNavBarPageBack -->
-                    <ul class="Tabs">
-                        <li>
-                            <a name="OverviewControl" id="TicketSearch" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkBack"}">$Text{"Change search options"}</a>
-                        </li>
-                    </ul>
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-    $('#TicketSearch').bind('click', function (Event) {
-        Core.Agent.Search.OpenSearchDialog( 'AgentTicketSearch', '$QData{"Profile"}' );
-        return false;
-    });
-//]]></script>
-<!--dtl:js_on_document_complete-->
-<!-- dtl:block:OverviewNavBarPageBack -->
                     <ul class="OverviewZoom">
 <!-- dtl:block:OverviewNavBarViewMode -->
 <!-- dtl:block:OverviewNavBarViewModeSelected -->
