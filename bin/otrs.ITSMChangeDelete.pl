@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangeDelete.pl - to delete changes
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangeDelete.pl,v 1.1 2010-12-14 19:58:25 en Exp $
+# $Id: otrs.ITSMChangeDelete.pl,v 1.2 2010-12-14 20:04:04 en Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -30,7 +30,7 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Getopt::Long;
 use Kernel::Config;
@@ -82,7 +82,7 @@ if ($All) {
     # get number of config items
     my $ChangeCount = scalar @ChangesIDs;
 
-    # if there are any CI to delete
+    # if there are any changes to delete
     if ($ChangeCount) {
 
         print "Are you sure that you want to delete ALL $ChangeCount changes? ";
