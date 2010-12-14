@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.244 2010-12-10 19:18:27 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.245 2010-12-14 05:03:09 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -9308,5 +9308,21 @@
             </Hash>
         </Setting>
     </ConfigItem>
-
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSearch###SearchCSVData" Required="1" Valid="1">
+        <Description Translatable="1">Data used to export the search result in CSV format.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeSearch</SubGroup>
+        <Setting>
+            <Array>
+                <Item>ChangeNumber</Item>
+                <Item>ChangeTitle</Item>
+                <Item>ChangeBuilder</Item>
+                <Item>WorkOrderCount</Item>
+                <Item>ChangeState</Item>
+                <Item>Priority</Item>
+                <Item>PlannedStartTime</Item>
+                <Item>PlannedEndTime</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
 </otrs_config>
