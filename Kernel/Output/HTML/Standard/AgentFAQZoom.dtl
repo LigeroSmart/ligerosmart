@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.22 2010-12-07 17:45:34 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.23 2010-12-14 20:24:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -113,7 +113,6 @@
         </div>
         <div class="ContentColumn">
             <div class="ControlRow">
-                <h2>$Text{"Details"}</h2>
                 <div class="AdditionalInformation">
                 </div>
             </div>
