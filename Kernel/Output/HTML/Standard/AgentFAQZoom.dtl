@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.23 2010-12-14 20:24:40 ub Exp $
+# $Id: AgentFAQZoom.dtl,v 1.24 2010-12-14 21:53:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,7 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1 title="$Text{"Zoom"} $Config{"FAQ::FAQHook"}: $QData{"Number"} &ndash; $QData{"Title", "40"}">
+        <h1 title="$Config{"FAQ::FAQHook"}: $QData{"Number"} &ndash; $QData{"Title", "40"}">
             $Config{"FAQ::FAQHook"}: $Data{"Number"} <span>&mdash;</span> $QData{"Title", "60"}
         </h1>
     </div>
