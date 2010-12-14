@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.18 2010-12-06 12:58:06 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.19 2010-12-14 04:50:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -353,7 +353,8 @@ sub Run {
                     );
 
                     # add current incident signal
-                    $ServiceData{CurInciSignal} = $InciSignals{ $ServiceData{CurInciStateType} };
+                    $ServiceData{CurInciSignal}
+                        = $InciSignals{ $ServiceData{CurInciStateTypeFromCIs} };
 
                     # store service data
                     push @ServicesData, \%ServiceData;
