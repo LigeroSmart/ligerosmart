@@ -1,0 +1,50 @@
+# --
+# AgentITSMChangeSearchResultPrint.dtl - html for printing ITSM Change search results
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentITSMChangeSearchResultPrint.dtl,v 1.1 2010-12-14 04:53:30 cr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- start form -->
+<i>$Data{"Warning"}</i>
+<table border="0" cellspacing="1" cellpadding="0" width="100%">
+    <tr>
+        <td class="mainhead">$Text{"Search"}</td>
+    </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="4">
+    <tr>
+        <td class="contentbody">
+            <table border="0" width="100%" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td width="5%" class="contentkey">$Config{"ITSMChange::Hook"}</td>
+                    <td width="25%" class="contentkey">$Text{"ChangeTitle"}</td>
+                    <td width="15%" class="contentkey">$Text{"ChangeBuilder"}</td>
+                    <td width="5%" class="contentkey">$Text{"WorkOrders"}</td>
+                    <td width="5%" class="contentkey">$Text{"ChangeState"}</td>
+                    <td width="20%" class="contentkey">$Text{"Priority"}</td>
+                    <td width="10%" class="contentkey">$Text{"PlannedStartTime"}</td>
+                    <td width="10%" class="contentkey">$Text{"PlannedEndTime"}</td>
+
+                </tr>
+<!-- dtl:block:Record -->
+                <tr>
+                    <td class="contentvalue">$QData{"ChangeNumber"}</td>
+                    <td class="contentvalue">$QData{"ChangeTitle","30"}</td>
+                    <td class="contentvalue">$QData{"ChangeBuilder","30"}</td>
+                    <td class="contentvalue">$QData{"WorkOrderCount"}</td>
+                    <td class="contentvalue">$QData{"ChangeState"}</td>
+                    <td class="contentvalue">$QData{"Priority"}</td>
+                    <td class="contentvalue">$TimeLong{"$Data{"PlannedStartTime"}"}</td>
+                    <td class="contentvalue">$TimeLong{"$Data{"PlannedEndTime"}"}</td>
+                </tr>
+<!-- dtl:block:Record -->
+            </table>
+        </td>
+    </tr>
+</table>
+<!-- end form -->
