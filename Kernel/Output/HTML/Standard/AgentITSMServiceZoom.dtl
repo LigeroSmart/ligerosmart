@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.12 2010-12-14 21:54:57 ub Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.13 2010-12-14 22:10:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,12 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1>$Text{"Service"}: $QData{"Name"}</h1>
+        <div class="Flag" title="$Text{"$Data{"CurInciState"}"}">
+            <span class="$QData{"CurInciSignal"}"></span>
+        </div>
+        <h1 title="$Text{"Service"}: $QData{"Name"}">
+            $Text{"Service"}: $QData{"Name"}
+        </h1>
     </div>
     <div class="LayoutFixedSidebar SidebarLast">
         <div class="SidebarColumn">
