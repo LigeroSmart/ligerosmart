@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -66,6 +66,15 @@ label.SubElement {
 
 div.SubElement {
     width:35%;
+}
+
+/**
+ * @subsection NoDoubleBorders
+ */
+
+.Content.NoDoubleBorders {
+    border-left: 0 none #000000;
+    border-right: 0 none #000000;
 }
 
 }/* end media */
