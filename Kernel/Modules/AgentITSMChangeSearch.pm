@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.60 2010-12-11 01:47:24 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.61 2010-12-14 05:00:49 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,9 +18,12 @@ use Kernel::System::CustomerUser;
 use Kernel::System::SearchProfile;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::CSV;
+use Kernel::System::LinkObject;
+use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,6 +47,9 @@ sub new {
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{ChangeObject}        = Kernel::System::ITSMChange->new(%Param);
     $Self->{WorkOrderObject}     = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{CSVObject}           = Kernel::System::CSV->new(%Param);
+    $Self->{LinkObject}          = Kernel::System::LinkObject->new(%Param);
+    $Self->{ServiceObject}       = Kernel::System::Service->new(%Param);
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -55,7 +61,7 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # get confid data
-    $Self->{StartHit} = $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1;
+    $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
     $Self->{SearchLimit} = $Self->{Config}->{SearchLimit} || 500;
     $Self->{SortBy} = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
         || $Self->{Config}->{'SortBy::Default'}
@@ -63,10 +69,21 @@ sub Run {
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
+    $Self->{Profile}        = $Self->{ParamObject}->GetParam( Param => 'Profile' )        || '';
+    $Self->{SaveProfile}    = $Self->{ParamObject}->GetParam( Param => 'SaveProfile' )    || '';
     $Self->{TakeLastSearch} = $Self->{ParamObject}->GetParam( Param => 'TakeLastSearch' ) || '';
-    $Self->{Profile} = $Self->{ParamObject}->GetParam( Param => 'Profile' ) || 'last-search';
+    $Self->{SelectTemplate} = $Self->{ParamObject}->GetParam( Param => 'SelectTemplate' ) || '';
+    $Self->{EraseTemplate}  = $Self->{ParamObject}->GetParam( Param => 'EraseTemplate' )  || '';
 
-    # search parameters
+    # check request
+    if ( $Self->{ParamObject}->GetParam( Param => 'SearchTemplate' ) && $Self->{Profile} ) {
+        return $Self->{LayoutObject}->Redirect(
+            OP =>
+                "Action=AgentITSMChangeSearch;Subaction=Search;TakeLastSearch=1;SaveProfile=1;Profile=$Self->{Profile}"
+        );
+    }
+
+    # get single params
     my %GetParam;
 
     # get configured change freetext field numbers
@@ -93,7 +110,7 @@ sub Run {
             ChangeNumber ChangeTitle Description Justification
             SelectedCustomerUser CABCustomer
             SelectedUser1        CABAgent
-            WorkOrderTitle WorkOrderInstruction WorkOrderReport
+            WorkOrderTitle WorkOrderInstruction WorkOrderReport ResultForm
             )
             )
         {
@@ -179,25 +196,31 @@ sub Run {
         }
     }
 
-    # remove old profile stuff
-    $Self->{SearchProfileObject}->SearchProfileDelete(
-        Base      => 'ITSMChangeSearch',
-        Name      => $Self->{Profile},
-        UserLogin => $Self->{UserLogin},
-    );
-
-    # insert new profile params
-    for my $Key ( keys %GetParam ) {
-        if ( $GetParam{$Key} ) {
-            $Self->{SearchProfileObject}->SearchProfileAdd(
-                Base      => 'ITSMChangeSearch',
-                Name      => $Self->{Profile},
-                Key       => $Key,
-                Value     => $GetParam{$Key},
-                UserLogin => $Self->{UserLogin},
-            );
-        }
+    # set result form env
+    if ( !$GetParam{ResultForm} ) {
+        $GetParam{ResultForm} = '';
     }
+
+    #    TODO this code block should be in another place
+    #    # remove old profile stuff
+    #    $Self->{SearchProfileObject}->SearchProfileDelete(
+    #        Base      => 'ITSMChangeSearch',
+    #        Name      => $Self->{Profile},
+    #        UserLogin => $Self->{UserLogin},
+    #    );
+    #
+    #    # insert new profile params
+    #    for my $Key ( keys %GetParam ) {
+    #        if ( $GetParam{$Key} ) {
+    #            $Self->{SearchProfileObject}->SearchProfileAdd(
+    #                Base      => 'ITSMChangeSearch',
+    #                Name      => $Self->{Profile},
+    #                Key       => $Key,
+    #                Value     => $GetParam{$Key},
+    #                UserLogin => $Self->{UserLogin},
+    #            );
+    #        }
+    #    }
 
     # Remember the reason why searching was not attempted.
     # The entries are the names of the dtl validation error blocks.
@@ -208,7 +231,12 @@ sub Run {
     my %ExpandInfo;
 
     # show result site or perform other actions
-    if ( $Self->{Subaction} eq 'Search' ) {
+    if ( $Self->{Subaction} eq 'Search' && !$Self->{EraseTemplate} ) {
+
+        # fill up profile name (e.g. with last-search)
+        if ( !$Self->{Profile} || !$Self->{SaveProfile} ) {
+            $Self->{Profile} = 'last-search';
+        }
 
         # Extract the parameters that are not needed for searching,
         # which are not stored in the search profile
@@ -418,19 +446,19 @@ sub Run {
             }
 
             # search for substrings by default
-            for (
+            for my $Field (
                 qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
                 )
             {
-                if ( defined( $GetParam{$_} ) && $GetParam{$_} ne '' ) {
-                    $GetParam{$_} = "*$GetParam{$_}*";
+                if ( defined( $GetParam{$Field} ) && $GetParam{$Field} ne '' ) {
+                    $GetParam{$Field} = "*$GetParam{$Field}*";
                 }
             }
 
             # do not search, when there are validation errors
             if ( !@ValidationErrors ) {
 
-                # perform ticket search
+                # perform change search
                 my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
                     Result           => 'ARRAY',
                     OrderBy          => [ $Self->{SortBy} ],
@@ -440,71 +468,546 @@ sub Run {
                     %GetParam,
                 );
 
-                # start html page
-                my $Output = $Self->{LayoutObject}->Header();
-                $Output .= $Self->{LayoutObject}->NavigationBar();
-                $Self->{LayoutObject}->Print( Output => \$Output );
-                $Output = '';
+                # CSV output
+                if ( $GetParam{ResultForm} eq 'CSV' ) {
+                    my @CSVHead;
+                    my @CSVData;
 
-                $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
-                $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
+                    ID:
+                    for my $ChangeID ( @{$ViewableChangeIDs} ) {
 
-                # show changes
-                my $LinkPage = 'Filter='
-                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                    . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                    . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
-                    . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
-                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
-                    . ';';
-                my $LinkSort = 'Filter='
-                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                    . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
-                    . ';';
-                my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
-                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                    . ';';
-                my $LinkBack = 'Subaction=LoadProfile;Profile='
-                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                    . ';TakeLastSearch=1;';
+                        # to store all data
+                        my %Info;
 
-                # find out which columns should be shown
-                my @ShowColumns;
-                if ( $Self->{Config}->{ShowColumns} ) {
+                        # to store data of sub-elements
+                        my %SubElementData;
 
-                    # get all possible columns from config
-                    my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+                        # get change data
+                        my $Change = $Self->{ChangeObject}->ChangeGet(
+                            UserID   => $Self->{UserID},
+                            ChangeID => $ChangeID,
+                        );
 
-                    # get the column names that should be shown
-                    COLUMNNAME:
-                    for my $Name ( keys %PossibleColumn ) {
-                        next COLUMNNAME if !$PossibleColumn{$Name};
-                        push @ShowColumns, $Name;
+                        next ID if !$Change;
+
+                        # add change data,
+                        # ( let workorder data overwrite
+                        # some change attributes, i.e. PlannedStartTime, etc... )
+                        %Info = ( %{$Change}, %Info );
+
+                        # get user data for needed user types
+                        USERTYPE:
+                        for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
+
+                            # check if UserType attribute exists either in change or workorder
+                            if ( !$Change->{ $UserType . 'ID' } && !$Info{ $UserType . 'ID' } ) {
+                                next USERTYPE;
+                            }
+
+                            # get user data
+                            my %User = $Self->{UserObject}->GetUserData(
+                                UserID =>
+                                    $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
+                                Cached => 1,
+                            );
+
+                            # set user data
+                            $Info{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                            $Info{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                            $Info{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                            $Info{ $UserType . 'LeftParenthesis' }  = '(';
+                            $Info{ $UserType . 'RightParenthesis' } = ')';
+
+                            # set user full name
+                            $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
+                                . $User{UserLastname} . ')';
+                        }
+
+                        # to store the linked service data
+                        my $LinkListWithData = {};
+
+                        my @WorkOrderIDs;
+
+                        # store the combined linked services data from all workorders of this change
+                        @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
+
+                        # store the combined linked services data
+                        for my $WorkOrderID (@WorkOrderIDs) {
+
+                            # get linked objects of this workorder
+                            my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                                Object => 'ITSMWorkOrder',
+                                Key    => $WorkOrderID,
+                                State  => 'Valid',
+                                UserID => $Self->{UserID},
+                            );
+
+                            OBJECT:
+                            for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+
+                                # only show linked services of workorder
+                                if ( $Object ne 'Service' ) {
+                                    next OBJECT;
+                                }
+
+                                LINKTYPE:
+                                for my $LinkType (
+                                    keys %{ $LinkListWithDataWorkOrder->{$Object} }
+                                    )
+                                {
+
+                                    DIRECTION:
+                                    for my $Direction (
+                                        keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                                        )
+                                    {
+
+                                        ID:
+                                        for my $ID (
+                                            keys %{
+                                                $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                                    ->{$Direction}
+                                            }
+                                            )
+                                        {
+
+                                            # combine the linked object data from all workorders
+                                            $LinkListWithData->{$Object}->{$LinkType}
+                                                ->{$Direction}->{$ID}
+                                                = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                                ->{$Direction}->{$ID};
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        # get unique service ids
+                        my %UniqueServiceIDs;
+                        my $ServicesRef = $LinkListWithData->{Service} || {};
+                        for my $LinkType ( keys %{$ServicesRef} ) {
+
+                            # extract link type List
+                            my $LinkTypeList = $ServicesRef->{$LinkType};
+
+                            for my $Direction ( keys %{$LinkTypeList} ) {
+
+                                # extract direction list
+                                my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
+
+                                # collect unique service ids
+                                for my $ServiceID ( keys %{$DirectionList} ) {
+                                    $UniqueServiceIDs{$ServiceID}++;
+                                }
+                            }
+                        }
+
+                        # get the data for each service
+                        my @ServicesData;
+                        SERVICEID:
+                        for my $ServiceID ( keys %UniqueServiceIDs ) {
+
+                            # get service data
+                            my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                                ServiceID => $ServiceID,
+                                UserID    => $Self->{UserID},
+                            );
+
+                            # store service data
+                            push @ServicesData, \%ServiceData;
+                        }
+
+                        # sort services data by service name
+                        @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
+
+                        # store services data
+                        if ( scalar @ServicesData ) {
+                            SERVICE:
+                            for my $Service (@ServicesData) {
+                                my $ServiceName = $Service->{NameShort};
+                                if ( $Info{Services} ) {
+                                    $Info{Services} .= ' ' . $ServiceName;
+                                    next SERVICE;
+                                }
+                                $Info{Services} = $ServiceName;
+                            }
+                        }
+
+                        # csv quote
+                        if ( !@CSVHead ) {
+                            @CSVHead = @{ $Self->{Config}->{SearchCSVData} };
+                        }
+
+                        my @Data;
+                        for my $Header (@CSVHead) {
+                            push @Data, $Info{$Header};
+                        }
+                        push @CSVData, \@Data;
                     }
+
+                    # translate headers
+                    for my $Header (@CSVHead) {
+
+                        # replace FAQNumber header with the current FAQHook from config
+                        if ( $Header eq 'ChangeNumber' ) {
+                            $Header = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                        }
+                        else {
+                            $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                        }
+                    }
+
+                    # assable CSV data
+                    my $CSV = $Self->{CSVObject}->Array2CSV(
+                        Head      => \@CSVHead,
+                        Data      => \@CSVData,
+                        Separator => $Self->{UserCSVSeparator},
+                    );
+
+                    # return csv to download
+                    my $CSVFile = 'change_search';
+                    my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
+                        SystemTime => $Self->{TimeObject}->SystemTime(),
+                    );
+                    $M = sprintf( "%02d", $M );
+                    $D = sprintf( "%02d", $D );
+                    $h = sprintf( "%02d", $h );
+                    $m = sprintf( "%02d", $m );
+                    return $Self->{LayoutObject}->Attachment(
+                        Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
+                        ContentType => "text/csv; charset=" . $Self->{LayoutObject}->{UserCharset},
+                        Content     => $CSV,
+                    );
+
                 }
+                elsif ( $GetParam{ResultForm} eq 'Print' ) {
 
-                $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
-                    ChangeIDs   => $ViewableChangeIDs,
-                    Total       => scalar @{$ViewableChangeIDs},
-                    View        => $Self->{View},
-                    Env         => $Self,
-                    LinkPage    => $LinkPage,
-                    LinkSort    => $LinkSort,
-                    LinkFilter  => $LinkFilter,
-                    LinkBack    => $LinkBack,
-                    TitleName   => 'Change Search Result',
-                    ShowColumns => \@ShowColumns,
-                    SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
-                    OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
-                );
+                    # to store all data
+                    my %Info;
 
-                # build footer
-                $Output .= $Self->{LayoutObject}->Footer();
+                    # to send data to the PDF output
+                    my @PDFData;
+                    ID:
+                    for my $ChangeID ( @{$ViewableChangeIDs} ) {
 
-                return $Output;
+                        # get change data
+                        my $Change = $Self->{ChangeObject}->ChangeGet(
+                            UserID   => $Self->{UserID},
+                            ChangeID => $ChangeID,
+                        );
+
+                        next ID if !$Change;
+
+                        # add change data,
+                        %Info = %{$Change};
+
+                        # get user data for needed user types
+                        USERTYPE:
+                        for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
+
+                            # check if UserType attribute exists either in change or workorder
+                            if ( !$Change->{ $UserType . 'ID' } && !$Info{ $UserType . 'ID' } ) {
+                                next USERTYPE;
+                            }
+
+                            # get user data
+                            my %User = $Self->{UserObject}->GetUserData(
+                                UserID =>
+                                    $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
+                                Cached => 1,
+                            );
+
+                            # set user full name
+                            $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
+                                . $User{UserLastname} . ')';
+                        }
+
+                        use Kernel::System::PDF;
+                        $Self->{PDFObject} = Kernel::System::PDF->new( %{$Self} );
+                        if ( $Self->{PDFObject} ) {
+
+                            my $ChangeTitle = $Self->{LayoutObject}->Output(
+                                Template => '$QData{"ChangeTitle","30"}',
+                                Data     => \%Info,
+                            );
+
+                            my $PlannedStart = $Self->{LayoutObject}->Output(
+                                Template => '$TimeLong{"$Data{"PlannedStartTime"}"}',
+                                Data     => \%Info,
+                            );
+
+                            my $PlannedEnd = $Self->{LayoutObject}->Output(
+                                Template => '$TimeLong{"$Data{"PlannedEndTime"}"}',
+                                Data     => \%Info,
+                            );
+
+                            my @PDFRow;
+                            push @PDFRow,  $Info{ChangeNumber};
+                            push @PDFRow,  $ChangeTitle;
+                            push @PDFRow,  $Info{ChangeBuilder};
+                            push @PDFRow,  $Info{WorkOrderCount};
+                            push @PDFRow,  $Info{ChangeState};
+                            push @PDFRow,  $Info{Priority};
+                            push @PDFRow,  $PlannedStart;
+                            push @PDFRow,  $PlannedEnd;
+                            push @PDFData, \@PDFRow;
+                        }
+                        else {
+
+                            # add table block
+                            $Self->{LayoutObject}->Block(
+                                Name => 'Record',
+                                Data => {
+                                    %Info,
+                                },
+                            );
+                        }
+                    }
+
+                    # PDF Output
+                    if ( $Self->{PDFObject} ) {
+                        my $Title = $Self->{LayoutObject}->{LanguageObject}->Get('Change') . ' '
+                            . $Self->{LayoutObject}->{LanguageObject}->Get('Search');
+                        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
+                        my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+                        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+                        my $Url       = '';
+                        if ( $ENV{REQUEST_URI} ) {
+                            $Url
+                                = $Self->{ConfigObject}->Get('HttpType') . '://'
+                                . $Self->{ConfigObject}->Get('FQDN')
+                                . $ENV{REQUEST_URI};
+                        }
+
+                        # get maximum number of pages
+                        my $MaxPages = $Self->{ConfigObject}->Get('PDF::MaxPages');
+                        if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
+                            $MaxPages = 100;
+                        }
+
+                        # create the header
+                        my $CellData;
+                        $CellData->[0]->[0]->{Content}
+                            = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                        $CellData->[0]->[0]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[1]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeTitle');
+                        $CellData->[0]->[1]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[2]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeBuilder');
+                        $CellData->[0]->[2]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[3]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('WorkOrders');
+                        $CellData->[0]->[3]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[4]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeState');
+                        $CellData->[0]->[4]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[5]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('Priority');
+                        $CellData->[0]->[5]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[6]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedStartTime');
+                        $CellData->[0]->[6]->{Font} = 'ProportionalBold';
+                        $CellData->[0]->[7]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedEndTime');
+                        $CellData->[0]->[7]->{Font} = 'ProportionalBold';
+
+                        # create the content array
+                        my $CounterRow = 1;
+                        for my $Row (@PDFData) {
+                            my $CounterColumn = 0;
+                            for my $Content ( @{$Row} ) {
+                                $CellData->[$CounterRow]->[$CounterColumn]->{Content} = $Content;
+                                $CounterColumn++;
+                            }
+                            $CounterRow++;
+                        }
+
+                        # output 'No ticket data found', if no content was given
+                        if ( !$CellData->[0]->[0] ) {
+                            $CellData->[0]->[0]->{Content}
+                                = $Self->{LayoutObject}->{LanguageObject}
+                                ->Get('No ticket data found.');
+                        }
+
+                        # page params
+                        my %PageParam;
+                        $PageParam{PageOrientation} = 'landscape';
+                        $PageParam{MarginTop}       = 30;
+                        $PageParam{MarginRight}     = 40;
+                        $PageParam{MarginBottom}    = 40;
+                        $PageParam{MarginLeft}      = 40;
+                        $PageParam{HeaderRight}     = $Title;
+                        $PageParam{FooterLeft}      = $Url;
+                        $PageParam{HeadlineLeft}    = $Title;
+                        $PageParam{HeadlineRight}   = $PrintedBy . ' '
+                            . $Self->{UserFirstname} . ' '
+                            . $Self->{UserLastname} . ' ('
+                            . $Self->{UserEmail} . ') '
+                            . $Time;
+
+                        # table params
+                        my %TableParam;
+                        $TableParam{CellData}            = $CellData;
+                        $TableParam{Type}                = 'Cut';
+                        $TableParam{FontSize}            = 6;
+                        $TableParam{Border}              = 0;
+                        $TableParam{BackgroundColorEven} = '#AAAAAA';
+                        $TableParam{BackgroundColorOdd}  = '#DDDDDD';
+                        $TableParam{Padding}             = 1;
+                        $TableParam{PaddingTop}          = 3;
+                        $TableParam{PaddingBottom}       = 3;
+
+                        # create new pdf document
+                        $Self->{PDFObject}->DocumentNew(
+                            Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
+                            Encode => $Self->{LayoutObject}->{UserCharset},
+                        );
+
+                        # start table output
+                        $Self->{PDFObject}->PageNew( %PageParam, FooterRight => $Page . ' 1', );
+                        for ( 2 .. $MaxPages ) {
+
+                            # output table (or a fragment of it)
+                            %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+                            # stop output or another page
+                            if ( $TableParam{State} ) {
+                                last;
+                            }
+                            else {
+                                $Self->{PDFObject}->PageNew(
+                                    %PageParam, FooterRight => $Page
+                                        . ' ' . $_,
+                                );
+                            }
+                        }
+
+                        # return the pdf document
+                        my $Filename = 'change_search';
+                        my ( $s, $m, $h, $D, $M, $Y )
+                            = $Self->{TimeObject}->SystemTime2Date(
+                            SystemTime => $Self->{TimeObject}->SystemTime(),
+                            );
+                        $M = sprintf( "%02d", $M );
+                        $D = sprintf( "%02d", $D );
+                        $h = sprintf( "%02d", $h );
+                        $m = sprintf( "%02d", $m );
+                        my $PDFString = $Self->{PDFObject}->DocumentOutput();
+                        return $Self->{LayoutObject}->Attachment(
+                            Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+                            ContentType => "application/pdf",
+                            Content     => $PDFString,
+                            Type        => 'attachment',
+                        );
+                    }
+                    else {
+                        my $Output = $Self->{LayoutObject}->PrintHeader( Width => 800 );
+                        if ( @{$ViewableChangeIDs} == $Self->{SearchLimit} ) {
+                            $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
+                                . $Self->{SearchLimit} . '"}';
+                        }
+                        $Output .= $Self->{LayoutObject}->Output(
+                            TemplateFile => 'AgentITSMChangeSearchResultPrint',
+                            Data         => \%Param,
+                        );
+
+                        # add footer
+                        $Output .= $Self->{LayoutObject}->PrintFooter();
+
+                        # return output
+                        return $Output;
+                    }
+
+                }
+                else {
+
+                    # start html page
+                    my $Output = $Self->{LayoutObject}->Header();
+                    $Output .= $Self->{LayoutObject}->NavigationBar();
+                    $Self->{LayoutObject}->Print( Output => \$Output );
+                    $Output = '';
+
+                    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
+                    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
+
+                    # show changes
+                    my $LinkPage = 'Filter='
+                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+                        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
+                        . ';OrderBy='
+                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
+                        . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
+                        . ';';
+                    my $LinkSort = 'Filter='
+                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+                        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                        . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
+                        . ';';
+                    my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
+                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                        . ';';
+                    my $LinkBack = 'Subaction=LoadProfile;Profile='
+                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                        . ';TakeLastSearch=1;';
+
+                    # find out which columns should be shown
+                    my @ShowColumns;
+                    if ( $Self->{Config}->{ShowColumns} ) {
+
+                        # get all possible columns from config
+                        my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+
+                        # get the column names that should be shown
+                        COLUMNNAME:
+                        for my $Name ( keys %PossibleColumn ) {
+                            next COLUMNNAME if !$PossibleColumn{$Name};
+                            push @ShowColumns, $Name;
+                        }
+                    }
+
+                    $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+                        ChangeIDs   => $ViewableChangeIDs,
+                        Total       => scalar @{$ViewableChangeIDs},
+                        View        => $Self->{View},
+                        Env         => $Self,
+                        LinkPage    => $LinkPage,
+                        LinkSort    => $LinkSort,
+                        LinkFilter  => $LinkFilter,
+                        LinkBack    => $LinkBack,
+                        TitleName   => 'Change Search Result',
+                        ShowColumns => \@ShowColumns,
+                        SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
+                        OrderBy => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
+                    );
+
+                    # build footer
+                    $Output .= $Self->{LayoutObject}->Footer();
+
+                    return $Output;
+                }
             }
         }
+    }
+    elsif ( $Self->{Subaction} eq 'AJAXProfileDelete' ) {
+        my $Profile = $Self->{ParamObject}->GetParam( Param => 'Profile' );
+
+        # remove old profile stuff
+        $Self->{SearchProfileObject}->SearchProfileDelete(
+            Base      => 'ITSMSearch',
+            Name      => $Profile,
+            UserLogin => $Self->{UserLogin},
+        );
+        my $Output = $Self->{LayoutObject}->JSONEncode(
+            Data => 1,
+        );
+        return $Self->{LayoutObject}->Attachment(
+            NoCache     => 1,
+            ContentType => 'text/html',
+            Content     => $Output,
+            Type        => 'inline'
+        );
     }
     elsif ( $Self->{Subaction} eq 'AJAX' ) {
 
@@ -550,9 +1053,37 @@ sub Run {
 sub _MaskForm {
     my ( $Self, %Param ) = @_;
 
-    # get configured change and workorder freetext field numbers
-    my @ConfiguredChangeFreeTextFields    = @{ $Param{ConfiguredChangeFreeTextFields} };
-    my @ConfiguredWorkOrderFreeTextFields = @{ $Param{ConfiguredWorkOrderFreeTextFields} };
+    my $Profile = $Self->{ParamObject}->GetParam( Param => 'Profile' ) || '';
+    my $EmptySearch = $Self->{ParamObject}->GetParam( Param => 'EmptySearch' );
+    if ( !$Profile ) {
+        $EmptySearch = 1;
+    }
+    my %GetParam = $Self->{SearchProfileObject}->SearchProfileGet(
+        Base      => 'ITSMChangeSearch',
+        Name      => $Profile,
+        UserLogin => $Self->{UserLogin},
+    );
+
+    # TODO Check if implement
+    #        # if no profile is used, set default params of default attributes
+    #        if ( !$Profile ) {
+    #            if ( $Self->{Config}->{Defaults} ) {
+    #                for my $Key ( sort keys %{ $Self->{Config}->{Defaults} } ) {
+    #                    next if !$Self->{Config}->{Defaults}->{$Key};
+    #
+    #                    if ( $Key =~ /^(Ticket|Article)(Create|Change|Close)/ ) {
+    #                        my @Items = split /;/, $Self->{Config}->{Defaults}->{$Key};
+    #                        for my $Item (@Items) {
+    #                            my ( $Key, $Value ) = split /=/, $Item;
+    #                            $GetParam{$Key} = $Value;
+    #                        }
+    #                    }
+    #                    else {
+    #                        $GetParam{$Key} = $Self->{Config}->{Defaults}->{$Key};
+    #                    }
+    #                }
+    #            }
+    #        }
 
     # set attributes string
     my @Attributes = (
@@ -598,10 +1129,15 @@ sub _MaskForm {
             Value => 'WorkOrder Report',
         },
         {
-            Key   => '',
-            Value => '-',
+            Key      => '',
+            Value    => '-',
+            Disabled => 1,
         },
     );
+
+    # get configured change and workorder freetext field numbers
+    my @ConfiguredChangeFreeTextFields    = @{ $Param{ConfiguredChangeFreeTextFields} };
+    my @ConfiguredWorkOrderFreeTextFields = @{ $Param{ConfiguredWorkOrderFreeTextFields} };
 
     # get change FreeTextKeys
     for my $Number (@ConfiguredChangeFreeTextFields) {
@@ -635,14 +1171,11 @@ sub _MaskForm {
         );
     }
 
-    #
-    #            ConfiguredChangeFreeTextFields    => \@ConfiguredChangeFreeTextFields,
-    #        ConfiguredWorkOrderFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
-
     push @Attributes, (
         {
-            Key   => '',
-            Value => '-',
+            Key      => '',
+            Value    => '-',
+            Disabled => 1,
         },
     );
 
@@ -688,8 +1221,9 @@ sub _MaskForm {
             Value => 'WorkOrder Agent',
         },
         {
-            Key   => '',
-            Value => '-',
+            Key      => '',
+            Value    => '-',
+            Disabled => 1,
         },
     );
 
@@ -836,6 +1370,16 @@ sub _MaskForm {
         Multiple   => 1,
         Size       => 5,
         SelectedID => $Param{WorkOrderStateIDs},
+    );
+
+    $Param{ResultFormStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data => {
+            Normal => 'Normal',
+            Print  => 'Print',
+            CSV    => 'CSV',
+        },
+        Name => 'ResultForm',
+        SelectedID => $GetParam{ResultForm} || 'Normal',
     );
 
     # html search mask output
