@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.16 2010-12-09 04:24:38 cr Exp $
+# $Id: FAQ.t,v 1.17 2010-12-14 15:04:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -419,7 +419,7 @@ $Self->True(
 my $CategoryID = $FAQObject->CategoryAdd(
     Name     => 'TestCategory',
     Comment  => 'Category for testing',
-    ParentID => '0',
+    ParentID => 0,
     ValidID  => 1,
     UserID   => 1,
 );
@@ -445,7 +445,7 @@ $Self->False(
 
 my $CategoryUpdate = $FAQObject->CategoryUpdate(
     CategoryID => $CategoryID,
-    ParentID   => '0',
+    ParentID   => 0,
     Name       => 'RootCategory',
     Comment    => 'Root Category for testing',
     ValidID    => 1,
