@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.58 2010-12-09 21:46:44 ub Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.59 2010-12-14 21:53:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,8 @@
         <div class="Flag" title="$Text{"$Data{"ChangeState"}"}">
             <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
         </div>
-        <h1 title="$Text{"Zoom"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} &ndash; $QData{"ChangeTitle"}">
-            $Text{"Zoom"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} <span>&mdash;</span> $QData{"ChangeTitle","70"}
+        <h1 title="$Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} &ndash; $QData{"ChangeTitle"}">
+            $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} <span>&mdash;</span> $QData{"ChangeTitle","70"}
         </h1>
     </div>
 
