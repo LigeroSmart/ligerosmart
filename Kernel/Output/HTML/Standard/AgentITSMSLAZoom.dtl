@@ -2,7 +2,7 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.8 2010-12-07 18:41:15 ub Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.9 2010-12-14 21:55:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1>$Text{"Zoom"}: $Text{"SLA"}</h1>
+        <h1>$Text{"SLA"}: $QData{"Name"}</h1>
     </div>
 
     <div class="LayoutFixedSidebar SidebarLast">
@@ -53,7 +53,6 @@
 
         <div class="ContentColumn">
             <div class="ControlRow">
-                <h2>$Text{"SLA Actions"}</h2>
             </div>
             <div class="ActionRow">
                 <ul class="Actions">
@@ -81,7 +80,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>$Text{"$Data{"Name"}"}</td>
+                                <td>$QData{"Name"}</td>
                                 <td>$Text{"$Data{"Type"}"}</td>
                                 <td>$Text{"$Data{"CalendarName"}"}</td>
                                 <td>$QData{"FirstResponseTime"} $Text{"minutes"}</td>
