@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.137 2010-12-09 08:30:31 ub Exp $
+# $Id: FAQ.pm,v 1.138 2010-12-14 15:14:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.137 $) [1];
+$VERSION = qw($Revision: 1.138 $) [1];
 
 =head1 NAME
 
@@ -389,30 +389,53 @@ sub FAQAdd {
         ],
     );
 
+    # build SQL to get the id of the newly inserted FAQ article
+    my $SQL = 'SELECT id FROM faq_item '
+        . 'WHERE f_number = ? '
+        . 'AND f_name = ? '
+        . 'AND f_language_id = ? '
+        . 'AND category_id = ? '
+        . 'AND state_id = ? '
+        . 'AND approved = ? '
+        . 'AND created_by = ? '
+        . 'AND changed_by = ? ';
+
+    # handle the title
+    if ( $Param{Title} ) {
+        $SQL .= 'AND f_subject = ? '
+    }
+
+    # additional SQL for the case that the title is an empty string
+    # and the database is oracle, which treats empty strings as NULL
+    else {
+        $SQL .= 'AND ((f_subject = ?) OR (f_subject IS NULL)) '
+    }
+
+    # handle the keywords
+    if ( $Param{Keywords} ) {
+        $SQL .= 'AND f_keywords = ? '
+    }
+
+    # additional SQL for the case that keywords is an empty string
+    # and the database is oracle, which treats empty strings as NULL
+    else {
+        $SQL .= 'AND ((f_keywords = ?) OR (f_keywords IS NULL)) '
+    }
+
     # get id
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id FROM faq_item '
-            . 'WHERE f_number = ? '
-            . 'AND f_name = ? '
-            . 'AND f_language_id = ? '
-            . 'AND f_subject = ? '
-            . 'AND category_id = ? '
-            . 'AND state_id = ? '
-            . 'AND f_keywords = ? '
-            . 'AND approved = ? '
-            . 'AND created_by = ? '
-            . 'AND changed_by = ?',
+        SQL  => $SQL,
         Bind => [
             \$Param{Number},
             \$Param{Name},
             \$Param{LanguageID},
-            \$Param{Title},
             \$Param{CategoryID},
             \$Param{StateID},
-            \$Param{Keywords},
             \$Param{Approved},
             \$Param{UserID},
             \$Param{UserID},
+            \$Param{Title},
+            \$Param{Keywords},
         ],
     );
     my $ID;
@@ -4399,6 +4422,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.137 $ $Date: 2010-12-09 08:30:31 $
+$Revision: 1.138 $ $Date: 2010-12-14 15:14:09 $
 
 =cut
