@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.29 2010-12-10 17:38:47 en Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.30 2010-12-14 22:14:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@
 
                     <fieldset class="TableLike FixedLabel">
 
-                        <label class="Mandatory" for="Name"><span class="Marker">*</span>$Text{"Name"}:</label>
+                        <label class="Mandatory" for="Name"><span class="Marker">* </span>$Text{"Name"}:</label>
                         <div class="Field">
                             <input type="text" id="Name" name="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"InvalidName"}" maxlength="250" />
                             <div id="NameError" class="TooltipErrorMessage" ><p>$Text{"Need a valid name."}</p></div>
