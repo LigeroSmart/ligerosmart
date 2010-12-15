@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.209 2010-12-14 20:01:10 en Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.210 2010-12-15 04:14:08 cr Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -92,6 +92,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeOverviewSmall.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangePrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeSearch.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeTimeSlot.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeZoom.dtl"/>
@@ -166,6 +167,7 @@
         <File Permission="644" Location="scripts/test/ITSMWorkOrder.t"/>
         <File Permission="644" Location="var/cron/itsmchange_check.dist"/>
         <File Permission="644" Location="var/httpd/htdocs/js/itsm-changemanagement.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ChangeManagement.Header.css"/>
