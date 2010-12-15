@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.61 2010-12-14 05:00:49 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.62 2010-12-15 04:21:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -236,6 +236,33 @@ sub Run {
         # fill up profile name (e.g. with last-search)
         if ( !$Self->{Profile} || !$Self->{SaveProfile} ) {
             $Self->{Profile} = 'last-search';
+        }
+
+        # save search profile (under last-search or real profile name)
+        $Self->{SaveProfile} = 1;
+
+        # remember last search values
+        if ( $Self->{SaveProfile} && $Self->{Profile} ) {
+
+            # remove old profile stuff
+            $Self->{SearchProfileObject}->SearchProfileDelete(
+                Base      => 'ITSMChangeSearch',
+                Name      => $Self->{Profile},
+                UserLogin => $Self->{UserLogin},
+            );
+
+            # insert new profile params
+            for my $Key ( keys %GetParam ) {
+                if ( $GetParam{$Key} ) {
+                    $Self->{SearchProfileObject}->SearchProfileAdd(
+                        Base      => 'ITSMChangeSearch',
+                        Name      => $Self->{Profile},
+                        Key       => $Key,
+                        Value     => $GetParam{$Key},
+                        UserLogin => $Self->{UserLogin},
+                    );
+                }
+            }
         }
 
         # Extract the parameters that are not needed for searching,
@@ -976,6 +1003,7 @@ sub Run {
                         LinkSort    => $LinkSort,
                         LinkFilter  => $LinkFilter,
                         LinkBack    => $LinkBack,
+                        Profile     => $Self->{Profile},
                         TitleName   => 'Change Search Result',
                         ShowColumns => \@ShowColumns,
                         SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
@@ -1062,6 +1090,12 @@ sub _MaskForm {
         Base      => 'ITSMChangeSearch',
         Name      => $Profile,
         UserLogin => $Self->{UserLogin},
+    );
+
+    # allow profile overwrite the contents of %Param
+    %Param = (
+        %Param,
+        %GetParam,
     );
 
     # TODO Check if implement
@@ -1379,7 +1413,26 @@ sub _MaskForm {
             CSV    => 'CSV',
         },
         Name => 'ResultForm',
-        SelectedID => $GetParam{ResultForm} || 'Normal',
+        SelectedID => $Param{ResultForm} || 'Normal',
+    );
+
+    my %Profiles = $Self->{SearchProfileObject}->SearchProfileList(
+        Base      => 'ITSMChangeSearch',
+        UserLogin => $Self->{UserLogin},
+    );
+    delete $Profiles{''};
+    delete $Profiles{'last-search'};
+    if ($EmptySearch) {
+        $Profiles{''} = '-';
+    }
+    else {
+        $Profiles{'last-search'} = '-';
+    }
+    $Param{ProfilesStrg} = $Self->{LayoutObject}->BuildSelection(
+        Data       => \%Profiles,
+        Name       => 'Profile',
+        ID         => 'SearchProfile',
+        SelectedID => $Profile,
     );
 
     # html search mask output
@@ -1394,43 +1447,20 @@ sub _MaskForm {
     # time period that can be selected from the GUI
     my %TimePeriod = %{ $Self->{ConfigObject}->Get('ITSMWorkOrder::TimePeriod') };
 
-    #    # setup for the time search fields
-    #    my @TimeTypes = (
-    #        { Prefix => 'Requested',    Title => 'Requested Date', },
-    #        { Prefix => 'PlannedStart', Title => 'PlannedStartTime', },
-    #        { Prefix => 'PlannedEnd',   Title => 'PlannedEndTime', },
-    #        { Prefix => 'ActualStart',  Title => 'ActualStartTime', },
-    #        { Prefix => 'ActualEnd',    Title => 'ActualEndTime', },
-    #        { Prefix => 'Create',       Title => 'CreateTime', },
-    #        { Prefix => 'Change',       Title => 'ChangeTime', },
-    #    );
-
-    #    TIMETYPE:
+    TIMETYPE:
     for my $TimeType (@TimeTypes) {
         my $Prefix = $TimeType->{Prefix};
 
-        #        # show RequestedTime only when enabled in SysConfig
-        #        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
-        #            next TIMETYPE;
-        #        }
+        # show RequestedTime only when enabled in SysConfig
+        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
+            next TIMETYPE;
+        }
 
         my $Title             = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
         my %TimeSelectionData = (
             Prefix => $Prefix,
             Title  => $Title,
         );
-
-        #        # set radio button for time search types
-        #        my $SearchType = $Prefix . 'TimeSearchType';
-        #        if ( !$Param{$SearchType} ) {
-        #            $TimeSelectionData{'TimeSearchType::None'} = 'checked="checked"';
-        #        }
-        #        elsif ( $Param{$SearchType} eq 'TimePoint' ) {
-        #            $TimeSelectionData{'TimeSearchType::TimePoint'} = 'checked="checked"';
-        #        }
-        #        elsif ( $Param{$SearchType} eq 'TimeSlot' ) {
-        #            $TimeSelectionData{'TimeSearchType::TimeSlot'} = 'checked="checked"';
-        #        }
 
         $TimeSelectionData{TimePoint} = $Self->{LayoutObject}->BuildSelection(
             Data       => \%OneToFiftyNine,
@@ -1511,30 +1541,18 @@ sub _MaskForm {
     # build customer search autocomplete field for CABCustomer
     my $CustomerAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CustomerSearchAutoComplete');
-    if ( $CustomerAutoCompleteConfig->{Active} ) {
 
-   #        $Self->{LayoutObject}->Block(
-   #            Name => 'CustomerSearchAutoComplete',
-   #            Data => {
-   #                minQueryLength => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
-   #                queryDelay     => $CustomerAutoCompleteConfig->{QueryDelay}     || 0.1,
-   #                typeAhead      => $CustomerAutoCompleteConfig->{TypeAhead}      || 'false',
-   #                maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-   #            },
-   #        );
-   #        $Self->{LayoutObject}->Block(
-   #            Name => 'CABCustomerSearchAutoCompleteDivStart',
-   #        );
-   #        $Self->{LayoutObject}->Block(
-   #            Name => 'CABCustomerSearchAutoCompleteDivEnd',
-   #        );
-    }
-    else {
-
-        #        $Self->{LayoutObject}->Block(
-        #            Name => 'SearchCustomerButton',
-        #        );
-    }
+    # set autocomplete parameters
+    $Self->{LayoutObject}->Block(
+        Name => 'CustomerSearchITSMSearchAutocomplete',
+        Data => {
+            active              => $CustomerAutoCompleteConfig->{Active},
+            minQueryLength      => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
+            queryDelay          => $CustomerAutoCompleteConfig->{QueryDelay} || 0.1,
+            typeAhead           => $CustomerAutoCompleteConfig->{TypeAhead} || 'false',
+            maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+        },
+    );
 
     # build user search autocomplete field for CABAgent
     my $UserAutoCompleteConfig
@@ -1699,6 +1717,24 @@ sub _MaskForm {
                 },
             );
         }
+    }
+
+    # show attributes
+    my %AlreadyShown;
+    for my $Item (@Attributes) {
+        my $Key = $Item->{Key};
+        next if !$Key;
+        next if !defined $Param{$Key};
+        next if $Param{$Key} eq '';
+
+        next if $AlreadyShown{$Key};
+        $AlreadyShown{$Key} = 1;
+        $Self->{LayoutObject}->Block(
+            Name => 'SearchAJAXShow',
+            Data => {
+                Attribute => $Key,
+            },
+        );
     }
 
     # build output
