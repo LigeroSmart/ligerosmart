@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.117 2010-08-30 16:41:27 cr Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.118 2010-12-15 04:02:40 cr Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -46,6 +46,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCustomerSearch.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMService.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServicePrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMServiceZoom.dtl"/>
@@ -60,10 +61,12 @@
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Detail.IE7.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Search.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Print.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Table.css"/>
         <File Permission="644" Location="var/packagesetup/ITSMCore.pm"/>
