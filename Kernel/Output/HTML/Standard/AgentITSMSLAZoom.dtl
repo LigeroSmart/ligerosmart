@@ -2,18 +2,17 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.9 2010-12-14 21:55:17 ub Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.10 2010-12-15 16:15:59 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1>$Text{"SLA"}: $QData{"Name"}</h1>
+        <h1>$Text{"Zoom SLA"}: $QData{"Name"}</h1>
     </div>
 
     <div class="LayoutFixedSidebar SidebarLast">
@@ -64,32 +63,49 @@
                 </ul>
             </div>
 
-            <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="WidgetBox SpacingTop Expanded">
+                <div class="LightRow Header">
+                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
+                    <h2>$Text{"SLA"}: $Text{"$Data{"Name"}"}</h2>
+                </div>
                 <div class="Content">
-                    <table class="DataTable">
-                        <thead>
-                            <tr>
-                                <th>$Text{"SLA"}</th>
-                                <th>$Text{"Type"}</th>
-                                <th>$Text{"Calendar"}</th>
-                                <th>$Text{"First Response Time"}</th>
-                                <th>$Text{"Update Time"}</th>
-                                <th>$Text{"Solution Time"}</th>
-                                <th>$Text{"Minimum Time Between Incidents"}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>$QData{"Name"}</td>
-                                <td>$Text{"$Data{"Type"}"}</td>
-                                <td>$Text{"$Data{"CalendarName"}"}</td>
-                                <td>$QData{"FirstResponseTime"} $Text{"minutes"}</td>
-                                <td>$QData{"UpdateTime"} $Text{"minutes"}</td>
-                                <td>$QData{"SolutionTime"} $Text{"minutes"}</td>
-                                <td>$QData{"MinTimeBetweenIncidents"} $Text{"minutes"}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <fieldset class="TableLike">
+                        <label title="$Text{"Type"}">$Text{"Type"}: </label>
+                        <div class="Field">
+                            $Text{"$Data{"Type"}"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"Calendar"}">$Text{"Calendar"}: </label>
+                        <div class="Field">
+                            $Text{"$Data{"CalendarName"}"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"First Response Time"}">$Text{"First Response Time"}: </label>
+                        <div class="Field">
+                            $QData{"FirstResponseTime"} $Text{"minutes"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"Update Time"}">$Text{"Update Time"}: </label>
+                        <div class="Field">
+                            $QData{"UpdateTime"} $Text{"minutes"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"Solution Time"}">$Text{"Solution Time"}: </label>
+                        <div class="Field">
+                            $QData{"SolutionTime"} $Text{"minutes"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"Minimum Time Between Incidents"}">$Text{"Minimum Time Between Incidents"}: </label>
+                        <div class="Field">
+                            $QData{"MinTimeBetweenIncidents"} $Text{"minutes"}
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
                 </div>
             </div>
 

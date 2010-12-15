@@ -2,7 +2,7 @@
 # AgentITSMServiceZoom.dtl - provides HTML form for AgentITSMServiceZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.dtl,v 1.13 2010-12-14 22:10:24 ub Exp $
+# $Id: AgentITSMServiceZoom.dtl,v 1.14 2010-12-15 16:15:59 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,8 @@
         <div class="Flag" title="$Text{"$Data{"CurInciState"}"}">
             <span class="$QData{"CurInciSignal"}"></span>
         </div>
-        <h1 title="$Text{"Service"}: $QData{"Name"}">
-            $Text{"Service"}: $QData{"Name"}
+        <h1 title="$Text{"Zoom Service"}: $QData{"Name"}">
+            $Text{"Zoom Service"}: $QData{"Name"}
         </h1>
     </div>
     <div class="LayoutFixedSidebar SidebarLast">
@@ -88,24 +88,25 @@
                 <div class="Clear"></div>
             </div>
 
-            <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="WidgetBox SpacingTop Expanded">
+                <div class="LightRow Header">
+                    <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
+                    <h2>$Text{"Service"}: $Text{"$Data{"Name"}"}</h2>
+                </div>
                 <div class="Content">
-                    <table class="DataTable">
-                        <thead>
-                            <tr>
-                                <th>$Text{"Service"}</th>
-                                <th>$Text{"Type"}</th>
-                                <th>$Text{"Criticality"}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>$QData{"Name"}</td>
-                                <td>$Text{"$Data{"Type"}"}</td>
-                                <td>$Text{"$Data{"Criticality"}"}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <fieldset class="TableLike FixedLabelSmall">
+                        <label title="$Text{"Type"}">$Text{"Type"}: </label>
+                        <div class="Field">
+                            $Text{"$Data{"Type"}"}
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label title="$Text{"Criticality"}">$Text{"Criticality"}: </label>
+                        <div class="Field">
+                            $Text{"$Data{"Criticality"}"}
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
                 </div>
             </div>
 
