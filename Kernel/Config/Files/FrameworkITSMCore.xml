@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Framework">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.52 2010-08-20 17:19:45 cr Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.53 2010-12-15 04:05:28 cr Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.242.2.6 2010/03/09 09:37:46 dz Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1">
         <Description Translatable="1">This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.</Description>
@@ -38,6 +38,17 @@
         <Setting>
             <Array>
                 <Item>ITSM.Agent.Default.css</Item>
+                <Item>ITSM.Agent.Search.css</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Loader::Agent::CommonJS###100-ITSM" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>ITSM.Agent.CustomerSearch.js</Item>
             </Array>
         </Setting>
     </ConfigItem>
