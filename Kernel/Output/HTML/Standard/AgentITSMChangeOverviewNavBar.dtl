@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewNavBar.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewNavBar.dtl,v 1.11 2010-12-14 04:49:33 cr Exp $
+# $Id: AgentITSMChangeOverviewNavBar.dtl,v 1.12 2010-12-15 04:15:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,13 +39,13 @@
 <!-- dtl:block:OverviewNavBarPageBack -->
                 <ul class="Tabs">
                     <li>
-                        <a id="TicketSearch" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkBack"}">$Text{"Change search options"}</a>
+                        <a id="ChangeSearch" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkBack"}">$Text{"Change search options"}</a>
                     </li>
                 </ul>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
-    $('#TicketSearch').bind('click', function (Event) {
-        Core.Agent.Search.OpenSearchDialog( 'AgentITSMChangeSearch', '$QData{"Profile"}' );
+    $('#ChangeSearch').bind('click', function (Event) {
+        ITSM.Agent.ChangeManagement.Search.OpenSearchDialog( 'AgentITSMChangeSearch', '$QData{"Profile"}' );
         return false;
     });
 //]]></script>
