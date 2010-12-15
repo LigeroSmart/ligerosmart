@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.245 2010-12-14 05:03:09 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.246 2010-12-15 04:23:45 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -398,7 +398,7 @@
                     <Name>Search</Name>
                     <Image>search.png</Image>
                     <Link>Action=AgentITSMChangeSearch</Link>
-                    <LinkOption>onclick="Core.Agent.Search.OpenSearchDialog('AgentITSMChangeSearch'); event.stopPropagation(); return false;"</LinkOption>
+                    <LinkOption>onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); event.stopPropagation(); return false;"</LinkOption>
                     <NavBar>ITSM Change</NavBar>
                     <Type></Type>
                     <Block></Block>
@@ -9322,6 +9322,16 @@
                 <Item>Priority</Item>
                 <Item>PlannedStartTime</Item>
                 <Item>PlannedEndTime</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Loader::Agent::CommonJS###100-ITSMChangeManagement" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>ITSM.Agent.ChangeManagement.Search.js</Item>
             </Array>
         </Setting>
     </ConfigItem>
