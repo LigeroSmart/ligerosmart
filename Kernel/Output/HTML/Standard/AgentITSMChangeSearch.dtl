@@ -2,13 +2,14 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.43 2010-12-14 04:52:17 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.44 2010-12-15 04:22:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+$Include{"AgentITSMCustomerSearch"}
 <!-- dtl:block:SearchAJAX -->
 <div class="InnerContent">
     <form action="$Env{"CGIHandle"}" method="post" id="SearchForm">
@@ -86,7 +87,8 @@
         <div class="Clear"></div>
         <label for="CABCustomer" id="LabelCABCustomer">$Text{"CABCustomer"} ($Text{"e.g."} US4231):</label>
         <div class="Field">
-            <input type="text" name="CABCustomer" value="$QData{"CABCustomer"}" class="W50pc"/>
+            <input type="hidden" id="CABCustomerSelected" value="" name="CABCustomer">
+            <input type="text" name="CABCustomer::Search" value="$QData{"CABCustomer"}" class="W50pc ITSMCustomerSearch"/>
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
@@ -224,9 +226,9 @@
 <script type="text/javascript">//<![CDATA[
     window.setTimeout(function (){
 <!-- dtl:block:SearchAJAXShow -->
-        Core.Agent.Search.SearchAttributeAdd('$QData{"Attribute"}');
+        ITSM.Agent.ChangeManagement.Search.SearchAttributeAdd('$QData{"Attribute"}');
 <!-- dtl:block:SearchAJAXShow -->
-        Core.Agent.Search.AdditionalAttributeSelectionRebuild();
+        ITSM.Agent.ChangeManagement.Search.AdditionalAttributeSelectionRebuild();
     }, 0);
 //]]></script>
 
@@ -235,7 +237,7 @@
 
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
-    Core.Agent.Search.OpenSearchDialog( '$Env{"Action"}' );
+    ITSM.Agent.ChangeManagement.Search.OpenSearchDialog( '$Env{"Action"}' );
 //]]></script>
 <!--dtl:js_on_document_complete-->
 
