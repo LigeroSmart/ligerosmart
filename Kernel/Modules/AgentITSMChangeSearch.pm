@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.65 2010-12-16 10:25:53 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.66 2010-12-16 21:20:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1566,19 +1566,6 @@ sub _MaskForm {
         Multiple                 => 1,
     );
 
-    # show change freetext area if freetext fields are configured
-    if (
-        @ConfiguredChangeFreeTextFields && grep {$_}
-        values %{ $Self->{Config}->{ChangeFreeText} }
-        )
-    {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeTextArea',
-            Data => {},
-        );
-    }
-
     # show change freetext fields
     for my $Number (@ConfiguredChangeFreeTextFields) {
 
@@ -1623,19 +1610,6 @@ sub _MaskForm {
         ConfiguredFreeTextFields => \@ConfiguredWorkOrderFreeTextFields,
         NullOption               => 1,
     );
-
-    # show workorder freetext area if freetext fields are configured
-    if (
-        @ConfiguredWorkOrderFreeTextFields && grep {$_}
-        values %{ $Self->{Config}->{WorkOrderFreeText} }
-        )
-    {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeTextArea',
-            Data => {},
-        );
-    }
 
     # show workorder freetext fields
     for my $Number (@ConfiguredWorkOrderFreeTextFields) {
