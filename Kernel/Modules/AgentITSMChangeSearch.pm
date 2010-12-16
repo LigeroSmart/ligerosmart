@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.62 2010-12-15 04:21:30 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.63 2010-12-16 05:05:16 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1275,14 +1275,18 @@ sub _MaskForm {
     for my $TimeType (@TimeTypes) {
         my $Prefix = $TimeType->{Prefix};
         my $Title  = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
+        my $BeforeAfterTrasnlatable
+            = $Self->{LayoutObject}->{LanguageObject}->Get('(before/after)');
+        my $BetweenTranslatable
+            = $Self->{LayoutObject}->{LanguageObject}->Get('(between)');
         push @Attributes, (
             {
                 Key   => $Prefix . 'TimePoint',
-                Value => $Title . ' (before/after)',
+                Value => $Title . " $BeforeAfterTrasnlatable",
             },
             {
                 Key   => $Prefix . 'TimeSlot',
-                Value => $Title . ' (between)',
+                Value => $Title . " $BetweenTranslatable",
             },
 
         );
@@ -1495,6 +1499,7 @@ sub _MaskForm {
             %TimePeriod,
             Prefix   => $Prefix . 'TimeStart',
             Format   => 'DateInputFormat',
+            Validate => 1,
             DiffTime => -( ( 60 * 60 * 24 ) * 30 ),
         );
 
@@ -1557,48 +1562,18 @@ sub _MaskForm {
     # build user search autocomplete field for CABAgent
     my $UserAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
-    if ( $UserAutoCompleteConfig->{Active} ) {
 
-        #        # general blocks
-        #        $Self->{LayoutObject}->Block(
-        #            Name => 'UserSearchAutoComplete',
-        #        );
-
-  #        # CABAgent
-  #        $Self->{LayoutObject}->Block(
-  #            Name => 'UserSearchAutoCompleteCode',
-  #            Data => {
-  #                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
-  #                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
-  #                typeAhead           => $UserAutoCompleteConfig->{TypeAhead}           || 'false',
-  #                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-  #                InputNr             => 1,
-  #            },
-  #        );
-
-        #        # return for CABAgent
-        #        $Self->{LayoutObject}->Block(
-        #            Name => 'UserSearchAutoCompleteReturnElements',
-        #            Data => {
-        #                InputNr => 1,
-        #            },
-        #        );
-
-        # CABAgent
-        #        $Self->{LayoutObject}->Block(
-        #            Name => 'CABAgentSearchAutoCompleteDivStart1',
-        #        );
-        #        $Self->{LayoutObject}->Block(
-        #            Name => 'CABAgentSearchAutoCompleteDivEnd1',
-        #        );
-    }
-    else {
-
-        #        # show usersearch buttons for CABAgent
-        #        $Self->{LayoutObject}->Block(
-        #            Name => 'SearchUserButton1',
-        #        );
-    }
+    # set autocomplete parameters
+    $Self->{LayoutObject}->Block(
+        Name => 'UserSearchITSMSearchAutocomplete',
+        Data => {
+            active              => $UserAutoCompleteConfig->{Active},
+            minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength} || 2,
+            queryDelay          => $UserAutoCompleteConfig->{QueryDelay} || 0.1,
+            typeAhead           => $UserAutoCompleteConfig->{TypeAhead} || 'false',
+            maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+        },
+    );
 
     # get the change freetext config
     my %ChangeFreeTextConfig;
