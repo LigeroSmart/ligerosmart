@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.43 2010-12-10 23:59:53 en Exp $
+# $Id: TimeAccounting.pm,v 1.44 2010-12-16 20:03:32 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -935,6 +935,83 @@ sub UserSettingsGet {
     return %Data;
 }
 
+=item SingleUserSettingsGet()
+
+returns a hash with the user period data
+
+    my %UserData = $TimeAccountingObject->SingleUserSettingsGet( UserID => 1 );
+
+=cut
+
+sub SingleUserSettingsGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID!' );
+        return;
+    }
+
+    my %UserData = ();
+
+    # db select
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status '
+            .
+            'FROM time_accounting_user_period WHERE user_id = ?',
+        Bind => [ \$Param{UserID} ],
+    );
+
+    # fetch Data
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $UserData{ $Row[1] }{UserID}      = $Row[0];
+        $UserData{ $Row[1] }{Period}      = $Row[1];
+        $UserData{ $Row[1] }{DateStart}   = substr( $Row[2], 0, 10 );
+        $UserData{ $Row[1] }{DateEnd}     = substr( $Row[3], 0, 10 );
+        $UserData{ $Row[1] }{WeeklyHours} = $Row[4];
+        $UserData{ $Row[1] }{LeaveDays}   = $Row[5];
+        $UserData{ $Row[1] }{Overtime}    = $Row[6];
+        $UserData{ $Row[1] }{UserStatus}  = $Row[7];
+    }
+    return %UserData;
+}
+
+=item UserLastPeriodNumberGet()
+
+returns the number of the last registered period for this user
+
+    my $LastPeriodNumber = $TimeAccountingObject->UserLastPeriodNumberGet( UserID => 1 );
+
+=cut
+
+sub UserLastPeriodNumberGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID!' );
+        return;
+    }
+
+    my $LastPeriodNumber;
+
+    # db select
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            'SELECT max(preference_period) '
+            .
+            'FROM time_accounting_user_period WHERE user_id = ?',
+        Bind => [ \$Param{UserID} ],
+    );
+
+    # fetch Data
+    my @Row = $Self->{DBObject}->FetchrowArray();
+    $LastPeriodNumber = $Row[0] || 0;
+
+    return $LastPeriodNumber;
+}
+
 =item UserSettingsInsert()
 
 insert new user data in the db
@@ -1119,6 +1196,100 @@ sub UserSettingsUpdate {
             return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
         }
     }
+    return 1;
+}
+
+=item SingleUserSettingsUpdate()
+
+update user data in the db
+
+    $TimeAccountingObject->SingleUserSettingsUpdate(
+        UserID        => 1,
+        Description   => 'Some Text',
+        CreateProject => 1 || 0,
+        ShowOvertime  => 1 || 0,
+        Period        => {
+            1 => {
+                DateStart    => '2010-12-12',
+                DateEnd      => '2010-12-31',
+                WeeklyHours  => '38',
+                LeaveDays    => '25',
+                Overtime     => '38',
+                UserStatus   => 1 || 0,
+            },
+            2 => {
+                DateStart    => '2010-12-12',
+                DateEnd      => '2010-12-31',
+                WeeklyHours  => '38',
+                LeaveDays    => '25',
+                Overtime     => '38',
+                UserStatus   => 1 || 0,
+            },
+            3 => ......
+        }
+    );
+
+=cut
+
+sub SingleUserSettingsUpdate {
+    my ( $Self, %Param ) = @_;
+
+    # delete cache
+    delete $Self->{'Cache::UserCurrentPeriodGet'};
+
+    my $UserID = $Param{UserID};
+
+    if ( !defined $Param{Period}->{1}{DateStart} && !defined $Param{Period}->{1}{DateEnd} ) {
+        return $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "UserSettingUpdate: No data for user id $UserID!"
+        );
+    }
+
+    #set default values
+    $Param{ShowOvertime}  ||= 0;
+    $Param{CreateProject} ||= 0;
+    $Param{Calendar}      ||= 0;
+
+    # build sql
+    my $SQL
+        = "UPDATE time_accounting_user "
+        . "SET description = ?, show_overtime = ?, create_project = ?, calendar = ? "
+        . "WHERE user_id = ?";
+
+    my $Bind = [
+        \$Param{Description}, \$Param{ShowOvertime},
+        \$Param{CreateProject}, \$Param{Calendar}, \$Param{UserID}
+    ];
+
+    # db insert
+    return if !$Self->{DBObject}->Do(
+        SQL  => $SQL,
+        Bind => $Bind,
+    );
+
+    # update all periods
+    for my $Period ( keys %{ $Param{Period} } ) {
+
+        # build sql
+        my $SQL
+            = "UPDATE time_accounting_user_period "
+            . "SET leave_days = ?, date_start = ?"
+            . ", date_end = ?, overtime = ?"
+            . ", weekly_hours = ?, status = ? "
+            . "WHERE user_id = ? AND preference_period = ?";
+
+        my $Bind = [
+            \$Param{Period}->{$Period}{LeaveDays},   \$Param{Period}->{$Period}{DateStart},
+            \$Param{Period}->{$Period}{DateEnd},     \$Param{Period}->{$Period}{Overtime},
+            \$Param{Period}->{$Period}{WeeklyHours}, \$Param{Period}->{$Period}{UserStatus},
+            \$UserID, \$Period,
+        ];
+
+        # db insert
+        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
+    }
+
     return 1;
 }
 
@@ -1735,6 +1906,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2010-12-10 23:59:53 $
+$Revision: 1.44 $ $Date: 2010-12-16 20:03:32 $
 
 =cut
