@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.45 2010-12-16 05:09:00 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.46 2010-12-16 21:18:55 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -118,7 +118,6 @@ $Include{"AgentITSMUserSearch"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 
-<!-- dtl:block:ChangeFreeTextArea -->
 <!-- dtl:block:ChangeFreeText -->
         <div class="Clear"></div>
         $Data{"ChangeFreeKeyField"}
@@ -127,9 +126,7 @@ $Include{"AgentITSMUserSearch"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 <!-- dtl:block:ChangeFreeText -->
-<!-- dtl:block:ChangeFreeTextArea -->
 
-<!-- dtl:block:WorkOrderFreeTextArea -->
 <!-- dtl:block:WorkOrderFreeText -->
         <div class="Clear"></div>
         $Data{"WorkOrderFreeKeyField"}
@@ -138,7 +135,6 @@ $Include{"AgentITSMUserSearch"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
 <!-- dtl:block:WorkOrderFreeText -->
-<!-- dtl:block:WorkOrderFreeTextArea -->
 
         <div class="Clear"></div>
         <label for="ChangePriority" id="LabelChangePriority">$Text{"ITSM Change"} $Text{"Priority"}:</label>
@@ -210,10 +206,6 @@ $Include{"AgentITSMUserSearch"}
             $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
-<!-- dtl:block:InvalidTimeSlot -->
-        <br />
-        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTimeSlot -->
 <!-- dtl:block:TimeSelection -->
 
         <div class="Clear"></div>
@@ -244,88 +236,3 @@ $Include{"AgentITSMUserSearch"}
 <!--dtl:js_on_document_complete-->
 
 <!-- dtl:block:Search -->
-
-
-
-
-
-<!--
-
-
-<style type="text/css">
-.myAutoComplete {
-    width:          17em;    /* set width here or else widget will expand to fit its container */
-    padding-bottom: 0.5em;
-}
-</style>
-
-<script language="JavaScript" type="text/javascript">
-
-
-// clear CABCustomer
-function clear_cab_customer() {
-    document.compose.SelectedCustomerUser.value = "";
-    document.compose.CABCustomer.value          = "";
-    document.compose.CABCustomer.focus();
-}
-
-// clear CABAgent
-function clear_cab_agent() {
-    document.compose.SelectedUser1.value = "";
-    document.compose.CABAgent.value = "";
-    document.compose.CABAgent.focus();
-}
-
-// do initialization when the DOM is fully loaded
-document.observe( "dom:loaded", function() {
-
-    // clear the CABAgent input field, when it gains focus
-    $('myAutoCompleteInput1').observe(
-        'focus',
-        function() {
-            this.setValue('');
-        }
-    );
-
-    // clear the CABCustomer input field, when it gains focus
-    $('myAutoCompleteInput').observe(
-        'focus',
-        function() {
-            this.setValue('');
-        }
-    );
--->
-<!-- dtl:block:TimeSelectionJS -->
-<!--
-    // register onchange-handlers for the TimePoint dropdown menus
-    var TimePointElements = $("$QData{"Prefix"}TimeSearchType::TimePoint").adjacent('select');
-    TimePointElements.each(
-        function(elem) {
-            elem.observe(
-                'click',
-                function() {
-                    $("$QData{"Prefix"}TimeSearchType::TimePoint").checked = true;
-                }
-            );
-        }
-    );
-
-    // register onchange-handlers for the TimeSlot dropdown menus and calendar links
-    var TimeSlotElements  = $("$QData{"Prefix"}TimeSearchType::TimeSlot").adjacent('select, a[target="calendar"]');
-    TimeSlotElements.each(
-        function(elem) {
-            elem.observe(
-                'click',
-                function() {
-                    $("$QData{"Prefix"}TimeSearchType::TimeSlot").checked = true;
-                }
-            );
-        }
-    );
--->
-<!-- dtl:block:TimeSelectionJS -->
-<!--
-} );
-
-</script>
--->
