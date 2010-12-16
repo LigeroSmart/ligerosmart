@@ -2,17 +2,18 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.10 2010-12-15 16:15:59 en Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.11 2010-12-16 09:39:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1>$Text{"Zoom SLA"}: $QData{"Name"}</h1>
+        <h1>$Text{"SLA"}: $QData{"Name"}</h1>
     </div>
 
     <div class="LayoutFixedSidebar SidebarLast">
