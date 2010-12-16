@@ -2,7 +2,7 @@
 // ITSM.Agent.ChangeManagemnt.Search.js - provides the special module functions for the global search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ChangeManagement.Search.js,v 1.1 2010-12-15 03:49:49 cr Exp $
+// $Id: ITSM.Agent.ChangeManagement.Search.js,v 1.2 2010-12-16 05:06:29 cr Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -70,15 +70,33 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 });
 
             // set autocomple to customer type fields
-            $('#SearchInsert').find('.ITSMCustomerSearch').each(function() {
-                var InputID = $(this).attr('id') + 'Autocomplete';
+            $('#SearchInsert').find('.ITSMCustomerSearch').each(function(){
+                var InputID = $(this).attr('id') + 'CustomerAutocomplete';
                 $(this).removeClass('ITSMCustomerSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
                 ITSM.Agent.CustomerSearch.Init($('#' + InputID), Core.Config.Get('Autocomplete.Active'));
 
                 // prevent dialog closure when select a customer from the list
-                $('ul.ui-autocomplete').bind('click', function(Event) { Event.stopPropagation(); return false; });
+                $('ul.ui-autocomplete').bind('click', function(Event){
+                    Event.stopPropagation();
+                    return false;
+                });
+            });
+
+            // set autocomple to user type fields
+            $('#SearchInsert').find('.ITSMUserSearch').each(function(){
+                var InputID = $(this).attr('id') + 'UserAutocomplete';
+                $(this).removeClass('ITSMUserSearch');
+                $(this).attr('id', InputID);
+                $(this).prev().attr('id', InputID + 'Selected');
+                ITSM.Agent.UserSearch.Init($('#' + InputID), Core.Config.Get('Autocomplete.Active'));
+
+                // prevent dialog closure when select a customer from the list
+                $('ul.ui-autocomplete').bind('click', function(Event){
+                    Event.stopPropagation();
+                    return false;
+                });
             });
 
         }
