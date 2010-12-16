@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.246 2010-12-15 04:23:45 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.247 2010-12-16 05:12:04 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -9332,6 +9332,7 @@
         <Setting>
             <Array>
                 <Item>ITSM.Agent.ChangeManagement.Search.js</Item>
+                <Item>ITSM.Agent.UserSearch.js</Item>
             </Array>
         </Setting>
     </ConfigItem>
