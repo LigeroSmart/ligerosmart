@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.27 2010-11-16 21:38:15 en Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.28 2010-12-16 20:04:41 en Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -24,6 +24,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.TableNoHighLight.css"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
     </Filelist>
     <DatabaseInstall Type="post">
