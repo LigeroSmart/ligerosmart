@@ -2,7 +2,7 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.7 2010-10-26 15:09:14 ub Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.8 2010-12-16 05:10:49 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,155 +10,32 @@
 # --
 
 <!-- dtl:block:UserSearchAutoComplete -->
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"Ticket::Frontend::CustomerSearchAutoComplete::DynamicWidth"}");
+    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Customer"}");
+//]]></script>
 
-<!--CSS file (default YUI Sam Skin) -->
-<link type="text/css" rel="stylesheet" href="$Config{"Frontend::YUIPath"}build/autocomplete/assets/skins/sam/autocomplete.css">
+<!-- dtl:block:UserSearchInit -->
+<script type="text/javascript">//<![CDATA[
+/*global ITSM: true */
+    ITSM.Agent.UserSearch.Init($("$QData{"ItemID"}"), $QData{"ActiveAutoComplete"});
+//]]></script>
+<!-- dtl:block:UserSearchInit -->
 
-<!-- Dependencies -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/datasource/datasource-min.js"></script>
-
-<!-- OPTIONAL: Connection (required only if using XHRDataSource) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/connection/connection-min.js"></script>
-
-<!-- OPTIONAL: Animation (required only if enabling animation) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/animation/animation-min.js"></script>
-
-<!-- OPTIONAL: JSON (enables JSON validation) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/json/json-min.js"></script>
-
-<!-- Source file -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/autocomplete/autocomplete-min.js"></script>
-
-<script type="text/javascript">
-
-(function() {
-
-    var Dom = YAHOO.util.Dom,
-        Event = YAHOO.util.Event;
-
-    Event.onDOMReady(function() {
-
-        // add yui css to body tag
-        document.body.className = "yui-skin-sam";
-
-<!-- dtl:block:UserSearchAutoCompleteCode -->
-        // define XHRDataSource for autocomplete object
-        var myDataSource$Data{"InputNr"} = new YAHOO.util.XHRDataSource('');
-        myDataSource$Data{"InputNr"}.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-        myDataSource$Data{"InputNr"}.maxCacheEntries = 100;
-        myDataSource$Data{"InputNr"}.connXhrMode = 'cancelStaleRequests';
-
-        // define the schema of the results for autocomplete object
-        myDataSource$Data{"InputNr"}.responseSchema = {
-            resultsList : "Response.Results", // String pointer to result data
-            fields : [
-                { key: "UserKey" },
-                { key: "UserValue" },
-                { key: "UserValuePlain" }
-            ]
-        };
-        // define autocomplete object
-        var myAutoComp$Data{"InputNr"} = new YAHOO.widget.AutoComplete("myAutoCompleteInput$Data{"InputNr"}", "myAutoCompleteContainer$Data{"InputNr"}", myDataSource$Data{"InputNr"});
-        myAutoComp$Data{"InputNr"}.resultTypeList = false;
-
-        // get groups the user should belong to
-        var UserGroup$Data{"InputNr"} = document.compose.UserSearchGroups$Data{"InputNr"}.value;
-
-        // define request parameters
-        myAutoComp$Data{"InputNr"}.generateRequest = function(sQuery$Data{"InputNr"}) {
-          return "?Action=AgentITSMUserSearch;Search=" + sQuery$Data{"InputNr"} + "*" + ";Groups=" + UserGroup$Data{"InputNr"};
-        };
-
-        // define output format for drop down list
-        myAutoComp$Data{"InputNr"}.formatResult = function(oResultData$Data{"InputNr"}, sQuery$Data{"InputNr"}, sResultMatch$Data{"InputNr"}) {
-            return (oResultData$Data{"InputNr"}.UserValue + " (" + oResultData$Data{"InputNr"}.UserKey + ")");
-        };
-
-        // define various autocomplete properties
-        myAutoComp$Data{"InputNr"}.minQueryLength           = $QData{"minQueryLength"};
-        myAutoComp$Data{"InputNr"}.queryDelay               = $QData{"queryDelay"};
-        myAutoComp$Data{"InputNr"}.typeAhead                = $QData{"typeAhead"};
-        myAutoComp$Data{"InputNr"}.maxResultsDisplayed      = $QData{"maxResultsDisplayed"};
-        myAutoComp$Data{"InputNr"}.animVert                 = true;
-        myAutoComp$Data{"InputNr"}.animSpeed                = 0.2;
-        myAutoComp$Data{"InputNr"}.allowBrowserAutocomplete = false;
-
-        // fixes IE6 bug that causes form select elements to be displayed
-        // over elements with a higher z-index
-        myAutoComp$Data{"InputNr"}.useIFrame = true;
-
-        // define custom itemSelect handler function
-        var itemSelectHandler$Data{"InputNr"} = function(sType$Data{"InputNr"}, aArgs$Data{"InputNr"}) {
-            var oMyAcInstance$Data{"InputNr"} = aArgs$Data{"InputNr"}[0];  // your AutoComplete instance
-            var elListItem$Data{"InputNr"}    = aArgs$Data{"InputNr"}[1];  // the <li> element selected in the suggestion container
-            var oData$Data{"InputNr"}         = aArgs$Data{"InputNr"}[2];  // object literal of data for the result
-
-            // set autocomplete field with selected value
-            oMyAcInstance$Data{"InputNr"}.getInputEl().value = oData$Data{"InputNr"}.UserValuePlain;
-
-            // set hidden field SelectedUser
-            if (document.compose.SelectedUser$Data{"InputNr"}) {
-                document.compose.SelectedUser$Data{"InputNr"}.value = oData$Data{"InputNr"}.UserKey;
-            }
-        };
-
-        // subscribe custom itemSelect handler to the event
-        myAutoComp$Data{"InputNr"}.itemSelectEvent.subscribe(itemSelectHandler$Data{"InputNr"});
-
-        // dynamically adjust the width of the autocomplete container
-        myAutoComp$Data{"InputNr"}.doBeforeLoadData = function (oRequest$Data{"InputNr"}, oResponse$Data{"InputNr"}, oPayload$Data{"InputNr"}) {
-
-            // check if dynamic width is enabled
-            if ( !Number('$Config{"ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth"}') ) {
-                return true;
-            }
-
-            // find the longest result string
-            var MaxString$Data{"InputNr"} = '';
-            for ( var i = 0; i < oResponse$Data{"InputNr"}.results.length; i++ ) {
-                var Result$Data{"InputNr"} = oResponse$Data{"InputNr"}.results[i];
-                var String$Data{"InputNr"} = Result$Data{"InputNr"}["UserValuePlain"] + Result$Data{"InputNr"}["UserKey"];
-                if ( String$Data{"InputNr"}.length > MaxString$Data{"InputNr"}.length ) {
-                    MaxString$Data{"InputNr"} = String$Data{"InputNr"};
-                }
-            }
-
-            // build option element with the longest result string
-            var DummyOption$Data{"InputNr"} = document.createElement("option");
-            DummyOption$Data{"InputNr"}.appendChild(document.createTextNode(MaxString$Data{"InputNr"}));
-
-            // build invisible dummy select field to find the width
-            var DummySelect$Data{"InputNr"} = document.createElement("select");
-            DummySelect$Data{"InputNr"}.setAttribute( 'id', 'DummySelectID$Data{"InputNr"}' );
-            DummySelect$Data{"InputNr"}.setAttribute( 'style', 'visibility:hidden' );
-            DummySelect$Data{"InputNr"}.appendChild(DummyOption$Data{"InputNr"});
-            document.getElementsByTagName("body")[0].appendChild(DummySelect$Data{"InputNr"});
-
-            // get new width
-            var NewWidth$Data{"InputNr"} = DummySelect$Data{"InputNr"}.offsetWidth;
-
-            // remove hidden select field
-            document.getElementsByTagName("body")[0].removeChild(DummySelect$Data{"InputNr"});
-
-            // get container
-            var Container$Data{"InputNr"} = document.getElementById('myAutoCompleteContainer$Data{"InputNr"}');
-
-            // apply new width to container
-            Container$Data{"InputNr"}.style.width = NewWidth$Data{"InputNr"} + 'px';
-            return true;
-        };
-<!-- dtl:block:UserSearchAutoCompleteCode -->
-
-        return {
-<!-- dtl:block:UserSearchAutoCompleteReturnElements -->
-            myDataSource$Data{"InputNr"}: myDataSource$Data{"InputNr"},
-            myAutoComp$Data{"InputNr"}  : myAutoComp$Data{"InputNr"},
-<!-- dtl:block:UserSearchAutoCompleteReturnElements -->
-            dummy: 1    // workaround for avoiding a trailing comma
-        };
-    });
-})();
-</script>
-
+<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:UserSearchAutoComplete -->
+
+<!-- dtl:block:UserSearchITSMSearchAutocomplete -->
+<script type="text/javascript">//<![CDATA[
+    Core.Config.Set('Autocomplete.Active', $QData{"active"});
+    Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"Ticket::Frontend::CustomerSearchAutoComplete::DynamicWidth"}");
+    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Customer"}");
+//]]></script>
+<!-- dtl:block:UserSearchITSMSearchAutocomplete -->

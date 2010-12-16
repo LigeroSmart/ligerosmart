@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMUserSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMUserSearch.pm,v 1.15 2010-05-11 15:21:26 ub Exp $
+# $Id: AgentITSMUserSearch.pm,v 1.16 2010-12-16 05:10:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,8 +49,9 @@ sub Run {
     if ( !$Self->{Subaction} ) {
 
         # get needed params
-        my $Search = $Self->{ParamObject}->GetParam( Param => 'Search' ) || '';
+        my $Search = $Self->{ParamObject}->GetParam( Param => 'Term' )   || '';
         my $Groups = $Self->{ParamObject}->GetParam( Param => 'Groups' ) || '';
+        my $MaxResults = int( $Self->{ParamObject}->GetParam( Param => 'MaxResults' ) || 20 );
 
         # get all members of the groups
         my %GroupUsers;
@@ -98,6 +99,8 @@ sub Run {
             Valid  => 1,
         );
 
+        my $MaxResultCount = $MaxResults;
+
         # the data that will be sent as response
         my @Data;
 
@@ -117,30 +120,24 @@ sub Run {
                 UserID => $UserID,
                 Valid  => $Param{Valid},
             );
-            my $UserValuePlain = sprintf '"%s %s" <%s>',
+
+            my $UserValue = sprintf '"%s %s" <%s>',
                 $User{UserFirstname},
                 $User{UserLastname},
                 $User{UserEmail};
 
-            # html quote characters like <>
-            my $UserValue = $Self->{LayoutObject}->Ascii2Html(
-                Text => $UserValuePlain,
-            );
-
             push @Data, {
-                UserKey        => $UserID,
-                UserValue      => $UserValue,
-                UserValuePlain => $UserValuePlain,
+                UserKey   => $UserID,
+                UserValue => $UserValue,
             };
+
+            $MaxResultCount--;
+            last USERID if $MaxResultCount <= 0;
         }
 
         # build JSON output
-        $JSON = $Self->{LayoutObject}->JSON(
-            Data => {
-                Response => {
-                    Results => \@Data,
-                },
-            },
+        $JSON = $Self->{LayoutObject}->JSONEncode(
+            Data => \@Data,
         );
     }
 
