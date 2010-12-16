@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.44 2010-12-16 20:02:24 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.45 2010-12-16 23:42:27 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -69,7 +69,7 @@ sub PreRun {
         )
     {
         return $Self->{LayoutObject}->Redirect(
-            OP => 'Action=AgentTimeAccounting&Subaction=Edit'
+            OP => 'Action=AgentTimeAccounting;Subaction=Edit'
         );
     }
     return;
@@ -245,7 +245,7 @@ sub Run {
             {
                 return $Self->{LayoutObject}->Redirect(
                     OP =>
-                        "Action=$Self->{Action}&Subaction=View&Year=$Param{Year}&Month=$Param{Month}&Day=$Param{Day}"
+                        "Action=$Self->{Action};Subaction=View;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
                 );
             }
         }
@@ -255,7 +255,7 @@ sub Run {
             SessionID => $Self->{SessionID},
             Key       => 'LastScreen',
             Value =>
-                "Action=$Self->{Action}&Subaction=Edit&Year=$Param{Year}&Month=$Param{Month}&Day=$Param{Day}",
+                "Action=$Self->{Action};Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}",
         );
 
         $Param{Month_to_Text} = $MonthArray[ $Param{Month} ];
@@ -353,7 +353,6 @@ sub Run {
         );
 
         if ( $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime') ) {
-            $Param{TextPosition}  = 'left';
             $Param{PeriodBlock}   = 'UnitInputPeriod';
             $Frontend{ClassTime}  = 'footnote';
             $Frontend{PeriodNote} = '*';
@@ -363,7 +362,6 @@ sub Run {
             );
         }
         else {
-            $Param{TextPosition}  = 'right';
             $Param{PeriodBlock}   = 'UnitPeriodWithoutInput';
             $Frontend{ClassTime}  = 'required';
             $Frontend{PeriodNote} = '';
@@ -496,9 +494,8 @@ sub Run {
             $Self->{LayoutObject}->Block(
                 Name => $Param{PeriodBlock},
                 Data => {
-                    TextPosition => $Param{TextPosition},
-                    Period       => $Period,
-                    ID           => $ID,
+                    Period => $Period,
+                    ID     => $ID,
                 },
             );
 
@@ -929,7 +926,7 @@ sub Run {
         }
         return $Self->{LayoutObject}->Redirect(
             OP =>
-                "Action=$Self->{Action}&Subaction=Edit&Year=$Param{Year}&Month=$Param{Month}&Day=$Param{Day}"
+                "Action=$Self->{Action};Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
         );
     }
 
@@ -983,7 +980,7 @@ sub Run {
             SessionID => $Self->{SessionID},
             Key       => 'LastScreen',
             Value =>
-                "Action=$Self->{Action}&Subaction=Overview&Year=$Param{Year}&Month=$Param{Month}",
+                "Action=$Self->{Action};Subaction=Overview;Year=$Param{Year};Month=$Param{Month}",
         );
 
         $Param{Month_to_Text} = $MonthArray[ $Param{Month} ];
@@ -1492,23 +1489,22 @@ sub Run {
             SessionID => $Self->{SessionID},
             Key       => 'LastScreen',
             Value =>
-                "Action=$Self->{Action}&Subaction=Reporting&Year=$Param{Year}&Month=$Param{Month}",
+                "Action=$Self->{Action};Subaction=Reporting;Year=$Param{Year};Month=$Param{Month}",
         );
 
         $Param{Month_to_Text} = $MonthArray[ $Param{Month} ];
 
         my %Month = ();
         for my $ID ( 1 .. 12 ) {
-            $Month{ sprintf( "%02d", $ID ) }{Value}    = $MonthArray[$ID];
-            $Month{ sprintf( "%02d", $ID ) }{Position} = $ID;
-            if ( $Param{Month} == $ID ) {
-                $Month{ sprintf( "%02d", $ID ) }{Selected} = 1;
-            }
+            $Month{ sprintf( "%02d", $ID ) } = $MonthArray[$ID];
         }
 
-        $Frontend{MonthOption} = $Self->{LayoutObject}->OptionElement(
-            Data => \%Month,
-            Name => 'Month',
+        $Frontend{MonthOption} = $Self->{LayoutObject}->BuildSelection(
+            Data        => \%Month,
+            SelectedID  => $Param{Month} || '',
+            Name        => 'Month',
+            Sort        => 'NumericKey',
+            Translation => 0,
         );
 
         my @Year = ( 2005 .. $Year );
@@ -1564,7 +1560,7 @@ sub Run {
             TotalSick TotalLeaveDayRemaining TotalOvertimeTotal)
             )
         {
-            $Param{$Parameter} = sprintf( "%.2f", $Param{$Parameter} );
+            $Param{$Parameter} = sprintf( "%.2f", ( $Param{$Parameter} ) || 0 );
         }
 
         # show the report sort by projects
@@ -2365,7 +2361,7 @@ sub _FirstUserRedirect {
     for my $GroupKey ( keys %GroupList ) {
         if ( $GroupList{$GroupKey} eq 'time_accounting' ) {
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentTimeAccounting&" . "Subaction=Setting"
+                OP => "Action=AgentTimeAccounting;" . "Subaction=Setting"
             );
         }
     }
