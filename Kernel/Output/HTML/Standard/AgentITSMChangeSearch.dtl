@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.44 2010-12-15 04:22:22 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.45 2010-12-16 05:09:00 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,9 +10,10 @@
 # --
 
 $Include{"AgentITSMCustomerSearch"}
+$Include{"AgentITSMUserSearch"}
 <!-- dtl:block:SearchAJAX -->
 <div class="InnerContent">
-    <form action="$Env{"CGIHandle"}" method="post" id="SearchForm">
+    <form action="$Env{"CGIHandle"}" method="post" id="SearchForm" class="">
         <input type="hidden" name="Action" value="$Env{"Action"}" id="SearchAction"/>
         <input type="hidden" name="Subaction" value="Search"/>
         <input type="hidden" name="EmptySearch" value="$QData{"EmptySearch"}" id="EmptySearch"/>
@@ -81,7 +82,8 @@ $Include{"AgentITSMCustomerSearch"}
         <div class="Clear"></div>
         <label for="CABAgent" id="LabelCABAgent">$Text{"CABAgent"} ($Text{"e.g."} 234231):</label>
         <div class="Field">
-            <input type="text" name="CABAgent" value="$QData{"CABAgent"}" class="W50pc"/>
+            <input type="hidden" id="CABAgentSelected" value="" name="CABAgent">
+            <input type="text" name="CABAgent::Search" value="$QData{"CABAgent"}" class="W50pc ITSMUserSearch"/>
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
@@ -204,7 +206,7 @@ $Include{"AgentITSMCustomerSearch"}
         <div class="Clear"></div>
         <label for="$Data{"Prefix"}TimeSlot" id="Label$Data{"Prefix"}TimeSlot">$Text{"$Data{"Title"}"} $Text{"(between)"}:</label>
         <div class="Field">
-            <input type="hidden" name="$Text{"$Data{"Prefix"}"}$Text{"TimeSlot"}" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
+            <input type="hidden" name="$Data{"Prefix"}TimeSlot" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
             $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
