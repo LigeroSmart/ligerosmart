@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.14 2010-12-01 10:04:07 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.15 2010-12-16 15:20:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,6 +84,25 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # get categories (with category long names) where user has rights
+    my $UserCategoriesLongNames = $Self->{FAQObject}->GetUserCategoriesLongNames(
+        Type   => 'rw',
+        UserID => $Self->{UserID},
+    );
+
+    # chek that there are categories available for this user
+    if (
+        !$UserCategoriesLongNames
+        || ref $UserCategoriesLongNames ne 'HASH'
+        || !%{$UserCategoriesLongNames}
+        )
+    {
+        return $Self->{LayoutObject}->ErrorScreen(
+            Message => 'No categories found where user has read/write permissions!',
+            Comment => 'Please contact the admin.',
+        );
+    }
+
     # ------------------------------------------------------------ #
     # show the faq add screen
     # ------------------------------------------------------------ #
@@ -95,7 +114,8 @@ sub Run {
 
         # html output
         $Output .= $Self->_MaskNew(
-            FormID => $Self->{FormID},
+            FormID                  => $Self->{FormID},
+            UserCategoriesLongNames => $UserCategoriesLongNames,
 
             # last viewed category from session (written by faq explorer)
             CategoryID => $Self->{LastViewedCategory},
@@ -185,7 +205,8 @@ sub Run {
 
             # html output
             $Output .= $Self->_MaskNew(
-                Attachments => \@Attachments,
+                UserCategoriesLongNames => $UserCategoriesLongNames,
+                Attachments             => \@Attachments,
                 %GetParam,
                 %Error,
                 FormID => $Self->{FormID},
@@ -311,18 +332,12 @@ sub _MaskNew {
         SelectedID => $Param{ValidID} || $ValidListReverse{valid},
     );
 
-    # get categories (with category long names) where user has rights
-    my $UserCategoriesLongNames = $Self->{FAQObject}->GetUserCategoriesLongNames(
-        Type   => 'rw',
-        UserID => $Self->{UserID},
-    );
-
     # set no server error class as default
     $Param{CategoryIDServerError} ||= '';
 
     # build category selection
     $Data{CategoryOption} = $Self->{LayoutObject}->BuildSelection(
-        Data         => $UserCategoriesLongNames,
+        Data         => $Param{UserCategoriesLongNames},
         Name         => 'CategoryID',
         SelectedID   => $Param{CategoryID},
         PossibleNone => 1,
