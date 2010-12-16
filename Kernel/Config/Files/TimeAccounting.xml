@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.15 2010-12-10 23:57:17 en Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.16 2010-12-16 19:56:08 en Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -71,6 +71,9 @@
                     <AccessKey></AccessKey>
                     <Prio>900</Prio>
                 </NavBar>
+                <Loader>
+                    <CSS>TimeAccounting.TableNoHightLight.css</CSS>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
