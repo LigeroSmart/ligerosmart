@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.98 2010-12-10 13:32:50 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.99 2010-12-16 14:48:16 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -13,6 +13,7 @@
         <File Permission="755" Location="bin/FAQImport.pl"/>
         <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
+        <File Permission="644" Location="doc/faq-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/FAQ.xml"/>
         <File Permission="644" Location="Kernel/cpan-lib/XML/RSS/SimpleGen.pm"/>
         <File Permission="644" Location="Kernel/Language/da_FAQ.pm"/>
