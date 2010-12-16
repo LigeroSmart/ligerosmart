@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.64 2010-12-16 05:22:10 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.65 2010-12-16 10:25:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1238,14 +1238,14 @@ sub _MaskForm {
     for my $TimeType (@TimeTypes) {
         my $Prefix = $TimeType->{Prefix};
         my $Title  = $Self->{LayoutObject}->{LanguageObject}->Get( $TimeType->{Title} );
-        my $BeforeAfterTrasnlatable
+        my $BeforeAfterTranslatable
             = $Self->{LayoutObject}->{LanguageObject}->Get('(before/after)');
         my $BetweenTranslatable
             = $Self->{LayoutObject}->{LanguageObject}->Get('(between)');
         push @Attributes, (
             {
                 Key   => $Prefix . 'TimePoint',
-                Value => $Title . " $BeforeAfterTrasnlatable",
+                Value => $Title . " $BeforeAfterTranslatable",
             },
             {
                 Key   => $Prefix . 'TimeSlot',
