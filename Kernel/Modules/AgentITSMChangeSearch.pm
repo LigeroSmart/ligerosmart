@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.63 2010-12-16 05:05:16 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.64 2010-12-16 05:22:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -277,744 +277,707 @@ sub Run {
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
         }
 
-        # is a "search user" or "search customer" button clicked
-        my $ExpandUser = $GetParam{ExpandCABAgent1} || $GetParam{ExpandCABAgent2}
-            || $GetParam{ExpandCABCustomer1} || $GetParam{ExpandCABCustomer2};
+        # store last queue screen
+        my $URL
+            = "Action=AgentITSMChangeSearch;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
+            . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit}";
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenChanges',
+            Value     => $URL,
+        );
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastChangeView',
+            Value     => $URL,
+        );
 
-        # is a "clear user" button clicked
-        my $ClearUser = $GetParam{ClearCABAgent} || $GetParam{ClearCABCustomer};
+        # get and check the time search parameters
+        TIMETYPE:
+        for my $TimeType (
+            qw( Requested PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
+            )
+        {
 
-        if ($ExpandUser) {
-
-            # get user and customer info when autocompletion is turned off
-            %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
-        }
-        elsif ($ClearUser) {
-
-            # which fields to clear
-            my %FieldMap = (
-                ClearCABAgent    => [qw(CABAgent    SelectedUser1)],
-                ClearCABCustomer => [qw(CABCustomer SelectedCustomerUser)],
-            );
-
-            # actually clear the fields associated with the button that was clicked
-            my $Fields = $FieldMap{$ClearUser} || [];
-            for my $Field ( @{$Fields} ) {
-                $GetParam{$Field} = '';
-            }
-        }
-        else {
-
-            # store last queue screen
-            my $URL
-                = "Action=AgentITSMChangeSearch;Subaction=Search;Profile=$Self->{Profile};SortBy=$Self->{SortBy}"
-                . ";OrderBy=$Self->{OrderBy};TakeLastSearch=1;StartHit=$Self->{StartHit}";
-            $Self->{SessionObject}->UpdateSessionID(
-                SessionID => $Self->{SessionID},
-                Key       => 'LastScreenChanges',
-                Value     => $URL,
-            );
-            $Self->{SessionObject}->UpdateSessionID(
-                SessionID => $Self->{SessionID},
-                Key       => 'LastChangeView',
-                Value     => $URL,
-            );
-
-            # prepare CABAgents and CABCustomers, checking for emptied text fields
-            if ( $GetParam{SelectedUser1} && $GetParam{CABAgent} ) {
-                $GetParam{CABAgents} = [ $GetParam{SelectedUser1} ];
-            }
-            if ( $GetParam{SelectedCustomerUser} && $GetParam{CABCustomer} ) {
-                $GetParam{CABCustomers} = [ $GetParam{SelectedCustomerUser} ];
-            }
-
-            # get and check the time search parameters
-            TIMETYPE:
-            for my $TimeType (
-                qw( Requested PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
+            # extract the time search parameters for $TimeType into %TimeSelectionParam
+            my %TimeSelectionParam;
+            for my $Part (
+                qw(
+                SearchType
+                PointFormat Point PointStart
+                Start StartDay StartMonth StartYear
+                Stop  StopDay  StopMonth  StopYear
+                )
                 )
             {
+                $TimeSelectionParam{$Part} = $GetParam{ $TimeType . 'Time' . $Part };
+            }
 
-                # extract the time search parameters for $TimeType into %TimeSelectionParam
-                my %TimeSelectionParam;
-                for my $Part (
-                    qw(
-                    SearchType
-                    PointFormat Point PointStart
-                    Start StartDay StartMonth StartYear
-                    Stop  StopDay  StopMonth  StopYear
-                    )
+            # nothing to do, when no time search type has been selected
+            next TIMETYPE if !$TimeSelectionParam{SearchType};
+
+            if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
+
+                my %SystemTime;    # used for checking the ordering of the two times
+
+                # the earlier limit
+                if (
+                    $TimeSelectionParam{StartDay}
+                    && $TimeSelectionParam{StartMonth}
+                    && $TimeSelectionParam{StartYear}
                     )
                 {
-                    $TimeSelectionParam{$Part} = $GetParam{ $TimeType . 'Time' . $Part };
-                }
 
-                # nothing to do, when no time search type has been selected
-                next TIMETYPE if !$TimeSelectionParam{SearchType};
+                    # format as timestamp
+                    $GetParam{ $TimeType . 'TimeNewerDate' } = sprintf
+                        '%04d-%02d-%02d 00:00:01',
+                        $TimeSelectionParam{StartYear},
+                        $TimeSelectionParam{StartMonth},
+                        $TimeSelectionParam{StartDay};
 
-                if ( $TimeSelectionParam{SearchType} eq 'TimeSlot' ) {
-
-                    my %SystemTime;    # used for checking the ordering of the two times
-
-                    # the earlier limit
-                    if (
-                        $TimeSelectionParam{StartDay}
-                        && $TimeSelectionParam{StartMonth}
-                        && $TimeSelectionParam{StartYear}
-                        )
-                    {
-
-                        # format as timestamp
-                        $GetParam{ $TimeType . 'TimeNewerDate' } = sprintf
-                            '%04d-%02d-%02d 00:00:01',
-                            $TimeSelectionParam{StartYear},
-                            $TimeSelectionParam{StartMonth},
-                            $TimeSelectionParam{StartDay};
-
-                        # check the validity
-                        $SystemTime{TimeNewerDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
-                            String => $GetParam{ $TimeType . 'TimeNewerDate' },
-                        );
-                        if ( !$SystemTime{TimeNewerDate} ) {
-                            push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
-                        }
-                    }
-
-                    # the later limit
-                    if (
-                        $TimeSelectionParam{StopDay}
-                        && $TimeSelectionParam{StopMonth}
-                        && $TimeSelectionParam{StopYear}
-                        )
-                    {
-
-                        # format as timestamp
-                        $GetParam{ $TimeType . 'TimeOlderDate' } = sprintf
-                            '%04d-%02d-%02d 23:59:59',
-                            $TimeSelectionParam{StopYear},
-                            $TimeSelectionParam{StopMonth},
-                            $TimeSelectionParam{StopDay};
-
-                        # check the validity
-                        $SystemTime{TimeOlderDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
-                            String => $GetParam{ $TimeType . 'TimeOlderDate' },
-                        );
-                        if ( !$SystemTime{TimeOlderDate} ) {
-                            push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
-                        }
-                    }
-
-                    # check the ordering of the times
-                    if (
-                        $SystemTime{TimeNewerDate}
-                        && $SystemTime{TimeOlderDate}
-                        && $SystemTime{TimeNewerDate} >= $SystemTime{TimeOlderDate}
-                        )
-                    {
+                    # check the validity
+                    $SystemTime{TimeNewerDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $GetParam{ $TimeType . 'TimeNewerDate' },
+                    );
+                    if ( !$SystemTime{TimeNewerDate} ) {
                         push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
                     }
-
                 }
-                elsif ( $TimeSelectionParam{SearchType} eq 'TimePoint' ) {
 
-                    # queries relative to now
-                    if (
-                        $TimeSelectionParam{Point}
-                        && $TimeSelectionParam{PointStart}
-                        && $TimeSelectionParam{PointFormat}
-                        )
-                    {
-                        my $DiffSeconds = 0;
-                        if ( $TimeSelectionParam{PointFormat} eq 'minute' ) {
-                            $DiffSeconds = $TimeSelectionParam{Point} * 60;
-                        }
-                        elsif ( $TimeSelectionParam{PointFormat} eq 'hour' ) {
-                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60;
-                        }
-                        elsif ( $TimeSelectionParam{PointFormat} eq 'day' ) {
-                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24;
-                        }
-                        elsif ( $TimeSelectionParam{PointFormat} eq 'week' ) {
-                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 7;
-                        }
-                        elsif ( $TimeSelectionParam{PointFormat} eq 'month' ) {
-                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 30;
-                        }
-                        elsif ( $TimeSelectionParam{PointFormat} eq 'year' ) {
-                            $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
-                        }
+                # the later limit
+                if (
+                    $TimeSelectionParam{StopDay}
+                    && $TimeSelectionParam{StopMonth}
+                    && $TimeSelectionParam{StopYear}
+                    )
+                {
 
-                        my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
-                        my $CurrentTimeStamp  = $Self->{TimeObject}->SystemTime2TimeStamp(
-                            SystemTime => $CurrentSystemTime
-                        );
-                        if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
+                    # format as timestamp
+                    $GetParam{ $TimeType . 'TimeOlderDate' } = sprintf
+                        '%04d-%02d-%02d 23:59:59',
+                        $TimeSelectionParam{StopYear},
+                        $TimeSelectionParam{StopMonth},
+                        $TimeSelectionParam{StopDay};
 
-                            # search in the future
-                            my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-                                SystemTime => $CurrentSystemTime + $DiffSeconds,
-                            );
-                            $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
-                            $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
-                        }
-                        else {
-                            my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-                                SystemTime => $CurrentSystemTime - $DiffSeconds,
-                            );
-                            $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
-                            $GetParam{ $TimeType . 'TimeOlderDate' } = $CurrentTimeStamp;
-                        }
+                    # check the validity
+                    $SystemTime{TimeOlderDate} = $Self->{TimeObject}->TimeStamp2SystemTime(
+                        String => $GetParam{ $TimeType . 'TimeOlderDate' },
+                    );
+                    if ( !$SystemTime{TimeOlderDate} ) {
+                        push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
                     }
                 }
-                else {
 
-                    # unknown search types are simply ignored
+                # check the ordering of the times
+                if (
+                    $SystemTime{TimeNewerDate}
+                    && $SystemTime{TimeOlderDate}
+                    && $SystemTime{TimeNewerDate} >= $SystemTime{TimeOlderDate}
+                    )
+                {
+                    push @ValidationErrors, $TimeType . 'InvalidTimeSlot';
+                }
+
+            }
+            elsif ( $TimeSelectionParam{SearchType} eq 'TimePoint' ) {
+
+                # queries relative to now
+                if (
+                    $TimeSelectionParam{Point}
+                    && $TimeSelectionParam{PointStart}
+                    && $TimeSelectionParam{PointFormat}
+                    )
+                {
+                    my $DiffSeconds = 0;
+                    if ( $TimeSelectionParam{PointFormat} eq 'minute' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'hour' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'day' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'week' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 7;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'month' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 30;
+                    }
+                    elsif ( $TimeSelectionParam{PointFormat} eq 'year' ) {
+                        $DiffSeconds = $TimeSelectionParam{Point} * 60 * 60 * 24 * 365;
+                    }
+
+                    my $CurrentSystemTime = $Self->{TimeObject}->SystemTime();
+                    my $CurrentTimeStamp  = $Self->{TimeObject}->SystemTime2TimeStamp(
+                        SystemTime => $CurrentSystemTime
+                    );
+                    if ( $TimeSelectionParam{PointStart} eq 'Before' ) {
+
+                        # search in the future
+                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                            SystemTime => $CurrentSystemTime + $DiffSeconds,
+                        );
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = $CurrentTimeStamp;
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = $SearchTimeStamp;
+                    }
+                    else {
+                        my $SearchTimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                            SystemTime => $CurrentSystemTime - $DiffSeconds,
+                        );
+                        $GetParam{ $TimeType . 'TimeNewerDate' } = $SearchTimeStamp;
+                        $GetParam{ $TimeType . 'TimeOlderDate' } = $CurrentTimeStamp;
+                    }
                 }
             }
+            else {
 
-            # search for substrings by default
-            for my $Field (
-                qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
-                )
-            {
-                if ( defined( $GetParam{$Field} ) && $GetParam{$Field} ne '' ) {
-                    $GetParam{$Field} = "*$GetParam{$Field}*";
-                }
+                # unknown search types are simply ignored
             }
+        }
 
-            # do not search, when there are validation errors
-            if ( !@ValidationErrors ) {
+        # search for substrings by default
+        for my $Field (
+            qw(ChangeTitle WorkOrderTitle Description Justification WorkOrderInstruction WorkOrderReport)
+            )
+        {
+            if ( defined( $GetParam{$Field} ) && $GetParam{$Field} ne '' ) {
+                $GetParam{$Field} = "*$GetParam{$Field}*";
+            }
+        }
 
-                # perform change search
-                my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
-                    Result           => 'ARRAY',
-                    OrderBy          => [ $Self->{SortBy} ],
-                    OrderByDirection => [ $Self->{OrderBy} ],
-                    Limit            => $Self->{SearchLimit},
-                    UserID           => $Self->{UserID},
-                    %GetParam,
-                );
+        # do not search, when there are validation errors
+        if ( !@ValidationErrors ) {
 
-                # CSV output
-                if ( $GetParam{ResultForm} eq 'CSV' ) {
-                    my @CSVHead;
-                    my @CSVData;
+            # perform change search
+            my $ViewableChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+                Result           => 'ARRAY',
+                OrderBy          => [ $Self->{SortBy} ],
+                OrderByDirection => [ $Self->{OrderBy} ],
+                Limit            => $Self->{SearchLimit},
+                UserID           => $Self->{UserID},
+                %GetParam,
+            );
 
-                    ID:
-                    for my $ChangeID ( @{$ViewableChangeIDs} ) {
+            # CSV output
+            if ( $GetParam{ResultForm} eq 'CSV' ) {
+                my @CSVHead;
+                my @CSVData;
 
-                        # to store all data
-                        my %Info;
-
-                        # to store data of sub-elements
-                        my %SubElementData;
-
-                        # get change data
-                        my $Change = $Self->{ChangeObject}->ChangeGet(
-                            UserID   => $Self->{UserID},
-                            ChangeID => $ChangeID,
-                        );
-
-                        next ID if !$Change;
-
-                        # add change data,
-                        # ( let workorder data overwrite
-                        # some change attributes, i.e. PlannedStartTime, etc... )
-                        %Info = ( %{$Change}, %Info );
-
-                        # get user data for needed user types
-                        USERTYPE:
-                        for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
-
-                            # check if UserType attribute exists either in change or workorder
-                            if ( !$Change->{ $UserType . 'ID' } && !$Info{ $UserType . 'ID' } ) {
-                                next USERTYPE;
-                            }
-
-                            # get user data
-                            my %User = $Self->{UserObject}->GetUserData(
-                                UserID =>
-                                    $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
-                                Cached => 1,
-                            );
-
-                            # set user data
-                            $Info{ $UserType . 'UserLogin' }        = $User{UserLogin};
-                            $Info{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
-                            $Info{ $UserType . 'UserLastname' }     = $User{UserLastname};
-                            $Info{ $UserType . 'LeftParenthesis' }  = '(';
-                            $Info{ $UserType . 'RightParenthesis' } = ')';
-
-                            # set user full name
-                            $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
-                                . $User{UserLastname} . ')';
-                        }
-
-                        # to store the linked service data
-                        my $LinkListWithData = {};
-
-                        my @WorkOrderIDs;
-
-                        # store the combined linked services data from all workorders of this change
-                        @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
-
-                        # store the combined linked services data
-                        for my $WorkOrderID (@WorkOrderIDs) {
-
-                            # get linked objects of this workorder
-                            my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
-                                Object => 'ITSMWorkOrder',
-                                Key    => $WorkOrderID,
-                                State  => 'Valid',
-                                UserID => $Self->{UserID},
-                            );
-
-                            OBJECT:
-                            for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
-
-                                # only show linked services of workorder
-                                if ( $Object ne 'Service' ) {
-                                    next OBJECT;
-                                }
-
-                                LINKTYPE:
-                                for my $LinkType (
-                                    keys %{ $LinkListWithDataWorkOrder->{$Object} }
-                                    )
-                                {
-
-                                    DIRECTION:
-                                    for my $Direction (
-                                        keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
-                                        )
-                                    {
-
-                                        ID:
-                                        for my $ID (
-                                            keys %{
-                                                $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                                    ->{$Direction}
-                                            }
-                                            )
-                                        {
-
-                                            # combine the linked object data from all workorders
-                                            $LinkListWithData->{$Object}->{$LinkType}
-                                                ->{$Direction}->{$ID}
-                                                = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                                ->{$Direction}->{$ID};
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        # get unique service ids
-                        my %UniqueServiceIDs;
-                        my $ServicesRef = $LinkListWithData->{Service} || {};
-                        for my $LinkType ( keys %{$ServicesRef} ) {
-
-                            # extract link type List
-                            my $LinkTypeList = $ServicesRef->{$LinkType};
-
-                            for my $Direction ( keys %{$LinkTypeList} ) {
-
-                                # extract direction list
-                                my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
-
-                                # collect unique service ids
-                                for my $ServiceID ( keys %{$DirectionList} ) {
-                                    $UniqueServiceIDs{$ServiceID}++;
-                                }
-                            }
-                        }
-
-                        # get the data for each service
-                        my @ServicesData;
-                        SERVICEID:
-                        for my $ServiceID ( keys %UniqueServiceIDs ) {
-
-                            # get service data
-                            my %ServiceData = $Self->{ServiceObject}->ServiceGet(
-                                ServiceID => $ServiceID,
-                                UserID    => $Self->{UserID},
-                            );
-
-                            # store service data
-                            push @ServicesData, \%ServiceData;
-                        }
-
-                        # sort services data by service name
-                        @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
-
-                        # store services data
-                        if ( scalar @ServicesData ) {
-                            SERVICE:
-                            for my $Service (@ServicesData) {
-                                my $ServiceName = $Service->{NameShort};
-                                if ( $Info{Services} ) {
-                                    $Info{Services} .= ' ' . $ServiceName;
-                                    next SERVICE;
-                                }
-                                $Info{Services} = $ServiceName;
-                            }
-                        }
-
-                        # csv quote
-                        if ( !@CSVHead ) {
-                            @CSVHead = @{ $Self->{Config}->{SearchCSVData} };
-                        }
-
-                        my @Data;
-                        for my $Header (@CSVHead) {
-                            push @Data, $Info{$Header};
-                        }
-                        push @CSVData, \@Data;
-                    }
-
-                    # translate headers
-                    for my $Header (@CSVHead) {
-
-                        # replace FAQNumber header with the current FAQHook from config
-                        if ( $Header eq 'ChangeNumber' ) {
-                            $Header = $Self->{ConfigObject}->Get('ITSMChange::Hook');
-                        }
-                        else {
-                            $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
-                        }
-                    }
-
-                    # assable CSV data
-                    my $CSV = $Self->{CSVObject}->Array2CSV(
-                        Head      => \@CSVHead,
-                        Data      => \@CSVData,
-                        Separator => $Self->{UserCSVSeparator},
-                    );
-
-                    # return csv to download
-                    my $CSVFile = 'change_search';
-                    my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
-                        SystemTime => $Self->{TimeObject}->SystemTime(),
-                    );
-                    $M = sprintf( "%02d", $M );
-                    $D = sprintf( "%02d", $D );
-                    $h = sprintf( "%02d", $h );
-                    $m = sprintf( "%02d", $m );
-                    return $Self->{LayoutObject}->Attachment(
-                        Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
-                        ContentType => "text/csv; charset=" . $Self->{LayoutObject}->{UserCharset},
-                        Content     => $CSV,
-                    );
-
-                }
-                elsif ( $GetParam{ResultForm} eq 'Print' ) {
+                ID:
+                for my $ChangeID ( @{$ViewableChangeIDs} ) {
 
                     # to store all data
                     my %Info;
 
-                    # to send data to the PDF output
-                    my @PDFData;
-                    ID:
-                    for my $ChangeID ( @{$ViewableChangeIDs} ) {
+                    # to store data of sub-elements
+                    my %SubElementData;
 
-                        # get change data
-                        my $Change = $Self->{ChangeObject}->ChangeGet(
-                            UserID   => $Self->{UserID},
-                            ChangeID => $ChangeID,
-                        );
-
-                        next ID if !$Change;
-
-                        # add change data,
-                        %Info = %{$Change};
-
-                        # get user data for needed user types
-                        USERTYPE:
-                        for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
-
-                            # check if UserType attribute exists either in change or workorder
-                            if ( !$Change->{ $UserType . 'ID' } && !$Info{ $UserType . 'ID' } ) {
-                                next USERTYPE;
-                            }
-
-                            # get user data
-                            my %User = $Self->{UserObject}->GetUserData(
-                                UserID =>
-                                    $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
-                                Cached => 1,
-                            );
-
-                            # set user full name
-                            $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
-                                . $User{UserLastname} . ')';
-                        }
-
-                        use Kernel::System::PDF;
-                        $Self->{PDFObject} = Kernel::System::PDF->new( %{$Self} );
-                        if ( $Self->{PDFObject} ) {
-
-                            my $ChangeTitle = $Self->{LayoutObject}->Output(
-                                Template => '$QData{"ChangeTitle","30"}',
-                                Data     => \%Info,
-                            );
-
-                            my $PlannedStart = $Self->{LayoutObject}->Output(
-                                Template => '$TimeLong{"$Data{"PlannedStartTime"}"}',
-                                Data     => \%Info,
-                            );
-
-                            my $PlannedEnd = $Self->{LayoutObject}->Output(
-                                Template => '$TimeLong{"$Data{"PlannedEndTime"}"}',
-                                Data     => \%Info,
-                            );
-
-                            my @PDFRow;
-                            push @PDFRow,  $Info{ChangeNumber};
-                            push @PDFRow,  $ChangeTitle;
-                            push @PDFRow,  $Info{ChangeBuilder};
-                            push @PDFRow,  $Info{WorkOrderCount};
-                            push @PDFRow,  $Info{ChangeState};
-                            push @PDFRow,  $Info{Priority};
-                            push @PDFRow,  $PlannedStart;
-                            push @PDFRow,  $PlannedEnd;
-                            push @PDFData, \@PDFRow;
-                        }
-                        else {
-
-                            # add table block
-                            $Self->{LayoutObject}->Block(
-                                Name => 'Record',
-                                Data => {
-                                    %Info,
-                                },
-                            );
-                        }
-                    }
-
-                    # PDF Output
-                    if ( $Self->{PDFObject} ) {
-                        my $Title = $Self->{LayoutObject}->{LanguageObject}->Get('Change') . ' '
-                            . $Self->{LayoutObject}->{LanguageObject}->Get('Search');
-                        my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
-                        my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
-                        my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
-                        my $Url       = '';
-                        if ( $ENV{REQUEST_URI} ) {
-                            $Url
-                                = $Self->{ConfigObject}->Get('HttpType') . '://'
-                                . $Self->{ConfigObject}->Get('FQDN')
-                                . $ENV{REQUEST_URI};
-                        }
-
-                        # get maximum number of pages
-                        my $MaxPages = $Self->{ConfigObject}->Get('PDF::MaxPages');
-                        if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
-                            $MaxPages = 100;
-                        }
-
-                        # create the header
-                        my $CellData;
-                        $CellData->[0]->[0]->{Content}
-                            = $Self->{ConfigObject}->Get('ITSMChange::Hook');
-                        $CellData->[0]->[0]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[1]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeTitle');
-                        $CellData->[0]->[1]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[2]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeBuilder');
-                        $CellData->[0]->[2]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[3]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('WorkOrders');
-                        $CellData->[0]->[3]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[4]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeState');
-                        $CellData->[0]->[4]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[5]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('Priority');
-                        $CellData->[0]->[5]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[6]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedStartTime');
-                        $CellData->[0]->[6]->{Font} = 'ProportionalBold';
-                        $CellData->[0]->[7]->{Content}
-                            = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedEndTime');
-                        $CellData->[0]->[7]->{Font} = 'ProportionalBold';
-
-                        # create the content array
-                        my $CounterRow = 1;
-                        for my $Row (@PDFData) {
-                            my $CounterColumn = 0;
-                            for my $Content ( @{$Row} ) {
-                                $CellData->[$CounterRow]->[$CounterColumn]->{Content} = $Content;
-                                $CounterColumn++;
-                            }
-                            $CounterRow++;
-                        }
-
-                        # output 'No ticket data found', if no content was given
-                        if ( !$CellData->[0]->[0] ) {
-                            $CellData->[0]->[0]->{Content}
-                                = $Self->{LayoutObject}->{LanguageObject}
-                                ->Get('No ticket data found.');
-                        }
-
-                        # page params
-                        my %PageParam;
-                        $PageParam{PageOrientation} = 'landscape';
-                        $PageParam{MarginTop}       = 30;
-                        $PageParam{MarginRight}     = 40;
-                        $PageParam{MarginBottom}    = 40;
-                        $PageParam{MarginLeft}      = 40;
-                        $PageParam{HeaderRight}     = $Title;
-                        $PageParam{FooterLeft}      = $Url;
-                        $PageParam{HeadlineLeft}    = $Title;
-                        $PageParam{HeadlineRight}   = $PrintedBy . ' '
-                            . $Self->{UserFirstname} . ' '
-                            . $Self->{UserLastname} . ' ('
-                            . $Self->{UserEmail} . ') '
-                            . $Time;
-
-                        # table params
-                        my %TableParam;
-                        $TableParam{CellData}            = $CellData;
-                        $TableParam{Type}                = 'Cut';
-                        $TableParam{FontSize}            = 6;
-                        $TableParam{Border}              = 0;
-                        $TableParam{BackgroundColorEven} = '#AAAAAA';
-                        $TableParam{BackgroundColorOdd}  = '#DDDDDD';
-                        $TableParam{Padding}             = 1;
-                        $TableParam{PaddingTop}          = 3;
-                        $TableParam{PaddingBottom}       = 3;
-
-                        # create new pdf document
-                        $Self->{PDFObject}->DocumentNew(
-                            Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
-                            Encode => $Self->{LayoutObject}->{UserCharset},
-                        );
-
-                        # start table output
-                        $Self->{PDFObject}->PageNew( %PageParam, FooterRight => $Page . ' 1', );
-                        for ( 2 .. $MaxPages ) {
-
-                            # output table (or a fragment of it)
-                            %TableParam = $Self->{PDFObject}->Table( %TableParam, );
-
-                            # stop output or another page
-                            if ( $TableParam{State} ) {
-                                last;
-                            }
-                            else {
-                                $Self->{PDFObject}->PageNew(
-                                    %PageParam, FooterRight => $Page
-                                        . ' ' . $_,
-                                );
-                            }
-                        }
-
-                        # return the pdf document
-                        my $Filename = 'change_search';
-                        my ( $s, $m, $h, $D, $M, $Y )
-                            = $Self->{TimeObject}->SystemTime2Date(
-                            SystemTime => $Self->{TimeObject}->SystemTime(),
-                            );
-                        $M = sprintf( "%02d", $M );
-                        $D = sprintf( "%02d", $D );
-                        $h = sprintf( "%02d", $h );
-                        $m = sprintf( "%02d", $m );
-                        my $PDFString = $Self->{PDFObject}->DocumentOutput();
-                        return $Self->{LayoutObject}->Attachment(
-                            Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
-                            ContentType => "application/pdf",
-                            Content     => $PDFString,
-                            Type        => 'attachment',
-                        );
-                    }
-                    else {
-                        my $Output = $Self->{LayoutObject}->PrintHeader( Width => 800 );
-                        if ( @{$ViewableChangeIDs} == $Self->{SearchLimit} ) {
-                            $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
-                                . $Self->{SearchLimit} . '"}';
-                        }
-                        $Output .= $Self->{LayoutObject}->Output(
-                            TemplateFile => 'AgentITSMChangeSearchResultPrint',
-                            Data         => \%Param,
-                        );
-
-                        # add footer
-                        $Output .= $Self->{LayoutObject}->PrintFooter();
-
-                        # return output
-                        return $Output;
-                    }
-
-                }
-                else {
-
-                    # start html page
-                    my $Output = $Self->{LayoutObject}->Header();
-                    $Output .= $Self->{LayoutObject}->NavigationBar();
-                    $Self->{LayoutObject}->Print( Output => \$Output );
-                    $Output = '';
-
-                    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
-                    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
-
-                    # show changes
-                    my $LinkPage = 'Filter='
-                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
-                        . ';OrderBy='
-                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
-                        . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
-                        . ';';
-                    my $LinkSort = 'Filter='
-                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-                        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-                        . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
-                        . ';';
-                    my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
-                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                        . ';';
-                    my $LinkBack = 'Subaction=LoadProfile;Profile='
-                        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
-                        . ';TakeLastSearch=1;';
-
-                    # find out which columns should be shown
-                    my @ShowColumns;
-                    if ( $Self->{Config}->{ShowColumns} ) {
-
-                        # get all possible columns from config
-                        my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
-
-                        # get the column names that should be shown
-                        COLUMNNAME:
-                        for my $Name ( keys %PossibleColumn ) {
-                            next COLUMNNAME if !$PossibleColumn{$Name};
-                            push @ShowColumns, $Name;
-                        }
-                    }
-
-                    $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
-                        ChangeIDs   => $ViewableChangeIDs,
-                        Total       => scalar @{$ViewableChangeIDs},
-                        View        => $Self->{View},
-                        Env         => $Self,
-                        LinkPage    => $LinkPage,
-                        LinkSort    => $LinkSort,
-                        LinkFilter  => $LinkFilter,
-                        LinkBack    => $LinkBack,
-                        Profile     => $Self->{Profile},
-                        TitleName   => 'Change Search Result',
-                        ShowColumns => \@ShowColumns,
-                        SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
-                        OrderBy => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
+                    # get change data
+                    my $Change = $Self->{ChangeObject}->ChangeGet(
+                        UserID   => $Self->{UserID},
+                        ChangeID => $ChangeID,
                     );
 
-                    # build footer
-                    $Output .= $Self->{LayoutObject}->Footer();
+                    next ID if !$Change;
 
+                    # add change data,
+                    # ( let workorder data overwrite
+                    # some change attributes, i.e. PlannedStartTime, etc... )
+                    %Info = ( %{$Change}, %Info );
+
+                    # get user data for needed user types
+                    USERTYPE:
+                    for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
+
+                        # check if UserType attribute exists either in change or workorder
+                        if ( !$Change->{ $UserType . 'ID' } && !$Info{ $UserType . 'ID' } ) {
+                            next USERTYPE;
+                        }
+
+                        # get user data
+                        my %User = $Self->{UserObject}->GetUserData(
+                            UserID =>
+                                $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
+                            Cached => 1,
+                        );
+
+                        # set user data
+                        $Info{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                        $Info{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                        $Info{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                        $Info{ $UserType . 'LeftParenthesis' }  = '(';
+                        $Info{ $UserType . 'RightParenthesis' } = ')';
+
+                        # set user full name
+                        $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
+                            . $User{UserLastname} . ')';
+                    }
+
+                    # to store the linked service data
+                    my $LinkListWithData = {};
+
+                    my @WorkOrderIDs;
+
+                    # store the combined linked services data from all workorders of this change
+                    @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
+
+                    # store the combined linked services data
+                    for my $WorkOrderID (@WorkOrderIDs) {
+
+                        # get linked objects of this workorder
+                        my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                            Object => 'ITSMWorkOrder',
+                            Key    => $WorkOrderID,
+                            State  => 'Valid',
+                            UserID => $Self->{UserID},
+                        );
+
+                        OBJECT:
+                        for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+
+                            # only show linked services of workorder
+                            if ( $Object ne 'Service' ) {
+                                next OBJECT;
+                            }
+
+                            LINKTYPE:
+                            for my $LinkType (
+                                keys %{ $LinkListWithDataWorkOrder->{$Object} }
+                                )
+                            {
+
+                                DIRECTION:
+                                for my $Direction (
+                                    keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                                    )
+                                {
+
+                                    ID:
+                                    for my $ID (
+                                        keys %{
+                                            $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                                ->{$Direction}
+                                        }
+                                        )
+                                    {
+
+                                        # combine the linked object data from all workorders
+                                        $LinkListWithData->{$Object}->{$LinkType}
+                                            ->{$Direction}->{$ID}
+                                            = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                            ->{$Direction}->{$ID};
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    # get unique service ids
+                    my %UniqueServiceIDs;
+                    my $ServicesRef = $LinkListWithData->{Service} || {};
+                    for my $LinkType ( keys %{$ServicesRef} ) {
+
+                        # extract link type List
+                        my $LinkTypeList = $ServicesRef->{$LinkType};
+
+                        for my $Direction ( keys %{$LinkTypeList} ) {
+
+                            # extract direction list
+                            my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
+
+                            # collect unique service ids
+                            for my $ServiceID ( keys %{$DirectionList} ) {
+                                $UniqueServiceIDs{$ServiceID}++;
+                            }
+                        }
+                    }
+
+                    # get the data for each service
+                    my @ServicesData;
+                    SERVICEID:
+                    for my $ServiceID ( keys %UniqueServiceIDs ) {
+
+                        # get service data
+                        my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                            ServiceID => $ServiceID,
+                            UserID    => $Self->{UserID},
+                        );
+
+                        # store service data
+                        push @ServicesData, \%ServiceData;
+                    }
+
+                    # sort services data by service name
+                    @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
+
+                    # store services data
+                    if ( scalar @ServicesData ) {
+                        SERVICE:
+                        for my $Service (@ServicesData) {
+                            my $ServiceName = $Service->{NameShort};
+                            if ( $Info{Services} ) {
+                                $Info{Services} .= ' ' . $ServiceName;
+                                next SERVICE;
+                            }
+                            $Info{Services} = $ServiceName;
+                        }
+                    }
+
+                    # csv quote
+                    if ( !@CSVHead ) {
+                        @CSVHead = @{ $Self->{Config}->{SearchCSVData} };
+                    }
+
+                    my @Data;
+                    for my $Header (@CSVHead) {
+                        push @Data, $Info{$Header};
+                    }
+                    push @CSVData, \@Data;
+                }
+
+                # translate headers
+                for my $Header (@CSVHead) {
+
+                    # replace FAQNumber header with the current FAQHook from config
+                    if ( $Header eq 'ChangeNumber' ) {
+                        $Header = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                    }
+                    else {
+                        $Header = $Self->{LayoutObject}->{LanguageObject}->Get($Header);
+                    }
+                }
+
+                # assable CSV data
+                my $CSV = $Self->{CSVObject}->Array2CSV(
+                    Head      => \@CSVHead,
+                    Data      => \@CSVData,
+                    Separator => $Self->{UserCSVSeparator},
+                );
+
+                # return csv to download
+                my $CSVFile = 'change_search';
+                my ( $s, $m, $h, $D, $M, $Y ) = $Self->{TimeObject}->SystemTime2Date(
+                    SystemTime => $Self->{TimeObject}->SystemTime(),
+                );
+                $M = sprintf( "%02d", $M );
+                $D = sprintf( "%02d", $D );
+                $h = sprintf( "%02d", $h );
+                $m = sprintf( "%02d", $m );
+                return $Self->{LayoutObject}->Attachment(
+                    Filename    => $CSVFile . "_" . "$Y-$M-$D" . "_" . "$h-$m.csv",
+                    ContentType => "text/csv; charset=" . $Self->{LayoutObject}->{UserCharset},
+                    Content     => $CSV,
+                );
+
+            }
+            elsif ( $GetParam{ResultForm} eq 'Print' ) {
+
+                # to store all data
+                my %Info;
+
+                # to send data to the PDF output
+                my @PDFData;
+                ID:
+                for my $ChangeID ( @{$ViewableChangeIDs} ) {
+
+                    # get change data
+                    my $Change = $Self->{ChangeObject}->ChangeGet(
+                        UserID   => $Self->{UserID},
+                        ChangeID => $ChangeID,
+                    );
+
+                    next ID if !$Change;
+
+                    # add change data,
+                    %Info = %{$Change};
+
+                    # get user data for needed user types
+                    USERTYPE:
+                    for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
+
+                        # check if UserType attribute exists either in change or workorder
+                        if ( !$Change->{ $UserType . 'ID' } && !$Info{ $UserType . 'ID' } ) {
+                            next USERTYPE;
+                        }
+
+                        # get user data
+                        my %User = $Self->{UserObject}->GetUserData(
+                            UserID =>
+                                $Change->{ $UserType . 'ID' } || $Info{ $UserType . 'ID' },
+                            Cached => 1,
+                        );
+
+                        # set user full name
+                        $Info{$UserType} = $User{UserLogin} . ' (' . $User{UserFirstname}
+                            . $User{UserLastname} . ')';
+                    }
+
+                    use Kernel::System::PDF;
+                    $Self->{PDFObject} = Kernel::System::PDF->new( %{$Self} );
+                    if ( $Self->{PDFObject} ) {
+
+                        my $ChangeTitle = $Self->{LayoutObject}->Output(
+                            Template => '$QData{"ChangeTitle","30"}',
+                            Data     => \%Info,
+                        );
+
+                        my $PlannedStart = $Self->{LayoutObject}->Output(
+                            Template => '$TimeLong{"$Data{"PlannedStartTime"}"}',
+                            Data     => \%Info,
+                        );
+
+                        my $PlannedEnd = $Self->{LayoutObject}->Output(
+                            Template => '$TimeLong{"$Data{"PlannedEndTime"}"}',
+                            Data     => \%Info,
+                        );
+
+                        my @PDFRow;
+                        push @PDFRow,  $Info{ChangeNumber};
+                        push @PDFRow,  $ChangeTitle;
+                        push @PDFRow,  $Info{ChangeBuilder};
+                        push @PDFRow,  $Info{WorkOrderCount};
+                        push @PDFRow,  $Info{ChangeState};
+                        push @PDFRow,  $Info{Priority};
+                        push @PDFRow,  $PlannedStart;
+                        push @PDFRow,  $PlannedEnd;
+                        push @PDFData, \@PDFRow;
+                    }
+                    else {
+
+                        # add table block
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Record',
+                            Data => {
+                                %Info,
+                            },
+                        );
+                    }
+                }
+
+                # PDF Output
+                if ( $Self->{PDFObject} ) {
+                    my $Title = $Self->{LayoutObject}->{LanguageObject}->Get('Change') . ' '
+                        . $Self->{LayoutObject}->{LanguageObject}->Get('Search');
+                    my $PrintedBy = $Self->{LayoutObject}->{LanguageObject}->Get('printed by');
+                    my $Page      = $Self->{LayoutObject}->{LanguageObject}->Get('Page');
+                    my $Time      = $Self->{LayoutObject}->Output( Template => '$Env{"Time"}' );
+                    my $Url       = '';
+                    if ( $ENV{REQUEST_URI} ) {
+                        $Url
+                            = $Self->{ConfigObject}->Get('HttpType') . '://'
+                            . $Self->{ConfigObject}->Get('FQDN')
+                            . $ENV{REQUEST_URI};
+                    }
+
+                    # get maximum number of pages
+                    my $MaxPages = $Self->{ConfigObject}->Get('PDF::MaxPages');
+                    if ( !$MaxPages || $MaxPages < 1 || $MaxPages > 1000 ) {
+                        $MaxPages = 100;
+                    }
+
+                    # create the header
+                    my $CellData;
+                    $CellData->[0]->[0]->{Content}
+                        = $Self->{ConfigObject}->Get('ITSMChange::Hook');
+                    $CellData->[0]->[0]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[1]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeTitle');
+                    $CellData->[0]->[1]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[2]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeBuilder');
+                    $CellData->[0]->[2]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[3]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('WorkOrders');
+                    $CellData->[0]->[3]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[4]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('ChangeState');
+                    $CellData->[0]->[4]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[5]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('Priority');
+                    $CellData->[0]->[5]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[6]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedStartTime');
+                    $CellData->[0]->[6]->{Font} = 'ProportionalBold';
+                    $CellData->[0]->[7]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('PlannedEndTime');
+                    $CellData->[0]->[7]->{Font} = 'ProportionalBold';
+
+                    # create the content array
+                    my $CounterRow = 1;
+                    for my $Row (@PDFData) {
+                        my $CounterColumn = 0;
+                        for my $Content ( @{$Row} ) {
+                            $CellData->[$CounterRow]->[$CounterColumn]->{Content} = $Content;
+                            $CounterColumn++;
+                        }
+                        $CounterRow++;
+                    }
+
+                    # output 'No ticket data found', if no content was given
+                    if ( !$CellData->[0]->[0] ) {
+                        $CellData->[0]->[0]->{Content}
+                            = $Self->{LayoutObject}->{LanguageObject}
+                            ->Get('No ticket data found.');
+                    }
+
+                    # page params
+                    my %PageParam;
+                    $PageParam{PageOrientation} = 'landscape';
+                    $PageParam{MarginTop}       = 30;
+                    $PageParam{MarginRight}     = 40;
+                    $PageParam{MarginBottom}    = 40;
+                    $PageParam{MarginLeft}      = 40;
+                    $PageParam{HeaderRight}     = $Title;
+                    $PageParam{FooterLeft}      = $Url;
+                    $PageParam{HeadlineLeft}    = $Title;
+                    $PageParam{HeadlineRight}   = $PrintedBy . ' '
+                        . $Self->{UserFirstname} . ' '
+                        . $Self->{UserLastname} . ' ('
+                        . $Self->{UserEmail} . ') '
+                        . $Time;
+
+                    # table params
+                    my %TableParam;
+                    $TableParam{CellData}            = $CellData;
+                    $TableParam{Type}                = 'Cut';
+                    $TableParam{FontSize}            = 6;
+                    $TableParam{Border}              = 0;
+                    $TableParam{BackgroundColorEven} = '#AAAAAA';
+                    $TableParam{BackgroundColorOdd}  = '#DDDDDD';
+                    $TableParam{Padding}             = 1;
+                    $TableParam{PaddingTop}          = 3;
+                    $TableParam{PaddingBottom}       = 3;
+
+                    # create new pdf document
+                    $Self->{PDFObject}->DocumentNew(
+                        Title  => $Self->{ConfigObject}->Get('Product') . ': ' . $Title,
+                        Encode => $Self->{LayoutObject}->{UserCharset},
+                    );
+
+                    # start table output
+                    $Self->{PDFObject}->PageNew( %PageParam, FooterRight => $Page . ' 1', );
+                    for ( 2 .. $MaxPages ) {
+
+                        # output table (or a fragment of it)
+                        %TableParam = $Self->{PDFObject}->Table( %TableParam, );
+
+                        # stop output or another page
+                        if ( $TableParam{State} ) {
+                            last;
+                        }
+                        else {
+                            $Self->{PDFObject}->PageNew(
+                                %PageParam, FooterRight => $Page
+                                    . ' ' . $_,
+                            );
+                        }
+                    }
+
+                    # return the pdf document
+                    my $Filename = 'change_search';
+                    my ( $s, $m, $h, $D, $M, $Y )
+                        = $Self->{TimeObject}->SystemTime2Date(
+                        SystemTime => $Self->{TimeObject}->SystemTime(),
+                        );
+                    $M = sprintf( "%02d", $M );
+                    $D = sprintf( "%02d", $D );
+                    $h = sprintf( "%02d", $h );
+                    $m = sprintf( "%02d", $m );
+                    my $PDFString = $Self->{PDFObject}->DocumentOutput();
+                    return $Self->{LayoutObject}->Attachment(
+                        Filename    => $Filename . "_" . "$Y-$M-$D" . "_" . "$h-$m.pdf",
+                        ContentType => "application/pdf",
+                        Content     => $PDFString,
+                        Type        => 'attachment',
+                    );
+                }
+                else {
+                    my $Output = $Self->{LayoutObject}->PrintHeader( Width => 800 );
+                    if ( @{$ViewableChangeIDs} == $Self->{SearchLimit} ) {
+                        $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
+                            . $Self->{SearchLimit} . '"}';
+                    }
+                    $Output .= $Self->{LayoutObject}->Output(
+                        TemplateFile => 'AgentITSMChangeSearchResultPrint',
+                        Data         => \%Param,
+                    );
+
+                    # add footer
+                    $Output .= $Self->{LayoutObject}->PrintFooter();
+
+                    # return output
                     return $Output;
                 }
+
+            }
+            else {
+
+                # start html page
+                my $Output = $Self->{LayoutObject}->Header();
+                $Output .= $Self->{LayoutObject}->NavigationBar();
+                $Self->{LayoutObject}->Print( Output => \$Output );
+                $Output = '';
+
+                $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
+                $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
+
+                # show changes
+                my $LinkPage = 'Filter='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+                    . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                    . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} )
+                    . ';OrderBy='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} )
+                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
+                    . ';';
+                my $LinkSort = 'Filter='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+                    . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+                    . ';Profile=' . $Self->{Profile} . ';TakeLastSearch=1;Subaction=Search'
+                    . ';';
+                my $LinkFilter = 'TakeLastSearch=1;Subaction=Search;Profile='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                    . ';';
+                my $LinkBack = 'Subaction=LoadProfile;Profile='
+                    . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Profile} )
+                    . ';TakeLastSearch=1;';
+
+                # find out which columns should be shown
+                my @ShowColumns;
+                if ( $Self->{Config}->{ShowColumns} ) {
+
+                    # get all possible columns from config
+                    my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+
+                    # get the column names that should be shown
+                    COLUMNNAME:
+                    for my $Name ( keys %PossibleColumn ) {
+                        next COLUMNNAME if !$PossibleColumn{$Name};
+                        push @ShowColumns, $Name;
+                    }
+                }
+
+                $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
+                    ChangeIDs   => $ViewableChangeIDs,
+                    Total       => scalar @{$ViewableChangeIDs},
+                    View        => $Self->{View},
+                    Env         => $Self,
+                    LinkPage    => $LinkPage,
+                    LinkSort    => $LinkSort,
+                    LinkFilter  => $LinkFilter,
+                    LinkBack    => $LinkBack,
+                    Profile     => $Self->{Profile},
+                    TitleName   => 'Change Search Result',
+                    ShowColumns => \@ShowColumns,
+                    SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{SortBy} ),
+                    OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $Self->{OrderBy} ),
+                );
+
+                # build footer
+                $Output .= $Self->{LayoutObject}->Footer();
+
+                return $Output;
             }
         }
     }
@@ -1719,216 +1682,6 @@ sub _MaskForm {
     );
 
     return $Output;
-}
-
-sub _GetExpandInfo {
-    my ( $Self, %Param ) = @_;
-
-    my %Info;    # this hash will be returned
-
-    # get group id for the group 'itsm-change'.
-    my $ITSMChangeGroupID = $Self->{GroupObject}->GroupLookup(
-        Group => 'itsm-change',
-    );
-
-    # get members of group 'itsm-change'.
-    # Only members of this group may be CABAgents.
-    # TODO: what about agents that were removed from 'itsm-change', but are still CAB members ?
-    my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
-        GroupID => $ITSMChangeGroupID,
-        Type    => 'ro',
-        Result  => 'HASH',
-        Cached  => 1,
-    );
-
-    # currently the only Agent search is for 'CABAgent', but more might be added
-    for my $Name (qw(CABAgent)) {
-
-        # the fields in .dtl have a number at the end
-        my $Key = 1;
-
-        # handle the "search user" button
-        if ( $Param{ 'Expand' . $Name . '1' } ) {
-
-            # search for agents
-            my %UserFound = $Self->{UserObject}->UserSearch(
-                Search => $Param{$Name} . '*',
-                Valid  => 1,
-            );
-
-            # UserSearch() returns values with a trailing space, get rid of it
-            for my $Name ( values %UserFound ) {
-                $Name =~ s{ \s+ \z }{}xms;
-            }
-
-            # filter the itsm-change users in found users
-            my %UserList;
-            USERID:
-            for my $UserID ( keys %ITSMChangeUsers ) {
-                next USERID if !$UserFound{$UserID};
-
-                $UserList{$UserID} = $UserFound{$UserID};
-            }
-
-            # if a single user was found, fill up SelectedUser and the search field
-            my @KeysUserList = keys %UserList;
-            if ( scalar @KeysUserList == 1 ) {
-
-                # if user is found, display the name
-                $Info{$Name} = $UserList{ $KeysUserList[0] };
-
-                # get user
-                my %UserData = $Self->{UserObject}->GetUserData(
-                    UserID => $KeysUserList[0],
-                );
-
-                # if user is found set hidden field,
-                # this is the id that will actually be used in ChangeSearch
-                if ( $UserData{UserID} ) {
-                    $Info{ 'SelectedUser' . $Key } = $UserData{UserID};
-                }
-            }
-
-            # if no or more the one user was found, show list
-            # and clean UserID
-            else {
-
-                # reset input field
-                $Info{ 'SelectedUser' . $Key } = '';
-
-                # build drop down with found users
-                $Info{ $Name . 'SelectionString' } = $Self->{LayoutObject}->BuildSelection(
-                    Name => $Name . 'ID',
-                    Data => \%UserList,
-                );
-
-                # show 'take this user' button
-                $Self->{LayoutObject}->Block(
-                    Name => 'Take' . $Name,
-                );
-
-                # clear the selected user if no user was found
-                if ( !%UserList ) {
-                    $Info{$Name} = '';
-                    $Info{ 'SelectedUser' . $Key } = '';
-                }
-            }
-        }
-
-        # handle the "take this user" button
-        elsif ( $Param{ 'Expand' . $Name . '2' } ) {
-
-            # show user data
-            my $UserID   = $Param{ $Name . 'ID' };
-            my %UserData = $Self->{UserObject}->GetUserData(
-                UserID => $UserID,
-            );
-
-            # if user is found
-            if (%UserData) {
-
-                # set hidden field
-                $Info{ 'SelectedUser' . $Key } = $UserID;
-                $Info{$Name} = sprintf '"%s %s" <%s>',
-                    $UserData{UserFirstname},
-                    $UserData{UserLastname},
-                    $UserData{UserEmail};
-            }
-        }
-    }
-
-    # search for CABCustomer
-    if ( $Param{ExpandCABCustomer1} ) {
-
-        # search customers
-        my %CustomerUserFound = $Self->{CustomerUserObject}->CustomerSearch(
-            Search => $Param{CABCustomer} . '*',
-            Valid  => 1,
-        );
-
-        # save found customer users in @CustomerUserList
-        my @CustomerUserList;
-        for my $CustomerUserID ( keys %CustomerUserFound ) {
-
-            push @CustomerUserList, {
-                Name => $CustomerUserFound{$CustomerUserID},
-                ID   => $CustomerUserID,
-            };
-        }
-
-        # check if just one customer user exists
-        # if just one, fillup CustomerUserID and CustomerID
-        if ( scalar @CustomerUserList == 1 ) {
-
-            # if user is found, display the name
-            $Info{CABCustomer} = $CustomerUserList[0]->{Name};
-
-            # set hidden field when a customer user is found
-            # this is the id that will actually be used in ChangeSearch
-            $Info{'SelectedCustomerUser'} = $CustomerUserList[0]->{ID};
-        }
-
-        # if more the one user exists, show list
-        # and clean UserID
-        else {
-
-            # build list for drop down
-            my @UserListForDropDown;
-            for my $User (@CustomerUserList) {
-                push @UserListForDropDown, {
-                    Key   => $User->{ID},
-                    Value => $User->{Name},
-                };
-            }
-
-            # reset input field
-            $Info{CABCustomer} = '';
-
-            # build drop down with found customer users
-            $Info{CABCustomerSelectionString} = $Self->{LayoutObject}->BuildSelection(
-                Name => 'CABCustomerID',
-                Data => \@UserListForDropDown,
-            );
-
-            # show 'take this user' button
-            $Self->{LayoutObject}->Block(
-                Name => 'TakeCABCustomer',
-            );
-
-            # clear to if there is no customer found
-            if ( !@CustomerUserList ) {
-                $Info{'CABCustomer'}   = '';
-                $Info{'CABCustomerID'} = '';
-            }
-        }
-    }
-
-    # handle the "take this user" button
-    elsif ( $Param{ExpandCABCustomer2} ) {
-
-        # show user data
-        my $CustomerUserID = $Param{'CABCustomerID'};
-        my %UserData;
-
-        # get customer user data
-        my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            User  => $CustomerUserID,
-            Valid => 1,
-        );
-
-        # if user is found
-        if (%CustomerUserData) {
-
-            # set hidden field
-            $Info{SelectedCustomerUser} = $CustomerUserID;
-            $Info{CABCustomer}          = sprintf '"%s %s" <%s>',
-                $CustomerUserData{UserFirstname},
-                $CustomerUserData{UserLastname},
-                $CustomerUserData{UserEmail};
-        }
-    }
-
-    return %Info;
 }
 
 sub _GetFreeTextKeyString {
