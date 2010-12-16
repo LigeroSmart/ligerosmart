@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.30 2010-12-14 22:14:50 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.31 2010-12-16 18:39:25 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -73,11 +73,11 @@
                 </div>
 
                 <div class="Content">
-                    <table class="DataTable">
+                    <table class="DataTable DataTableNoHighlight">
                         <thead>
                             <tr>
-                                <th class="W20pc">Object</th>
-                                <th class="W20pc">Selector</th>
+                                <th class="W10pc">Object</th>
+                                <th class="W25pc">Selector</th>
                                 <th class="W20pc">Attribute</th>
                                 <th class="W20pc">Operator</th>
                                 <th class="W20pc">Value</th>
@@ -170,7 +170,7 @@
                     <h2>$Text{"Actions"}</h2>
                 </div>
                 <div class="Content">
-                    <table class="DataTable">
+                    <table class="DataTable DataTableNoHighlight">
                         <thead>
                             <tr>
                                 <th class="W20pc">Object</th>
