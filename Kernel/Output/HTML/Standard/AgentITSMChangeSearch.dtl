@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.46 2010-12-16 21:18:55 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.47 2010-12-17 13:36:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -82,15 +82,15 @@ $Include{"AgentITSMUserSearch"}
         <div class="Clear"></div>
         <label for="CABAgent" id="LabelCABAgent">$Text{"CABAgent"} ($Text{"e.g."} 234231):</label>
         <div class="Field">
-            <input type="hidden" id="CABAgentSelected" value="" name="CABAgent">
-            <input type="text" name="CABAgent::Search" value="$QData{"CABAgent"}" class="W50pc ITSMUserSearch"/>
+            <input type="hidden" id="CABAgentSelected" value="$QData{"CABAgent"}" name="CABAgent">
+            <input type="text" name="CABAgentSearch" value="$QData{"CABAgentSearch"}" class="W50pc ITSMUserSearch"/>
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
         <label for="CABCustomer" id="LabelCABCustomer">$Text{"CABCustomer"} ($Text{"e.g."} US4231):</label>
         <div class="Field">
-            <input type="hidden" id="CABCustomerSelected" value="" name="CABCustomer">
-            <input type="text" name="CABCustomer::Search" value="$QData{"CABCustomer"}" class="W50pc ITSMCustomerSearch"/>
+            <input type="hidden" id="CABCustomerSelected" value="$QData{"CABCustomer"}" name="CABCustomer">
+            <input type="text" name="CABCustomerSearch" value="$QData{"CABCustomerSearch"}" class="W50pc ITSMCustomerSearch"/>
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
