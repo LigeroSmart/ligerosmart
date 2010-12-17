@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.61 2010-12-09 03:01:04 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.62 2010-12-17 13:24:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -510,11 +510,6 @@ sub Run {
         %TimePeriod,
     );
 
-    # remove AJAX-Loading images in date selection fields to avoid jitter effect
-    $MoveTimeSelectionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
-        HTMLString => $MoveTimeSelectionString,
-    );
-
     # show block with template dropdown
     $Self->{LayoutObject}->Block(
         Name => 'WorkOrderTemplate',
@@ -541,8 +536,8 @@ sub Run {
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Add',
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # add rich text editor
     if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
@@ -749,7 +744,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }

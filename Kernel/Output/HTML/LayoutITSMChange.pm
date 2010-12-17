@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.54 2010-12-16 21:18:05 cr Exp $
+# $Id: LayoutITSMChange.pm,v 1.55 2010-12-17 13:24:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =over 4
 
@@ -645,31 +645,6 @@ sub ITSMChangeListShow {
 
     # return content if available
     return $OutputRaw;
-}
-
-=item RemoveAJAXLoadingImage()
-
-A method that removes all AJAX loading images from a given html string.
-Returns the string without any AJAX loading images.
-This is useful to avoid the flickering jitter effectof selection fields,
-if the content is updated via AJAX.
-
-    my $CleanedHTMLString = $LayoutObject->RemoveAJAXLoadingImage(
-        HTMLString => 'A HTML string as returned from BuildSelection',
-    );
-
-=cut
-
-sub RemoveAJAXLoadingImage {
-    my ( $Self, %Param ) = @_;
-
-    # get the original HTML string
-    my $CleanedHTMLString = $Param{HTMLString} || '';
-
-    # remove all AJAX-Loading images to avoid jitter effect
-    $CleanedHTMLString =~ s{ <a [ ] id="AJAXImage [^<>]+ "></a> }{}xmsg;
-
-    return $CleanedHTMLString;
 }
 
 =item BuildFreeTextHTML()

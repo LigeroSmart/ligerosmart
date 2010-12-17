@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.33 2010-12-10 19:08:29 en Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.34 2010-12-17 13:24:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -305,11 +305,6 @@ sub Run {
         Validate      => 1,
         MoveTimeClass => $ValidationErrors{MoveTimeInvalid} || '',
         %TimePeriod,
-    );
-
-    # remove AJAX-Loading images in date selection fields to avoid jitter effect
-    $MoveTimeSelectionString = $Self->{LayoutObject}->RemoveAJAXLoadingImage(
-        HTMLString => $MoveTimeSelectionString,
     );
 
     # output header
