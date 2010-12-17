@@ -2,7 +2,7 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.10 2010-12-17 16:36:55 cr Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.11 2010-12-17 23:18:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,11 +12,11 @@
 <!-- dtl:block:UserSearchAutoComplete -->
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth"}");
-    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Agent"}");
+    Core.Config.Set('UserAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('UserAutocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('UserAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('UserAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
+    Core.Config.Set('UserAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
 //]]></script>
 
 <!-- dtl:block:UserSearchInit -->
@@ -31,11 +31,11 @@
 
 <!-- dtl:block:UserSearchITSMSearchAutocomplete -->
 <script type="text/javascript">//<![CDATA[
-    Core.Config.Set('Autocomplete.Active', $QData{"active"});
-    Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth"}");
-    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Agent"}");
+    Core.Config.Set('UserAutocomplete.Active', "$QData{"active"}");
+    Core.Config.Set('UserAutocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('UserAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('UserAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('UserAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
+    Core.Config.Set('UserAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
 //]]></script>
 <!-- dtl:block:UserSearchITSMSearchAutocomplete -->
