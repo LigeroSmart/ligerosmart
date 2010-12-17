@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAgent.pm - the OTRS::ITSM::ChangeManagement workorder agent edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAgent.pm,v 1.38 2010-12-09 03:01:04 ub Exp $
+# $Id: AgentITSMWorkOrderAgent.pm,v 1.39 2010-12-17 16:09:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -120,10 +120,11 @@ sub Run {
 
             if ($CouldUpdateWorkOrder) {
 
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => $Self->{LastWorkOrderView},
+                # load new URL in parent window and close popup
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => $Self->{LastWorkOrderView},
                 );
+
             }
             else {
 
@@ -153,9 +154,10 @@ sub Run {
 
                 if ($CouldUpdateWorkOrder) {
 
-                    # redirect to zoom mask
-                    return $Self->{LayoutObject}->Redirect(
-                        OP => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrder->{WorkOrderID}",
+                    # load new URL in parent window and close popup
+                    return $Self->{LayoutObject}->PopupClose(
+                        URL =>
+                            "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrder->{WorkOrderID}",
                     );
                 }
                 else {
@@ -320,16 +322,21 @@ sub Run {
         # show javascript parts for autocompletion
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoComplete',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteCode',
             Data => {
                 minQueryLength      => $AutoCompleteConfig->{MinQueryLength}      || 2,
                 queryDelay          => $AutoCompleteConfig->{QueryDelay}          || 0.1,
-                typeAhead           => $AutoCompleteConfig->{TypeAhead}           || 'false',
                 maxResultsDisplayed => $AutoCompleteConfig->{MaxResultsDisplayed} || 20,
             },
         );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchInit',
+            Data => {
+                ItemID             => 'UserAutoComplete',
+                ActiveAutoComplete => 1,
+            },
+        );
+
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoCompleteReturnElements',
             Data => {},
@@ -337,10 +344,7 @@ sub Run {
 
         # show html part for autocompletion
         $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteDivStart',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoCompleteDivEnd',
+            Name => 'UserSearchAutoCompleteDiv',
         );
     }
     else {
@@ -354,8 +358,8 @@ sub Run {
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => $WorkOrder->{WorkOrderTitle},
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
@@ -368,7 +372,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
