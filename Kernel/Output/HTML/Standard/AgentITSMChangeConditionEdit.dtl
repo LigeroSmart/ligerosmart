@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.31 2010-12-16 18:39:25 en Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.32 2010-12-17 12:11:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -76,19 +76,19 @@
                     <table class="DataTable DataTableNoHighlight">
                         <thead>
                             <tr>
-                                <th class="W10pc">Object</th>
-                                <th class="W25pc">Selector</th>
+                                <th class="W15pc">Object</th>
+                                <th class="W20pc">Selector</th>
                                 <th class="W20pc">Attribute</th>
                                 <th class="W20pc">Operator</th>
                                 <th class="W20pc">Value</th>
-                                <th class="W20pc">$Text{"Delete"}</th>
+                                <th class="W5pc">$Text{"Delete"}</th>
                             </tr>
                         </thead>
                         <tbody>
 <!-- dtl:block:ExpressionOverviewRow -->
                             <tr>
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
-                                <td class="W20pc">$Data{"ObjectOptionString"}</td>
+                                <td>$Data{"ObjectOptionString"}</td>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
@@ -99,7 +99,7 @@
 <!-- dtl:block:ExpressionOverviewRowElementObject -->
 
 <!-- dtl:block:ExpressionOverviewRowElementSelector -->
-                                <td class="W20pc">$Data{"SelectorOptionString"}</td>
+                                <td>$Data{"SelectorOptionString"}</td>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
@@ -110,7 +110,7 @@
 <!-- dtl:block:ExpressionOverviewRowElementSelector -->
 
 <!-- dtl:block:ExpressionOverviewRowElementAttribute -->
-                                <td class="W20pc">$Data{"AttributeOptionString"}</td>
+                                <td>$Data{"AttributeOptionString"}</td>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
@@ -128,9 +128,9 @@
 <!--dtl:js_on_document_complete-->
 <!-- dtl:block:ExpressionOverviewRowElementAttribute -->
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
-                                <td class="W20pc">$Data{"OperatorOptionString"}</td>
+                                <td>$Data{"OperatorOptionString"}</td>
 <!-- dtl:block:ExpressionOverviewRowElementOperator -->
-                                <td class="W20pc">
+                                <td>
                                     <div id="ExpressionID-$QData{"ExpressionID"}-CompareValue-Div">
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueText -->
                                         <input type="text" id="ExpressionID-$QData{"ExpressionID"}-CompareValue" name="ExpressionID-$QData{"ExpressionID"}-CompareValue" value="$QData{"CompareValue"}" class="W100pc" maxlength="250" />
@@ -140,7 +140,7 @@
 <!-- dtl:block:ExpressionOverviewRowElementCompareValueSelection -->
                                     </div>
                                 </td>
-                                <td class="W20pc Center">
+                                <td class="Center">
                                     <a href="$Env{"Baselink"}Action=$Env{"Action"};ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"};DeleteConditionID::$LQData{"ConditionID"}=Delete" class="TrashCan" title="$Text{"Delete"}">
                                         $Text{"Delete Condition"}
                                     </a>
@@ -173,12 +173,12 @@
                     <table class="DataTable DataTableNoHighlight">
                         <thead>
                             <tr>
-                                <th class="W20pc">Object</th>
+                                <th class="W15pc">Object</th>
                                 <th class="W20pc">Selector</th>
                                 <th class="W20pc">Attribute</th>
-                                <th class="W20pc">Operator</th>
-                                <th class="W20pc">Value</th>
-                                <th class="W20pc">$Text{"Delete"}</th>
+                                <th class="W10pc">Operator</th>
+                                <th class="W30pc">Value</th>
+                                <th class="W5pc">$Text{"Delete"}</th>
                             </tr>
                         </thead>
                         <tbody>
