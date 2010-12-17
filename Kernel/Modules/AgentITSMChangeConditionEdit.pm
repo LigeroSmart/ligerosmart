@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.40 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.41 2010-12-17 09:58:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -783,7 +783,7 @@ sub Run {
     }
 
     # output header
-    my $Output = $Self->{LayoutObject}->Header( Type => 'Small', );
+    my $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
 
     # generate ValidOptionString
     $ConditionData{ValidOptionString} = $Self->{LayoutObject}->BuildSelection(
