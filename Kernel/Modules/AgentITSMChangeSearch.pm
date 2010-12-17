@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.67 2010-12-17 13:43:20 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.68 2010-12-17 23:20:09 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1452,6 +1452,7 @@ sub _MaskForm {
             queryDelay          => $CustomerAutoCompleteConfig->{QueryDelay} || 0.1,
             typeAhead           => $CustomerAutoCompleteConfig->{TypeAhead} || 'false',
             maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            dynamicWidth        => $CustomerAutoCompleteConfig->{DynamicWidth} || 1,
         },
     );
 
@@ -1468,6 +1469,7 @@ sub _MaskForm {
             queryDelay          => $UserAutoCompleteConfig->{QueryDelay} || 0.1,
             typeAhead           => $UserAutoCompleteConfig->{TypeAhead} || 'false',
             maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth} || 1,
         },
     );
 
