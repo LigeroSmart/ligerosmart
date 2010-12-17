@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -77,4 +77,21 @@ div.SubElement {
     border-right: 0 none #000000;
 }
 
+/**
+ * @subsection  Standard Widths
+ */
+.W5pc {
+    width: 5%;
+}
+
+.W15pc {
+    width: 15%;
+}
+
+.W30pc {
+    width: 30%;
+}
+
 }/* end media */
+
+
