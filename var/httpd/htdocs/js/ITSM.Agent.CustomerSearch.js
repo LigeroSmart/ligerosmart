@@ -2,7 +2,7 @@
 // ITSM.Agent.CustomerSearch.js - provides the special module functions for the customer search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.CustomerSearch.js,v 1.1 2010-12-15 04:04:24 cr Exp $
+// $Id: ITSM.Agent.CustomerSearch.js,v 1.2 2010-12-17 20:26:28 cr Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -43,7 +43,6 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
         else {
             ActiveAutoComplete = !!ActiveAutoComplete;
         }
-
 
         if (isJQueryObject($Element)) {
             $Element.autocomplete({
