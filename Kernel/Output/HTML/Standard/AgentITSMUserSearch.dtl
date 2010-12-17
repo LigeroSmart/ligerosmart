@@ -2,7 +2,7 @@
 # AgentITSMUserSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMUserSearch.dtl,v 1.8 2010-12-16 05:10:49 cr Exp $
+# $Id: AgentITSMUserSearch.dtl,v 1.9 2010-12-17 14:52:10 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,11 +12,11 @@
 <!-- dtl:block:UserSearchAutoComplete -->
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
+    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
     Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
     Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"Ticket::Frontend::CustomerSearchAutoComplete::DynamicWidth"}");
-    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Customer"}");
+    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth"}");
+    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Agent"}");
 //]]></script>
 
 <!-- dtl:block:UserSearchInit -->
@@ -35,7 +35,7 @@
     Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
     Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
     Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"Ticket::Frontend::CustomerSearchAutoComplete::DynamicWidth"}");
-    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Customer"}");
+    Core.Config.Set('Autocomplete.DynamicWidth', "$Config{"ITSMChange::Frontend::UserSearchAutoComplete::DynamicWidth"}");
+    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Agent"}");
 //]]></script>
 <!-- dtl:block:UserSearchITSMSearchAutocomplete -->
