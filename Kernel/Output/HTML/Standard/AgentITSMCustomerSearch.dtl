@@ -2,7 +2,7 @@
 # AgentITSMCustomerSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMCustomerSearch.dtl,v 1.3 2010-12-17 20:28:53 cr Exp $
+# $Id: AgentITSMCustomerSearch.dtl,v 1.4 2010-12-17 23:17:08 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,13 +12,11 @@
 <!-- dtl:block:CustomerSearchAutoComplete -->
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-    Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('Autocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Customer"}");
-    alert('OK');
-
+    Core.Config.Set('CustomerAutocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('CustomerAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('CustomerAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('CustomerAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
+    Core.Config.Set('CustomerAutocomplete.SearchButtonText', "$JSText{"Search Customer"}");
 //]]></script>
 
 <!-- dtl:block:CustomerSearchInit -->
@@ -33,11 +31,11 @@
 
 <!-- dtl:block:CustomerSearchITSMSearchAutocomplete -->
 <script type="text/javascript">//<![CDATA[
-    Core.Config.Set('Autocomplete.Active', "$QData{"active"}");
-    Core.Config.Set('Autocomplete.QueryDelay', "$QData{"queryDelay"}");
-    Core.Config.Set('Autocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
-    Core.Config.Set('Autocomplete.MinQueryLength', "$QData{"minQueryLength"}");
-    Core.Config.Set('Autocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
-    Core.Config.Set('Autocomplete.SearchButtonText', "$JSText{"Search Customer"}");
+    Core.Config.Set('CustomerAutocomplete.Active', "$QData{"active"}");
+    Core.Config.Set('CustomerAutocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('CustomerAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('CustomerAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('CustomerAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
+    Core.Config.Set('CustomerAutocomplete.SearchButtonText', "$JSText{"Search Customer"}");
 //]]></script>
 <!-- dtl:block:CustomerSearchITSMSearchAutocomplete -->

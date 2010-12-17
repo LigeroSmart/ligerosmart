@@ -2,7 +2,7 @@
 // ITSM.Agent.CustomerSearch.js - provides the special module functions for the customer search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.CustomerSearch.js,v 1.2 2010-12-17 20:26:28 cr Exp $
+// $Id: ITSM.Agent.CustomerSearch.js,v 1.3 2010-12-17 23:17:08 cr Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -46,13 +46,13 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
 
         if (isJQueryObject($Element)) {
             $Element.autocomplete({
-                minLength: ActiveAutoComplete ? Core.Config.Get('Autocomplete.MinQueryLength') : 500,
-                delay: Core.Config.Get('Autocomplete.QueryDelay'),
+                minLength: ActiveAutoComplete ? Core.Config.Get('CustomerAutocomplete.MinQueryLength') : 500,
+                delay: Core.Config.Get('CustomerAutocomplete.QueryDelay'),
                 source: function (Request, Response) {
                     var URL = Core.Config.Get('Baselink'), Data = {
                         Action: 'AgentCustomerSearch',
                         Term: Request.term,
-                        MaxResults: Core.Config.Get('Autocomplete.MaxResultsDisplayed')
+                        MaxResults: Core.Config.Get('CustomerAutocomplete.MaxResultsDisplayed')
                     };
                     Core.AJAX.FunctionCall(URL, Data, function (Result) {
                         var Data = [];
@@ -78,7 +78,7 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
             });
 
             if (!ActiveAutoComplete) {
-                $Element.after('<button id="' + $Element.attr('id') + 'Search" type="button">' + Core.Config.Get('Autocomplete.SearchButtonText') + '</button>');
+                $Element.after('<button id="' + $Element.attr('id') + 'Search" type="button">' + Core.Config.Get('CustomerAutocomplete.SearchButtonText') + '</button>');
                 $('#' + $Element.attr('id') + 'Search').click(function () {
                     $Element.autocomplete("option", "minLength", 0);
                     $Element.autocomplete("search");
