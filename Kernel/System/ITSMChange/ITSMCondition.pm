@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.54 2010-11-14 12:35:10 bes Exp $
+# $Id: ITSMCondition.pm,v 1.55 2010-12-18 13:30:17 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use base qw(Kernel::System::ITSMChange::ITSMCondition::Expression);
 use base qw(Kernel::System::ITSMChange::ITSMCondition::Action);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =head1 NAME
 
@@ -411,7 +411,8 @@ sub ConditionGet {
 
 =item ConditionList()
 
-return a list of all conditions ids of a given change id as array reference
+return a list of all conditions ids of a given change id as array reference.
+The ids are sorted by the name of the condition.
 
     my $ConditionIDsRef = $ConditionObject->ConditionList(
         ChangeID => 5,
@@ -631,8 +632,12 @@ sub ConditionDeleteAll {
 
 =item ConditionMatchExecuteAll()
 
-This functions finds all conditions for a given ChangeID, and in case a condition matches,
-all defined actions will be executed.
+This functions finds the valid conditions for a given ChangeID. The found conditions
+are handled by executing the associated actions when a condition matches.
+The conditions are handled in the order defined by their names.
+
+Internally, the method ConditionMatchExecute() is called for each of the found conditions.
+The optional parameter 'AttributesChanged' is passed on to ConditionMatchExecute().
 
     my $Success = $ConditionObject->ConditionMatchExecuteAll(
         ChangeID          => 123,
@@ -694,10 +699,14 @@ sub ConditionMatchExecuteAll {
 
 =item ConditionMatchExecute()
 
-This function matches the given condition and executes all defined actions.
+This function matches the given condition. When it matches the associated actions are
+executed.
+
 The optional parameter 'AttributesChanged' defines a list of attributes that were changed
-during e.g. a ChangeUpdate-Event. If a condition matches an expression, the attribute of the expression
-must be listed in 'AttributesChanged'.
+during e.g. a ChangeUpdate-Event. When 'AttributesChanged' is passed, it is used to shortcut the
+expression evalution. Only the changed attributes must be checked.
+When the expression conjunction is 'any' and more than a single expression is set up,
+then, for obvious reasons, the shortcut is not used.
 
     my $Success = $ConditionObject->ConditionMatchExecute(
         ConditionID       => 123,
@@ -1377,6 +1386,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2010-11-14 12:35:10 $
+$Revision: 1.55 $ $Date: 2010-12-18 13:30:17 $
 
 =cut
