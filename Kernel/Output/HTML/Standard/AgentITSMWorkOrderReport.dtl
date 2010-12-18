@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.35 2010-12-10 14:18:02 ub Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.36 2010-12-18 14:53:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -110,9 +110,9 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:ShowAccountedTime -->
                 <label for="AccountedTime">$Text{"AccountedTime"}:</label>
                 <div class="Field">
-                    <input type="text" id="AccountedTime" name="AccountedTime" value="$QData{"AccountedTime"}" class="25pc $Data{AccountedTimeInvalid}" maxlength="11"/>
-                    <div id="AccountedTimeError" class="TooltipErrorMessage" ><p>$Text{"This field is required."}</p></div>
-                    <div id="AccountedTimeServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    <input type="text" id="AccountedTime" name="AccountedTime" value="$QData{"AccountedTime"}" class="25pc Validate $QData{"AccountedTimeInvalid"}" maxlength="11"/>
+                    <div id="AccountedTimeError" class="TooltipErrorMessage" ><p>$Text{"Invalid format."}</p></div>
+                    <div id="AccountedTimeServerError" class="TooltipErrorMessage"><p>$Text{"Invalid format."}</p></div>
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:ShowAccountedTime -->
