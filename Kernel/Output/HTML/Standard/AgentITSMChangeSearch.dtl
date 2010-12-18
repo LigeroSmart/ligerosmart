@@ -2,7 +2,7 @@
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.47 2010-12-17 13:36:30 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.48 2010-12-18 15:14:31 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -137,55 +137,55 @@ $Include{"AgentITSMUserSearch"}
 <!-- dtl:block:WorkOrderFreeText -->
 
         <div class="Clear"></div>
-        <label for="ChangePriority" id="LabelChangePriority">$Text{"ITSM Change"} $Text{"Priority"}:</label>
+        <label for="PriorityIDs" id="LabelPriorityIDs">$Text{"ITSM Change"} $Text{"Priority"}:</label>
         <div class="Field">
             $Data{"ChangePrioritySelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeImpact" id="LabelChangeImpact">$Text{"ITSM Change"} $Text{"Impact"}:</label>
+        <label for="ImpactIDs" id="LabelImpactIDs">$Text{"ITSM Change"} $Text{"Impact"}:</label>
         <div class="Field">
             $Data{"ChangeImpactSelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeCategory" id="LabelChangeCategory">$Text{"Change Category"}:</label>
+        <label for="CategoryIDs" id="LabelCategoryIDs">$Text{"Change Category"}:</label>
         <div class="Field">
             $Data{"ChangeCategorySelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeState" id="LabelChangeState">$Text{"ChangeState"}:</label>
+        <label for="ChangeStateIDs" id="LabelChangeStateIDs">$Text{"ChangeState"}:</label>
         <div class="Field">
             $Data{"ChangeStateSelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeManager" id="LabelChangeManager">$Text{"ChangeManager"}:</label>
+        <label for="ChangeManagerIDs" id="LabelChangeManagerIDs">$Text{"ChangeManager"}:</label>
         <div class="Field">
             $Data{"ChangeManagerSelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="ChangeBuilder" id="LabelChangeBuilder">$Text{"ChangeBuilder"}:</label>
+        <label for="ChangeBuilderIDs" id="LabelChangeBuilderIDs">$Text{"ChangeBuilder"}:</label>
         <div class="Field">
             $Data{"ChangeBuilderSelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="CreatedBy" id="LabelCreatedBy">$Text{"Created by"}:</label>
+        <label for="CreateBy" id="LabelCreateBy">$Text{"Created by"}:</label>
         <div class="Field">
             $Data{"CreateBySelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderState" id="LabelWorkOrderState">$Text{"WorkOrderState"}:</label>
+        <label for="WorkOrderStateIDs" id="LabelWorkOrderStateIDs">$Text{"WorkOrderState"}:</label>
         <div class="Field">
             $Data{"WorkOrderStateSelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="WorkOrderAgent" id="LabelWorkOrderAgent">$Text{"WorkOrderAgent"}:</label>
+        <label for="WorkOrderAgentIDs" id="LabelWorkOrderAgentIDs">$Text{"WorkOrderAgent"}:</label>
         <div class="Field">
             $Data{"WorkOrderAgentIDSelectionString"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
@@ -195,14 +195,14 @@ $Include{"AgentITSMUserSearch"}
         <div class="Clear"></div>
         <label for="$Data{"Prefix"}TimePoint" id="Label$Data{"Prefix"}TimePoint">$Text{"$Data{"Title"}"} $Text{"(before/after)"}:</label>
         <div class="Field">
-            <input type="hidden" name="$Data{"Prefix"}TimePoint" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
+            <input type="hidden" name="$Data{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
             $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
         <label for="$Data{"Prefix"}TimeSlot" id="Label$Data{"Prefix"}TimeSlot">$Text{"$Data{"Title"}"} $Text{"(between)"}:</label>
         <div class="Field">
-            <input type="hidden" name="$Data{"Prefix"}TimeSlot" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
+            <input type="hidden" name="$Data{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
             $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>

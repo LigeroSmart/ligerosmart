@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.69 2010-12-17 23:28:24 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.70 2010-12-18 15:14:31 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.69 $) [1];
+$VERSION = qw($Revision: 1.70 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1048,8 +1048,9 @@ sub _MaskForm {
         },
 
         {
-            Key   => '',
-            Value => '-',
+            Key      => '',
+            Value    => '-',
+            Disabled => 1,
         },
         {
             Key   => 'Description',
@@ -1120,43 +1121,39 @@ sub _MaskForm {
 
     push @Attributes, (
         {
-            Key   => 'ChangePriority',
+            Key   => 'PriorityIDs',
             Value => 'Change Priority',
         },
         {
-            Key   => 'ChangeImpact',
-            Value => 'ChangeImpact',
+            Key   => 'ImpactIDs',
+            Value => 'Change Impact',
         },
         {
-            Key   => 'ChangeCategory',
+            Key   => 'CategoryIDs',
             Value => 'Change Category',
         },
         {
-            Key   => 'ChangeState',
+            Key   => 'ChangeStateIDs',
             Value => 'Change State',
         },
         {
-            Key   => 'ChangeManager',
+            Key   => 'ChangeManagerIDs',
             Value => 'Change Manager',
         },
         {
-            Key   => 'ChangeBuilder',
+            Key   => 'ChangeBuilderIDs',
             Value => 'Change Builder',
         },
         {
-            Key   => 'CreatedBy',
+            Key   => 'CreateBy',
             Value => 'Created By',
         },
         {
-            Key   => 'WorkOrderState',
+            Key   => 'WorkOrderStateIDs',
             Value => 'WorkOrder State',
         },
         {
-            Key   => 'ChangeManager',
-            Value => 'Change Manager',
-        },
-        {
-            Key   => 'WorkOrderAgent',
+            Key   => 'WorkOrderAgentIDs',
             Value => 'WorkOrder Agent',
         },
         {
@@ -1322,6 +1319,7 @@ sub _MaskForm {
         SelectedID => $Param{WorkOrderStateIDs},
     );
 
+    # set result output formats
     $Param{ResultFormStrg} = $Self->{LayoutObject}->BuildSelection(
         Data => {
             Normal => 'Normal',
@@ -1429,15 +1427,15 @@ sub _MaskForm {
         );
     }
 
-    TIMETYPE:
-    for my $TimeType (@TimeTypes) {
-        my $Prefix = $TimeType->{Prefix};
-
-        # show RequestedTime only when enabled in SysConfig
-        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
-            next TIMETYPE;
-        }
-    }
+    #    TIMETYPE:
+    #    for my $TimeType (@TimeTypes) {
+    #        my $Prefix = $TimeType->{Prefix};
+    #
+    #        # show RequestedTime only when enabled in SysConfig
+    #        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
+    #            next TIMETYPE;
+    #        }
+    #    }
 
     # build customer search autocomplete field for CABCustomer
     my $CustomerAutoCompleteConfig
