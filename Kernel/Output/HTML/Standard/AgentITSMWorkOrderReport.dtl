@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderReport.dtl - provides HTML form for AgentITSMWorkOrderReport
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.dtl,v 1.36 2010-12-18 14:53:54 ub Exp $
+# $Id: AgentITSMWorkOrderReport.dtl,v 1.37 2010-12-18 16:50:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@
 $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
 
-                    <textarea id="RichText" class="RichText Validate_RequiredRichText $Data{"ReportInvalid"}" name="Report" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Report"}</textarea>
+                    <textarea id="RichText" class="RichText Validate_Required $Data{"ReportInvalid"}" name="Report" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Report"}</textarea>
                     <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                     <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                 </div>
