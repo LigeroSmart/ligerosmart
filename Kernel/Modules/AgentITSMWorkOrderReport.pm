@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.33 2010-12-18 14:53:42 ub Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.34 2010-12-18 16:50:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -396,7 +396,6 @@ sub Run {
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
                     WorkOrderFreeTextField =>
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeTextField' . $Number },
-                    Number => $Number,
                 },
             );
         }
