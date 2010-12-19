@@ -2,7 +2,7 @@
 # AgentFAQAdd.dtl - provides HTML form for AgentFAQAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.dtl,v 1.10 2010-12-06 21:06:08 mb Exp $
+# $Id: AgentFAQAdd.dtl,v 1.11 2010-12-19 16:28:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,6 +101,17 @@
                         </ul>
                     </div>
                     <div class="Clear"></div>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#FileUpload').bind('change', function (Event) {
+        var $Form = $('#FileUpload').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
 <!-- dtl:block:AttachmentUpload -->
 
 <!-- dtl:block:RichText -->
@@ -114,16 +125,6 @@ $Include{"RichTextEditor"}
                     </div>
                     <div class="Clear"></div>
 <!-- dtl:block:FAQContent -->
-
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-    $('#FileUpload').bind('change', function (Event) {
-        var $Form = $('#FileUpload').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.find('#AttachmentUpload').val('1').end().submit();
-    });
-//]]></script>
-<!--dtl:js_on_document_complete-->
 
                     <div class="Field SpacingTop">
                         <button class="Primary" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
