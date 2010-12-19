@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.55 2010-12-17 13:24:17 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.56 2010-12-19 17:03:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 =over 4
 
@@ -827,11 +827,8 @@ sub BuildFreeTextHTML {
         my $ClassParam = '';
         my $DataParam  = '';
         if ( $Config{Required}->{$Number} ) {
-            $ClassParam .= 'Validate_Required';
-            if ( ref $Config{ $Type . 'FreeText' . $Number } eq 'HASH' ) {
-                $ClassParam .= 'Dropdown';
-            }
-            $ClassParam .= ' ';
+
+            $ClassParam .= 'Validate_Required ';
 
             $DataParam
                 .= '<div id="'
