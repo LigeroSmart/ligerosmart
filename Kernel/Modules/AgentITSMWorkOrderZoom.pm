@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.48 2010-12-20 13:36:35 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.49 2010-12-20 13:37:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -499,7 +499,7 @@ sub Run {
         # check for attachment information
         next ATTACHMENT if !$AttachmentData;
 
-        # do not show inline attachments in attchments list
+        # do not show inline attachments in attchments list (they have a content id)
         next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
 
         # show block
