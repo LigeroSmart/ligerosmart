@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.118 2010-12-15 04:02:40 cr Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.119 2010-12-20 09:58:19 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -61,6 +61,7 @@
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.Form.Validate.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css"/>
