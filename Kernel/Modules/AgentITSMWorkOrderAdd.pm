@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.63 2010-12-20 14:28:39 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.64 2010-12-20 16:14:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -45,7 +45,7 @@ sub new {
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{TemplateObject}    = Kernel::System::ITSMChange::Template->new(%Param);
 
-    # get config of frontend module
+    # get config of frontend module (WorkorderAdd is a change action!)
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
 
     # get form id
