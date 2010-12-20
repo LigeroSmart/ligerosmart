@@ -2,7 +2,7 @@
 // ITSM.Agent.UserSearch.js - provides the special module functions for the user search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.UserSearch.js,v 1.2 2010-12-17 23:18:53 cr Exp $
+// $Id: ITSM.Agent.UserSearch.js,v 1.3 2010-12-20 17:56:44 dz Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -46,7 +46,8 @@ ITSM.Agent.UserSearch = (function (TargetNS) {
                     var URL = Core.Config.Get('Baselink'), Data = {
                         Action: 'AgentITSMUserSearch',
                         Term: Request.term + '*',
-                        MaxResults: Core.Config.Get('UserAutocomplete.MaxResultsDisplayed')
+                        MaxResults: Core.Config.Get('UserAutocomplete.MaxResultsDisplayed'),
+                        Groups : Core.Config.Get('UserAutocomplete.Groups') || '',
                     };
                     Core.AJAX.FunctionCall(URL, Data, function (Result) {
                         var Data = [];

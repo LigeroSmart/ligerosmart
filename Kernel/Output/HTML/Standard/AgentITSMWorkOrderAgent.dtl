@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.27 2010-12-17 16:09:24 dz Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.28 2010-12-20 17:56:44 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,18 +11,18 @@
 
 $Include{"AgentITSMUserSearch"}
 
-<script language="JavaScript" type="text/javascript">
-<!--
-
-//-->
-</script>
+<!--dtl:js_on_document_complete-->
+    <script type="text/javascript">//<![CDATA[
+        $('#User').bind('click', function( Event ) {
+            $('#User').val('');
+        });
+    //]]></script>
+<!--dtl:js_on_document_complete-->
 
 <form action="$Env{"CGIHandle"}" method="post" name="compose" class="Validate PreventMultipleSubmits">
     <input type="hidden" name="Action"    value="$Env{"Action"}" />
     <input type="hidden" name="Subaction" value="Save" />
     <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}" />
-    <input type="hidden" name="SelectedUser" value="$QData{"UserID"}" />
-    <input type="hidden" name="UserSearchGroups" value="itsm-change" />
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -36,42 +36,24 @@ $Include{"AgentITSMUserSearch"}
 
         <div class="Content SpacingBottom">
             <fieldset class="TableLike FixedLabel">
-                <label class="Mandatory" for="UserAutoComplete"><span class="Marker">*</span> $Text{"WorkOrderAgent"}: </label>
+
+                <label class="Mandatory" for="User"><span class="Marker">*</span> $Text{"WorkOrderAgent"}: </label>
                 <div class="Field">
-                    <input id="UserAutoComplete" type="text" name="UserAutoComplete" value="$QData{"User"}" class="W75pc" />
-                    <input id="UserAutoCompleteSelected" type="hidden" name="UserAutoCompleteSelected" value="$QData{"UserID"}" class="W75pc" />
-
-<!-- dtl:block:UserSearchAutoCompleteDiv -->
-                    <div id="UserAutoCompleteContainer"></div>
-<!-- dtl:block:UserSearchAutoCompleteDiv -->
-
+                    <input id="User" type="text" name="User" value="$QData{"User"}" class="W75pc Validate_Required $Data{"UserServerError"}"/>
+                    <input id="UserSelected" type="hidden" name="UserSelected" value="$QData{"UserID"}" />
                 </div>
 
-                <div id="UserAutoCompleteError" class="TooltipErrorMessage">
+                <div id="UserError" class="TooltipErrorMessage">
                     <p>$Text{"This field is required."}</p>
                 </div>
-                <div id="UserAutoCompleteServerError" class="TooltipErrorMessage">
+                <div id="UserServerError" class="TooltipErrorMessage">
                     <p>$Text{"Invalid User"}</p>
                 </div>
 
-                <div class="Field">
-                    $Data{"UserStrg"}
-                </div>
-                <div class="Clear"></div>
-                <div class="Field">
-<!-- dtl:block:TakeUser -->
-                    <button class="button" type="submit" name="ExpandUserName2" value="$Text{"Take this User"}"> $Text{"Take this User"} </button>
-<!-- dtl:block:TakeUser -->
-
-<!-- dtl:block:SearchUserButton -->
-                    <button type="submit" name="ExpandUserName1" value="$Text{"Search User"}">$Text{"Search User"}</button>
-                    <button type="submit" name="ClearUser" value="$Text{"Clear"} $Text{"User"}" onclick="clear_field(); return false;"> $Text{"Clear User"} </button>
-<!-- dtl:block:SearchUserButton -->
-                </div>
             </fieldset>
         </div>
         <div class="Footer">
-            <button class="Primary"type="submit" name="Submit" value="$Text{"Save"}">$Text{"Save"}</button>
+            <button class="Primary" type="submit" name="Submit" value="$Text{"Save"}">$Text{"Save"}</button>
         </div>
     </div>
 </form>
