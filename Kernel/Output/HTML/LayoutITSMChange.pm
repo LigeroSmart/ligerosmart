@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.56 2010-12-19 17:03:22 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.57 2010-12-20 10:12:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =over 4
 
@@ -823,47 +823,35 @@ sub BuildFreeTextHTML {
             }
         }
 
-        # Add Validate and Error classes
-        my $ClassParam = '';
-        my $DataParam  = '';
+        # build Validate and Error classes
+        my $ValidationClass = '';
+        my $MandatoryString = '';
+        my $ToolTipString   = '';
+
+        # field is a required field
         if ( $Config{Required}->{$Number} ) {
 
-            $ClassParam .= 'Validate_Required ';
-
-            $DataParam
-                .= '<div id="'
-                . $Type
-                . 'FreeText'
-                . $Number
-                . 'Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>';
-
-            # for FreeKeyFields
-            $Data{ $Type . 'FreeKeyField' . $Number }
-                = '<label id="Label' . $Type . 'FreeText' . $Number . '" '
-                . 'for="' . $Type . 'FreeText' . $Number . '" '
-                . 'class="Mandatory"><span class="Marker">*</span> '
-                . $Data{ $Type . 'FreeKeyField' . $Number }
-                . ':</label>';
-        }
-        else {
-
-            # for FreeKeyFields
-            $Data{ $Type . 'FreeKeyField' . $Number }
-                = '<label id="Label' . $Type . 'FreeText' . $Number . '" '
-                . 'for="' . $Type . 'FreeText' . $Number . '">'
-                . $Data{ $Type . 'FreeKeyField' . $Number }
-                . ':</label>';
+            $ValidationClass = 'Validate_Required ';
+            $MandatoryString = 'class="Mandatory"><span class="Marker">*</span> ';
+            $ToolTipString   = '<div id="' . $Type . 'FreeText' . $Number . 'Error" '
+                . 'class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>';
         }
 
+        # server error occured, add server error class and tooltip
         if ( $InputData{Error}->{$Number} ) {
-            $ClassParam .= 'ServerError ';
-            $DataParam
-                .= '<div id="'
-                . $Type
-                . 'FreeText'
-                . $Number
-                . 'ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>';
+
+            $ValidationClass .= 'ServerError ';
+            $ToolTipString   .= '<div id="' . $Type . 'FreeText' . $Number . 'ServerError" '
+                . 'class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>';
         }
+
+        # build freekey string
+        $Data{ $Type . 'FreeKeyField' . $Number }
+            = '<label id="Label' . $Type . 'FreeText' . $Number . '" '
+            . 'for="' . $Type . 'FreeText' . $Number . '" '
+            . $MandatoryString
+            . $Data{ $Type . 'FreeKeyField' . $Number }
+            . ':</label>';
 
         # freetext config exists
         if ( ref $Config{ $Type . 'FreeText' . $Number } eq 'HASH' ) {
@@ -891,10 +879,11 @@ sub BuildFreeTextHTML {
                 HTMLQuote    => 1,
                 PossibleNone => $PossibleNone,
                 Multiple     => $Param{Multiple} || 0,
-                Class        => $ClassParam,
+                Class        => $ValidationClass,
             );
 
-            $Data{ $Type . 'FreeTextField' . $Number } .= $DataParam;
+            # add tooltips for validation error
+            $Data{ $Type . 'FreeTextField' . $Number } .= $ToolTipString;
         }
         else {
 
@@ -919,7 +908,7 @@ sub BuildFreeTextHTML {
                 # build input field with freetext data
                 $Data{ $Type . 'FreeTextField' . $Number }
                     = '<input type="text" class="W75pc '
-                    . $ClassParam
+                    . $ValidationClass
                     . '" id="'
                     . $Type . 'FreeText' . $Number
                     . '" name="'
@@ -928,7 +917,8 @@ sub BuildFreeTextHTML {
                     . $Self->Ascii2Html( Text => $InputData{ $Type . 'FreeText' . $Number } )
                     . '" />';
 
-                $Data{ $Type . 'FreeTextField' . $Number } .= $DataParam;
+                # add tooltips for validation error
+                $Data{ $Type . 'FreeTextField' . $Number } .= $ToolTipString;
             }
 
             # freetext data is not defined
@@ -937,14 +927,15 @@ sub BuildFreeTextHTML {
                 # build empty input field
                 $Data{ $Type . 'FreeTextField' . $Number }
                     = '<input type="text" class="W75pc '
-                    . $ClassParam
+                    . $ValidationClass
                     . '" id="'
                     . $Type . 'FreeText' . $Number
                     . '" name="'
                     . $Type . 'FreeText' . $Number
                     . '" value="" />';
 
-                $Data{ $Type . 'FreeTextField' . $Number } .= $DataParam;
+                # add tooltips for validation error
+                $Data{ $Type . 'FreeTextField' . $Number } .= $ToolTipString;
             }
         }
     }
