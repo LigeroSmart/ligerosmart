@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.140 2010-12-14 18:22:46 ub Exp $
+# $Id: FAQ.pm,v 1.141 2010-12-20 13:41:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.140 $) [1];
+$VERSION = qw($Revision: 1.141 $) [1];
 
 =head1 NAME
 
@@ -4129,16 +4129,6 @@ sub FAQInlineAttachmentURLUpdate {
         UserID => $Param{UserID},
     );
 
-    #
-    # TODO
-    # Do not delete this old ULR style below now,
-    # as we need it to write the migration code in packagesetup!!!
-    #
-
-    #    # picture url in faq atttachment
-    #    my $Replace = "Action=AgentFAQ&Subaction=Download&"
-    #        . "ItemID=$Param{ItemID}&FileID=$Attachment->{FileID}";
-
     # picture url in upload cache
     my $Search = "Action=PictureUpload .+ FormID=$Param{FormID} .+ "
         . "ContentID=$Param{Attachment}->{ContentID}";
@@ -4422,6 +4412,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.140 $ $Date: 2010-12-14 18:22:46 $
+$Revision: 1.141 $ $Date: 2010-12-20 13:41:56 $
 
 =cut
