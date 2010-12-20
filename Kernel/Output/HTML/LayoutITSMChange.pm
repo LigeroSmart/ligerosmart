@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.57 2010-12-20 10:12:24 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.58 2010-12-20 10:24:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =over 4
 
@@ -824,16 +824,18 @@ sub BuildFreeTextHTML {
         }
 
         # build Validate and Error classes
-        my $ValidationClass = '';
-        my $MandatoryString = '';
-        my $ToolTipString   = '';
+        my $ValidationClass       = '';
+        my $MandatoryClass        = '';
+        my $MandatoryMarkerString = '';
+        my $ToolTipString         = '';
 
         # field is a required field
         if ( $Config{Required}->{$Number} ) {
 
-            $ValidationClass = 'Validate_Required ';
-            $MandatoryString = 'class="Mandatory"><span class="Marker">*</span> ';
-            $ToolTipString   = '<div id="' . $Type . 'FreeText' . $Number . 'Error" '
+            $ValidationClass       = 'Validate_Required ';
+            $MandatoryClass        = 'class="Mandatory"';
+            $MandatoryMarkerString = '<span class="Marker">*</span> ';
+            $ToolTipString         = '<div id="' . $Type . 'FreeText' . $Number . 'Error" '
                 . 'class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>';
         }
 
@@ -849,7 +851,9 @@ sub BuildFreeTextHTML {
         $Data{ $Type . 'FreeKeyField' . $Number }
             = '<label id="Label' . $Type . 'FreeText' . $Number . '" '
             . 'for="' . $Type . 'FreeText' . $Number . '" '
-            . $MandatoryString
+            . $MandatoryClass
+            . '>'
+            . $MandatoryMarkerString
             . $Data{ $Type . 'FreeKeyField' . $Number }
             . ':</label>';
 
