@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.57 2010-12-09 21:46:15 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.58 2010-12-20 14:23:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -188,16 +188,6 @@ sub Run {
                 return $Self->{LayoutObject}->FatalError();
             }
         }
-    }
-
-    # break Description after 80 chars
-    if ( $Change->{Description} ) {
-        $Change->{Description} =~ s{ ( \S{80} ) }{$1\n}xmsg;
-    }
-
-    # break Justification after 80 chars
-    if ( $Change->{Justification} ) {
-        $Change->{Justification} =~ s{ ( \S{80} ) }{$1\n}xmsg;
     }
 
     # output header

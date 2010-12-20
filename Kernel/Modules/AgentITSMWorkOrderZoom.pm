@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.49 2010-12-20 13:37:44 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.50 2010-12-20 14:23:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -154,16 +154,6 @@ sub Run {
         Key       => 'LastScreenView',
         Value     => $Self->{RequestedURL},
     );
-
-    # break instruction after 80 chars
-    if ( $WorkOrder->{Instruction} ) {
-        $WorkOrder->{Instruction} =~ s{ (\S{80}) }{$1 }xmsg;
-    }
-
-    # break report after 80 chars
-    if ( $WorkOrder->{Report} ) {
-        $WorkOrder->{Report} =~ s{ (\S{80}) }{$1 }xmsg;
-    }
 
     # get the change that workorder belongs to
     my $Change = $Self->{ChangeObject}->ChangeGet(
