@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.44 2010-12-16 20:03:32 en Exp $
+# $Id: TimeAccounting.pm,v 1.45 2010-12-20 23:51:00 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1296,7 +1296,7 @@ sub SingleUserSettingsUpdate {
 =item WorkingUnitsCompletnessCheck()
 
 returns a hash with the incomplete working days and
-the information if the incomplete working day are in the allowed
+the information if the incomplete working days are in the allowed
 range.
 
     my %WorkingUnitsCheck = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
@@ -1906,6 +1906,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.44 $ $Date: 2010-12-16 20:03:32 $
+$Revision: 1.45 $ $Date: 2010-12-20 23:51:00 $
 
 =cut
