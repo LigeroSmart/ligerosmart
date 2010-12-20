@@ -2,7 +2,7 @@
 // ITSM.Agent.ChangeManagemnt.Search.js - provides the special module functions for the global search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ChangeManagement.Search.js,v 1.3 2010-12-17 23:20:53 cr Exp $
+// $Id: ITSM.Agent.ChangeManagement.Search.js,v 1.4 2010-12-20 18:31:21 cr Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -75,7 +75,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $(this).removeClass('ITSMCustomerSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
-                ITSM.Agent.CustomerSearch.Init( $('#' + InputID), parseInt(Core.Config.Get('CustomerAutocomplete.Active')) );
+                ITSM.Agent.CustomerSearch.Init( $('#' + InputID), parseInt( Core.Config.Get('CustomerAutocomplete.Active')),10 );
 
                 // prevent dialog closure when select a customer from the list
                 $('ul.ui-autocomplete').bind('click', function(Event){
@@ -90,7 +90,7 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $(this).removeClass('ITSMUserSearch');
                 $(this).attr('id', InputID);
                 $(this).prev().attr('id', InputID + 'Selected');
-                ITSM.Agent.UserSearch.Init( $('#' + InputID), parseInt(Core.Config.Get('UserAutocomplete.Active')) );
+                ITSM.Agent.UserSearch.Init( $('#' + InputID), parseInt( Core.Config.Get('UserAutocomplete.Active')),10 );
 
                 // prevent dialog closure when select a customer from the list
                 $('ul.ui-autocomplete').bind('click', function(Event){
