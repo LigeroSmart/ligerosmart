@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.64 2010-12-20 16:14:22 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.65 2010-12-20 17:02:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,7 +80,7 @@ sub Run {
         UserID   => $Self->{UserID},
     );
 
-    # error screen, don't show the add mask
+    # error screen
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions on the change!",
@@ -138,17 +138,16 @@ sub Run {
 
     # store time related fields in %GetParam
     for my $TimeType (qw(PlannedStartTime PlannedEndTime MoveTime)) {
-        for my $TimePart (qw(Used Year Month Day Hour Minute)) {
+        for my $TimePart (qw(Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
         }
     }
 
     # Remember the reason why saving was not attempted.
-    # The entries are the names of the dtl validation error blocks.
     my %ValidationError;
 
-    # perform the adding
+    # add the workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
         # the title is required
