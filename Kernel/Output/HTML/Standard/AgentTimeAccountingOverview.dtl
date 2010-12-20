@@ -1,175 +1,208 @@
 # --
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.21 2009-04-03 11:49:29 tr Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.22 2010-12-20 23:50:32 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-  <tr>
-    <td class="mainhead">
-      $Env{"Box0"}$Text{"Time reporting monthly overview"}$Env{"Box1"}
-    </td>
-  </tr>
-  <tr>
-    <td class="mainbody">
-      <br>
-      <table border="0" width="33%" cellspacing="2" cellpadding="2" align="center">
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">$Text{"Time reporting monthly overview"}</h1>
+
+    <div class="SidebarColumn">
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
 <!-- dtl:block:User -->
-        <tr>
-          <td colspan="4" class="contentkey">$Text{"Overview of "} $QData{"User"}<br></td>
-        </tr>
+                <h2>$Text{"Overview of "} $QData{"User"}</h2>
 <!-- dtl:block:User -->
-        <tr>
-          <td colspan="4" align="center">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}&UserID=$LQData{"UserID"}">
-            &#060;&#060;
-            </a>
-            &nbsp;&nbsp;
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}&UserID=$LQData{"UserID"}">
-            &#062;&#062;
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="4" class="contenthead" align="center">
-            $Text{"$QData{"Month_to_Text"}"} $QData{"Year"}
-          </td>
-        </tr>
+                <div>
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"};UserID=$LQData{"UserID"}">
+                        $Text{"Previous month"}
+                    </a>
+                    <strong>$Text{"$Data{"Month_to_Text"}"} $QData{"Year"}</strong>
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"};UserID=$LQData{"UserID"}">
+                        $Text{"Next month"}
+                    </a>
+                </div>
+            </div>
+
+            <div class="Content">
+                <table class="DataTable">
+                    <tbody>
 <!-- dtl:block:Row -->
-        <tr $Data{"Style"}>
-          <td align="center">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=$LQData{"Subaction"}&Year=$LQData{"Year"}&Month=$LQData{"Month"}&Day=$LQData{"Day"}&UserID=$LQData{"UserID"}">
-            $QData{"Day"}
-            </a>
-          </td>
-          <td>$Text{"$QData{"Weekday_to_Text"}"}</td>
-          <td>$Text{"$QData{"Comment"}"}</td>
-          <td align="right">$QData{"WorkingHours"}</td>
-        </tr>
+                        <tr $Data{"Style"}>
+                            <td class="Center">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=$LQData{"Subaction"};Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"};UserID=$LQData{"UserID"}">
+                                    $QData{"Day"}
+                                </a>
+                            </td>
+                            <td>$Text{"$Data{"Weekday_to_Text"}"}</td>
+                            <td>$Text{"$Data{"Comment"}"}</td>
+                            <td class="Right">$QData{"WorkingHours"}</td>
+                        </tr>
 <!-- dtl:block:Row -->
-        <tr>
-          <td colspan="3" class="contenthead" align="left">$Text{"Total hours worked"}:</td>
-          <td class="contenthead" align="right">$QData{"WorkingHours"}</td>
-        </tr>
-      </table>
-      <br>
-      <table border="0" width="33%" cellspacing="0" cellpadding="2" align="center">
+                        <tr>
+                            <td colspan="3" class="Right"><strong>$Text{"Total worked hours"}:</strong></td>
+                            <td class="Right">$QData{"WorkingHours"}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 <!-- dtl:block:Overtime -->
-        <tr class="contenthead">
-          <td colspan="2">$Text{"Overtime (Hours)"}:</td>
-        </tr>
-        <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"Overtime (this month)"}:</td>
-          <td class="contentvalue" align="right">$QData{"Overtime"}</td>
-        </tr>
-        <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"Overtime (total)"}:</td>
-          <td class="contentvalue" align="right">$QData{"OvertimeUntil"}</td>
-        </tr>
-        <tr class="contenthead">
-          <td>$Text{"Remaining overtime leave"}:</td>
-          <td align="right">$QData{"OvertimeTotal"}</td>
-        </tr>
-        <tr>
-          <td colspan="2">&nbsp;</td>
-        </tr>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Overtime (Hours)"}</h2>
+            </div>
+            <div class="Content">
+                <fieldset class="TableLike">
+                    <label>
+                        $Text{"Overtime (this month)"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"Overtime"}</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>
+                        $Text{"Overtime (total)"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"OvertimeUntil"}</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>
+                        $Text{"Remaining overtime leave"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"OvertimeTotal"}</p>
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+            </div>
+        </div>
 <!-- dtl:block:Overtime -->
-        <tr class="contenthead">
-          <td colspan="2">$Text{"Vacation (Days)"}:</td>
-        </tr>
-        <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"Vacation taken (this month)"}:</td>
-          <td class="contentvalue" align="right">$QData{"LeaveDay"}</td>
-        </tr>
-        <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"Vacation taken (total)"}:</td>
-          <td class="contentvalue" align="right">$QData{"LeaveDayTotal"}</td>
-        </tr>
-        <tr class="contenthead">
-          <td>$Text{"Remaining vacation"}:</td>
-          <td align="right">$QData{"LeaveDayRemaining"}</td>
-        </tr>
-        <tr>
-          <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr class="contenthead">
-          <td colspan="2">$Text{"Sick leave (Days)"}:</td>
-        </tr>
-        <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"Sick leave taken (this month)"}:</td>
-          <td class="contentvalue" align="right">$QData{"Sick"}</td>
-        </tr>
-        <tr class="contentbody">
-          <td class="contentkey">&nbsp;$Text{"Sick leave taken (total)"}:</td>
-          <td class="contentvalue" align="right">$QData{"SickTotal"}</td>
-        </tr>
-        <tr class="contentfooter">
-          <td colspan="2">&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
-        <tr>
-          <td class="contenthead">$Text{"User's project overview"}:
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"Year"}&Month=$LQData{"Month"}&ProjectStatusShow=$LQData{"ProjectStatusShow"}&UserID=$LQData{"UserID"}">
-            ($Text{"Show"} $Text{"$QData{"ProjectStatusShow"}"} $Text{"Projects"})
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table border="1" width="100%" align="center">
-              <tr class="contentkey">
-                <td colspan="2">&nbsp;</td>
-                <td>$Text{"Monthly"}</td>
-                <td>$Text{"Lifetime"}</td>
-              </tr>
-              <tr class="contentkey">
-                <td>$Text{"Project"}</td>
-                <td>$Text{"Task"}</td>
-                <td>$Text{"Hours"}</td>
-                <td>$Text{"Hours"}</td>
-              </tr>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Vacation (Days)"}</h2>
+            </div>
+            <div class="Content">
+                <fieldset class="TableLike">
+                    <label>
+                        $Text{"Vacation taken (this month)"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"LeaveDay"}</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>
+                        $Text{"Vacation taken (total)"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"LeaveDayTotal"}</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>
+                        $Text{"Remaining vacation"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"LeaveDayRemaining"}</p>
+                    </div>
+                    <div class="Clear"></div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Sick Leave (Days)"}</h2>
+            </div>
+            <div class="Content">
+                <fieldset class="TableLike">
+                    <label>
+                        $Text{"Sick leave taken (this month)"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"Sick"}</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>
+                        $Text{"Sick leave taken (total)"}:
+                    </label>
+                    <div class="Right">
+                        <p>$QData{"SickTotal"}</p>
+                    </div>
+                    <div class="Clear"></div>
+
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>
+                    $Text{"User's project overview"}
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"Year"};Month=$LQData{"Month"};ProjectStatusShow=$LQData{"ProjectStatusShow"};UserID=$LQData{"UserID"}">
+                        ($Text{"Show"} $Text{"$Data{"ProjectStatusShow"}"} $Text{"Projects"})
+                    </a>
+                </h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable DataTableNoHighlight">
+                    <tbody>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td><strong>$Text{"Monthly"}</strong></td>
+                            <td><strong>$Text{"Lifetime"}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>$Text{"Project"}</strong></td>
+                            <td><strong>$Text{"Task"}</strong></td>
+                            <td><strong>$Text{"Hours"}</strong></td>
+                            <td><strong>$Text{"Hours"}</strong></td>
+                        </tr>
 <!-- dtl:block:Action -->
-              <tr>
+                        <tr>
 <!-- dtl:block:Project -->
-                <td rowspan="$Data{"RowSpan"}" valign="top">
-                  <span class="contentkey$QData{"Status"}">
+                            <td rowspan="$Data{"RowSpan"}" valign="top">
+                                <span>
 <!-- dtl:block:ProjectNoLink -->
-                  $Data{"Project"}
+                                    $Data{"Project"}
 <!-- dtl:block:ProjectNoLink -->
 <!-- dtl:block:ProjectLink -->
-                  <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectReporting&ProjectID=$QData{"ProjectID"}">
-                  $Data{"Project"}
-                  </a>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectReporting;ProjectID=$QData{"ProjectID"}">
+                                        $Data{"Project"}
+                                    </a>
 <!-- dtl:block:ProjectLink -->
-                  </span>
-                  <br>
-                  <span class="contentvalue$QData{"Status"}">$Data{"ProjectDescription"}</span>
-                </td>
+                                </span>
+                                <span>$Data{"ProjectDescription"}</span>
+                            </td>
 <!-- dtl:block:Project -->
-                <td class="$QData{"Class"}$QData{"Status"}" >$QData{"Action"}</td>
-                <td class="$QData{"Class"}$QData{"Status"}" align="right">$QData{"Hours"}</td>
-                <td class="$QData{"Class"}$QData{"Status"}" align="right">$QData{"HoursTotal"}</td>
-              </tr>
+                            <td>$QData{"Action"}</td>
+                            <td class="Right">$QData{"Hours"}</td>
+                            <td class="Right">$QData{"HoursTotal"}</td>
+                        </tr>
 <!-- dtl:block:Action -->
-              <tr class="contentkey">
-                <td colspan="2">$Text{"Grand total"}</td>
-                <td align="right">$QData{"TotalHours"}</td>
-                <td align="right">$QData{"TotalHoursTotal"}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td class="contentfooter">&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-    </td>
-  </tr>
-</table>
+                        <tr>
+                            <td colspan="2"><strong>$Text{"Grand total"}</strong></td>
+                            <td class="Right"><strong>$QData{"TotalHours"}</strong></td>
+                            <td class="Right"><strong>$QData{"TotalHoursTotal"}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

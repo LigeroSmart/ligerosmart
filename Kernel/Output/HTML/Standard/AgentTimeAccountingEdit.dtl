@@ -2,160 +2,15 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.28 2010-06-24 12:35:58 jp Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.29 2010-12-20 23:50:32 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!--CSS file (default YUI Sam Skin) -->
-<link type="text/css" rel="stylesheet" href="$Config{"Frontend::YUIPath"}build/autocomplete/assets/skins/sam/autocomplete.css">
-
-<!-- Dependencies -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/datasource/datasource-min.js"></script>
-
-<!-- OPTIONAL: Animation (required only if enabling animation) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/animation/animation-min.js"></script>
-
-<!-- Source file -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/autocomplete/autocomplete-min.js"></script>
-
-<style type="text/css">
-.ProjectAutoComplete {
-    width:36em; /* set width here or else widget will expand to fit its container */
-    padding-bottom:0.5em;
-}
-.ActionAutoComplete {
-    width:30em; /* set width here or else widget will expand to fit its container */
-    padding-bottom:0.5em;
-}
-</style>
-
 <script type="text/javascript">
 <!--
-
-//
-// AutoCompletion not finished yet, it is currently deactivated
-//
-
-// Initializes Autocompletion for Input field
-// FieldName contains either "Project" or "Action"
-// RowNumber contains number of row (1 to 16)
-function initAutoCompletionInput(FieldName, RowNumber) {
-
-    var Dom = YAHOO.util.Dom;
-
-    $QData{"JSProjectList"}
-    var myProjects = JSProjectList[RowNumber];
-
-    // Define a custom search function for the DataSource
-    var matchNames = function(sQuery) {
-        // Case insensitive matching
-        var query = decodeURIComponent(sQuery.toLowerCase()),
-            contact,
-            i=0,
-            l=myProjects.length,
-            matches = [];
-
-        // Match against each name of each contact
-        for(; i<l; i++) {
-            contact = myProjects[i];
-            if( (contact.name && (contact.name.toLowerCase().indexOf(query) > -1)) || query == ' ' ) {
-                matches[matches.length] = contact;
-            }
-        }
-
-        return matches;
-    };
-
-    // Use a FunctionDataSource
-    var oDS = new YAHOO.util.FunctionDataSource(matchNames);
-    oDS.responseSchema = {
-        fields: ["id", "name"]
-    }
-
-    // Instantiate AutoComplete
-    var oAC = new YAHOO.widget.AutoComplete(FieldName + "AutoCompleteInput[" + RowNumber + "]", FieldName + "AutoCompleteContainer[" + RowNumber + "]", oDS);
-    //oAC.useIFrame = true;
-    oAC.useShadow = true;
-    oAC.resultTypeList = false;
-    //oAC.forceSelection = true;
-
-
-    // Custom formatter to highlight the matching letters
-    oAC.formatResult = function(oResultData, sQuery, sResultMatch) {
-        var query = sQuery.toLowerCase(),
-
-            name = oResultData.name || "", // Guard against null value
-            query = sQuery.toLowerCase(),
-            nameMatchIndex = name.toLowerCase().indexOf(query),
-            displayname;
-
-        if(nameMatchIndex > -1) {
-            displayname = highlightMatch(name, query, nameMatchIndex);
-        }
-        else {
-            displayname = name ? name : "";
-        }
-
-        return displayname;
-    };
-
-    // Helper function for the formatter
-    var highlightMatch = function(full, snippet, matchindex) {
-        return full.substring(0, matchindex) +
-                "<span class='match'>" +
-                full.substr(matchindex, snippet.length) +
-                "</span>" +
-                full.substring(matchindex + snippet.length);
-    };
-
-    // Define an event handler to populate a hidden form field
-    // when an item gets selected and populate the input field
-    var myHiddenField = YAHOO.util.Dom.get(FieldName + "ID[" + RowNumber + "]");
-    var myHandler = function(sType, aArgs) {
-        var myAC = aArgs[0]; // reference back to the AC instance
-        var elLI = aArgs[1]; // reference to the selected LI element
-        var oData = aArgs[2]; // object literal of selected item's result data
-
-        // update hidden form field with the selected item's ID
-        myHiddenField.value = oData.id;
-
-        myAC.getInputEl().value = oData.name ? oData.name : "";
-    };
-
-    oAC.itemSelectEvent.subscribe(myHandler);
-
-    return {
-        oDS: oDS,
-        oAC: oAC
-    };
-};
-
-// Initialize Autocompletion for project and action selection
-var ProjectACObjects = new Array();
-var ActionACObjects = new Array();
-var Event = YAHOO.util.Event;
-Event.onDOMReady(function() {
-    // add yui css to body tag
-    document.body.className = "yui-skin-sam";
-
-    // initialize Autocompletion for selection of projects and actions
-    for (var RowNumber = 1; RowNumber < 16; RowNumber++) {
-        ProjectACObjects[RowNumber] = initAutoCompletionInput("Project", RowNumber);
-        //ActionACObjects[RowNumber] = initAutoCompletionInput("Action", RowNumber);
-    }
-});
-
-function ClearAutoCompletionID(FieldName, RowNumber) {
-    var TextElement = document.getElementById(FieldName + "AutoCompleteInput[" + RowNumber + "]");
-    var IDElement = document.getElementById(FieldName + "ID[" + RowNumber + "]");
-    if (TextElement.value == '') {
-        IDElement.value = '';
-    }
-}
 
 function submit_compose() {
     for (var Counter = 1;Counter < 10; Counter++) {
@@ -194,12 +49,12 @@ function project_remark_check(Project) {
 // Fills options of action selection according to selected project
 function FillActionList(WorkingUnitID) {
 
-    var ProjectSelectionIndex = document.getElementById("ProjectID[" + WorkingUnitID + "]").selectedIndex;
-    var ProjectName = document.getElementById("ProjectID[" + WorkingUnitID + "]").options[ProjectSelectionIndex].text;
+    var ProjectSelectionIndex = document.getElementById("ProjectID" + WorkingUnitID).selectedIndex;
+    var ProjectName = document.getElementById("ProjectID" + WorkingUnitID).options[ProjectSelectionIndex].text;
 
     var ActionList = $QData{"JSActionList"};
     var ActionListConstraints = $QData{"JSActionListConstraints"};
-    var ActionSelection = document.getElementById("ActionID[" + WorkingUnitID + "]");
+    var ActionSelection = document.getElementById("ActionID" + WorkingUnitID);
     var SelectedActionID = ActionSelection.value;
 
     // remove previous actions, leave first element (empty element)
@@ -256,241 +111,232 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
     }
 }
 
-// This funciton make the invisible input fields (9 - 16) visible
-
-function MoreInputFields() {
-    if (document.getElementById) {
-        document.getElementById("MoreFields[9]").style.visibility = "visible";
-        document.getElementById("MoreFields[10]").style.visibility = "visible";
-        document.getElementById("MoreFields[11]").style.visibility = "visible";
-        document.getElementById("MoreFields[12]").style.visibility = "visible";
-        document.getElementById("MoreFields[13]").style.visibility = "visible";
-        document.getElementById("MoreFields[14]").style.visibility = "visible";
-        document.getElementById("MoreFields[15]").style.visibility = "visible";
-        document.getElementById("MoreFields[16]").style.visibility = "visible";
-        document.getElementById("Link").style.visibility = "collapse";
-    }
-}
-
 //-->
 </script>
 
-<style type="text/css">
-.ProjectSelection { width:450px;}
-.ActionSelection { width:300px;}
-</style>
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">$Text{"Edit Time Record"}</h1>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td colspan="3" class="mainhead">
-            $Env{"Box0"}$Text{"Edit time record"}$Env{"Box1"}
-        </td>
-    </tr>
-<!-- dtl:block:Overview -->
-    <tr>
-        <td colspan="3" class="menu">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Overview&Year=$LQData{"Year"}&Month=$LQData{"Month"}" class="menuitem">$Text{"Overview"}</a>
+    <div class="SidebarColumn">
+<!-- dtl:block:OverviewProject -->
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Actions"}</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"Year"};Month=$LQData{"Month"}" class="CallForAction"><span>$Text{"Go to overview"}</span></a>
+                    </li>
 <!-- dtl:block:CreateProject -->
-            -
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=ProjectSetting" class="menuitem">
-                $Text{"Project settings"}
-            </a>
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectSetting" class="CallForAction"><span>$Text{"Project settings"}</span></a>
+                    </li>
 <!-- dtl:block:CreateProject -->
-        </td>
-    </tr>
-<!-- dtl:block:Overview -->
-    <tr>
-        <td class="mainbody">
-            <br>
-            <table border="0" width="700" align="center" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        <table class="contentbody" border="0" width="100%" cellspacing="0" cellpadding="4">
-                            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose2">
-                                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                                <input type="hidden" name="Subaction" value="Edit">
-                                <tr>
-                                    <td colspan="2" class="contenthead">$Text{"Date navigation"}</td>
-                                </tr>
-                                <tr class="contentvalue">
-                                    <td>
-                                        $Data{"Date"}
-                                        <input class="button" type="submit" value="$Text{"Submit"}">
-                                    </td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    $QData{"Year"}-$QData{"Month"}-$QData{"Day"}&nbsp;
-                                                </td>
-                                                <td>
-                                                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearBack"}&Month=$LQData{"MonthBack"}&Day=$LQData{"DayBack"}"><img border="0" src="$Config{"Frontend::ImagePath"}left-big.png" alt="$Text{"One day back"}"></a>
-                                                    &nbsp;
-                                                </td>
-                                                <td>
-                                                    <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"YearNext"}&Month=$LQData{"MonthNext"}&Day=$LQData{"DayNext"}"><img border="0" src="$Config{"Frontend::ImagePath"}right-big.png" alt="$Text{"Next day"}"></a>
-                                                    &nbsp;
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                </ul>
+            </div>
+        </div>
+<!-- dtl:block:OverviewProject -->
+    </div>
+    <div class="ContentColumn">
+        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose2">
+            <input type="hidden" name="Action"    value="$Env{"Action"}" />
+            <input type="hidden" name="Subaction" value="Edit" />
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Date Navigation"}</h2>
+                </div>
+                <div class="Content LayoutGrid ColumnsWithSpacing">
+                    <div class="Size1of2">
+                        $Data{"Date"}
+                        <input class="button" type="submit" value="$Text{"Submit"}" />
+                    </div>
+
+                    <div class="Size1of2">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"}">$Text{"Previous day"}</a>
+                        $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"}">$Text{"Next day"}</a>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+                <div class="Content">
 <!-- dtl:block:IncompleteText -->
-                                <tr class="contentvalue">
-                                    <td colspan="2">
-                                        $Text{"Days without entries"}:
+                    <label>$Text{"Days without entries"}:</label>
+                    <p>
 <!-- dtl:block:IncompleteWorkingDays -->
-                                        &nbsp;
-                                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Edit&Year=$LQData{"Year"}&Month=$LQData{"Month"}&Day=$LQData{"Day"}">
-                                            $Data{"BoldStart"}
-                                            $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
-                                            $Data{"BoldEnd"}
-                                        </a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">
+                            $Data{"BoldStart"}
+                            $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+                            $Data{"BoldEnd"}
+                        </a>
 <!-- dtl:block:IncompleteWorkingDays -->
-                                        &nbsp;
-                                    </td>
-                                </tr>
+                    </p>
 <!-- dtl:block:IncompleteText -->
-                                <tr>
-                                    <td colspan="2" class="contentfooter">&nbsp;</td>
-                                </tr>
-                            </form>
-                        </table>
-                        <br>
-                        <table border="0" width="100%" cellspacing="0" cellpadding="4">
-                            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                                <input type="hidden" name="Subaction" value="Edit">
-                                <input type="hidden" name="Status"    value="Action">
-                                <input type="hidden" name="Year"      value="$QData{"Year"}">
-                                <input type="hidden" name="Month"     value="$QData{"Month"}">
-                                <input type="hidden" name="Day"       value="$QData{"Day"}">
-                                <tr>
-                                    <td class="contenthead">
-                                        $Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentbody">
-                                        <table border="0" cellspacing="0" cellpadding="3" align="center">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="WorkingUnits" class="Validate PreventMultipleSubmits">
+                <input type="hidden" name="Action"        value="$Env{"Action"}" />
+                <input type="hidden" name="Subaction"     value="Edit" />
+                <input type="hidden" name="RecordsNumber" value="$QData{"RecordsNumber"}" />
+                <input type="hidden" name="Status"        value="Action" />
+                <input type="hidden" name="Year"          value="$QData{"Year"}" />
+                <input type="hidden" name="Month"         value="$QData{"Month"}" />
+                <input type="hidden" name="Day"           value="$QData{"Day"}" />
+                <div class="Header">
+                    <h2>$Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</h2>
+                </div>
+                <div class="Content">
+
 <!-- dtl:block:UnitBlock -->
-                                            <tr class="contentkey">
-                                                <td>$Text{"Project"}<span class="required">*</span></td>
-                                                <td>$Text{"Task"}<span class="required">*</span></td>
-                                                <td>$Text{"Remark"}</td>
-                                                <td>$Text{"Start"} (HH:MM)<span class="$QData{"ClassTime"}">*</span></td>
-                                                <td>$Text{"End"} (HH:MM)<span class="$QData{"ClassTime"}">*</span></td>
-                                                <td>$Text{"Period"}<span class="footnote">$QData{"PeriodNote"}</span></td>
-                                            </tr>
+                    <table class="DataTable DataTableNoHighlight">
+                        <thead>
+                            <tr>
+                                <th><span class="Marker">*</span> $Text{"Project"}</th>
+                                <th><span class="Marker">*</span> $Text{"Task"}</th>
+                                <th>$Text{"Remark"}</th>
+                                <th><span class="Marker">$QData{"StartTimeRequired"}</span> $Text{"Start"} (HH:MM)</th>
+                                <th><span class="Marker">$QData{"EndTimeRequired"}</span> $Text{"End"} (HH:MM)</th>
+                                <th><span class="Marker">$QData{"PeriodNote"}</span> $Text{"Period"}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
 <!-- dtl:block:Unit -->
-                                            <tr class="contentvalue" id="MoreFields[$QData{"ID"}]"  style="visibility:$QData{"Visibility"}">
-                                                <td>
-<!-- the following block will be enabled when project autocompletion is implemented
-                                                    <div class="ProjectAutoComplete">
-                                                        <input id="ProjectAutoCompleteInput[$QData{"ID"}]" type="text" value="$QData{"ProjectName"}" onchange="ClearAutoCompletionID('Project', $QData{"ID"});">
-                                                        <div id="ProjectAutoCompleteContainer[$QData{"ID"}]"></div>
-                                                        <input id="ProjectID[$QData{"ID"}]" name="ProjectID[$QData{"ID"}]" type="hidden" value="$QData{"ProjectID"}">
-                                                    </div>
-                                                    -->
-                                                    $Data{"ProjectOption"}
-                                                </td>
-                                                <td>
-<!-- the following block will be enabled when action autocompletion is implemented
-                                                    <div class="ActionAutoComplete">
-                                                        <input id="ActionAutoCompleteInput[$QData{"ID"}]" type="text" value="$QData{"ActionName"}" onchange="ClearAutoCompletionID('Action', $QData{"ID"});">
-                                                        <div id="ActionAutoCompleteContainer[$QData{"ID"}]"></div>
-                                                        <input id="ActionIDNew[$QData{"ID"}]" name="ActionIDNew[$QData{"ID"}]" type="hidden" value="$QData{"ActionID"}">
-                                                    </div>
-                                                    -->
-                                                    $Data{"ActionOption"}
-                                                </td>
-                                                <td><input type="text" name="Remark[$QData{"ID"}]"    value="$QData{"Remark"}"    size="35"></td>
-                                                <td><input type="text" name="StartTime[$QData{"ID"}]" value="$QData{"StartTime"}" size="7"></td>
-                                                <td><input type="text" name="EndTime[$QData{"ID"}]"   value="$QData{"EndTime"}"   size="7"></td>
+                            <tr>
+                                <td>
+                                    $Data{"ProjectOption"}
+                                    <div id="ProjectID$QData{"ID"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <div id="ProjectID$QData{"ID"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                </td>
+                                <td>
+                                    $Data{"ActionOption"}
+                                    <div id="ActionID$QData{"ID"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <div id="ActionID$QData{"ID"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                </td>
+                                <td>
+                                    <input type="text" name="Remark[$QData{"ID"}]" id="Remark$QData{"ID"}" class="$QData{"RemarkInvalid"}" value="$QData{"Remark"}" size="35" />
+                                    <div id="Remark$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="StartTime[$QData{"ID"}]" id="StartTime$QData{"ID"}" class="$QData{"StartTimeRequired"} $QData{"StartTimeInvalid"}" value="$QData{"StartTime"}" size="7" />
+                                    <div id="StartTime$QData{"ID"}Error" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+                                    <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="$QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
+                                    <div id="EndTime$QData{"ID"}Error" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+                                    <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+                                </td>
 <!-- dtl:block:UnitInputPeriod -->
-                                                <td align="$QData{"TextPosition"}">
-                                                    <input type="text" name="Period[$QData{"ID"}]" value="$QData{"Period"}" size="7">
-                                                </td>
+                                <td>
+                                    <input type="text" name="Period[$QData{"ID"}]" id="Period$QData{"ID"}" class="$QData{"PeriodRequired"} $QData{"PeriodInvalid"}" value="$QData{"Period"}" size="7" />
+                                    <div id="Period$QData{"ID"}Error" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+<!-- dtl:block:PeriodGenericServerError -->
+                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+<!-- dtl:block:PeriodGenericServerError -->
+<!-- dtl:block:InvalidPeriodServerError -->
+                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"Period is bigger than the interval between start and end times!"}</p>
+                                    </div>
+<!-- dtl:block:InvalidPeriodServerError -->
+<!-- dtl:block:InvalidHoursPeriodServerError -->
+                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"Invalid period! A day has only 24 hours."}</p>
+                                    </div>
+<!-- dtl:block:InvalidHoursPeriodServerError -->
+                                </td>
 <!-- dtl:block:UnitInputPeriod -->
 <!-- dtl:block:UnitPeriodWithoutInput -->
-                                                <td align="$QData{"TextPosition"}">$QData{"Period"}</td>
+                                <td>$QData{"Period"}</td>
 <!-- dtl:block:UnitPeriodWithoutInput -->
-                                            </tr>
-<!-- dtl:block:UnitRequired -->
-                                            <tr class="required">
-                                                <td colspan="6">
-                                                    $Text{"$Data{"Description"}"}
-                                                </td>
-                                            </tr>
-<!-- dtl:block:UnitRequired -->
-<!-- dtl:block:UnitReadonly -->
-                                            <tr class="readonly">
-                                                <td colspan="6">
-                                                    $Text{"$Data{"Description"}"}
-                                                </td>
-                                            </tr>
-<!-- dtl:block:UnitReadonly -->
+                            </tr>
 <!-- dtl:block:Unit -->
-                                            <tr class="contentvalue" id="Link">
-                                                <td colspan="5">
-                                                    <a href="javascript:MoreInputFields()" style="visibility:$QData{"LinkVisibility"}">
-                                                        <img border="0" src="$Config{"Frontend::ImagePath"}down-big.png" alt="$Text{"More input fields"}">
-                                                    </a>
-                                                </td>
-                                            </tr>
+                            <tr>
+                                <td colspan="6" class="Right">
+                                    <button class="CallForAction Plus" value="More input fields"><span>$Text{"More input fields"}</span></button>
+                                </td>
+                            </tr>
 <!-- dtl:block:UnitBlock -->
-                                            <tr>
-                                                <td class="contentkey" colspan="4">
-<!-- dtl:block:OtherTimes -->
-                                                    <input type="checkbox" value="1" name="LeaveDay" $Data{"LeaveDay"}>$Text{"On vacation"}&nbsp;
-                                                    <input type="checkbox" value="1" name="Sick"     $Data{"Sick"}>$Text{"On sick leave"}&nbsp;
-                                                    <input type="checkbox" value="1" name="Overtime" $Data{"Overtime"}>$Text{"On overtime leave"}
-<!-- dtl:block:OtherTimes -->
-                                                    &nbsp;
-                                                </td>
+                            <tr>
+                                <td colspan="4">
+                                </td>
 <!-- dtl:block:Total -->
-                                                <td>$Text{"Total"}:</td>
-                                                <td align="$QData{"TextPosition"}">$QData{"Total"}&nbsp;</td>
+                                <td>$Text{"Total"}:</td>
+                                <td>$QData{"Total"}</td>
 <!-- dtl:block:Total -->
-                                            </tr>
-<!-- dtl:block:Required -->
-                                            <tr>
-                                                <td colspan="6">
-                                                    <div class="required">$Text{"$Data{"Description"}"}</div>
-                                                </td>
-                                            </tr>
-<!-- dtl:block:Required -->
+
+                            </tr>
 <!-- dtl:block:Readonly -->
-                                            <tr>
-                                                <td colspan="6">
-                                                    <div class="readonly">$Text{"$Data{"Description"}"}</div>
-                                                </td>
-                                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    $Text{"$Data{"Description"}"}
+                                </td>
+                            </tr>
 <!-- dtl:block:Readonly -->
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentfooter">
-                                        <input class="button" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">
-                                        <input class="button" type="submit" value="$Text{"Delete"}" name="Delete">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="required">* $Text{"Required Field"}</div>
-<!-- dtl:block:FootNote -->
-                                        <div class="footnote">* $Text{"You have to insert a start and an end time or a period"}</div>
-<!-- dtl:block:FootNote -->
-                                        <div class="footnote">* $Text{"If you select "Miscellaneous (misc)" the task, please explain this in the remarks field"}</div>
-                                    </td>
-                                </tr>
-                            </form>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-            <br>
-        </td>
-    </tr>
-</table>
+
+                        </tbody>
+                    </table>
+
+<!-- dtl:block:OtherTimes -->
+                    <div>
+                        <input type="checkbox" value="1" id="LeaveDay" name="LeaveDay" title="$Text{"On vacation"}" class="$Data{"LeaveDayInvalid"}" $Data{"LeaveDay"} />
+                        <label for="LeaveDay">$Text{"On vacation"}</label>
+                        <div id="LeaveDayServerError" class="TooltipErrorMessage">
+                            <p>$Text{"You can only select one checkbox element!"}</p>
+                        </div>
+                        <input type="checkbox" value="1" id="Sick" name="Sick" title="$Text{"On sick leave"}" class="$Data{"SickInvalid"}" $Data{"Sick"} />
+                        <label for="LeaveDay">$Text{"On sick leave"}</label>
+                        <div id="SickServerError" class="TooltipErrorMessage">
+                            <p>$Text{"You can only select one checkbox element!"}</p>
+                        </div>
+                        <input type="checkbox" value="1" id="Overtime" name="Overtime" title="$Text{"On overtime leave"}" class="$Data{"OvertimeInvalid"}" $Data{"Overtime"} />
+                        <label for="LeaveDay">$Text{"On overtime leave"}</label>
+                        <div id="LeaveDayServerError" class="TooltipErrorMessage">
+                            <p>$Text{"You can only select one checkbox element!"}</p>
+                        </div>
+                    </div>
+<!-- dtl:block:OtherTimes -->
+
+                    <div class="Field Center SpacingTop">
+                        <button class="Primary" type="submit" value="$Text{"Submit"} onclick="return submit_compose();">$Text{"Submit"}</button>
+                        <button type="submit" value="$Text{"Delete"}" name="Delete">$Text{"Delete"}</button>
+                        $Text{"or"}
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"}</a>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+            </form>
+        </div>
+
+<!-- start note -->
+        <div class="WidgetSimple SpacingTop">
+            <div class="Header">
+                <h2>$Text{"Reference"}</h2>
+            </div>
+            <div class="Content">
+                <p>* $Text{"Required Field"}</p>
+                <p>* $Text{"You have to insert a start and an end time or a period"}</p>
+                <p>* $Text{"If you select "Miscellaneous (misc)" as task, please explain this in the remarks field"}</p>
+            </div>
+        </div>
+<!-- end note -->
+    </div>
+</div>

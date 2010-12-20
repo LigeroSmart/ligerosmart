@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.45 2010-12-16 23:42:27 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.46 2010-12-20 23:48:23 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -198,8 +198,9 @@ sub Run {
 
         # get params
         for my $Parameter (qw(Status Year Month Day)) {
-            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
         }
+        $Param{RecordsNumber} = $Self->{ParamObject}->GetParam( Param => 'RecordsNumber' ) || 8;
 
         # Check Date
         if ( !$Param{Year} || !$Param{Month} || !$Param{Day} ) {
@@ -219,8 +220,8 @@ sub Run {
             Day   => $Param{Day},
         );
 
-        # for initial useing, the first agent with rw-right will be redirected
-        # to 'Setting'. Then he can do the initial settings
+        # for initial use, the first agent with rw-right will be redirected
+        # to 'Setting', so he can do the initial settings
         if ( !$User{ $Self->{UserID} } ) {
             return $Self->_FirstUserRedirect();
         }
@@ -267,11 +268,14 @@ sub Run {
 
         my $ReduceTimeRef = $Self->{ConfigObject}->Get('TimeAccounting::ReduceTime');
 
+        # hash to store server side errors
+        my %Errors;
+
         # Edit Working Units
         if ( $Param{Status} ) {
 
             ID:
-            for my $ID ( 1 .. 16 ) {
+            for my $ID ( 1 .. $Param{RecordsNumber} ) {
                 for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
                     $Param{$Parameter}
                         = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
@@ -319,16 +323,20 @@ sub Run {
                 }
             }
 
-            my $CheckboxCheck = 0;
+            my %CheckboxCheck = ();
             for my $Element (qw(LeaveDay Sick Overtime)) {
                 my $Value = $Self->{ParamObject}->GetParam( Param => $Element );
                 if ($Value) {
                     $Data{$Element} = 1;
-                    $CheckboxCheck++;
+                    $CheckboxCheck{Element} = 1;
                 }
             }
-            if ( $CheckboxCheck > 1 ) {
-                $Param{RequiredDescription} = 'You can only select one checkbox element!';
+
+            # if more than one check box was checked it is a server error
+            if ( scalar keys %CheckboxCheck > 1 ) {
+                for my $Checkbox ( keys %CheckboxCheck ) {
+                    $Errors{ $Checkbox . 'Invalid' } = 'ServerError';
+                }
             }
 
             $Data{Year}  = $Param{Year};
@@ -354,16 +362,10 @@ sub Run {
 
         if ( $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime') ) {
             $Param{PeriodBlock}   = 'UnitInputPeriod';
-            $Frontend{ClassTime}  = 'footnote';
             $Frontend{PeriodNote} = '*';
-            $Self->{LayoutObject}->Block(
-                Name => 'FootNote',
-                Data => { %Param, %Frontend },
-            );
         }
         else {
             $Param{PeriodBlock}   = 'UnitPeriodWithoutInput';
-            $Frontend{ClassTime}  = 'required';
             $Frontend{PeriodNote} = '';
         }
 
@@ -410,7 +412,7 @@ sub Run {
 
         # build units
         $Param{"JSProjectList"} = "var JSProjectList = new Array();\n";
-        for my $ID ( 1 .. 16 ) {
+        for my $ID ( 1 .. $Param{RecordsNumber} ) {
             $Param{ID} = $ID;
             my $UnitRef = $Units[$ID];
 
@@ -435,15 +437,13 @@ sub Run {
             $Param{"JSProjectList"}
                 .= "JSProjectList[$ID] = [" . ( join ', ', @JSProjectList ) . "];\n";
 
-            # ProjectOption will not be used any more when project autocompletion is done
             $Frontend{ProjectOption} = $Self->{LayoutObject}->BuildSelection(
                 Data        => $ProjectList,
                 Name        => "ProjectID[$ID]",
+                ID          => "ProjectID$ID",
                 Translation => 0,
-
-                #Max        => 62,
-                Class    => 'ProjectSelection',
-                OnChange => "FillActionList($ID);",
+                Class       => 'ProjectSelection',
+                OnChange    => "FillActionList($ID);",
             );
 
 # action list initially only contains empty and selected element as well as elements configured for selected project
@@ -464,6 +464,7 @@ sub Run {
                 Data        => $ActionData,
                 SelectedID  => $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
+                ID          => "ActionID$ID",
                 Translation => 0,
                 Class       => 'ActionSelection',
             );
@@ -471,8 +472,16 @@ sub Run {
             $Param{Remark} = $UnitRef->{Remark} || '';
             if ( $UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
                 if ( $UnitRef->{Period} == 0 ) {
-                    $Param{UnitRequiredDescription}
-                        = 'Can\'t save settings, because of missing period!';
+                    if (
+                        $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime')
+                        )
+                    {
+                        $Errors{PeriodInvalid} = 'ServerError';
+                    }
+                    else {
+                        $Errors{StartTimeInvalid} = 'ServerError';
+                        $Errors{EndTimeInvalid}   = 'ServerError';
+                    }
                 }
             }
 
@@ -483,12 +492,9 @@ sub Run {
                     || $UnitRef->{$TimePeriod} eq '00:00' ? '' : $UnitRef->{$TimePeriod};
             }
 
-            # Define if the input fields are visible or not
-            $Param{Visibility} = $ShowAllInputFields || $ID < 9 ? 'visible' : 'collapse';
-
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
-                Data => { %Param, %Frontend },
+                Data => { %Param, %Frontend, %Errors },
             );
 
             $Self->{LayoutObject}->Block(
@@ -496,10 +502,11 @@ sub Run {
                 Data => {
                     Period => $Period,
                     ID     => $ID,
+                    %Errors,
                 },
             );
 
-            # Validity checks start
+            # validity check
             if (
                 $UnitRef->{ProjectID}
                 && $UnitRef->{ActionID}
@@ -507,7 +514,7 @@ sub Run {
                 )
             {
                 $Param{ReadOnlyDescription}
-                    = 'Are you sure, that you worked while you were on sick leave?';
+                    = 'Are you sure that you worked while you were on sick leave?';
             }
             elsif (
                 $UnitRef->{ProjectID}
@@ -516,7 +523,7 @@ sub Run {
                 )
             {
                 $Param{ReadOnlyDescription}
-                    = 'Are you sure, that you worked while you were on vacation?';
+                    = 'Are you sure that you worked while you were on vacation?';
             }
             elsif (
                 $UnitRef->{ProjectID}
@@ -525,15 +532,13 @@ sub Run {
                 )
             {
                 $Param{ReadOnlyDescription}
-                    = 'Are you sure, that you worked while you were on overtime leave?';
+                    = 'Are you sure that you worked while you were on overtime leave?';
             }
             if ( $UnitRef->{ProjectID} && !$UnitRef->{ActionID} ) {
-                $Param{UnitRequiredDescription}
-                    = 'Can\'t save settings, because of missing task!';
+                $Errors{ 'ActionID' . $ID . 'Invalid' } = 'ServerError';
             }
             if ( !$UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
-                $Param{UnitRequiredDescription}
-                    = 'Can\'t save settings, because of missing project!';
+                $Errors{ 'ProjectID' . $ID . 'Invalid' } = 'ServerError';
             }
             if (
                 $UnitRef->{StartTime}
@@ -551,51 +556,23 @@ sub Run {
                             > ( $EndTime - $StartTime ) / 60 + 0.01
                             )
                         {
-                            $Param{UnitRequiredDescription}
-                                = 'Can\'t save settings, because the Period is bigger'
-                                . ' than the interval between Starttime and Endtime!';
+                            $Self->{LayoutObject}->Block(
+                                Name => 'InvalidPeriodServerError',
+                                Data => { ID => $ID },
+                            );
                         }
                         if ( $EndTime > 60 * 24 || $StartTime > 60 * 24 ) {
-                            $Param{UnitRequiredDescription}
-                                = 'Can\'t save settings, because a day has only 24 hours!';
+                            $Self->{LayoutObject}->Block(
+                                Name => 'InvalidHoursPeriodServerError',
+                                Data => { ID => $ID },
+                            );
                         }
                     }
                 }
             }
 
-            if ( $Param{UnitRequiredDescription} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'UnitRequired',
-                    Data => { Description => $Param{UnitRequiredDescription} },
-                );
-
-                # REMARK: don't delete all working units
-                # REMARK: better would be to delete only incomplete working units
-                #if (
-                #    !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
-                #        Year  => $Param{Year},
-                #        Month => $Param{Month},
-                #        Day   => $Param{Day},
-                #    )
-                #    )
-                #{
-                #    return $Self->{LayoutObject}->ErrorScreen(
-                #        Message => 'Can\'t delete Working Units!'
-                #    );
-                #}
-                $Param{UnitRequiredDescription}     = '';
-                $Param{UnitRequiredDescriptionTrue} = 1;
-            }
-            if ( $Param{UnitReadOnlyDescription} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'UnitReadonly',
-                    Data => { Description => $Param{UnitReadOnlyDescription} },
-                );
-                $Param{UnitReadOnlyDescription} = '';
-            }
-
-            # Validity checks end
-
+            # reinitializes the server error hash
+            %Errors = ();
         }
 
         if (
@@ -613,16 +590,17 @@ sub Run {
         # validity checks start
         if ( $Param{Total} && $Param{Total} > 24 ) {
             $Param{RequiredDescription}
-                = 'Can\'t save settings, because of more than 24 working hours!';
+                = 'Can\'t save settings, because you entered more than 24 working hours!';
         }
         elsif ( $Param{Total} && $Param{Total} > 16 ) {
-            $Param{ReadOnlyDescription} = 'Are you sure, that you worked more than 16 hours?';
+            $Param{ReadOnlyDescription} = 'Are you sure that you worked more than 16 hours?';
         }
         if ( $Param{RequiredDescription} ) {
             $Self->{LayoutObject}->Block(
-                Name => 'Required',
+                Name => 'Readonly',
                 Data => { Description => $Param{RequiredDescription} },
             );
+
             if (
                 !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
                     Year  => $Param{Year},
@@ -636,14 +614,13 @@ sub Run {
                 );
             }
         }
+
         if ( $Param{ReadOnlyDescription} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'Readonly',
                 Data => { Description => $Param{ReadOnlyDescription} },
             );
         }
-
-        # validity checks end
 
         $Param{Date} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
@@ -665,7 +642,7 @@ sub Run {
                 )
             {
                 $Self->{LayoutObject}->Block(
-                    Name => 'Required',
+                    Name => 'Readonly',
                     Data => {
                         Description =>
                             'This Date is out of limit, but you haven\'t insert this day yet, so you get one(!) chance to insert'
@@ -730,11 +707,8 @@ sub Run {
 
         $Param{Weekday_to_Text} = $WeekdayArray[ $Param{Weekday} - 1 ];
 
-        # integrate the handling for required remarks in relation to
-        # projects
+        # integrate the handling for required remarks in relation to projects
         $Param{RemarkRegExp} = $Self->_Project2RemarkRegExp();
-
-        $Param{LinkVisibility} = $ShowAllInputFields ? 'collapse' : 'visible';
 
         # build output
         my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
@@ -1959,7 +1933,9 @@ sub Run {
             # check that the name is unique
             my %ExistingProject
                 = $Self->{TimeAccountingObject}->ProjectGet( Project => $GetParam{Project} );
-            if (%ExistingProject) {
+
+            # if the project name is found, check that the ID is different
+            if ( %ExistingProject && $ExistingProject{ID} ne $GetParam{ID} ) {
                 $Errors{ProjectInvalid}   = 'ServerError';
                 $Errors{ProjectErrorType} = 'ProjectDuplicateName';
             }
