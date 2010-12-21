@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAdd.dtl - provides HTML form for AgentITSMWorkOrderAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.dtl,v 1.55 2010-12-20 14:29:01 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.dtl,v 1.56 2010-12-21 13:07:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -84,11 +84,11 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Instruction"}:</label>
-                        <div class="RichTextField">
 <!-- dtl:block:RichText -->
 $Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
+                        <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Instruction"}:</label>
+                        <div class="RichTextField">
                             <textarea id="RichText" class="RichText Validate_Required $Data{"InstructionInvalid"}" name="Instruction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Instruction"}</textarea>
                             <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                             <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
