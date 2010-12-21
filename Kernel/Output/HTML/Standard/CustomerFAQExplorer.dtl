@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.16 2010-12-08 17:02:47 cr Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.17 2010-12-21 11:20:54 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -142,7 +142,7 @@
                 <div class="WidgetSimple">
 
                     <div class="Header">
-                        <h3>$Text{"Articles"}</h3>
+                        <h3>$Text{"FAQ Articles"}</h3>
 <!-- dtl:block:Pagination -->
                         <div class="Pagination">
                             <strong>$Data{"Result"}</strong> $Text{"of"} <strong>$Data{"TotalHits"}</strong> - $Text{"Page"}: $Data{"SiteNavBar"}
