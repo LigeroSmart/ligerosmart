@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.250 2010-12-21 05:13:50 dz Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.251 2010-12-21 23:29:15 cr Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -668,7 +668,6 @@
                 <NavBar>
                     <Description>Change Schedule</Description>
                     <Name>Change Schedule</Name>
-                    <Image>overview.png</Image>
                     <Block></Block>
                     <Type></Type>
                     <NavBar></NavBar>
@@ -676,6 +675,10 @@
                     <AccessKey></AccessKey>
                     <Prio>450</Prio>
                 </NavBar>
+                <Loader>
+                    <CSS>ITSM.ChangeManagement.Default.css</CSS>
+                    <CSS>ITSM.ChangeManagement.Table.css</CSS>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
