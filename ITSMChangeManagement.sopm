@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.212 2010-12-21 05:13:50 dz Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.213 2010-12-21 16:27:37 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -167,7 +167,6 @@
         <File Permission="644" Location="scripts/test/ITSMTemplate.t"/>
         <File Permission="644" Location="scripts/test/ITSMWorkOrder.t"/>
         <File Permission="644" Location="var/cron/itsmchange_check.dist"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/itsm-changemanagement.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.Search.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ChangeManagement.WorkorderGraph.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.ConfirmationDialog.js"/>
