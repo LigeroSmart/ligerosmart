@@ -2,7 +2,7 @@
 // ITSM.Agent.CABMemberSearch.js - provides the special module functions for the user search
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.CABMemberSearch.js,v 1.1 2010-12-21 05:13:50 dz Exp $
+// $Id: ITSM.Agent.CABMemberSearch.js,v 1.2 2010-12-21 17:45:53 dz Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -46,7 +46,7 @@ ITSM.Agent.CABMemberSearch = (function (TargetNS) {
                     var URL = Core.Config.Get('Baselink'), Data = {
                         Action: 'AgentITSMCABMemberSearch',
                         Search: Request.term + '*',
-                        Groups : Core.Config.Get('CABAutocomplete.Groups') || '',
+                        Groups : Core.Config.Get('CABAutocomplete.Groups') || ''
                     };
                     Core.AJAX.FunctionCall(URL, Data, function (Result) {
                         var Data = [];
