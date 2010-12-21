@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeZoom.pm - the OTRS::ITSM::ChangeManagement change zoom module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.pm,v 1.58 2010-12-20 14:23:43 ub Exp $
+# $Id: AgentITSMChangeZoom.pm,v 1.59 2010-12-21 13:06:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -658,6 +658,9 @@ sub Run {
 
         # check for attachment information
         next ATTACHMENT if !$AttachmentData;
+
+        # do not show inline attachments in attachments list (they have a content id)
+        next ATTACHMENT if $AttachmentData->{Preferences}->{ContentID};
 
         # show block
         $Self->{LayoutObject}->Block(
