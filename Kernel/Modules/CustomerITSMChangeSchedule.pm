@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerITSMChangeSchedule.pm - the OTRS::ITSM::ChangeManagement customer change schedule overview module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerITSMChangeSchedule.pm,v 1.6 2010-12-09 03:01:04 ub Exp $
+# $Id: CustomerITSMChangeSchedule.pm,v 1.7 2010-12-21 23:38:15 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::ITSMChange;
 use Kernel::System::LinkObject;
 use Kernel::System::Service;
+use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,9 +40,11 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ChangeObject}  = Kernel::System::ITSMChange->new(%Param);
-    $Self->{LinkObject}    = Kernel::System::LinkObject->new(%Param);
-    $Self->{ServiceObject} = Kernel::System::Service->new(%Param);
+    $Self->{ChangeObject}       = Kernel::System::ITSMChange->new(%Param);
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
+    $Self->{CustomerUserObject} = $Self->{UserObject};
+    $Self->{UserObject}         = Kernel::System::User->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
@@ -49,6 +52,8 @@ sub new {
     # get filter and view params
     $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || 'All';
     $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
+    $Self->{StartHit} = int( $Self->{ParamObject}->GetParam( Param => 'StartHit' ) || 1 );
+    $Self->{PageShown} = $Self->{UserShowTickets} || 1;
 
     return $Self;
 }
@@ -200,11 +205,13 @@ sub Run {
     );
     my @ChangeIDs = @{$ChangeIDsRef};
 
+    my %CustomerUserServices;
+
     # if configured, get only changes which have workorders that are linked with a service
     if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
 
         # get all services the customer user is allowed to use
-        my %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+        %CustomerUserServices = $Self->{ServiceObject}->CustomerUserServiceMemberList(
             CustomerUserLogin => $Self->{UserID},
             Result            => 'HASH',
             DefaultServices   => 1,
@@ -258,7 +265,18 @@ sub Run {
 
     # display all navbar filters
     my %NavBarFilter;
-    for my $Filter ( keys %Filters ) {
+    my $Counter;
+    my $AllChanges;
+    my $AllChangesTotal;
+
+    # store the number of filters
+    my $NumberOfFilters = keys %Filters;
+
+    # array to sort the filters by its priority
+    my @NavBarFilters = sort { $Filters{$a}->{Prio} <=> $Filters{$b}->{Prio} } keys %Filters;
+
+    for my $FilterName (@NavBarFilters) {
+        $Counter++;
 
         # do not show the filter count in customer interface,
         # if the feature ShowOnlyChangesWithAllowedServices is activevated
@@ -271,59 +289,352 @@ sub Run {
 
             # count the number of changes for each filter
             $Count = $Self->{ChangeObject}->ChangeSearch(
-                %{ $Filters{$Filter}->{Search} },
+                %{ $Filters{$FilterName}->{Search} },
                 Result => 'COUNT',
             );
         }
 
+        my $ClassLI = '';
+        my $ClassA  = '';
+        if ( $FilterName eq $Self->{Filter} ) {
+            $ClassA = 'Selected';
+            $AllChanges = $Count || 0;
+        }
+        if ( $NumberOfFilters == $Counter ) {
+            $ClassLI = 'Last';
+        }
+        if ( $FilterName eq 'All' ) {
+            $AllChangesTotal = $Count;
+        }
+
+        # set counter string (emty string if Count is undefined)
+        my $CountStrg;
+        if ( defined $Count ) {
+            $CountStrg = '(' . $Count . ')';
+        }
+
         # display the navbar filter
-        $NavBarFilter{ $Filters{$Filter}->{Prio} } = {
-            Count  => $Count,
-            Filter => $Filter,
-            %{ $Filters{$Filter} },
+        $NavBarFilter{ $Filters{$FilterName}->{Prio} } = {
+            CountStrg => $CountStrg,
+            Filter    => $FilterName,
+            ClassLI   => $ClassLI,
+            ClassA    => $ClassA,
+            %{ $Filters{$FilterName} },
         };
     }
 
-    # show changes
-    my $LinkPage = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+    # set meta-link for pagination
+    my $Link = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
         . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . ';Subaction=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Subaction} )
         . ';';
-    my $LinkSort = 'Filter='
-        . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
-        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . ';';
-    my $LinkFilter = 'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
-        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
-        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
-        . ';';
-    $Output .= $Self->{LayoutObject}->ITSMChangeListShow(
 
-        ChangeIDs => \@ChangeIDs,
-        Total     => scalar @ChangeIDs,
+    # create pagination
+    my %PageNav = $Self->{LayoutObject}->PageNavBar(
+        Limit     => 10000,
+        StartHit  => $Self->{StartHit},
+        PageShown => $Self->{PageShown},
+        AllHits   => scalar(@ChangeIDs),                    #$AllChanges,
+        Action    => 'Action=CustomerITSMChangeSchedule',
+        Link      => $Link,
+        IDPrefix  => 'CustomerITSMChangeSchedule',
+    );
 
-        View => $Self->{View},
+    # show changes is data if any
+    if ( scalar @ChangeIDs ) {
 
-        Filter     => $Self->{Filter},
-        Filters    => \%NavBarFilter,
-        FilterLink => $LinkFilter,
+        # show header filter
+        for my $Key ( sort keys %NavBarFilter ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'FilterHeader',
+                Data => {
+                    %{ $NavBarFilter{$Key} },
+                },
+            );
+        }
 
-        TitleName  => 'Overview: Change Schedule',
-        TitleValue => $Self->{Filter},
+        if ( scalar @ShowColumns ) {
 
-        Env      => $Self,
-        LinkPage => $LinkPage,
-        LinkSort => $LinkSort,
+            # set headers
+            for my $ColumnName (@ShowColumns) {
 
-        ShowColumns => \@ShowColumns,
+                # create needed veriables
+                my $CSS = '';
+                my $SetOrderBy;
 
-        Frontend => 'Customer',
+                # remove ID if necesary
+                if ($SortBy) {
+                    $SortBy = ( $SortBy eq 'PriorityID' )
+                        ? 'Priority'
+                        : ( $SortBy eq 'CategoryID' )       ? 'Category'
+                        : ( $SortBy eq 'ChangeBuilderID' )  ? 'ChangeBuilder'
+                        : ( $SortBy eq 'ChangeManagerID' )  ? 'ChangeManager'
+                        : ( $SortBy eq 'ChangeStateID' )    ? 'ChangeState'
+                        : ( $SortBy eq 'ImpactID' )         ? 'Impact'
+                        : ( $SortBy eq 'WorkOrderAgentID' ) ? 'WorkOrderAgent'
+                        : ( $SortBy eq 'WorkOrderStateID' ) ? 'WorkOrderState'
+                        : ( $SortBy eq 'WorkOrderTypeID' )  ? 'WorkOrderType'
+                        :                                     $SortBy;
+                }
+
+                # set the correct Set CSS class and order by link
+                if ( $SortBy && ( $SortBy eq $ColumnName ) ) {
+                    if ( $OrderBy && ( $OrderBy eq 'Up' ) ) {
+                        $SetOrderBy = 'Down';
+                        $CSS .= ' SortDescending';
+                    }
+                    else {
+                        $SetOrderBy = 'Up';
+                        $CSS .= ' SortAscending';
+                    }
+                }
+                else {
+                    $SetOrderBy = 'Up';
+                }
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'Record' . $ColumnName . 'Header',
+                    Data => {
+                        CSS     => $CSS,
+                        OrderBy => $SetOrderBy,
+                    },
+                );
+            }
+        }
+
+        # define incident signals, needed for services
+        my %InciSignals = (
+            operational => 'greenled',
+            warning     => 'yellowled',
+            incident    => 'redled',
+        );
+
+        # show changes's
+        $Counter = 0;
+
+        ID:
+        for my $ChangeID (@ChangeIDs) {
+            $Counter++;
+            if (
+                $Counter >= $Self->{StartHit}
+                && $Counter < ( $Self->{PageShown} + $Self->{StartHit} )
+                )
+            {
+
+                # to store all data
+                my %Data;
+
+                # to store data of sub-elements
+                my %SubElementData;
+
+                my $Change = $Self->{ChangeObject}->ChangeGet(
+                    ChangeID => $ChangeID,
+                    UserID   => $Self->{UserID},
+                );
+
+                next ID if !$Change;
+
+                # add change data,
+                # ( let workorder data overwrite
+                # some change attributes, i.e. PlannedStartTime, etc... )
+                %Data = ( %{$Change}, %Data );
+
+                # get user data for needed user types
+                USERTYPE:
+                for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
+
+                    # check if UserType attribute exists either in change or workorder
+                    if ( !$Change->{ $UserType . 'ID' } && !$Data{ $UserType . 'ID' } ) {
+                        next USERTYPE;
+                    }
+
+                    # get user data
+                    my %User = $Self->{UserObject}->GetUserData(
+                        UserID => $Change->{ $UserType . 'ID' } || $Data{ $UserType . 'ID' },
+                        Cached => 1,
+                    );
+
+                    # set user data
+                    $Data{ $UserType . 'UserLogin' }        = $User{UserLogin};
+                    $Data{ $UserType . 'UserFirstname' }    = $User{UserFirstname};
+                    $Data{ $UserType . 'UserLastname' }     = $User{UserLastname};
+                    $Data{ $UserType . 'LeftParenthesis' }  = '(';
+                    $Data{ $UserType . 'RightParenthesis' } = ')';
+                }
+
+                # to store the linked service data
+                my $LinkListWithData = {};
+
+                my @WorkOrderIDs;
+
+                # store the combined linked services data from all workorders of this change
+                @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
+
+                # store the combined linked services data
+                for my $WorkOrderID (@WorkOrderIDs) {
+
+                    # get linked objects of this workorder
+                    my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                        Object => 'ITSMWorkOrder',
+                        Key    => $WorkOrderID,
+                        State  => 'Valid',
+                        UserID => $Self->{UserID},
+                    );
+
+                    OBJECT:
+                    for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+
+                        # only show linked services of workorder
+                        if ( $Object ne 'Service' ) {
+                            next OBJECT;
+                        }
+
+                        LINKTYPE:
+                        for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+
+                            DIRECTION:
+                            for my $Direction (
+                                keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
+                                )
+                            {
+
+                                ID:
+                                for my $ID (
+                                    keys %{
+                                        $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                            ->{$Direction}
+                                    }
+                                    )
+                                {
+
+                                    # combine the linked object data from all workorders
+                                    $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ID}
+                                        = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                        ->{$Direction}->{$ID};
+                                }
+                            }
+                        }
+                    }
+                }
+
+                # get unique service ids
+                my %UniqueServiceIDs;
+                my $ServicesRef = $LinkListWithData->{Service} || {};
+                for my $LinkType ( keys %{$ServicesRef} ) {
+
+                    # extract link type List
+                    my $LinkTypeList = $ServicesRef->{$LinkType};
+
+                    for my $Direction ( keys %{$LinkTypeList} ) {
+
+                        # extract direction list
+                        my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
+
+                        # collect unique service ids
+                        for my $ServiceID ( keys %{$DirectionList} ) {
+                            $UniqueServiceIDs{$ServiceID}++;
+                        }
+                    }
+                }
+
+                # get the data for each service
+                my @ServicesData;
+                SERVICEID:
+                for my $ServiceID ( keys %UniqueServiceIDs ) {
+
+                    if ( $Self->{Config}->{ShowOnlyChangesWithAllowedServices} ) {
+
+                        # do not show this service if customer is not allowed to use it
+                        next SERVICEID if !$CustomerUserServices{$ServiceID};
+                    }
+
+                    # get service data
+                    my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                        ServiceID => $ServiceID,
+                        UserID    => $Self->{UserID},
+                    );
+
+                    # add current incident signal
+                    $ServiceData{CurInciSignal} = $InciSignals{ $ServiceData{CurInciStateType} };
+
+                    # store service data
+                    push @ServicesData, \%ServiceData;
+                }
+
+                # sort services data by service name
+                @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
+
+                # do not show the change if it has no services
+                next ID if !@ServicesData;
+
+                # store services data
+                $SubElementData{Services} = \@ServicesData;
+
+                # add block
+                $Self->{LayoutObject}->Block(
+                    Name => 'Record',
+                    Data => {},
+                );
+
+                if (@ShowColumns) {
+                    COLUMN:
+                    for my $ColumnName (@ShowColumns) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'Record' . $ColumnName,
+                            Data => {
+                                %Data,
+                            },
+                        );
+
+                        # check if this column contains sub-elements
+                        if (
+                            $SubElementData{$ColumnName}
+                            && ref $SubElementData{$ColumnName} eq 'ARRAY'
+                            )
+                        {
+
+                            for my $SubElement ( @{ $SubElementData{$ColumnName} } ) {
+
+                                # show sub-elements of column
+                                $Self->{LayoutObject}->Block(
+                                    Name => 'Record' . $ColumnName . 'SubElement',
+                                    Data => {
+                                        %Param,
+                                        %Data,
+                                        %{$SubElement},
+                                    },
+                                );
+                            }
+                        }
+
+                        if ( !@ServicesData ) {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'Record' . $ColumnName . 'SubElementEmpty',
+                                Data => {},
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # otherwise show no data found message
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'NoDataFoundMsg',
+            Data => {},
+        );
+    }
+
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'CustomerITSMChangeOverView',
+        Data         => \%Param,
     );
 
     # get page footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->CustomerFooter();
 
     return $Output;
 }
