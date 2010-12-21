@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeCABTemplate.pm - the OTRS::ITSM::ChangeManagement add CAB template module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeCABTemplate.pm,v 1.5 2010-12-09 03:01:04 ub Exp $
+# $Id: AgentITSMChangeCABTemplate.pm,v 1.6 2010-12-21 19:41:39 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -98,19 +98,18 @@ sub Run {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
-    # Remember the reason why saving was not attempted.
-    # The items are the names of the dtl validation error blocks.
-    my @ValidationErrors;
+    # return ServerError class when needed
+    my %ServerError;
 
     # add a template
     if ( $Self->{Subaction} eq 'AddTemplate' ) {
 
         # check validity of the template name
         if ( !$GetParam{TemplateName} ) {
-            push @ValidationErrors, 'InvalidTemplateName';
+            $ServerError{TemplateNameServerError} = 'ServerError';
         }
 
-        if ( !@ValidationErrors ) {
+        if ( !%ServerError ) {
 
             # serialize the change
             my $TemplateContent = $Self->{TemplateObject}->TemplateSerialize(
@@ -151,16 +150,12 @@ sub Run {
             );
         }
     }
-    else {
-
-        # no subaction,
-    }
 
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Template',
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     my $ValidSelectionString = $Self->{LayoutObject}->BuildSelection(
         Data => {
@@ -171,16 +166,12 @@ sub Run {
         Sort       => 'NumericKey',
     );
 
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
-
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeCABTemplate',
         Data         => {
             %GetParam,
+            %ServerError,
             ChangeID             => $ChangeID,
             ValidSelectionString => $ValidSelectionString,
             ChangeNumber         => $Change->{ChangeNumber},
@@ -189,7 +180,7 @@ sub Run {
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
