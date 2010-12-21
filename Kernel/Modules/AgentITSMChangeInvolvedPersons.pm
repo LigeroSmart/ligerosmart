@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.40 2010-12-21 05:13:50 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.41 2010-12-21 17:38:10 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -96,8 +96,8 @@ sub Run {
     my %GetParam;
     for my $ParamName (
         qw(ChangeBuilder ChangeBuilderSelected ChangeManager ChangeManagerSelected
-        NewCABMember NewCABMemberSelected NewCABMemberType CABTemplate CABMemberID
-        AddCABMember AddCABTemplate TemplateID)
+        NewCABMember NewCABMemberSelected NewCABMemberType CABTemplate AddCABMember
+        AddCABTemplate TemplateID NewTemplate)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -112,8 +112,12 @@ sub Run {
 
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        #DELETE DELETE
-        print STDERR $Self->{MainObject}->Dump( \%GetParam );
+        # go to Store the new template
+        if ( $GetParam{NewTemplate} ) {
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentITSMChangeCABTemplate;ChangeID=$ChangeID",
+            );
+        }
 
         # change manager and change builder are required for an update
         my %ErrorAllRequired = $Self->_CheckChangeManagerAndChangeBuilder(
@@ -238,7 +242,7 @@ sub Run {
                 # redirect to change zoom mask
                 # load new URL in parent window and close popup
                 return $Self->{LayoutObject}->PopupClose(
-                    URL => $Self->{LastChangeView},
+                    URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
                 );
             }
             else {
@@ -317,7 +321,7 @@ sub Run {
     }
 
     # show all agent members of CAB
-    if ( @{ $Change->{CABAgents} } ) {
+    if ( @{ $Change->{CABAgents} } || @{ $Change->{CABCustomers} } ) {
         $Self->{LayoutObject}->Block( Name => 'CABMemberTable' );
     }
 
@@ -336,7 +340,8 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'CABMemberRow',
             Data => {
-                UserType => 'Agent',
+                UserType         => 'Agent',
+                InternalUserType => 'CABAgents',
                 %User,
             },
         );
@@ -359,7 +364,8 @@ sub Run {
         $Self->{LayoutObject}->Block(
             Name => 'CABMemberRow',
             Data => {
-                UserType => 'Customer',
+                UserType         => 'Customer',
+                InternalUserType => 'CABCustomers',
                 %CustomerUser,
             },
         );
@@ -374,25 +380,18 @@ sub Run {
         $AutoComplete = 'false';
     }
 
+    $Self->{LayoutObject}->Block(
+        Name => 'UserSearchAutoComplete',
+        Data => {
+            minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
+            queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+            maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth}        || 'false',
+        },
+    );
+
     # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
-    for my $Group (qw( itsm-change-manager itsm-change-builder )) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'UserSearchAutoComplete',
-            Data => {
-                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
-                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
-                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-                dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth}        || 'false',
-                groups              => $Group,
-            },
-        );
-
-        my $ItemID = 'ChangeManager';
-        if ( $Group eq 'itsm-change-builder' ) {
-            $ItemID = 'ChangeBuilder';
-        }
-
+    for my $ItemID (qw( ChangeManager ChangeBuilder )) {
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchInit',
             Data => {
@@ -435,6 +434,11 @@ sub Run {
             CABTemplateStrg => $TemplateDropDown,
         },
     );
+
+    # if CAB Members show New Template Button
+    if ( @{ $Change->{CABAgents} } || @{ $Change->{CABCustomers} } ) {
+        $Self->{LayoutObject}->Block( Name => 'NewTemplateButton' );
+    }
 
     # build CAB member search autocomplete field
     my $CABMemberAutoCompleteConfig
@@ -504,7 +508,7 @@ sub _IsMemberDeletion {
     # check possible agent ids
     AGENTID:
     for my $AgentID ( @{ $Param{Change}->{CABAgents} } ) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABAgent' . $AgentID ) ) {
+        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABAgents' . $AgentID ) ) {
 
             # save info
             %DeleteInfo = (
@@ -521,7 +525,7 @@ sub _IsMemberDeletion {
         # check possible customer ids
         CUSTOMERID:
         for my $CustomerID ( @{ $Param{Change}->{CABCustomers} } ) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABCustomer' . $CustomerID ) ) {
+            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteCABCustomers' . $CustomerID ) ) {
 
                 # save info
                 %DeleteInfo = (
@@ -576,9 +580,6 @@ sub _CheckChangeManagerAndChangeBuilder {
         }
     }
 
-    #DELETE DELETE
-    print STDERR $Self->{MainObject}->Dump( \%Errors );
-
     return %Errors
 }
 
@@ -598,9 +599,9 @@ sub _IsNewCABMemberOk {
     my @CurrentMembers;
 
     # an agent is requested to be added
-    if ( $MemberType eq 'Agent' ) {
+    if ( $MemberType eq 'CABAgents' ) {
         my %User = $Self->{UserObject}->GetUserData(
-            UserID => $Param{CABMemberID},
+            UserID => $Param{NewCABMemberSelected},
         );
 
         if (%User) {
@@ -684,258 +685,6 @@ sub _IsNewCABMemberOk {
     }
 
     return %MemberInfo;
-}
-
-sub _GetExpandInfo {
-    my ( $Self, %Param ) = @_;
-
-    my %Info;
-
-    # get group of group itsm-change
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
-        Group => 'itsm-change',
-    );
-
-    # get members of group
-    my %ITSMChangeUsers = $Self->{GroupObject}->GroupMemberList(
-        GroupID => $GroupID,
-        Type    => 'ro',
-        Result  => 'HASH',
-        Cached  => 1,
-    );
-
-    for my $Name (qw(Builder Manager)) {
-
-        # the fields in .dtl have a number at the end
-        my $Key = $Name eq 'Manager' ? 1 : 2;
-
-        # handle the "search user" button for either ExpandBuilder or ExpandManager
-        if ( $Param{ 'Expand' . $Name . '1' } ) {
-
-            # search agents
-            my %UserFound = $Self->{UserObject}->UserSearch(
-                Search => $Param{ 'Change' . $Name } . '*',
-                Valid  => 1,
-            );
-
-            # UserSearch() returns values with a trailing space, get rid of it
-            for my $Name ( values %UserFound ) {
-                $Name =~ s{ \s+ \z }{}xms;
-            }
-
-            # filter the itsm-change users in found users
-            my %UserList;
-            CHANGEUSERID:
-            for my $ChangeUserID ( keys %ITSMChangeUsers ) {
-                next CHANGEUSERID if !$UserFound{$ChangeUserID};
-
-                $UserList{$ChangeUserID} = $UserFound{$ChangeUserID};
-            }
-
-            # check if just one customer user exists
-            # if just one, fillup CustomerUserID and CustomerID
-            my @KeysUserList = keys %UserList;
-            if ( scalar @KeysUserList == 1 ) {
-
-                # if user is found, display the name
-                $Info{ 'Change' . $Name } = $UserList{ $KeysUserList[0] };
-
-                # get user
-                my %UserData = $Self->{UserObject}->GetUserData(
-                    UserID => $KeysUserList[0],
-                );
-
-                # if user is found set hidden field
-                if ( $UserData{UserID} ) {
-                    $Info{ 'SelectedUser' . $Key } = $UserData{UserID};
-                }
-            }
-
-            # if more the one user exists, show list
-            # and clean UserID
-            else {
-
-                # reset input field
-                $Info{ 'SelectedUser' . $Key } = '';
-
-                # build drop down with found users
-                $Info{ 'Change' . $Name . 'Strg' } = $Self->{LayoutObject}->BuildSelection(
-                    Name => 'Change' . $Name . 'ID',
-                    Data => \%UserList,
-                );
-
-                # show 'take this user' button
-                $Self->{LayoutObject}->Block(
-                    Name => 'TakeChange' . $Name,
-                );
-
-                # clear to if there is no customer found
-                if ( !%UserList ) {
-                    $Info{ 'Change' . $Name }      = '';
-                    $Info{ 'SelectedUser' . $Key } = '';
-                }
-            }
-        }
-
-        # handle the "take this user" button
-        elsif ( $Param{ 'Expand' . $Name . '2' } ) {
-
-            # show user data
-            my $UserID   = $Param{ 'Change' . $Name . 'ID' };
-            my %UserData = $Self->{UserObject}->GetUserData(
-                UserID => $UserID,
-            );
-
-            # if user is found
-            if (%UserData) {
-
-                # set hidden field
-                $Info{ 'SelectedUser' . $Key } = $UserID;
-                $Info{ 'Change' . $Name }      = sprintf '"%s %s" <%s>',
-                    $UserData{UserFirstname},
-                    $UserData{UserLastname},
-                    $UserData{UserEmail};
-            }
-        }
-    }
-
-    if ( $Param{ExpandCABMember1} ) {
-
-        # search agents
-        my %UserFound = $Self->{UserObject}->UserSearch(
-            Search => $Param{'NewCABMember'} . '*',
-            Valid  => 1,
-        );
-
-        # UserSearch() returns values with a trailing space, get rid of it
-        for my $Name ( values %UserFound ) {
-            $Name =~ s{ \s+ \z }{}xms;
-        }
-
-        # filter the itsm-change users in found users
-        my @UserList;
-        CHANGEUSERID:
-        for my $ChangeUserID ( keys %UserFound ) {
-
-            # save found user in @UserList
-            push @UserList, {
-                Name => $UserFound{$ChangeUserID},
-                ID   => $ChangeUserID,
-                Type => 'CABAgents',
-            };
-        }
-
-        # search customers
-        my %CustomerUserFound = $Self->{CustomerUserObject}->CustomerSearch(
-            Search => $Param{'NewCABMember'} . '*',
-            Valid  => 1,
-        );
-
-        # save found customer users in @UserList
-        for my $CustomerUserID ( keys %CustomerUserFound ) {
-
-            push @UserList, {
-                Name => $CustomerUserFound{$CustomerUserID},
-                ID   => $CustomerUserID,
-                Type => 'CABCustomers',
-            };
-        }
-
-        # check if just one customer user exists
-        # if just one, fillup CustomerUserID and CustomerID
-        if ( scalar @UserList == 1 ) {
-
-            # if user is found, display the name
-            $Info{NewCABMember}  = $UserList[0]->{Name};
-            $Info{CABMemberID}   = $UserList[0]->{ID};
-            $Info{CABMemberType} = $UserList[0]->{Type};
-        }
-
-        # if more the one user exists, show list
-        # and clean UserID
-        else {
-
-            # build list for drop down
-            my @UserListForDropDown;
-            for my $User (@UserList) {
-                push @UserListForDropDown, {
-                    Key   => $User->{ID},
-                    Value => $User->{Name},
-                };
-            }
-
-            # reset input field
-            $Info{NewCABMember} = '';
-
-            # build drop down with found users
-            $Info{CABMemberStrg} = $Self->{LayoutObject}->BuildSelection(
-                Name => 'MemberID',
-                Data => \@UserListForDropDown,
-            );
-
-            # show 'take this user' button
-            $Self->{LayoutObject}->Block(
-                Name => 'TakeCABMember',
-            );
-
-            # clear to if there is no customer found
-            if ( !@UserList ) {
-                $Info{'NewCABMember'}  = '';
-                $Info{'CABMemberID'}   = '';
-                $Info{'CABMemberType'} = '';
-            }
-        }
-    }
-
-    # handle the "take this user" button
-    elsif ( $Param{ExpandCABMember2} ) {
-
-        # show user data
-        my $UserID = $Param{'MemberID'};
-        my %UserData;
-
-        if ( $UserID =~ m{ \A \d+ \z }xms ) {
-            %UserData = $Self->{UserObject}->GetUserData(
-                UserID => $UserID,
-            );
-        }
-
-        # if user is found
-        if (%UserData) {
-
-            # set hidden field
-            $Info{'CABMemberID'}   = $UserID;
-            $Info{'CABMemberType'} = 'CABAgents';
-            $Info{'NewCABMember'}  = sprintf '%s %s %s',
-                $UserData{UserLogin},
-                $UserData{UserFirstname},
-                $UserData{UserLastname};
-        }
-
-        # maybe it's a customer user
-        else {
-
-            # get customer user data
-            my %CustomerUserData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                User  => $UserID,
-                Valid => 1,
-            );
-
-            # if user is found
-            if (%CustomerUserData) {
-
-                # set hidden field
-                $Info{'CABMemberID'}   = $UserID;
-                $Info{'CABMemberType'} = 'CABCustomers';
-                $Info{'NewCABMember'}  = sprintf '%s %s %s',
-                    $CustomerUserData{UserFirstname},
-                    $CustomerUserData{UserLastname},
-                    $CustomerUserData{UserEmail};
-            }
-        }
-    }
-
-    return %Info;
 }
 
 1;

@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.37 2010-12-21 05:13:50 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.38 2010-12-21 17:38:10 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,21 @@ $Include{"AgentITSMCABMemberSearch"}
 
 <!--dtl:js_on_document_complete-->
     <script type="text/javascript">//<![CDATA[
-        $('#FIELD').bind('click', function( Event ) {
-            $('#FIELD').val('');
+
+        $('#ChangeManager').bind('focus', function( Event ) {
+            $('#ChangeManager').val('');
+            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
         });
+
+        $('#ChangeBuilder').bind('focus', function( Event ) {
+            $('#ChangeBuilder').val('');
+            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder')
+        });
+
+        $('#NewCABMember').bind('click', function( Event ) {
+            $('#NewCABMember').val('');
+        });
+
     //]]></script>
 <!--dtl:js_on_document_complete-->
 
@@ -49,12 +61,20 @@ $Include{"AgentITSMCABMemberSearch"}
                         <div class="Field">
                             <input id="ChangeManager" name="ChangeManager" type="text" value="$QData{"ChangeManager"}" class="W75pc Validate_Required $Data{"ChangeManagerError"}"/>
                             <input id="ChangeManagerSelected" name="ChangeManagerSelected" type="hidden" value="$QData{"ChangeManagerID"}" />
+
+                            <div id="ChangeManagerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="ChangeManagerServerError" class="TooltipErrorMessage"><p>$Text{"User invalid."}</p></div>
+
                         </div>
 
                         <label class="Mandatory" for="ChangeBuilder"><span class="Marker">*</span> $Text{"ChangeBuilder"}: </label>
                         <div class="Field">
                             <input id="ChangeBuilder" name="ChangeBuilder" type="text" value="$QData{"ChangeBuilder"}" class="W75pc Validate_Required $Data{"ChangeBuilderError"}"/>
                             <input id="ChangeBuilderSelected" type="hidden" name="ChangeBuilderSelected" value="$QData{"ChangeBuilderID"}" />
+
+                            <div id="ChangeBuilderError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="ChangeBuilderServerError" class="TooltipErrorMessage"><p>$Text{"User invalid."}</p></div>
+
                         </div>
                     </fieldset>
                 </div>
@@ -68,20 +88,25 @@ $Include{"AgentITSMCABMemberSearch"}
                     <fieldset class="TableLike FixedLabel">
 
 <!-- dtl:block:CABTemplate -->
-                        <label for="TemplateID"> $Text{"Add CAB Template"}: </label>
+                        <label for="TemplateID"> $Text{"CAB Template"}: </label>
                         <div class="Field">
                             $Data{"CABTemplateStrg"}
-                            <button type="submit" name="AddCABTemplate" value="$Text{"Add"}"> $Text{"Add"} </button>
+                            <button type="submit" name="AddCABTemplate" value="$Text{"Apply Template"}"> $Text{"Apply Template"} </button>
+<!-- dtl:block:NewTemplateButton -->
+                            <button type="submit" name="NewTemplate" value="$Text{"NewTemplate"}"> $Text{"Save this CAB as template"} </button>
+<!-- dtl:block:NewTemplateButton -->
                         </div>
 <!-- dtl:block:CABTemplate -->
 
                         <label for="NewCABMember"> $Text{"Add to CAB"}: </label>
                         <div class="Field">
-                            <input id="NewCABMember"         type="text"   value="$QData{"NewCABMember"}" class="W75pc $Data{"NewCABMemberError"}" />
-                            <input id="NewCABMemberSelected" type="hidden" value="$QData{"NewCABMemberID"}" />
-                            <input id="NewCABMemberType"     type="hidden" value="$QData{"CABMemberType"}" />
+                            <input id="NewCABMember" name="NewCABMember" type="text"   value="$QData{"NewCABMember"}" class="W75pc $Data{"NewCABMemberError"}" />
+                            <input id="NewCABMemberSelected" name="NewCABMemberSelected" type="hidden" value="$QData{"NewCABMemberID"}" />
+                            <input id="NewCABMemberType" name="NewCABMemberType" type="hidden" value="$QData{"CABMemberType"}" />
 
-                            <button type="submit" id="AddCABMember" value="$Text{"Add"}">$Text{"Add"}</button>
+                            <div id="NewCABMemberServerError" class="TooltipErrorMessage"><p>$Text{"User invalid."}</p></div>
+
+                            <button type="submit" id="AddCABMember" name="AddCABMember" value="$Text{"Add"}">$Text{"Add"}</button>
                         </div>
 
                         <div id="UserServerError" class="TooltipErrorMessage">
@@ -98,7 +123,7 @@ $Include{"AgentITSMCABMemberSearch"}
                 </div>
                 <div class="Content">
 <!-- dtl:block:CABMemberTable -->
-                    <table>
+                    <table class="DataTable">
                         <thead>
                             <tr>
                                 <th>
@@ -116,13 +141,13 @@ $Include{"AgentITSMCABMemberSearch"}
 <!-- dtl:block:CABMemberRow -->
                             <tr>
                                 <td>
-                                    $Text{"Data{"UserType"}"}
+                                    $Text{"$Data{"UserType"}"}
                                 </td>
                                 <td title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">
                                     $QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})
                                 </td>
                                 <td>
-                                    <button type="submit" class="TrashCan" name="DeleteCAB$Data{"UserType"}$QData{"UserID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+                                    <button type="submit" class="TrashCan" name="Delete$Data{"InternalUserType"}$QData{"UserID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
                                 </td>
                             </tr>
 <!-- dtl:block:CABMemberRow -->
