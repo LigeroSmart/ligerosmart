@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.50 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.51 2010-12-21 16:18:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
+use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -40,9 +41,18 @@ sub new {
     # create needed objects
     $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
     $Self->{CIPAllocateObject} = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(%Param);
+    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Self->{Action}");
+
+    # get form id
+    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
 
     return $Self;
 }
@@ -94,9 +104,9 @@ sub Run {
     my %GetParam;
     for my $ParamName (
         qw(
-        ChangeTitle Description Justification TicketID
-        OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        ElementChanged SaveAttachment Filename
+        ChangeTitle Description Justification
+        CategoryID ImpactID PriorityID
+        AttachmentUpload FileID
         )
         )
     {
@@ -123,35 +133,14 @@ sub Run {
 
     # store time related fields in %GetParam
     if ( $Self->{Config}->{RequestedTime} ) {
-        for my $TimePart (qw(Year Month Day Hour Minute Used)) {
+        for my $TimePart (qw(Used Year Month Day Hour Minute)) {
             my $ParamName = 'RequestedTime' . $TimePart;
             $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
         }
     }
 
     # Remember the reason why performing the subaction was not attempted.
-    # The entries are the names of the dtl validation error blocks.
-    my @ValidationErrors;
-
-    # remember the numbers of the change freetext fields with validation errors
-    my %ChangeFreeTextValidationErrors;
-
-    # if attachment upload is requested
-    if ( $GetParam{SaveAttachment} ) {
-        $Self->{Subaction} = 'SaveAttachment';
-    }
-
-    # get all attachments meta data
-    my @Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
-        ChangeID => $ChangeID,
-    );
-
-    # check if attachment should be deleted
-    for my $Filename (@Attachments) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Filename ) ) {
-            $Self->{Subaction} = 'DeleteAttachment';
-        }
-    }
+    my %ValidationError;
 
     # keep ChangeStateID only if configured
     if ( $Self->{Config}->{ChangeState} ) {
@@ -163,13 +152,13 @@ sub Run {
 
         # check the title
         if ( !$GetParam{ChangeTitle} ) {
-            push @ValidationErrors, 'InvalidTitle';
+            $ValidationError{ChangeTitleServerError} = 'ServerError';
         }
 
         # check CIP
         for my $Type (qw(Category Impact Priority)) {
             if ( !$GetParam{"${Type}ID"} || $GetParam{"${Type}ID"} !~ m{ \A \d+ \z }xms ) {
-                push @ValidationErrors, 'Invalid' . $Type;
+                $ValidationError{ $Type . 'IDServerError' } = 'ServerError';
             }
             else {
                 my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
@@ -178,7 +167,7 @@ sub Run {
                 );
 
                 if ( !$CIPIsValid ) {
-                    push @ValidationErrors, 'Invalid' . $Type;
+                    $ValidationError{ $Type . 'IDServerError' } = 'ServerError';
                 }
             }
         }
@@ -210,14 +199,14 @@ sub Run {
 
                 # do not save when time is invalid
                 if ( !$SystemTime ) {
-                    push @ValidationErrors, 'InvalidRequestedTime';
+                    $ValidationError{RequestedTimeInvalid} = 'ServerError';
                 }
             }
             else {
 
                 # it was indicated that the requested time should be set,
                 # but at least one of the required time params is missing
-                push @ValidationErrors, 'InvalidRequestedTime';
+                $ValidationError{RequestedTimeInvalid} = 'ServerError';
             }
         }
 
@@ -231,12 +220,52 @@ sub Run {
             {
 
                 # remember the change freetext field number with validation errors
-                $ChangeFreeTextValidationErrors{$Number}++;
+                $ChangeFreeTextParam{Error}->{$Number} = 1;
+                $ValidationError{ 'ChangeFreeText' . $Number } = 'ServerError';
             }
         }
 
+        # check if an attachment must be deleted
+        ATTACHMENT:
+        for my $Number ( 1 .. 32 ) {
+
+            # check if the delete button was pressed for this attachment
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+
+            # check next attachment if it was not pressed
+            next ATTACHMENT if !$Delete;
+
+            # remember that we need to show the page again
+            $ValidationError{Attachment} = 1;
+
+            # remove the attachment from the upload cache
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Number,
+            );
+        }
+
+        # check if there was an attachment upload
+        if ( $GetParam{AttachmentUpload} ) {
+
+            # remember that we need to show the page again
+            $ValidationError{Attachment} = 1;
+
+            # get the uploaded attachment
+            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+                Param  => 'FileUpload',
+                Source => 'string',
+            );
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+        }
+
         # update only when there are no input validation errors
-        if ( !@ValidationErrors && !%ChangeFreeTextValidationErrors ) {
+        if ( !%ValidationError ) {
 
             # setting of change state and requested time is configurable
             my %AdditionalParam;
@@ -247,6 +276,7 @@ sub Run {
                 $AdditionalParam{RequestedTime} = $GetParam{RequestedTime};
             }
 
+            # update the change
             my $CouldUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
                 ChangeID      => $ChangeID,
                 Description   => $GetParam{Description},
@@ -260,12 +290,164 @@ sub Run {
                 %ChangeFreeTextParam,
             );
 
+            # update was successful
             if ($CouldUpdateChange) {
 
-                # redirect to zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => $Self->{LastChangeView},
+                # get all attachments from upload cache
+                my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                    FormID => $Self->{FormID},
                 );
+
+                # build a lookup lookup hash of the new attachments
+                my %NewAttachment;
+                for my $Attachment (@Attachments) {
+
+                    # the key is the filename + filesize + content type
+                    my $Key = $Attachment->{Filename}
+                        . $Attachment->{Filesize}
+                        . $Attachment->{ContentType};
+
+                    # append content id if available (for new inline images)
+                    if ( $Attachment->{ContentID} ) {
+                        $Key .= $Attachment->{ContentID};
+                    }
+
+                    # store all of the new attachment data
+                    $NewAttachment{$Key} = $Attachment;
+                }
+
+                # get all attachments meta data
+                my @ExistingAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
+                    ChangeID => $ChangeID,
+                );
+
+                # check the existing attachments
+                FILENAME:
+                for my $Filename (@ExistingAttachments) {
+
+                    # get the existing attachment data
+                    my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+                        ChangeID => $ChangeID,
+                        Filename => $Filename,
+                        UserID   => $Self->{UserID},
+                    );
+
+                    # do not consider inline attachments
+                    next FILENAME if $AttachmentData->{Preferences}->{ContentID};
+
+                    # the key is the filename + filesize + content type
+                    # (no content id, as existing attachments don't have it)
+                    my $Key = $AttachmentData->{Filename}
+                        . $AttachmentData->{Filesize}
+                        . $AttachmentData->{ContentType};
+
+                    # attachment is already existing, we can delete it from the new attachment hash
+                    if ( $NewAttachment{$Key} ) {
+                        delete $NewAttachment{$Key};
+                    }
+
+                    # existing attachment is no longer in new attachments hash
+                    else {
+
+                        # delete the existing attachment
+                        my $DeleteSuccessful = $Self->{ChangeObject}->ChangeAttachmentDelete(
+                            ChangeID => $ChangeID,
+                            Filename => $Filename,
+                            UserID   => $Self->{UserID},
+                        );
+
+                        # check error
+                        if ( !$DeleteSuccessful ) {
+                            return $Self->{LayoutObject}->FatalError();
+                        }
+                    }
+                }
+
+                # write the new attachments
+                ATTACHMENT:
+                for my $Attachment ( values %NewAttachment ) {
+
+                    # check if attachment is an inline attachment
+                    my $Inline = 0;
+                    if ( $Attachment->{ContentID} ) {
+
+                        # remember that it is inline
+                        $Inline = 1;
+
+                        # remember if this inline attachment is used in
+                        # the change description or justification
+                        my $ContentIDFound;
+
+                        # check change description and justification for content id
+                        if (
+                            ( $GetParam{Description} =~ m{ $Attachment->{ContentID} }xms )
+                            || ( $GetParam{Justification} =~ m{ $Attachment->{ContentID} }xms )
+                            )
+                        {
+
+                            # found the content id
+                            $ContentIDFound = 1;
+                        }
+
+                        # we do not want to keep this attachment,
+                        # because it was deleted in the richt text editor
+                        next ATTACHMENT if !$ContentIDFound;
+                    }
+
+                    # add attachment
+                    my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
+                        %{$Attachment},
+                        ChangeID => $ChangeID,
+                        UserID   => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        return $Self->{LayoutObject}->FatalError();
+                    }
+
+                    next ATTACHMENT if !$Inline;
+                    next ATTACHMENT if !$Self->{LayoutObject}->{BrowserRichText};
+
+                    # picture url in upload cache
+                    my $Search = "Action=PictureUpload .+ FormID=$Self->{FormID} .+ "
+                        . "ContentID=$Attachment->{ContentID}";
+
+                    # picture url in change atttachment
+                    my $Replace
+                        = "Action=AgentITSMChangeZoom;Subaction=DownloadAttachment;"
+                        . "Filename=$Attachment->{Filename};ChangeID=$ChangeID";
+
+                    # replace urls
+                    $GetParam{Description}   =~ s{$Search}{$Replace}xms;
+                    $GetParam{Justification} =~ s{$Search}{$Replace}xms;
+
+                    # update change
+                    $Success = $Self->{ChangeObject}->ChangeUpdate(
+                        ChangeID      => $ChangeID,
+                        Description   => $GetParam{Description},
+                        Justification => $GetParam{Justification},
+                        UserID        => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => "Could not update the inline image URLs "
+                                . "for ChangeID '$ChangeID'!!",
+                        );
+                    }
+                }
+
+                # delete the upload cache
+                $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
+
+                # load new URL in parent window and close popup
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => "Action=AgentITSMChangeZoom;ChangeID=$ChangeID",
+                );
+
             }
             else {
 
@@ -278,28 +460,28 @@ sub Run {
         }
     }
 
-    # handle AJAXUpdate, only for setting the priority
+    # handle AJAXUpdate
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
-        # get all possible priorities
+        # get priorities
         my $Priorities = $Self->{ChangeObject}->ChangePossibleCIPGet(
             Type   => 'Priority',
             UserID => $Self->{UserID},
         );
 
-        # propose a priority, based on the category and the impact the proposed p selected priority
-        my $ProposedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
+        # get selected priority
+        my $SelectedPriority = $Self->{CIPAllocateObject}->PriorityAllocationGet(
             CategoryID => $GetParam{CategoryID},
             ImpactID   => $GetParam{ImpactID},
         );
 
         # build json
-        my $JSON = $Self->{LayoutObject}->BuildJSON(
+        my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
                 {
                     Name        => 'PriorityID',
                     Data        => $Priorities,
-                    SelectedID  => $ProposedPriority,
+                    SelectedID  => $SelectedPriority,
                     Translation => 1,
                     Max         => 100,
                 },
@@ -315,94 +497,17 @@ sub Run {
         );
     }
 
-    # handle attachment actions
-    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
-        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => 'AttachmentNew',
-            Source => 'string',
-        );
-
-        # check if file was already uploaded
-        my $FileAlreadyUploaded = $Self->{ChangeObject}->ChangeAttachmentExists(
-            Filename => $UploadStuff{Filename},
-            UserID   => $Self->{UserID},
-            ChangeID => $ChangeID,
-        );
-
-        # write to virtual fs
-        if ( $UploadStuff{Filename} && !$FileAlreadyUploaded ) {
-
-            my $Success = $Self->{ChangeObject}->ChangeAttachmentAdd(
-                %UploadStuff,
-                ChangeID => $ChangeID,
-                UserID   => $Self->{UserID},
-            );
-
-            # check for error
-            if ( !$Success ) {
-                push @ValidationErrors, 'FileAlreadyUploaded';
-            }
-
-            # reload attachment list
-            @Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
-                ChangeID => $ChangeID,
-            );
-        }
-        else {
-            push @ValidationErrors, 'FileAlreadyUploaded';
-        }
-    }
-    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
-        for my $Filename (@Attachments) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Filename ) ) {
-
-                # delete attachment
-                $Self->{ChangeObject}->ChangeAttachmentDelete(
-                    ChangeID => $ChangeID,
-                    Filename => $Filename,
-                    UserID   => $Self->{UserID},
-                );
-
-                # reload attachment list
-                @Attachments = $Self->{ChangeObject}->ChangeAttachmentList(
-                    ChangeID => $ChangeID,
-                );
-            }
-        }
-    }
-
-    # handle attachment downloads
-    elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
-
-        # get data for attachment
-        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-            ChangeID => $ChangeID,
-            Filename => $GetParam{Filename},
-        );
-
-        # return error if file does not exist
-        if ( !$AttachmentData ) {
-            $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{Filename})! May be an attack!!!",
-                Priority => 'error',
-            );
-            return $Self->{LayoutObject}->ErrorScreen();
-        }
-
-        return $Self->{LayoutObject}->Attachment(
-            %{$AttachmentData},
-            Type => 'attachment',
-        );
-    }
-
     # delete all keys from %GetParam when it is no Subaction
     else {
+
         %GetParam = ();
 
+        # set the change state from change, if configured
         if ( $Self->{Config}->{ChangeState} ) {
             $GetParam{ChangeStateID} = $Change->{ChangeStateID};
         }
 
+        # set the requested time from change if configured
         if ( $Self->{Config}->{RequestedTime} && $Change->{RequestedTime} ) {
 
             # get requested time from the change
@@ -421,8 +526,44 @@ sub Run {
             $GetParam{RequestedTimeMonth}  = $Month;
             $GetParam{RequestedTimeYear}   = $Year;
         }
+
+        # get all attachments meta data
+        my @ExistingAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
+            ChangeID => $ChangeID,
+        );
+
+        # copy all existing attachments to upload cache
+        FILENAME:
+        for my $Filename (@ExistingAttachments) {
+
+            # get the existing attachment data
+            my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
+                ChangeID => $ChangeID,
+                Filename => $Filename,
+                UserID   => $Self->{UserID},
+            );
+
+            # do not consider inline attachments
+            next FILENAME if $AttachmentData->{Preferences}->{ContentID};
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID      => $Self->{FormID},
+                Filename    => $AttachmentData->{Filename},
+                Content     => $AttachmentData->{Content},
+                ContentType => $AttachmentData->{ContentType},
+            );
+        }
     }
 
+    # if there was an attachment delete or upload
+    # we do not want to show validation errors for other fields
+    if ( $ValidationError{Attachment} ) {
+        %ValidationError = ();
+        $ChangeFreeTextParam{Error} = {};
+    }
+
+    # check if change state is configured
     if ( $Self->{Config}->{ChangeState} ) {
 
         # get change state list
@@ -438,9 +579,9 @@ sub Run {
             SelectedID => $GetParam{ChangeStateID},
         );
 
-        # show state dropdown
+        # show change state dropdown
         $Self->{LayoutObject}->Block(
-            Name => 'State',
+            Name => 'ChangeState',
             Data => {
                 StateSelectionString => $StateSelectionString,
             },
@@ -450,16 +591,10 @@ sub Run {
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Edit',
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # add rich text editor
-    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'RichText',
-        );
-    }
-
+    # check if requested time should be shown
     if ( $Self->{Config}->{RequestedTime} ) {
 
         # time period that can be selected from the GUI
@@ -471,6 +606,8 @@ sub Run {
             Format                => 'DateInputFormatLong',
             Prefix                => 'RequestedTime',
             RequestedTimeOptional => 1,
+            RequestedTimeClass    => 'Validate ' . ( $ValidationError{RequestedTimeInvalid} || '' ),
+            Validate              => 1,
             %TimePeriod,
         );
 
@@ -494,17 +631,6 @@ sub Run {
         Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $GetParam{CategoryID} || $Change->{CategoryID},
-        Ajax       => {
-            Update => [
-                'PriorityID',
-            ],
-            Depend => [
-                'ChangeID',
-                'CategoryID',
-                'ImpactID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # create dropdown for the impact
@@ -518,17 +644,6 @@ sub Run {
         Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $GetParam{ImpactID} || $Change->{ImpactID},
-        Ajax       => {
-            Update => [
-                'PriorityID',
-            ],
-            Depend => [
-                'ChangeID',
-                'CategoryID',
-                'ImpactID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # create dropdown for priority,
@@ -566,6 +681,15 @@ sub Run {
             # store the change freetext config
             $ChangeFreeTextConfig{ $Type . $Number } = $Config;
         }
+
+        # add required entry in the hash (if configured for this free text field)
+        if (
+            $Self->{Config}->{ChangeFreeText}->{$Number}
+            && $Self->{Config}->{ChangeFreeText}->{$Number} == 2
+            )
+        {
+            $ChangeFreeTextConfig{Required}->{$Number} = 1;
+        }
     }
 
     # build the change freetext HTML
@@ -576,14 +700,10 @@ sub Run {
     );
 
     # show change freetext fields
-    my $ChangeFreeTextShown;
     for my $Number (@ConfiguredChangeFreeTextFields) {
 
         # check if this freetext field should be shown in this frontend
         if ( $Self->{Config}->{ChangeFreeText}->{$Number} ) {
-
-            # remember that at least one freetext field is shown
-            $ChangeFreeTextShown = 1;
 
             # show single change freetext fields
             $Self->{LayoutObject}->Block(
@@ -593,16 +713,6 @@ sub Run {
                 },
             );
 
-            # show change freetext validation error for single change freetext field
-            if ( $ChangeFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeFreeText' . $Number,
-                    Data => {
-                        %ChangeFreeTextHTML,
-                    },
-                );
-            }
-
             # show all change freetext fields
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeText',
@@ -611,71 +721,43 @@ sub Run {
                     ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
                 },
             );
-
-            # show all change freetext validation errors
-            if ( $ChangeFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeFreeText',
-                    Data => {
-                        %ChangeFreeTextHTML,
-                    },
-                );
-            }
         }
     }
 
-    # show space between change freetext and change state if change freetext fields are shown
-    if ($ChangeFreeTextShown) {
+    # show the attachment upload button
+    $Self->{LayoutObject}->Block(
+        Name => 'AttachmentUpload',
+        Data => {%Param},
+    );
 
-        $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeTextSpacer',
-            Data => {},
-        );
-    }
-
-    # build change freetext java script check
-    NUMBER:
-    for my $Number (@ConfiguredChangeFreeTextFields) {
-
-        next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
-
-        # java script check for required change free text fields by form submit
-        if ( $Self->{Config}->{ChangeFreeText}->{$Number} == 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeTextCheckJs',
-                Data => {
-                    ChangeFreeKeyField  => 'ChangeFreeKey' . $Number,
-                    ChangeFreeTextField => 'ChangeFreeText' . $Number,
-                },
-            );
-        }
-    }
-
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
+    # get all attachments meta data
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
 
     # show attachments
     ATTACHMENT:
-    for my $Filename (@Attachments) {
+    for my $Attachment (@Attachments) {
 
-        # get info about file
-        my $AttachmentData = $Self->{ChangeObject}->ChangeAttachmentGet(
-            ChangeID => $ChangeID,
-            Filename => $Filename,
-        );
+        # do not show inline images as attachments
+        # (they have a content id)
+        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+            next ATTACHMENT;
+        }
 
-        # check for attachment information
-        next ATTACHMENT if !$AttachmentData;
-
-        # show block
         $Self->{LayoutObject}->Block(
-            Name => 'AttachmentRow',
-            Data => {
-                %{$Change},
-                %{$AttachmentData},
-            },
+            Name => 'Attachment',
+            Data => $Attachment,
+        );
+    }
+
+    # add rich text editor javascript
+    # only if activated and the browser can handle it
+    # otherwise just a textarea is shown
+    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+            Data => {%Param},
         );
     }
 
@@ -686,11 +768,13 @@ sub Run {
             %Param,
             %{$Change},
             %GetParam,
+            %ValidationError,
+            FormID => $Self->{FormID},
         },
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
