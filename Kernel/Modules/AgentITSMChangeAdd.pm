@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.69 2010-12-21 13:49:57 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.70 2010-12-21 14:39:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.69 $) [1];
+$VERSION = qw($Revision: 1.70 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,8 +83,7 @@ sub Run {
     for my $ParamName (
         qw(
         ChangeTitle Description Justification TicketID
-        OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
-        ElementChanged
+        CategoryID ImpactID PriorityID
         AttachmentUpload FileID
         MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
         MoveTimeMinute TemplateID
