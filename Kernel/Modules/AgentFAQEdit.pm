@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.13 2010-12-08 17:07:08 ub Exp $
+# $Id: AgentFAQEdit.pm,v 1.14 2010-12-21 13:02:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -358,7 +358,7 @@ sub Run {
                 # remember that it is inline
                 $Inline = 1;
 
-                # rember if this inline attachment is used in any faq article
+                # remember if this inline attachment is used in any faq article
                 my $ContentIDFound;
 
                 # check all fields for content id
