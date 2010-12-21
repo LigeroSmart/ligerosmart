@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.38 2010-12-21 17:38:10 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.39 2010-12-21 17:55:23 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ $Include{"AgentITSMCABMemberSearch"}
 <!--dtl:js_on_document_complete-->
 
 
-<form action="$Env{"CGIHandle"}" method="post" name="compose" class="Validate PreventMultipleSubmits">
+<form action="$Env{"CGIHandle"}" method="post" name="compose" class="Validate">
     <input type="hidden" name="Action"            value="$Env{"Action"}" />
     <input type="hidden" name="Subaction"         value="Save" />
     <input type="hidden" name="ChangeID"          value="$QData{"ChangeID"}" />
