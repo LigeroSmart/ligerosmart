@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderAgent.dtl - provides HTML form for AgentITSMWorkOrderAgent
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAgent.dtl,v 1.29 2010-12-21 05:07:14 dz Exp $
+# $Id: AgentITSMWorkOrderAgent.dtl,v 1.30 2010-12-21 19:27:52 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,7 +37,7 @@ $Include{"AgentITSMUserSearch"}
         <div class="Content SpacingBottom">
             <fieldset class="TableLike FixedLabel">
 
-                <label class="Mandatory" for="User"> $Text{"WorkOrderAgent"}: </label>
+                <label for="User"> $Text{"WorkOrderAgent"}: </label>
                 <div class="Field">
                     <input id="User" type="text" name="User" value="$QData{"User"}" class="W75pc $Data{"UserServerError"}"/>
                     <input id="UserSelected" type="hidden" name="UserSelected" value="$QData{"UserID"}" />
