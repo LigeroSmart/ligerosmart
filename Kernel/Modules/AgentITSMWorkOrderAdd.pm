@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.65 2010-12-20 17:02:26 ub Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.66 2010-12-21 13:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -150,6 +150,9 @@ sub Run {
     # add the workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
         # the title is required
         if ( !$GetParam{WorkOrderTitle} ) {
             $ValidationError{WorkOrderTitleServerError} = 'ServerError';
@@ -276,6 +279,8 @@ sub Run {
 
         # add only when there are no input validation errors
         if ( !%ValidationError ) {
+
+            # create the workorder
             my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
                 ChangeID         => $ChangeID,
                 WorkOrderTitle   => $GetParam{WorkOrderTitle},
@@ -317,7 +322,7 @@ sub Run {
                             );
 
                             # picture url in upload cache
-                            my $Search = "Action=PictureUpload .+ FormID=$Param{FormID} .+ "
+                            my $Search = "Action=PictureUpload .+ FormID=$Self->{FormID} .+ "
                                 . "ContentID=$CachedAttachment->{ContentID}";
 
                             # picture url in workorder atttachment
@@ -329,11 +334,20 @@ sub Run {
                             $WorkOrderData->{Instruction} =~ s{$Search}{$Replace}xms;
 
                             # update workorder
-                            $Self->{WorkOrderObject}->WorkOrderUpdate(
+                            my $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
                                 WorkOrderID => $WorkOrderID,
                                 Instruction => $WorkOrderData->{Instruction},
                                 UserID      => $Self->{UserID},
                             );
+
+                            # check error
+                            if ( !$Success ) {
+                                $Self->{LogObject}->Log(
+                                    Priority => 'error',
+                                    Message  => "Could not update the inline image URLs "
+                                        . "for WorkOrderID '$WorkOrderID'!",
+                                );
+                            }
                         }
 
                         $Self->{UploadCacheObject}->FormIDRemoveFile(
@@ -424,7 +438,7 @@ sub Run {
 
         if ( !%ValidationError ) {
 
-            # create template based on the template
+            # create workorder based on the template
             my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
                 ChangeID        => $ChangeID,
                 TemplateID      => $Self->{ParamObject}->GetParam( Param => 'TemplateID' ),
@@ -433,7 +447,7 @@ sub Run {
                 MoveTimeType    => $GetParam{MoveTimeType},
             );
 
-            # change could not be created
+            # workorder could not be created
             if ( !$WorkOrderID ) {
 
                 # show error message, when adding failed
@@ -618,13 +632,12 @@ sub Run {
         # add selection for the time
         $GetParam{ $TimeType . 'SelectionString' } = $Self->{LayoutObject}->BuildDateSelection(
             %GetParam,
-            Format   => 'DateInputFormatLong',
-            Prefix   => $TimeType,
-            DiffTime => $DiffTime,
-            $TimeType
-                . 'Class' => 'Validate_Required '
+            Format              => 'DateInputFormatLong',
+            Prefix              => $TimeType,
+            DiffTime            => $DiffTime,
+            Validate            => 1,
+            $TimeType . 'Class' => 'Validate_Required '
                 . ( $ValidationError{ $TimeType . 'Invalid' } || '' ),
-            Validate => 1,
             %TimePeriod,
         );
 
