@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.10 2010-12-10 16:42:57 en Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.28 2010/12/08 19:46:59 mp Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.11 2010-12-21 21:51:07 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.30 2010/12/16 17:07:36 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

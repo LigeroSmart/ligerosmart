@@ -2,7 +2,7 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.14 2010-12-10 16:42:57 en Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.15 2010-12-21 21:51:28 ub Exp $
 # $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -78,7 +78,7 @@
 <!-- dtl:block:TicketBack -->
 <!-- dtl:block:PropertiesLock -->
             <p>
-                $Text{"The ticket was locked"}.
+                $Text{"The ticket has been locked"}.
                 <a class="UndoClosePopup" href="$Env{"Baselink"}Action=AgentTicketLock;Subaction=Unlock;TicketID=$Data{"TicketID"}">
                     $Text{"Undo & close window"}
                 </a>
@@ -343,18 +343,18 @@ $Include{"RichTextEditor"}
 
 # example of how to use fixed ticket freetext blocks for customizations
 #<!-- dtl:block:TicketFreeText1 -->
-#                        <label>$Data{"TicketFreeKeyField1"}:</label>
-#                        <div class="Field">
-#                            $Data{"TicketFreeTextField1"}
-#                        </div>
-#                        <div class="Clear"></div>
+#                $Data{"TicketFreeKeyField1"}
+#                <div class="Field">
+#                    $Data{"TicketFreeTextField1"}
+#                </div>
+#                <div class="Clear"></div>
 #<!-- dtl:block:TicketFreeText1 -->
 #<!-- dtl:block:TicketFreeText2 -->
-#                        <label>$Data{"TicketFreeKeyField2"}:</label>
-#                        <div class="Field">
-#                            $Data{"TicketFreeTextField2"}
-#                        </div>
-#                        <div class="Clear"></div>
+#                $Data{"TicketFreeKeyField2"}
+#                <div class="Field">
+#                    $Data{"TicketFreeTextField2"}
+#                </div>
+#                <div class="Clear"></div>
 #<!-- dtl:block:TicketFreeText2 -->
 
 <!-- dtl:block:TicketFreeTime -->
@@ -392,18 +392,18 @@ $Include{"RichTextEditor"}
 
 # example of how to use fixed article freetext blocks for customizations
 #<!-- dtl:block:ArticleFreeText1 -->
-#                        <label>$Data{"ArticleFreeKeyField1"}:</label>
-#                        <div class="Field">
-#                            $Data{"ArticleFreeTextField1"}
-#                        </div>
-#                        <div class="Clear"></div>
+#                $Data{"ArticleFreeKeyField1"}
+#                <div class="Field">
+#                    $Data{"ArticleFreeTextField1"}
+#                </div>
+#                <div class="Clear"></div>
 #<!-- dtl:block:ArticleFreeText1 -->
 #<!-- dtl:block:ArticleFreeText2 -->
-#                        <label>$Data{"ArticleFreeKeyField2"}:</label>
-#                        <div class="Field">
-#                            $Data{"ArticleFreeTextField2"}
-#                        </div>
-#                        <div class="Clear"></div>
+#                $Data{"ArticleFreeKeyField2"}
+#                <div class="Field">
+#                    $Data{"ArticleFreeTextField2"}
+#                </div>
+#                <div class="Clear"></div>
 #<!-- dtl:block:ArticleFreeText2 -->
 
 <!-- dtl:block:TimeUnitsLabel -->
