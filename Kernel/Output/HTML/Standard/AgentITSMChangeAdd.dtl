@@ -2,350 +2,221 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.56 2010-12-07 17:27:27 ub Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.57 2010-12-21 13:50:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AJAX"}
+<div class="MainBox ARIARoleMain">
 
-<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
-<script language="JavaScript" type="text/javascript">
-<!--
+    <h1>$Text{"Add Change"}</h1>
 
-function submit_template() {
-
-    // the Subaction depends on which button was clicked
-    document.compose.Subaction.value = 'CreateFromTemplate';
-
-    // check the planned time
-    // 2010-01-32 is rejected, but 2010-02-31 is allowed
-    // an exact time check is performed on the serverside
-    if ( !CheckTime( 'MoveTime' ) ) {
-        alert('$JSText{"The planned time is invalid!"}');
-
-        return false;
-    }
-
-    return true;
-}
-
-function submit_compose() {
-
-    // the Subaction depends on which button was clicked
-    document.compose.Subaction.value = 'Save';
-
-    // check the title, all whitespace counts as empty
-    if (document.compose.ChangeTitle.value.match(/^\s*$/)) {
-        alert('$JSText{"A change must have a title!"}');
-        document.compose.ChangeTitle.focus();
-
-        return false;
-    }
-
-    // check the requested time
-    if ( document.compose.RequestedTimeUsed.checked && !CheckTime( 'RequestedTime' ) ) {
-        alert('$JSText{"The requested time is invalid!"}');
-
-        return false;
-    }
-
-    // check the requested time
-    if ( document.compose.RequestedTimeUsed.checked && !CheckTime( 'RequestedTime' ) ) {
-        alert('$JSText{"The requested time is invalid!"}');
-
-        return false;
-    }
-
-<!-- dtl:block:ChangeFreeTextCheckJs -->
-    // check the required freetext fields
-    if (document.compose.$Data{"ChangeFreeTextField"}.value == "") {
-        alert('$JSText{"A required field is:"} ' + document.compose.$Data{"ChangeFreeKeyField"}.value + '!');
-        document.compose.$Data{"ChangeFreeTextField"}.focus();
-
-        return false;
-    }
-<!-- dtl:block:ChangeFreeTextCheckJs -->
-
-    return true;
-}
-
-//-->
-</script>
-
-<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-    <input type="hidden" name="Action"     value="$Env{"Action"}">
-    <input type="hidden" name="TicketID"   value="$QData{"TicketID"}">
-    <input type="hidden" name="Subaction"  value="">
-    <input type="hidden" name="FormID"     value="$QData{"FormID"}">
-    <table border="0" width="100%" cellspacing="0" cellpadding="3">
-        <tr>
-            <td class="mainhead">
-                <div title="$Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}">
-                    $Env{"Box0"} $Text{"ITSM Change"}: $Text{"NEW"} $Env{"Box1"}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="menu">
-                <a class="menuitem" href="$Env{"Baselink"}Action=AgentITSMChange" onclick="history.back(); return false;">$Text{"Back"}</a>
-            </td>
-        </tr>
+    <div class="ContentColumn">
 
 <!-- dtl:block:ChangeTemplate -->
-        <tr>
-            <td class="mainbody">
-                <br />
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Select Change Template"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130"/>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Template"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"TemplateSelectionString"}
-<!-- dtl:block:InvalidTemplate -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTemplate -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"Time type"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"MoveTimeTypeSelectionString"}
-<!-- dtl:block:InvalidMoveTimeType -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidMoveTimeType -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"New time"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"MoveTimeSelectionString"}
-<!-- dtl:block:InvalidMoveTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidMoveTime -->
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" id="submitTemplate" accesskey="t" type="submit" name="SubmitTemplate" value="$Text{"Create"}" onclick="return submit_template();"/>
-                        </td>
-                    </tr>
-                </table>
-                <br />
-            </td>
-        </tr>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Select Change Template"}</h2>
+            </div>
+
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="post" name="template" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+                    <input type="hidden" name="Subaction" value="CreateFromTemplate"/>
+                    <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}"/>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+
+                        <label class="Mandatory" for="TemplateID"><span class="Marker">* </span>$Text{"Template"}:</label>
+                        <div class="Field">
+                            $Data{"TemplateSelectionString"}
+                            <div id="TemplateIDError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="TemplateIDServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        </div>
+
+                        <label for="MoveTimeType">$Text{"Time type"}:</label>
+                        <div class="Field">
+                            $Data{"MoveTimeTypeSelectionString"}
+                            <div id="MoveTimeTypeServerError" class="TooltipErrorMessage"><p>$Text{"Invalid time type."}</p></div>
+                        </div>
+
+                        <label>$Text{"New time"}:</label>
+                        <div class="Field">
+                            $Data{"MoveTimeSelectionString"}
+                        </div>
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary" id="SubmitTemplate" name="SubmitTemplate" title="$Text{"Create"}" type="submit" value="$Text{"Create"}">$Text{"Create"}</button>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
 <!-- dtl:block:ChangeTemplate -->
-        <tr>
-            <td class="mainbody">
-                <br />
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"ITSM Change"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130"/>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Title"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        <input type="text" name="ChangeTitle" value="$QData{"ChangeTitle"}" size="70" maxlength="250">
-<!-- dtl:block:InvalidTitle -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTitle -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Description"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        <div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"ITSM Change"}</h2>
+            </div>
+
+            <div class="Content">
+                <form action="$Env{"CGIHandle"}" method="post" name="compose" id="ChangeAddForm" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+                    <input type="hidden" name="Subaction" value="Save"/>
+                    <input type="hidden" name="TicketID"  value="$QData{"TicketID"}"/>
+                    <input type="hidden" name="FormID"    value="$QData{"FormID"}"/>
+
+                    <fieldset class="TableLike FixedLabelSmall">
+
+                        <label class="Mandatory" for="ChangeTitle"><span class="Marker">* </span>$Text{"Title"}:</label>
+                        <div class="Field">
+                            <input type="text" name="ChangeTitle" id="ChangeTitle" value="$QData{"ChangeTitle"}" class="W75pc Validate_Required $QData{"ChangeTitleTitleServerError"}" maxlength="250"/>
+                            <div id="ChangeTitleError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="ChangeTitleServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        </div>
+                        <div class="Clear"></div>
+
 <!-- dtl:block:RichText -->
-$Include{"RichTextEditorITSM"}
+$Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
-                                            <textarea id="RichText1" name="Description" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Description"}</textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Justification"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        <div>
-                                            <textarea id="RichText2" name="Justification" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Justification"}</textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Category"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"CategorySelectionString"}
-<!-- dtl:block:InvalidCategory -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidCategory -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Impact"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"ImpactSelectionString"}
-<!-- dtl:block:InvalidImpact -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidImpact -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Priority"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"PrioritySelectionString"}
-<!-- dtl:block:InvalidPriority -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidPriority -->
-                                    </td>
-                                </tr>
-<!-- dtl:block:ChangeFreeTextSpacer -->
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-<!-- dtl:block:ChangeFreeTextSpacer -->
+                        <label class="Mandatory" for="RichText1"><span class="Marker">*</span> $Text{"Description"}:</label>
+                        <div class="RichTextField">
+                            <textarea id="RichText1" class="RichText Validate_Required $Data{"DescriptionInvalid"}" name="Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Description"}</textarea>
+                            <div id="RichTextError1" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="RichTextServerError1" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label class="Mandatory" for="RichText2"><span class="Marker">*</span> $Text{"Justification"}:</label>
+                        <div class="RichTextField">
+                            <textarea id="RichText2" class="RichText Validate_Required $Data{"JustificationInvalid"}" name="Justification" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Justification"}</textarea>
+                            <div id="RichTextError2" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                            <div id="RichTextServerError2" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label for="CategoryID">$Text{"Category"}:</label>
+                        <div class="Field">
+                            $Data{"CategorySelectionString"}
+                        </div>
+                        <div id="CategoryIDServerError" class="TooltipErrorMessage"><p>$Text{"Input invalid."}</p></div>
+                        <div class="Clear"></div>
+
+                        <label for="ImpactID">$Text{"Impact"}:</label>
+                        <div class="Field">
+                            $Data{"ImpactSelectionString"}
+                        </div>
+                        <div id="ImpactIDServerError" class="TooltipErrorMessage"><p>$Text{"Input invalid."}</p></div>
+                        <div class="Clear"></div>
+
+                        <label for="PriorityID">$Text{"Priority"}:</label>
+                        <div class="Field">
+                            $Data{"PrioritySelectionString"}
+                        </div>
+                        <div id="PriorityIDServerError" class="TooltipErrorMessage"><p>$Text{"Input invalid."}</p></div>
+                        <div class="Clear"></div>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#CategoryID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#ChangeAddForm'), 'AJAXUpdate', 'CategoryID', ['ImpactID', 'PriorityID']);
+    })
+    $('#ImpactID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#ChangeAddForm'), 'AJAXUpdate', 'ImpactID', ['PriorityID']);
+    })
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
 <!-- dtl:block:ChangeFreeText -->
-                                <tr>
-                                    <td class="contentkey">$Data{"ChangeFreeKeyField"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"ChangeFreeTextField"}
-<!-- dtl:block:InvalidChangeFreeText -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidChangeFreeText -->
-                                    </td>
-                                </tr>
+                        $Data{"ChangeFreeKeyField"}
+                        <div class="Field">
+                            $Data{"ChangeFreeTextField"}
+                        </div>
+                        <div class="Clear"></div>
 <!-- dtl:block:ChangeFreeText -->
-# ###########################################################
+
+# #############################################################
 # example for customization of single change freetext fields
-# ###########################################################
+# #############################################################
 #<!-- dtl:block:ChangeFreeText1 -->
-#                                <tr>
-#                                  <td class="contentkey">$Data{"ChangeFreeKeyField1"}:</td>
-#                                   <td class="contentvalue">
-#                                       $Data{"ChangeFreeTextField1"}
-#<!-- dtl:block:InvalidChangeFreeText1 -->
-#                                       <br />
-#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
-#<!-- dtl:block:InvalidChangeFreeText1 -->
-#                                  </td>
-#                                </tr>
+#                        $Data{"ChangeFreeKeyField1"}
+#                        <div class="Field">
+#                            $Data{"ChangeFreeTextField1"}
+#                        </div>
+#                        <div class="Clear"></div>
 #<!-- dtl:block:ChangeFreeText1 -->
-#
 #
 #<!-- dtl:block:ChangeFreeText2 -->
-#                                <tr>
-#                                  <td colspan="2" class="contentkey">$Data{"ChangeFreeKeyField2"}:</td>
-#                                  <td class="contentvalue">
-#                                      $Data{"ChangeFreeTextField2"}
-#<!-- dtl:block:InvalidChangeFreeText2 -->
-#                                       <br />
-#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
-#<!-- dtl:block:InvalidChangeFreeText2 -->
-#                                  </td>
-#                                </tr>
+#                        $Data{"ChangeFreeKeyField2"}
+#                        <div class="Field">
+#                            $Data{"ChangeFreeTextField2"}
+#                        </div>
+#                        <div class="Clear"></div>
 #<!-- dtl:block:ChangeFreeText2 -->
 # ####################################################
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
+
+
 <!-- dtl:block:RequestedTime -->
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Requested Date"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"RequestedTimeString"}
-<!-- dtl:block:InvalidRequestedTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidRequestedTime -->
-                                    </td>
-                                </tr>
+                        <label>$Text{"Requested Date"}:</label>
+                        <div class="Field">
+                            $Data{"RequestedTimeString"}
+                            <div id="RequestedTimeDayError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                            <div id="RequestedTimeHourError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:RequestedTimeGenericServerError -->
+                            <div id="RequestedTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                            <div id="RequestedTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:RequestedTimeGenericServerError -->
+                        </div>
+                        <div class="Clear"></div>
 <!-- dtl:block:RequestedTime -->
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"Attachment"}:</td>
-                                    <td class="contentvalue">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-<!-- dtl:block:AttachmentRow -->
-                                            <tr>
-                                                <td>$QData{"Filename"}</td>
-                                                <td width="16"><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;FileID=$LQData{"FileID"};FormID=$LQData{"FormID"}"><img src="$Config{"Frontend::ImagePath"}disk-s.png" border="0" alt="Download" title="Download"/></a></td>
-                                                <td>$QData{"Filesize"}</td>
-                                                <td width="100%"><input class="button" type="submit" name="DeleteAttachment$QData{"FileID"}" value="$Text{"Delete"}"></td>
-                                            </tr>
-<!-- dtl:block:AttachmentRow -->
-                                            <tr>
-                                                <td colspan="3">
-                                                    <input type="file" name="AttachmentNew">
-<!-- dtl:block:FileAlreadyUploaded -->
-                                                    <br />
-                                                    <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:FileAlreadyUploaded -->
-                                                </td>
-                                                <td width="100%">
-                                                    <input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" id="submitAddChange" accesskey="g" type="submit" name="AddChange" value="$Text{"Submit"}" onclick="return submit_compose();"/>
-                        </td>
-                    </tr>
-                </table>
-                <br />
-            </td>
-        </tr>
-    </table>
-</form>
+
+<!-- dtl:block:AttachmentUpload -->
+                        <label>$Text{"Attachment"}:</label>
+                        <div class="Field">
+                            <ul>
+<!-- dtl:block:Attachment -->
+                                <li>
+                                    $QData{"Filename"} ($QData{"Filesize"})
+                                    <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#AttachmentDelete$QData{"FileID"}').bind('click', function () {
+        Core.Form.Validate.DisableValidation($('#AttachmentDelete$QData{"FileID"}').closest('form'));
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+                                </li>
+<!-- dtl:block:Attachment -->
+                                <li>
+                                    <input name="FileUpload" id="FileUpload" type="file" size="40"/>
+                                    <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="Clear"></div>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#FileUpload').bind('change', function (Event) {
+        var $Form = $('#FileUpload').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!-- dtl:block:AttachmentUpload -->
+
+                        <div class="Field SpacingTop">
+                            <button class="Primary" id="SubmitChangeAdd" name="ChangeAdd" title="$Text{"Save"}" type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

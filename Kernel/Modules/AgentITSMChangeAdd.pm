@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeAdd.pm - the OTRS::ITSM::ChangeManagement change add module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.pm,v 1.68 2010-12-17 13:24:53 ub Exp $
+# $Id: AgentITSMChangeAdd.pm,v 1.69 2010-12-21 13:49:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.68 $) [1];
+$VERSION = qw($Revision: 1.69 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -70,7 +70,7 @@ sub Run {
         UserID => $Self->{UserID},
     );
 
-    # error screen, don't show the add mask
+    # error screen
     if ( !$Access ) {
         return $Self->{LayoutObject}->NoPermission(
             Message    => "You need $Self->{Config}->{Permission} permissions!",
@@ -85,7 +85,7 @@ sub Run {
         ChangeTitle Description Justification TicketID
         OldCategoryID CategoryID OldImpactID ImpactID OldPriorityID PriorityID
         ElementChanged
-        SaveAttachment FileID
+        AttachmentUpload FileID
         MoveTimeType MoveTimeYear MoveTimeMonth MoveTimeDay MoveTimeHour
         MoveTimeMinute TemplateID
         )
@@ -113,11 +113,11 @@ sub Run {
     }
 
     # store time related fields in %GetParam
-    TIME_TYPE:
+    TIMETYPE:
     for my $TimeType (qw(RequestedTime MoveTime)) {
 
         # skip the requested time if not configured
-        next TIME_TYPE if ( $TimeType eq 'RequestedTime' && !$Self->{Config}->{RequestedTime} );
+        next TIMETYPE if ( $TimeType eq 'RequestedTime' && !$Self->{Config}->{RequestedTime} );
 
         for my $TimePart (qw(Used Year Month Day Hour Minute)) {
             my $ParamName = $TimeType . $TimePart;
@@ -146,69 +146,7 @@ sub Run {
     }
 
     # Remember the reason why saving was not attempted.
-    # The entries are the names of the dtl validation error blocks.
-    my @ValidationErrors;
-
-    # remember the numbers of the change freetext fields with validation errors
-    my %ChangeFreeTextValidationErrors;
-
-    # get meta data for all already uploaded files
-    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-        FormID => $Self->{FormID},
-    );
-
-    # reset subaction
-    # if attachment upload is requested
-    if ( $GetParam{SaveAttachment} ) {
-
-        # get upload data
-        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => 'AttachmentNew',
-            Source => 'string',
-        );
-
-        # check if file was already uploaded
-        my $FileAlreadyUploaded = 0;
-        for my $FileMetaData (@Attachments) {
-            if ( $FileMetaData->{Filename} eq $UploadStuff{Filename} ) {
-                $FileAlreadyUploaded = 1;
-
-                # show error message
-                push @ValidationErrors, 'FileAlreadyUploaded';
-            }
-        }
-
-        if ( !$FileAlreadyUploaded ) {
-            $Self->{UploadCacheObject}->FormIDAddFile(
-                FormID => $Self->{FormID},
-                %UploadStuff,
-            );
-
-            # reload attachment list, as an attachment was added
-            @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-                FormID => $Self->{FormID},
-            );
-        }
-
-        $Self->{Subaction} = 'SaveAttachment';
-    }
-
-    # reset subaction
-    # if attachment should be deleted
-    for my $Attachment (@Attachments) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Attachment->{FileID} ) )
-        {
-
-            # delete attachment
-            $Self->{UploadCacheObject}->FormIDRemoveFile(
-                FormID => $Self->{FormID},
-                FileID => $Attachment->{FileID},
-            );
-
-            # set marker that the attachment list needs to be reloaded
-            $Self->{Subaction} = 'DeleteAttachment';
-        }
-    }
+    my %ValidationError;
 
     # the TicketID can be validated even without the Subaction 'Save',
     # as it is passed as GET-param or in a hidden field.
@@ -286,15 +224,18 @@ sub Run {
     # perform the adding
     if ( $Self->{Subaction} eq 'Save' ) {
 
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
         # the title is required
         if ( !$GetParam{ChangeTitle} ) {
-            push @ValidationErrors, 'InvalidTitle';
+            $ValidationError{ChangeTitleServerError} = 'ServerError';
         }
 
         # check CIP
         for my $Type (qw(Category Impact Priority)) {
             if ( !$GetParam{"${Type}ID"} || $GetParam{"${Type}ID"} !~ m{ \A \d+ \z }xms ) {
-                push @ValidationErrors, 'Invalid' . $Type;
+                $ValidationError{ $Type . 'IDServerError' } = 'ServerError';
             }
             else {
                 my $CIPIsValid = $Self->{ChangeObject}->ChangeCIPLookup(
@@ -303,7 +244,7 @@ sub Run {
                 );
 
                 if ( !$CIPIsValid ) {
-                    push @ValidationErrors, 'Invalid' . $Type;
+                    $ValidationError{ $Type . 'IDServerError' } = 'ServerError';
                 }
             }
         }
@@ -320,7 +261,7 @@ sub Run {
                 )
             {
 
-                # format as timestamp, when all required time param were passed
+                # format as timestamp, when all required time params were passed
                 $GetParam{RequestedTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',
                     $GetParam{RequestedTimeYear},
                     $GetParam{RequestedTimeMonth},
@@ -335,14 +276,14 @@ sub Run {
 
                 # do not save when time is invalid
                 if ( !$SystemTime ) {
-                    push @ValidationErrors, 'InvalidRequestedTime';
+                    $ValidationError{RequestedTimeInvalid} = 'ServerError';
                 }
             }
             else {
 
                 # it was indicated that the requested time should be set,
                 # but at least one of the required time params is missing
-                push @ValidationErrors, 'InvalidRequestedTime';
+                $ValidationError{RequestedTimeInvalid} = 'ServerError';
             }
         }
 
@@ -356,18 +297,61 @@ sub Run {
             {
 
                 # remember the change freetext field number with validation errors
-                $ChangeFreeTextValidationErrors{$Number}++;
+                $ChangeFreeTextParam{Error}->{$Number} = 1;
+                $ValidationError{ 'ChangeFreeText' . $Number } = 'ServerError';
             }
         }
 
+        # check if an attachment must be deleted
+        ATTACHMENT:
+        for my $Number ( 1 .. 32 ) {
+
+            # check if the delete button was pressed for this attachment
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+
+            # check next attachment if it was not pressed
+            next ATTACHMENT if !$Delete;
+
+            # remember that we need to show the page again
+            $ValidationError{Attachment} = 1;
+
+            # remove the attachment from the upload cache
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Number,
+            );
+        }
+
+        # check if there was an attachment upload
+        if ( $GetParam{AttachmentUpload} ) {
+
+            # remember that we need to show the page again
+            $ValidationError{Attachment} = 1;
+
+            # get the uploaded attachment
+            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+                Param  => 'FileUpload',
+                Source => 'string',
+            );
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+        }
+
         # add only when there are no input validation errors
-        if ( !@ValidationErrors && !%ChangeFreeTextValidationErrors ) {
+        if ( !%ValidationError ) {
+
             my %AdditionalParam;
 
+            # add requested time if configured
             if ( $Self->{Config}->{RequestedTime} ) {
                 $AdditionalParam{RequestedTime} = $GetParam{RequestedTime};
             }
 
+            # create the change
             my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
                 Description   => $GetParam{Description},
                 Justification => $GetParam{Justification},
@@ -432,6 +416,47 @@ sub Run {
 
                     # delete file from cache if move was successful
                     if ($Success) {
+
+                        # rewrite URL for inline images
+                        if ( $CachedAttachment->{ContentID} ) {
+
+                            # get the change data
+                            my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+                                ChangeID => $ChangeID,
+                                UserID   => $Self->{UserID},
+                            );
+
+                            # picture url in upload cache
+                            my $Search = "Action=PictureUpload .+ FormID=$Self->{FormID} .+ "
+                                . "ContentID=$CachedAttachment->{ContentID}";
+
+                            # picture url in change atttachment
+                            my $Replace
+                                = "Action=AgentITSMChangeZoom;Subaction=DownloadAttachment;"
+                                . "Filename=$CachedAttachment->{Filename};ChangeID=$ChangeID";
+
+                            # replace urls
+                            $ChangeData->{Description}   =~ s{$Search}{$Replace}xms;
+                            $ChangeData->{Justification} =~ s{$Search}{$Replace}xms;
+
+                            # update change
+                            my $Success = $Self->{ChangeObject}->ChangeUpdate(
+                                ChangeID      => $ChangeID,
+                                Description   => $ChangeData->{Description},
+                                Justification => $ChangeData->{Justification},
+                                UserID        => $Self->{UserID},
+                            );
+
+                            # check error
+                            if ( !$Success ) {
+                                $Self->{LogObject}->Log(
+                                    Priority => 'error',
+                                    Message  => "Could not update the inline image URLs "
+                                        . "for ChangeID '$ChangeID'!",
+                                );
+                            }
+                        }
+
                         $Self->{UploadCacheObject}->FormIDRemoveFile(
                             FormID => $Self->{FormID},
                             FileID => $CachedAttachment->{FileID},
@@ -474,7 +499,7 @@ sub Run {
             || ( $MoveTimeType ne 'PlannedStartTime' && $MoveTimeType ne 'PlannedEndTime' )
             )
         {
-            push @ValidationErrors, 'InvalidTimeType';
+            $ValidationError{MoveTimeTypeInvalid} = 'ServerError';
         }
 
         # check the completeness of the time parameter list,
@@ -487,11 +512,11 @@ sub Run {
             || !defined $GetParam{MoveTimeMinute}
             )
         {
-            push @ValidationErrors, 'InvalidMoveTime';
+            $ValidationError{MoveTimeInvalid} = 'ServerError';
         }
 
         # get the system time from the input, if it can't be determined we have a validation error
-        if ( !@ValidationErrors ) {
+        if ( !%ValidationError ) {
 
             # format as timestamp
             my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
@@ -507,16 +532,16 @@ sub Run {
             );
 
             if ( !$NewTime ) {
-                push @ValidationErrors, 'InvalidMoveTime';
+                $ValidationError{MoveTimeInvalid} = 'ServerError';
             }
         }
 
         # check whether a template was selected
         if ( !$GetParam{TemplateID} ) {
-            push @ValidationErrors, 'InvalidTemplate';
+            $ValidationError{TemplateIDServerError} = 'ServerError';
         }
 
-        if ( !@ValidationErrors ) {
+        if ( !%ValidationError ) {
 
             # create change based on the template
             my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
@@ -578,49 +603,6 @@ sub Run {
         }
     }
 
-    # handle save attachment subaction
-    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
-
-        # nothing to do
-        # attachments were already saved above
-    }
-
-    # handle attachment deletion
-    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
-
-        # reload the attachment list,
-        # as at least one attachment was deleted above
-        @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
-            FormID => $Self->{FormID},
-        );
-    }
-
-    # handle attachment downloads
-    elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
-
-        # get meta-data and content of the cached attachments
-        my @CachedAttachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
-            FormID => $Self->{FormID},
-        );
-
-        # get data for requested attachment
-        my ($AttachmentData) = grep { $_->{FileID} == $GetParam{FileID} } @CachedAttachments;
-
-        # return error if file does not exist
-        if ( !$AttachmentData ) {
-            $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{FileID})! May be an attack!!!",
-                Priority => 'error',
-            );
-            return $Self->{LayoutObject}->ErrorScreen();
-        }
-
-        return $Self->{LayoutObject}->Attachment(
-            %{$AttachmentData},
-            Type => 'attachment',
-        );
-    }
-
     # handle AJAXUpdate
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
 
@@ -637,7 +619,7 @@ sub Run {
         );
 
         # build json
-        my $JSON = $Self->{LayoutObject}->BuildJSON(
+        my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
                 {
                     Name        => 'PriorityID',
@@ -658,6 +640,18 @@ sub Run {
         );
     }
 
+    # if there was an attachment delete or upload
+    # we do not want to show validation errors for other fields
+    if ( $ValidationError{Attachment} ) {
+        %ValidationError = ();
+        $ChangeFreeTextParam{Error} = {};
+    }
+
+    # get all attachments meta data
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
+
     # build template dropdown
     my $TemplateList = $Self->{TemplateObject}->TemplateList(
         UserID        => $Self->{UserID},
@@ -667,17 +661,19 @@ sub Run {
     my $TemplateSelectionString = $Self->{LayoutObject}->BuildSelection(
         Name         => 'TemplateID',
         Data         => $TemplateList,
+        Class        => 'Validate_Required ' . ( $ValidationError{TemplateIDServerError} || '' ),
         PossibleNone => 1,
     );
 
     # build drop-down with time types
     my $MoveTimeTypeSelectionString = $Self->{LayoutObject}->BuildSelection(
+        Name => 'MoveTimeType',
         Data => [
             { Key => 'PlannedStartTime', Value => 'PlannedStartTime' },
             { Key => 'PlannedEndTime',   Value => 'PlannedEndTime' },
         ],
-        Name => 'MoveTimeType',
         SelectedID => $GetParam{MoveTimeType} || 'PlannedStartTime',
+        Class => 'Validate_Required ' . ( $ValidationError{MoveTimeTypeInvalid} || '' ),
     );
 
     # time period that can be selected from the GUI
@@ -686,8 +682,10 @@ sub Run {
     # add selection for the time
     my $MoveTimeSelectionString = $Self->{LayoutObject}->BuildDateSelection(
         %GetParam,
-        Format => 'DateInputFormatLong',
-        Prefix => 'MoveTime',
+        Format        => 'DateInputFormatLong',
+        Prefix        => 'MoveTime',
+        MoveTimeClass => 'Validate_Required ' . ( $ValidationError{MoveTimeInvalid} || '' ),
+        Validate      => 1,
         %TimePeriod,
     );
 
@@ -702,31 +700,13 @@ sub Run {
         },
     );
 
-    # show validation errors in ChangeTemplate block
-    my %ValidationErrorNames;
-    @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
-    for my $ChangeTemplateValidationError (qw(InvalidMoveTimeType InvalidMoveTime InvalidTemplate))
-    {
-        if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
-            $Self->{LayoutObject}->Block(
-                Name => $ChangeTemplateValidationError,
-            );
-        }
-    }
-
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Add',
     );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # add rich text editor
-    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'RichText',
-        );
-    }
-
+    # check if requested time should be shown
     if ( $Self->{Config}->{RequestedTime} ) {
 
         # time period that can be selected from the GUI
@@ -738,6 +718,8 @@ sub Run {
             Format                => 'DateInputFormatLong',
             Prefix                => 'RequestedTime',
             RequestedTimeOptional => 1,
+            RequestedTimeClass    => 'Validate ' . ( $ValidationError{RequestedTimeInvalid} || '' ),
+            Validate              => 1,
             %TimePeriod,
         );
 
@@ -761,16 +743,6 @@ sub Run {
         Data       => $Categories,
         Name       => 'CategoryID',
         SelectedID => $Param{CategoryID},
-        Ajax       => {
-            Update => [
-                'PriorityID',
-            ],
-            Depend => [
-                'CategoryID',
-                'ImpactID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # create dropdown for the impact
@@ -784,16 +756,6 @@ sub Run {
         Data       => $Impacts,
         Name       => 'ImpactID',
         SelectedID => $Param{ImpactID},
-        Ajax       => {
-            Update => [
-                'PriorityID',
-            ],
-            Depend => [
-                'CategoryID',
-                'ImpactID',
-            ],
-            Subaction => 'AJAXUpdate',
-        },
     );
 
     # create dropdown for priority,
@@ -838,6 +800,16 @@ sub Run {
             # store the change freetext config
             $ChangeFreeTextConfig{ $Type . $Number } = $Config;
         }
+
+        # add required entry in the hash (if configured for this free text field)
+        if (
+            $Self->{Config}->{ChangeFreeText}->{$Number}
+            && $Self->{Config}->{ChangeFreeText}->{$Number} == 2
+            )
+        {
+            $ChangeFreeTextConfig{Required}->{$Number} = 1;
+        }
+
     }
 
     # build the change freetext HTML
@@ -848,14 +820,10 @@ sub Run {
     );
 
     # show change freetext fields
-    my $ChangeFreeTextShown;
     for my $Number (@ConfiguredChangeFreeTextFields) {
 
         # check if this freetext field should be shown in this frontend
         if ( $Self->{Config}->{ChangeFreeText}->{$Number} ) {
-
-            # remember that at least one freetext field is shown
-            $ChangeFreeTextShown = 1;
 
             # show single change freetext fields
             $Self->{LayoutObject}->Block(
@@ -865,16 +833,6 @@ sub Run {
                 },
             );
 
-            # show change freetext validation error for single change freetext field
-            if ( $ChangeFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeFreeText' . $Number,
-                    Data => {
-                        %ChangeFreeTextHTML,
-                    },
-                );
-            }
-
             # show all change freetext fields
             $Self->{LayoutObject}->Block(
                 Name => 'ChangeFreeText',
@@ -883,59 +841,38 @@ sub Run {
                     ChangeFreeTextField => $ChangeFreeTextHTML{ 'ChangeFreeTextField' . $Number },
                 },
             );
-
-            # show all change freetext validation errors
-            if ( $ChangeFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeFreeText',
-                    Data => {
-                        %ChangeFreeTextHTML,
-                    },
-                );
-            }
         }
     }
 
-    # show space between priority and change freetext if change freetext fields are shown
-    if ($ChangeFreeTextShown) {
+    # show the attachment upload button
+    $Self->{LayoutObject}->Block(
+        Name => 'AttachmentUpload',
+        Data => {%Param},
+    );
+
+    # show attachments
+    ATTACHMENT:
+    for my $Attachment (@Attachments) {
+
+        # do not show inline images as attachments
+        # (they have a content id)
+        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+            next ATTACHMENT;
+        }
 
         $Self->{LayoutObject}->Block(
-            Name => 'ChangeFreeTextSpacer',
-            Data => {},
+            Name => 'Attachment',
+            Data => $Attachment,
         );
     }
 
-    # build change freetext java script check
-    NUMBER:
-    for my $Number (@ConfiguredChangeFreeTextFields) {
-
-        next NUMBER if !$Self->{Config}->{ChangeFreeText}->{$Number};
-
-        # java script check for required change free text fields by form submit
-        if ( $Self->{Config}->{ChangeFreeText}->{$Number} == 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'ChangeFreeTextCheckJs',
-                Data => {
-                    ChangeFreeKeyField  => 'ChangeFreeKey' . $Number,
-                    ChangeFreeTextField => 'ChangeFreeText' . $Number,
-                },
-            );
-        }
-    }
-
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
-
-    # show attachments
-    for my $Attachment (@Attachments) {
+    # add rich text editor javascript
+    # only if activated and the browser can handle it
+    # otherwise just a textarea is shown
+    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
         $Self->{LayoutObject}->Block(
-            Name => 'AttachmentRow',
-            Data => {
-                %{$Attachment},
-                FormID => $Self->{FormID},
-            },
+            Name => 'RichText',
+            Data => {%Param},
         );
     }
 
@@ -945,6 +882,7 @@ sub Run {
         Data         => {
             %Param,
             %GetParam,
+            %ValidationError,
             FormID => $Self->{FormID},
         },
     );
