@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.49 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.50 2010-12-21 13:06:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
+use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,12 +38,21 @@ sub new {
         }
     }
 
-    # create additional objects
-    $Self->{ChangeObject}    = Kernel::System::ITSMChange->new(%Param);
-    $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    # create needed objects
+    $Self->{ChangeObject}      = Kernel::System::ITSMChange->new(%Param);
+    $Self->{WorkOrderObject}   = Kernel::System::ITSMChange::ITSMWorkOrder->new(%Param);
+    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
 
-    # get config for frontend
+    # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("ITSMWorkOrder::Frontend::$Self->{Action}");
+
+    # get form id
+    $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
+
+    # create form id
+    if ( !$Self->{FormID} ) {
+        $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
 
     return $Self;
 }
@@ -66,15 +76,6 @@ sub Run {
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );
-
-    # check if LayoutObject has TranslationObject
-    if ( $Self->{LayoutObject}->{LanguageObject} ) {
-
-        # translate workorder type
-        $WorkOrder->{WorkOrderType} = $Self->{LayoutObject}->{LanguageObject}->Get(
-            $WorkOrder->{WorkOrderType}
-        );
-    }
 
     # check error
     if ( !$WorkOrder ) {
@@ -105,7 +106,7 @@ sub Run {
         qw(
         WorkOrderTitle Instruction
         PlannedEffort
-        SaveAttachment Filename
+        AttachmentUpload FileID
         )
         )
     {
@@ -139,36 +140,18 @@ sub Run {
         }
     }
 
-    # if attachment upload is requested
-    if ( $GetParam{SaveAttachment} ) {
-        $Self->{Subaction} = 'SaveAttachment';
-    }
-
-    # get all attachments meta data
-    my @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-        WorkOrderID => $WorkOrderID,
-    );
-
-    # check if attachment should be deleted
-    for my $Filename (@Attachments) {
-        if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Filename ) ) {
-            $Self->{Subaction} = 'DeleteAttachment';
-        }
-    }
-
     # Remember the reason why saving was not attempted.
-    # The items are the names of the dtl validation error blocks.
-    my @ValidationErrors;
-
-    # remember the numbers of the workorder freetext fields with validation errors
-    my %WorkOrderFreeTextValidationErrors;
+    my %ValidationError;
 
     # update workorder
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # update only if WorkOrderTitle is given
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
+        # the title is required
         if ( !$GetParam{WorkOrderTitle} ) {
-            push @ValidationErrors, 'InvalidTitle';
+            $ValidationError{WorkOrderTitleServerError} = 'ServerError';
         }
 
         # check whether complete times are passed and build the time stamps
@@ -199,25 +182,33 @@ sub Run {
                 String => $GetParam{$TimeType},
             );
 
-            # if time format is invalid
+            # do not save if time is invalid
             if ( !$SystemTime{$TimeType} ) {
-                push @ValidationErrors, "Invalid$TimeType";
+                $ValidationError{ $TimeType . 'Invalid' } = 'ServerError';
             }
         }
 
-        # check the ordering of the times
-        if (
-            $SystemTime{PlannedStartTime}
-            && $SystemTime{PlannedEndTime}
-            && $SystemTime{PlannedStartTime} >= $SystemTime{PlannedEndTime}
+        # check validity of the planned start and end times
+        if ( $SystemTime{PlannedStartTime} && !$SystemTime{PlannedEndTime} ) {
+            $ValidationError{PlannedEndTimeInvalid}   = 'ServerError';
+            $ValidationError{PlannedEndTimeErrorType} = 'GenericServerError';
+        }
+        elsif ( !$SystemTime{PlannedStartTime} && $SystemTime{PlannedEndTime} ) {
+            $ValidationError{PlannedStartTimeInvalid}   = 'ServerError';
+            $ValidationError{PlannedStartTimeErrorType} = 'GenericServerError';
+        }
+        elsif (
+            ( $SystemTime{PlannedStartTime} && $SystemTime{PlannedEndTime} )
+            && ( $SystemTime{PlannedEndTime} < $SystemTime{PlannedStartTime} )
             )
         {
-            push @ValidationErrors, 'InvalidPlannedEndTime';
+            $ValidationError{PlannedStartTimeInvalid}   = 'ServerError';
+            $ValidationError{PlannedStartTimeErrorType} = 'BeforeThanEndTimeServerError';
         }
 
         # check format of planned effort, empty is allowed
         if ( $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
-            push @ValidationErrors, 'InvalidPlannedEffort';
+            $ValidationError{'PlannedEffortInvalid'} = 'ServerError';
         }
 
         # check for required workorder freetext fields (if configured)
@@ -228,16 +219,54 @@ sub Run {
                 && $WorkOrderFreeTextParam{ 'WorkOrderFreeText' . $Number } eq ''
                 )
             {
-
-                # remember the workorder freetext field number with validation errors
-                $WorkOrderFreeTextValidationErrors{$Number}++;
+                $WorkOrderFreeTextParam{Error}->{$Number} = 1;
+                $ValidationError{ 'WorkOrderFreeText' . $Number } = 'ServerError';
             }
         }
 
+        # check if an attachment must be deleted
+        ATTACHMENT:
+        for my $Number ( 1 .. 32 ) {
+
+            # check if the delete button was pressed for this attachment
+            my $Delete = $Self->{ParamObject}->GetParam( Param => "AttachmentDelete$Number" );
+
+            # check next attachment if it was not pressed
+            next ATTACHMENT if !$Delete;
+
+            # remember that we need to show the page again
+            $ValidationError{Attachment} = 1;
+
+            # remove the attachment from the upload cache
+            $Self->{UploadCacheObject}->FormIDRemoveFile(
+                FormID => $Self->{FormID},
+                FileID => $Number,
+            );
+        }
+
+        # check if there was an attachment upload
+        if ( $GetParam{AttachmentUpload} ) {
+
+            # remember that we need to show the page again
+            $ValidationError{Attachment} = 1;
+
+            # get the uploaded attachment
+            my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
+                Param  => 'FileUpload',
+                Source => 'string',
+            );
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID => $Self->{FormID},
+                %UploadStuff,
+            );
+        }
+
         # if all passed data is valid
-        if ( !@ValidationErrors && !%WorkOrderFreeTextValidationErrors ) {
+        if ( !%ValidationError ) {
             my $CouldUpdateWorkOrder = $Self->{WorkOrderObject}->WorkOrderUpdate(
-                WorkOrderID      => $WorkOrder->{WorkOrderID},
+                WorkOrderID      => $WorkOrderID,
                 WorkOrderTitle   => $GetParam{WorkOrderTitle},
                 Instruction      => $GetParam{Instruction},
                 PlannedStartTime => $GetParam{PlannedStartTime},
@@ -247,105 +276,168 @@ sub Run {
                 %WorkOrderFreeTextParam,
             );
 
+            # update was successful
             if ($CouldUpdateWorkOrder) {
 
-                # redirect to zoom mask, when update was successful
-                return $Self->{LayoutObject}->Redirect(
-                    OP => $Self->{LastWorkOrderView},
+                # get all attachments from upload cache
+                my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesData(
+                    FormID => $Self->{FormID},
+                );
+
+                # build a lookup lookup hash of the new attachments
+                my %NewAttachment;
+                for my $Attachment (@Attachments) {
+
+                    # the key is the filename + filesize + content type
+                    my $Key = $Attachment->{Filename}
+                        . $Attachment->{Filesize}
+                        . $Attachment->{ContentType};
+
+                    # append content id if available (for new inline images)
+                    if ( $Attachment->{ContentID} ) {
+                        $Key .= $Attachment->{ContentID};
+                    }
+
+                    # store all of the new attachment data
+                    $NewAttachment{$Key} = $Attachment;
+                }
+
+                # get all attachments meta data
+                my @ExistingAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+                    WorkOrderID => $WorkOrderID,
+                );
+
+                # check the existing attachments
+                FILENAME:
+                for my $Filename (@ExistingAttachments) {
+
+                    # get the existing attachment data
+                    my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+                        WorkOrderID => $WorkOrderID,
+                        Filename    => $Filename,
+                        UserID      => $Self->{UserID},
+                    );
+
+                    # do not consider inline attachments
+                    next FILENAME if $AttachmentData->{Preferences}->{ContentID};
+
+                    # the key is the filename + filesize + content type
+                    # (no content id, as existing attachments don't have it)
+                    my $Key = $AttachmentData->{Filename}
+                        . $AttachmentData->{Filesize}
+                        . $AttachmentData->{ContentType};
+
+                    # attachment is already existing, we can delete it from the new attachment hash
+                    if ( $NewAttachment{$Key} ) {
+                        delete $NewAttachment{$Key};
+                    }
+
+                    # existing attachment is no longer in new attachments hash
+                    else {
+
+                        # delete the existing attachment
+                        my $DeleteSuccessful = $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                            ChangeID    => $WorkOrder->{ChangeID},
+                            WorkOrderID => $WorkOrderID,
+                            Filename    => $Filename,
+                            UserID      => $Self->{UserID},
+                        );
+
+                        # check error
+                        if ( !$DeleteSuccessful ) {
+                            return $Self->{LayoutObject}->FatalError();
+                        }
+                    }
+                }
+
+                # write the new attachments
+                ATTACHMENT:
+                for my $Attachment ( values %NewAttachment ) {
+
+                    # check if attachment is an inline attachment
+                    my $Inline = 0;
+                    if ( $Attachment->{ContentID} ) {
+
+                        # remember that it is inline
+                        $Inline = 1;
+
+                        # remember if this inline attachment is used in the workorder instruction
+                        my $ContentIDFound;
+
+                        # check workorder instruction for content id
+                        if ( $GetParam{Instruction} =~ m{ $Attachment->{ContentID} }xms ) {
+
+                            # found the content id
+                            $ContentIDFound = 1;
+                        }
+
+                        # we do not want to keep this attachment,
+                        # because it was deleted in the richt text editor
+                        next ATTACHMENT if !$ContentIDFound;
+                    }
+
+                    # add attachment
+                    my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
+                        %{$Attachment},
+                        WorkOrderID => $WorkOrderID,
+                        ChangeID    => $WorkOrder->{ChangeID},
+                        UserID      => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        return $Self->{LayoutObject}->FatalError();
+                    }
+
+                    next ATTACHMENT if !$Inline;
+                    next ATTACHMENT if !$Self->{LayoutObject}->{BrowserRichText};
+
+                    # picture url in upload cache
+                    my $Search = "Action=PictureUpload .+ FormID=$Self->{FormID} .+ "
+                        . "ContentID=$Attachment->{ContentID}";
+
+                    # picture url in workorder atttachment
+                    my $Replace
+                        = "Action=AgentITSMWorkOrderZoom;Subaction=DownloadAttachment;"
+                        . "Filename=$Attachment->{Filename};WorkOrderID=$WorkOrderID";
+
+                    # replace url
+                    $GetParam{Instruction} =~ s{$Search}{$Replace}xms;
+
+                    # update workorder
+                    $Success = $Self->{WorkOrderObject}->WorkOrderUpdate(
+                        WorkOrderID => $WorkOrderID,
+                        Instruction => $GetParam{Instruction},
+                        UserID      => $Self->{UserID},
+                    );
+
+                    # check error
+                    if ( !$Success ) {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message  => "Could not update the inline image URLs "
+                                . "for WorkOrderID '$WorkOrderID'!!",
+                        );
+                    }
+                }
+
+                # delete the upload cache
+                $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
+
+                # load new URL in parent window and close popup
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => "Action=AgentITSMWorkOrderZoom;WorkOrderID=$WorkOrderID",
                 );
             }
             else {
 
                 # show error message, when update failed
                 return $Self->{LayoutObject}->ErrorScreen(
-                    Message => "Was not able to update WorkOrder $WorkOrder->{WorkOrderID}!",
+                    Message => "Was not able to update WorkOrder $WorkOrderID!",
                     Comment => 'Please contact the admin.',
                 );
             }
         }
-    }
-
-    # handle attachment actions
-    elsif ( $Self->{Subaction} eq 'SaveAttachment' ) {
-
-        my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => 'AttachmentNew',
-            Source => 'string',
-        );
-
-        # check if file was already uploaded
-        my $FileAlreadyUploaded = $Self->{WorkOrderObject}->WorkOrderAttachmentExists(
-            Filename    => $UploadStuff{Filename},
-            WorkOrderID => $WorkOrderID,
-            UserID      => $Self->{UserID},
-        );
-
-        # write to virtual fs
-        if ( $UploadStuff{Filename} && !$FileAlreadyUploaded ) {
-            my $Success = $Self->{WorkOrderObject}->WorkOrderAttachmentAdd(
-                %UploadStuff,
-                WorkOrderID => $WorkOrderID,
-                ChangeID    => $WorkOrder->{ChangeID},
-                UserID      => $Self->{UserID},
-            );
-
-            # check for error
-            if ( !$Success ) {
-                push @ValidationErrors, 'FileAlreadyUploaded';
-            }
-
-            # reload attachment list
-            @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-                WorkOrderID => $WorkOrderID,
-            );
-        }
-        else {
-            push @ValidationErrors, 'FileAlreadyUploaded';
-        }
-    }
-    elsif ( $Self->{Subaction} eq 'DeleteAttachment' ) {
-
-        for my $Filename (@Attachments) {
-            if ( $Self->{ParamObject}->GetParam( Param => 'DeleteAttachment' . $Filename ) ) {
-
-                # delete attachment
-                $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
-                    ChangeID    => $WorkOrder->{ChangeID},
-                    WorkOrderID => $WorkOrderID,
-                    Filename    => $Filename,
-                    UserID      => $Self->{UserID},
-                );
-
-                # reload attachment list
-                @Attachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
-                    WorkOrderID => $WorkOrderID,
-                );
-            }
-        }
-    }
-
-    # handle attachment downloads
-    elsif ( $Self->{Subaction} eq 'DownloadAttachment' ) {
-
-        # get data for attachment
-        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            WorkOrderID => $WorkOrderID,
-            Filename    => $GetParam{Filename},
-        );
-
-        # return error if file does not exist
-        if ( !$AttachmentData ) {
-            $Self->{LogObject}->Log(
-                Message  => "No such attachment ($GetParam{Filename})! May be an attack!!!",
-                Priority => 'error',
-            );
-            return $Self->{LayoutObject}->ErrorScreen();
-        }
-
-        return $Self->{LayoutObject}->Attachment(
-            %{$AttachmentData},
-            Type => 'attachment',
-        );
     }
 
     else {
@@ -368,13 +460,40 @@ sub Run {
                     );
 
                 # set the parameter hash for BuildDateSelection()
-                $GetParam{ $TimeType . 'Used' }   = 1;
                 $GetParam{ $TimeType . 'Minute' } = $Minute;
                 $GetParam{ $TimeType . 'Hour' }   = $Hour;
                 $GetParam{ $TimeType . 'Day' }    = $Day;
                 $GetParam{ $TimeType . 'Month' }  = $Month;
                 $GetParam{ $TimeType . 'Year' }   = $Year;
             }
+        }
+
+        # get all attachments meta data
+        my @ExistingAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+            WorkOrderID => $WorkOrderID,
+        );
+
+        # copy all existing attachments to upload cache
+        FILENAME:
+        for my $Filename (@ExistingAttachments) {
+
+            # get the existing attachment data
+            my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
+                WorkOrderID => $WorkOrderID,
+                Filename    => $Filename,
+                UserID      => $Self->{UserID},
+            );
+
+            # do not consider inline attachments
+            next FILENAME if $AttachmentData->{Preferences}->{ContentID};
+
+            # add attachment to the upload cache
+            $Self->{UploadCacheObject}->FormIDAddFile(
+                FormID      => $Self->{FormID},
+                Filename    => $AttachmentData->{Filename},
+                Content     => $AttachmentData->{Content},
+                ContentType => $AttachmentData->{ContentType},
+            );
         }
     }
 
@@ -392,18 +511,18 @@ sub Run {
         );
     }
 
+    # if there was an attachment delete or upload
+    # we do not want to show validation errors for other fields
+    if ( $ValidationError{Attachment} ) {
+        %ValidationError = ();
+        $WorkOrderFreeTextParam{Error} = {};
+    }
+
     # output header
     my $Output = $Self->{LayoutObject}->Header(
         Title => $WorkOrder->{WorkOrderTitle},
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
-
-    # add rich text editor
-    if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'RichText',
-        );
-    }
 
     # get the workorder freetext config and fillup workorder freetext fields from workorder data
     my %WorkOrderFreeTextConfig;
@@ -428,6 +547,15 @@ sub Run {
             # store the workorder freetext config
             $WorkOrderFreeTextConfig{ $Type . $Number } = $Config;
         }
+
+        # add required entry in the hash (if configured for this free text field)
+        if (
+            $Self->{Config}->{WorkOrderFreeText}->{$Number}
+            && $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2
+            )
+        {
+            $WorkOrderFreeTextConfig{Required}->{$Number} = 1;
+        }
     }
 
     # build the workorder freetext HTML
@@ -438,14 +566,10 @@ sub Run {
     );
 
     # show workorder freetext fields
-    my $WorkOrderFreeTextShown;
     for my $Number (@ConfiguredWorkOrderFreeTextFields) {
 
         # check if this freetext field should be shown in this frontend
         if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} ) {
-
-            # remember that at least one freetext field is shown
-            $WorkOrderFreeTextShown = 1;
 
             # show single workorder freetext fields
             $Self->{LayoutObject}->Block(
@@ -455,16 +579,6 @@ sub Run {
                 },
             );
 
-            # show workorder freetext validation error for single workorder freetext field
-            if ( $WorkOrderFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidWorkOrderFreeText' . $Number,
-                    Data => {
-                        %WorkOrderFreeTextHTML,
-                    },
-                );
-            }
-
             # show all workorder freetext fields
             $Self->{LayoutObject}->Block(
                 Name => 'WorkOrderFreeText',
@@ -473,43 +587,6 @@ sub Run {
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeKeyField' . $Number },
                     WorkOrderFreeTextField =>
                         $WorkOrderFreeTextHTML{ 'WorkOrderFreeTextField' . $Number },
-                },
-            );
-
-            # show all workorder freetext validation errors
-            if ( $WorkOrderFreeTextValidationErrors{$Number} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidWorkOrderFreeText',
-                    Data => {
-                        %WorkOrderFreeTextHTML,
-                    },
-                );
-            }
-        }
-    }
-
-    # show space after workorder freetext fields
-    if ($WorkOrderFreeTextShown) {
-
-        $Self->{LayoutObject}->Block(
-            Name => 'WorkOrderFreeTextSpacer',
-            Data => {},
-        );
-    }
-
-    # build workorder freetext java script check
-    NUMBER:
-    for my $Number (@ConfiguredWorkOrderFreeTextFields) {
-
-        next NUMBER if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
-
-        # java script check for required workorder free text fields by form submit
-        if ( $Self->{Config}->{WorkOrderFreeText}->{$Number} == 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'WorkOrderFreeTextCheckJs',
-                Data => {
-                    WorkOrderFreeKeyField  => 'WorkOrderFreeKey' . $Number,
-                    WorkOrderFreeTextField => 'WorkOrderFreeText' . $Number,
                 },
             );
         }
@@ -527,12 +604,21 @@ sub Run {
         my $DiffTime = $TimeType eq 'PlannedStartTime' ? 0 : 60 * 60;
 
         # add selection for the time
-        $GetParam{ $TimeType . 'String' } = $Self->{LayoutObject}->BuildDateSelection(
+        $GetParam{ $TimeType . 'SelectionString' } = $Self->{LayoutObject}->BuildDateSelection(
             %GetParam,
-            Format   => 'DateInputFormatLong',
-            Prefix   => $TimeType,
-            DiffTime => $DiffTime,
+            Format              => 'DateInputFormatLong',
+            Prefix              => $TimeType,
+            DiffTime            => $DiffTime,
+            Validate            => 1,
+            $TimeType . 'Class' => 'Validate_Required '
+                . ( $ValidationError{ $TimeType . 'Invalid' } || '' ),
             %TimePeriod,
+        );
+
+        # add server error messages for the planned times
+        $Self->{LayoutObject}->Block(
+            Name => $TimeType
+                . ( $ValidationError{ $TimeType . 'ErrorType' } || 'GenericServerError' )
         );
     }
 
@@ -543,35 +629,45 @@ sub Run {
             Data => {
                 %{$WorkOrder},
                 %GetParam,
+                %ValidationError,
             },
         );
     }
 
-    # add the validation error messages
-    for my $BlockName (@ValidationErrors) {
-        $Self->{LayoutObject}->Block( Name => $BlockName );
-    }
+    # show the attachment upload button
+    $Self->{LayoutObject}->Block(
+        Name => 'AttachmentUpload',
+        Data => {%Param},
+    );
+
+    # get all attachments meta data
+    my @Attachments = $Self->{UploadCacheObject}->FormIDGetAllFilesMeta(
+        FormID => $Self->{FormID},
+    );
 
     # show attachments
     ATTACHMENT:
-    for my $Filename (@Attachments) {
+    for my $Attachment (@Attachments) {
 
-        # get info about file
-        my $AttachmentData = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-            WorkOrderID => $WorkOrderID,
-            Filename    => $Filename,
-        );
+        # do not show inline images as attachments
+        # (they have a content id)
+        if ( $Attachment->{ContentID} && $Self->{LayoutObject}->{BrowserRichText} ) {
+            next ATTACHMENT;
+        }
 
-        # check for attachment information
-        next ATTACHMENT if !$AttachmentData;
-
-        # show block
         $Self->{LayoutObject}->Block(
-            Name => 'AttachmentRow',
-            Data => {
-                %{$WorkOrder},
-                %{$AttachmentData},
-            },
+            Name => 'Attachment',
+            Data => $Attachment,
+        );
+    }
+
+    # add rich text editor javascript
+    # only if activated and the browser can handle it
+    # otherwise just a textarea is shown
+    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'RichText',
+            Data => {%Param},
         );
     }
 
@@ -583,11 +679,13 @@ sub Run {
             %{$Change},
             %{$WorkOrder},
             %GetParam,
+            %ValidationError,
+            FormID => $Self->{FormID},
         },
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }

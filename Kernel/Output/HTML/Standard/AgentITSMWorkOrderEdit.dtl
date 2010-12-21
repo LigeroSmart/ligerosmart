@@ -2,262 +2,171 @@
 # AgentITSMWorkOrderEdit.dtl - provides HTML form for AgentITSMWorkOrderEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderEdit.dtl,v 1.50 2010-10-28 11:57:52 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.dtl,v 1.51 2010-12-21 13:07:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<script type="text/javascript" src="$Config{"Frontend::JavaScriptPath"}itsm-changemanagement.js"></script>
-<script language="JavaScript" type="text/javascript">
-<!--
+<div class="LayoutPopup ARIARoleMain">
 
-function submit_compose() {
+    <div class="Header">
+        <h1>$Text{"Edit"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} &mdash; $QData{"WorkOrderTitle"}</h1>
+        <p>
+            <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
+        </p>
+    </div>
 
-    // check the title, all whitespace counts as empty
-    if (document.compose.WorkOrderTitle.value.match(/^\s*$/)) {
-        alert('$JSText{"A workorder must have a title!"}');
-        document.compose.WorkOrderTitle.focus();
+    <div class="Content">
 
-        return false;
-    }
+        <div class="Content">
+            <form action="$Env{"CGIHandle"}" method="post" name="compose" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
+                <input type="hidden" name="Action"    value="$Env{"Action"}"/>
+                <input type="hidden" name="Subaction" value="Save"/>
+                <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}"/>
+                <input type="hidden" name="FormID"    value="$QData{"FormID"}"/>
 
-    // check the planned start time
-    if ( !CheckTime( 'PlannedStartTime' ) ) {
-        alert('$JSText{"The planned start time is invalid!"}');
+                <fieldset class="TableLike FixedLabelSmall">
 
-        return false;
-    }
+                    <label class="Mandatory" for="WorkOrderTitle"><span class="Marker">* </span>$Text{"Title"}:</label>
+                    <div class="Field">
+                        <input type="text" name="WorkOrderTitle" id="WorkOrderTitle" value="$QData{"WorkOrderTitle"}" class="W75pc Validate_Required $QData{"WorkOrderTitleServerError"}" maxlength="250"/>
+                        <div id="WorkOrderTitleError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        <div id="WorkOrderTitleServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    </div>
+                    <div class="Clear"></div>
 
-    // check the planned end time
-    if ( !CheckTime( 'PlannedEndTime' ) ) {
-        alert('$JSText{"The planned end time is invalid!"}');
-
-        return false;
-    }
-
-    // check whether the planned start time is before the planned end time
-    var StartAfterEndMsg = '$JSText{"The planned start time must be before the planned end time!"}';
-    if ( !CheckStartBeforeEnd( 'PlannedStartTime', 'PlannedEndTime', StartAfterEndMsg ) ) {
-        return false;
-    }
-
-<!-- dtl:block:WorkOrderFreeTextCheckJs -->
-    // check the required freetext fields
-    if (document.compose.$Data{"WorkOrderFreeTextField"}.value == "") {
-        alert('$JSText{"A required field is:"} ' + document.compose.$Data{"WorkOrderFreeKeyField"}.value + '!');
-        document.compose.$Data{"WorkOrderFreeTextField"}.focus();
-
-        return false;
-    }
-<!-- dtl:block:WorkOrderFreeTextCheckJs -->
-
-    return true;
-}
-//-->
-</script>
-
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} $Env{"Box1"} $QData{"WorkOrderTitle","70"}
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastWorkOrderView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-        </td>
-    </tr>
-
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="Save">
-                <input type="hidden" name="WorkOrderID" value="$QData{"WorkOrderID"}">
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Workorder"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <tr>
-                                    <td width="140" class="contentkey">
-                                        $Text{"Title"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
-                                    </td>
-                                    <td width="*" class="contentvalue">
-                                        <input type="text" name="WorkOrderTitle" value="$QData{"WorkOrderTitle"}" size="70" maxlength="250">
-<!-- dtl:block:InvalidTitle -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTitle -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Instruction"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        <div>
 <!-- dtl:block:RichText -->
-$Include{"RichTextEditorITSM"}
+$Include{"RichTextEditor"}
 <!-- dtl:block:RichText -->
-                                            <textarea id="RichText1" name="Instruction" rows="15" cols="$Config{"ITSM::Frontend::TextArea"}" wrap="$Env{"BrowserWrap"}">$Data{"Instruction"}</textarea>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"WorkOrderType"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $QData{"WorkOrderType"}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
+                    <label class="Mandatory" for="RichText"><span class="Marker">*</span> $Text{"Instruction"}:</label>
+                    <div class="RichTextField">
+                        <textarea id="RichText" class="RichText Validate_Required $Data{"InstructionInvalid"}" name="Instruction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Instruction"}</textarea>
+                        <div id="RichTextError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        <div id="RichTextServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"WorkOrderType"}:</label>
+                    <div class="Field">
+                        $Text{"$Data{"WorkOrderType"}"}
+                    </div>
+                    <div class="Clear"></div>
+
 <!-- dtl:block:WorkOrderFreeText -->
-                                <tr>
-                                    <td class="contentkey">$Data{"WorkOrderFreeKeyField"}:</td>
-                                    <td class="contentvalue">
-                                        $Data{"WorkOrderFreeTextField"}
-<!-- dtl:block:InvalidWorkOrderFreeText -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidWorkOrderFreeText -->
-                                    </td>
-                                </tr>
+                    $Data{"WorkOrderFreeKeyField"}
+                    <div class="Field">
+                        $Data{"WorkOrderFreeTextField"}
+                    </div>
+                    <div class="Clear"></div>
 <!-- dtl:block:WorkOrderFreeText -->
-<!-- dtl:block:WorkOrderFreeTextSpacer -->
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-<!-- dtl:block:WorkOrderFreeTextSpacer -->
+
 # #############################################################
 # example for customization of single workorder freetext fields
 # #############################################################
 #<!-- dtl:block:WorkOrderFreeText1 -->
-#                                <tr>
-#                                  <td class="contentkey">$Data{"WorkOrderFreeKeyField1"}:</td>
-#                                   <td class="contentvalue">
-#                                       $Data{"WorkOrderFreeTextField1"}
-#<!-- dtl:block:InvalidWorkOrderFreeText1 -->
-#                                       <br />
-#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
-#<!-- dtl:block:InvalidWorkOrderFreeText1 -->
-#                                  </td>
-#                                </tr>
+#                    $Data{"WorkOrderFreeKeyField1"}
+#                    <div class="Field">
+#                        $Data{"WorkOrderFreeTextField1"}
+#                    </div>
+#                    <div class="Clear"></div>
 #<!-- dtl:block:WorkOrderFreeText1 -->
 #
-#
 #<!-- dtl:block:WorkOrderFreeText2 -->
-#                                <tr>
-#                                  <td colspan="2" class="contentkey">$Data{"WorkOrderFreeKeyField2"}:</td>
-#                                  <td class="contentvalue">
-#                                      $Data{"WorkOrderFreeTextField2"}
-#<!-- dtl:block:InvalidWorkOrderFreeText2 -->
-#                                       <br />
-#                                       <font color="red" size="-2">$Text{"Input invalid"}</font>
-#<!-- dtl:block:InvalidWorkOrderFreeText2 -->
-#                                  </td>
-#                                </tr>
+#                    $Data{"WorkOrderFreeKeyField2"}
+#                    <div class="Field">
+#                        $Data{"WorkOrderFreeTextField2"}
+#                    </div>
+#                    <div class="Clear"></div>
 #<!-- dtl:block:WorkOrderFreeText2 -->
 # ####################################################
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"PlannedStartTime"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"PlannedStartTimeString"}
-<!-- dtl:block:InvalidPlannedStartTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidPlannedStartTime -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"PlannedEndTime"}:
-                                    </td>
-                                    <td class="contentvalue">
-                                        $Data{"PlannedEndTimeString"}
-<!-- dtl:block:InvalidPlannedEndTime -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidPlannedEndTime -->
-                                    </td>
-                                </tr>
-<!-- dtl:block:ShowPlannedEffort -->
-                                <tr>
-                                    <td class="contentkey">$Text{"PlannedEffort"}:</td>
 
-                                    <td class="contentvalue">
-                                        <div>
-                                            <input type="text" name="PlannedEffort" value="$QData{"PlannedEffort"}" size="11" maxlength="11">
-<!-- dtl:block:InvalidPlannedEffort -->
-                                            <br />
-                                            <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidPlannedEffort -->
-                                        </div>
-                                    </td>
-                                </tr>
+                    <label>$Text{"PlannedStartTime"}:</label>
+                    <div class="Field">
+                        $Data{"PlannedStartTimeSelectionString"}
+                        <div id="PlannedStartTimeDayError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                        <div id="PlannedStartTimeHourError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:PlannedStartTimeGenericServerError -->
+                        <div id="PlannedStartTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                        <div id="PlannedStartTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:PlannedStartTimeGenericServerError -->
+<!-- dtl:block:PlannedStartTimeBeforeThanEndTimeServerError -->
+                        <div id="PlannedStartTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"The planned start time must be before the planned end time!"}</p></div>
+                        <div id="PlannedStartTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"The planned start time must be before the planned end time!"}</p></div>
+<!-- dtl:block:PlannedStartTimeBeforeThanEndTimeServerError -->
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label>$Text{"PlannedEndTime"}:</label>
+                    <div class="Field">
+                        $Data{"PlannedEndTimeSelectionString"}
+                        <div id="PlannedEndTimeDayError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                        <div id="PlannedEndTimeHourError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:PlannedEndTimeGenericServerError -->
+                        <div id="PlannedEndTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+                        <div id="PlannedEndTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:PlannedEndTimeGenericServerError -->
+<!-- dtl:block:PlannedEndTimeBeforeThanEndTimeServerError -->
+                        <div id="PlannedEndTimeDayServerError" class="TooltipErrorMessage"><p>$Text{"The planned start time must be before the planned end time!"}</p></div>
+                        <div id="PlannedEndTimeHourServerError" class="TooltipErrorMessage"><p>$Text{"The planned start time must be before the planned end time!"}</p></div>
+<!-- dtl:block:PlannedEndTimeBeforeThanEndTimeServerError -->
+                    </div>
+                    <div class="Clear"></div>
+
 <!-- dtl:block:ShowPlannedEffort -->
-                                <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">$Text{"Attachment"}:</td>
-                                    <td class="contentvalue">
-                                        <table width="100%" cellspacing="0" cellpadding="0">
-<!-- dtl:block:AttachmentRow -->
-                                            <tr>
-                                                <td>$QData{"Filename"}</td>
-                                                <td width="16">
-                                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=DownloadAttachment;Filename=$LQData{"Filename"};WorkOrderID=$LQData{"WorkOrderID"}"><img src="" border="0" alt="Download" title="Download"/></a>
-                                                </td>
-                                                <td>$QData{"Filesize"}</td>
-                                                <td width="100%">
-                                                    <input class="button" type="submit" name="DeleteAttachment$QData{"Filename"}" value="$Text{"Delete"}">
-                                                </td>
-                                            </tr>
-<!-- dtl:block:AttachmentRow -->
-                                            <tr>
-                                                <td colspan="3">
-                                                    <input type="file" name="AttachmentNew">
-                                                </td>
-                                                <td width="100%"><input type="submit" class="button" name="SaveAttachment" value="$Text{"Attach"}"></td>
-                                            </tr>
-<!-- dtl:block:FileAlreadyUploaded -->
-                                            <tr>
-                                                <td>
-                                                    <font color="red" size="-2">$Text{"Input invalid"}</font>
-                                                </td>
-                                            </tr>
-<!-- dtl:block:FileAlreadyUploaded -->
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" id="submitWorkOrderEdit" accesskey="g" type="submit" name="WorkOrderEdit" value="$Text{"Save"}" onclick="return submit_compose();"/>
-                        </td>
-                    </tr>
-                </table>
+                    <label for="PlannedEffort">$Text{"PlannedEffort"}:</label>
+                    <div class="Field">
+                        <input type="text" name="PlannedEffort" id="PlannedEffort" value="$QData{"PlannedEffort"}" class="W10pc Validate $QData{"PlannedEffortInvalid"}" maxlength="10"/>
+                        <div id="PlannedEffortError" class="TooltipErrorMessage"><p>$Text{"Invalid format."}</p></div>
+                        <div id="PlannedEffortServerError" class="TooltipErrorMessage"><p>$Text{"Invalid format."}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:ShowPlannedEffort -->
+
+<!-- dtl:block:AttachmentUpload -->
+                    <label>$Text{"Attachment"}:</label>
+                    <div class="Field">
+                        <ul>
+<!-- dtl:block:Attachment -->
+                            <li>
+                                $QData{"Filename"} ($QData{"Filesize"})
+                                <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#AttachmentDelete$QData{"FileID"}').bind('click', function () {
+        Core.Form.Validate.DisableValidation($('#AttachmentDelete$QData{"FileID"}').closest('form'));
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+                            </li>
+<!-- dtl:block:Attachment -->
+                            <li>
+                                <input name="FileUpload" id="FileUpload" type="file" size="40"/>
+                                <input type="hidden" id="AttachmentUpload" name="AttachmentUpload" value="0" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="Clear"></div>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#FileUpload').bind('change', function (Event) {
+        var $Form = $('#FileUpload').closest('form');
+        Core.Form.Validate.DisableValidation($Form);
+        $Form.find('#AttachmentUpload').val('1').end().submit();
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!-- dtl:block:AttachmentUpload -->
+
+                    <div class="Field SpacingTop">
+                        <button class="Primary" id="SubmitWorkOrderEdit" name="WorkOrderEdit" title="$Text{"Save"}" type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+                    </div>
+
+                </fieldset>
             </form>
-            <br>
-        </td>
-    </tr>
-</table>
+        </div>
+    </div>
+</div>
