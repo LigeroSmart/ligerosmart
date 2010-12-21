@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.39 2010-12-09 03:01:04 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.40 2010-12-21 05:13:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -95,39 +95,30 @@ sub Run {
     # store all needed parameters in %GetParam to make it reloadable
     my %GetParam;
     for my $ParamName (
-        qw(ChangeBuilder ChangeManager NewCABMember CABTemplate
-        ExpandBuilder1 ExpandBuilder2 ExpandManager1 ExpandManager2
-        ExpandCABMember1 ExpandCABMember2 CABMemberType CABMemberID
-        ChangeBuilderID ChangeManagerID SelectedUser1 SelectedUser2
-        MemberID ClearCABMember ClearUser1 ClearUser2
+        qw(ChangeBuilder ChangeBuilderSelected ChangeManager ChangeManagerSelected
+        NewCABMember NewCABMemberSelected NewCABMemberType CABTemplate CABMemberID
         AddCABMember AddCABTemplate TemplateID)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
     }
 
+    # server error hash, to store the items with ServerError class
+    my %ServerError;
+
     # Remember the reason why saving was not attempted.
     # The entries are the names of the dtl validation error blocks.
     my @ValidationErrors;
 
-    # this is needed to handle user requests when autocompletion is turned off
-    # %ExpandInfo gets info about chosen user and all available users
-    my %ExpandInfo;
-
     if ( $Self->{Subaction} eq 'Save' ) {
+
+        #DELETE DELETE
+        print STDERR $Self->{MainObject}->Dump( \%GetParam );
 
         # change manager and change builder are required for an update
         my %ErrorAllRequired = $Self->_CheckChangeManagerAndChangeBuilder(
             %GetParam,
         );
-
-        # is a "search user" button clicked
-        my $ExpandUser = $GetParam{ExpandBuilder1} || $GetParam{ExpandBuilder2}
-            || $GetParam{ExpandManager1}   || $GetParam{ExpandManager2}
-            || $GetParam{ExpandCABMember1} || $GetParam{ExpandCABMember2};
-
-        # is a "clear user" button clicked
-        my $ClearUser = $GetParam{ClearUser1} || $GetParam{ClearUser2} || $GetParam{ClearCABMember};
 
         # is cab member delete requested
         my %DeleteMember = $Self->_IsMemberDeletion(
@@ -165,7 +156,7 @@ sub Run {
                     # do not display a name in autocomplete field
                     # and do not set values in hidden fields as the
                     # user was already added
-                    delete @GetParam{qw(NewCABMember CABMemberType CABMemberID)};
+                    delete @GetParam{qw(NewCABMember NewCABMemberSelected NewCABMemberType)};
                 }
                 else {
 
@@ -179,9 +170,7 @@ sub Run {
 
             # if member is invalid
             else {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidCABMember',
-                );
+                $ServerError{NewCABMemberError} = 'ServerError';
             }
         }
         elsif ( $GetParam{AddCABTemplate} ) {
@@ -202,27 +191,7 @@ sub Run {
             }
 
             # notify about the missing template id
-            push @ValidationErrors, 'InvalidTemplate';
-        }
-        elsif ($ExpandUser) {
-
-            # get user info when autocompletion is turned off
-            %ExpandInfo = $Self->_GetExpandInfo(%GetParam);
-        }
-        elsif ($ClearUser) {
-
-            # which fields to clear
-            my %FieldMap = (
-                ClearUser1     => [qw(ChangeManager SelectedUser1)],
-                ClearUser2     => [qw(ChangeManager SelectedUser2)],
-                ClearCABMember => [qw(NewCABMember CABMemberID CABMemberType)],
-            );
-
-            # actually clear the fields associated with the button that was clicked
-            my $Fields = $FieldMap{$ClearUser} || [];
-            for my $Field ( @{$Fields} ) {
-                $GetParam{$Field} = '';
-            }
+            $ServerError{TemplateIDError} = 'ServerError';
         }
         elsif (%DeleteMember) {
 
@@ -258,8 +227,8 @@ sub Run {
             # update change
             my $CanUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
                 ChangeID        => $ChangeID,
-                ChangeManagerID => $GetParam{SelectedUser1},
-                ChangeBuilderID => $GetParam{SelectedUser2},
+                ChangeManagerID => $GetParam{ChangeManagerSelected},
+                ChangeBuilderID => $GetParam{ChangeBuilderSelected},
                 UserID          => $Self->{UserID},
             );
 
@@ -267,8 +236,9 @@ sub Run {
             if ($CanUpdateChange) {
 
                 # redirect to change zoom mask
-                return $Self->{LayoutObject}->Redirect(
-                    OP => $Self->{LastChangeView},
+                # load new URL in parent window and close popup
+                return $Self->{LayoutObject}->PopupClose(
+                    URL => $Self->{LastChangeView},
                 );
             }
             else {
@@ -284,16 +254,12 @@ sub Run {
 
             # show error message for change builder
             if ( $ErrorAllRequired{ChangeBuilder} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeBuilder',
-                );
+                $ServerError{ChangeBuilderError} = 'ServerError';
             }
 
             # show error message for change manager
             if ( $ErrorAllRequired{ChangeManager} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InvalidChangeManager',
-                );
+                $ServerError{ChangeManagerError} = 'ServerError';
             }
         }
     }
@@ -343,14 +309,18 @@ sub Run {
 
         # fill GetParam hash
         %GetParam = (
-            SelectedUser1 => $Change->{ChangeManagerID},
-            SelectedUser2 => $Change->{ChangeBuilderID},
-            ChangeManager => $ChangeManager,
-            ChangeBuilder => $ChangeBuilder,
+            ChangeManager   => $ChangeManager,
+            ChangeManagerID => $Change->{ChangeManagerID},
+            ChangeBuilder   => $ChangeBuilder,
+            ChangeBuilderID => $Change->{ChangeBuilderID},
         );
     }
 
     # show all agent members of CAB
+    if ( @{ $Change->{CABAgents} } ) {
+        $Self->{LayoutObject}->Block( Name => 'CABMemberTable' );
+    }
+
     USERID:
     for my $UserID ( @{ $Change->{CABAgents} } ) {
 
@@ -364,8 +334,9 @@ sub Run {
 
         # display cab member info
         $Self->{LayoutObject}->Block(
-            Name => 'AgentCAB',
+            Name => 'CABMemberRow',
             Data => {
+                UserType => 'Agent',
                 %User,
             },
         );
@@ -386,8 +357,9 @@ sub Run {
 
         # display cab member info
         $Self->{LayoutObject}->Block(
-            Name => 'CustomerCAB',
+            Name => 'CABMemberRow',
             Data => {
+                UserType => 'Customer',
                 %CustomerUser,
             },
         );
@@ -396,50 +368,50 @@ sub Run {
     # build changebuilder and changemanager search autocomplete field
     my $UserAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::UserSearchAutoComplete');
-    if ( $UserAutoCompleteConfig->{Active} ) {
 
-        # add code needed for autocompletion (AgentITSMUserSearch.dtl)
+    my $AutoComplete = 'true';
+    if ( !$UserAutoCompleteConfig->{Active} ) {
+        $AutoComplete = 'false';
+    }
+
+    # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
+    for my $Group (qw( itsm-change-manager itsm-change-builder )) {
+
         $Self->{LayoutObject}->Block(
             Name => 'UserSearchAutoComplete',
+            Data => {
+                minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
+                queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+                maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+                dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth}        || 'false',
+                groups              => $Group,
+            },
         );
 
-        # code and return blocks for change builder and change manager (AgentITSMUserSearch.dtl)
-        for my $InputNr ( 1 .. 2 ) {
-
-            $Self->{LayoutObject}->Block(
-                Name => 'UserSearchAutoCompleteCode',
-                Data => {
-                    minQueryLength => $UserAutoCompleteConfig->{MinQueryLength} || 2,
-                    queryDelay     => $UserAutoCompleteConfig->{QueryDelay}     || 0.1,
-                    typeAhead      => $UserAutoCompleteConfig->{TypeAhead}      || 'false',
-                    maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-                    InputNr => $InputNr,
-                },
-            );
-
-            $Self->{LayoutObject}->Block(
-                Name => 'UserSearchAutoCompleteReturnElements',
-                Data => {
-                    InputNr => $InputNr,
-                },
-            );
-
-            # blocks in AgentITSMChangeInvolvedPersons.pm
-            $Self->{LayoutObject}->Block(
-                Name => "UserSearchAutoCompleteDivStart$InputNr",
-            );
-            $Self->{LayoutObject}->Block(
-                Name => "UserSearchAutoCompleteDivEnd$InputNr",
-            );
+        my $ItemID = 'ChangeManager';
+        if ( $Group eq 'itsm-change-builder' ) {
+            $ItemID = 'ChangeBuilder';
         }
-    }
-    else {
 
-        # show usersearch buttons for change manager and change builder
-        for my $InputNr ( 1 .. 2 ) {
-            $Self->{LayoutObject}->Block(
-                Name => "SearchUserButton$InputNr",
-            );
+        $Self->{LayoutObject}->Block(
+            Name => 'UserSearchInit',
+            Data => {
+                ItemID             => $ItemID,
+                ActiveAutoComplete => $AutoComplete,
+            },
+        );
+
+    }
+
+    # show validation errors in CABTemplate block
+    my %ValidationErrorNames;
+    my $TemplateError = '';
+
+    $ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
+
+    for my $ChangeTemplateValidationError (qw(InvalidTemplate)) {
+        if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
+            $ServerError{TemplateIDError} = 'ServerError';
         }
     }
 
@@ -449,6 +421,7 @@ sub Run {
         CommentLength => 15,
         TemplateType  => 'CAB',
     );
+
     my $TemplateDropDown = $Self->{LayoutObject}->BuildSelection(
         Name         => 'TemplateID',
         Data         => $TemplateList,
@@ -463,68 +436,41 @@ sub Run {
         },
     );
 
-    # show validation errors in CABTemplate block
-    my %ValidationErrorNames;
-    @ValidationErrorNames{@ValidationErrors} = (1) x @ValidationErrors;
-    for my $ChangeTemplateValidationError (qw(InvalidTemplate)) {
-        if ( $ValidationErrorNames{$ChangeTemplateValidationError} ) {
-            $Self->{LayoutObject}->Block(
-                Name => $ChangeTemplateValidationError,
-            );
-        }
-    }
-
     # build CAB member search autocomplete field
     my $CABMemberAutoCompleteConfig
         = $Self->{ConfigObject}->Get('ITSMChange::Frontend::CABMemberSearchAutoComplete');
-    if ( $CABMemberAutoCompleteConfig->{Active} ) {
 
-        # general blocks
-        $Self->{LayoutObject}->Block(
-            Name => 'CABMemberSearchAutoComplete',
-        );
+    # CABMember
+    $Self->{LayoutObject}->Block(
+        Name => 'CABMemberSearchAutoComplete',
+        Data => {
+            minQueryLength      => $CABMemberAutoCompleteConfig->{MinQueryLength}      || 2,
+            queryDelay          => $CABMemberAutoCompleteConfig->{QueryDelay}          || 0.1,
+            typeAhead           => $CABMemberAutoCompleteConfig->{TypeAhead}           || 'false',
+            maxResultsDisplayed => $CABMemberAutoCompleteConfig->{MaxResultsDisplayed} || 20,
+            dynamicWidth        => $CABMemberAutoCompleteConfig->{DynamicWidth}        || 1,
+        },
+    );
 
-        # CABMember
-        $Self->{LayoutObject}->Block(
-            Name => 'CABMemberSearchAutoCompleteCode',
-            Data => {
-                minQueryLength => $CABMemberAutoCompleteConfig->{MinQueryLength} || 2,
-                queryDelay     => $CABMemberAutoCompleteConfig->{QueryDelay}     || 0.1,
-                typeAhead      => $CABMemberAutoCompleteConfig->{TypeAhead}      || 'false',
-                maxResultsDisplayed => $CABMemberAutoCompleteConfig->{MaxResultsDisplayed} || 20,
-            },
-        );
-
-        # general block
-        $Self->{LayoutObject}->Block(
-            Name => 'CABMemberSearchAutoCompleteReturn',
-        );
-
-        # CAB member
-        $Self->{LayoutObject}->Block(
-            Name => 'CABMemberSearchAutoCompleteReturnElements',
-        );
-
-        $Self->{LayoutObject}->Block(
-            Name => 'CABMemberSearchAutoCompleteDivStart',
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'CABMemberSearchAutoCompleteDivEnd',
-        );
+    my $ActiveAutoComplete = 'true';
+    if ( !$CABMemberAutoCompleteConfig->{Active} ) {
+        $ActiveAutoComplete = 'false';
     }
-    else {
 
-        # show usersearch buttons for CAB member
-        $Self->{LayoutObject}->Block(
-            Name => 'SearchCABMemberButton',
-        );
-    }
+    # search init
+    $Self->{LayoutObject}->Block(
+        Name => 'CABMemberSearchInit',
+        Data => {
+            ActiveAutoComplete => $ActiveAutoComplete,
+            ItemID             => 'NewCABMember',
+            }
+    );
 
     # output header and navigation
     my $Output = $Self->{LayoutObject}->Header(
         Title => 'Involved Persons',
+        Type  => 'Small',
     );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # start template output
     $Output .= $Self->{LayoutObject}->Output(
@@ -533,12 +479,12 @@ sub Run {
             %Param,
             %{$Change},
             %GetParam,
-            %ExpandInfo,
+            %ServerError,
         },
     );
 
     # add footer
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
 
     return $Output;
 }
@@ -600,18 +546,15 @@ sub _CheckChangeManagerAndChangeBuilder {
     ROLE:
     for my $Role (qw(ChangeBuilder ChangeManager)) {
 
-        # the fields in .dtl have a number at the end
-        my $Key = $Role eq 'ChangeManager' ? 1 : 2;
-
         # check the role
-        if ( !$Param{$Role} || !$Param{ 'SelectedUser' . $Key } ) {
+        if ( !$Param{$Role} || !$Param{ $Role . 'Selected' } ) {
             $Errors{$Role} = 1;
             next ROLE;
         }
 
         # get user data
         my %User = $Self->{UserObject}->GetUserData(
-            UserID => $Param{ 'SelectedUser' . $Key },
+            UserID => $Param{ $Role . 'Selected' },
         );
 
         # show error if user does not exist
@@ -633,6 +576,9 @@ sub _CheckChangeManagerAndChangeBuilder {
         }
     }
 
+    #DELETE DELETE
+    print STDERR $Self->{MainObject}->Dump( \%Errors );
+
     return %Errors
 }
 
@@ -646,13 +592,13 @@ sub _IsNewCABMemberOk {
     my %MemberInfo;
 
     # CABCustomers or CABAgents?
-    my $MemberType = $Param{CABMemberType};
+    my $MemberType = $Param{NewCABMemberType};
 
     # current members
     my @CurrentMembers;
 
     # an agent is requested to be added
-    if ( $MemberType eq 'CABAgents' ) {
+    if ( $MemberType eq 'Agent' ) {
         my %User = $Self->{UserObject}->GetUserData(
             UserID => $Param{CABMemberID},
         );
@@ -719,7 +665,7 @@ sub _IsNewCABMemberOk {
         # Furthermore the returned hash from CustomerSearch() depends on the setting of
         # 'CustomerUserListFields'.
         my %CustomerUser = $Self->{CustomerUserObject}->CustomerSearch(
-            UserLogin => $Param{CABMemberID},
+            UserLogin => $Param{NewCABMemberSelected},
         );
 
         if ( scalar( keys %CustomerUser ) == 1 ) {
@@ -731,7 +677,7 @@ sub _IsNewCABMemberOk {
 
                 # save member infos
                 %MemberInfo = (
-                    $MemberType => [ @CurrentMembers, $Param{CABMemberID} ],
+                    $MemberType => [ @CurrentMembers, $Param{NewCABMemberSelected} ],
                 );
             }
         }

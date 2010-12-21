@@ -2,189 +2,41 @@
 # AgentITSMCABMemberSearch.dtl - provides autocomplete feature for customer search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMCABMemberSearch.dtl,v 1.5 2010-10-26 15:09:14 ub Exp $
+# $Id: AgentITSMCABMemberSearch.dtl,v 1.6 2010-12-21 05:13:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!--CSS file (default YUI Sam Skin) -->
-<link type="text/css" rel="stylesheet" href="$Config{"Frontend::YUIPath"}build/autocomplete/assets/skins/sam/autocomplete.css">
+<!-- dtl:block:CABMemberSearchAutoComplete -->
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.Config.Set('CABAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('CABAutocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('CABAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('CABAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
+    Core.Config.Set('CABAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
+    Core.Config.Set('CABAutocomplete.Groups', "$QData{"groups"}");
+//]]></script>
 
-<!-- Dependencies -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/datasource/datasource-min.js"></script>
+<!-- dtl:block:CABMemberSearchInit -->
+<script type="text/javascript">//<![CDATA[
+/*global ITSM: true */
+    ITSM.Agent.CABMemberSearch.Init($("#$QData{"ItemID"}"), $QData{"ActiveAutoComplete"});
+//]]></script>
+<!-- dtl:block:CABMemberSearchInit -->
 
-<!-- OPTIONAL: Connection (required only if using XHRDataSource) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/connection/connection-min.js"></script>
-
-<!-- OPTIONAL: Animation (required only if enabling animation) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/animation/animation-min.js"></script>
-
-<!-- OPTIONAL: JSON (enables JSON validation) -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/json/json-min.js"></script>
-
-<!-- Source file -->
-<script type="text/javascript" src="$Config{"Frontend::YUIPath"}build/autocomplete/autocomplete-min.js"></script>
-
-
-<script type="text/javascript">
-
-(function() {
-
-    var Dom = YAHOO.util.Dom,
-        Event = YAHOO.util.Event;
-
-    Event.onDOMReady(function() {
-
-        // add yui css to body tag
-        document.body.className = "yui-skin-sam";
-
+<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:CABMemberSearchAutoComplete -->
 
-<!-- dtl:block:CABMemberSearchAutoCompleteCode -->
-        // define XHRDataSource for autocomplete object
-        var myCABDataSource$Data{"InputNr"} = new YAHOO.util.XHRDataSource('');
-        myCABDataSource$Data{"InputNr"}.responseType = YAHOO.util.XHRDataSource.TYPE_JSON;
-        myCABDataSource$Data{"InputNr"}.maxCacheEntries = 100;
-        myCABDataSource$Data{"InputNr"}.connXhrMode = 'cancelStaleRequests';
-
-        // define the schema of the results for autocomplete object
-        myCABDataSource$Data{"InputNr"}.responseSchema = {
-            resultsList : "Response.Results", // String pointer to result data
-            fields : [
-                { key: "UserKey" },
-                { key: "UserValue" },
-                { key: "UserValuePlain" },
-                { key: "UserType" }
-            ]
-        };
-        // define autocomplete object
-        var myCABAutoComp$Data{"InputNr"} = new YAHOO.widget.AutoComplete("myCABAutoCompleteInput$Data{"InputNr"}", "myCABAutoCompleteContainer$Data{"InputNr"}", myCABDataSource$Data{"InputNr"});
-        myCABAutoComp$Data{"InputNr"}.resultTypeList = false;
-
-        // get groups the user should belong to
-        var CABMemberGroup$Data{"InputNr"} = '';
-        if( document.compose.CABMemberSearchGroups$Data{"InputNr"} ) {
-            CABMemberGroup$Data{"InputNr"} = document.compose.CABMemberSearchGroups$Data{"InputNr"}.value;
-        }
-
-        // define request parameters
-        myCABAutoComp$Data{"InputNr"}.generateRequest = function(sCABQuery$Data{"InputNr"}) {
-          return "?Action=AgentITSMCABMemberSearch;Search=" + sCABQuery$Data{"InputNr"} + "*" + ";Groups=" + CABMemberGroup$Data{"InputNr"};
-        };
-
-        // define output format for drop down list
-        myCABAutoComp$Data{"InputNr"}.formatResult = function(oCABResultData$Data{"InputNr"}, sCABQuery$Data{"InputNr"}, sCABResultMatch$Data{"InputNr"}) {
-            var CABMaxLength$Data{"InputNr"} = 35;
-
-            var CABUserValue$Data{"InputNr"} = oCABResultData$Data{"InputNr"}.UserValue;
-            if( CABUserValue$Data{"InputNr"}.length > CABMaxLength$Data{"InputNr"} ) {
-                CABUserValue$Data{"InputNr"} = CABUserValue$Data{"InputNr"}.substring( 0, CABMaxLength$Data{"InputNr"} ) + '[..]';
-            }
-
-            var CABUserKey$Data{"InputNr"} = oCABResultData$Data{"InputNr"}.UserKey;
-            if( CABUserKey$Data{"InputNr"}.length > CABMaxLength$Data{"InputNr"} ) {
-                CABUserKey$Data{"InputNr"} = CABUserKey$Data{"InputNr"}.substring( 0, CABMaxLength$Data{"InputNr"} ) + '[..]';
-            }
-
-            var CABFormattedString = CABUserValue$Data{"InputNr"} + " (" + CABUserKey$Data{"InputNr"} + ")";
-
-            return (CABFormattedString + " - " + oCABResultData$Data{"InputNr"}.UserType);
-        };
-
-        // define various autocomplete properties
-        myCABAutoComp$Data{"InputNr"}.minQueryLength           = $QData{"minQueryLength"};
-        myCABAutoComp$Data{"InputNr"}.queryDelay               = $QData{"queryDelay"};
-        myCABAutoComp$Data{"InputNr"}.typeAhead                = $QData{"typeAhead"};
-        myCABAutoComp$Data{"InputNr"}.maxResultsDisplayed      = $QData{"maxResultsDisplayed"};
-        myCABAutoComp$Data{"InputNr"}.animVert                 = true;
-        myCABAutoComp$Data{"InputNr"}.animSpeed                = 0.2;
-        myCABAutoComp$Data{"InputNr"}.allowBrowserAutocomplete = false;
-
-        // fixes IE6 bug that causes form select elements to be displayed
-        // over elements with a higher z-index
-        myCABAutoComp$Data{"InputNr"}.useIFrame = true;
-
-        // define custom itemSelect handler function
-        var itemSelectHandlerCAB$Data{"InputNr"} = function(sCABType$Data{"InputNr"}, aCABArgs$Data{"InputNr"}) {
-            var oCABMyAcInstance$Data{"InputNr"} = aCABArgs$Data{"InputNr"}[0];  // your AutoComplete instance
-            var elCABListItem$Data{"InputNr"}    = aCABArgs$Data{"InputNr"}[1];  // the <li> element selected in the suggestion container
-            var oCABData$Data{"InputNr"}         = aCABArgs$Data{"InputNr"}[2];  // object literal of data for the result
-
-            // set autocomplete field with selected value
-            oCABMyAcInstance$Data{"InputNr"}.getInputEl().value = oCABData$Data{"InputNr"}.UserValuePlain;
-
-            // set hidden field CABMemberID
-            if (document.compose.CABMemberID$Data{"InputNr"}) {
-                document.compose.CABMemberID$Data{"InputNr"}.value = oCABData$Data{"InputNr"}.UserKey;
-            }
-
-            // set hidden field CABMemberType
-            if (document.compose.CABMemberType$Data{"InputNr"}) {
-                document.compose.CABMemberType$Data{"InputNr"}.value = oCABData$Data{"InputNr"}.UserType;
-            }
-        };
-
-        // subscribe custom itemSelect handler to the event
-        myCABAutoComp$Data{"InputNr"}.itemSelectEvent.subscribe(itemSelectHandlerCAB$Data{"InputNr"});
-
-        // dynamically adjust the width of the autocomplete container
-        myCABAutoComp$Data{"InputNr"}.doBeforeLoadData = function (oCABRequest$Data{"InputNr"}, oCABResponse$Data{"InputNr"}, oCABPayload$Data{"InputNr"}) {
-
-            // check if dynamic width is enabled
-            if ( !Number('$Config{"ITSMChange::Frontend::CABMemberSearchAutoComplete::DynamicWidth"}') ) {
-                return true;
-            }
-
-            // find the longest result string
-            var CABMaxString$Data{"InputNr"} = '';
-            for ( var i = 0; i < oCABResponse$Data{"InputNr"}.results.length; i++ ) {
-                var CABResult$Data{"InputNr"} = oCABResponse$Data{"InputNr"}.results[i];
-                var CABString$Data{"InputNr"} = CABResult$Data{"InputNr"}["UserValuePlain"] + CABResult$Data{"InputNr"}["UserKey"];
-                    CABString$Data{"InputNr"} = CABString$Data{"InputNr"} + CABResult$Data{"InputNr"}["UserType"] + "     ";
-                if ( CABString$Data{"InputNr"}.length > CABMaxString$Data{"InputNr"}.length ) {
-                    CABMaxString$Data{"InputNr"} = CABString$Data{"InputNr"};
-                }
-            }
-
-            // build option element with the longest result string
-            var CABDummyOption$Data{"InputNr"} = document.createElement("option");
-            CABDummyOption$Data{"InputNr"}.appendChild(document.createTextNode(CABMaxString$Data{"InputNr"}));
-
-            // build invisible dummy select field to find the width
-            var CABDummySelect$Data{"InputNr"} = document.createElement("select");
-            CABDummySelect$Data{"InputNr"}.setAttribute( 'id', 'DummySelectID$Data{"InputNr"}' );
-            CABDummySelect$Data{"InputNr"}.setAttribute( 'style', 'visibility:hidden' );
-            CABDummySelect$Data{"InputNr"}.appendChild(CABDummyOption$Data{"InputNr"});
-            document.getElementsByTagName("body")[0].appendChild(CABDummySelect$Data{"InputNr"});
-
-            // get new width
-            var CABNewWidth$Data{"InputNr"} = CABDummySelect$Data{"InputNr"}.offsetWidth;
-
-            // remove hidden select field
-            document.getElementsByTagName("body")[0].removeChild(CABDummySelect$Data{"InputNr"});
-
-            // get container
-            var CABContainer$Data{"InputNr"} = document.getElementById('myCABAutoCompleteContainer$Data{"InputNr"}');
-
-            // apply new width to container
-            CABContainer$Data{"InputNr"}.style.width = CABNewWidth$Data{"InputNr"} + 'px';
-            return true;
-        };
-<!-- dtl:block:CABMemberSearchAutoCompleteCode -->
-<!-- dtl:block:CABMemberSearchAutoComplete -->
-
-<!-- dtl:block:CABMemberSearchAutoCompleteReturn -->
-        return {
-<!-- dtl:block:CABMemberSearchAutoCompleteReturnElements -->
-            myCABDataSource$Data{"InputNr"}: myCABDataSource$Data{"InputNr"},
-            myCABAutoComp$Data{"InputNr"}  : myCABAutoComp$Data{"InputNr"},
-<!-- dtl:block:CABMemberSearchAutoCompleteReturnElements -->
-            dummy: 1
-        };
-<!-- dtl:block:CABMemberSearchAutoCompleteReturn -->
-    });
-})();
-</script>
+<!-- dtl:block:CABMemberSearchITSMSearchAutocomplete -->
+<script type="text/javascript">//<![CDATA[
+    Core.Config.Set('CABAutocomplete.Active', "$QData{"active"}");
+    Core.Config.Set('CABAutocomplete.QueryDelay', "$QData{"queryDelay"}");
+    Core.Config.Set('CABAutocomplete.MaxResultsDisplayed', "$QData{"maxResultsDisplayed"}");
+    Core.Config.Set('CABAutocomplete.MinQueryLength', "$QData{"minQueryLength"}");
+    Core.Config.Set('CABAutocomplete.DynamicWidth', "$QData{"dynamicWidth"}");
+    Core.Config.Set('CABAutocomplete.SearchButtonText', "$JSText{"Search Agent"}");
+//]]></script>
+<!-- dtl:block:CABMemberSearchITSMSearchAutocomplete -->

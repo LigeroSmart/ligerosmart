@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMCABMemberSearch.pm - a module used for the autocomplete feature
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMCABMemberSearch.pm,v 1.11 2010-05-11 15:21:26 ub Exp $
+# $Id: AgentITSMCABMemberSearch.pm,v 1.12 2010-12-21 05:13:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -123,16 +123,10 @@ sub Run {
                 $User{UserLastname},
                 $User{UserEmail};
 
-            # html quote characters like <>
-            my $UserValue = $Self->{LayoutObject}->Ascii2Html(
-                Text => $UserValuePlain,
-            );
-
             push @Data, {
-                UserKey        => $UserID,
-                UserValue      => $UserValue,
-                UserValuePlain => $UserValuePlain,
-                UserType       => 'CABAgents',
+                UserKey   => $UserID,
+                UserValue => $UserValuePlain,
+                UserType  => 'CABAgents',
             };
         }
 
@@ -160,20 +154,15 @@ sub Run {
             );
 
             push @Data, {
-                UserKey        => $CustomerUserLogin,
-                UserValue      => $CustomerUserList{$CustomerUserLogin},
-                UserValuePlain => $CustomerUserValuePlain,
-                UserType       => 'CABCustomers',
+                UserKey   => $CustomerUserLogin,
+                UserValue => $CustomerUserValuePlain,
+                UserType  => 'CABCustomers',
             };
         }
 
         # build JSON output
-        $JSON = $Self->{LayoutObject}->JSON(
-            Data => {
-                Response => {
-                    Results => \@Data,
-                },
-            },
+        $JSON = $Self->{LayoutObject}->JSONEncode(
+            Data => \@Data,
         );
     }
 

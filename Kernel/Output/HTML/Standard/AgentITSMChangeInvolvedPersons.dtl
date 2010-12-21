@@ -2,288 +2,138 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.36 2010-12-07 17:27:28 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.37 2010-12-21 05:13:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-$Include{"AJAX"}
-
 $Include{"AgentITSMUserSearch"}
 $Include{"AgentITSMCABMemberSearch"}
 
-<style type="text/css">
-    .myAutoComplete {
-        width:          32em;    /* set width here or else widget will expand to fit its container */
-        padding-bottom: 0.5em;
-    }
 
-     /* needed for stacked instances for ie & sf z-index bug of absolute inside relative els */
-     #myAutoComplete1 { z-index:9001; }
-     #myAutoComplete2 { z-index:9000; }
+<!--dtl:js_on_document_complete-->
+    <script type="text/javascript">//<![CDATA[
+        $('#FIELD').bind('click', function( Event ) {
+            $('#FIELD').val('');
+        });
+    //]]></script>
+<!--dtl:js_on_document_complete-->
 
-</style>
 
-<script language="JavaScript" type="text/javascript">
-<!--
-function clear_field1() {
-    document.compose.ChangeManager.value = "";
-    document.compose.ChangeManager.focus();
-}
-function clear_field2() {
-    document.compose.ChangeBuilder.value = "";
-    document.compose.ChangeBuilder.focus();
-}
-function clear_field3() {
-    document.compose.NewCABMember.value = "";
-    document.compose.NewCABMember.focus();
-}
+<form action="$Env{"CGIHandle"}" method="post" name="compose" class="Validate PreventMultipleSubmits">
+    <input type="hidden" name="Action"            value="$Env{"Action"}" />
+    <input type="hidden" name="Subaction"         value="Save" />
+    <input type="hidden" name="ChangeID"          value="$QData{"ChangeID"}" />
 
-// do initialization when the DOM is fully loaded
-document.observe( "dom:loaded", function() {
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1 title="$Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} &ndash; $QData{"ChangeTitle"}">
+                $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} &ndash; $QData{"ChangeTitle","70"}
+            </h1>
 
-    // clear the ChangeManager input field, when it gains focus
-    $('myAutoCompleteInput1').observe(
-        'focus',
-        function() {
-            this.setValue('');
-        }
-    );
+            <p>
+                <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
 
-    // clear the ChangeBuilder input field, when it gains focus
-    $('myAutoCompleteInput2').observe(
-        'focus',
-        function() {
-            this.setValue('');
-        }
-    );
+        <div class="Content SpacingBottom">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Involved Persons"}</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
+                        <label class="Mandatory" for="ChangeManager"><span class="Marker">*</span> $Text{"ChangeManager"}: </label>
+                        <div class="Field">
+                            <input id="ChangeManager" name="ChangeManager" type="text" value="$QData{"ChangeManager"}" class="W75pc Validate_Required $Data{"ChangeManagerError"}"/>
+                            <input id="ChangeManagerSelected" name="ChangeManagerSelected" type="hidden" value="$QData{"ChangeManagerID"}" />
+                        </div>
 
-    // clear the CABMember input field, when it gains focus
-    $('myCABAutoCompleteInput').observe(
-        'focus',
-        function() {
-            this.setValue('');
-        }
-    );
-} );
-
-//-->
-</script>
-
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            <div title="$Env{"Box0"} $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle"}">
-                $Env{"Box0"} $Text{"Edit"} $Text{"Involved Persons"} $Text{"of"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $Env{"Box1"} $QData{"ChangeTitle","70"}
+                        <label class="Mandatory" for="ChangeBuilder"><span class="Marker">*</span> $Text{"ChangeBuilder"}: </label>
+                        <div class="Field">
+                            <input id="ChangeBuilder" name="ChangeBuilder" type="text" value="$QData{"ChangeBuilder"}" class="W75pc Validate_Required $Data{"ChangeBuilderError"}"/>
+                            <input id="ChangeBuilderSelected" type="hidden" name="ChangeBuilderSelected" value="$QData{"ChangeBuilderID"}" />
+                        </div>
+                    </fieldset>
+                </div>
             </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}$Env{"LastChangeView"}" onmouseover="window.status='$JSText{"Back"}'; return true;" onmouseout="window.status='';" class="menuitem">$Text{"Back"}</a>
-            -
-            <a href="$Env{"Baselink"}Action=AgentITSMChangeCABTemplate;ChangeID=$Data{"ChangeID"}" class="menuitem">$Text{"Template"}</a>
-        </td>
-    </tr>
 
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" name="compose">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Change Advisory Board"}</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabel">
 
-                <input type="hidden" name="Action"            value="$Env{"Action"}">
-                <input type="hidden" name="Subaction"         value="Save">
-                <input type="hidden" name="ChangeID"          value="$QData{"ChangeID"}">
-
-<!--        ## HiddenFields for ChangeManager Autocompletion ##            -->
-                <input type="hidden" name="SelectedUser1"     value="$QData{"SelectedUser1"}">
-                <input type="hidden" name="UserSearchGroups1" value="itsm-change-manager">
-
-<!--        ## HiddenFields for ChangeBuilder Autocompletion ##            -->
-                <input type="hidden" name="SelectedUser2"     value="$QData{"SelectedUser2"}">
-                <input type="hidden" name="UserSearchGroups2" value="itsm-change-builder">
-
-<!--        ## HiddenFields for CABMember Autocompletion ##                -->
-                <input type="hidden" name="CABMemberType"     value="$QData{"CABMemberType"}">
-                <input type="hidden" name="CABMemberID"       value="$QData{"CABMemberID"}">
-
-                <table border="0" width="800" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td class="contenthead">$Text{"Involved Persons"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130">
-                                    <col>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"ChangeManager"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
-                                    </td>
-                                    <td class="contentvalue">
-<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
-                                        <div id="myAutoComplete1" class="myAutoComplete">
-<!-- dtl:block:UserSearchAutoCompleteDivStart1 -->
-                                            <input id="myAutoCompleteInput1" type="text" name="ChangeManager" value="$QData{"ChangeManager"}" size="70"/>
-<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
-                                            <div id="myAutoCompleteContainer1"></div>
-                                        </div>
-<!-- dtl:block:UserSearchAutoCompleteDivEnd1 -->
-<!-- dtl:block:InvalidChangeManager -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidChangeManager -->
-                                        <br/>
-                                        $Data{"ChangeManagerStrg"}
-<!-- dtl:block:TakeChangeManager -->
-                                        <br/><input class="button" type="submit" name="ExpandManager2" value="$Text{"Take this User"}"/>
-<!-- dtl:block:TakeChangeManager -->
-<!-- dtl:block:SearchUserButton1 -->
-                                        <input class="button" type="submit" name="ExpandManager1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser1" value="$Text{"Clear"} $Text{"User"}" onclick="clear_field1(); return false;"/>
-<!-- dtl:block:SearchUserButton1 -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"ChangeBuilder"}:
-                                        <font color="red" title="$Text{"Required"}">*</font>
-                                    </td>
-                                    <td class="contentvalue">
-<!-- dtl:block:UserSearchAutoCompleteDivStart2 -->
-                                        <div id="myAutoComplete2" class="myAutoComplete">
-<!-- dtl:block:UserSearchAutoCompleteDivStart2 -->
-                                            <input id="myAutoCompleteInput2" type="text" name="ChangeBuilder" value="$QData{"ChangeBuilder"}" size="70"/>
-<!-- dtl:block:UserSearchAutoCompleteDivEnd2 -->
-                                            <div id="myAutoCompleteContainer2"></div>
-                                        </div>
-<!-- dtl:block:UserSearchAutoCompleteDivEnd2 -->
-<!-- dtl:block:InvalidChangeBuilder -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidChangeBuilder -->
-                                        <br/>
-                                        $Data{"ChangeBuilderStrg"}
-<!-- dtl:block:TakeChangeBuilder -->
-                                        <br/><input class="button" type="submit" name="ExpandBuilder2" value="$Text{"Take this User"}"/>
-<!-- dtl:block:TakeChangeBuilder -->
-<!-- dtl:block:SearchUserButton2 -->
-                                        <input class="button" type="submit" name="ExpandBuilder1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearUser2" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field2(); return false;"/>
-<!-- dtl:block:SearchUserButton2 -->
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contenthead">$Text{"Change Advisory Board"}</td>
-                    </tr>
-                    <tr class="contentbody">
-                        <td>
-                            <table border="0" width="100%" cellspacing="0" cellpadding="3">
-                                <colgroup>
-                                    <col width="130">
-                                    <col>
-                                </colgroup>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Add CAB Template"}:
-                                    </td>
-                                    <td class="contentvalue">
 <!-- dtl:block:CABTemplate -->
-                                        $Data{"CABTemplateStrg"}
+                        <label for="TemplateID"> $Text{"Add CAB Template"}: </label>
+                        <div class="Field">
+                            $Data{"CABTemplateStrg"}
+                            <button type="submit" name="AddCABTemplate" value="$Text{"Add"}"> $Text{"Add"} </button>
+                        </div>
 <!-- dtl:block:CABTemplate -->
-<!-- dtl:block:InvalidTemplate -->
-                                        <br />
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidTemplate -->
-                                    </td>
-                                    <td>
-                                        <input type="submit" class="button" name="AddCABTemplate" value="$Text{"Add"}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Add to CAB"}:
-                                    </td>
-                                    <td class="contentvalue" width="65%">
-<!-- dtl:block:CABMemberSearchAutoCompleteDivStart -->
-                                        <div id="myCABAutoComplete" class="myCABAutoComplete">
-<!-- dtl:block:CABMemberSearchAutoCompleteDivStart -->
-                                            <input id="myCABAutoCompleteInput" type="text" name="NewCABMember" value="$QData{"NewCABMember"}" size="70"/>
-<!-- dtl:block:CABMemberSearchAutoCompleteDivEnd -->
-                                            <div id="myCABAutoCompleteContainer"></div>
-                                        </div>
-<!-- dtl:block:CABMemberSearchAutoCompleteDivEnd -->
-<!-- dtl:block:InvalidCABMember -->
-                                        <br><br>
-                                        <font color="red" size="-2">$Text{"Input invalid"}</font>
-<!-- dtl:block:InvalidCABMember -->
-                                        <br>
-                                        $Data{"CABMemberStrg"}
-<!-- dtl:block:TakeCABMember -->
-                                        <br/><input class="button" type="submit" name="ExpandCABMember2" value="$Text{"Take this User"}"/>
-<!-- dtl:block:TakeCABMember -->
-<!-- dtl:block:SearchCABMemberButton -->
-                                        <input class="button" type="submit" name="ExpandCABMember1" value="$Text{"Search User"}"/>
-                                        <input class="button" type="submit" name="ClearCABMember" value="$Text{"Clear"} $Text{"User"}" onclick="javascript:clear_field3(); return false;"/>
-<!-- dtl:block:SearchCABMemberButton -->
-                                    </td>
-                                    <td class="contentvalue">
-                                        <input type="submit" class="button" name="AddCABMember" value="$Text{"Add"}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey">
-                                        $Text{"Current CAB"}:
-                                    </td>
-                                    <td class="contentkey">
-                                        $Text{"Agent"}:
-                                    </td>
-                                    <td class="contentvalue">&nbsp;</td>
-                                </tr>
-<!-- dtl:block:AgentCAB -->
-                                <tr>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentvalue">
-                                        <span title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</span>
-                                    </td>
-                                    <td class="contentvalue"><input type="submit" class="button" name="DeleteCABAgent$QData{"UserID"}" value="$Text{"Delete"}"></td>
-                                </tr>
-<!-- dtl:block:AgentCAB -->
-                                <tr>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Customer"}:</td>
-                                    <td class="contentvalue">&nbsp;</td>
-                                </tr>
-<!-- dtl:block:CustomerCAB -->
-                                <tr>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentvalue">
-                                        <span title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">$QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})</span>
-                                    </td>
-                                    <td class="contentvalue"><input type="submit" class="button" name="DeleteCABCustomer$QData{"UserLogin"}" value="$Text{"Delete"}"></td>
-                                </tr>
-<!-- dtl:block:CustomerCAB -->
 
-                            </table>
-                        </td>
-                    </tr>
+                        <label for="NewCABMember"> $Text{"Add to CAB"}: </label>
+                        <div class="Field">
+                            <input id="NewCABMember"         type="text"   value="$QData{"NewCABMember"}" class="W75pc $Data{"NewCABMemberError"}" />
+                            <input id="NewCABMemberSelected" type="hidden" value="$QData{"NewCABMemberID"}" />
+                            <input id="NewCABMemberType"     type="hidden" value="$QData{"CABMemberType"}" />
 
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" type="submit" name="Submit" value="$Text{"Submit"}">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
-        </td>
-    </tr>
-</table>
+                            <button type="submit" id="AddCABMember" value="$Text{"Add"}">$Text{"Add"}</button>
+                        </div>
+
+                        <div id="UserServerError" class="TooltipErrorMessage">
+                            <p>$Text{"Invalid User"}</p>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Current CAB"}:</h2>
+                </div>
+                <div class="Content">
+<!-- dtl:block:CABMemberTable -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    $Text{"Type"}
+                                </th>
+                                <th>
+                                    $Text{"Login"}
+                                </th>
+                                <th>
+                                    $Text{"Delete"}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+<!-- dtl:block:CABMemberRow -->
+                            <tr>
+                                <td>
+                                    $Text{"Data{"UserType"}"}
+                                </td>
+                                <td title="$QData{"UserLogin"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}"})">
+                                    $QData{"UserLogin","25"} ($Quote{"$Data{"UserFirstname"} $Data{"UserLastname"}","25"})
+                                </td>
+                                <td>
+                                    <button type="submit" class="TrashCan" name="DeleteCAB$Data{"UserType"}$QData{"UserID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+                                </td>
+                            </tr>
+<!-- dtl:block:CABMemberRow -->
+                        </tbody>
+                    </table>
+<!-- dtl:block:CABMemberTable -->
+                </div>
+            </div>
+        </div>
+        <div class="Footer">
+            <button type="submit" name="Submit" value="$Text{"Submit"}"> $Text{"Submit"} </button>
+        </div>
+    </div>
+</form>
