@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.17 2010-12-08 12:41:43 mb Exp $
+# $Id: nl_FAQ.pm,v 1.18 2010-12-21 11:20:09 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Number'} = 'FAQ nummer';
     $Self->{Translation}->{'LatestChangedItems'} = 'Laatst gewijzigde artikelen';
     $Self->{Translation}->{'LatestCreatedItems'} = 'Laatst aangemaakte artikelen';
-    $Self->{Translation}->{'Top10Items'} = 'Meest populaire artikelen';
+    $Self->{Translation}->{'Top10Items'} = 'Populairste artikelen';
     $Self->{Translation}->{'SubCategoryOf'} = 'Subcategorie van';
     $Self->{Translation}->{'public (all)'} = 'publiek';
     $Self->{Translation}->{'external (customer)'} = 'extern (klanten)';
@@ -64,7 +64,10 @@ sub Data {
 
         # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ verkenner';
+    $Self->{Translation}->{'Quick Search'} = '';
+    $Self->{Translation}->{'Advanced Search'} = '';
     $Self->{Translation}->{'Subcategories'} = 'Subcategoriën';
+    $Self->{Translation}->{'FAQ Articles'} = 'Artikelen';
     $Self->{Translation}->{'No subcategories found.'} = 'Geen subcategoriën gevonden.';
 
         # Template: AgentFAQHistory
@@ -84,7 +87,7 @@ sub Data {
     $Self->{Translation}->{'This kanguage is used in the following FAQ Article(s)'} = '';
 
         # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Max. shown FAQ items a page'} = '';
+    $Self->{Translation}->{'FAQ articles per page'} = 'Aantal artikelen per pagina';
 
         # Template: AgentFAQOverviewSmall
     $Self->{Translation}->{'No FAQ data found.'} = 'Geen FAQ data gevonden.';
@@ -102,6 +105,9 @@ sub Data {
 
         # Template: AgentFAQSearchResultPrint
 
+        # Template: AgentFAQSearchSmall
+    $Self->{Translation}->{'FAQ Search'} = '';
+
         # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Informatie';
     $Self->{Translation}->{'Rating'} = 'Beoordeling';
@@ -116,9 +122,9 @@ sub Data {
     $Self->{Translation}->{'very helpful'} = 'heel erg';
 
         # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Insert FAQ Text'} = '';
-    $Self->{Translation}->{'Insert FAQ Link'} = '';
-    $Self->{Translation}->{'Insert FAQ Text & Link'} = '';
+    $Self->{Translation}->{'Insert FAQ Text'} = 'Voeg FAQ tekst in';
+    $Self->{Translation}->{'Insert FAQ Link'} = 'Voeg link naar FAQ in';
+    $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Voeg FAQ tekst en link in';
 
         # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'Geen artikelen gevonden.';
@@ -171,6 +177,10 @@ sub Data {
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
@@ -198,14 +208,19 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Beheer talen';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
+    $Self->{Translation}->{'New FAQ Article'} = 'Nieuw artikel';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
     $Self->{Translation}->{'Number of shown items in last changes.'} = '';
     $Self->{Translation}->{'Number of shown items in last created.'} = '';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
