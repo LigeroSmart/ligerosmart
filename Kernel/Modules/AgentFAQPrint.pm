@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.pm,v 1.9 2010-12-01 20:25:54 cr Exp $
+# $Id: AgentFAQPrint.pm,v 1.10 2010-12-21 11:36:46 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -230,7 +230,7 @@ sub Run {
             Y    => -6,
         );
 
-        # output faq infos
+        # output faq information
         $Self->_PDFOutputFAQHeaderInfo(
             PageData => \%Page,
             FAQData  => \%FAQData,
@@ -378,7 +378,7 @@ sub _PDFOutputFAQHeaderInfo {
         $FAQData{Approval} = $FAQData{Approved} ? 'Yes' : 'No';
         my $Row = {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Approval') . ':',
-            Value => $FAQData{Approval},
+            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{Approval} ),
         };
         push( @{$TableLeft}, $Row );
     }
