@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMChangeCIPAllocate.pm - all criticality, impact and priority allocation functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeCIPAllocate.pm,v 1.2 2010-03-01 12:44:53 ub Exp $
+# $Id: ITSMChangeCIPAllocate.pm,v 1.3 2010-12-22 08:43:32 ub Exp $
 # $OldId: ITSMCIPAllocate.pm,v 1.15 2010/02/18 14:32:59 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -11,7 +11,7 @@
 # --
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #package Kernel::System::ITSMCIPAllocate;
 package Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
@@ -21,12 +21,12 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #Kernel::System::ITSMCIPAllocate - criticality, impact and priority allocation lib
 Kernel::System::ITSMChange::ITSMChangeCIPAllocate - category, impact and priority allocation lib
@@ -35,7 +35,7 @@ Kernel::System::ITSMChange::ITSMChangeCIPAllocate - category, impact and priorit
 =head1 SYNOPSIS
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #All criticality, impact and priority allocation functions.
 All category, impact and priority allocation functions.
@@ -55,7 +55,7 @@ create an object
     use Kernel::System::Encode;
     use Kernel::System::Log;
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    use Kernel::System::ITSMCIPAllocate;
     use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
@@ -83,7 +83,7 @@ create an object
         MainObject   => $MainObject,
     );
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    my $CIPAllocateObject = Kernel::System::ITSMCIPAllocate->new(
     my $CIPAllocateObject = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new(
@@ -151,7 +151,7 @@ sub AllocateList {
 
     # ask database
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    $Self->{DBObject}->Prepare(
 #        SQL => 'SELECT criticality_id, impact_id, priority_id FROM cip_allocate',
@@ -172,7 +172,7 @@ sub AllocateList {
 =item AllocateUpdate()
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #update the allocation of criticality, impact and priority
 update the allocation of category, impact and priority
@@ -223,7 +223,7 @@ sub AllocateUpdate {
 
     # delete old allocations
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    $Self->{DBObject}->Do( SQL => 'DELETE FROM cip_allocate' );
     return if !$Self->{DBObject}->Do( SQL => 'DELETE FROM change_cip_allocate' );
@@ -233,7 +233,7 @@ sub AllocateUpdate {
     for my $ImpactID ( keys %{ $Param{AllocateData} } ) {
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        for my $CriticalityID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
         for my $CategoryID ( keys %{ $Param{AllocateData}->{$ImpactID} } ) {
@@ -241,7 +241,7 @@ sub AllocateUpdate {
 
             # extract priority
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #            my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CriticalityID};
             my $PriorityID = $Param{AllocateData}->{$ImpactID}->{$CategoryID};
@@ -249,7 +249,7 @@ sub AllocateUpdate {
 
             # insert new allocation
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #            $Self->{DBObject}->Do(
 #                SQL => 'INSERT INTO cip_allocate '
@@ -262,7 +262,7 @@ sub AllocateUpdate {
                     . '(?, ?, ?, current_timestamp, ?, current_timestamp, ?)',
                 Bind => [
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #                    \$CriticalityID, \$ImpactID, \$PriorityID,
                     \$CategoryID, \$ImpactID, \$PriorityID,
@@ -279,7 +279,7 @@ sub AllocateUpdate {
 =item PriorityAllocationGet()
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #return the priority id of a criticality and an impact
 return the priority id for given category and impact
@@ -287,7 +287,7 @@ return the priority id for given category and impact
 
     my $PriorityID = $CIPAllocateObject->PriorityAllocationGet(
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        CriticalityID => 321,
 #        ImpactID      => 123,
@@ -303,7 +303,7 @@ sub PriorityAllocationGet {
 
     # check needed stuff
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    for my $Argument (qw(CriticalityID ImpactID)) {
     for my $Argument (qw(CategoryID ImpactID)) {
@@ -319,7 +319,7 @@ sub PriorityAllocationGet {
 
     # get priority id from db
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    $Self->{DBObject}->Prepare(
 #        SQL => 'SELECT priority_id FROM cip_allocate '
@@ -352,17 +352,12 @@ This Software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (GPL). If you
-# ---
-# ITSM Change Management
-# ---
-#did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
-did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
-# ---
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2010-03-01 12:44:53 $
+$Revision: 1.3 $ $Date: 2010-12-22 08:43:32 $
 
 =cut
