@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.12 2010-08-16 16:53:45 dz Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.13 2010-12-22 08:41:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -173,7 +173,7 @@ sub Run {
 
             for my $Column ( 0 .. $#{ $AllocateMatrix->[$Row] } ) {
 
-                #check if the row is header
+                # check if the row is header
                 if ( $Row == 0 ) {
 
                     if ( $Column == 0 ) {
@@ -190,7 +190,7 @@ sub Run {
                     }
                 }
 
-                #check if the column is description
+                # check if the column is description
                 elsif ( $Column == 0 ) {
                     $Self->{LayoutObject}->Block(
                         Name => 'DescriptionCell',
