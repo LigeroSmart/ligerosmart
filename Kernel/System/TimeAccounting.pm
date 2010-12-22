@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.45 2010-12-20 23:51:00 en Exp $
+# $Id: TimeAccounting.pm,v 1.46 2010-12-22 22:38:47 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -550,50 +550,9 @@ sub ProjectSettingsDelete {
 
 =item ProjectSettingsUpdate()
 
-update project data in the db
-
-    $TimeAccountingObject->ProjectSettingsUpdate(
-        1    => {                        # equal ProjectID
-            Project       => 'internal',
-            ProjectStatus => 1 || 0,
-        },
-        2    => {                        # equal ProjectID
-            Project       => 'projectname',
-            ProjectStatus => 1 || 0,
-        },
-        3    => ......
-    );
-
-=cut
-
-sub ProjectSettingsUpdate {
-    my ( $Self, %Param ) = @_;
-
-    PROJECTID:
-    for my $ProjectID ( sort keys %Param ) {
-        next if !$Param{$ProjectID}{Project};
-
-        # build sql
-        my $SQL
-            = "UPDATE time_accounting_project "
-            . "SET project = ? , status = ? , description = ?  WHERE id = ?";
-
-        my $Bind = [
-            \$Param{$ProjectID}{Project},            \$Param{$ProjectID}{ProjectStatus},
-            \$Param{$ProjectID}{ProjectDescription}, \$ProjectID
-        ];
-
-        # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
-    }
-    return 1;
-}
-
-=item ProjectUpdate()
-
 update of a project
 
-    my $Success = $TimeAccountingObject->ProjectUpdate(
+    my $Success = $TimeAccountingObject->ProjectSettingsUpdate(
         ID                 => 123,
         Project            => 'internal',
         ProjectDescription => 'description',
@@ -602,7 +561,7 @@ update of a project
 
 =cut
 
-sub ProjectUpdate {
+sub ProjectSettingsUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -760,44 +719,9 @@ sub ActionSettingsInsert {
 
 =item ActionSettingsUpdate()
 
-update action data in the db
-
-    $TimeAccountingObject->ActionSettingsUpdate(
-        1    => {                      # equal ActionID
-            Action       => 'meeting',
-            ActionStatus => 1 || 0,
-        },
-        2    => {                      # equal ActionID
-            Action       => 'journey',
-            ActionStatus => 1 || 0,
-        },
-        3    => ......
-    );
-
-=cut
-
-sub ActionSettingsUpdate {
-    my ( $Self, %Param ) = @_;
-
-    ACTIONID:
-    for my $ActionID ( sort keys %Param ) {
-        next ACTIONID if !$Param{$ActionID}{Action};
-
-        # build sql
-        my $SQL = 'UPDATE time_accounting_action SET action = ? , status = ? WHERE id = ? ';
-        my $Bind = [ \$Param{$ActionID}{Action}, \$Param{$ActionID}{ActionStatus}, \$ActionID ];
-
-        # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
-    }
-    return 1;
-}
-
-=item ActionUpdate()
-
 update of an action (task)
 
-    my $Success = $TimeAccountingObject->ActionUpdate(
+    my $Success = $TimeAccountingObject->ActionSettingsUpdate(
         ActionID     => 123,
         Action       => 'internal',
         ActionStatus => 1,
@@ -805,7 +729,7 @@ update of an action (task)
 
 =cut
 
-sub ActionUpdate {
+sub ActionSettingsUpdate {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
@@ -1906,6 +1830,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.45 $ $Date: 2010-12-20 23:51:00 $
+$Revision: 1.46 $ $Date: 2010-12-22 22:38:47 $
 
 =cut
