@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.12 2010-12-22 14:51:56 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.13 2010-12-22 15:11:01 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -188,13 +188,12 @@ sub Run {
                     Title     => $FAQData{Title},
                     Category  => $FAQData{CategoryName},
                     Language  => $FAQData{Language},
-                    State     => $FAQData{State},
                     Changed   => $Changed,
                 );
 
                 # csv quote
                 if ( !@CSVHead ) {
-                    @CSVHead = qw( FAQNumber Title Category Language State Changed );
+                    @CSVHead = qw( FAQNumber Title Category Language Changed );
                 }
                 my @Data;
                 for my $Header (@CSVHead) {
