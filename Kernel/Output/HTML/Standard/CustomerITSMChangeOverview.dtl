@@ -2,7 +2,7 @@
 # CustomerITSMChangeOverview.dtl - html for change overview in customer interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerITSMChangeOverview.dtl,v 1.2 2010-12-22 11:32:04 ub Exp $
+# $Id: CustomerITSMChangeOverview.dtl,v 1.3 2010-12-22 14:26:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -170,24 +170,12 @@
 <!-- dtl:block:RecordWorkOrderStateSignal -->
 <!-- dtl:block:RecordChangeNumber -->
                     <td>
-<!-- dtl:block:RecordChangeNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$LQData{"ChangeNumber"}">
-<!-- dtl:block:RecordChangeNumberLinkStart -->
-                            $QData{"ChangeNumber"}
-<!-- dtl:block:RecordChangeNumberLinkEnd -->
-                        </a>
-<!-- dtl:block:RecordChangeNumberLinkEnd -->
+                        <div title="$QData{"ChangeNumber"}">$QData{"ChangeNumber"}</div>
                     </td>
 <!-- dtl:block:RecordChangeNumber -->
 <!-- dtl:block:RecordWorkOrderNumber -->
                     <td>
-<!-- dtl:block:RecordWorkOrderNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" title="$LQData{"ChangeNumber"}-$LQData{"WorkOrderNumber"}">
-<!-- dtl:block:RecordWorkOrderNumberLinkStart -->
-                            $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
-<!-- dtl:block:RecordWorkOrderNumberLinkEnd -->
-                        </a>
-<!-- dtl:block:RecordWorkOrderNumberLinkEnd -->
+                        <div title="$QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}">$QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderNumber -->
 <!-- dtl:block:RecordWorkOrderTitle -->
@@ -197,13 +185,7 @@
 <!-- dtl:block:RecordWorkOrderTitle -->
 <!-- dtl:block:RecordChangeTitle -->
                     <td>
-<!-- dtl:block:RecordChangeTitleLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$LQData{"ChangeTitle"}">
-<!-- dtl:block:RecordChangeTitleLinkStart -->
-                            $QData{"ChangeTitle","40"}
-<!-- dtl:block:RecordChangeTitleLinkEnd -->
-                        </a>
-<!-- dtl:block:RecordChangeTitleLinkEnd -->
+                        <div title="$QData{"ChangeTitle"}">$QData{"ChangeTitle","40"}</div>
                     </td>
 <!-- dtl:block:RecordChangeTitle -->
 <!-- dtl:block:RecordWorkOrderAgent -->
