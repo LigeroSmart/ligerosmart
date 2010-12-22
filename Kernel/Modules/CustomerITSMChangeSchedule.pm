@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerITSMChangeSchedule.pm - the OTRS::ITSM::ChangeManagement customer change schedule overview module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerITSMChangeSchedule.pm,v 1.7 2010-12-21 23:38:15 cr Exp $
+# $Id: CustomerITSMChangeSchedule.pm,v 1.8 2010-12-22 09:02:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Service;
 use Kernel::System::User;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -629,7 +629,7 @@ sub Run {
     }
 
     $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'CustomerITSMChangeOverView',
+        TemplateFile => 'CustomerITSMChangeOverview',
         Data         => \%Param,
     );
 
