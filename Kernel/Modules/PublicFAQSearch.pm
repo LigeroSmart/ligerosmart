@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.11 2010-12-02 08:22:24 ub Exp $
+# $Id: PublicFAQSearch.pm,v 1.12 2010-12-22 14:51:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -260,7 +260,7 @@ sub Run {
                     . $Self->{SearchLimit} . '"}';
             }
             $Output .= $Self->{LayoutObject}->Output(
-                TemplateFile => 'CustomerFAQSearchResultPrint',
+                TemplateFile => 'PublicFAQSearchResultPrint',
                 Data         => \%Param,
             );
 
