@@ -2,7 +2,7 @@
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.57 2010-12-21 13:50:14 ub Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.58 2010-12-22 19:19:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -123,10 +123,10 @@ $Include{"RichTextEditor"}
 <script type="text/javascript">//<![CDATA[
     $('#CategoryID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#ChangeAddForm'), 'AJAXUpdate', 'CategoryID', ['ImpactID', 'PriorityID']);
-    })
+    });
     $('#ImpactID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#ChangeAddForm'), 'AJAXUpdate', 'ImpactID', ['PriorityID']);
-    })
+    });
 //]]></script>
 <!--dtl:js_on_document_complete-->
 
