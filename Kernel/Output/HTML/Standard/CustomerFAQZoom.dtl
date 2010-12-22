@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for CustomerFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.20 2010-12-07 17:44:50 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.21 2010-12-22 16:08:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -123,7 +123,7 @@
 
 <!-- dtl:block:FAQVoting -->
         <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote" class="PreventMultipleSubmits">
-            <div id="FollowUp" class="Visible">
+            <div class="VotingBox Visible">
                 <div class="MessageHeader">
                     <h3>$Text{"Rating"}:</h3>
                     <div class="Clear"></div>

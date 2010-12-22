@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -99,10 +99,39 @@
     margin-top: 13px;
 }
 
+.SpacingTopLarge {
+    margin-top: 26px;
+}
+
 .VotingQuestion {
     margin-left: 10px;
     margin-right:10px;
     color: #000000;
+}
+
+.VotingBox {
+    min-width: 20pc;
+    margin: 0 30px 21px;
+    color: #6A6A6A;
+    background: #F0F0F0;
+    background: -moz-linear-gradient(top, #F9F9F9, #F0F0F0);
+    background: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#F0F0F0));
+    border-left: 1px solid #D6D6D6;
+    border-right: 1px solid #D6D6D6;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: inline-block;
+    position: relative;
+    border-bottom: 1px solid #D6D6D6;
+}
+
+.VotingBox > #Messenger {
+    height: auto;
+    border-top: 1px solid #EEE;
 }
 
 .RSSIcon {
