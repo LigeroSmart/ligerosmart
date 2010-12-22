@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.28 2010-12-09 01:21:17 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.29 2010-12-22 14:27:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -259,10 +259,10 @@
                     <td>
                         <ul class="ITSMFlag">
 <!-- dtl:block:RecordServicesSubElement -->
-                            <li title="$Text{"$Data{"CurInciState"}"}">
+                            <li>
                                 <div title="$Text{"$Data{"Name"}"}">
                                     <div class="Value">
-                                        <div class="Flag Small">
+                                        <div class="Flag Small" title="$Text{"$Data{"CurInciState"}"}">
                                             <span class="$QData{"CurInciSignal"}">"$QData{"CurrInciState"}"</span>
                                         </div>
                                     </div>
