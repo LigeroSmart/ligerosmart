@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.29 2010-12-20 23:50:32 en Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.30 2010-12-22 22:37:52 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -177,15 +177,16 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
         </form>
     </div>
     <div class="ContentColumn">
-        <div class="WidgetSimple">
-            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="WorkingUnits" class="Validate PreventMultipleSubmits">
-                <input type="hidden" name="Action"        value="$Env{"Action"}" />
-                <input type="hidden" name="Subaction"     value="Edit" />
-                <input type="hidden" name="RecordsNumber" value="$QData{"RecordsNumber"}" />
-                <input type="hidden" name="Status"        value="Action" />
-                <input type="hidden" name="Year"          value="$QData{"Year"}" />
-                <input type="hidden" name="Month"         value="$QData{"Month"}" />
-                <input type="hidden" name="Day"           value="$QData{"Day"}" />
+        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="WorkingUnits" class="Validate PreventMultipleSubmits">
+            <input type="hidden" name="Action"        value="$Env{"Action"}" />
+            <input type="hidden" name="Subaction"     value="Edit" />
+            <input type="hidden" name="RecordsNumber" value="$QData{"RecordsNumber"}" />
+            <input type="hidden" name="Status"        value="Action" />
+            <input type="hidden" name="Year"          value="$QData{"Year"}" />
+            <input type="hidden" name="Month"         value="$QData{"Month"}" />
+            <input type="hidden" name="Day"           value="$QData{"Day"}" />
+
+            <div class="WidgetSimple">
                 <div class="Header">
                     <h2>$Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</h2>
                 </div>
@@ -262,6 +263,12 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                                         <p>$Text{"Invalid period! A day has only 24 hours."}</p>
                                     </div>
 <!-- dtl:block:InvalidHoursPeriodServerError -->
+<!-- dtl:block:CeroHoursPeriodServerError -->
+                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"A valid period must be greater than cero."}</p>
+                                    </div>
+<!-- dtl:block:CeroHoursPeriodServerError -->
+
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
 <!-- dtl:block:UnitPeriodWithoutInput -->
@@ -271,7 +278,7 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
 <!-- dtl:block:Unit -->
                             <tr>
                                 <td colspan="6" class="Right">
-                                    <button class="CallForAction Plus" value="More input fields"><span>$Text{"More input fields"}</span></button>
+                                    <button class="CallForAction Plus" name="MoreInputFields" value="More input fields"><span>$Text{"More input fields"}</span></button>
                                 </td>
                             </tr>
 <!-- dtl:block:UnitBlock -->
@@ -303,28 +310,47 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                             <p>$Text{"You can only select one checkbox element!"}</p>
                         </div>
                         <input type="checkbox" value="1" id="Sick" name="Sick" title="$Text{"On sick leave"}" class="$Data{"SickInvalid"}" $Data{"Sick"} />
-                        <label for="LeaveDay">$Text{"On sick leave"}</label>
+                        <label for="Sick">$Text{"On sick leave"}</label>
                         <div id="SickServerError" class="TooltipErrorMessage">
                             <p>$Text{"You can only select one checkbox element!"}</p>
                         </div>
                         <input type="checkbox" value="1" id="Overtime" name="Overtime" title="$Text{"On overtime leave"}" class="$Data{"OvertimeInvalid"}" $Data{"Overtime"} />
-                        <label for="LeaveDay">$Text{"On overtime leave"}</label>
-                        <div id="LeaveDayServerError" class="TooltipErrorMessage">
+                        <label for="Overtime">$Text{"On overtime leave"}</label>
+                        <div id="OvertimeServerError" class="TooltipErrorMessage">
                             <p>$Text{"You can only select one checkbox element!"}</p>
                         </div>
                     </div>
 <!-- dtl:block:OtherTimes -->
 
                     <div class="Field Center SpacingTop">
-                        <button class="Primary" type="submit" value="$Text{"Submit"} onclick="return submit_compose();">$Text{"Submit"}</button>
-                        <button type="submit" value="$Text{"Delete"}" name="Delete">$Text{"Delete"}</button>
+                        <button class="Primary" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">$Text{"Submit"}</button>
+                        <a id="DeleteTimeAccountingEntry" href="#">
+                            $Text{"Delete"}
+                        </a>
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'DeleteTimeAccountingEntry',
+        ElementSelector:            '#DeleteTimeAccountingEntry',
+        DialogContentQueryString:   'Action=AgentTimeAccounting;DeleteDay=1;Year=$QData{"Year"};Month=$QData{"Month"};Day=$QData{"Day"}',
+        ConfirmedActionQueryString: 'Action=AgentTimeAccounting;Subaction=Delete;Year=$QData{"Year"};Month=$QData{"Month"};Day=$QData{"Day"}',
+        DialogTitle:                '$JSText{"Delete Time Accounting Entry"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
                         $Text{"or"}
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit">$Text{"Cancel"}</a>
                     </div>
                     <div class="Clear"></div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
 
 <!-- start note -->
         <div class="WidgetSimple SpacingTop">

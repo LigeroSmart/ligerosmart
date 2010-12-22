@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.28 2010-12-16 20:04:41 en Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.29 2010-12-22 22:39:43 en Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -14,16 +14,20 @@
         <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/de_AgentTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/es_AgentTimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/fa_AgentTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingOverview.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingProjectReporting.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingReporting.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingSetting.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingView.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
+        <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.TableNoHighLight.css"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
     </Filelist>
@@ -196,6 +200,26 @@
         &lt;br&gt;
 
     </IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es">
+
+        &lt;br&gt;
+        &lt;b&gt;BIENVENIDO&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Usted está a punto de instalar el paquete de Contabilidad de Tiempo de OTRS.&lt;br&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        &lt;b&gt;PAQUETES OTRS REQUERIDOS&lt;/b&gt;
+        &lt;ul&gt;
+        &lt;li&gt;Sin dependencias&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+        Implementado y mantenido por OTRS AG y c.a.p.e. IT.&lt;br&gt;
+        &lt;br&gt;
+    </IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en">
 
         &lt;br&gt;
@@ -222,6 +246,22 @@
         &lt;br&gt;
         &lt;br&gt;
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es">
+
+        &lt;br&gt;
+        &lt;b&gt;NOTA&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Para permitirles s los usuarios el acceso al módulo de contabilidad de tiempo, es necesario añadirlos como miembros del grupo 'time_accounting'.
+        &lt;br&gt;
+        &lt;br&gt;
+        Los elementos del menú agregados por este paquete, serán visibles luego de reiniciar sesión en el sistema.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
@@ -258,6 +298,24 @@
         &lt;br&gt;
         Die von diesem Paket angelegte Gruppe 'time_accounting' wird deaktiviert.
         Sie kann jederzeit im Admin-Bereich wieder aktiviert werden.
+        &lt;br&gt;
+        &lt;br&gt;
+        ((enjoy))&lt;br&gt;
+        &lt;br&gt;
+
+    </IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es">
+
+        &lt;br&gt;
+        &lt;b&gt;ATENCIÓN&lt;/b&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Si usted desinstala este paquete, todas las tablas de la base de datos que se crearon durante la instalación del mismo, se eliminarán y
+        el contenido de dichas tablas se perderá irrevocablemente.
+        &lt;br&gt;
+        &lt;br&gt;
+        El grupo 'time_accounting' que se dió de alta durante la instalación del paquete, se desactivará.
+        Es posible reactivar dicho grupo en el área de administración.
         &lt;br&gt;
         &lt;br&gt;
         ((enjoy))&lt;br&gt;
