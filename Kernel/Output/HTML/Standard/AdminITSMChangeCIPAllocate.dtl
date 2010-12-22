@@ -2,8 +2,8 @@
 # AdminITSMChangeCIPAllocate.dtl - provides HTML form for AdminITSMChangeCIPAllocate
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.14 2010-12-16 18:39:03 en Exp $
-# $OldId: AdminITSMCIPAllocate.dtl,v 1.11 2010/08/19 16:43:47 mp Exp $
+# $Id: AdminITSMChangeCIPAllocate.dtl,v 1.15 2010-12-22 08:45:08 ub Exp $
+# $OldId: AdminITSMCIPAllocate.dtl,v 1.12 2010/12/16 18:40:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,9 +12,9 @@
 
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
 # ---
-# ITSM Change Management
+# ITSM
 # ---
-#   <h1 class="Header">$Text{"Criticality <-> Impact <-> Priority"}</h1>
+#    <h1 class="Header">$Text{"Criticality <-> Impact <-> Priority"}</h1>
     <h1 class="Header">$Text{"Category <-> Impact <-> Priority"}</h1>
 # ---
 
@@ -24,9 +24,9 @@
             <div class="Content">
                 <p class="FieldExplanation">
 # ---
-# ITSM Change Management
+# ITSM
 # ---
-#                   $Text{"Manage the priority result of combinating Criticality <-> Impact."}
+#                    $Text{"Manage the priority result of combinating Criticality <-> Impact."}
                     $Text{"Manage the priority result of combinating Category <-> Impact."}
 # ---
                 </p>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminITSMChangeCIPAllocate.pm - admin frontend of criticality, impact and priority
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMChangeCIPAllocate.pm,v 1.7 2010-09-13 20:52:36 mp Exp $
+# $Id: AdminITSMChangeCIPAllocate.pm,v 1.8 2010-12-22 08:44:01 ub Exp $
 # $OldId: AdminITSMCIPAllocate.pm,v 1.12 2010/08/16 16:53:45 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -11,7 +11,7 @@
 # --
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #package Kernel::Modules::AdminITSMCIPAllocate;
 package Kernel::Modules::AdminITSMChangeCIPAllocate;
@@ -22,7 +22,7 @@ use warnings;
 
 use Kernel::System::GeneralCatalog;
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #use Kernel::System::ITSMCIPAllocate;
 #use Kernel::System::Priority;
@@ -31,7 +31,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,7 +48,7 @@ sub new {
     }
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
 #    $Self->{PriorityObject}       = Kernel::System::Priority->new(%Param);
@@ -64,7 +64,7 @@ sub Run {
 
     # ------------------------------------------------------------ #
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #    # criticality, impact and priority allocation
     # category, impact and priority allocation
@@ -75,7 +75,7 @@ sub Run {
         # get option lists
         my %ObjectOption;
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
 #            Class => 'ITSM::Core::Criticality',
@@ -103,7 +103,7 @@ sub Run {
         for my $ImpactID ( keys %{ $ObjectOption{ImpactList} } ) {
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #            CRITICALITYID:
 #            for my $CriticalityID ( keys %{ $ObjectOption{CriticalityList} } ) {
@@ -149,7 +149,7 @@ sub Run {
         # get option lists
         my %ObjectOption;
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        $ObjectOption{CriticalityList} = $Self->{GeneralCatalogObject}->ItemList(
 #            Class => 'ITSM::Core::Criticality',
@@ -179,7 +179,7 @@ sub Run {
 
         my $AllocateMatrix;
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        $AllocateMatrix->[0]->[0]->{ObjectType} = 'Impact \ Criticality';
         $AllocateMatrix->[0]->[0]->{ObjectType} = 'Impact \ Category';
@@ -200,7 +200,7 @@ sub Run {
         }
 
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        # generate table description (Criticality)
 #        my $Counter2 = 1;
@@ -237,7 +237,7 @@ sub Run {
                 # extract keys
                 my $ImpactKey      = $AllocateMatrix->[$Row]->[0]->{ImpactKey};
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #                my $CriticalityKey = $AllocateMatrix->[0]->[$Column]->{CriticalityKey};
 #
@@ -270,7 +270,7 @@ sub Run {
 
             for my $Column ( 0 .. $#{ $AllocateMatrix->[$Row] } ) {
 
-                #check if the row is header
+                # check if the row is header
                 if ( $Row == 0 ) {
 
                     if ( $Column == 0 ) {
@@ -287,7 +287,7 @@ sub Run {
                     }
                 }
 
-                #check if the column is description
+                # check if the column is description
                 elsif ( $Column == 0 ) {
                     $Self->{LayoutObject}->Block(
                         Name => 'DescriptionCell',
@@ -309,7 +309,7 @@ sub Run {
 
         # generate output
 # ---
-# ITSM Change Management
+# ITSM
 # ---
 #        $Output .= $Self->{LayoutObject}->Output(
 #            TemplateFile => 'AdminITSMCIPAllocate',
