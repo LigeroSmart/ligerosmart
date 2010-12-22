@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.39 2010-12-21 17:55:23 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.40 2010-12-22 16:09:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,6 @@
 
 $Include{"AgentITSMUserSearch"}
 $Include{"AgentITSMCABMemberSearch"}
-
 
 <!--dtl:js_on_document_complete-->
     <script type="text/javascript">//<![CDATA[
@@ -23,7 +22,7 @@ $Include{"AgentITSMCABMemberSearch"}
 
         $('#ChangeBuilder').bind('focus', function( Event ) {
             $('#ChangeBuilder').val('');
-            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder')
+            Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
         });
 
         $('#NewCABMember').bind('click', function( Event ) {
