@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.22 2010-12-20 23:50:32 en Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.23 2010-12-22 22:38:14 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,9 +36,9 @@
                 <table class="DataTable">
                     <tbody>
 <!-- dtl:block:Row -->
-                        <tr $Data{"Style"}>
+                        <tr class="MasterAction">
                             <td class="Center">
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=$LQData{"Subaction"};Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"};UserID=$LQData{"UserID"}">
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditUser;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"};UserID=$LQData{"UserID"}" class="MasterActionLink">
                                     $QData{"Day"}
                                 </a>
                             </td>
@@ -206,3 +206,10 @@
         </div>
     </div>
 </div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('.MasterAction').bind('click', function (Event) {
+        window.location = $(this).find('.MasterActionLink').attr('href');
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
