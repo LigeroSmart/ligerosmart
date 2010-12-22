@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.46 2010-12-20 23:48:23 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.47 2010-12-22 22:26:27 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -88,7 +88,8 @@ sub Run {
     # ---------------------------------------------------------- #
     # delete the time accounting elements of one day
     # ---------------------------------------------------------- #
-    if ( $Self->{ParamObject}->GetParam( Param => 'Delete' ) ) {
+    if ( $Self->{ParamObject}->GetParam( Param => 'DeleteDay' ) ) {
+
         my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(
             SystemTime => $Self->{TimeObject}->SystemTime(),
@@ -111,14 +112,26 @@ sub Run {
             $Param{Day}   = sprintf( "%02d", $Param{Day} );
         }
 
-        my $Output = $Self->{LayoutObject}->Header( Title => 'Delete' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Output .= $Self->{LayoutObject}->Output(
-            Data         => \%Param,
-            TemplateFile => 'AgentTimeAccountingDelete'
+        my $Output = $Self->{LayoutObject}->Output(
+            Data         => {%Param},
+            TemplateFile => 'AgentTimeAccountingDelete',
         );
-        $Output .= $Self->{LayoutObject}->Footer();
-        return $Output;
+
+        # build the returned data structure
+        my %Data = (
+            HTML       => $Output,
+            DialogType => 'Confirmation',
+        );
+
+        # return JSON-String because of AJAX-Mode
+        my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+        return $Self->{LayoutObject}->Attachment(
+            ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+            Content     => $OutputJSON,
+            Type        => 'inline',
+            NoCache     => 1,
+        );
     }
 
     # expression add time period was pressed
@@ -202,6 +215,11 @@ sub Run {
         }
         $Param{RecordsNumber} = $Self->{ParamObject}->GetParam( Param => 'RecordsNumber' ) || 8;
 
+        # add more input fields?
+        if ( $Self->{ParamObject}->GetParam( Param => 'MoreInputFields' ) ) {
+            $Param{RecordsNumber} += 8;
+        }
+
         # Check Date
         if ( !$Param{Year} || !$Param{Month} || !$Param{Day} ) {
             $Param{Year}  = $Year;
@@ -269,7 +287,7 @@ sub Run {
         my $ReduceTimeRef = $Self->{ConfigObject}->Get('TimeAccounting::ReduceTime');
 
         # hash to store server side errors
-        my %Errors;
+        my %Errors = ();
 
         # Edit Working Units
         if ( $Param{Status} ) {
@@ -327,8 +345,12 @@ sub Run {
             for my $Element (qw(LeaveDay Sick Overtime)) {
                 my $Value = $Self->{ParamObject}->GetParam( Param => $Element );
                 if ($Value) {
-                    $Data{$Element} = 1;
-                    $CheckboxCheck{Element} = 1;
+                    $Data{$Element}          = 1;
+                    $CheckboxCheck{$Element} = 1;
+                    $Param{$Element}         = 'checked';
+                }
+                else {
+                    $Param{$Element} = ''
                 }
             }
 
@@ -339,17 +361,21 @@ sub Run {
                 }
             }
 
-            $Data{Year}  = $Param{Year};
-            $Data{Month} = $Param{Month};
-            $Data{Day}   = $Param{Day};
+            # if no errors occurred
+            if ( !%Errors ) {
 
-            if ( !$Self->{TimeAccountingObject}->WorkingUnitsInsert(%Data) ) {
-                return $Self->{LayoutObject}->ErrorScreen(
-                    Message => 'Can\'t insert Working Units!'
-                );
+                $Data{Year}  = $Param{Year};
+                $Data{Month} = $Param{Month};
+                $Data{Day}   = $Param{Day};
+
+                if ( !$Self->{TimeAccountingObject}->WorkingUnitsInsert(%Data) ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => 'Can\'t insert Working Units!'
+                    );
+                }
+
+                $Param{SuccessfulInsert} = 1;
             }
-
-            $Param{SuccessfulInsert} = 1;
         }
 
         # Show Working Units
@@ -375,11 +401,6 @@ sub Run {
                 Data => { %Param, %Frontend },
             );
         }
-
-        # get sick, leave day and overtime
-        $Param{Sick}     = $Data{Sick}     ? 'checked' : '';
-        $Param{LeaveDay} = $Data{LeaveDay} ? 'checked' : '';
-        $Param{Overtime} = $Data{Overtime} ? 'checked' : '';
 
         $Param{Total} = $Data{Total};
 
@@ -437,13 +458,21 @@ sub Run {
             $Param{"JSProjectList"}
                 .= "JSProjectList[$ID] = [" . ( join ', ', @JSProjectList ) . "];\n";
 
+            # check for missing values
+            if ( $UnitRef->{ProjectID} && !$UnitRef->{ActionID} ) {
+                $Errors{ 'ActionID' . $ID . 'Invalid' } = 'ServerError';
+            }
+            if ( !$UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
+                $Errors{ 'ProjectID' . $ID . 'Invalid' } = 'ServerError';
+            }
+
             $Frontend{ProjectOption} = $Self->{LayoutObject}->BuildSelection(
                 Data        => $ProjectList,
                 Name        => "ProjectID[$ID]",
                 ID          => "ProjectID$ID",
                 Translation => 0,
-                Class       => 'ProjectSelection',
-                OnChange    => "FillActionList($ID);",
+                Class => 'ProjectSelection ' . ( $Errors{ 'ProjectID' . $ID . 'Invalid' } || '' ),
+                OnChange => "FillActionList($ID);",
             );
 
 # action list initially only contains empty and selected element as well as elements configured for selected project
@@ -466,12 +495,14 @@ sub Run {
                 Name        => "ActionID[$ID]",
                 ID          => "ActionID$ID",
                 Translation => 0,
-                Class       => 'ActionSelection',
+                Class => 'ActionSelection ' . ( $Errors{ 'ActionID' . $ID . 'Invalid' } || '' ),
             );
 
             $Param{Remark} = $UnitRef->{Remark} || '';
+
             if ( $UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
-                if ( $UnitRef->{Period} == 0 ) {
+                if ( $UnitRef->{Period} == 0.00 ) {
+                    $Errors{ServerErrorBlock} = 'CeroHoursPeriodServerError';
                     if (
                         $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime')
                         )
@@ -506,6 +537,19 @@ sub Run {
                 },
             );
 
+            $Self->{LayoutObject}->Block(
+                Name => $Errors{ServerErrorBlock} || 'PeriodGenericServerError',
+                Data => {
+                    ID => $ID,
+                },
+            );
+
+            # remove entries in the hash for already shown error messages
+            $Errors{ServerErrorBlock} = '';
+            $Errors{PeriodInvalid}    = '';
+            $Errors{StartTimeInvalid} = '';
+            $Errors{EndTimeInvalid}   = '';
+
             # validity check
             if (
                 $UnitRef->{ProjectID}
@@ -534,12 +578,7 @@ sub Run {
                 $Param{ReadOnlyDescription}
                     = 'Are you sure that you worked while you were on overtime leave?';
             }
-            if ( $UnitRef->{ProjectID} && !$UnitRef->{ActionID} ) {
-                $Errors{ 'ActionID' . $ID . 'Invalid' } = 'ServerError';
-            }
-            if ( !$UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
-                $Errors{ 'ProjectID' . $ID . 'Invalid' } = 'ServerError';
-            }
+
             if (
                 $UnitRef->{StartTime}
                 && $UnitRef->{StartTime} ne '00:00'
@@ -570,9 +609,6 @@ sub Run {
                     }
                 }
             }
-
-            # reinitializes the server error hash
-            %Errors = ();
         }
 
         if (
@@ -667,8 +703,8 @@ sub Run {
                         && $DayID   eq $Param{Day}
                         )
                     {
-                        $BoldStart = '<b>';
-                        $BoldEnd   = '</b>';
+                        $BoldStart = '<strong>';
+                        $BoldEnd   = '</strong>';
                     }
 
                     $Self->{LayoutObject}->Block(
@@ -701,7 +737,11 @@ sub Run {
         if ( $Param{Weekday} != 6 && $Param{Weekday} != 7 && !$VacationCheck ) {
             $Self->{LayoutObject}->Block(
                 Name => 'OtherTimes',
-                Data => { %Param, %Frontend },
+                Data => {
+                    %Param,
+                    %Frontend,
+                    %Errors,
+                },
             );
         }
 
@@ -712,6 +752,7 @@ sub Run {
 
         # build output
         my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );
+
         if ( !$IncompleteWorkingDays{EnforceInsert} ) {
             $Output .= $Self->{LayoutObject}->NavigationBar();
             $Self->{LayoutObject}->Block(
@@ -727,17 +768,29 @@ sub Run {
                 $Self->{LayoutObject}->Block( Name => 'CreateProject', );
             }
         }
+        else {
+            if ( $IncompleteWorkingDays{Warning} ) {
+                $Output .= $Self->{LayoutObject}->Notify(
+                    Info     => 'Please insert your working hours!',
+                    Priority => 'Error'
+                );
+            }
+        }
+
         if (
             !$Param{RequiredDescription}
-            && !$Param{UnitRequiredDescriptionTrue}
             && $Param{SuccessfulInsert}
+            && !%Errors
             )
         {
             $Output .= $Self->{LayoutObject}->Notify( Info => 'Successful insert!', );
         }
         $Output .= $Self->{LayoutObject}->Output(
-            Data => { %Param, %Frontend },
-            TemplateFile => 'AgentTimeAccountingEdit'
+            TemplateFile => 'AgentTimeAccountingEdit',
+            Data         => {
+                %Param,
+                %Frontend,
+            },
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
@@ -930,7 +983,6 @@ sub Run {
             }
             $Param{Subaction} = 'View';
         }
-
         if ( $Param{UserID} != $Self->{UserID} ) {
             my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
             $Param{User} = $ShownUsers{ $Param{UserID} };
@@ -981,18 +1033,8 @@ sub Run {
                 Calendar => $UserData{Calendar},
             );
 
-            if ( $Param{Year} eq $Year && $Param{Month} eq $Month && $CurrentDay eq $Day ) {
-                $Param{Style} = 'bgcolor="orange"';
-            }
-            elsif ($VacationCheck) {
-                $Param{Style}   = 'bgcolor="#EBCCCC"';
+            if ($VacationCheck) {
                 $Param{Comment} = $VacationCheck;
-            }
-            elsif ( $Param{Weekday} == 6 || $Param{Weekday} == 5 ) {
-                $Param{Style} = 'bgcolor="#FFE0E0"';
-            }
-            else {
-                $Param{Style} = 'bgcolor="#E5F0FF"';
             }
 
             my %Data = $Self->{TimeAccountingObject}->WorkingUnitsGet(
@@ -1065,68 +1107,69 @@ sub Run {
             my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
-            $Param{Class}   = 'contentvalue';
-            $Param{Status}  = $ProjectRef->{Status} ? '' : 'passiv';
+            $Param{Status} = $ProjectRef->{Status} ? '' : 'passiv';
 
             my $Total      = 0;
             my $TotalTotal = 0;
 
             next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
 
-            for my $ActionID (
-                sort { $ActionsRef->{$a}{Name} cmp $ActionsRef->{$b}{Name} }
-                keys %{$ActionsRef}
-                )
-            {
-                my $ActionRef = $ActionsRef->{$ActionID};
+            if ( $ActionsRef->{Name} ) {
 
-                $Param{Action}     = $ActionRef->{Name};
-                $Param{Hours}      = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
-                $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
-                $Total      += $Param{Hours};
-                $TotalTotal += $Param{HoursTotal};
-                $Self->{LayoutObject}->Block(
-                    Name => 'Action',
-                    Data => {%Param},
-                );
-                if ( !$Param{Project} ) {
-                    $Param{Project} = $ProjectRef->{Name};
-                    my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
-                        Text           => $ProjectRef->{Description},
-                        HTMLResultMode => 1,
-                        NewLine        => 50,
-                    );
+                for my $ActionID (
+                    sort { $ActionsRef->{$a}{Name} cmp $ActionsRef->{$b}{Name} }
+                    keys %{$ActionsRef}
+                    )
+                {
+                    my $ActionRef = $ActionsRef->{$ActionID};
 
+                    $Param{Action}     = $ActionRef->{Name};
+                    $Param{Hours}      = sprintf( "%.2f", $ActionRef->{PerMonth} || 0 );
+                    $Param{HoursTotal} = sprintf( "%.2f", $ActionRef->{Total} || 0 );
+                    $Total      += $Param{Hours};
+                    $TotalTotal += $Param{HoursTotal};
                     $Self->{LayoutObject}->Block(
-                        Name => 'Project',
-                        Data => {
-                            RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
-                            Status             => $Param{Status},
-                            ProjectDescription => $ProjectDescription,
-                        },
+                        Name => 'Action',
+                        Data => {%Param},
                     );
+                    if ( !$Param{Project} ) {
+                        $Param{Project} = $ProjectRef->{Name};
+                        my $ProjectDescription = $Self->{LayoutObject}->Ascii2Html(
+                            Text           => $ProjectRef->{Description},
+                            HTMLResultMode => 1,
+                            NewLine        => 50,
+                        );
 
-                    if ( $UserData{CreateProject} ) {
-
-                        # persons how are allowed to see the create object link are
-                        # allowed to see the project reporting
                         $Self->{LayoutObject}->Block(
-                            Name => 'ProjectLink',
+                            Name => 'Project',
                             Data => {
-                                Project   => $ProjectRef->{Name},
-                                ProjectID => $ProjectID,
+                                RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
+                                Status             => $Param{Status},
+                                ProjectDescription => $ProjectDescription,
                             },
                         );
-                    }
-                    else {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'ProjectNoLink',
-                            Data => { Project => $ProjectRef->{Name} },
-                        );
+
+                        if ( $UserData{CreateProject} ) {
+
+                            # persons how are allowed to see the create object link are
+                            # allowed to see the project reporting
+                            $Self->{LayoutObject}->Block(
+                                Name => 'ProjectLink',
+                                Data => {
+                                    Project   => $ProjectRef->{Name},
+                                    ProjectID => $ProjectID,
+                                },
+                            );
+                        }
+                        else {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'ProjectNoLink',
+                                Data => { Project => $ProjectRef->{Name} },
+                            );
+                        }
                     }
                 }
             }
-            $Param{Class}      = 'contentkey';
             $Param{Action}     = 'Total';
             $Param{Hours}      = sprintf( "%.2f", $Total );
             $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
@@ -1136,7 +1179,6 @@ sub Run {
                 Name => 'Action',
                 Data => {%Param},
             );
-            $Param{Class} = '';
         }
         if ( defined( $Param{TotalHours} ) ) {
             $Param{TotalHours} = sprintf( "%.2f", $Param{TotalHours} );
@@ -1945,7 +1987,7 @@ sub Run {
         if ( !%Errors ) {
 
             # edit project
-            if ( $Self->{TimeAccountingObject}->ProjectUpdate(%GetParam) ) {
+            if ( $Self->{TimeAccountingObject}->ProjectSettingsUpdate(%GetParam) ) {
                 $Self->_ProjectSettingOverview();
                 my $Output = $Self->{LayoutObject}->Header();
                 $Output .= $Self->{LayoutObject}->NavigationBar();
@@ -2153,7 +2195,7 @@ sub Run {
         if ( !%Errors ) {
 
             # edit action (task)
-            my $ActionUpdate = $Self->{TimeAccountingObject}->ActionUpdate(
+            my $ActionUpdate = $Self->{TimeAccountingObject}->ActionSettingsUpdate(
                 ActionID     => $GetParam{ActionID},
                 Action       => $GetParam{Task},
                 ActionStatus => $GetParam{TaskStatus},
