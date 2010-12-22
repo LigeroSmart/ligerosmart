@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.41 2010-12-21 17:38:10 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.42 2010-12-22 19:48:00 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -97,7 +97,7 @@ sub Run {
     for my $ParamName (
         qw(ChangeBuilder ChangeBuilderSelected ChangeManager ChangeManagerSelected
         NewCABMember NewCABMemberSelected NewCABMemberType CABTemplate AddCABMember
-        AddCABTemplate TemplateID NewTemplate)
+        AddCABTemplate TemplateID NewTemplate Submit)
         )
     {
         $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName );
@@ -112,7 +112,7 @@ sub Run {
 
     if ( $Self->{Subaction} eq 'Save' ) {
 
-        # go to Store the new template
+        # go to store the new template
         if ( $GetParam{NewTemplate} ) {
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMChangeCABTemplate;ChangeID=$ChangeID",
@@ -226,7 +226,9 @@ sub Run {
                 UserID   => $Self->{UserID},
             );
         }
-        elsif ( !%ErrorAllRequired ) {
+
+        # just update change when submit button clicked
+        elsif ( !%ErrorAllRequired && $GetParam{Submit} ) {
 
             # update change
             my $CanUpdateChange = $Self->{ChangeObject}->ChangeUpdate(
@@ -254,7 +256,9 @@ sub Run {
                 );
             }
         }
-        elsif (%ErrorAllRequired) {
+
+        # show field errors just when submit
+        elsif ( %ErrorAllRequired && $GetParam{Submit} ) {
 
             # show error message for change builder
             if ( $ErrorAllRequired{ChangeBuilder} ) {

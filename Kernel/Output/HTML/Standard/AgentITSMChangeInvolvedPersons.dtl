@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.40 2010-12-22 16:09:05 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.41 2010-12-22 19:48:00 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,19 +14,30 @@ $Include{"AgentITSMCABMemberSearch"}
 
 <!--dtl:js_on_document_complete-->
     <script type="text/javascript">//<![CDATA[
+        // enable login form
+        Core.Form.EnableForm($('#LoginBox form, #PasswordBox form'));
 
         $('#ChangeManager').bind('focus', function( Event ) {
             $('#ChangeManager').val('');
+            $('#ChangeManager' + 'Selected').val('');
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
         });
 
         $('#ChangeBuilder').bind('focus', function( Event ) {
             $('#ChangeBuilder').val('');
+            $('#ChangeBuilder' + 'Selected').val('');
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
         });
 
-        $('#NewCABMember').bind('click', function( Event ) {
+        $('#NewCABMember').bind('focus', function( Event ) {
             $('#NewCABMember').val('');
+            $('#NewCABMember' + 'Selected').val('');
+            $('#NewCABMember' + 'Type').val('');
+        });
+
+       $('#AddCABMember').bind('click', function (Event) {
+            var $Form = $('#AddCABMember').closest('form');
+            Core.Form.Validate.DisableValidation($Form);
         });
 
     //]]></script>
