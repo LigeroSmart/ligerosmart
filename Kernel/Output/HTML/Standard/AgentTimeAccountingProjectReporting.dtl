@@ -1,106 +1,105 @@
 # --
 # AgentTimeAccountingProjectReporting.dtl - provides HTML form for time accounting reporting
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.7 2009-04-03 11:49:29 tr Exp $
+# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.8 2010-12-22 23:17:58 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-  <tr>
-    <td class="mainhead">
-      $Env{"Box0"}$Text{"Project report"}: $QData{"Project"} $Env{"Box1"}
-    </td>
-  </tr>
-  <tr>
-    <td class="menu">
-      <a href="$Env{"Baselink"}$Env{"LastScreen"}" class="menuitem">$Text{"Back"}</a>
-    </td>
-  </tr>
-  <tr>
-    <td class="mainbody">
-      <br>
-      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
-        <tr>
-          <td class="contenthead">
-            $Text{"Project report"}: $QData{"Project"}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table border="1" width="100%" align="center">
-              <tr class="contentkey">
-                <td>$Text{"Task"}</td>
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">$Text{"Project report"}: $QData{"Project"}</h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Actions"}</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Reporting" class="CallForAction"><span>$Text{"Go to overview"}</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Project report"}: $QData{"Project"}</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable DataTableNoHighlight">
+                    <thead>
+                        <tr>
+                            <th>$Text{"Task"}</th>
 <!-- dtl:block:UserName -->
-                <td>$QData{"User"}</td>
+                            <th>$Text{"User"}</th>
 <!-- dtl:block:UserName -->
-                <td>$Text{"Total"}</td>
-              </tr>
+                            <th>$Text{"Total"}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
 <!-- dtl:block:Action -->
-              <tr>
-                <td class="contentvalue">$QData{"Action"}</td>
+                            <td>$QData{"Action"}</td>
 <!-- dtl:block:User -->
-                <td class="contentvalue" align="right">$QData{"Hours"}</td>
+                            <td class="Right">$QData{"Hours"}</td>
 <!-- dtl:block:User -->
-              </tr>
+                        </tr>
 <!-- dtl:block:Action -->
-              <tr>
-                <td class="contentkey">$Text{"Total"}</td>
+                        <tr>
+                            <td><strong>$Text{"Total"}</strong></td>
 <!-- dtl:block:UserTotal -->
-                <td class="contentkey" align="right">$QData{"Total"}</td>
+                            <td class="Right"><strong>$QData{"Total"}</strong></td>
 <!-- dtl:block:UserTotal -->
-                <td class="contentkey" align="right">$QData{"TotalAll"}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td class="contentfooter">&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-      <table class="contentbody" border="0" width="50%" cellpadding="3" cellspacing="0" align="center">
-        <tr>
-          <td class="contenthead">
-            $Text{"History"}: $QData{"Project"}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table border="1" width="100%" align="center">
-              <tr class="contentkey">
-                <td>$Text{"Date"}</td>
-                <td>$Text{"User"}</td>
-                <td>$Text{"Task"}</td>
-                <td>$Text{"Remark"}</td>
-                <td>$Text{"Period"}</td>
-              </tr>
+                            <td class="Right"><strong>$QData{"TotalAll"}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"History"}: $QData{"Project"}</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable DataTableNoHighlight">
+                    <thead>
+                        <tr>
+                            <th>$Text{"Date"}</th>
+                            <th>$Text{"User"}</th>
+                            <th>$Text{"Task"}</th>
+                            <th>$Text{"Remark"}</th>
+                            <th>$Text{"Period"}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 <!-- dtl:block:Row -->
-              <tr>
-                <td class="contentvalue">$QData{"Date"}</td>
-                <td class="contentvalue">$QData{"User"}</td>
-                <td class="contentvalue">$QData{"Action"}</td>
-                <td class="contentvalue">$QData{"Remark"}</td>
-                <td class="contentvalue" align="right">$QData{"Period"}</td>
-              </tr>
+                        <tr>
+                            <td>$QData{"Date"}</td>
+                            <td>$QData{"User"}</td>
+                            <td>$QData{"Action"}</td>
+                            <td>$QData{"Remark"}</td>
+                            <td class="Right">$QData{"Period"}</td>
+                        </tr>
 <!-- dtl:block:Row -->
-              <tr>
+                        <tr>
 <!-- dtl:block:HistoryTotal -->
-                <td colspan="4" class="contentkey">$Text{"Total"}</td>
-                <td class="contentkey" align="right">$QData{"HistoryTotal"}</td>
+                            <td colspan="4"><strong>$Text{"Total"}</strong></td>
+                            <td class="Right"><strong>$QData{"HistoryTotal"}</strong></td>
 <!-- dtl:block:HistoryTotal -->
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td class="contentfooter">&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-    </td>
-  </tr>
-</table>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
