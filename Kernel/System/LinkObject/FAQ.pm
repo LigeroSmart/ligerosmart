@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.15 2010-11-25 23:17:07 cr Exp $
+# $Id: FAQ.pm,v 1.16 2010-12-22 05:18:24 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -106,7 +106,7 @@ return a hash of object descriptions
 Return
     %Description = (
         Normal => "FAQ# 1234",
-        Long   => "FAQ# 1234: FAQName",
+        Long   => "FAQ# 1234: FAQTitle",
     );
 
     %Description = $LinkObject->ObjectDescriptionGet(
@@ -153,7 +153,7 @@ sub ObjectDescriptionGet {
     # create description
     %Description = (
         Normal => $DescriptionText,
-        Long   => "$DescriptionText: $FAQ{Name}",
+        Long   => "$DescriptionText: $FAQ{Title}",
     );
 
     return %Description;
