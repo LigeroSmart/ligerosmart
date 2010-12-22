@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.66 2010-12-10 10:06:10 mb Exp $
+# $Id: ITSMChangeManagement.pm,v 1.67 2010-12-22 19:13:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use warnings;
 use Kernel::Config;
 use Kernel::System::SysConfig;
 use Kernel::System::CSV;
+use Kernel::System::CacheInternal;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
 use Kernel::System::ITSMChange;
@@ -34,7 +35,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.66 $) [1];
+$VERSION = qw($Revision: 1.67 $) [1];
 
 =head1 NAME
 
@@ -166,6 +167,11 @@ sub new {
         %{$Self},
         UserID => 1,
     );
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %{$Self},
+        Type => 'Group',
+        TTL  => 60 * 60 * 3,
+    );
 
     # define file prefix for stats
     $Self->{FilePrefix} = 'ITSMStats';
@@ -218,6 +224,9 @@ sub CodeInstall {
 
     # add system notifications
     $Self->_AddSystemNotifications();
+
+    # delete the group cache to avoid problems with CI permissions
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
 
     return 1;
 }
@@ -283,6 +292,9 @@ sub CodeUpgrade {
 
     # set default CIP matrix (this is only done if no matrix exists)
     $Self->_CIPDefaultMatrixSet();
+
+    # delete the group cache to avoid problems with CI permissions
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
 
     return 1;
 }
@@ -2710,6 +2722,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.66 $ $Date: 2010-12-10 10:06:10 $
+$Revision: 1.67 $ $Date: 2010-12-22 19:13:07 $
 
 =cut
