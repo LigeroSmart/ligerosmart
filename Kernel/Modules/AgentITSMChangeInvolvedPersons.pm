@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.42 2010-12-22 19:48:00 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.43 2010-12-22 20:50:36 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -269,6 +269,15 @@ sub Run {
             if ( $ErrorAllRequired{ChangeManager} ) {
                 $ServerError{ChangeManagerError} = 'ServerError';
             }
+        }
+
+        # use the selected change and builder managers
+        if ( $GetParam{ChangeManagerSelected} ) {
+            $Change->{ChangeManagerID} = $GetParam{ChangeManagerSelected};
+        }
+
+        if ( $GetParam{ChangeBuilderSelected} ) {
+            $Change->{ChangeBuilderID} = $GetParam{ChangeBuilderSelected};
         }
     }
 
