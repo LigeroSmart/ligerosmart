@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.47 2010-12-22 22:26:27 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.48 2010-12-23 17:57:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -868,7 +868,6 @@ sub Run {
         # only show the unit block if there is some data
         my $UnitsRef = $Data{WorkingUnits};
         if ( $UnitsRef->[0] ) {
-            $Self->{LayoutObject}->Block( Name => 'UnitBlock', );
 
             for my $UnitRef ( @{$UnitsRef} ) {
 
@@ -889,6 +888,9 @@ sub Run {
                 Name => 'Total',
                 Data => { Total => sprintf( "%.2f", $Data{Total} ) }
             );
+        }
+        else {
+            $Self->{LayoutObject}->Block( Name => 'NoDataFound' );
         }
 
         if ( $Param{Sick} || $Param{LeaveDay} || $Param{Overtime} ) {
