@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.48 2010-12-23 17:57:24 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.49 2010-12-23 21:42:29 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1422,8 +1422,8 @@ sub Run {
                 Data => {
                     %Param,
                     Description    => $Description,
-                    ShowOvertime   => $UserBasicsRef->{ShowOvertime} ? 'checked' : '',
-                    CreateProject  => $UserBasicsRef->{CreateProject} ? 'checked' : '',
+                    ShowOvertime   => $UserBasicsRef->{ShowOvertime} ? 'checked="checked"' : '',
+                    CreateProject  => $UserBasicsRef->{CreateProject} ? 'checked="checked"' : '',
                     CalendarOption => $CalendarOption,
                 },
             );
@@ -2928,8 +2928,8 @@ sub _UserSettingsEdit {
         Name => 'OverviewUpdateUser',
         Data => {
             %Param,
-            ShowOvertime  => $UserData{ShowOvertime}  ? 'checked' : '',
-            CreateProject => $UserData{CreateProject} ? 'checked' : '',
+            ShowOvertime  => $UserData{ShowOvertime}  ? 'checked="checked"' : '',
+            CreateProject => $UserData{CreateProject} ? 'checked="checked"' : '',
             }
     );
 
