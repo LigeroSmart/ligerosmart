@@ -2,7 +2,7 @@
 # PublicFAQSearch.dtl - provides HTML form for PublicFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.dtl,v 1.5 2010-11-25 23:55:07 cr Exp $
+# $Id: PublicFAQSearch.dtl,v 1.6 2010-12-23 00:10:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,10 @@
             </fieldset>
             <fieldset>
                 <h2>$Text{"Fulltext search in FAQ articles (e. g. "John*n" or "Will*")"}</h2>
+                <div>
+                    <label for="Title">$Text{"Fulltext"}</label>
+                    <input title="$Text{"Fulltext"}" type="text" id="FullText" name="Fulltext" value="$QData{"Fulltext"}" size="20" />
+                </div>
                 <div>
                     <label for="Title">$Text{"Title"}</label>
                     <input title="$Text{"Title"}" type="text" id="Title" name="Title" value="$QData{"Title"}" size="20" />
