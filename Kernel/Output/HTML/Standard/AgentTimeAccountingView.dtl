@@ -1,139 +1,128 @@
 # --
 # AgentTimeAccountingView.dtl - provides HTML for view inserts of one day
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingView.dtl,v 1.11 2009-04-03 11:49:29 tr Exp $
+# $Id: AgentTimeAccountingView.dtl,v 1.12 2010-12-23 17:56:59 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-  <tr>
-    <td colspan="3" class="mainhead">
-      $Env{"Box0"}$Text{"View time record"}$Env{"Box1"}
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3" class="menu">
-      <a href="$Env{"Baselink"}$Env{"LastScreen"}" class="menuitem">$Text{"Back"}</a>
-    </td>
-  </tr>
-  <tr>
-    <td class="mainbody">
-      <br>
-      <table border="0" width="700" align="center" cellspacing="0" cellpadding="0">
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1 class="Header">$Text{"View Time Record"}
 <!-- dtl:block:User -->
-        <tr>
-          <td colspan="4" class="contentkey">$Text{"View of "} $QData{"User"}<br><br></td>
-        </tr>
+        - $Text{"View of "} $QData{"User"}
 <!-- dtl:block:User -->
-        <tr>
-          <td>
-            <table class="contentbody" border="0" width="100%" cellspacing="0" cellpadding="4">
-              <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
-                <input type="hidden" name="Action"    value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="View">
-                <input type="hidden" name="UserID"    value="$QData{"UserID"}">
-                <tr class="contenthead">
-                  <td colspan="2">$Text{"Date navigation"}</td>
-                </tr>
-                <tr>
-                  <td>
-                    $Data{"DateSelection"}
-                    <input class="button" accesskey="g" type="submit" value="$Text{"Submit"}">
-                  </td>
-                  <td>
-                    <table>
-                      <tr class="contentvalue">
-                        <td>
-                          $QData{"Date"}&nbsp;
-                        </td>
-                        <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=View&Year=$QData{"YearBack"}&Month=$QData{"MonthBack"}&Day=$QData{"DayBack"}&UserID=$QData{"UserID"}"><img border="0" src="$Config{"Frontend::ImagePath"}left-big.png" alt="$Text{"One day back"}"></a>
-                          &nbsp;
-                        </td>
-                        <td>
-                          <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=View&Year=$QData{"YearNext"}&Month=$QData{"MonthNext"}&Day=$QData{"DayNext"}&UserID=$QData{"UserID"}"><img border="0" src="$Config{"Frontend::ImagePath"}right-big.png" alt="$Text{"Next day"}"></a>
-                          &nbsp;
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                <tr class="contentfooter">
-                  <td colspan="2">&nbsp;</td>
-                </tr>
-              </form>
-            </table>
-            <br>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <table border="0" width="100%" cellspacing="0" cellpadding="4">
-              <tr>
-                <td class="contenthead">$Text{"Date"}: $QData{"Weekday_to_Text"} $QData{"Date"}</td>
-              </tr>
-              <tr>
-                <td class="contentbody">
-                  <table border="1" cellspacing="0" cellpadding="3" align="center" width="90%">
-<!-- dtl:block:UnitBlock -->
-                    <tr class="contentkey">
-                      <td>$Text{"Project"}</td>
-                      <td>$Text{"Task"}</td>
-                      <td>$Text{"Remark"}</td>
-                      <td>$Text{"Start"}</td>
-                      <td>$Text{"End"}</td>
-                      <td>$Text{"Period"}</td>
-                    </tr>
+    </h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Actions"}</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"Year"};Month=$LQData{"Month"}" class="CallForAction"><span>$Text{"Go to overview"}</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose">
+            <input type="hidden" name="Action"    value="$Env{"Action"}">
+            <input type="hidden" name="Subaction" value="View">
+            <input type="hidden" name="UserID"    value="$QData{"UserID"}">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Date navigation"}</h2>
+                </div>
+                <div class="Content LayoutGrid ColumnsWithSpacing">
+                    <div class="Size1of2">
+                        $Data{"DateSelection"}
+                        <input class="button" type="submit" value="$Text{"Submit"}" />
+                    </div>
+
+                    <div class="Size1of2">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=View;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"};Day=$LQData{"DayBack"}">$Text{"Previous day"}</a>
+                        $QData{"Date"}
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=View;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"};Day=$LQData{"DayNext"}">$Text{"Next day"}</a>
+                    </div>
+                    <div class="Clear"></div>
+                </div>
+            </div>
+        </form>
+
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Date"}</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable DataTableNoHighlight">
+                    <thead>
+                        <tr>
+                            <th>$Text{"Project"}</th>
+                            <th>$Text{"Task"}</th>
+                            <th>$Text{"Remark"}</th>
+                            <th>$Text{"Start"}</th>
+                            <th>$Text{"End"}</th>
+                            <th>$Text{"Period"}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 <!-- dtl:block:Unit -->
-                    <tr class="contentvalue">
-                      <td>$QData{"Project"}&nbsp;</td>
-                      <td>$QData{"Action"}&nbsp;</td>
-                      <td>$QData{"Remark"}&nbsp;</td>
-                      <td align="right">$QData{"StartTime"}&nbsp;</td>
-                      <td align="right">$QData{"EndTime"}&nbsp;</td>
-                      <td align="right">$QData{"Period"}&nbsp;</td>
-                    </tr>
+                        <tr>
+                            <td>$QData{"Project"}</td>
+                            <td>$QData{"Action"}</td>
+                            <td>$QData{"Remark"}</td>
+                            <td class="Right">$QData{"StartTime"}</td>
+                            <td class="Right">$QData{"EndTime"}</td>
+                            <td class="Right">$QData{"Period"}</td>
+                        </tr>
 <!-- dtl:block:Unit -->
-<!-- dtl:block:UnitBlock -->
+
 <!-- dtl:block:Total -->
-                    <tr class="contentkey">
-                      <td colspan="4">
-                        &nbsp;
-                      </td>
-                      <td>$Text{"Total"}:</td>
-                      <td align="right">$QData{"Total"}&nbsp;</td>
-                    </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td><strong>$Text{"Total"}:</strong></td>
+                            <td class="Right"><strong>$QData{"Total"}</strong></td>
+
+                        </tr>
 <!-- dtl:block:Total -->
+
+<!-- dtl:block:NoDataFound -->
+                        <tr>
+                            <td colspan="6">$Text{"No data found for this day."}</td>
+                        </tr>
+<!-- dtl:block:NoDataFound -->
+
+                    </tbody>
+                </table>
+
 <!-- dtl:block:OtherTimes -->
-                    <tr class="contentkey" align="center">
-                      <td colspan="6">
-                        <input type="checkbox" value="-2" name="LeaveDay" $Data{"LeaveDay"} disabled>$Text{"On vacation"}&nbsp;
-                        <input type="checkbox" value="-1" name="Sick" $Data{"Sick"} disabled>$Text{"On sick leave"}&nbsp;
-                        <input type="checkbox" value="-3" name="Overtime" $Data{"Overtime"} disabled>$Text{"On overtime leave"}
-                        &nbsp;
-                      </td>
-                    </tr>
+                <div>
+                    <input type="checkbox" value="-2" id="LeaveDay" name="LeaveDay" title="$Text{"On vacation"}" $Data{"LeaveDay"} disabled />
+                    <label for="LeaveDay">$Text{"On vacation"}</label>
+                    <input type="checkbox" value="-1" id="Sick" name="Sick" title="$Text{"On sick leave"}" $Data{"Sick"} disabled />
+                    <label for="Sick">$Text{"On sick leave"}</label>
+                    <input type="checkbox" value="-3" id="Overtime" name="Overtime" title="$Text{"On overtime leave"}" $Data{"Overtime"} disabled />
+                    <label for="Overtime">$Text{"On overtime leave"}</label>
+                </div>
 <!-- dtl:block:OtherTimes -->
+
+                <div class="Clear"></div>
 <!-- dtl:block:Vacation -->
-                    <tr class="contentkey" align="center">
-                      <td colspan="6">
+                <div class="SpacingTopSmall">
+                    <p>
                         $QData{"Vacation"}
-                        &nbsp;
-                      </td>
-                    </tr>
+                    </p>
+                </div>
 <!-- dtl:block:Vacation -->
-                  </table>
-                </td>
-              </tr>
-              <tr><td class="contentfooter">&nbsp;</td></tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-      <br>
-    </td>
-  </tr>
-</table>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
