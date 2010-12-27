@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.49 2010-12-23 21:42:29 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.50 2010-12-27 15:58:35 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1035,8 +1035,38 @@ sub Run {
                 Calendar => $UserData{Calendar},
             );
 
-            if ($VacationCheck) {
+            my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Day );
+            my $DayStartTime
+                = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
+            my $DayStopTime
+                = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
+
+            # add time zone to calculation
+            my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $UserData{Calendar} );
+            if ($Zone) {
+                my $ZoneSeconds = $Zone * 60 * 60;
+                $DayStartTime = $DayStartTime - $ZoneSeconds;
+                $DayStopTime  = $DayStopTime - $ZoneSeconds;
+            }
+
+            my $ThisDayWorkingTime = $Self->{TimeObject}->WorkingTime(
+                StartTime => $DayStartTime,
+                StopTime  => $DayStopTime,
+                Calendar  => $UserData{Calendar} || '',
+            ) || '0';
+
+            if ( $Param{Year} eq $Year && $Param{Month} eq $Month && $CurrentDay eq $Day ) {
+                $Param{Class} = 'Active';
+            }
+            elsif ($VacationCheck) {
+                $Param{Class}   = 'Vacation';
                 $Param{Comment} = $VacationCheck;
+            }
+            elsif ($ThisDayWorkingTime) {
+                $Param{Class} = 'WorkingDay';
+            }
+            else {
+                $Param{Class} = 'NonWorkingDay';
             }
 
             my %Data = $Self->{TimeAccountingObject}->WorkingUnitsGet(

@@ -1,0 +1,76 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Time Accounting Additional Table Settings
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  data table elements without hover
+ */
+
+.NoHover tbody tr:hover td {
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.NoHover tr.Even:hover td,
+.NoHover tr.Even:hover.Last td {
+    background-color: #F5F5F5;
+}
+
+.NoHover tbody tr.Last:hover td {
+    background: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+/**
+ * @subsection  fixed data table widths
+ */
+
+.DataTable td.Fixed.Day {
+    width: 50px;
+}
+
+.DataTable td.Fixed.Weekday {
+    width: 80px;
+}
+
+/**
+ * @subsection  table colours for overview
+ */
+
+.DataTable tr.Vacation td {
+    background-color: #EBCCCC;
+}
+
+.DataTable tr.NonWorkingDay td {
+    background-color: #FFE0E0;
+}
+
+.DataTable tr.Active td {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    color: #1A1A1A;
+}
+
+.DataTable tr.Active td:first-child {
+    border-left: 1px solid #000000;
+}
+
+.DataTable tr.Active td:last-child,
+.DataTable tr.Active td.Last {
+    border-right: 1px solid #000000;
+}
+
+} /* end @media */
