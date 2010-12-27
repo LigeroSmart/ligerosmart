@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQPrint.pm,v 1.6 2010-12-01 20:26:31 cr Exp $
+# $Id: PublicFAQPrint.pm,v 1.7 2010-12-27 16:47:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +55,8 @@ sub new {
         Types  => ['public'],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -273,11 +275,16 @@ sub _PDFOutputFAQHeaderInfo {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('State') . ':',
             Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{State} ),
         },
-        {
+    ];
+
+    # language row, feature is enabled
+    if ( $Self->{MultiLanguage} ) {
+        my $Row = {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Language') . ':',
             Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{Language} ),
-        },
-    ];
+        };
+        push( @{$TableLeft}, $Row );
+    }
 
     # create right table
     my $TableRight = [
@@ -534,6 +541,14 @@ sub _PDFOuputFAQContent {
 
 sub _HTMLMask {
     my ( $Self, %Param ) = @_;
+
+    # show Language
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Language',
+            Data => \%Param,
+        );
+    }
 
     return $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicFAQPrint',
