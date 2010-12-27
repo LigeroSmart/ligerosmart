@@ -2,7 +2,7 @@
 # AgentFAQEdit.dtl - provides HTML form for AgentFAQEdit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.dtl,v 1.10 2010-12-19 16:28:20 ub Exp $
+# $Id: AgentFAQEdit.dtl,v 1.11 2010-12-27 16:28:08 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -68,11 +68,17 @@
                 </div>
                 <div class="Clear"></div>
 
+<!-- dtl:block:Language -->
                 <label for="LanguageID">$Text{"Language"}:</label>
                 <div class="Field">
                     $Data{"LanguageOption"}
                 </div>
                 <div class="Clear"></div>
+<!-- dtl:block:Language -->
+
+<!-- dtl:block:NoLanguage -->
+                <input type="hidden" name="LanguageID" value="$QData{"LanguageID"}"/>
+<!-- dtl:block:NoLanguage -->
 
 <!-- dtl:block:Approval -->
                 <label for="Approved">$Text{"Approval"}:</label>

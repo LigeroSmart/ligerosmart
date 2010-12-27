@@ -2,7 +2,7 @@
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.12 2010-12-07 17:45:34 cr Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.13 2010-12-27 16:30:05 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,34 @@
     <h1>$Text{"FAQ Language Management"}</h1>
 
     <div class="SidebarColumn">
+
+<!-- dtl:block:Disabled -->
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Notice"}</h2>
+            </div>
+            <div class="Content ActionList">
+                <form action="$Env{"CGIHandle"}" method="post">
+                    <input type="hidden" name="Action" value="AdminSysConfig"/>
+                    <input type="hidden" name="Subaction" value="Edit"/>
+                    <input type="hidden" name="SysConfigGroup" value="FAQ"/>
+                    <input type="hidden" name="SysConfigSubGroup" value="Core"/>
+                    <h3>$Text{"This feature is disabled!"}</h3>
+                    <fieldset>
+                        <p class="FieldExplanation">
+                            $Text{"Use this feature if you want to work with multiple languges."}
+                        </p>
+                        <div class="Field SpacingTop">
+                            <button class="CallForAction" type="submit" value="$Text{"Enable it here!"}">
+                                <span>$Text{"Enable it here!"}</span>
+                            </button>
+                        </div>
+                        <div class="Clear"></div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+<!-- dtl:block:Disabled -->
 
 <!-- dtl:block:ActionList -->
         <div class="WidgetSimple">
@@ -40,9 +68,9 @@
         </div>
 <!-- dtl:block:ActionList -->
     </div>
+<!-- dtl:block:OverviewResult -->
     <div class="ContentColumn">
         <div class="WidgetSimple">
-<!-- dtl:block:OverviewResult -->
             <div class="Header">
                 <h2>$Text{"List"}</h2>
             </div>
@@ -156,7 +184,7 @@
     $Text{"You can not delete this language. It is used in at least one FAQ article!"}
 </p>
 <p class="SpacingTop SpacingBottom">
-    $Text{"This kanguage is used in the following FAQ Article(s)"}:
+    $Text{"This language is used in the following FAQ Article(s)"}:
 </p>
 
 <ul>

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.12 2010-11-17 15:54:50 cr Exp $
+# $Id: FAQOverviewSmall.pm,v 1.13 2010-12-27 16:50:57 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -31,6 +31,8 @@ sub new {
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -80,7 +82,10 @@ sub Run {
             # call main block
             $Self->{LayoutObject}->Block( Name => 'RecordForm' );
 
+            COLUMN:
             for my $Column (@ShowColumns) {
+
+                next COLUMN if ( $Column eq 'Language' && !$Self->{MultiLanguage} );
 
                 # create needed variables
                 my $CSS = '';
@@ -162,6 +167,8 @@ sub Run {
                 if (@ShowColumns) {
                     COLUMN:
                     for my $Column (@ShowColumns) {
+
+                        next COLUMN if ( $Column eq 'Language' && !$Self->{MultiLanguage} );
                         $Self->{LayoutObject}->Block(
                             Name => 'Record' . $Column,
                             Data => {

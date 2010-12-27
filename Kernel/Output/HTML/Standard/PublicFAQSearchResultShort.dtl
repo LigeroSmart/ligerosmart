@@ -2,7 +2,7 @@
 # PublicFAQSearchResultShort.dtl - html for FAQ search results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearchResultShort.dtl,v 1.9 2010-12-01 17:47:16 ub Exp $
+# $Id: PublicFAQSearchResultShort.dtl,v 1.10 2010-12-27 16:49:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,11 +54,13 @@
                             $Text{"Category"}
                         </a>
                     </th>
+<!-- dtl:block:HeaderLanguage -->
                     <th class="Language $Data{"LanguageSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Language;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Language"}
                         </a>
                     </th>
+<!-- dtl:block:HeaderLanguage -->
                     <th class="Changed $Data{"ChangedSort"}">
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;;$Data{"Profile"}SortBy=Changed;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Changed"}
@@ -79,7 +81,9 @@
                     <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
                     <td class="Title">$QData{"Title","60"}</td>
                     <td class="Category">$QData{"CategoryName","60"}</td>
+<!-- dtl:block:RecordLanguage -->
                     <td class="Language">$QData{"Language","5"}</td>
+<!-- dtl:block:RecordLanguage -->
                     <td class="Changed" title="$TimeShort{"$Data{"Changed"}"}">$QData{"Changed","20"}</td>
                 </tr>
 <!-- dtl:block:Record -->

@@ -2,7 +2,7 @@
 # PublicFAQExplorer.dtl.dtl - provides HTML for PublicFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.dtl,v 1.9 2010-12-22 15:11:01 cr Exp $
+# $Id: PublicFAQExplorer.dtl,v 1.10 2010-12-27 16:45:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,6 +33,7 @@
 
         <div class="LayoutFixedSidebar SidebarLast">
             <div class="SidebarColumn Large">
+
 <!-- dtl:block:QuickSearch -->
                 <div class="WidgetSimple">
                     <div class="Header">
@@ -172,11 +173,13 @@
                                             $Text{"Category"}
                                         </a>
                                     </th>
+<!-- dtl:block:HeaderLanguage -->
                                     <th class="Language $Data{"LanguageSort"}">
                                         <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Language;Order=$LQData{"Order"}">
                                             $Text{"Language"}
                                         </a>
                                     </th>
+<!-- dtl:block:HeaderLanguage -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -192,7 +195,9 @@
                                     <td class="FAQNumber" title="$QData{"Number"}"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
                                     <td class="Title" title="$QData{"Title"}">$QData{"Title","60"}</td>
                                     <td class="Category" title="$QData{"CategoryName"}">$QData{"CategoryName","45"}</td>
+<!-- dtl:block:RecordLanguage -->
                                     <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
+<!-- dtl:block:RecordLanguage -->
                                 </tr>
 <!-- dtl:block:Record -->
                             </tbody>

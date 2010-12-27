@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.17 2010-12-20 13:38:44 ub Exp $
+# $Id: AgentFAQAdd.pm,v 1.18 2010-12-27 16:27:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -60,6 +60,8 @@ sub new {
         Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -405,6 +407,60 @@ sub _MaskNew {
             %Data,
         },
     );
+
+    # show languages field
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Language',
+            Data => {
+                %Param,
+                %Data,
+            },
+        );
+    }
+    else {
+
+        # get default language
+        my $DefaultLanguage
+            = $Self->{ConfigObject}->Get('FAQ::Default::Language') || 'en';
+
+        # get default language ID
+        my $LanguageID = $Self->{FAQObject}->LanguageLookup(
+            Name => $DefaultLanguage,
+        );
+
+        # create default language if it was deleted or does not exists
+        if ( !$LanguageID ) {
+            my $InsertLanguage = $Self->{FAQObject}->LanguageAdd(
+                Name   => $DefaultLanguage,
+                UserID => 1,
+            );
+
+            if ( !$InsertLanguage ) {
+
+                # return with error screen
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => "No default language found and can't create a new one.",
+                    Comment => 'Please contact the admin.',
+                );
+            }
+
+            # get default language ID
+            $LanguageID = $Self->{FAQObject}->LanguageLookup(
+                Name => $DefaultLanguage,
+            );
+        }
+
+        $Param{LanguageID} = $LanguageID;
+
+        $Self->{LayoutObject}->Block(
+            Name => 'NoLanguage',
+            Data => {
+                %Param,
+                %Data,
+            },
+        );
+    }
 
     # show approval field
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {

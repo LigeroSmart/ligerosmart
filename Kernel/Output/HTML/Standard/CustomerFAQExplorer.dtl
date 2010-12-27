@@ -2,7 +2,7 @@
 # CustomerFAQExplorer.dtl - provides HTML for CustomerFAQExplorer.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.dtl,v 1.17 2010-12-21 11:20:54 mb Exp $
+# $Id: CustomerFAQExplorer.dtl,v 1.18 2010-12-27 16:41:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -170,11 +170,13 @@
                                             $Text{"Category"}
                                         </a>
                                     </th>
+<!-- dtl:block:HeaderLanguage -->
                                     <th class="Language $Data{"LanguageSort"}">
                                         <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=Language;Order=$LQData{"Order"}">
                                             $Text{"Language"}
                                         </a>
                                     </th>
+<!-- dtl:block:HeaderLanguage -->
                                     <th class="State $Data{"StateSort"}">
                                         <a href="$Env{"Baselink"}Action=$Env{"Action"};CategoryID=$LQData{"CategoryID"};SortBy=State;Order=$LQData{"Order"}">
                                             $Text{"State"}
@@ -195,7 +197,9 @@
                                     <td class="FAQNumber" title="$QData{"Number"}"><a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
                                     <td class="Title" title="$QData{"Title"}">$QData{"Title","60"}</td>
                                     <td class="Category" title="$QData{"CategoryName"}">$QData{"CategoryName","45"}</td>
+<!-- dtl:block:RecordLanguage -->
                                     <td class="Language" title="$QData{"Language"}">$QData{"Language","5"}</td>
+<!-- dtl:block:RecordLanguage -->
                                     <td class="State" title="$QData{"State"}">$QData{"State","21"}</td>
                                 </tr>
 <!-- dtl:block:Record -->

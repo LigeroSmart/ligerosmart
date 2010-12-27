@@ -2,7 +2,7 @@
 # AgentFAQPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.dtl,v 1.2 2010-11-19 11:45:18 ub Exp $
+# $Id: AgentFAQPrint.dtl,v 1.3 2010-12-27 16:31:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,10 +30,12 @@
                                 <td class="contentkey">$Text{"State"}: </td>
                                 <td class="contentvalue"> $Quote{"$Data{"State"}"}</td>
                             </tr>
+<!-- dtl:block:Language -->
                             <tr>
                                 <td class="contentkey">$Text{"Language"}: </td>
                                 <td class="contentvalue"> $Quote{"$Data{"Language"}"}</td>
                             </tr>
+<!-- dtl:block:Language -->
 
 <!-- dtl:block:PrintApproval -->
                             <tr>

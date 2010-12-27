@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.25 2010-12-08 16:53:47 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.26 2010-12-27 16:36:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +55,8 @@ sub new {
         Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -254,8 +256,17 @@ sub Run {
 
                 # csv quote
                 if ( !@CSVHead ) {
-                    @CSVHead = qw( FAQNumber Title Category Language State Changed );
+                    @CSVHead = qw( FAQNumber Title Category);
+
+                    # insert language header
+                    if ( $Self->{MultiLanguage} ) {
+                        push @CSVHead, 'Language';
+                    }
+
+                    push @CSVHead, qw(State Changed);
                 }
+
+                # inssert data
                 my @Data;
                 for my $Header (@CSVHead) {
                     push @Data, $CSVInfo{$Header};
@@ -321,10 +332,15 @@ sub Run {
 
                     # create PDF Rows
                     my @PDFRow;
-                    push @PDFRow,  $FAQData{Number};
-                    push @PDFRow,  $FAQData{Title};
-                    push @PDFRow,  $FAQData{CategoryName};
-                    push @PDFRow,  $FAQData{Language};
+                    push @PDFRow, $FAQData{Number};
+                    push @PDFRow, $FAQData{Title};
+                    push @PDFRow, $FAQData{CategoryName};
+
+                    # create language row
+                    if ( $Self->{MultiLanguage} ) {
+                        push @PDFRow, $FAQData{Language};
+                    }
+
                     push @PDFRow,  $FAQData{State};
                     push @PDFRow,  $Changed;
                     push @PDFData, \@PDFRow;
@@ -336,6 +352,14 @@ sub Run {
                         Name => 'Record',
                         Data => {%FAQData},
                     );
+
+                    # add language data
+                    if ( $Self->{MultiLanguage} ) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'RecordLanguage',
+                            Data => {%FAQData},
+                        );
+                    }
                 }
             }
 
@@ -370,15 +394,25 @@ sub Run {
                 $CellData->[0]->[2]->{Content}
                     = $Self->{LayoutObject}->{LanguageObject}->Get('Category');
                 $CellData->[0]->[2]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[3]->{Content}
-                    = $Self->{LayoutObject}->{LanguageObject}->Get('Language');
-                $CellData->[0]->[3]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[4]->{Content}
+
+                # store the correct header index
+                my $NextHeaderIndex = 3;
+
+                # add language header
+                if ( $Self->{MultiLanguage} ) {
+                    $CellData->[0]->[3]->{Content}
+                        = $Self->{LayoutObject}->{LanguageObject}->Get('Language');
+                    $CellData->[0]->[3]->{Font} = 'ProportionalBold';
+                    $NextHeaderIndex = 4;
+                }
+
+                $CellData->[0]->[$NextHeaderIndex]->{Content}
                     = $Self->{LayoutObject}->{LanguageObject}->Get('State');
-                $CellData->[0]->[4]->{Font} = 'ProportionalBold';
-                $CellData->[0]->[5]->{Content}
+                $CellData->[0]->[$NextHeaderIndex]->{Font} = 'ProportionalBold';
+
+                $CellData->[0]->[ $NextHeaderIndex + 1 ]->{Content}
                     = $Self->{LayoutObject}->{LanguageObject}->Get('Changed');
-                $CellData->[0]->[5]->{Font} = 'ProportionalBold';
+                $CellData->[0]->[ $NextHeaderIndex + 1 ]->{Font} = 'ProportionalBold';
 
                 # create the content array
                 my $CounterRow = 1;
@@ -471,6 +505,15 @@ sub Run {
                     $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
                         . $Self->{SearchLimit} . '"}';
                 }
+
+                # add language header
+                if ( $Self->{MultiLanguage} ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'HeaderLanguage',
+                        Data => {},
+                    );
+                }
+
                 $Output .= $Self->{LayoutObject}->Output(
                     TemplateFile => 'AgentFAQSearchResultPrint',
                     Data         => \%Param,
@@ -663,10 +706,19 @@ sub _MaskForm {
             Key   => 'Keyword',
             Value => 'Keyword',
         },
-        {
-            Key   => 'LanguageIDs',
-            Value => 'Language',
-        },
+    );
+
+    # show Languages attribute
+    if ( $Self->{MultiLanguage} ) {
+        push @Attributes, (
+            {
+                Key   => 'LanguageIDs',
+                Value => 'Language',
+            },
+        );
+    }
+
+    push @Attributes, (
         {
             Key   => 'CategoryIDs',
             Value => 'Category',

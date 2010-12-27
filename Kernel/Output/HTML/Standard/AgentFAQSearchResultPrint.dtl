@@ -2,7 +2,7 @@
 # AgentFAQSearchResultPrint.dtl - html for printing FAQ search results
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchResultPrint.dtl,v 1.4 2010-11-25 23:17:07 cr Exp $
+# $Id: AgentFAQSearchResultPrint.dtl,v 1.5 2010-12-27 16:36:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,11 @@
                     <td width="10%" class="contentkey">$Config{"FAQ::FAQHook"}</td>
                     <td width="35%" class="contentkey">$Text{"Title"}</td>
                     <td width="10%" class="contentkey">$Text{"Category"}</td>
+
+<!-- dtl:block:HeaderLanguage -->
                     <td width="10%" class="contentkey">$Text{"Language"}</td>
+<!-- dtl:block:HeaderLanguage -->
+
                     <td width="15%" class="contentkey">$Text{"State"}</td>
                     <td width="20%" class="contentkey">$Text{"Changed"}</td>
                 </tr>
@@ -33,7 +37,11 @@
                     <td class="contentvalue">$QData{"Number"}</td>
                     <td class="contentvalue">$QData{"Title","40"}</td>
                     <td class="contentvalue">$QData{"CategoryName","30"}</td>
+
+<!-- dtl:block:RecordLanguage -->
                     <td class="contentvalue">$QData{"Language"}</td>
+<!-- dtl:block:RecordLanguage -->
+
                     <td class="contentvalue">$QData{"State","30"}</td>
                     <td class="contentvalue">$TimeLong{"$Data{"Changed"}"}</td>
                 </tr>

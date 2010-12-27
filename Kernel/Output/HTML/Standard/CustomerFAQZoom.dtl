@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for CustomerFAQZoom.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.21 2010-12-22 16:08:26 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.22 2010-12-27 16:44:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,9 @@
             <ul id="Metadata">
                 <li><span class="Key">$Text{"Category"}:</span> <span title="$Text{"$Data{"CategoryName"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>
                 <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Quote{"$Text{"$Data{"State"}"}","25"}</span></li>
+<!-- dtl:block:Language -->
                 <li><span class="Key">$Text{"Language"}:</span> <span title="$Text{"$Data{"Language"}"}">$Quote{"$Text{"$Data{"Language"}"}","18"}</span></li>
+<!-- dtl:block:Language -->
                 <li>
                     <span class="Key RatingLabel">$Text{"Rating"}:</span>
 <!-- dtl:block:RateStars -->

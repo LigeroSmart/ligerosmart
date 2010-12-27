@@ -2,7 +2,7 @@
 # CustomerFAQSearch.dtl - provides HTML form for CustomerFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.dtl,v 1.8 2010-12-23 00:10:30 cr Exp $
+# $Id: CustomerFAQSearch.dtl,v 1.9 2010-12-27 16:43:59 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -55,12 +55,14 @@
                     <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" size="20" />
                 </div>
             </fieldset>
+<!-- dtl:block:Language -->
             <fieldset>
                 <h2>$Text{"Language"}:</h2>
                 <div>
                     $Data{"LanguagesStrg"}
                 </div>
             </fieldset>
+<!-- dtl:block:Language -->
             <fieldset>
                 <h2>$Text{"Category"}:</h2>
                 <div>

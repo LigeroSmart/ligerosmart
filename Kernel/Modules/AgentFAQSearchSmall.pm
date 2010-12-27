@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearchSmall.pm - module for FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchSmall.pm,v 1.1 2010-12-08 17:02:47 cr Exp $
+# $Id: AgentFAQSearchSmall.pm,v 1.2 2010-12-27 16:37:24 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::SearchProfile;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,6 +53,8 @@ sub new {
         Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -348,6 +350,14 @@ sub _MaskForm {
         Name => 'Search',
         Data => {%Param},
     );
+
+    # show languages select
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Language',
+            Data => {%Param},
+        );
+    }
 
     # html search mask output
     return $Self->{LayoutObject}->Output(

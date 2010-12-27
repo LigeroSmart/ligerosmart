@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.13 2010-12-01 03:14:51 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.14 2010-12-27 16:30:05 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +35,8 @@ sub new {
 
     # create additional objects
     $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -55,7 +57,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # change
     # ------------------------------------------------------------ #
-    if ( $Self->{Subaction} eq 'Change' ) {
+    if ( $Self->{Subaction} eq 'Change' && $Self->{MultiLanguage} ) {
 
         # get the LanguageID
         my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
@@ -100,7 +102,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # change action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'ChangeAction' ) {
+    elsif ( $Self->{Subaction} eq 'ChangeAction' && $Self->{MultiLanguage} ) {
 
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
@@ -194,7 +196,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # add
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'Add' ) {
+    elsif ( $Self->{Subaction} eq 'Add' && $Self->{MultiLanguage} ) {
 
         # get the new name
         $GetParam{Name} = $Self->{ParamObject}->GetParam( Param => 'Name' );
@@ -224,7 +226,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # add action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'AddAction' ) {
+    elsif ( $Self->{Subaction} eq 'AddAction' && $Self->{MultiLanguage} ) {
 
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
@@ -314,7 +316,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # delete
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'Delete' ) {
+    elsif ( $Self->{Subaction} eq 'Delete' && $Self->{MultiLanguage} ) {
 
         # get the LanguageID
         my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
@@ -416,7 +418,7 @@ sub Run {
     # ------------------------------------------------------------ #
     # delete action
     # ------------------------------------------------------------ #
-    elsif ( $Self->{Subaction} eq 'DeleteAction' ) {
+    elsif ( $Self->{Subaction} eq 'DeleteAction' && $Self->{MultiLanguage} ) {
 
         # get the LanguageID
         my $LanguageID = $Self->{ParamObject}->GetParam( Param => 'LanguageID' ) || '';
@@ -522,36 +524,42 @@ sub _Overview {
 
     # output overview blocks
     $Self->{LayoutObject}->Block( Name => 'Overview' );
-    $Self->{LayoutObject}->Block( Name => 'ActionList' );
-    $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
-    $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
-    # get languages list
-    my %Languages = $Self->{FAQObject}->LanguageList(
-        UserID => $Self->{UserID},
-    );
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block( Name => 'ActionList' );
+        $Self->{LayoutObject}->Block( Name => 'ActionAdd' );
+        $Self->{LayoutObject}->Block( Name => 'OverviewResult' );
 
-    # if there are any languages, they are shown
-    if (%Languages) {
-        for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
+        # get languages list
+        my %Languages = $Self->{FAQObject}->LanguageList(
+            UserID => $Self->{UserID},
+        );
 
-            # get languages result
-            my %LanguageData = $Self->{FAQObject}->LanguageGet(
-                LanguageID => $LanguageID,
-                UserID     => $Self->{UserID},
-            );
+        # if there are any languages, they are shown
+        if (%Languages) {
+            for my $LanguageID ( sort { $Languages{$a} cmp $Languages{$b} } keys %Languages ) {
 
-            #output results
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewResultRow',
-                Data => {%LanguageData},
-            );
+                # get languages result
+                my %LanguageData = $Self->{FAQObject}->LanguageGet(
+                    LanguageID => $LanguageID,
+                    UserID     => $Self->{UserID},
+                );
+
+                #output results
+                $Self->{LayoutObject}->Block(
+                    Name => 'OverviewResultRow',
+                    Data => {%LanguageData},
+                );
+            }
+        }
+
+        # otherwise a no data found msg is displayed
+        else {
+            $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
         }
     }
-
-    # otherwise a no data found msg is displayed
     else {
-        $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
+        $Self->{LayoutObject}->Block( Name => 'Disabled' );
     }
 }
 

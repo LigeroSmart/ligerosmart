@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.14 2010-12-21 13:02:29 ub Exp $
+# $Id: AgentFAQEdit.pm,v 1.15 2010-12-27 16:28:08 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -60,6 +60,8 @@ sub new {
         Types => [ 'internal', 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -526,6 +528,26 @@ sub _MaskNew {
             %Data,
         },
     );
+
+    # show languages field
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Language',
+            Data => {
+                %Param,
+                %Data,
+            },
+        );
+    }
+    else {
+        $Self->{LayoutObject}->Block(
+            Name => 'NoLanguage',
+            Data => {
+                %Param,
+                %Data,
+            },
+        );
+    }
 
     # show approval field
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {

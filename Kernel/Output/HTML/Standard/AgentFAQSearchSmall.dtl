@@ -2,7 +2,7 @@
 # AgentFAQSearchSmall.dtl - provides HTML form for CustomerFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchSmall.dtl,v 1.1 2010-12-08 17:02:47 cr Exp $
+# $Id: AgentFAQSearchSmall.dtl,v 1.2 2010-12-27 16:37:24 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -82,11 +82,15 @@
                 <div class= "Field">
                     <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" class="W50pc" />
                 </div>
+
+<!-- dtl:block:Language -->
                 <div class='SpacingTopSmall Clear'></div>
                 <label for="LanguageIDs">$Text{"Language"}</label>
                 <div class="Field">
                     $Data{"LanguagesStrg"}
                 </div>
+<!-- dtl:block:Language -->
+
                 <div class='SpacingTopSmall Clear'></div>
                 <label for="CategoryIDs">$Text{"Category"}:</label>
                 <div class="Field">

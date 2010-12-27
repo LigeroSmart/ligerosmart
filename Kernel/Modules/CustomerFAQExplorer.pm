@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQExplorer.pm - customer FAQ explorer
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.pm,v 1.5 2010-12-08 17:02:47 cr Exp $
+# $Id: CustomerFAQExplorer.pm,v 1.6 2010-12-27 16:41:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,6 +51,8 @@ sub new {
         Types => [ 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -213,6 +215,18 @@ sub Run {
         },
     );
 
+    # show language header
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'HeaderLanguage',
+            Data => {
+                CategoryID => $CategoryID,
+                %CSSSort,
+                Order => $NewOrder{ $Self->{OrderBy} },
+            },
+        );
+    }
+
     my $Counter = 0;
     if (@ViewableFAQIDs) {
 
@@ -240,6 +254,16 @@ sub Run {
                         %FAQData,
                     },
                 );
+
+                # add language data
+                if ( $Self->{MultiLanguage} ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordLanguage',
+                        Data => {
+                            %FAQData,
+                        },
+                    );
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.14 2010-12-02 09:25:42 ub Exp $
+# $Id: CustomerFAQSearch.pm,v 1.15 2010-12-27 16:43:59 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,6 +52,8 @@ sub new {
         Types => [ 'external', 'public' ],
         UserID => $Self->{UserID},
     );
+
+    $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
 
     return $Self;
 }
@@ -252,7 +254,14 @@ sub Run {
 
                 # csv quote
                 if ( !@CSVHead ) {
-                    @CSVHead = qw( FAQNumber Title Category Language State Changed );
+                    @CSVHead = qw( FAQNumber Title Category);
+
+                    # insert language header
+                    if ( $Self->{MultiLanguage} ) {
+                        push @CSVHead, 'Language';
+                    }
+
+                    push @CSVHead, qw(State Changed);
                 }
                 my @Data;
                 for my $Header (@CSVHead) {
@@ -309,6 +318,15 @@ sub Run {
                     Name => 'Record',
                     Data => {%FAQData},
                 );
+
+                # add language data
+                if ( $Self->{MultiLanguage} ) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'RecordLanguage',
+                        Data => {%FAQData},
+                    );
+                }
+
             }
 
             # output header
@@ -317,6 +335,15 @@ sub Run {
                 $Param{Warning} = '$Text{"Reached max. count of %s search hits!", "'
                     . $Self->{SearchLimit} . '"}';
             }
+
+            # add language header
+            if ( $Self->{MultiLanguage} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'HeaderLanguage',
+                    Data => {},
+                );
+            }
+
             $Output .= $Self->{LayoutObject}->Output(
                 TemplateFile => 'CustomerFAQSearchResultPrint',
                 Data         => \%Param,
@@ -358,6 +385,14 @@ sub Run {
                             %FAQData,
                         },
                     );
+
+                    # add language data
+                    if ( $Self->{MultiLanguage} ) {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'RecordLanguage',
+                            Data => {%FAQData},
+                        );
+                    }
                 }
             }
         }
@@ -418,6 +453,18 @@ sub Run {
             Down => 'Up',
             Up   => 'Down',
         );
+
+        # show language header
+        if ( $Self->{MultiLanguage} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'HeaderLanguage',
+                Data => {
+                    %Param,
+                    %CSSSort,
+                    Order => $NewOrder{ $Self->{OrderBy} },
+                },
+            );
+        }
 
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'CustomerFAQSearchResultShort',
@@ -530,6 +577,14 @@ sub MaskForm {
         Name => 'Search',
         Data => {%Param},
     );
+
+    # show languages select
+    if ( $Self->{MultiLanguage} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Language',
+            Data => {%Param},
+        );
+    }
 
     # html search mask output
     return $Self->{LayoutObject}->Output(

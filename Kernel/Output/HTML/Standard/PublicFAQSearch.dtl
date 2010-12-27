@@ -2,7 +2,7 @@
 # PublicFAQSearch.dtl - provides HTML form for PublicFAQSearch.pm
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.dtl,v 1.6 2010-12-23 00:10:30 cr Exp $
+# $Id: PublicFAQSearch.dtl,v 1.7 2010-12-27 16:49:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,12 +39,14 @@
                     <input title="$Text{"Keyword"}" type="text" id="Keyword" name="Keyword" value="$QData{"Keyword"}" size="20" />
                 </div>
             </fieldset>
+<!-- dtl:block:Language -->
             <fieldset>
                 <h2>$Text{"Language"}:</h2>
                 <div>
                     $Data{"LanguagesStrg"}
                 </div>
             </fieldset>
+<!-- dtl:block:Language -->
             <fieldset>
                 <h2>$Text{"Category"}:</h2>
                 <div>
