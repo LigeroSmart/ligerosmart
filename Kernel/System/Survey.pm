@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.50 2010-05-21 12:49:51 mh Exp $
+# $Id: Survey.pm,v 1.51 2010-12-28 18:27:55 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -1813,13 +1813,6 @@ sub RequestSend {
         TicketID => $Param{TicketID},
     );
 
-    for my $Data ( keys %Ticket ) {
-        if ( defined $Ticket{$Data} ) {
-            $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
-            $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
-        }
-    }
-
     # check if ticket is in a send queue
     if ( $Survey{Queues} && ref $Survey{Queues} eq 'ARRAY' && @{ $Survey{Queues} } ) {
         my $Found;
@@ -1832,6 +1825,13 @@ sub RequestSend {
         }
 
         return if !$Found;
+    }
+
+    for my $Data ( keys %Ticket ) {
+        if ( defined $Ticket{$Data} ) {
+            $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
+            $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
+        }
     }
 
     # cleanup
@@ -1876,7 +1876,12 @@ sub RequestSend {
         my %Article = $Self->{TicketObject}->ArticleLastCustomerArticle(
             TicketID => $Param{TicketID},
         );
-        $ToString = $Article{From};
+        if ( $Article{SenderType} eq 'agent' ) {
+            $ToString = $Article{To};
+        }
+        else {
+            $ToString = $Article{From};
+        }
     }
 
     # parse the to string
@@ -1891,7 +1896,7 @@ sub RequestSend {
     # check if it's a valid email addedss (min is needed)
     return if $To !~ /@/;
 
-    # konvert to lower cases
+    # convert to lower cases
     $To = lc $To;
 
     # check if not survey should be send
@@ -2236,10 +2241,10 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2010-05-21 12:49:51 $
+$Revision: 1.51 $ $Date: 2010-12-28 18:27:55 $
 
 =cut
