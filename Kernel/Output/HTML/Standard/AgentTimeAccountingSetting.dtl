@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.25 2010-12-20 23:50:32 en Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.26 2010-12-28 19:41:16 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,43 +51,9 @@
     </div>
 
     <div class="ContentColumn">
-        <div class="WidgetSimple">
-<!-- dtl:block:OverviewResultProject -->
-            <div class="Header">
-                <h2>$Text{"List"}</h2>
-            </div>
-            <div class="Content">
-
-                <table class="DataTable">
-                    <thead>
-                        <tr>
-                            <th>$Text{"Name"}</th>
-                            <th>$Text{"Comment"}</th>
-                            <th>$Text{"Status"}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<!-- dtl:block:NoProjectDataFoundMsg -->
-                        <tr>
-                            <td colspan="3">
-                                $Text{"No data found."}
-                            </td>
-                        </tr>
-<!-- dtl:block:NoProjectDataFoundMsg -->
-
-<!-- dtl:block:OverviewResultProjectRow -->
-                        <tr>
-                            <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditProject;ID=$LQData{"ProjectID"}">$QData{"Project"}</a></td>
-                            <td title="$QData{"ProjectDescription"}">$QData{"ProjectDescription","40"}</td>
-                            <td>$Text{"$Data{"Status"}"}</td>
-                        </tr>
-<!-- dtl:block:OverviewResultProjectRow -->
-                    </tbody>
-                </table>
-            </div>
-<!-- dtl:block:OverviewResultProject -->
 
 <!-- dtl:block:OverviewUpdateProject -->
+        <div class="WidgetSimple">
             <div class="Header">
 <!-- dtl:block:HeaderAddProject -->
                 <h2>$Text{"Add Project"}</h2>
@@ -146,8 +112,8 @@
                     </fieldset>
                 </form>
             </div>
-<!-- dtl:block:OverviewUpdateProject -->
         </div>
+<!-- dtl:block:OverviewUpdateProject -->
     </div>
 </div>
 <!-- dtl:block:OverviewProject -->
@@ -165,6 +131,17 @@
             </div>
             <div class="Content">
                 <ul class="ActionList">
+<!--dtl:block:ActionAddProject-->
+                    <li>
+                        <form action="$Env{"CGIHandle"}" method="post">
+                            <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                            <input type="hidden" name="Subaction" value="AddProject"/>
+                            <button class="CallForAction Plus" type="submit" value="$Text{"Add"}">
+                                <span>$Text{"Add project"}</span>
+                            </button>
+                        </form>
+                    </li>
+<!--dtl:block:ActionAddProject-->
 <!--dtl:block:ActionAddTask-->
                     <li>
                         <form action="$Env{"CGIHandle"}" method="post">
@@ -188,15 +165,6 @@
                         </form>
                     </li>
 <!--dtl:block:ActionAddUser-->
-                    <li>
-                        <form action="$Env{"CGIHandle"}" method="post">
-                            <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                            <input type="hidden" name="Subaction" value="ProjectSetting"/>
-                            <button class="CallForAction" type="submit" value="$Text{"Edit project settings"}">
-                                <span>$Text{"Edit project settings"}</span>
-                            </button>
-                        </form>
-                    </li>
 <!-- dtl:block:ActionOverviewSetting -->
                     <li>
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting" class="CallForAction"><span>$Text{"Go to overview"}</span></a>
@@ -207,6 +175,17 @@
             </div>
         </div>
 <!-- dtl:block:ActionListSetting -->
+
+<!-- dtl:block:ProjectFilter -->
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2><label for="FilterProjects">$Text{"Filter for Projects"}</label></h2>
+            </div>
+            <div class="Content">
+                <input type="text" id="FilterProjects" class="W50pc" name="FilterProjects" value="" title="$Text{"Filter for Projects"}" />
+            </div>
+        </div>
+<!-- dtl:block:ProjectFilter -->
 
 <!-- dtl:block:TaskFilter -->
         <div class="WidgetSimple">
@@ -233,10 +212,58 @@
     </div>
 
     <div class="ContentColumn">
+<!-- dtl:block:OverviewResultProject -->
         <div class="WidgetSimple">
-<!-- dtl:block:OverviewResultSetting -->
             <div class="Header">
-                <h2>$Text{"List"}</h2>
+                <h2>$Text{"Project List"}</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable" id="Projects">
+                    <thead>
+                        <tr>
+                            <th>$Text{"Name"}</th>
+                            <th>$Text{"Comment"}</th>
+                            <th>$Text{"Status"}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="2">
+                                $Text{"No matches found."}
+                            </td>
+                        </tr>
+<!-- dtl:block:NoProjectDataFoundMsg -->
+                        <tr>
+                            <td colspan="3">
+                                $Text{"No data found."}
+                            </td>
+                        </tr>
+<!-- dtl:block:NoProjectDataFoundMsg -->
+
+<!-- dtl:block:OverviewResultProjectRow -->
+                        <tr>
+                            <td><a class="AsBlock" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=EditProject;ID=$LQData{"ProjectID"}">$QData{"Project"}</a></td>
+                            <td title="$QData{"ProjectDescription"}">$QData{"ProjectDescription","40"}</td>
+                            <td>$Text{"$Data{"Status"}"}</td>
+                        </tr>
+<!-- dtl:block:OverviewResultProjectRow -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<!-- dtl:block:OverviewResultProject -->
+
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.UI.Table.InitTableFilter($('#FilterProjects'), $('#Projects'));
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+
+<!-- dtl:block:OverviewResultSetting -->
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Task List"}</h2>
             </div>
             <div class="Content">
 
@@ -270,6 +297,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 <!-- dtl:block:OverviewResultSetting -->
 
 <!-- dtl:js_on_document_complete -->
@@ -279,6 +307,7 @@
 <!-- dtl:js_on_document_complete -->
 
 <!-- dtl:block:OverviewUpdateTask -->
+        <div class="WidgetSimple">
             <div class="Header">
 <!-- dtl:block:HeaderAddTask -->
                 <h2>$Text{"Add Task"}</h2>
@@ -330,11 +359,15 @@
                     </fieldset>
                 </form>
             </div>
+        </div>
 <!-- dtl:block:OverviewUpdateTask -->
 
 <!-- dtl:block:OverviewResultUser -->
-            <div class="Content SpacingTop">
-
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"User List"}</h2>
+            </div>
+            <div class="Content">
                 <table class="DataTable" id="Users">
                     <thead>
                         <tr>
@@ -367,6 +400,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 <!-- dtl:block:OverviewResultUser -->
 
 <!-- dtl:js_on_document_complete -->
@@ -376,6 +410,7 @@
 <!-- dtl:js_on_document_complete -->
 
 <!-- dtl:block:OverviewUpdateUser -->
+        <div class="WidgetSimple">
             <div class="Header">
 <!-- dtl:block:HeaderAddUser -->
                 <h2>$Text{"New User Settings"}: $QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"UserLogin"})</h2>
@@ -414,7 +449,7 @@
                         <div class="Clear"></div>
                     </fieldset>
 
-                    <table class="DataTable DataTableNoHighlight">
+                    <table class="DataTable NoHover">
                         <thead>
                             <tr>
                                 <th>$Text{"Period Begin"}</th>
@@ -471,8 +506,8 @@
                     </div>
                 </form>
             </div>
-<!-- dtl:block:OverviewUpdateUser -->
         </div>
+<!-- dtl:block:OverviewUpdateUser -->
     </div>
 </div>
 
