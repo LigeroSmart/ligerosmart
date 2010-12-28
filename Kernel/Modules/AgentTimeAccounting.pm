@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.50 2010-12-27 15:58:35 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.51 2010-12-28 13:48:41 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1129,6 +1129,8 @@ sub Run {
             $Param{ProjectStatusShow} = 'valid';
         }
 
+        $Param{ShowProjects} = 'Show ' . $Param{ProjectStatusShow} . ' projects';
+
         PROJECTID:
         for my $ProjectID (
             sort { $ProjectData{$a}{Name} cmp $ProjectData{$b}{Name} }
@@ -1146,8 +1148,7 @@ sub Run {
 
             next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
 
-            if ( $ActionsRef->{Name} ) {
-
+            if ($ActionsRef) {
                 for my $ActionID (
                     sort { $ActionsRef->{$a}{Name} cmp $ActionsRef->{$b}{Name} }
                     keys %{$ActionsRef}
@@ -1175,15 +1176,23 @@ sub Run {
                         $Self->{LayoutObject}->Block(
                             Name => 'Project',
                             Data => {
-                                RowSpan            => ( 1 + scalar keys %{$ActionsRef} ),
-                                Status             => $Param{Status},
-                                ProjectDescription => $ProjectDescription,
+                                RowSpan => ( 1 + scalar keys %{$ActionsRef} ),
+                                Status  => $Param{Status},
                             },
                         );
 
+                        if ($ProjectDescription) {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'ProjectDescription',
+                                Data => {
+                                    ProjectDescription => $ProjectDescription,
+                                },
+                            );
+                        }
+
                         if ( $UserData{CreateProject} ) {
 
-                            # persons how are allowed to see the create object link are
+                            # persons who are allowed to see the create object link are
                             # allowed to see the project reporting
                             $Self->{LayoutObject}->Block(
                                 Name => 'ProjectLink',
@@ -1201,16 +1210,17 @@ sub Run {
                         }
                     }
                 }
+
+                # Now show row with total result of all actions of this project
+                $Param{Hours}      = sprintf( "%.2f", $Total );
+                $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
+                $Param{TotalHours}      += $Total;
+                $Param{TotalHoursTotal} += $TotalTotal;
+                $Self->{LayoutObject}->Block(
+                    Name => 'ActionTotal',
+                    Data => {%Param},
+                );
             }
-            $Param{Action}     = 'Total';
-            $Param{Hours}      = sprintf( "%.2f", $Total );
-            $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
-            $Param{TotalHours}      += $Total;
-            $Param{TotalHoursTotal} += $TotalTotal;
-            $Self->{LayoutObject}->Block(
-                Name => 'Action',
-                Data => {%Param},
-            );
         }
         if ( defined( $Param{TotalHours} ) ) {
             $Param{TotalHours} = sprintf( "%.2f", $Param{TotalHours} );
@@ -1555,7 +1565,7 @@ sub Run {
             Translation => 0,
         );
 
-        my @Year = ( 2005 .. $Year );
+        my @Year = ( $Year - 4 .. $Year + 1 );
 
         $Frontend{YearOption} = $Self->{LayoutObject}->BuildSelection(
             Data        => \@Year,
@@ -1619,6 +1629,8 @@ sub Run {
             $Param{ProjectStatusShow} = 'valid';
         }
 
+        $Param{ShowProjects} = 'Show ' . $Param{ProjectStatusShow} . ' projects';
+
         my %ProjectData = $Self->{TimeAccountingObject}->ProjectActionReporting(
             Year  => $Param{Year},
             Month => $Param{Month},
@@ -1636,8 +1648,7 @@ sub Run {
             my $ActionsRef = $ProjectRef->{Actions};
 
             $Param{Project} = '';
-            $Param{Class}   = 'contentvalue';
-            $Param{Status}  = $ProjectRef->{Status} ? '' : 'passiv';
+            $Param{Status} = $ProjectRef->{Status} ? '' : 'passiv';
 
             my $Total      = 0;
             my $TotalTotal = 0;
@@ -1682,14 +1693,12 @@ sub Run {
                 }
             }
 
-            $Param{Class}      = 'contentkey';
-            $Param{Action}     = 'Total';
             $Param{Hours}      = sprintf( "%.2f", $Total );
             $Param{HoursTotal} = sprintf( "%.2f", $TotalTotal );
             $Param{TotalHours}      += $Total;
             $Param{TotalHoursTotal} += $TotalTotal;
             $Self->{LayoutObject}->Block(
-                Name => 'Action',
+                Name => 'ActionTotal',
                 Data => { %Param, %Frontend },
             );
         }

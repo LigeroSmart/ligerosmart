@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -17,22 +17,20 @@
  */
 
 .NoHover tbody tr:hover td {
-    background: none;
+    background: transparent;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-.NoHover tr.Even:hover td,
-.NoHover tr.Even:hover.Last td {
+
+.NoHover tr.Even:hover td {
     background-color: #F5F5F5;
 }
 
-.NoHover tbody tr.Last:hover td {
-    background: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+.NoHover tr.GrandTotal:hover td {
+    background-color: #CFCFCF;
 }
+
 
 /**
  * @subsection  fixed data table widths
@@ -72,5 +70,25 @@
 .DataTable tr.Active td.Last {
     border-right: 1px solid #000000;
 }
+
+.DataTable tr.GrandTotal td {
+    background-color: #CFCFCF;
+}
+
+/**
+ * @subsection  data table with two header rows
+ */
+
+.DataTable thead.TwoRows tr:first-child th {
+    border-bottom: none;
+    padding-bottom: 2px;
+}
+
+.DataTable thead.TwoRows tr:last-child th,
+.DataTable thead.TwoRows tr.Last th {
+    border-top: none;
+    padding-top: 3px;
+}
+
 
 } /* end @media */

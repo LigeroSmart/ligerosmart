@@ -1,0 +1,47 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Time Accounting Default CSS
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  left and right arrows
+ */
+
+.Arrow {
+    text-indent: -9999px;
+    display: block;
+    width: 12px;
+    height: 12px;
+    float: left;
+    margin-top: 5px;
+    margin-right: 4px;
+}
+
+.Arrow.Left {
+    background-image: url(../img/arrow_leftright.png);
+}
+
+.Arrow.Right {
+    background-image: url(../img/arrow_leftright.png);
+    background-position: -12px 0px;
+}
+
+/**
+ * @subsection  special settings: reporting
+ */
+
+div.MonthSelection {
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+} /* end @media */

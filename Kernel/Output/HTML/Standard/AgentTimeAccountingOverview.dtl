@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.24 2010-12-27 15:58:35 mn Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.25 2010-12-28 13:48:41 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -118,12 +118,8 @@
                     </h2>
                     <div class="AdditionalInformation">
                         $Text{"$Data{"Month_to_Text"}"} $QData{"Year"}
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"};UserID=$LQData{"UserID"}">
-                            $Text{"Previous month"}
-                        </a>
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"};UserID=$LQData{"UserID"}">
-                            $Text{"Next month"}
-                        </a>
+                        <a class="Arrow Left" title="$Text{"Previous month"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"};UserID=$LQData{"UserID"}"></a>
+                        <a class="Arrow Right" title="$Text{"Next month"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"};UserID=$LQData{"UserID"}"></a>
                     </div>
                 </div>
                 <div class="Content">
@@ -160,39 +156,38 @@
                     <h2>
                         $Text{"User's project overview"}
                         <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"Year"};Month=$LQData{"Month"};ProjectStatusShow=$LQData{"ProjectStatusShow"};UserID=$LQData{"UserID"}">
-                            ($Text{"Show"} $Text{"$Data{"ProjectStatusShow"}"} $Text{"Projects"})
+                            ($Text{"$Data{"ShowProjects"}"})
                         </a>
                     </h2>
                 </div>
                 <div class="Content">
                     <table class="DataTable NoHover">
+                        <thead>
+                            <tr>
+                                <th>$Text{"Project"}</th>
+                                <th>$Text{"Task"}</th>
+                                <th>$Text{"Hours (monthly)"}</th>
+                                <th>$Text{"Hours (Lifetime)"}</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="2"></td>
-                                <td><strong>$Text{"Monthly"}</strong></td>
-                                <td><strong>$Text{"Lifetime"}</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>$Text{"Project"}</strong></td>
-                                <td><strong>$Text{"Task"}</strong></td>
-                                <td><strong>$Text{"Hours"}</strong></td>
-                                <td><strong>$Text{"Hours"}</strong></td>
-                            </tr>
 <!-- dtl:block:Action -->
                             <tr>
 <!-- dtl:block:Project -->
-                                <td rowspan="$Data{"RowSpan"}" valign="top">
-                                    <span>
+                                <td rowspan="$Data{"RowSpan"}">
+                                    <strong>
 <!-- dtl:block:ProjectNoLink -->
+                                    $Data{"Project"}
+<!-- dtl:block:ProjectNoLink -->
+<!-- dtl:block:ProjectLink -->
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectReporting;ProjectID=$QData{"ProjectID"}">
                                         $Data{"Project"}
-<!-- dtl:block:ProjectNoLink -->
+                                    </a>
 <!-- dtl:block:ProjectLink -->
-                                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectReporting;ProjectID=$QData{"ProjectID"}">
-                                            $Data{"Project"}
-                                        </a>
-<!-- dtl:block:ProjectLink -->
-                                    </span>
-                                    <span>$Data{"ProjectDescription"}</span>
+                                    </strong>
+<!-- dtl:block:ProjectDescription -->
+                                    <br/>$Data{"ProjectDescription"}
+<!-- dtl:block:ProjectDescription -->
                                 </td>
 <!-- dtl:block:Project -->
                                 <td>$QData{"Action"}</td>
@@ -200,7 +195,14 @@
                                 <td class="Right">$QData{"HoursTotal"}</td>
                             </tr>
 <!-- dtl:block:Action -->
+<!-- dtl:block:ActionTotal -->
                             <tr>
+                                <td><strong>$Text{"Total"}</strong></td>
+                                <td class="Right"><strong>$QData{"Hours"}</strong></td>
+                                <td class="Right"><strong>$QData{"HoursTotal"}</strong></td>
+                            </tr>
+<!-- dtl:block:ActionTotal -->
+                            <tr class="GrandTotal">
                                 <td colspan="2"><strong>$Text{"Grand total"}</strong></td>
                                 <td class="Right"><strong>$QData{"TotalHours"}</strong></td>
                                 <td class="Right"><strong>$QData{"TotalHoursTotal"}</strong></td>
