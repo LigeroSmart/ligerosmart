@@ -2,7 +2,7 @@
 # AgentTimeAccountingProjectReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.9 2010-12-28 13:48:41 mn Exp $
+# $Id: AgentTimeAccountingProjectReporting.dtl,v 1.10 2010-12-28 13:55:30 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -53,7 +53,7 @@
 <!-- dtl:block:User -->
                         </tr>
 <!-- dtl:block:Action -->
-                        <tr>
+                        <tr class="GrandTotal">
                             <td><strong>$Text{"Total"}</strong></td>
 <!-- dtl:block:UserTotal -->
                             <td class="Right"><strong>$QData{"Total"}</strong></td>
@@ -91,7 +91,7 @@
                             <td class="Right">$QData{"Period"}</td>
                         </tr>
 <!-- dtl:block:Row -->
-                        <tr>
+                        <tr class="GrandTotal">
 <!-- dtl:block:HistoryTotal -->
                             <td colspan="4"><strong>$Text{"Total"}</strong></td>
                             <td class="Right"><strong>$QData{"HistoryTotal"}</strong></td>

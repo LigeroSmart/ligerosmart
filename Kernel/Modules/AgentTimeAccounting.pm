@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.51 2010-12-28 13:48:41 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.52 2010-12-28 13:55:30 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1835,7 +1835,7 @@ sub Run {
                     User   => $Row->{User},
                     Action => $Row->{Action},
                     Remark => $Row->{Remark} || '--',
-                    Period => $Row->{Period},
+                    Period => sprintf( "%.2f", $Row->{Period} ),
                     Date   => $Row->{Date},
                     }
             );
@@ -1843,8 +1843,11 @@ sub Run {
 
         # show the total sum of hours at the end of the history list
         # I also can use $Param{TotalAll}
-        my $ProjectTotalHours = $Self->{TimeAccountingObject}->ProjectTotalHours(
-            ProjectID => $Param{ProjectID},
+        my $ProjectTotalHours = sprintf(
+            "%.2f",
+            $Self->{TimeAccountingObject}->ProjectTotalHours(
+                ProjectID => $Param{ProjectID},
+                )
         );
 
         $Self->{LayoutObject}->Block(
