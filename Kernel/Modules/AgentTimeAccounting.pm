@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.52 2010-12-28 13:55:30 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.53 2010-12-28 19:39:51 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -347,7 +347,7 @@ sub Run {
                 if ($Value) {
                     $Data{$Element}          = 1;
                     $CheckboxCheck{$Element} = 1;
-                    $Param{$Element}         = 'checked';
+                    $Param{$Element}         = 'checked="checked"';
                 }
                 else {
                     $Param{$Element} = ''
@@ -401,6 +401,11 @@ sub Run {
                 Data => { %Param, %Frontend },
             );
         }
+
+        # get sick, leave day and overtime
+        $Param{Sick}     = $Data{Sick}     ? 'checked="checked"' : '';
+        $Param{LeaveDay} = $Data{LeaveDay} ? 'checked="checked"' : '';
+        $Param{Overtime} = $Data{Overtime} ? 'checked="checked"' : '';
 
         $Param{Total} = $Data{Total};
 
@@ -1249,7 +1254,7 @@ sub Run {
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRw};
 
         # build output
-        $Self->_TaskSettingOverview();
+        $Self->_SettingOverview();
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
         $Output .= $Self->{LayoutObject}->Output(
@@ -1493,26 +1498,6 @@ sub Run {
                 );
             }
         }
-    }
-
-    # ---------------------------------------------------------- #
-    # settings for handling time accounting
-    # ---------------------------------------------------------- #
-    elsif ( $Self->{Subaction} eq 'ProjectSetting' ) {
-
-        # permission check
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
-
-        # build output
-        $Self->_ProjectSettingOverview();
-        my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-        $Output .= $Self->{LayoutObject}->Output(
-            Data         => \%Param,
-            TemplateFile => 'AgentTimeAccountingSetting'
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
-        return $Output;
     }
 
     # ---------------------------------------------------------- #
@@ -1927,7 +1912,7 @@ sub Run {
             if ($ProjectID) {
 
                 # build the output
-                $Self->_ProjectSettingOverview();
+                $Self->_SettingOverview();
                 my $Output = $Self->{LayoutObject}->Header();
                 $Output .= $Self->{LayoutObject}->NavigationBar();
                 $Output .= $Self->{LayoutObject}->Notify( Info => 'Project added!' );
@@ -2032,7 +2017,8 @@ sub Run {
 
             # edit project
             if ( $Self->{TimeAccountingObject}->ProjectSettingsUpdate(%GetParam) ) {
-                $Self->_ProjectSettingOverview();
+
+                $Self->_SettingOverview();
                 my $Output = $Self->{LayoutObject}->Header();
                 $Output .= $Self->{LayoutObject}->NavigationBar();
                 $Output .= $Self->{LayoutObject}->Notify( Info => 'Project updated!' );
@@ -2134,7 +2120,7 @@ sub Run {
             if ($TaskID) {
 
                 # build the output
-                $Self->_TaskSettingOverview();
+                $Self->_SettingOverview();
                 my $Output = $Self->{LayoutObject}->Header();
                 $Output .= $Self->{LayoutObject}->NavigationBar();
                 $Output .= $Self->{LayoutObject}->Notify( Info => 'Task added!' );
@@ -2229,7 +2215,9 @@ sub Run {
             # check that the name is unique
             my %ExistingTask
                 = $Self->{TimeAccountingObject}->ActionGet( Action => $GetParam{Task} );
-            if (%ExistingTask) {
+
+            # if the task name is found, check that the ID is different
+            if ( %ExistingTask && $ExistingTask{ID} ne $GetParam{ActionID} ) {
                 $Errors{TaskInvalid}   = 'ServerError';
                 $Errors{TaskErrorType} = 'TaskDuplicateName';
             }
@@ -2246,7 +2234,7 @@ sub Run {
             );
 
             if ($ActionUpdate) {
-                $Self->_TaskSettingOverview();
+                $Self->_SettingOverview();
                 my $Output = $Self->{LayoutObject}->Header();
                 $Output .= $Self->{LayoutObject}->NavigationBar();
                 $Output .= $Self->{LayoutObject}->Notify( Info => 'Task updated!' );
@@ -2666,58 +2654,6 @@ sub _Project2RemarkRegExp {
     return join '|', @Projects2Remark;
 }
 
-sub _ProjectSettingOverview {
-    my ( $Self, %Param ) = @_;
-
-    my %Project = ();
-    my %Data    = ();
-
-    $Self->{LayoutObject}->Block( Name => 'OverviewProject', );
-    $Self->{LayoutObject}->Block( Name => 'ActionListProject' );
-    $Self->{LayoutObject}->Block( Name => 'ActionAddProject' );
-    $Self->{LayoutObject}->Block( Name => 'ActionSettingOverview' );
-
-    # Show project data
-    %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
-
-    $Self->{LayoutObject}->Block(
-        Name => 'OverviewResultProject',
-        Data => \%Param,
-    );
-
-    # define status list
-    my %StatusList = (
-        1 => 'valid',
-        0 => 'invalid',
-    );
-
-    # show list of available projects (if any)
-    if ( $Project{Project} ) {
-        for my $ProjectID (
-            sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
-            keys %{ $Project{Project} }
-            )
-        {
-            $Param{Project}            = $Project{Project}{$ProjectID};
-            $Param{ProjectDescription} = $Project{ProjectDescription}{$ProjectID};
-            $Param{ProjectID}          = $ProjectID;
-            $Param{Status}             = $StatusList{ $Project{ProjectStatus}{$ProjectID} };
-
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewResultProjectRow',
-                Data => {%Param},
-            );
-        }
-    }
-
-    # otherwise, show a no data found msg
-    else {
-        $Self->{LayoutObject}->Block( Name => 'NoProjectDataFoundMsg' );
-    }
-
-    return 1;
-}
-
 sub _ProjectSettingsEdit {
     my ( $Self, %Param ) = @_;
 
@@ -2762,7 +2698,7 @@ sub _ProjectSettingsEdit {
     return 1;
 }
 
-sub _TaskSettingOverview {
+sub _SettingOverview {
     my ( $Self, %Param ) = @_;
 
     my %Project = ();
@@ -2770,9 +2706,11 @@ sub _TaskSettingOverview {
 
     # build output
     $Self->{LayoutObject}->Block( Name => 'Setting', );
+    $Self->{LayoutObject}->Block( Name => 'ProjectFilter' );
     $Self->{LayoutObject}->Block( Name => 'TaskFilter' );
     $Self->{LayoutObject}->Block( Name => 'UserFilter' );
     $Self->{LayoutObject}->Block( Name => 'ActionListSetting' );
+    $Self->{LayoutObject}->Block( Name => 'ActionAddProject' );
     $Self->{LayoutObject}->Block( Name => 'ActionAddTask' );
 
     # get user data
@@ -2806,11 +2744,11 @@ sub _TaskSettingOverview {
         );
     }
 
-    # Show action data
-    my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
+    # Show project data
+    %Project = $Self->{TimeAccountingObject}->ProjectSettingsGet();
 
     $Self->{LayoutObject}->Block(
-        Name => 'OverviewResultSetting',
+        Name => 'OverviewResultProject',
         Data => \%Param,
     );
 
@@ -2818,6 +2756,38 @@ sub _TaskSettingOverview {
     my %StatusList = (
         1 => 'valid',
         0 => 'invalid',
+    );
+
+    # show list of available projects (if any)
+    if ( $Project{Project} ) {
+        for my $ProjectID (
+            sort { $Project{Project}{$a} cmp $Project{Project}{$b} }
+            keys %{ $Project{Project} }
+            )
+        {
+            $Param{Project}            = $Project{Project}{$ProjectID};
+            $Param{ProjectDescription} = $Project{ProjectDescription}{$ProjectID};
+            $Param{ProjectID}          = $ProjectID;
+            $Param{Status}             = $StatusList{ $Project{ProjectStatus}{$ProjectID} };
+
+            $Self->{LayoutObject}->Block(
+                Name => 'OverviewResultProjectRow',
+                Data => {%Param},
+            );
+        }
+    }
+
+    # otherwise, show a no data found msg
+    else {
+        $Self->{LayoutObject}->Block( Name => 'NoProjectDataFoundMsg' );
+    }
+
+    # Show action data
+    my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
+
+    $Self->{LayoutObject}->Block(
+        Name => 'OverviewResultSetting',
+        Data => \%Param,
     );
 
     # show list of available tasks/actions (if any)
