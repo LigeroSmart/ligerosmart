@@ -3,7 +3,7 @@
 // confirmation dialogs
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.ConfirmationDialog.js,v 1.1 2010-12-22 22:39:27 en Exp $
+// $Id: TimeAccounting.Agent.ConfirmationDialog.js,v 1.2 2010-12-29 23:00:29 en Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -44,7 +44,7 @@ TimeAccounting.Agent.ConfirmationDialog = (function (TargetNS) {
      * @function
      * @param {EventObject} event object of the clicked element.
      * @return nothing
-     *      This function shows a confirmation dialog with 2 buttons: Yes and No
+     *      This function shows a confirmation dialog with 2 buttons: Yes and No or a message dialog with one button: Ok.
      */
     TargetNS.ShowConfirmationDialog = function (Event) {
 
@@ -57,13 +57,12 @@ TimeAccounting.Agent.ConfirmationDialog = (function (TargetNS) {
         LocalDialogData = DialogData[$(Event.target).attr('id')];
 
         // define the position of the dialog
-//        PositionTop = $(window).scrollTop() + ($(window).height() * 0.3);
         PositionTop = $(window).height() * 0.3;
 
         // show waiting dialog
         ShowWaitingDialog(PositionTop);
 
-        // ajax call to the module that deletes the template
+        // ajax call to the module that executes the action when pressing the confirmation button
         Data = LocalDialogData.DialogContentQueryString;
         Core.AJAX.FunctionCall(Core.Config.Get('Baselink'), Data, function (Response) {
 
