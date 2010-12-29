@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.25 2010-12-28 13:48:41 mn Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.26 2010-12-29 14:19:10 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -161,7 +161,7 @@
                     </h2>
                 </div>
                 <div class="Content">
-                    <table class="DataTable NoHover">
+                    <table class="DataTable NoHover HighCells">
                         <thead>
                             <tr>
                                 <th>$Text{"Project"}</th>

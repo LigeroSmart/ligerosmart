@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.31 2010-12-28 13:48:41 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.32 2010-12-29 14:19:10 mn Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -28,6 +28,7 @@
         <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
         <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>

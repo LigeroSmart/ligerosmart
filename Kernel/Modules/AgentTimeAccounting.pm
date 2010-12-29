@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.53 2010-12-28 19:39:51 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.54 2010-12-29 14:19:10 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -476,8 +476,9 @@ sub Run {
                 Name        => "ProjectID[$ID]",
                 ID          => "ProjectID$ID",
                 Translation => 0,
-                Class => 'ProjectSelection ' . ( $Errors{ 'ProjectID' . $ID . 'Invalid' } || '' ),
-                OnChange => "FillActionList($ID);",
+                Class       => 'Validate_TimeAccounting_Project ProjectSelection '
+                    . ( $Errors{ 'ProjectID' . $ID . 'Invalid' } || '' ),
+                OnChange => "TimeAccounting.Agent.EditTimeRecords.FillActionList($ID);",
             );
 
 # action list initially only contains empty and selected element as well as elements configured for selected project
@@ -500,14 +501,17 @@ sub Run {
                 Name        => "ActionID[$ID]",
                 ID          => "ActionID$ID",
                 Translation => 0,
-                Class => 'ActionSelection ' . ( $Errors{ 'ActionID' . $ID . 'Invalid' } || '' ),
+                Class       => 'Validate_DependingRequiredAND Validate_Depending_ProjectID'
+                    . $ID
+                    . ' ActionSelection '
+                    . ( $Errors{ 'ActionID' . $ID . 'Invalid' } || '' ),
             );
 
             $Param{Remark} = $UnitRef->{Remark} || '';
 
             if ( $UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
                 if ( $UnitRef->{Period} == 0.00 ) {
-                    $Errors{ServerErrorBlock} = 'CeroHoursPeriodServerError';
+                    $Errors{ServerErrorBlock} = 'ZeroHoursPeriodServerError';
                     if (
                         $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime')
                         )
@@ -700,28 +704,31 @@ sub Run {
                     if ( !$Param{Incomplete} ) {
                         $Self->{LayoutObject}->Block( Name => 'IncompleteText', );
                     }
-                    my $BoldStart = '';
-                    my $BoldEnd   = '';
                     if (
                         $YearID     eq $Param{Year}
                         && $MonthID eq $Param{Month}
                         && $DayID   eq $Param{Day}
                         )
                     {
-                        $BoldStart = '<strong>';
-                        $BoldEnd   = '</strong>';
+                        $Self->{LayoutObject}->Block(
+                            Name => 'IncompleteWorkingDaysSelected',
+                            Data => {
+                                Year  => $YearID,
+                                Month => $MonthID,
+                                Day   => $DayID,
+                            },
+                        );
                     }
-
-                    $Self->{LayoutObject}->Block(
-                        Name => 'IncompleteWorkingDays',
-                        Data => {
-                            Year      => $YearID,
-                            Month     => $MonthID,
-                            Day       => $DayID,
-                            BoldStart => $BoldStart,
-                            BoldEnd   => $BoldEnd,
-                        },
-                    );
+                    else {
+                        $Self->{LayoutObject}->Block(
+                            Name => 'IncompleteWorkingDays',
+                            Data => {
+                                Year  => $YearID,
+                                Month => $MonthID,
+                                Day   => $DayID,
+                            },
+                        );
+                    }
                     $Param{Incomplete} = 1;
                 }
             }

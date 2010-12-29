@@ -2,117 +2,12 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.30 2010-12-22 22:37:52 en Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.31 2010-12-29 14:19:10 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
-
-<script type="text/javascript">
-<!--
-
-function submit_compose() {
-    for (var Counter = 1;Counter < 10; Counter++) {
-        var Remark  = 'Remark['    + Counter + ']';
-        var Project = 'ProjectID[' + Counter + ']';
-
-        if ( document.compose.elements[Project].value ) {
-
-            var RemarkCheck = project_remark_check(Project);
-
-            if (   document.compose.elements[Project].value
-                && RemarkCheck
-                &&  (!document.compose.elements[Remark].value
-                        || document.compose.elements[Remark].value.length < 8
-                    )
-            ) {
-                alert('$JSText{"Please add a remark with more than 8 characters!"}');
-                document.compose.elements[Remark].focus();
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-function project_remark_check(Project) {
-
-    var reg = /^($QData{"RemarkRegExp"})$/;
-
-    if ( reg.test(document.compose.elements[Project].value) == false ) {
-        return false;
-    }
-    return true;
-}
-
-// Fills options of action selection according to selected project
-function FillActionList(WorkingUnitID) {
-
-    var ProjectSelectionIndex = document.getElementById("ProjectID" + WorkingUnitID).selectedIndex;
-    var ProjectName = document.getElementById("ProjectID" + WorkingUnitID).options[ProjectSelectionIndex].text;
-
-    var ActionList = $QData{"JSActionList"};
-    var ActionListConstraints = $QData{"JSActionListConstraints"};
-    var ActionSelection = document.getElementById("ActionID" + WorkingUnitID);
-    var SelectedActionID = ActionSelection.value;
-
-    // remove previous actions, leave first element (empty element)
-    var ActionSelectionLength = ActionSelection.length;
-    for (var ActionSelectionIndex = 1; ActionSelectionIndex < ActionSelectionLength; ActionSelectionIndex++) {
-        ActionSelection.remove(1);
-    }
-
-    var OptionCount = 0;
-    for (var ActionListIndex = 0; ActionListIndex < ActionList.length; ActionListIndex++) {
-
-        var ActionID = ActionList[ActionListIndex][0];
-        var ActionName = ActionList[ActionListIndex][1];
-
-        for (var ActionListConstraintsIndex = 0; ActionListConstraintsIndex < ActionListConstraints.length; ActionListConstraintsIndex++) {
-            var ProjectNameRegExp = new RegExp(ActionListConstraints[ActionListConstraintsIndex][0]);
-            var ActionNameRegExp = new RegExp(ActionListConstraints[ActionListConstraintsIndex][1]);
-
-            // add action to selection
-            if (ProjectNameRegExp.test(ProjectName) && ActionNameRegExp.test(ActionName)) {
-                AddSelectionOption(ActionSelection, ActionName, ActionID, SelectedActionID);
-                OptionCount++;
-            }
-        }
-    }
-
-    // all actions will be added if no action was added above (possible misconfiguration)
-    if (!OptionCount) {
-        // ignore first element because it's the empty element which is already part of the list
-        for (var ActionListIndex = 1; ActionListIndex < ActionList.length; ActionListIndex++) {
-            var ActionID = ActionList[ActionListIndex][0];
-            var ActionName = ActionList[ActionListIndex][1];
-            AddSelectionOption(ActionSelection, ActionName, ActionID, SelectedActionID);
-        }
-    }
-}
-
-// Adds option to a selection
-function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedOption) {
-
-    var Option = document.createElement('option');
-    Option.text = OptionText;
-    Option.value = OptionValue;
-
-    if (OptionValue == SelectedOption) {
-        Option.selected = true;
-    }
-
-    try {
-        SelectionElement.add(Option, null); // All but IE
-    }
-    catch (ex) {
-        SelectionElement.add(Option); // Only IE
-    }
-}
-
-//-->
-</script>
 
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
     <h1 class="Header">$Text{"Edit Time Record"}</h1>
@@ -137,75 +32,83 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
             </div>
         </div>
 <!-- dtl:block:OverviewProject -->
-    </div>
-    <div class="ContentColumn">
-        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose2">
-            <input type="hidden" name="Action"    value="$Env{"Action"}" />
-            <input type="hidden" name="Subaction" value="Edit" />
-            <div class="WidgetSimple">
-                <div class="Header">
-                    <h2>$Text{"Date Navigation"}</h2>
-                </div>
-                <div class="Content LayoutGrid ColumnsWithSpacing">
-                    <div class="Size1of2">
-                        $Data{"Date"}
-                        <input class="button" type="submit" value="$Text{"Submit"}" />
-                    </div>
-
-                    <div class="Size1of2">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"}">$Text{"Previous day"}</a>
-                        $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"}">$Text{"Next day"}</a>
-                    </div>
-                    <div class="Clear"></div>
-                </div>
-                <div class="Content">
-<!-- dtl:block:IncompleteText -->
-                    <label>$Text{"Days without entries"}:</label>
-                    <p>
-<!-- dtl:block:IncompleteWorkingDays -->
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">
-                            $Data{"BoldStart"}
-                            $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
-                            $Data{"BoldEnd"}
-                        </a>
-<!-- dtl:block:IncompleteWorkingDays -->
-                    </p>
-<!-- dtl:block:IncompleteText -->
-                </div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Date Navigation"}</h2>
             </div>
-        </form>
+            <div class="Content">
+                <div class="MonthSelection">
+                    <a class="Arrow Left" title="$Text{"Previous day"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"}"></a>
+                    $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+                    <a class="Arrow Right" title="$Text{"Next day"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"}"></a>
+                </div>
+                <div class="Clear"></div>
+                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="DateSelection">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="Edit" />
+                    $Data{"Date"}
+                    <input class="button" type="submit" value="$Text{"Submit"}" />
+                </form>
+<!-- dtl:block:IncompleteText -->
+                <h2 class="SpacingTop">$Text{"Days without entries"}:</h2>
+                <ul>
+<!-- dtl:block:IncompleteWorkingDays -->
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">
+                            $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
+                        </a>
+                    </li>
+<!-- dtl:block:IncompleteWorkingDays -->
+<!-- dtl:block:IncompleteWorkingDaysSelected -->
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">
+                            <strong>$QData{"Year"}-$QData{"Month"}-$QData{"Day"}</strong>
+                        </a>
+                    </li>
+<!-- dtl:block:IncompleteWorkingDaysSelected -->
+                </ul>
+<!-- dtl:block:IncompleteText -->
+            </div>
+        </div>
+        <div class="WidgetSimple SpacingTop">
+            <div class="Header">
+                <h2>$Text{"Reference"}</h2>
+            </div>
+            <div class="Content">
+                <ul>
+                    <li>$Text{"Required fields are marked with a "*""}</li>
+                    <li>$Text{"You have to insert a start and an end time or a period"}</li>
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="ContentColumn">
-        <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" id="WorkingUnits" class="Validate PreventMultipleSubmits">
-            <input type="hidden" name="Action"        value="$Env{"Action"}" />
-            <input type="hidden" name="Subaction"     value="Edit" />
-            <input type="hidden" name="RecordsNumber" value="$QData{"RecordsNumber"}" />
-            <input type="hidden" name="Status"        value="Action" />
-            <input type="hidden" name="Year"          value="$QData{"Year"}" />
-            <input type="hidden" name="Month"         value="$QData{"Month"}" />
-            <input type="hidden" name="Day"           value="$QData{"Day"}" />
-
-            <div class="WidgetSimple">
-                <div class="Header">
-                    <h2>$Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</h2>
-                </div>
-                <div class="Content">
-
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</h2>
+            </div>
+            <div class="Content">
 <!-- dtl:block:UnitBlock -->
-                    <table class="DataTable DataTableNoHighlight">
+                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="WorkingUnits" id="WorkingUnits" class="Validate PreventMultipleSubmits">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="Edit" />
+                    <input type="hidden" name="RecordsNumber" value="$QData{"RecordsNumber"}" />
+                    <input type="hidden" name="Status" value="Action" />
+                    <input type="hidden" name="Year" value="$QData{"Year"}" />
+                    <input type="hidden" name="Month" value="$QData{"Month"}" />
+                    <input type="hidden" name="Day" value="$QData{"Day"}" />
+                    <table class="DataTable NoHover HighCells">
                         <thead>
                             <tr>
                                 <th><span class="Marker">*</span> $Text{"Project"}</th>
                                 <th><span class="Marker">*</span> $Text{"Task"}</th>
                                 <th>$Text{"Remark"}</th>
-                                <th><span class="Marker">$QData{"StartTimeRequired"}</span> $Text{"Start"} (HH:MM)</th>
-                                <th><span class="Marker">$QData{"EndTimeRequired"}</span> $Text{"End"} (HH:MM)</th>
+                                <th>$Text{"Start"} (HH:MM)</th>
+                                <th>$Text{"End"} (HH:MM)</th>
                                 <th><span class="Marker">$QData{"PeriodNote"}</span> $Text{"Period"}</th>
                             </tr>
                         </thead>
                         <tbody>
-
 <!-- dtl:block:Unit -->
                             <tr>
                                 <td>
@@ -219,24 +122,25 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                                     <div id="ActionID$QData{"ID"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                                 </td>
                                 <td>
-                                    <input type="text" name="Remark[$QData{"ID"}]" id="Remark$QData{"ID"}" class="$QData{"RemarkInvalid"}" value="$QData{"Remark"}" size="35" />
+                                    <input type="text" name="Remark[$QData{"ID"}]" id="Remark$QData{"ID"}" class="Validate_TimeAccounting_Remark $QData{"RemarkInvalid"}" value="$QData{"Remark"}" size="35" />
+                                    <div id="Remark$QData{"ID"}Error" class="TooltipErrorMessage"><p>$Text{"Please add a remark with more than 8 characters!."}</p></div>
                                     <div id="Remark$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"This field is required."}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="StartTime[$QData{"ID"}]" id="StartTime$QData{"ID"}" class="$QData{"StartTimeRequired"} $QData{"StartTimeInvalid"}" value="$QData{"StartTime"}" size="7" />
+                                    <input type="text" name="StartTime[$QData{"ID"}]" id="StartTime$QData{"ID"}" class="Validate_TimeAccounting_StartTime $QData{"StartTimeRequired"} $QData{"StartTimeInvalid"}" value="$QData{"StartTime"}" size="7" />
                                     <div id="StartTime$QData{"ID"}Error" class="TooltipErrorMessage">
-                                        <p>$Text{"This field is required."}</p>
+                                        <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
                                     <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"This field is required."}</p>
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="$QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
+                                    <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="Validate_DependingRequiredAND Validate_Depending_StartTime$QData{"ID"} $QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
                                     <div id="EndTime$QData{"ID"}Error" class="TooltipErrorMessage">
-                                        <p>$Text{"This field is required."}</p>
+                                        <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
                                     <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"This field is required."}</p>
@@ -244,9 +148,9 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
                                 <td>
-                                    <input type="text" name="Period[$QData{"ID"}]" id="Period$QData{"ID"}" class="$QData{"PeriodRequired"} $QData{"PeriodInvalid"}" value="$QData{"Period"}" size="7" />
+                                    <input type="text" name="Period[$QData{"ID"}]" id="Period$QData{"ID"}" class="Validate_TimeAccounting_Period Validate_TimeUnits $QData{"PeriodRequired"} $QData{"PeriodInvalid"}" value="$QData{"Period"}" size="7" />
                                     <div id="Period$QData{"ID"}Error" class="TooltipErrorMessage">
-                                        <p>$Text{"This field is required."}</p>
+                                        <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
 <!-- dtl:block:PeriodGenericServerError -->
                                     <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
@@ -263,11 +167,11 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                                         <p>$Text{"Invalid period! A day has only 24 hours."}</p>
                                     </div>
 <!-- dtl:block:InvalidHoursPeriodServerError -->
-<!-- dtl:block:CeroHoursPeriodServerError -->
+<!-- dtl:block:ZeroHoursPeriodServerError -->
                                     <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
-                                        <p>$Text{"A valid period must be greater than cero."}</p>
+                                        <p>$Text{"A valid period must be greater than zero."}</p>
                                     </div>
-<!-- dtl:block:CeroHoursPeriodServerError -->
+<!-- dtl:block:ZeroHoursPeriodServerError -->
 
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
@@ -283,13 +187,11 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                             </tr>
 <!-- dtl:block:UnitBlock -->
                             <tr>
-                                <td colspan="4">
-                                </td>
+                                <td colspan="4"></td>
 <!-- dtl:block:Total -->
                                 <td>$Text{"Total"}:</td>
                                 <td>$QData{"Total"}</td>
 <!-- dtl:block:Total -->
-
                             </tr>
 <!-- dtl:block:Readonly -->
                             <tr>
@@ -298,12 +200,10 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                                 </td>
                             </tr>
 <!-- dtl:block:Readonly -->
-
                         </tbody>
                     </table>
-
 <!-- dtl:block:OtherTimes -->
-                    <div>
+                    <div class="SpacingTop">
                         <input type="checkbox" value="1" id="LeaveDay" name="LeaveDay" title="$Text{"On vacation"}" class="$Data{"LeaveDayInvalid"}" $Data{"LeaveDay"} />
                         <label for="LeaveDay">$Text{"On vacation"}</label>
                         <div id="LeaveDayServerError" class="TooltipErrorMessage">
@@ -321,15 +221,20 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
                         </div>
                     </div>
 <!-- dtl:block:OtherTimes -->
-
-                    <div class="Field Center SpacingTop">
-                        <button class="Primary" type="submit" value="$Text{"Submit"}" onclick="return submit_compose();">$Text{"Submit"}</button>
+                    <div class="Center SpacingTop">
+                        <button class="Primary" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
                         <a id="DeleteTimeAccountingEntry" href="#">
                             $Text{"Delete"}
                         </a>
-
+                        $Text{"or"}
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit">$Text{"Cancel"}</a>
+                    </div>
+                    <div class="Clear"></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+    TimeAccounting.Agent.EditTimeRecords.ActionList = $QData{"JSActionList"};
+    TimeAccounting.Agent.EditTimeRecords.ActionListConstraints = $QData{"JSActionListConstraints"};
+    TimeAccounting.Agent.EditTimeRecords.Init("$QData{"RemarkRegExp"}");
     TimeAccounting.Agent.ConfirmationDialog.BindConfirmationDialog({
         ElementID:                  'DeleteTimeAccountingEntry',
         ElementSelector:            '#DeleteTimeAccountingEntry',
@@ -343,26 +248,8 @@ function AddSelectionOption(SelectionElement, OptionText, OptionValue, SelectedO
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
-
-                        $Text{"or"}
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit">$Text{"Cancel"}</a>
-                    </div>
-                    <div class="Clear"></div>
-                </div>
-            </div>
-        </form>
-
-<!-- start note -->
-        <div class="WidgetSimple SpacingTop">
-            <div class="Header">
-                <h2>$Text{"Reference"}</h2>
-            </div>
-            <div class="Content">
-                <p>* $Text{"Required Field"}</p>
-                <p>* $Text{"You have to insert a start and an end time or a period"}</p>
-                <p>* $Text{"If you select "Miscellaneous (misc)" as task, please explain this in the remarks field"}</p>
+                </form>
             </div>
         </div>
-<!-- end note -->
     </div>
 </div>
