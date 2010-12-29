@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.51 2010-12-28 18:27:55 dz Exp $
+# $Id: Survey.pm,v 1.52 2010-12-29 17:11:59 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 =head1 NAME
 
@@ -1984,7 +1984,8 @@ sub RequestSend {
 to get all public attributes of a survey
 
     my %PublicSurvey = $SurveyObject->PublicSurveyGet(
-        PublicSurveyKey => 'Aw5de3Xf5qA',
+            PublicSurveyKey => 'Aw5de3Xf5qA',
+            Invalid         => 1, # optional to know if one key was already used.
     );
 
 =cut
@@ -2004,10 +2005,17 @@ sub PublicSurveyGet {
     # quote
     $Param{PublicSurveyKey} = $Self->{DBObject}->Quote( $Param{PublicSurveyKey} );
 
+    my $ValidID = 'AND valid_id = 1';
+
+    # if not invalid show just valid keys
+    if ( $Param{Invalid} ) {
+        $ValidID = 'AND valid_id = 0';
+    }
+
     # get request
     $Self->{DBObject}->Prepare(
         SQL => "SELECT survey_id FROM survey_request "
-            . "WHERE public_survey_key = '$Param{PublicSurveyKey}' AND valid_id = 1",
+            . "WHERE public_survey_key = '$Param{PublicSurveyKey}' $ValidID ",
         Limit => 1,
     );
 
@@ -2245,6 +2253,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.51 $ $Date: 2010-12-28 18:27:55 $
+$Revision: 1.52 $ $Date: 2010-12-29 17:11:59 $
 
 =cut

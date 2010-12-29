@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicSurvey.pm - a survey module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.19 2009-04-02 16:22:19 mh Exp $
+# $Id: PublicSurvey.pm,v 1.20 2010-12-29 17:11:59 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,13 +121,30 @@ sub Run {
     # ------------------------------------------------------------ #
     my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => 'PublicSurveyKey' );
     $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
+
+    my $UsedSurveyKey = $Self->{SurveyObject}->PublicSurveyGet(
+        PublicSurveyKey => $PublicSurveyKey,
+        Invalid         => 1,
+    );
+
     my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
+
     $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
         Text           => $Survey{Introduction},
         HTMLResultMode => 1,
     );
+
     $Survey{PublicSurveyKey} = $PublicSurveyKey;
-    if ( $Survey{SurveyID} > 0 ) {
+
+    if ($UsedSurveyKey) {
+        $Self->{LayoutObject}->Block(
+            Name => 'PublicSurveyError',
+            Data => {
+                Message => 'You have already answered the survey, Thank you for your feedbak!.',
+            },
+        );
+    }
+    elsif ( $Survey{SurveyID} && $Survey{SurveyID} > 0 ) {
         $Self->{LayoutObject}->Block(
             Name => 'PublicSurvey',
             Data => {%Survey},
@@ -180,7 +197,12 @@ sub Run {
         }
     }
     else {
-        $Self->{LayoutObject}->Block( Name => 'PublicNoSurvey' );
+        $Self->{LayoutObject}->Block(
+            Name => 'PublicSurveyError',
+            Data => {
+                Message => 'Invalid survey key.',
+            },
+        );
     }
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'PublicSurvey',
