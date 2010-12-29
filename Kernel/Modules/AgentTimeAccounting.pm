@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.54 2010-12-29 14:19:10 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.55 2010-12-29 23:20:13 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,7 +86,7 @@ sub Run {
     my @WeekdayArray = ( 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', );
 
     # ---------------------------------------------------------- #
-    # delete the time accounting elements of one day
+    # show confirmation dialog to delete the entry of this day
     # ---------------------------------------------------------- #
     if ( $Self->{ParamObject}->GetParam( Param => 'DeleteDay' ) ) {
 
@@ -214,6 +214,8 @@ sub Run {
             $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
         }
         $Param{RecordsNumber} = $Self->{ParamObject}->GetParam( Param => 'RecordsNumber' ) || 8;
+        $Param{InsertWorkingUnits}
+            = $Self->{ParamObject}->GetParam( Param => 'InsertWorkingUnits' );
 
         # add more input fields?
         if ( $Self->{ParamObject}->GetParam( Param => 'MoreInputFields' ) ) {
@@ -561,31 +563,31 @@ sub Run {
 
             # validity check
             if (
-                $UnitRef->{ProjectID}
+                $Param{InsertWorkingUnits}
+                && $UnitRef->{ProjectID}
                 && $UnitRef->{ActionID}
                 && $Param{Sick}
                 )
             {
-                $Param{ReadOnlyDescription}
-                    = 'Are you sure that you worked while you were on sick leave?';
+                $Param{BlockName} = 'SickLeaveMessage';
             }
             elsif (
-                $UnitRef->{ProjectID}
+                $Param{InsertWorkingUnits}
+                && $UnitRef->{ProjectID}
                 && $UnitRef->{ActionID}
                 && $Param{LeaveDay}
                 )
             {
-                $Param{ReadOnlyDescription}
-                    = 'Are you sure that you worked while you were on vacation?';
+                $Param{BlockName} = 'VacationMessage';
             }
             elsif (
-                $UnitRef->{ProjectID}
+                $Param{InsertWorkingUnits}
+                && $UnitRef->{ProjectID}
                 && $UnitRef->{ActionID}
                 && $Param{Overtime}
                 )
             {
-                $Param{ReadOnlyDescription}
-                    = 'Are you sure that you worked while you were on overtime leave?';
+                $Param{BlockName} = 'OvertimeMessage';
             }
 
             if (
@@ -637,8 +639,8 @@ sub Run {
             $Param{RequiredDescription}
                 = 'Can\'t save settings, because you entered more than 24 working hours!';
         }
-        elsif ( $Param{Total} && $Param{Total} > 16 ) {
-            $Param{ReadOnlyDescription} = 'Are you sure that you worked more than 16 hours?';
+        elsif ( $Param{InsertWorkingUnits} && $Param{Total} && $Param{Total} > 16 ) {
+            $Param{BlockName} = 'More16HoursMessage';
         }
         if ( $Param{RequiredDescription} ) {
             $Self->{LayoutObject}->Block(
@@ -660,10 +662,15 @@ sub Run {
             }
         }
 
-        if ( $Param{ReadOnlyDescription} ) {
+        if ( $Param{BlockName} ) {
             $Self->{LayoutObject}->Block(
-                Name => 'Readonly',
-                Data => { Description => $Param{ReadOnlyDescription} },
+                Name => 'ShowConfirmation',
+                Data => {
+                    BlockName => $Param{BlockName},
+                    Year      => $Param{Year},
+                    Month     => $Param{Month},
+                    Day       => $Param{Day},
+                },
             );
         }
 
@@ -2670,7 +2677,7 @@ sub _ProjectSettingsEdit {
     );
 
     $Self->{LayoutObject}->Block( Name => 'ActionListProject' );
-    $Self->{LayoutObject}->Block( Name => 'ActionOverviewProject' );
+    $Self->{LayoutObject}->Block( Name => 'ActionSettingOverview' );
 
     # define status list
     my %StatusList = (
