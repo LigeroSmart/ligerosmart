@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.55 2010-12-29 23:20:13 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.56 2010-12-29 23:43:41 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -2916,6 +2916,7 @@ sub _UserSettingsEdit {
 
     $Self->{LayoutObject}->Block( Name => 'ActionListSetting' );
     $Self->{LayoutObject}->Block( Name => 'ActionOverviewSetting' );
+    $Self->{LayoutObject}->Block( Name => 'Reference' );
 
     # define status list
     my %StatusList = (
