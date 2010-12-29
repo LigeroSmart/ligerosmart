@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.27 2010-12-29 14:19:10 mn Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.28 2010-12-29 23:00:11 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -32,12 +32,6 @@
                         </form>
                     </li>
 <!--dtl:block:ActionAddProject-->
-
-<!-- dtl:block:ActionOverviewProject -->
-                    <li>
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectSetting" class="CallForAction"><span>$Text{"Go to overview"}</span></a>
-                    </li>
-<!-- dtl:block:ActionOverviewProject -->
 
 <!-- dtl:block:ActionSettingOverview -->
                     <li>
@@ -106,7 +100,7 @@
                         <div class="Field SpacingTop">
                             <button class="Primary" type="submit" id="Submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
                             $Text{"or"}
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectSetting">$Text{"Cancel"}</a>
+                            <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting">$Text{"Cancel"}</a>
                         </div>
                         <div class="Clear"></div>
                     </fieldset>
