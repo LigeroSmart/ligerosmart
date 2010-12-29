@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.28 2010-12-29 23:00:11 en Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.29 2010-12-29 23:44:33 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -202,6 +202,19 @@
             </div>
         </div>
 <!-- dtl:block:UserFilter -->
+
+<!-- dtl:block:Reference -->
+        <div class="WidgetSimple SpacingTop">
+            <div class="Header">
+                <h2>$Text{"Reference"}</h2>
+            </div>
+            <div class="Content">
+                <ul>
+                    <li>$Text{"Required fields are marked with a "*"."}</li>
+                </ul>
+            </div>
+        </div>
+<!-- dtl:block:Reference -->
 
     </div>
 
@@ -449,9 +462,9 @@
                     <table class="DataTable NoHover">
                         <thead>
                             <tr>
-                                <th>$Text{"Period Begin"}</th>
-                                <th>$Text{"Period End"}</th>
-                                <th>$Text{"Days of Vacation"}</th>
+                                <th><span class="Marker">*</span> $Text{"Period Begin"}</th>
+                                <th><span class="Marker">*</span> $Text{"Period End"}</th>
+                                <th><span class="Marker">*</span> $Text{"Days of Vacation"}</th>
                                 <th>$Text{"Hours per Week"}</th>
                                 <th>$Text{"Authorized Overtime"}</th>
                                 <th>$Text{"Status"}</th>
@@ -461,13 +474,19 @@
 <!-- dtl:block:PeriodOverviewRow -->
                             <tr>
                                 <td>
-                                    <input type="text" id="DateStart-$QData{"Period"}" name="DateStart[$QData{"Period"}]" value="$QData{"DateStart"}" />
+                                    <input type="text" id="DateStart-$QData{"Period"}" name="DateStart[$QData{"Period"}]" value="$QData{"DateStart"}" class="Validate_Required $QData{"DateStartInvalid"}" />
+                                    <div id="DateStart-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <div id="DateStart-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                                 </td>
                                 <td>
-                                    <input type="text" id="DateEnd-$QData{"Period"}" name="DateEnd[$QData{"Period"}]" value="$QData{"DateEnd"}" />
+                                    <input type="text" id="DateEnd-$QData{"Period"}" name="DateEnd[$QData{"Period"}]" value="$QData{"DateEnd"}" class="Validate_Required $QData{"DateEndInvalid"}" />
+                                    <div id="DateEnd-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <div id="DateEnd-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                                 </td>
                                 <td>
-                                    <input type="text" id="LeaveDays-$QData{"Period"}" name="LeaveDays[$QData{"Period"}]" value="$QData{"LeaveDays"}" />
+                                    <input type="text" id="LeaveDays-$QData{"Period"}" name="LeaveDays[$QData{"Period"}]" value="$QData{"LeaveDays"}" class="Validate_Required $QData{"LeaveDaysInvalid"}" />
+                                    <div id="LeaveDays-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <div id="LeaveDays-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
                                 </td>
                                 <td>
                                     <input type="text" id="WeeklyHours-$QData{"Period"}" name="WeeklyHours[$QData{"Period"}]" value="$QData{"WeeklyHours"}" />
