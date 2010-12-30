@@ -2,7 +2,7 @@
 # Kernel/Language/bg_AgentSurvey.pm - the bulgarian language for AgentSurvey
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_AgentSurvey.pm,v 1.7 2010-12-30 20:53:39 dz Exp $
+# $Id: bg_AgentSurvey.pm,v 1.8 2010-12-30 20:56:16 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -42,8 +42,8 @@ sub Data {
     $Self->{Translation}->{'List'}              = 'Списък';
     $Self->{Translation}->{'Textarea'}          = 'Зона за текст';
 
-    $Self->{Translation}->{'A Survey Module'} = '';
-    $Self->{Translation}->{'Public Survey'} = '';
+    $Self->{Translation}->{'A Survey Module.'} = '';
+    $Self->{Translation}->{'Public Survey.'} = '';
     $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means: Always send it ) .'} = '';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = '';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} = '';
