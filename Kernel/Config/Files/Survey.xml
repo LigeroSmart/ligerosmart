@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.10 2008-12-22 10:03:38 martin Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.11 2010-12-30 20:52:44 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Lang="en">All parameters for the Survey object in the agent interface.</Description>
         <Description Lang="de">Alle Parameter des Befragungs-Objekts im Agent-Interface.</Description>
@@ -8,24 +8,22 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>A Survey Module</Description>
+                <Description Translatable="1">A Survey Module.</Description>
                 <NavBarName>Survey</NavBarName>
                 <Title>Survey</Title>
                 <NavBar>
-                    <Description>A Survey Module</Description>
-                    <Name>Survey</Name>
+                    <Description Translatable="1">A Survey Module</Description>
+                    <Name  Translatable="1">Survey</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
-                    <Image>survey.png</Image>
                     <Link>Action=AgentSurvey</Link>
                     <NavBar>Survey</NavBar>
                     <AccessKey>u</AccessKey>
                     <Prio>8000</Prio>
                 </NavBar>
                 <NavBar>
-                    <Description>Overview</Description>
-                    <Name>Overview</Name>
-                    <Image>overview.png</Image>
+                    <Description  Translatable="1">Overview</Description>
+                    <Name  Translatable="1">Overview</Name>
                     <Link>Action=AgentSurvey</Link>
                     <Type></Type>
                     <Block></Block>
@@ -34,10 +32,9 @@
                     <Prio>100</Prio>
                 </NavBar>
                 <NavBar>
-                    <Description>New</Description>
-                    <Name>New</Name>
-                    <Image>new.png</Image>
-                    <Link>Action=AgentSurvey&amp;Subaction=SurveyAdd</Link>
+                    <Description Translatable="1">New</Description>
+                    <Name Translatable="1">New</Name>
+                    <Link>Action=AgentSurvey;Subaction=SurveyAdd</Link>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>Survey</NavBar>
@@ -48,21 +45,19 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="PublicFrontend::Module###PublicSurvey" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the PublicSurvey object in the public Survey area.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das PublicSurvey-Objekt im öffentlichen Umfrage-Bereich.</Description>
+        <Description Translatable="1">Frontend module registration for the PublicSurvey object in the public Survey area.</Description>
         <Group>Survey</Group>
         <SubGroup>Frontend::Public::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description>Public Survey</Description>
+                <Description Translatable="1">Public Survey.</Description>
                 <NavBarName>Survey</NavBarName>
                 <Title>Survey</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::SendPeriod" Required="0" Valid="1">
-        <Description Lang="en">Days starting from the latest customer survey email between no customer survey email is sent.</Description>
-        <Description Lang="de">Tage zwischen der letzten Kunden-Umfrage und den keine Kunden-Umfrage gesendet wird.</Description>
+        <Description Translatable="1">Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -70,8 +65,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::NotificationSender" Required="1" Valid="1">
-        <Description Lang="en">Default sender for the notification email to customers about new survey.</Description>
-        <Description Lang="de">Default-Sender für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Description Translatable="1">Default sender for the notification email to customers about new survey.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -79,8 +73,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::NotificationSubject" Required="1" Valid="1">
-        <Description Lang="en">Default subject for the notification email to customers about new survey.</Description>
-        <Description Lang="de">Default-Betreff für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Description Translatable="1">Default subject for the notification email to customers about new survey.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -88,8 +81,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::NotificationBody" Required="1" Valid="1">
-        <Description Lang="en">Default body for the notification email to customers about new survey.</Description>
-        <Description Lang="de">Default-Body für die Benachrichtigungsmail an Kunden bzgl. neue Umfragen.</Description>
+        <Description  Translatable="1">Default body for the notification email to customers about new survey.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -108,8 +100,7 @@ Your OTRS-Team
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::SendNoSurveyRegExp" Required="0" Valid="1">
-        <Description Lang="en">If this regex matches, no customer survey will be sent.</Description>
-        <Description Lang="de">Trifft dieser reguläre Ausdruck zu, wird keine Benachrichtigungsmail an Kunden bzgl. neue Umfragen gesendet.</Description>
+        <Description  Translatable="1">If this regex matches, no customer survey will be sent.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -117,8 +108,7 @@ Your OTRS-Team
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::EventModulePost###99-SurveySendRequest" Required="0" Valid="1">
-        <Description Lang="en">Ticket event module to send automatically survey email requests to customers if a ticket gets closed.</Description>
-        <Description Lang="de">Ticket Event Modul welches automatisch Umfragen-Emails an Kunden wenn deren Ticket geschlossen wird.</Description>
+        <Description Translatable="1">Ticket event module to send automatically survey email requests to customers if a ticket gets closed.</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>

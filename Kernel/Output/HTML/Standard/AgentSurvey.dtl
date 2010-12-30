@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.35 2010-04-27 13:05:42 mh Exp $
+# $Id: AgentSurvey.dtl,v 1.36 2010-12-30 20:53:39 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -74,7 +74,7 @@ function submit_survey() {
                         <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$QData{"SurveyNumber"}</a>
                     </td>
                     <td class="$QData{"Class"}">$QData{"Title","60"}</td>
-                    <td class="$QData{"Class"}">$Text{"$QData{"Status"}"}</td>
+                    <td class="$QData{"Class"}">$Text{"$Data{"Status"}"}</td>
                     <td class="$QData{"Class"}">$TimeLong{"$QData{"CreateTime"}"}</td>
                 </tr>
 <!-- dtl:block:OverviewSurvey -->
@@ -87,6 +87,8 @@ function submit_survey() {
     </tr>
 </table>
 <!-- dtl:block:Overview -->
+
+
 <!-- dtl:block:Survey -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
@@ -277,7 +279,7 @@ function submit_survey() {
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Status"}:</td>
-                    <td class="mainvalue"><font color='red'>$Text{"$QData{"Status"}"}</font></td>
+                    <td class="mainvalue"><font color='red'>$Text{"$Data{"Status"}"}</font></td>
                 </tr>
                 <tr>
                     <td class="mainkey">$Text{"Change Status"}:</td>
@@ -314,6 +316,7 @@ function submit_survey() {
     </tr>
 </table>
 <!-- dtl:block:Survey -->
+
 <!-- dtl:block:SurveyEdit -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
@@ -454,7 +457,7 @@ function submit_survey() {
 <!-- dtl:block:SurveyEditQuestionsValidOnce -->
                                         <tr>
                                             <td class="contentbody">
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($Text{"$QData{"Type"}"})
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($Text{"$Data{"Type"}"})
                                             </td>
                                             <td class="contentbody" align="right">
                                                 <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Config{"Frontend::ImagePath"}up-big.png"></a>
@@ -466,10 +469,10 @@ function submit_survey() {
                                         <tr>
                                             <td class="contentbody">
 <!-- dtl:block:SurveyEditQuestionsComplete -->
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($Text{"$QData{"Type"}"})
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($Text{"$Data{"Type"}"})
 <!-- dtl:block:SurveyEditQuestionsComplete -->
 <!-- dtl:block:SurveyEditQuestionsIncomplete -->
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><font color='red'>$QData{"Question","70"}</font></a>&nbsp;($Text{"$QData{"Type"}"})
+                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><font color='red'>$QData{"Question","70"}</font></a>&nbsp;($Text{"$Data{"Type"}"})
 <!-- dtl:block:SurveyEditQuestionsIncomplete -->
                                             </td>
                                             <td class="contentbody" align="right">
@@ -547,113 +550,76 @@ function submit_survey() {
     </tr>
 </table>
 <!-- dtl:block:SurveyEdit -->
+
 <!-- dtl:block:SurveyAdd -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"}$Text{"Add"}: $Text{"Survey"}$Env{"Box1"}
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" name="Survey">
-                <input type="hidden" name="Action" value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="SurveyNew">
-                <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td colspan="4" class="contenthead">
-                            <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td class="contenthead">$Text{"Survey"}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">
-                            <table border="0" width="100%">
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Title"}:</td>
-                                    <td class="contentvalue"><input type="text" size="70" name="Title" value=""></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Introduction"}:</td>
-                                    <td class="contentvalue"><textarea name="Introduction" rows="5" cols="50">$QData{"Introduction"}</textarea></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Sender"}:</td>
-                                    <td class="contentvalue"><input type="text" size="70" name="NotificationSender" value="$QData{"NotificationSender"}"></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Subject"}:</td>
-                                    <td class="contentvalue"><input type="text" size="70" name="NotificationSubject" value="$QData{"NotificationSubject"}"></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Body"}:</td>
-                                    <td class="contentvalue"><textarea name="NotificationBody" rows="12" cols="50">$QData{"NotificationBody"}</textarea></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Queues"}:</td>
-                                    <td class="contentvalue">$Data{"QueueString"}</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
-                                    <td class="contentvalue"><textarea name="Description" rows="5" cols="50"></textarea></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" type="submit" value="$Text{"Save"}" onclick="return submit_survey();">
-                        </td>
-                    </tr>
-                </table>
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarLast">
+
+    <h1>$Text{"Create New Survey"}</h1>
+    <div class="ContentColumn">
+        <div class="Content">
+            <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="Survey" id="Survey" class="Validate PreventMultipleSubmits">
+                <input type="hidden" name="Action" value="$Env{"Action"}" />
+                <input type="hidden" name="Subaction" value="SurveyNew" />
+                <fieldset class="TableLike">
+
+                    <label class="Mandatory" for="Title"><span class="Marker">*</span> $Text{"Title"}:</label>
+                    <div class="Field">
+                        <input id="Title" name="Title" type="text" class="W50pc Validate_Required $QData{"TitleServerError"}" value="$QData{"Title"}" />
+                    </div>
+
+                    <label class="Mandatory" for="Introduction"><span class="Marker">*</span> $Text{"Introduction"}:</label>
+                    <div class="Field">
+                        <textarea id="Introduction" name="Introduction" class="Validate_Required $QData{"IntroductionServerError"}" title="Survey Introduction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$Text{"$Data{"Introduction"}"}</textarea>
+                    </div>
+
+                    <label class="Mandatory" for="NotificationSender"><span class="Marker">*</span> $Text{"Sender"}:</label>
+                    <div class="Field">
+                        <input id="NotificationSender" name="NotificationSender" type="text" class="W50pc Validate_Required $QData{"NotificationSenderServerError"}" value="$QData{"NotificationSender"}" />
+                    </div>
+
+                    <label class="Mandatory" for="NotificationSubject"><span class="Marker">*</span> $Text{"Subject"}:</label>
+                    <div class="Field">
+                        <input id="NotificationSubject" name="NotificationSubject" type="text" class="W50pc Validate_Required $QData{"NotificationSubjectServerError"}" value="$QData{"NotificationSubject"}" />
+                    </div>
+
+                    <label class="Mandatory" for="NotificationBody"><span class="Marker">*</span> $Text{"Body"}:</label>
+                    <div class="Field">
+                        <textarea id="NotificationBody" name="NotificationBody" class="W50pc Validate_Required $QData{"NotificationBodyServerError"}" title="Notification Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"NotificationBody"}</textarea>
+                    </div>
+
+                    <label for="Queues">$Text{"Queues"}:</label>
+                    <div class="Field">
+                        $Data{"QueueString"}
+                    </div>
+
+                    <label class="Mandatory" for="Description"><span class="Marker">*</span> $Text{"Internal Description"}:</label>
+                    <div class="Field">
+                        <textarea id="Description" name="Description" class="W50pc Validate_Required $QData{"DescriptionServerError"}" title="Internal Description" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Description"}</textarea>
+                    </div>
+
+<!-- dtl:block:GenericError -->
+                    <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
+                        <p>$Text{"This field is required."}</p>
+                    </div>
+<!-- dtl:block:GenericError -->
+
+<!-- dtl:block:GenericServerError -->
+                    <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
+                        <p>$Text{"This field is required."}</p>
+                    </div>
+<!-- dtl:block:GenericServerError -->
+
+                    <div class="Field">
+                        <button class="Primary" type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
+                    </div>
+
+                </fieldset>
             </form>
-            <br>
-        </td>
-    </tr>
-</table>
+        </div>
+    </div>
+</div>
 <!-- dtl:block:SurveyAdd -->
+
 <!-- dtl:block:QuestionEdit -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">
     <tr>
@@ -1088,7 +1054,7 @@ function submit_survey() {
                                             <td width="50" class="contentkey" align="right">
                                                 &nbsp;
                                             </td>
-                                            <td class="contentvalue">$Text{"$QData{"Answer"}"}</td>
+                                            <td class="contentvalue">$Text{"$Data{"Answer"}"}</td>
                                         </tr>
 <!-- dtl:block:StatsDetailAnswer -->
                                     </table>

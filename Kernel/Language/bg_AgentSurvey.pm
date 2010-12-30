@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/bg_AgentSurvey.pm - the bulgarian language for AgentSurvey
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_AgentSurvey.pm,v 1.6 2009-10-30 08:28:52 mb Exp $
+# $Id: bg_AgentSurvey.pm,v 1.7 2010-12-30 20:53:39 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -41,6 +41,19 @@ sub Data {
     $Self->{Translation}->{'YesNo'}             = 'ДА или НЕ';
     $Self->{Translation}->{'List'}              = 'Списък';
     $Self->{Translation}->{'Textarea'}          = 'Зона за текст';
+
+    $Self->{Translation}->{'A Survey Module'} = '';
+    $Self->{Translation}->{'Public Survey'} = '';
+    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means: Always send it ) .'} = '';
+    $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = '';
+    $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} = '';
+    $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = '';
+    $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = '';
+    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
+    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = '';
+
+    $Self->{Translation}->{'Create New Survey'} = '';
+    $Self->{Translation}->{'Internal Description'} = '';
 
     return 1;
 }

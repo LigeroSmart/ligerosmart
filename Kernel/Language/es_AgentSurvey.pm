@@ -2,7 +2,7 @@
 # Kernel/Language/es_AgentSurvey.pm - the es language for AgentSurvey
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: es_AgentSurvey.pm,v 1.1 2010-08-18 09:17:45 mh Exp $
+# $Id: es_AgentSurvey.pm,v 1.2 2010-12-30 20:53:39 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -46,6 +46,26 @@ sub Data {
     $Self->{Translation}->{'Survey NotificationSender is required!'} = '¡Se requiere el remitente de la notificación para la encuesta!';
     $Self->{Translation}->{'Survey NotificationSubject is required!'} = '¡Se requiere el tema de la notificación para la encuesta!';
     $Self->{Translation}->{'Survey NotificationBody is required!'} = '¡Se requiere el contenido de la notificación para la encuesta!';
+
+    $Self->{Translation}->{'A Survey Module'} = 'Modulo de Encuestas';
+    $Self->{Translation}->{'Public Survey'} = 'Modulo PublicSurvey';
+    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'}
+         = 'Numero de días en los que no se enviaran encuestas, comenzando con el dia en que fue enviada la ultima encuesta al cliente, ( 0 significa envíala siempre ) .';
+    $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'}
+        = 'Registro de módulos Frontend Para el objeto PublicSurvey in el área de encuestas en la interfaz pública.';
+    $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'}
+        = 'cuenta de correo predeterminada para las notificaciones de nuevas encuestas a los clientes.';
+    $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'}
+        = 'Título predeterminado para las notificaciones de nuevas encuestas a los clientes.';
+    $Self->{Translation}->{'Default body for the notification email to customers about new survey.'}
+        = 'Cuerpo predeterminado para las notificaciones de nuevas encuestas a los clientes.';
+    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'}
+        = 'Si la expresión concuerda la encuesta no será enviada.';
+    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'}
+        = 'Modulo de Ticket event para envío automático de solicitudes de encuesta a los clientes si un ticket se cierra.';
+
+    $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
+    $Self->{Translation}->{'Internal Description'} = 'Descripción Interna';
 
     return 1;
 }

@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentSurvey.pm - a survey module
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.37 2009-10-30 08:27:10 mb Exp $
+# $Id: AgentSurvey.pm,v 1.38 2010-12-30 20:53:39 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -256,7 +256,8 @@ sub Run {
             $NewStatus{Valid}   = 'Valid';
             $NewStatus{Invalid} = 'Invalid';
         }
-        my $NewStatusStr = $Self->{LayoutObject}->OptionStrgHashRef(
+
+        my $NewStatusStr = $Self->{LayoutObject}->BuildSelection(
             Name => 'NewStatus',
             Data => \%NewStatus,
         );
@@ -457,67 +458,35 @@ sub Run {
     # survey add
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveyAdd' ) {
-        $Output = $Self->{LayoutObject}->Header( Title => 'Survey Add' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
-
-        my %Queues      = $Self->{QueueObject}->GetAllQueues();
-        my $QueueString = $Self->{LayoutObject}->BuildSelection(
-            Data         => \%Queues,
-            Name         => 'Queues',
-            Size         => 6,
-            Multiple     => 1,
-            PossibleNone => 0,
-            Sort         => 'AlphanumericValue',
-            Translation  => 0,
-        );
-
-        # print the main table.
-        $Self->{LayoutObject}->Block(
-            Name => 'SurveyAdd',
-            Data => {
-                QueueString         => $QueueString,
-                NotificationSender  => $Self->{ConfigObject}->Get('Survey::NotificationSender'),
-                NotificationSubject => $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
-                NotificationBody    => $Self->{ConfigObject}->Get('Survey::NotificationBody'),
-            },
-        );
-
-        $Output .= $Self->{LayoutObject}->Output( TemplateFile => 'AgentSurvey' );
-        $Output .= $Self->{LayoutObject}->Footer();
-
-        return $Output;
+        return $Self->_SurveyAddMask;
     }
 
     # ------------------------------------------------------------ #
     # survey new
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'SurveyNew' ) {
-        my $Title              = $Self->{ParamObject}->GetParam( Param => "Title" );
-        my $Introduction       = $Self->{ParamObject}->GetParam( Param => "Introduction" );
-        my $Description        = $Self->{ParamObject}->GetParam( Param => "Description" );
-        my $NotificationSender = $Self->{ParamObject}->GetParam( Param => "NotificationSender" )
-            || '';
-        my $NotificationSubject = $Self->{ParamObject}->GetParam( Param => "NotificationSubject" );
-        my $NotificationBody    = $Self->{ParamObject}->GetParam( Param => "NotificationBody" );
-        my @Queues = $Self->{ParamObject}->GetArray( Param => "Queues" );
 
-        if (
-            $Title
-            && $Introduction
-            && $Description
-            && $NotificationSender && $NotificationSubject && $NotificationBody
+        # get requiered form elements and errors
+        my %ServerError;
+        my %FormElements;
+        for my $Item (
+            qw( Title Introduction Description NotificationSender NotificationSubject NotificationBody )
             )
         {
+            $FormElements{$Item} = $Self->{ParamObject}->GetParam( Param => "$Item" );
 
+            if ( !$FormElements{$Item} ) {
+                $ServerError{ "$Item" . 'ServerError' } = 'ServerError';
+            }
+        }
+
+        @{ $FormElements{Queues} } = $Self->{ParamObject}->GetArray( Param => "Queues" );
+
+        # save if no errors
+        if ( !%ServerError ) {
             my $SurveyID = $Self->{SurveyObject}->SurveyNew(
-                Title               => $Title,
-                Introduction        => $Introduction,
-                Description         => $Description,
-                NotificationSender  => $NotificationSender,
-                NotificationSubject => $NotificationSubject,
-                NotificationBody    => $NotificationBody,
-                Queues              => \@Queues,
-                UserID              => $Self->{UserID},
+                %FormElements,
+                UserID => $Self->{UserID},
             );
 
             return $Self->{LayoutObject}->Redirect(
@@ -525,9 +494,12 @@ sub Run {
             );
         }
 
-        return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=SurveyAdd",
+        # reload form if error
+        return $Self->_SurveyAddMask(
+            FormElements => \%FormElements,
+            ServerError  => \%ServerError,
         );
+
     }
 
     # ------------------------------------------------------------ #
@@ -1139,4 +1111,77 @@ sub Run {
     return $Output;
 }
 
+sub _SurveyAddMask {
+    my ( $Self, %Param ) = @_;
+
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
+
+    my %FormElements;
+    if ( $Param{FormElements} ) {
+        %FormElements = %{ $Param{FormElements} };
+    }
+
+    my $Output;
+
+    $Output .= $Self->{LayoutObject}->Header( Title => 'Add New Survey ' );
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+
+    my %Queues      = $Self->{QueueObject}->GetAllQueues();
+    my $QueueString = $Self->{LayoutObject}->BuildSelection(
+        Data         => \%Queues,
+        Name         => 'Queues',
+        Size         => 6,
+        Multiple     => 1,
+        PossibleNone => 0,
+        Sort         => 'AlphanumericValue',
+        Translation  => 0,
+        SelectedID   => $FormElements{Queues},
+    );
+
+    # print the form
+    $Self->{LayoutObject}->Block(
+        Name => 'SurveyAdd',
+        Data => {
+            %ServerError,
+            %FormElements,
+            QueueString        => $QueueString,
+            NotificationSender => $FormElements{NotificationSender}
+                || $Self->{ConfigObject}->Get('Survey::NotificationSender'),
+            NotificationSubject => $FormElements{NotificationSubject}
+                || $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
+            NotificationBody => $FormElements{NotificationBody}
+                || $Self->{ConfigObject}->Get('Survey::NotificationBody'),
+        },
+    );
+
+    # generates generic errors for javascript
+    for my $NeededItem (
+        qw( Title Introduction Description NotificationSender NotificationSubject NotificationBody )
+        )
+    {
+        $Self->{LayoutObject}->Block(
+            Name => 'GenericError',
+            Data => {
+                ItemName => $NeededItem . 'Error',
+            },
+        );
+    }
+
+    for my $Item ( keys %ServerError ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'GenericServerError',
+            Data => {
+                ItemName => $Item,
+            },
+        );
+    }
+
+    $Output .= $Self->{LayoutObject}->Output( TemplateFile => 'AgentSurvey' );
+    $Output .= $Self->{LayoutObject}->Footer();
+
+    return $Output;
+}
 1;
