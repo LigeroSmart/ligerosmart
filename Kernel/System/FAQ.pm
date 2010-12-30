@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.142 2010-12-21 16:23:50 ub Exp $
+# $Id: FAQ.pm,v 1.143 2010-12-30 20:37:59 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.142 $) [1];
+$VERSION = qw($Revision: 1.143 $) [1];
 
 =head1 NAME
 
@@ -1350,7 +1350,7 @@ sub HistoryGet {
     }
 
     # add order by clause
-    $SQL .= 'ORDER BY created DESC';
+    $SQL .= 'ORDER BY h.created DESC';
 
     # get the data from db
     return if !$Self->{DBObject}->Prepare(
@@ -4412,6 +4412,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.142 $ $Date: 2010-12-21 16:23:50 $
+$Revision: 1.143 $ $Date: 2010-12-30 20:37:59 $
 
 =cut
