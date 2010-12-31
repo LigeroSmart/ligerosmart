@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.56 2010-12-29 23:43:41 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.57 2010-12-31 23:04:44 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -142,54 +142,66 @@ sub Run {
     {
         my %GetParam = ();
 
-        # get all parameters
-        for my $Parameter (qw(Subaction UserID Description Calendar)) {
-            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
-        }
-        for my $Parameter (qw(ShowOvertime CreateProject)) {
-            $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || 0;
-        }
+        $GetParam{UserID} = $Self->{ParamObject}->GetParam( Param => 'UserID' );
+        my $Periods
+            = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet( UserID => $GetParam{UserID} );
 
-        my %UserData
-            = $Self->{TimeAccountingObject}->SingleUserSettingsGet( UserID => $GetParam{UserID} );
-        my $Period = 1;
-        my %PeriodData;
+        # check validity of periods
+        my %Errors = $Self->_CheckValidityUserPeriods( Period => $Periods );
 
-        # get parameters for all registered periods
-        while ( $UserData{$Period} ) {
-            for my $Parameter (qw(DateStart DateEnd WeeklyHours LeaveDays Overtime)) {
-                $PeriodData{$Period}{$Parameter}
-                    = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" )
-                    || $UserData{$Period}{$Parameter};
+        # if the period data is ok
+        if ( !%Errors ) {
+
+            # get all parameters
+            for my $Parameter (qw(Subaction Description Calendar)) {
+                $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
             }
-            $PeriodData{$Period}{UserStatus}
-                = $Self->{ParamObject}->GetParam( Param => "PeriodStatus[$Period]" ) || 0;
-            $Period++;
-        }
-        $GetParam{Period} = \%PeriodData;
+            for my $Parameter (qw(ShowOvertime CreateProject)) {
+                $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || 0;
+            }
 
-        # update periods
-        if ( !$Self->{TimeAccountingObject}->SingleUserSettingsUpdate(%GetParam) ) {
-            return $Self->{LayoutObject}->ErrorScreen(
-                Message => 'Unable to update user settings! Please contact your administrator.'
-            );
-        }
+            my $Period = 1;
+            my %PeriodData;
 
-        if ( $Self->{ParamObject}->GetParam( Param => 'AddPeriod' ) ) {
+            my %UserData
+                = $Self->{TimeAccountingObject}
+                ->SingleUserSettingsGet( UserID => $GetParam{UserID} );
 
-            # show the edit time settiengs again, but now with a new empty time period line
-            return $Self->{LayoutObject}->Redirect(
-                OP =>
-                    "Action=AgentTimeAccounting;Subaction=$GetParam{Subaction};UserID=$GetParam{UserID};"
-                    . "NewTimePeriod=1",
-            );
-        }
-        else {
+            # get parameters for all registered periods
+            while ( $UserData{$Period} ) {
+                for my $Parameter (qw(WeeklyHours Overtime DateStart DateEnd LeaveDays)) {
+                    $PeriodData{$Period}{$Parameter}
+                        = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" )
+                        || $UserData{$Period}{$Parameter};
+                }
+                $PeriodData{$Period}{UserStatus}
+                    = $Self->{ParamObject}->GetParam( Param => "PeriodStatus[$Period]" ) || 0;
+                $Period++;
+            }
+            $GetParam{Period} = \%PeriodData;
 
-            # show the overview of tasks and users
-            return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentTimeAccounting;Subaction=Setting",
-            );
+            # update periods
+            if ( !$Self->{TimeAccountingObject}->SingleUserSettingsUpdate(%GetParam) ) {
+                return $Self->{LayoutObject}->ErrorScreen(
+                    Message => 'Unable to update user settings! Please contact your administrator.'
+                );
+            }
+            if ( $Self->{ParamObject}->GetParam( Param => 'AddPeriod' ) ) {
+
+                # show the edit time settiengs again, but now with a new empty time period line
+                return $Self->{LayoutObject}->Redirect(
+                    OP =>
+                        "Action=AgentTimeAccounting;Subaction=$GetParam{Subaction};UserID=$GetParam{UserID};"
+                        . "NewTimePeriod=1",
+                );
+            }
+            else {
+
+                # show the overview of tasks and users
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentTimeAccounting;Subaction=Setting",
+                );
+            }
         }
     }
 
@@ -2384,6 +2396,19 @@ sub Run {
             }
         }
 
+        my %Errors = ();
+        my $Periods = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet( UserID => $ID );
+
+        if (
+            $Self->{ParamObject}->GetParam( Param => 'AddPeriod' )
+            || $Self->{ParamObject}->GetParam( Param => 'SubmitUserData' )
+            )
+        {
+
+            # check validity of periods
+            %Errors = $Self->_CheckValidityUserPeriods( Period => $Periods );
+        }
+
         # get user data
         my %User = $Self->{UserObject}->GetUserData( UserID => $ID );
 
@@ -2393,6 +2418,8 @@ sub Run {
             Action    => 'EditUser',
             Subaction => 'EditUser',
             UserID    => $ID,
+            Errors    => \%Errors,
+            Periods   => $Periods,
             %User,
         );
         $Output .= $Self->{LayoutObject}->Output(
@@ -2409,6 +2436,26 @@ sub Run {
     $Self->{LogObject}->Log( Priority => 'error', Message => "$Self->{Subaction}" );
 
     #    return $Self->{LayoutObject}->ErrorScreen( Message => 'Invalid Subaction process!' );
+}
+
+sub _CheckValidityUserPeriods {
+    my ( $Self, %Param ) = @_;
+
+    my %Errors = ();
+
+    for ( my $Period = 1; $Period <= $Param{Period}; $Period++ ) {
+
+        # check for needed data
+        for my $Parameter (qw(DateStart DateEnd LeaveDays)) {
+            my $PeriodData = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
+            if ( !$PeriodData ) {
+                $Errors{ $Parameter . '-' . $Period . 'Invalid' }   = 'ServerError';
+                $Errors{ $Parameter . '-' . $Period . 'ErrorType' } = 'MissingValue';
+            }
+        }
+    }
+
+    return %Errors;
 }
 
 sub _FirstUserRedirect {
@@ -2908,6 +2955,12 @@ sub _TaskSettingsEdit {
 
 sub _UserSettingsEdit {
     my ( $Self, %Param ) = @_;
+    my %GetParam = ();
+
+    # get parameters
+    for my $Parameter (qw(Description ShowOvertime CreateProject Calendar)) {
+        $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
+    }
 
     $Self->{LayoutObject}->Block(
         Name => 'Setting',
@@ -2922,12 +2975,6 @@ sub _UserSettingsEdit {
     my %StatusList = (
         1 => 'valid',
         0 => 'invalid',
-    );
-
-    $Param{StatusOption} = $Self->{LayoutObject}->BuildSelection(
-        Data       => \%StatusList,
-        SelectedID => $Param{SelectedStatus} || 1,
-        Name       => 'PeriodStatus',
     );
 
     # fill up the calendar list
@@ -2946,17 +2993,19 @@ sub _UserSettingsEdit {
         Data        => $CalendarListRef,
         Name        => 'Calendar',
         Translation => 1,
-        SelectedID  => $UserData{Calendar} || 0,
+        SelectedID  => $GetParam{Calendar} || $UserData{Calendar} || 0,
     );
 
-    $Param{Description} = $UserData{Description} || '';
+    $Param{Description} = $GetParam{Description} || $UserData{Description} || '';
 
     $Self->{LayoutObject}->Block(
         Name => 'OverviewUpdateUser',
         Data => {
             %Param,
-            ShowOvertime  => $UserData{ShowOvertime}  ? 'checked="checked"' : '',
-            CreateProject => $UserData{CreateProject} ? 'checked="checked"' : '',
+            ShowOvertime => ( $GetParam{ShowOvertime} || $UserData{ShowOvertime} )
+            ? 'checked="checked"' : '',
+            CreateProject => ( $GetParam{CreateProject} || $UserData{CreateProject} )
+            ? 'checked="checked"' : '',
             }
     );
 
@@ -2971,39 +3020,93 @@ sub _UserSettingsEdit {
         );
     }
 
-    my %User = $Self->{TimeAccountingObject}->SingleUserSettingsGet( UserID => $Param{UserID} );
+    # if there are errors to show
+    if ( %{ $Param{Errors} } ) {
 
-    # show user data
-    if (%User) {
-        my $LastPeriodNumber
-            = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet( UserID => $Param{UserID} );
+        # show all existing periods
+        for ( my $Period = 1; $Period <= $Param{Periods}; $Period++ ) {
 
-        for ( my $Period = 1; $Period <= $LastPeriodNumber; $Period++ ) {
-            my %PeriodParam = ();
-
-            # get all needed data to display
-            for my $Parameter (qw(DateStart DateEnd LeaveDays WeeklyHours Overtime)) {
-                $PeriodParam{$Parameter} = $User{$Period}{$Parameter};
+            for my $Parameter (qw(DateStart DateEnd LeaveDays WeeklyHours Overtime PeriodStatus )) {
+                $GetParam{$Parameter}
+                    = $Self->{ParamObject}->GetParam( Param => "$Parameter\[$Period\]" );
             }
-            $PeriodParam{Period} = $Period;
 
-            $PeriodParam{PeriodStatusOption} = $Self->{LayoutObject}->BuildSelection(
+            $Param{$Period}{PeriodStatusOption} = $Self->{LayoutObject}->BuildSelection(
                 Data       => \%StatusList,
-                SelectedID => $User{$Period}{UserStatus},
+                SelectedID => $GetParam{PeriodStatus} || $Param{$Period}{PeriodStatus},
                 Name       => "PeriodStatus[$Period]",
                 ID         => "PeriodStatus-$Period",
             );
 
             $Self->{LayoutObject}->Block(
                 Name => 'PeriodOverviewRow',
-                Data => \%PeriodParam,
+                Data => {
+                    Period           => $Period,
+                    DateStartInvalid => $Param{Errors}->{ 'DateStart-' . $Period . 'Invalid' }
+                        || '',
+                    DateEndInvalid => $Param{Errors}->{ 'DateEnd-' . $Period . 'Invalid' } || '',
+                    LeaveDaysInvalid => $Param{Errors}->{ 'LeaveDays-' . $Period . 'Invalid' }
+                        || '',
+                    DateStart          => $GetParam{DateStart},
+                    DateEnd            => $GetParam{DateEnd},
+                    LeaveDays          => $GetParam{LeaveDays},
+                    WeeklyHours        => $GetParam{WeeklyHours},
+                    Overtime           => $GetParam{Overtime},
+                    PeriodStatusOption => $Param{$Period}{PeriodStatusOption},
+                },
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'DateStart'
+                    . (
+                    $Param{Errors}->{ 'DateStart-' . $Period . 'ErrorType' }
+                        || 'MissingValue'
+                    ),
+                Data => { Period => $Period },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'DateEnd'
+                    . ( $Param{Errors}->{ 'DateEnd-' . $Period . 'ErrorType' } || 'MissingValue' ),
+                Data => { Period => $Period },
             );
         }
     }
-
-    # show a no data found msg
     else {
-        $Self->{LayoutObject}->Block( Name => 'PeriodOverviewRowNoData' );
+        my %User = $Self->{TimeAccountingObject}->SingleUserSettingsGet( UserID => $Param{UserID} );
+
+        # show user data
+        if (%User) {
+            my $LastPeriodNumber
+                = $Self->{TimeAccountingObject}
+                ->UserLastPeriodNumberGet( UserID => $Param{UserID} );
+
+            for ( my $Period = 1; $Period <= $LastPeriodNumber; $Period++ ) {
+                my %PeriodParam = ();
+
+                # get all needed data to display
+                for my $Parameter (qw(DateStart DateEnd LeaveDays WeeklyHours Overtime)) {
+                    $PeriodParam{$Parameter} = $User{$Period}{$Parameter};
+                }
+                $PeriodParam{Period} = $Period;
+
+                $PeriodParam{PeriodStatusOption} = $Self->{LayoutObject}->BuildSelection(
+                    Data       => \%StatusList,
+                    SelectedID => $User{$Period}{UserStatus},
+                    Name       => "PeriodStatus[$Period]",
+                    ID         => "PeriodStatus-$Period",
+                );
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'PeriodOverviewRow',
+                    Data => \%PeriodParam,
+                );
+            }
+        }
+
+        # show a no data found msg
+        else {
+            $Self->{LayoutObject}->Block( Name => 'PeriodOverviewRowNoData' );
+        }
     }
 
     return 1;
