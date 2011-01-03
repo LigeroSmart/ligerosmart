@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.30 2010-12-31 23:04:44 en Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.31 2011-01-03 21:59:11 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -486,6 +486,9 @@
 <!-- dtl:block:DateEndMissingValue -->
                                     <div id="DateEnd-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!-- dtl:block:DateEndMissingValue -->
+<!-- dtl:block:DateEndBeforeDateStart -->
+                                    <div id="DateEnd-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"Period end must be after period begin."}</p></div>
+<!-- dtl:block:DateEndBeforeDateStart -->
                                 </td>
                                 <td>
                                     <input type="text" id="LeaveDays-$QData{"Period"}" name="LeaveDays[$QData{"Period"}]" value="$QData{"LeaveDays"}" class="Validate_Required $QData{"LeaveDaysInvalid"}" />
