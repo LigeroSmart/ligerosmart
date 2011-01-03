@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerFAQPrint.pm - print layout for agent interface
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQPrint.pm,v 1.12 2010-12-27 16:42:10 cr Exp $
+# $Id: CustomerFAQPrint.pm,v 1.13 2011-01-03 10:44:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -302,7 +302,7 @@ sub _PDFOutputFAQHeaderInfo {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Language') . ':',
             Value => $Self->{LayoutObject}->{LanguageObject}->Get( $FAQData{Language} ),
         };
-        push( @{$TableLeft}, $Row );
+        push @{$TableLeft}, $Row;
     }
 
     # create right table
