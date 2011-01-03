@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.251 2010-12-21 23:29:15 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.252 2011-01-03 13:41:50 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -88,7 +88,6 @@
                     <Name>ITSM Change</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
-                    <Image>itsm_change.png</Image>
                     <Link>Action=AgentITSMChange</Link>
                     <NavBar>ITSM Change</NavBar>
                     <AccessKey></AccessKey>
@@ -97,7 +96,6 @@
                 <NavBar>
                     <Description>Change Overview</Description>
                     <Name>Overview</Name>
-                    <Image>overview.png</Image>
                     <Link>Action=AgentITSMChange</Link>
                     <Type></Type>
                     <Block></Block>
@@ -125,7 +123,6 @@
                 <NavBar>
                     <Description>New</Description>
                     <Name>New</Name>
-                    <Image>new.png</Image>
                     <Link>Action=AgentITSMChangeAdd</Link>
                     <Type></Type>
                     <Block></Block>
@@ -308,7 +305,6 @@
                 <NavBar>
                     <Description>PIR (Post Implementation Review)</Description>
                     <Name>PIR</Name>
-                    <Image>overview.png</Image>
                     <Link>Action=AgentITSMChangePIR</Link>
                     <Type></Type>
                     <Block></Block>
@@ -348,7 +344,6 @@
                 <NavBar>
                     <Description>PSA (Projected Service Availability)</Description>
                     <Name>PSA</Name>
-                    <Image>overview.png</Image>
                     <Link>Action=AgentITSMChangePSA</Link>
                     <Type></Type>
                     <Block></Block>
@@ -375,7 +370,6 @@
                 <NavBar>
                     <Description>Change Schedule</Description>
                     <Name>Schedule</Name>
-                    <Image>overview.png</Image>
                     <Link>Action=AgentITSMChangeSchedule</Link>
                     <Type></Type>
                     <Block></Block>
@@ -399,7 +393,6 @@
                 <NavBar>
                     <Description>Search Changes</Description>
                     <Name>Search</Name>
-                    <Image>search.png</Image>
                     <Link>Action=AgentITSMChangeSearch</Link>
                     <LinkOption>onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); event.stopPropagation(); return false;"</LinkOption>
                     <NavBar>ITSM Change</NavBar>
@@ -493,7 +486,6 @@
                 <NavBar>
                     <Description>Template Overview</Description>
                     <Name>Template</Name>
-                    <Image>itsm_change_template.png</Image>
                     <Link>Action=AgentITSMTemplateOverview</Link>
                     <Type></Type>
                     <Block></Block>
