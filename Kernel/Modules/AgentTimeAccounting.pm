@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.57 2010-12-31 23:04:44 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.58 2011-01-03 21:58:48 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -639,7 +639,7 @@ sub Run {
             > timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 )
             )
         {
-            $Param{Total} = sprintf( "%.2f", $Param{Total} );
+            $Param{Total} = sprintf( "%.2f", ( $Param{Total} || 0 ) );
             $Self->{LayoutObject}->Block(
                 Name => 'Total',
                 Data => { %Param, %Frontend },
@@ -1606,7 +1606,7 @@ sub Run {
                 qw(LeaveDay Overtime WorkingHours Sick LeaveDayRemaining OvertimeTotal)
                 )
             {
-                $Param{$Parameter} = sprintf( "%.2f", $UserReport{$UserID}{$Parameter} );
+                $Param{$Parameter} = sprintf( "%.2f", ( $UserReport{$UserID}{$Parameter} || 0 ) );
                 $Param{ 'Total' . $Parameter } += $Param{$Parameter};
             }
 
@@ -2379,12 +2379,12 @@ sub Run {
         my $ID = $Self->{ParamObject}->GetParam( Param => 'UserID' ) || '';
 
         my $NewTimePeriod = $Self->{ParamObject}->GetParam( Param => 'NewTimePeriod' );
+        my $LastPeriodNumber = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
+            UserID => $ID,
+        );
 
         # if it is an action about adding a new time period, insert it
         if ($NewTimePeriod) {
-            my $LastPeriodNumber = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
-                UserID => $ID,
-            );
             my $Success = $Self->{TimeAccountingObject}->UserSettingsInsert(
                 UserID => $ID,
                 Period => $LastPeriodNumber + 1,
@@ -2397,7 +2397,6 @@ sub Run {
         }
 
         my %Errors = ();
-        my $Periods = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet( UserID => $ID );
 
         if (
             $Self->{ParamObject}->GetParam( Param => 'AddPeriod' )
@@ -2406,7 +2405,7 @@ sub Run {
         {
 
             # check validity of periods
-            %Errors = $Self->_CheckValidityUserPeriods( Period => $Periods );
+            %Errors = $Self->_CheckValidityUserPeriods( Period => $LastPeriodNumber );
         }
 
         # get user data
@@ -2419,7 +2418,7 @@ sub Run {
             Subaction => 'EditUser',
             UserID    => $ID,
             Errors    => \%Errors,
-            Periods   => $Periods,
+            Periods   => $LastPeriodNumber,
             %User,
         );
         $Output .= $Self->{LayoutObject}->Output(
@@ -2442,16 +2441,40 @@ sub _CheckValidityUserPeriods {
     my ( $Self, %Param ) = @_;
 
     my %Errors = ();
+    my %GetParam;
 
     for ( my $Period = 1; $Period <= $Param{Period}; $Period++ ) {
 
         # check for needed data
         for my $Parameter (qw(DateStart DateEnd LeaveDays)) {
-            my $PeriodData = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
-            if ( !$PeriodData ) {
+            $GetParam{$Parameter}
+                = $Self->{ParamObject}->GetParam( Param => $Parameter . "[$Period]" );
+            if ( !$GetParam{$Parameter} ) {
                 $Errors{ $Parameter . '-' . $Period . 'Invalid' }   = 'ServerError';
                 $Errors{ $Parameter . '-' . $Period . 'ErrorType' } = 'MissingValue';
             }
+        }
+        my ( $Year, $Month, $Day ) = split( '-', $GetParam{DateStart} );
+        my $StartDate = $Self->{TimeObject}->Date2SystemTime(
+            Year   => $Year,
+            Month  => $Month,
+            Day    => $Day,
+            Hour   => 0,
+            Minute => 0,
+            Second => 0,
+        );
+        ( $Year, $Month, $Day ) = split( '-', $GetParam{DateEnd} );
+        my $EndDate = $Self->{TimeObject}->Date2SystemTime(
+            Year   => $Year,
+            Month  => $Month,
+            Day    => $Day,
+            Hour   => 0,
+            Minute => 0,
+            Second => 0,
+        );
+        if ( $StartDate >= $EndDate ) {
+            $Errors{ 'DateEnd-' . $Period . 'Invalid' }   = 'ServerError';
+            $Errors{ 'DateEnd-' . $Period . 'ErrorType' } = 'BeforeDateStart';
         }
     }
 
@@ -3021,7 +3044,7 @@ sub _UserSettingsEdit {
     }
 
     # if there are errors to show
-    if ( %{ $Param{Errors} } ) {
+    if ( $Param{Errors} && %{ $Param{Errors} } ) {
 
         # show all existing periods
         for ( my $Period = 1; $Period <= $Param{Periods}; $Period++ ) {
