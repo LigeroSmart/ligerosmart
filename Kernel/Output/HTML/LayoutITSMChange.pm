@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.58 2010-12-20 10:24:31 ub Exp $
+# $Id: LayoutITSMChange.pm,v 1.59 2011-01-04 09:45:00 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =over 4
 
@@ -1176,6 +1176,14 @@ sub _ITSMChangeGetWorkOrderGraph {
                     || '';
             }
         }
+    }
+
+    # set the graph direction (LTR: left, RTL: right)
+    if ( $Self->{TextDirection} && $Self->{TextDirection} eq 'rtl' ) {
+        $WorkOrderInformation{"GraphDirection"} = 'right';
+    }
+    else {
+        $WorkOrderInformation{"GraphDirection"} = 'left';
     }
 
     # create graph of workorder item

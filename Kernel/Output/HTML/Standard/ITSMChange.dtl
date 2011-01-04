@@ -1,8 +1,8 @@
 # --
 # ITSMChange.dtl - provides HTML elements for work order graph
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.36 2010-12-09 11:55:37 ub Exp $
+# $Id: ITSMChange.dtl,v 1.37 2011-01-04 09:45:00 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,12 @@
     .LabelMargin {
         margin-left: $QData{"LabelMargin"}px;
     }
+
+    .RTL .LabelMargin {
+        margin-left: auto;
+        margin-right: $QData{"LabelMargin"}px;
+    }
+
 
     div.WorkorderLabel {
         width: $QData{"LabelWidth"}px;
@@ -28,6 +34,11 @@
         background-color: $QData{"TimeLineColor"};
         left: $QData{"TimeLineLeft"}%;
         width: $QData{"TimeLineWidth"}px;
+    }
+
+    .RTL div.Timeline {
+        left: auto;
+        right: $QData{"TimeLineLeft"}%;
     }
 /* <!-- dtl:block:CSSTimeLine --> */
 </style>
@@ -68,10 +79,10 @@
         <div class="Workorder LabelMargin">
             <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
                 <span>
-                    <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="left: $QData{"PlannedPadding"}%; width: $QData{"PlannedTicks"}%">&nbsp;</span>
+                    <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="$QData{"GraphDirection"}: $QData{"PlannedPadding"}%; width: $QData{"PlannedTicks"}%">&nbsp;</span>
                 </span>
                 <span>
-                    <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="left: $QData{"ActualPadding"}%; width: $QData{"ActualTicks"}%">&nbsp;</span>
+                    <span class="$QData{"WorkOrderType"}_actual $Data{"WorkOrderOpacity"}" style="$QData{"GraphDirection"}: $QData{"ActualPadding"}%; width: $QData{"ActualTicks"}%">&nbsp;</span>
                 </span>
             </a>
             <div class="WorkorderDetails">
