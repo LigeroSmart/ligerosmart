@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.120 2011-01-04 13:03:30 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.121 2011-01-04 14:35:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.120 $) [1];
+$VERSION = qw($Revision: 1.121 $) [1];
 
 =head1 NAME
 
@@ -1266,6 +1266,9 @@ sub WorkOrderSearch {
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
+            # get like escape string needed for some databases (e.g. oracle)
+            my $LikeEscapeString = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+
             # Quote
             $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
 
@@ -1276,7 +1279,7 @@ sub WorkOrderSearch {
             next STRINGPARAM if $Param{$StringParam} =~ m{ \A %* \z }xms;
 
             push @SQLWhere,
-                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}') $LikeEscapeString";
         }
 
         # no wildcards are used
@@ -3406,6 +3409,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.120 $ $Date: 2011-01-04 13:03:30 $
+$Revision: 1.121 $ $Date: 2011-01-04 14:35:27 $
 
 =cut

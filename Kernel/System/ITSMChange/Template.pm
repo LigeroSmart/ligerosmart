@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template.pm - all template functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Template.pm,v 1.56 2010-10-28 12:31:07 ub Exp $
+# $Id: Template.pm,v 1.57 2011-01-04 14:35:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Data::Dumper;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =head1 NAME
 
@@ -767,6 +767,9 @@ sub TemplateSearch {
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
+            # get like escape string needed for some databases (e.g. oracle)
+            my $LikeEscapeString = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+
             # Quote
             $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
 
@@ -777,7 +780,7 @@ sub TemplateSearch {
             next STRINGPARAM if $Param{$StringParam} =~ m{ \A %* \z }xms;
 
             push @SQLWhere,
-                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}')";
+                "LOWER($StringParams{$StringParam}) LIKE LOWER('$Param{$StringParam}') $LikeEscapeString";
         }
 
         # no wildcards are used
@@ -1409,6 +1412,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.57 $ $Date: 2011-01-04 14:35:27 $
 
 =cut
