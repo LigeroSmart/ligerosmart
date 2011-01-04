@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/bg_AgentSurvey.pm - the bulgarian language for AgentSurvey
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_AgentSurvey.pm,v 1.8 2010-12-30 20:56:16 dz Exp $
+# $Id: bg_AgentSurvey.pm,v 1.9 2011-01-04 21:29:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -51,9 +51,11 @@ sub Data {
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = '';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = '';
-
     $Self->{Translation}->{'Create New Survey'} = '';
     $Self->{Translation}->{'Internal Description'} = '';
+    $Self->{Translation}->{'Filter for Survey'} = 'Filtro de Encuestas';
+    $Self->{Translation}->{'Survey Results Graph'} = '';
+    $Self->{Translation}->{'Survey Information'} = '';
 
     return 1;
 }

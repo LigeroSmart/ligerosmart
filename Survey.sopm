@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.35 2010-11-09 17:51:55 mh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.36 2011-01-04 21:29:24 dz Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -33,8 +33,8 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
         <File Permission="644" Location="Kernel/System/Survey.pm"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/survey.png"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="survey">

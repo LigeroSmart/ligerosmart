@@ -1,289 +1,153 @@
 # --
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.36 2010-12-30 20:53:39 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.37 2011-01-04 21:29:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<script language="JavaScript" type="text/javascript">
-<!--
-function submit_survey() {
-    if (document.Survey.Title.value == "") {
-        alert('$JSText{"Survey Title is required!"}');
-        document.Survey.Title.focus();
-        return false;
-    }
-    else if (document.Survey.Introduction.value == "") {
-        alert('$JSText{"Survey Introduction is required!"}');
-        document.Survey.Introduction.focus();
-        return false;
-    }
-    else if (document.Survey.Description.value == "") {
-        alert('$JSText{"Survey Description is required!"}');
-        document.Survey.Description.focus();
-        return false;
-    }
-    else if (document.Survey.NotificationSender.value == "") {
-        alert('$JSText{"Survey NotificationSender is required!"}');
-        document.Survey.NotificationSender.focus();
-        return false;
-    }
-    else if (document.Survey.NotificationSubject.value == "") {
-        alert('$JSText{"Survey NotificationSubject is required!"}');
-        document.Survey.NotificationSubject.focus();
-        return false;
-    }
-    else if (document.Survey.NotificationBody.value == "") {
-        alert('$JSText{"Survey NotificationBody is required!"}');
-        document.Survey.NotificationBody.focus();
-        return false;
-    }
-    else {
-        return true;
-    }
-}
-//-->
-</script>
-
 <!-- dtl:block:Overview -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"}$Text{"Overview"}: $Text{"Survey"}$Env{"Box1"}
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody" align="center">
-            <br>
-            <table border="0" width="800" cellspacing="0" cellpadding="3">
-                <tr class="contenthead">
-                    <td class="contentkey" width="3%">&nbsp;</td>
-                    <td class="contentkey">$Text{"Number"}</td>
-                    <td class="contentkey">$Text{"Title"}</td>
-                    <td class="contentkey">$Text{"Status"}</td>
-                    <td class="contentkey" width="18%">$Text{"Created"}</td>
-                </tr>
-<!-- dtl:block:OverviewSurvey -->
-                <tr class="contentbody">
-                    <td class="$QData{"Class"}">&nbsp;</td>
-                    <td class="$QData{"Class"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$QData{"SurveyNumber"}</a>
-                    </td>
-                    <td class="$QData{"Class"}">$QData{"Title","60"}</td>
-                    <td class="$QData{"Class"}">$Text{"$Data{"Status"}"}</td>
-                    <td class="$QData{"Class"}">$TimeLong{"$QData{"CreateTime"}"}</td>
-                </tr>
-<!-- dtl:block:OverviewSurvey -->
-                <tr class="contentfooter">
-                    <td colspan="5">&nbsp;</td>
-                </tr>
-            </table>
-            <br>
-        </td>
-    </tr>
-</table>
+<div class="MainBox AriaRoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>$Text{"Overview"}: $Text{"Survey"}</h1>
+
+    <div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Actions"}</h2>
+            </div>
+            <div class="Content">
+                <ul class="ActionList">
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=SurveyAdd" class="CallForAction Plus"><span>$Text{"Add"}</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2><label for="SurveyFilter">$Text{"Filter for Survey"}</label></h2>
+            </div>
+            <div class="Content">
+                <ul>
+                    <li>
+                        <form action="">
+                            <fieldset>
+                                <input type="text" id="SurveyFilter" class="W50pc" name="SurveyFilter" value="" title="$Text{"Filter for Survey"}" />
+                            </fieldset>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"List"}</h2>
+            </div>
+            <div class="Content">
+
+                <table class="DataTable" id="SurveyTable">
+                    <thead>
+                        <tr>
+                            <th class="">
+                                $Text{"Number"}
+                            </th>
+                            <th class="">
+                                $Text{"Title"}
+                            </th>
+                            <th class="">
+                                $Text{"Status"}
+                            </th>
+                            <th class="">
+                                $Text{"Created"}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<!-- dtl:block:SurveyRow -->
+                        <tr>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Survey;SurveyID=$QData{"SurveyID"}">$QData{"SurveyNumber"}</a>
+                            </td>
+                            <td>
+                                $QData{"Title","60"}
+                            </td>
+                            <td>
+                                $Text{"$Data{"Status"}"}
+                            </td>
+                            <td>
+                                $TimeLong{"$QData{"CreateTime"}"}
+                            </td>
+                        </tr>
+<!-- dtl:block:SurveyRow -->
+<!-- dtl:block:SurveyNoDataFound -->
+                        <tr>
+                            <td colspan="4">
+                                $Text{"No data found."}
+                            </td>
+                        </tr>
+<!-- dtl:block:SurveyNoDataFound -->
+                        <tr class="FilterMessage Hidden">
+                            <td colspan="4">$Text{"No matches found."}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.UI.Table.InitTableFilter($('#SurveyFilter'), $('#SurveyTable'));
+//]]></script>
+<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:Overview -->
 
 
 <!-- dtl:block:Survey -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"}$Text{"View"}: $Text{"Survey"}$Env{"Box1"}
-        </td>
-        <td class="mainhead">&nbsp;</td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Back"}</a>
-<!-- dtl:block:SurveyEditStatsDetails -->
-            -&nbsp;<a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Stats"}</a>
-<!-- dtl:block:SurveyEditStatsDetails -->
-        </td>
-        <td class="menu">&nbsp;</td>
-    </tr>
-    <tr>
-        <td class="mainbody">
-            <br>
-            <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td colspan="4" class="contenthead">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td class="contenthead">$Text{"Survey"}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentbody">
-                        <table border="0" width="100%">
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey" width="25%">&nbsp;</td>
-                                <td class="contentkey">&nbsp;</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">$Text{"Number"}:</td>
-                                <td class="contentvalue">$QData{"SurveyNumber"}</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">$Text{"Title"}:</td>
-                                <td class="contentvalue">$QData{"Title"}</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">$Text{"Introduction"}:</td>
-                                <td class="contentvalue">$Data{"Introduction"}</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">$Text{"Queues"}:</td>
-                                <td class="contentvalue">$Data{"QueueListString"}</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
-                                <td class="contentvalue">$Data{"Description"}</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey" width="25%">&nbsp;</td>
-                                <td class="contentkey">&nbsp;</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">
-                        <table border="0" align="right" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td>
-                                    <form action="$Env{"CGIHandle"}" method="post">
-                                        <input type="hidden" name="Action" value="$Env{"Action"}">
-                                        <input type="hidden" name="Subaction" value="SurveyEdit">
-                                        <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-                                        <input class="button" type="submit" value="$Text{"Edit"}">
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-            <br>
-<!-- dtl:block:SurveyEditStats -->
-            <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td colspan="4" class="contenthead">$Text{"Stats"} $Text{"Overview"}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentbody">
-                        <table border="0" width="100%">
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">&nbsp;</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-<!-- dtl:block:SurveyEditStatsQuestion -->
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">$QData{"Question","100"}</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">
-                                    <table border="0" width="100%" cellspacing="0">
-<!-- dtl:block:SurveyEditStatsAnswer -->
-                                        <tr>
-                                            <td width="50" class="contentkey" align="right">
-                                                &nbsp;
-                                            </td>
-                                            <td class="contentvalue">$Text{"$Data{"Answer"}"}</td>
-                                            <td class="contentkey" width="110">
-                                                <table border="0" width="100" cellspacing="0" cellpadding="0">
-                                                    <tr>
-                                                        <td width="$QData{"AnswerPercentTable"}%" bgcolor="#008000">&nbsp;</td>
-                                                        <td bordercolor="#DDDDDD">&nbsp;</td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="contentvalue" width="50">$QData{"AnswerPercent"}%</td>
-                                        </tr>
-<!-- dtl:block:SurveyEditStatsAnswer -->
-                                    </table>
-                                </td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">&nbsp;</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-<!-- dtl:block:SurveyEditStatsQuestion -->
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">&nbsp;
-                    </td>
-                </tr>
-            </table>
-            <br>
-<!-- dtl:block:SurveyEditStats -->
-        </td>
-        <td width="25%" class="menu">
-            <table border="0" align="right" cellspacing="1" cellpadding="0" width="95%">
-                <tr>
-                    <td class="mainkey">$Text{"Created"}:</td>
-                    <td class="mainvalue">$TimeLong{"$Data{"CreateTime"}"}</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Created by"}:</td>
-                    <td class="mainvalue">
-                        <div title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
+<div class="MainBox AriaRoleMain LayoutFixedSidebar SidebarFirst">
+    <div class="ClearLeft"></div>
+    <div class="Headline">
+        <h1 title="$QData{"Title"}" >$QData{"SurveyNumber"} - $QData{"Title","40"} </h1>
+    </div>
+
+    <div class="LayoutFixedSidebar SidebarLast">
+        <div class="SidebarColumn">
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>$Text{"Survey Information"}</h2>
+                </div>
+                <div class="Content">
+                    <fieldset class="TableLike FixedLabelSmall">
+
+                        <label>$Text{"Created"}:</label>
+                        <p class="Value">$TimeLong{"$Data{"CreateTime"}"}</p>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Created by"}:</label>
+                        <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
                             $Quote{"$Data{"CreateUserLogin"}"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","20"})
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Changed"}:</td>
-                    <td class="mainvalue">$TimeLong{"$Data{"ChangeTime"}"}</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Changed by"}:</td>
-                    <td class="mainvalue">
-                        <div title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
+                        </p>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Changed"}:</label>
+                        <p class="Value" >$TimeLong{"$Data{"ChangeTime"}"}</p>
+
+                        <label>$Text{"Changed by"}:</label>
+                        <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
                             $Quote{"$Data{"CreateUserLogin"}"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","20"})
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">&nbsp;</td>
-                    <td class="mainvalue">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Status"}:</td>
-                    <td class="mainvalue"><font color='red'>$Text{"$Data{"Status"}"}</font></td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Change Status"}:</td>
-                    <td class="mainvalue">
+                        </p>
+
+                        <label>$Text{"Status"}:</label>
+                        <p class="Value">$Text{"$Data{"Status"}"}</p>
+
+                        <label>$Text{"Change Status"}:</label>
+
                         <form action="$Env{"CGIHandle"}" method="post">
                             <input type="hidden" name="Action" value="$Env{"Action"}">
                             <input type="hidden" name="Subaction" value="SurveyStatus">
@@ -293,268 +157,107 @@ function submit_survey() {
 <!-- dtl:block:SurveyStatus -->
                             <input class="button" type="submit" value="$Text{"Change"}">
                         </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="mainkey">&nbsp;</td>
-                    <td class="mainvalue">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">&nbsp;</td>
-                    <td class="mainvalue">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Sent requests"}:</td>
-                    <td class="mainvalue"><font color='red'>$QData{"SendRequest"}</font></td>
-                </tr>
-                <tr>
-                    <td class="mainkey">$Text{"Received surveys"}:</td>
-                    <td class="mainvalue"><font color='red'>$QData{"RequestComplete"}</font></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+
+                        <label> $Text{"Sent requests"}:</label>
+                        <p class="Value">$QData{"SendRequest"}</p>
+
+                        <label>$Text{"Received surveys"}:</label>
+                        <p class="Value">$QData{"RequestComplete"}</p>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="ContentColumn">
+            <div class="ControlRow">
+                <div class="AdditionalInformation">
+                </div>
+            </div>
+            <div class="ActionRow">
+                <ul class="Actions">
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Back"}</a>
+                    </li>
+                    <li>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=SurveyEdit;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Edit"}</a>
+                    </li>
+                    <li>
+<!-- dtl:block:SurveyEditStatsDetails -->
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Stats&SurveyID=$QData{"SurveyID"}">$Text{"Stats"}</a>
+<!-- dtl:block:SurveyEditStatsDetails -->
+                    </li>
+                </ul>
+                <div class="Clear"></div>
+            </div>
+
+            <div class="WidgetSimple SpacingTop">
+                <div class="Header">
+                    <h2>$Text{"Survey Information"}</h2>
+                </div>
+                <div class="Content">
+                    <table class="DataTable">
+                        <thead>
+                            <tr>
+                                <th>$Text{"Number"}:</th>
+                                <th>$Text{"Title"}:</th>
+                                <th>$Text{"Introduction"}:</th>
+                                <th>$Text{"Queues"}:</th>
+                                <th>$Text{"Internal Description"}:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$QData{"SurveyNumber"}</td>
+                                <td>$QData{"Title"}</td>
+                                <td>$Data{"Introduction"}</td>
+                                <td>$Data{"QueueListString"}</td>
+                                <td>$Data{"Description"}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+                <div class="Header">
+                    <h2>$Text{"Survey Results Graph"}</h2>
+                </div>
+                <div class="Content">
+
+<!-- dtl:block:SurveyEditStats -->
+
+<!-- dtl:block:SurveyEditStatsQuestion -->
+                    <fieldset class="SpacingTop SurveyGraphs">
+                        <div class="Question">$QData{"Question","100"}: </div>
+<!-- dtl:block:SurveyEditStatsAnswer -->
+                        <div class="Answer">$Text{"$Data{"Answer"}"}</div>
+
+                        <div class="SurveyGraph">
+                            <div class="SurveyGraphContainer">
+                                <div class="SurveyGraphBar" style="width:$QData{"AnswerPercentTable"}%;"></div >
+                            </div>
+                        </div>
+                        <p class="SurveyGraphLeyend">$QData{"AnswerPercent"}%</p>
+<!-- dtl:block:SurveyEditStatsAnswer -->
+                    </fieldset>
+<!-- dtl:block:SurveyEditStatsQuestion -->
+
+<!-- dtl:block:SurveyEditStats -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- dtl:block:Survey -->
 
-<!-- dtl:block:SurveyEdit -->
-<table border="0" width="100%" cellspacing="0" cellpadding="3">
-    <tr>
-        <td class="mainhead">
-            $Env{"Box0"}$Text{"Edit"}: $Text{"Survey"}$Env{"Box1"}
-        </td>
-    </tr>
-    <tr>
-        <td class="menu">
-            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=Survey&SurveyID=$QData{"SurveyID"}">$Text{"Back"}</a>
-        </td>
-    </tr>
-    <tr>
-        <td class="mainbody">
-            <br>
-            <form action="$Env{"CGIHandle"}" method="post" name="Survey">
-                <input type="hidden" name="Action" value="$Env{"Action"}">
-                <input type="hidden" name="Subaction" value="SurveySave">
-                <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-                <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                    <tr>
-                        <td colspan="4" class="contenthead">
-                            <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                                <tr>
-                                    <td class="contenthead">$Text{"Survey"}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentbody">
-                            <table border="0" width="100%">
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Number"}:</td>
-                                    <td class="contentvalue">$QData{"SurveyNumber"}</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Title"}:</td>
-                                    <td class="contentvalue"><input type="text" size="70" name="Title" value="$QData{"Title"}"></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Introduction"}:</td>
-                                    <td class="contentvalue"><textarea name="Introduction" rows="5" cols="50">$QData{"Introduction"}</textarea></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Sender"}:</td>
-                                    <td class="contentvalue"><input type="text" size="70" name="NotificationSender" value="$QData{"NotificationSender"}"></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Subject"}:</td>
-                                    <td class="contentvalue"><input type="text" size="70" name="NotificationSubject" value="$QData{"NotificationSubject"}"></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Body"}:</td>
-                                    <td class="contentvalue"><textarea name="NotificationBody" rows="12" cols="50">$QData{"NotificationBody"}</textarea></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Queues"}:</td>
-                                    <td class="contentvalue">$Data{"QueueString"}</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">$Text{"Internal"}&nbsp;$Text{"Description"}:</td>
-                                    <td class="contentvalue"><textarea name="Description" rows="5" cols="50">$QData{"Description"}</textarea></td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey">&nbsp;</td>
-                                    <td class="contentkey" width="25">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="contentfooter">
-                            <input class="button" type="submit" value="$Text{"Save"}" onclick="return submit_survey();">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
-            <table border="0" width="700" align="center" cellspacing="0" cellpadding="4">
-                <tr>
-                    <td colspan="4" class="contenthead">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td class="contenthead"><a name="Question"></a>$Text{"Questions"}</td>
-                                <td class="contenthead" align="right">&nbsp;</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentbody">
-                        <table border="0" width="100%">
-                            <tr>
-                                <td class="contentbody" width="25">&nbsp;</td>
-                                <td class="contentbody">
-                                    <table border="0" width="100%">
-                                        <tr>
-                                            <td class="contentkey" width="25">&nbsp;</td>
-                                            <td class="contentkey">&nbsp;</td>
-                                        </tr>
-<!-- dtl:block:SurveyEditQuestionsValidOnce -->
-                                        <tr>
-                                            <td class="contentbody">
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>&nbsp;($Text{"$Data{"Type"}"})
-                                            </td>
-                                            <td class="contentbody" align="right">
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Config{"Frontend::ImagePath"}up-big.png"></a>
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Config{"Frontend::ImagePath"}down-big.png"></a>
-                                            </td>
-                                        </tr>
-<!-- dtl:block:SurveyEditQuestionsValidOnce -->
-<!-- dtl:block:SurveyEditQuestions -->
-                                        <tr>
-                                            <td class="contentbody">
-<!-- dtl:block:SurveyEditQuestionsComplete -->
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}">$QData{"Question","70"}</a>&nbsp;($Text{"$Data{"Type"}"})
-<!-- dtl:block:SurveyEditQuestionsComplete -->
-<!-- dtl:block:SurveyEditQuestionsIncomplete -->
-                                                <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionEdit&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><font color='red'>$QData{"Question","70"}</font></a>&nbsp;($Text{"$Data{"Type"}"})
-<!-- dtl:block:SurveyEditQuestionsIncomplete -->
-                                            </td>
-                                            <td class="contentbody" align="right">
-                                                <table border="0" align="right" cellspacing="0" cellpadding="0">
-                                                    <tr>
-                                                        <td>
-                                                            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionUp&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Config{"Frontend::ImagePath"}up-big.png"></a>
-                                                            <a href="$Env{"Baselink"}Action=$Env{"Action"}&Subaction=QuestionDown&SurveyID=$QData{"SurveyID"}&QuestionID=$QData{"QuestionID"}"><img border="0" src="$Config{"Frontend::ImagePath"}down-big.png"></a>&nbsp;&nbsp;
-                                                        </td>
-                                                        <td>
-                                                            <form action="$Env{"CGIHandle"}" method="post">
-                                                                <input type="hidden" name="Action" value="$Env{"Action"}">
-                                                                <input type="hidden" name="Subaction" value="QuestionDelete">
-                                                                <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-                                                                <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}">
-                                                                <input class="button" type="submit" value="$Text{"Delete"}">
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-<!-- dtl:block:SurveyEditQuestions -->
-                                        <tr>
-                                            <td class="contentkey" width="25">&nbsp;</td>
-                                            <td class="contentkey">&nbsp;</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td class="contentbody" width="25">&nbsp;</td>
-                            </tr>
-<!-- dtl:block:SurveyEditNewQuestion -->
-                            <tr>
-                                <td class="contentkey" width="25"><a name="NewQuestion"></a>&nbsp;</td>
-                                <td class="contentvalue">
-                                    <form action="$Env{"CGIHandle"}" method="post">
-                                        <input type="hidden" name="Action" value="$Env{"Action"}">
-                                        <input type="hidden" name="Subaction" value="QuestionAdd">
-                                        <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}">
-                                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td rowspan="4"><input type="text" size="60" name="Question"></td>
-                                                <td class="contentvalue"><input type="radio" name="Type" value="YesNo" checked>&nbsp;$Text{"YesNo"}</td>
-                                                <td rowspan="4">&nbsp;&nbsp;&nbsp;<input class="button" type="submit" value="$Text{"Add"}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="contentvalue"><input type="radio" name="Type" value="Radio">&nbsp;$Text{"Radio"}&nbsp;($Text{"List"})</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="contentvalue"><input type="radio" name="Type" value="Checkbox">&nbsp;$Text{"Checkbox"}&nbsp;($Text{"List"})</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="contentvalue"><input type="radio" name="Type" value="Textarea">&nbsp;$Text{"Textarea"}</td>
-                                            </tr>
-                                        </table>
-                                    </form>
-                                </td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                                <td class="contentkey">&nbsp;</td>
-                                <td class="contentkey" width="25">&nbsp;</td>
-                            </tr>
-<!-- dtl:block:SurveyEditNewQuestion -->
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="contentfooter">&nbsp;</td>
-                </tr>
-            </table>
-            <br>
-        </td>
-    </tr>
-</table>
-<!-- dtl:block:SurveyEdit -->
 
-<!-- dtl:block:SurveyAdd -->
+<!-- dtl:block:SurveyForm -->
 <div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarLast">
 
     <h1>$Text{"Create New Survey"}</h1>
+
     <div class="ContentColumn">
         <div class="Content">
             <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="Survey" id="Survey" class="Validate PreventMultipleSubmits">
@@ -615,10 +318,148 @@ function submit_survey() {
 
                 </fieldset>
             </form>
+
+
+
+
+<!-- dtl:block:SurveyEdit -->
+            <div class="WidgetSimple SpacingTop SpacingBottomMedium W50pc">
+                <div class="Header">
+                    <h2>$Text{"Survey Questions"}</h2>
+                </div>
+                <div class="Content">
+                    <table class="DataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    $Text{"Question"}
+                                </th>
+                                <th>
+                                    $Text{"Type"}
+                                </th>
+                                <th>
+                                    $Text{"Up"}
+                                </th>
+                                <th>
+                                    $Text{"Down"}
+                                </th>
+<!-- dtl:block:SurveyEditDeleteColumn -->
+                                <th>
+                                    $Text{"Delete"}
+                                </th>
+<!-- dtl:block:SurveyEditDeleteColumn -->
+                            </tr>
+                        </thead>
+                        <tbody>
+<!-- dtl:block:SurveyNoQuestionsSaved -->
+                            <tr>
+                                <td colspan="$Data{"Columns"}">
+                                    $Text{"There aren't questions saved for this survey."}
+                                </td>
+                            </tr>
+<!-- dtl:block:SurveyNoQuestionsSaved -->
+
+<!-- dtl:block:SurveyEditQuestionsSaved -->
+                            <tr>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>
+                                </td>
+                                <td>
+                                    $Text{"$Data{"Type"}"}
+                                </td>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp" $Data{"Disabled"}>$Text{"Up"}</a>
+                                </td>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown" $Data{"Disabled"}>$Text{"Down"}</a>
+                                </td>
+                            </tr>
+<!-- dtl:block:SurveyEditQuestionsSaved -->
+
+<!-- dtl:block:SurveyEditQuestions -->
+                            <tr>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="$Data{"Class"}">$QData{"Question","70"}</a>
+                                </td>
+                                <td>
+                                    $Text{"$Data{"Type"}"}
+                                </td>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp" $Data{"Disabled"}>
+                                        $Text{"Up"}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown" $Data{"Disabled"}>
+                                        $Text{"Down"}
+                                    </a>
+                                </td>
+<!-- dtl:block:SurveyEditDeleteButton -->
+                                <td>
+                                    <form action="$Env{"CGIHandle"}" method="post">
+                                        <input type="hidden" name="Action" value="$Env{"Action"}" />
+                                        <input type="hidden" name="Subaction" value="QuestionDelete" />
+                                        <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+                                        <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}" />
+                                        <button type="submit" value="$Text{"Delete"}" >$Text{"Delete"}</button>
+                                    </form>
+                                </td>
+<!-- dtl:block:SurveyEditDeleteButton -->
+                            </tr>
+<!-- dtl:block:SurveyEditQuestions -->
+                        </tbody>
+                    </table>
+<!-- dtl:block:SurveyEditAddQuestion -->
+                    <form action="$Env{"CGIHandle"}" method="post">
+                        <input type="hidden" name="Action" value="$Env{"Action"}" />
+                        <input type="hidden" name="Subaction" value="QuestionAdd" />
+                        <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+
+                        <fieldset class="TableLike SpacingTop">
+                            <label for="Question">$Text{"Type the question"}:&nbsp</label>
+                            <div>
+                                <input type="text" id="Question" name="Question" size="60" />
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <label class="SubLabel" for="YesNo">$Text{"Yes/No"}</label>
+                            <div class="SubField">
+                                <input type="radio" id="YesNo" name="Type" value="YesNo" checked />
+                            </div>
+
+                            <label class="SubLabel" for="Radio">$Text{"Radio"}&nbsp;($Text{"List"})</label>
+                            <div class="SubField">
+                                <input type="radio" id="Radio" name="Type" value="Radio">
+                            </div>
+
+                            <label class="SubLabel" for="Checkbox">$Text{"Checkbox"} ($Text{"List"})</label>
+                            <div class="SubField">
+                                <input type="radio" id="Checkbox" name="Type" value="Checkbox">
+                            </div>
+
+
+                            <label class="SubLabel" for="Textarea">$Text{"Textarea"}</label>
+                            <div class="SubField">
+                                <input type="radio" id="Textarea" name="Type" value="Textarea">
+                            </div>
+                        </fieldset>
+                        <div class="SubField">
+                            <button type="submit" value="$Text{"Add"}">$Text{"Add"}</button>
+                        </div>
+                    </form>
+<!-- dtl:block:SurveyEditAddQuestion -->
+                </div>
+            </div>
+<!-- dtl:block:SurveyEdit -->
+
+
+
+
         </div>
     </div>
 </div>
-<!-- dtl:block:SurveyAdd -->
+<!-- dtl:block:SurveyForm -->
 
 <!-- dtl:block:QuestionEdit -->
 <table border="0" width="100%" cellspacing="0" cellpadding="3">

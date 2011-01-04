@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentSurvey.pm - a survey module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.38 2010-12-30 20:53:39 dz Exp $
+# $Id: AgentSurvey.pm,v 1.39 2011-01-04 21:29:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -321,86 +321,16 @@ sub Run {
             'Yes'
             )
         {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            return $Self->{LayoutObject}
+                ->Redirect( OP => "Action=$Self->{Action};Subaction=Survey" );
         }
 
-        # output header
-        $Output = $Self->{LayoutObject}->Header( Title => 'Survey' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
-        # build queue selection
-        my %Queues      = $Self->{QueueObject}->GetAllQueues();
-        my $QueueString = $Self->{LayoutObject}->BuildSelection(
-            Data         => \%Queues,
-            Name         => 'Queues',
-            SelectedID   => $Survey{Queues},
-            Size         => 6,
-            Multiple     => 1,
-            PossibleNone => 0,
-            Sort         => 'AlphanumericValue',
-            Translation  => 0,
+        return $Self->_SurveyAddMask(
+            %Survey,
         );
 
-        # print the main table.
-        $Self->{LayoutObject}->Block(
-            Name => 'SurveyEdit',
-            Data => {
-                %Survey,
-                QueueString => $QueueString,
-            },
-        );
-        my @List = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
-        if ( $Survey{Status} eq 'New' ) {
-            for my $Question (@List) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'SurveyEditQuestions',
-                    Data => $Question,
-                );
-                my $AnswerCount = $Self->{SurveyObject}->AnswerCount(
-                    QuestionID => $Question->{QuestionID},
-                );
-
-                if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
-                    if ( $AnswerCount < 2 ) {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'SurveyEditQuestionsIncomplete',
-                            Data => $Question,
-                        );
-                    }
-                    else {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'SurveyEditQuestionsComplete',
-                            Data => $Question,
-                        );
-                    }
-                }
-                else {
-                    $Self->{LayoutObject}->Block(
-                        Name => 'SurveyEditQuestionsComplete',
-                        Data => $Question,
-                    );
-                }
-            }
-            $Self->{LayoutObject}->Block(
-                Name => 'SurveyEditNewQuestion',
-                Data => { SurveyID => $SurveyID },
-            );
-        }
-        else {
-            for my $Question (@List) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'SurveyEditQuestionsValidOnce',
-                    Data => $Question,
-                );
-            }
-        }
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentSurvey',
-            Data         => {%Param},
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
-        return $Output;
     }
 
     # ------------------------------------------------------------ #
@@ -490,7 +420,7 @@ sub Run {
             );
 
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=$Self->{Action}&Subaction=Survey&SurveyID=$SurveyID",
+                OP => "Action=$Self->{Action};Subaction=Survey;SurveyID=$SurveyID",
             );
         }
 
@@ -528,7 +458,7 @@ sub Run {
             $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         }
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#NewQuestion"
+            OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question"
         );
     }
 
@@ -1082,31 +1012,37 @@ sub Run {
     # ------------------------------------------------------------ #
     # show overview
     # ------------------------------------------------------------ #
-    $Output = $Self->{LayoutObject}->Header( Title => 'Overview' );
+    $Output = $Self->{LayoutObject}->Header( Title => 'Survey Overview' );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
     # print the main table.
     $Self->{LayoutObject}->Block( Name => 'Overview' );
-    my @List = $Self->{SurveyObject}->SurveyList();
-    for my $SurveyID (@List) {
 
-        # set output class
-        if ( $Param{Class} && $Param{Class} eq 'searchpassive' ) {
-            $Param{Class} = 'searchactive';
+    # get survey list
+    my @List = $Self->{SurveyObject}->SurveyList();
+
+    if ( scalar @List ) {
+
+        # print one data line per survey
+        for my $SurveyID (@List) {
+            my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyRow',
+                Data => { %Survey, %Param },
+            );
         }
-        else {
-            $Param{Class} = 'searchpassive';
-        }
-        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
-        $Self->{LayoutObject}->Block(
-            Name => 'OverviewSurvey',
-            Data => { %Survey, %Param },
-        );
     }
+    else {
+
+        # show 'no data found' message
+        $Self->{LayoutObject}->Block( Name => 'SurveyNoDataFound', );
+    }
+
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurvey',
         Data         => {%Param},
     );
+
     $Output .= $Self->{LayoutObject}->Footer();
     return $Output;
 }
@@ -1126,7 +1062,15 @@ sub _SurveyAddMask {
 
     my $Output;
 
-    $Output .= $Self->{LayoutObject}->Header( Title => 'Add New Survey ' );
+    my $Title;
+    if ( $Param{SurveyID} ) {
+        $Title = 'Survey Edit'
+    }
+    else {
+        $Title = 'Add New Survey'
+    }
+
+    $Output .= $Self->{LayoutObject}->Header( Title => $Title );
     $Output .= $Self->{LayoutObject}->NavigationBar();
 
     my %Queues      = $Self->{QueueObject}->GetAllQueues();
@@ -1143,10 +1087,9 @@ sub _SurveyAddMask {
 
     # print the form
     $Self->{LayoutObject}->Block(
-        Name => 'SurveyAdd',
+        Name => 'SurveyForm',
         Data => {
-            %ServerError,
-            %FormElements,
+            %Param,
             QueueString        => $QueueString,
             NotificationSender => $FormElements{NotificationSender}
                 || $Self->{ConfigObject}->Get('Survey::NotificationSender'),
@@ -1154,6 +1097,8 @@ sub _SurveyAddMask {
                 || $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
             NotificationBody => $FormElements{NotificationBody}
                 || $Self->{ConfigObject}->Get('Survey::NotificationBody'),
+            %ServerError,
+            %FormElements,
         },
     );
 
@@ -1177,6 +1122,66 @@ sub _SurveyAddMask {
                 ItemName => $Item,
             },
         );
+    }
+
+    # if survey edit the load the question fields
+    if ( $Param{SurveyID} ) {
+        my @List = $Self->{SurveyObject}->QuestionList( SurveyID => $Param{SurveyID} );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'SurveyEdit',
+            Data => {%Param},
+        );
+
+        if ( $Param{Status} eq 'New' ) {
+
+            $Self->{LayoutObject}->Block( Name => 'SurveyEditDeleteColumn' );
+            if ( scalar @List ) {
+                for my $Question (@List) {
+                    my $AnswerCount = $Self->{SurveyObject}->AnswerCount(
+                        QuestionID => $Question->{QuestionID},
+                    );
+
+                    my $Class;
+                    if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+                        if ( $AnswerCount < 2 ) {
+                            $Class = 'Error';
+                        }
+                    }
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'SurveyEditQuestions',
+                        Data => {
+                            %{$Question},
+                            Class => $Class
+                        },
+                    );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'SurveyEditDeleteButton',
+                        Data => $Question,
+                    );
+                }
+            }
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'SurveyNoQuestionsSaved',
+                    Data => { Columns => 5, }
+                );
+            }
+
+            $Self->{LayoutObject}->Block(
+                Name => 'SurveyEditAddQuestion',
+                Data => { SurveyID => $Param{SurveyID} },
+            );
+        }
+        else {
+            for my $Question (@List) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'SurveyEditQuestionsSaved',
+                    Data => $Question,
+                );
+            }
+        }
     }
 
     $Output .= $Self->{LayoutObject}->Output( TemplateFile => 'AgentSurvey' );

@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/es_AgentSurvey.pm - the es language for AgentSurvey
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_AgentSurvey.pm,v 1.3 2010-12-30 20:56:16 dz Exp $
+# $Id: es_AgentSurvey.pm,v 1.4 2011-01-04 21:29:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -63,9 +63,13 @@ sub Data {
         = 'Si la expresión concuerda la encuesta no será enviada.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'}
         = 'Modulo de Ticket event para envío automático de solicitudes de encuesta a los clientes si un ticket se cierra.';
-
     $Self->{Translation}->{'Create New Survey'} = 'Crear Nueva Encuesta';
     $Self->{Translation}->{'Internal Description'} = 'Descripción Interna';
+    $Self->{Translation}->{'Filter for Survey'} = 'Filtro de Encuestas';
+    $Self->{Translation}->{'Survey Results Graph'} = 'Grafica de Resultados de la Encuesta';
+    $Self->{Translation}->{'Survey Information'} = 'Información de la Encuesta';
+
+#    $Self->{Translation}->{''} = '';
 
     return 1;
 }
