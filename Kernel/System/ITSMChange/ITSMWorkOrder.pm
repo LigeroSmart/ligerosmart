@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.119 2010-12-09 00:03:45 en Exp $
+# $Id: ITSMWorkOrder.pm,v 1.120 2011-01-04 13:03:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Cache;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.119 $) [1];
+$VERSION = qw($Revision: 1.120 $) [1];
 
 =head1 NAME
 
@@ -805,7 +805,7 @@ sub WorkOrderGet {
             next ATTRIBUTE if !$WorkOrderData{$Attribute};
 
             # do not show zero values
-            if ( $WorkOrderData{$Attribute} == 0 ) {
+            if ( $WorkOrderData{$Attribute} eq 0 ) {
                 $WorkOrderData{$Attribute} = '';
                 next ATTRIBUTE;
             }
@@ -2626,7 +2626,7 @@ sub WorkOrderChangeEffortsGet {
             next ATTRIBUTE if !$ChangeEfforts{$Attribute};
 
             # do not show zero values
-            if ( $ChangeEfforts{$Attribute} == 0 ) {
+            if ( $ChangeEfforts{$Attribute} eq 0 ) {
                 $ChangeEfforts{$Attribute} = '';
                 next ATTRIBUTE;
             }
@@ -3406,6 +3406,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.119 $ $Date: 2010-12-09 00:03:45 $
+$Revision: 1.120 $ $Date: 2011-01-04 13:03:30 $
 
 =cut
