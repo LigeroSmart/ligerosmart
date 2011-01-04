@@ -1,8 +1,8 @@
 // --
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.3 2010-12-07 17:25:52 ub Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.4 2011-01-04 16:28:57 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -24,6 +24,82 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
 
     /**
      * @function
+     * @param {jQueryObject} $Element The editor
+     * @return nothing
+     *      Initialize the needed stuff for the FAQ functionality of the ticket screens.
+     */
+    TargetNS.InitFAQTicketCompose = function ($Element) {
+        function GetCursorPosition() {
+            var Element = $Element[0],
+                ElementValue = $Element.val(),
+                Range,
+                TextRange,
+                TextRangeDuplicate,
+                StartRange = 0,
+                EndRange = 0;
+            // Firefox
+            if (Element.selectionStart) {
+                StartRange = Element.selectionStart;
+                EndRange = Element.selectionEnd;
+            }
+            // IE
+            else if (document.selection) {
+                Range = document.selection.createRange().duplicate();
+                TextRange = Element.createTextRange();
+                TextRangeDuplicate = TextRange.duplicate();
+                TextRange.moveToBookmark(Range.getBookmark());
+                TextRangeDuplicate.setEndPoint('EndToStart', TextRange);
+                StartRange = EndRange = TextRangeDuplicate.text.length;
+            }
+
+            // Save cursor position for later usage
+            $Element.data('Cursor', {
+                StartRange: StartRange,
+                EndRange: EndRange
+            });
+        }
+
+        var InstanceName = $Element.attr('id');
+        // Register RTE events for saving the cursor position
+        if (typeof CKEDITOR !== 'undefined' && CKEDITOR && CKEDITOR.instances.RichText) {
+            // Get last cursor position and save it (on focus we come back to this position)
+            CKEDITOR.instances[InstanceName].on('contentDom', function() {
+                CKEDITOR.instances[InstanceName].document.on('click', function () {
+                    $('#' + InstanceName).data('RTECursor', CKEDITOR.instances[InstanceName].getSelection().getRanges());
+                });
+                CKEDITOR.instances[InstanceName].document.on('keyup', function () {
+                    $('#' + InstanceName).data('RTECursor', CKEDITOR.instances[InstanceName].getSelection().getRanges());
+                });
+            });
+
+            // needed for client-side validation and inserting data into RTE
+            CKEDITOR.instances[InstanceName].on('focus', function () {
+                var Selection;
+
+                // if a saved cursor position exists, set this position now
+                var RTECursorRange = $('#' + InstanceName).data('RTECursor');
+                if (RTECursorRange) {
+                    Selection = new CKEDITOR.dom.selection(CKEDITOR.instances[InstanceName].document);
+                    Selection.selectRanges(RTECursorRange);
+                    // delete saved cursor position (to not keep old stuff)
+                    $('#' + InstanceName).data('RTECursor', undefined);
+                }
+            });
+        }
+        // Register events for saving the cursor position of textarea
+        else {
+            $Element.unbind('click.FAQComposing').bind('click.FAQComposing', function () {
+                GetCursorPosition();
+            });
+            $Element.unbind('keyup.FAQComposing').bind('keyup.FAQComposing', function () {
+                GetCursorPosition();
+            });
+        }
+    };
+
+
+    /**
+     * @function
      * @param {String} Title of a FAQ article to be returned into ticket Subject
      * @param {String} Fields of a FAQ article and or Link to the public interface in plain text
      * @param {String} Fields of a FAQ article and or Link to the public interface in HTML
@@ -33,10 +109,16 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
     TargetNS.SetData = function (FAQTitle, FAQContent, FAQHTMLContent) {
         if ($('#Subject', parent.document).length && $('#RichText', parent.document).length) {
             var $ParentSubject = $('#Subject', parent.document),
-                $ParentBody    = $('#RichText', parent.document),
+                $ParentBody = $('#RichText', parent.document),
+                ParentBody = $ParentBody[0],
+                ParentBodyValue = $ParentBody.val(),
+                Range,
+                StartRange = 0,
+                EndRange = 0,
+                NewPosition = 0,
                 NewHTML;
 
-            /* copy subject */
+            // copy subject
             if ($ParentSubject.val() === '') {
                 $ParentSubject.val(FAQTitle);
             }
@@ -46,18 +128,37 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
 
             // add FAQ text and/or link to WYSIWYG editor in parent window
             if (parent.CKEDITOR && parent.CKEDITOR.instances.RichText) {
-                NewHTML = parent.CKEDITOR.instances.RichText.getData();
-                NewHTML += FAQHTMLContent;
-                parent.CKEDITOR.instances.RichText.setData(NewHTML);
-                window.setTimeout(function () {
-                    parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
-                }, 50);
+                parent.CKEDITOR.instances.RichText.focus();
+                window.setTimeout( function () {
+                    parent.CKEDITOR.instances.RichText.insertHtml(FAQHTMLContent);
+                    window.setTimeout(function () {
+                        parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
+                    }, 50);
+                }, 100);
                 return;
             }
 
-            /* insert body and/or link on top */
+            // insert body and/or link to textarea (if possible to cursor position otherwise to the top)
             else {
-                $ParentBody.val( FAQContent + $ParentBody.val());
+                // Get previously saved cursor position of textarea
+                StartRange = parent.$('#RichText', parent.document).data('Cursor').StartRange;
+                EndRange =  parent.$('#RichText', parent.document).data('Cursor').EndRange;
+
+                // Add new text to textarea
+                $ParentBody.val(ParentBodyValue.substr(0, StartRange) + FAQContent + ParentBodyValue.substr(EndRange, ParentBodyValue.length));
+                NewPosition = StartRange + FAQContent.length;
+
+                // Jump to new cursor position (after inserted text)
+                if (ParentBody.selectionStart) {
+                    ParentBody.selectionStart = NewPosition;
+                    ParentBody.selectionEnd = NewPosition;
+                }
+                else if (document.selection) {
+                    Range = document.selection.createRange().duplicate();
+                    Range.moveStart('character', NewPosition);
+                    Range.select();
+                }
+
                 parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
                 return;
             }

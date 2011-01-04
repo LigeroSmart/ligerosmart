@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.100 2011-01-03 10:32:58 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.101 2011-01-04 16:28:57 mn Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -1462,6 +1462,16 @@ Your OTRS Notification Master
         <SubGroup>Core</SubGroup>
         <Setting>
             <String>en</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Loader::Agent::CommonJS###200-FAQ" Required="1" Valid="1">
+        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>FAQ.Agent.TicketCompose.js</Item>
+            </Array>
         </Setting>
     </ConfigItem>
 </otrs_config>
