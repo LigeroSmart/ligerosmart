@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -140,6 +140,34 @@
     text-indent: -9999px;
     height: 16px;
     width: 28px;
+}
+
+.Details .FAQLabel {
+    width: 85px;
+    margin: 0 3px;
+    color: #AAA;
+    display: inline-block;
+    text-align: right;
+}
+.RTL .Details .FAQLabel {
+    text-align: left;
+}
+
+
+.Details .Attachments .FAQLabel {
+    background: url(../img/paper-clip.png) no-repeat right;
+    text-indent: -9999px;
+    text-align:left;
+
+}
+.RTL .Details .Attachments .FAQLabel {
+    background-position: left;
+    text-indent: -9999px;
+    text-align:right;
+}
+
+.Keyword a {
+    color: #000;
 }
 
 }
