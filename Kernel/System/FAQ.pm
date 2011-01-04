@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq funktions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.143 2010-12-30 20:37:59 cr Exp $
+# $Id: FAQ.pm,v 1.144 2011-01-04 15:51:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.143 $) [1];
+$VERSION = qw($Revision: 1.144 $) [1];
 
 =head1 NAME
 
@@ -106,6 +106,9 @@ sub new {
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
     $Self->{LinkObject}          = Kernel::System::LinkObject->new( %{$Self} );
     $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
+
+    # get like escape string needed for some databases (e.g. oracle)
+    $Self->{LikeEscapeString} = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
 
     return $Self;
 }
@@ -1466,7 +1469,7 @@ sub CategorySearch {
         # db like quote
         $Param{Name} = $Self->{DBObject}->Quote( $Param{Name}, 'Like' );
 
-        $Ext .= " AND name LIKE '%" . $Param{Name} . "%'";
+        $Ext .= " AND name LIKE '%" . $Param{Name} . "%' $Self->{LikeEscapeString}";
     }
 
     # search for parent id
@@ -3049,11 +3052,11 @@ sub FAQSearch {
     if ( $Param{Number} ) {
         $Param{Number} =~ s/\*/%/g;
         $Param{Number} =~ s/%%/%/g;
-        $Param{Number} = $Self->{DBObject}->Quote( $Param{Number} );
+        $Param{Number} = $Self->{DBObject}->Quote( $Param{Number}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= " LOWER(i.f_number) LIKE LOWER('" . $Param{Number} . "')";
+        $Ext .= " LOWER(i.f_number) LIKE LOWER('" . $Param{Number} . "') $Self->{LikeEscapeString}";
     }
 
     # search for the title
@@ -3061,11 +3064,11 @@ sub FAQSearch {
         $Param{Title} = "\%$Param{Title}\%";
         $Param{Title} =~ s/\*/%/g;
         $Param{Title} =~ s/%%/%/g;
-        $Param{Title} = $Self->{DBObject}->Quote( $Param{Title} );
+        $Param{Title} = $Self->{DBObject}->Quote( $Param{Title}, 'Like' );
         if ($Ext) {
             $Ext .= ' AND';
         }
-        $Ext .= " LOWER(i.f_subject) LIKE LOWER('" . $Param{Title} . "')";
+        $Ext .= " LOWER(i.f_subject) LIKE LOWER('" . $Param{Title} . "') $Self->{LikeEscapeString}";
     }
 
     # search for languages
@@ -3130,13 +3133,19 @@ sub FAQSearch {
         $Param{Keyword} = $Self->{DBObject}->Quote( $Param{Keyword}, 'Like' );
 
         if ( $Self->{DBObject}->GetDatabaseFunction('NoLowerInLargeText') ) {
-            $Ext .= " i.f_keywords LIKE '" . $Param{Keyword} . "'";
+            $Ext .= " i.f_keywords LIKE '" . $Param{Keyword} . "' $Self->{LikeEscapeString}";
         }
         elsif ( $Self->{DBObject}->GetDatabaseFunction('LcaseLikeInLargeText') ) {
-            $Ext .= " LCASE(i.f_keywords) LIKE LCASE('" . $Param{Keyword} . "')";
+            $Ext
+                .= " LCASE(i.f_keywords) LIKE LCASE('"
+                . $Param{Keyword}
+                . "') $Self->{LikeEscapeString}";
         }
         else {
-            $Ext .= " LOWER(i.f_keywords) LIKE LOWER('" . $Param{Keyword} . "')";
+            $Ext
+                .= " LOWER(i.f_keywords) LIKE LOWER('"
+                . $Param{Keyword}
+                . "') $Self->{LikeEscapeString}";
         }
     }
 
@@ -4412,6 +4421,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.143 $ $Date: 2010-12-30 20:37:59 $
+$Revision: 1.144 $ $Date: 2011-01-04 15:51:52 $
 
 =cut
