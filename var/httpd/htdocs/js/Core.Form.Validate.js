@@ -1,9 +1,9 @@
 // --
 // Core.Form.Validate.js - provides functions for validating form inputs
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: Core.Form.Validate.js,v 1.1 2010-12-20 09:58:19 ub Exp $
-// $OldId: Core.Form.Validate.js,v 1.26 2010/12/20 09:43:18 mg Exp $
+// $Id: Core.Form.Validate.js,v 1.2 2011-01-04 11:18:37 ub Exp $
+// $OldId: Core.Form.Validate.js,v 1.29 2011/01/03 11:01:55 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -160,7 +160,11 @@ Core.Form.Validate = (function (TargetNS) {
             Form.submit();
         }
         if ($(Form).hasClass("PreventMultipleSubmits")) {
-            Core.Form.DisableForm($(Form));
+            // fix for Safari: this "disable" comes to early after the submit, so that some fields are
+            // disabled before submitting and therefor are not submitted
+            window.setTimeout(function () {
+                Core.Form.DisableForm($(Form));
+            }, 0);
         }
     }
 
@@ -418,7 +422,7 @@ Core.Form.Validate = (function (TargetNS) {
 
 
     $.validator.addClassRules("Validate_DependingRequiredOR", {
-        Validate_DependingRequiredAND: true
+        Validate_DependingRequiredOR: true
     });
 
     /**
@@ -458,7 +462,9 @@ Core.Form.Validate = (function (TargetNS) {
          * If on document load there are Error classes present, there were validation errors on server side.
          * Show an alert message and initialize the tooltips.
          */
-        $ServerErrors = $('input, textarea, select').filter('.' + Options.ServerErrorClass);
+        $ServerErrors = $('input.' + Options.ServerErrorClass)
+            .add('textarea.' + Options.ServerErrorClass)
+            .add('select.' + Options.ServerErrorClass);
 
         if ($ServerErrors.length) {
             $ServerErrors.each(function () {
