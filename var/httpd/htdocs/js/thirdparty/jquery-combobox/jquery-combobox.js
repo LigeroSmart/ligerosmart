@@ -2,7 +2,7 @@
 // jquery-combobox.js - special jquery ui combobox
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: jquery-combobox.js,v 1.1 2011-01-05 11:48:56 mn Exp $
+// $Id: jquery-combobox.js,v 1.2 2011-01-05 16:00:38 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,8 @@
     $.widget( "ui.combobox", {
         options: {
             class: '',
-            idprefix: 'Combo_',
+            idprefixinput: 'Combo_',
+            idprefixbutton: 'ComboBtn_',
             validationtooltip: '',
             lang: {
                 showallitems: 'Show all items'
@@ -26,7 +27,7 @@
                 value = selected.val() ? selected.text() : "";
             var input = this.input = $( "<input>" )
                 .addClass(this.options.class)
-                .attr('id', this.options.idprefix + select[0].id)
+                .attr('id', this.options.idprefixinput + select[0].id)
                 .insertAfter( select )
                 .css('width', select.width())
                 .val( value )
@@ -92,6 +93,7 @@
             this.button = $( "<button type='button'>&nbsp;</button>" )
                 .attr( "tabIndex", -1 )
                 .attr( "title", this.options.lang.showallitems )
+                .attr('id', this.options.idprefixbutton + select[0].id)
                 .insertAfter( input )
                 .button({
                     icons: {

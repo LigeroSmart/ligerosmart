@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.32 2011-01-05 11:48:56 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.33 2011-01-05 16:00:38 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -92,12 +92,12 @@
                 <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="WorkingUnits" id="WorkingUnits" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />
                     <input type="hidden" name="Subaction" value="Edit" />
-                    <input type="hidden" name="RecordsNumber" value="$QData{"RecordsNumber"}" />
+                    <input type="hidden" name="RecordsNumber" id="RecordsNumber" value="$QData{"RecordsNumber"}" />
                     <input type="hidden" name="Status" value="Action" />
                     <input type="hidden" name="Year" value="$QData{"Year"}" />
                     <input type="hidden" name="Month" value="$QData{"Month"}" />
                     <input type="hidden" name="Day" value="$QData{"Day"}" />
-                    <table class="DataTable NoHover HighCells">
+                    <table class="DataTable NoHover HighCells" id="InsertWorkingHours">
                         <thead>
                             <tr>
                                 <th><span class="Marker">*</span> $Text{"Project"}</th>
@@ -110,7 +110,7 @@
                         </thead>
                         <tbody>
 <!-- dtl:block:Unit -->
-                            <tr>
+                            <tr class="WorkingHours">
                                 <td>
                                     $Data{"ProjectOption"}
                                     <div id="ProjectID$QData{"ID"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
@@ -186,7 +186,7 @@
 <!-- dtl:block:Unit -->
                             <tr>
                                 <td colspan="6" class="Right">
-                                    <button class="CallForAction Plus" name="MoreInputFields" value="More input fields"><span>$Text{"More input fields"}</span></button>
+                                    <button class="CallForAction Plus" type="button" id="MoreInputFields" name="MoreInputFields"><span>$Text{"Add one row"}</span></button>
                                 </td>
                             </tr>
 <!-- dtl:block:UnitBlock -->

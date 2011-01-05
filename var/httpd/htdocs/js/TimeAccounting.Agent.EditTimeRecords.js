@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.2 2011-01-05 11:48:56 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.3 2011-01-05 16:00:38 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -82,6 +82,90 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         }
 
         $SelectionElement.append($Option);
+    }
+
+    function InitAutoCompletion(Language) {
+        // Initialize ComboBox on Project dropdown
+        Core.UI.ComboBox.Init('.ProjectSelection', {
+            class: "Validate_TimeAccounting_Project",
+            lang: {
+                showallitems: Language.ShowAllItems
+            }
+        });
+        // Initialize ComboBox on task dropdown
+        Core.UI.ComboBox.Init('.ActionSelection', {
+            class: "Validate_DependingRequiredAND",
+            lang: {
+                showallitems: Language.ShowAllItems
+            }
+        });
+        // Add special validation class to ActionSelection
+        $('.ActionSelection').next('input:text').each(function () {
+            var ID = this.id.replace('Combo_ActionID', '');
+            $(this).addClass('Validate_Depending_Combo_ProjectID' + ID);
+        });
+        // Remove validation classes from underlying select
+        $('.ProjectSelection').removeClass('Validate_TimeAccounting_Project');
+        $('.ActionSelection').removeClass('Validate_DependingRequiredAND');
+
+        // Copy ServerError classes to according comboboxes
+        $('.ProjectSelection.ServerError').next('input[id^=Combo_').addClass('ServerError');
+        $('.ActionSelection.ServerError').next('input[id^=Combo_').addClass('ServerError');
+
+        Core.Form.Validate.Init();
+    }
+
+    function InitAddRow() {
+        $('#MoreInputFields').unbind('click.MoreInputFields').bind('click.MoreInputFields', function () {
+            var $LastRow = $('#InsertWorkingHours tbody tr.WorkingHours:last'),
+                $NewRow = $LastRow.clone(),
+                NewRowHTML = $NewRow.html(),
+                RecordNumber = parseInt($('#RecordsNumber').val(), 10) + 1;
+
+            // Now take the last row and replace all numbers with the new record number
+            NewRowHTML = NewRowHTML.replace(/ProjectID[0-9]+/g, 'ProjectID' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/ProjectID\[[0-9]+/g, 'ProjectID[' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/FillActionList\([0-9]+/g, 'FillActionList(' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/ActionID[0-9]+/g, 'ActionID' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/ActionID\[[0-9]+/g, 'ActionID[' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/Remark[0-9]+/g, 'Remark' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/Remark\[[0-9]+/g, 'Remark[' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/StartTime[0-9]+/g, 'StartTime' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/StartTime\[[0-9]+/g, 'StartTime[' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/EndTime[0-9]+/g, 'EndTime' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/EndTime\[[0-9]+/g, 'EndTime[' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/Period[0-9]+/g, 'Period' + RecordNumber);
+            NewRowHTML = NewRowHTML.replace(/Period\[[0-9]+/g, 'Period[' + RecordNumber);
+
+            // Now write this HTML back to the jquery object
+            $NewRow.html(NewRowHTML);
+
+            // If last row contained values, these must be removed
+            $NewRow
+                .find('input:text').val('').end()
+                .find('select option').removeAttr('selected');
+
+            // Remove autocompletion from this row (will be re-initiated later)
+            $NewRow
+                .find('input[id^=Combo_]').remove().end()
+                .find('button[id^=ComboBtn_]').remove();
+
+            console.log($NewRow.html());
+
+            // Now add this row to the table
+            $LastRow.after($NewRow);
+
+            // Save new RecordNumber
+            $('#RecordsNumber').val(RecordNumber);
+
+            // Re-initiate the 'odd/even' colours of the table
+            $('#InsertWorkingHours tbody tr')
+                .removeClass('Even')
+                .filter(':odd').addClass('Even');
+
+            // Re-initiate autocompletion combobox
+            InitAutoCompletion(Language);
+        });
     }
 
     /**
@@ -174,31 +258,11 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
         // Enable autocompletion, if configured
         if (Options.Autocompletion) {
-            // Initialize ComboBox on Project dropdown
-            Core.UI.ComboBox.Init('.ProjectSelection', {
-                class: "Validate_TimeAccounting_Project",
-                lang: {
-                    showallitems: Language.ShowAllItems
-                }
-            });
-            // Initialize ComboBox on task dropdown
-            Core.UI.ComboBox.Init('.ActionSelection', {
-                class: "Validate_DependingRequiredAND",
-                lang: {
-                    showallitems: Language.ShowAllItems
-                }
-            });
-            // Add special validation class to ActionSelection
-            $('.ActionSelection').next('input:text').each(function () {
-                var ID = this.id.replace('Combo_ActionID', '');
-                $(this).addClass('Validate_Depending_Combo_ProjectID' + ID);
-            });
-            // Remove validation classes from underlying select
-            $('.ProjectSelection').removeClass('Validate_TimeAccounting_Project');
-            $('.ActionSelection').removeClass('Validate_DependingRequiredAND');
-
-            Core.Form.Validate.Init();
+            InitAutoCompletion(Language);
         }
+
+        // initiate "more input fields" functionality
+        InitAddRow();
     }
 
     return TargetNS;
