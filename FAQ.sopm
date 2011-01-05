@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.100 2011-01-05 15:51:00 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.101 2011-01-05 22:39:32 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -485,13 +485,13 @@
     </CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
         <br/>
-        <b>WELCOME</b>
+        <strong>WELCOME</strong>
         <br/>
         <br/>
         You are about to install the OTRS package FAQ.<br/>
         <br/>
         <br/>
-        <b>ATTENTION</b>
+        <strong>ATTENTION</strong>
         <br/>
         <br/>
         Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
@@ -502,13 +502,13 @@
     ]]></IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
         <br/>
-        <b>WILLKOMMEN</b>
+        <strong>WILLKOMMEN</strong>
         <br/>
         <br/>
         Sie sind im Begriff das OTRS-Paket FAQ zu installieren.<br/>
         <br/>
         <br/>
-        <b>ACHTUNG</b>
+        <strong>ACHTUNG</strong>
         <br/>
         <br/>
         Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
@@ -519,7 +519,7 @@
     ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
         <br/>
-        <b>NOTICE</b>
+        <strong>NOTICE</strong>
         <br/>
         <br/>
         In order to grant users access to the faq menu, you need to add them as member to the group 'faq'.
@@ -540,7 +540,7 @@
     ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
         <br/>
-        <b>HINWEIS</b>
+        <strong>HINWEIS</strong>
         <br/>
         <br/>
         Um Benutzern Zugriff auf das FAQ-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'faq' sein.
@@ -561,7 +561,7 @@
     ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
         <br/>
-        <b>WELCOME</b>
+        <strong>WELCOME</strong>
         <br/>
         <br/>
         You are about to upgrade the OTRS package FAQ.<br/>
@@ -572,7 +572,7 @@
     ]]></IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
         <br/>
-        <b>WILLKOMMEN</b>
+        <strong>WILLKOMMEN</strong>
         <br/>
         <br/>
         Sie sind im Begriff das OTRS-Paket FAQ zu aktualisieren.<br/>
@@ -583,7 +583,7 @@
     ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
         <br/>
-        <b>ATTENTION</b>
+        <strong>ATTENTION</strong>
         <br/>
         <br/>
         If you uninstall this package, all database tables that were created during installation will be deleted.
@@ -599,7 +599,7 @@
     ]]></IntroUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
         <br/>
-        <b>ACHTUNG</b>
+        <strong>ACHTUNG</strong>
         <br/>
         <br/>
         Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
