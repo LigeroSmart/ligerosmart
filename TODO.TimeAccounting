@@ -1,48 +1,48 @@
 # --
 # TODO - todo list of TimeAccounting
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TODO.TimeAccounting,v 1.25 2010-11-09 19:11:51 en Exp $
+# $Id: TODO.TimeAccounting,v 1.26 2011-01-05 11:58:25 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-TimeAccounting 1.3
+TimeAccounting 2.0
+High Priority
 - Insert Unit tests.
-- change the workingunit handling from hash to array
-- insert a complete project-task-remark-relationship handling
-- delete form: use buttons instead of links
-- Make description in projectsettings to an requiredfield
-- insert a help/description text in projectsetting dtl
-- rework the corefunctions for ProjectAction-Reporting
-  one Primary function und serveral extensions
 - problems with very long working days
   16:00 - 1:00 is not possible
   16:00 - 24:00 is not possible
   16:00 - 23:59 is possible
 - remove white spaces at time inserts " 12:30 "
   a better way could be a regexp  ~/*(/d/d):(/d/d)*
-- don't forget to write the text in the submitbuttons big (delete => Delete; löschen => Löschen)
-- insert a permission check, if one can view the overview of projects he should not see
 - error warning for set 31.09 in edit
+- sysconfig: allow to deactivate the option MaxIncompleteWorkingDays
+- Include working hours per week into the overview.
+- Add the days without entry on a drop-down list, instead of in a continuous row.
+- Show the most selected options at the beginning of the list in the task drop down list (like in the project).
+- When a lot of days have missing entries, it is not possible to access the system until you add the entry
+  for all the days. Add a log out or close button to this screen, to exit the system in a proper way, without
+  using the X button of the browser.
+
+Lower Priority (or: old todo's - check if still valid)
+- change the workingunit handling from hash to array
+- insert a complete project-task-remark-relationship handling
+- insert a help/description text in projectsetting dtl
+- rework the corefunctions for ProjectAction-Reporting
+  one Primary function und serveral extensions
+- insert a permission check, if one can view the overview of projects he should not see
 - if the agentsetting is changed from valid to invalid his timeaccounting
   settings AND accounted hours are invisible!!!
 - realize reports with following settings: selceted group of persons, weekly witch projects and actions
 - grep the TimeAccountingmodule for record and replace the words with accounting or account
-- sysconfig: allow to deactivate the option MaxIncompleteWorkingDays
-- insert a config, that nobody kann insert the hole das misc!!!
-- insert a config, that nobady kann insert misc without a description
-- insert a config option that each new Project must match with the defined regexp for no 'InfoGenie'
 - Kernel/System/TimeAccounting.pm sub UserSettingsInsert: create two separate functions for the
   db-insert in time_accounting_user and time_accounting_user_period. Maybe the update function too.
 - check all functions for a better functionallity
 - use bind for sql statements
 - make a logentry is someone adds or updates a project, user or task (time + user)
-
-
-Performance
 - Cache often used SQL-functions
 - to evaluate the overview of one user - the user data of all user is
   requested
@@ -50,29 +50,8 @@ Performance
   FROM time_accounting_user_period
   WHERE date_start <= '2007-04-28 00:00:00' AND date_end >='2007-04-28 00:00:00'
   -> integrate user_id in where-clause
-
-2.2 (OTRS)
-
-
-3.0
--
-
-misc (not scheduled yet - nobody is working on it yet).
-- First beta release on Dec. 15th, 2010.
-
-
-
-ideas for improvement
-
-- Include working hours per week into the overview.
 - Add a label to the day, month and year.
 - Use always the same format for the date.
 - Move the check boxes from the bottom the top (on sick time leave... ).
-- Add the days without entry on a drop-down list, instead of in a continuous row.
-- Show the most selected options at the beginning of the list in the task drop down list (like in the project).
 - Change the calendar to get the data with jQuery, instead of opening a pop-up.
 - Load the form for the days without entry with ajax.
-- Make the delete screen a confirmation dialog (like in ITSM).
-- When a lot of days have missing entries, it is not possible to access the system until you add the entry
-  for all the days. Add a log out or close button to this screen, to exit the system in a proper way, without
-  using the X button of the browser.
