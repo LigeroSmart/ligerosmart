@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.16 2011-01-05 15:24:18 cr Exp $
+# $Id: CustomerFAQZoom.pm,v 1.17 2011-01-05 17:20:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -175,8 +175,9 @@ sub Run {
 
         # customer can't use this subaction if is not enbled
         if ( !$Self->{Voting} ) {
-            $Self->{LayoutObject}
-                ->CustomerFatalError( Message => "The voting mechanism is not enabled!" );
+            $Self->{LayoutObject}->CustomerFatalError(
+                Message => "The voting mechanism is not enabled!",
+            );
         }
 
         # user can vote only once per FAQ revision
