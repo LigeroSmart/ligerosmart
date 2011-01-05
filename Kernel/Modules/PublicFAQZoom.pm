@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQZoom.pm - to get a closer view
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.pm,v 1.8 2010-12-27 16:50:21 cr Exp $
+# $Id: PublicFAQZoom.pm,v 1.9 2011-01-05 15:26:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,7 +55,9 @@ sub new {
         UserID => $Self->{UserID},
     );
 
+    # get default options
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+    $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
 
     return $Self;
 }
@@ -181,11 +183,15 @@ sub Run {
         );
     }
 
-    # always diplays Votes result even if its 0
-    $Self->{LayoutObject}->Block(
-        Name => 'ViewVotes',
-        Data => {%FAQData},
-    );
+    # show votes
+    if ( $Self->{Voting} ) {
+
+        # always diplays Votes result even if its 0
+        $Self->{LayoutObject}->Block(
+            Name => 'ViewVotes',
+            Data => {%FAQData},
+        );
+    }
 
     # show FAQ path
     my $ShowFAQPath = $Self->{LayoutObject}->FAQPathShow(
@@ -219,10 +225,12 @@ sub Run {
     }
 
     # output rating stars
-    $Self->{LayoutObject}->FAQRatingStarsShow(
-        VoteResult => $FAQData{VoteResult},
-        Votes      => $FAQData{Votes},
-    );
+    if ( $Self->{Voting} ) {
+        $Self->{LayoutObject}->FAQRatingStarsShow(
+            VoteResult => $FAQData{VoteResult},
+            Votes      => $FAQData{Votes},
+        );
+    }
 
     # output attachments if any
     my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(

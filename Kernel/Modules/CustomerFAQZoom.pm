@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.15 2010-12-27 16:44:42 cr Exp $
+# $Id: CustomerFAQZoom.pm,v 1.16 2011-01-05 15:24:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,7 +52,9 @@ sub new {
         UserID => $Self->{UserID},
     );
 
+    # get default options
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+    $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
 
     return $Self;
 }
@@ -139,13 +141,16 @@ sub Run {
     $Output .= $Self->{LayoutObject}->CustomerNavigationBar();
 
     # get FAQ vote information
-    my $VoteData = $Self->{FAQObject}->VoteGet(
-        CreateBy  => $Self->{UserID},
-        ItemID    => $FAQData{ItemID},
-        Interface => $Self->{Interface}->{StateID},
-        IP        => $ENV{'REMOTE_ADDR'},
-        UserID    => $Self->{UserID},
-    );
+    my $VoteData;
+    if ( $Self->{Voting} ) {
+        $VoteData = $Self->{FAQObject}->VoteGet(
+            CreateBy  => $Self->{UserID},
+            ItemID    => $FAQData{ItemID},
+            Interface => $Self->{Interface}->{StateID},
+            IP        => $ENV{'REMOTE_ADDR'},
+            UserID    => $Self->{UserID},
+        );
+    }
 
     # check if user already voted this FAQ item
     my $AlreadyVoted;
@@ -167,6 +172,12 @@ sub Run {
     # Vote Subaction
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
+
+        # customer can't use this subaction if is not enbled
+        if ( !$Self->{Voting} ) {
+            $Self->{LayoutObject}
+                ->CustomerFatalError( Message => "The voting mechanism is not enabled!" );
+        }
 
         # user can vote only once per FAQ revision
         if ($AlreadyVoted) {
@@ -280,11 +291,15 @@ sub Run {
         );
     }
 
-    # always diplays Votes result even if its 0
-    $Self->{LayoutObject}->Block(
-        Name => 'ViewVotes',
-        Data => {%FAQData},
-    );
+    # show votes
+    if ( $Self->{Voting} ) {
+
+        # always diplays Votes result even if its 0
+        $Self->{LayoutObject}->Block(
+            Name => 'ViewVotes',
+            Data => {%FAQData},
+        );
+    }
 
     # show FAQ path
     my $ShowFAQPath = $Self->{LayoutObject}->FAQPathShow(
@@ -318,10 +333,12 @@ sub Run {
     }
 
     # output rating stars
-    $Self->{LayoutObject}->FAQRatingStarsShow(
-        VoteResult => $FAQData{VoteResult},
-        Votes      => $FAQData{Votes},
-    );
+    if ( $Self->{Voting} ) {
+        $Self->{LayoutObject}->FAQRatingStarsShow(
+            VoteResult => $FAQData{VoteResult},
+            Votes      => $FAQData{Votes},
+        );
+    }
 
     # output attachments if any
     my @AttachmentIndex = $Self->{FAQObject}->AttachmentIndex(
@@ -355,13 +372,16 @@ sub Run {
     );
 
     # show FAQ Voting
-    # check config
-    my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
-    if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+    if ( $Self->{Voting} ) {
 
-        # check if the user already voted after last change
-        if ( !$AlreadyVoted ) {
-            $Self->_FAQVoting( FAQData => {%FAQData} );
+        # get voting config
+        my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
+        if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+
+            # check if the user already voted after last change
+            if ( !$AlreadyVoted ) {
+                $Self->_FAQVoting( FAQData => {%FAQData} );
+            }
         }
     }
 

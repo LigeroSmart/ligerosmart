@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.28 2010-12-27 16:38:21 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.29 2011-01-05 15:21:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -54,7 +54,9 @@ sub new {
         UserID => $Self->{UserID},
     );
 
+    # get default options
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+    $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
 
     return $Self;
 }
@@ -155,13 +157,16 @@ sub Run {
     }
 
     # get FAQ vote information
-    my $VoteData = $Self->{FAQObject}->VoteGet(
-        CreateBy  => $Self->{UserID},
-        ItemID    => $FAQData{ItemID},
-        Interface => $Self->{Interface}->{StateID},
-        IP        => $ENV{'REMOTE_ADDR'},
-        UserID    => $Self->{UserID},
-    );
+    my $VoteData;
+    if ( $Self->{Voting} ) {
+        $VoteData = $Self->{FAQObject}->VoteGet(
+            CreateBy  => $Self->{UserID},
+            ItemID    => $FAQData{ItemID},
+            Interface => $Self->{Interface}->{StateID},
+            IP        => $ENV{'REMOTE_ADDR'},
+            UserID    => $Self->{UserID},
+        );
+    }
 
     # check if user already voted this FAQ item
     my $AlreadyVoted;
@@ -183,6 +188,11 @@ sub Run {
     # Vote Subaction
     # ---------------------------------------------------------- #
     if ( $Self->{Subaction} eq 'Vote' ) {
+
+        # user can't use this subaction if is not enbled
+        if ( !$Self->{Voting} ) {
+            $Self->{LayoutObject}->FatalError( Message => "The voting mechanism is not enabled!" );
+        }
 
         # user can vote only once per FAQ revision
         if ($AlreadyVoted) {
@@ -339,17 +349,20 @@ sub Run {
         );
     }
 
-    # output votes number if any
-    if ( $FAQData{Votes} ) {
-        $Self->{LayoutObject}->Block(
-            Name => 'ViewVotes',
-            Data => {%FAQData},
-        );
-    }
+    if ( $Self->{Voting} ) {
 
-    # otherwise display a No Votes found message
-    else {
-        $Self->{LayoutObject}->Block( Name => 'ViewNoVotes' );
+        # output votes number if any
+        if ( $FAQData{Votes} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ViewVotes',
+                Data => {%FAQData},
+            );
+        }
+
+        # otherwise display a No Votes found message
+        else {
+            $Self->{LayoutObject}->Block( Name => 'ViewNoVotes' );
+        }
     }
 
     # show FAQ path
@@ -396,11 +409,12 @@ sub Run {
     }
 
     # output rating stars
-    $Self->{LayoutObject}->FAQRatingStarsShow(
-        VoteResult => $FAQData{VoteResult},
-        Votes      => $FAQData{Votes},
-    );
-
+    if ( $Self->{Voting} ) {
+        $Self->{LayoutObject}->FAQRatingStarsShow(
+            VoteResult => $FAQData{VoteResult},
+            Votes      => $FAQData{Votes},
+        );
+    }
     if ( $Nav ne 'None' ) {
 
         # output existing attachments
@@ -439,13 +453,16 @@ sub Run {
     if ( $Nav ne 'None' ) {
 
         # show FAQ Voting
-        # check config
-        my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
-        if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+        if ( $Self->{Voting} ) {
 
-            # check if the user already voted after last change
-            if ( !$AlreadyVoted ) {
-                $Self->_FAQVoting( FAQData => {%FAQData} );
+            # get voting config
+            my $ShowVotingConfig = $Self->{ConfigObject}->Get('FAQ::Item::Voting::Show');
+            if ( $ShowVotingConfig->{ $Self->{Interface}->{Name} } ) {
+
+                # check if the user already voted after last change
+                if ( !$AlreadyVoted ) {
+                    $Self->_FAQVoting( FAQData => {%FAQData} );
+                }
             }
         }
 

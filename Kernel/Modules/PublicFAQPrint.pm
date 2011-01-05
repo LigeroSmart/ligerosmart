@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQPrint.pm,v 1.8 2011-01-03 10:48:03 ub Exp $
+# $Id: PublicFAQPrint.pm,v 1.9 2011-01-05 15:25:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,7 +56,9 @@ sub new {
         UserID => $Self->{UserID},
     );
 
+    # get default options
     $Self->{MultiLanguage} = $Self->{ConfigObject}->Get('FAQ::MultiLanguage');
+    $Self->{Voting}        = $Self->{ConfigObject}->Get('FAQ::Voting');
 
     return $Self;
 }
@@ -186,7 +188,7 @@ sub Run {
             Y    => -6,
         );
 
-        # output faq infos
+        # output faq information
         $Self->_PDFOutputFAQHeaderInfo(
             PageData => \%Page,
             FAQData  => \%FAQData,
@@ -287,24 +289,30 @@ sub _PDFOutputFAQHeaderInfo {
     }
 
     # create right table
-    my $TableRight = [
-        {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Votes') . ':',
-            Value => $FAQData{Votes},
-        },
-        {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Result') . ':',
-            Value => $FAQData{VoteResult} . " %",
-        },
+    my $TableRight;
 
-        {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last update') . ':',
-            Value => $Self->{LayoutObject}->Output(
-                Template => '$TimeLong{"$Data{"Changed"}"}',
-                Data     => \%FAQData,
-            ),
-        },
-    ];
+    # voting rows, featre is enabled
+    if ( $Self->{Voting} ) {
+        $TableRight = [
+            {
+                Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Votes') . ':',
+                Value => $FAQData{Votes},
+            },
+            {
+                Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Result') . ':',
+                Value => $FAQData{VoteResult} . " %",
+            },
+        ];
+    }
+
+    # last update row
+    push @{$TableRight}, {
+        Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Last update') . ':',
+        Value => $Self->{LayoutObject}->Output(
+            Template => '$TimeLong{"$Data{"Changed"}"}',
+            Data     => \%FAQData,
+        ),
+    };
 
     my $Rows = @{$TableLeft};
     if ( @{$TableRight} > $Rows ) {
@@ -534,7 +542,6 @@ sub _PDFOuputFAQContent {
                 $Page{PageCount}++;
             }
         }
-
     }
     return 1;
 }
@@ -546,6 +553,14 @@ sub _HTMLMask {
     if ( $Self->{MultiLanguage} ) {
         $Self->{LayoutObject}->Block(
             Name => 'Language',
+            Data => \%Param,
+        );
+    }
+
+    # show rating
+    if ( $Self->{Voting} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Rating',
             Data => \%Param,
         );
     }

@@ -1,8 +1,8 @@
 # --
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.25 2010-12-27 16:38:21 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.26 2011-01-05 15:21:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -65,8 +65,10 @@
                         <div class="Clear"></div>
 <!-- dtl:block:ViewApproval -->
 
+<!-- dtl:block:ViewRating -->
                         <label>$Text{"Rating"}:</label>
                         <div class="Value" title="$Text{"Rating $Data{"VoteResult"}%"}">
+
 <!-- dtl:block:RateStars -->
                             <div>
                                 <span class="RateStar">Star</span>
@@ -79,14 +81,17 @@
 <!-- dtl:block:RateStarsCount -->
                         </div>
                         <div class="Clear"></div>
+<!-- dtl:block:ViewRating -->
 
-                        <label>$Text{"Votes"}:</label>
 <!-- dtl:block:ViewVotes -->
+                        <label>$Text{"Votes"}:</label>
                         <p class="Value" title="$Quote{"$Text{"$Data{"Votes"}"}"}">$Quote{"$Text{"$Data{"Votes"}"}","18"}</p>
 <!-- dtl:block:ViewVotes -->
 <!-- dtl:block:ViewNoVotes -->
+                        <label>$Text{"Votes"}:</label>
                         <p class="Value" title="$Text{"No votes found!"}">$Text{"No votes found! Be the first one to rate this FAQ article."}</p>
 <!-- dtl:block:ViewNoVotes -->
+
                         <div class="Clear"></div>
 
                         <label>$Text{"Created"}:</label>

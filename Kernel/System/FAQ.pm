@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.144 2011-01-04 15:51:52 ub Exp $
+# $Id: FAQ.pm,v 1.145 2011-01-05 15:27:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.144 $) [1];
+$VERSION = qw($Revision: 1.145 $) [1];
 
 =head1 NAME
 
@@ -110,6 +110,9 @@ sub new {
     # get like escape string needed for some databases (e.g. oracle)
     $Self->{LikeEscapeString} = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
 
+    # get default options
+    $Self->{Voting} = $Self->{ConfigObject}->Get('FAQ::Voting');
+
     return $Self;
 }
 
@@ -144,10 +147,13 @@ sub FAQGet {
     }
 
     # get vote data for this FAQ item
-    my $VoteData = $Self->ItemVoteDataGet(
-        ItemID => $Param{ItemID},
-        UserID => $Param{UserID},
-    );
+    my $VoteData;
+    if ( $Self->{Voting} ) {
+        $VoteData = $Self->ItemVoteDataGet(
+            ItemID => $Param{ItemID},
+            UserID => $Param{UserID},
+        );
+    }
 
     # get number of decimal places from config
     my $DecimalPlaces
@@ -207,7 +213,7 @@ sub FAQGet {
             StateTypeID   => $Row[21],
             StateTypeName => $Row[22],
             VoteResult    => $VoteResult,
-            Votes         => $VoteData->{Votes},
+            Votes         => $VoteData->{Votes} || 0,
         );
     }
 
@@ -4421,6 +4427,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.144 $ $Date: 2011-01-04 15:51:52 $
+$Revision: 1.145 $ $Date: 2011-01-05 15:27:36 $
 
 =cut

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.101 2011-01-04 16:28:57 mn Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.102 2011-01-05 15:28:11 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -1446,7 +1446,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::MultiLanguage" Required="1" Valid="1">
-        <Description Translatable="1">Enable Multiple Languages on FAQ module.</Description>
+        <Description Translatable="1">Enable multiple languages on FAQ module.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -1457,7 +1457,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Default::Language" Required="0" Valid="0">
-        <Description Translatable="1">Default Language for FAQ articles on Single Language Mode.</Description>
+        <Description Translatable="1">Default language for FAQ articles on single language mode.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -1472,6 +1472,17 @@ Your OTRS Notification Master
             <Array>
                 <Item>FAQ.Agent.TicketCompose.js</Item>
             </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Voting" Required="1" Valid="1">
+        <Description Translatable="1">Enable voting mechanism on FAQ module.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 </otrs_config>
