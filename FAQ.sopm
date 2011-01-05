@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.102 2011-01-05 23:37:36 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.103 2011-01-05 23:44:19 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -525,7 +525,7 @@
         Usted est&aacute; a punto de instalar el paquete FAQ de OTRS.<br/>
         <br/>
         <br/>
-        <strong>ATTENTION</strong>
+        <strong>ATENCI&Oacute;N</strong>
         <br/>
         <br/>
         Por favor aseg&uacute;rese que su base de datos acepte paquetes de m&aacute;s de 5 MB de tama&ntilde;o. Por ejemplo una base de datos de MySQL acepta paquetes de m&aacute;s de 1 MB predefinido. En este caso la configuraci&oacute;n max_allowed_packet debe ser incrementada. El tama&ntilde;o recomendado es 20 MB.
