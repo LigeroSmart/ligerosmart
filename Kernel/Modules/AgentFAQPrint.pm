@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.pm,v 1.13 2011-01-05 15:19:33 cr Exp $
+# $Id: AgentFAQPrint.pm,v 1.14 2011-01-05 22:24:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::PDF;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -383,7 +383,7 @@ sub _PDFOutputFAQHeaderInfo {
     }
 
     # approval state row, feature is enabled
-    if ( !$Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
         $FAQData{Approval} = $FAQData{Approved} ? 'Yes' : 'No';
         my $Row = {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Approval') . ':',
