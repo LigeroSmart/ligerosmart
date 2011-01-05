@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -42,6 +42,23 @@
 div.MonthSelection {
     line-height: 24px;
     margin-bottom: 10px;
+}
+
+/**
+ * @subsection  special overwriting settings for autocompletion button
+ */
+
+.ui-button-icon-only .ui-button-text {
+    padding-bottom: 9px !important;
+    padding-top: 9px !important;
+}
+
+.ui-button .ui-button-text {
+    line-height: 0 !important;
+}
+
+button.ui-button-icon-only {
+    width: 24px !important;
 }
 
 } /* end @media */

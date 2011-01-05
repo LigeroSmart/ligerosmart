@@ -1,9 +1,9 @@
 // --
 // TimeAccounting.Agent.EditTimeRecords.js - provides the special module functions for the
 // edit screen
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.1 2010-12-29 14:19:10 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.2 2011-01-05 11:48:56 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -86,19 +86,33 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
     /**
      * @function
-     * @param {String} the regular expression for the remark validation check
+     * @param {Object} Options thedifferent possible options:
+     *                  RemarkRegExpContent - the regular expression for the remark validation check
+     *                  Language - object with text translations
+     *                  Autocompletion - boolean
      * @return nothing
      *      This function initializes all needed JS for the Edit screen
      */
-    TargetNS.Init = function (RemarkRegExpContent) {
+    TargetNS.Init = function (Options) {
+        var RemarkRegExpContent = Options.RemarkRegExpContent,
+            Language = Options.Language;
         // Add some special validation methods for the edit screen
         // Define all available elements (only the prefixes) in a row
         var ElementPrefixes = ['ProjectID', 'ActionID', 'Remark', 'StartTime', 'EndTime', 'Period'];
 
         // Validates the project: if some other field in this row is filled, the project select must be filled, too
         Core.Form.Validate.AddMethod('Validate_TimeAccounting_Project', function (Value, Element) {
-            var ID = $(Element).attr('id').replace('ProjectID', ''),
+            var ID,
                 Result = true;
+
+            // Get ID
+            // Our Element can be the select element or the autocompletion input field
+            if ($(Element).is('select')) {
+                ID = $(Element).attr('id').replace('ProjectID', '');
+            }
+            else {
+                ID = $(Element).prev('select').attr('id').replace('ProjectID', '');
+            }
 
             if (!Value) {
                 $.each(ElementPrefixes, function () {
@@ -157,6 +171,34 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         });
 
         Core.Form.Validate.AddRule('Validate_TimeAccounting_Period', { Validate_TimeAccounting_Period: true });
+
+        // Enable autocompletion, if configured
+        if (Options.Autocompletion) {
+            // Initialize ComboBox on Project dropdown
+            Core.UI.ComboBox.Init('.ProjectSelection', {
+                class: "Validate_TimeAccounting_Project",
+                lang: {
+                    showallitems: Language.ShowAllItems
+                }
+            });
+            // Initialize ComboBox on task dropdown
+            Core.UI.ComboBox.Init('.ActionSelection', {
+                class: "Validate_DependingRequiredAND",
+                lang: {
+                    showallitems: Language.ShowAllItems
+                }
+            });
+            // Add special validation class to ActionSelection
+            $('.ActionSelection').next('input:text').each(function () {
+                var ID = this.id.replace('Combo_ActionID', '');
+                $(this).addClass('Validate_Depending_Combo_ProjectID' + ID);
+            });
+            // Remove validation classes from underlying select
+            $('.ProjectSelection').removeClass('Validate_TimeAccounting_Project');
+            $('.ActionSelection').removeClass('Validate_DependingRequiredAND');
+
+            Core.Form.Validate.Init();
+        }
     }
 
     return TargetNS;

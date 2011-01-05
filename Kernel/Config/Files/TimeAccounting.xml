@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.20 2010-12-29 14:19:10 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.21 2011-01-05 11:48:56 mn Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -74,6 +74,9 @@
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
+                    <JavaScript>thirdparty/jquery-ui-button-1.8.7/jquery-ui-button.js</JavaScript>
+                    <JavaScript>thirdparty/jquery-combobox/jquery-combobox.js</JavaScript>
+                    <JavaScript>Core.UI.ComboBox.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.ConfirmationDialog.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.EditTimeRecords.js</JavaScript>
                 </Loader>
@@ -256,6 +259,17 @@
         <Setting>
             <Hash>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TimeAccounting::EnableAutoCompletion" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 </otrs_config>

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.58 2011-01-03 21:58:48 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.59 2011-01-05 11:48:56 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -780,6 +780,10 @@ sub Run {
 
         # integrate the handling for required remarks in relation to projects
         $Param{RemarkRegExp} = $Self->_Project2RemarkRegExp();
+
+        # enable autocompletion?
+        $Param{EnableAutocompletion}
+            = $Self->{ConfigObject}->Get("TimeAccounting::EnableAutoCompletion");
 
         # build output
         my $Output = $Self->{LayoutObject}->Header( Title => 'Edit' );

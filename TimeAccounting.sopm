@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.32 2010-12-29 14:19:10 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.33 2011-01-05 11:48:56 mn Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -26,7 +26,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
         <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/images/Standard/time_accounting.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-ui-button-1.8.7/jquery-ui-button.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-combobox/jquery-combobox.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.ComboBox.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
