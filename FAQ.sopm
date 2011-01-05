@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.101 2011-01-05 22:39:32 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.102 2011-01-05 23:37:36 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -517,6 +517,23 @@
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; a punto de instalar el paquete FAQ de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        Por favor aseg&uacute;rese que su base de datos acepte paquetes de m&aacute;s de 5 MB de tama&ntilde;o. Por ejemplo una base de datos de MySQL acepta paquetes de m&aacute;s de 1 MB predefinido. En este caso la configuraci&oacute;n max_allowed_packet debe ser incrementada. El tama&ntilde;o recomendado es 20 MB.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
         <br/>
         <strong>NOTICE</strong>
@@ -531,7 +548,7 @@
         To create new FAQ article you need to create categories and define the permission who can access categories.
         <br/>
         <br/>
-        If you are using the FAQ approval feature, you need to create a group and and to define a queue.
+        If you are using the FAQ approval feature, you need to create a group and define a queue.
         You will find further information in the sysconfig in FAQ -> Core::Approval.
         <br/>
         <br/>
@@ -559,6 +576,27 @@
         ((enjoy))<br/>
         <br/>
     ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>AVISO</strong>
+        <br/>
+        <br/>
+        Para poder permitir el acceso a los usuarios al men&uacute; de faq, usted necesita agregarlos como miembros del grupo 'faq'.<br/>
+        <br/>
+        <br/>
+        Los elementos del menu que fueron agregados por este paquete ser&aacute;n visibles despu&eacute;s de que cierre y abra su sesi&oacute;n de nuevo.
+        <br/>
+        <br/>
+        Para crear un nuevo art&iacute;culo FAQ usted necesita crear una categor&iacute;a y definir los permisos de quienes pueden acceder esta categor&iacute;a.
+        <br/>
+        <br/>
+        Si usted est&aacute; utilizando la funcionalidad de "FAQ approval", necesita crear un grupo y definir una cola.
+        Encontrar&aacute; m&aacute;s informaci&oacute;n en sysconfig, en FAQ -> Core::Approval.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
         <br/>
         <strong>WELCOME</strong>
@@ -576,6 +614,17 @@
         <br/>
         <br/>
         Sie sind im Begriff das OTRS-Paket FAQ zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; apunto de actualizar el paquete FAQ de OTRS.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -608,6 +657,22 @@
         <br/>
         Die von diesem Paket angelegten Gruppen 'faq' und 'faq_admin' werden deaktiviert.
         Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>ATENCI&Oacute;N</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalaci&oacute;n ser&aacute;n borradas.
+        &iexcl;Todos los datos de esas tablas se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        Los grupos 'faq' y 'faq_admin' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
+        Usted puede activar estos grupos nuevamente en el &aacute;rea de admin.
         <br/>
         <br/>
         ((enjoy))<br/>
