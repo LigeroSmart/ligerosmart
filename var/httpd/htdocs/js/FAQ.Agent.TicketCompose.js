@@ -2,7 +2,7 @@
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.5 2011-01-05 11:53:48 mn Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.6 2011-01-05 15:07:28 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -74,10 +74,9 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
 
             // needed for client-side validation and inserting data into RTE
             CKEDITOR.instances[InstanceName].on('focus', function () {
-                var Selection;
-
                 // if a saved cursor position exists, set this position now
-                var RTECursorRange = $('#' + InstanceName).data('RTECursor');
+                var RTECursorRange = $('#' + InstanceName).data('RTECursor'),
+                    Selection;
                 if (RTECursorRange) {
                     Selection = new CKEDITOR.dom.selection(CKEDITOR.instances[InstanceName].document);
                     Selection.selectRanges(RTECursorRange);
@@ -135,7 +134,9 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                     try {
                         parent.CKEDITOR.instances.RichText.insertHtml(FAQHTMLContent);
                     }
-                    catch () {}
+                    catch (Error) {
+                        $.noop();
+                    }
                     window.setTimeout(function () {
                         parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
                     }, 50);

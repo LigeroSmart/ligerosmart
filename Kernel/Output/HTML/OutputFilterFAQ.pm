@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.12 2011-01-04 16:28:57 mn Exp $
+# $Id: OutputFilterFAQ.pm,v 1.13 2011-01-05 15:07:28 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@ package Kernel::Output::HTML::OutputFilterFAQ;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.12 $';
+$VERSION = '$Revision: 1.13 $';
 $VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
 
 sub new {
@@ -63,6 +63,7 @@ sub Run {
 
 <!--dtl:js_on_document_complete-->
 <script type=\"text/javascript\">//<![CDATA[
+/*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
     var FAQIFrame = '<iframe class=\"TextOption Customer\" src=\"' + Core.Config.Get('CGIHandle') + '?Action=AgentFAQExplorer;Nav=None;Subject=;What=\"></iframe>';
@@ -89,6 +90,7 @@ END
 
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+/*global FAQ: true */
 FAQ.Agent.TicketCompose.InitFAQTicketCompose(\$('#RichText'));
 \$('#OptionFAQ').bind('click', function (event) {
     var FAQIFrame = '<iframe class="TextOption Customer" src="' + Core.Config.Get('CGIHandle') + '?Action=AgentFAQExplorer;Nav=None;Subject=;What="></iframe>';
