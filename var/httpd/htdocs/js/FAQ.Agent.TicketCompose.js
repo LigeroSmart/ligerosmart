@@ -2,7 +2,7 @@
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.4 2011-01-04 16:28:57 mn Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.5 2011-01-05 11:53:48 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -130,7 +130,12 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             if (parent.CKEDITOR && parent.CKEDITOR.instances.RichText) {
                 parent.CKEDITOR.instances.RichText.focus();
                 window.setTimeout( function () {
-                    parent.CKEDITOR.instances.RichText.insertHtml(FAQHTMLContent);
+                    // In some circumstances, this command throws an error (although inserting the HTML works)
+                    // Because the intended functionality also works, we just wrap it in a try-catch-statement
+                    try {
+                        parent.CKEDITOR.instances.RichText.insertHtml(FAQHTMLContent);
+                    }
+                    catch () {}
                     window.setTimeout(function () {
                         parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
                     }, 50);
