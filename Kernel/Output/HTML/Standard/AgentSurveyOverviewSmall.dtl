@@ -1,0 +1,180 @@
+# --
+# AgentSurveyOverviewSmall.dtl - html for change overview table
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentSurveyOverviewSmall.dtl,v 1.1 2011-01-07 13:17:00 cr Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.UI.ActionRow.Init();
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+
+<div id="OverviewBody" class="Overview FixedHeader">
+<!-- dtl:block:NoDataFoundMsg -->
+    <div id="EmptyMessageSmall">
+        $Text{"No data found."}
+    </div>
+<!-- dtl:block:NoDataFoundMsg -->
+
+    <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
+        <table id="FixedTable" class="TableSmall" summary="A generic Survey table">
+            <thead>
+                <tr>
+<!-- dtl:block:RecordSurveyNumberHeader -->
+                    <th class="Fixed">
+                        <span>$Config{"Survey::Hook"}</span>
+                    </th>
+<!-- dtl:block:RecordSurveyNumberHeader -->
+<!-- dtl:block:RecordTitleHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Title"}</span>
+                    </th>
+<!-- dtl:block:RecordTitleHeader -->
+<!-- dtl:block:RecordIntroductionHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Introduction"}</span>
+                    </th>
+<!-- dtl:block:RecordIntroductionHeader -->
+<!-- dtl:block:RecordDescriptionHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Description"}</span>
+                    </th>
+<!-- dtl:block:RecordDescriptionHeader -->
+<!-- dtl:block:RecordNotificationSenderHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Notification Sender"}</span>
+                    </th>
+<!-- dtl:block:RecordNotificationSenderHeader -->
+<!-- dtl:block:RecordNotificationSubjectHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Notification Subject"}</span>
+                    </th>
+<!-- dtl:block:RecordNotificationSubjectHeader -->
+<!-- dtl:block:RecordNotificationBodyHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Notification Body"}</span>
+                    </th>
+<!-- dtl:block:RecordNotificationBodyHeader -->
+<!-- dtl:block:RecordStatusHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Status"}</span>
+                    </th>
+<!-- dtl:block:RecordStatusHeader -->
+<!-- dtl:block:RecordCreateTimeHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Created Time"}</span>
+                    </th>
+<!-- dtl:block:RecordCreateTimeHeader -->
+<!-- dtl:block:RecordCreateByHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Created By"}</span>
+                    </th>
+<!-- dtl:block:RecordCreateByHeader -->
+<!-- dtl:block:RecordChangeTimeHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Changed Time"}</span>
+                    </th>
+<!-- dtl:block:RecordChangeTimeHeader -->
+<!-- dtl:block:RecordChangeByHeader -->
+                    <th class="Fixed">
+                        <span>$Text{"Changed By"}</span>
+                    </th>
+<!-- dtl:block:RecordChangeByHeader -->
+                </tr>
+            </thead>
+            <tbody>
+<!-- dtl:block:Record -->
+                <tr class="MasterAction">
+<!-- dtl:block:RecordSurveyNumber -->
+                    <td>
+<!-- dtl:block:RecordSurveyNumberLinkStart -->
+                        <a href="$Env{"Baselink"}Action=AgentSurveyZoom;SurveyID=$LQData{"SurveyID"}" title="$LQData{"SurveyNumber"}" class="MasterActionLink">
+<!-- dtl:block:RecordSurveyNumberLinkStart -->
+                            $QData{"SurveyNumber"}
+<!-- dtl:block:RecordSurveyNumberLinkEnd -->
+                        </a>
+<!-- dtl:block:RecordSurveyNumberLinkEnd -->
+                    </td>
+<!-- dtl:block:RecordSurveyNumber -->
+<!-- dtl:block:RecordTitle -->
+                    <td>
+                        <div title="$QData{"Title"}">$QData{"Title","40"}</div>
+                    </td>
+<!-- dtl:block:RecordTitle -->
+<!-- dtl:block:RecordIntroduction -->
+                    <td>
+                        <div title="$QData{"Introduction"}">$QData{"Introduction","40"}</div>
+                    </td>
+<!-- dtl:block:RecordIntroduction -->
+<!-- dtl:block:RecordDescription -->
+                    <td>
+                        <div title="$QData{"Description"}">$QData{"Description","40"}</div>
+                    </td>
+<!-- dtl:block:RecordDescription -->
+<!-- dtl:block:RecordNotificationSender -->
+                    <td>
+                        <div title="$QData{"NotificationSender"}">$QData{"NotificationSender"}</div>
+                    </td>
+<!-- dtl:block:RecordNotificationSender -->
+<!-- dtl:block:RecordNotificationSubject -->
+                    <td>
+                        <div title="$QData{"NotificationSubject"}">$QData{"NotificationSubject","40"}</div>
+                    </td>
+<!-- dtl:block:RecordNotificationSubject -->
+<!-- dtl:block:RecordNotificationBody -->
+                    <td>
+                        <div title="$QData{"NotificationBody"}">$QData{"NotificationBody","40"}</div>
+                    </td>
+<!-- dtl:block:RecordNotificationBody -->
+<!-- dtl:block:RecordStatus -->
+                    <td>
+                        <div title="$Text{"$Data{"Status"}"}">$Text{"$Data{"Status"}"}</div>
+                    </td>
+<!-- dtl:block:RecordStatus -->
+<!-- dtl:block:RecordCreateTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"CreateTime"}"}">$TimeLong{"$QData{"CreateTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordCreateTime -->
+<!-- dtl:block:RecordCreateBy -->
+                    <td>
+                        <div title="$QData{"CreateUserLogin"} $QData{"CreateLeftParenthesis"}$QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}$QData{"CreateRightParenthesis"}">
+                            $QData{"CreateUserLogin","15"} $QData{"CreateLeftParenthesis"}$Quote{"$Data{"CreateUserFirstname"}", "15"} $Quote{"$Data{"CreateUserLastname"}","15"}$QData{"CreateRightParenthesis"}
+                        </div>
+                    </td>
+<!-- dtl:block:RecordCreateBy -->
+<!-- dtl:block:RecordChangeTime -->
+                    <td>
+                        <div title="$TimeLong{"$QData{"ChangeTime"}"}">$TimeLong{"$QData{"ChangeTime"}"}</div>
+                    </td>
+<!-- dtl:block:RecordChangeTime -->
+<!-- dtl:block:RecordChangeBy -->
+                    <td>
+                        <div title="$QData{"ChangeUserLogin"} $QData{"ChangeLeftParenthesis"}$QData{"ChangeUserFirstname"} $QData{"ChangetUserLastname"}$QData{"ChangeRightParenthesis"}">
+                            $QData{"ChangeUserLogin","15"} $QData{"ChangeLeftParenthesis"}$Quote{"$Data{"ChangeUserFirstname"}", "15"} $Quote{"$Data{"ChangeUserLastname"}","15"}$QData{"ChangeRightParenthesis"}
+                        </div>
+                    </td>
+<!-- dtl:block:RecordChangeBy -->
+                </tr>
+<!-- dtl:block:Record -->
+            </tbody>
+        </table>
+    </form>
+</div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.UI.InitTableHead($('#FixedTable thead'), $('#FixedTable tbody'));
+    Core.UI.StaticTableControl($('#OverviewControl').add($('#OverviewBody')));
+    $('.MasterAction').bind('click', function (Event) {
+        window.location = $(this).find('.MasterActionLink').attr('href');
+    });
+    $(window).resize(function() {
+        Core.UI.AdjustTableHead($('#OverviewHeader thead'), $('#OverviewBody tbody'));
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
