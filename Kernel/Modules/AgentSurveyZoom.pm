@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.pm,v 1.1 2011-01-07 17:38:13 dz Exp $
+# $Id: AgentSurveyZoom.pm,v 1.2 2011-01-07 20:02:26 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -126,7 +126,7 @@ sub Run {
 
     # print the main table.
     $Self->{LayoutObject}->Block(
-        Name => 'Survey',
+        Name => 'SurveyZoom',
         Data => {
             %Survey,
             NoQueueMessage  => $NoQueueMessage,
@@ -247,6 +247,10 @@ sub Run {
                 Data => { SurveyID => $SurveyID },
             );
         }
+    }
+
+    if ( $Survey{Status} eq 'New' ) {
+        $Self->{LayoutObject}->Block( Name => 'NoStatResults' );
     }
 
     # output the possible status

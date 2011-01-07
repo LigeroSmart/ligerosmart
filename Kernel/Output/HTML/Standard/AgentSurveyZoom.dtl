@@ -2,14 +2,14 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.1 2011-01-07 17:38:13 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.2 2011-01-07 20:02:26 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<!-- dtl:block:Survey -->
+<!-- dtl:block:SurveyZoom -->
 <div class="MainBox AriaRoleMain LayoutFixedSidebar SidebarFirst">
     <div class="ClearLeft"></div>
     <div class="Headline">
@@ -127,6 +127,10 @@
                 </div>
                 <div class="Content">
 
+<!-- dtl:block:NoStatResults -->
+                    $Text{"No Stat Results."}
+<!-- dtl:block:NoStatResults -->
+
 <!-- dtl:block:SurveyEditStats -->
 
 <!-- dtl:block:SurveyEditStatsQuestion -->
@@ -166,4 +170,4 @@
 
 //]]></script>
 <!-- dtl:js_on_document_complete -->
-<!-- dtl:block:Survey -->
+<!-- dtl:block:SurveyZoom -->
