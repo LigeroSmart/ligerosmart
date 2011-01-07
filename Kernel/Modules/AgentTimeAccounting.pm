@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.61 2011-01-07 21:33:51 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.62 2011-01-07 22:20:07 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -543,7 +543,11 @@ sub Run {
             $Param{Remark} = $UnitRef->{Remark} || '';
 
             # set period to 0 if there was a time error
-            if ( $Errors{$ID}{StartTimeInvalid} || $Errors{$ID}{EndTimeInvalid} ) {
+            if (
+                $Errors{$ID}
+                && ( $Errors{$ID}{StartTimeInvalid} || defined $Errors{$ID}{EndTimeInvalid} )
+                )
+            {
                 $UnitRef->{Period} = '';
             }
 
@@ -573,6 +577,9 @@ sub Run {
                     || $UnitRef->{$TimePeriod} eq '00:00' ? '' : $UnitRef->{$TimePeriod};
             }
 
+            my $StartTimeInvalid = $Errors{$ID} ? $Errors{$ID}{StartTimeInvalid} : '';
+            my $EndTimeInvalid   = $Errors{$ID} ? $Errors{$ID}{EndTimeInvalid}   : '';
+
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
                 Data => {
@@ -580,15 +587,18 @@ sub Run {
                     %Frontend,
                     %Errors,
                     %{ $Param{$ID} },
-                    StartTimeInvalid => $Errors{StartTimeInvalid} || $Errors{$ID}{StartTimeInvalid},
-                    EndTimeInvalid   => $Errors{EndTimeInvalid}   || $Errors{$ID}{EndTimeInvalid},
+                    StartTimeInvalid => $Errors{StartTimeInvalid} || $StartTimeInvalid || '',
+                    EndTimeInvalid   => $Errors{EndTimeInvalid}   || $EndTimeInvalid   || '',
                 },
             );
 
             # add proper server error msg for the start and end times
+            my $ServerErrorBlockName;
             for my $TimePeriod (qw(StartTime EndTime)) {
+                my $ServerErrorBlockName
+                    = $Errors{$ID} ? $Errors{$ID}{ $TimePeriod . 'ServerErrorBlock' } : '';
                 $Self->{LayoutObject}->Block(
-                    Name => $Errors{$ID}{ $TimePeriod . 'ServerErrorBlock' }
+                    Name => $ServerErrorBlockName
                         || ( $TimePeriod . 'GenericServerError' ),
                     Data => {
                         ID => $ID,
@@ -597,8 +607,9 @@ sub Run {
             }
 
             # add proper server error msg for the end time
+            $ServerErrorBlockName = $Errors{$ID} ? $Errors{$ID}{EndTimeServerErrorBlock} : '';
             $Self->{LayoutObject}->Block(
-                Name => $Errors{$ID}{EndTimeServerErrorBlock} || 'EndTimeGenericServerError',
+                Name => $ServerErrorBlockName || 'EndTimeGenericServerError',
                 Data => {
                     ID => $ID,
                 },
@@ -621,10 +632,10 @@ sub Run {
             );
 
             # remove entries in the hash for already shown error messages
-            $Errors{ServerErrorBlock} = '';
-            $Errors{PeriodInvalid}    = '';
-            $Errors{StartTimeInvalid} = '';
-            $Errors{EndTimeInvalid}   = '';
+            delete $Errors{ServerErrorBlock};
+            delete $Errors{PeriodInvalid};
+            delete $Errors{StartTimeInvalid};
+            delete $Errors{EndTimeInvalid};
 
             # validity check
             if (
