@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.60 2011-01-05 16:00:38 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.61 2011-01-07 21:33:51 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -306,6 +306,7 @@ sub Run {
                 for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
                     $Param{$Parameter}
                         = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
+                    $Param{$ID}{$Parameter} = $Param{$Parameter};
                 }
 
                 next ID if !$Param{ProjectID} && !$Param{ActionID};
@@ -319,6 +320,12 @@ sub Run {
                 #allow format hh:mm
                 elsif ( $Param{Period} =~ /^(\d+):(\d+)/ ) {
                     $Period = $1 + $2 / 60;
+                }
+
+                # if start or end times are missing, delete the other entry
+                if ( !$Param{StartTime} || !$Param{EndTime} ) {
+                    $Param{StartTime} = '';
+                    $Param{EndTime}   = '';
                 }
 
                 my %WorkingUnit = (
@@ -346,6 +353,22 @@ sub Run {
                         else {
                             $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60;
                         }
+
+                        # end time must be after start time
+                        if ( $EndTime <= $StartTime ) {
+                            $Errors{$ID}{EndTimeInvalid} = 'ServerError';
+                            $Errors{$ID}{EndTimeServerErrorBlock}
+                                = 'EndTimeBeforeStartTimeServerError';
+                        }
+                    }
+                }
+
+                # negative times are not allowed
+                for my $CheckValue (qw(StartTime EndTime)) {
+                    if ( $Param{$CheckValue} =~ /^-(\d+):(\d+)/ ) {
+                        $Errors{$ID}{ $CheckValue . 'Invalid' } = 'ServerError';
+                        $Errors{$ID}{ $CheckValue . 'ServerErrorBlock' }
+                            = $CheckValue . 'NegativeServerError';
                     }
                 }
             }
@@ -488,6 +511,7 @@ sub Run {
                 Class       => 'Validate_TimeAccounting_Project ProjectSelection '
                     . ( $Errors{ 'ProjectID' . $ID . 'Invalid' } || '' ),
                 OnChange => "TimeAccounting.Agent.EditTimeRecords.FillActionList($ID);",
+                SelectedID => $Param{$ID}{ProjectID} || $UnitRef->{ProjectID},
             );
 
 # action list initially only contains empty and selected element as well as elements configured for selected project
@@ -506,7 +530,7 @@ sub Run {
             $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
 
                 Data        => $ActionData,
-                SelectedID  => $UnitRef->{ActionID} || '',
+                SelectedID  => $Param{$ID}{ActionID} || $UnitRef->{ActionID} || '',
                 Name        => "ActionID[$ID]",
                 ID          => "ActionID$ID",
                 Translation => 0,
@@ -518,8 +542,16 @@ sub Run {
 
             $Param{Remark} = $UnitRef->{Remark} || '';
 
-            if ( $UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
-                if ( $UnitRef->{Period} == 0.00 ) {
+            # set period to 0 if there was a time error
+            if ( $Errors{$ID}{StartTimeInvalid} || $Errors{$ID}{EndTimeInvalid} ) {
+                $UnitRef->{Period} = '';
+            }
+
+            # check for errors
+            if ( $Param{$ID}{ProjectID} && $Param{$ID}{ActionID} ) {
+
+                # a period of zero hours is not allowed
+                if ( $UnitRef->{Period} && $UnitRef->{Period} eq '0.00' ) {
                     $Errors{ServerErrorBlock} = 'ZeroHoursPeriodServerError';
                     if (
                         $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime')
@@ -543,7 +575,33 @@ sub Run {
 
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
-                Data => { %Param, %Frontend, %Errors },
+                Data => {
+                    %Param,
+                    %Frontend,
+                    %Errors,
+                    %{ $Param{$ID} },
+                    StartTimeInvalid => $Errors{StartTimeInvalid} || $Errors{$ID}{StartTimeInvalid},
+                    EndTimeInvalid   => $Errors{EndTimeInvalid}   || $Errors{$ID}{EndTimeInvalid},
+                },
+            );
+
+            # add proper server error msg for the start and end times
+            for my $TimePeriod (qw(StartTime EndTime)) {
+                $Self->{LayoutObject}->Block(
+                    Name => $Errors{$ID}{ $TimePeriod . 'ServerErrorBlock' }
+                        || ( $TimePeriod . 'GenericServerError' ),
+                    Data => {
+                        ID => $ID,
+                    },
+                );
+            }
+
+            # add proper server error msg for the end time
+            $Self->{LayoutObject}->Block(
+                Name => $Errors{$ID}{EndTimeServerErrorBlock} || 'EndTimeGenericServerError',
+                Data => {
+                    ID => $ID,
+                },
             );
 
             $Self->{LayoutObject}->Block(
@@ -610,6 +668,7 @@ sub Run {
                         my $EndTime = $1 * 60 + $2;
                         if (
                             $UnitRef->{Period}
+                            && $UnitRef->{Period}
                             > ( $EndTime - $StartTime ) / 60 + 0.01
                             )
                         {
