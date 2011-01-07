@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.39 2011-01-04 21:29:24 dz Exp $
+# $Id: AgentSurvey.pm,v 1.40 2011-01-07 13:37:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.39 $) [1];
+$VERSION = qw($Revision: 1.40 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -36,6 +36,13 @@ sub new {
         }
     }
     $Self->{SurveyObject} = Kernel::System::Survey->new(%Param);
+
+    # get config of frontend module
+    $Self->{Config} = $Self->{ConfigObject}->Get("Survey::Frontend::$Self->{Action}");
+
+    # get default parameters
+    $Self->{Filter} = $Self->{ParamObject}->GetParam( Param => 'Filter' ) || '';
+    $Self->{View}   = $Self->{ParamObject}->GetParam( Param => 'View' )   || '';
 
     return $Self;
 }
@@ -1012,35 +1019,91 @@ sub Run {
     # ------------------------------------------------------------ #
     # show overview
     # ------------------------------------------------------------ #
-    $Output = $Self->{LayoutObject}->Header( Title => 'Survey Overview' );
-    $Output .= $Self->{LayoutObject}->NavigationBar();
 
-    # print the main table.
-    $Self->{LayoutObject}->Block( Name => 'Overview' );
+    # store last screen, used for backlinks
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenView',
+        Value     => $Self->{RequestedURL},
+    );
+
+    # get sorting parameters
+    my $SortBy = $Self->{ParamObject}->GetParam( Param => 'SortBy' )
+        || $Self->{Config}->{'SortBy::Default'}
+        || 'Number';
+
+    # get ordering parameters
+    my $OrderBy = $Self->{ParamObject}->GetParam( Param => 'OrderBy' )
+        || $Self->{Config}->{'Order::Default'}
+        || 'Down';
+
+    # investigate refresh
+    my $Refresh = $Self->{UserRefreshTime} ? 60 * $Self->{UserRefreshTime} : undef;
+
+    # output header
+    $Output = $Self->{LayoutObject}->Header(
+        Title   => 'Overview',
+        Refresh => $Refresh,
+    );
+    $Output .= $Self->{LayoutObject}->NavigationBar();
+    $Self->{LayoutObject}->Print( Output => \$Output );
+    $Output = '';
 
     # get survey list
-    my @List = $Self->{SurveyObject}->SurveyList();
+    my @SurveyIDs = $Self->{SurveyObject}->SurveyList();
 
-    if ( scalar @List ) {
+    # find out which columns should be shown
+    my @ShowColumns;
+    if ( $Self->{Config}->{ShowColumns} ) {
 
-        # print one data line per survey
-        for my $SurveyID (@List) {
-            my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
-            $Self->{LayoutObject}->Block(
-                Name => 'SurveyRow',
-                Data => { %Survey, %Param },
-            );
+        # get all possible columns from config
+        my %PossibleColumn = %{ $Self->{Config}->{ShowColumns} };
+
+        # get the column names that should be shown
+        COLUMNNAME:
+        for my $Name ( keys %PossibleColumn ) {
+            next COLUMNNAME if !$PossibleColumn{$Name};
+            push @ShowColumns, $Name;
         }
     }
-    else {
 
-        # show 'no data found' message
-        $Self->{LayoutObject}->Block( Name => 'SurveyNoDataFound', );
-    }
+    # show the list
+    my $LinkPage =
+        'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';';
+    my $LinkSort =
+        'Filter=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{Filter} )
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';';
+    my $LinkFilter =
+        'SortBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $SortBy )
+        . ';OrderBy=' . $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy )
+        . ';View=' . $Self->{LayoutObject}->Ascii2Html( Text => $Self->{View} )
+        . ';';
 
-    $Output .= $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentSurvey',
-        Data         => {%Param},
+    # show config item list
+    $Output .= $Self->{LayoutObject}->SurveyListShow(
+        SurveyIDs => [@SurveyIDs],
+        Total     => scalar @SurveyIDs,
+
+        View => $Self->{View},
+
+        FilterLink => $LinkFilter,
+
+        TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview'),
+
+        TitleValue => $Self->{LayoutObject}->{LanguageObject}->Get('Survey'),
+
+        Env      => $Self,
+        LinkPage => $LinkPage,
+        LinkSort => $LinkSort,
+
+        ShowColumns => \@ShowColumns,
+        SortBy      => $Self->{LayoutObject}->Ascii2Html( Text => $SortBy ),
+        OrderBy     => $Self->{LayoutObject}->Ascii2Html( Text => $OrderBy ),
     );
 
     $Output .= $Self->{LayoutObject}->Footer();
