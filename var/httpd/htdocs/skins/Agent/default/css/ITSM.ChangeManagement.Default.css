@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -22,6 +22,19 @@
 
 .SpacingBottomSmall {
     margin-bottom: 5px;
+}
+
+/**
+ * @subsection  Layout fix
+ */
+/**
+ * @note     Because of some overflow hidden, workorder tooltips are not always
+ *           completely visible.
+ *           The overflow hidden is necessary in the layout and can't be changed.
+ *           This is a workaround to fully show the workorder tooltip.
+ */
+.LayoutFixedSidebar > .ContentColumn {
+    min-height: 450px;
 }
 
 } /* end @media */
