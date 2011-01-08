@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.36 2011-01-04 21:29:24 dz Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.37 2011-01-08 07:52:28 dz Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -35,6 +35,20 @@
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_disabled.png"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyEditQuestions.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEditQuestions.dtl"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down.png"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewNavBar.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
+
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="survey">
