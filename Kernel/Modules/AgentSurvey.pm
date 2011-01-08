@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.41 2011-01-07 20:45:17 dz Exp $
+# $Id: AgentSurvey.pm,v 1.42 2011-01-08 07:51:23 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -514,62 +514,6 @@ sub _SurveyAddMask {
             },
         );
     }
-
-    # EditQuestions
-    # if survey edit the load the question fields
-    #    if ( $Param{SurveyID} ) {
-    #        my @List = $Self->{SurveyObject}->QuestionList( SurveyID => $Param{SurveyID} );
-    #
-    #        if ( $Param{Status} && $Param{Status} eq 'New' ) {
-    #
-    #            $Self->{LayoutObject}->Block( Name => 'SurveyEditDeleteColumn' );
-    #            if ( scalar @List ) {
-    #                for my $Question (@List) {
-    #                    my $AnswerCount = $Self->{SurveyObject}->AnswerCount(
-    #                        QuestionID => $Question->{QuestionID},
-    #                    );
-    #
-    #                    my $Class;
-    #                    if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
-    #                        if ( $AnswerCount < 2 ) {
-    #                            $Class = 'Error';
-    #                        }
-    #                    }
-    #
-    #                    $Self->{LayoutObject}->Block(
-    #                        Name => 'SurveyEditQuestions',
-    #                        Data => {
-    #                            %{$Question},
-    #                            Class => $Class
-    #                        },
-    #                    );
-    #                    $Self->{LayoutObject}->Block(
-    #                        Name => 'SurveyEditDeleteButton',
-    #                        Data => $Question,
-    #                    );
-    #                }
-    #            }
-    #            else {
-    #                $Self->{LayoutObject}->Block(
-    #                    Name => 'SurveyNoQuestionsSaved',
-    #                    Data => { Columns => 5, }
-    #                );
-    #            }
-    #
-    #            $Self->{LayoutObject}->Block(
-    #                Name => 'SurveyEditAddQuestion',
-    #                Data => { SurveyID => $Param{SurveyID} },
-    #            );
-    #        }
-    #        else {
-    #            for my $Question (@List) {
-    #                $Self->{LayoutObject}->Block(
-    #                    Name => 'SurveyEditQuestionsSaved',
-    #                    Data => $Question,
-    #                );
-    #            }
-    #        }
-    #    }
 
     $Output .= $Self->{LayoutObject}->Output( TemplateFile => 'AgentSurvey' );
     $Output .= $Self->{LayoutObject}->Footer( Type => $Type );

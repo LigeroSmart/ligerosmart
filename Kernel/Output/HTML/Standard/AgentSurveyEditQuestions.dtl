@@ -1,0 +1,181 @@
+# --
+# AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentSurveyEditQuestions.dtl,v 1.1 2011-01-08 07:51:23 dz Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+<!-- dtl:block:SurveyEditQuestions -->
+<div class="LayoutPopup ARIARoleMain">
+    <div class="Header">
+        <h1>$Text{"Survey Edit Questions"}: $QData{"SurveyID"} - $QData{"Title"}</h1>
+        <p>
+            <a href="" class="HistoryBack">$Text{"Go back to edit survey"}</a>
+        </p>
+    </div>
+    <div class="Content">
+
+        <div class="Header">
+        </div>
+
+        <div class="WidgetSimple SpacingTop SpacingBottomMedium">
+            <div class="Header">
+                <h2>$Text{"Survey Questions"}</h2>
+            </div>
+            <div class="Content">
+                <table class="DataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                $Text{"Question"}
+                            </th>
+                            <th>
+                                $Text{"Type"}
+                            </th>
+                            <th>
+                                $Text{"Up"}
+                            </th>
+                            <th>
+                                $Text{"Down"}
+                            </th>
+<!-- dtl:block:SurveyDeleteColumn -->
+                            <th>
+                                $Text{"Delete"}
+                            </th>
+<!-- dtl:block:SurveyDeleteColumn -->
+                        </tr>
+                    </thead>
+                    <tbody>
+<!-- dtl:block:SurveyNoQuestionsSaved -->
+                        <tr>
+                            <td colspan="$Data{"Columns"}">
+                                $Text{"There aren't questions saved for this survey."}
+                            </td>
+                        </tr>
+<!-- dtl:block:SurveyNoQuestionsSaved -->
+
+<!-- dtl:block:SurveyQuestionsSaved -->
+                        <tr>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}">$QData{"Question","90"}</a>
+                            </td>
+                            <td>
+                                $Text{"$Data{"Type"}"}
+                            </td>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp" $Data{"Disabled"}>$Text{"Up"}</a>
+                            </td>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown" $Data{"Disabled"}>$Text{"Down"}</a>
+                            </td>
+                        </tr>
+<!-- dtl:block:SurveyQuestionsSaved -->
+
+<!-- dtl:block:SurveyQuestionsRow -->
+                        <tr>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionEdit;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="$Data{"Class"}">$QData{"Question","70"}</a>
+                            </td>
+                            <td>
+                                $Text{"$Data{"Type"}"}
+                            </td>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp" $Data{"Disabled"}>
+                                    $Text{"Up"}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown" $Data{"Disabled"}>
+                                    $Text{"Down"}
+                                </a>
+                            </td>
+<!-- dtl:block:SurveyQuestionsDeleteButton -->
+                            <td>
+                                <form action="$Env{"CGIHandle"}" method="post">
+                                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                                    <input type="hidden" name="Subaction" value="QuestionDelete" />
+                                    <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+                                    <input type="hidden" name="QuestionID" value="$QData{"QuestionID"}" />
+                                    <button type="submit" class="TrashCan" value="$Text{"Delete"}" >$Text{"Delete"}</button>
+                                </form>
+                            </td>
+<!-- dtl:block:SurveyQuestionsDeleteButton -->
+                        </tr>
+<!-- dtl:block:SurveyQuestionsRow -->
+                    </tbody>
+                </table>
+
+<!-- dtl:block:SurveyAddQuestion -->
+                <form action="$Env{"CGIHandle"}" method="post">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="QuestionAdd" />
+                    <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+
+                    <fieldset class="TableLike SpacingTop">
+                        <label for="Question">$Text{"Type the question"}:&nbsp</label>
+                        <div>
+                            <input type="text" id="Question" name="Question" size="60" />
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <label class="SubLabel" for="YesNo">$Text{"Yes/No"}</label>
+                        <div class="SubField">
+                            <input type="radio" id="YesNo" name="Type" value="YesNo" checked />
+                        </div>
+
+                        <label class="SubLabel" for="Radio">$Text{"Radio"}&nbsp;($Text{"List"})</label>
+                        <div class="SubField">
+                            <input type="radio" id="Radio" name="Type" value="Radio">
+                        </div>
+
+                        <label class="SubLabel" for="Checkbox">$Text{"Checkbox"} ($Text{"List"})</label>
+                        <div class="SubField">
+                            <input type="radio" id="Checkbox" name="Type" value="Checkbox">
+                        </div>
+
+
+                        <label class="SubLabel" for="Textarea">$Text{"Textarea"}</label>
+                        <div class="SubField">
+                            <input type="radio" id="Textarea" name="Type" value="Textarea">
+                        </div>
+
+<!-- dtl:block:SurveyGenericError -->
+                        <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
+                            <p>$Text{"This field is required."}</p>
+                        </div>
+<!-- dtl:block:SurveyGenericError -->
+
+<!-- dtl:block:SurveyServerError -->
+                        <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
+                            <p>$Text{"This field is required."}</p>
+                        </div>
+<!-- dtl:block:SurveyServerError -->
+
+                    </fieldset>
+                    <div class="SubField">
+                        <button type="submit" value="$Text{"Add"}">$Text{"Add"}</button>
+                    </div>
+                </form>
+<!-- dtl:block:SurveyAddQuestion -->
+            </div>
+        </div>
+
+    </div>
+    <div class="Footer">
+    </div>
+</div>
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    $('a.HistoryBack').bind('click', function (Event) {
+        history.back();
+        return false;
+    });
+
+//]]></script>
+<!-- dtl:js_on_document_complete -->
+
+<!-- dtl:block:SurveyEditQuestions -->
