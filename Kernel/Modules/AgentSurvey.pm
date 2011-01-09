@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.42 2011-01-08 07:51:23 dz Exp $
+# $Id: AgentSurvey.pm,v 1.43 2011-01-09 18:47:25 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -357,7 +357,11 @@ sub Run {
     $Output = '';
 
     # get survey list
-    my @SurveyIDs = $Self->{SurveyObject}->SurveyList();
+    my @SurveyIDs = $Self->{SurveyObject}->SurveySearch(
+        OrderBy          => [$SortBy],
+        OrderByDirection => [$OrderBy],
+        UserID           => $Self->{UserID},
+    );
 
     # find out which columns should be shown
     my @ShowColumns;
