@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.53 2011-01-07 17:38:13 dz Exp $
+# $Id: Survey.pm,v 1.54 2011-01-09 18:44:48 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 =head1 NAME
 
@@ -2239,6 +2239,394 @@ sub SurveyQueueGet {
     return \@QueueList;
 }
 
+=item SurveySearch()
+
+search in surveys
+
+    my @IDs = $SurveyObject->SurveySearch(
+
+        Number              => '*134*',                                         # (optional)
+        Title               => '*some title*',                                  # (optional)
+        Introduction        => '*some introduction*',                           # (optional)
+        Description         => '*some desription*',                             # (optional)
+        NotificationSender  => '*user@domain*',                                 # (optional)
+        NotificationSubject => '*some notification subject*',                   # (optional)
+        NotificationBody    => '*some notification body*',                      # (optional)
+
+        # is searching in Number, Title, Introduction, Description, NotificationSender,
+        # NotificationSubject and NotificationBody
+        What   => '*some text*',                                                # (optional)
+
+        Status => '*some status*',                                              # (optional)
+
+        CreateTime          => 's.create_time',
+        CreateBy            => 's.create_by',
+        ChangeTime          => 's.change_time',
+        ChangeBy            => 's.change_by',
+
+        OrderBy => [ 'SurveyID', 'Title' ],                                     # (optional)
+        # default: [ 'SurveyID' ],
+        # ()SurveyID, Number, Title, Introduction, Description,
+        # NotificationSender, NotificationSubject, NotificationBody,
+        # Status, CreateTime, CreateBy, ChangeTime, ChangeBy)
+
+        # Additional information for OrderBy:
+        # The OrderByDirection can be specified for each OrderBy attribute.
+        # The pairing is made by the array indices.
+
+        OrderByDirection => [ 'Down', 'Up' ],                                   # (optional)
+        # default: [ 'Down' ]
+        # (Down | Up)
+
+        Limit     => 150,                                                       # (optional)
+        UserID    => 1,
+    );
+
+=cut
+
+sub SurveySearch {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need UserID!",
+        );
+        return;
+    }
+
+    # verify that all passed array parameters contain an arrayref
+    ARGUMENT:
+    for my $Argument (qw(OrderBy OrderByDirection)) {
+
+        if ( !defined $Param{$Argument} ) {
+            $Param{$Argument} ||= [];
+
+            next ARGUMENT;
+        }
+
+        if ( ref $Param{$Argument} ne 'ARRAY' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be an array reference!",
+            );
+            return;
+        }
+    }
+
+    # define order table
+    my %OrderByTable = (
+
+        # Survey item attributes
+        SurveyID            => 's.id',
+        Number              => 's.surveynumber',
+        Title               => 's.title',
+        Introduction        => 's.introduction',
+        Description         => 's.description',
+        NotificationSender  => 's.notification_sender',
+        NotificationSubject => 's.notification_subject',
+        NotificationBody    => 's.notification_body',
+        Status              => 's.status',
+        CreateTime          => 's.create_time',
+        CreateBy            => 's.create_by',
+        ChangeTime          => 's.change_time',
+        ChangeBy            => 's.change_by',
+    );
+
+    # check if OrderBy contains only unique valid values
+    my %OrderBySeen;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        if ( !$OrderBy || !$OrderByTable{$OrderBy} || $OrderBySeen{$OrderBy} ) {
+
+            # found an error
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "OrderBy contains invalid value '$OrderBy' "
+                    . 'or the value is used more than once!',
+            );
+            return;
+        }
+
+        # remember the value to check if it appears more than once
+        $OrderBySeen{$OrderBy} = 1;
+
+    }
+
+    # check if OrderByDirection array contains only 'Up' or 'Down'
+    DIRECTION:
+    for my $Direction ( @{ $Param{OrderByDirection} } ) {
+
+        # only 'Up' or 'Down' allowed
+        next DIRECTION if $Direction eq 'Up';
+        next DIRECTION if $Direction eq 'Down';
+
+        # found an error
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "OrderByDirection can only contain 'Up' or 'Down'!",
+        );
+        return;
+    }
+
+    # assemble the ORDER BY clause
+    my @SQLOrderBy;
+    my $Count = 0;
+    for my $OrderBy ( @{ $Param{OrderBy} } ) {
+
+        # set the default order direction
+        my $Direction = 'DESC';
+
+        # add the given order direction
+        if ( $Param{OrderByDirection}->[$Count] ) {
+            if ( $Param{OrderByDirection}->[$Count] eq 'Up' ) {
+                $Direction = 'ASC';
+            }
+            elsif ( $Param{OrderByDirection}->[$Count] eq 'Down' ) {
+                $Direction = 'DESC';
+            }
+        }
+
+        # add SQL
+        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+    }
+    continue {
+        $Count++;
+    }
+
+    # if there is a possibility that the ordering is not determined
+    # we add an descending ordering by id
+    if ( !grep { $_ eq 'SurveyID' } ( @{ $Param{OrderBy} } ) ) {
+        push @SQLOrderBy, "$OrderByTable{SurveyID} DESC";
+    }
+
+    # sql
+    my $SQL = 'SELECT s.id '
+        . 'FROM survey s ';
+
+    # extended SQL
+    my $Ext = '';
+
+    # fulltext search
+    if ( $Param{What} && $Param{What} ne '*' ) {
+
+        # define the search fields for fulltext search
+        my @SearchFields = (
+            's.surveynumber',
+            's.title',
+            's.introduction',
+            's.description',
+            's.notification_sender',
+            's.notification_subject',
+            's.notification_body',
+            's.status',
+        );
+
+        # add the SQL for the fulltext search
+        $Ext .= $Self->{DBObject}->QueryCondition(
+            Key          => \@SearchFields,
+            Value        => $Param{What},
+            SearchPrefix => '*',
+            SearchSuffix => '*',
+        );
+    }
+
+    # search for the number
+    if ( $Param{Number} ) {
+        $Param{Number} =~ s/\*/%/g;
+        $Param{Number} =~ s/%%/%/g;
+        $Param{Number} = $Self->{DBObject}->Quote( $Param{Number}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " LOWER(s.number) LIKE LOWER('" . $Param{Number} . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the title
+    if ( $Param{Title} ) {
+        $Param{Title} = "\%$Param{Title}\%";
+        $Param{Title} =~ s/\*/%/g;
+        $Param{Title} =~ s/%%/%/g;
+        $Param{Title} = $Self->{DBObject}->Quote( $Param{Title}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " LOWER(s.title) LIKE LOWER('" . $Param{Title} . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the introduction
+    if ( $Param{Introduction} ) {
+        $Param{Introduction} = "\%$Param{Introduction}\%";
+        $Param{Introduction} =~ s/\*/%/g;
+        $Param{Introduction} =~ s/%%/%/g;
+        $Param{Introduction} = $Self->{DBObject}->Quote( $Param{Introduction}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext
+            .= " LOWER(s.introduction) LIKE LOWER('"
+            . $Param{Introduction}
+            . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the description
+    if ( $Param{Description} ) {
+        $Param{Description} = "\%$Param{Description}\%";
+        $Param{Description} =~ s/\*/%/g;
+        $Param{Description} =~ s/%%/%/g;
+        $Param{Description} = $Self->{DBObject}->Quote( $Param{Description}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext
+            .= " LOWER(s.description) LIKE LOWER('"
+            . $Param{Description}
+            . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the notification sender
+    if ( $Param{NotificationSender} ) {
+        $Param{NotificationSender} = "\%$Param{NotificationSender}\%";
+        $Param{NotificationSender} =~ s/\*/%/g;
+        $Param{NotificationSender} =~ s/%%/%/g;
+        $Param{NotificationSender} = $Self->{DBObject}->Quote( $Param{NotificationSender}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext
+            .= " LOWER(s.notification_sender) LIKE LOWER('"
+            . $Param{NotificationSender}
+            . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the notification subject
+    if ( $Param{NotificationSubject} ) {
+        $Param{NotificationSubject} = "\%$Param{NotificationSubject}\%";
+        $Param{NotificationSubject} =~ s/\*/%/g;
+        $Param{NotificationSubject} =~ s/%%/%/g;
+        $Param{NotificationSubject}
+            = $Self->{DBObject}->Quote( $Param{NotificationSubject}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext
+            .= " LOWER(s.notification_subject) LIKE LOWER('"
+            . $Param{NotificationSubject}
+            . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the notification body
+    if ( $Param{NotificationBody} ) {
+        $Param{NotificationBody} = "\%$Param{NotificationBody}\%";
+        $Param{NotificationBody} =~ s/\*/%/g;
+        $Param{NotificationBody} =~ s/%%/%/g;
+        $Param{NotificationBody} = $Self->{DBObject}->Quote( $Param{NotificationBody}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext
+            .= " LOWER(s.notification_body) LIKE LOWER('"
+            . $Param{NotificationBody}
+            . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the status
+    if ( $Param{Status} ) {
+        $Param{Status} = "\%$Param{Status}\%";
+        $Param{Status} =~ s/\*/%/g;
+        $Param{Status} =~ s/%%/%/g;
+        $Param{Status} = $Self->{DBObject}->Quote( $Param{Status}, 'Like' );
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " LOWER(s.status) LIKE LOWER('" . $Param{Status} . "') $Self->{LikeEscapeString}";
+    }
+
+    # search for the create by
+    if ( $Param{CreateBy} ) {
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " s.create_by = " . $Param{CreateBy};
+    }
+
+    # search for the create by
+    if ( $Param{ChangeBy} ) {
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= " s.create_by = " . $Param{ChangeBy};
+    }
+
+    # set time params
+    my %TimeParams = (
+
+        # times in change_item
+        CreateTimeNewerDate => 's.create_time >=',
+        CreateTimeOlderDate => 's.create_time <=',
+        ChangeTimeNewerDate => 's.change_time >=',
+        ChangeTimeOlderDate => 's.change_time <=',
+    );
+
+    # check and add time params to WHERE
+    TIMEPARAM:
+    for my $TimeParam ( keys %TimeParams ) {
+
+        next TIMEPARAM if !$Param{$TimeParam};
+
+        # check format
+        if ( $Param{$TimeParam} !~ m{ \A \d\d\d\d-\d\d-\d\d \s \d\d:\d\d:\d\d \z }xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The parameter $TimeParam has an invalid date format!",
+            );
+
+            return;
+        }
+
+        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+
+        # add time parameter to WHERE
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
+    }
+
+    # add WHERE statement
+    if ($Ext) {
+        $Ext = ' WHERE ' . $Ext;
+    }
+
+    # add GROUP BY
+    $Ext
+        .= ' GROUP BY s.id ';
+
+    # add the ORDER BY clause
+    if (@SQLOrderBy) {
+        $Ext .= 'ORDER BY ';
+        $Ext .= join ', ', @SQLOrderBy;
+        $Ext .= ' ';
+    }
+
+    # add extended SQL
+    $SQL .= $Ext;
+
+    # ask database
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => $Param{Limit},
+    );
+
+    # fetch the result
+    my @List;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        push @List, $Row[0];
+    }
+    return @List;
+}
+
 1;
 
 =back
@@ -2253,6 +2641,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2011-01-07 17:38:13 $
+$Revision: 1.54 $ $Date: 2011-01-09 18:44:48 $
 
 =cut
