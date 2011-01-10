@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.3 2011-01-08 07:51:23 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.4 2011-01-10 23:37:28 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -80,7 +80,10 @@
                         <a href="" class="HistoryBack">$Text{"Back"}</a>
                     </li>
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=SurveyEdit;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Edit"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=SurveyEdit;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Edit General Info"}</a>
+                    </li>
+                    <li>
+                        <a href="$Env{"Baselink"}Action=AgentSurveyEditQuestions;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Edit Questions"}</a>
                     </li>
 <!-- dtl:block:SurveyEditStatsDetails -->
                     <li>
