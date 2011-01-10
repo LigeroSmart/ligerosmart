@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.2 2011-01-10 23:37:28 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.3 2011-01-10 23:39:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -597,9 +597,6 @@ sub Run {
                 'test',    # (optional) use string or arrayref (unable to use with ArrayHashRef)
             Translation => 1,    # (optional) default 1 (0|1) translate value
         );
-
-        #DELETE DELETE
-        print STDERR $Self->{MainObject}->Dump($SelectionType);
 
         $Self->{LayoutObject}->Block(
             Name => 'SurveyAddQuestion',
