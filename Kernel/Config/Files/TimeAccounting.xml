@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.21 2011-01-05 11:48:56 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.22 2011-01-11 14:18:01 mn Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -270,6 +270,18 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::ToolBarModule###201-TimeAccounting::IncompleteWorkingDays" Required="0" Valid="1">
+        <Description Translatable="1">Agent interface notification module to see the number of incomplete working days for the user.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent::ToolBarModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ToolBarIncompleteWorkingDays</Item>
+                <Item Key="CssClass">IncompleteWorkingDays</Item>
+                <Item Key="CSS">TimeAccounting.Agent.Toolbar.IncompleteWorkingDays.css</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
