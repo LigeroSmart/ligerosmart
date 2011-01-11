@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.14 2010-12-27 16:49:19 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.15 2011-01-11 16:10:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -209,6 +209,19 @@ sub Run {
                     push @Data, $CSVInfo{$Header};
                 }
                 push @CSVData, \@Data;
+            }
+
+            # csv quote
+            # translate non existing header may result in a garbage file
+            if ( !@CSVHead ) {
+                @CSVHead = qw(FAQNumber Title Category);
+
+                # insert language header
+                if ( $Self->{MultiLanguage} ) {
+                    push @CSVHead, 'Language';
+                }
+
+                push @CSVHead, 'Changed';
             }
 
             # translate headers
