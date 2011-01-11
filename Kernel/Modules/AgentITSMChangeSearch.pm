@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.70 2010-12-18 15:14:31 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.71 2011-01-11 16:23:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
+$VERSION = qw($Revision: 1.71 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -573,6 +573,12 @@ sub Run {
                     push @Data, $Info{$Header};
                 }
                 push @CSVData, \@Data;
+            }
+
+            # csv quote
+            # translate non existing header may result in a garbage file
+            if ( !@CSVHead ) {
+                @CSVHead = @{ $Self->{Config}->{SearchCSVData} };
             }
 
             # translate headers
