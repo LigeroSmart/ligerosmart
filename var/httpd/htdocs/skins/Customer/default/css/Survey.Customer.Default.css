@@ -1,0 +1,55 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Customer Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Survey - Skin "Default"
+ * @section     Customer
+ */
+
+div.Intro {
+    margin: 8px 0 13px;
+    padding-bottom: 5px;
+    background: #F8F9F9;
+    background: -moz-linear-gradient(center top , #FFF, #F8F9F9);
+    background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F8F9F9));
+    border: 1px solid #EAEEEE;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.SubHeader {
+    background: -moz-linear-gradient(center top , #F9F9F9, #ECEEEE) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CCCCCC;
+    color: #333333;
+    font-size: 12px;
+    margin: 0;
+    padding: 4px 9px 3px 9px;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+div.Intro .Content{
+    border-top: 0;
+}
+
+span.Question{
+    border-bottom: 1px solid #C9C9C9;
+    color: #333333;
+    font-size: 12px;
+    margin-left: 5%;
+    margin-top: 10px;
+    width: 70%;
+    padding: 4px 9px 3px 9px;
+    text-shadow: 0 1px 0 #ECEEEE;
+    font-weight: bold;
+    display: block;
+}
+
+fieldset input,
+fieldset textarea {
+    margin: 7px 0 7px 10%;
+}
