@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.62 2011-01-07 22:20:07 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.63 2011-01-11 19:12:01 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -301,6 +301,9 @@ sub Run {
         # Edit Working Units
         if ( $Param{Status} ) {
 
+            # arrays to save all start and end times for some checks
+            my ( @StartTimes, @EndTimes );
+
             ID:
             for my $ID ( 1 .. $Param{RecordsNumber} ) {
                 for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
@@ -360,6 +363,9 @@ sub Run {
                             $Errors{$ID}{EndTimeServerErrorBlock}
                                 = 'EndTimeBeforeStartTimeServerError';
                         }
+
+                        push @StartTimes, $StartTime;
+                        push @EndTimes,   $EndTime;
                     }
                 }
 
@@ -369,6 +375,31 @@ sub Run {
                         $Errors{$ID}{ $CheckValue . 'Invalid' } = 'ServerError';
                         $Errors{$ID}{ $CheckValue . 'ServerErrorBlock' }
                             = $CheckValue . 'NegativeServerError';
+                    }
+                }
+            }
+
+            # repeated hours are not allowed
+            for ( my $Position = 0; $Position < scalar @StartTimes; $Position++ ) {
+                for ( my $Index = 0; $Index < scalar @StartTimes; $Index++ ) {
+                    next if $Index == $Position;
+                    if (
+                        $StartTimes[$Position] >= $StartTimes[$Index]
+                        && $StartTimes[$Position] <= $EndTimes[$Index]
+                        )
+                    {
+                        $Errors{ $Position + 1 }{StartTimeInvalid} = 'ServerError';
+                        $Errors{ $Position + 1 }{StartTimeServerErrorBlock}
+                            = 'StartTimeRepeatedHourServerError';
+                    }
+                    if (
+                        $EndTimes[$Position] >= $StartTimes[$Index]
+                        && $EndTimes[$Position] <= $EndTimes[$Index]
+                        )
+                    {
+                        $Errors{ $Position + 1 }{EndTimeInvalid} = 'ServerError';
+                        $Errors{ $Position + 1 }{EndTimeServerErrorBlock}
+                            = 'EndTimeRepeatedHourServerError';
                     }
                 }
             }

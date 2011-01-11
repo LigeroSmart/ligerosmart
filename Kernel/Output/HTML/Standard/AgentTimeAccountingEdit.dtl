@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.35 2011-01-11 11:50:09 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.36 2011-01-11 19:12:01 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -147,6 +147,11 @@
                                         <p>$Text{"Negative times are not allowed."}</p>
                                     </div>
 <!-- dtl:block:StartTimeNegativeServerError -->
+<!-- dtl:block:StartTimeRepeatedHourServerError -->
+                                    <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"Repetead hours are not allowed. Start time matches another interval."}</p>
+                                    </div>
+<!-- dtl:block:StartTimeRepeatedHourServerError -->
                                 </td>
                                 <td>
                                     <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="Validate_DependingRequiredAND Validate_Depending_StartTime$QData{"ID"} $QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
@@ -168,6 +173,11 @@
                                         <p>$Text{"Negative times are not allowed."}</p>
                                     </div>
 <!-- dtl:block:EndTimeNegativeServerError -->
+<!-- dtl:block:EndTimeRepeatedHourServerError -->
+                                    <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"Repetead hours are not allowed. End time matches another interval."}</p>
+                                    </div>
+<!-- dtl:block:EndTimeRepeatedHourServerError -->
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
                                 <td>
