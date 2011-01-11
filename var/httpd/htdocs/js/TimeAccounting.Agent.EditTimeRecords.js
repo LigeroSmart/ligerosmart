@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.3 2011-01-05 16:00:38 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.4 2011-01-11 11:23:01 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -87,16 +87,16 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
     function InitAutoCompletion(Language) {
         // Initialize ComboBox on Project dropdown
         Core.UI.ComboBox.Init('.ProjectSelection', {
-            class: "Validate_TimeAccounting_Project",
-            lang: {
-                showallitems: Language.ShowAllItems
+            Class: "Validate_TimeAccounting_Project",
+            Lang: {
+                ShowAllItems: Language.ShowAllItems
             }
         });
         // Initialize ComboBox on task dropdown
         Core.UI.ComboBox.Init('.ActionSelection', {
-            class: "Validate_DependingRequiredAND",
-            lang: {
-                showallitems: Language.ShowAllItems
+            Class: "Validate_DependingRequiredAND",
+            Lang: {
+                ShowAllItems: Language.ShowAllItems
             }
         });
         // Add special validation class to ActionSelection
