@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.3 2011-01-10 23:39:50 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.4 2011-01-11 04:07:19 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,7 +72,7 @@ sub Run {
             $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         }
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action};Subaction=SurveyEdit&SurveyID=$SurveyID#Question"
+            OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
         );
     }
 
@@ -101,7 +101,7 @@ sub Run {
         );
         $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question"
+            OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
         );
     }
 
@@ -131,7 +131,7 @@ sub Run {
         );
 
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question"
+            OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
         );
     }
 
@@ -160,7 +160,7 @@ sub Run {
             QuestionID => $QuestionID,
         );
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=SurveyEdit&SurveyID=$SurveyID#Question"
+            OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
         );
     }
 
@@ -353,7 +353,7 @@ sub Run {
         }
         return $Self->{LayoutObject}->Redirect(
             OP =>
-                "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#NewAnswer",
+                "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#NewAnswer",
         );
     }
 
@@ -386,7 +386,7 @@ sub Run {
         $Self->{SurveyObject}->AnswerSort( QuestionID => $QuestionID );
         return $Self->{LayoutObject}->Redirect(
             OP =>
-                "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer",
+                "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer",
         );
     }
 
@@ -452,7 +452,7 @@ sub Run {
         );
         return $Self->{LayoutObject}->Redirect(
             OP =>
-                "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer",
+                "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer",
         );
     }
 
@@ -530,7 +530,7 @@ sub Run {
             );
             return $Self->{LayoutObject}->Redirect(
                 OP =>
-                    "Action=$Self->{Action}&Subaction=QuestionEdit&SurveyID=$SurveyID&QuestionID=$QuestionID#Answer"
+                    "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#Answer"
             );
         }
         else {

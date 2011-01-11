@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.43 2011-01-09 18:47:25 cr Exp $
+# $Id: AgentSurvey.pm,v 1.44 2011-01-11 04:07:19 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -228,13 +228,17 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
-        $Output = $Self->{LayoutObject}->Header( Title => 'Stats Overview' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output = $Self->{LayoutObject}->Header(
+            Title => 'Stats Overview',
+            Type  => 'Small',
+        );
+
+        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'Stats',
-            Data => { SurveyID => $SurveyID },
+            Data => {%Survey},
         );
         my @List = $Self->{SurveyObject}->VoteList( SurveyID => $SurveyID );
         for my $Vote (@List) {
@@ -250,7 +254,8 @@ sub Run {
             TemplateFile => 'AgentSurvey',
             Data         => {%Param},
         );
-        $Output .= $Self->{LayoutObject}->Footer();
+
+        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
         return $Output;
     }
 
@@ -258,8 +263,9 @@ sub Run {
     # stats detail
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'StatsDetail' ) {
-        my $SurveyID  = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
-        my $RequestID = $Self->{ParamObject}->GetParam( Param => "RequestID" );
+        my $SurveyID     = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
+        my $RequestID    = $Self->{ParamObject}->GetParam( Param => "RequestID" );
+        my $TicketNumber = $Self->{ParamObject}->GetParam( Param => "TicketNumber" );
 
         # check if survey exists
         if (
@@ -271,13 +277,20 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
-        $Output = $Self->{LayoutObject}->Header( Title => 'Stats Detail' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        $Output = $Self->{LayoutObject}->Header(
+            Title => 'Stats Detail',
+            Type  => 'Small',
+        );
+
+        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
         # print the main table.
         $Self->{LayoutObject}->Block(
             Name => 'StatsDetail',
-            Data => { SurveyID => $SurveyID },
+            Data => {
+                %Survey,
+                TicketNumber => $TicketNumber,
+            },
         );
         my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
         for my $Question (@QuestionList) {
