@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.63 2011-01-11 19:12:01 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.64 2011-01-12 11:05:11 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -810,43 +810,39 @@ sub Run {
                 );
             }
         }
+
+        # get incomplete working days
+        my %IncompleteWorkingDaysList;
+
         for my $YearID ( sort keys %{ $IncompleteWorkingDays{Incomplete} } ) {
             for my $MonthID ( sort keys %{ $IncompleteWorkingDays{Incomplete}{$YearID} } ) {
                 for my $DayID (
                     sort keys %{ $IncompleteWorkingDays{Incomplete}{$YearID}{$MonthID} }
                     )
                 {
-                    if ( !$Param{Incomplete} ) {
-                        $Self->{LayoutObject}->Block( Name => 'IncompleteText', );
-                    }
-                    if (
-                        $YearID     eq $Param{Year}
-                        && $MonthID eq $Param{Month}
-                        && $DayID   eq $Param{Day}
-                        )
-                    {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'IncompleteWorkingDaysSelected',
-                            Data => {
-                                Year  => $YearID,
-                                Month => $MonthID,
-                                Day   => $DayID,
-                            },
-                        );
-                    }
-                    else {
-                        $Self->{LayoutObject}->Block(
-                            Name => 'IncompleteWorkingDays',
-                            Data => {
-                                Year  => $YearID,
-                                Month => $MonthID,
-                                Day   => $DayID,
-                            },
-                        );
-                    }
+                    $IncompleteWorkingDaysList{"$YearID-$MonthID-$DayID"}
+                        = "$YearID-$MonthID-$DayID";
                     $Param{Incomplete} = 1;
                 }
             }
+        }
+
+        # Show text, if incomplete working days are available
+        if ( $Param{Incomplete} ) {
+
+            # show incomplete working days as a dropdown
+            my $IncompleWorkingDaysSelect = $Self->{LayoutObject}->BuildSelection(
+                Data       => \%IncompleteWorkingDaysList,
+                SelectedID => "$Param{Year}-$Param{Month}-$Param{Day}",
+                Name       => "IncompleteWorkingDaysList",
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'IncompleteWorkingDays',
+                Data => {
+                    IncompleteWorkingDaysSelect => $IncompleWorkingDaysSelect,
+                },
+            );
         }
 
         my %UserData = $Self->{TimeAccountingObject}->UserGet(

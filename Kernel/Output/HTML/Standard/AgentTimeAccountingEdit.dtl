@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.36 2011-01-11 19:12:01 en Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.37 2011-01-12 11:05:10 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,25 +49,18 @@
                     $Data{"Date"}
                     <input class="button" type="submit" value="$Text{"Submit"}" />
                 </form>
-<!-- dtl:block:IncompleteText -->
+<!-- dtl:block:IncompleteWorkingDays -->
                 <h2 class="SpacingTop">$Text{"Days without entries"}:</h2>
-                <ul>
+                $Data{"IncompleteWorkingDaysSelect"}
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#IncompleteWorkingDaysList').unbind('change.IncompleteWorkingDays').bind('change.IncompleteWorkingDays', function () {
+        var Date = $(this).val().split('-');
+        location.href = "$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=" + Date[0] + ";Month=" + Date[1] + ";Day=" + Date[2];
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:IncompleteWorkingDays -->
-                    <li>
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">
-                            $QData{"Year"}-$QData{"Month"}-$QData{"Day"}
-                        </a>
-                    </li>
-<!-- dtl:block:IncompleteWorkingDays -->
-<!-- dtl:block:IncompleteWorkingDaysSelected -->
-                    <li>
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">
-                            <strong>$QData{"Year"}-$QData{"Month"}-$QData{"Day"}</strong>
-                        </a>
-                    </li>
-<!-- dtl:block:IncompleteWorkingDaysSelected -->
-                </ul>
-<!-- dtl:block:IncompleteText -->
             </div>
         </div>
         <div class="WidgetSimple SpacingTop">
