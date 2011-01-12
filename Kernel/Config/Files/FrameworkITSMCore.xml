@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.54 2010-12-22 17:39:45 ub Exp $</CVS>
-    <CVS>$OldId: Framework.xml,v 1.242.2.6 2010/03/09 09:37:46 dz Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.55 2011-01-12 17:59:19 ub Exp $</CVS>
+    <CVS>$OldId: Framework.xml,v 1.415 2011/01/06 09:54:05 mn Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1" ConfigLevel="200">
         <Description Translatable="1">Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.</Description>
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 3.0 Beta 1</String>
+            <String Regex="">OTRS::ITSM 3.0 Beta 2</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -29,27 +29,6 @@
             <Hash>
                 <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages30/">[--OTRS::ITSM 3.0 Master--] http://ftp.otrs.org/</Item>
             </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Loader::Agent::CommonCSS###100-ITSM" Required="1" Valid="1">
-        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
-        <Group>Framework</Group>
-        <SubGroup>Core::Web</SubGroup>
-        <Setting>
-            <Array>
-                <Item>ITSM.Agent.Default.css</Item>
-                <Item>ITSM.Agent.Search.css</Item>
-            </Array>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Loader::Agent::CommonJS###100-ITSM" Required="1" Valid="1">
-        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
-        <Group>Framework</Group>
-        <SubGroup>Core::Web</SubGroup>
-        <Setting>
-            <Array>
-                <Item>ITSM.Agent.CustomerSearch.js</Item>
-            </Array>
         </Setting>
     </ConfigItem>
 </otrs_config>
