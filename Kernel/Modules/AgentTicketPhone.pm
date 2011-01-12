@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.26 2010-12-10 16:42:57 en Exp $
-# $OldId: AgentTicketPhone.pm,v 1.175 2010/12/08 19:46:59 mp Exp $
+# $Id: AgentTicketPhone.pm,v 1.27 2011-01-12 16:39:22 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.176 2011/01/06 10:45:19 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1823,7 +1823,7 @@ sub _MaskPhoneNew {
         $Param{ResponsibleUsers}->{''} = '-';
         $Param{ResponsibleOptionStrg} = $Self->{LayoutObject}->BuildSelection(
             Data       => $Param{ResponsibleUsers},
-            SelectedID => $Param{ResponsibleUsersSelected},
+            SelectedID => $Param{ResponsibleUserSelected},
             Name       => 'NewResponsibleID',
         );
         $Self->{LayoutObject}->Block(

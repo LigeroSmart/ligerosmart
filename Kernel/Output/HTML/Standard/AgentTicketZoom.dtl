@@ -1,9 +1,9 @@
 # --
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.31 2010-12-21 21:51:28 ub Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.177 2010/12/14 10:36:32 mb Exp $
+# $Id: AgentTicketZoom.dtl,v 1.32 2011-01-12 16:39:22 ub Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.179 2011/01/12 10:29:16 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -643,7 +643,7 @@ $Data{"ArticleItems"}
         <div class="LightRow Header">
             <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
             <h2>#$QData{"Count"} &ndash; $QData{"Subject","60"}</h2>
-            <div class="AdditionalInformation">
+            <div class="AdditionalInformation SpacingRight">
                 $Text{"Created"}: $TimeShort{"$Data{"Created"}"}
             </div>
         </div>
@@ -757,12 +757,12 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
             <div class="ArticleMailContent">
 <!-- dtl:block:BodyPlain -->
 $Data{"BodyNote"}
-                <div class="message">
+                <div class="ArticleBody">
 $Data{"Body"}
                 </div>
 <!-- dtl:block:BodyPlain -->
 <!-- dtl:block:BodyHTML -->
-                <div class="message">
+                <div>
 # execute IFrame JS asynchronously. Otherwise it could happen before our API was loaded
                     <iframe width="100%" frameborder="0" id="Iframe$QData{"ArticleID"}" onload="window.setTimeout( function (){ if (typeof Core === 'object' && typeof Core.Agent === 'object' && typeof Core.Agent.TicketZoom === 'object') { Core.Agent.TicketZoom.IframeAutoHeight($('#Iframe$QData{"ArticleID"}')); } }, 500);" src="$Env{"Baselink"}Action=AgentTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
                 </div>
