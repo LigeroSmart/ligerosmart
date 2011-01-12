@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.64 2011-01-12 11:05:11 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.65 2011-01-12 17:56:15 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -637,15 +637,6 @@ sub Run {
                 );
             }
 
-            # add proper server error msg for the end time
-            $ServerErrorBlockName = $Errors{$ID} ? $Errors{$ID}{EndTimeServerErrorBlock} : '';
-            $Self->{LayoutObject}->Block(
-                Name => $ServerErrorBlockName || 'EndTimeGenericServerError',
-                Data => {
-                    ID => $ID,
-                },
-            );
-
             $Self->{LayoutObject}->Block(
                 Name => $Param{PeriodBlock},
                 Data => {
@@ -743,19 +734,14 @@ sub Run {
         }
 
         # validity checks start
+        my $ErrorNote;
         if ( $Param{Total} && $Param{Total} > 24 ) {
-            $Param{RequiredDescription}
-                = 'Can\'t save settings, because you entered more than 24 working hours!';
+            $ErrorNote = 'Can\'t save settings, because you entered more than 24 working hours!';
         }
         elsif ( $Param{InsertWorkingUnits} && $Param{Total} && $Param{Total} > 16 ) {
             $Param{BlockName} = 'More16HoursMessage';
         }
-        if ( $Param{RequiredDescription} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'Readonly',
-                Data => { Description => $Param{RequiredDescription} },
-            );
-
+        if ($ErrorNote) {
             if (
                 !$Self->{TimeAccountingObject}->WorkingUnitsDelete(
                     Year  => $Param{Year},
@@ -904,9 +890,15 @@ sub Run {
             }
         }
 
+        if ($ErrorNote) {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Info     => $ErrorNote,
+                Priority => 'Error'
+            );
+        }
+
         if (
-            !$Param{RequiredDescription}
-            && $Param{SuccessfulInsert}
+            $Param{SuccessfulInsert}
             && !%Errors
             )
         {
