@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.214 2010-12-21 23:30:00 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.215 2011-01-12 18:28:48 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
-    <PackageRequired Version="2.1.91">ITSMCore</PackageRequired>
+    <PackageRequired Version="2.1.92">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">The OTRS::ITSM Change Management package.</Description>
     <Description Lang="de">Das OTRS::ITSM Change Management Paket.</Description>
+    <Description Lang="es">El paquete OTRS::ITSM Change Management.</Description>
     <Filelist>
         <File Permission="755" Location="bin/otrs.ITSMChangesCheck.pl"/>
         <File Permission="755" Location="bin/otrs.ITSMChangeDelete.pl"/>
@@ -3259,7 +3260,7 @@
         <br>
         <b>REQUIRED OTRS PACKAGES</b>
         <ul>
-        <li>ITSMCore 2.1.91</li>
+        <li>ITSMCore 2.1.92</li>
         </ul>
         <br>
         ((enjoy))<br>
@@ -3277,7 +3278,7 @@
         <br>
         <b>BENÖTIGTE OTRS-PAKETE</b>
         <ul>
-        <li>ITSMCore 2.1.91</li>
+        <li>ITSMCore 2.1.92</li>
         </ul>
         <br>
         ((enjoy))<br>
@@ -3327,7 +3328,7 @@
         <br>
         <b>REQUIRED OTRS PACKAGES</b>
         <ul>
-        <li>ITSMCore 2.1.91</li>
+        <li>ITSMCore 2.1.92</li>
         </ul>
         <br>
         ((enjoy))<br>
@@ -3345,7 +3346,7 @@
         <br>
         <b>BENÖTIGTE OTRS-PAKETE</b>
         <ul>
-        <li>ITSMCore 2.1.91</li>
+        <li>ITSMCore 2.1.92</li>
         </ul>
         <br>
         ((enjoy))<br>
