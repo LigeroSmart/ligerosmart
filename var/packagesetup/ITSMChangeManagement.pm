@@ -1,8 +1,8 @@
 # --
 # ITSMChangeManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.67 2010-12-22 19:13:07 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.68 2011-01-13 18:37:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 =head1 NAME
 
@@ -379,6 +379,9 @@ sub CodeUninstall {
 
     # delete all links with change and workorder objects
     $Self->_LinkDelete();
+
+    # delete all existing attachments for changes and workorders
+    $Self->_AttachmentDelete();
 
     # deactivate the group itsm-change
     $Self->_GroupDeactivate(
@@ -776,6 +779,68 @@ sub _LinkDelete {
                     Object => 'ITSMWorkOrder',
                     Key    => $WorkOrderID,
                     UserID => 1,
+                );
+            }
+        }
+    }
+
+    return 1;
+}
+
+=item _AttachmentDelete()
+
+delete all existing attachments for changes and workorders
+
+    my $Result = $CodeObject->_AttachmentDelete();
+
+=cut
+
+sub _AttachmentDelete {
+    my ( $Self, %Param ) = @_;
+
+    # get all change object ids
+    my $ChangeIDs = $Self->{ChangeObject}->ChangeList(
+        UserID => 1,
+    );
+
+    for my $ChangeID ( @{$ChangeIDs} ) {
+
+        # get the list of all change attachments
+        my @ChangeAttachments = $Self->{ChangeObject}->ChangeAttachmentList(
+            ChangeID => $ChangeID,
+        );
+
+        # delete all change attachments
+        for my $Filename (@ChangeAttachments) {
+
+            $Self->{ChangeObject}->ChangeAttachmentDelete(
+                ChangeID => $ChangeID,
+                Filename => $Filename,
+                UserID   => 1,
+            );
+        }
+
+        # get all workorder ids for this change
+        my $WorkOrderIDs = $Self->{WorkOrderObject}->WorkOrderList(
+            ChangeID => $ChangeID,
+            UserID   => 1,
+        );
+
+        for my $WorkOrderID ( @{$WorkOrderIDs} ) {
+
+            # get the list of all workorder attachments
+            my @WorkOrderAttachments = $Self->{WorkOrderObject}->WorkOrderAttachmentList(
+                WorkOrderID => $WorkOrderID,
+            );
+
+            # delete all workorder attachments
+            for my $Filename (@WorkOrderAttachments) {
+
+                $Self->{WorkOrderObject}->WorkOrderAttachmentDelete(
+                    ChangeID    => $ChangeID,
+                    WorkOrderID => $WorkOrderID,
+                    Filename    => $Filename,
+                    UserID      => 1,
                 );
             }
         }
@@ -2722,6 +2787,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.67 $ $Date: 2010-12-22 19:13:07 $
+$Revision: 1.68 $ $Date: 2011-01-13 18:37:36 $
 
 =cut
