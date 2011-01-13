@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.35 2011-01-11 14:18:01 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.36 2011-01-13 23:00:50 en Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -11,8 +11,8 @@
     <Description Lang="de">Ein Zeiterfassungsmodul.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
-        <File Permission="644" Location="Kernel/Language/de_AgentTimeAccounting.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_AgentTimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
