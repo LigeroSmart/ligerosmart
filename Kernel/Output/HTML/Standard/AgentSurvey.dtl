@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.41 2011-01-11 04:07:19 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.42 2011-01-13 21:45:21 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -97,7 +97,7 @@
         <div class="Content">
 
             <div class="Header">
-                <h2>$Text{"Options"}</h2>
+                <h2>$Text{"General Info"}</h2>
             </div>
 
             <fieldset class="TableLike">
