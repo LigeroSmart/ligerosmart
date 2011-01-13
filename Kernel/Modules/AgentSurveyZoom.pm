@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.pm,v 1.2 2011-01-07 20:02:26 dz Exp $
+# $Id: AgentSurveyZoom.pm,v 1.3 2011-01-13 17:57:04 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -255,6 +255,8 @@ sub Run {
 
     # output the possible status
     my %NewStatus;
+    $NewStatus{ChangeStatus} = '- Change Status -';
+
     if ( $Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid' ) {
         $NewStatus{Master} = 'Master';
         $NewStatus{Valid}  = 'Valid';
@@ -269,12 +271,18 @@ sub Run {
     }
 
     my $NewStatusStr = $Self->{LayoutObject}->BuildSelection(
-        Name => 'NewStatus',
-        Data => \%NewStatus,
+        Name       => 'NewStatus',
+        ID         => 'NewStatus',
+        Data       => \%NewStatus,
+        SelectedID => 'ChangeStatus',
     );
+
     $Self->{LayoutObject}->Block(
         Name => 'SurveyStatus',
-        Data => { NewStatusStr => $NewStatusStr },
+        Data => {
+            NewStatusStr => $NewStatusStr,
+            SurveyID     => $SurveyID,
+        },
     );
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurveyZoom',

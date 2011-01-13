@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.5 2011-01-11 04:07:19 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.6 2011-01-13 17:57:04 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@
 <div class="MainBox AriaRoleMain LayoutFixedSidebar SidebarFirst">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1 title="$QData{"Title"}" >$QData{"SurveyNumber"} - $QData{"Title","40"} </h1>
+        <h1 title="$QData{"Title"}" >$QData{"SurveyNumber"} - $QData{"Title","60"} </h1>
     </div>
 
     <div class="LayoutFixedSidebar SidebarLast">
@@ -26,44 +26,36 @@
                     <fieldset class="TableLike FixedLabelSmall">
 
                         <label>$Text{"Created"}:</label>
-                        <p class="Value">$TimeLong{"$Data{"CreateTime"}"}</p>
+                        <p class="Value">$TimeShort{"$Data{"CreateTime"}"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
                         <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
-                            $Quote{"$Data{"CreateUserLogin"}"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","20"})
+                            $Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","18"})
                         </p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
-                        <p class="Value" >$TimeLong{"$Data{"ChangeTime"}"}</p>
+                        <p class="Value" >$TimeShort{"$Data{"ChangeTime"}"}</p>
 
                         <label>$Text{"Changed by"}:</label>
                         <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
-                            $Quote{"$Data{"CreateUserLogin"}"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","20"})
+                            $Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})","18"}
                         </p>
+                        <div class="Clear"></div>
 
                         <label>$Text{"Status"}:</label>
-                        <p class="Value">$Text{"$Data{"Status"}"}</p>
+                        <p class="Value" title="$Text{"$Data{"Status"}"}">$Quote{"$Data{"Status"}","18"}</p>
+                        <div class="Clear"></div>
+                    </fieldset>
 
-                        <label>$Text{"Change Status"}:</label>
-
-                        <form action="$Env{"CGIHandle"}" method="post">
-                            <input type="hidden" name="Action" value="AgentSurvey" />
-                            <input type="hidden" name="Subaction" value="SurveyStatus" />
-                            <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
-<!-- dtl:block:SurveyStatus -->
-                            $Data{"NewStatusStr"}
-<!-- dtl:block:SurveyStatus -->
-                            <button type="submit" value="$Text{"Change"}">$Text{"Change"}</button>
-                        </form>
-
+                    <fieldset class="TableLike FixedLabelSmall">
                         <label> $Text{"Sent requests"}:</label>
                         <p class="Value">$QData{"SendRequest"}</p>
 
                         <label>$Text{"Received surveys"}:</label>
                         <p class="Value">$QData{"RequestComplete"}</p>
-
+                        <div class="Clear"></div>
                     </fieldset>
                 </div>
             </div>
@@ -90,6 +82,16 @@
                         <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=Stats;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Stats Details"}</a>
                     </li>
 <!-- dtl:block:SurveyEditStatsDetails -->
+<!-- dtl:block:SurveyStatus -->
+                    <li>
+                        <form action="$Env{"CGIHandle"}" method="post">
+                            <input type="hidden" name="Action" value="AgentSurvey" />
+                            <input type="hidden" name="Subaction" value="SurveyStatus" />
+                            <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+                            $Data{"NewStatusStr"}
+                        </form>
+                    </li>
+<!-- dtl:block:SurveyStatus -->
                 </ul>
                 <div class="Clear"></div>
             </div>
@@ -106,19 +108,19 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Title"}:</label>
-                        <div class="Field">$QData{"Title"}</div>
+                        <div class="Field" title="$QData{"Title"}">$QData{"Title","80"}</div>
                         <div class="Clear"></div>
 
                         <label>$Text{"Introduction"}:</label>
-                        <div class="Field">$Data{"Introduction"}</div>
+                        <div class="Field" title="$QData{"Introduction"}">$QData{"Introduction","80"}</div>
                         <div class="Clear"></div>
 
                         <label>$Text{"Queues"}:</label>
-                        <div class="Field">$Data{"QueueListString"} $Data{"NoQueueMessage"}</div>
+                        <div class="Field" title="$QData{"QueueListString"}">$QData{"QueueListString","80"} $Data{"NoQueueMessage"}</div>
                         <div class="Clear"></div>
 
                         <label>$Text{"Internal Description"}:</label>
-                        <div class="Field">$Data{"Description"}</div>
+                        <div class="Field" title="$QData{"Description"}">$QData{"Description","80"}</div>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>
@@ -138,7 +140,7 @@
 
 <!-- dtl:block:SurveyEditStatsQuestion -->
                     <fieldset class="SpacingTop SurveyGraphs">
-                        <div class="Question">$QData{"Question","100"}: </div>
+                        <div class="Question" title="$Data{"Question"}" >$QData{"Question","100"}: </div>
 <!-- dtl:block:SurveyEditStatsAnswer -->
                         <div class="Answer">$Text{"$Data{"Answer"}"}</div>
 
@@ -170,6 +172,11 @@
         history.back();
         return false;
     });
+
+    $('#NewStatus').bind('change', function (Event) {
+        $(this).closest('form').submit();
+    });
+
 
 //]]></script>
 <!-- dtl:js_on_document_complete -->
