@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.4 2011-01-11 04:07:19 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.5 2011-01-13 18:01:05 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -168,8 +168,8 @@ sub Run {
     # question edit
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'QuestionEdit' ) {
-        my $SurveyID   = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
-        my $QuestionID = $Self->{ParamObject}->GetParam( Param => "QuestionID" );
+        my $SurveyID   = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
+        my $QuestionID = $Self->{ParamObject}->GetParam( Param => 'QuestionID' );
 
         # check if survey and question exists
         if (
@@ -198,19 +198,24 @@ sub Run {
             Data => {%Question},
         );
 
-        if ( $Question{Type} eq 'YesNo' ) {
+        if ( $Question{Type} ne 'Textarea' ) {
             $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
+        }
+        if ( $Question{Type} eq 'YesNo' ) {
             $Self->{LayoutObject}->Block( Name => 'QuestionEditYesno' );
         }
         elsif ( $Question{Type} eq 'Radio' || $Question{Type} eq 'Checkbox' ) {
-
-            $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
 
             my $Type = $Question{Type};
             my @List = $Self->{SurveyObject}->AnswerList( QuestionID => $QuestionID );
             if ( scalar @List ) {
                 if ( $Survey{Status} eq 'New' ) {
+
                     $Self->{LayoutObject}->Block( Name => 'QuestionEditTableDelete' );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'QuestionEditAddAnswer',
+                        Data => {%Question},
+                    );
 
                     my $Counter = 0;
                     for my $Answer2 (@List) {
@@ -243,16 +248,12 @@ sub Run {
                         );
                         $Counter++;
                     }
-                    $Self->{LayoutObject}->Block(
-                        Name => 'QuestionEditAddAnswer',
-                        Data => {%Question},
-                    );
                 }
                 else {
                     for my $Answer2 (@List) {
                         $Answer2->{SurveyID} = $SurveyID;
                         $Self->{LayoutObject}->Block(
-                            Name => "QuestionEditRadio" . $Type,
+                            Name => "QuestionEdit" . $Type,
                             Data => $Answer2,
                         );
                     }
@@ -260,14 +261,15 @@ sub Run {
             }
             else {
                 $Self->{LayoutObject}->Block(
+                    Name => 'QuestionEditAddAnswer',
+                    Data => {%Question},
+                );
+
+                $Self->{LayoutObject}->Block(
                     Name => 'NoAnswersSaved',
                     Data => {
                         Columns => 3,
                     },
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'QuestionEditAddAnswer',
-                    Data => {%Question},
                 );
             }
         }
