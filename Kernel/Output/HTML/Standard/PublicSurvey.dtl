@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.17 2011-01-11 20:01:09 dz Exp $
+# $Id: PublicSurvey.dtl,v 1.18 2011-01-13 22:23:12 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -32,7 +32,7 @@
             <input type="hidden" name="Action" value="$Env{"Action"}" />
             <input type="hidden" name="Subaction" value="PublicSurveyVote" />
             <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
-            <fieldset>
+            <fieldset class="Survey">
                 <div class="SubHeader">
                     $Text{"Please answer the next questions"}
                 </div>
