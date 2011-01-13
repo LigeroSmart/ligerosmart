@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -16,12 +16,12 @@
  * @subsection Survey Graph
  */
 
-fieldset .SurveyGraphs {
+fieldset.SurveyGraphs {
     display: block;
     margin-bottom: 20px;
 }
 
-fieldset .SurveyGraphs .Question {
+fieldset.SurveyGraphs .Question {
     display: block;
     line-height: 1.5em;
     text-align: right;
@@ -30,7 +30,7 @@ fieldset .SurveyGraphs .Question {
     margin-bottom: 10px;
 }
 
-fieldset .SurveyGraphs .Answer {
+fieldset.SurveyGraphs .Answer {
     float: left;
     line-height: 1.3em;
     text-align: right;
@@ -39,7 +39,7 @@ fieldset .SurveyGraphs .Answer {
     margin-bottom: 5px;
 }
 
-div .SurveyGraph {
+div.SurveyGraph {
     float: left;
     width: 50%;
     height: 22px;
@@ -47,23 +47,24 @@ div .SurveyGraph {
     padding-bottom: 3px;
 }
 
-div .SurveyGraphContainer {
+div.SurveyGraphContainer {
     width: 95%;
     height: 22px;
 }
 
-div .SurveyGraphBar {
+div.SurveyGraphBar {
     height: 22px;
     background-color: #F2B13E;
 }
 
-p .SurveyGraphLeyend {
+p.SurveyGraphLeyend {
     float: left;
     line-height: 1.3em;
     text-align: left;
     text-shadow: 0 1px 0 #FAFAFA;
     width: 10%;
     margin-bottom: 5px;
+    height: 22px;
 }
 
 .SubLabel {
@@ -122,6 +123,20 @@ a.ArrowDown {
 a.ArrowDownDisabled {
     background: url(../img/icons/arrow_down_disabled.png);
     cursor: default;
+}
+
+a.SeeDetails {
+    height: 15px;
+    width: 15px;
+    padding: 1px;
+    margin-top: 0;
+    margin-bottom: 1px;
+    border-style: none;
+    text-indent: -9999px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    background: url(../img/icons/see_details.png);
 }
 
 }

@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.42 2011-01-13 21:45:21 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.43 2011-01-13 22:50:28 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -213,7 +213,7 @@
                                 $QData{"TicketNumber"}
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$QData{"SurveyID"};RequestID=$QData{"RequestID"};TicketNumber=$QData{"TicketNumber"}">See Details</a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StatsDetail;SurveyID=$QData{"SurveyID"};RequestID=$QData{"RequestID"};TicketNumber=$QData{"TicketNumber"}" class="SeeDetails">See Details</a>
                             </td>
                         </tr>
 <!-- dtl:block:StatsVote -->
