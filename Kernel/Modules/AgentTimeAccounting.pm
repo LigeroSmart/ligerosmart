@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.65 2011-01-12 17:56:15 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.66 2011-01-13 21:36:22 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -199,7 +199,7 @@ sub Run {
 
                 # show the overview of tasks and users
                 return $Self->{LayoutObject}->Redirect(
-                    OP => "Action=AgentTimeAccounting;Subaction=Setting",
+                    OP => "Action=AgentTimeAccounting;Subaction=Setting;User=$Self->{Subaction}",
                 );
             }
         }
@@ -1367,10 +1367,21 @@ sub Run {
         # permission check
         return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRw};
 
+        # get the user action to show a msg if an user was updated or added
+        my $Note = $Self->{ParamObject}->GetParam( Param => 'User' );
+
         # build output
         $Self->_SettingOverview();
         my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
         $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # show a notification msg if proper
+        if ($Note) {
+            $Output .= $Note eq 'EditUser'
+                ? $Self->{LayoutObject}->Notify( Info => 'User updated!' )
+                : $Self->{LayoutObject}->Notify( Info => 'User added!' );
+        }
+
         $Output .= $Self->{LayoutObject}->Output(
             Data         => \%Param,
             TemplateFile => 'AgentTimeAccountingSetting'
