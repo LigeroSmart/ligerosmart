@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.5 2011-01-13 18:01:05 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.6 2011-01-13 21:37:22 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,7 +44,6 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     my $Output;
-    my $SurveyID = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
 
     # ------------------------------------------------------------ #
     # question add
@@ -62,6 +61,8 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
+
+        my %ServerError;
         if ($Question) {
             $Self->{SurveyObject}->QuestionAdd(
                 SurveyID => $SurveyID,
@@ -71,9 +72,15 @@ sub Run {
             );
             $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         }
-        return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action};Subaction=SurveyEdit;SurveyID=$SurveyID#Question"
+        else {
+            $ServerError{Question} = 1;
+        }
+
+        return $Self->_MaskQuestionOverview(
+            SurveyID    => $SurveyID,
+            ServerError => \%ServerError,
         );
+
     }
 
     # ------------------------------------------------------------ #
@@ -184,113 +191,20 @@ sub Run {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
 
-        # output header
-        $Output = $Self->{LayoutObject}->Header(
-            Title => 'Question Edit',
-            Type  => 'Small',
-        );
-        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
-        my %Question = $Self->{SurveyObject}->QuestionGet( QuestionID => $QuestionID );
-
-        # print the main body
-        $Self->{LayoutObject}->Block(
-            Name => 'QuestionEdit',
-            Data => {%Question},
+        return $Self->_MaskQuestionEdit(
+            SurveyID   => $SurveyID,
+            QuestionID => $QuestionID,
         );
 
-        if ( $Question{Type} ne 'Textarea' ) {
-            $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
-        }
-        if ( $Question{Type} eq 'YesNo' ) {
-            $Self->{LayoutObject}->Block( Name => 'QuestionEditYesno' );
-        }
-        elsif ( $Question{Type} eq 'Radio' || $Question{Type} eq 'Checkbox' ) {
-
-            my $Type = $Question{Type};
-            my @List = $Self->{SurveyObject}->AnswerList( QuestionID => $QuestionID );
-            if ( scalar @List ) {
-                if ( $Survey{Status} eq 'New' ) {
-
-                    $Self->{LayoutObject}->Block( Name => 'QuestionEditTableDelete' );
-                    $Self->{LayoutObject}->Block(
-                        Name => 'QuestionEditAddAnswer',
-                        Data => {%Question},
-                    );
-
-                    my $Counter = 0;
-                    for my $Answer2 (@List) {
-                        $Answer2->{SurveyID} = $SurveyID;
-
-                        my $ClassUp;
-                        my $ClassDown;
-
-                        # disable up action on first row
-                        if ( !$Counter ) {
-                            $ClassUp = 'Disabled';
-                        }
-
-                        # disable down action on last row
-                        if ( $Counter == $#List ) {
-                            $ClassDown = 'Disabled';
-                        }
-
-                        $Self->{LayoutObject}->Block(
-                            Name => "QuestionEdit" . $Type,
-                            Data => {
-                                %{$Answer2},
-                                ClassUp   => $ClassUp,
-                                ClassDown => $ClassDown,
-                                }
-                        );
-                        $Self->{LayoutObject}->Block(
-                            Name => 'QuestionEdit' . $Type . 'Delete',
-                            Data => $Answer2,
-                        );
-                        $Counter++;
-                    }
-                }
-                else {
-                    for my $Answer2 (@List) {
-                        $Answer2->{SurveyID} = $SurveyID;
-                        $Self->{LayoutObject}->Block(
-                            Name => "QuestionEdit" . $Type,
-                            Data => $Answer2,
-                        );
-                    }
-                }
-            }
-            else {
-                $Self->{LayoutObject}->Block(
-                    Name => 'QuestionEditAddAnswer',
-                    Data => {%Question},
-                );
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'NoAnswersSaved',
-                    Data => {
-                        Columns => 3,
-                    },
-                );
-            }
-        }
-        elsif ( $Question{Type} eq 'Textarea' ) {
-            $Self->{LayoutObject}->Block( Name => 'QuestionEditTextArea' );
-        }
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentSurveyEditQuestions',
-            Data         => {%Param},
-        );
-        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
-        return $Output;
     }
 
     # ------------------------------------------------------------ #
     # question save
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'QuestionSave' ) {
-        my $QuestionID = $Self->{ParamObject}->GetParam( Param => "QuestionID" );
-        my $SurveyID   = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
-        my $Question   = $Self->{ParamObject}->GetParam( Param => "Question" );
+        my $QuestionID = $Self->{ParamObject}->GetParam( Param => 'QuestionID' );
+        my $SurveyID   = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
+        my $Question   = $Self->{ParamObject}->GetParam( Param => 'Question' );
 
         # check if survey and question exists
         if (
@@ -304,6 +218,8 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
+
+        my %ServerError;
         if ($Question) {
             $Self->{SurveyObject}->QuestionSave(
                 QuestionID => $QuestionID,
@@ -311,17 +227,21 @@ sub Run {
                 Question   => $Question,
                 UserID     => $Self->{UserID},
             );
-            return $Self->{LayoutObject}->Redirect(
-                OP =>
-                    "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID",
+
+            return $Self->_MaskQuestionEdit(
+                SurveyID   => $SurveyID,
+                QuestionID => $QuestionID,
             );
         }
         else {
-            return $Self->{LayoutObject}->Redirect(
-                OP =>
-                    "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID",
-            );
+            $ServerError{QuestionServerError} = 'ServerError';
         }
+
+        return $Self->_MaskQuestionEdit(
+            SurveyID    => $SurveyID,
+            QuestionID  => $QuestionID,
+            ServerError => \%ServerError,
+        );
     }
 
     # ------------------------------------------------------------ #
@@ -344,6 +264,8 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
+
+        my %ServerError;
         if ($Answer) {
             $Self->{SurveyObject}->AnswerAdd(
                 SurveyID   => $SurveyID,
@@ -351,11 +273,20 @@ sub Run {
                 Answer     => $Answer,
                 UserID     => $Self->{UserID},
             );
-            $Self->{SurveyObject}->AnswerSort( QuestionID => $QuestionID );
+
+            return $Self->_MaskQuestionEdit(
+                SurveyID   => $SurveyID,
+                QuestionID => $QuestionID,
+            );
         }
-        return $Self->{LayoutObject}->Redirect(
-            OP =>
-                "Action=$Self->{Action};Subaction=QuestionEdit;SurveyID=$SurveyID;QuestionID=$QuestionID#NewAnswer",
+        else {
+            $ServerError{AnswerServerError} = 'ServerError';
+        }
+
+        return $Self->_MaskQuestionEdit(
+            SurveyID    => $SurveyID,
+            QuestionID  => $QuestionID,
+            ServerError => \%ServerError,
         );
     }
 
@@ -462,9 +393,9 @@ sub Run {
     # answer edit
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'AnswerEdit' ) {
-        my $SurveyID   = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
-        my $QuestionID = $Self->{ParamObject}->GetParam( Param => "QuestionID" );
-        my $AnswerID   = $Self->{ParamObject}->GetParam( Param => "AnswerID" );
+        my $SurveyID   = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
+        my $QuestionID = $Self->{ParamObject}->GetParam( Param => 'QuestionID' );
+        my $AnswerID   = $Self->{ParamObject}->GetParam( Param => 'AnswerID' );
 
         # check if survey, question and answer exists
         if (
@@ -480,24 +411,13 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
-        $Output = $Self->{LayoutObject}->Header(
-            Title => 'Answer Edit',
-            Type  => 'Small',
-        );
-        my %Answer = $Self->{SurveyObject}->AnswerGet( AnswerID => $AnswerID );
-        $Answer{SurveyID} = $SurveyID;
 
-        # print the main table.
-        $Self->{LayoutObject}->Block(
-            Name => 'AnswerEdit',
-            Data => {%Answer},
+        return $Self->_MaskAnswerEdit(
+            SurveyID   => $SurveyID,
+            QuestionID => $QuestionID,
+            AnswerID   => $AnswerID,
         );
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'AgentSurveyEditQuestions',
-            Data         => {%Param},
-        );
-        $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
-        return $Output;
+
     }
 
     # ------------------------------------------------------------ #
@@ -523,6 +443,8 @@ sub Run {
         {
             return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
         }
+
+        my %ServerError;
         if ($Answer) {
             $Self->{SurveyObject}->AnswerSave(
                 AnswerID   => $AnswerID,
@@ -536,18 +458,40 @@ sub Run {
             );
         }
         else {
-            return $Self->{LayoutObject}->Redirect(
-                OP =>
-                    "Action=$Self->{Action};Subaction=AnswerEdit;SurveyID=$SurveyID;QuestionID=$QuestionID;AnswerID=$AnswerID"
-            );
+            $ServerError{AnswerServerError} = 'SeverError';
         }
+
+        return $Self->_MaskAnswerEdit(
+            SurveyID    => $SurveyID,
+            QuestionID  => $QuestionID,
+            AnswerID    => $AnswerID,
+            ServerError => \%ServerError,
+            )
     }
 
     # ------------------------------------------------------------ #
     # question overview
     # ------------------------------------------------------------ #
+    my $SurveyID = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
 
     if ( !$SurveyID ) {
+        return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurvey" );
+    }
+
+    return $Self->_MaskQuestionOverview( SurveyID => $SurveyID );
+}
+
+sub _MaskQuestionOverview {
+    my ( $Self, %Param ) = @_;
+
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
+
+    my $Output;
+
+    if ( !$Param{SurveyID} ) {
         return $Self->{LayoutObject}->Redirect( OP => "Action=AgentSurvey" );
     }
 
@@ -558,21 +502,21 @@ sub Run {
     );
 
     # get all attributes of the survey
-    my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+    my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $Param{SurveyID} );
 
     $Self->{LayoutObject}->Block(
         Name => 'SurveyEditQuestions',
         Data => \%Survey,
     );
 
-    my @List = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
+    my @List = $Self->{SurveyObject}->QuestionList( SurveyID => $Param{SurveyID} );
 
     if ( $Survey{Status} && $Survey{Status} eq 'New' ) {
 
         my $ArrayHashRef = [
             {
-                Key      => 'Yes/No',
-                Value    => 'Yes/No',
+                Key      => 'YesNo',
+                Value    => 'YesNo',
                 Selected => 1,
             },
             {
@@ -590,21 +534,24 @@ sub Run {
         ];
 
         my $SelectionType = $Self->{LayoutObject}->BuildSelection(
-            Data => $ArrayHashRef,    # use $HashRef, $ArrayRef or $ArrayHashRef (see below)
-            Name => 'Type',           # name of element
-            ID   => 'HTMLID'
-            , # (optional) the HTML ID for this element, if not provided, the name will be used as ID as well
-            Class => 'class',    # (optional) a css class
-            SelectedValue =>
-                'test',    # (optional) use string or arrayref (unable to use with ArrayHashRef)
-            Translation => 1,    # (optional) default 1 (0|1) translate value
+            Data          => $ArrayHashRef,
+            Name          => 'Type',
+            ID            => 'Type',
+            SelectedValue => 'Yes/No',
+            Translation   => 1,
         );
+
+        my $QuestionErrorClass = '';
+        if ( $ServerError{Question} ) {
+            $QuestionErrorClass = 'ServerError';
+        }
 
         $Self->{LayoutObject}->Block(
             Name => 'SurveyAddQuestion',
             Data => {
-                SurveyID      => $SurveyID,
-                SelectionType => $SelectionType,
+                SurveyID           => $Param{SurveyID},
+                SelectionType      => $SelectionType,
+                QuestionErrorClass => $QuestionErrorClass,
             },
         );
 
@@ -671,7 +618,159 @@ sub Run {
 
     $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentSurveyEditQuestions',
-        Data => { SurveyID => $SurveyID },
+        Data => { SurveyID => $Param{SurveyID} },
+    );
+
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    return $Output;
+}
+
+sub _MaskQuestionEdit {
+    my ( $Self, %Param ) = @_;
+
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
+
+    my $Output;
+
+    # output header
+    $Output = $Self->{LayoutObject}->Header(
+        Title => 'Question Edit',
+        Type  => 'Small',
+    );
+    my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $Param{SurveyID} );
+    my %Question = $Self->{SurveyObject}->QuestionGet( QuestionID => $Param{QuestionID} );
+
+    # print the main body
+    $Self->{LayoutObject}->Block(
+        Name => 'QuestionEdit',
+        Data => {
+            %Question,
+            %ServerError,
+        },
+    );
+
+    if ( $Question{Type} eq 'YesNo' ) {
+        $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
+        $Self->{LayoutObject}->Block( Name => 'QuestionEditYesno' );
+    }
+    elsif ( $Question{Type} eq 'Radio' || $Question{Type} eq 'Checkbox' ) {
+
+        $Self->{LayoutObject}->Block( Name => 'QuestionEditTable' );
+
+        my $Type = $Question{Type};
+        my @List = $Self->{SurveyObject}->AnswerList( QuestionID => $Param{QuestionID} );
+        if ( scalar @List ) {
+
+            if ( $Survey{Status} eq 'New' ) {
+
+                $Self->{LayoutObject}->Block( Name => 'QuestionEditTableDelete' );
+
+                my $Counter = 0;
+                for my $Answer2 (@List) {
+                    $Answer2->{SurveyID} = $Param{SurveyID};
+
+                    my $ClassUp;
+                    my $ClassDown;
+
+                    # disable up action on first row
+                    if ( !$Counter ) {
+                        $ClassUp = 'Disabled';
+                    }
+
+                    # disable down action on last row
+                    if ( $Counter == $#List ) {
+                        $ClassDown = 'Disabled';
+                    }
+
+                    $Self->{LayoutObject}->Block(
+                        Name => "QuestionEdit" . $Type,
+                        Data => {
+                            %{$Answer2},
+                            ClassUp   => $ClassUp,
+                            ClassDown => $ClassDown,
+                            }
+                    );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'QuestionEdit' . $Type . 'Delete',
+                        Data => $Answer2,
+                    );
+                    $Counter++;
+                }
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'QuestionEditAddAnswer',
+                    Data => {
+                        %Question,
+                        %ServerError,
+                    },
+                );
+            }
+            else {
+                for my $Answer2 (@List) {
+                    $Answer2->{SurveyID} = $Param{SurveyID};
+                    $Self->{LayoutObject}->Block(
+                        Name => "QuestionEdit" . $Type,
+                        Data => $Answer2,
+                    );
+                }
+            }
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'NoAnswersSaved',
+                Data => {
+                    Columns => 3,
+                },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'QuestionEditAddAnswer',
+                Data => {%Question},
+            );
+        }
+    }
+    elsif ( $Question{Type} eq 'Textarea' ) {
+        $Self->{LayoutObject}->Block( Name => 'QuestionEditTextArea' );
+    }
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentSurveyEditQuestions',
+        Data         => {%Param},
+    );
+    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    return $Output;
+}
+
+sub _MaskAnswerEdit {
+    my ( $Self, %Param ) = @_;
+
+    my %ServerError;
+    if ( $Param{ServerError} ) {
+        %ServerError = %{ $Param{ServerError} };
+    }
+
+    my $Output;
+    $Output = $Self->{LayoutObject}->Header(
+        Title => 'Answer Edit',
+        Type  => 'Small',
+    );
+    my %Answer = $Self->{SurveyObject}->AnswerGet( AnswerID => $Param{AnswerID} );
+    $Answer{SurveyID} = $Param{SurveyID};
+
+    # print the main table.
+    $Self->{LayoutObject}->Block(
+        Name => 'AnswerEdit',
+        Data => {
+            %Answer,
+            %Param,
+            %ServerError,
+        },
+    );
+
+    $Output .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentSurveyEditQuestions',
+        Data         => {%Param},
     );
 
     $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
