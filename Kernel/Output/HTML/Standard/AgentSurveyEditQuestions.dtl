@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.4 2011-01-13 21:37:22 dz Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.5 2011-01-13 21:44:54 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -347,17 +347,13 @@
         </div>
     </div>
     <div class="Footer">
-        <button class="Primary HistoryBack" value="$Text{"Go Back"}">$Text{"Go Back"}</button>
+        <form action="$Env{"CGIHandle"}" method="post">
+            <input type="hidden" name="Action" value="$Env{"Action"}" />
+            <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+            <button class="Primary" value="$Text{"Go Back"}">$Text{"Go Back"}</button>
+        </form>
     </div>
 </div>
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    $('button.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    });
-//]]></script>
-<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:QuestionEdit -->
 
 <!-- dtl:block:AnswerEdit -->
