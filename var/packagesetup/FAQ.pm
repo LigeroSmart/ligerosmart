@@ -1,8 +1,8 @@
 # --
 # FAQ.pm - code to excecute during package installation
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.13 2010-12-02 22:11:32 ub Exp $
+# $Id: FAQ.pm,v 1.14 2011-01-14 10:43:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -431,11 +431,14 @@ sub _GroupAdd {
     );
     my %ValidListReverse = reverse %ValidList;
 
+    # get list of all groups
+    my %GroupList = $Self->{GroupObject}->GroupList();
+
+    # reverse the group list for easier lookup
+    my %GroupListReverse = reverse %GroupList;
+
     # check if group already exists
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
-        Group  => $Param{Name},
-        UserID => 1,
-    );
+    my $GroupID = $GroupListReverse{ $Param{Name} };
 
     # reactivate the group
     if ($GroupID) {
@@ -590,6 +593,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2010-12-02 22:11:32 $
+$Revision: 1.14 $ $Date: 2011-01-14 10:43:25 $
 
 =cut
