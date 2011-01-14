@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.69 2011-01-14 05:32:26 ep Exp $
+# $Id: ITSMChangeManagement.pm,v 1.70 2011-01-14 10:31:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.69 $) [1];
+$VERSION = qw($Revision: 1.70 $) [1];
 
 =head1 NAME
 
@@ -225,7 +225,7 @@ sub CodeInstall {
     # add system notifications
     $Self->_AddSystemNotifications();
 
-    # delete the group cache to avoid problems with CI permissions
+    # delete the group cache to avoid permission problems
     $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
 
     return 1;
@@ -438,9 +438,7 @@ sub _GroupAdd {
     my %ValidListReverse = reverse %ValidList;
 
     # get list of all groups
-    my %GroupList = $Self->{GroupObject}->GroupList(
-        Valid => $ValidListReverse{valid},
-    );
+    my %GroupList = $Self->{GroupObject}->GroupList();
 
     # reverse the group list for easier lookup
     my %GroupListReverse = reverse %GroupList;
@@ -2792,6 +2790,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.69 $ $Date: 2011-01-14 05:32:26 $
+$Revision: 1.70 $ $Date: 2011-01-14 10:31:12 $
 
 =cut
