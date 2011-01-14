@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.32 2011-01-14 17:11:33 ub Exp $
+# $Id: de_FAQ.pm,v 1.33 2011-01-14 17:16:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Approval'} = 'Freigabe';
 
     # Template: AgentFAQCategory
-    $Self->{Translation}->{'FAQ Category Management'} = 'FAQ-Kategorie-Verwaltung';
+    $Self->{Translation}->{'FAQ Category Management'} = 'FAQ Kategorien Verwaltung';
     $Self->{Translation}->{'Add category'} = 'Kategorie hinzufügen';
     $Self->{Translation}->{'Delete Category'} = 'Kategorie löschen';
     $Self->{Translation}->{'Ok'} = 'Ok';
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'Edit Category'} = 'Kategorie bearbeiten';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wird im Explorer als Kommentar angezeigt.';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Wählen Sie mindestens eine Berechtigungsgruppe.';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Agenten-Gruppen die berechtigt sein auf FAQ-Artikel in dieser Kategorie zuzugreifen.';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Agenten-Gruppen die berechtigt sind auf FAQ-Artikel in dieser Kategorie zuzugreifen.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Wollen Sie diese Kategorie wirklich löschen?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = 'Sie können diese Kategorie nicht löschen. Sie wird in mindestens einem FAQ-Artikel verwendet!';
     $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Diese kategorie wird in den folgenden FAQ-Artikeln verwendet';
@@ -163,7 +163,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} = 'Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Graphikverzeichnis des OTRS zugegriffen. Als zweite Möglichkeit kann man aber auch den direkten Link zur Grafik angeben (z. B. http://otrs.org/faq.png).';
     $Self->{Translation}->{'CSS color for the voting result.'} = '';
-    $Self->{Translation}->{'Category Management'} = 'Kategorie-Verwaltung';
+    $Self->{Translation}->{'Category Management'} = 'Kategorien Verwaltung';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Dezimalstellen des Ergebnisses bei der Artikelbewertung.';
     $Self->{Translation}->{'Default category name.'} = 'Root Kategorie Name.';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';
@@ -206,7 +206,7 @@ sub Data {
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Interfaces in denen das QuickSearch Feature angezeigt wird.';
     $Self->{Translation}->{'Journal'} = 'Journal';
-    $Self->{Translation}->{'Language Management'} = 'Sprachen-Verwaltung';
+    $Self->{Translation}->{'Language Management'} = 'Sprachen Verwaltung';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
