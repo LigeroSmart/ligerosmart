@@ -1,8 +1,8 @@
 # --
 # Survey.t - Survey tests
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.16 2010-12-13 16:59:25 mh Exp $
+# $Id: Survey.t,v 1.17 2011-01-14 15:56:29 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,11 +21,19 @@ use Kernel::System::Survey;
 use Kernel::System::Ticket;
 use Kernel::System::User;
 
-$Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
-$Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
-$Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
-$Self->{TicketObject}       = Kernel::System::Ticket->new( %{$Self} );
-$Self->{SurveyObject}       = Kernel::System::Survey->new( %{$Self} );
+# create local objects
+my $UserObject   = Kernel::System::User->new( %{$Self} );
+my $TicketObject = Kernel::System::Ticket->new( %{$Self} );
+
+my $SurveyObject = Kernel::System::Survey->new(
+    ConfigObject => $Self->{ConfigObject},
+    LogObject    => $Self->{LogObject},
+    TimeObject   => $Self->{TimeObject},
+    DBObject     => $Self->{DBObject},
+    MainObject   => $Self->{MainObject},
+    EncodeObject => $Self->{EncodeObject},
+    UserObject   => $UserObject,
+);
 
 # save original sendmail config
 my $SendmailModule = $Self->{ConfigObject}->Get('SendmailModule');
@@ -50,7 +58,7 @@ my %SurveyData = (
     NotificationSubject => 'Help us with your feedback! ÄÖÜ',
     NotificationBody    => 'Dear customer... äöü',
 );
-my $SurveyID = $Self->{SurveyObject}->SurveyNew(
+my $SurveyID = $SurveyObject->SurveyNew(
     UserID => 1,
     %SurveyData,
 );
@@ -60,19 +68,19 @@ $Self->True(
 );
 
 for ( 1 .. 3 ) {
-    my $QuestionAdd = $Self->{SurveyObject}->QuestionAdd(
+    my $QuestionAdd = $SurveyObject->QuestionAdd(
         UserID   => 1,
         SurveyID => $SurveyID,
         Question => 'The Question',
         Type     => 'Radio',
     );
 }
-my @List = $Self->{SurveyObject}->QuestionList(
+my @List = $SurveyObject->QuestionList(
     SurveyID => $SurveyID,
 );
 for my $Question (@List) {
     for ( 1 .. 3 ) {
-        $Self->{SurveyObject}->AnswerAdd(
+        $SurveyObject->AnswerAdd(
             UserID     => 1,
             QuestionID => $Question->{QuestionID},
             Answer     => 'The Answer',
@@ -80,7 +88,7 @@ for my $Question (@List) {
     }
 }
 
-my $StatusSet = $Self->{SurveyObject}->SurveyStatusSet(
+my $StatusSet = $SurveyObject->SurveyStatusSet(
     SurveyID  => $SurveyID,
     NewStatus => 'Master'
 );
@@ -90,7 +98,7 @@ $Self->Is(
     "SurveyStatusSet()",
 );
 
-my %SurveyGet = $Self->{SurveyObject}->SurveyGet(
+my %SurveyGet = $SurveyObject->SurveyGet(
     SurveyID => $SurveyID,
 );
 
@@ -315,16 +323,16 @@ for my $Test (@Tests) {
     if ( $Test->{Sleep} ) {
         sleep $Test->{Sleep};
     }
-    my $TicketID = $Self->{TicketObject}->TicketCreate(
+    my $TicketID = $TicketObject->TicketCreate(
         %{ $Test->{Ticket} },
     );
-    my $ArticleID = $Self->{TicketObject}->ArticleCreate(
+    my $ArticleID = $TicketObject->ArticleCreate(
         TicketID => $TicketID,
         %{ $Test->{Article} },
     );
 
     # send survey first time
-    my ( $HeaderRef, $BodyRef ) = $Self->{SurveyObject}->RequestSend(
+    my ( $HeaderRef, $BodyRef ) = $SurveyObject->RequestSend(
         TicketID => $TicketID,
     );
 
@@ -384,7 +392,7 @@ rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
     }
 
     # send survey second time
-    ( $HeaderRef, $BodyRef ) = $Self->{SurveyObject}->RequestSend(
+    ( $HeaderRef, $BodyRef ) = $SurveyObject->RequestSend(
         TicketID => $TicketID,
     );
 
@@ -402,7 +410,7 @@ rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
         );
     }
 
-    my $Delete = $Self->{TicketObject}->TicketDelete(
+    my $Delete = $TicketObject->TicketDelete(
         TicketID => $TicketID,
         UserID   => 1,
     );
