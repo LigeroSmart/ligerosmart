@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.18 2011-01-14 05:33:50 ep Exp $
+# $Id: ITSMCore.pm,v 1.19 2011-01-14 10:38:28 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -396,9 +396,7 @@ sub _GroupAdd {
     my %ValidListReverse = reverse %ValidList;
 
     # get list of all groups
-    my %GroupList = $Self->{GroupObject}->GroupList(
-        Valid => $ValidListReverse{valid},
-    );
+    my %GroupList = $Self->{GroupObject}->GroupList();
 
     # reverse the group list for easier lookup
     my %GroupListReverse = reverse %GroupList;
@@ -634,6 +632,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2011-01-14 05:33:50 $
+$Revision: 1.19 $ $Date: 2011-01-14 10:38:28 $
 
 =cut
