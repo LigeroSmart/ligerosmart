@@ -1,8 +1,8 @@
 # --
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.10 2010-08-09 06:53:05 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.11 2011-01-15 03:42:52 ep Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -373,10 +373,14 @@ sub _SetTypeValid {
     TYPENAME:
     for my $TypeName ( @{ $Param{TypeNames} } ) {
 
+        # get list of all types
+        my %TypeList = $Self->{TypeObject}->TypeList();
+
+        # reverse the type list for easier lookup
+        my %TypeListReverse = reverse %TypeList;
+
         # lookup type id
-        my $TypeID = $Self->{TypeObject}->TypeLookup(
-            Type => $TypeName,
-        );
+        my $TypeID = $TypeListReverse{$TypeName};
 
         next TYPENAME if !$TypeID;
 
@@ -412,6 +416,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-08-09 06:53:05 $
+$Revision: 1.11 $ $Date: 2011-01-15 03:42:52 $
 
 =cut
