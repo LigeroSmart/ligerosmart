@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.59 2011-01-04 09:45:00 mn Exp $
+# $Id: LayoutITSMChange.pm,v 1.60 2011-01-15 20:04:55 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 =over 4
 
@@ -362,7 +362,7 @@ in F<Kernel/Output/HTML/LayoutTicket.pm>.
         Filter     => 'All',
         Filters    => \%NavBarFilter,
         FilterLink => $LinkFilter,
-        TitleName  => 'Overview: Change',
+        TitleName  => 'Overview: Changes',
         TitleValue => $Self->{Filter},
         Env        => $Self,
         LinkPage   => $LinkPage,
