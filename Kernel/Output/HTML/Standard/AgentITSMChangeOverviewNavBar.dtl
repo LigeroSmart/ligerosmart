@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeOverviewNavBar.dtl - html for change overview table
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewNavBar.dtl,v 1.12 2010-12-15 04:15:42 cr Exp $
+# $Id: AgentITSMChangeOverviewNavBar.dtl,v 1.13 2011-01-15 20:05:53 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -66,7 +66,7 @@
                         <input type="hidden" name="Group" value="$QData{"Group"}"/>
                         <input type="hidden" name="RedirectURL" value="$QData{"RequestedURL"}"/>
                         <fieldset class="TableLike">
-                            <label for="$QData{"PreferencesKey"}">$Text{"Max. shown Changes a page"}:</label>
+                            <label for="$QData{"PreferencesKey"}">$Text{"Changes per page"}:</label>
                             <div class="Field">
                                 $Data{"PageShownString"}
                             </div>
