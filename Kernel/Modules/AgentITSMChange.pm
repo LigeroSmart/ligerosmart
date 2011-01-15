@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChange.pm - the OTRS::ITSM::ChangeManagement change overview module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChange.pm,v 1.31 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChange.pm,v 1.32 2011-01-15 20:04:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -227,7 +227,7 @@ sub Run {
         FilterLink => $LinkFilter,
 
         TitleName => $Self->{LayoutObject}->{LanguageObject}->Get('Overview')
-            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('ITSM Change'),
+            . ': ' . $Self->{LayoutObject}->{LanguageObject}->Get('ITSM Changes'),
 
         TitleValue => $Filters{ $Self->{Filter} }->{Name},
 
