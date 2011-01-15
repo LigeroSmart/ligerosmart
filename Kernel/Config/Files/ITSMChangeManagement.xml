@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.254 2011-01-07 14:27:31 mn Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.255 2011-01-15 20:03:42 mb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -82,10 +82,10 @@
                 <GroupRo>itsm-change</GroupRo>
                 <Description>Overview over all Changes</Description>
                 <NavBarName>ITSM Change</NavBarName>
-                <Title>ITSM Change</Title>
+                <Title>ITSM Changes</Title>
                 <NavBar>
                     <Description>Change-Area</Description>
-                    <Name>ITSM Change</Name>
+                    <Name>ITSM Changes</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
                     <Link>Action=AgentITSMChange</Link>
@@ -338,12 +338,12 @@
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change</GroupRo>
-                <Description>PSA (Projected Service Availability) of changes. Overview over approved changes and their services.</Description>
+                <Description>Projected Service Availability (PSA) of changes. Overview of approved changes and their services.</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>PSA</Title>
                 <NavBar>
-                    <Description>PSA (Projected Service Availability)</Description>
-                    <Name>PSA</Name>
+                    <Description>Projected Service Availability (PSA)</Description>
+                    <Name>Projected Service Availability (PSA)</Name>
                     <Link>Action=AgentITSMChangePSA</Link>
                     <Type></Type>
                     <Block></Block>
@@ -486,7 +486,7 @@
                 <Title>ITSM Change</Title>
                 <NavBar>
                     <Description>Template Overview</Description>
-                    <Name>Template</Name>
+                    <Name>Templates</Name>
                     <Link>Action=AgentITSMTemplateOverview</Link>
                     <Type></Type>
                     <Block></Block>
