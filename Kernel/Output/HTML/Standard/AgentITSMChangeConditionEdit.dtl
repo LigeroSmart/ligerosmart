@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.33 2010-12-17 12:50:31 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.34 2011-01-15 20:05:15 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -76,11 +76,11 @@
                     <table class="DataTable DataTableNoHighlight">
                         <thead>
                             <tr>
-                                <th class="W15pc">Object</th>
-                                <th class="W20pc">Selector</th>
-                                <th class="W20pc">Attribute</th>
-                                <th class="W20pc">Operator</th>
-                                <th class="W20pc">Value</th>
+                                <th class="W15pc">$Text{"Object"}</th>
+                                <th class="W20pc">$Text{"Selector"}</th>
+                                <th class="W20pc">$Text{"Attribute"}</th>
+                                <th class="W20pc">$Text{"Operator"}</th>
+                                <th class="W20pc">$Text{"Value"}</th>
                                 <th class="W5pc">$Text{"Delete"}</th>
                             </tr>
                         </thead>
@@ -173,11 +173,11 @@
                     <table class="DataTable DataTableNoHighlight">
                         <thead>
                             <tr>
-                                <th class="W15pc">Object</th>
-                                <th class="W20pc">Selector</th>
-                                <th class="W20pc">Attribute</th>
-                                <th class="W20pc">Operator</th>
-                                <th class="W20pc">Value</th>
+                                <th class="W15pc">$Text{"Object"}</th>
+                                <th class="W20pc">$Text{"Selector"}</th>
+                                <th class="W20pc">$Text{"Attribute"}</th>
+                                <th class="W20pc">$Text{"Operator"}</th>
+                                <th class="W20pc">$Text{"Value"}</th>
                                 <th class="W5pc">$Text{"Delete"}</th>
                             </tr>
                         </thead>
