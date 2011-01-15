@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/nl_ITSMChangeManagement.pm - the Dutch translation of ITSMChangeManagement
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.1 2010-12-09 15:55:12 mb Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.2 2011-01-15 20:06:36 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -26,16 +26,17 @@ sub Data {
 
     # misc
     $Lang->{'A change must have a title!'}          = 'Vul een titel in voor de change.';
-    $Lang->{'Template Name'}                        = 'template-naam';
-    $Lang->{'Templates'}                            = 'templates';
+    $Lang->{'Template Name'}                        = 'Template-naam';
+    $Lang->{'Templates'}                            = 'Templates';
     $Lang->{'A workorder must have a title!'}       = 'Vul een titel in voor de workorder';
     $Lang->{'Clear'}                                = 'Leegmaken';
     $Lang->{'Create a change from this ticket!'}    = 'Maak een change van dit ticket';
     $Lang->{'Create Change'}                        = 'Change aanmaken';
     $Lang->{'e.g.'}                                 = 'bijvoorbeeld';
-    $Lang->{'Save Change as template'}              = 'Bewaar Change als template';
+    $Lang->{'Save Change as Template'}              = 'Bewaar Change als template';
+    $Lang->{'Reset States'}                         = 'Statussen resetten';
     $Lang->{'Save Workorder as template'}           = 'Bewaar Work Order als template';
-    $Lang->{'Save Change CAB as template'}          = 'Bewaar Change CAB als template';
+    $Lang->{'Save this CAB as template'}            = 'Bewaar dit CAB als template';
     $Lang->{'New time'}                             = 'Nieuw tijdstip';
     $Lang->{'Requested (by customer) Date'}         = 'Aangevraagd door klant voor datum';
     $Lang->{'The planned end time is invalid!'}     = 'De geplande eindtijd is ongeldig';
@@ -47,6 +48,7 @@ sub Data {
     $Lang->{'Do you really want to delete this template?'} = 'Wilt u deze template echt verwijderen?';
     $Lang->{'Change Advisory Board'}                = 'Change Advisory Board';
     $Lang->{'CAB'}                                  = 'CAB';
+    $Lang->{'Apply Template'}                       = 'Kies template';
 
     # ITSM ChangeManagement icons
     $Lang->{'My Changes'}                           = 'Mijn changes';
@@ -59,7 +61,8 @@ sub Data {
     $Lang->{'Search Changes'}                       = 'Zoek Changes';
 
     # Change menu
-    $Lang->{'ITSM Change'}                           = 'Change';
+    $Lang->{'ITSM Change'}                          = 'Change';
+    $Lang->{'ITSM Changes'}                          = 'Changes';
     $Lang->{'ITSM Workorder'}                        = 'Workorder';
     $Lang->{'Schedule'}                              = 'Schedule';
     $Lang->{'Involved Persons'}                      = 'Betrokken personen';
@@ -120,6 +123,7 @@ sub Data {
     $Lang->{'PlannedStartTime'} = 'Geplande starttijd';
     $Lang->{'Priority'}         = 'Prioriteit';
     $Lang->{'RequestedTime'}    = 'Gevraagde implementatietijd';
+    $Lang->{'Requested Date'}    = 'Gevraagde implementatietijd';
 
     # Workorder attributes as returned from WorkOrderGet(), or taken by WorkOrderUpdate()
     $Lang->{'Instruction'}      = 'Instructie';
@@ -272,8 +276,10 @@ sub Data {
     $Lang->{'Condition Edit'}                           = 'Contities bewerken';
     $Lang->{'Add new expression'}                       = 'Nieuwe voorwaarde toevoegen';
     $Lang->{'Add new action'}                           = 'Nieuwe actie toevoegen';
-    $Lang->{'Any expression'}                           = 'Enkele voorwaarden';
-    $Lang->{'All expressions'}                          = 'Alle voorwaarden';
+    $Lang->{'Any expression (OR)'}                      = 'Een voorwaarde (OR)';
+    $Lang->{'All expressions (AND)'}                    = 'Alle voorwaarden (AND)';
+    $Lang->{'Attribute'}                                = 'Attribuut';
+    $Lang->{'Value'}                                    = 'Waarde';
     $Lang->{'any'}                                      = 'enkele';
     $Lang->{'all'}                                      = 'alle';
     $Lang->{'is'}                                       = 'is';
