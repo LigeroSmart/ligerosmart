@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.8 2011-01-17 03:54:37 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.9 2011-01-17 17:22:58 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -112,7 +112,7 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Introduction"}:</label>
-                        <div class="Field" title="$Data{"Introduction"}">$QData{"Introduction","80"}</div>
+                        <div class="Field" title="$Data{"IntroductionASCII"}">$QData{"Introduction","80"}</div>
                         <div class="Clear"></div>
 
                         <label>$Text{"Queues"}:</label>

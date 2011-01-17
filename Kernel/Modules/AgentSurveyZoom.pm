@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.pm,v 1.3 2011-01-13 17:57:04 dz Exp $
+# $Id: AgentSurveyZoom.pm,v 1.4 2011-01-17 17:22:58 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::Survey;
+use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,7 +36,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{SurveyObject} = Kernel::System::Survey->new(%Param);
+    $Self->{SurveyObject}    = Kernel::System::Survey->new(%Param);
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
 
     return $Self;
 }
@@ -123,6 +125,10 @@ sub Run {
     if ( !$QueueListString ) {
         $QueueListString = '- No queue selected -';
     }
+
+    # convert introduction field to ascii
+    $Survey{IntroductionASCII}
+        = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
 
     # print the main table.
     $Self->{LayoutObject}->Block(
