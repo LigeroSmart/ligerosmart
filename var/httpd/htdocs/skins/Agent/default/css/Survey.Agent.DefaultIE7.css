@@ -1,0 +1,40 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ * @css-for     IE7
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Agent
+ */
+
+@media screen,projection,tv,handheld {
+
+form.ActionForm {
+    margin-top: 4px;
+}
+
+div.Field {
+    margin-top: 4px;
+}    background-position: 0 -36px;
+
+/*    background-image: url(../img/zoom_sprite.png) no-repeat 0 0;
+
+*/
+a span.ArrowUp,
+a span.ArrowDown {
+    display:block;
+    padding:4px 0;
+    color:black;
+    font-weight:bold;
+    font-size:12px;
+    text-shadow: 0 1px 0 #000;
+    text-indent:0;
+    text-align:center;
+    cursor:hand;
+}
+
+} /* end @media */

@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.43 2011-01-13 22:50:28 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.44 2011-01-17 03:54:37 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -109,7 +109,7 @@
 
                 <label class="Mandatory" for="Introduction"><span class="Marker">*</span> $Text{"Introduction"}:</label>
                 <div class="Field">
-                    <textarea id="Introduction" name="Introduction" class="Validate_Required W75pc $QData{"IntroductionServerError"}" title="Survey Introduction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$Text{"$Data{"Introduction"}"}</textarea>
+                    <textarea id="Introduction" name="Introduction" class="Validate_Required W75pc $QData{"IntroductionServerError"}" title="Survey Introduction" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$Data{"Introduction"}</textarea>
                 </div>
 
                 <label class="Mandatory" for="NotificationSender"><span class="Marker">*</span> $Text{"Sender"}:</label>
