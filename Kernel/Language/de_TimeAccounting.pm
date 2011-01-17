@@ -2,7 +2,7 @@
 # Kernel/Language/de_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_TimeAccounting.pm,v 1.2 2011-01-17 13:09:22 mn Exp $
+# $Id: de_TimeAccounting.pm,v 1.3 2011-01-17 14:59:42 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -179,6 +179,7 @@ sub Data {
 
     $Self->{Translation}->{'Show all projects'} = 'Alle Projekte anzeigen';
     $Self->{Translation}->{'Show valid projects'} = 'Alle gültigen Projekte anzeigen';
+    $Self->{Translation}->{'TimeAccounting'} = 'Zeiterfassung';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
