@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.56 2011-01-14 15:56:29 dz Exp $
+# $Id: Survey.pm,v 1.57 2011-01-17 16:53:35 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =head1 NAME
 
@@ -1589,7 +1589,6 @@ sub VoteGet {
     $Self->{DBObject}->Prepare(
         SQL => "SELECT id, vote_value FROM survey_vote"
             . " WHERE request_id = $Param{RequestID} AND question_id = $Param{QuestionID}",
-        Limit => 1,
     );
 
     # fetch the result
@@ -2642,6 +2641,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2011-01-14 15:56:29 $
+$Revision: 1.57 $ $Date: 2011-01-17 16:53:35 $
 
 =cut
