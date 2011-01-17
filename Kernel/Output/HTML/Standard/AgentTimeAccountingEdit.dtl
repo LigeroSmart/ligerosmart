@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.37 2011-01-12 11:05:10 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.38 2011-01-17 13:09:22 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -70,7 +70,7 @@
             <div class="Content">
                 <ul>
                     <li>$Text{"Required fields are marked with a "*"."}</li>
-                    <li>$Text{"You have to insert a start and an end times or a period."}</li>
+                    <li>$Text{"You have to fill in start and end time or a time period."}</li>
                 </ul>
             </div>
         </div>
@@ -142,7 +142,7 @@
 <!-- dtl:block:StartTimeNegativeServerError -->
 <!-- dtl:block:StartTimeRepeatedHourServerError -->
                                     <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
-                                        <p>$Text{"Repetead hours are not allowed. Start time matches another interval."}</p>
+                                        <p>$Text{"Repeated hours are not allowed. Start time matches another interval."}</p>
                                     </div>
 <!-- dtl:block:StartTimeRepeatedHourServerError -->
                                 </td>
@@ -168,7 +168,7 @@
 <!-- dtl:block:EndTimeNegativeServerError -->
 <!-- dtl:block:EndTimeRepeatedHourServerError -->
                                     <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
-                                        <p>$Text{"Repetead hours are not allowed. End time matches another interval."}</p>
+                                        <p>$Text{"Repeated hours are not allowed. End time matches another interval."}</p>
                                     </div>
 <!-- dtl:block:EndTimeRepeatedHourServerError -->
                                 </td>
