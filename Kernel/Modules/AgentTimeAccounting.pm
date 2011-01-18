@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.66 2011-01-13 21:36:22 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.67 2011-01-18 00:02:40 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.66 $) [1];
+$VERSION = qw($Revision: 1.67 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -736,7 +736,7 @@ sub Run {
         # validity checks start
         my $ErrorNote;
         if ( $Param{Total} && $Param{Total} > 24 ) {
-            $ErrorNote = 'Can\'t save settings, because you entered more than 24 working hours!';
+            $ErrorNote = 'Can\'t save settings, because a day has only 24 hours!';
         }
         elsif ( $Param{InsertWorkingUnits} && $Param{Total} && $Param{Total} > 16 ) {
             $Param{BlockName} = 'More16HoursMessage';
@@ -896,8 +896,7 @@ sub Run {
                 Priority => 'Error'
             );
         }
-
-        if (
+        elsif (
             $Param{SuccessfulInsert}
             && !%Errors
             )
@@ -1672,7 +1671,7 @@ sub Run {
             SelectedID  => $Param{Month} || '',
             Name        => 'Month',
             Sort        => 'NumericKey',
-            Translation => 0,
+            Translation => 1,
         );
 
         my @Year = ( $Year - 4 .. $Year + 1 );
