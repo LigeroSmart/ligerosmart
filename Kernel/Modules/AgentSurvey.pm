@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.44 2011-01-11 04:07:19 dz Exp $
+# $Id: AgentSurvey.pm,v 1.45 2011-01-18 17:43:50 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -113,7 +113,7 @@ sub Run {
             );
 
             return $Self->{LayoutObject}->PopupClose(
-                URL => "Action=AgentSurveyZoom;Subaction=Survey;SurveyID=$SurveyID;",
+                URL => "Action=AgentSurveyZoom;SurveyID=$SurveyID;",
             );
 
         }
@@ -166,7 +166,7 @@ sub Run {
             );
 
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=AgentSurveyZoom;Subaction=Survey;SurveyID=$SurveyID",
+                OP => "Action=AgentSurveyZoom;SurveyID=$SurveyID",
             );
         }
 
@@ -210,7 +210,7 @@ sub Run {
             $Message = ';Message=StatusSet';
         }
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=AgentSurveyZoom;Subaction=Survey;SurveyID=$SurveyID$Message",
+            OP => "Action=AgentSurveyZoom;SurveyID=$SurveyID$Message",
         );
     }
 
