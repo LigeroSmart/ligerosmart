@@ -1,0 +1,19 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Customer Frontend
+ * @version     $Revision: 1.1 $
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Survey - Skin "Default"
+ * @section     Customer
+ */
+
+label.Answer {
+    padding-top: 5px;
+}
+
+div.QuestionContainer {
+    margin-left: 40px;
+}

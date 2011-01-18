@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.20 2011-01-17 03:54:38 dz Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.21 2011-01-18 17:50:33 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Lang="en">All parameters for the Survey object in the agent interface.</Description>
         <Description Lang="de">Alle Parameter des Befragungs-Objekts im Agent-Interface.</Description>
@@ -43,7 +43,7 @@
                 </NavBar>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
-                    <CSS_IE7>Survey.Agent.DefaultIE7.css</CSS_IE7>
+                    <CSS_IE7>Survey.Agent.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -58,7 +58,7 @@
                 <NavBarName>Survey</NavBarName>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
-                    <CSS_IE7>Survey.Agent.DefaultIE7.css</CSS_IE7>
+                    <CSS_IE7>Survey.Agent.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -72,7 +72,7 @@
                 <Description Translatable="1">A module to edit survey questions.</Description>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
-                    <CSS_IE7>Survey.Agent.DefaultIE7.css</CSS_IE7>
+                    <CSS_IE7>Survey.Agent.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -88,6 +88,7 @@
                 <Title>Survey</Title>
                 <Loader>
                     <CSS>Survey.Customer.Default.css</CSS>
+                    <CSS_IE7>Survey.Customer.Default.IE7.css</CSS_IE7>
                 </Loader>
             </FrontendModuleReg>
         </Setting>

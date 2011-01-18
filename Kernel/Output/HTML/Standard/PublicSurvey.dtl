@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.18 2011-01-13 22:23:12 dz Exp $
+# $Id: PublicSurvey.dtl,v 1.19 2011-01-18 17:50:33 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,77 +10,74 @@
 # --
 
 <!-- dtl:block:PublicSurvey -->
-<div class="TicketCompose ARIARoleMain" id="MainBox">
-    <div class="Content">
-
-        <div class="Header">
-            <h2>$Text{"Survey"}: $Data{"Title"}</h2>
-        </div>
-
-        <div class="Intro">
-            <div class="SubHeader">
-                $Text{"Introduction"}
-            </div>
-            <div class="Content">
-                $Data{"Introduction"}
-            </div>
-        </div>
-
-        <div class="Clear"></div>
-
-        <form action="$Env{"CGIHandle"}" method="post" name="compose">
-            <input type="hidden" name="Action" value="$Env{"Action"}" />
-            <input type="hidden" name="Subaction" value="PublicSurveyVote" />
-            <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
-            <fieldset class="Survey">
-                <div class="SubHeader">
-                    $Text{"Please answer the next questions"}
-                </div>
-
-<!-- dtl:block:PublicQuestions -->
-                <div>
-<!-- dtl:block:PublicAnswerYesNo -->
-
-                    <span class="Question"> $Data{"Question"} </span>
-                    <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" />
-                    $Text{"Yes"}
-                    <div class="Clear"></div>
-                    <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No" />
-                    $Text{"No"}
-
-<!-- dtl:block:PublicAnswerYesNo -->
-
-<!-- dtl:block:PublicAnswerRadio -->
-                    <span class="Question"> $Data{"Question"} </span>
-<!-- dtl:block:PublicAnswerRadiob -->
-                    <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" />
-                    $QData{"Answer"}
-                    <div class="Clear"></div>
-<!-- dtl:block:PublicAnswerRadiob -->
-<!-- dtl:block:PublicAnswerRadio -->
-
-<!-- dtl:block:PublicAnswerCheckbox -->
-                    <span class="Question"> $Data{"Question"} </span>
-<!-- dtl:block:PublicAnswerCheckboxb -->
-                    <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes" />
-                    $QData{"Answer"}
-                    <div class="Clear"></div>
-<!-- dtl:block:PublicAnswerCheckboxb -->
-<!-- dtl:block:PublicAnswerCheckbox -->
-
-<!-- dtl:block:PublicAnswerTextarea -->
-                    <span class="Question"> $Data{"Question"} </span>
-                    <textarea rows="4" cols="62" name="PublicSurveyVote4[$QData{"QuestionID"}]"></textarea>
-<!-- dtl:block:PublicAnswerTextarea -->
-                </div>
-<!-- dtl:block:PublicQuestions -->
-            </fieldset>
-            <div class="ActionRow" id="BottomActionRow">
-                <button type="reset" value="$Text{"Reset"}"> $Text{"Reset"} </button>
-                <button type="submit" value="$Text{"Finish"}"> $Text{"Finish"} </button>
-            </div>
-        </form>
+<div class="Content ARIARoleMain" id="MainBox">
+    <div class="Header">
+        <h2>$Text{"Survey"}: $Data{"Title"}</h2>
     </div>
+
+    <div class="Intro">
+        <div class="SubHeader">
+            $Text{"Introduction"}
+        </div>
+        <div class="Content">
+            $Data{"Introduction"}
+        </div>
+    </div>
+
+    <div class="Clear"></div>
+
+    <form action="$Env{"CGIHandle"}" method="post">
+        <input type="hidden" name="Action" value="$Env{"Action"}" />
+        <input type="hidden" name="Subaction" value="PublicSurveyVote" />
+        <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
+        <fieldset class="Survey">
+            <div class="SubHeader">
+                $Text{"Please answer the next questions"}
+            </div>
+
+<!-- dtl:block:PublicQuestions -->
+            <div class="QuestionContainer">
+<!-- dtl:block:PublicAnswerYesNo -->
+
+                <div class="Question"> $Data{"Question"} </div>
+                <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" />
+                <label class="Answer">$Text{"Yes"}</label>
+                <div class="Clear"></div>
+
+                <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No" />
+                <label class="Answer">$Text{"No"}</label>
+                <div class="Clear"></div>
+<!-- dtl:block:PublicAnswerYesNo -->
+
+<!-- dtl:block:PublicAnswerRadio -->
+                <div class="Question"> $Data{"Question"} </div>
+<!-- dtl:block:PublicAnswerRadiob -->
+                <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" />
+                <label class="Answer">$QData{"Answer"}</label>
+                <div class="Clear"></div>
+<!-- dtl:block:PublicAnswerRadiob -->
+<!-- dtl:block:PublicAnswerRadio -->
+
+<!-- dtl:block:PublicAnswerCheckbox -->
+                <div class="Question"> $Data{"Question"} </div>
+<!-- dtl:block:PublicAnswerCheckboxb -->
+                <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes"/>
+                <label class="Answer">$QData{"Answer"}</label>
+                <div class="Clear"></div>
+<!-- dtl:block:PublicAnswerCheckboxb -->
+<!-- dtl:block:PublicAnswerCheckbox -->
+
+<!-- dtl:block:PublicAnswerTextarea -->
+                <div class="Question"> $Data{"Question"} </div>
+                <textarea rows="4" cols="62" name="PublicSurveyVote4[$QData{"QuestionID"}]"></textarea>
+<!-- dtl:block:PublicAnswerTextarea -->
+            </div>
+<!-- dtl:block:PublicQuestions -->
+        </fieldset>
+        <div class="ActionRow" id="BottomActionRow">
+            <button class="Primary" type="submit" value="$Text{"Finish"}"> $Text{"Finish"} </button>
+        </div>
+    </form>
 </div>
 <!-- dtl:block:PublicSurvey -->
 
