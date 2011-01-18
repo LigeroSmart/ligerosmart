@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.6 2011-01-13 22:50:28 dz Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.7 2011-01-18 17:48:18 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -103,10 +103,14 @@
                                 $Text{"$Data{"Type"}"}
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp$Data{"ClassUp"}">$Text{"Up"}</a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp$Data{"ClassUp"}">
+                                    <span>$Text{"Up"}</span>
+                                </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown$Data{"ClassDown"}">$Text{"Down"}</a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown$Data{"ClassDown"}">
+                                    <span>$Text{"Down"}</span>
+                                </a>
                             </td>
                         </tr>
 <!-- dtl:block:SurveyQuestionsSaved -->
@@ -121,12 +125,12 @@
                             </td>
                             <td>
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp$Data{"ClassUp"}">
-                                    $Text{"Up"}
+                                    <span>$Text{"Up"}</span>
                                 </a>
                             </td>
                             <td>
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowDown$Data{"ClassDown"}">
-                                    $Text{"Down"}
+                                    <span>$Text{"Down"}</span>
                                 </a>
                             </td>
 <!-- dtl:block:SurveyQuestionsDeleteButton -->
@@ -149,7 +153,7 @@
 
     </div>
     <div class="Footer">
-        <button class="CancelClosePopup Primary" value="$Text{"Close window"}">$Text{"Close window"}</button>
+        <button type="submit" class="CancelClosePopup Primary" value="$Text{"Close window"}">$Text{"Close window"}</button>
     </div>
 </div>
 <!-- dtl:js_on_document_complete -->
@@ -272,10 +276,14 @@
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}"> $QData{"Answer","90"} </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowUp$Data{"ClassUp"}"> $Text{"Up"} </a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowUp$Data{"ClassUp"}">
+                                    <span>$Text{"Up"}</span>
+                                </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowDown$Data{"ClassDown"}"> $Text{"Down"} </a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowDown$Data{"ClassDown"}">
+                                    <span>$Text{"Down"}</span>
+                                </a>
                             </td>
 <!-- dtl:block:QuestionEditRadioDelete -->
                             <td>
@@ -298,10 +306,14 @@
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerEdit;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}">$QData{"Answer"}</a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowUp$Data{"ClassUp"}">$Text{"Up"}</a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowUp$Data{"ClassUp"}">
+                                    <span>$Text{"Up"}</span>
+                                </a>
                             </td>
                             <td>
-                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowDown$Data{"ClassDown"}">$Text{"Down"}</a>
+                                <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=AnswerDown;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"};AnswerID=$QData{"AnswerID"}" class="ArrowDown$Data{"ClassDown"}">
+                                    <span>$Text{"Down"}</span>
+                                </a>
                             </td>
 <!-- dtl:block:QuestionEditCheckboxDelete -->
                             <td>
@@ -321,13 +333,13 @@
 <!-- dtl:block:QuestionEditYesno -->
                         <tr>
                             <td> $Text{"Yes"} </td>
-                            <td><a href="" class="ArrowUpDisabled">$Text{"Up"}</a></td>
-                            <td><a href="" class="ArrowDownDisabled">$Text{"Down"}</a></td>
+                            <td><a href="" class="ArrowUpDisabled"><span>$Text{"Up"}</span></a></td>
+                            <td><a href="" class="ArrowDownDisabled"><span>$Text{"Down"}</span></a></td>
                         </tr>
                         <tr>
                             <td> $Text{"No"} </td>
-                            <td><a href="" class="ArrowUpDisabled" >$Text{"Up"}</a></td>
-                            <td><a href="" class="ArrowDownDisabled" >$Text{"Down"}</a></td>
+                            <td><a href="" class="ArrowUpDisabled" ><span>$Text{"Up"}</span></a></td>
+                            <td><a href="" class="ArrowDownDisabled" ><span>$Text{"Down"}</span></a></td>
                         </tr>
 <!-- dtl:block:QuestionEditYesno -->
 
@@ -350,7 +362,7 @@
         <form action="$Env{"CGIHandle"}" method="post">
             <input type="hidden" name="Action" value="$Env{"Action"}" />
             <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
-            <button class="Primary" value="$Text{"Go Back"}">$Text{"Go Back"}</button>
+            <button type="submit" class="Primary" value="$Text{"Go Back"}">$Text{"Go Back"}</button>
         </form>
     </div>
 </div>
@@ -402,7 +414,7 @@
             </div>
         </div>
         <div class="Footer">
-            <button class="Primary" value="$Text{"Save"}">$Text{"Save"}</button>
+            <button type="submit" class="Primary" value="$Text{"Save"}">$Text{"Save"}</button>
         </div>
     </div>
 </form>

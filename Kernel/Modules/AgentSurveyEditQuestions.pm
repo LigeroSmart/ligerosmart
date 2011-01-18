@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.6 2011-01-13 21:37:22 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.7 2011-01-18 17:48:18 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -608,11 +608,30 @@ sub _MaskQuestionOverview {
 
     }
     else {
+        my $Counter;
         for my $Question (@List) {
+
+            my $ClassUp;
+            my $ClassDown;
+
+            if ( !$Counter ) {
+                $ClassUp = 'Disabled',
+            }
+
+            if ( $Counter && $Counter == $#List ) {
+                $ClassDown = 'Disabled',
+            }
+
             $Self->{LayoutObject}->Block(
                 Name => 'SurveyQuestionsSaved',
-                Data => $Question,
+                Data => {
+                    %{$Question},
+                    ClassUp   => $ClassUp,
+                    ClassDown => $ClassDown,
+                },
             );
+
+            $Counter++;
         }
     }
 
@@ -691,7 +710,7 @@ sub _MaskQuestionEdit {
                             %{$Answer2},
                             ClassUp   => $ClassUp,
                             ClassDown => $ClassDown,
-                            }
+                        },
                     );
                     $Self->{LayoutObject}->Block(
                         Name => 'QuestionEdit' . $Type . 'Delete',
@@ -709,12 +728,30 @@ sub _MaskQuestionEdit {
                 );
             }
             else {
+                my $Counter;
                 for my $Answer2 (@List) {
                     $Answer2->{SurveyID} = $Param{SurveyID};
+
+                    my $ClassUp;
+                    my $ClassDown;
+
+                    if ( !$Counter ) {
+                        $ClassUp = 'Disabled',
+                    }
+
+                    if ( $Counter && $Counter == $#List ) {
+                        $ClassDown = 'Disabled',
+                    }
+
                     $Self->{LayoutObject}->Block(
                         Name => "QuestionEdit" . $Type,
-                        Data => $Answer2,
+                        Data => {
+                            %{$Answer2},
+                            ClassUp   => $ClassUp,
+                            ClassDown => $ClassDown,
+                        },
                     );
+                    $Counter++;
                 }
             }
         }
