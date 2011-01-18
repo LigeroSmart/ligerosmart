@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.45 2011-01-18 17:48:43 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.46 2011-01-18 19:04:39 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -226,6 +226,7 @@
 
     </div>
     <div class="Footer">
+        <button type="submit" class="CancelClosePopup Primary" value="$Text{"Close window"}">$Text{"Close window"}</button>
     </div>
 </div>
 <!-- dtl:js_on_document_complete -->
@@ -234,6 +235,11 @@
         history.back();
         return false;
     });
+    $('button.HistoryBack').bind('click', function (Event) {
+        history.back();
+        return false;
+    });
+
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 
@@ -263,8 +269,8 @@
 <!-- dtl:block:StatsDetailQuestion -->
                     <label>$QData{"Question"}:</label>
 <!-- dtl:block:StatsDetailAnswer -->
-                    <div class="Field">
-                        $Text{"$Data{"Answer"}"}
+                    <div class="Field" title="$QData{"Answer"}">
+                        $QData{"Answer","80"}
                     </div>
                     <div class="Clear"></div>
 <!-- dtl:block:StatsDetailAnswer -->
@@ -274,7 +280,14 @@
             </div>
         </div>
     </div>
-    <div class="Footer"></div>
+    <div class="Footer">
+        <form action="$Env{"CGIHandle"}" method="post">
+            <input type="hidden" name="Action" value="$Env{"Action"}" />
+            <input type="hidden" name="Subaction" value="Stats" />
+            <input type="hidden" name="SurveyID" value="$QData{"SurveyID"}" />
+            <button type="submit" class="Primary" value="$Text{"Go Back"}">$Text{"Go Back"}</button>
+        </form>
+    </div>
 </div>
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
