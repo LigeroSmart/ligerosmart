@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.39 2011-01-18 15:08:18 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.40 2011-01-18 15:49:57 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@
                     </li>
 <!-- dtl:block:CreateProject -->
                     <li>
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectSetting" class="CallForAction"><span>$Text{"Project settings"}</span></a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Setting" class="CallForAction"><span>$Text{"Project settings"}</span></a>
                     </li>
 <!-- dtl:block:CreateProject -->
                 </ul>
