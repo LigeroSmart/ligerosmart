@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.40 2011-01-18 15:49:57 en Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.41 2011-01-18 22:18:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -130,47 +130,43 @@
                                     <div id="StartTime$QData{"ID"}Error" class="TooltipErrorMessage">
                                         <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
-<!-- dtl:block:StartTimeGenericServerError -->
                                     <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
+<!-- dtl:block:StartTimeGenericServerError -->
                                         <p>$Text{"This field is required."}</p>
-                                    </div>
 <!-- dtl:block:StartTimeGenericServerError -->
 <!-- dtl:block:StartTimeNegativeServerError -->
-                                    <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"Negative times are not allowed."}</p>
-                                    </div>
 <!-- dtl:block:StartTimeNegativeServerError -->
 <!-- dtl:block:StartTimeRepeatedHourServerError -->
-                                    <div id="StartTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"Repeated hours are not allowed. Start time matches another interval."}</p>
-                                    </div>
 <!-- dtl:block:StartTimeRepeatedHourServerError -->
+<!-- dtl:block:StartTimeInvalidFormatServerError -->
+                                        <p>$Text{"Invalid format! Please enter a time with the format HH:MM."}</p>
+<!-- dtl:block:StartTimeInvalidFormatServerError -->
+                                    </div>
                                 </td>
                                 <td>
                                     <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="Validate_DependingRequiredAND Validate_Depending_StartTime$QData{"ID"} $QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
                                     <div id="EndTime$QData{"ID"}Error" class="TooltipErrorMessage">
                                         <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
-<!-- dtl:block:EndTimeGenericServerError -->
                                     <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
+<!-- dtl:block:EndTimeGenericServerError -->
                                         <p>$Text{"This field is required."}</p>
-                                    </div>
 <!-- dtl:block:EndTimeGenericServerError -->
 <!-- dtl:block:EndTimeBeforeStartTimeServerError -->
-                                    <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"End time must be after start time."}</p>
-                                    </div>
 <!-- dtl:block:EndTimeBeforeStartTimeServerError -->
 <!-- dtl:block:EndTimeNegativeServerError -->
-                                    <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"Negative times are not allowed."}</p>
-                                    </div>
 <!-- dtl:block:EndTimeNegativeServerError -->
 <!-- dtl:block:EndTimeRepeatedHourServerError -->
-                                    <div id="EndTime$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"Repeated hours are not allowed. End time matches another interval."}</p>
-                                    </div>
 <!-- dtl:block:EndTimeRepeatedHourServerError -->
+<!-- dtl:block:EndTimeInvalidFormatServerError -->
+                                        <p>$Text{"Invalid format! Please enter a time with the format HH:MM."}</p>
+<!-- dtl:block:EndTimeInvalidFormatServerError -->
+                                    </div>
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
                                 <td>

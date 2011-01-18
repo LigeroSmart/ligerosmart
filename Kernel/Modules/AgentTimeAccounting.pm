@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.67 2011-01-18 00:02:40 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.68 2011-01-18 22:18:39 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -306,6 +306,10 @@ sub Run {
 
             ID:
             for my $ID ( 1 .. $Param{RecordsNumber} ) {
+
+                # arrays to save the server errors block to show the error msgs
+                my ( @StartTimeServerErrorBlock, @EndTimeServerErrorBlock ) = ();
+
                 for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
                     $Param{$Parameter}
                         = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
@@ -345,42 +349,68 @@ sub Run {
                 #overwrite Period when Start and Endtime is given...
                 next ID if !$Param{StartTime} || !$Param{EndTime};
 
-                if ( $Param{StartTime} =~ /^(\d+):(\d+)/ ) {
+                if (
+                    ( $Param{StartTime} =~ /^(\d+):(\d+)$/ )
+                    && ( $Param{EndTime} =~ /^(\d+):(\d+)$/ )
+                    )
+                {
+                    $Param{StartTime} =~ /^(\d+):(\d+)$/;
                     my $StartTime = $1 * 60 + $2;
-                    if ( $Param{EndTime} =~ /^(\d+):(\d+)/ ) {
-                        my $EndTime = $1 * 60 + $2;
-                        if ( $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } ) {
-                            $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60
-                                * $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } / 100;
-                        }
-                        else {
-                            $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60;
-                        }
+                    $Param{EndTime} =~ /^(\d+):(\d+)$/;
+                    my $EndTime = $1 * 60 + $2;
+                    if ( $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } ) {
+                        $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60
+                            * $ReduceTimeRef->{ $ActionList{ $Param{ActionID} } } / 100;
+                    }
+                    else {
+                        $WorkingUnit{Period} = ( $EndTime - $StartTime ) / 60;
+                    }
 
-                        # end time must be after start time
-                        if ( $EndTime <= $StartTime ) {
-                            $Errors{$ID}{EndTimeInvalid} = 'ServerError';
-                            $Errors{$ID}{EndTimeServerErrorBlock}
-                                = 'EndTimeBeforeStartTimeServerError';
-                        }
+                    # end time must be after start time
+                    if ( $EndTime <= $StartTime ) {
+                        $Errors{$ID}{EndTimeInvalid} = 'ServerError';
+                        push @EndTimeServerErrorBlock, 'EndTimeBeforeStartTimeServerError';
+                    }
 
-                        push @StartTimes, $StartTime;
-                        push @EndTimes,   $EndTime;
+                    push @StartTimes, $StartTime;
+                    push @EndTimes,   $EndTime;
+                }
+                else {
+                    if ( $Param{StartTime} !~ /^(\d+):(\d+)$/ ) {
+                        $Errors{$ID}{StartTimeInvalid} = 'ServerError';
+                        push @StartTimeServerErrorBlock, 'StartTimeInvalidFormatServerError';
+                    }
+                    if ( $Param{EndTime} !~ /^(\d+):(\d+)$/ ) {
+                        $Errors{$ID}{EndTimeInvalid} = 'ServerError';
+                        push @EndTimeServerErrorBlock, 'EndTimeInvalidFormatServerError';
                     }
                 }
 
                 # negative times are not allowed
-                for my $CheckValue (qw(StartTime EndTime)) {
-                    if ( $Param{$CheckValue} =~ /^-(\d+):(\d+)/ ) {
-                        $Errors{$ID}{ $CheckValue . 'Invalid' } = 'ServerError';
-                        $Errors{$ID}{ $CheckValue . 'ServerErrorBlock' }
-                            = $CheckValue . 'NegativeServerError';
-                    }
+                if ( $Param{StartTime} =~ /^-(\d+):(\d+)$/ ) {
+                    $Errors{$ID}{StartTimeInvalid} = 'ServerError';
+                    push @StartTimeServerErrorBlock, 'StartTimeNegativeServerError';
+                }
+                if ( $Param{EndTime} =~ /^-(\d+):(\d+)$/ ) {
+                    $Errors{$ID}{EndTimeInvalid} = 'ServerError';
+                    push @EndTimeServerErrorBlock, 'EndTimeNegativeServerError';
+                }
+
+                # add reference to the server error msgs to be shown
+                if ( $Errors{$ID} && $Errors{$ID}{StartTimeInvalid} ) {
+                    $Errors{$ID}{StartTimeServerErrorBlock} = \@StartTimeServerErrorBlock;
+                }
+                if ( $Errors{$ID} && $Errors{$ID}{EndTimeInvalid} ) {
+                    $Errors{$ID}{EndTimeServerErrorBlock} = \@EndTimeServerErrorBlock;
                 }
             }
 
             # repeated hours are not allowed
             for ( my $Position = 0; $Position < scalar @StartTimes; $Position++ ) {
+
+                # arrays to save the server errors block to show the error msgs
+                my ( @StartTimeServerErrorBlock, @EndTimeServerErrorBlock ) = ();
+
                 for ( my $Index = 0; $Index < scalar @StartTimes; $Index++ ) {
                     next if $Index == $Position;
                     if (
@@ -389,8 +419,7 @@ sub Run {
                         )
                     {
                         $Errors{ $Position + 1 }{StartTimeInvalid} = 'ServerError';
-                        $Errors{ $Position + 1 }{StartTimeServerErrorBlock}
-                            = 'StartTimeRepeatedHourServerError';
+                        push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError';
                     }
                     if (
                         $EndTimes[$Position] >= $StartTimes[$Index]
@@ -398,8 +427,34 @@ sub Run {
                         )
                     {
                         $Errors{ $Position + 1 }{EndTimeInvalid} = 'ServerError';
+                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError';
+                    }
+                }
+
+                # add reference to the server error msgs to be shown
+                if ( $Errors{ $Position + 1 } && $Errors{ $Position + 1 }{StartTimeInvalid} ) {
+                    if ( !ref $Errors{ $Position + 1 }{StartTimeServerErrorBlock} ) {
+                        $Errors{ $Position + 1 }{StartTimeServerErrorBlock}
+                            = \@StartTimeServerErrorBlock;
+                    }
+                    else {
+                        while (@StartTimeServerErrorBlock) {
+                            my $ErroBlock = shift @StartTimeServerErrorBlock;
+                            push @{ $Errors{ $Position + 1 }{StartTimeServerErrorBlock} },
+                                $ErroBlock;
+                        }
+                    }
+                }
+                if ( $Errors{ $Position + 1 } && $Errors{ $Position + 1 }{EndTimeInvalid} ) {
+                    if ( !ref $Errors{ $Position + 1 }{EndTimeServerErrorBlock} ) {
                         $Errors{ $Position + 1 }{EndTimeServerErrorBlock}
-                            = 'EndTimeRepeatedHourServerError';
+                            = \@EndTimeServerErrorBlock;
+                    }
+                    else {
+                        while (@EndTimeServerErrorBlock) {
+                            my $ErroBlock = shift @EndTimeServerErrorBlock;
+                            push @{ $Errors{ $Position + 1 }{EndTimeServerErrorBlock} }, $ErroBlock;
+                        }
                     }
                 }
             }
@@ -595,8 +650,8 @@ sub Run {
                         $Errors{PeriodInvalid} = 'ServerError';
                     }
                     else {
-                        $Errors{StartTimeInvalid} = 'ServerError';
-                        $Errors{EndTimeInvalid}   = 'ServerError';
+                        $Errors{$ID}{StartTimeInvalid} = 'ServerError';
+                        $Errors{$ID}{EndTimeInvalid}   = 'ServerError';
                     }
                 }
             }
@@ -618,23 +673,28 @@ sub Run {
                     %Frontend,
                     %Errors,
                     %{ $Param{$ID} },
-                    StartTimeInvalid => $Errors{StartTimeInvalid} || $StartTimeInvalid || '',
-                    EndTimeInvalid   => $Errors{EndTimeInvalid}   || $EndTimeInvalid   || '',
+                    StartTimeInvalid => $StartTimeInvalid || '',
+                    EndTimeInvalid   => $EndTimeInvalid   || '',
                 },
             );
 
             # add proper server error msg for the start and end times
             my $ServerErrorBlockName;
-            for my $TimePeriod (qw(StartTime EndTime)) {
-                my $ServerErrorBlockName
-                    = $Errors{$ID} ? $Errors{$ID}{ $TimePeriod . 'ServerErrorBlock' } : '';
-                $Self->{LayoutObject}->Block(
-                    Name => $ServerErrorBlockName
-                        || ( $TimePeriod . 'GenericServerError' ),
-                    Data => {
-                        ID => $ID,
-                    },
-                );
+            if ( $Errors{$ID} && $Errors{$ID}{StartTimeInvalid} ) {
+                while ( @{ $Errors{$ID}{StartTimeServerErrorBlock} } ) {
+                    $ServerErrorBlockName = shift @{ $Errors{$ID}{StartTimeServerErrorBlock} };
+                    $Self->{LayoutObject}->Block(
+                        Name => $ServerErrorBlockName || 'StartTimeGenericServerError',
+                    );
+                }
+            }
+            if ( $Errors{$ID} && $Errors{$ID}{EndTimeInvalid} ) {
+                while ( @{ $Errors{$ID}{EndTimeServerErrorBlock} } ) {
+                    $ServerErrorBlockName = shift @{ $Errors{$ID}{EndTimeServerErrorBlock} };
+                    $Self->{LayoutObject}->Block(
+                        Name => $ServerErrorBlockName || 'EndTimeGenericServerError',
+                    );
+                }
             }
 
             $Self->{LayoutObject}->Block(
@@ -656,8 +716,6 @@ sub Run {
             # remove entries in the hash for already shown error messages
             delete $Errors{ServerErrorBlock};
             delete $Errors{PeriodInvalid};
-            delete $Errors{StartTimeInvalid};
-            delete $Errors{EndTimeInvalid};
 
             # validity check
             if (
