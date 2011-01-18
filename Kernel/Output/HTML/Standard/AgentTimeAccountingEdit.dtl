@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.38 2011-01-17 13:09:22 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.39 2011-01-18 15:08:18 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -80,7 +80,7 @@
             <div class="Header">
                 <h2>$Text{"Date"}: $Text{"$Data{"Weekday_to_Text"}"} $QData{"Year"}-$QData{"Month"}-$QData{"Day"}</h2>
             </div>
-            <div class="Content">
+            <div class="Content HorizontalScroll">
 <!-- dtl:block:UnitBlock -->
                 <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="WorkingUnits" id="WorkingUnits" class="Validate PreventMultipleSubmits">
                     <input type="hidden" name="Action" value="$Env{"Action"}" />

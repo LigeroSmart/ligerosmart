@@ -2,7 +2,7 @@
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.21 2011-01-11 11:50:09 mn Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.22 2011-01-18 15:08:18 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@
             <div class="Header">
                 <h2>$Text{"User reports"}</h2>
             </div>
-            <div class="Content">
+            <div class="Content HorizontalScroll">
                 <table class="DataTable">
                     <thead class="TwoRows">
                         <tr>
@@ -96,7 +96,7 @@
                     </a>
                 </h2>
             </div>
-            <div class="Content">
+            <div class="Content HorizontalScroll">
                 <table class="DataTable NoHover">
                     <thead>
                         <tr>
@@ -110,7 +110,7 @@
 <!-- dtl:block:Action -->
                         <tr class="MasterAction">
 <!-- dtl:block:Project -->
-                            <td rowspan="$Data{"RowSpan"}">
+                            <td rowspan="$Data{"RowSpan"}" class="RowSpan">
                                 <strong><a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=ProjectReporting;ProjectID=$QData{"ProjectID"}" class="MasterActionLink">
                                 $Data{"Project"}
                             </a></strong>

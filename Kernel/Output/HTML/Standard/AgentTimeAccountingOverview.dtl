@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.26 2010-12-29 14:19:10 mn Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.27 2011-01-18 15:08:18 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -117,9 +117,9 @@
 <!-- dtl:block:User -->
                     </h2>
                     <div class="AdditionalInformation">
-                        $Text{"$Data{"Month_to_Text"}"} $QData{"Year"}
                         <a class="Arrow Left" title="$Text{"Previous month"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearBack"};Month=$LQData{"MonthBack"};UserID=$LQData{"UserID"}"></a>
                         <a class="Arrow Right" title="$Text{"Next month"}" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Overview;Year=$LQData{"YearNext"};Month=$LQData{"MonthNext"};UserID=$LQData{"UserID"}"></a>
+                        $Text{"$Data{"Month_to_Text"}"} $QData{"Year"}
                     </div>
                 </div>
                 <div class="Content">
@@ -174,7 +174,7 @@
 <!-- dtl:block:Action -->
                             <tr>
 <!-- dtl:block:Project -->
-                                <td rowspan="$Data{"RowSpan"}">
+                                <td rowspan="$Data{"RowSpan"}" class="RowSpan">
                                     <strong>
 <!-- dtl:block:ProjectNoLink -->
                                     $Data{"Project"}
