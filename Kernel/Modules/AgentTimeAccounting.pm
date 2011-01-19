@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.68 2011-01-18 22:18:39 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.69 2011-01-19 04:50:50 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.68 $) [1];
+$VERSION = qw($Revision: 1.69 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -372,8 +372,8 @@ sub Run {
                         push @EndTimeServerErrorBlock, 'EndTimeBeforeStartTimeServerError';
                     }
 
-                    push @StartTimes, $StartTime;
-                    push @EndTimes,   $EndTime;
+                    $StartTimes[$ID] = $StartTime;
+                    $EndTimes[$ID]   = $EndTime;
                 }
                 else {
                     if ( $Param{StartTime} !~ /^(\d+):(\d+)$/ ) {
@@ -406,54 +406,62 @@ sub Run {
             }
 
             # repeated hours are not allowed
-            for ( my $Position = 0; $Position < scalar @StartTimes; $Position++ ) {
+            for ( my $Position = 1; $Position <= $Param{RecordsNumber}; $Position++ ) {
 
                 # arrays to save the server errors block to show the error msgs
                 my ( @StartTimeServerErrorBlock, @EndTimeServerErrorBlock ) = ();
 
-                for ( my $Index = 0; $Index < scalar @StartTimes; $Index++ ) {
-                    next if $Index == $Position;
+                for ( my $Index = 1; $Index <= $Param{RecordsNumber}; $Index++ ) {
+                    next
+                        if $Index == $Position
+                            || !defined $StartTimes[$Position]
+                            || !defined $StartTimes[$Index];
                     if (
                         $StartTimes[$Position] >= $StartTimes[$Index]
                         && $StartTimes[$Position] <= $EndTimes[$Index]
                         )
                     {
-                        $Errors{ $Position + 1 }{StartTimeInvalid} = 'ServerError';
-                        push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError';
+                        $Errors{$Position}{StartTimeInvalid} = 'ServerError';
+                        push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
+                            if !grep( /^StartTimeRepeatedHourServerError$/,
+                            @StartTimeServerErrorBlock );
                     }
                     if (
                         $EndTimes[$Position] >= $StartTimes[$Index]
                         && $EndTimes[$Position] <= $EndTimes[$Index]
                         )
                     {
-                        $Errors{ $Position + 1 }{EndTimeInvalid} = 'ServerError';
-                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError';
+                        $Errors{$Position}{EndTimeInvalid} = 'ServerError';
+                        push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
+                            if !
+                                grep( /^EndTimeRepeatedHourServerError$/,
+                                    @EndTimeServerErrorBlock );
                     }
                 }
 
                 # add reference to the server error msgs to be shown
-                if ( $Errors{ $Position + 1 } && $Errors{ $Position + 1 }{StartTimeInvalid} ) {
-                    if ( !ref $Errors{ $Position + 1 }{StartTimeServerErrorBlock} ) {
-                        $Errors{ $Position + 1 }{StartTimeServerErrorBlock}
+                if ( $Errors{$Position} && $Errors{$Position}{StartTimeInvalid} ) {
+                    if ( !ref $Errors{$Position}{StartTimeServerErrorBlock} ) {
+                        $Errors{$Position}{StartTimeServerErrorBlock}
                             = \@StartTimeServerErrorBlock;
                     }
                     else {
                         while (@StartTimeServerErrorBlock) {
                             my $ErroBlock = shift @StartTimeServerErrorBlock;
-                            push @{ $Errors{ $Position + 1 }{StartTimeServerErrorBlock} },
+                            push @{ $Errors{$Position}{StartTimeServerErrorBlock} },
                                 $ErroBlock;
                         }
                     }
                 }
-                if ( $Errors{ $Position + 1 } && $Errors{ $Position + 1 }{EndTimeInvalid} ) {
-                    if ( !ref $Errors{ $Position + 1 }{EndTimeServerErrorBlock} ) {
-                        $Errors{ $Position + 1 }{EndTimeServerErrorBlock}
+                if ( $Errors{$Position} && $Errors{$Position}{EndTimeInvalid} ) {
+                    if ( !ref $Errors{$Position}{EndTimeServerErrorBlock} ) {
+                        $Errors{$Position}{EndTimeServerErrorBlock}
                             = \@EndTimeServerErrorBlock;
                     }
                     else {
                         while (@EndTimeServerErrorBlock) {
                             my $ErroBlock = shift @EndTimeServerErrorBlock;
-                            push @{ $Errors{ $Position + 1 }{EndTimeServerErrorBlock} }, $ErroBlock;
+                            push @{ $Errors{$Position}{EndTimeServerErrorBlock} }, $ErroBlock;
                         }
                     }
                 }
@@ -558,14 +566,14 @@ sub Run {
         $Param{"JSProjectList"} = "var JSProjectList = new Array();\n";
         for my $ID ( 1 .. $Param{RecordsNumber} ) {
             $Param{ID} = $ID;
-            my $UnitRef = $Units[$ID];
+            my $UnitRef = !$Param{Status} ? $Units[$ID] : undef;
 
             # get data of projects
             my $ProjectList = $Self->_ProjectList(
-                SelectedID => $UnitRef->{ProjectID},
+                SelectedID => $Param{$ID}{ProjectID} || ( $UnitRef ? $UnitRef->{ProjectID} : '' ),
             );
 
-            $Param{ProjectID} = $UnitRef->{ProjectID} || '';
+            $Param{ProjectID} = $Param{$ID}{ProjectID} || ( $UnitRef ? $UnitRef->{ProjectID} : '' );
             $Param{ProjectName} = '';
 
             # generate JavaScript array which will be output to the template
@@ -582,10 +590,10 @@ sub Run {
                 .= "JSProjectList[$ID] = [" . ( join ', ', @JSProjectList ) . "];\n";
 
             # check for missing values
-            if ( $UnitRef->{ProjectID} && !$UnitRef->{ActionID} ) {
+            if ( $Param{$ID}{ProjectID} && !$Param{$ID}{ActionID} ) {
                 $Errors{ 'ActionID' . $ID . 'Invalid' } = 'ServerError';
             }
-            if ( !$UnitRef->{ProjectID} && $UnitRef->{ActionID} ) {
+            if ( !$Param{$ID}{ProjectID} && $Param{$ID}{ActionID} ) {
                 $Errors{ 'ProjectID' . $ID . 'Invalid' } = 'ServerError';
             }
 
@@ -597,26 +605,26 @@ sub Run {
                 Class       => 'Validate_TimeAccounting_Project ProjectSelection '
                     . ( $Errors{ 'ProjectID' . $ID . 'Invalid' } || '' ),
                 OnChange => "TimeAccounting.Agent.EditTimeRecords.FillActionList($ID);",
-                SelectedID => $Param{$ID}{ProjectID} || $UnitRef->{ProjectID},
+                SelectedID => $Param{$ID}{ProjectID} || ( $UnitRef ? $UnitRef->{ProjectID} : '' ),
             );
 
 # action list initially only contains empty and selected element as well as elements configured for selected project
 # if no constraints are configured, all actions will be displayed
             my $ActionData = $Self->_ActionListConstraints(
-                ProjectID             => $UnitRef->{ProjectID},
+                ProjectID => $Param{$ID}{ProjectID} || ( $UnitRef ? $UnitRef->{ProjectID} : '' ),
                 ProjectList           => $ProjectList,
                 ActionList            => \%ActionList,
                 ActionListConstraints => $ActionListConstraints,
             );
             $ActionData->{''} = '';
-            if ( $UnitRef->{ActionID} && $ActionList{ $UnitRef->{ActionID} } ) {
-                $ActionData->{ $UnitRef->{ActionID} } = $ActionList{ $UnitRef->{ActionID} };
+            if ( $Param{$ID}{ActionID} && $ActionList{ $Param{$ID}{ActionID} } ) {
+                $ActionData->{ $Param{$ID}{ActionID} } = $ActionList{ $Param{$ID}{ActionID} };
             }
 
             $Frontend{ActionOption} = $Self->{LayoutObject}->BuildSelection(
 
                 Data        => $ActionData,
-                SelectedID  => $Param{$ID}{ActionID} || $UnitRef->{ActionID} || '',
+                SelectedID  => $Param{$ID}{ActionID} || ( $UnitRef ? $UnitRef->{ActionID} : '' ),
                 Name        => "ActionID[$ID]",
                 ID          => "ActionID$ID",
                 Translation => 0,
@@ -625,8 +633,7 @@ sub Run {
                     . ' ActionSelection '
                     . ( $Errors{ 'ActionID' . $ID . 'Invalid' } || '' ),
             );
-
-            $Param{Remark} = $UnitRef->{Remark} || '';
+            $Param{Remark} = $Param{$ID}{Remark} || ( $UnitRef ? $UnitRef->{Remark} : '' );
 
             # set period to 0 if there was a time error
             if (
@@ -634,14 +641,14 @@ sub Run {
                 && ( $Errors{$ID}{StartTimeInvalid} || defined $Errors{$ID}{EndTimeInvalid} )
                 )
             {
-                $UnitRef->{Period} = '';
+                $Param{$ID}{Period} = '';
             }
 
             # check for errors
             if ( $Param{$ID}{ProjectID} && $Param{$ID}{ActionID} ) {
 
                 # a period of zero hours is not allowed
-                if ( $UnitRef->{Period} && $UnitRef->{Period} eq '0.00' ) {
+                if ( $Param{$ID}{Period} && $Param{$ID}{Period} eq '0.00' ) {
                     $Errors{ServerErrorBlock} = 'ZeroHoursPeriodServerError';
                     if (
                         $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime')
@@ -656,15 +663,16 @@ sub Run {
                 }
             }
 
-            my $Period = $UnitRef->{Period} || '';
+            my $Period = $Param{$ID}{Period} || ( $UnitRef ? $UnitRef->{Period} : '' );
 
             for my $TimePeriod (qw(StartTime EndTime)) {
-                $Param{$TimePeriod} = !$UnitRef->{$TimePeriod}
-                    || $UnitRef->{$TimePeriod} eq '00:00' ? '' : $UnitRef->{$TimePeriod};
+                $Param{$TimePeriod} = !$Param{$ID}{$TimePeriod}
+                    || $Param{$ID}{$TimePeriod} eq '00:00' ? '' : $Param{$ID}{$TimePeriod};
             }
 
             my $StartTimeInvalid = $Errors{$ID} ? $Errors{$ID}{StartTimeInvalid} : '';
             my $EndTimeInvalid   = $Errors{$ID} ? $Errors{$ID}{EndTimeInvalid}   : '';
+            my %DayData          = $UnitRef     ? %{$UnitRef}                    : ();
 
             $Self->{LayoutObject}->Block(
                 Name => 'Unit',
@@ -673,6 +681,7 @@ sub Run {
                     %Frontend,
                     %Errors,
                     %{ $Param{$ID} },
+                    %DayData,
                     StartTimeInvalid => $StartTimeInvalid || '',
                     EndTimeInvalid   => $EndTimeInvalid   || '',
                 },
@@ -720,8 +729,8 @@ sub Run {
             # validity check
             if (
                 $Param{InsertWorkingUnits}
-                && $UnitRef->{ProjectID}
-                && $UnitRef->{ActionID}
+                && $Param{$ID}{ProjectID}
+                && $Param{$ID}{ActionID}
                 && $Param{Sick}
                 )
             {
@@ -729,8 +738,8 @@ sub Run {
             }
             elsif (
                 $Param{InsertWorkingUnits}
-                && $UnitRef->{ProjectID}
-                && $UnitRef->{ActionID}
+                && $Param{$ID}{ProjectID}
+                && $Param{$ID}{ActionID}
                 && $Param{LeaveDay}
                 )
             {
@@ -738,8 +747,8 @@ sub Run {
             }
             elsif (
                 $Param{InsertWorkingUnits}
-                && $UnitRef->{ProjectID}
-                && $UnitRef->{ActionID}
+                && $Param{$ID}{ProjectID}
+                && $Param{$ID}{ActionID}
                 && $Param{Overtime}
                 )
             {
@@ -747,19 +756,19 @@ sub Run {
             }
 
             if (
-                $UnitRef->{StartTime}
-                && $UnitRef->{StartTime} ne '00:00'
-                && $UnitRef->{EndTime}
-                && $UnitRef->{EndTime} ne '00:00'
+                $Param{$ID}{StartTime}
+                && $Param{$ID}{StartTime} ne '00:00'
+                && $Param{$ID}{EndTime}
+                && $Param{$ID}{EndTime} ne '00:00'
                 )
             {
-                if ( $UnitRef->{StartTime} =~ /^(\d+):(\d+)/ ) {
+                if ( $Param{$ID}{StartTime} =~ /^(\d+):(\d+)/ ) {
                     my $StartTime = $1 * 60 + $2;
-                    if ( $UnitRef->{EndTime} =~ /^(\d+):(\d+)/ ) {
+                    if ( $Param{$ID}{EndTime} =~ /^(\d+):(\d+)/ ) {
                         my $EndTime = $1 * 60 + $2;
                         if (
-                            $UnitRef->{Period}
-                            && $UnitRef->{Period}
+                            $Param{$ID}{Period}
+                            && $Param{$ID}{Period}
                             > ( $EndTime - $StartTime ) / 60 + 0.01
                             )
                         {
