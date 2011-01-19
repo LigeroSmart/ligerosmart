@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.46 2011-01-19 19:21:14 dz Exp $
+# $Id: AgentSurvey.pm,v 1.47 2011-01-19 23:28:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -340,8 +340,20 @@ sub Run {
                     RequestID  => $RequestID,
                     QuestionID => $Question->{QuestionID},
                 );
+
                 my %Data;
                 $Data{Answer} = $List[0]->{VoteValue};
+
+                # clean html
+                if ( $Question->{Type} eq 'Textarea' && $Data{Answer} ) {
+                    $Data{Answer} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+                    $Data{Answer} = $Self->{LayoutObject}->Ascii2Html(
+                        Text           => $Data{Answer},
+                        HTMLResultMode => 1,
+                    );
+                    $Data{Answer} =
+                        $Self->{HTMLUtilsObject}->ToAscii( String => $Data{Answer} );
+                }
                 push( @Answers, \%Data );
             }
             for my $Row (@Answers) {

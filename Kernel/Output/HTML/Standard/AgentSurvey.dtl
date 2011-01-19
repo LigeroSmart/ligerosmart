@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.47 2011-01-19 19:21:14 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.48 2011-01-19 23:28:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -303,8 +303,8 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:StatsDetailQuestion -->
                     <label class="$Data{"Class"}">$QData{"Question"}:</label>
 <!-- dtl:block:StatsDetailAnswer -->
-                    <div class="Field $Data{"Class"}" title="$QData{"Answer"}">
-                        $QData{"Answer"}
+                    <div class="Field $Data{"Class"}">
+                        $Data{"Answer"}
                     </div>
                     <div class="Clear"></div>
 <!-- dtl:block:StatsDetailAnswer -->
