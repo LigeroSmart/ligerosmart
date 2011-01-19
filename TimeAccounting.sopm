@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.37 2011-01-19 12:39:34 mae Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.38 2011-01-19 13:02:08 mh Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -209,167 +209,220 @@
         }
 
     ]]></CodeUninstall>
-    <IntroInstall Type="pre" Title="Install Information" Lang="en">
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;WELCOME&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        You are about to install the OTRS package TimeAccounting.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;REQUIRED OTRS PACKAGES&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;no dependencies&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-        Implemented and maintained by OTRS AG and c.a.p.e. IT.&lt;br&gt;
-        &lt;br&gt;
-    </IntroInstall>
-    <IntroInstall Type="pre" Title="Installation Information" Lang="de">
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to install the OTRS package TimeAccounting.<br>
+        <br>
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-        &lt;br&gt;
-        &lt;b&gt;WILLKOMMEN&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Sie sind im Begriff das OTRS-Paket TimeAccounting (Zeiterfassung) zu installieren.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;BENÖTIGTE OTRS-PAKETE&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;keine Abhängigkeiten&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-        Entwickelt und supported von OTRS AG and c.a.p.e. IT.&lt;br&gt;
-        &lt;br&gt;
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
-    </IntroInstall>
-    <IntroInstall Type="pre" Title="Install Information" Lang="es">
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket TimeAccounting zu installieren.<br>
+        <br>
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-        &lt;br&gt;
-        &lt;b&gt;BIENVENIDO&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Usted está a punto de instalar el paquete de Contabilidad de Tiempo de OTRS.&lt;br&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        &lt;b&gt;PAQUETES OTRS REQUERIDOS&lt;/b&gt;
-        &lt;ul&gt;
-        &lt;li&gt;Sin dependencias&lt;/li&gt;
-        &lt;/ul&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
-        Implementado y mantenido por OTRS AG y c.a.p.e. IT.&lt;br&gt;
-        &lt;br&gt;
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="en">
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;NOTICE&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to install the OTRS package TimeAccounting.<br>
+        <br>
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>NOTICE</b>
+        <br>
+        <br>
         In order to grant users access to the time accounting module, you need to add them as member to the group 'time_accounting'.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
         The menu items that were added by this package will be visible after you log-in to the system again.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="de">
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;HINWEIS&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>HINWEIS</b>
+        <br>
+        <br>
         Um Benutzern Zugriff auf die Zeiterfassung zu gewähren, müssen diese Mitglied der neuen Gruppe 'time_accounting' sein.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroInstall Type="post" Title="Installation Information" Lang="es">
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;NOTA&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>NOTA</b>
+        <br>
+        <br>
         Para permitirles s los usuarios el acceso al módulo de contabilidad de tiempo, es necesario añadirlos como miembros del grupo 'time_accounting'.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
         Los elementos del menú agregados por este paquete, serán visibles luego de reiniciar sesión en el sistema.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroInstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en">
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ATTENTION&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package TimeAccounting.<br>
+        <br>
+        <br>
+        </b>ATTENTION</b>
+        <br>
+        <br>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
+
+        <br>
+        <b>WILLKOMMEN</b>
+        <br>
+        <br>
+        Sie sind im Begriff das OTRS-Paket TimeAccounting zu aktualisieren.<br>
+        <br>
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+
+        <br>
+        <b>WELCOME</b>
+        <br>
+        <br>
+        You are about to upgrade the OTRS package TimeAccounting.<br>
+        <br>
+        <br>
+        </b>ATTENTION</b>
+        <br>
+        <br>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
+
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
         If you uninstall this package, all database tables that were created during installation will be deleted.
         All data from these tables will be irrevocably lost!
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
         The group 'time_accounting' that was created during package installation will be deactivated.
         You can activate this group again in the admin area.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de">
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ACHTUNG&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>ACHTUNG</b>
+        <br>
+        <br>
         Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
         Die von diesem Paket angelegte Gruppe 'time_accounting' wird deaktiviert.
         Sie kann jederzeit im Admin-Bereich wieder aktiviert werden.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
-    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es">
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es"><![CDATA[
 
-        &lt;br&gt;
-        &lt;b&gt;ATENCIÓN&lt;/b&gt;
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <b>ATTENTION</b>
+        <br>
+        <br>
         Si usted desinstala este paquete, todas las tablas de la base de datos que se crearon durante la instalación del mismo, se eliminarán y
         el contenido de dichas tablas se perderá irrevocablemente.
-        &lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
         El grupo 'time_accounting' que se dió de alta durante la instalación del paquete, se desactivará.
         Es posible reactivar dicho grupo en el área de administración.
-        &lt;br&gt;
-        &lt;br&gt;
-        ((enjoy))&lt;br&gt;
-        &lt;br&gt;
+        <br>
+        <br>
+        ((enjoy))<br>
+        <br>
 
-    </IntroUninstall>
+    ]]></IntroUninstall>
 </otrs_package>
