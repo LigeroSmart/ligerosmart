@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.36 2011-01-13 23:00:50 en Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.37 2011-01-19 12:39:34 mae Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -62,6 +62,17 @@
             <Index Name="time_accounting_table_user_id">
                 <IndexColumn Name="user_id"/>
             </Index>
+            <Index Name="time_accounting_table_project_action_period_time_start_end">
+                <IndexColumn Name="project_id"/>
+                <IndexColumn Name="action_id"/>
+                <IndexColumn Name="period"/>
+                <IndexColumn Name="time_start"/>
+                <IndexColumn Name="time_end"/>
+            </Index>
+            <Index Name="time_accounting_table_user_id_time_start">
+                <IndexColumn Name="user_id"/>
+                <IndexColumn Name="time_start"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user_period">
             <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
@@ -73,6 +84,11 @@
             <Column Name="leave_days" Required="false" Type="DECIMAL" Size="10,2"/>
             <Column Name="overtime" Required="false" Type="DECIMAL" Size="10,2"/>
             <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
+            <Index Name="time_accounting_user_period_user_status_date_start_end">
+                <IndexColumn Name="status"/>
+                <IndexColumn Name="date_start"/>
+                <IndexColumn Name="date_end"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user">
             <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
@@ -81,11 +97,39 @@
             <Column Name="show_overtime" Required="false" Type="INTEGER"/>
             <Column Name="create_project" Required="false" Type="INTEGER"/>
             <Column Name="calendar" Required="false" Type="INTEGER"/>
+            <Index Name="time_accounting_user_user_id">
+                <IndexColumn Name="user_id"/>
+            </Index>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUpgrade Type="post">
         <TableAlter Name="time_accounting_user" Version="1.2.2">
             <ColumnAdd Name="calendar" Required="false" Type="INTEGER"/>
+        </TableAlter>
+        <TableAlter Name="time_accounting_table" Version="1.4.2">
+            <IndexCreate Name="time_accounting_table_project_action_period_time_start_end">
+                <IndexColumn Name="project_id"/>
+                <IndexColumn Name="action_id"/>
+                <IndexColumn Name="period"/>
+                <IndexColumn Name="time_start"/>
+                <IndexColumn Name="time_end"/>
+            </IndexCreate>
+            <IndexCreate Name="time_accounting_table_user_id_time_start">
+                <IndexColumn Name="user_id"/>
+                <IndexColumn Name="time_start"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="time_accounting_user" Version="1.4.2">
+            <IndexCreate Name="time_accounting_user_user_id">
+                <IndexColumn Name="user_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="time_accounting_user_period" Version="1.4.2">
+            <IndexCreate Name="time_accounting_user_period_user_status_date_start_end">
+                <IndexColumn Name="status"/>
+                <IndexColumn Name="date_start"/>
+                <IndexColumn Name="date_end"/>
+            </IndexCreate>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
