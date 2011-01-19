@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.5 2010-12-27 16:45:45 cr Exp $
+# $Id: PublicFAQExplorer.pm,v 1.6 2011-01-19 22:23:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -73,6 +73,16 @@ sub Run {
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'Order' )
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
+
+    # get Item ID
+    my $ItemID = $Self->{ParamObject}->GetParam( Param => 'ItemID' ) || 0;
+
+    # check if ItemID parameter was sent and redirect to FAQ article zoom screen
+    if ($ItemID) {
+
+        # redirect to FAQ zoom
+        return $Self->{LayoutObject}->Redirect( OP => 'Action=PublicFAQZoom;ItemID=' . $ItemID );
+    }
 
     # get category id
     my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
