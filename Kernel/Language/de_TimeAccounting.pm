@@ -2,7 +2,7 @@
 # Kernel/Language/de_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_TimeAccounting.pm,v 1.3 2011-01-17 14:59:42 mn Exp $
+# $Id: de_TimeAccounting.pm,v 1.4 2011-01-19 10:01:21 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,6 +31,7 @@ sub Data {
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Task'} = 'Tätigkeit';
     $Self->{Translation}->{'Remark'} = 'Anmerkung';
+    $Self->{Translation}->{'Date Navigation'} = 'Datumsnavigation';
     $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Bitte geben Sie eine Anmerkung mit mindestens 8 Zeichen Länge ein.';
     $Self->{Translation}->{'Negative times are not allowed.'} = 'Negative Angaben sind nicht erlaubt.';
     $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} = 'Diese Startzeit wurde bereits in einem anderen Eintrag angegeben.';
@@ -68,6 +69,7 @@ sub Data {
     $Self->{Translation}->{'Sick leave taken (total)'} = 'Erkrankt (Summe)';
     $Self->{Translation}->{'Previous month'} = 'Vorheriger Monat';
     $Self->{Translation}->{'Next month'} = 'Nächster Monat';
+    $Self->{Translation}->{'Day'} = 'Tag';
     $Self->{Translation}->{'Weekday'} = 'Wochentag';
     $Self->{Translation}->{'Working Hours'} = 'Arbeitsstunden';
     $Self->{Translation}->{'Total worked hours'} = 'Arbeitsstunden (gesamt)';
@@ -180,6 +182,13 @@ sub Data {
     $Self->{Translation}->{'Show all projects'} = 'Alle Projekte anzeigen';
     $Self->{Translation}->{'Show valid projects'} = 'Alle gültigen Projekte anzeigen';
     $Self->{Translation}->{'TimeAccounting'} = 'Zeiterfassung';
+    $Self->{Translation}->{'Actions'} = 'Aktionen';
+    $Self->{Translation}->{'User updated!'} = 'Benutzer aktualisiert!';
+    $Self->{Translation}->{'User added!'} = 'benutzer hinzugefügt!';
+    $Self->{Translation}->{'Project added!'} = 'Projekt hinzugefügt!';
+    $Self->{Translation}->{'Project updated!'} = 'Projekt aktualisiert!';
+    $Self->{Translation}->{'Task added!'} = 'Tätigkeit hinzugefügt!';
+    $Self->{Translation}->{'Task updated!'} = 'Tätigkeit aktualisiert!';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

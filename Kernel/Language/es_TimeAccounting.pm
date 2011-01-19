@@ -2,7 +2,7 @@
 # Kernel/Language/es_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_TimeAccounting.pm,v 1.3 2011-01-17 23:46:55 en Exp $
+# $Id: es_TimeAccounting.pm,v 1.4 2011-01-19 10:01:21 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -181,6 +181,13 @@ sub Data {
     $Self->{Translation}->{'Show all projects'} = 'Mostrar todos los proyectos';
     $Self->{Translation}->{'Show valid projects'} = 'Mostrar todos los proyectos válidos';
     $Self->{Translation}->{'TimeAccounting'} = 'Contabilidad De Tiempo';
+    $Self->{Translation}->{'Actions'} = 'Acciones';
+    $Self->{Translation}->{'User updated!'} = '¡Usuario actualizado!';
+    $Self->{Translation}->{'User added!'} = '¡Usuario añadido!';
+    $Self->{Translation}->{'Project added!'} = '¡Proyecto añadido!';
+    $Self->{Translation}->{'Project updated!'} = '¡Proyecto actualizado!';
+    $Self->{Translation}->{'Task added!'} = '¡Tarea añadida!';
+    $Self->{Translation}->{'Task updated!'} = '¡Tarea actualizada!';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
@@ -191,13 +198,6 @@ sub Data {
     $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '¡Imposible guardar la configuración porque un día sólo tiene 24 horas!';
     $Self->{Translation}->{'Can\'t delete Working Units!'} = '¡Imposible eliminar las unidades de trabajo!';
     $Self->{Translation}->{'Please insert your working hours!'} = '¡Favor de insertar sus horas de trabajo!';
-    $Self->{Translation}->{'Actions'} = 'Acciones';
-    $Self->{Translation}->{'User updated!'} = '¡Usuario actualizado!';
-    $Self->{Translation}->{'User added!'} = '¡Usuario añadido!';
-    $Self->{Translation}->{'Project added!'} = '¡Proyecto añadido!';
-    $Self->{Translation}->{'Project updated!'} = '¡Proyecto actualizado!';
-    $Self->{Translation}->{'Task added!'} = '¡Tarea añadida!';
-    $Self->{Translation}->{'Task updated!'} = '¡Tarea actualizada!';
 }
 
 1;
