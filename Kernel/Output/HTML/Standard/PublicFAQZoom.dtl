@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.19 2011-01-05 15:26:03 cr Exp $
+# $Id: PublicFAQZoom.dtl,v 1.20 2011-01-19 23:08:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@
 <!-- dtl:block:Back -->
     <div class="ActionRow">
         <ul class="Tabs">
-            <li><a href="$Env{"Baselink"};Action=AgentFAQExplorer;CategoryID=$QData{"CategoryID"}" class="HistoryBack">&larr; $Text{"Back"}</a></li>
+            <li><a href="$Env{"Baselink"};Action=PublicFAQExplorer;CategoryID=$QData{"CategoryID"}" class="HistoryBack">&larr; $Text{"Back"}</a></li>
         </ul>
         <div class="Clear"></div>
     </div>
