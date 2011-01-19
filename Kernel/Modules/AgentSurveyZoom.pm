@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.pm,v 1.4 2011-01-17 17:22:58 dz Exp $
+# $Id: AgentSurveyZoom.pm,v 1.5 2011-01-19 19:21:14 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -93,15 +93,17 @@ sub Run {
     # get all attributes of the survey
     my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
 
-    # convert the textareas in html (\n --><br>)
-    $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
-        Text           => $Survey{Introduction},
-        HTMLResultMode => 1,
-    );
-    $Survey{Description} = $Self->{LayoutObject}->Ascii2Html(
-        Text           => $Survey{Description},
-        HTMLResultMode => 1,
-    );
+    # clean html and convert the textareas in html (\n --><br>)
+    for my $SurveyField (qw( Introduction Description )) {
+        next if !$Survey{$SurveyField};
+
+        $Survey{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+
+        $Survey{$SurveyField} = $Self->{LayoutObject}->Ascii2Html(
+            Text           => $Survey{$SurveyField},
+            HTMLResultMode => 1,
+        );
+    }
 
     # get numbers of requests and votes
     my $SendRequest = $Self->{SurveyObject}->CountRequest(
@@ -126,9 +128,9 @@ sub Run {
         $QueueListString = '- No queue selected -';
     }
 
-    # convert introduction field to ascii
-    $Survey{IntroductionASCII}
-        = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
+    # convert text area fields to ascii
+    $Survey{Introduction} = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
+    $Survey{Description}  = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Description} );
 
     # print the main table.
     $Self->{LayoutObject}->Block(

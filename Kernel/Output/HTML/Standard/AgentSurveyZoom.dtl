@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.9 2011-01-17 17:22:58 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.10 2011-01-19 19:21:14 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -111,17 +111,18 @@
                         <div class="Field" title="$QData{"Title"}">$QData{"Title","80"}</div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Introduction"}:</label>
-                        <div class="Field" title="$Data{"IntroductionASCII"}">$QData{"Introduction","80"}</div>
+                        <label class="Textarea">$Text{"Introduction"}:</label>
+                        <div class="Field Textarea">$Data{"Introduction"}</div>
                         <div class="Clear"></div>
 
                         <label>$Text{"Queues"}:</label>
-                        <div class="Field" title="$QData{"QueueListString"}">$QData{"QueueListString","80"} $Data{"NoQueueMessage"}</div>
+                        <div class="Field" title="$QData{"QueueListString"}">$QData{"QueueListString","80"} $QData{"NoQueueMessage"}</div>
                         <div class="Clear"></div>
 
-                        <label>$Text{"Internal Description"}:</label>
-                        <div class="Field" title="$QData{"Description"}">$QData{"Description","80"}</div>
+                        <label class="Textarea">$Text{"Internal Description"}:</label>
+                        <div class="Field Textarea">$Data{"Description"}</div>
                         <div class="Clear"></div>
+
                     </fieldset>
                 </div>
             </div>

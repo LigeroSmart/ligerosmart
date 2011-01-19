@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.45 2011-01-18 17:43:50 dz Exp $
+# $Id: AgentSurvey.pm,v 1.46 2011-01-19 19:21:14 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::Survey;
+use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.45 $) [1];
+$VERSION = qw($Revision: 1.46 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,7 +36,8 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-    $Self->{SurveyObject} = Kernel::System::Survey->new(%Param);
+    $Self->{SurveyObject}    = Kernel::System::Survey->new(%Param);
+    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("Survey::Frontend::$Self->{Action}");
@@ -104,6 +106,12 @@ sub Run {
 
         @{ $FormElements{Queues} } = $Self->{ParamObject}->GetArray( Param => "Queues" );
 
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+            $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
+            $FormElements{NotificationBody} = "\$html/text\$ $FormElements{NotificationBody}";
+            $FormElements{Description}      = "\$html/text\$ $FormElements{Description}";
+        }
+
         # save if no errors
         if ( !%ServerError ) {
             my $SaveResult = $Self->{SurveyObject}->SurveySave(
@@ -157,6 +165,12 @@ sub Run {
         }
 
         @{ $FormElements{Queues} } = $Self->{ParamObject}->GetArray( Param => "Queues" );
+
+        if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
+            $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
+            $FormElements{NotificationBody} = "\$html/text\$ $FormElements{NotificationBody}";
+            $FormElements{Description}      = "\$html/text\$ $FormElements{Description}";
+        }
 
         # save if no errors
         if ( !%ServerError ) {
@@ -294,9 +308,18 @@ sub Run {
         );
         my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
         for my $Question (@QuestionList) {
+
+            my $Class = '';
+            if ( $Question->{Type} eq 'Textarea' ) {
+                $Class = 'Textarea';
+            }
+
             $Self->{LayoutObject}->Block(
                 Name => 'StatsDetailQuestion',
-                Data => $Question,
+                Data => {
+                    %{$Question},
+                    Class => $Class,
+                },
             );
             my @Answers;
             if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
@@ -324,7 +347,10 @@ sub Run {
             for my $Row (@Answers) {
                 $Self->{LayoutObject}->Block(
                     Name => 'StatsDetailAnswer',
-                    Data => $Row,
+                    Data => {
+                        %{$Row},
+                        Class => $Class,
+                        }
                 );
             }
         }
@@ -503,11 +529,65 @@ sub _SurveyAddMask {
                 || $Self->{ConfigObject}->Get('Survey::NotificationSender'),
             NotificationSubject => $FormElements{NotificationSubject}
                 || $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
-            NotificationBody => $FormElements{NotificationBody}
-                || $Self->{ConfigObject}->Get('Survey::NotificationBody'),
             %ServerError,
             %FormElements,
         },
+    );
+
+    # rich text elements
+    my %SurveyElements;
+
+    $SurveyElements{Introduction} = $FormElements{Introduction} ||
+        $Param{Introduction};
+
+    $SurveyElements{NotificationBody} = $FormElements{NotificationBody} ||
+        $Param{NotificationBody} ||
+        $Self->{ConfigObject}->Get('Survey::NotificationBody');
+
+    $SurveyElements{Description} = $FormElements{Description} ||
+        $Param{Description} ||
+        '';
+
+    # load rich text editor
+    my $RichTextEditor = $Self->{ConfigObject}->Get('Frontend::RichText');
+    if ($RichTextEditor) {
+        $Self->{LayoutObject}->Block( Name => "$Block" . 'RichText' );
+    }
+
+    # convert required elements to RTE
+    for my $SurveyField ( keys %SurveyElements ) {
+        next if !$SurveyElements{$SurveyField};
+
+        # clean html
+        my $HTMLContent =
+            $SurveyElements{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+
+        if ( !$HTMLContent && $RichTextEditor ) {
+            $SurveyElements{$SurveyField} =
+                $Self->{LayoutObject}->Ascii2Html(
+                Text           => $SurveyElements{$SurveyField},
+                HTMLResultMode => 1,
+                );
+        }
+        elsif ( $HTMLContent && !$RichTextEditor ) {
+            $SurveyElements{$SurveyField} =
+                $Self->{HTMLUtilsObject}->ToAscii( String => $SurveyElements{$SurveyField} );
+        }
+    }
+
+    $Self->{LayoutObject}->Block(
+        Name => "$Block" . 'Introduction',
+        Data => { Introduction => $SurveyElements{Introduction}, },
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => "$Block" . 'NotificationBody',
+        Data => { NotificationBody => $SurveyElements{NotificationBody}, },
+    );
+
+    $Self->{LayoutObject}->Block(
+        Name => "$Block" . 'InternalDescription',
+        Data => { Description => $SurveyElements{Description}, },
     );
 
     # generates generic errors for javascript
