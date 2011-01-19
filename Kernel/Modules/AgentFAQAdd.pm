@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.18 2010-12-27 16:27:10 cr Exp $
+# $Id: AgentFAQAdd.pm,v 1.19 2011-01-19 23:16:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -363,6 +363,20 @@ sub _MaskNew {
 
         # use the user language, or if not found 'en'
         $SelectedLanguage = $Self->{LayoutObject}->{UserLanguage} || 'en';
+
+        # get user language ID
+        my $SelectedLanguageID = $Self->{FAQObject}->LanguageLookup( Name => $SelectedLanguage );
+
+        # check if LanduageID does not exsits
+        if ( !$SelectedLanguageID ) {
+
+            # get the lowest language ID
+            my @LanguageIDs = sort keys %Languages;
+            $SelectedLanguageID = $LanguageIDs[0];
+
+            # set the language with lowest language ID as selected language
+            $SelectedLanguage = $Languages{$SelectedLanguageID};
+        }
     }
 
     # build the language selection
