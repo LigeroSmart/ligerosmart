@@ -1,12 +1,12 @@
 # --
 # TimeAccounting.pm - code to excecute during package installation
-# Copyright (C) 2001-2008 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.4 2008-08-29 05:55:26 tr Exp $
+# $Id: TimeAccounting.pm,v 1.5 2011-01-20 12:15:44 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
-# the enclosed file COPYING for license information (GPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package var::packagesetup::TimeAccounting;
@@ -14,11 +14,12 @@ package var::packagesetup::TimeAccounting;
 use strict;
 use warnings;
 
+use Kernel::System::CacheInternal;
 use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -44,6 +45,7 @@ create an object
     use Kernel::System::Time;
     use Kernel::System::DB;
     use Kernel::System::XML;
+    use var::packagesetup::TimeAccounting;
 
     my $ConfigObject = Kernel::Config->new();
     my $LogObject    = Kernel::System::Log->new(
@@ -90,8 +92,13 @@ sub new {
     for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
-    $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
-    $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
+    $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
+    $Self->{ValidObject}         = Kernel::System::Valid->new( %{$Self} );
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %{$Self},
+        Type => 'Group',
+        TTL  => 60 * 60 * 3,
+    );
 
     return $Self;
 }
@@ -112,6 +119,9 @@ sub CodeInstall {
         Name        => 'time_accounting',
         Description => 'Group for all time accounting user.',
     );
+
+    # delete the group cache to avoid permission problems
+    $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
 
     return 1;
 }
@@ -166,11 +176,14 @@ sub _GroupAdd {
     );
     my %ValidListReverse = reverse %ValidList;
 
+    # get list of all groups
+    my %GroupList = $Self->{GroupObject}->GroupList();
+
+    # reverse the group list for easier lookup
+    my %GroupListReverse = reverse %GroupList;
+
     # check if group already exists
-    my $GroupID = $Self->{GroupObject}->GroupLookup(
-        Group  => $Param{Name},
-        UserID => 1,
-    );
+    my $GroupID = $GroupListReverse{ $Param{Name} };
 
     # reactivate the group
     if ($GroupID) {
@@ -292,6 +305,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2008-08-29 05:55:26 $
+$Revision: 1.5 $ $Date: 2011-01-20 12:15:44 $
 
 =cut
