@@ -2,7 +2,7 @@
 # TimeAccounting.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.7 2011-01-20 12:58:14 mn Exp $
+# $Id: TimeAccounting.pm,v 1.8 2011-01-20 13:31:30 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -95,6 +95,31 @@ sub new {
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    # create needed sysconfig object
+    $Self->{SysConfigObject} = Kernel::System::SysConfig->new( %{$Self} );
+
+    # rebuild ZZZ* files
+    $Self->{SysConfigObject}->WriteDefault();
+
+    # define the ZZZ files
+    my @ZZZFiles = (
+        'ZZZAAuto.pm',
+        'ZZZAuto.pm',
+    );
+
+    # reload the ZZZ files (mod_perl workaround)
+    for my $ZZZFile (@ZZZFiles) {
+
+        PREFIX:
+        for my $Prefix (@INC) {
+            my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
+            next PREFIX if !-f $File;
+            do $File;
+            last PREFIX;
+        }
+    }
+
     $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
     $Self->{ValidObject}         = Kernel::System::Valid->new( %{$Self} );
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
@@ -311,6 +336,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2011-01-20 12:58:14 $
+$Revision: 1.8 $ $Date: 2011-01-20 13:31:30 $
 
 =cut
