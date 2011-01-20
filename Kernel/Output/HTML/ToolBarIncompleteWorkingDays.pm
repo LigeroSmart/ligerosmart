@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarIncompleteWorkingDays.pm,v 1.1 2011-01-11 14:18:01 mn Exp $
+# $Id: ToolBarIncompleteWorkingDays.pm,v 1.2 2011-01-20 12:10:52 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::TimeAccounting;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,6 +46,23 @@ sub Run {
     # define action, group, label, image and prio
     my $Action    = 'AgentTimeAccounting';
     my $Subaction = 'Edit';
+    my $Group     = 'time_accounting';
+
+    # get the group id
+    my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+
+    # deny access, when the group is not found
+    return if !$GroupID;
+
+    # get user groups, where the user has the appropriate privilege
+    my %Groups = $Self->{GroupObject}->GroupMemberList(
+        UserID => $Self->{UserID},
+        Type   => 'rw',
+        Result => 'HASH',
+    );
+
+    # deny access if the agent doesn't have the appropriate type in the appropriate group
+    return if !$Groups{$GroupID};
 
     # do not show icon if frontend module is not registered
     return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
