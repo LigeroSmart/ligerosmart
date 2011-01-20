@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.70 2011-01-20 04:48:24 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.71 2011-01-20 13:57:39 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
+$VERSION = qw($Revision: 1.71 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1325,7 +1325,8 @@ sub Run {
                 = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
 
             # add time zone to calculation
-            my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $UserData{Calendar} );
+            my $UserCalendar = $UserData{Calendar} || '';
+            my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $UserCalendar );
             if ($Zone) {
                 my $ZoneSeconds = $Zone * 60 * 60;
                 $DayStartTime = $DayStartTime - $ZoneSeconds;
@@ -1335,7 +1336,7 @@ sub Run {
             my $ThisDayWorkingTime = $Self->{TimeObject}->WorkingTime(
                 StartTime => $DayStartTime,
                 StopTime  => $DayStopTime,
-                Calendar  => $UserData{Calendar} || '',
+                Calendar  => $UserCalendar,
             ) || '0';
 
             if ( $Param{Year} eq $Year && $Param{Month} eq $Month && $CurrentDay eq $Day ) {
