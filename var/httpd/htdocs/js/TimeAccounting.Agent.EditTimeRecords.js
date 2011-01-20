@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.4 2011-01-11 11:23:01 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.5 2011-01-20 09:09:19 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -115,7 +115,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         Core.Form.Validate.Init();
     }
 
-    function InitAddRow() {
+    function InitAddRow(Language) {
         $('#MoreInputFields').unbind('click.MoreInputFields').bind('click.MoreInputFields', function () {
             var $LastRow = $('#InsertWorkingHours tbody tr.WorkingHours:last'),
                 $NewRow = $LastRow.clone(),
@@ -149,8 +149,6 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
             $NewRow
                 .find('input[id^=Combo_]').remove().end()
                 .find('button[id^=ComboBtn_]').remove();
-
-            console.log($NewRow.html());
 
             // Now add this row to the table
             $LastRow.after($NewRow);
@@ -262,7 +260,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         }
 
         // initiate "more input fields" functionality
-        InitAddRow();
+        InitAddRow(Language);
     }
 
     return TargetNS;
