@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarIncompleteWorkingDays.pm,v 1.2 2011-01-20 12:10:52 mn Exp $
+# $Id: ToolBarIncompleteWorkingDays.pm,v 1.3 2011-01-20 13:27:39 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::TimeAccounting;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -28,7 +28,7 @@ sub new {
 
     # get needed objects
     for (
-        qw(ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID)
+        qw(ConfigObject LogObject DBObject TicketObject UserObject GroupObject LayoutObject UserID TimeObject)
         )
     {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
@@ -63,6 +63,19 @@ sub Run {
 
     # deny access if the agent doesn't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
+
+    my ( $Sec, $Min, $Hour, $Day, $Month, $Year ) = $Self->{TimeObject}->SystemTime2Date(
+        SystemTime => $Self->{TimeObject}->SystemTime(),
+    );
+
+    my %UserCurrentPeriod = $Self->{TimeAccountingObject}->UserCurrentPeriodGet(
+        Year  => $Year,
+        Month => $Month,
+        Day   => $Day,
+    );
+
+    # deny access, if user has no valid period
+    return if !$UserCurrentPeriod{ $Self->{UserID} };
 
     # do not show icon if frontend module is not registered
     return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
