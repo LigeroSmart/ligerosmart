@@ -1,8 +1,8 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.46 2010-12-22 22:38:47 en Exp $
+# $Id: TimeAccounting.pm,v 1.47 2011-01-20 04:51:23 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1457,7 +1457,7 @@ insert working units in the db
             {
                 ProjectID => 1,
                 ActionID  => 23,
-                Remark    => 'SomeText,
+                Remark    => 'SomeText',
                 StartTime => '7:30',
                 EndTime   => '11:00',
                 Period    => '8.5',
@@ -1480,15 +1480,6 @@ sub WorkingUnitsInsert {
         }
     }
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
-
-    # delete exiting data
-    if ( !$Self->WorkingUnitsDelete(%Param) ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Can\'t delete Working Units!'
-        );
-        return;
-    }
 
     # add special time working units
     my %SpecialAction = (
@@ -1516,9 +1507,6 @@ sub WorkingUnitsInsert {
     #insert new working units
     UNITREF:
     for my $UnitRef ( @{ $Param{WorkingUnits} } ) {
-
-        #next UNITREF if !$UnitRef->{ProjectID} || !$UnitRef->{ActionID};
-
         my $StartTime = $Date . ' ' . $UnitRef->{StartTime};
         my $EndTime   = $Date . ' ' . $UnitRef->{EndTime};
 
@@ -1830,6 +1818,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.46 $ $Date: 2010-12-22 22:38:47 $
+$Revision: 1.47 $ $Date: 2011-01-20 04:51:23 $
 
 =cut
