@@ -2,7 +2,7 @@
 # Kernel/Language/es_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_TimeAccounting.pm,v 1.4 2011-01-19 10:01:21 mn Exp $
+# $Id: es_TimeAccounting.pm,v 1.5 2011-01-20 04:46:02 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,6 +39,7 @@ sub Data {
     $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} = '¡El periodo es mayor al intervalo entre las horas de inicio y finalización!';
     $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = '¡Periodo inválido! Un día sólo tiene 24 horas.';
     $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Un periodo válido debe ser mayor a cero.';
+    $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = '¡Periodo inválido! No se permiten periodos negativos.';
     $Self->{Translation}->{'Add one row'} = 'Añadir una fila';
     $Self->{Translation}->{'Total'} = 'Total';
     $Self->{Translation}->{'On vacation'} = 'De vacaciones';
