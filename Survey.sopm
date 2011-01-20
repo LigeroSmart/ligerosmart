@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.38 2011-01-11 04:07:19 dz Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.39 2011-01-20 17:20:21 dz Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -9,44 +9,44 @@
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A customer survey tool.</Description>
     <Description Lang="de">Ein Kundenumfragen Werkzeug.</Description>
+    <Description Lang="es">Una herramienta de encuestas a clientes.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/Survey.xml"/>
-        <File Permission="644" Location="Kernel/Language/bg_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/bg_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/cz_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/cz_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/da_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/da_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/de_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/de_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/es_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/fr_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/fr_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/nl_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/nl_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/ru_AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Language/ru_PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
+        <File Permission="644" Location="doc/survey-database.png"/>
+        <File Permission="644" Location="Kernel/Language/cz_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/ru_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/nl_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/da_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/fr_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/de_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/ru_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/da_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_Survey.pm"/>
+        <File Permission="644" Location="Kernel/Language/bg_Survey.pm"/>
         <File Permission="644" Location="Kernel/System/Survey.pm"/>
         <File Permission="644" Location="Kernel/System/Ticket/Event/SurveySendRequest.pm"/>
         <File Permission="644" Location="scripts/test/Survey.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_disabled.png"/>
-        <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurvey.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentSurveyEditQuestions.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentSurveyZoom.pm"/>
+        <File Permission="644" Location="Kernel/Modules/PublicSurvey.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurvey.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyEditQuestions.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicSurvey.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewNavBar.dtl"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.IE7.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.IE7.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up_disabled.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down.png"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewSmall.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/SurveyOverviewSmall.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentSurveyOverviewNavBar.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/LayoutSurvey.pm"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/see_details.png"/>
 
     </Filelist>
     <DatabaseInstall Type="post">

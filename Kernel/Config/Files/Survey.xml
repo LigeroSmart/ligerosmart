@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.21 2011-01-18 17:50:33 dz Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.22 2011-01-20 17:20:21 dz Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Lang="en">All parameters for the Survey object in the agent interface.</Description>
         <Description Lang="de">Alle Parameter des Befragungs-Objekts im Agent-Interface.</Description>
@@ -12,7 +12,7 @@
                 <NavBarName>Survey</NavBarName>
                 <Title>Survey</Title>
                 <NavBar>
-                    <Description Translatable="1">A Survey Module</Description>
+                    <Description Translatable="1">A Survey Module.</Description>
                     <Name  Translatable="1">Survey</Name>
                     <Type>Menu</Type>
                     <Block>ItemArea</Block>
@@ -54,7 +54,7 @@
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description Translatable="1">A Survey Zoom Module.</Description>
+                <Description Translatable="1">Survey Zoom Module.</Description>
                 <NavBarName>Survey</NavBarName>
                 <Loader>
                     <CSS>Survey.Agent.Default.css</CSS>
