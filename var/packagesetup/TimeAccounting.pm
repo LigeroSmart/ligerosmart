@@ -2,7 +2,7 @@
 # TimeAccounting.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.5 2011-01-20 12:15:44 mn Exp $
+# $Id: TimeAccounting.pm,v 1.6 2011-01-20 12:29:26 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -89,7 +89,10 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for my $Object (qw(ConfigObject LogObject MainObject TimeObject DBObject XMLObject)) {
+    for my $Object (
+        qw(ConfigObject EncodeObject LogObject MainObject TimeObject DBObject XMLObject)
+        )
+    {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
     $Self->{GroupObject}         = Kernel::System::Group->new( %{$Self} );
@@ -305,6 +308,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2011-01-20 12:15:44 $
+$Revision: 1.6 $ $Date: 2011-01-20 12:29:26 $
 
 =cut
