@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.41 2011-01-18 22:18:39 en Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.42 2011-01-20 04:49:07 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -174,26 +174,20 @@
                                     <div id="Period$QData{"ID"}Error" class="TooltipErrorMessage">
                                         <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
-<!-- dtl:block:PeriodGenericServerError -->
                                     <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
+<!-- dtl:block:PeriodGenericServerError -->
                                         <p>$Text{"This field is required."}</p>
-                                    </div>
 <!-- dtl:block:PeriodGenericServerError -->
-<!-- dtl:block:InvalidPeriodServerError -->
-                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
-                                        <p>$Text{"Period is bigger than the interval between start and end times!"}</p>
-                                    </div>
-<!-- dtl:block:InvalidPeriodServerError -->
 <!-- dtl:block:InvalidHoursPeriodServerError -->
-                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"Invalid period! A day has only 24 hours."}</p>
-                                    </div>
 <!-- dtl:block:InvalidHoursPeriodServerError -->
 <!-- dtl:block:ZeroHoursPeriodServerError -->
-                                    <div id="Period$QData{"ID"}ServerError" class="TooltipErrorMessage">
                                         <p>$Text{"A valid period must be greater than zero."}</p>
-                                    </div>
 <!-- dtl:block:ZeroHoursPeriodServerError -->
+<!-- dtl:block:NegativePeriodServerError -->
+                                        <p>$Text{"Invalid period! Negative periods are not allowed."}</p>
+<!-- dtl:block:NegativePeriodServerError -->
+                                    </div>
 
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
