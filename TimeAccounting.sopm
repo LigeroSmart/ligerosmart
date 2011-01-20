@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.38 2011-01-19 13:02:08 mh Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.39 2011-01-20 15:54:39 en Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -250,16 +250,16 @@
     <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
 
         <br>
-        <b>WELCOME</b>
+        <b>BIENVENIDO</b>
         <br>
         <br>
-        You are about to install the OTRS package TimeAccounting.<br>
+        Ud. está a punto de instalar el paquete Contabilidad de Tiempo de OTRS.<br>
         <br>
         <br>
-        <b>ATTENTION</b>
+        <b>NOTA</b>
         <br>
         <br>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        Asegúrese de que su base de datos acepte paquetes de tamaño superior a 5 MB. Una base de datos MySQL, por ejemplo, acepta por defecto paquetes de 1 MB, como máximo. En este caso, el valor de max_allowed_packet debe incrementarse. El tamaño que se recomienda es de 20 MB.<br>
         <br>
         <br>
         ((enjoy))<br>
@@ -355,16 +355,16 @@
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
 
         <br>
-        <b>WELCOME</b>
+        <b>BIENVENIDO</b>
         <br>
         <br>
-        You are about to upgrade the OTRS package TimeAccounting.<br>
+        Ud. está a punto de actualizar el paquete Contabilidad de Tiempo de OTRS.<br>
         <br>
         <br>
-        </b>ATTENTION</b>
+        <b>NOTA</b>
         <br>
         <br>
-        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
+        Asegúrese de que su base de datos acepte paquetes de tamaño superior a 5 MB. Una base de datos MySQL, por ejemplo, acepta por defecto paquetes de 1 MB, como máximo. En este caso, el valor de max_allowed_packet debe incrementarse. El tamaño que se recomienda es de 20 MB.<br>
         <br>
         <br>
         ((enjoy))<br>
