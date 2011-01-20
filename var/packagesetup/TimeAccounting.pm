@@ -2,7 +2,7 @@
 # TimeAccounting.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.8 2011-01-20 13:31:30 mn Exp $
+# $Id: TimeAccounting.pm,v 1.9 2011-01-20 13:35:32 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Group;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -169,9 +169,6 @@ sub CodeUninstall {
     $Self->_GroupDeactivate(
         Name => 'time_accounting',
     );
-
-    # install config
-    $Self->{ConfigObject} = Kernel::Config->new( %{$Self} );
 
     return 1;
 }
@@ -336,6 +333,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2011-01-20 13:31:30 $
+$Revision: 1.9 $ $Date: 2011-01-20 13:35:32 $
 
 =cut
