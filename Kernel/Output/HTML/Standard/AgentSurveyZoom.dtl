@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.10 2011-01-19 19:21:14 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.11 2011-01-20 17:42:44 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -52,6 +52,7 @@
                     <fieldset class="TableLike FixedLabelSmall">
                         <label> $Text{"Sent requests"}:</label>
                         <p class="Value">$QData{"SendRequest"}</p>
+                        <div class="Clear"></div>
 
                         <label>$Text{"Received surveys"}:</label>
                         <p class="Value">$QData{"RequestComplete"}</p>
