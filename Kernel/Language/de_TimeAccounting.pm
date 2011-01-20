@@ -2,7 +2,7 @@
 # Kernel/Language/de_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_TimeAccounting.pm,v 1.6 2011-01-20 09:08:51 mn Exp $
+# $Id: de_TimeAccounting.pm,v 1.7 2011-01-20 14:22:39 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -185,7 +185,7 @@ sub Data {
     $Self->{Translation}->{'TimeAccounting'} = 'Zeiterfassung';
     $Self->{Translation}->{'Actions'} = 'Aktionen';
     $Self->{Translation}->{'User updated!'} = 'Benutzer aktualisiert!';
-    $Self->{Translation}->{'User added!'} = 'benutzer hinzugefügt!';
+    $Self->{Translation}->{'User added!'} = 'Benutzer hinzugefügt!';
     $Self->{Translation}->{'Project added!'} = 'Projekt hinzugefügt!';
     $Self->{Translation}->{'Project updated!'} = 'Projekt aktualisiert!';
     $Self->{Translation}->{'Task added!'} = 'Tätigkeit hinzugefügt!';
