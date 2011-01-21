@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2008 Aquiles Cohen
 # --
-# $Id: es_FAQ.pm,v 1.25 2011-01-19 22:13:45 cr Exp $
+# $Id: es_FAQ.pm,v 1.26 2011-01-21 04:27:09 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'FAQ Category Management'} = 'Administración de Categorías de FAQ';
     $Self->{Translation}->{'Add category'} = 'Agregar categoría';
     $Self->{Translation}->{'Delete Category'} = 'Borrar Categoría';
-    $Self->{Translation}->{'Ok'} = 'Si';
+    $Self->{Translation}->{'Ok'} = 'Aceptar';
     $Self->{Translation}->{'Add Category'} = 'Agregar Categoría';
     $Self->{Translation}->{'Edit Category'} = 'Editar Categoría';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Seran mostrados como comentarios en el explorador.';
