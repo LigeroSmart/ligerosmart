@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.21 2011-01-24 13:25:22 ub Exp $
+# $Id: nl_FAQ.pm,v 1.22 2011-01-24 14:05:10 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,26 +29,26 @@ sub Data {
     $Self->{Translation}->{'public (all)'} = 'publiek';
     $Self->{Translation}->{'external (customer)'} = 'extern (klanten)';
     $Self->{Translation}->{'internal (agent)'} = 'intern (gebruikers)';
-    $Self->{Translation}->{'StartDay'} = 'Start dag';
-    $Self->{Translation}->{'StartMonth'} = '';
-    $Self->{Translation}->{'StartYear'} = '';
-    $Self->{Translation}->{'EndDay'} = '';
-    $Self->{Translation}->{'EndMonth'} = '';
-    $Self->{Translation}->{'EndYear'} = '';
-    $Self->{Translation}->{'Thanks for your vote!'} = '';
-    $Self->{Translation}->{'You have already voted!'} = '';
-    $Self->{Translation}->{'FAQ Article Print'} = '';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = '';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '';
+    $Self->{Translation}->{'StartDay'} = 'Eerste dag';
+    $Self->{Translation}->{'StartMonth'} = 'Eerste maand';
+    $Self->{Translation}->{'StartYear'} = 'Eerste jaar';
+    $Self->{Translation}->{'EndDay'} = 'Laatste dag';
+    $Self->{Translation}->{'EndMonth'} = 'Laatste maand';
+    $Self->{Translation}->{'EndYear'} = 'Laatste jaar';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Bedankt voor uw stem!';
+    $Self->{Translation}->{'You have already voted!'} = 'U heeft al gestemd.';
+    $Self->{Translation}->{'FAQ Article Print'} = 'Artikel afdrukken';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Artikelen (top 10)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Artikelen (nieuw aangemaakt)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Artikelen (laatst gewijzigd)';
     $Self->{Translation}->{'FAQ category updated!'} = 'FAQ categorie bijgewerkt.';
     $Self->{Translation}->{'FAQ category added!'} = 'FAQ categorie toegevoegd.';
-    $Self->{Translation}->{'A category should have a name!'} = '';
-    $Self->{Translation}->{'This category already exists'} = '';
-    $Self->{Translation}->{'FAQ language added!'} = '';
-    $Self->{Translation}->{'FAQ language updated!'} = '';
-    $Self->{Translation}->{'The name is required!'} = '';
-    $Self->{Translation}->{'This language already exists!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = 'Geef een naam op voor de categorie.';
+    $Self->{Translation}->{'This category already exists'} = 'Deze categorie bestaat al';
+    $Self->{Translation}->{'FAQ language added!'} = 'Taal toegevoegd.';
+    $Self->{Translation}->{'FAQ language updated!'} = 'Taal bijgewerkt';
+    $Self->{Translation}->{'The name is required!'} = 'De naam is verplicht.';
+    $Self->{Translation}->{'This language already exists!'} = 'Deze taal bestaat al.';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Artikel toevoegen';
@@ -59,16 +59,16 @@ sub Data {
     $Self->{Translation}->{'FAQ Category Management'} = 'FAQ categoriebeheer';
     $Self->{Translation}->{'Add category'} = 'Categorie toevoegen';
     $Self->{Translation}->{'Delete Category'} = 'Categorie verwijderen';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Categorie toevoegen';
     $Self->{Translation}->{'Edit Category'} = 'Categorie bewerken';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wordt in webinterface getoond.';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer tenminste één permissiegroep.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Gebruikers met rechten op artikelen in deze categorie.';
-    $Self->{Translation}->{'Do you really want to delete this category?'} = '';
+    $Self->{Translation}->{'Do you really want to delete this category?'} = 'Wilt u deze categorie verwijderen?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = '';
-    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '';
-    $Self->{Translation}->{'This category is parent of the following subcategories'} = '';
+    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Deze categorie wordt gebruikt door de volgende artikelen';
+    $Self->{Translation}->{'This category is parent of the following subcategories'} = 'Deze categorie heeft de volgende subcategoriën';
 
     # Template: AgentFAQDelete
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = 'Wilt u dit artikel verwijderen?';
@@ -78,8 +78,8 @@ sub Data {
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ verkenner';
-    $Self->{Translation}->{'Quick Search'} = '';
-    $Self->{Translation}->{'Advanced Search'} = '';
+    $Self->{Translation}->{'Quick Search'} = 'Zoeken';
+    $Self->{Translation}->{'Advanced Search'} = 'Uitgebreid zoeken';
     $Self->{Translation}->{'Subcategories'} = 'Subcategoriën';
     $Self->{Translation}->{'FAQ Articles'} = 'Artikelen';
     $Self->{Translation}->{'No subcategories found.'} = 'Geen subcategoriën gevonden.';
@@ -87,19 +87,18 @@ sub Data {
     # Template: AgentFAQHistory
 
     # Template: AgentFAQJournalOverviewSmall
-    $Self->{Translation}->{'No FAQ Journal data found.'} = '';
+    $Self->{Translation}->{'No FAQ Journal data found.'} = 'Geen data gevonden.';
 
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'Beheer talen';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = '';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = 'Gebruik deze feature als u met meerdere talen wilt werken.';
     $Self->{Translation}->{'Add language'} = 'Taal toevoegen';
-    $Self->{Translation}->{'Delete: '} = '';
     $Self->{Translation}->{'Delete Language'} = 'Taal verwijderen';
     $Self->{Translation}->{'Add Language'} = 'Taal toevoegen';
     $Self->{Translation}->{'Edit Language'} = 'Taal bewerken';
-    $Self->{Translation}->{'Do you really want to delete this language?'} = '';
-    $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = '';
-    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
+    $Self->{Translation}->{'Do you really want to delete this language?'} = 'Wilt u deze taal verwijderen?';
+    $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = 'U kunt deze taal niet verwijderen, hij wordt gebruikt door een of meer artikelen.';
+    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = 'Deze taal is gebruikt voor de volgende artikelen';
 
     # Template: AgentFAQOverviewNavBar
     $Self->{Translation}->{'FAQ articles per page'} = 'Aantal artikelen per pagina';
@@ -108,7 +107,7 @@ sub Data {
     $Self->{Translation}->{'No FAQ data found.'} = 'Geen FAQ data gevonden.';
 
     # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = '';
+    $Self->{Translation}->{'FAQ-Info'} = 'FAQ Informatie';
     $Self->{Translation}->{'Votes'} = 'Stemmen';
 
     # Template: AgentFAQSearch
@@ -116,21 +115,21 @@ sub Data {
     # Template: AgentFAQSearchOpenSearchDescriptionFAQNumber
 
     # Template: AgentFAQSearchOpenSearchDescriptionFulltext
-    $Self->{Translation}->{'FAQFulltext'} = '';
+    $Self->{Translation}->{'FAQFulltext'} = 'Zoeken in FAQ';
 
     # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
-    $Self->{Translation}->{'FAQ Search'} = '';
+    $Self->{Translation}->{'FAQ Search'} = 'FAQ zoeken';
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Informatie';
     $Self->{Translation}->{'Rating'} = 'Beoordeling';
-    $Self->{Translation}->{'Rating %'} = '';
+    $Self->{Translation}->{'Rating %'} = 'Beoordeling %';
     $Self->{Translation}->{'out of 5'} = 'van 5';
     $Self->{Translation}->{'No votes found!'} = 'Geen stemmen gevonden';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Geen stemmen gevonden. Wees de eerste om dit artikel te beoordelen.';
-    $Self->{Translation}->{'Download Attachment'} = '';
+    $Self->{Translation}->{'Download Attachment'} = 'Sla bijlage op';
     $Self->{Translation}->{'ArticleVotingQuestion'} = 'Hielp dit artikel bij het beantwoorden van uw vraag?';
     $Self->{Translation}->{'not helpful'} = 'helemaal niet';
     $Self->{Translation}->{'very helpful'} = 'heel erg';
@@ -165,7 +164,7 @@ sub Data {
     # Template: PublicFAQSearch
 
     # Template: PublicFAQSearchOpenSearchDescription
-    $Self->{Translation}->{'Public'} = '';
+    $Self->{Translation}->{'Public'} = 'Openbaar';
 
     # Template: PublicFAQSearchResultPrint
 
