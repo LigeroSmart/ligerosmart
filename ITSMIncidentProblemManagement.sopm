@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.63 2011-01-12 18:29:52 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.64 2011-01-24 19:54:02 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -15,8 +15,8 @@
         <File Permission="644" Location="Kernel/Config/Files/ITSMTicket.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/TicketITSMTicket.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Language/cs_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/ct_ITSMTicket.pm"/>
-        <File Permission="644" Location="Kernel/Language/cz_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/da_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ITSMTicket.pm"/>
@@ -271,7 +271,7 @@
         Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu installieren.<br/>
         <br/>
         <br/>
-        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <strong>BENÃTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.92</li>
         </ul>
@@ -280,7 +280,7 @@
         <br/>
 
     ]]></IntroInstall>
-    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+    <IntroInstall Type="pre" Title="InformaciÃ³n de InstalaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
         <strong>BIENVENIDO</strong>
@@ -325,7 +325,7 @@
         Sie sind im Begriff das OTRS-Paket ITSMIncidentProblemManagement zu aktualisieren.<br/>
         <br/>
         <br/>
-        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <strong>BENÃTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.92</li>
         </ul>
@@ -334,7 +334,7 @@
         <br/>
 
     ]]></IntroUpgrade>
-    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+    <IntroUpgrade Type="pre" Title="InformaciÃ³n de ActualizaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
         <strong>BIENVENIDO</strong>
@@ -376,27 +376,27 @@
         <br/>
         <br/>
         Bei der Deinstallation werden die von diesem Paket angelegten Ticket-Typen und -Status deaktiviert.
-        Diese können jederzeit im Admin-Bereich wieder aktiviert werden.
+        Diese kÃ¶nnen jederzeit im Admin-Bereich wieder aktiviert werden.
         <br/>
         <br/>
-        Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
+        Nach der Deinstallation sind die zu diesem Paket zugehÃ¶rigen Statistiken nicht mehr verfÃ¼gbar.
         <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
 
     ]]></IntroUninstall>
-    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+    <IntroUninstall Type="pre" Title="InformaciÃ³n de DesinstalaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
         <strong>ATTENTION</strong>
         <br/>
         <br/>
-        Si usted desinstala este paquete, los tipos de ticket y estados que fueron agregados durante la instalación serán desactivados.
-        Pueden ser activados de nuevo en el área de admin.
+        Si usted desinstala este paquete, los tipos de ticket y estados que fueron agregados durante la instalaciÃ³n serÃ¡n desactivados.
+        Pueden ser activados de nuevo en el Ã¡rea de admin.
         <br/>
         <br/>
-        Las estadísticas asociadas a este paquete no estarán disponibles si desinstala el paquete.
+        Las estadÃ­sticas asociadas a este paquete no estarÃ¡n disponibles si desinstala el paquete.
         <br/>
         <br/>
         ((enjoy))<br/>

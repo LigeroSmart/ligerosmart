@@ -1,15 +1,15 @@
 # --
-# Kernel/Language/ct_ITSMTicket.pm - translation file
+# Kernel/Language/cs_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ct_ITSMTicket.pm,v 1.10 2011-01-24 19:54:02 ub Exp $
+# $Id: cs_ITSMTicket.pm,v 1.1 2011-01-24 19:54:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::ct_ITSMTicket;
+package Kernel::Language::cs_ITSMTicket;
 
 use strict;
 
@@ -18,7 +18,7 @@ sub Data {
 
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Caviar Camps ITSM addicionals del tiquet';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Zmìna ITSM polí v tiketu';
     $Self->{Translation}->{'Impact'} = '';
 
     # Template: AgentTicketAddtlITSMField
@@ -38,25 +38,25 @@ sub Data {
     # Template: AgentTicketPrint
 
     # Template: AgentTicketZoom
-    $Self->{Translation}->{'Decision Result'} = 'Resultat de la decisió';
-    $Self->{Translation}->{'Decision Date'} = 'Data de decisió';
-    $Self->{Translation}->{'Repair Start Time'} = 'Temps d\'inici de la reparació';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Temps d\'inici de la recuperació';
-    $Self->{Translation}->{'Due date'} = 'Data de venciment';
+    $Self->{Translation}->{'Decision Result'} = 'Výsledek Øe¹ení';
+    $Self->{Translation}->{'Decision Date'} = 'Datum Øe¹ení';
+    $Self->{Translation}->{'Repair Start Time'} = 'Èas zahájení opravy';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Èas zahájení obnovení';
+    $Self->{Translation}->{'Due date'} = 'Nejzaz¹í Termín';
 
     # Template: CustomerTicketPrint
 
     # Template: CustomerTicketZoom
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = '';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Camps ITSM addicionals';
+    $Self->{Translation}->{'Add a decision!'} = 'Doplòte øe¹ení!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'Doplòková ITSM pole';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = '';
-    $Self->{Translation}->{'Decision'} = 'Decisió';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Zmìòte ITMS pole!';
+    $Self->{Translation}->{'Decision'} = 'Øe¹ení';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} = '';
@@ -111,9 +111,10 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Afegir decisió al tiquet';
-    $Self->{Translation}->{'Reason'} = 'Raó';
-    $Self->{Translation}->{'Review Required'} = 'Revisió requerida';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Pøidat øe¹ení k tiketu';
+    $Self->{Translation}->{'Reason'} = 'Pøíèina';
+    $Self->{Translation}->{'Review Required'} = 'Vy¾aduje Pøehled';
+    $Self->{Translation}->{'closed with workaround'} = 'uzavøeno doèasným øe¹ením';
 
 }
 
