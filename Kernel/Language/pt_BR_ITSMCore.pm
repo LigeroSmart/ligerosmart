@@ -1,9 +1,8 @@
 # --
-# Kernel/Language/pt_BR_ITSMCore.pm - the Brazilian translation of ITSMCore
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Copyright (C) 2010 Cristiano Korndörfer, http://www.dorfer.com.br/
+# Kernel/Language/pt_BR_ITSMCore.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_ITSMCore.pm,v 1.9 2010-08-18 21:13:24 en Exp $
+# $Id: pt_BR_ITSMCore.pm,v 1.10 2011-01-24 18:29:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,113 +12,132 @@
 package Kernel::Language::pt_BR_ITSMCore;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAITSMCore
+    $Self->{Translation}->{'Alternative to'} = 'Alternativa a';
+    $Self->{Translation}->{'Availability'} = 'Avaliabilidade';
+    $Self->{Translation}->{'Back End'} = '';
+    $Self->{Translation}->{'Connected to'} = 'Conectado a';
+    $Self->{Translation}->{'Current State'} = 'Situação Atual';
+    $Self->{Translation}->{'Demonstration'} = 'Demonstração';
+    $Self->{Translation}->{'Depends on'} = 'Depende de';
+    $Self->{Translation}->{'End User Service'} = 'Serviço a Usuário Final';
+    $Self->{Translation}->{'Errors'} = 'Erros';
+    $Self->{Translation}->{'Front End'} = '';
+    $Self->{Translation}->{'IT Management'} = 'Gerenciamento de TI';
+    $Self->{Translation}->{'IT Operational'} = 'Operações de TI';
+    $Self->{Translation}->{'Impact'} = 'Impacto';
+    $Self->{Translation}->{'Incident State'} = 'Situação de Incidentes';
+    $Self->{Translation}->{'Includes'} = 'Inclui';
+    $Self->{Translation}->{'Other'} = 'Outro';
+    $Self->{Translation}->{'Part of'} = 'Parte de';
+    $Self->{Translation}->{'Project'} = 'Projeto';
+    $Self->{Translation}->{'Recovery Time'} = 'Tempo de Recuperação';
+    $Self->{Translation}->{'Relevant to'} = 'Relevante a';
+    $Self->{Translation}->{'Reporting'} = 'Relatório';
+    $Self->{Translation}->{'Required for'} = 'Requisitado por';
+    $Self->{Translation}->{'Resolution Rate'} = 'Taxa de Resolução';
+    $Self->{Translation}->{'Response Time'} = 'Tempo de Resposta';
+    $Self->{Translation}->{'SLA Overview'} = 'Resumo da SLA';
+    $Self->{Translation}->{'Service Overview'} = 'Resumo do Serviço';
+    $Self->{Translation}->{'Service-Area'} = 'Serviço-Área';
+    $Self->{Translation}->{'Training'} = 'Treinamento';
+    $Self->{Translation}->{'Transactions'} = 'Transações';
+    $Self->{Translation}->{'Underpinning Contract'} = 'Contrato com Terceiros (UC)';
+    $Self->{Translation}->{'allocation'} = '';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminITSMCIPAllocate
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Criticalidade <-> Impacto <-> Prioridade';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
+    $Self->{Translation}->{'Priority allocation'} = 'Alocar prioridade';
 
-    $Lang->{'Criticality'}                         = 'Criticalidade';
-    $Lang->{'Impact'}                              = 'Impacto';
-    $Lang->{'Criticality <-> Impact <-> Priority'} = 'Criticalidade <-> Impacto <-> Prioridade';
-    $Lang->{'allocate'}                            = 'Alocar';
-    $Lang->{'Priority allocation'}                 = 'Alocar prioridade';
-    $Lang->{'Relevant to'}                         = 'Relevante a';
-    $Lang->{'Includes'}                            = 'Inclui';
-    $Lang->{'Part of'}                             = 'Parte de';
-    $Lang->{'Depends on'}                          = 'Depende de';
-    $Lang->{'Required for'}                        = 'Requisitado por';
-    $Lang->{'Connected to'}                        = 'Conectado a';
-    $Lang->{'Alternative to'}                      = 'Alternativa a';
-    $Lang->{'Incident State'}                      = 'Situação de Incidentes';
-    $Lang->{'Current Incident State'}              = 'Situação Atual de Incidentes';
-    $Lang->{'Current State'}                       = 'Situação Atual';
-    $Lang->{'Service-Area'}                        = 'Serviço-Área';
-    $Lang->{'Minimum Time Between Incidents'}      = 'Tempo Mínimo entre Incidentes';
-    $Lang->{'Service Overview'}                    = 'Resumo do Serviço';
-    $Lang->{'SLA Overview'}                        = 'Resumo da SLA';
-    $Lang->{'Associated Services'}                 = 'Serviços Associados';
-    $Lang->{'Associated SLAs'}                     = 'SLAs Associadas';
-    $Lang->{'Back End'}                            = '';
-    $Lang->{'Demonstration'}                       = 'Demonstração';
-    $Lang->{'End User Service'}                    = 'Serviço a Usuário Final';
-    $Lang->{'Front End'}                           = '';
-    $Lang->{'IT Management'}                       = 'Gerenciamento de TI';
-    $Lang->{'IT Operational'}                      = 'Operações de TI';
-    $Lang->{'Other'}                               = 'Outro';
-    $Lang->{'Project'}                             = 'Projeto';
-    $Lang->{'Reporting'}                           = 'Relatório';
-    $Lang->{'Training'}                            = 'Treinamento';
-    $Lang->{'Underpinning Contract'}               = 'Contrato com Terceiros (UC)';
-    $Lang->{'Availability'}                        = 'Avaliabilidade';
-    $Lang->{'Errors'}                              = 'Erros';
-    $Lang->{'Other'}                               = 'Outro';
-    $Lang->{'Recovery Time'}                       = 'Tempo de Recuperação';
-    $Lang->{'Resolution Rate'}                     = 'Taxa de Resolução';
-    $Lang->{'Response Time'}                       = 'Tempo de Resposta';
-    $Lang->{'Transactions'}                        = 'Transações';
-    $Lang->{'This setting controls the name of the application as is shown in the web interface as well as the tabs and title bar of your web browser.'} = '';
-    $Lang->{'Determines the way the linked objects are displayed in each zoom mask.'} = '';
-    $Lang->{'List of online repositories (for example you also can use other installations as repositoriy by using Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name").'} = '';
-    $Lang->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
-    $Lang->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = '';
-    $Lang->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';
-    $Lang->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = '';
-    $Lang->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = '';
-    $Lang->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = '';
-    $Lang->{'Module to show back link in service menu.'} = '';
-    $Lang->{'Module to show print link in service menu.'} = '';
-    $Lang->{'Module to show link link in service menu.'} = '';
-    $Lang->{'Module to show back link in sla menu.'} = '';
-    $Lang->{'Module to show print link in sla menu.'} = '';
-    $Lang->{'If ticket service/SLA feature is enabled, you can define ticket services and SLAs for tickets (e. g. email, desktop, network, ...).'} = '';
-    $Lang->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = '';
-    $Lang->{'Set the type of link to be used to calculate the incident state.'} = '';
-    $Lang->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Lang->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Lang->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Lang->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Lang->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} ='';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = '';
-    $Lang->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
-    $Lang->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = '';
-    $Lang->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = '';
-    $Lang->{'Width of ITSM textareas.'} = '';
-    $Lang->{'Parameters for the incident states in the preference view.'} = '';
-    $Lang->{'Manage priority matrix.'} = '';
-    $Lang->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
-    $Lang->{'Impact \ Criticality'} = '';
-    $Lang->{'Service Actions'} = '';
-    $Lang->{'SLA Actions'} = '';
-    $Lang->{'Current incident state'} = '';
-    $Lang->{'Linked Objects'} = '';
+    # Template: AdminNotification
 
-    return 1;
+    # Template: AdminSLA
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Tempo Mínimo entre Incidentes';
+
+    # Template: AdminService
+    $Self->{Translation}->{'Criticality'} = 'Criticalidade';
+
+    # Template: AgentITSMCustomerSearch
+
+    # Template: AgentITSMSLA
+
+    # Template: AgentITSMSLAPrint
+    $Self->{Translation}->{'SLA-Info'} = '';
+    $Self->{Translation}->{'Last changed'} = '';
+    $Self->{Translation}->{'Last changed by'} = '';
+
+    # Template: AgentITSMSLAZoom
+    $Self->{Translation}->{'SLA Information'} = '';
+    $Self->{Translation}->{'Show or hide the content.'} = '';
+    $Self->{Translation}->{'Associated Services'} = 'Serviços Associados';
+
+    # Template: AgentITSMService
+
+    # Template: AgentITSMServicePrint
+    $Self->{Translation}->{'Service-Info'} = '';
+    $Self->{Translation}->{'Current Incident State'} = 'Situação Atual de Incidentes';
+    $Self->{Translation}->{'Associated SLAs'} = 'SLAs Associadas';
+
+    # Template: AgentITSMServiceZoom
+    $Self->{Translation}->{'Service Information'} = '';
+    $Self->{Translation}->{'Current incident state'} = '';
+
+    # SysConfig
+    $Self->{Translation}->{'Allows defining services and SLAs for tickets (e. g. email, desktop, network, ...), and escalation attributes for SLAs (if ticket service/SLA feature is enabled).'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';
+    $Self->{Translation}->{'Manage priority matrix.'} = '';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
+    $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
+    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = '';
+    $Self->{Translation}->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
+    $Self->{Translation}->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
+    $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
+    $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
+    $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = '';
+
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

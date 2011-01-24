@@ -1,10 +1,10 @@
 # --
 # Kernel/Language/cz_ITSMCore.pm - the czech translation of ITSMCore
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2007-2008 Milen Koutev
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ITSMCore.pm,v 1.23 2010-08-18 21:13:24 en Exp $
+# $Id: cz_ITSMCore.pm,v 1.24 2011-01-24 18:29:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -120,7 +120,6 @@ sub Data {
     $Lang->{'Current incident state'} = '';
     $Lang->{'Linked Objects'} = '';
 
-    return 1;
 }
 
 1;
