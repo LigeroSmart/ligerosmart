@@ -1,0 +1,43 @@
+# --
+# AAAITSMCore.dtl - $Text variable file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# --
+# $Id: AAAITSMCore.dtl,v 1.1 2011-01-24 18:29:35 ub Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+# Common
+$Text{"Alternative to"}
+$Text{"Availability"}
+$Text{"Back End"}
+$Text{"Connected to"}
+$Text{"Current State"}
+$Text{"Demonstration"}
+$Text{"Depends on"}
+$Text{"End User Service"}
+$Text{"Errors"}
+$Text{"Front End"}
+$Text{"IT Management"}
+$Text{"IT Operational"}
+$Text{"Impact"}
+$Text{"Incident State"}
+$Text{"Includes"}
+$Text{"Other"}
+$Text{"Part of"}
+$Text{"Project"}
+$Text{"Recovery Time"}
+$Text{"Relevant to"}
+$Text{"Reporting"}
+$Text{"Required for"}
+$Text{"Resolution Rate"}
+$Text{"Response Time"}
+$Text{"SLA Overview"}
+$Text{"Service Overview"}
+$Text{"Service-Area"}
+$Text{"Training"}
+$Text{"Transactions"}
+$Text{"Underpinning Contract"}
+$Text{"allocation"}
