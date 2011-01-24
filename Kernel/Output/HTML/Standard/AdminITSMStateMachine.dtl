@@ -1,8 +1,8 @@
 # --
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.28 2010-12-09 03:01:15 ub Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.29 2011-01-24 21:20:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@
                             <input type="hidden" name="Subaction" value="StateTransitionAdd">
                             <div>$Data{"ClassSelectionString"}</div>
                             <div id="ClassError" class="TooltipErrorMessage"><p>$Text{"Select a catalog class!"}</p></div>
-                            <div id="ClassServerError" class="TooltipErrorMessage"><p>$Text{" A catalog class is required!"}</p></div>
+                            <div id="ClassServerError" class="TooltipErrorMessage"><p>$Text{"A catalog class is required!"}</p></div>
                             <button class="CallForAction Plus" type="submit" value="$Text{"Add"}">
                                 <span>$Text{"Add a state transition"}</span>
                             </button>
