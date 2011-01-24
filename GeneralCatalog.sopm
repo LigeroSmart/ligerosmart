@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.48 2010-09-22 17:56:41 cr Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.49 2011-01-24 18:41:40 ub Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -14,8 +14,8 @@
         <File Permission="644" Location="doc/general-catalog-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/GeneralCatalog.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_GeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/Language/cs_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/ct_GeneralCatalog.pm"/>
-        <File Permission="644" Location="Kernel/Language/cz_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/da_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/de_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_GeneralCatalog.pm"/>
@@ -150,7 +150,7 @@
         <strong>ACHTUNG</strong>
         <br/>
         <br/>
-        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelÃ¶scht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
         <br/>
         <br/>
@@ -158,14 +158,14 @@
         <br/>
 
     ]]></IntroUninstall>
-    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+    <IntroUninstall Type="pre" Title="InformaciÃ³n de DesinstalaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
-        <strong>ATENCIÓN</strong>
+        <strong>ATENCIÃN</strong>
         <br/>
         <br/>
-        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalación serán borradas.
-        ¡Todos los datos de esas tablas serán irrevocablemente perdidos!.
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalaciÃ³n serÃ¡n borradas.
+        Â¡Todos los datos de esas tablas serÃ¡n irrevocablemente perdidos!.
         <br/>
         <br/>
         ((enjoy))<br/>
