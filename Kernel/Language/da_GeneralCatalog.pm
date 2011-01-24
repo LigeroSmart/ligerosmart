@@ -1,8 +1,8 @@
 # --
-# Kernel/Language/da_GeneralCatalog.pm - provides da (Danish) language translation
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Language/da_GeneralCatalog.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_GeneralCatalog.pm,v 1.3 2010-08-12 22:50:38 cr Exp $
+# $Id: da_GeneralCatalog.pm,v 1.4 2011-01-24 17:32:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,30 +12,34 @@
 package Kernel::Language::da_GeneralCatalog;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAGeneralCatalog
+    $Self->{Translation}->{'Functionality'} = 'Funktionalitet';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminGeneralCatalog
+    $Self->{Translation}->{'General Catalog Management'} = 'General Katalog Management';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Tilføj katalog post';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Tilføj Katalog klasse';
+    $Self->{Translation}->{'Catalog Class'} = 'Katalog Klasse';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = '';
+    $Self->{Translation}->{'Catalog Class is required.'} = '';
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = '';
+    $Self->{Translation}->{'Name is required.'} = '';
 
-    $Lang->{'General Catalog'}            = 'General Katalog';
-    $Lang->{'General Catalog Management'} = 'General Katalog Management';
-    $Lang->{'Catalog Class'}              = 'Katalog Klasse';
-    $Lang->{'Add a new Catalog Class.'}   = 'Tilføj ny katalog klasse.';
-    $Lang->{'Add Catalog Item'}           = 'Tilføj katalog post';
-    $Lang->{'Add Catalog Class'}          = 'Tilføj Katalog klasse';
-    $Lang->{'Functionality'}              = 'Funktionalitet';
-    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
-    $Lang->{'Parameters for the example comment 2 of general catalog attributes.'} = '';
-    $Lang->{'Parameters for the example permission groups of general catalog attributes.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Self->{Translation}->{'General Catalog'} = 'General Katalog';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

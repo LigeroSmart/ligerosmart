@@ -1,8 +1,8 @@
 # --
-# Kernel/Language/de_GeneralCatalog.pm - the german translation of GeneralCatalog
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Language/de_GeneralCatalog.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_GeneralCatalog.pm,v 1.16 2010-08-12 22:50:38 cr Exp $
+# $Id: de_GeneralCatalog.pm,v 1.17 2011-01-24 17:32:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,33 +12,34 @@
 package Kernel::Language::de_GeneralCatalog;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAGeneralCatalog
+    $Self->{Translation}->{'Functionality'} = 'Funktionalität';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminGeneralCatalog
+    $Self->{Translation}->{'General Catalog Management'} = 'General-Katalog-Verwaltung';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Katalog-Eintrag hinzufügen';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Katalog-Klasse hinzufügen';
+    $Self->{Translation}->{'Catalog Class'} = 'Katalog-Klasse';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'Eine General-Katalog-Klasse benötigt eine Beschereibung!';
+    $Self->{Translation}->{'Catalog Class is required.'} = 'Katalog-Klasse ist erforderlich.';
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'Eine Katalog-Klasse benötigt einen Namen!';
+    $Self->{Translation}->{'Name is required.'} = 'Der Name ist erforderlich.';
 
-    $Lang->{'General Catalog'}            = 'General Catalog';
-    $Lang->{'General Catalog Management'} = 'General Catalog Verwaltung';
-    $Lang->{'Catalog Class'}              = 'Katalog Klasse';
-    $Lang->{'Add a new Catalog Class.'}   = 'Eine neue Katalog Klasse hinzufügen.';
-    $Lang->{'Add Catalog Item'}           = 'Katalog Eintrag hinzufügen';
-    $Lang->{'Add Catalog Class'}          = 'Katalog Klasse hinzufügen';
-    $Lang->{'Functionality'}              = 'Funktionalität';
-    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'}
-        = 'Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.';
-    $Lang->{'Parameters for the example comment 2 of general catalog attributes.'}
-        = 'Parameter für den Beispiel-Kommentar 2 der GeneralCatalog-Attribute.';
-    $Lang->{'Parameters for the example permission groups of general catalog attributes.'}
-        = 'Parameter für die zugriffsberechtigte Gruppe der GeneralCatalog-Attribute.';
+    # SysConfig
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'General-Katalog erstellen und verwalten.';
+    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = 'Frontendmodul-Registration der AdminGeneralCatalog Konfiguration im Admin-Bereich.';
+    $Self->{Translation}->{'General Catalog'} = 'General-Katalog';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'Parameter für den Beispiel-Kommentar 2 der General-Katalog-Attribute.';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = 'Parameter für die zugriffsberechtigte Gruppe der General-Katalog-Attribute.';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

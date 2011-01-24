@@ -1,9 +1,8 @@
 # --
-# Kernel/Language/fa_GeneralCatalog.pm - the persian (farsi) translation of GeneralCatalog
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Copyright (C) 2003-2009 Afshar Mohebbi <afshar.mohebbi at gmail.com>
+# Kernel/Language/fa_GeneralCatalog.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_GeneralCatalog.pm,v 1.3 2010-08-12 22:50:38 cr Exp $
+# $Id: fa_GeneralCatalog.pm,v 1.4 2011-01-24 17:32:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,30 +12,34 @@
 package Kernel::Language::fa_GeneralCatalog;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAGeneralCatalog
+    $Self->{Translation}->{'Functionality'} = 'کارکردی';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminGeneralCatalog
+    $Self->{Translation}->{'General Catalog Management'} = 'مدیریت فهرست عمومی';
+    $Self->{Translation}->{'Add Catalog Item'} = 'اضافه کردن یک قلم فهرست';
+    $Self->{Translation}->{'Add Catalog Class'} = 'اضافه کردن کلاس فهرستی';
+    $Self->{Translation}->{'Catalog Class'} = 'فهرست کلاسی';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = '';
+    $Self->{Translation}->{'Catalog Class is required.'} = '';
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = '';
+    $Self->{Translation}->{'Name is required.'} = '';
 
-    $Lang->{'General Catalog'}            = 'فهرست عمومی';
-    $Lang->{'General Catalog Management'} = 'مدیریت فهرست عمومی';
-    $Lang->{'Catalog Class'}              = 'فهرست کلاسی';
-    $Lang->{'Add a new Catalog Class.'}   = 'اضافه کردن فهرست کلاسی.';
-    $Lang->{'Add Catalog Item'}           = 'اضافه کردن یک قلم فهرست';
-    $Lang->{'Add Catalog Class'}          = 'اضافه کردن کلاس فهرستی';
-    $Lang->{'Functionality'}              = 'کارکردی';
-    $Lang->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
-    $Lang->{'Parameters for the example comment 2 of general catalog attributes.'} = '';
-    $Lang->{'Parameters for the example permission groups of general catalog attributes.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Self->{Translation}->{'General Catalog'} = 'فهرست عمومی';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;
