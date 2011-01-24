@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.37 2011-01-24 13:25:22 ub Exp $
+# $Id: de_FAQ.pm,v 1.38 2011-01-24 15:13:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -93,7 +93,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ-Sprachen-Verwaltung';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = 'Verwenden Sie dieses Feature wenn Sie mit verschiedenen Sprachen arbeiten wollen.';
     $Self->{Translation}->{'Add language'} = 'Sprache Hinzufügen';
-    $Self->{Translation}->{'Delete: '} = 'Löschen: ';
     $Self->{Translation}->{'Delete Language'} = 'Sprache Löschen';
     $Self->{Translation}->{'Add Language'} = 'Sprache Hinzufügen';
     $Self->{Translation}->{'Edit Language'} = 'Sprache Bearbeiten';
@@ -277,6 +276,7 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'Delete: '} = 'Löschen: ';
 
 }
 
