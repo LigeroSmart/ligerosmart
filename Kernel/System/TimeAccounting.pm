@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.47 2011-01-20 04:51:23 en Exp $
+# $Id: TimeAccounting.pm,v 1.48 2011-01-24 23:58:21 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -355,7 +355,7 @@ sub UserReporting {
 
 =item ProjectSettingsGet()
 
-returns a hash with the project data
+returns a hash with all the projects' data
 
     my %ProjectData = $TimeAccountingObject->ProjectSettingsGet(
         Status => 'valid' || 'invalid', optional default valid && invalid
@@ -392,7 +392,7 @@ sub ProjectSettingsGet {
 
 =item ProjectGet()
 
-returns a hash with project data
+returns a hash with the requested project data
 
     my %ProjectData = $TimeAccountingObject->ProjectGet( ID => 2 );
 
@@ -518,36 +518,6 @@ sub ProjectSettingsInsert {
     return $ProjectID;
 }
 
-=item ProjectSettingsDelete()
-
-delete records of project from database
-
-    $TimeAccountingObject->ProjectSettingsDelete(
-        ProjectID          => 3423, # ID of record
-    );
-
-=cut
-
-sub ProjectSettingsDelete {
-    my ( $Self, %Param ) = @_;
-
-    if ( !exists $Param{ProjectID} || !$Param{ProjectID} ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'ProjectSettingsDelete: Need ProjectID!',
-        );
-        return;
-    }
-
-    # delete project record
-    my $Result = $Self->{DBObject}->Do(
-        SQL  => 'DELETE FROM time_accounting_project WHERE id = ?',
-        Bind => [ \$Param{ProjectID}, ],
-    );
-
-    return $Result;
-}
-
 =item ProjectSettingsUpdate()
 
 update of a project
@@ -586,7 +556,7 @@ sub ProjectSettingsUpdate {
 
 =item ActionSettingsGet()
 
-returns a hash with the action settings
+returns a hash with all the actions settings
 
     my %ActionData = $TimeAccountingObject->ActionSettingsGet();
 
@@ -610,7 +580,7 @@ sub ActionSettingsGet {
 
 =item ActionGet()
 
-returns a hash with action (task) data
+returns a hash with the requested action (task) data
 
     my %ActionData = $TimeAccountingObject->ActionGet( ID => 2 );
 
@@ -623,7 +593,7 @@ This returns something like:
 
     or
 
-    my %ActionData = $TimeAccountingObject->ActionGet( Action => 'My task; );
+    my %ActionData = $TimeAccountingObject->ActionGet( Action => 'My task' );
 
 This returns something like:
 
@@ -685,7 +655,7 @@ sub ActionGet {
 
 =item ActionSettingsInsert()
 
-insert new action data in the db
+inserts a new action in the db
 
     $TimeAccountingObject->ActionSettingsInsert(
         Action       => 'meeting',   # optional
@@ -719,7 +689,7 @@ sub ActionSettingsInsert {
 
 =item ActionSettingsUpdate()
 
-update of an action (task)
+updates an action (task)
 
     my $Success = $TimeAccountingObject->ActionSettingsUpdate(
         ActionID     => 123,
@@ -1772,7 +1742,7 @@ sub ProjectHistory {
 
 =item LastProjectsOfUser()
 
-returns the a array with the last projects of the user
+returns an array with the last projects of the current user
 
     my @LastProjects = $TimeAccountingObject->LastProjectsOfUser();
 
@@ -1818,6 +1788,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2011-01-20 04:51:23 $
+$Revision: 1.48 $ $Date: 2011-01-24 23:58:21 $
 
 =cut
