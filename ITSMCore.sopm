@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.121 2011-01-24 15:36:03 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.122 2011-01-24 15:42:51 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -31,6 +31,7 @@
         <File Permission="644" Location="Kernel/Language/ru_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Language/zh_CN_ITSMCore.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMCIPAllocate.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AdminNotification.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminService.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminSLA.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMService.pm"/>
@@ -44,6 +45,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/ITSMSLAMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectService.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminITSMCIPAllocate.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminNotification.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminService.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminSLA.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMCustomerSearch.dtl"/>
