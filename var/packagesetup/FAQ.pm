@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.15 2011-01-24 14:25:17 cr Exp $
+# $Id: FAQ.pm,v 1.16 2011-01-24 14:53:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -597,38 +597,24 @@ creates aditional FAQ languages for system default language and user language
 sub _CreateAditionalFAQLanguages {
     my ( $Self, %Param ) = @_;
 
-    # to store language names
-    my @NewLanguages;
-
-    my $Language;
-
     # get system defaut language
-    $Language = $Self->{ConfigObject}->Get('DefaultLanguage');
+    my $Language = $Self->{ConfigObject}->Get('DefaultLanguage');
     if ($Language) {
-        push @NewLanguages, $Language;
-    }
 
-    # get user language
-    $Language = $Self->{LayoutObject}->{UserLanguage};
-    if ($Language) {
-        push @NewLanguages, $Language;
-    }
+        # get current FAQ languages
+        my %CurrentLanguages = $Self->{FAQObject}->LanguageList(
+            UserID => 1,
+        );
 
-    # get current FAQ languages
-    my %CurrentLanguages = $Self->{FAQObject}->LanguageList(
-        UserID => $Self->{UserID},
-    );
+        # use reverse hash for easy lookup
+        my %ReverseLanguages = reverse %CurrentLanguages;
 
-    # use reverse hash for easy lookup
-    my %ReverseLanguages = reverse %CurrentLanguages;
-
-    # check if language is already defined
-    for my $NewLanguage (@NewLanguages) {
-        if ( !$ReverseLanguages{$NewLanguage} ) {
+        # check if language is already defined
+        if ( !$ReverseLanguages{$Language} ) {
 
             # add language
             my $Success = $Self->{FAQObject}->LanguageAdd(
-                Name   => $NewLanguage,
+                Name   => $Language,
                 UserID => 1,
             );
         }
@@ -652,6 +638,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2011-01-24 14:25:17 $
+$Revision: 1.16 $ $Date: 2011-01-24 14:53:41 $
 
 =cut
