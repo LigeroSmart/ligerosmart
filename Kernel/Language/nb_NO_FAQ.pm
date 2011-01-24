@@ -2,7 +2,7 @@
 # Kernel/Language/nb_NO_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nb_NO_FAQ.pm,v 1.2 2011-01-24 13:25:22 ub Exp $
+# $Id: nb_NO_FAQ.pm,v 1.3 2011-01-24 18:06:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -91,7 +91,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Language Management'} = 'Språkoppsett for OSS';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = '';
     $Self->{Translation}->{'Add language'} = 'Legg til språk';
-    $Self->{Translation}->{'Delete: '} = '';
     $Self->{Translation}->{'Delete Language'} = 'Slett språk';
     $Self->{Translation}->{'Add Language'} = 'Legg til språk';
     $Self->{Translation}->{'Edit Language'} = 'Endre språk';
@@ -185,15 +184,15 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} = '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} = '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} = '';
@@ -224,23 +223,20 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Språkoppsett';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'LanguageKey definert i språkfilen *_FAQ.pm';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Lenk opp et annet objekt til denne artikkelen';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = '';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '';
-    $Self->{Translation}->{'Module to generate accounted time ticket statistics.'} = '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
-    $Self->{Translation}->{'Module to generate ticket solution and response time statistics.'} = '';
-    $Self->{Translation}->{'Module to generate ticket statistics.'} = '';
     $Self->{Translation}->{'New FAQ Article'} = 'Ny OSS-artikkel';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Nye artikler trenger godkjenning før de kan publiseres.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} = '';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} = '';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} = '';
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Antall objekter vist i siste endringer.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Antall viste objekter under sist opprettet.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Antall viste artikler i "Topp 10"-funksjonen';
@@ -249,9 +245,9 @@ sub Data {
     $Self->{Translation}->{'Print this FAQ'} = 'Skriv ut denne artikkelen';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Kø for godkjenning av OSS-artikler.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Rater for avstemming. Nøkkel må være i prosent.';
-    $Self->{Translation}->{'Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
-    $Self->{Translation}->{'Show "Insert Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
-    $Self->{Translation}->{'Show "Insert Text" Button in AgentFAQZoomSmall.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = '';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'Vis HTML i OSS-artikkel.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = 'Vis OSS-sti (ja/nei)';
     $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = 'Vis WYSIWYG-redigerer i agent-delen.';

@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_FAQ.pm,v 1.19 2011-01-24 13:25:22 ub Exp $
+# $Id: zh_CN_FAQ.pm,v 1.20 2011-01-24 18:06:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -93,7 +93,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ 语言管理';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = '';
     $Self->{Translation}->{'Add language'} = '';
-    $Self->{Translation}->{'Delete: '} = '';
     $Self->{Translation}->{'Delete Language'} = '删除语言';
     $Self->{Translation}->{'Add Language'} = '增加语言';
     $Self->{Translation}->{'Edit Language'} = '编辑语言';
@@ -190,15 +189,15 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} = '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} = '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} = '';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} = '';
@@ -230,20 +229,20 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = '';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
     $Self->{Translation}->{'Link another object to this FAQ item'} = '链接';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = '';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
     $Self->{Translation}->{'New FAQ Article'} = '添加新文章';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '新的 FAQ 文章在发布前需要批准.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} = '';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} = '';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} = '';
     $Self->{Translation}->{'Number of shown items in last changes.'} = '显示最近更改项目的数量.';
     $Self->{Translation}->{'Number of shown items in last created.'} = '显示最新创建项目的数量.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '显示点击量前十位项目的数量.';
@@ -254,9 +253,9 @@ sub Data {
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '好评率, 键值必须在百分比以内.';
     $Self->{Translation}->{'Search FAQ'} = '';
     $Self->{Translation}->{'Set this to yes if you trust in all your public and private pgp keys, even if they are not certified with a trusted signature.'} = '';
-    $Self->{Translation}->{'Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
-    $Self->{Translation}->{'Show "Insert Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
-    $Self->{Translation}->{'Show "Insert Text" Button in AgentFAQZoomSmall.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = '';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = '';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = '是/否显示 FAQ 路径.';
     $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = '在服务人员介面显示 WYSIWYG(所见即所得)编辑器.';

@@ -2,7 +2,7 @@
 # Kernel/Language/es_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_FAQ.pm,v 1.28 2011-01-24 13:25:22 ub Exp $
+# $Id: es_FAQ.pm,v 1.29 2011-01-24 18:06:53 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -93,7 +93,6 @@ sub Data {
     $Self->{Translation}->{'FAQ Language Management'} = 'Administración de Idiomas de FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = 'Utilice esta funcionalidad si desea trabajar con múltiples idiomas.';
     $Self->{Translation}->{'Add language'} = 'Agregar idioma';
-    $Self->{Translation}->{'Delete: '} = 'Borrar: ';
     $Self->{Translation}->{'Delete Language'} = 'Borrar Idioma';
     $Self->{Translation}->{'Add Language'} = 'Agregar Idioma';
     $Self->{Translation}->{'Edit Language'} = 'Editar Idioma';
@@ -187,15 +186,15 @@ sub Data {
     $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} = 'Valor por omisión para el parámetro "Action" para el "fronend" público. El parámetro "Action" es usado do en los "scripts" del sistema.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} = 'Define un módulo de tipo resumen para mostrar la vista corta de la bitácora de FAQ';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} = 'Define un módulo tipo resumen para mostrar la vista corta de un listado de FAQs';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en el Explorador FAQ en la interface del agente.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en una búsqeda de FAQ en la interface del agente.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en una búsqeda de FAQ en la interface del cliente.';
     $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en una búsqeda de FAQ en la interface pública.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en el Explorador FAQ en la interface del cliente.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en el Explorador FAQ en la interface pública.';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado del Explorador FAQ en la interface del cliente. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
-    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado del Explorador FAQ en la interface pública. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
-    $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado del Explorador FAQ en la interface del agente. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} = '';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado de una búsqueda en la interface del agente. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado de una búsqueda en la interface del cliente. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado de una búsqueda en la interface pública. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
@@ -226,20 +225,20 @@ sub Data {
     $Self->{Translation}->{'Language Management'} = 'Administración de Idiomas';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'La clave se encuentra definida en el archivo de idioma *_FAQ.pm.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Vincular otro objecto a este artículo FAQ';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = '';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = 'Número máximo de artículos FAQ a ser mostrados en la bitácora de FAQ en la interface del agente.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = 'Número máximo de artículos FAQ a ser mostrados dentro del explorador en la interface del cliente.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = 'Número máximo de artículos FAQ a ser mostrados dentro del explorador en la interface pública.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} = 'Número máximo de artículos FAQ a ser mostrados como resultado del Explorador FAQ en la interface del agente.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.'} = 'Número máximo de artículos FAQ a ser mostrados como resultado de una búsqueda en la interface del agente.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = 'Número máximo de artículos FAQ a ser mostrados como resultado de una búsqueda en la interface del cliente.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = 'Número máximo de artículos FAQ a ser mostrados como resultado de una búsqueda en la interface pública.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = 'Módulo para generar el perfil html "OpenSearch" para búsquedas cortas de FAQ.';
     $Self->{Translation}->{'New FAQ Article'} = 'Nuevo FAQ';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '¿Los nuevos artículos FAQ requieren aprobación antes de ser publicados?';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} = 'Número de artículos FAQ a ser mostrados por cada página como resultado de una búsqueda en la interface del cliente.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} = 'Número de artículos FAQ a ser mostrados por cada página como resultado de una búsqueda en la interface pública.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} = 'Número de artículos FAQ a ser mostrados dentro del explorador en la interface del cliente.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} = 'Número de artículos FAQ a ser mostrados dentro del explorador en la interface pública.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} = '';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} = '';
     $Self->{Translation}->{'Number of shown items in last changes.'} = 'Número de últimos artículos actualizados que se mostrarán.';
     $Self->{Translation}->{'Number of shown items in last created.'} = 'Número de últimos artículos creados que se mostrarán.';
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Número de artículos que se mostrarán en el Top 10.';
@@ -249,9 +248,9 @@ sub Data {
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Fila para la aprobación de los artículos FAQ.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Rangos para la votación. La llave debe estar expresada en porcentajes.';
     $Self->{Translation}->{'Search FAQ'} = 'Búsqueda FAQ';
-    $Self->{Translation}->{'Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = 'Mostrar el Botón "Insertar Vínculo" en AgentFAQZoomSmall para artículos FAQ públicos';
-    $Self->{Translation}->{'Show "Insert Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = 'Mostrar el Botón "Insertar Texto & Vínculo" en AgentFAQZoomSmall para artículos FAQ públicos';
-    $Self->{Translation}->{'Show "Insert Text" Button in AgentFAQZoomSmall.'} = 'Mostrar el Botón "Insertar Texto" en AgentFAQZoomSmall para artículos FAQ públicos';
+    $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
+    $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = '';
     $Self->{Translation}->{'Show FAQ Article with HTML.'} = '¿Mostrar contenido HTML en los artículos FAQ?.';
     $Self->{Translation}->{'Show FAQ path yes/no.'} = '¿Mostrar la ruta del FAQ? si/no.';
     $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = 'Mostrar el editor WYSIWYG en la interface del agente.';
@@ -282,13 +281,30 @@ sub Data {
     $Self->{Translation}->{'Agent groups which can access this category.'} = 'Los grupos agentes pueden acceder a esta categoría';
     $Self->{Translation}->{'Articles'} = 'Artículos';
     $Self->{Translation}->{'Categories'} = 'Categorias';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en el Explorador FAQ en la interface del agente.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en el Explorador FAQ en la interface del cliente.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.'} = 'Define el atributo por omisión para ordenar los artículos FAQ en el Explorador FAQ en la interface pública.';
+    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado del Explorador FAQ en la interface del cliente. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
+    $Self->{Translation}->{'Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado del Explorador FAQ en la interface pública. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
+    $Self->{Translation}->{'Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.'} = 'Define el sentido del orden por omisión en el resultado del Explorador FAQ en la interface del agente. Arriba: los más antiguos en la parte superior. Abajo: los últimos en la parte superior.';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Define dónde es que la liga \'Insertar FAQ\' será desplegada.';
+    $Self->{Translation}->{'Delete: '} = 'Borrar: ';
     $Self->{Translation}->{'DetailSearch'} = 'Busqueda detallada';
     $Self->{Translation}->{'Do you really want to delete this Category?'} = '¿Está seguro de querer borrar esta Categoría?';
     $Self->{Translation}->{'Do you really want to delete this Language?'} = '¿Está seguro de querer borrar este Idioma?';
     $Self->{Translation}->{'FAQ Category'} = 'Categoría de FAQ';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = 'Número máximo de artículos FAQ a ser mostrados dentro del explorador en la interface del cliente.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = 'Número máximo de artículos FAQ a ser mostrados dentro del explorador en la interface pública.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.'} = 'Número máximo de artículos FAQ a ser mostrados como resultado del Explorador FAQ en la interface del agente.';
     $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'No se puede acceder a ninguna categoría. Para crear un articulo usted debe tener acceso a mínimo una categoría. Por favor revise sus permisos de grupo/categoría en el -menú categoría-!';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the customer interface.'} = 'Número de artículos FAQ a ser mostrados por cada página como resultado de una búsqueda en la interface del cliente.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in each page of a search result in the public interface.'} = 'Número de artículos FAQ a ser mostrados por cada página como resultado de una búsqueda en la interface pública.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the customer interface.'} = 'Número de artículos FAQ a ser mostrados dentro del explorador en la interface del cliente.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the explorer in the public interface.'} = 'Número de artículos FAQ a ser mostrados dentro del explorador en la interface pública.';
     $Self->{Translation}->{'QuickSearch'} = 'Busqueda rápida';
+    $Self->{Translation}->{'Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = 'Mostrar el Botón "Insertar Vínculo" en AgentFAQZoomSmall para artículos FAQ públicos';
+    $Self->{Translation}->{'Show "Insert Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = 'Mostrar el Botón "Insertar Texto & Vínculo" en AgentFAQZoomSmall para artículos FAQ públicos';
+    $Self->{Translation}->{'Show "Insert Text" Button in AgentFAQZoomSmall.'} = 'Mostrar el Botón "Insertar Texto" en AgentFAQZoomSmall para artículos FAQ públicos';
     $Self->{Translation}->{'Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface'} = 'Muestra un liga en el menú para acceder al historial de un artículo FAQ en su vista de detalles en la interface del agente.';
     $Self->{Translation}->{'SubCategories'} = 'Subcategorias';
     $Self->{Translation}->{'The title is required.'} = 'El título es requerido.';
