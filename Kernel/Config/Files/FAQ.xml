@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.103 2011-01-24 10:37:17 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.104 2011-01-24 17:59:21 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -482,7 +482,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SearchLimit" Required="1" Valid="1">
-        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the explorer in the customer interface.</Description>
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -490,7 +490,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SearchPageShown" Required="1" Valid="1">
-        <Description Translatable="1">Number of FAQ articles to be displayed in the explorer in the customer interface.</Description>
+        <Description Translatable="1">Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -498,7 +498,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###SortBy::Default" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the explorer in the customer interface.</Description>
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -512,7 +512,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerFAQExplorer###Order::Default" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default FAQ order in the explorer in the customer interface. Up: oldest on top. Down: latest on top.</Description>
+        <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -558,7 +558,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SearchLimit" Required="1" Valid="1">
-        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the explorer in the public interface.</Description>
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -566,7 +566,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SearchPageShown" Required="1" Valid="1">
-        <Description Translatable="1">Number of FAQ articles to be displayed in the explorer in the public interface.</Description>
+        <Description Translatable="1">Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -574,7 +574,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###SortBy::Default" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the explorer in the public interface.</Description>
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -588,7 +588,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::PublicFAQExplorer###Order::Default" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default FAQ order in the explorer in the public interface. Up: oldest on top. Down: latest on top.</Description>
+        <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -900,7 +900,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###SortBy::Default" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in a FAQ Explorer of the agent interface.</Description>
+        <Description Translatable="1">Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -914,7 +914,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###Order::Default" Required="1" Valid="1">
-        <Description Translatable="1">Defines the default FAQ order of a Explorer result in the agent interface. Up: oldest on top. Down: latest on top.</Description>
+        <Description Translatable="1">Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -924,8 +924,8 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###ExplorerLimit" Required="1" Valid="1">
-        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the result of a Explorer in the agent interface.</Description>
+    <ConfigItem Name="FAQ::Frontend::AgentFAQExplorer###SearchLimit" Required="1" Valid="1">
+        <Description Translatable="1">Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::ViewFAQExplorer</SubGroup>
         <Setting>
@@ -1125,7 +1125,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerFAQSearch###SearchPageShown" Required="1" Valid="1">
-        <Description Translatable="1">Number of FAQ articles to be displayed in each page of a search result in the customer interface.</Description>
+        <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the customer interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::ViewFAQSearch</SubGroup>
         <Setting>
@@ -1217,7 +1217,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::PublicFAQSearch###SearchPageShown" Required="1" Valid="1">
-        <Description Translatable="1">Number of FAQ articles to be displayed in each page of a search result in the public interface.</Description>
+        <Description Translatable="1">Number of FAQ articles to be displayed on each page of a search result in the public interface.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Public::ViewFAQSearch</SubGroup>
         <Setting>
@@ -1413,7 +1413,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextButton" Required="1" Valid="1">
-        <Description Translatable="1">Show "Insert Text" Button in AgentFAQZoomSmall.</Description>
+        <Description Translatable="1">Show "Insert FAQ Text" Button in AgentFAQZoomSmall.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
@@ -1424,7 +1424,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertLinkButton" Required="1" Valid="1">
-        <Description Translatable="1">Show "Insert Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Description Translatable="1">Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
@@ -1435,7 +1435,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextAndLinkButton" Required="1" Valid="1">
-        <Description Translatable="1">Show "Insert Text &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Description Translatable="1">Show "Insert FAQ Text &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
