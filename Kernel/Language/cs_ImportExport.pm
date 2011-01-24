@@ -1,22 +1,22 @@
 # --
-# Kernel/Language/cz_ImportExport.pm - the czech translation of ImportExport
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Language/cs_ImportExport.pm - the czech translation of ImportExport
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_ImportExport.pm,v 1.12 2010-09-14 21:49:14 dz Exp $
+# $Id: cs_ImportExport.pm,v 1.1 2011-01-24 20:31:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Language::cz_ImportExport;
+package Kernel::Language::cs_ImportExport;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 sub Data {
     my $Self = shift;

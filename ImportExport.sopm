@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.45 2010-10-20 19:26:05 dz Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.46 2011-01-24 20:31:27 ub Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -15,8 +15,8 @@
         <File Permission="644" Location="doc/import-export-database.png"/>
         <File Permission="644" Location="Kernel/Config/Files/ImportExport.xml"/>
         <File Permission="644" Location="Kernel/Language/bg_ImportExport.pm"/>
+        <File Permission="644" Location="Kernel/Language/cs_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/ct_ImportExport.pm"/>
-        <File Permission="644" Location="Kernel/Language/cz_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/da_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/de_ImportExport.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ImportExport.pm"/>
