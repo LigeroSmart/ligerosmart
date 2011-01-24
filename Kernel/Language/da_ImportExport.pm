@@ -1,8 +1,8 @@
 # --
-# Kernel/Language/da_ImportExport.pm - provides da (Danish) language translation
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Language/da_ImportExport.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_ImportExport.pm,v 1.4 2010-09-14 21:49:14 dz Exp $
+# $Id: da_ImportExport.pm,v 1.5 2011-01-24 20:49:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,51 +12,54 @@
 package Kernel::Language::da_ImportExport;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAImportExport
+    $Self->{Translation}->{'Add mapping template'} = 'Tilføj Mapping-Template';
+    $Self->{Translation}->{'Charset'} = 'Tegnsæt';
+    $Self->{Translation}->{'Colon (:)'} = 'Kolon (:)';
+    $Self->{Translation}->{'Column'} = 'Kolonne';
+    $Self->{Translation}->{'Column Separator'} = '';
+    $Self->{Translation}->{'Dot (.)'} = 'Punktum (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminImportExport
+    $Self->{Translation}->{'Import/Export Management'} = 'Import/Ekport styring';
+    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Note'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Start Import'} = 'Start import';
+    $Self->{Translation}->{'Start Export'} = 'Start ekport';
+    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Step'} = 'Trin';
+    $Self->{Translation}->{'Edit common information'} = 'Ret fælles information';
+    $Self->{Translation}->{'Name is required!'} = '';
+    $Self->{Translation}->{'Object is required!'} = '';
+    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Edit object information'} = 'Ret objekt information';
+    $Self->{Translation}->{'Edit format information'} = 'Ret format information';
+    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'Edit mapping information'} = 'Ret mapping information';
+    $Self->{Translation}->{'No map elements found.'} = '';
+    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'Edit search information'} = 'Ret søgeinformation';
+    $Self->{Translation}->{'Restrict export per search'} = 'Begræns ekport pr. søgning';
+    $Self->{Translation}->{'Import information'} = 'Import information';
+    $Self->{Translation}->{'Source File'} = 'Kilde fil';
 
-    $Lang->{'Import/Export'}              = 'Import/Ekport';
-    $Lang->{'Import/Export Management'}   = 'Import/Ekport styring';
-    $Lang->{'Add mapping template'}       = 'Tilføj Mapping-Template';
-    $Lang->{'Start Import'}               = 'Start import';
-    $Lang->{'Start Export'}               = 'Start ekport';
-    $Lang->{'Step'}                       = 'Trin';
-    $Lang->{'Edit common information'}    = 'Ret fælles information';
-    $Lang->{'Edit object information'}    = 'Ret objekt information';
-    $Lang->{'Edit format information'}    = 'Ret format information';
-    $Lang->{'Edit mapping information'}   = 'Ret mapping information';
-    $Lang->{'Edit search information'}    = 'Ret søgeinformation';
-    $Lang->{'Import information'}         = 'Import information';
-    $Lang->{'Column'}                     = 'Kolonne';
-    $Lang->{'Restrict export per search'} = 'Begræns ekport pr. søgning';
-    $Lang->{'Source File'}                = 'Kilde fil';
-    $Lang->{'Column Seperator'}           = 'Kolonne adskillelse';
-    $Lang->{'Tabulator (TAB)'}            = 'Tabulator (TAB)';
-    $Lang->{'Semicolon (;)'}              = 'Semikolon (;)';
-    $Lang->{'Colon (:)'}                  = 'Kolon (:)';
-    $Lang->{'Dot (.)'}                    = 'Punktum (.)';
-    $Lang->{'Charset'}                    = 'Tegnsæt';
-    $Lang->{'Frontend module registration for the agent interface.'} = '';
-    $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import/Export'} = 'Import/Ekport';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+    $Self->{Translation}->{'Column Seperator'} = 'Kolonne adskillelse';
+
 }
 
 1;

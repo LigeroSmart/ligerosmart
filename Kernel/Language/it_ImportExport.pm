@@ -1,8 +1,8 @@
 # --
-# Kernel/Language/it_ImportExport.pm - the italian translation of ImportExport
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Language/it_ImportExport.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: it_ImportExport.pm,v 1.5 2010-09-14 21:49:14 dz Exp $
+# $Id: it_ImportExport.pm,v 1.6 2011-01-24 20:49:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,51 +12,51 @@
 package Kernel::Language::it_ImportExport;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAImportExport
+    $Self->{Translation}->{'Add mapping template'} = 'Aggiungi mappatura modello';
+    $Self->{Translation}->{'Charset'} = 'Charset';
+    $Self->{Translation}->{'Colon (:)'} = 'Due punti (:)';
+    $Self->{Translation}->{'Column'} = 'Colonna';
+    $Self->{Translation}->{'Column Separator'} = 'Separatore di colonna';
+    $Self->{Translation}->{'Dot (.)'} = 'Punto (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Punto e virgola (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulatore (TAB)';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminImportExport
+    $Self->{Translation}->{'Import/Export Management'} = 'Gestione Importazione/Esportazione';
+    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Start Import'} = 'Iniziare Importazione';
+    $Self->{Translation}->{'Start Export'} = 'Iniziare Esportazione';
+    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Step'} = 'Passo';
+    $Self->{Translation}->{'Edit common information'} = 'Modifica informazioni comuni';
+    $Self->{Translation}->{'Object is required!'} = '';
+    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Edit object information'} = 'Modifica informazioni oggetto';
+    $Self->{Translation}->{'Edit format information'} = 'Modifica formato informazione';
+    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'Edit mapping information'} = 'Modifica mappatura informazioni';
+    $Self->{Translation}->{'No map elements found.'} = '';
+    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'Edit search information'} = 'Modifica informazioni di ricerca';
+    $Self->{Translation}->{'Restrict export per search'} = 'Restringere esportazione per ricerca';
+    $Self->{Translation}->{'Import information'} = 'Importare informazione';
+    $Self->{Translation}->{'Source File'} = 'Archivio origine';
 
-    $Lang->{'Import/Export'}              = 'Importare/Esportare';
-    $Lang->{'Import/Export Management'}   = 'Gestione Importazione/Esportazione';
-    $Lang->{'Add mapping template'}       = 'Aggiungi mappatura modello';
-    $Lang->{'Start Import'}               = 'Iniziare Importazione';
-    $Lang->{'Start Export'}               = 'Iniziare Esportazione';
-    $Lang->{'Step'}                       = 'Passo';
-    $Lang->{'Edit common information'}    = 'Modifica informazioni comuni';
-    $Lang->{'Edit object information'}    = 'Modifica informazioni oggetto';
-    $Lang->{'Edit format information'}    = 'Modifica formato informazione';
-    $Lang->{'Edit mapping information'}   = 'Modifica mappatura informazioni';
-    $Lang->{'Edit search information'}    = 'Modifica informazioni di ricerca';
-    $Lang->{'Import information'}         = 'Importare informazione';
-    $Lang->{'Column'}                     = 'Colonna';
-    $Lang->{'Restrict export per search'} = 'Restringere esportazione per ricerca';
-    $Lang->{'Source File'}                = 'Archivio origine';
-    $Lang->{'Column Separator'}           = 'Separatore di colonna';
-    $Lang->{'Tabulator (TAB)'}            = 'Tabulatore (TAB)';
-    $Lang->{'Semicolon (;)'}              = 'Punto e virgola (;)';
-    $Lang->{'Colon (:)'}                  = 'Due punti (:)';
-    $Lang->{'Dot (.)'}                    = 'Punto (.)';
-    $Lang->{'Charset'}                    = 'Charset';
-    $Lang->{'Frontend module registration for the agent interface.'} = '';
-    $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import/Export'} = 'Importare/Esportare';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

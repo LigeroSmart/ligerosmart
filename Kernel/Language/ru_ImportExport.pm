@@ -1,9 +1,8 @@
 # --
-# Kernel/Language/ru_ImportExport.pm - the russian translation of ImportExport
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Copyright (C) 2008 Egor Tsilenko <bg8s at symlink.ru>
+# Kernel/Language/ru_ImportExport.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_ImportExport.pm,v 1.6 2010-09-14 21:49:14 dz Exp $
+# $Id: ru_ImportExport.pm,v 1.7 2011-01-24 20:49:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,51 +12,51 @@
 package Kernel::Language::ru_ImportExport;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAImportExport
+    $Self->{Translation}->{'Add mapping template'} = 'Добавление шаблона соответствия';
+    $Self->{Translation}->{'Charset'} = 'Кодировка';
+    $Self->{Translation}->{'Colon (:)'} = 'Двоеточие (:)';
+    $Self->{Translation}->{'Column'} = 'Столбец';
+    $Self->{Translation}->{'Column Separator'} = 'Разделитель';
+    $Self->{Translation}->{'Dot (.)'} = 'Точка (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Точка с запятой (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Табуляция (TAB)';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminImportExport
+    $Self->{Translation}->{'Import/Export Management'} = 'Управление Импортом/Экспортом';
+    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Start Import'} = 'Начать импорт';
+    $Self->{Translation}->{'Start Export'} = 'Начать экспорт';
+    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Step'} = 'Шаг';
+    $Self->{Translation}->{'Edit common information'} = 'Редактировать общую информацию';
+    $Self->{Translation}->{'Object is required!'} = '';
+    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Edit object information'} = 'Редактировать информацию об объекте';
+    $Self->{Translation}->{'Edit format information'} = 'Редактировать формат данных';
+    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'Edit mapping information'} = 'Редактировать информацию соответствия';
+    $Self->{Translation}->{'No map elements found.'} = '';
+    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'Edit search information'} = 'Редактировать поисковую информацию';
+    $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
+    $Self->{Translation}->{'Import information'} = 'Информация импорта';
+    $Self->{Translation}->{'Source File'} = 'Исходный файл';
 
-    $Lang->{'Import/Export'}              = 'Импорт/Экспорт';
-    $Lang->{'Import/Export Management'}   = 'Управление Импортом/Экспортом';
-    $Lang->{'Add mapping template'}       = 'Добавление шаблона соответствия';
-    $Lang->{'Start Import'}               = 'Начать импорт';
-    $Lang->{'Start Export'}               = 'Начать экспорт';
-    $Lang->{'Step'}                       = 'Шаг';
-    $Lang->{'Edit common information'}    = 'Редактировать общую информацию';
-    $Lang->{'Edit object information'}    = 'Редактировать информацию об объекте';
-    $Lang->{'Edit format information'}    = 'Редактировать формат данных';
-    $Lang->{'Edit mapping information'}   = 'Редактировать информацию соответствия';
-    $Lang->{'Edit search information'}    = 'Редактировать поисковую информацию';
-    $Lang->{'Import information'}         = 'Информация импорта';
-    $Lang->{'Column'}                     = 'Столбец';
-    $Lang->{'Restrict export per search'} = 'Ограничить экспорт поиском';
-    $Lang->{'Source File'}                = 'Исходный файл';
-    $Lang->{'Column Separator'}           = 'Разделитель';
-    $Lang->{'Tabulator (TAB)'}            = 'Табуляция (TAB)';
-    $Lang->{'Semicolon (;)'}              = 'Точка с запятой (;)';
-    $Lang->{'Colon (:)'}                  = 'Двоеточие (:)';
-    $Lang->{'Dot (.)'}                    = 'Точка (.)';
-    $Lang->{'Charset'}                    = 'Кодировка';
-    $Lang->{'Frontend module registration for the agent interface.'} = '';
-    $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import/Export'} = 'Импорт/Экспорт';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

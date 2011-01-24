@@ -1,9 +1,8 @@
 # --
-# Kernel/Language/cs_ImportExport.pm - the czech translation of ImportExport
+# Kernel/Language/cs_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
-# Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cs_ImportExport.pm,v 1.1 2011-01-24 20:31:27 ub Exp $
+# $Id: cs_ImportExport.pm,v 1.2 2011-01-24 20:49:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,51 +12,51 @@
 package Kernel::Language::cs_ImportExport;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAImportExport
+    $Self->{Translation}->{'Add mapping template'} = 'Nová ¹ablona zobrazení';
+    $Self->{Translation}->{'Charset'} = 'Znaková sada';
+    $Self->{Translation}->{'Colon (:)'} = 'Dvojteèka (:)';
+    $Self->{Translation}->{'Column'} = 'Sloupec';
+    $Self->{Translation}->{'Column Separator'} = 'Oddìlovaè Sloupcù';
+    $Self->{Translation}->{'Dot (.)'} = 'Teèka (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Støedník (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulátor (TAB)';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminImportExport
+    $Self->{Translation}->{'Import/Export Management'} = 'Import/Export Správa';
+    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Start Import'} = 'Zahájit Import';
+    $Self->{Translation}->{'Start Export'} = 'Zahájit Export';
+    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Step'} = 'Krok';
+    $Self->{Translation}->{'Edit common information'} = 'Editace obecných informací';
+    $Self->{Translation}->{'Object is required!'} = '';
+    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Edit object information'} = 'Editace informací o objektu';
+    $Self->{Translation}->{'Edit format information'} = 'Editace formátu';
+    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'Edit mapping information'} = 'Editace mapování';
+    $Self->{Translation}->{'No map elements found.'} = '';
+    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'Edit search information'} = 'Editace vyhledávání';
+    $Self->{Translation}->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
+    $Self->{Translation}->{'Import information'} = 'Informace o Importu';
+    $Self->{Translation}->{'Source File'} = 'Zdrojový Soubor';
 
-    $Lang->{'Import/Export'}              = 'Import/Export';
-    $Lang->{'Import/Export Management'}   = 'Import/Export Správa';
-    $Lang->{'Add mapping template'}       = 'Nová ¹ablona zobrazení';
-    $Lang->{'Start Import'}               = 'Zahájit Import';
-    $Lang->{'Start Export'}               = 'Zahájit Export';
-    $Lang->{'Step'}                       = 'Krok';
-    $Lang->{'Edit common information'}    = 'Editace obecných informací';
-    $Lang->{'Edit object information'}    = 'Editace informací o objektu';
-    $Lang->{'Edit format information'}    = 'Editace formátu';
-    $Lang->{'Edit mapping information'}   = 'Editace mapování';
-    $Lang->{'Edit search information'}    = 'Editace vyhledávání';
-    $Lang->{'Import information'}         = 'Informace o Importu';
-    $Lang->{'Column'}                     = 'Sloupec';
-    $Lang->{'Restrict export per search'} = 'Omezit Export vyhledáváním';
-    $Lang->{'Source File'}                = 'Zdrojový Soubor';
-    $Lang->{'Column Separator'}           = 'Oddìlovaè Sloupcù';
-    $Lang->{'Tabulator (TAB)'}            = 'Tabulátor (TAB)';
-    $Lang->{'Semicolon (;)'}              = 'Støedník (;)';
-    $Lang->{'Colon (:)'}                  = 'Dvojteèka (:)';
-    $Lang->{'Dot (.)'}                    = 'Teèka (.)';
-    $Lang->{'Charset'}                    = 'Znaková sada';
-    $Lang->{'Frontend module registration for the agent interface.'} = '';
-    $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import/Export'} = 'Import/Export';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

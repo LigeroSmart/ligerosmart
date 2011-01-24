@@ -1,9 +1,8 @@
 # --
-# Kernel/Language/bg_ImportExport.pm - the bulgarian translation of ImportExport
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Copyright (C) 2007-2008 Milen Koutev
+# Kernel/Language/bg_ImportExport.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ImportExport.pm,v 1.14 2010-09-14 21:49:14 dz Exp $
+# $Id: bg_ImportExport.pm,v 1.15 2011-01-24 20:49:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,51 +12,51 @@
 package Kernel::Language::bg_ImportExport;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAImportExport
+    $Self->{Translation}->{'Add mapping template'} = '';
+    $Self->{Translation}->{'Charset'} = '';
+    $Self->{Translation}->{'Colon (:)'} = '';
+    $Self->{Translation}->{'Column'} = '';
+    $Self->{Translation}->{'Column Separator'} = '';
+    $Self->{Translation}->{'Dot (.)'} = '';
+    $Self->{Translation}->{'Semicolon (;)'} = '';
+    $Self->{Translation}->{'Tabulator (TAB)'} = '';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminImportExport
+    $Self->{Translation}->{'Import/Export Management'} = '';
+    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Start Import'} = '';
+    $Self->{Translation}->{'Start Export'} = '';
+    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Step'} = '';
+    $Self->{Translation}->{'Edit common information'} = '';
+    $Self->{Translation}->{'Object is required!'} = '';
+    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Edit object information'} = '';
+    $Self->{Translation}->{'Edit format information'} = '';
+    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'Edit mapping information'} = '';
+    $Self->{Translation}->{'No map elements found.'} = '';
+    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'Edit search information'} = '';
+    $Self->{Translation}->{'Restrict export per search'} = '';
+    $Self->{Translation}->{'Import information'} = '';
+    $Self->{Translation}->{'Source File'} = '';
 
-    $Lang->{'Import/Export'}              = '';
-    $Lang->{'Import/Export Management'}   = '';
-    $Lang->{'Add mapping template'}       = '';
-    $Lang->{'Start Import'}               = '';
-    $Lang->{'Start Export'}               = '';
-    $Lang->{'Step'}                       = '';
-    $Lang->{'Edit common information'}    = '';
-    $Lang->{'Edit object information'}    = '';
-    $Lang->{'Edit format information'}    = '';
-    $Lang->{'Edit mapping information'}   = '';
-    $Lang->{'Edit search information'}    = '';
-    $Lang->{'Import information'}         = '';
-    $Lang->{'Column'}                     = '';
-    $Lang->{'Restrict export per search'} = '';
-    $Lang->{'Source File'}                = '';
-    $Lang->{'Column Separator'}           = '';
-    $Lang->{'Tabulator (TAB)'}            = '';
-    $Lang->{'Semicolon (;)'}              = '';
-    $Lang->{'Colon (:)'}                  = '';
-    $Lang->{'Dot (.)'}                    = '';
-    $Lang->{'Charset'}                    = '';
-    $Lang->{'Frontend module registration for the agent interface.'} = '';
-    $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import/Export'} = '';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;

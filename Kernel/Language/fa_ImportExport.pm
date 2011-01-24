@@ -1,9 +1,8 @@
 # --
-# Kernel/Language/fa_ImportExport.pm - the persian (farsi) translation of fa_ImportExport
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
-# Copyright (C) 2003-2009 Afshar Mohebbi <afshar.mohebbi at gmail.com>
+# Kernel/Language/fa_ImportExport.pm - translation file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ImportExport.pm,v 1.5 2010-09-14 21:49:14 dz Exp $
+# $Id: fa_ImportExport.pm,v 1.6 2011-01-24 20:49:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,51 +12,51 @@
 package Kernel::Language::fa_ImportExport;
 
 use strict;
-use warnings;
-
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
 
 sub Data {
     my $Self = shift;
 
-    my $Lang = $Self->{Translation};
+    # Template: AAAImportExport
+    $Self->{Translation}->{'Add mapping template'} = 'اضافه کردن یک قالب نگاشت';
+    $Self->{Translation}->{'Charset'} = 'کدبندی اطلاعات';
+    $Self->{Translation}->{'Colon (:)'} = 'دونقطه (:)';
+    $Self->{Translation}->{'Column'} = 'ستون';
+    $Self->{Translation}->{'Column Separator'} = 'جداکننده ستون‌ها';
+    $Self->{Translation}->{'Dot (.)'} = 'نقطه (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'سمی کالن (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'جدول ساز (TAB)';
 
-    return if ref $Lang ne 'HASH';
+    # Template: AdminImportExport
+    $Self->{Translation}->{'Import/Export Management'} = 'مدیریت ورود/صدور';
+    $Self->{Translation}->{'Add template'} = '';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = '';
+    $Self->{Translation}->{'Start Import'} = 'شروع عملیات ورود';
+    $Self->{Translation}->{'Start Export'} = 'شروع عملیات صدور';
+    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Step'} = 'گام';
+    $Self->{Translation}->{'Edit common information'} = 'ویرایش اطلاعات عمومی';
+    $Self->{Translation}->{'Object is required!'} = '';
+    $Self->{Translation}->{'Format is required!'} = '';
+    $Self->{Translation}->{'Edit object information'} = 'ویرایش اطلاعات آبجکتی';
+    $Self->{Translation}->{'Edit format information'} = 'ویرایش اطلاعات قالب‌بندی';
+    $Self->{Translation}->{' is required!'} = '';
+    $Self->{Translation}->{'Edit mapping information'} = 'ویرایش اطلاعات نگاشت';
+    $Self->{Translation}->{'No map elements found.'} = '';
+    $Self->{Translation}->{'Add Mapping Element'} = '';
+    $Self->{Translation}->{'Edit search information'} = 'ویرایش اطلاعات جستجو';
+    $Self->{Translation}->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
+    $Self->{Translation}->{'Import information'} = 'ورود اطلاعات';
+    $Self->{Translation}->{'Source File'} = 'فایل منبع';
 
-    $Lang->{'Import/Export'}              = 'ورود/صدور';
-    $Lang->{'Import/Export Management'}   = 'مدیریت ورود/صدور';
-    $Lang->{'Add mapping template'}       = 'اضافه کردن یک قالب نگاشت';
-    $Lang->{'Start Import'}               = 'شروع عملیات ورود';
-    $Lang->{'Start Export'}               = 'شروع عملیات صدور';
-    $Lang->{'Step'}                       = 'گام';
-    $Lang->{'Edit common information'}    = 'ویرایش اطلاعات عمومی';
-    $Lang->{'Edit object information'}    = 'ویرایش اطلاعات آبجکتی';
-    $Lang->{'Edit format information'}    = 'ویرایش اطلاعات قالب‌بندی';
-    $Lang->{'Edit mapping information'}   = 'ویرایش اطلاعات نگاشت';
-    $Lang->{'Edit search information'}    = 'ویرایش اطلاعات جستجو';
-    $Lang->{'Import information'}         = 'ورود اطلاعات';
-    $Lang->{'Column'}                     = 'ستون';
-    $Lang->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
-    $Lang->{'Source File'}                = 'فایل منبع';
-    $Lang->{'Column Separator'}           = 'جداکننده ستون‌ها';
-    $Lang->{'Tabulator (TAB)'}            = 'جدول ساز (TAB)';
-    $Lang->{'Semicolon (;)'}              = 'سمی کالن (;)';
-    $Lang->{'Colon (:)'}                  = 'دونقطه (:)';
-    $Lang->{'Dot (.)'}                    = 'نقطه (.)';
-    $Lang->{'Charset'}                    = 'کدبندی اطلاعات';
-    $Lang->{'Frontend module registration for the agent interface.'} = '';
-    $Lang->{'Format backend module registration for the import/export module.'} = '';
-    $Lang->{'Import and export object information.'} = '';
-    $Lang->{'Object is required!'} = '';
-    $Lang->{'Format is required!'} = '';
-    $Lang->{'Class is required!'} = '';
-    $Lang->{'Column Separator is required!'} = '';
-    $Lang->{'No map elements found.'} = '';
-    $Lang->{'Empty fields indicate that the current values are kept'} = '';
-    $Lang->{'Create a template in order to can import and export object information.'} = '';
+    # SysConfig
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Import and export object information.'} = '';
+    $Self->{Translation}->{'Import/Export'} = 'ورود/صدور';
 
-    return 1;
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+
 }
 
 1;
