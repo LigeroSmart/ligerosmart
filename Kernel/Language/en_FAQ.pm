@@ -2,7 +2,7 @@
 # Kernel/Language/en_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.29 2011-01-14 17:30:24 ub Exp $
+# $Id: en_FAQ.pm,v 1.30 2011-01-24 13:25:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1469,13 +1469,6 @@ sub Data {
     $Self->{Translation}->{'When tickets are merged, the customer can be informed per email by setting the check box "Inform Sender". In this text area, you can define a pre-formatted text which can later be modified by the agents.'} = '';
     $Self->{Translation}->{'Your language'} = '';
     $Self->{Translation}->{'Your queue selection of your favourite queues. You also get notified about those queues via email if enabled.'} = '';
-
-    #
-    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
-    #
-    $Self->{Translation}->{'DetailSearch'} = 'Detail Search';
-    $Self->{Translation}->{'QuickSearch'} = 'Quick Search';
-    $Self->{Translation}->{'SubCategories'} = 'Subcategories';
 
 }
 

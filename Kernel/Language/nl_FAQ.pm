@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.20 2011-01-24 10:37:17 ub Exp $
+# $Id: nl_FAQ.pm,v 1.21 2011-01-24 13:25:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
