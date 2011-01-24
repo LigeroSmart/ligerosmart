@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.102 2011-01-05 15:28:11 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.103 2011-01-24 10:37:17 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>
@@ -988,7 +988,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">Back</Item>
-                <Item Key="Description">Back</Item>
+                <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
                 <Item Key="Link">$Env{"LastScreenFAQ"}</Item>
                 <Item Key="Target">Back</Item>
@@ -1003,7 +1003,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">Edit</Item>
-                <Item Key="Description">Edit this FAQ</Item>
+                <Item Key="Description" Translatable="1">Edit this FAQ</Item>
                 <Item Key="Action">AgentFAQEdit</Item>
                 <Item Key="Link">Action=AgentFAQEdit;ItemID=$QData{"ItemID"}</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1018,7 +1018,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">History</Item>
-                <Item Key="Description">History of this FAQ</Item>
+                <Item Key="Description" Translatable="1">History of this FAQ</Item>
                 <Item Key="Action">AgentFAQHistory</Item>
                 <Item Key="Link">Action=AgentFAQHistory;ItemID=$QData{"ItemID"}</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1033,7 +1033,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">Print</Item>
-                <Item Key="Description">Print this FAQ</Item>
+                <Item Key="Description" Translatable="1">Print this FAQ</Item>
                 <Item Key="Action">AgentFAQPrint</Item>
                 <Item Key="Link">Action=AgentFAQPrint;ItemID=$QData{"ItemID"}</Item>
                 <Item Key="LinkParam">target="print_FAQ"</Item>
@@ -1049,7 +1049,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">Link</Item>
-                <Item Key="Description">Link another object to this FAQ item</Item>
+                <Item Key="Description" Translatable="1">Link another object to this FAQ item</Item>
                 <Item Key="Action">AgentLinkObject</Item>
                 <Item Key="Link">Action=AgentLinkObject;SourceObject=FAQ;SourceKey=$QData{"ItemID"}</Item>
                 <Item Key="Target">PopUp</Item>
@@ -1064,7 +1064,7 @@ Your OTRS Notification Master
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::FAQMenuGeneric</Item>
                 <Item Key="Name">Delete</Item>
-                <Item Key="Description">Delete this FAQ</Item>
+                <Item Key="Description" Translatable="1">Delete this FAQ</Item>
                 <Item Key="Action">AgentFAQDelete</Item>
                 <Item Key="Link">Action=AgentFAQDelete;ItemID=$QData{"ItemID"}</Item>
                 <Item Key="Target">ConfirmationDialog</Item>

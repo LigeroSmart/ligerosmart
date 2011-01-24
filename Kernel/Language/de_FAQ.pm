@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.35 2011-01-19 18:36:25 ub Exp $
+# $Id: de_FAQ.pm,v 1.36 2011-01-24 10:37:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,15 +17,15 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ-Kategorie aktualisiert!';
-    $Self->{Translation}->{'FAQ category added!'} = 'FAQ-Kategorie hinzugefügt!';
     $Self->{Translation}->{'internal'} = 'intern';
     $Self->{Translation}->{'public'} = 'öffentlich';
+    $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = 'FAQ-Nummer';
     $Self->{Translation}->{'LatestChangedItems'} = 'Zuletzt geänderte FAQ-Artikel';
     $Self->{Translation}->{'LatestCreatedItems'} = 'Zuletzt erstellte FAQ-Artikel';
     $Self->{Translation}->{'Top10Items'} = 'Top 10 FAQ-Artikel';
     $Self->{Translation}->{'SubCategoryOf'} = 'Unterkategorie von';
+    $Self->{Translation}->{'No rate selected!'} = '';
     $Self->{Translation}->{'public (all)'} = 'öffentlich (Alle)';
     $Self->{Translation}->{'external (customer)'} = 'extern (Kunde)';
     $Self->{Translation}->{'internal (agent)'} = 'intern (Agent)';
@@ -35,6 +35,20 @@ sub Data {
     $Self->{Translation}->{'EndDay'} = 'End Tag';
     $Self->{Translation}->{'EndMonth'} = 'End Monat';
     $Self->{Translation}->{'EndYear'} = 'End Jahr';
+    $Self->{Translation}->{'Thanks for your vote!'} = '';
+    $Self->{Translation}->{'You have already voted!'} = 'Sie haben bereits abgestimmt!';
+    $Self->{Translation}->{'FAQ Article Print'} = '';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = '';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '';
+    $Self->{Translation}->{'FAQ category updated!'} = 'FAQ-Kategorie aktualisiert!';
+    $Self->{Translation}->{'FAQ category added!'} = 'FAQ-Kategorie hinzugefügt!';
+    $Self->{Translation}->{'A category should have a name!'} = '';
+    $Self->{Translation}->{'This category already exists'} = '';
+    $Self->{Translation}->{'FAQ language added!'} = '';
+    $Self->{Translation}->{'FAQ language updated!'} = '';
+    $Self->{Translation}->{'The name is required!'} = '';
+    $Self->{Translation}->{'This language already exists!'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'FAQ-Artikel Hinzufügen';
@@ -190,6 +204,8 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} = 'Definert die angezeigten Spalten in der FAQ-Suche. Diese Option hat keine Auswirkung auf die Position der Spalten.';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} = 'Definiert wo der \'FAQ Einfügen\' link angezeigt wird. Hinweis: AgentTicketActionCommon beinhaltet AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority und AgentTicketResponsible.';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = 'Definition der freien Textfelder.';
+    $Self->{Translation}->{'Delete this FAQ'} = 'Diese FAQ löschen!';
+    $Self->{Translation}->{'Edit this FAQ'} = '';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = 'Multiple Sprachen im FAQ-Modul aktivieren.';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = 'Bewertungs-Mechanismus im FAQ-Modul aktivieren.';
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ Journal';
@@ -202,12 +218,14 @@ sub Data {
     $Self->{Translation}->{'FAQ-Area'} = 'FAQ-Bereich';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Frontend-Modul-Registrierung für das Public-Interface';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Gruppe für die Freigabe von FAQ-Artikeln.';
+    $Self->{Translation}->{'History of this FAQ'} = '';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = 'Interne FAQ-Felder in einem FAQ-basiertenTicket verwenden.';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = 'Den Namen jedes FAQ-Feldes einem FAQ-basierten Ticket verwenden.';
     $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Interfaces in denen das QuickSearch Feature angezeigt wird.';
     $Self->{Translation}->{'Journal'} = 'Journal';
     $Self->{Translation}->{'Language Management'} = 'Sprachen-Verwaltung';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'LanguageKey für die Frage bei der Artikelbewertung. Wird in den Sprachfiles definiert.';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = 'Maximale Anzahl von FAQ-Artikeln die im FAQ-Journal im Agenten-Interface angezeigt werden.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = 'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Kunden-Interface angezeigt werden.';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = 'Maximale Anzahl von FAQ-Artikeln die im FAQ-Explorer im Public-Interface angezeigt werden.';
@@ -227,6 +245,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = 'Anzahl der anzuzeigenden Artikel im Top 10 Feature.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} = 'Parameter für die Seiten (in denen FAQ-Artikel angezeigt werden) für die Small-Ansicht des FAQ-Journals.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} = 'Parameter für die Seiten (in denen FAQ-Artikel angezeigt werden) für die Small-Ansicht des FAQ-Overiews.';
+    $Self->{Translation}->{'Print this FAQ'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Queue für die Freigabe von FAQ-Artikeln.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Gewichtung für die Bewertung. Der Key muss in Prozent angegeben werden.';
     $Self->{Translation}->{'Search FAQ'} = 'FAQ durchsuchen';
@@ -254,6 +273,10 @@ sub Data {
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'Ticket\' objects using the \'ParentChild\' link type.'} = 'Definiert, dass ein \'FAQ\'-Objekte mit dem Linktyp \'ParentChild\' mit anderen \'Ticket\'-Objekten verlinkt werden kann.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Body des Tickets zur Freigabe eines FAQ-Artikels.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Betreff des Tickets zur Freigabe eines FAQ-Artikels.';
+
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
 
 }
 

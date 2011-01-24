@@ -1,8 +1,8 @@
 # --
 # AAAFAQ.dtl - $Text variable file
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AAAFAQ.dtl,v 1.3 2010-12-08 12:00:33 mb Exp $
+# $Id: AAAFAQ.dtl,v 1.4 2011-01-24 10:37:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,15 +10,15 @@
 # --
 
 # Common
-$Text{"FAQ category updated!"}
-$Text{"FAQ category added!"}
 $Text{"internal"}
 $Text{"public"}
+$Text{"external"}
 $Text{"FAQ Number"}
 $Text{"LatestChangedItems"}
 $Text{"LatestCreatedItems"}
 $Text{"Top10Items"}
 $Text{"SubCategoryOf"}
+$Text{"No rate selected!"}
 
 # FAQ 'states'
 $Text{"public (all)"}
@@ -32,3 +32,29 @@ $Text{"StartYear"}
 $Text{"EndDay"}
 $Text{"EndMonth"}
 $Text{"EndYear"}
+
+# AgentFAQZoom Menu-Modules
+$Text{"Thanks for your vote!"}
+$Text{"No rate selected!"}
+$Text{"You have already voted!"}
+
+# FAQ Print screens
+$Text{"FAQ Article Print"}
+
+# RSS Feeds
+$Text{"FAQ Articles (Top 10)"}
+$Text{"FAQ Articles (new created)"}
+$Text{"FAQ Articles (recently changed)"}
+
+# AgentFAQCategory.pm
+$Text{"FAQ category updated!"}
+$Text{"FAQ category added!"}
+$Text{"A category should have a name!"}
+$Text{"This category already exists"}
+
+# AgentFAQLanguage.pm
+$Text{"FAQ language added!"}
+$Text{"FAQ language updated!"}
+$Text{"The name is required!"}
+$Text{"This language already exists!"}
+$Text{"The name is required!"}

@@ -1,9 +1,8 @@
 # --
 # Kernel/Language/fr_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
-# Copyright (C) 2009 Jonathan Peyrot
 # --
-# $Id: fr_FAQ.pm,v 1.14 2011-01-14 17:30:24 ub Exp $
+# $Id: fr_FAQ.pm,v 1.15 2011-01-24 10:37:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,15 +17,15 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'FAQ category updated!'} = '';
-    $Self->{Translation}->{'FAQ category added!'} = '';
     $Self->{Translation}->{'internal'} = '';
     $Self->{Translation}->{'public'} = '';
+    $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
     $Self->{Translation}->{'LatestChangedItems'} = 'Dernières questions modifiées';
     $Self->{Translation}->{'LatestCreatedItems'} = 'Dernières questions créées';
     $Self->{Translation}->{'Top10Items'} = 'Top 10 des questions';
     $Self->{Translation}->{'SubCategoryOf'} = 'Sous catégorie de';
+    $Self->{Translation}->{'No rate selected!'} = 'Pas de sélection !';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
@@ -36,6 +35,20 @@ sub Data {
     $Self->{Translation}->{'EndDay'} = 'Jour Fin';
     $Self->{Translation}->{'EndMonth'} = 'Mois Fin';
     $Self->{Translation}->{'EndYear'} = 'Année Fin';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Merci pour votre vote !';
+    $Self->{Translation}->{'You have already voted!'} = 'Vous avez déjà voté !';
+    $Self->{Translation}->{'FAQ Article Print'} = '';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'FAQ Articles (Top 10)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'FAQ Articles (nouvelles questions)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'FAQ Articles (derniers changements)';
+    $Self->{Translation}->{'FAQ category updated!'} = '';
+    $Self->{Translation}->{'FAQ category added!'} = '';
+    $Self->{Translation}->{'A category should have a name!'} = '';
+    $Self->{Translation}->{'This category already exists'} = '';
+    $Self->{Translation}->{'FAQ language added!'} = '';
+    $Self->{Translation}->{'FAQ language updated!'} = '';
+    $Self->{Translation}->{'The name is required!'} = '';
+    $Self->{Translation}->{'This language already exists!'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = '';
@@ -190,6 +203,8 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} = '';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '';
+    $Self->{Translation}->{'Delete this FAQ'} = '';
+    $Self->{Translation}->{'Edit this FAQ'} = '';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
     $Self->{Translation}->{'FAQ Journal'} = '';
@@ -201,12 +216,14 @@ sub Data {
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
+    $Self->{Translation}->{'History of this FAQ'} = '';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = '';
     $Self->{Translation}->{'Language Management'} = '';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the explorer in the public interface.'} = '';
@@ -225,6 +242,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} = '';
+    $Self->{Translation}->{'Print this FAQ'} = '';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
     $Self->{Translation}->{'Search FAQ'} = '';
@@ -259,15 +277,9 @@ sub Data {
     $Self->{Translation}->{'Agent groups which can access this category.'} = 'Groupes d\'Agents pouvant accéder à cette catégorie';
     $Self->{Translation}->{'Categories'} = 'Catégories';
     $Self->{Translation}->{'DetailSearch'} = 'Détails de la recherche';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'FAQ Articles (Top 10)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'FAQ Articles (nouvelles questions)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'FAQ Articles (derniers changements)';
     $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Aucun catégorie accessible. Pour créer une question, vous devez avoir accès à au moins une catégorie. SVP vérifiez les permissions de votre groupe/catégorie via le menu -catégorie- !';
-    $Self->{Translation}->{'No rate selected!'} = 'Pas de sélection !';
     $Self->{Translation}->{'QuickSearch'} = 'Recherche rapide';
     $Self->{Translation}->{'SubCategories'} = 'Sous-catégories';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Merci pour votre vote !';
-    $Self->{Translation}->{'You have already voted!'} = 'Vous avez déjà voté !';
 
 }
 
