@@ -1,8 +1,8 @@
 # --
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.25 2010-12-09 22:33:54 ub Exp $
+# $Id: AdminImportExport.dtl,v 1.26 2011-01-24 20:37:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -230,10 +230,10 @@
                         <div class="Field">
                             $Data{"InputStrg"}
                             <div id="$Data{"ID"}Error" class="TooltipErrorMessage">
-                                <p>$Text{"$Data{"ErrorMessage"}!"}</p>
+                                <p>$Text{"$Data{"ErrorMessage"}"}</p>
                             </div>
                             <div id="$Data{"ID"}ServerError" class="TooltipErrorMessage">
-                                <p>$Text{"$Data{"ErrorMessage"}!"}</p>
+                                <p>$Text{"$Data{"ErrorMessage"}"}</p>
                             </div>
                         </div>
 <!-- dtl:block:TemplateEdit2Element -->
