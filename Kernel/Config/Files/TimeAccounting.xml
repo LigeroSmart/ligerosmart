@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.22 2011-01-11 14:18:01 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.23 2011-01-24 09:01:10 mn Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -150,7 +150,7 @@
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">2010-01-01</String>
+            <String Regex="">2011-01-01</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserDateEnd" Required="1" Valid="1">
@@ -158,7 +158,7 @@
         <Group>TimeAccounting</Group>
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
-            <String Regex="">2010-12-31</String>
+            <String Regex="">2011-12-31</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
