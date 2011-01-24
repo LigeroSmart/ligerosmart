@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.42 2010-10-28 12:31:07 ub Exp $
+# $Id: Notification.pm,v 1.43 2011-01-24 10:45:09 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,11 +21,12 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Notification;
 use Kernel::System::Valid;
+use Kernel::Language;
 
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 =head1 NAME
 
@@ -321,6 +322,7 @@ sub NotificationSend {
             WorkOrder => $WorkOrder,
             Link      => $Link,
             Data      => $Param{Data},
+            Language  => $PreferredLanguage,
         );
 
         $Notification->{Subject} = $Self->_NotificationReplaceMacros(
@@ -332,6 +334,7 @@ sub NotificationSend {
             WorkOrder => $WorkOrder,
             Link      => $Link,
             Data      => $Param{Data},
+            Language  => $PreferredLanguage,
         );
 
         # add urls and verify to be full html document
@@ -978,7 +981,7 @@ This method replaces all the <OTRS_xxxx> macros in notification text.
     my $CleanText = $NotificationObject->_NotificationReplaceMacros(
         Type      => 'Change',    # Change|WorkOrder
         Text      => 'Some <OTRS_CONFIG_FQDN> text',
-        RichText  => 1,          # optional, is Text richtext or not. default 0
+        RichText  => 1,           # optional, is Text richtext or not. default 0
         Recipient => {%User},
         Data      => {
             ChangeBuilder => {
@@ -990,6 +993,7 @@ This method replaces all the <OTRS_xxxx> macros in notification text.
         Change    => $Change,
         WorkOrder => $WorkOrder,
         Link      => $Link,
+        Language  => $Language    # used for translating states and such
         UserID    => 1,
     );
 
@@ -999,7 +1003,7 @@ sub _NotificationReplaceMacros {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for my $Needed (qw(Type Text Data UserID Change WorkOrder Link)) {
+    for my $Needed (qw(Type Text Data UserID Change WorkOrder Link Language)) {
         if ( !defined $Param{$Needed} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1020,6 +1024,24 @@ sub _NotificationReplaceMacros {
         $Start = '&lt;';
         $End   = '&gt;';
         $Text =~ s{ (\n|\r) }{}xmsg;
+    }
+
+    # translate Change and Workorder values, where appropriate
+    my $LanguageObject = Kernel::Language->new(
+        MainObject   => $Self->{MainObject},
+        ConfigObject => $Self->{ConfigObject},
+        EncodeObject => $Self->{EncodeObject},
+        LogObject    => $Self->{LogObject},
+        UserLanguage => $Param{Language},
+    );
+    my %ChangeData = %{ $Param{Change} };
+    for my $Field (qw(ChangeState Category Priority Impact)) {
+        $ChangeData{$Field} = $LanguageObject->Get( $ChangeData{$Field} );
+    }
+
+    my %WorkOrderData = %{ $Param{WorkOrder} };
+    for my $Field (qw(WorkOrderState WorkOrderType)) {
+        $WorkOrderData{$Field} = $LanguageObject->Get( $WorkOrderData{$Field} );
     }
 
     # replace config options
@@ -1074,8 +1096,7 @@ sub _NotificationReplaceMacros {
 
     # replace <OTRS_CHANGE_... tags
     {
-        my $Tag        = $Start . 'OTRS_CHANGE_';
-        my %ChangeData = %{ $Param{Change} };
+        my $Tag = $Start . 'OTRS_CHANGE_';
 
         # html quoting of content
         if ( $Param{RichText} ) {
@@ -1101,8 +1122,7 @@ sub _NotificationReplaceMacros {
 
     # replace <OTRS_WORKORDER_... tags
     {
-        my $Tag           = $Start . 'OTRS_WORKORDER_';
-        my %WorkOrderData = %{ $Param{WorkOrder} };
+        my $Tag = $Start . 'OTRS_WORKORDER_';
 
         # html quoting of content
         if ( $Param{RichText} ) {
@@ -1389,6 +1409,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.42 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.43 $ $Date: 2011-01-24 10:45:09 $
 
 =cut
