@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.26 2011-01-24 20:37:42 ub Exp $
+# $Id: AdminImportExport.dtl,v 1.27 2011-01-24 20:46:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,7 +42,7 @@
             </div>
             <div class="Content">
                 <p class="FieldExplanation">
-                    $Text{"Create a template in order to can import and export object information."}
+                    $Text{"Create a template to import and export object information."}
                 </p>
             </div>
         </div>
