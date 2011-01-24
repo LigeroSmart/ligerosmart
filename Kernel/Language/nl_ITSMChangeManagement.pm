@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMChangeManagement.pm - the Dutch translation of ITSMChangeManagement
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.2 2011-01-15 20:06:36 mb Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.3 2011-01-24 10:38:42 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -49,8 +49,10 @@ sub Data {
     $Lang->{'Change Advisory Board'}                = 'Change Advisory Board';
     $Lang->{'CAB'}                                  = 'CAB';
     $Lang->{'Apply Template'}                       = 'Kies template';
+    $Lang->{'Last changed'}                         = 'Laatst aangepast op';
+    $Lang->{'Last changed by'}                      = 'Laatst aangepast door';
 
-    # ITSM ChangeManagement icons
+    # ITSM ChangeManagement menu
     $Lang->{'My Changes'}                           = 'Mijn changes';
     $Lang->{'My Workorders'}                        = 'Mijn workorders';
     $Lang->{'PIR (Post Implementation Review)'}     = 'PIR (Post Implementation Review)';
@@ -96,6 +98,13 @@ sub Data {
 
     # Template menu
     $Lang->{'A template must have a name!'} = 'Kies een naam voor de template.';
+
+    # History interface
+    $Lang->{'Show details'}                         = 'Toon details';
+    $Lang->{'Show workorder'}                       = 'Toon Work Order';
+    $Lang->{'Old Value'}                            = 'Oude waarde';
+    $Lang->{'New Value'}                            = 'Nieuwe waarde';
+    $Lang->{'Detailed history information of'}      = 'Gedetailleerde informatie van';
 
     # Change attributes as returned from ChangeGet(), or taken by ChangeUpdate()
     $Lang->{'AccountedTime'}    = 'Vastgelegde tijd';
