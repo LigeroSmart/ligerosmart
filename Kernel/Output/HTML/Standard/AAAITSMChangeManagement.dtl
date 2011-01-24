@@ -1,0 +1,157 @@
+# --
+# AAAITSMChangeManagement.dtl - $Text variable file
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# --
+# $Id: AAAITSMChangeManagement.dtl,v 1.1 2011-01-24 21:20:04 ub Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+# Common
+$Text{"A change must have a title!"}
+$Text{"A condition must have a name!"}
+$Text{"A template must have a name!"}
+$Text{"A workorder must have a title!"}
+$Text{"ActionExecute::successfully"}
+$Text{"ActionExecute::unsuccessfully"}
+$Text{"Add CAB Template"}
+$Text{"Add Workorder"}
+$Text{"Add a workorder to the change"}
+$Text{"Add new condition and action pair"}
+$Text{"Agent interface module to show the ChangeManager overview icon."}
+$Text{"Agent interface module to show the MyCAB overview icon."}
+$Text{"Agent interface module to show the MyChanges overview icon."}
+$Text{"Agent interface module to show the MyWorkOrders overview icon."}
+$Text{"CABAgents"}
+$Text{"CABCustomers"}
+$Text{"Change Overview"}
+$Text{"Change Schedule"}
+$Text{"Change involved persons of the change"}
+$Text{"ChangeHistory::ActionAdd"}
+$Text{"ChangeHistory::ActionAddID"}
+$Text{"ChangeHistory::ActionDelete"}
+$Text{"ChangeHistory::ActionDeleteAll"}
+$Text{"ChangeHistory::ActionExecute"}
+$Text{"ChangeHistory::ActionUpdate"}
+$Text{"ChangeHistory::ChangeActualEndTimeReached"}
+$Text{"ChangeHistory::ChangeActualStartTimeReached"}
+$Text{"ChangeHistory::ChangeAdd"}
+$Text{"ChangeHistory::ChangeAttachmentAdd"}
+$Text{"ChangeHistory::ChangeAttachmentDelete"}
+$Text{"ChangeHistory::ChangeCABDelete"}
+$Text{"ChangeHistory::ChangeCABUpdate"}
+$Text{"ChangeHistory::ChangeLinkAdd"}
+$Text{"ChangeHistory::ChangeLinkDelete"}
+$Text{"ChangeHistory::ChangeNotificationSent"}
+$Text{"ChangeHistory::ChangePlannedEndTimeReached"}
+$Text{"ChangeHistory::ChangePlannedStartTimeReached"}
+$Text{"ChangeHistory::ChangeRequestedTimeReached"}
+$Text{"ChangeHistory::ChangeUpdate"}
+$Text{"ChangeHistory::ConditionAdd"}
+$Text{"ChangeHistory::ConditionAddID"}
+$Text{"ChangeHistory::ConditionDelete"}
+$Text{"ChangeHistory::ConditionDeleteAll"}
+$Text{"ChangeHistory::ConditionUpdate"}
+$Text{"ChangeHistory::ExpressionAdd"}
+$Text{"ChangeHistory::ExpressionAddID"}
+$Text{"ChangeHistory::ExpressionDelete"}
+$Text{"ChangeHistory::ExpressionDeleteAll"}
+$Text{"ChangeHistory::ExpressionUpdate"}
+$Text{"ChangeNumber"}
+$Text{"Clear"}
+$Text{"Condition Edit"}
+$Text{"Conditions"}
+$Text{"Create Change"}
+$Text{"Create a change from this ticket!"}
+$Text{"Delete Workorder"}
+$Text{"Edit the change"}
+$Text{"Edit the conditions of the change"}
+$Text{"Edit the workorder"}
+$Text{"Expression"}
+$Text{"Full-Text Search in Change and Workorder"}
+$Text{"ITSMCondition"}
+$Text{"ITSMWorkOrder"}
+$Text{"Link another object to the change"}
+$Text{"Link another object to the workorder"}
+$Text{"Move all workorders in time"}
+$Text{"My CABs"}
+$Text{"My Changes"}
+$Text{"My Workorders"}
+$Text{"No XXX settings"}
+$Text{"PIR (Post Implementation Review)"}
+$Text{"PSA (Projected Service Availability)"}
+$Text{"Please select first a catalog class!"}
+$Text{"Print the change"}
+$Text{"Print the workorder"}
+$Text{"RequestedTime"}
+$Text{"Save Change CAB as Template"}
+$Text{"Save change as a template"}
+$Text{"Save workorder as a template"}
+$Text{"Search Changes"}
+$Text{"Set the agent for the workorder"}
+$Text{"Take Workorder"}
+$Text{"Take the workorder"}
+$Text{"Template Overview"}
+$Text{"Templates"}
+$Text{"The planned end time is invalid!"}
+$Text{"The planned start time is invalid!"}
+$Text{"The planned time is invalid!"}
+$Text{"The requested time is invalid!"}
+$Text{"WorkOrderHistory::WorkOrderActualEndTimeReached"}
+$Text{"WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderActualStartTimeReached"}
+$Text{"WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderAdd"}
+$Text{"WorkOrderHistory::WorkOrderAddWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderAttachmentAdd"}
+$Text{"WorkOrderHistory::WorkOrderAttachmentAddWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderAttachmentDelete"}
+$Text{"WorkOrderHistory::WorkOrderAttachmentDeleteWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderDelete"}
+$Text{"WorkOrderHistory::WorkOrderDeleteWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderLinkAdd"}
+$Text{"WorkOrderHistory::WorkOrderLinkAddWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderLinkDelete"}
+$Text{"WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderNotificationSent"}
+$Text{"WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderPlannedEndTimeReached"}
+$Text{"WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderPlannedStartTimeReached"}
+$Text{"WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID"}
+$Text{"WorkOrderHistory::WorkOrderUpdate"}
+$Text{"WorkOrderHistory::WorkOrderUpdateWithWorkOrderID"}
+$Text{"WorkOrderNumber"}
+$Text{"accepted"}
+$Text{"any"}
+$Text{"approval"}
+$Text{"approved"}
+$Text{"backout"}
+$Text{"begins with"}
+$Text{"canceled"}
+$Text{"contains"}
+$Text{"created"}
+$Text{"decision"}
+$Text{"ends with"}
+$Text{"failed"}
+$Text{"in progress"}
+$Text{"is"}
+$Text{"is after"}
+$Text{"is before"}
+$Text{"is empty"}
+$Text{"is greater than"}
+$Text{"is less than"}
+$Text{"is not"}
+$Text{"is not empty"}
+$Text{"not contains"}
+$Text{"pending approval"}
+$Text{"pending pir"}
+$Text{"pir"}
+$Text{"ready"}
+$Text{"rejected"}
+$Text{"requested"}
+$Text{"retracted"}
+$Text{"set"}
+$Text{"successful"}
