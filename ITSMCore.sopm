@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.120 2011-01-12 18:29:28 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.121 2011-01-24 15:36:03 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -61,7 +61,6 @@
         <File Permission="644" Location="scripts/test/ITSMCIPAllocate.t"/>
         <File Permission="644" Location="scripts/test/Service.t"/>
         <File Permission="644" Location="scripts/test/SLA.t"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/Core.Form.Validate.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.CustomerSearch.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/ITSM.Agent.Zoom.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.Agent.Default.css"/>
@@ -577,7 +576,7 @@
         Sie sind im Begriff das OTRS-Paket ITSMCore zu installieren.<br/>
         <br/>
         <br/>
-        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <strong>BENÃTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>GeneralCatalog 2.1.92</li>
         </ul>
@@ -585,20 +584,20 @@
         <strong>ACHTUNG</strong>
         <br/>
         <br/>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer GrÃ¶Ãe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmÃ¤Ãig Pakete mit einer GrÃ¶Ãe von maximal 1 MB. In diesem Fall muss der Wert fÃ¼r max_allowed_packet erhÃ¶ht werden. Empfohlen werden 20 MB.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
 
     ]]></IntroInstall>
-    <IntroInstall Type="pre" Title="Información de Instalación" Lang="es"><![CDATA[
+    <IntroInstall Type="pre" Title="InformaciÃ³n de InstalaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
         <strong>BIENVENIDO</strong>
         <br/>
         <br/>
-        Usted está apunto de instalar el modulo ITSMCore de OTRS.<br/>
+        Usted estÃ¡ apunto de instalar el modulo ITSMCore de OTRS.<br/>
         <br/>
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
@@ -606,10 +605,10 @@
         <li>GeneralCatalog 2.1.92</li>
         </ul>
         <br/>
-        <strong>ATENCIÓN</strong>
+        <strong>ATENCIÃN</strong>
         <br/>
         <br/>
-        Por favor asegúrese que su base de datos acepte paquetes de mas de 5 MB de tamaño. Por ejemplo una base de datos de MySQL acepta paquetes de mas de 1 MB predefinido. En este caso la configuración max_allowed_packet debe ser incrementada. El tamaño recomendado es 20 MB.<br/>
+        Por favor asegÃºrese que su base de datos acepte paquetes de mas de 5 MB de tamaÃ±o. Por ejemplo una base de datos de MySQL acepta paquetes de mas de 1 MB predefinido. En este caso la configuraciÃ³n max_allowed_packet debe ser incrementada. El tamaÃ±o recomendado es 20 MB.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -638,17 +637,17 @@
         <strong>HINWEIS</strong>
         <br/>
         <br/>
-        Um Benutzern Zugriff auf das Service-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'itsm-service' sein.
+        Um Benutzern Zugriff auf das Service-MenÃ¼ zu gewÃ¤hren, mÃ¼ssen diese Mitglied der neuen Gruppe 'itsm-service' sein.
         <br/>
         <br/>
-        Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
+        Die von diesem Paket hinzugefÃ¼gten MenÃ¼-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
         <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
 
     ]]></IntroInstall>
-    <IntroInstall Type="post" Title="Información de Instalación" Lang="es"><![CDATA[
+    <IntroInstall Type="post" Title="InformaciÃ³n de InstalaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
         <strong>AVISO</strong>
@@ -656,7 +655,7 @@
         <br/>
         Para poder permitir el acceso a los usuarios al menu de servicios, usted necesita agregarlos como miembros del grupo 'itsm-service'.<br/>
         <br/>
-        Los elementos del menu que fueron agregados por este packete serán visibles despues de que cierre y abra su sesion de nuevo.
+        Los elementos del menu que fueron agregados por este packete serÃ¡n visibles despues de que cierre y abra su sesion de nuevo.
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -697,7 +696,7 @@
         Sie sind im Begriff das OTRS-Paket ITSMCore zu aktualisieren.<br/>
         <br/>
         <br/>
-        <strong>BENÖTIGTE OTRS-PAKETE</strong>
+        <strong>BENÃTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>GeneralCatalog 2.1.92</li>
         </ul>
@@ -705,20 +704,20 @@
         <strong>ACHTUNG</strong>
         <br/>
         <br/>
-        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer Größe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmäßig Pakete mit einer Größe von maximal 1 MB. In diesem Fall muss der Wert für max_allowed_packet erhöht werden. Empfohlen werden 20 MB.<br/>
+        Vergewissern Sie sich, dass ihre Datenbank Pakete mit einer GrÃ¶Ãe von mehr als 5 MB akzeptiert. Eine MySQL Datenbank akzeptiert beispielsweise standardmÃ¤Ãig Pakete mit einer GrÃ¶Ãe von maximal 1 MB. In diesem Fall muss der Wert fÃ¼r max_allowed_packet erhÃ¶ht werden. Empfohlen werden 20 MB.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
         <br/>
 
     ]]></IntroUpgrade>
-    <IntroUpgrade Type="pre" Title="Información de Actualización" Lang="es"><![CDATA[
+    <IntroUpgrade Type="pre" Title="InformaciÃ³n de ActualizaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
         <strong>BIENVENIDO</strong>
         <br/>
         <br/>
-        Usted está apunto de instalar el modulo ITSMCore de OTRS.<br/>
+        Usted estÃ¡ apunto de instalar el modulo ITSMCore de OTRS.<br/>
         <br/>
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
@@ -726,10 +725,10 @@
         <li>GeneralCatalog 2.1.92</li>
         </ul>
         <br/>
-        <strong>ATENCIÓN</strong>
+        <strong>ATENCIÃN</strong>
         <br/>
         <br/>
-        Por favor asegúrese que su base de datos acepte paquetes de mas de 5 MB de tamaño. Por ejemplo una base de datos de MySQL acepta paquetes de mas de 1 MB predefinido. En este caso la configuración max_allowed_packet debe ser incrementada. El tamaño recomendado es 20 MB.<br/>
+        Por favor asegÃºrese que su base de datos acepte paquetes de mas de 5 MB de tamaÃ±o. Por ejemplo una base de datos de MySQL acepta paquetes de mas de 1 MB predefinido. En este caso la configuraciÃ³n max_allowed_packet debe ser incrementada. El tamaÃ±o recomendado es 20 MB.<br/>
         <br/>
         <br/>
         ((enjoy))<br/>
@@ -760,7 +759,7 @@
         <strong>ACHTUNG</strong>
         <br/>
         <br/>
-        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
+        Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelÃ¶scht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
         <br/>
         <br/>
@@ -772,17 +771,17 @@
         <br/>
 
     ]]></IntroUninstall>
-    <IntroUninstall Type="pre" Title="Información de Desinstalación" Lang="es"><![CDATA[
+    <IntroUninstall Type="pre" Title="InformaciÃ³n de DesinstalaciÃ³n" Lang="es"><![CDATA[
 
         <br/>
-        <strong>ATENCIÓN</strong>
+        <strong>ATENCIÃN</strong>
         <br/>
         <br/>
-        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalación serán borradas.
-        ¡Todos los datos de esas tablas serán irrevocablemente perdidos!.
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalaciÃ³n serÃ¡n borradas.
+        Â¡Todos los datos de esas tablas serÃ¡n irrevocablemente perdidos!.
         <br/>
         <br/>
-        El grupo 'itsm-service' que fue creado durante la instalación será desactivado.
+        El grupo 'itsm-service' que fue creado durante la instalaciÃ³n serÃ¡ desactivado.
         Usted puede activar este grupo de nuevo en el area de admin.
         <br/>
         <br/>
