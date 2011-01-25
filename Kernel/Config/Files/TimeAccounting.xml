@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.23 2011-01-24 09:01:10 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.24 2011-01-25 15:12:50 mn Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -161,6 +161,14 @@
             <String Regex="">2011-12-31</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="TimeAccounting::DefaultUserDescription" Required="1" Valid="1">
+        <Description Translatable="1">Default setting for description.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <String Regex="">Put your description here.</String>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="TimeAccounting::DefaultUserStatus" Required="1" Valid="1">
         <Description Translatable="1">Default status for new users.</Description>
         <Group>TimeAccounting</Group>
@@ -267,6 +275,17 @@
         <SubGroup>Frontend::Agent</SubGroup>
         <Setting>
             <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TimeAccounting::AllowMassEntryForUser" Required="0" Valid="1">
+        <Description Translatable="1">If enabled, the user is allowed to enter "on vacation leave", "on sick leave" and "on overtime leave" to multiple dates at once.</Description>
+        <Group>TimeAccounting</Group>
+        <SubGroup>Frontend::Agent</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>

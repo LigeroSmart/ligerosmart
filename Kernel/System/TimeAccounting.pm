@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.48 2011-01-24 23:58:21 en Exp $
+# $Id: TimeAccounting.pm,v 1.49 2011-01-25 15:12:50 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -933,7 +933,7 @@ sub UserSettingsInsert {
     $Param{DateStart} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateStart')
         || '2007-01-01';
     $Param{Description} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDescription')
-        || '';
+        || 'Put your description here.';
 
     # db quote
     for ( keys %Param ) {
@@ -1788,6 +1788,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2011-01-24 23:58:21 $
+$Revision: 1.49 $ $Date: 2011-01-25 15:12:50 $
 
 =cut
