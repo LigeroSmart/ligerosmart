@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -107,20 +107,20 @@ a.ArrowDownDisabled:active {
 }
 
 a.ArrowUp {
-    background: url(../img/icons/arrow_up_blue.png);
+    background: url(../img/icons/survey_arrow_up.png);
 }
 
 a.ArrowUpDisabled {
-    background: url(../img/icons/arrow_up_gray.png);
+    background: url(../img/icons/survey_arrow_up_disabled.png);
     cursor: default;
 }
 
 a.ArrowDown {
-    background: url(../img/icons/arrow_down_blue.png) no-repeat 0 0;
+    background: url(../img/icons/survey_arrow_down.png) no-repeat 0 0;
 }
 
 a.ArrowDownDisabled {
-    background: url(../img/icons/arrow_down_gray.png);
+    background: url(../img/icons/survey_arrow_down_disabled.png);
     cursor: default;
 }
 
@@ -143,7 +143,7 @@ a.SeeDetails {
     display: inline-block;
     vertical-align: middle;
     cursor: pointer;
-    background: url(../img/icons/see_details.png);
+    background: url(../img/icons/survey_see_details.png);
 }
 
 label.Textarea,
