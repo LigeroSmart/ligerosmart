@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.49 2011-01-25 15:12:50 mn Exp $
+# $Id: TimeAccounting.pm,v 1.50 2011-01-25 23:48:30 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -104,12 +104,12 @@ sub new {
 
 =item UserCurrentPeriodGet()
 
-returns a hash with the user of the current period data
+returns a hash with the current period data of the specified user
 
     my %UserData = $TimeAccountingObject->UserCurrentPeriodGet(
         Year  => '2005',
-        Month => '12';
-        Day   => '24'
+        Month => '12',
+        Day   => '24',
     );
 
 The returned hash contains the following elements:
@@ -471,7 +471,7 @@ sub ProjectGet {
 
 =item ProjectSettingsInsert()
 
-insert new project data in the db
+inserts a new project in the db
 
     $TimeAccountingObject->ProjectSettingsInsert(
         Project            => 'internal',    # optional
@@ -520,7 +520,7 @@ sub ProjectSettingsInsert {
 
 =item ProjectSettingsUpdate()
 
-update of a project
+updates a project
 
     my $Success = $TimeAccountingObject->ProjectSettingsUpdate(
         ID                 => 123,
@@ -724,7 +724,7 @@ sub ActionSettingsUpdate {
 
 =item UserList()
 
-returns a hash with the user data of all user
+returns a hash with the user data of all users
 
     my %UserData = $TimeAccountingObject->UserList();
 
@@ -831,7 +831,7 @@ sub UserSettingsGet {
 
 =item SingleUserSettingsGet()
 
-returns a hash with the user period data
+returns a hash with the requested user's period data
 
     my %UserData = $TimeAccountingObject->SingleUserSettingsGet( UserID => 1 );
 
@@ -873,7 +873,7 @@ sub SingleUserSettingsGet {
 
 =item UserLastPeriodNumberGet()
 
-returns the number of the last registered period for this user
+returns the number of the last registered period for the specified user
 
     my $LastPeriodNumber = $TimeAccountingObject->UserLastPeriodNumberGet( UserID => 1 );
 
@@ -1095,7 +1095,7 @@ sub UserSettingsUpdate {
 
 =item SingleUserSettingsUpdate()
 
-update user data in the db
+updates user data in the db
 
     $TimeAccountingObject->SingleUserSettingsUpdate(
         UserID        => 1,
@@ -1620,7 +1620,7 @@ sub ProjectActionReporting {
 
 =item ProjectTotalHours()
 
-returns the total sum of all hours related to a project
+returns the sum of all hours related to a project
 
     my $ProjectTotalHours = $TimeAccountingObject->ProjectTotalHours(
         ProjectID  => 15,
@@ -1656,7 +1656,7 @@ sub ProjectTotalHours {
 
 =item ProjectHistory()
 
-returns a array with all WorkingUnits related to a project
+returns an array with all WorkingUnits related to a project
 
     my @ProjectHistoryArray = $TimeAccountingObject->ProjectHistory(
         ProjectID  => 15,
@@ -1788,6 +1788,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2011-01-25 15:12:50 $
+$Revision: 1.50 $ $Date: 2011-01-25 23:48:30 $
 
 =cut
