@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.71 2011-01-20 13:57:39 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.72 2011-01-25 15:28:20 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.71 $) [1];
+$VERSION = qw($Revision: 1.72 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -222,7 +222,7 @@ sub Run {
             );
 
         # get params
-        for my $Parameter (qw(Status Year Month Day)) {
+        for my $Parameter (qw(Status Year Month Day Notification)) {
             $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
         }
         $Param{RecordsNumber} = $Self->{ParamObject}->GetParam( Param => 'RecordsNumber' ) || 8;
@@ -984,19 +984,44 @@ sub Run {
         # Show text, if incomplete working days are available
         if ( $Param{Incomplete} ) {
 
-            # show incomplete working days as a dropdown
-            my $IncompleWorkingDaysSelect = $Self->{LayoutObject}->BuildSelection(
-                Data       => \%IncompleteWorkingDaysList,
-                SelectedID => "$Param{Year}-$Param{Month}-$Param{Day}",
-                Name       => "IncompleteWorkingDaysList",
-            );
+            # if mass entry option is enabled, show list of working days
+            if ( $Self->{ConfigObject}->Get("TimeAccounting::AllowMassEntryForUser") ) {
 
-            $Self->{LayoutObject}->Block(
-                Name => 'IncompleteWorkingDays',
-                Data => {
-                    IncompleteWorkingDaysSelect => $IncompleWorkingDaysSelect,
-                },
-            );
+                $Self->{LayoutObject}->Block(
+                    Name => 'IncompleteWorkingDaysMassEntry',
+                );
+
+                foreach my $WorkingDays ( sort keys %IncompleteWorkingDaysList ) {
+                    my ( $Year, $Month, $Day )
+                        = split( /-/, $IncompleteWorkingDaysList{$WorkingDays} );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'IncompleteWorkingDaysMassEntrySingleDay',
+                        Data => {
+                            Date  => $IncompleteWorkingDaysList{$WorkingDays},
+                            Year  => $Year,
+                            Month => $Month,
+                            Day   => $Day,
+                        },
+                    );
+                }
+
+            }
+
+            # otherwise show incomplete working days as a dropdown
+            else {
+                my $IncompleWorkingDaysSelect = $Self->{LayoutObject}->BuildSelection(
+                    Data       => \%IncompleteWorkingDaysList,
+                    SelectedID => "$Param{Year}-$Param{Month}-$Param{Day}",
+                    Name       => "IncompleteWorkingDaysList",
+                );
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'IncompleteWorkingDays',
+                    Data => {
+                        IncompleteWorkingDaysSelect => $IncompleWorkingDaysSelect,
+                    },
+                );
+            }
         }
 
         my %UserData = $Self->{TimeAccountingObject}->UserGet(
@@ -1068,6 +1093,19 @@ sub Run {
         {
             $Output .= $Self->{LayoutObject}->Notify( Info => 'Successful insert!', );
         }
+
+        # show mass entry notification
+        if ( $Param{Notification} eq 'Error' ) {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Info     => 'Error while inserting multiple dates!',
+                Priority => 'Error'
+            );
+        }
+        elsif ( $Param{Notification} eq 'Successful' ) {
+            $Output .= $Self->{LayoutObject}
+                ->Notify( Info => 'Successfully inserted entries for several dates!', );
+        }
+
         $Output .= $Self->{LayoutObject}->Output(
             TemplateFile => 'AgentTimeAccountingEdit',
             Data         => {
@@ -2691,6 +2729,52 @@ sub Run {
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
+    }
+
+    #---------------------------------------------------------- #
+    # mass entry
+    # ---------------------------------------------------------- #
+    elsif ( $Self->{Subaction} eq 'MassEntry' ) {
+
+        # permission check
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRo};
+
+        # get params
+        for my $Parameter (qw(Dates LeaveDay Sick Overtime)) {
+            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter ) || '';
+        }
+
+        # split up dates
+        my @Dates = split /[|]/, $Param{Dates};
+        my $InsertError = 0;
+
+        # save entries in the db
+        foreach my $Date (@Dates) {
+
+            my ( $Year, $Month, $Day ) = split /[-]/, $Date;
+
+            if (
+                !$Self->{TimeAccountingObject}->WorkingUnitsInsert(
+                    Year     => $Year,
+                    Month    => $Month,
+                    Day      => $Day,
+                    LeaveDay => $Param{LeaveDay} || 0,
+                    Sick     => $Param{Sick} || 0,
+                    Overtime => $Param{Overtime} || 0,
+                )
+                )
+            {
+                $InsertError = 1;
+            }
+
+        }
+
+        # redirect to edit screen with log message
+        return $Self->{LayoutObject}->Redirect(
+            OP => 'Action=AgentTimeAccounting;Subaction=Edit;Notification='
+                . ( $InsertError ? 'Error' : 'Successful' )
+        );
+
     }
 
     # ---------------------------------------------------------- #

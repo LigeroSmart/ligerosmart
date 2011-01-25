@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.42 2011-01-20 04:49:07 en Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.43 2011-01-25 15:28:20 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -61,6 +61,43 @@
 //]]></script>
 <!--dtl:js_on_document_complete-->
 <!-- dtl:block:IncompleteWorkingDays -->
+<!-- dtl:block:IncompleteWorkingDaysMassEntry -->
+                <h2 class="SpacingTop">$Text{"Days without entries"}:</h2>
+                <ul class="IncompleteWorkingDays">
+                    <li id="SelectAllDays"><input type="checkbox" id="IncompleteWorkingDay-All" name="IncompleteWorkingDay-All" /><label for="IncompleteWorkingDay-All"><em>$Text{"Select all days"}</em></label></li>
+<!-- dtl:block:IncompleteWorkingDaysMassEntrySingleDay -->
+                    <li><input type="checkbox" id="IncompleteWorkingDay-$QData{"Date"}" name="IncompleteWorkingDay-$QData{"Date"}" /><label for="IncompleteWorkingDay-$QData{"Date"}">$QData{"Date"}</label> - <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"}">$Text{"Edit"}</a></li>
+<!-- dtl:block:IncompleteWorkingDaysMassEntrySingleDay -->
+                </ul>
+                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" id="MassEntry" name="MassEntry" class="SpacingTop">
+                    <input type="hidden" name="Action" value="$Env{"Action"}" />
+                    <input type="hidden" name="Subaction" value="MassEntry" />
+                    <input type="hidden" name="Dates" value="" />
+                    <input type="hidden" name="LeaveDay" value="" />
+                    <input type="hidden" name="Sick" value="" />
+                    <input type="hidden" name="Overtime" value="" />
+                    <input class="button" type="button" id="MassEntrySubmit" value="$Text{"Mass entry"}" />
+                </form>
+                <div id="MassEntryConfirmDialog" class="Hidden">
+                    <h2>$Text{"Please choose the reason for your absence for the selected days"}.</h2>
+                    <ul id="MassEntryConfirmRadio">
+                        <li><input type="radio" name="LeaveDay" id="ConfirmLeaveDay" /><label for="ConfirmLeaveDay">$Text{"On vacation"}</label></li>
+                        <li><input type="radio" name="Sick" id="ConfirmSick" /><label for="ConfirmSick">$Text{"On sick leave"}</label></li>
+                        <li><input type="radio" name="Overtime" id="ConfirmOvertime" /><label for="ConfirmOvertime">$Text{"On overtime leave"}</label></li>
+                    </ul>
+                </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    TimeAccounting.Agent.EditTimeRecords.MassEntryInit({
+        MsgChooseOneDay:    '$JSText{"Please choose at least one day!"}',
+        MsgAbsenceReason:   '$JSText{"Please choose a reason for absence!"}',
+        MassEntry:          '$JSText{"Mass Entry"}',
+        Submit:             '$JSText{"Submit"}',
+        Cancel:             '$JSText{"Cancel"}'
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:IncompleteWorkingDaysMassEntry -->
             </div>
         </div>
         <div class="WidgetSimple SpacingTop">

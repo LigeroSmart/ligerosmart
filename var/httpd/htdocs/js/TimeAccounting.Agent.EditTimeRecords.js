@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.5 2011-01-20 09:09:19 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.6 2011-01-25 15:28:20 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -261,7 +261,87 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
         // initiate "more input fields" functionality
         InitAddRow(Language);
-    }
+    };
+
+    /**
+     * @function
+     * @param {Object} Language object with text translations
+     * @return nothing
+     *      This function initializes the javascript for the mass entry functionality
+     */
+    TargetNS.MassEntryInit = function(Language) {
+        $('#IncompleteWorkingDay-All').unbind('click.SelectAllDays').bind('click.SelectAllDays', function (Event) {
+            var State = $(this).attr('checked');
+            $('ul.IncompleteWorkingDays li input:checkbox').attr('checked', State);
+        });
+        $('#MassEntrySubmit').unbind('click.MassEntrySubmit').bind('click.MassEntrySubmit', function () {
+            var $WorkingDayCheckboxes = $('ul.IncompleteWorkingDays li input:checkbox:checked').filter('[name!=IncompleteWorkingDay-All]');
+
+            if (!$WorkingDayCheckboxes.length) {
+                alert(Language.MsgChooseOneDay);
+                return false;
+            }
+
+            // Show overlay
+            Core.UI.Dialog.ShowContentDialog($('#MassEntryConfirmDialog'), Language.MassEntry, '150px', 'Center', true, [
+                {
+                    Label: Language.Submit,
+                    Function: function () {
+                        var $SelectedRadio = $('#MassEntryConfirmRadio li input:radio:checked'),
+                            AbsenceReason,
+                            CollectedDates = '';
+
+                        if (!$SelectedRadio.length) {
+                            alert(Language.MsgAbsenceReason);
+                            return false;
+                        }
+
+                        // set absence reason
+                        AbsenceReason = $SelectedRadio.attr('name');
+                        if (AbsenceReason === 'LeaveDay') {
+                            $('#MassEntry input[name=LeaveDay]').val(1);
+                        }
+                        else if (AbsenceReason === 'Sick') {
+                            $('#MassEntry input[name=Sick]').val(1);
+                        }
+                        else if (AbsenceReason === 'Overtime') {
+                            $('#MassEntry input[name=Overtime]').val(1);
+                        }
+
+                        // collect dates
+                        $('ul.IncompleteWorkingDays li input:checkbox:checked').each(function () {
+                            var Date = $(this).attr('name').replace(/IncompleteWorkingDay-/, "");
+                            if (Date !== 'All') {
+                                CollectedDates += Date + '|';
+                            }
+                        });
+                        $('#MassEntry input[name=Dates]').val(CollectedDates);
+
+                        // Show waiting icon
+                        $('.Dialog:visible')
+                        .find('.ContentFooter')
+                        .empty()
+                        .end()
+                        .find('.InnerContent')
+                        .width($('.Dialog:visible').find('.InnerContent').width())
+                        .empty()
+                        .append('<span class="AJAXLoader"></span>');
+
+                        // Submit form
+                        $('#MassEntry').submit();
+                    },
+                    Class: 'Primary'
+                },
+                {
+                    Label: Language.Cancel,
+                    Function: function () {
+                        Core.UI.Dialog.CloseDialog($('.Dialog:visible'));
+                    }
+                },
+            ]);
+            return false;
+        });
+    };
 
     return TargetNS;
 }(TimeAccounting.Agent.EditTimeRecords || {}));
