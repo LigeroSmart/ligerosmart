@@ -2,7 +2,7 @@
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.27 2011-01-24 20:46:58 ub Exp $
+# $Id: AdminImportExport.dtl,v 1.28 2011-01-25 17:07:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -376,7 +376,7 @@
 <!-- dtl:block:TemplateEdit4Row -->
                         </tbody>
                     </table>
-                    <div class="W100pc SpacingTopSmall Right">
+                    <div class="W100pc SpacingTopSmall Left">
                         <button class="CallForAction Plus" id="MappingAdd" type="submit" name="MappingAdd" value="$Text{"Add"}"><span> $Text{"Add Mapping Element"}</span> </button>
                     </div>
 
