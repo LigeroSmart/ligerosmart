@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -55,20 +55,20 @@ button.ArrowDown[disabled="disabled"]:active {
 }
 
 button.ArrowUp {
-    background: url(../img/icons/arrow_up.png);
+    background: url(../img/icons/importexport_arrow_up.png);
 }
 
 button.ArrowUp[disabled="disabled"] {
-    background: url(../img/icons/arrow_up_disabled.png);
+    background: url(../img/icons/importexport_arrow_up_disabled.png);
     cursor: default;
 }
 
 button.ArrowDown {
-    background: url(../img/icons/arrow_down.png);
+    background: url(../img/icons/importexport_arrow_down.png);
 }
 
 button.ArrowDown[disabled="disabled"]{
-    background: url(../img/icons/arrow_down_disabled.png);
+    background: url(../img/icons/importexport_arrow_down_disabled.png);
     cursor: default;
 }
 

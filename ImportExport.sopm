@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ImportExport.sopm,v 1.46 2011-01-24 20:31:27 ub Exp $</CVS>
+    <CVS>$Id: ImportExport.sopm,v 1.47 2011-01-25 16:01:13 ub Exp $</CVS>
     <Name>ImportExport</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -71,10 +71,10 @@
         <File Permission="644" Location="scripts/test/sample/ImportExport/ImportExportFormatCSV008-OpenOffice-Semicolon.csv"/>
         <File Permission="644" Location="var/packagesetup/ImportExport.pm"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/ITSM.ImportExport.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_up.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_up_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_down.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/importexport_arrow_down_disabled.png"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="imexport_template">
