@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.255 2011-01-15 20:03:42 mb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.256 2011-01-25 17:01:41 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -343,7 +343,7 @@
                 <Title>PSA</Title>
                 <NavBar>
                     <Description>Projected Service Availability (PSA)</Description>
-                    <Name>Projected Service Availability (PSA)</Name>
+                    <Name>Projected Service Availability</Name>
                     <Link>Action=AgentITSMChangePSA</Link>
                     <Type></Type>
                     <Block></Block>
