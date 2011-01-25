@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeAdd.dtl - provides HTML form for AgentITSMChangeAdd
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeAdd.dtl,v 1.58 2010-12-22 19:19:57 ub Exp $
+# $Id: AgentITSMChangeAdd.dtl,v 1.59 2011-01-25 19:39:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,7 @@
                     <input type="hidden" name="Action"    value="$Env{"Action"}"/>
                     <input type="hidden" name="Subaction" value="CreateFromTemplate"/>
                     <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}"/>
+                    <input type="hidden" name="TicketID"  value="$QData{"TicketID"}"/>
 
                     <fieldset class="TableLike FixedLabelSmall">
 
