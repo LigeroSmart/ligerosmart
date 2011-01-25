@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.39 2011-01-20 17:20:21 dz Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.40 2011-01-25 03:40:18 dz Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -42,12 +42,11 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Survey.Agent.Default.IE7.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Survey.Customer.Default.IE7.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up_disabled.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down.png"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_disabled.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up_gray.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_up_blue.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_blue.png"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/arrow_down_gray.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/see_details.png"/>
-
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="survey">
