@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.23 2011-01-24 18:06:54 cr Exp $
+# $Id: nl_FAQ.pm,v 1.24 2011-01-25 09:12:51 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,13 +19,13 @@ sub Data {
     # Template: AAAFAQ
     $Self->{Translation}->{'internal'} = 'intern';
     $Self->{Translation}->{'public'} = 'publiek';
-    $Self->{Translation}->{'external'} = '';
+    $Self->{Translation}->{'external'} = 'extern';
     $Self->{Translation}->{'FAQ Number'} = 'FAQ nummer';
     $Self->{Translation}->{'LatestChangedItems'} = 'Laatst gewijzigde artikelen';
     $Self->{Translation}->{'LatestCreatedItems'} = 'Laatst aangemaakte artikelen';
     $Self->{Translation}->{'Top10Items'} = 'Populairste artikelen';
     $Self->{Translation}->{'SubCategoryOf'} = 'Subcategorie van';
-    $Self->{Translation}->{'No rate selected!'} = '';
+    $Self->{Translation}->{'No rate selected!'} = 'Geen waardering geselecteerd.';
     $Self->{Translation}->{'public (all)'} = 'publiek';
     $Self->{Translation}->{'external (customer)'} = 'extern (klanten)';
     $Self->{Translation}->{'internal (agent)'} = 'intern (gebruikers)';
@@ -66,7 +66,7 @@ sub Data {
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer tenminste één permissiegroep.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Gebruikers met rechten op artikelen in deze categorie.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Wilt u deze categorie verwijderen?';
-    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = '';
+    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = 'U kunt deze categorie niet verwijderen. Hij wordt gebruikt in een of meer artikelen en/of heeft onderliggende categoriën.';
     $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Deze categorie wordt gebruikt door de volgende artikelen';
     $Self->{Translation}->{'This category is parent of the following subcategories'} = 'Deze categorie heeft de volgende subcategoriën';
 
