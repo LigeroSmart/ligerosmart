@@ -2,7 +2,7 @@
 # Kernel/Language/nl_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_Survey.pm,v 1.1 2011-01-20 17:20:21 dz Exp $
+# $Id: nl_Survey.pm,v 1.2 2011-01-25 09:20:41 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,64 +17,64 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurvey
-    $Self->{Translation}->{'Create New Survey'} = '';
-    $Self->{Translation}->{'Introduction'} = '';
-    $Self->{Translation}->{'Internal Description'} = '';
-    $Self->{Translation}->{'Survey Edit'} = '';
-    $Self->{Translation}->{'General Info'} = '';
-    $Self->{Translation}->{'Stats Overview'} = '';
-    $Self->{Translation}->{'Requests Table'} = '';
-    $Self->{Translation}->{'Send Time'} = '';
-    $Self->{Translation}->{'Vote Time'} = '';
-    $Self->{Translation}->{'Details'} = '';
-    $Self->{Translation}->{'No questions saved for this survey.'} = '';
-    $Self->{Translation}->{'Survey Stat Details'} = '';
-    $Self->{Translation}->{'go back to stats overview'} = '';
-    $Self->{Translation}->{'Go Back'} = '';
+    $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
+    $Self->{Translation}->{'Introduction'} = 'Introductie';
+    $Self->{Translation}->{'Internal Description'} = 'Interne omschrijving';
+    $Self->{Translation}->{'Survey Edit'} = 'Bewerk enquête';
+    $Self->{Translation}->{'General Info'} = 'Algemene informatie';
+    $Self->{Translation}->{'Stats Overview'} = 'Statistieken';
+    $Self->{Translation}->{'Requests Table'} = 'Verzoeken';
+    $Self->{Translation}->{'Send Time'} = 'Verstuurd op';
+    $Self->{Translation}->{'Vote Time'} = 'Ingevuld op';
+    $Self->{Translation}->{'Details'} = 'Details';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Er zijn geen vragen opgeslagen voor deze enquête';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Detailoverzicht statistieken';
+    $Self->{Translation}->{'go back to stats overview'} = 'ga terug naar het overzicht';
+    $Self->{Translation}->{'Go Back'} = 'Ga terug';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Survey Edit Questions'} = '';
-    $Self->{Translation}->{'Add Question'} = '';
-    $Self->{Translation}->{'Type the question'} = '';
-    $Self->{Translation}->{'Survey Questions'} = '';
-    $Self->{Translation}->{'Question'} = '';
-    $Self->{Translation}->{'Edit Question'} = '';
-    $Self->{Translation}->{'go back to questions'} = '';
-    $Self->{Translation}->{'Possible Answers For'} = '';
-    $Self->{Translation}->{'Add Answer'} = '';
-    $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} = '';
-    $Self->{Translation}->{'Edit Answer'} = '';
-    $Self->{Translation}->{'go back to edit question'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Bewerk vragen';
+    $Self->{Translation}->{'Add Question'} = 'Vraag toevoegen';
+    $Self->{Translation}->{'Type the question'} = 'Vraag';
+    $Self->{Translation}->{'Survey Questions'} = 'Vragen';
+    $Self->{Translation}->{'Question'} = 'Vraag';
+    $Self->{Translation}->{'Edit Question'} = 'Bewerk vraag';
+    $Self->{Translation}->{'go back to questions'} = 'ga terug naar de vragen';
+    $Self->{Translation}->{'Possible Answers For'} = 'Mogelijke antwoorden';
+    $Self->{Translation}->{'Add Answer'} = 'Antwoord toevoegen';
+    $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} = 'Deze heeft niet meerdere antwoorden. Er zal een tekstvak getoond worden.';
+    $Self->{Translation}->{'Edit Answer'} = 'Antwoord bewerken';
+    $Self->{Translation}->{'go back to edit question'} = 'ga terug naar de vraag';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = '';
+    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maximaal aantal enquêtes per pagina';
 
     # Template: AgentSurveyOverviewSmall
-    $Self->{Translation}->{'Notification Sender'} = '';
-    $Self->{Translation}->{'Notification Subject'} = '';
-    $Self->{Translation}->{'Notification Body'} = '';
-    $Self->{Translation}->{'Created Time'} = '';
-    $Self->{Translation}->{'Created By'} = '';
-    $Self->{Translation}->{'Changed Time'} = '';
-    $Self->{Translation}->{'Changed By'} = '';
+    $Self->{Translation}->{'Notification Sender'} = 'Afzender notificatie';
+    $Self->{Translation}->{'Notification Subject'} = 'Onderwerp';
+    $Self->{Translation}->{'Notification Body'} = 'Body text';
+    $Self->{Translation}->{'Created Time'} = 'Aangemaakt op';
+    $Self->{Translation}->{'Created By'} = 'Aangemaakt door';
+    $Self->{Translation}->{'Changed Time'} = 'Gewijzigd op';
+    $Self->{Translation}->{'Changed By'} = 'Gewijzigd door';
 
     # Template: AgentSurveyZoom
-    $Self->{Translation}->{'Survey Information'} = '';
-    $Self->{Translation}->{'Sent requests'} = '';
-    $Self->{Translation}->{'Received surveys'} = '';
-    $Self->{Translation}->{'Edit General Info'} = '';
-    $Self->{Translation}->{'Edit Questions'} = '';
-    $Self->{Translation}->{'Stats Details'} = '';
-    $Self->{Translation}->{'Survey Details'} = '';
-    $Self->{Translation}->{'Survey Results Graph'} = '';
-    $Self->{Translation}->{'No stat results.'} = '';
+    $Self->{Translation}->{'Survey Information'} = 'Details enquête';
+    $Self->{Translation}->{'Sent requests'} = 'Verstuurde verzoeken';
+    $Self->{Translation}->{'Received surveys'} = 'Ontvangen enquêtes';
+    $Self->{Translation}->{'Edit General Info'} = 'Bewerk algemene informatie';
+    $Self->{Translation}->{'Edit Questions'} = 'Bewerk vragen';
+    $Self->{Translation}->{'Stats Details'} = 'Details statistieken';
+    $Self->{Translation}->{'Survey Details'} = 'Details enquête';
+    $Self->{Translation}->{'Survey Results Graph'} = 'Resultaten (grafiek)';
+    $Self->{Translation}->{'No stat results.'} = 'Geen resultaten.';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = '';
-    $Self->{Translation}->{'Please answer the next questions'} = '';
+    $Self->{Translation}->{'Survey'} = 'Enquête';
+    $Self->{Translation}->{'Please answer the next questions'} = 'Beantwoordt u de volgende vragen';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = '';
+    $Self->{Translation}->{'A Survey Module.'} = 'Een module om enqêtes te onderhouden en te versturen';
     $Self->{Translation}->{'A module to edit survey questions.'} = '';
     $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} = '';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = '';
