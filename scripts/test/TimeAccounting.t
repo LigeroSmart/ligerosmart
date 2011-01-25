@@ -2,7 +2,7 @@
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.7 2011-01-24 23:59:57 en Exp $
+# $Id: TimeAccounting.t,v 1.8 2011-01-25 10:19:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -186,7 +186,7 @@ $TimeAccountingObject->SingleUserSettingsUpdate(
             Overtime    => '10',
             UserStatus  => 1,
         },
-        }
+    },
 );
 
 # set to invalid all registries used for the tests
@@ -195,12 +195,14 @@ $TimeAccountingObject->ActionSettingsUpdate(
     Action       => $NewActionData{Action} . 'modified',
     ActionStatus => 0,
 );
+
 $TimeAccountingObject->ProjectSettingsUpdate(
     ID                 => $ProjectID,
     Project            => $NewProjectData{Project} . 'modified',
     ProjectDescription => 'Test',
     ProjectStatus      => 0,
 );
+
 $UserData{ValidID} = 0;
 $UserObject->UserUpdate(%UserData);
 $TimeAccountingObject->SingleUserSettingsUpdate(
@@ -225,7 +227,7 @@ $TimeAccountingObject->SingleUserSettingsUpdate(
             Overtime    => '10',
             UserStatus  => 0,
         },
-        }
+    },
 );
 
 1;
