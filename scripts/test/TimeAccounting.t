@@ -2,7 +2,7 @@
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.9 2011-01-25 23:42:54 en Exp $
+# $Id: TimeAccounting.t,v 1.10 2011-01-26 23:46:30 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,15 +18,32 @@ use vars qw($Self);
 use Kernel::System::TimeAccounting;
 use Kernel::System::User;
 
-my $UserObject           = Kernel::System::User->new( %{$Self} );
+# create local object
+my $UserObject = Kernel::System::User->new( %{$Self} );
+
+# data for new user
+my $RandomNumber = int( rand(10000) );
+my %UserData     = (
+    UserFirstname => 'Unit Test',
+    UserLastname  => 'User',
+    UserLogin     => 'UnitTest' . $RandomNumber,
+    UserPw        => 'pass',
+    UserEmail     => 'email@mydomain.com',
+    ValidID       => 1,
+    ChangeUserID  => 1,
+);
+
+# create test user
+my $UserID = $UserObject->UserAdd(%UserData);
+
+# crete local object
 my $TimeAccountingObject = Kernel::System::TimeAccounting->new(
     %{$Self},
-    UserID     => 1,
+    UserID     => $UserID,
     UserObject => $UserObject,
 );
 
 # data for the new action (task)
-my $RandomNumber  = int( rand(10000) );
 my %NewActionData = (
     Action       => 'TestAction' . $RandomNumber,
     ActionStatus => 1,
@@ -133,20 +150,6 @@ $Self->Is(
     $NewProjectData{Project} . 'modified',
     'Compare project name saved in DB with the specified in the update',
 );
-
-# data for new user
-my %UserData = (
-    UserFirstname => 'Huber',
-    UserLastname  => 'Manfred',
-    UserLogin     => 'mhuber' . $RandomNumber,
-    UserPw        => 'pass',
-    UserEmail     => 'email@mydomain.com',
-    ValidID       => 1,
-    ChangeUserID  => 1,
-);
-
-# create test user
-my $UserID = $UserObject->UserAdd(%UserData);
 
 # obtain the last registered period of the test user
 my $LastPeriodNumber = $TimeAccountingObject->UserLastPeriodNumberGet( UserID => $UserID ) + 1;
@@ -291,6 +294,112 @@ $Self->Is(
     'Verify end date of current period',
 );
 
+# hash with the working units for Jan. 15th, 2011
+my %WorkingUnits = (
+    Year         => '2011',
+    Month        => '01',
+    Day          => '15',
+    LeaveDay     => 0,
+    Sick         => 0,
+    Overtime     => 0,
+    WorkingUnits => [
+        {
+            ProjectID => $ProjectID,
+            ActionID  => $ActionData{ID},
+            Remark    => 'My comment',
+            StartTime => '7:00',
+            EndTime   => '10:00',
+            Period    => '3.0',
+        },
+        {
+            ProjectID => $ProjectID,
+            ActionID  => $ActionData{ID},
+            Remark    => 'My comment',
+            StartTime => '13:00',
+            EndTime   => '15:00',
+            Period    => '2.0',
+        },
+    ],
+);
+
+# insert working units in the DB
+$Insert = $TimeAccountingObject->WorkingUnitsInsert(%WorkingUnits);
+
+# verify that the working units were successfully inserted
+$Self->True(
+    $Insert,
+    'Insert working units for test user into database',
+);
+
+# get all days without working units entry
+my %WorkingUnitsCheck = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
+    UserID => $UserID,
+);
+
+# verify that Jan 15th, 2011 is not in the list of days without entry
+$Self->False(
+    $WorkingUnitsCheck{Incomplete}{2011}{01}{15},
+    'Verify completion of working units'
+);
+
+# get working units of all users
+my %Data = $TimeAccountingObject->UserReporting(
+    Year  => '2011',
+    Month => '01',
+    Day   => '15',
+);
+
+# verify the correctness of the working units for the test user
+$Self->Is(
+    $Data{$UserID}{WorkingHoursTotal},
+    5,
+    'Verify number of working hours of the test user',
+);
+
+# get projects in which the test user has worked on
+my @LastProjects = $TimeAccountingObject->LastProjectsOfUser();
+
+my $TestProjectExistence;
+
+for my $ID (@LastProjects) {
+    next if $ID != $ProjectID;
+    $TestProjectExistence = 1;
+}
+
+# verify that existence of the test project into the user's list
+$Self->True(
+    $TestProjectExistence,
+    'Verify that existence of the test project into the user\'s list',
+);
+
+# delete working units for Jan. 15th, 2011
+my $Delete = $TimeAccountingObject->WorkingUnitsDelete(
+    Year  => '2011',
+    Month => '1',
+    Day   => '15',
+);
+
+# verify that the working units were successfully deleted
+$Self->True(
+    $Delete,
+    'Delete working units for test',
+);
+
+# get working units for Jan. 15th, 2011
+my %WorkingUnitsData = $TimeAccountingObject->WorkingUnitsGet(
+    Year   => '2011',
+    Month  => '1',
+    Day    => '15',
+    UserID => $UserID,
+);
+
+# verify inexistence of the deleted working units
+$Self->Is(
+    $WorkingUnitsData{Total},
+    '0',
+    'Verify inexistence of the deleted working units',
+);
+
 # set to invalid all registries used for the tests
 $TimeAccountingObject->ActionSettingsUpdate(
     ActionID     => $ActionData{ID},
@@ -305,7 +414,7 @@ $TimeAccountingObject->ProjectSettingsUpdate(
     ProjectStatus      => 0,
 );
 
-$UserData{ValidID} = 0;
+$UserData{ValidID} = 2;
 $UserData{UserID}  = $UserID;
 $UserObject->UserUpdate(%UserData);
 $TimeAccountingObject->SingleUserSettingsUpdate(
