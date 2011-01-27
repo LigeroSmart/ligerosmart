@@ -2,7 +2,7 @@
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.10 2011-01-26 23:46:30 en Exp $
+# $Id: TimeAccounting.t,v 1.11 2011-01-27 23:47:08 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -370,6 +370,41 @@ for my $ID (@LastProjects) {
 $Self->True(
     $TestProjectExistence,
     'Verify that existence of the test project into the user\'s list',
+);
+
+# get project - action working hours
+my %ProjectActionWorkingHours = $TimeAccountingObject->ProjectActionReporting(
+    Year   => 2011,
+    Month  => 1,
+    UserID => $UserID,
+);
+
+# verify total reported hours for the test action (task) and test project
+$Self->Is(
+    $ProjectActionWorkingHours{$ProjectID}{Actions}{ $ActionData{ID} }{Total},
+    '5',
+    'Verify total reported hours for the test action (task) and test project',
+);
+
+# get project working units
+my @ProjectHistoryArray = $TimeAccountingObject->ProjectHistory( ProjectID => $ProjectID );
+
+my $TotalHours;
+
+# get sum of all working unit for the test project
+for my $Project (@ProjectHistoryArray) {
+    $TotalHours += $Project->{Period};
+}
+
+my $TestProjectTotalHours = $TimeAccountingObject->ProjectTotalHours(
+    ProjectID => $ProjectID,
+);
+
+# verify total working units for the test project
+$Self->Is(
+    int $TotalHours,
+    int $TestProjectTotalHours,
+    'Verify total hours of test project',
 );
 
 # delete working units for Jan. 15th, 2011
