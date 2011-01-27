@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.48 2011-01-19 23:28:11 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.49 2011-01-27 05:15:36 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -107,7 +107,7 @@ $Include{"RichTextEditor"}
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>$Text{"Survey Edit"}: $QData{"SurveyNumber"} - $QData{"Title"}</h1>
+            <h1>$Text{"Edit General Info for"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
             <p>
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>
@@ -195,7 +195,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:Stats -->
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
-        <h1>$Text{"Stats Overview"} : $Data{"SurveyNumber"} - $Data{"Title"} </h1>
+        <h1>$Text{"Stats Overview of"} : $Config{"Survey::Hook"}$Data{"SurveyNumber"} - $Data{"Title"} </h1>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
         </p>
@@ -282,7 +282,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:StatsDetail -->
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
-        <h1>$Text{"Survey Stat Details"} : $Text{"Ticket"}#$Data{"TicketNumber"} : $Data{"SurveyNumber"} - $Data{"Title"} :  </h1>
+        <h1>$Text{"Survey Stat Details"} : $Text{"Ticket"}#$Data{"TicketNumber"} : $Config{"Survey::Hook"}$Data{"SurveyNumber"} - $Data{"Title"} :  </h1>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             $Text{"or"}
