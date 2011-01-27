@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.27 2011-01-18 15:08:18 mn Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.28 2011-01-27 17:08:28 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -194,7 +194,6 @@
                                 <td class="Right">$QData{"Hours"}</td>
                                 <td class="Right">$QData{"HoursTotal"}</td>
                             </tr>
-<!-- dtl:block:Action -->
 <!-- dtl:block:ActionTotal -->
                             <tr>
                                 <td><strong>$Text{"Total"}</strong></td>
@@ -202,6 +201,7 @@
                                 <td class="Right"><strong>$QData{"HoursTotal"}</strong></td>
                             </tr>
 <!-- dtl:block:ActionTotal -->
+<!-- dtl:block:Action -->
                             <tr class="GrandTotal">
                                 <td colspan="2"><strong>$Text{"Grand total"}</strong></td>
                                 <td class="Right"><strong>$QData{"TotalHours"}</strong></td>
