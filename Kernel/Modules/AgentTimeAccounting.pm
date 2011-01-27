@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.72 2011-01-25 15:28:20 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.73 2011-01-27 19:49:52 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.72 $) [1];
+$VERSION = qw($Revision: 1.73 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1135,6 +1135,32 @@ sub Run {
             if ( !$Param{$Needed} ) {
                 return $Self->{LayoutObject}->ErrorScreen( Message => "View: Need $Needed" );
             }
+        }
+
+        # get current date and time
+        my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
+            = $Self->{TimeObject}->SystemTime2Date(
+            SystemTime => $Self->{TimeObject}->SystemTime(),
+            );
+
+        my $MaxAllowedInsertDays
+            = $Self->{ConfigObject}->Get('TimeAccounting::MaxAllowedInsertDays') || '10';
+        ( $Param{YearAllowed}, $Param{MonthAllowed}, $Param{DayAllowed} )
+            = Add_Delta_YMD( $Year, $Month, $Day, 0, 0, -$MaxAllowedInsertDays );
+
+        # redirect to the edit screen, if necessary
+        if (
+            timelocal( 1, 0, 0, $Param{Day}, $Param{Month} - 1, $Param{Year} - 1900 ) > timelocal(
+                1, 0, 0, $Param{DayAllowed},
+                $Param{MonthAllowed} - 1,
+                $Param{YearAllowed} - 1900
+            )
+            )
+        {
+            return $Self->{LayoutObject}->Redirect(
+                OP =>
+                    "Action=$Self->{Action};Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
+            );
         }
 
         # if no UserID posted use the current user
