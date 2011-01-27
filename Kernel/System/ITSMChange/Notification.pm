@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.43 2011-01-24 10:45:09 mb Exp $
+# $Id: Notification.pm,v 1.44 2011-01-27 16:05:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::Language;
 use base qw(Kernel::System::EventHandler);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -993,7 +993,7 @@ This method replaces all the <OTRS_xxxx> macros in notification text.
         Change    => $Change,
         WorkOrder => $WorkOrder,
         Link      => $Link,
-        Language  => $Language    # used for translating states and such
+        Language  => $Language,    # used for translating states and such
         UserID    => 1,
     );
 
@@ -1409,6 +1409,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2011-01-24 10:45:09 $
+$Revision: 1.44 $ $Date: 2011-01-27 16:05:14 $
 
 =cut
