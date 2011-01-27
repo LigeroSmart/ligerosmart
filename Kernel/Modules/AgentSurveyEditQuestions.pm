@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.7 2011-01-18 17:48:18 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.8 2011-01-27 05:08:05 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -577,16 +577,20 @@ sub _MaskQuestionOverview {
                     $ClassDown = 'Disabled',
                 }
 
+                my $Status = 'Complete';
                 if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
                     if ( $AnswerCount < 2 ) {
-                        $Class = 'Error';
+                        $Class  = 'Error';
+                        $Status = 'Incomplete';
                     }
                 }
 
+                $Self->{LayoutObject}->Block( Name => 'SurveyStatusColumn' );
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyQuestionsRow',
                     Data => {
                         %{$Question},
+                        Status    => $Status,
                         Class     => $Class,
                         ClassUp   => $ClassUp,
                         ClassDown => $ClassDown,

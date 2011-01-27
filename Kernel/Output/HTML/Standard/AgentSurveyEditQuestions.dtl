@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.8 2011-01-19 19:21:14 dz Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.9 2011-01-27 05:08:05 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 <!-- dtl:block:SurveyEditQuestions -->
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
-        <h1>$Text{"Survey Edit Questions"}: $QData{"SurveyNumber"} - $QData{"Title"}</h1>
+        <h1>$Text{"Edit Questions for"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
         </p>
@@ -72,6 +72,11 @@
                             <th>
                                 $Text{"Type"}
                             </th>
+<!-- dtl:block:SurveyStatusColumn -->
+                            <th>
+                                $Text{"Status"}
+                            </th>
+<!-- dtl:block:SurveyStatusColumn -->
                             <th>
                                 $Text{"Up"}
                             </th>
@@ -122,6 +127,9 @@
                             </td>
                             <td>
                                 $Text{"$Data{"Type"}"}
+                            </td>
+                            <td>
+                                $Text{"$Data{"Status"}"}
                             </td>
                             <td>
                                 <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=QuestionUp;SurveyID=$QData{"SurveyID"};QuestionID=$QData{"QuestionID"}" class="ArrowUp$Data{"ClassUp"}">
