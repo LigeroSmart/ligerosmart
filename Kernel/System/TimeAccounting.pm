@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.50 2011-01-25 23:48:30 en Exp $
+# $Id: TimeAccounting.pm,v 1.51 2011-01-27 23:46:30 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -929,9 +929,9 @@ sub UserSettingsInsert {
     $Param{UserStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserStatus')    || '1';
     $Param{Overtime}   = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserOvertime')  || '0';
     $Param{DateEnd}    = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateEnd')
-        || '2007-12-31';
+        || '2011-12-31';
     $Param{DateStart} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDateStart')
-        || '2007-01-01';
+        || '2011-01-01';
     $Param{Description} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDescription')
         || 'Put your description here.';
 
@@ -1788,6 +1788,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2011-01-25 23:48:30 $
+$Revision: 1.51 $ $Date: 2011-01-27 23:46:30 $
 
 =cut
