@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.32 2011-01-12 16:39:22 ub Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.179 2011/01/12 10:29:16 martin Exp $
+# $Id: AgentTicketZoom.dtl,v 1.33 2011-01-27 18:44:38 ub Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.182 2011/01/27 08:50:20 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -77,8 +77,8 @@
     <div class="ClearLeft"></div>
     <div class="Headline">
         <div class="Flag" title="$Text{"$Data{"Priority"}"}"><span class="PriorityID-$QData{"PriorityID"}">$Text{"$Data{"Priority"}"}</span></div>
-        <h1 title="$Text{"Zoom"} $Config{"Ticket::Hook"}: $Data{"TicketNumber"} &ndash; $QData{"Title", "40"}">
-            #$Data{"TicketNumber"} <span>&mdash;</span> $QData{"Title", "60"}
+        <h1 title="$Text{"Zoom"} $Config{"Ticket::Hook"}$Data{"TicketNumber"} &ndash; $QData{"Title", "70"}">
+            $Config{"Ticket::Hook"}$Data{"TicketNumber"} <span>&mdash;</span> $QData{"Title", "60"}
         </h1>
     </div>
 
@@ -274,11 +274,12 @@
 #                            <a href="$Config{"CustomerDBLink"}" class="AsPopup PopupType_TicketAction" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a>
 #                        </p>
 #                        <div class="Clear"></div>
-#
+#<!-- dtl:block:TotalAccountedTime -->
 #                        <label>$Text{"Accounted time"}:</label>
 #                        <p class="Value">$Data{"TicketTimeUnits"}</p>
 #                        <div class="Clear"></div>
 #
+#<!-- dtl:block:TotalAccountedTime -->
 #<!-- dtl:block:PendingUntil -->
 #                        <label>$Text{"Pending till"}:</label>
 #                        <p class="Value $QData{"PendingUntilClass"}">$Data{"PendingUntil"}</p>
@@ -386,9 +387,11 @@
                         <p class="Value"><a href="$Config{"CustomerDBLink"}" class="OpenAsPopup" $Config{"CustomerDBLinkTarget"}>$QData{"CustomerID", "18"}</a></p>
                         <div class="Clear"></div>
 
+<!-- dtl:block:TotalAccountedTime -->
                         <label>$Text{"Accounted time"}:</label>
                         <p class="Value">$Data{"TicketTimeUnits"}</p>
                         <div class="Clear"></div>
+<!-- dtl:block:TotalAccountedTime -->
 
                     </fieldset>
 
@@ -643,7 +646,7 @@ $Data{"ArticleItems"}
         <div class="LightRow Header">
             <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content"}"><span></span></a></div>
             <h2>#$QData{"Count"} &ndash; $QData{"Subject","60"}</h2>
-            <div class="AdditionalInformation SpacingRight">
+            <div class="AdditionalInformation SpacingLoader">
                 $Text{"Created"}: $TimeShort{"$Data{"Created"}"}
             </div>
         </div>

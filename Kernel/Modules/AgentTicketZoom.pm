@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.21 2011-01-12 16:39:22 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.144 2011/01/11 23:11:51 mp Exp $
+# $Id: AgentTicketZoom.pm,v 1.22 2011-01-27 18:44:38 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.145 2011/01/27 08:50:20 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -375,8 +375,6 @@ sub MaskAgentZoom {
     # fetch all std. responses
     my %StandardResponses
         = $Self->{QueueObject}->GetStandardResponses( QueueID => $Ticket{QueueID} );
-
-    $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(%Ticket);
 
     # owner info
     my %OwnerInfo = $Self->{UserObject}->GetUserData(
@@ -727,6 +725,15 @@ sub MaskAgentZoom {
         $Self->{LayoutObject}->Block(
             Name => 'SolutionTime',
             Data => { %Ticket, %AclAction },
+        );
+    }
+
+    # show total accounted time if feature is active:
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
+        $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(%Ticket);
+        $Self->{LayoutObject}->Block(
+            Name => 'TotalAccountedTime',
+            Data => \%Ticket,
         );
     }
 
@@ -1671,7 +1678,11 @@ sub _ArticleItem {
     }
 
     # show accounted article time
-    if ( $Self->{ConfigObject}->Get('Ticket::ZoomTimeDisplay') ) {
+    if (
+        $Self->{ConfigObject}->Get('Ticket::ZoomTimeDisplay')
+        && $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime')
+        )
+    {
         my $ArticleTime = $Self->{TicketObject}->ArticleAccountedTimeGet(
             ArticleID => $Article{ArticleID}
         );

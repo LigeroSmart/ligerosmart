@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.11 2010-12-21 21:51:07 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.30 2010/12/16 17:07:36 mp Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.12 2011-01-27 18:44:38 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.33 2011/01/26 17:37:46 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -783,6 +783,12 @@ sub Run {
                     my $ContentIDHTMLQuote = $Self->{LayoutObject}->Ascii2Html(
                         Text => $ContentID,
                     );
+
+                    # workaround for link encode of rich text editor, see bug#5053
+                    my $ContentIDLinkEncode = $Self->{LayoutObject}->LinkEncode($ContentID);
+                    $GetParam{Body} =~ s/(ContentID=)$ContentIDLinkEncode/$1$ContentID/g;
+
+                    # ignore attachment if not linked in body
                     next if $GetParam{Body} !~ /(\Q$ContentIDHTMLQuote\E|\Q$ContentID\E)/i;
                 }
 
