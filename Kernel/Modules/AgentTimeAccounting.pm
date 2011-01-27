@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.73 2011-01-27 19:49:52 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.74 2011-01-27 21:37:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -924,7 +924,7 @@ sub Run {
             }
         }
 
-        if ( $Param{BlockName} ) {
+        if ( $Param{BlockName} && $Param{SuccessfulInsert} ) {
             $Self->{LayoutObject}->Block(
                 Name => 'ShowConfirmation',
                 Data => {
