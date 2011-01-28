@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.6 2011-01-25 15:28:20 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.7 2011-01-28 13:08:05 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -166,6 +166,94 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
         });
     }
 
+    function RecalculateTotalHours() {
+        var Total = 0;
+        $('.Period').each(function () {
+            var Value = parseFloat($(this).val());
+            if (!isNaN(Value)) {
+                Total += Value;
+            }
+        });
+        $('.TotalHours').text(Total.toFixed(2));
+    }
+
+    function InitPeriodCalculation() {
+        // init calculation of period field after working hours where added/substracted/whatever...
+        $('.Period').unbind('change.PeriodCalculation').bind('change.PeriodCalculation', function () {
+           var FieldValue = $(this).val();
+
+           // replace , with .
+           FieldValue = FieldValue.replace(/,/, ".");
+
+           // check if the entered value only consists of allowed values
+           // if not, we do not eval for security reasons
+           if (FieldValue.match(/^[0-9\.+\- ]+$/)) {
+               // Calculation
+               try {
+                   FieldValue = eval(FieldValue);
+               }
+               catch (CalcError) {
+                   FieldValue = 0;
+               }
+
+               // set new value
+               $(this).val(FieldValue.toFixed(2));
+
+               // now StartTime and EndTime will not match the period anymore
+               // delete these entries
+               $(this).closest('tr').find('.StartTime, .EndTime').val('');
+
+               // now re-calculate the total hours sum
+               RecalculateTotalHours();
+           }
+        });
+
+        // init period calculation on starttime and endtime fields
+        $('.StartTime, .EndTime').unbind('change.PeriodCalculation').bind('change.PeriodCalculation', function () {
+            var $StartTime, $EndTime,
+                StartTimeHour, StartTimeMinute, EndTimeHour, EndTimeMinute,
+                StartDate, EndDate, Today,
+                Period, PeriodHour, PeriodMinute;
+
+            if ($(this).hasClass('StartTime')) {
+                $StartTime = $(this);
+                $EndTime = $StartTime.closest('tr').find('.EndTime');
+            }
+            else {
+                $StartTime = $(this).closest('tr').find('.StartTime');
+                $EndTime = $(this);
+            }
+
+            // only calculate if both fields are filled
+            if ($StartTime.val() && $EndTime.val()) {
+                // extract hours and minutes
+                StartTimeHour = $StartTime.val().split(/:/)[0] || 0;
+                StartTimeMinute = $StartTime.val().split(/:/)[1] || 0;
+                EndTimeHour = $EndTime.val().split(/:/)[0] || 0;
+                EndTimeMinute = $EndTime.val().split(/:/)[1] || 0;
+
+                // define date objects
+                Today = new Date();
+                StartDate = new Date(Today.getYear(), Today.getMonth(), Today.getDate(), StartTimeHour, StartTimeMinute, 0);
+                EndDate = new Date(Today.getYear(), Today.getMonth(), Today.getDate(), EndTimeHour, EndTimeMinute, 0);
+
+                // calculate differences
+                Period = EndDate.getTime() - StartDate.getTime();
+                Period = Period / (1000 * 60 * 60);
+
+                // set new value
+                if (!isNaN(Period)) {
+                    $StartTime.closest('tr').find('.Period').val(Period.toFixed(2));
+                }
+                else {
+                    $StartTime.closest('tr').find('.Period').val('0');
+                }
+
+                RecalculateTotalHours();
+            }
+        });
+    }
+
     /**
      * @function
      * @param {Object} Options thedifferent possible options:
@@ -261,6 +349,9 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
         // initiate "more input fields" functionality
         InitAddRow(Language);
+
+        // initiate period calculation
+        InitPeriodCalculation();
     };
 
     /**

@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.43 2011-01-25 15:28:20 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.44 2011-01-28 13:08:05 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -163,7 +163,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="StartTime[$QData{"ID"}]" id="StartTime$QData{"ID"}" class="Validate_TimeAccounting_StartTime $QData{"StartTimeRequired"} $QData{"StartTimeInvalid"}" value="$QData{"StartTime"}" size="7" />
+                                    <input type="text" name="StartTime[$QData{"ID"}]" id="StartTime$QData{"ID"}" class="StartTime Validate_TimeAccounting_StartTime $QData{"StartTimeRequired"} $QData{"StartTimeInvalid"}" value="$QData{"StartTime"}" size="7" />
                                     <div id="StartTime$QData{"ID"}Error" class="TooltipErrorMessage">
                                         <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
@@ -183,7 +183,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="Validate_DependingRequiredAND Validate_Depending_StartTime$QData{"ID"} $QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
+                                    <input type="text" name="EndTime[$QData{"ID"}]" id="EndTime$QData{"ID"}" class="EndTime Validate_DependingRequiredAND Validate_Depending_StartTime$QData{"ID"} $QData{"EndTimeRequired"} $QData{"EndTimeInvalid"}" value="$QData{"EndTime"}" size="7" />
                                     <div id="EndTime$QData{"ID"}Error" class="TooltipErrorMessage">
                                         <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
@@ -207,7 +207,7 @@
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
                                 <td>
-                                    <input type="text" name="Period[$QData{"ID"}]" id="Period$QData{"ID"}" class="Validate_TimeAccounting_Period Validate_TimeUnits $QData{"PeriodRequired"} $QData{"PeriodInvalid"}" value="$QData{"Period"}" size="7" />
+                                    <input type="text" name="Period[$QData{"ID"}]" id="Period$QData{"ID"}" class="Period Validate_TimeAccounting_Period Validate_TimeUnits $QData{"PeriodRequired"} $QData{"PeriodInvalid"}" value="$QData{"Period"}" size="7" />
                                     <div id="Period$QData{"ID"}Error" class="TooltipErrorMessage">
                                         <p>$Text{"You have to fill in start and end time or a time period."}</p>
                                     </div>
@@ -243,7 +243,7 @@
                                 <td colspan="4"></td>
 <!-- dtl:block:Total -->
                                 <td>$Text{"Total"}:</td>
-                                <td>$QData{"Total"}</td>
+                                <td><span class="TotalHours">$QData{"Total"}</span></td>
 <!-- dtl:block:Total -->
                             </tr>
 <!-- dtl:block:Readonly -->
