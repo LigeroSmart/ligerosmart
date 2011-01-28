@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.40 2011-01-28 15:56:55 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.41 2011-01-28 16:01:56 mn Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -38,6 +38,7 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/arrow_leftright.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/timeaccounting_toolbar.png"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
+        <File Permission="644" Location="CHANGES-TimeAccounting"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="time_accounting_action">
