@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.8 2011-01-28 13:25:19 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.9 2011-01-28 13:26:22 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -205,7 +205,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
 
            }
            else {
-               $(this).val('0.00');
+               $(this).val('');
            }
 
            // now re-calculate the total hours sum
