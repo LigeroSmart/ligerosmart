@@ -2,7 +2,7 @@
 # TODO - todo list of TimeAccounting
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TODO.TimeAccounting,v 1.26 2011-01-05 11:58:25 mn Exp $
+# $Id: TODO.TimeAccounting,v 1.27 2011-01-28 16:08:17 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,6 @@
 
 TimeAccounting 2.0
 High Priority
-- Insert Unit tests.
 - problems with very long working days
   16:00 - 1:00 is not possible
   16:00 - 24:00 is not possible
@@ -21,11 +20,7 @@ High Priority
 - error warning for set 31.09 in edit
 - sysconfig: allow to deactivate the option MaxIncompleteWorkingDays
 - Include working hours per week into the overview.
-- Add the days without entry on a drop-down list, instead of in a continuous row.
 - Show the most selected options at the beginning of the list in the task drop down list (like in the project).
-- When a lot of days have missing entries, it is not possible to access the system until you add the entry
-  for all the days. Add a log out or close button to this screen, to exit the system in a proper way, without
-  using the X button of the browser.
 
 Lower Priority (or: old todo's - check if still valid)
 - change the workingunit handling from hash to array
@@ -53,5 +48,4 @@ Lower Priority (or: old todo's - check if still valid)
 - Add a label to the day, month and year.
 - Use always the same format for the date.
 - Move the check boxes from the bottom the top (on sick time leave... ).
-- Change the calendar to get the data with jQuery, instead of opening a pop-up.
 - Load the form for the days without entry with ajax.
