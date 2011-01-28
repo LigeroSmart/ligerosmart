@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.51 2011-01-27 23:46:30 en Exp $
+# $Id: TimeAccounting.pm,v 1.52 2011-01-28 22:01:58 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -981,123 +981,9 @@ sub UserSettingsInsert {
 
 =item UserSettingsUpdate()
 
-update user data in the db
-
-    $TimeAccountingObject->UserSettingsUpdate(
-        UserID => 1,
-        Description => 'Some Text',
-        CreateProject => 1 || 0,
-        ShowOvertime  => 1 || 0,
-        1    => {
-            UserID => 1,
-            Description => 'Some Text',
-            CreateProject => 1 || 0,
-            ShowOvertime  => 1 || 0,
-            1 => {
-                UserID       => 1,
-                Period       => '1',
-                DateStart    => '2005-12-12',
-                DateEnd      => '2005-12-31',
-                WeeklyHours  => '38',
-                LeaveDays    => '25',
-                Overtime     => '38',
-                UserStatus   => 1 || 0,
-            },
-        },
-        2    => {
-            1 => {
-                UserID       => 2,
-                Period       => '1',
-                DateStart    => '2005-12-12',
-                DateEnd      => '2005-12-31',
-                WeeklyHours  => '38',
-                LeaveDays    => '25',
-                Overtime     => '38',
-                UserStatus   => 1 || 0,
-            },
-        },
-        3    => ......
-    );
-
-=cut
-
-sub UserSettingsUpdate {
-    my ( $Self, %Param ) = @_;
-
-    # delete cache
-    delete $Self->{'Cache::UserCurrentPeriodGet'};
-
-    USERID:
-    for my $UserID ( sort keys %Param ) {
-
-        my $UserRef = $Param{$UserID};
-
-        if ( !defined $UserRef->{1}{DateStart} && !defined $UserRef->{1}{DateEnd} ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "UserSettingUpdate: There are no data for user id $UserID!"
-            );
-            next USERID;
-        }
-
-        #set default for ShowOverTime...
-        $UserRef->{ShowOvertime} ||= 0;
-
-        #set default for CreateProject...
-        $UserRef->{CreateProject} ||= 0;
-        $UserRef->{Calendar}      ||= 0;
-
-        # build sql
-        my $SQL
-            = "UPDATE time_accounting_user "
-            . "SET description = ?, show_overtime = ?, create_project = ?, calendar = ? "
-            . "WHERE user_id = ?";
-
-        my $Bind = [
-            \$UserRef->{Description}, \$UserRef->{ShowOvertime},
-            \$UserRef->{CreateProject}, \$UserRef->{Calendar}, \$UserRef->{UserID}
-        ];
-
-        # db insert
-        return if !$Self->{DBObject}->Do(
-            SQL  => $SQL,
-            Bind => $Bind,
-        );
-
-        for (qw(UserID Description ShowOvertime CreateProject Calendar)) {
-            delete $UserRef->{$_};
-        }
-
-        for my $Period ( keys %{$UserRef} ) {
-
-            my $PeriodRef = $UserRef->{$Period};
-
-            # build sql
-            my $SQL
-                = "UPDATE time_accounting_user_period "
-                . "SET leave_days = ?, date_start = ?"
-                . ", date_end = ?, overtime = ?"
-                . ", weekly_hours = ?, status = ? "
-                . "WHERE user_id = ? AND preference_period = ?";
-
-            my $Bind = [
-                \$PeriodRef->{LeaveDays}, \$PeriodRef->{DateStart},   \$PeriodRef->{DateEnd},
-                \$PeriodRef->{Overtime},  \$PeriodRef->{WeeklyHours}, \$PeriodRef->{UserStatus},
-                \$PeriodRef->{UserID},    \$Period,
-            ];
-
-            # db insert
-            return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
-        }
-    }
-    return 1;
-}
-
-=item SingleUserSettingsUpdate()
-
 updates user data in the db
 
-    $TimeAccountingObject->SingleUserSettingsUpdate(
+    $TimeAccountingObject->UserSettingsUpdate(
         UserID        => 1,
         Description   => 'Some Text',
         CreateProject => 1 || 0,
@@ -1125,7 +1011,7 @@ updates user data in the db
 
 =cut
 
-sub SingleUserSettingsUpdate {
+sub UserSettingsUpdate {
     my ( $Self, %Param ) = @_;
 
     # delete cache
@@ -1788,6 +1674,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.51 $ $Date: 2011-01-27 23:46:30 $
+$Revision: 1.52 $ $Date: 2011-01-28 22:01:58 $
 
 =cut
