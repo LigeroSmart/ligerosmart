@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="../thirdparty/qunit/qunit.css" type="text/css"/>
+
+    <title>TimeAccounting for OTRS 3.0 &ndash; UnitTest Results</title>
+</head>
+<body>
+    <h1 id="qunit-header">TimeAccounting for OTRS 3.0 &ndash; UnitTest Results</h1>
+    <h2 id="qunit-banner"></h2>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+
+
+    <!-- UnitTest code goes here -->
+    <script type="text/javascript" src="../thirdparty/qunit/qunit.js"></script>
+    <!--
+        Now always load library first and then the UnitTest file for it.
+        The UnitTest file is responsible for runnint the tests.
+    -->
+    <script type="text/javascript" src="../thirdparty/jquery-1.4.4/jquery.js"></script>
+
+    <script type="text/javascript" src="../Core.Exception.js"></script>
+    <script type="text/javascript" src="../Core.Debug.js"></script>
+    <script type="text/javascript" src="../Core.Data.js"></script>
+
+    <script type="text/javascript" src="../thirdparty/json/json2.js"></script>
+    <script type="text/javascript" src="../Core.JSON.js"></script>
+    <script type="text/javascript" src="../Core.Config.js"></script>
+
+    <script type="text/javascript" src="../thirdparty/jquery-ui-1.8.7/jquery-ui.js"></script>
+    <script type="text/javascript" src="../thirdparty/jquery-validate-1.7/jquery.validate.js"></script>
+    <script type="text/javascript" src="../Core.UI.Dialog.js"></script>
+    <script type="text/javascript" src="../Core.Form.ErrorTooltips.js"></script>
+    <script type="text/javascript" src="../Core.UI.Accessibility.js"></script>
+    <script type="text/javascript" src="../Core.UI.RichTextEditor.js"></script>
+    <script type="text/javascript" src="../Core.Form.Validate.js"></script>
+    <script type="text/javascript" src="../TimeAccounting.Agent.EditTimeRecords.js"></script>
+    <script type="text/javascript" src="TimeAccounting.Agent.EditTimeRecords.UnitTest.js"></script>
+    <script type="text/javascript">
+        TimeAccounting.Agent.EditTimeRecords.RunUnitTests();
+    </script>
+</body>
+</html>

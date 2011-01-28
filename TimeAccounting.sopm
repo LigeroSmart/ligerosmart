@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.39 2011-01-20 15:54:39 en Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.40 2011-01-28 15:56:55 mn Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -30,6 +30,8 @@
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.ComboBox.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.EditTimeRecords.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/test/JSUnitTest-TimeAccounting.html"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/test/TimeAccounting.Agent.EditTimeRecords.UnitTest.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Agent.Toolbar.IncompleteWorkingDays.css"/>

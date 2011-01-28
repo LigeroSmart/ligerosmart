@@ -3,7 +3,7 @@
 // edit screen
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.9 2011-01-28 13:26:22 mn Exp $
+// $Id: TimeAccounting.Agent.EditTimeRecords.js,v 1.10 2011-01-28 15:56:55 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -183,7 +183,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
            var FieldValue = $(this).val();
 
            // replace , with .
-           FieldValue = FieldValue.replace(/,/, ".");
+           FieldValue = FieldValue.replace(/,/g, ".");
 
            // check if the entered value only consists of allowed values
            // if not, we do not eval for security reasons
@@ -250,7 +250,7 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
                     $StartTime.closest('tr').find('.Period').val(Period.toFixed(2));
                 }
                 else {
-                    $StartTime.closest('tr').find('.Period').val('0');
+                    $StartTime.closest('tr').find('.Period').val('');
                 }
 
                 RecalculateTotalHours();
@@ -268,7 +268,8 @@ TimeAccounting.Agent.EditTimeRecords = (function (TargetNS) {
      *      This function initializes all needed JS for the Edit screen
      */
     TargetNS.Init = function (Options) {
-        var RemarkRegExpContent = Options.RemarkRegExpContent,
+        var Options = Options || {},
+            RemarkRegExpContent = Options.RemarkRegExpContent,
             Language = Options.Language;
         // Add some special validation methods for the edit screen
         // Define all available elements (only the prefixes) in a row
