@@ -2,7 +2,7 @@
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.11 2011-01-27 23:47:08 en Exp $
+# $Id: TimeAccounting.t,v 1.12 2011-01-29 00:01:29 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -181,7 +181,7 @@ $Self->True(
 $RandomNumber = int( rand(100) );
 
 # update user data
-$Update = $TimeAccountingObject->SingleUserSettingsUpdate(
+$Update = $TimeAccountingObject->UserSettingsUpdate(
     UserID        => $UserID,
     Description   => 'Test user' . $RandomNumber,
     CreateProject => 1,
@@ -452,7 +452,7 @@ $TimeAccountingObject->ProjectSettingsUpdate(
 $UserData{ValidID} = 2;
 $UserData{UserID}  = $UserID;
 $UserObject->UserUpdate(%UserData);
-$TimeAccountingObject->SingleUserSettingsUpdate(
+$TimeAccountingObject->UserSettingsUpdate(
     UserID        => $UserID,
     Description   => 'Test user',
     CreateProject => 0,
