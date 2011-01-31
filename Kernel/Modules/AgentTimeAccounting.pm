@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.76 2011-01-31 11:54:45 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.77 2011-01-31 23:14:22 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,11 +15,12 @@ use strict;
 use warnings;
 
 use Kernel::System::TimeAccounting;
+use Kernel::System::CheckItem;
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.76 $) [1];
+$VERSION = qw($Revision: 1.77 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -39,6 +40,8 @@ sub new {
 
     # create required objects...
     $Self->{TimeAccountingObject} = Kernel::System::TimeAccounting->new(%Param);
+    $Self->{CheckItemObject}      = Kernel::System::CheckItem->new(%Param);
+
     return $Self;
 }
 
@@ -181,7 +184,7 @@ sub Run {
             $GetParam{Period} = \%PeriodData;
 
             # update periods
-            if ( !$Self->{TimeAccountingObject}->SingleUserSettingsUpdate(%GetParam) ) {
+            if ( !$Self->{TimeAccountingObject}->UserSettingsUpdate(%GetParam) ) {
                 return $Self->{LayoutObject}->ErrorScreen(
                     Message => 'Unable to update user settings! Please contact your administrator.'
                 );
@@ -372,6 +375,16 @@ sub Run {
                 for my $Parameter (qw(ProjectID ActionID Remark StartTime EndTime Period)) {
                     $Param{$Parameter}
                         = $Self->{ParamObject}->GetParam( Param => $Parameter . '[' . $ID . ']' );
+                    if ( $Param{$Parameter} ) {
+                        my $ParamRef = \$Param{$Parameter};
+
+                        # delete leading and tailing spaces
+                        $ParamRef = $Self->{CheckItemObject}->StringClean(
+                            StringRef => $ParamRef,
+                            TrimLeft  => 1,
+                            TrimRight => 1,
+                        );
+                    }
                 }
 
                 next ID if !$Param{ProjectID} && !$Param{ActionID};
@@ -1635,241 +1648,6 @@ sub Run {
         );
         $Output .= $Self->{LayoutObject}->Footer();
         return $Output;
-
-        my %Data = ();
-
-        for my $Parameter (qw(ActionAction ActionUser NewAction NewUser)) {
-            $Param{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
-        }
-
-        if ( $Param{ActionAction} || $Param{NewAction} ) { }
-        else {
-            my %User = $Self->{TimeAccountingObject}->UserSettingsGet();
-
-            my %LastPeriod = ();
-            for my $UserID ( keys %User ) {
-                $LastPeriod{$UserID} = 0;
-                for my $Period ( keys %{ $User{$UserID} } ) {
-                    if ( $LastPeriod{$UserID} < $Period ) {
-                        $LastPeriod{$UserID} = $Period;
-                    }
-                }
-                if ( $Self->{ParamObject}->GetParam( Param => "NewUserSetting[${UserID}]" ) ) {
-                    my %InsertData = ();
-                    $InsertData{UserID} = $UserID;
-                    $InsertData{Period} = $LastPeriod{$UserID} + 1;
-                    $Param{ActionUser}  = 'true';
-                    if ( !$Self->{TimeAccountingObject}->UserSettingsInsert(%InsertData) ) {
-                        return $Self->{LayoutObject}->ErrorScreen(
-                            Message => 'Can\'t insert user data!'
-                        );
-                    }
-                }
-            }
-
-            if ( $Param{ActionUser} || $Param{NewUser} ) {
-
-                my %UserBasics = $Self->{TimeAccountingObject}->UserList();
-
-                USERID:
-                for my $UserID ( keys %User ) {
-
-                    for my $Parameter (qw( ShowOvertime CreateProject Calendar )) {
-                        $Data{$UserID}{$Parameter}
-                            = $Self->{ParamObject}
-                            ->GetParam( Param => $Parameter . '[' . $UserID . ']' );
-                    }
-
-                    my $Break = '';
-                    if (
-                        $UserBasics{$UserID}{Description}
-                        && $Self->{ParamObject}->GetParam( Param => 'Description[' . $UserID . ']' )
-                        )
-                    {
-                        $Break = "\n";
-                    }
-
-                    my $Description
-                        = $Self->{ParamObject}->GetParam( Param => "Description[${UserID}]" );
-
-                    $Data{$UserID}{Description}
-                        = $UserBasics{$UserID}{Description} . $Break . $Description;
-
-                    $Data{$UserID}{UserID} = $UserID;
-
-                    for my $Period ( keys %{ $User{$UserID} } ) {
-
-                        # the following is because of deactivate user
-                        if (
-                            !defined $Self->{ParamObject}->GetParam(
-                                Param => 'DateStart[' . $UserID . '][' . $Period . ']'
-                            )
-                            )
-                        {
-                            delete $Data{$UserID};
-                            next USERID;
-                        }
-
-                        for my $Parameter (
-                            qw(WeeklyHours LeaveDays UserStatus DateStart DateEnd Overtime)
-                            )
-                        {
-                            $Data{$UserID}{$Period}{$Parameter} = $Self->{ParamObject}->GetParam(
-                                Param => $Parameter . '[' . $UserID . '][' . $Period . ']'
-                            );
-                        }
-                        $Data{$UserID}{$Period}{UserID} = $UserID;
-                        $LastPeriod{$UserID} = $Period;
-                    }
-                }
-
-                if ( !$Self->{TimeAccountingObject}->UserSettingsUpdate(%Data) ) {
-                    return $Self->{LayoutObject}->ErrorScreen(
-                        Message => 'Can\'t update user data!'
-                    );
-                }
-
-                if ( $Param{NewUser} && $Self->{ParamObject}->GetParam( Param => 'NewUserID' ) ) {
-
-                    %Data = ();
-                    $Data{UserID} = $Self->{ParamObject}->GetParam( Param => 'NewUserID' );
-                    $Data{Period} = '1';
-                    if ( !$Self->{TimeAccountingObject}->UserSettingsInsert(%Data) ) {
-                        return $Self->{LayoutObject}->ErrorScreen(
-                            Message => 'Can\'t insert user data!'
-                        );
-                    }
-                    my %Groups = $Self->{GroupObject}->GroupList( Valid => 1 );
-                    my %GroupData = $Self->{GroupObject}->GroupMemberList(
-                        UserID => $Data{UserID},
-                        Type   => 'ro',
-                        Result => 'HASH',
-                    );
-                    for my $GroupKey ( keys %Groups ) {
-                        if ( $Groups{$GroupKey} eq 'time_accounting' && !$GroupData{$GroupKey} ) {
-
-                            $Self->{GroupObject}->GroupMemberAdd(
-                                GID        => $GroupKey,
-                                UID        => $Data{UserID},
-                                Permission => {
-                                    ro        => 1,
-                                    move_into => 0,
-                                    create    => 0,
-                                    owner     => 0,
-                                    priority  => 0,
-                                    rw        => 0,
-                                },
-                                UserID => $Self->{UserID},
-                            );
-                        }
-                    }
-                }
-            }
-        }
-
-        # Show TimeAccounting Preferences
-        my %StatusList = (
-            1 => 'valid',
-            0 => 'invalid',
-        );
-
-        # Show action data
-        my %Action      = $Self->{TimeAccountingObject}->ActionSettingsGet();
-        my $ActionEmpty = 0;
-
-        for my $ActionID ( sort { $Action{$a}{Action} cmp $Action{$b}{Action} } keys %Action ) {
-            $Param{Action}   = $Action{$ActionID}{Action};
-            $Param{ActionID} = $ActionID;
-
-            my $StatusOption = $Self->{LayoutObject}->BuildSelection(
-                Data       => \%StatusList,
-                SelectedID => $Action{$ActionID}{ActionStatus},
-                Name       => "ActionStatus[$Param{ActionID}]",
-            );
-
-            $Self->{LayoutObject}->Block(
-                Name => 'Action',
-                Data => {
-                    %Param,
-                    StatusOption => $StatusOption,
-                },
-            );
-        }
-
-        # Show user data
-        my %User       = $Self->{TimeAccountingObject}->UserSettingsGet();
-        my %UserBasics = $Self->{TimeAccountingObject}->UserList();
-        my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
-
-        # fill up the calendar list
-        my $CalendarListRef = { 0 => 'Default' };
-        my $CalendarIndex = 1;
-        while ( $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $CalendarIndex . "Name" ) ) {
-            $CalendarListRef->{$CalendarIndex}
-                = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $CalendarIndex . "Name" );
-            $CalendarIndex++;
-        }
-
-        USERID:
-        for my $UserID ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
-            next USERID if !$User{$UserID};
-
-            $Param{User}   = $ShownUsers{$UserID};
-            $Param{UserID} = $UserID;
-            my $UserRef       = $User{$UserID};
-            my $UserBasicsRef = $UserBasics{$UserID};
-
-            my $Description = $Self->{LayoutObject}->Ascii2Html(
-                Text           => $UserBasicsRef->{Description},
-                HTMLResultMode => 1,
-                NewLine        => 50,
-            );
-
-            $Description = $Description ? $Description . '<br>' : '';
-
-            my $CalendarOption = $Self->{LayoutObject}->BuildSelection(
-                Data        => $CalendarListRef,
-                Name        => "Calendar[$UserID]",
-                Translation => 0,
-                SelectedID  => $UserBasicsRef->{Calendar} || 0,
-            );
-
-            $Self->{LayoutObject}->Block(
-                Name => 'User',
-                Data => {
-                    %Param,
-                    Description    => $Description,
-                    ShowOvertime   => $UserBasicsRef->{ShowOvertime} ? 'checked="checked"' : '',
-                    CreateProject  => $UserBasicsRef->{CreateProject} ? 'checked="checked"' : '',
-                    CalendarOption => $CalendarOption,
-                },
-            );
-
-            delete $ShownUsers{$UserID};
-
-            for my $Period ( sort keys %{$UserRef} ) {
-
-                my $StatusOption = $Self->{LayoutObject}->BuildSelection(
-                    Data       => \%StatusList,
-                    SelectedID => $UserRef->{$Period}{UserStatus},
-                    Name       => "UserStatus[$UserID][$Period]",
-                );
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'Period',
-                    Data => {
-                        UserID       => $UserID,
-                        WeeklyHours  => $UserRef->{$Period}{WeeklyHours},
-                        LeaveDays    => $UserRef->{$Period}{LeaveDays},
-                        Overtime     => $UserRef->{$Period}{Overtime},
-                        DateStart    => $UserRef->{$Period}{DateStart},
-                        DateEnd      => $UserRef->{$Period}{DateEnd},
-                        Period       => $Period,
-                        StatusOption => $StatusOption,
-                    },
-                );
-            }
-        }
     }
 
     # ---------------------------------------------------------- #
