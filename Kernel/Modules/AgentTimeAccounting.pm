@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.77 2011-01-31 23:14:22 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.78 2011-01-31 23:33:53 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.77 $) [1];
+$VERSION = qw($Revision: 1.78 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -2642,7 +2642,15 @@ sub _CheckValidityUserPeriods {
             Minute => 0,
             Second => 0,
         );
-        if ( $StartDate >= $EndDate ) {
+        if ( !$StartDate ) {
+            $Errors{ 'DateStart-' . $Period . 'Invalid' }   = 'ServerError';
+            $Errors{ 'DateStart-' . $Period . 'ErrorType' } = 'Invalid';
+        }
+        if ( !$EndDate ) {
+            $Errors{ 'DateEnd-' . $Period . 'Invalid' }   = 'ServerError';
+            $Errors{ 'DateEnd-' . $Period . 'ErrorType' } = 'Invalid';
+        }
+        if ( $StartDate && $EndDate && $StartDate >= $EndDate ) {
             $Errors{ 'DateEnd-' . $Period . 'Invalid' }   = 'ServerError';
             $Errors{ 'DateEnd-' . $Period . 'ErrorType' } = 'BeforeDateStart';
         }

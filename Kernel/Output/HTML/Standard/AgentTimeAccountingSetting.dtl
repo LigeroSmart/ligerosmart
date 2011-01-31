@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.32 2011-01-31 11:30:49 mn Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.33 2011-01-31 23:33:54 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -476,6 +476,9 @@
                                 <td>
                                     <input type="text" id="DateStart-$QData{"Period"}" name="DateStart[$QData{"Period"}]" value="$QData{"DateStart"}" class="DatepickerElement Validate_Required $QData{"DateStartInvalid"}" />
                                     <div id="DateStart-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."} $Text{"Please insert a valid date."}</p></div>
+<!-- dtl:block:DateStartInvalid -->
+                                    <div id="DateStart-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:DateStartInvalid -->
 <!-- dtl:block:DateStartMissingValue -->
                                     <div id="DateStart-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!-- dtl:block:DateStartMissingValue -->
@@ -483,6 +486,9 @@
                                 <td>
                                     <input type="text" id="DateEnd-$QData{"Period"}" name="DateEnd[$QData{"Period"}]" value="$QData{"DateEnd"}" class="DatepickerElement Validate_Required $QData{"DateEndInvalid"}" />
                                     <div id="DateEnd-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."} $Text{"Please insert a valid date."}</p></div>
+<!-- dtl:block:DateEndInvalid -->
+                                    <div id="DateEnd-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"Invalid date!"}</p></div>
+<!-- dtl:block:DateEndInvalid -->
 <!-- dtl:block:DateEndMissingValue -->
                                     <div id="DateEnd-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!-- dtl:block:DateEndMissingValue -->
