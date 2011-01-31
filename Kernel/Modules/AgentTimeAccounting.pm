@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.75 2011-01-31 11:30:49 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.76 2011-01-31 11:54:45 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,11 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::TimeAccounting;
-use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
+use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.75 $) [1];
+$VERSION = qw($Revision: 1.76 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -239,6 +239,15 @@ sub Run {
             $Param{Year}  = sprintf( "%02d", $Param{Year} );
             $Param{Month} = sprintf( "%02d", $Param{Month} );
             $Param{Day}   = sprintf( "%02d", $Param{Day} );
+        }
+
+        # check if the given date is a valid date
+        # if not valid, set the date to today
+        if ( !check_date( $Param{Year}, $Param{Month}, $Param{Day} ) ) {
+            $Param{Year}        = $Year;
+            $Param{Month}       = $Month;
+            $Param{Day}         = $Day;
+            $Param{'WrongDate'} = 1;
         }
 
         my %User = $Self->{TimeAccountingObject}->UserCurrentPeriodGet(
@@ -938,8 +947,9 @@ sub Run {
 
         $Param{Date} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
-            Prefix => '',
-            Format => 'DateInputFormat',
+            Validate => 1,
+            Prefix   => '',
+            Format   => 'DateInputFormat',
         );
 
         if (
@@ -1104,6 +1114,14 @@ sub Run {
         elsif ( $Param{Notification} eq 'Successful' ) {
             $Output .= $Self->{LayoutObject}
                 ->Notify( Info => 'Successfully inserted entries for several dates!', );
+        }
+
+        # show notification if wrong date was selected
+        if ( $Param{WrongDate} ) {
+            $Output .= $Self->{LayoutObject}->Notify(
+                Info     => 'Entered date was invalid! Date was changed to today.',
+                Priority => 'Error'
+            );
         }
 
         $Output .= $Self->{LayoutObject}->Output(
