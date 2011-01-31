@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.22 2011-01-19 23:28:11 dz Exp $
+# $Id: PublicSurvey.pm,v 1.23 2011-01-31 22:46:34 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,6 +133,169 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
+    # show survey vote data
+    # ------------------------------------------------------------ #
+    elsif ( $Self->{Subaction} eq 'ShowVoteData' ) {
+        my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => 'PublicSurveyKey' );
+
+        # return if feature not enabled
+        if ( !$Self->{ConfigObject}->Get("Survey::ShowVoteData") ) {
+            $Output .= $Self->{LayoutObject}->CustomerHeader();
+
+            $Self->{LayoutObject}->Block(
+                Name => 'PublicSurveyMessage',
+                Data => {
+                    MessageType   => 'Survey Message!',
+                    MessageHeader => 'Module not enabled.',
+                    Message =>
+                        'This functionality is not enabled, please contact your administrator.',
+                },
+            );
+
+            $Output .= $Self->{LayoutObject}->Output(
+                TemplateFile => 'PublicSurvey',
+            );
+
+            $Output .= $Self->{LayoutObject}->CustomerFooter();
+            return $Output;
+        }
+
+        # Get the request data and start showing the data
+        my %RequestData = $Self->{SurveyObject}->RequestGet(
+            PublicSurveyKey => $PublicSurveyKey,
+        );
+
+        my $SurveyID  = $RequestData{SurveyID};
+        my $TicketID  = $RequestData{TicketID};
+        my $RequestID = $RequestData{RequestID};
+
+        # check if survey exists
+        if (
+            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            'Yes'
+            || $Self->{SurveyObject}->ElementExists( ElementID => $RequestID, Element => 'Request' )
+            ne 'Yes'
+            )
+        {
+            $Self->{LogObject}->Log(
+                Message  => "Wrong public survey key: $PublicSurveyKey!",
+                Priority => 'info',
+            );
+
+            $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'PublicSurveyMessage',
+                Data => {
+                    MessageType   => 'Survey Error!',
+                    MessageHeader => 'Invalid survey key.',
+                    Message =>
+                        'The inserted survey key is invalid, if you followed a link maybe this is obsolete or broken.',
+                },
+            );
+
+            $Output .= $Self->{LayoutObject}->Output(
+                TemplateFile => 'PublicSurvey',
+            );
+
+            $Output .= $Self->{LayoutObject}->CustomerFooter();
+            return $Output;
+        }
+
+        $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey Vote' );
+
+        my %Survey = $Self->{SurveyObject}->SurveyGet(
+            SurveyID => $SurveyID,
+            Public   => 1,
+        );
+
+        # clean html
+        if ( $Survey{Introduction} ) {
+            $Survey{Introduction} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+            $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
+                Text           => $Survey{Introduction},
+                HTMLResultMode => 1,
+            );
+            $Survey{Introduction} =
+                $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
+        }
+
+        # print the main table.
+        $Self->{LayoutObject}->Block(
+            Name => 'PublicSurveyVoteData',
+            Data => {
+                %Survey,
+                MessageType => 'Survey Vote Data',
+            },
+        );
+        my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $SurveyID );
+        for my $Question (@QuestionList) {
+
+            my $Class = '';
+            if ( $Question->{Type} eq 'Textarea' ) {
+                $Class = 'Textarea';
+            }
+
+            $Self->{LayoutObject}->Block(
+                Name => 'PublicSurveyVoteQuestion',
+                Data => {
+                    %{$Question},
+                    Class => $Class,
+                },
+            );
+            my @Answers;
+            if ( $Question->{Type} eq 'Radio' || $Question->{Type} eq 'Checkbox' ) {
+                my @AnswerList;
+                @AnswerList = $Self->{SurveyObject}->VoteGet(
+                    RequestID  => $RequestID,
+                    QuestionID => $Question->{QuestionID},
+                );
+                for my $Row (@AnswerList) {
+                    my %Answer = $Self->{SurveyObject}->AnswerGet( AnswerID => $Row->{VoteValue} );
+                    my %Data;
+                    $Data{Answer} = $Answer{Answer};
+                    push( @Answers, \%Data );
+                }
+            }
+            elsif ( $Question->{Type} eq 'YesNo' || $Question->{Type} eq 'Textarea' ) {
+                my @List = $Self->{SurveyObject}->VoteGet(
+                    RequestID  => $RequestID,
+                    QuestionID => $Question->{QuestionID},
+                );
+
+                my %Data;
+                $Data{Answer} = $List[0]->{VoteValue};
+
+                # clean html
+                if ( $Question->{Type} eq 'Textarea' && $Data{Answer} ) {
+                    $Data{Answer} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+                    $Data{Answer} = $Self->{LayoutObject}->Ascii2Html(
+                        Text           => $Data{Answer},
+                        HTMLResultMode => 1,
+                    );
+                    $Data{Answer} =
+                        $Self->{HTMLUtilsObject}->ToAscii( String => $Data{Answer} );
+                }
+                push( @Answers, \%Data );
+            }
+            for my $Row (@Answers) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'PublicSurveyVoteAnswer',
+                    Data => {
+                        %{$Row},
+                        Class => $Class,
+                        }
+                );
+            }
+        }
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'PublicSurvey',
+        );
+        $Output .= $Self->{LayoutObject}->CustomerFooter();
+        return $Output;
+    }
+
+    # ------------------------------------------------------------ #
     # show survey
     # ------------------------------------------------------------ #
     my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => 'PublicSurveyKey' );
@@ -156,6 +319,15 @@ sub Run {
                 Message       => 'You have already answered the survey.',
             },
         );
+
+        if ( $Self->{ConfigObject}->Get("Survey::ShowVoteData") ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ShowAnswersButton',
+                Data => {
+                    PublicSurveyKey => $PublicSurveyKey,
+                    }
+            );
+        }
     }
     elsif ( $Survey{SurveyID} ) {
 

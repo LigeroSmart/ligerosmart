@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.20 2011-01-19 23:28:11 dz Exp $
+# $Id: PublicSurvey.dtl,v 1.21 2011-01-31 22:46:34 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,8 +15,8 @@
         <h2>$Text{"Survey"}: $Data{"Title"}</h2>
     </div>
 
-    <div class="Intro">
-        <div class="SubHeader">
+    <div class="SurveyBlock">
+        <div class="SurveyBlockHeader">
             $Text{"Introduction"}
         </div>
         <div class="Content">
@@ -31,7 +31,7 @@
         <input type="hidden" name="Subaction" value="PublicSurveyVote" />
         <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
         <fieldset class="Survey">
-            <div class="SubHeader">
+            <div class="SurveyBlockHeader">
                 $Text{"Please answer the next questions"}
             </div>
 
@@ -97,7 +97,61 @@
             <p class="SpacingTop">
                 $Text{"$Data{"Message"}"}
             </p>
+            <div class="Clear"></div>
+<!-- dtl:block:ShowAnswersButton -->
+            <form action="$Env{"CGIHandle"}" method="post">
+                <input type="hidden" name="Action" value="$Env{"Action"}" />
+                <input type="hidden" name="Subaction" value="ShowVoteData" />
+                <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
+                <button type="submit" >$Text{"Show my answers"}</button>
+            </form>
+<!-- dtl:block:ShowAnswersButton -->
         </div>
     </div>
 </div>
 <!-- dtl:block:PublicSurveyMessage -->
+
+<!-- dtl:block:PublicSurveyVoteData -->
+<div class="Content ARIARoleMain" id="MainBox">
+    <div class="Header">
+        <h2>These are your answers:</h2>
+    </div>
+    <div class="SurveyBlock">
+        <div class="SurveyBlockHeader">
+            $Text{"Survey Title"}
+        </div>
+        <div class="Content">
+            <h2>$Text{"Survey"}: $Data{"Title"}</h2>
+        </div>
+    </div>
+
+    <div class="SurveyBlock">
+        <div class="SurveyBlockHeader">
+            $Text{"Introduction"}
+        </div>
+        <div class="Content">
+            $Data{"Introduction"}
+        </div>
+    </div>
+
+    <div class="Clear"></div>
+    <fieldset class="Survey">
+        <div class="SurveyBlockHeader">
+            $Text{"These are your answers."}
+        </div>
+
+<!-- dtl:block:PublicSurveyVoteQuestion -->
+        <div class="QuestionContainer">
+            <div class="Question">$QData{"Question"}:</div>
+<!-- dtl:block:PublicSurveyVoteAnswer -->
+            <div class="Answer">
+                $Data{"Answer"}
+            </div>
+            <div class="Clear"></div>
+<!-- dtl:block:PublicSurveyVoteAnswer -->
+            <div class="Clear"></div>
+        </div>
+<!-- dtl:block:PublicSurveyVoteQuestion -->
+    </fieldset>
+</div>
+<!-- dtl:block:PublicSurveyVoteData -->

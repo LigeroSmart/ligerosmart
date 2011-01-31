@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.57 2011-01-17 16:53:35 dz Exp $
+# $Id: Survey.pm,v 1.58 2011-01-31 22:46:34 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 =head1 NAME
 
@@ -215,22 +215,24 @@ sub SurveyGet {
     );
 
     # added CreateBy
-    my %CreateUserInfo = $Self->{UserObject}->GetUserData(
-        UserID => $Data{CreateBy},
-        Cached => 1,
-    );
-    $Data{CreateUserLogin}     = $CreateUserInfo{UserLogin};
-    $Data{CreateUserFirstname} = $CreateUserInfo{UserFirstname};
-    $Data{CreateUserLastname}  = $CreateUserInfo{UserLastname};
+    if ( !$Param{Public} ) {
+        my %CreateUserInfo = $Self->{UserObject}->GetUserData(
+            UserID => $Data{CreateBy},
+            Cached => 1,
+        );
+        $Data{CreateUserLogin}     = $CreateUserInfo{UserLogin};
+        $Data{CreateUserFirstname} = $CreateUserInfo{UserFirstname};
+        $Data{CreateUserLastname}  = $CreateUserInfo{UserLastname};
 
-    # added ChangeBy
-    my %ChangeUserInfo = $Self->{UserObject}->GetUserData(
-        UserID => $Data{ChangeBy},
-        Cached => 1,
-    );
-    $Data{ChangeUserLogin}     = $ChangeUserInfo{UserLogin};
-    $Data{ChangeUserFirstname} = $ChangeUserInfo{UserFirstname};
-    $Data{ChangeUserLastname}  = $ChangeUserInfo{UserLastname};
+        # added ChangeBy
+        my %ChangeUserInfo = $Self->{UserObject}->GetUserData(
+            UserID => $Data{ChangeBy},
+            Cached => 1,
+        );
+        $Data{ChangeUserLogin}     = $ChangeUserInfo{UserLogin};
+        $Data{ChangeUserFirstname} = $ChangeUserInfo{UserFirstname};
+        $Data{ChangeUserLastname}  = $ChangeUserInfo{UserLastname};
+    }
 
     return %Data;
 }
@@ -1979,6 +1981,56 @@ sub RequestSend {
     );
 }
 
+=item RequestGet()
+
+to get an array list of request elements
+
+    my %RequestData = $SurveyObject->RequestGet(
+        PublicSurveyKey => 'Aw5de3Xf5qA',
+    );
+
+=cut
+
+sub RequestGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{PublicSurveyKey} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need PublicSurveyKey!',
+        );
+        return;
+    }
+
+    # quote
+    $Param{PublicSurveyKey} = $Self->{DBObject}->Quote( $Param{PublicSurveyKey} );
+
+    # get vote list
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            "SELECT id, ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time, vote_time "
+            . "FROM survey_request WHERE public_survey_key = '$Param{PublicSurveyKey}' ",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my %RequestData;
+
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $RequestData{RequestID}       = $Row[0];
+        $RequestData{TicketID}        = $Row[1];
+        $RequestData{SurveyID}        = $Row[2];
+        $RequestData{ValidID}         = $Row[3];
+        $RequestData{PublicSurveyKey} = $Row[4];
+        $RequestData{SendTo}          = $Row[5];
+        $RequestData{SendTime}        = $Row[6];
+        $RequestData{VoteTime}        = $Row[7];
+    }
+
+    return %RequestData;
+}
+
 =item PublicSurveyGet()
 
 to get all public attributes of a survey
@@ -2641,6 +2693,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2011-01-17 16:53:35 $
+$Revision: 1.58 $ $Date: 2011-01-31 22:46:34 $
 
 =cut

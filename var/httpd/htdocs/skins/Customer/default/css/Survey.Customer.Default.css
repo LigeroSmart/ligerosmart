@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Customer Frontend
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -10,7 +10,7 @@
  * @section     Customer
  */
 
-div.Intro {
+div.SurveyBlock {
     margin: 8px 0 13px;
     padding-bottom: 5px;
     background: #F8F9F9;
@@ -23,7 +23,7 @@ div.Intro {
     width: 738px;
 }
 
-.SubHeader {
+.SurveyBlockHeader {
     background: -moz-linear-gradient(center top , #F9F9F9, #ECEEEE) repeat scroll 0 0 transparent;
     border-bottom: 1px solid #CCCCCC;
     color: #333333;
@@ -67,15 +67,38 @@ label.Answer {
     text-align:left;
 }
 
-fieldset input {
+fieldset input,
+div.Answer {
     float:left;
 }
 
 fieldset input,
-fieldset textarea {
+fieldset textarea,
+div.Answer {
     margin: 7px 0 7px 75px;
 }
 
 .RichTextAnswer {
     margin: 7px 0 7px 75px;
+}
+
+div.Answer {
+    padding:0px;
+}
+
+.SurveyButton {
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-box-shadow:0 0 3px #F6F9F9;
+    border-color:-moz-use-text-color #D6D6D6 #D6D6D6;
+    border-right:1px solid #D6D6D6;
+    border-style:none solid solid;
+    border-width:medium 1px 1px;
+    bottom:-22px;
+    color:#999999;
+    display:none;
+    height:10px;
+    margin:0 13px;
+    padding:4px 8px 7px 24px;
+    position:absolute;
 }

@@ -1,0 +1,25 @@
+# --
+# CHANGES - change log of the Survey module for OTRS
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# --
+# $Id: CHANGES-Survey,v 1.1 2011-01-31 22:46:34 dz Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+1.2.92 - 2011-02-04
+ - 2011-01-31 - Implemented - Show survey answered on read-only mode.
+    http://otrsteam.ideascale.com/a/dtd/Show-survey-answered-on-read-only-mode./103470-10369.
+ - 2011-01-25 Fixed bug #6746 - Survey beta 1 does not install with ITSM.
+
+1.2.91 - 2011-01-21
+ - Init release for OTRS 3.0.
+ - Implemented bug #5973 - Improve Survey-Key invalid message when survey is answered once.
+ - Implemented bug #4784 - no WYSIWYG editor available composing email text.
+ - Fixed bug #6711 - Question up arrow doesn't works.
+ - Fixed bug #6712 - Answer up arrow doesn't works.
+ - Fixed bug #6714 - Stat Details shows just one answer for questions with more than one like Checkbox.
+
+EOF
