@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.74 2011-01-27 21:37:24 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.75 2011-01-31 11:30:49 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -3358,6 +3358,10 @@ sub _UserSettingsEdit {
     for my $Parameter (qw(Description ShowOvertime CreateProject Calendar)) {
         $GetParam{$Parameter} = $Self->{ParamObject}->GetParam( Param => $Parameter );
     }
+
+# the datepicker used in this screen is non-standard
+# Therefor we have to define this var in the LayoutObject for automatic config generation in the JS footer
+    $Self->{LayoutObject}->{HasDatepicker} = 1;
 
     $Self->{LayoutObject}->Block(
         Name => 'Setting',

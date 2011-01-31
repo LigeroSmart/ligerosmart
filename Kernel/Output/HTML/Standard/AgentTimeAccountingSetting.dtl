@@ -2,7 +2,7 @@
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.31 2011-01-03 21:59:11 en Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.32 2011-01-31 11:30:49 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -474,15 +474,15 @@
 <!-- dtl:block:PeriodOverviewRow -->
                             <tr>
                                 <td>
-                                    <input type="text" id="DateStart-$QData{"Period"}" name="DateStart[$QData{"Period"}]" value="$QData{"DateStart"}" class="Validate_Required $QData{"DateStartInvalid"}" />
-                                    <div id="DateStart-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <input type="text" id="DateStart-$QData{"Period"}" name="DateStart[$QData{"Period"}]" value="$QData{"DateStart"}" class="DatepickerElement Validate_Required $QData{"DateStartInvalid"}" />
+                                    <div id="DateStart-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."} $Text{"Please insert a valid date."}</p></div>
 <!-- dtl:block:DateStartMissingValue -->
                                     <div id="DateStart-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!-- dtl:block:DateStartMissingValue -->
                                 </td>
                                 <td>
-                                    <input type="text" id="DateEnd-$QData{"Period"}" name="DateEnd[$QData{"Period"}]" value="$QData{"DateEnd"}" class="Validate_Required $QData{"DateEndInvalid"}" />
-                                    <div id="DateEnd-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                                    <input type="text" id="DateEnd-$QData{"Period"}" name="DateEnd[$QData{"Period"}]" value="$QData{"DateEnd"}" class="DatepickerElement Validate_Required $QData{"DateEndInvalid"}" />
+                                    <div id="DateEnd-$QData{"Period"}Error" class="TooltipErrorMessage"><p>$Text{"This field is required."} $Text{"Please insert a valid date."}</p></div>
 <!-- dtl:block:DateEndMissingValue -->
                                     <div id="DateEnd-$QData{"Period"}ServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
 <!-- dtl:block:DateEndMissingValue -->
@@ -504,7 +504,6 @@
                                 <td>
                                     $Data{"PeriodStatusOption"}
                                 </td>
-
                             </tr>
 <!-- dtl:block:PeriodOverviewRow -->
 
@@ -530,6 +529,14 @@
                 </form>
             </div>
         </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    TimeAccounting.Agent.Datepicker.Init($('.DatepickerElement'), {
+        DateInFuture: false,
+        WeekDayStart: 1
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:OverviewUpdateUser -->
     </div>
 </div>
