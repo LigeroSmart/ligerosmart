@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.78 2011-01-31 23:33:53 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.79 2011-02-01 19:49:41 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.78 $) [1];
+$VERSION = qw($Revision: 1.79 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -545,6 +545,22 @@ sub Run {
                     }
                 }
 
+                # '24:00' is only permitted as end time
+                if ( $StartTimes[$ID] && $StartTimes[$ID] == 1440 ) {
+                    $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
+                    push @StartTimeServerErrorBlock, 'StartTime24Hours';
+                }
+
+                # times superior to 24:00 are not allowed
+                if ( $StartTimes[$ID] && $StartTimes[$ID] > 1440 ) {
+                    $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
+                    push @StartTimeServerErrorBlock, 'StartTimeInvalid';
+                }
+                if ( $EndTimes[$ID] && $EndTimes[$ID] > 1440 ) {
+                    $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
+                    push @EndTimeServerErrorBlock, 'EndTimeInvalid';
+                }
+
                 # add reference to the server error msgs to be shown
                 if ( $Errors{$ErrorIndex} && $Errors{$ErrorIndex}{StartTimeInvalid} ) {
                     $Errors{$ErrorIndex}{StartTimeServerErrorBlock} = \@StartTimeServerErrorBlock;
@@ -603,6 +619,9 @@ sub Run {
 
                     # initialize the array of working units
                     @{ $Data{WorkingUnits} } = ();
+
+                    # replace 24:00 for 23:59:59 to be a valid entry in the DB
+                    $Param{EndTime} = $Param{EndTime} eq '24:00' ? '23:59:59' : $Param{EndTime};
 
                     my %WorkingUnit = (
                         ProjectID => $Param{ProjectID},
@@ -3085,14 +3104,14 @@ sub _SettingOverview {
             my %UserData = $Self->{TimeAccountingObject}->UserGet( UserID => $UserID );
             my %UserGeneralData = $Self->{UserObject}->GetUserData( UserID => $UserID );
 
-            $Param{User} = "$UserGeneralData{UserFirstname} $UserGeneralData{UserLastname} "
-                . "($UserGeneralData{UserLogin})",;
+            $Param{User}
+                = "$UserGeneralData{UserFirstname} $UserGeneralData{UserLastname} ($UserGeneralData{UserLogin})";
             $Param{UserID}     = $UserID;
             $Param{Comment}    = $UserData{Description};
             $Param{CalendarNo} = $UserData{Calendar};
             $Param{Calendar}   = $Self->{ConfigObject}->Get(
                 "TimeZone::Calendar"
-                    . $Param{CalendarNo} . "Name"
+                    . ( $Param{CalendarNo} || '' ) . "Name"
             ) || 'Default';
 
             $Self->{LayoutObject}->Block(

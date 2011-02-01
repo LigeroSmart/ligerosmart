@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.52 2011-01-28 22:01:58 en Exp $
+# $Id: TimeAccounting.pm,v 1.53 2011-02-01 19:49:41 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1277,6 +1277,11 @@ sub WorkingUnitsGet {
         my $EndTime   = '';
         if ( $Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}smx ) {
             $EndTime = $2;
+
+            # replace 23:59:59 with 24:00
+            if ( $EndTime eq '23:59' && $3 eq '59' ) {
+                $EndTime = '24:00';
+            }
         }
 
         my %WorkingUnit = (
@@ -1674,6 +1679,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2011-01-28 22:01:58 $
+$Revision: 1.53 $ $Date: 2011-02-01 19:49:41 $
 
 =cut

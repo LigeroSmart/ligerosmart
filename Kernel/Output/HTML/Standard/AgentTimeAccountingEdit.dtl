@@ -2,7 +2,7 @@
 # AgentTimeAccountingEdit.dtl - provides HTML form for time accounting edit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingEdit.dtl,v 1.45 2011-01-31 11:54:45 mn Exp $
+# $Id: AgentTimeAccountingEdit.dtl,v 1.46 2011-02-01 19:49:41 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -180,6 +180,12 @@
 <!-- dtl:block:StartTimeInvalidFormatServerError -->
                                         <p>$Text{"Invalid format! Please enter a time with the format HH:MM."}</p>
 <!-- dtl:block:StartTimeInvalidFormatServerError -->
+<!-- dtl:block:StartTime24Hours -->
+                                        <p>$Text{"24:00 is only permitted as end time."}</p>
+<!-- dtl:block:StartTime24Hours -->
+<!-- dtl:block:StartTimeInvalid -->
+                                        <p>$Text{"Invalid time! A day has only 24 hours."}</p>
+<!-- dtl:block:StartTimeInvalid -->
                                     </div>
                                 </td>
                                 <td>
@@ -203,6 +209,9 @@
 <!-- dtl:block:EndTimeInvalidFormatServerError -->
                                         <p>$Text{"Invalid format! Please enter a time with the format HH:MM."}</p>
 <!-- dtl:block:EndTimeInvalidFormatServerError -->
+<!-- dtl:block:EndTimeInvalid -->
+                                        <p>$Text{"Invalid time! A day has only 24 hours."}</p>
+<!-- dtl:block:EndTimeInvalid -->
                                     </div>
                                 </td>
 <!-- dtl:block:UnitInputPeriod -->
