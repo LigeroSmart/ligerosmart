@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.42 2011-01-31 23:21:00 en Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.43 2011-02-01 10:13:24 mn Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -36,8 +36,6 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Defaults.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Table.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/TimeAccounting.Agent.Toolbar.IncompleteWorkingDays.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/source/toolbar_icons/timeaccounting_icons.psd"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/source/toolbar_icons/timeaccounting_toolbar_sprite.psd"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/arrow_leftright.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/timeaccounting_toolbar.png"/>
         <File Permission="644" Location="var/packagesetup/TimeAccounting.pm"/>
