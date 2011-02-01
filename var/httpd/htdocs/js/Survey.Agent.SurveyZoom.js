@@ -2,7 +2,7 @@
 // Survey.Agent.SurveyZoom.js - provides the special module functions for SurveyZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: Survey.Agent.SurveyZoom.js,v 1.1 2011-02-01 01:39:24 dz Exp $
+// $Id: Survey.Agent.SurveyZoom.js,v 1.2 2011-02-01 17:19:44 dz Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -31,11 +31,11 @@ Survey.Agent.SurveyZoom = (function (TargetNS) {
         if (isJQueryObject($Iframe)) {
             var NewHeight = $Iframe.contents().height();
             if (!NewHeight || isNaN(NewHeight)) {
-                NewHeight = Core.Config.Get('HTMLRichTextHeightDefault');
+                NewHeight = Core.Config.Get('Survey.HTMLRichTextHeightDefault');
             }
             else {
-                if (NewHeight > Core.Config.Get('HTMLRichTextHeightMax')) {
-                    NewHeight = Core.Config.Get('HTMLRichTextHeightMax');
+                if (NewHeight > Core.Config.Get('Survey.HTMLRichTextHeightMax')) {
+                    NewHeight = Core.Config.Get('Survey.HTMLRichTextHeightMax');
                 }
             }
             $Iframe.height(NewHeight + 'px');
@@ -43,4 +43,4 @@ Survey.Agent.SurveyZoom = (function (TargetNS) {
     };
 
     return TargetNS;
-}(Core.Agent.SurveyZoom || {}));
+}(Survey.Agent.SurveyZoom || {}));
