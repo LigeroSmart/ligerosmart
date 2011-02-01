@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.pm,v 1.5 2011-01-19 19:21:14 dz Exp $
+# $Id: AgentSurveyZoom.pm,v 1.6 2011-02-01 01:39:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -46,6 +46,77 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     my $Output;
+
+    # view attachment for html email
+    if ( $Self->{Subaction} eq 'HTMLView' ) {
+
+        # get params
+        my $SurveyID    = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
+        my $SurveyField = $Self->{ParamObject}->GetParam( Param => "SurveyField" );
+
+        # needed params
+        for my $Needed (qw( SurveyID SurveyField )) {
+            if ( !$Needed ) {
+                $Self->{LogObject}->Log(
+                    Message  => "Needed Param: $Needed!",
+                    Priority => 'error',
+                );
+                return;
+            }
+        }
+
+        if ( $SurveyField ne 'Introduction' && $SurveyField ne 'Description' ) {
+            $Self->{LogObject}->Log(
+                Message  => "Invalid SurveyField Param: $SurveyField!",
+                Priority => 'error',
+            );
+            return;
+        }
+
+        # check if survey exists
+        if (
+            $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
+            'Yes'
+            )
+        {
+            $Self->{LogObject}->Log(
+                Message  => "Invalid SurveyID: $SurveyID!",
+                Priority => 'error',
+            );
+            return;
+        }
+
+        # get all attributes of the survey
+        my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+
+        if ( $Survey{$SurveyField} ) {
+
+            # clean html and convert the Field in html (\n --><br>)
+            $Survey{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+            $Survey{$SurveyField} = $Self->{LayoutObject}->Ascii2Html(
+                Text           => $Survey{$SurveyField},
+                HTMLResultMode => 1,
+            );
+        }
+        else {
+            return;
+        }
+
+        # convert text area fields to ascii
+        $Survey{$SurveyField}
+            = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{$SurveyField} );
+
+        $Survey{$SurveyField} = $Self->{HTMLUtilsObject}->DocumentComplete(
+            String  => $Survey{$SurveyField},
+            Charset => 'utf-8',
+        );
+
+        return $Self->{LayoutObject}->Attachment(
+            Type        => 'inline',
+            ContentType => 'text/html',
+            Content     => $Survey{$SurveyField},
+        );
+    }
 
     # ------------------------------------------------------------ #
     # survey zoom
@@ -92,12 +163,17 @@ sub Run {
 
     # get all attributes of the survey
     my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
+    my %HTML;
 
     # clean html and convert the textareas in html (\n --><br>)
     for my $SurveyField (qw( Introduction Description )) {
         next if !$Survey{$SurveyField};
 
         $Survey{$SurveyField} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+
+        if ($1) {
+            $HTML{$SurveyField} = 1;
+        }
 
         $Survey{$SurveyField} = $Self->{LayoutObject}->Ascii2Html(
             Text           => $Survey{$SurveyField},
@@ -128,10 +204,6 @@ sub Run {
         $QueueListString = '- No queue selected -';
     }
 
-    # convert text area fields to ascii
-    $Survey{Introduction} = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
-    $Survey{Description}  = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Description} );
-
     # print the main table.
     $Self->{LayoutObject}->Block(
         Name => 'SurveyZoom',
@@ -141,6 +213,33 @@ sub Run {
             QueueListString => $QueueListString,
         },
     );
+
+    for my $Field (qw( Introduction Description)) {
+        $Self->{LayoutObject}->Block(
+            Name => 'SurveyBlock',
+            Data => {
+                Title => "Survey $Field",
+                }
+        );
+        if ( $HTML{$Field} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'BodyHTML',
+                Data => {
+                    SurveyField => $Field,
+                    SurveyID    => $SurveyID,
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'BodyPlain',
+                Data => {
+                    Label   => $Field,
+                    Content => $Survey{$Field},
+                },
+            );
+        }
+    }
 
     # display stats if status Master, Valid or Invalid
     if (

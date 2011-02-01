@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.12 2011-01-27 05:15:36 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.13 2011-02-01 01:39:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -112,21 +112,44 @@
                         <div class="Field" title="$QData{"Title"}">$QData{"Title","80"}</div>
                         <div class="Clear"></div>
 
-                        <label class="Textarea">$Text{"Introduction"}:</label>
-                        <div class="Field Textarea">$Data{"Introduction"}</div>
-                        <div class="Clear"></div>
-
                         <label>$Text{"Queues"}:</label>
                         <div class="Field" title="$QData{"QueueListString"}">$QData{"QueueListString","80"} $QData{"NoQueueMessage"}</div>
-                        <div class="Clear"></div>
-
-                        <label class="Textarea">$Text{"Internal Description"}:</label>
-                        <div class="Field Textarea">$Data{"Description"}</div>
                         <div class="Clear"></div>
 
                     </fieldset>
                 </div>
             </div>
+
+<!-- dtl:block:SurveyBlock -->
+            <div class="WidgetSimple SpacingTop">
+                <div class="Header">
+                    <h2>$Text{"$Data{"Title"}"}</h2>
+                </div>
+                <div class="Content">
+<!-- dtl:block:BodyHTML -->
+                    <div>
+                        <iframe width="100%" frameborder="0" id="IframeSurvey$Data{"SurveyField"}" onload="Survey.Agent.SurveyZoom.IframeAutoHeight($('#IframeSurvey$Data{"SurveyField"}'));" src="$Env{"Baselink"}Action=AgentSurveyZoom;Subaction=HTMLView;SurveyID=$QData{"SurveyID"};SurveyField=$QData{"SurveyField"};">
+                        </iframe>
+                    </div>
+
+<script type="text/javascript">//<![CDATA[
+    Core.Config.AddConfig({
+        HTMLRichTextHeightDefault: '$Config{"Survey::Frontend::HTMLRichTextHeightDefault"}',
+        HTMLRichTextHeightMax:     '$Config{"Survey::Frontend::HTMLRichTextHeightMax"}',
+    });
+//]]></script>
+
+<!-- dtl:block:BodyHTML -->
+<!-- dtl:block:BodyPlain -->
+                    <fieldset>
+                        <label class="Textarea">$Text{"$Data{"Label"}"}:</label>
+                        <div class="Field Textarea">$Data{"Content"}</div>
+                        <div class="Clear"></div>
+                    </fieldset>
+<!-- dtl:block:BodyPlain -->
+                </div>
+            </div>
+<!-- dtl:block:SurveyBlock -->
 
             <div class="WidgetSimple SpacingTop SpacingBottomMedium">
                 <div class="Header">
@@ -178,8 +201,6 @@
     $('#NewStatus').bind('change', function (Event) {
         $(this).closest('form').submit();
     });
-
-
 //]]></script>
 <!-- dtl:js_on_document_complete -->
 <!-- dtl:block:SurveyZoom -->

@@ -2,7 +2,7 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.1 2011-01-31 22:46:34 dz Exp $
+# $Id: CHANGES-Survey,v 1.2 2011-02-01 01:39:24 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,6 +10,7 @@
 # --
 
 1.2.92 - 2011-02-04
+ - 2011-01-31 - Improved HTML view on SurveyZoom related to Bug#4784.
  - 2011-01-31 - Implemented - Show survey answered on read-only mode.
     http://otrsteam.ideascale.com/a/dtd/Show-survey-answered-on-read-only-mode./103470-10369.
  - 2011-01-25 Fixed bug #6746 - Survey beta 1 does not install with ITSM.
