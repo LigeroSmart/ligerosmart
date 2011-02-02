@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.216 2011-01-27 18:53:21 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.217 2011-02-02 12:26:35 cr Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -3251,154 +3251,228 @@
     ]]></CodeUninstall>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
-        <br>
-        <b>WELCOME</b>
-        <br>
-        <br>
-        You are about to install the OTRS package ITSMChangeManagement.<br>
-        <br>
-        <br>
-        <b>REQUIRED OTRS PACKAGES</b>
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package ITSMChangeManagement.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.93</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="pre" Title="Installation Information" Lang="de"><![CDATA[
 
-        <br>
-        <b>WILLKOMMEN</b>
-        <br>
-        <br>
-        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu installieren.<br>
-        <br>
-        <br>
-        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu installieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.93</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; a punto de instalar el paquete ITSMChangeManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 2.1.93</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
     ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="en"><![CDATA[
 
-        <br>
-        <b>NOTICE</b>
-        <br>
-        <br>
+        <br/>
+        <strong>NOTICE</strong>
+        <br/>
+        <br/>
         In order to grant users access to the change menu, you need to add them as member to the group 'itsm-change'.
-        <br>
-        <br>
+        <br/>
+        <br/>
         The menu items that were added by this package will be visible after you log-in to the system again.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroInstall Type="post" Title="Installation Information" Lang="de"><![CDATA[
 
-        <br>
-        <b>HINWEIS</b>
-        <br>
-        <br>
+        <br/>
+        <strong>HINWEIS</strong>
+        <br/>
+        <br/>
         Um Benutzern Zugriff auf das Change-Menü zu gewähren, müssen diese Mitglied der neuen Gruppe 'itsm-change' sein.
-        <br>
-        <br>
+        <br/>
+        <br/>
         Die von diesem Paket hinzugefügten Menü-Punkte sind erst nach einem erneuten Anmeldevorgang im System sichtbar.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroInstall>
+    <IntroInstall Type="post" Title="Installation Information" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>AVISO</strong>
+        <br/>
+        <br/>
+        Para poder permitir el acceso a los usuarios al men&uacute; de faq, usted necesita agregarlos como miembros del grupo 'itsm-change'.<br/>
+        <br/>
+        <br/>
+        Los elementos del menu que fueron agregados por este paquete ser&aacute;n visibles despu&eacute;s de que cierre y abra su sesi&oacute;n de nuevo.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroInstall>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
 
-        <br>
-        <b>WELCOME</b>
-        <br>
-        <br>
-        You are about to upgrade the OTRS package ITSMChangeManagement.<br>
-        <br>
-        <br>
-        <b>REQUIRED OTRS PACKAGES</b>
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package ITSMChangeManagement.<br/>
+        <br/>
+        <br/>
+        <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
         <li>ITSMCore 2.1.93</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="de"><![CDATA[
 
-        <br>
-        <b>WILLKOMMEN</b>
-        <br>
-        <br>
-        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu aktualisieren.<br>
-        <br>
-        <br>
-        <b>BENÖTIGTE OTRS-PAKETE</b>
+        <br/>
+        <strong>WILLKOMMEN</strong>
+        <br/>
+        <br/>
+        Sie sind im Begriff das OTRS-Paket ITSMChangeManagement zu aktualisieren.<br/>
+        <br/>
+        <br/>
+        <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
         <li>ITSMCore 2.1.93</li>
         </ul>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; apunto de actualizar el paquete ITSMChangeManagement de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>PAQUETES OTRS REQUERIDOS</strong>
+        <ul>
+        <li>ITSMCore 2.1.93</li>
+        </ul>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUpgrade>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
 
-        <br>
-        <b>ATTENTION</b>
-        <br>
-        <br>
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
         If you uninstall this package, all database tables that were created during installation will be deleted.
         All data from these tables will be irrevocably lost!
-        <br>
-        <br>
+        <br/>
+        <br/>
         The groups 'itsm-change', 'itsm-change-builder' and 'itsm-change-manager' that were created during package installation will be deactivated.
         You can activate these groups again in the admin area.
-        <br>
-        <br>
+        <br/>
+        <br/>
         All links to change objects and workorder objects will be irrevocably deleted!
-        <br>
-        <br>
+        <br/>
+        <br/>
         The statistics that are associated with this package, will no longer be available if the package is uninstalled.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
     <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="de"><![CDATA[
 
-        <br>
-        <b>ACHTUNG</b>
-        <br>
-        <br>
+        <br/>
+        <strong>ACHTUNG</strong>
+        <br/>
+        <br/>
         Bei der Deinstallation werden die von diesem Paket angelegten Datenbank-Tabellen gelöscht.
         Alle darin enthaltenen Daten gehen unwiderruflich verloren!
-        <br>
-        <br>
+        <br/>
+        <br/>
         Die von diesem Paket angelegten Gruppen 'itsm-change', 'itsm-change-builder' und 'itsm-change-manager' werden deaktiviert.
         Sie können jederzeit im Admin-Bereich wieder aktiviert werden.
-        <br>
-        <br>
+        <br/>
+        <br/>
         Alle Verknüpfungen zu Change-Objekten und zu Workorder-Objekten werden unwiderruflich gelöscht!
-        <br>
-        <br>
+        <br/>
+        <br/>
         Nach der Deinstallation sind die zu diesem Paket zugehörigen Statistiken nicht mehr verfügbar.
-        <br>
-        <br>
-        ((enjoy))<br>
-        <br>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es"><![CDATA[
+
+        <br/>
+        <strong>ATENCI&Oacute;N</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, todas las tablas de la base de datos creadas durante la instalaci&oacute;n ser&aacute;n borradas.
+        &iexcl;Todos los datos de esas tablas se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        Los grupos 'itsm-change', 'itsm-change-builder' y 'itsm-change-manager' que fueron creados durante la instalaci&oacute;n del paquete ser&aacute;n desactivados.
+        Usted puede activar estos grupos nuevamente en el &aacute;rea de admin.
+        <br/>
+        <br/>
+        &iexcl;Todos los v&iacute;nculos a objetos cambio y objetos &oacute;rdenes de trabajo ser&aacute;n borrados irrevocablemente!.
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, las estad&iacute;sticas que est&aacute;n asociadas a &eacute;l ya no estar&aacute;n disponibles.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
 
     ]]></IntroUninstall>
 </otrs_package>
