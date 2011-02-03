@@ -2,7 +2,7 @@
 // Survey.Agent.SurveyZoom.js - provides the special module functions for SurveyZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: Survey.Agent.SurveyZoom.js,v 1.2 2011-02-01 17:19:44 dz Exp $
+// $Id: Survey.Agent.SurveyZoom.js,v 1.3 2011-02-03 22:46:15 dz Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ Survey.Agent = Survey.Agent || {};
 
 /**
  * @namespace
- * @exports TargetNS as Core.Agent.SurveyZoom
+ * @exports TargetNS as Survey.Agent.SurveyZoom
  * @description
  *      This namespace contains the special module functions for SurveyZoom.
  */

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.47 2011-01-19 23:28:11 dz Exp $
+# $Id: AgentSurvey.pm,v 1.48 2011-02-03 22:46:14 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -274,7 +274,7 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # stats detail
+    # stats details
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'StatsDetail' ) {
         my $SurveyID     = $Self->{ParamObject}->GetParam( Param => "SurveyID" );
