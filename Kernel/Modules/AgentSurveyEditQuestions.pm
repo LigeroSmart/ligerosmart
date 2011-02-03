@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.8 2011-01-27 05:08:05 dz Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.9 2011-02-03 22:48:27 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -557,7 +557,7 @@ sub _MaskQuestionOverview {
 
         $Self->{LayoutObject}->Block( Name => 'SurveyDeleteColumn' );
         if ( scalar @List ) {
-
+            $Self->{LayoutObject}->Block( Name => 'SurveyStatusColumn' );
             my $Counter = 0;
 
             for my $Question (@List) {
@@ -585,7 +585,6 @@ sub _MaskQuestionOverview {
                     }
                 }
 
-                $Self->{LayoutObject}->Block( Name => 'SurveyStatusColumn' );
                 $Self->{LayoutObject}->Block(
                     Name => 'SurveyQuestionsRow',
                     Data => {
