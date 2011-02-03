@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.21 2011-01-31 22:46:34 dz Exp $
+# $Id: PublicSurvey.dtl,v 1.22 2011-02-03 17:47:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,20 +40,20 @@
 <!-- dtl:block:PublicAnswerYesNo -->
 
                 <div class="Question"> $Data{"Question"} </div>
-                <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" />
-                <label class="Answer">$Text{"Yes"}</label>
+                <input type="radio" id="PublicSurveyVote1$QData{"QuestionID"}Yes" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" />
+                <label class="Answer" for="PublicSurveyVote1$QData{"QuestionID"}Yes">$Text{"Yes"}</label>
                 <div class="Clear"></div>
 
-                <input type="radio" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No" />
-                <label class="Answer">$Text{"No"}</label>
+                <input type="radio" id="PublicSurveyVote1$QData{"QuestionID"}No" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="No" />
+                <label class="Answer" for="PublicSurveyVote1$QData{"QuestionID"}No">$Text{"No"}</label>
                 <div class="Clear"></div>
 <!-- dtl:block:PublicAnswerYesNo -->
 
 <!-- dtl:block:PublicAnswerRadio -->
                 <div class="Question"> $Data{"Question"} </div>
 <!-- dtl:block:PublicAnswerRadiob -->
-                <input type="radio" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" />
-                <label class="Answer">$QData{"Answer"}</label>
+                <input type="radio" id="PublicSurveyVote2$QData{"QuestionID"}$QData{"AnswerID"}" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" />
+                <label class="Answer" for="PublicSurveyVote2$QData{"QuestionID"}$QData{"AnswerID"}">$QData{"Answer"}</label>
                 <div class="Clear"></div>
 <!-- dtl:block:PublicAnswerRadiob -->
 <!-- dtl:block:PublicAnswerRadio -->
@@ -61,8 +61,8 @@
 <!-- dtl:block:PublicAnswerCheckbox -->
                 <div class="Question"> $Data{"Question"} </div>
 <!-- dtl:block:PublicAnswerCheckboxb -->
-                <input type="checkbox" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes"/>
-                <label class="Answer">$QData{"Answer"}</label>
+                <input type="checkbox" id="PublicSurveyVote3$QData{"AnswerID"}" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes"/>
+                <label class="Answer" for="PublicSurveyVote3$QData{"AnswerID"}">$QData{"Answer"}</label>
                 <div class="Clear"></div>
 <!-- dtl:block:PublicAnswerCheckboxb -->
 <!-- dtl:block:PublicAnswerCheckbox -->
@@ -72,8 +72,8 @@
 <!-- dtl:block:RichText-->
                 $Include{"CustomerRichTextEditor"}
 <!-- dtl:block:RichText-->
-                <div class="RichTextAnswer">
-                    <textarea title="$Data{"Question"}" id="RichText" name="PublicSurveyVote4[$QData{"QuestionID"}]" class="RichText DontPrint" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}"></textarea>
+                <div class="RichTextAnswer$QData{"AnswerID"}">
+                    <textarea title="$Data{"Question"}" id="RichText$QData{"QuestionID"}" name="PublicSurveyVote4[$QData{"QuestionID"}]" class="RichText DontPrint" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}"></textarea>
                 </div>
 <!-- dtl:block:PublicAnswerTextarea -->
             </div>
