@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.58 2011-01-31 22:46:34 dz Exp $
+# $Id: Survey.pm,v 1.59 2011-02-03 05:10:01 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 =head1 NAME
 
@@ -1833,6 +1833,7 @@ sub RequestSend {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
             $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
+            $Body    =~ s/&lt;OTRS_TICKET_$Data&gt;/$Ticket{$Data}/g;
         }
     }
 
@@ -1843,10 +1844,12 @@ sub RequestSend {
     # replace config options
     $Subject =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
     $Body    =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
+    $Body    =~ s{&lt;OTRS_CONFIG_(.+?)&gt;}{$Self->{ConfigObject}->Get($1)}egx;
 
     # cleanup
     $Subject =~ s/<OTRS_CONFIG_.+?>/-/gi;
     $Body    =~ s/<OTRS_CONFIG_.+?>/-/gi;
+    $Body    =~ s/&lt;OTRS_CONFIG_.+?&gt;/-/gi;
 
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
     my %CustomerUser;
@@ -1861,16 +1864,19 @@ sub RequestSend {
 
             $Subject =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
             $Body    =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
+            $Body    =~ s/&lt;OTRS_CUSTOMER_DATA_$Data&gt;/$CustomerUser{$Data}/gi;
         }
     }
 
     # cleanup all not needed <OTRS_CUSTOMER_DATA_ tags
     $Subject =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
     $Body    =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
+    $Body    =~ s/&lt;OTRS_CUSTOMER_DATA_.+?&gt;/-/gi;
 
     # replace key
     $Subject =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
     $Body    =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
+    $Body    =~ s/&lt;OTRS_PublicSurveyKey&gt;/$PublicSurveyKey/gi;
 
     my $ToString = $CustomerUser{UserEmail};
 
@@ -1954,10 +1960,15 @@ sub RequestSend {
     # get charset
     my $Charset = $Self->{ConfigObject}->Get('DefaultCharset') || 'uft-8';
 
-    # convert body to html
-    $Body = $Self->{HTMLUtilsObject}->ToHTML(
-        String => $Body,
-    );
+    # clean html and convert the Field in html (\n --><br>)
+    $Body =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+    if ( !$1 ) {
+
+        # convert body to html
+        $Body = $Self->{HTMLUtilsObject}->ToHTML(
+            String => $Body,
+        );
+    }
 
     # prepare html links
     $Self->{HTMLUtilsObject}->LinkQuote(
@@ -2693,6 +2704,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2011-01-31 22:46:34 $
+$Revision: 1.59 $ $Date: 2011-02-03 05:10:01 $
 
 =cut
