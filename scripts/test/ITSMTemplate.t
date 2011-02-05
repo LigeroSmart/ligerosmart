@@ -1,8 +1,8 @@
 # --
 # ITSMTemplate.t - change tests
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTemplate.t,v 1.5 2010-02-09 14:08:26 reb Exp $
+# $Id: ITSMTemplate.t,v 1.6 2011-02-05 14:22:53 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -617,19 +617,19 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
         UserID     => 1,
     );
 
-    # check change id
+    # check workorder id
     $Self->True(
         $WorkOrderID,
         "Test $TestCount: Create workorder based on template (TemplateID: $TemplateID)",
     );
 
-    # get change data
+    # get workorder data
     my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
 
-    # check change attributes
+    # check workorder attributes
     REQUESTEDATTRIBUTE:
     for my $RequestedAttribute ( keys %{ $WorkOrderDefinitions{$WorkOrderTemplateName} } ) {
 
