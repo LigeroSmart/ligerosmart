@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.79 2011-02-01 19:49:41 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.80 2011-02-08 09:24:24 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.79 $) [1];
+$VERSION = qw($Revision: 1.80 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -663,6 +663,15 @@ sub Run {
             Month => $Param{Month},
             Day   => $Param{Day},
         );
+
+    # get number of working units (=records)
+    # if bigger than RecordsNumber, more than the number of default records were saved for this date
+        if ( $Data{WorkingUnits} ) {
+            my $WorkingUnitsCount = @{ $Data{WorkingUnits} };
+            if ( $WorkingUnitsCount > $Param{RecordsNumber} ) {
+                $Param{RecordsNumber} = $WorkingUnitsCount;
+            }
+        }
 
         if ( $Self->{ConfigObject}->Get('TimeAccounting::InputHoursWithoutStartEndTime') ) {
             $Param{PeriodBlock}   = 'UnitInputPeriod';
