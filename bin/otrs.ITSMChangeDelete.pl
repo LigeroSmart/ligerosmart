@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.ITSMChangeDelete.pl - to delete changes
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangeDelete.pl,v 1.2 2010-12-14 20:04:04 en Exp $
+# $Id: otrs.ITSMChangeDelete.pl,v 1.3 2011-02-09 10:22:06 mb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -30,7 +30,7 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Getopt::Long;
 use Kernel::Config;
@@ -61,7 +61,7 @@ $CommonObject{ChangeObject} = Kernel::System::ITSMChange->new(%CommonObject);
 
 print "otrs.ITSMChangeDelete.pl <Revision $VERSION> - ";
 print "delete changes (all or by number).\n";
-print "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+print "Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 
 my $Help          = '';
 my $All           = '';
@@ -73,13 +73,13 @@ GetOptions(
     'ChangeNumber=s{,}' => \@ChangeNumbers,
 );
 
-# delete all config items
+# delete all changes
 if ($All) {
 
-    # get all config items ids
+    # get all change ids
     my @ChangesIDs = @{ $CommonObject{ChangeObject}->ChangeList( UserID => 1 ) };
 
-    # get number of config items
+    # get number of changes
     my $ChangeCount = scalar @ChangesIDs;
 
     # if there are any changes to delete
@@ -92,7 +92,7 @@ if ($All) {
         # if the user confirms the deletion
         if ( $Confirmation eq 'y' ) {
 
-            # delete config items
+            # delete changes
             print "Deleting all changes...\n";
             DeleteChanges( ChangesIDs => \@ChangesIDs );
         }
@@ -105,7 +105,7 @@ if ($All) {
     }
 }
 
-# delete listed config items
+# delete listed changes
 elsif (@ChangeNumbers) {
 
     my @ChangesIDs;
@@ -125,7 +125,7 @@ elsif (@ChangeNumbers) {
         }
     }
 
-    # delete config items (if any valid number was given)
+    # delete changes (if any valid number was given)
     if (@ChangesIDs) {
         print "Deleting specified changes...\n";
         DeleteChanges( ChangesIDs => \@ChangesIDs );
@@ -151,7 +151,7 @@ sub DeleteChanges {
 
     my $DeletedChanges = 0;
 
-    # delete specified config items
+    # delete specified changes
     for my $ChangeID ( @{ $Param{ChangesIDs} } ) {
         my $True = $CommonObject{ChangeObject}->ChangeDelete(
             ChangeID => $ChangeID,
