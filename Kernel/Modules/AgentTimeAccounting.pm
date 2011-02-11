@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.82 2011-02-11 18:10:06 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.83 2011-02-11 22:51:27 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.82 $) [1];
+$VERSION = qw($Revision: 1.83 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -642,6 +642,7 @@ sub Run {
                             Message => 'Can\'t insert Working Units!'
                         );
                     }
+                    $Param{SuccessfulInsert} = 1;
                 }
 
                 # increment the error index if there was an error on this row
@@ -650,9 +651,6 @@ sub Run {
 
             if (%ServerErrorData) {
                 $Param{SuccessfulInsert} = undef;
-            }
-            else {
-                $Param{SuccessfulInsert} = 1;
             }
         }
 
@@ -1141,7 +1139,7 @@ sub Run {
                 Priority => 'Error'
             );
         }
-        elsif ( $Param{SuccessfulInsert} )
+        elsif ( defined $Param{SuccessfulInsert} )
         {
             $Output .= $Self->{LayoutObject}->Notify( Info => 'Successful insert!', );
         }
