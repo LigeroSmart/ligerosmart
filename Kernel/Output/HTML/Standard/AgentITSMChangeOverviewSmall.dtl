@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.30 2011-02-11 00:14:11 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.31 2011-02-11 19:29:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -175,7 +175,7 @@
 <!-- dtl:block:RecordWorkOrderNumber -->
                     <td>
 <!-- dtl:block:RecordWorkOrderNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" title="$LQData{"ChangeNumber"}-$LQData{"WorkOrderNumber"}">
+                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" title="$LQData{"ChangeNumber"}-$LQData{"WorkOrderNumber"}" class="MasterActionLink">
 <!-- dtl:block:RecordWorkOrderNumberLinkStart -->
                             $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
 <!-- dtl:block:RecordWorkOrderNumberLinkEnd -->
