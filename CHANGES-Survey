@@ -2,12 +2,15 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.3 2011-02-03 05:10:01 dz Exp $
+# $Id: CHANGES-Survey,v 1.4 2011-02-11 18:33:06 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+1.2.92 - 2011-02-18
+ - 2011-02-02 Fixed Bug#6865 - Norwegian translation for survey module.
 
 1.2.92 - 2011-02-04
  - 2011-02-02 Fixed Bug#6849 - Survey Emails are not sending correct content.
