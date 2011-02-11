@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.217 2011-02-02 12:26:35 cr Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.218 2011-02-11 00:46:38 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -182,7 +182,6 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/ITSM.ChangeManagement.Default.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/flag_shadow.png"/>
         <File Permission="644" Location="var/packagesetup/ITSMChangeManagement.pm"/>
-        <File Permission="644" Location="doc/itsm-change-management-database.dia"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="change_item">
