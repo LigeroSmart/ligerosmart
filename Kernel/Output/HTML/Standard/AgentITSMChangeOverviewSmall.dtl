@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.29 2010-12-22 14:27:10 cr Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.30 2011-02-11 00:14:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -191,7 +191,7 @@
 <!-- dtl:block:RecordChangeTitle -->
                     <td>
 <!-- dtl:block:RecordChangeTitleLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$LQData{"ChangeTitle"}">
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$QData{"ChangeTitle"}">
 <!-- dtl:block:RecordChangeTitleLinkStart -->
                             $QData{"ChangeTitle","40"}
 <!-- dtl:block:RecordChangeTitleLinkEnd -->
