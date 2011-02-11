@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.57 2011-01-27 18:57:08 ub Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.58 2011-02-11 01:13:55 ub Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.416 2011/01/12 22:57:22 cg Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1" ConfigLevel="200">
         <Description Translatable="1">Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.</Description>
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 3.0 Beta 3</String>
+            <String Regex="">OTRS::ITSM 3.0 Beta 4</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
