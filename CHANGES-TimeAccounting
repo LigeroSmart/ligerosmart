@@ -2,7 +2,7 @@
 # CHANGES - change log of TimeAccounting 2.x
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-TimeAccounting,v 1.5 2011-02-10 22:14:47 en Exp $
+# $Id: CHANGES-TimeAccounting,v 1.6 2011-02-11 18:10:06 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,6 +10,7 @@
 # --
 
 2.0.0 beta3 - 2011-02-22
+ - 2011-02-11 Fixed bug#6860 - daily agents details (that is not myself).
  - 2011-02-10 Fixed bug#6856 - If navigation elements are turned off because of missing TA entries, they are never turned on again.
  - 2011-02-08 Fixed bug#6875 - Row refresh error.
 

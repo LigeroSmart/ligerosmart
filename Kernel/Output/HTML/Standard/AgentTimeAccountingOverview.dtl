@@ -2,7 +2,7 @@
 # AgentTimeAccountingOverview.dtl - provides HTML form for time accounting overview
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingOverview.dtl,v 1.28 2011-01-27 17:08:28 en Exp $
+# $Id: AgentTimeAccountingOverview.dtl,v 1.29 2011-02-11 18:10:06 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -136,7 +136,7 @@
 <!-- dtl:block:Row -->
                             <tr class="$QData{"Class"} MasterAction">
                                 <td class="Fixed Day">
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Edit;Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"};UserID=$LQData{"UserID"}" class="MasterActionLink">
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=$LQData{"Subaction"};Year=$LQData{"Year"};Month=$LQData{"Month"};Day=$LQData{"Day"};UserID=$LQData{"UserID"}" class="MasterActionLink">
                                         $QData{"Day"}
                                     </a>
                                 </td>

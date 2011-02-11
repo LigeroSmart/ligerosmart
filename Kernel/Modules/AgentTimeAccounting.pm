@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.81 2011-02-10 22:14:47 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.82 2011-02-11 18:10:06 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.81 $) [1];
+$VERSION = qw($Revision: 1.82 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1197,6 +1197,9 @@ sub Run {
             }
         }
 
+        # if no UserID posted use the current user
+        $Param{UserID} ||= $Self->{UserID};
+
         # get current date and time
         my ( $Sec, $Min, $Hour, $Day, $Month, $Year )
             = $Self->{TimeObject}->SystemTime2Date(
@@ -1214,7 +1217,7 @@ sub Run {
                 1, 0, 0, $Param{DayAllowed},
                 $Param{MonthAllowed} - 1,
                 $Param{YearAllowed} - 1900
-            )
+            ) && $Param{UserID} == $Self->{UserID}
             )
         {
             return $Self->{LayoutObject}->Redirect(
@@ -1222,9 +1225,6 @@ sub Run {
                     "Action=$Self->{Action};Subaction=Edit;Year=$Param{Year};Month=$Param{Month};Day=$Param{Day}"
             );
         }
-
-        # if no UserID posted use the current user
-        $Param{UserID} ||= $Self->{UserID};
 
         # show the naming of the agent which time accounting is visited
         if ( $Param{UserID} != $Self->{UserID} ) {
@@ -1248,8 +1248,10 @@ sub Run {
 
         $Param{DateSelection} = $Self->{LayoutObject}->BuildDateSelection(
             %Param,
-            Prefix => '',
-            Format => 'DateInputFormat',
+            Prefix   => '',
+            Format   => 'DateInputFormat',
+            Validate => 1,
+            Class    => $Param{Errors}->{DateInvalid},
         );
 
         # Show Working Units
