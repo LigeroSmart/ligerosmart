@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
-# ImportExport.pl - import/export script
+# otrs.ImportExport.pl - import/export script
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pl,v 1.14 2010-02-23 12:08:46 bes Exp $
+# $Id: otrs.ImportExport.pl,v 1.1 2011-02-11 00:26:53 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -38,7 +38,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 # get options
 my %Opts;
@@ -46,15 +46,15 @@ getopts( 'hn:a:i:o:', \%Opts );
 
 if ( $Opts{h} ) {
 
-    print STDOUT "ImportExport.pl <Revision $VERSION> - an import/export tool\n";
+    print STDOUT "otrs.ImportExport.pl <Revision $VERSION> - an import/export tool\n";
     print STDOUT "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
     print STDOUT "\n";
-    print STDOUT "usage:ImportExport.pl -n <TemplateNumber> -a import|export ";
+    print STDOUT "usage: otrs.ImportExport.pl -n <TemplateNumber> -a import|export ";
     print STDOUT "[-i <SourceFile>] [-o <DestinationFile>]\n";
     print STDOUT "\n";
     print STDOUT "   examples:\n";
-    print STDOUT "       ImportExport.pl -n 00004 -a import -i /tmp/import.csv\n";
-    print STDOUT "       ImportExport.pl -n 00004 -a export -o /tmp/export.csv\n";
+    print STDOUT "       otrs.ImportExport.pl -n 00004 -a import -i /tmp/import.csv\n";
+    print STDOUT "       otrs.ImportExport.pl -n 00004 -a export -o /tmp/export.csv\n";
 
     exit 1;
 }
@@ -200,6 +200,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2010-02-23 12:08:46 $
+$Revision: 1.1 $ $Date: 2011-02-11 00:26:53 $
 
 =cut
