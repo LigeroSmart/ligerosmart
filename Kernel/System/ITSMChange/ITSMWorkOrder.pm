@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.121 2011-01-04 14:35:27 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.122 2011-02-14 13:52:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,7 @@ package Kernel::System::ITSMChange::ITSMWorkOrder;
 use strict;
 use warnings;
 
+use Kernel::System::EventHandler;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::LinkObject;
 use Kernel::System::ITSMChange::ITSMStateMachine;
@@ -22,10 +23,12 @@ use Kernel::System::VirtualFS;
 use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
-use base qw(Kernel::System::EventHandler);
+use vars qw(@ISA $VERSION);
+$VERSION = qw($Revision: 1.122 $) [1];
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.121 $) [1];
+@ISA = (
+    'Kernel::System::EventHandler',
+);
 
 =head1 NAME
 
@@ -3409,6 +3412,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.121 $ $Date: 2011-01-04 14:35:27 $
+$Revision: 1.122 $ $Date: 2011-02-14 13:52:58 $
 
 =cut
