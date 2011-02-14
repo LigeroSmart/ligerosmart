@@ -2,7 +2,7 @@
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.12 2011-01-29 00:01:29 en Exp $
+# $Id: TimeAccounting.t,v 1.13 2011-02-14 10:33:00 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -309,7 +309,7 @@ my %WorkingUnits = (
             Remark    => 'My comment',
             StartTime => '7:00',
             EndTime   => '10:00',
-            Period    => '3.0',
+            Period    => 3.0,
         },
         {
             ProjectID => $ProjectID,
@@ -317,7 +317,7 @@ my %WorkingUnits = (
             Remark    => 'My comment',
             StartTime => '13:00',
             EndTime   => '15:00',
-            Period    => '2.0',
+            Period    => 2.0,
         },
     ],
 );
