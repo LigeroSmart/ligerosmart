@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.83 2011-02-11 22:51:27 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.84 2011-02-15 19:05:52 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.83 $) [1];
+$VERSION = qw($Revision: 1.84 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -362,6 +362,7 @@ sub Run {
                             Message => 'Can\'t insert Working Units!'
                         );
                     }
+                    $Param{SuccessfulInsert} = 1;
                 }
             }
 
