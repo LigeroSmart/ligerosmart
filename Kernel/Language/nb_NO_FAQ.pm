@@ -2,7 +2,7 @@
 # Kernel/Language/nb_NO_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nb_NO_FAQ.pm,v 1.3 2011-01-24 18:06:53 cr Exp $
+# $Id: nb_NO_FAQ.pm,v 1.4 2011-02-15 11:08:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,8 +19,8 @@ sub Data {
     # Template: AAAFAQ
     $Self->{Translation}->{'internal'} = 'internt';
     $Self->{Translation}->{'public'} = 'publiseres';
-    $Self->{Translation}->{'external'} = '';
-    $Self->{Translation}->{'FAQ Number'} = '';
+    $Self->{Translation}->{'external'} = 'eksternt';
+    $Self->{Translation}->{'FAQ Number'} = 'OSS-nummer';
     $Self->{Translation}->{'LatestChangedItems'} = 'Sist oppdaterte OSS-artikler';
     $Self->{Translation}->{'LatestCreatedItems'} = 'Sist opprettede OSS-artikler';
     $Self->{Translation}->{'Top10Items'} = 'Topp 10 OSS';
@@ -29,11 +29,11 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = 'kun til kunder';
     $Self->{Translation}->{'internal (agent)'} = 'kun internt (agenter)';
     $Self->{Translation}->{'StartDay'} = 'Startdag';
-    $Self->{Translation}->{'StartMonth'} = 'MÃ¥ned';
-    $Self->{Translation}->{'StartYear'} = 'Ã…r';
+    $Self->{Translation}->{'StartMonth'} = 'Måned';
+    $Self->{Translation}->{'StartYear'} = 'År';
     $Self->{Translation}->{'EndDay'} = 'Sluttdag';
-    $Self->{Translation}->{'EndMonth'} = 'MÃ¥ned';
-    $Self->{Translation}->{'EndYear'} = 'Ã…r';
+    $Self->{Translation}->{'EndMonth'} = 'Måned';
+    $Self->{Translation}->{'EndYear'} = 'År';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Takk for din stemme!';
     $Self->{Translation}->{'You have already voted!'} = 'Du har allerede stemt';
     $Self->{Translation}->{'FAQ Article Print'} = 'Utskrift av OSS-artikkel';
@@ -42,12 +42,12 @@ sub Data {
     $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'OSS-artikler (nylig endret)';
     $Self->{Translation}->{'FAQ category updated!'} = 'OSS-kategori oppdatert!';
     $Self->{Translation}->{'FAQ category added!'} = 'OSS-kategori lagt til';
-    $Self->{Translation}->{'A category should have a name!'} = 'En kategori mÃ¥ ha et navn!';
-    $Self->{Translation}->{'This category already exists'} = '';
-    $Self->{Translation}->{'FAQ language added!'} = 'OSS-sprÃ¥k lagt til!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'OSS-sprÃ¥k oppdatert!';
-    $Self->{Translation}->{'The name is required!'} = 'Navn er pÃ¥krevd!';
-    $Self->{Translation}->{'This language already exists!'} = 'Dette sprÃ¥ket finnes allerede!';
+    $Self->{Translation}->{'A category should have a name!'} = 'En kategori må ha et navn!';
+    $Self->{Translation}->{'This category already exists'} = 'Denne kategorien eksisterer allerede';
+    $Self->{Translation}->{'FAQ language added!'} = 'OSS-språk lagt til!';
+    $Self->{Translation}->{'FAQ language updated!'} = 'OSS-språk oppdatert!';
+    $Self->{Translation}->{'The name is required!'} = 'Navn er påkrevd!';
+    $Self->{Translation}->{'This language already exists!'} = 'Dette språket finnes allerede!';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Legg til OSS-artikkel';
@@ -58,16 +58,16 @@ sub Data {
     $Self->{Translation}->{'FAQ Category Management'} = 'Kategorioppsett for OSS';
     $Self->{Translation}->{'Add category'} = 'Legg til kategori';
     $Self->{Translation}->{'Delete Category'} = 'Slett kategori';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Ok'} = 'Ok';
     $Self->{Translation}->{'Add Category'} = 'Legg til kategori';
     $Self->{Translation}->{'Edit Category'} = 'Endre kategori';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Vil vises som kommentar i utforskeren';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '';
-    $Self->{Translation}->{'Do you really want to delete this category?'} = '';
-    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = '';
-    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '';
-    $Self->{Translation}->{'This category is parent of the following subcategories'} = '';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Saksbehandlergrupper som har tilgang til artikler i denne kategorien';
+    $Self->{Translation}->{'Do you really want to delete this category?'} = 'Vil du virkelig slette denne kategorien?';
+    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = 'Du kan ikke slette denne kategorien, fordi den er brukt i minst en OSS-artikkel og/eller foreldre til minst en annen kategori';
+    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Denne kategorien er brukt i følgende OSS-artikler';
+    $Self->{Translation}->{'This category is parent of the following subcategories'} = 'Denne kategorien er foreldre til følgende underkategorier';
 
     # Template: AgentFAQDelete
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = 'Vil du virkelig slette denne artikkelen?';
@@ -76,10 +76,10 @@ sub Data {
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'Utforsker';
-    $Self->{Translation}->{'Quick Search'} = '';
-    $Self->{Translation}->{'Advanced Search'} = '';
+    $Self->{Translation}->{'Quick Search'} = 'Hurtigsøk';
+    $Self->{Translation}->{'Advanced Search'} = 'Avansert søk';
     $Self->{Translation}->{'Subcategories'} = 'Underkategorier';
-    $Self->{Translation}->{'FAQ Articles'} = 'Ofte Stilte SpÃ¸rsmÃ¥l';
+    $Self->{Translation}->{'FAQ Articles'} = 'Ofte Stilte Spørsmål';
     $Self->{Translation}->{'No subcategories found.'} = 'Ingen underkategorier funnet';
 
     # Template: AgentFAQHistory
@@ -88,12 +88,12 @@ sub Data {
     $Self->{Translation}->{'No FAQ Journal data found.'} = '';
 
     # Template: AgentFAQLanguage
-    $Self->{Translation}->{'FAQ Language Management'} = 'SprÃ¥koppsett for OSS';
+    $Self->{Translation}->{'FAQ Language Management'} = 'Språkoppsett for OSS';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = '';
-    $Self->{Translation}->{'Add language'} = 'Legg til sprÃ¥k';
-    $Self->{Translation}->{'Delete Language'} = 'Slett sprÃ¥k';
-    $Self->{Translation}->{'Add Language'} = 'Legg til sprÃ¥k';
-    $Self->{Translation}->{'Edit Language'} = 'Endre sprÃ¥k';
+    $Self->{Translation}->{'Add language'} = 'Legg til språk';
+    $Self->{Translation}->{'Delete Language'} = 'Slett språk';
+    $Self->{Translation}->{'Add Language'} = 'Legg til språk';
+    $Self->{Translation}->{'Edit Language'} = 'Endre språk';
     $Self->{Translation}->{'Do you really want to delete this language?'} = '';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = '';
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '';
@@ -119,32 +119,32 @@ sub Data {
     # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
-    $Self->{Translation}->{'FAQ Search'} = '';
+    $Self->{Translation}->{'FAQ Search'} = 'OSS-søk';
 
     # Template: AgentFAQZoom
     $Self->{Translation}->{'FAQ Information'} = 'Info om OSS';
     $Self->{Translation}->{'Rating'} = 'Rating';
-    $Self->{Translation}->{'Rating %'} = '';
+    $Self->{Translation}->{'Rating %'} = 'Rating %';
     $Self->{Translation}->{'out of 5'} = 'av 5';
     $Self->{Translation}->{'No votes found!'} = 'Ingen stemmer funnet!';
-    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Ingen stemmer avgitt! Bli den fÃ¸rste til Ã¥ stemme pÃ¥ denne artikkelen.';
-    $Self->{Translation}->{'Download Attachment'} = '';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = 'Var denne artikkelen til hjelp? VÃ¦r snill og gi oss din stemme, slik at vi kan forbedre databasen. Tusen takk!';
+    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Ingen stemmer avgitt! Bli den første til å stemme på denne artikkelen.';
+    $Self->{Translation}->{'Download Attachment'} = 'Last ned vedlegg';
+    $Self->{Translation}->{'ArticleVotingQuestion'} = 'Var denne artikkelen til hjelp? Vær snill og gi oss din stemme, slik at vi kan forbedre databasen. Tusen takk!';
     $Self->{Translation}->{'not helpful'} = 'ikke til hjelp';
     $Self->{Translation}->{'very helpful'} = 'veldig nyttig';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Insert FAQ Text'} = '';
-    $Self->{Translation}->{'Insert FAQ Link'} = '';
-    $Self->{Translation}->{'Insert FAQ Text & Link'} = '';
+    $Self->{Translation}->{'Insert FAQ Text'} = 'Sett inn OSS-tekst';
+    $Self->{Translation}->{'Insert FAQ Link'} = 'Sett inn OSS-lenke';
+    $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Sett inn OSS-tekst og -lenke';
 
     # Template: CustomerFAQExplorer
-    $Self->{Translation}->{'No FAQ articles found.'} = '';
+    $Self->{Translation}->{'No FAQ articles found.'} = 'Ingen OSS-artikler ble funnet';
 
     # Template: CustomerFAQPrint
 
     # Template: CustomerFAQSearch
-    $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'FulltekstsÃ¸k i OSS-artikler (f.eks. "Ol*" eller "Andreas*n"';
+    $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'Fulltekstsøk i OSS-artikler (f.eks. "Ol*" eller "Andreas*n"';
 
     # Template: CustomerFAQSearchOpenSearchDescription
 
@@ -154,7 +154,7 @@ sub Data {
 
     # Template: CustomerFAQZoom
     $Self->{Translation}->{'Details'} = 'Detaljer';
-    $Self->{Translation}->{'Search for articles with keyword'} = '';
+    $Self->{Translation}->{'Search for articles with keyword'} = 'Søk etter artikler med nøkkelord';
 
     # Template: PublicFAQExplorer
 
@@ -212,16 +212,16 @@ sub Data {
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ path separator.'} = 'Separator for OSS-sti';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'FAQ-Area'} = '';
+    $Self->{Translation}->{'FAQ-Area'} = 'OSS-område';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = 'Modulregistrering for den offentlige delen';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = 'Gruppe som skal godkjenne OSS-artikler.';
     $Self->{Translation}->{'History of this FAQ'} = 'Historikk over denne artikkelen';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
-    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Grensesnitt der hurtigsÃ¸ket skal vises.';
+    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Grensesnitt der hurtigsøket skal vises.';
     $Self->{Translation}->{'Journal'} = '';
-    $Self->{Translation}->{'Language Management'} = 'SprÃ¥koppsett';
-    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'LanguageKey definert i sprÃ¥kfilen *_FAQ.pm';
+    $Self->{Translation}->{'Language Management'} = 'Språkoppsett';
+    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'LanguageKey definert i språkfilen *_FAQ.pm';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Lenk opp et annet objekt til denne artikkelen';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = '';
@@ -232,7 +232,7 @@ sub Data {
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
     $Self->{Translation}->{'New FAQ Article'} = 'Ny OSS-artikkel';
-    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Nye artikler trenger godkjenning fÃ¸r de kan publiseres.';
+    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'Nye artikler trenger godkjenning før de kan publiseres.';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} = '';
@@ -243,8 +243,8 @@ sub Data {
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} = '';
     $Self->{Translation}->{'Print this FAQ'} = 'Skriv ut denne artikkelen';
-    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'KÃ¸ for godkjenning av OSS-artikler.';
-    $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Rater for avstemming. NÃ¸kkel mÃ¥ vÃ¦re i prosent.';
+    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Kø for godkjenning av OSS-artikler.';
+    $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = 'Rater for avstemming. Nøkkel må være i prosent.';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
     $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
     $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = '';
@@ -274,26 +274,26 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'A category needs at least one permission group!'} = 'En kategori trenger minst Ã©n tilgangsgruppe';
-    $Self->{Translation}->{'A category should have a comment!'} = 'En kategori mÃ¥ ha en kommentar!';
+    $Self->{Translation}->{'A category needs at least one permission group!'} = 'En kategori trenger minst én tilgangsgruppe';
+    $Self->{Translation}->{'A category should have a comment!'} = 'En kategori må ha en kommentar!';
     $Self->{Translation}->{'Agent groups which can access this category.'} = 'Agent-grupper som har tilgang til denne kategorien';
     $Self->{Translation}->{'Categories'} = 'Kategorier';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed.'} = 'Definerer hvor "Sett inn OSS"-lenken skal vises.';
-    $Self->{Translation}->{'DetailSearch'} = 'DetaljsÃ¸k';
+    $Self->{Translation}->{'DetailSearch'} = 'Detaljsøk';
     $Self->{Translation}->{'Do you really want to delete this Category?'} = 'Vil du virkelig slette denne katgorien?';
-    $Self->{Translation}->{'Do you really want to delete this Language?'} = 'Vil du virkelig slette dette sprÃ¥ket?';
+    $Self->{Translation}->{'Do you really want to delete this Language?'} = 'Vil du virkelig slette dette språket?';
     $Self->{Translation}->{'FAQ Category'} = 'OSS-kategori';
-    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Ingen tilgang til kategori. For Ã¥ opprette en artikkel mÃ¥ du ha tilgang til minst Ã©n kategori. Vennligst sjekk dine gruppe-/kategori-tilganger under -kategorimeny-';
-    $Self->{Translation}->{'QuickSearch'} = 'HurtigsÃ¸k';
+    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Ingen tilgang til kategori. For å opprette en artikkel må du ha tilgang til minst én kategori. Vennligst sjekk dine gruppe-/kategori-tilganger under -kategorimeny-';
+    $Self->{Translation}->{'QuickSearch'} = 'Hurtigsøk';
     $Self->{Translation}->{'SubCategories'} = 'Underkategorier';
     $Self->{Translation}->{'The title is required.'} = 'Emne er obligatorisk.';
-    $Self->{Translation}->{'This Category is parent of the following SubCategories'} = 'Denne kategorien er forelder til fÃ¸lgende underkategorier';
-    $Self->{Translation}->{'This Category is used in the following FAQ Artice(s)'} = 'Denne kategorien brukes i fÃ¸lgende OSS-artikler';
-    $Self->{Translation}->{'This Language is used in the following FAQ Article(s)'} = 'Dette sprÃ¥ket er i bruk pÃ¥ fÃ¸lgende artikler';
+    $Self->{Translation}->{'This Category is parent of the following SubCategories'} = 'Denne kategorien er forelder til følgende underkategorier';
+    $Self->{Translation}->{'This Category is used in the following FAQ Artice(s)'} = 'Denne kategorien brukes i følgende OSS-artikler';
+    $Self->{Translation}->{'This Language is used in the following FAQ Article(s)'} = 'Dette språket er i bruk på følgende artikler';
     $Self->{Translation}->{'This category already exists!'} = 'Denne kategorien finnes allerede!';
     $Self->{Translation}->{'Updated'} = 'Oppdatert';
-    $Self->{Translation}->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'} = 'Du kan ikke slette denne kategorien. Den brukes av minst Ã©n artikkel og/eller av minst Ã©n underkategori';
-    $Self->{Translation}->{'You can not delete this Language. It is used in at least one FAQ Article!'} = 'Du kan ikke slette dette sprÃ¥ket, det er i bruk pÃ¥ minst Ã©n artikkel.';
+    $Self->{Translation}->{'You can not delete this Category. It is used in at least one FAQ Article! and/or is parent of at least another Category'} = 'Du kan ikke slette denne kategorien. Den brukes av minst én artikkel og/eller av minst én underkategori';
+    $Self->{Translation}->{'You can not delete this Language. It is used in at least one FAQ Article!'} = 'Du kan ikke slette dette språket, det er i bruk på minst én artikkel.';
 
 }
 
