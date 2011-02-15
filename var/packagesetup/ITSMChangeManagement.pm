@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.70 2011-01-14 10:31:12 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.71 2011-02-15 13:50:38 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,7 @@ use warnings;
 use Kernel::Config;
 use Kernel::System::SysConfig;
 use Kernel::System::CSV;
+use Kernel::System::Cache;
 use Kernel::System::CacheInternal;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::Group;
@@ -35,7 +36,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.70 $) [1];
+$VERSION = qw($Revision: 1.71 $) [1];
 
 =head1 NAME
 
@@ -167,6 +168,7 @@ sub new {
         %{$Self},
         UserID => 1,
     );
+    $Self->{CacheObject}         = Kernel::System::Cache->new( %{$Self} );
     $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
         %{$Self},
         Type => 'Group',
@@ -228,6 +230,11 @@ sub CodeInstall {
     # delete the group cache to avoid permission problems
     $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
 
+    # cleanup cache
+    $Self->{CacheObject}->CleanUp(
+        Type => 'ITSMChangeManagement',
+    );
+
     return 1;
 }
 
@@ -271,6 +278,11 @@ sub CodeReinstall {
     # set default StateMachine settings
     $Self->_StateMachineDefaultSet();
 
+    # cleanup cache
+    $Self->{CacheObject}->CleanUp(
+        Type => 'ITSMChangeManagement',
+    );
+
     return 1;
 }
 
@@ -295,6 +307,11 @@ sub CodeUpgrade {
 
     # delete the group cache to avoid problems with CI permissions
     $Self->{CacheInternalObject}->CleanUp( OtherType => 'Group' );
+
+    # cleanup cache
+    $Self->{CacheObject}->CleanUp(
+        Type => 'ITSMChangeManagement',
+    );
 
     return 1;
 }
@@ -400,6 +417,11 @@ sub CodeUninstall {
 
     # delete system notifications
     $Self->_DeleteSystemNotifications();
+
+    # cleanup cache
+    $Self->{CacheObject}->CleanUp(
+        Type => 'ITSMChangeManagement',
+    );
 
     return 1;
 }
@@ -2790,6 +2812,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.70 $ $Date: 2011-01-14 10:31:12 $
+$Revision: 1.71 $ $Date: 2011-02-15 13:50:38 $
 
 =cut
