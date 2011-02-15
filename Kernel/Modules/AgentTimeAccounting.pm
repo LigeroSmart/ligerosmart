@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.84 2011-02-15 19:05:52 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.85 2011-02-15 23:14:50 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.84 $) [1];
+$VERSION = qw($Revision: 1.85 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1087,7 +1087,18 @@ sub Run {
         );
 
         $Param{Weekday} = Day_of_Week( $Param{Year}, $Param{Month}, $Param{Day} );
-        if ( $Param{Weekday} != 6 && $Param{Weekday} != 7 && !$VacationCheck ) {
+
+        # get working days of the user's calendar
+        my $CalendarName = 'TimeWorkingHours';
+        $CalendarName .= $UserData{Calendar} ? "::Calendar$UserData{Calendar}" : '';
+        my $CalendarWorkingHours = $Self->{ConfigObject}->Get($CalendarName);
+
+        # show "other times" block, if necessary
+        if (
+            @{ $CalendarWorkingHours->{ $WeekdayArray[ $Param{Weekday} - 1 ] } }
+            && !$VacationCheck
+            )
+        {
             $Self->{LayoutObject}->Block(
                 Name => 'OtherTimes',
                 Data => {
