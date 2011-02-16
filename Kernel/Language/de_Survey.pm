@@ -2,7 +2,7 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.1 2011-01-20 17:20:20 dz Exp $
+# $Id: de_Survey.pm,v 1.2 2011-02-16 12:38:36 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,82 +17,82 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurvey
-    $Self->{Translation}->{'Create New Survey'} = '';
-    $Self->{Translation}->{'Introduction'} = '';
-    $Self->{Translation}->{'Internal Description'} = '';
-    $Self->{Translation}->{'Survey Edit'} = '';
-    $Self->{Translation}->{'General Info'} = '';
-    $Self->{Translation}->{'Stats Overview'} = '';
-    $Self->{Translation}->{'Requests Table'} = '';
-    $Self->{Translation}->{'Send Time'} = '';
-    $Self->{Translation}->{'Vote Time'} = '';
-    $Self->{Translation}->{'Details'} = '';
-    $Self->{Translation}->{'No questions saved for this survey.'} = '';
-    $Self->{Translation}->{'Survey Stat Details'} = '';
-    $Self->{Translation}->{'go back to stats overview'} = '';
-    $Self->{Translation}->{'Go Back'} = '';
+    $Self->{Translation}->{'Create New Survey'} = 'Neue Umfrage erstellen';
+    $Self->{Translation}->{'Introduction'} = 'Einleitungstext';
+    $Self->{Translation}->{'Internal Description'} = 'Interne Beschreibung';
+    $Self->{Translation}->{'Survey Edit'} = 'Umfrage bearbeiten';
+    $Self->{Translation}->{'General Info'} = 'Allgemeine Angaben';
+    $Self->{Translation}->{'Stats Overview'} = 'Statistik-Übersicht';
+    $Self->{Translation}->{'Requests Table'} = 'Anfragen-Tabelle';
+    $Self->{Translation}->{'Send Time'} = 'Sendezeit';
+    $Self->{Translation}->{'Vote Time'} = 'Abstimmungszeit';
+    $Self->{Translation}->{'Details'} = 'Details';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Für diese Umfrage sind keine Fragen gespeichert.';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Details Umfragestatistik';
+    $Self->{Translation}->{'go back to stats overview'} = 'Zurück zur Übersicht';
+    $Self->{Translation}->{'Go Back'} = 'Zurück';
 
     # Template: AgentSurveyEditQuestions
-    $Self->{Translation}->{'Survey Edit Questions'} = '';
-    $Self->{Translation}->{'Add Question'} = '';
-    $Self->{Translation}->{'Type the question'} = '';
-    $Self->{Translation}->{'Survey Questions'} = '';
-    $Self->{Translation}->{'Question'} = '';
-    $Self->{Translation}->{'Edit Question'} = '';
-    $Self->{Translation}->{'go back to questions'} = '';
-    $Self->{Translation}->{'Possible Answers For'} = '';
-    $Self->{Translation}->{'Add Answer'} = '';
-    $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} = '';
-    $Self->{Translation}->{'Edit Answer'} = '';
-    $Self->{Translation}->{'go back to edit question'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Fragen bearbeiten';
+    $Self->{Translation}->{'Add Question'} = 'Frage hinzufügen';
+    $Self->{Translation}->{'Type the question'} = 'Frage eingeben';
+    $Self->{Translation}->{'Survey Questions'} = 'Umfrage-Fragen';
+    $Self->{Translation}->{'Question'} = 'Frage';
+    $Self->{Translation}->{'Edit Question'} = 'Frage bearbeiten';
+    $Self->{Translation}->{'go back to questions'} = 'Zurück zu den Fragen';
+    $Self->{Translation}->{'Possible Answers For'} = 'Mögliche Antworten für';
+    $Self->{Translation}->{'Add Answer'} = 'Antwort hinzufügen';
+    $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} = 'Diese Frage hat nicht mehrere Antworten, ein Texteingabefeld wird hinzugefügt.';
+    $Self->{Translation}->{'Edit Answer'} = 'Antwort bearbeiten';
+    $Self->{Translation}->{'go back to edit question'} = 'Zurück zum Bearbeiten der Frage';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = '';
-    $Self->{Translation}->{'Max. shown Surveys per page'} = '';
+    $Self->{Translation}->{'Context Settings'} = 'Kontext-Einstellungen';
+    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maximale Anzahl angezeigter Umfragen pro Seite';
 
     # Template: AgentSurveyOverviewSmall
-    $Self->{Translation}->{'Notification Sender'} = '';
-    $Self->{Translation}->{'Notification Subject'} = '';
-    $Self->{Translation}->{'Notification Body'} = '';
-    $Self->{Translation}->{'Created Time'} = '';
-    $Self->{Translation}->{'Created By'} = '';
-    $Self->{Translation}->{'Changed Time'} = '';
-    $Self->{Translation}->{'Changed By'} = '';
+    $Self->{Translation}->{'Notification Sender'} = 'Benachrichtigung Absender';
+    $Self->{Translation}->{'Notification Subject'} = 'Benachrichtigung Betreff';
+    $Self->{Translation}->{'Notification Body'} = 'Benachrichtigung Text';
+    $Self->{Translation}->{'Created Time'} = 'Erstell-Zeitpunkt';
+    $Self->{Translation}->{'Created By'} = 'Erstellt von';
+    $Self->{Translation}->{'Changed Time'} = 'Änderungs-Zeitpunkt';
+    $Self->{Translation}->{'Changed By'} = 'Geändert von';
 
     # Template: AgentSurveyZoom
-    $Self->{Translation}->{'Survey Information'} = '';
-    $Self->{Translation}->{'Sent requests'} = '';
-    $Self->{Translation}->{'Received surveys'} = '';
-    $Self->{Translation}->{'Edit General Info'} = '';
-    $Self->{Translation}->{'Edit Questions'} = '';
-    $Self->{Translation}->{'Stats Details'} = '';
-    $Self->{Translation}->{'Survey Details'} = '';
-    $Self->{Translation}->{'Survey Results Graph'} = '';
-    $Self->{Translation}->{'No stat results.'} = '';
+    $Self->{Translation}->{'Survey Information'} = 'Umfrage-Informationen';
+    $Self->{Translation}->{'Sent requests'} = 'Gesendete Anfragen';
+    $Self->{Translation}->{'Received surveys'} = 'Erhaltene Umfragen';
+    $Self->{Translation}->{'Edit General Info'} = 'Allgemeine Angaben bearbeiten';
+    $Self->{Translation}->{'Edit Questions'} = 'Fragen bearbeiten';
+    $Self->{Translation}->{'Stats Details'} = 'Statistik-Details';
+    $Self->{Translation}->{'Survey Details'} = 'Umfrage-Details';
+    $Self->{Translation}->{'Survey Results Graph'} = 'Grafik Umfrageergebnisse';
+    $Self->{Translation}->{'No stat results.'} = 'Keine Statistik-Ergebnisse.';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = '';
-    $Self->{Translation}->{'Please answer the next questions'} = '';
+    $Self->{Translation}->{'Survey'} = 'Umfrage';
+    $Self->{Translation}->{'Please answer the next questions'} = 'Bitte beantworten Sie die folgenden Fragen';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = '';
-    $Self->{Translation}->{'A module to edit survey questions.'} = '';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} = '';
-    $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = '';
-    $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} = '';
-    $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = '';
-    $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} = '';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = '';
-    $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = '';
-    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
-    $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} = '';
-    $Self->{Translation}->{'Public Survey.'} = '';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
-    $Self->{Translation}->{'Survey Zoom Module.'} = '';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
-    $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} = '';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = '';
+    $Self->{Translation}->{'A Survey Module.'} = 'Ein Umfrage-Modul';
+    $Self->{Translation}->{'A module to edit survey questions.'} = 'Ein Modul, um Umfragen zu bearbeiten';
+    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} = 'Anzahl Tage, von der letzten Umfrage-E-Mail an den Kunden, in der keine weitere Umfrage-Email an den Kunden versendet wird (0 bedeutet, dass die E-Mail immer versendet wird).';
+    $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = 'Voreingestellter Text für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
+    $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} = 'Voreingestellter Absender für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
+    $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = 'Voreingestellter Betreff für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
+    $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} = 'Definiert ein Übersichts-Modul, dass eine Liste aller Umfragen anzeigt.';
+    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = 'Definiert die angezeigten Spalten in der Umfrage-Übersicht. Die Einstellung hat keinen Effekt auf die angezeigte Reihenfolge der Spalten.';
+    $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} = 'Frontend-Modul-Registrierung für die Umfrage-Detailansicht im Agenten-Interface.';
+    $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = 'Frontend-Modul-Registrierung für die öffentliche Umfrage-Übersicht.';
+    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Wenn dieser reguläre Ausdruck zutrifft, wird keine Umfrage an den Kunden gesendet.';
+    $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} = 'Parameter für die Seiten der Umfrage-Übersicht.';
+    $Self->{Translation}->{'Public Survey.'} = 'Öffentliche Umfrage.';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Umfrage-Übersicht Limit';
+    $Self->{Translation}->{'Survey Zoom Module.'} = 'Modul Umfrage-Detailansicht';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Umfrage-Limit pro Seite in der Umfrage-Übersicht';
+    $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} = 'Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#.';
+    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = 'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, when ein Ticket geschlossen wird.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
