@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.60 2011-02-16 17:34:31 dz Exp $
+# $Id: Survey.pm,v 1.61 2011-02-16 20:05:23 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 =head1 NAME
 
@@ -1833,7 +1833,9 @@ sub RequestSend {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
             $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
-            $Body    =~ s/&lt;OTRS_TICKET_$Data&gt;/$Ticket{$Data}/g;
+
+            # filter for new rich text content
+            $Body =~ s/&lt;OTRS_TICKET_$Data&gt;/$Ticket{$Data}/g;
         }
     }
 
@@ -1844,12 +1846,16 @@ sub RequestSend {
     # replace config options
     $Subject =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
     $Body    =~ s{<OTRS_CONFIG_(.+?)>}{$Self->{ConfigObject}->Get($1)}egx;
-    $Body    =~ s{&lt;OTRS_CONFIG_(.+?)&gt;}{$Self->{ConfigObject}->Get($1)}egx;
+
+    # filter for new rich text content
+    $Body =~ s{&lt;OTRS_CONFIG_(.+?)&gt;}{$Self->{ConfigObject}->Get($1)}egx;
 
     # cleanup
     $Subject =~ s/<OTRS_CONFIG_.+?>/-/gi;
     $Body    =~ s/<OTRS_CONFIG_.+?>/-/gi;
-    $Body    =~ s/&lt;OTRS_CONFIG_.+?&gt;/-/gi;
+
+    # filter for new rich text content
+    $Body =~ s/&lt;OTRS_CONFIG_.+?&gt;/-/gi;
 
     # get customer data and replace it with <OTRS_CUSTOMER_DATA_...
     my %CustomerUser;
@@ -1864,19 +1870,25 @@ sub RequestSend {
 
             $Subject =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
             $Body    =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
-            $Body    =~ s/&lt;OTRS_CUSTOMER_DATA_$Data&gt;/$CustomerUser{$Data}/gi;
+
+            # filter for new rich text content
+            $Body =~ s/&lt;OTRS_CUSTOMER_DATA_$Data&gt;/$CustomerUser{$Data}/gi;
         }
     }
 
     # cleanup all not needed <OTRS_CUSTOMER_DATA_ tags
     $Subject =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
     $Body    =~ s/<OTRS_CUSTOMER_DATA_.+?>/-/gi;
-    $Body    =~ s/&lt;OTRS_CUSTOMER_DATA_.+?&gt;/-/gi;
+
+    # filter for new rich text content
+    $Body =~ s/&lt;OTRS_CUSTOMER_DATA_.+?&gt;/-/gi;
 
     # replace key
     $Subject =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
     $Body    =~ s/<OTRS_PublicSurveyKey>/$PublicSurveyKey/gi;
-    $Body    =~ s/&lt;OTRS_PublicSurveyKey&gt;/$PublicSurveyKey/gi;
+
+    # filter for new rich text content
+    $Body =~ s/&lt;OTRS_PublicSurveyKey&gt;/$PublicSurveyKey/gi;
 
     my $ToString = $CustomerUser{UserEmail};
 
@@ -2704,6 +2716,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2011-02-16 17:34:31 $
+$Revision: 1.61 $ $Date: 2011-02-16 20:05:23 $
 
 =cut
