@@ -2,7 +2,7 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.2 2011-02-16 12:38:36 mn Exp $
+# $Id: de_Survey.pm,v 1.3 2011-02-16 22:15:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -93,6 +93,20 @@ sub Data {
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Umfrage-Limit pro Seite in der Umfrage-Übersicht';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} = 'Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = 'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, when ein Ticket geschlossen wird.';
+
+    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'This field is required'} = '';
+    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'Complete'} = '';
+    $Self->{Translation}->{'Incomplete'} = '';
+    $Self->{Translation}->{'Survey#'} = '';
+    $Self->{Translation}->{'Default value'} = '';
+
+    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
+    $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

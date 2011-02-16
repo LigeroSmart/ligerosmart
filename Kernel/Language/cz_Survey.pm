@@ -1,9 +1,9 @@
 # --
-# Kernel/Language/cz_AgentSurvey.pm - the czech language for AgentSurvey
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Language/cz_Survey.pm - the czech language for AgentSurvey
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cz_Survey.pm,v 1.1 2011-01-20 17:20:21 dz Exp $
+# $Id: cz_Survey.pm,v 1.2 2011-02-16 22:15:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -51,6 +51,20 @@ sub Data {
     $Self->{Translation}->{'YesNo'}             = 'Ano anebo Ne';
     $Self->{Translation}->{'List'}              = 'seznam';
     $Self->{Translation}->{'Textarea'}          = 'textové pole';
+
+    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'This field is required'} = '';
+    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'Complete'} = '';
+    $Self->{Translation}->{'Incomplete'} = '';
+    $Self->{Translation}->{'Survey#'} = '';
+    $Self->{Translation}->{'Default value'} = '';
+
+    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
+    $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = '';
 
     return 1;
 }

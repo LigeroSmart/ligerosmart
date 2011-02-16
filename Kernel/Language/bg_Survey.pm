@@ -2,7 +2,7 @@
 # Kernel/Language/bg_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_Survey.pm,v 1.1 2011-01-20 17:20:20 dz Exp $
+# $Id: bg_Survey.pm,v 1.2 2011-02-16 22:15:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,6 +101,20 @@ sub Data {
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = '';
     $Self->{Translation}->{'Ticket free text options shown in the ticket message screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required. NOTE. If you want to display these fields also in the ticket zoom of the customer interface, you have to enable them in CustomerTicketZoom###AttributesView.'} = '';
     $Self->{Translation}->{'Ticket free time options shown in the ticket message screen of the customer interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required. NOTE. If you want to display these fields also in the ticket zoom of the customer interface, you have to enable them in CustomerTicketZoom###AttributesView.'} = '';
+
+    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'This field is required'} = '';
+    $Self->{Translation}->{'Survey Introduction'} = '';
+    $Self->{Translation}->{'Survey Description'} = '';
+    $Self->{Translation}->{'Complete'} = '';
+    $Self->{Translation}->{'Incomplete'} = '';
+    $Self->{Translation}->{'Survey#'} = '';
+    $Self->{Translation}->{'Default value'} = '';
+
+    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
+    $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = '';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

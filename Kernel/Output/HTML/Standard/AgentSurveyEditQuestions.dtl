@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.9 2011-01-27 05:08:05 dz Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.10 2011-02-16 22:15:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,7 @@
 <!-- dtl:block:SurveyEditQuestions -->
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
-        <h1>$Text{"Edit Questions for"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
+        <h1>$Text{"Edit Questions"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
         </p>
@@ -40,11 +40,11 @@
                             $Data{"SelectionType"}
 
                             <div id="QuestionError" class="TooltipErrorMessage">
-                                <p>$Text{"This field is required."}</p>
+                                <p>$Text{"This field is required"}.</p>
                             </div>
 
                             <div id="QuestionServerError" class="TooltipErrorMessage">
-                                <p>$Text{"This field is required."}</p>
+                                <p>$Text{"This field is required"}.</p>
                             </div>
 
                         </div>
@@ -213,11 +213,11 @@
                             <input type="text" size="60" name="Question" id="Question" value="$QData{"Question"}" class="Validate_Required $Data{"QuestionServerError"}" />
 
                             <div id="QuestionError" class="TooltipErrorMessage">
-                                <p>$Text{"This field is required."}</p>
+                                <p>$Text{"This field is required"}.</p>
                             </div>
 
                             <div id="QuestionServerError" class="TooltipErrorMessage">
-                                <p>$Text{"This field is required."}</p>
+                                <p>$Text{"This field is required"}.</p>
                             </div>
 
                             <button type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
@@ -246,11 +246,11 @@
                         </div>
 
                         <div id="AnswerError" class="TooltipErrorMessage">
-                            <p>$Text{"This field is required."}</p>
+                            <p>$Text{"This field is required"}.</p>
                         </div>
 
                         <div id="AnswerServerError" class="TooltipErrorMessage">
-                            <p>$Text{"This field is required."}</p>
+                            <p>$Text{"This field is required"}.</p>
                         </div>
 
                     </fieldset>
@@ -411,11 +411,11 @@
                         </div>
 
                         <div id="AnswerError" class="TooltipErrorMessage">
-                            <p>$Text{"This field is required."}</p>
+                            <p>$Text{"This field is required"}.</p>
                         </div>
 
                         <div id="AnswerServerError" class="TooltipErrorMessage">
-                            <p>$Text{"This field is required."}</p>
+                            <p>$Text{"This field is required"}.</p>
                         </div>
                     </fieldset>
                 </div>

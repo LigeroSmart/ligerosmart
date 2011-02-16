@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.50 2011-02-01 01:39:24 dz Exp $
+# $Id: AgentSurvey.dtl,v 1.51 2011-02-16 22:15:11 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -77,13 +77,13 @@ $Include{"RichTextEditor"}
 
 <!-- dtl:block:SurveyAddGenericError -->
                     <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
-                        <p>$Text{"This field is required."}</p>
+                        <p>$Text{"This field is required"}.</p>
                     </div>
 <!-- dtl:block:SurveyAddGenericError -->
 
 <!-- dtl:block:SurveyAddGenericServerError -->
                     <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
-                        <p>$Text{"This field is required."}</p>
+                        <p>$Text{"This field is required"}.</p>
                     </div>
 <!-- dtl:block:SurveyAddGenericServerError -->
 
@@ -107,7 +107,7 @@ $Include{"RichTextEditor"}
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>$Text{"Edit General Info for"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
+            <h1>$Text{"Edit General Info"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
             <p>
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>
@@ -173,13 +173,13 @@ $Include{"RichTextEditor"}
 
 <!-- dtl:block:SurveyEditGenericError -->
                 <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
-                    <p>$Text{"This field is required."}</p>
+                    <p>$Text{"This field is required"}.</p>
                 </div>
 <!-- dtl:block:SurveyEditGenericError -->
 
 <!-- dtl:block:SurveyEditServerError -->
                 <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
-                    <p>$Text{"This field is required."}</p>
+                    <p>$Text{"This field is required"}.</p>
                 </div>
 <!-- dtl:block:SurveyEditServerError -->
 
