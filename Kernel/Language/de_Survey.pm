@@ -2,7 +2,7 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.4 2011-02-17 09:11:07 mn Exp $
+# $Id: de_Survey.pm,v 1.5 2011-02-17 17:16:49 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -102,7 +102,8 @@ sub Data {
     $Self->{Translation}->{'Survey#'} = 'Umfrage#';
     $Self->{Translation}->{'Default value'} = 'Standardwert';
 
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
+    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
+        'Aktivieren oder deaktivieren des ShowVoteData screens im Public Interface, um Abstimmungs-Daten anzuzeigen, wenn ein Kunde versucht ein zweites mal abzustimmen.';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = 'Alle Parameter für das Umfrage-Modul im Agenten-Interface.';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = 'Definiert die  Standardhöhe eines WYSIWYG-Bereichs für die Umfrage-Detailansicht.';
 
