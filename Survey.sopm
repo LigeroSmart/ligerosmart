@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.44 2011-02-17 20:50:01 dz Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.45 2011-02-18 00:28:53 dz Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -228,7 +228,7 @@
         You are about to upgrade the OTRS package Survey.<br>
         <br>
         <br>
-        </strong>ATTENTION</strong>
+        <strong>ATTENTION</strong>
         <br>
         <br>
         Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br>
@@ -266,10 +266,10 @@
         Esta apunto de actualizar el módulo de encuestas de OTRS.<br>
         <br>
         <br>
-        </strong>Atención</strong>
+        <strong>ATENCIÓN</strong>
         <br>
         <br>
-            <br>
+        Asegúrese de que su base de datos acepta packetes de arriba de 5 MB de tamaño. Por ejemplo una base de datos MySQL acepta packetes de arriba de 1 MB por defecto. En este caso el valor  max_allowed_packet debe ser incrementado. El tamaño máximo recomendado es de 20 MB.<br>
         <br>
         <br>
         ((enjoy))<br>
