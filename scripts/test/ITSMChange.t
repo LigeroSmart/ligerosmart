@@ -1,8 +1,8 @@
 # --
 # ITSMChange.t - change tests
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.189 2010-10-27 22:15:30 ub Exp $
+# $Id: ITSMChange.t,v 1.190 2011-02-18 13:37:12 bes Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -6102,9 +6102,8 @@ for my $TestFile (@TestFileList) {
         "Attachment $FileCount: number of attachments after adding",
     );
 
-    # get the last added attachment file name
+    # check whether the last added attachment is in the list
     my %AttachmentLookup = map { $_ => 1 } @AttachmentList;
-
     $Self->True(
         $AttachmentLookup{ $TestFile->{Filename} },
         "Attachment $FileCount: filename from ChangeAttachmentList()",
