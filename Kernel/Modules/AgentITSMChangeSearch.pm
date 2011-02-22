@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.71 2011-01-11 16:23:23 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.72 2011-02-22 13:15:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.71 $) [1];
+$VERSION = qw($Revision: 1.72 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -111,6 +111,9 @@ sub Run {
             CABCustomer
             CABAgent
             WorkOrderTitle WorkOrderInstruction WorkOrderReport ResultForm
+            RequestedTimeSearchType PlannedStartTimeSearchType PlannedEndTimeSearchType
+            ActualStartTimeSearchType ActualEndTimeSearchType CreateTimeSearchType
+            ChangeTimeSearchType
             )
             )
         {
@@ -144,9 +147,18 @@ sub Run {
             qw( Requested PlannedStart PlannedEnd ActualStart ActualEnd Create Change )
             )
         {
+
+            # get time params fields
+            my @Array = $Self->{ParamObject}->GetArray( Param => $TimeType . 'TimeSearchType' );
+            if (@Array) {
+                for my $Item (@Array) {
+                    $GetParam{ $TimeType . $Item . 'Field' } = 1;
+                }
+            }
+
+            # get time params details
             for my $Part (
                 qw(
-                SearchType
                 PointFormat Point PointStart
                 Start StartDay StartMonth StartYear
                 Stop  StopDay  StopMonth  StopYear
@@ -1196,11 +1208,11 @@ sub _MaskForm {
             = $Self->{LayoutObject}->{LanguageObject}->Get('(between)');
         push @Attributes, (
             {
-                Key   => $Prefix . 'TimePoint',
+                Key   => $Prefix . 'TimePointField',
                 Value => $Title . " $BeforeAfterTranslatable",
             },
             {
-                Key   => $Prefix . 'TimeSlot',
+                Key   => $Prefix . 'TimeSlotField',
                 Value => $Title . " $BetweenTranslatable",
             },
 

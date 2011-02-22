@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.48 2010-12-18 15:14:31 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.49 2011-02-22 13:15:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -193,14 +193,14 @@ $Include{"AgentITSMUserSearch"}
 
 <!-- dtl:block:TimeSelection -->
         <div class="Clear"></div>
-        <label for="$Data{"Prefix"}TimePoint" id="Label$Data{"Prefix"}TimePoint">$Text{"$Data{"Title"}"} $Text{"(before/after)"}:</label>
+        <label for="$Data{"Prefix"}TimePointField" id="Label$Data{"Prefix"}TimePointField">$Text{"$Data{"Title"}"} $Text{"(before/after)"}:</label>
         <div class="Field">
             <input type="hidden" name="$Data{"Prefix"}TimeSearchType" value="TimePoint" $Data{"TimeSearchType::TimePoint"}/>
             $Data{"TimePointStart"} $Data{"TimePoint"} $Data{"TimePointFormat"}
             <button type="submit" class="Remove" value="Remove" title="$Text{"Remove this entry"}">$Text{"Remove"}</button>
         </div>
         <div class="Clear"></div>
-        <label for="$Data{"Prefix"}TimeSlot" id="Label$Data{"Prefix"}TimeSlot">$Text{"$Data{"Title"}"} $Text{"(between)"}:</label>
+        <label for="$Data{"Prefix"}TimeSlotField" id="Label$Data{"Prefix"}TimeSlotField">$Text{"$Data{"Title"}"} $Text{"(between)"}:</label>
         <div class="Field">
             <input type="hidden" name="$Data{"Prefix"}TimeSearchType" value="TimeSlot" $Data{"TimeSearchType::TimeSlot"}/>
             $Data{"TimeStart"} $Text{"and"} $Data{"TimeStop"}
