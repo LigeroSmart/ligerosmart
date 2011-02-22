@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.8 2010-10-28 12:31:07 ub Exp $
+# $Id: ITSMChange.pm,v 1.9 2011-02-22 11:53:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -183,8 +183,8 @@ sub Serialize {
     my $CleanChange;
     for my $Attribute (
         qw(
-        ChangeID ChangeNumber ChangeStateID ChangeTitle Description DescriptionPlain
-        Justification JustificationPlain ChangeManagerID ChangeBuilderID
+        ChangeID ChangeNumber ChangeStateID ChangeTitle Description
+        Justification ChangeManagerID ChangeBuilderID
         CategoryID ImpactID PriorityID CABAgents CABCustomers RequestedTime
         CreateTime CreateBy ChangeTime ChangeBy PlannedStartTime PlannedEndTime)
         )
@@ -602,6 +602,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.9 $ $Date: 2011-02-22 11:53:30 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.9 2010-12-20 12:36:42 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.10 2011-02-22 11:53:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -166,8 +166,8 @@ sub Serialize {
     my $CleanWorkOrder;
     for my $Attribute (
         qw(
-        WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction InstructionPlain
-        Report ReportPlain WorkOrderStateID WorkOrderTypeID WorkOrderAgentID
+        WorkOrderID ChangeID WorkOrderNumber WorkOrderTitle Instruction
+        Report WorkOrderStateID WorkOrderTypeID WorkOrderAgentID
         PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime AccountedTime PlannedEffort
         CreateTime CreateBy ChangeTime ChangeBy)
         )
@@ -615,6 +615,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2010-12-20 12:36:42 $
+$Revision: 1.10 $ $Date: 2011-02-22 11:53:30 $
 
 =cut
