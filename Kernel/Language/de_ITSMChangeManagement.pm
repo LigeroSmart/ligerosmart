@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.83 2011-01-24 21:22:44 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.84 2011-02-24 16:16:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -201,6 +201,8 @@ sub Data {
     $Self->{Translation}->{'Invalid time type.'} = 'Ungültiger Zeit-Typ.';
     $Self->{Translation}->{'New time'} = 'Neue Zeit';
     $Self->{Translation}->{'ITSM Change'} = 'Change';
+    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
+
     $Self->{Translation}->{'Justification'} = 'Begründung';
     $Self->{Translation}->{'Input invalid.'} = 'Ungültige Eingabe.';
     $Self->{Translation}->{'Impact'} = 'Auswirkung';
