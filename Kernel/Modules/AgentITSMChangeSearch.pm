@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.72 2011-02-22 13:15:38 cr Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.73 2011-02-25 16:40:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.72 $) [1];
+$VERSION = qw($Revision: 1.73 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -309,7 +309,7 @@ sub Run {
 
                     # format as timestamp
                     $GetParam{ $TimeType . 'TimeNewerDate' } = sprintf
-                        '%04d-%02d-%02d 00:00:01',
+                        '%04d-%02d-%02d 00:00:00',
                         $TimeSelectionParam{StartYear},
                         $TimeSelectionParam{StartMonth},
                         $TimeSelectionParam{StartDay};
