@@ -2,7 +2,7 @@
 # scripts/test/TimeAccounting.t - TimeAccounting testscript
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.t,v 1.13 2011-02-14 10:33:00 mn Exp $
+# $Id: TimeAccounting.t,v 1.14 2011-03-01 19:37:31 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -197,7 +197,7 @@ $Update = $TimeAccountingObject->UserSettingsUpdate(
         },
         2 => {
             DateStart   => '2011-02-01',
-            DateEnd     => '2011-02-28',
+            DateEnd     => '2011-12-31',
             WeeklyHours => $RandomNumber + 10,
             LeaveDays   => '5',
             Overtime    => '10',
@@ -338,7 +338,7 @@ my %WorkingUnitsCheck = $TimeAccountingObject->WorkingUnitsCompletnessCheck(
 
 # verify that Jan 15th, 2011 is not in the list of days without entry
 $Self->False(
-    $WorkingUnitsCheck{Incomplete}{2011}{01}{15},
+    defined $WorkingUnitsCheck{Incomplete}{2011}{01}{15},
     'Verify completion of working units'
 );
 
