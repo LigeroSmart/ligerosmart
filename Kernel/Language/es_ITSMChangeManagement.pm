@@ -2,7 +2,7 @@
 # Kernel/Language/es_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.16 2011-03-03 19:12:01 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.17 2011-03-03 19:29:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,6 +19,7 @@ sub Data {
     # Template: AAAITSMChangeManagement
     $Self->{Translation}->{'ITSMChange'} = 'Cambio';
     $Self->{Translation}->{'ITSMChanges'} = 'Cambios';
+    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
     $Self->{Translation}->{'A change must have a title!'} = '¡Cada cambio debe tener un título!';
     $Self->{Translation}->{'A condition must have a name!'} = '¡Cada condición debe tener un nombre!';
     $Self->{Translation}->{'A template must have a name!'} = '¡Toda plantilla debe tener un nombre!';
