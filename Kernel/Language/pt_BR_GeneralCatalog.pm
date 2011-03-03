@@ -2,7 +2,7 @@
 # Kernel/Language/pt_BR_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_GeneralCatalog.pm,v 1.4 2011-01-24 17:32:49 ub Exp $
+# $Id: pt_BR_GeneralCatalog.pm,v 1.5 2011-03-03 18:39:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,10 +24,6 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Adicionar Item ao Catálogo';
     $Self->{Translation}->{'Add Catalog Class'} = 'Adicionar Classe ao Catálogo';
     $Self->{Translation}->{'Catalog Class'} = 'Classe do Catálogo';
-    $Self->{Translation}->{'A Catalog Class should have a description!'} = '';
-    $Self->{Translation}->{'Catalog Class is required.'} = '';
-    $Self->{Translation}->{'A Catalog Class should have a Name!'} = '';
-    $Self->{Translation}->{'Name is required.'} = '';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';

@@ -2,7 +2,7 @@
 # Kernel/Language/de_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_GeneralCatalog.pm,v 1.17 2011-01-24 17:32:49 ub Exp $
+# $Id: de_GeneralCatalog.pm,v 1.18 2011-03-03 18:39:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,10 +24,6 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Katalog-Eintrag hinzufügen';
     $Self->{Translation}->{'Add Catalog Class'} = 'Katalog-Klasse hinzufügen';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog-Klasse';
-    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'Eine General-Katalog-Klasse benötigt eine Beschereibung!';
-    $Self->{Translation}->{'Catalog Class is required.'} = 'Katalog-Klasse ist erforderlich.';
-    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'Eine Katalog-Klasse benötigt einen Namen!';
-    $Self->{Translation}->{'Name is required.'} = 'Der Name ist erforderlich.';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = 'General-Katalog erstellen und verwalten.';
@@ -39,6 +35,10 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'Eine Katalog-Klasse benötigt einen Namen!';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'Eine General-Katalog-Klasse benötigt eine Beschereibung!';
+    $Self->{Translation}->{'Catalog Class is required.'} = 'Katalog-Klasse ist erforderlich.';
+    $Self->{Translation}->{'Name is required.'} = 'Der Name ist erforderlich.';
 
 }
 
