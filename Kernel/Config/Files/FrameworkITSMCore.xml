@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.59 2011-02-24 15:30:20 ub Exp $</CVS>
-    <CVS>$OldId: Framework.xml,v 1.416 2011/01/12 22:57:22 cg Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.60 2011-03-03 15:46:02 ub Exp $</CVS>
+    <CVS>$OldId: Framework.xml,v 1.416.2.4 2011/03/03 15:26:06 ub Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1" ConfigLevel="200">
         <Description Translatable="1">Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.</Description>
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 3.0 Beta 5</String>
+            <String Regex="">OTRS::ITSM 3.0 RC1</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -22,7 +22,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Package::RepositoryList" Required="0" Valid="1" ConfigLevel="200">
-        <Description Translatable="1">Defines the list of online repositories. Another installations can be used as repositoriy, for example: Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name".</Description>
+        <Description Translatable="1">Defines the list of online repositories. Another installations can be used as repository, for example: Key="http://example.com/otrs/public.pl?Action=PublicRepository;File=" and Content="Some Name".</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Package</SubGroup>
         <Setting>
