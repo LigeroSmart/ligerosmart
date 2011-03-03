@@ -2,7 +2,7 @@
 # Kernel/Language/fa_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ITSMChangeManagement.pm,v 1.5 2011-03-03 19:29:17 ub Exp $
+# $Id: fa_ITSMChangeManagement.pm,v 1.6 2011-03-03 19:35:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
