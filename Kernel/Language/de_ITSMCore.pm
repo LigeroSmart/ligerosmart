@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.25 2011-01-24 18:29:49 ub Exp $
+# $Id: de_ITSMCore.pm,v 1.26 2011-03-03 18:41:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -54,8 +54,6 @@ sub Data {
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Verwaltung der Priorität aus der Kombination von Kritikalität <-> Impact.';
     $Self->{Translation}->{'Priority allocation'} = 'Priorität zuordnen';
 
-    # Template: AdminNotification
-
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Mindestzeit zwischen Incidents';
 
@@ -88,7 +86,6 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'Aktueller Vorfallstatus';
 
     # SysConfig
-    $Self->{Translation}->{'Allows defining services and SLAs for tickets (e. g. email, desktop, network, ...), and escalation attributes for SLAs (if ticket service/SLA feature is enabled).'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Frontendmodul-Registration der AdminITSMCIPAllocate Konfiguration im Admin-Bereich.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Frontendmodul-Registration des AgentITSMSLA-Objekts im Agent-Interface.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'Frontendmodul-Registration des AgentITSMSLAPrint-Objekts im Agent-Interface.';
