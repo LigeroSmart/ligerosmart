@@ -1,9 +1,9 @@
 # --
 # Kernel/Output/HTML/TicketOverviewPreview.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.9 2010-12-06 19:33:09 en Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.49 2010/12/02 11:32:30 mn Exp $
+# $Id: TicketOverviewPreview.pm,v 1.10 2011-03-03 15:20:08 ub Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.49.2.1 2011/03/01 18:17:20 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CustomerUser;
 use Kernel::System::SystemAddress;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -359,7 +359,7 @@ sub _Show {
             push @ActionItems, {
                 HTML        => $Output,
                 ID          => $Item->{ID},
-                Name        => $Item->{Name},
+                Name        => $Self->{LayoutObject}->{LanguageObject}->Get( $Item->{Name} ),
                 Link        => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
                 Target      => $Item->{Target},
                 PopupType   => $Item->{PopupType},
