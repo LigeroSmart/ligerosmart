@@ -2,7 +2,7 @@
 # Kernel/Language/fa_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ITSMChangeManagement.pm,v 1.6 2011-03-03 19:35:37 ub Exp $
+# $Id: fa_ITSMChangeManagement.pm,v 1.7 2011-03-03 22:12:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,6 +20,7 @@ sub Data {
     $Self->{Translation}->{'ITSMChange'} = 'تغییر';
     $Self->{Translation}->{'ITSMChanges'} = '';
     $Self->{Translation}->{'ITSM Changes'} = 'Changes';
+    $Self->{Translation}->{'workorder'} = 'دستور کار';
     $Self->{Translation}->{'A change must have a title!'} = 'هر تغییر باید عنوان داشته باشد!';
     $Self->{Translation}->{'A condition must have a name!'} = 'هر شرط باید دارای نام باشد!';
     $Self->{Translation}->{'A template must have a name!'} = 'قالب باید دارای نام باشد!';
