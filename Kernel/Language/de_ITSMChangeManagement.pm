@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.84 2011-02-24 16:16:07 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.85 2011-03-03 19:12:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMChangeManagement
+    $Self->{Translation}->{'ITSMChange'} = 'Change';
+    $Self->{Translation}->{'ITSMChanges'} = 'Changes';
     $Self->{Translation}->{'A change must have a title!'} = 'Ein Change benötigt einen Titel!';
     $Self->{Translation}->{'A condition must have a name!'} = 'Eine Bedingung benötigt einen Namen!';
     $Self->{Translation}->{'A template must have a name!'} = 'Eine Vorlage benötigt einen Namen!';
@@ -201,8 +203,6 @@ sub Data {
     $Self->{Translation}->{'Invalid time type.'} = 'Ungültiger Zeit-Typ.';
     $Self->{Translation}->{'New time'} = 'Neue Zeit';
     $Self->{Translation}->{'ITSM Change'} = 'Change';
-    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
-
     $Self->{Translation}->{'Justification'} = 'Begründung';
     $Self->{Translation}->{'Input invalid.'} = 'Ungültige Eingabe.';
     $Self->{Translation}->{'Impact'} = 'Auswirkung';
@@ -316,7 +316,6 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Zuletzt geändert';
     $Self->{Translation}->{'Last changed by'} = 'Zuletzt geändert von';
     $Self->{Translation}->{'Show or hide the content.'} = 'Inhalt anzeigen oder verbergen.';
-    $Self->{Translation}->{'ITSMChange'} = 'Change';
     $Self->{Translation}->{'Download Attachment'} = 'Anhang herunterladen';
 
     # Template: AgentITSMTemplateDelete
@@ -1092,8 +1091,6 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in \'ITSMChange::RestrictTicketTypes::Groups\'.'} = 'Dieses ACL Modul schränkt die Verwendung der Ticket-Typen, die in der Sysconfig-Option \'ITSMChange::AddChangeLinkTicketTypes\' definiert sind, auf Benutzer ein die Mitglied in einer der in \'ITSMChange::RestrictTicketTypes::Groups\' definerten Gruppen sind.';
-    $Self->{Translation}->{'workorder'} = 'Workorder';
 
 }
 

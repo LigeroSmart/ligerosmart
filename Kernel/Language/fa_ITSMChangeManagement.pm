@@ -2,7 +2,7 @@
 # Kernel/Language/fa_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ITSMChangeManagement.pm,v 1.3 2011-01-24 21:22:44 ub Exp $
+# $Id: fa_ITSMChangeManagement.pm,v 1.4 2011-03-03 19:12:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMChangeManagement
+    $Self->{Translation}->{'ITSMChange'} = 'تغییر';
+    $Self->{Translation}->{'ITSMChanges'} = '';
     $Self->{Translation}->{'A change must have a title!'} = 'هر تغییر باید عنوان داشته باشد!';
     $Self->{Translation}->{'A condition must have a name!'} = 'هر شرط باید دارای نام باشد!';
     $Self->{Translation}->{'A template must have a name!'} = 'قالب باید دارای نام باشد!';
@@ -314,7 +316,6 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = '';
     $Self->{Translation}->{'Last changed by'} = '';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'ITSMChange'} = 'تغییر';
     $Self->{Translation}->{'Download Attachment'} = '';
 
     # Template: AgentITSMTemplateDelete
@@ -1090,12 +1091,6 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'All expressions'} = 'تمام عبارات منطقی';
-    $Self->{Translation}->{'Any expression'} = 'هیچ عبارت منطقی';
-    $Self->{Translation}->{'Requested (by customer) Date'} = 'زمان درخواست )توسط مشترک(';
-    $Self->{Translation}->{'Save Change as template'} = 'ذخیره کردن تغییر به عنوان قالب';
-    $Self->{Translation}->{'Save Workorder as template'} = 'ذخیره کردن دستور کار به عنوان قالب';
-    $Self->{Translation}->{'workorder'} = 'دستور کار';
 
 }
 

@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.4 2011-01-24 21:22:44 ub Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.5 2011-03-03 19:12:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMChangeManagement
+    $Self->{Translation}->{'ITSMChange'} = 'Change';
+    $Self->{Translation}->{'ITSMChanges'} = 'Changes';
     $Self->{Translation}->{'A change must have a title!'} = 'Vul een titel in voor de change.';
     $Self->{Translation}->{'A condition must have a name!'} = 'Vul een titel in voor de conditie';
     $Self->{Translation}->{'A template must have a name!'} = 'Kies een naam voor de template.';
@@ -312,7 +314,6 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = 'Laatst aangepast op';
     $Self->{Translation}->{'Last changed by'} = 'Laatst aangepast door';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'ITSMChange'} = 'Change';
     $Self->{Translation}->{'Download Attachment'} = '';
 
     # Template: AgentITSMTemplateDelete
@@ -1088,10 +1089,6 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'ITSM Changes'} = 'Changes';
-    $Self->{Translation}->{'Requested (by customer) Date'} = 'Aangevraagd door klant voor datum';
-    $Self->{Translation}->{'Save Workorder as template'} = 'Bewaar Work Order als template';
-    $Self->{Translation}->{'workorder'} = 'Work Order';
 
 }
 

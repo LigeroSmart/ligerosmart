@@ -2,7 +2,7 @@
 # Kernel/Language/es_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_ITSMChangeManagement.pm,v 1.15 2011-01-24 21:22:44 ub Exp $
+# $Id: es_ITSMChangeManagement.pm,v 1.16 2011-03-03 19:12:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMChangeManagement
+    $Self->{Translation}->{'ITSMChange'} = 'Cambio';
+    $Self->{Translation}->{'ITSMChanges'} = 'Cambios';
     $Self->{Translation}->{'A change must have a title!'} = '¡Cada cambio debe tener un título!';
     $Self->{Translation}->{'A condition must have a name!'} = '¡Cada condición debe tener un nombre!';
     $Self->{Translation}->{'A template must have a name!'} = '¡Toda plantilla debe tener un nombre!';
@@ -314,7 +316,6 @@ sub Data {
     $Self->{Translation}->{'Last changed'} = '';
     $Self->{Translation}->{'Last changed by'} = '';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'ITSMChange'} = 'Cambio';
     $Self->{Translation}->{'Download Attachment'} = '';
 
     # Template: AgentITSMTemplateDelete
@@ -1090,10 +1091,6 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Defines the free text field number 12 for changes to add a new change attribute.'} = 'Define el campo free text número 12 de los cambios para añadir un atributo de cambio nuevo.';
-    $Self->{Translation}->{'ITSM event module deletes the history of workorders.'} = 'Módulo de eventos para ITSM que elimina el historial de órdenes de trabajo.';
-    $Self->{Translation}->{'This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option \'ITSMChange::AddChangeLinkTicketTypes\', to users of the groups as defined in \'ITSMChange::RestrictTicketTypes::Groups\'.'} = 'Este módulo ACL restringe es uso de los tipos de ticket, definidos en la opción \'ITSMChange::AddChangeLinkTicketTypes\' del sysconfig, a usuarios de los grupos especificados en \'ITSMChange::RestrictTicketTypes::Groups\'.';
-    $Self->{Translation}->{'workorder'} = 'orden de trabajo';
 
 }
 
