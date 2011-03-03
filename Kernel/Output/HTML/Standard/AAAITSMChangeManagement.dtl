@@ -2,7 +2,7 @@
 # AAAITSMChangeManagement.dtl - $Text variable file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AAAITSMChangeManagement.dtl,v 1.3 2011-03-03 19:27:01 ub Exp $
+# $Id: AAAITSMChangeManagement.dtl,v 1.4 2011-03-03 22:02:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,6 +13,7 @@
 $Text{"ITSMChange"}
 $Text{"ITSMChanges"}
 $Text{"ITSM Changes"}
+$Text{"workorder"}
 $Text{"A change must have a title!"}
 $Text{"A condition must have a name!"}
 $Text{"A template must have a name!"}
