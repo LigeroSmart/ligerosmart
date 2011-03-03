@@ -1,9 +1,9 @@
 // --
 // ITSM.Agent.ConfirmationDialog.js - provides the special module functions for the
 // confirmation dialogs
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ConfirmationDialog.js,v 1.4 2010-12-07 17:31:10 ub Exp $
+// $Id: ITSM.Agent.ConfirmationDialog.js,v 1.5 2011-03-03 13:32:49 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -102,6 +102,11 @@ ITSM.Agent.ConfirmationDialog = (function (TargetNS) {
 
             // show the confirmation dialog to confirm the action
             Core.UI.Dialog.ShowContentDialog(Response.HTML, LocalDialogData.DialogTitle, PositionTop, "Center", true, Buttons);
+            $('a.AsPopupDialog').unbind('click.AsPopupDialog').bind('click.AsPopupDialog', function (Event) {
+                Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
+                Core.UI.Dialog.CloseDialog($('.Dialog:visible'));
+                return false;
+            });
         }, 'json');
         return false;
     };

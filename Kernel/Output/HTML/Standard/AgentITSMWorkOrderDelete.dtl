@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderDelete.dtl - provides HTML form for AgentITSMWorkOrderDelete
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderDelete.dtl,v 1.22 2010-10-19 15:58:26 en Exp $
+# $Id: AgentITSMWorkOrderDelete.dtl,v 1.23 2011-03-03 13:32:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@
 <ul>
 <!-- dtl:block:WorkOrderInConditionRow -->
     <li class="Indent SpacingBottomSmall">
-        <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}">
+        <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}" class="AsPopupDialog">
             $QData{"Name"}
         </a>
     </li>
