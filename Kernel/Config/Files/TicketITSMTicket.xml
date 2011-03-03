@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.17 2011-01-12 18:00:09 ub Exp $</CVS>
-    <CVS>$OldId: Ticket.xml,v 1.417 2010/12/08 16:48:04 mp Exp $</CVS>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.18 2011-03-03 15:47:22 ub Exp $</CVS>
+    <CVS>$OldId: Ticket.xml,v 1.425 2011/01/28 15:56:21 mb Exp $</CVS>
     <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
         <Description Translatable="1">Allows defining new types for ticket (if ticket type feature is enabled).</Description>
         <Group>Ticket</Group>
