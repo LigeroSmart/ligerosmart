@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.17 2011-01-14 15:56:29 dz Exp $
+# $Id: Survey.t,v 1.18 2011-03-04 05:12:35 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -416,15 +416,87 @@ rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
     );
 }
 
-# cleanup system
-$Self->{DBObject}->Do(
-    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
-);
+# test GetRichTextDocumentComplete
+{
+    my %Text;
 
-# restore original sendmail config
-$Self->{ConfigObject}->Set(
-    Key   => 'SendmailModule',
-    Value => $SendmailModule,
-);
+    #tests for rich text
+    $Text{RichText} = {
+        Input =>
+            '$html/text$ <em>This is the introduction to this survey, if you want to answer it you have to<br />
+read this first, please let us tell you thanks for the opportunity to interact<br />
+with you.</em><br />
+<ul>
+    <li>
+        <span style="color: rgb(0, 0, 128);">Please read all the instructions</span></li>
+    <li>
+        <span style="color: rgb(0, 0, 128);">Please take attention in every question</span></li>
+    <li>
+        <span style="color: rgb(0, 0, 128);">Answer as clear as possible</span></li>
+</ul>
+<span style="color: rgb(255, 160, 122);">This is all we have to tell you for now, please take the opportunity now to<br />
+express your feelings in our survey.</span><br />
+<br />
+<span style="color: rgb(255, 160, 122);"> greetings,<br />
+<br />
+danielz,</span><br />',
+        Output =>
+            '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;"><em>This is the introduction to this survey, if you want to answer it you have to<br />
+read this first, please let us tell you thanks for the opportunity to interact<br />
+with you.</em><br />
+<ul>
+    <li>
+        <span style="color: rgb(0, 0, 128);">Please read all the instructions</span></li>
+    <li>
+        <span style="color: rgb(0, 0, 128);">Please take attention in every question</span></li>
+    <li>
+        <span style="color: rgb(0, 0, 128);">Answer as clear as possible</span></li>
+</ul>
+<span style="color: rgb(255, 160, 122);">This is all we have to tell you for now, please take the opportunity now to<br />
+express your feelings in our survey.</span><br />
+<br />
+<span style="color: rgb(255, 160, 122);"> greetings,<br />
+<br />
+danielz,</span><br /></body></html>',
+    };
 
+    # create tests for simple text
+    $Text{SimpleText} = {
+        Input => "This is an internal description example:
+
+ - One
+ - Two
+ - Three
+ - Four
+ - Five
+
+That's it.
+-dz
+",
+        Output =>
+            '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">This is an internal description example:
+
+ - One
+ - Two
+ - Three
+ - Four
+ - Five
+
+That\'s it.
+-dz
+</body></html>',
+    };
+
+    my $DocumentComplete;
+    for my $TextType ( keys %Text ) {
+        $DocumentComplete
+            = $SurveyObject->GetRichTextDocumentComplete( Text => $Text{$TextType}->{Input} );
+        $Self->Is(
+            $Text{$TextType}->{Output},
+            $DocumentComplete,
+            "GetRichTextDocumentComplete Test - $TextType",
+        );
+    }
+
+}
 1;

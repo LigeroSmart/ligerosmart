@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.61 2011-02-16 20:05:23 dz Exp $
+# $Id: Survey.pm,v 1.62 2011-03-04 05:12:35 dz Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 =head1 NAME
 
@@ -1606,6 +1606,47 @@ sub VoteGet {
     return @List;
 }
 
+=item VoteAttributeGet()
+
+to get all attributes of a vote
+
+    my $VoteAttributeContent = $SurveyObject->VoteAttributeGet(
+        VoteID => 13,
+    );
+
+=cut
+
+sub VoteAttributeGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(VoteID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # quote
+    for my $Argument (qw(VoteID)) {
+        $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument}, 'Integer' );
+    }
+
+    # get vote attribute
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT vote_value FROM survey_vote"
+            . " WHERE id = $Param{VoteID}",
+        Limit => 1,
+    );
+
+    # fetch the result
+    my $VoteAttributeContent = ${ $Self->{DBObject}->FetchrowArray() }[0];
+    return $VoteAttributeContent;
+}
+
 =item CountVote()
 
 to count all votes of a survey
@@ -2702,6 +2743,43 @@ sub SurveySearch {
     return @List;
 }
 
+=item GetRichTextDocumentComplete()
+
+get some text ready to show as richtext attachment inline
+
+    my $RichTextDocumentComplete = $SurveyObject->GetRichTextDocumentComplete(
+        Text => $RichText,
+    );
+
+=cut
+
+sub GetRichTextDocumentComplete {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Text)) {
+        if ( !defined $Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument parameter!",
+            );
+            return;
+        }
+    }
+
+    # clean html string
+    my $Text = $Param{Text};
+    $Text =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
+
+    # get document complete
+    my $HTMLDocumentComplete = $Self->{HTMLUtilsObject}->DocumentComplete(
+        String  => $Text,
+        Charset => 'utf-8',
+    );
+
+    return $HTMLDocumentComplete;
+}
+
 1;
 
 =back
@@ -2716,6 +2794,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.61 $ $Date: 2011-02-16 20:05:23 $
+$Revision: 1.62 $ $Date: 2011-03-04 05:12:35 $
 
 =cut
