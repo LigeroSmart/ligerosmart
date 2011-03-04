@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/Notification.pm - a event module to send notifications
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.29 2010-10-28 12:31:07 ub Exp $
+# $Id: Notification.pm,v 1.30 2011-03-04 16:09:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -274,7 +274,7 @@ sub Run {
             Event  => $Event,
             UserID => $Param{UserID},
             Data   => {
-                %{ $Param{Data} }    # do not pass as reference, as it would influence later events!
+                %{ $Param{Data} },   # do not pass as reference, as it would influence later events!
             },
         );
     }
@@ -556,6 +556,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.30 $ $Date: 2011-03-04 16:09:13 $
 
 =cut
