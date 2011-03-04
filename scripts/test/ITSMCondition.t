@@ -1,8 +1,8 @@
 # --
 # ITSMCondition.t - Condition tests
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.t,v 1.60 2010-01-30 11:19:55 bes Exp $
+# $Id: ITSMCondition.t,v 1.61 2011-03-04 12:08:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ use vars qw($Self);
 
 use Data::Dumper;
 
+use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
@@ -28,6 +30,8 @@ use Kernel::System::ITSMChange::ITSMCondition;
 my $TestCount = 1;
 
 # create common objects
+$Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
+$Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
 $Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );

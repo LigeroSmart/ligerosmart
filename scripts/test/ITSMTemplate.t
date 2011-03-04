@@ -2,7 +2,7 @@
 # ITSMTemplate.t - change tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTemplate.t,v 1.6 2011-02-05 14:22:53 bes Exp $
+# $Id: ITSMTemplate.t,v 1.7 2011-03-04 12:08:07 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,6 +18,8 @@ use vars qw($Self);
 use Data::Dumper;
 use List::Util qw(max);
 
+use Kernel::System::User;
+use Kernel::System::Group;
 use Kernel::System::CustomerUser;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMCondition;
@@ -37,6 +39,8 @@ use Kernel::System::Valid;
 my $TestCount = 1;
 
 # create common objects
+$Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
+$Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
 $Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
@@ -617,19 +621,19 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
         UserID     => 1,
     );
 
-    # check workorder id
+    # check change id
     $Self->True(
         $WorkOrderID,
         "Test $TestCount: Create workorder based on template (TemplateID: $TemplateID)",
     );
 
-    # get workorder data
+    # get change data
     my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
 
-    # check workorder attributes
+    # check change attributes
     REQUESTEDATTRIBUTE:
     for my $RequestedAttribute ( keys %{ $WorkOrderDefinitions{$WorkOrderTemplateName} } ) {
 
