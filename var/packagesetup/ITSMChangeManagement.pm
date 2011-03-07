@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.71 2011-02-15 13:50:38 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.72 2011-03-07 13:10:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.71 $) [1];
+$VERSION = qw($Revision: 1.72 $) [1];
 
 =head1 NAME
 
@@ -894,7 +894,7 @@ sub _AddNotifications {
             ValidID    => 1,
             Comment    => 'inform recipients that a change was requested',
             Rule       => '',
-            Recipients => [ 'ChangeInitiators', 'ChangeManager', 'ChangeBuilder' ],
+            Recipients => [ 'ChangeManager', 'ChangeBuilder' ],
         },
         {
             Name       => 'pending approval changes',
@@ -2812,6 +2812,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.71 $ $Date: 2011-02-15 13:50:38 $
+$Revision: 1.72 $ $Date: 2011-03-07 13:10:54 $
 
 =cut
