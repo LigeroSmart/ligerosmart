@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.73 2011-02-25 16:40:10 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.74 2011-03-07 12:42:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1444,16 +1444,6 @@ sub _MaskForm {
             Data => \%TimeSelectionData,
         );
     }
-
-    #    TIMETYPE:
-    #    for my $TimeType (@TimeTypes) {
-    #        my $Prefix = $TimeType->{Prefix};
-    #
-    #        # show RequestedTime only when enabled in SysConfig
-    #        if ( $Prefix eq 'Requested' && !$Self->{Config}->{RequestedTime} ) {
-    #            next TIMETYPE;
-    #        }
-    #    }
 
     # build customer search autocomplete field for CABCustomer
     my $CustomerAutoCompleteConfig
