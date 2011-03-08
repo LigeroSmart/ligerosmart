@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.26 2011-01-05 15:21:43 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.27 2011-03-08 13:09:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -99,7 +99,7 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
-                        <p class="Value" title="$TimeLong{"$Data{"Changed"}"} ($Data{"CreatedByLogin"})">$TimeShort{"$Data{"Changed"}"}  ($Data{"CreatedByLogin"})</p>
+                        <p class="Value" title="$TimeLong{"$Data{"Changed"}"} ($Data{"CreatedByLogin"})">$TimeShort{"$Data{"Changed"}"}  ($Data{"ChangedByLogin"})</p>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>
