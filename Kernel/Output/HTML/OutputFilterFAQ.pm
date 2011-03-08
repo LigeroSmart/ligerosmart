@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/OutputFilterFAQ.pm - Output filter for FAQ module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: OutputFilterFAQ.pm,v 1.13 2011-01-05 15:07:28 mn Exp $
+# $Id: OutputFilterFAQ.pm,v 1.14 2011-03-08 14:47:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,10 +12,10 @@
 package Kernel::Output::HTML::OutputFilterFAQ;
 
 use strict;
+use warnings;
 
 use vars qw($VERSION);
-$VERSION = '$Revision: 1.13 $';
-$VERSION =~ s/^\$.*:\W(.*)\W.+?$/$1/;
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
