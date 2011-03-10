@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.222 2011-03-03 21:52:22 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.223 2011-03-10 10:33:19 mb Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -211,12 +211,6 @@
             <Index Name="change_item_title">
                 <IndexColumn Name="title"/>
             </Index>
-            <Index Name="change_item_description_plain">
-                <IndexColumn Name="description_plain" Size="250"/>
-            </Index>
-            <Index Name="change_item_justification_plain">
-                <IndexColumn Name="justification_plain" Size="250"/>
-            </Index>
             <Index Name="change_item_change_state_id">
                 <IndexColumn Name="change_state_id"/>
             </Index>
@@ -284,12 +278,6 @@
             </Index>
             <Index Name="change_workorder_title">
                 <IndexColumn Name="title"/>
-            </Index>
-            <Index Name="change_workorder_instruction_plain">
-                <IndexColumn Name="instruction_plain" Size="250"/>
-            </Index>
-            <Index Name="change_workorder_report_plain">
-                <IndexColumn Name="report_plain" Size="250"/>
             </Index>
             <Index Name="change_workorder_workorder_state_id">
                 <IndexColumn Name="workorder_state_id"/>
@@ -2944,6 +2932,14 @@
                 <Reference Local="workorder_id" Foreign="id"/>
             </ForeignKey>
         </TableCreate>
+        <TableAlter Name="change_item" Version="3.0.1">
+            <IndexDrop Name="change_item_description_plain"/>
+            <IndexDrop Name="change_item_justification_plain"/>
+        </TableAlter>
+        <TableAlter Name="change_workorder" Version="3.0.1">
+            <IndexDrop Name="change_workorder_instruction_plain"/>
+            <IndexDrop Name="change_workorder_report_plain"/>
+        </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="change_freekey"/>
