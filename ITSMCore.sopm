@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.130 2011-03-03 15:55:31 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.131 2011-03-10 16:49:01 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
-    <PackageRequired Version="2.1.96">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="3.0.1">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -554,7 +554,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>GeneralCatalog 2.1.96</li>
+        <li>GeneralCatalog 3.0.1</li>
         </ul>
         <br/>
         <strong>ATTENTION</strong>
@@ -578,7 +578,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>GeneralCatalog 2.1.96</li>
+        <li>GeneralCatalog 3.0.1</li>
         </ul>
         <br/>
         <strong>ACHTUNG</strong>
@@ -602,7 +602,7 @@
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
         <ul>
-        <li>GeneralCatalog 2.1.96</li>
+        <li>GeneralCatalog 3.0.1</li>
         </ul>
         <br/>
         <strong>ATENCIÓN</strong>
@@ -674,7 +674,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>GeneralCatalog 2.1.96</li>
+        <li>GeneralCatalog 3.0.1</li>
         </ul>
         <br/>
         </strong>ATTENTION</strong>
@@ -698,7 +698,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>GeneralCatalog 2.1.96</li>
+        <li>GeneralCatalog 3.0.1</li>
         </ul>
         <br/>
         <strong>ACHTUNG</strong>
@@ -722,7 +722,7 @@
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
         <ul>
-        <li>GeneralCatalog 2.1.96</li>
+        <li>GeneralCatalog 3.0.1</li>
         </ul>
         <br/>
         <strong>ATENCIÓN</strong>
