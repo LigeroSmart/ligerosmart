@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.34 2011-02-24 15:19:51 ub Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.182.2.2 2011/02/24 13:21:44 mn Exp $
+# $Id: AgentTicketZoom.dtl,v 1.35 2011-03-10 16:35:56 ub Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.182.2.3 2011/03/10 00:09:24 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -745,7 +745,7 @@ $('#$QData{"FormID"} select[name=ResponseID]').bind('change', function (Event) {
                     <p class="Value">
 <!-- dtl:block:ArticleAttachmentRow -->
 <!-- dtl:block:ArticleAttachmentRowLink -->
-                        <a href="$Data{"Link"}" $Data{"Target"} title="$Text{"$Data{"Action"}"}">$QData{"Filename"}</a>, $QData{"Filesize"}
+                        <a class="$QData{"Class"}" href="$Data{"Link"}" $Data{"Target"} title="$Text{"$Data{"Action"}"}">$QData{"Filename"}</a> $QData{"DataFileSize"}
 <!-- dtl:block:ArticleAttachmentRowLink -->
 <!-- dtl:block:ArticleAttachmentRowNoLink -->
                         $QData{"Filename"}, $QData{"Filesize"}
