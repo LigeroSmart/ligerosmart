@@ -2,7 +2,7 @@
 # Kernel/Language/de_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_TimeAccounting.pm,v 1.7 2011-01-20 14:22:39 mn Exp $
+# $Id: de_TimeAccounting.pm,v 1.8 2011-03-11 09:10:27 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -159,6 +159,7 @@ sub Data {
     $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} = 'Modul, dass den Agent im Notification-Bereich des Agent-Interfaces darüber informiert, wenn schon zu lange keine Stunden mehr eingetragen wurden.';
     $Self->{Translation}->{'Time accounting.'} = 'Zeiterfassung.';
     $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} = 'Hier kann man eingeben, ob für eine bestimmte Tätigkeit, die zu verrechnenden Stunden gekürzt werden. Z. B wenn Reisezeiten nur zur Hälfte vergütet werden (Key =&gt; journey; Content =&gt; 50).';
+    $Self->{Translation}->{'Determines if the statistics module may generate time accounting information.'} = 'Bestimmt, ob das Statistik-Modul Informationen zur Zeiterfassung generieren kann.';
 
     $Self->{Translation}->{'Mon'} = 'Mo';
     $Self->{Translation}->{'Tue'} = 'Di';
