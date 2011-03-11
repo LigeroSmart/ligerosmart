@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Dynamic/TimeAccounting.pm - all advice functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.1 2011-03-11 08:27:09 mab Exp $
+# $Id: TimeAccounting.pm,v 1.2 2011-03-11 09:11:06 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,10 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Kernel::System::TimeAccounting;
-use Date::Calc qw( Add_Delta_Days Add_Delta_YM Add_Delta_YMD );
+use Date::Pcalc qw( Add_Delta_Days Add_Delta_YMD );
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -476,21 +476,23 @@ sub _GetStatData {
             );
 
             # get first day of previous month
-            my @NewStartDate = Add_Delta_YM(
+            my @NewStartDate = Add_Delta_YMD(
                 $CurrentDate[ $DateIndexToName{'Year'} ],
                 $CurrentDate[ $DateIndexToName{'Month'} ],
                 1,
                 0,
                 -1,
+                0,
             );
 
             # get first day of next month relative to previous month
-            my @NewStopDate = Add_Delta_YM(
+            my @NewStopDate = Add_Delta_YMD(
                 $NewStartDate[0],
                 $NewStartDate[1],
                 $NewStartDate[2],
                 0,
                 +1,
+                0,
             );
 
             # get last of day previous month
