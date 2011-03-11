@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.45 2011-02-17 19:32:26 mb Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.46 2011-03-11 08:27:09 mab Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -24,6 +24,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/NotificationTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm"/>
         <File Permission="644" Location="Kernel/System/TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm"/>
         <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-combobox/jquery-combobox.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-ui-button-1.8.7/jquery-ui-button.js"/>
