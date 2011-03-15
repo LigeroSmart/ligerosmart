@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.34 2011-01-15 20:05:15 mb Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.35 2011-03-15 14:11:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,8 @@
     <input type="hidden" name="Subaction" value="Save"/>
     <input type="hidden" name="ChangeID" value="$QData{"ChangeID"}"/>
     <input type="hidden" name="ConditionID" value="$QData{"ConditionID"}"/>
+    <input type="hidden" name="DeleteExpressionID" id="DeleteExpressionID" value=""/>
+    <input type="hidden" name="DeleteActionID" id="DeleteActionID" value=""/>
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
@@ -141,8 +143,8 @@
                                     </div>
                                 </td>
                                 <td class="Center">
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"};DeleteConditionID::$LQData{"ConditionID"}=Delete" class="TrashCan" title="$Text{"Delete"}">
-                                        $Text{"Delete Condition"}
+                                    <a href="#" class="TrashCan DeleteExpression" id="DeleteExpressionID-$LQData{"ExpressionID"}" title="$Text{"Delete"}">
+                                        $Text{"Delete Expression"}
                                     </a>
                                 </td>
                             </tr>
@@ -236,8 +238,8 @@
                                     </div>
                                 </td>
                                 <td class="Center">
-                                    <a href="$Env{"Baselink"}Action=$Env{"Action"};ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"};DeleteActionID::$LQData{"ActionID"}=Delete" class="TrashCan" title="$Text{"Delete"}">
-                                        $Text{"Delete Condition"}
+                                    <a href="#" class="TrashCan DeleteAction" id="DeleteActionID-$LQData{"ActionID"}" title="$Text{"Delete"}">
+                                        $Text{"Delete Action"}
                                     </a>
                                 </td>
                             </tr>
@@ -271,5 +273,18 @@
     $('#Cancel').bind('click', function (Event) {
         location.href = '$Env{"Baselink"}Action=AgentITSMChangeCondition;ChangeID=$QData{"ChangeID"}';
     });
+
+    $('.DeleteExpression').unbind('click.DeleteExpression').bind('click.DeleteExpression', function(Event) {
+        $('#DeleteExpressionID').val($(this).attr('id').replace(/DeleteExpressionID-/, ''));
+        $(this).closest('form').submit();
+        return false;
+    });
+
+    $('.DeleteAction').unbind('click.DeleteAction').bind('click.DeleteAction', function(Event) {
+        $('#DeleteActionID').val($(this).attr('id').replace(/DeleteActionID-/, ''));
+        $(this).closest('form').submit();
+        return false;
+    });
+
 //]]></script>
 <!--dtl:js_on_document_complete-->

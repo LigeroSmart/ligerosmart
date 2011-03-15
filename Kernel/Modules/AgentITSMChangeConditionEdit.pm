@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.42 2010-12-17 12:52:37 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.43 2011-03-15 14:11:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,7 +56,7 @@ sub Run {
     my %GetParam;
     for my $ParamName (
         qw(
-        ChangeID ConditionID Name Comment ExpressionConjunction ValidID
+        ChangeID ConditionID Name Comment ExpressionConjunction ValidID DeleteExpressionID DeleteActionID
         Save AddAction AddExpression NewExpression NewAction ElementChanged UpdateDivName)
         )
     {
@@ -401,64 +401,51 @@ sub Run {
             }
 
             # check if an expression should be deleted
-            for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+            if ( $GetParam{DeleteExpressionID} && $GetParam{DeleteExpressionID} ne 'NEW' ) {
 
-                # check if the delete button of this expression was pressed
-                if (
-                    $Self->{ParamObject}->GetParam(
-                        Param => 'DeleteExpressionID-' . $ExpressionID
-                    )
-                    )
-                {
+                # delete the expression
+                my $Success = $Self->{ConditionObject}->ExpressionDelete(
+                    ExpressionID => $GetParam{DeleteExpressionID},
+                    UserID       => $Self->{UserID},
+                );
 
-                    # delete the expression
-                    my $Success = $Self->{ConditionObject}->ExpressionDelete(
-                        ExpressionID => $ExpressionID,
-                        UserID       => $Self->{UserID},
-                    );
-
-                    # check error
-                    if ( !$Success ) {
-                        return $Self->{LayoutObject}->ErrorScreen(
-                            Message => "Could not delete ExpressionID $ExpressionID!",
-                            Comment => 'Please contact the admin.',
-                        );
-                    }
-
-                    # show the edit view again
-                    return $Self->{LayoutObject}->Redirect(
-                        OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                            . "ConditionID=$GetParam{ConditionID}",
+                # check error
+                if ( !$Success ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not delete ExpressionID $GetParam{DeleteExpressionID}!",
+                        Comment => 'Please contact the admin.',
                     );
                 }
+
+                # show the edit view again
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                        . "ConditionID=$GetParam{ConditionID}",
+                );
             }
 
             # check if an action should be deleted
-            for my $ActionID ( @{$ActionIDsRef} ) {
+            if ( $GetParam{DeleteActionID} && $GetParam{DeleteActionID} ne 'NEW' ) {
 
-                # check if the delete button of this action was pressed
-                if ( $Self->{ParamObject}->GetParam( Param => 'DeleteActionID-' . $ActionID ) ) {
+                # delete the action
+                my $Success = $Self->{ConditionObject}->ActionDelete(
+                    ActionID => $GetParam{DeleteActionID},
+                    UserID   => $Self->{UserID},
+                );
 
-                    # delete the action
-                    my $Success = $Self->{ConditionObject}->ActionDelete(
-                        ActionID => $ActionID,
-                        UserID   => $Self->{UserID},
-                    );
-
-                    # check error
-                    if ( !$Success ) {
-                        return $Self->{LayoutObject}->ErrorScreen(
-                            Message => "Could not delete ActionID $ActionID!",
-                            Comment => 'Please contact the admin.',
-                        );
-                    }
-
-                    # show the edit view again
-                    return $Self->{LayoutObject}->Redirect(
-                        OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
-                            . "ConditionID=$GetParam{ConditionID}",
+                # check error
+                if ( !$Success ) {
+                    return $Self->{LayoutObject}->ErrorScreen(
+                        Message => "Could not delete ActionID $GetParam{DeleteActionID}!",
+                        Comment => 'Please contact the admin.',
                     );
                 }
+
+                # show the edit view again
+                return $Self->{LayoutObject}->Redirect(
+                    OP => "Action=AgentITSMChangeConditionEdit;ChangeID=$GetParam{ChangeID};"
+                        . "ConditionID=$GetParam{ConditionID}",
+                );
             }
 
             # show the edit view again
