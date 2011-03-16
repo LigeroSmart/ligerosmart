@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.145 2011-01-05 15:27:36 cr Exp $
+# $Id: FAQ.pm,v 1.146 2011-03-16 21:59:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.145 $) [1];
+$VERSION = qw($Revision: 1.146 $) [1];
 
 =head1 NAME
 
@@ -2997,7 +2997,7 @@ sub FAQSearch {
         my @SearchFields = ( 'i.f_number', 'i.f_subject', 'i.f_keywords' );
 
         # used from the agent interface (internal)
-        if ( $Param{Interface} eq 'internal' ) {
+        if ( $Param{Interface}->{Name} eq 'internal' ) {
 
             for my $Number ( 1 .. 6 ) {
 
@@ -3017,7 +3017,7 @@ sub FAQSearch {
         }
 
         # used from the customer interface (external)
-        elsif ( $Param{Interface} eq 'external' ) {
+        elsif ( $Param{Interface}->{Name} eq 'external' ) {
 
             for my $Number ( 1 .. 6 ) {
 
@@ -4427,6 +4427,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.145 $ $Date: 2011-01-05 15:27:36 $
+$Revision: 1.146 $ $Date: 2011-03-16 21:59:03 $
 
 =cut
