@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.28 2011-01-25 19:21:13 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.178 2011/01/25 19:17:19 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.29 2011-03-16 21:49:02 en Exp $
+# $OldId: AgentTicketPhone.pm,v 1.178.2.1 2011/03/16 21:36:37 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -345,14 +345,14 @@ sub Run {
                 Action         => $Self->{Action},
                 Type           => $Key,
                 UserID         => $Self->{UserID},
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                CustomerUserID => $CustomerData{UserLogin} || '',
             );
             $TicketFreeText{$Text} = $Self->{TicketObject}->TicketFreeTextGet(
                 TicketID       => $Self->{TicketID},
                 Action         => $Self->{Action},
                 Type           => $Text,
                 UserID         => $Self->{UserID},
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                CustomerUserID => $CustomerData{UserLogin} || '',
             );
 
             # If Key has value 2, this means that the freetextfield is required
@@ -397,14 +397,14 @@ sub Run {
                 Type           => $Key,
                 Action         => $Self->{Action},
                 UserID         => $Self->{UserID},
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                CustomerUserID => $CustomerData{UserLogin} || '',
             );
             $ArticleFreeText{$Text} = $Self->{TicketObject}->ArticleFreeTextGet(
                 TicketID       => $Self->{TicketID},
                 Type           => $Text,
                 Action         => $Self->{Action},
                 UserID         => $Self->{UserID},
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                CustomerUserID => $CustomerData{UserLogin} || '',
             );
 
             # If Key has value 2, this means that the field is required
@@ -446,21 +446,21 @@ sub Run {
         # html output
         my $Services = $Self->_GetServices(
             %GetParam,
-            CustomerUserID => $CustomerData{CustomerUserLogin} || '',
-            QueueID => $Self->{QueueID} || 1,
+            CustomerUserID => $CustomerData{UserLogin} || '',
+            QueueID        => $Self->{QueueID}         || 1,
         );
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
-            CustomerUserID => $CustomerData{CustomerUserLogin} || '',
-            QueueID        => $Self->{QueueID}                 || 1,
+            CustomerUserID => $CustomerData{UserLogin} || '',
+            QueueID        => $Self->{QueueID}         || 1,
             Services       => $Services,
         );
         $Output .= $Self->_MaskPhoneNew(
             QueueID    => $Self->{QueueID},
             NextStates => $Self->_GetNextStates(
                 %GetParam,
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
-                QueueID => $Self->{QueueID} || 1,
+                CustomerUserID => $CustomerData{UserLogin} || '',
+                QueueID        => $Self->{QueueID}         || 1,
             ),
 # ---
 # ITSM
@@ -470,12 +470,12 @@ sub Run {
 # ---
             Priorities => $Self->_GetPriorities(
                 %GetParam,
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
-                QueueID => $Self->{QueueID} || 1,
+                CustomerUserID => $CustomerData{UserLogin} || '',
+                QueueID        => $Self->{QueueID}         || 1,
             ),
             Types => $Self->_GetTypes(
                 %GetParam,
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
+                CustomerUserID => $CustomerData{UserLogin} || '',
                 QueueID => $Self->{QueueID} || 1,
             ),
             Services         => $Services,
@@ -484,8 +484,8 @@ sub Run {
             ResponsibleUsers => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
             To               => $Self->_GetTos(
                 %GetParam,
-                CustomerUserID => $CustomerData{CustomerUserLogin} || '',
-                QueueID => $Self->{QueueID},
+                CustomerUserID => $CustomerData{UserLogin} || '',
+                QueueID        => $Self->{QueueID}         || 1,
             ),
             From         => $Article{From},
             Subject      => $Subject,
