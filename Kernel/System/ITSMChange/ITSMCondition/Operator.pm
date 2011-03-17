@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Operator.pm,v 1.27 2011-03-17 18:36:47 ub Exp $
+# $Id: Operator.pm,v 1.28 2011-03-17 19:03:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -833,8 +833,8 @@ sub _OperatorIsLessThan {
     return if $Param{Value1} !~ m{ \A \d+ ( \. \d+ )? \z }xms;
     return if $Param{Value2} !~ m{ \A \d+ ( \. \d+ )? \z }xms;
 
-    # return result of negated equation
-    return !$Self->_OperatorIsGreaterThan(%Param);
+    # return result of less than check
+    return $Param{Value1} < $Param{Value2};
 }
 
 =item _OperatorIsBefore()
@@ -1238,6 +1238,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2011-03-17 18:36:47 $
+$Revision: 1.28 $ $Date: 2011-03-17 19:03:48 $
 
 =cut
