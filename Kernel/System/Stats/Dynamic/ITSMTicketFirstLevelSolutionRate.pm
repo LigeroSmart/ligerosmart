@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMTicketFirstLevelSolutionRate.pm - stats functions for the first level solution rate
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTicketFirstLevelSolutionRate.pm,v 1.6 2010-09-06 20:46:52 dz Exp $
+# $Id: ITSMTicketFirstLevelSolutionRate.pm,v 1.7 2011-03-20 09:10:50 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Type;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -88,14 +88,14 @@ sub GetObjectAttributes {
 
     my @ObjectAttributes = (
         {
-            Name                => 'Queue',
-            UseAsXvalue         => 1,
-            UseAsValueSeries    => 1,
-            UseAsRestriction    => 1,
-            Element             => 'QueueIDs',
-            Block               => 'MultiSelectField',
-            LanguageTranslation => 0,
-            Values              => \%QueueList,
+            Name             => 'Queue',
+            UseAsXvalue      => 1,
+            UseAsValueSeries => 1,
+            UseAsRestriction => 1,
+            Element          => 'QueueIDs',
+            Block            => 'MultiSelectField',
+            Translation      => 0,
+            Values           => \%QueueList,
         },
         {
             Name             => 'State',
@@ -116,14 +116,14 @@ sub GetObjectAttributes {
             Values           => \%PriorityList,
         },
         {
-            Name                => 'Created in Queue',
-            UseAsXvalue         => 1,
-            UseAsValueSeries    => 1,
-            UseAsRestriction    => 1,
-            Element             => 'CreatedQueueIDs',
-            Block               => 'MultiSelectField',
-            LanguageTranslation => 0,
-            Values              => \%QueueList,
+            Name             => 'Created in Queue',
+            UseAsXvalue      => 1,
+            UseAsValueSeries => 1,
+            UseAsRestriction => 1,
+            Element          => 'CreatedQueueIDs',
+            Block            => 'MultiSelectField',
+            Translation      => 0,
+            Values           => \%QueueList,
         },
         {
             Name             => 'Created Priority',
@@ -229,24 +229,24 @@ sub GetObjectAttributes {
 
         my @ObjectAttributeAdd = (
             {
-                Name                => 'Service',
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'ServiceIDs',
-                Block               => 'MultiSelectField',
-                LanguageTranslation => 0,
-                Values              => \%Service,
+                Name             => 'Service',
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'ServiceIDs',
+                Block            => 'MultiSelectField',
+                Translation      => 0,
+                Values           => \%Service,
             },
             {
-                Name                => 'SLA',
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'SLAIDs',
-                Block               => 'MultiSelectField',
-                LanguageTranslation => 0,
-                Values              => \%SLA,
+                Name             => 'SLA',
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'SLAIDs',
+                Block            => 'MultiSelectField',
+                Translation      => 0,
+                Values           => \%SLA,
             },
         );
 
@@ -261,14 +261,14 @@ sub GetObjectAttributes {
         );
 
         my %ObjectAttribute1 = (
-            Name                => 'Type',
-            UseAsXvalue         => 1,
-            UseAsValueSeries    => 1,
-            UseAsRestriction    => 1,
-            Element             => 'TypeIDs',
-            Block               => 'MultiSelectField',
-            LanguageTranslation => 0,
-            Values              => \%Type,
+            Name             => 'Type',
+            UseAsXvalue      => 1,
+            UseAsValueSeries => 1,
+            UseAsRestriction => 1,
+            Element          => 'TypeIDs',
+            Block            => 'MultiSelectField',
+            Translation      => 0,
+            Values           => \%Type,
         );
 
         unshift @ObjectAttributes, \%ObjectAttribute1;
@@ -278,34 +278,34 @@ sub GetObjectAttributes {
 
         my @ObjectAttributeAdd = (
             {
-                Name                => 'Agent/Owner',
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'OwnerIDs',
-                Block               => 'MultiSelectField',
-                LanguageTranslation => 0,
-                Values              => \%UserList,
+                Name             => 'Agent/Owner',
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'OwnerIDs',
+                Block            => 'MultiSelectField',
+                Translation      => 0,
+                Values           => \%UserList,
             },
             {
-                Name                => 'Created by Agent/Owner',
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'CreatedUserIDs',
-                Block               => 'MultiSelectField',
-                LanguageTranslation => 0,
-                Values              => \%UserList,
+                Name             => 'Created by Agent/Owner',
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'CreatedUserIDs',
+                Block            => 'MultiSelectField',
+                Translation      => 0,
+                Values           => \%UserList,
             },
             {
-                Name                => 'Responsible',
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'ResponsibleIDs',
-                Block               => 'MultiSelectField',
-                LanguageTranslation => 0,
-                Values              => \%UserList,
+                Name             => 'Responsible',
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'ResponsibleIDs',
+                Block            => 'MultiSelectField',
+                Translation      => 0,
+                Values           => \%UserList,
             },
         );
 
@@ -372,14 +372,14 @@ sub GetObjectAttributes {
             $Name = 'TicketFreeText' . $FreeKey;
 
             my %ObjectAttribute = (
-                Name                => 'TicketFreeKey' . $FreeKey,
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'TicketFreeKey' . $FreeKey,
-                Block               => 'MultiSelectField',
-                Values              => $TicketFreeKey,
-                LanguageTranslation => 0,
+                Name             => 'TicketFreeKey' . $FreeKey,
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'TicketFreeKey' . $FreeKey,
+                Block            => 'MultiSelectField',
+                Values           => $TicketFreeKey,
+                Translation      => 0,
             );
 
             push @ObjectAttributes, \%ObjectAttribute;
@@ -394,14 +394,14 @@ sub GetObjectAttributes {
         if ($TicketFreeText) {
 
             my %ObjectAttribute = (
-                Name                => $Name,
-                UseAsXvalue         => 1,
-                UseAsValueSeries    => 1,
-                UseAsRestriction    => 1,
-                Element             => 'TicketFreeText' . $FreeKey,
-                Block               => 'MultiSelectField',
-                Values              => $TicketFreeText,
-                LanguageTranslation => 0,
+                Name             => $Name,
+                UseAsXvalue      => 1,
+                UseAsValueSeries => 1,
+                UseAsRestriction => 1,
+                Element          => 'TicketFreeText' . $FreeKey,
+                Block            => 'MultiSelectField',
+                Values           => $TicketFreeText,
+                Translation      => 0,
             );
 
             push @ObjectAttributes, \%ObjectAttribute;
