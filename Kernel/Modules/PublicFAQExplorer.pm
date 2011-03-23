@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.6 2011-01-19 22:23:42 cr Exp $
+# $Id: PublicFAQExplorer.pm,v 1.7 2011-03-23 23:25:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -86,6 +86,11 @@ sub Run {
 
     # get category id
     my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
+
+    # check for non numeric CategoryID
+    if ( $CategoryID !~ /\d+/ ) {
+        $CategoryID = 0;
+    }
 
     # try to get the category data
     my %CategoryData;

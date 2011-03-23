@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.10 2010-12-08 17:21:13 ub Exp $
+# $Id: AgentFAQExplorer.pm,v 1.11 2011-03-23 23:25:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,6 +81,11 @@ sub Run {
     # get category id
     my $CategoryID = $Self->{ParamObject}->GetParam( Param => 'CategoryID' ) || 0;
 
+    # check for non numeric CategoryID
+    if ( $CategoryID !~ /\d+/ ) {
+        $CategoryID = 0;
+    }
+
     # get navigation bar option
     my $Nav = $Self->{ParamObject}->GetParam( Param => 'Nav' ) || '';
 
@@ -101,7 +106,10 @@ sub Run {
             UserID     => $Self->{UserID},
         );
         if ( !%CategoryData ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => "The CategoryID $CategoryID is invalid.",
+                Comment => 'Please contact the admin.',
+            );
         }
 
         # check user permission
