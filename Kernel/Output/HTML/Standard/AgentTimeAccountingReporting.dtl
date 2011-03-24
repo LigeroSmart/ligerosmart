@@ -2,7 +2,7 @@
 # AgentTimeAccountingReporting.dtl - provides HTML form for time accounting reporting
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingReporting.dtl,v 1.23 2011-01-26 18:48:34 en Exp $
+# $Id: AgentTimeAccountingReporting.dtl,v 1.24 2011-03-24 18:37:31 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -146,6 +146,7 @@
 <script type="text/javascript">//<![CDATA[
     $('.MasterAction').bind('click', function (Event) {
         window.location = $(this).find('.MasterActionLink').attr('href');
+        return false;
     });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
