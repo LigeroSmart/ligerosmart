@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -30,6 +30,13 @@
 
 .LayoutFixedSidebar.SidebarLast > .SidebarColumn.Large {
     width: 350px;
+    float: right;
+    margin-left: 16px;
+    margin-right: 0;
+}
+
+.LayoutFixedSidebar.SidebarLast > .SidebarColumn.Medium {
+    width: 290px;
     float: right;
     margin-left: 16px;
     margin-right: 0;
