@@ -1,8 +1,8 @@
 # --
 # AgentITSMService.dtl - provides HTML form for AgentITSMService
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.dtl,v 1.13 2010-12-09 02:31:48 ub Exp $
+# $Id: AgentITSMService.dtl,v 1.14 2011-03-28 11:23:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -65,6 +65,7 @@
 <script type="text/javascript">//<![CDATA[
     $('.MasterAction').bind('click', function (Event) {
         window.location = $(this).find('.MasterActionLink').attr('href');
+        return false;
     });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
