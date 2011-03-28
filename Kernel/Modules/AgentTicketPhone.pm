@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.29 2011-03-16 21:49:02 en Exp $
+# $Id: AgentTicketPhone.pm,v 1.30 2011-03-28 10:56:51 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.178.2.1 2011/03/16 21:36:37 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -476,7 +476,7 @@ sub Run {
             Types => $Self->_GetTypes(
                 %GetParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
-                QueueID => $Self->{QueueID} || 1,
+                QueueID        => $Self->{QueueID}         || 1,
             ),
             Services         => $Services,
             SLAs             => $SLAs,
@@ -485,7 +485,7 @@ sub Run {
             To               => $Self->_GetTos(
                 %GetParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
-                QueueID        => $Self->{QueueID}         || 1,
+                QueueID => $Self->{QueueID},
             ),
             From         => $Article{From},
             Subject      => $Subject,
