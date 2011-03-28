@@ -1,8 +1,8 @@
 # --
 # AgentFAQOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.16 2010-12-07 15:52:22 mb Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.17 2011-03-28 16:01:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -108,6 +108,7 @@
     Core.UI.StaticTableControl($('#OverviewControl').add($('#OverviewBody')));
     $('.MasterAction').bind('click', function (Event) {
         window.location = $(this).find('.MasterActionLink').attr('href');
+        return false;
     });
     $(window).resize(function() {
         Core.UI.AdjustTableHead($('#OverviewHeader thead'), $('#OverviewBody tbody'));

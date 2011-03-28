@@ -1,8 +1,8 @@
 # --
 # AgentFAQExplorer.dtl - provides HTML for AgentFAQExplorer.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.dtl,v 1.19 2010-12-09 11:23:24 ub Exp $
+# $Id: AgentFAQExplorer.dtl,v 1.20 2011-03-28 16:01:18 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -150,6 +150,7 @@ $Data{"FAQItemListHTML"}
 <script type="text/javascript">//<![CDATA[
     $('.MasterAction').bind('click', function (Event) {
         window.location = $(this).find('.MasterActionLink').attr('href');
+        return false;
     });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
