@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.12 2011-03-24 22:08:09 cr Exp $
+# $Id: AgentFAQExplorer.pm,v 1.13 2011-04-04 21:35:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -217,6 +217,7 @@ sub Run {
     my $LinkPage = 'Filter='
         . $Self->{LayoutObject}->LinkEncode( $Self->{Filter} )
         . ';View=' . $Self->{LayoutObject}->LinkEncode( $Self->{View} )
+        . ';Nav=' . $Nav
         . ';SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} )
         . ';OrderBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{OrderBy} )
         . ';CategoryID=' . $CategoryID
@@ -224,12 +225,14 @@ sub Run {
     my $LinkSort = 'Filter='
         . $Self->{LayoutObject}->LinkEncode( $Self->{Filter} )
         . ';View=' . $Self->{LayoutObject}->LinkEncode( $Self->{View} )
+        . ';Nav=' . $Nav
         . ';CategoryID=' . $CategoryID
         . ';';
     my $FilterLink
         = 'SortBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{SortBy} )
         . ';OrderBy=' . $Self->{LayoutObject}->LinkEncode( $Self->{OrderBy} )
         . ';View=' . $Self->{LayoutObject}->LinkEncode( $Self->{View} )
+        . ';Nav=' . $Nav
         . ';CategoryID=' . $CategoryID
         . ';';
 
