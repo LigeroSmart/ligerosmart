@@ -2,7 +2,7 @@
 # AgentITSMSLA.dtl - provides HTML form for AgentITSMSLA
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLA.dtl,v 1.7 2011-03-28 11:23:42 ub Exp $
+# $Id: AgentITSMSLA.dtl,v 1.8 2011-04-05 15:33:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -55,8 +55,12 @@
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
     $('.MasterAction').bind('click', function (Event) {
-        window.location = $(this).find('.MasterActionLink').attr('href');
-        return false;
+        var $MasterActionLink = $(this).find('.MasterActionLink');
+        // only act if the link was not clicked directly
+        if (Event.target !== $MasterActionLink.get(0)) {
+            window.location = $MasterActionLink.attr('href');
+            return false;
+        }
     });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
