@@ -2,7 +2,7 @@
 # AgentITSMChangeCondition.dtl - provides HTML form for AgentITSMChangeCondition
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeCondition.dtl,v 1.14 2011-04-05 15:33:31 ub Exp $
+# $Id: AgentITSMChangeCondition.dtl,v 1.15 2011-04-07 16:28:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -43,9 +43,9 @@
                         </thead>
                         <tbody>
 <!-- dtl:block:OverviewRow -->
-                            <tr class="MasterAction">
+                            <tr>
                                 <td>
-                                    <a href="$Env{"Baselink"}Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}" class="AsBlock MasterActionLink">
+                                    <a href="$Env{"Baselink"}Action=AgentITSMChangeConditionEdit;ChangeID=$LQData{"ChangeID"};ConditionID=$LQData{"ConditionID"}" class="AsBlock">
                                         $QData{"Name"}
                                     </a>
                                 </td>
@@ -75,16 +75,3 @@
     </div>
     <div class="Clear"></div>
 </form>
-
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    $('.MasterAction').bind('click', function (Event) {
-        var $MasterActionLink = $(this).find('.MasterActionLink');
-        // only act if the link was not clicked directly
-        if (Event.target !== $MasterActionLink.get(0)) {
-            window.location = $MasterActionLink.attr('href');
-            return false;
-        }
-    });
-//]]></script>
-<!-- dtl:js_on_document_complete -->
