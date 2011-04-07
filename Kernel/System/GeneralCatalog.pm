@@ -1,8 +1,8 @@
 # --
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.52 2010-06-14 11:06:48 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.53 2011-04-07 16:47:50 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 =head1 NAME
 
@@ -673,7 +673,7 @@ set GeneralCatalog preferences
 sub GeneralCatalogPreferencesSet {
     my $Self = shift;
 
-    #Delete Cache...
+    # delete cache
     $Self->{CacheInternalObject}->CleanUp();
 
     return $Self->{PreferencesObject}->GeneralCatalogPreferencesSet(@_);
@@ -711,6 +711,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.52 $ $Date: 2010-06-14 11:06:48 $
+$Revision: 1.53 $ $Date: 2011-04-07 16:47:50 $
 
 =cut
