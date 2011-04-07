@@ -1,8 +1,8 @@
 # --
 # GeneralCatalog.pm - code to excecute during package installation
-# Copyright (C) 2001-2009 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.1 2009-10-07 13:16:23 reb Exp $
+# $Id: GeneralCatalog.pm,v 1.2 2011-04-07 18:25:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -144,6 +144,8 @@ sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
     # migrate 'functionality' to external table
+    # this is only neccesary in CodeUpgrade, for new installations this is done
+    # in the package ITSMCore during CodeInstall
     $Self->_MigrateFunctionality();
 
     return 1;
@@ -236,6 +238,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2009-10-07 13:16:23 $
+$Revision: 1.2 $ $Date: 2011-04-07 18:25:46 $
 
 =cut
