@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.44 2011-03-17 17:45:10 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.45 2011-04-07 15:25:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1288,7 +1288,13 @@ sub _ShowCompareValueField {
         # get compare value selection list
         my $CompareValueList = $Self->_GetCompareValueSelection(%Param);
 
+        # lookup attribute name
+        my $AttributeName = $Self->{ConditionObject}->AttributeLookup(
+            AttributeID => $Param{AttributeID},
+        );
+
         # add an empty selection if no list is available or nothing is selected
+        # or the list is the workorder agent list
         my $PossibleNone = 0;
         if (
             $Param{PossibleNone}
@@ -1296,6 +1302,7 @@ sub _ShowCompareValueField {
             || !$CompareValueList
             || ( ref $CompareValueList eq 'HASH'  && !%{$CompareValueList} )
             || ( ref $CompareValueList eq 'ARRAY' && !@{$CompareValueList} )
+            || ( $ValueFieldName eq 'ActionValue' && $AttributeName eq 'WorkOrderAgentID' )
             )
         {
             $PossibleNone = 1;
