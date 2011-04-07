@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm - all itsm workorder operator functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.7 2010-10-28 12:31:07 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.8 2011-04-07 11:57:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
@@ -144,6 +144,11 @@ sub Set {
     # ( this will prevent infinite event looping! )
     return 1 if $WorkOrder->{ $Param{Attribute} } eq $Param{ActionValue};
 
+    # if the workorder agent should be deleted it has to be undefined
+    if ( $Param{Attribute} eq 'WorkOrderAgentID' && !$Param{ActionValue} ) {
+        $Param{ActionValue} = undef;
+    }
+
     # update workorder and return update result
     return $Self->{WorkOrderObject}->WorkOrderUpdate(
         WorkOrderID       => $Param{Selector},
@@ -221,6 +226,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.8 $ $Date: 2011-04-07 11:57:37 $
 
 =cut
