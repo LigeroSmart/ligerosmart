@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.30 2011-03-28 10:56:51 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.178.2.1 2011/03/16 21:36:37 en Exp $
+# $Id: AgentTicketPhone.pm,v 1.31 2011-04-07 18:47:27 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.178.2.2 2011/04/01 09:45:05 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -737,7 +737,6 @@ sub Run {
                 # don't check email syntax on multi customer select
                 $Self->{ConfigObject}->Set( Key => 'CheckEmailAddresses', Value => 0 );
                 $CustomerID = '';
-                $Param{FromOptions} = \%CustomerUserList;
 
                 # clear from if there is no customer found
                 if ( !%CustomerUserList ) {
@@ -894,7 +893,6 @@ sub Run {
                 CustomerID   => $Self->{LayoutObject}->Ascii2Html( Text => $CustomerID ),
                 CustomerUser => $CustomerUser,
                 CustomerData => \%CustomerData,
-                FromOptions  => $Param{FromOptions},
                 To           => $Self->_GetTos( QueueID => $NewQueueID ),
                 ToSelected   => $Dest,
                 Errors       => \%Error,
