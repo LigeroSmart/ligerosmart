@@ -2,7 +2,7 @@
 # ITSMCore.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCore.pm,v 1.19 2011-01-14 10:38:28 ub Exp $
+# $Id: ITSMCore.pm,v 1.20 2011-04-07 18:25:54 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -145,6 +145,8 @@ sub CodeInstall {
     $Self->_FillupEmptySLATypeID();
 
     # set preferences for some GeneralCatalog entries
+    # this is only necessary in CodeInstall
+    # (For Upgrades this is done already in the GeneralCatalog package)
     $Self->_SetPreferences();
 
     return 1;
@@ -632,6 +634,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2011-01-14 10:38:28 $
+$Revision: 1.20 $ $Date: 2011-04-07 18:25:54 $
 
 =cut
