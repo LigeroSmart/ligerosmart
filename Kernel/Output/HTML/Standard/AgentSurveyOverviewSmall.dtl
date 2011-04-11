@@ -2,7 +2,7 @@
 # AgentSurveyOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyOverviewSmall.dtl,v 1.3 2011-04-11 19:55:27 mb Exp $
+# $Id: AgentSurveyOverviewSmall.dtl,v 1.4 2011-04-11 21:09:25 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@
                 <tr>
 <!-- dtl:block:RecordNumberHeader -->
                     <th class="Number $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Number;OrderBy=$LQData{"OrderBy"}">$Config{"Survey::Hook"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Number;OrderBy=$LQData{"OrderBy"}">$Text{"$Config{"Survey::Hook"}"}</a>
                     </th>
 <!-- dtl:block:RecordNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
@@ -72,12 +72,12 @@
 <!-- dtl:block:RecordCreateTimeHeader -->
 <!-- dtl:block:RecordCreateByHeader -->
                     <th class="CreateBy $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateBy;OrderBy=$LQData{"OrderBy"}">$Text{"Created By"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateBy;OrderBy=$LQData{"OrderBy"}">$Text{"Created by"}</a>
                     </th>
 <!-- dtl:block:RecordCreateByHeader -->
 <!-- dtl:block:RecordChangeTimeHeader -->
                     <th class="ChangeTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTime;OrderBy=$LQData{"OrderBy"}">$Text{"Changed Time"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTime;OrderBy=$LQData{"OrderBy"}">$Text{"Changed"}</a>
                     </th>
 <!-- dtl:block:RecordChangeTimeHeader -->
 <!-- dtl:block:RecordChangeByHeader -->

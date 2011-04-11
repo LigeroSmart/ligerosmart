@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.54 2011-04-11 19:24:12 mb Exp $
+# $Id: AgentSurvey.dtl,v 1.55 2011-04-11 21:08:35 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -107,7 +107,7 @@ $Include{"RichTextEditor"}
 
     <div class="LayoutPopup ARIARoleMain">
         <div class="Header">
-            <h1>$Text{"Edit General Info"}: $Config{"Survey::Hook"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
+            <h1>$Text{"Edit General Info"}: $Text{"$Config{"Survey::Hook"}"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
             <p>
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>
@@ -195,7 +195,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:Stats -->
 <div class="LayoutPopup ARIARoleMain">
     <div class="Header">
-        <h1>$Text{"Stats Overview of"} : $Config{"Survey::Hook"}$Data{"SurveyNumber"} - $Data{"Title"} </h1>
+        <h1>$Text{"Stats Overview of"} : $Text{"$Config{"Survey::Hook"}"}$Data{"SurveyNumber"} - $Data{"Title"} </h1>
         <p>
             <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
         </p>
