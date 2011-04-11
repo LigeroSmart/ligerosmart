@@ -2,7 +2,7 @@
 # AgentSurvey.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.dtl,v 1.53 2011-04-11 19:03:15 mb Exp $
+# $Id: AgentSurvey.dtl,v 1.54 2011-04-11 19:24:12 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -173,13 +173,13 @@ $Include{"RichTextEditor"}
 
 <!-- dtl:block:SurveyEditGenericError -->
                 <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
-                    <p>$Text{"This field is required"}.</p>
+                    <p>$Text{"This field is required."}</p>
                 </div>
 <!-- dtl:block:SurveyEditGenericError -->
 
 <!-- dtl:block:SurveyEditServerError -->
                 <div id="$QData{"ItemName"}" class="TooltipErrorMessage">
-                    <p>$Text{"This field is required"}.</p>
+                    <p>$Text{"This field is required."}</p>
                 </div>
 <!-- dtl:block:SurveyEditServerError -->
 
