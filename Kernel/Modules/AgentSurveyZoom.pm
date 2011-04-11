@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyZoom.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.pm,v 1.7 2011-02-01 17:19:44 dz Exp $
+# $Id: AgentSurveyZoom.pm,v 1.8 2011-04-11 21:08:09 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -370,15 +370,15 @@ sub Run {
 
     if ( $Survey{Status} eq 'New' || $Survey{Status} eq 'Invalid' ) {
         $NewStatus{Master} = 'Master';
-        $NewStatus{Valid}  = 'Valid';
+        $NewStatus{Valid}  = 'valid';
     }
     elsif ( $Survey{Status} eq 'Valid' ) {
         $NewStatus{Master}  = 'Master';
-        $NewStatus{Invalid} = 'Invalid';
+        $NewStatus{Invalid} = 'invalid';
     }
     elsif ( $Survey{Status} eq 'Master' ) {
         $NewStatus{Valid}   = 'Valid';
-        $NewStatus{Invalid} = 'Invalid';
+        $NewStatus{Invalid} = 'invalid';
     }
 
     my $NewStatusStr = $Self->{LayoutObject}->BuildSelection(
