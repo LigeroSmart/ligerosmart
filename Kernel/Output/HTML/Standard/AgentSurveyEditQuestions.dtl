@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.11 2011-04-11 19:03:15 mb Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.12 2011-04-11 19:40:16 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -229,7 +229,7 @@
         </div>
         <div class="WidgetSimple SpacingTop SpacingBottomMedium">
             <div class="Header">
-                <h2>$Text{"Possible Answers For"}: $QData{"Type"}</h2>
+                <h2>$Text{"Possible Answers For"}: $Text{"$Data{"Type"}"}</h2>
             </div>
             <div class="Content">
 <!-- dtl:block:QuestionEditAddAnswer -->
