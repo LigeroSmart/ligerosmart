@@ -1,0 +1,26 @@
+$Text{"- Change Status -"}
+$Text{"Add New Survey"}
+$Text{"Survey Edit"}
+$Text{"Survey Edit Questions"}
+$Text{"Question Edit"}
+$Text{"Answer Edit"}
+
+$Text{"Can't set new status! No questions defined."}
+$Text{"Status changed."}
+$Text{"Thank you for your feedback."}
+$Text{"The survey is finished."}
+$Text{"Complete"}
+$Text{"Incomplete"}
+$Text{"Checkbox"}
+$Text{"Checkbox (List)"}
+$Text{"Radio"}
+$Text{"Radio (List)"}
+$Text{"Stats Overview"}
+$Text{"Survey Description"}
+$Text{"Survey Introduction"}
+$Text{"Textarea"}
+$Text{"Yes/No"}
+$Text{"YesNo"}
+$Text{"answered"}
+$Text{"not answered"}
+$Text{"Stats Detail"}
