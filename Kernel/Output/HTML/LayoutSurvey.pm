@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutSurvey.pm - provides generic HTML output for Survey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutSurvey.pm,v 1.1 2011-01-07 13:17:00 cr Exp $
+# $Id: LayoutSurvey.pm,v 1.2 2011-04-11 19:08:22 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =over 4
 
@@ -129,9 +129,10 @@ sub SurveyListShow {
     $Param{Group}           = $Group;
     $Param{PreferencesKey}  = $PageShownPreferencesKey;
     $Param{PageShownString} = $Self->BuildSelection(
-        Name       => $PageShownPreferencesKey,
-        SelectedID => $PageShown,
-        Data       => \%Data,
+        Name        => $PageShownPreferencesKey,
+        SelectedID  => $PageShown,
+        Translation => 0,
+        Data        => \%Data,
     );
 
     # build navbar content
@@ -332,6 +333,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2011-01-07 13:17:00 $
+$Revision: 1.2 $ $Date: 2011-04-11 19:08:22 $
 
 =cut

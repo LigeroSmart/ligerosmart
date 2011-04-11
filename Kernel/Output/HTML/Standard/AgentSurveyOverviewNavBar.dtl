@@ -2,7 +2,7 @@
 # AgentSurveyOverviewNavBar.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyOverviewNavBar.dtl,v 1.1 2011-01-07 13:17:00 cr Exp $
+# $Id: AgentSurveyOverviewNavBar.dtl,v 1.2 2011-04-11 19:08:00 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,7 +10,7 @@
 # --
 <!-- dtl:block:OverviewNavBar -->
 <div class="OverviewBox ARIARoleMain $QData{"View"}">
-    <h1>$Text{"$Data{"TitleName"}"}: $Text{"$Data{"TitleValue"}"}</h1>
+    <h1>$Data{"TitleName"}: $Data{"TitleValue"}</h1>
 
     $Data{"DataInTheMiddle"}
 
