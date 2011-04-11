@@ -2,7 +2,7 @@
 # Kernel/Language/nl_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_Survey.pm,v 1.3 2011-02-16 22:15:11 dz Exp $
+# $Id: nl_Survey.pm,v 1.4 2011-04-11 18:47:39 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,17 +17,17 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentSurvey
-    $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquÃªte aanmaken';
+    $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
     $Self->{Translation}->{'Introduction'} = 'Introductie';
     $Self->{Translation}->{'Internal Description'} = 'Interne omschrijving';
-    $Self->{Translation}->{'Survey Edit'} = 'Bewerk enquÃªte';
+    $Self->{Translation}->{'Survey Edit'} = 'Bewerk enquête';
     $Self->{Translation}->{'General Info'} = 'Algemene informatie';
     $Self->{Translation}->{'Stats Overview'} = 'Statistieken';
     $Self->{Translation}->{'Requests Table'} = 'Verzoeken';
     $Self->{Translation}->{'Send Time'} = 'Verstuurd op';
     $Self->{Translation}->{'Vote Time'} = 'Ingevuld op';
     $Self->{Translation}->{'Details'} = 'Details';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'Er zijn geen vragen opgeslagen voor deze enquÃªte';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Er zijn geen vragen opgeslagen voor deze enquête';
     $Self->{Translation}->{'Survey Stat Details'} = 'Detailoverzicht statistieken';
     $Self->{Translation}->{'go back to stats overview'} = 'ga terug naar het overzicht';
     $Self->{Translation}->{'Go Back'} = 'Ga terug';
@@ -47,7 +47,7 @@ sub Data {
     $Self->{Translation}->{'go back to edit question'} = 'ga terug naar de vraag';
 
     # Template: AgentSurveyOverviewNavBar
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maximaal aantal enquÃªtes per pagina';
+    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maximaal aantal enquêtes per pagina';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Afzender notificatie';
@@ -59,18 +59,18 @@ sub Data {
     $Self->{Translation}->{'Changed By'} = 'Gewijzigd door';
 
     # Template: AgentSurveyZoom
-    $Self->{Translation}->{'Survey Information'} = 'Details enquÃªte';
+    $Self->{Translation}->{'Survey Information'} = 'Details enquête';
     $Self->{Translation}->{'Sent requests'} = 'Verstuurde verzoeken';
-    $Self->{Translation}->{'Received surveys'} = 'Ontvangen enquÃªtes';
+    $Self->{Translation}->{'Received surveys'} = 'Ontvangen enquêtes';
     $Self->{Translation}->{'Edit General Info'} = 'Bewerk algemene informatie';
     $Self->{Translation}->{'Edit Questions'} = 'Bewerk vragen';
     $Self->{Translation}->{'Stats Details'} = 'Details statistieken';
-    $Self->{Translation}->{'Survey Details'} = 'Details enquÃªte';
+    $Self->{Translation}->{'Survey Details'} = 'Details enquête';
     $Self->{Translation}->{'Survey Results Graph'} = 'Resultaten (grafiek)';
     $Self->{Translation}->{'No stat results.'} = 'Geen resultaten.';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = 'EnquÃªte';
+    $Self->{Translation}->{'Survey'} = 'Enquête';
     $Self->{Translation}->{'Please answer the next questions'} = 'Beantwoordt u de volgende vragen';
 
     # SysConfig
