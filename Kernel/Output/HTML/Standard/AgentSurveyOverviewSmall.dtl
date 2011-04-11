@@ -2,7 +2,7 @@
 # AgentSurveyOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyOverviewSmall.dtl,v 1.2 2011-01-09 18:46:09 cr Exp $
+# $Id: AgentSurveyOverviewSmall.dtl,v 1.3 2011-04-11 19:55:27 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@
 <!-- dtl:block:RecordStatusHeader -->
 <!-- dtl:block:RecordCreateTimeHeader -->
                     <th class="CreateTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=$LQData{"OrderBy"}">$Text{"Created Time"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=$LQData{"OrderBy"}">$Text{"Created"}</a>
                     </th>
 <!-- dtl:block:RecordCreateTimeHeader -->
 <!-- dtl:block:RecordCreateByHeader -->
