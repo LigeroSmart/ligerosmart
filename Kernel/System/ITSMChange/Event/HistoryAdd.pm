@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: HistoryAdd.pm,v 1.47 2010-10-28 12:31:07 ub Exp $
+# $Id: HistoryAdd.pm,v 1.48 2011-04-14 15:51:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 =head1 NAME
 
@@ -201,6 +201,9 @@ sub Run {
             next FIELD if $Field eq 'DescriptionPlain';      # change
             next FIELD if $Field eq 'ReportPlain';           # workorder
             next FIELD if $Field eq 'InstructionPlain';      # workorder
+
+            # we do no want to track the internal field "NoNumberCalc"
+            next FIELD if $Field eq 'NoNumberCalc';          # workorder
 
             # The history of CAB updates is not tracked here,
             # but in the handler for ChangeCABUpdate.
@@ -781,6 +784,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.48 $ $Date: 2011-04-14 15:51:43 $
 
 =cut
