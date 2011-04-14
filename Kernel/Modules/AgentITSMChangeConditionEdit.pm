@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeConditionEdit.pm - the OTRS::ITSM::ChangeManagement condition edit module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.pm,v 1.46 2011-04-07 16:19:47 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.pm,v 1.47 2011-04-14 16:24:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMCondition;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.46 $) [1];
+$VERSION = qw($Revision: 1.47 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -725,9 +725,9 @@ sub Run {
         # check if the condition belongs to the given change
         if ( $Condition->{ChangeID} ne $GetParam{ChangeID} ) {
             return $Self->{LayoutObject}->ErrorScreen(
-                Message => "ConditionID $ConditionData{ConditionID} belongs to "
-                    . " ChangeID $Condition->{ChangeID} and not to the given $GetParam{ChangeID}!",
-                Comment => 'Please contact the admin.',
+                Message => "ConditionID $ConditionData{ConditionID} does not belong to"
+                    . " the given ChangeID $GetParam{ChangeID}!",
+                Comment => 'Please contact the administrator.',
             );
         }
 
