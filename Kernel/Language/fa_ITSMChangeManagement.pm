@@ -2,7 +2,7 @@
 # Kernel/Language/fa_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ITSMChangeManagement.pm,v 1.7 2011-03-03 22:12:04 ub Exp $
+# $Id: fa_ITSMChangeManagement.pm,v 1.8 2011-04-14 16:51:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,31 +45,31 @@ sub Data {
     $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'عملیات (ID=%s) حذف شد';
     $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'تمام عملیات‌های شرط (ID=%s) حذف شد';
     $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'عملیات (ID=%s) اجرا شد: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (شناسه عملیات=%s): جدید: %s -> قدیم: %s';
+    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (شناسه عملیات=%s): جدید: %s <- قدیم: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'زمان حقیقی پایان تغییر فرا رسیده (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'زمان حقیقی آغاز تغییر فرا رسیده (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'تغییر جدید (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'پیوست جدید: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'پیوست حذف شد %s';
     $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'هیئت مشاوران تغییر حذف شد %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: جدید: %s -> قدیم: %s';
+    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: جدید: %s <- قدیم: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'ارتباط به %s (ID=%s) افزوده شد';
     $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'ارتباط به %s (ID=%s) حذف شد';
     $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'اعلام فرستاده شد %s (رویداد: %s)';
     $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'زمان برنامه‌ریزی شده پایان تغییر فرا رسیده (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'زمان برنامه‌ریزی شده آغاز تغییر فرا رسیده (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'زمان درخواست شده تغییر توسط مشترک فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: جدید: %s -> قدیم: %s';
+    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: جدید: %s <- قدیم: %s';
     $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'شرط جدید (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'شرط (ID=%s) حذف شد';
     $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'تمام شروط دستور کار (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (شناسه شرط=%s): جدید: %s -> قدیم: %s';
+    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (شناسه شرط=%s): جدید: %s <- قدیم: %s';
     $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'عبارت منطقی جدید (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'عبارت منطقی (ID=%s) حذف شد';
     $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'تمام عبارات منطقی شرط (ID=%s) حذف شد';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (شناسه عبارت=%s): جدید: %s -> قدیم: %s';
+    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (شناسه عبارت=%s): جدید: %s <- قدیم: %s';
     $Self->{Translation}->{'ChangeNumber'} = 'شماره تغییر';
     $Self->{Translation}->{'Clear'} = 'پاک کردن';
     $Self->{Translation}->{'Condition Edit'} = 'ویرایش شرط';
@@ -132,8 +132,8 @@ sub Data {
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} = 'زمان برنامه‌ریزی شده پایان پایان کار فرا رسیده (ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} = 'زمان برنامه‌ریزی شده آغاز دستور کار فرا رسیده (ID=%s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: جدید: %s -> قدیم: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: جدید: %s -> قدیم: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: جدید: %s <- قدیم: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: جدید: %s <- قدیم: %s';
     $Self->{Translation}->{'WorkOrderNumber'} = 'شماره دستور کار';
     $Self->{Translation}->{'accepted'} = 'پذیرفته شده';
     $Self->{Translation}->{'any'} = 'هیچ';

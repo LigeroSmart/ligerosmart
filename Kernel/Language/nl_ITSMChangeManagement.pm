@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.8 2011-03-03 22:12:04 ub Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.9 2011-04-14 16:51:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -45,31 +45,31 @@ sub Data {
     $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Actie (ID=%s) verwijderd';
     $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Alle akties (ID=%s) verwijderd';
     $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Actie (ID=%s) uitgevoerd: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Actie-ID=%s): nieuw: %s -> Old: %s';
+    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Actie-ID=%s): nieuw: %s <- Old: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Change (ID=%s) is beëindigd.';
     $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Change (ID=%s) is begonnen.';
     $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Nieuwe Change (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Nieuwe bijlage: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'Bijlage verwijderd: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeCABDelete'} = 'CAB verwijderd %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: nieuw: %s -> oud: %s';
+    $Self->{Translation}->{'ChangeHistory::ChangeCABUpdate'} = '%s: nieuw: %s <- oud: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'Link naar %s (ID=%s) toegevoegd';
     $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'Link naar %s (ID=%s) verwijderd';
     $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'Notificatie gestuurd aan %s(Event: %s)';
     $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Change (ID=%s) heeft de geplande eindtijd bereikt.';
     $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Change (ID=%s) heeft de geplande starttijd bereikt.';
     $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Change (ID=%s) heeft de aangevraagde eindtijd bereikt.';
-    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: nieuw: %s -> oud: %s';
+    $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: nieuw: %s <- oud: %s';
     $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'Nieuwe conditie (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ConditionDelete'} = 'Conditie (ID=%s) verwijderd';
     $Self->{Translation}->{'ChangeHistory::ConditionDeleteAll'} = 'Alle condities voor change (ID=%s) verwijderd.';
-    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (conditie ID=%s): nieuw: %s -> oud: %s';
+    $Self->{Translation}->{'ChangeHistory::ConditionUpdate'} = '%s (conditie ID=%s): nieuw: %s <- oud: %s';
     $Self->{Translation}->{'ChangeHistory::ExpressionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ExpressionAddID'} = 'Nieuwe expressie (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ExpressionDelete'} = 'Expressie (ID=%s) verwijderd';
     $Self->{Translation}->{'ChangeHistory::ExpressionDeleteAll'} = 'Alle expressies voor change (ID=%s) verwijderd';
-    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (expressie-ID=%s): nieuw: %s -> oud: %s';
+    $Self->{Translation}->{'ChangeHistory::ExpressionUpdate'} = '%s (expressie-ID=%s): nieuw: %s <- oud: %s';
     $Self->{Translation}->{'ChangeNumber'} = 'Changenummer';
     $Self->{Translation}->{'Clear'} = 'Leegmaken';
     $Self->{Translation}->{'Condition Edit'} = 'Contities bewerken';
@@ -132,8 +132,8 @@ sub Data {
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} = 'Work Order (ID=%s) heeft de geplande eindtijd bereikt.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Work Order (ID=%s) heeft de geplande starttijd bereikt.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} = 'Work Order (ID=%s) heeft de geplande starttijd bereikt.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: nieuw: %s -> oud: %s';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: nieuw: %s -> oud: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: nieuw: %s <- oud: %s';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: nieuw: %s <- oud: %s';
     $Self->{Translation}->{'WorkOrderNumber'} = 'Work Order-nummer';
     $Self->{Translation}->{'accepted'} = 'Geaccepteerd';
     $Self->{Translation}->{'any'} = 'enkele';
