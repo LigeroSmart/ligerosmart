@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.51 2011-04-14 15:51:43 ub Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.52 2011-04-14 15:58:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -212,7 +212,8 @@ sub Run {
                             }
                             elsif ( $Type eq 'Valid' ) {
 
-                    # get the UpdateID (ConditionID or ExpressionID or ActionID) and the AttributeID
+                                # get the UpdateID (ConditionID or ExpressionID or ActionID)
+                                # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
                                     ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
                                         = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
@@ -224,7 +225,8 @@ sub Run {
                             }
                             elsif ( $Type eq 'Object' ) {
 
-                    # get the UpdateID (ConditionID or ExpressionID or ActionID) and the AttributeID
+                                # get the UpdateID (ConditionID or ExpressionID or ActionID)
+                                # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
                                     ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
                                         = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
@@ -238,7 +240,8 @@ sub Run {
                             }
                             elsif ( $Type eq 'Attribute' ) {
 
-                    # get the UpdateID (ConditionID or ExpressionID or ActionID) and the AttributeID
+                                # get the UpdateID (ConditionID or ExpressionID or ActionID)
+                                # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
                                     ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
                                         = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
@@ -252,7 +255,8 @@ sub Run {
                             }
                             elsif ( $Type eq 'Operator' ) {
 
-                    # get the UpdateID (ConditionID or ExpressionID or ActionID) and the AttributeID
+                                # get the UpdateID (ConditionID or ExpressionID or ActionID)
+                                # and the AttributeID
                                 if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
                                     ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
                                         = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
@@ -314,7 +318,8 @@ sub Run {
                         )
                     {
 
-                    # get the UpdateID (ConditionID or ExpressionID or ActionID) and the AttributeID
+                        # get the UpdateID (ConditionID or ExpressionID or ActionID)
+                        # and the AttributeID
                         if ( $HistoryEntry->{$ContentNewOrOld} =~ m{ %% }xms ) {
                             ( $HistoryEntry->{UpdateID}, $HistoryEntry->{$ContentNewOrOld} )
                                 = split m/%%/, $HistoryEntry->{$ContentNewOrOld};
