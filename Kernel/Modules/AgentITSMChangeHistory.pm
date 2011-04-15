@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.52 2011-04-14 15:58:33 ub Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.53 2011-04-15 12:37:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -111,6 +111,24 @@ sub Run {
     if ( $Self->{ConfigObject}->Get('ITSMChange::Frontend::HistoryOrder') eq 'reverse' ) {
         @HistoryLines = reverse @{$HistoryEntriesRef};
     }
+
+    # make some lookups in advance to improve performance
+    my $Cache = {};
+
+    # get the object list
+    $Cache->{ObjectList} = $Self->{ConditionObject}->ObjectList(
+        UserID => $Self->{UserID},
+    );
+
+    # get the attribute list
+    $Cache->{AttributeList} = $Self->{ConditionObject}->AttributeList(
+        UserID => $Self->{UserID},
+    );
+
+    # get the operator list
+    $Cache->{OperatorList} = $Self->{ConditionObject}->OperatorList(
+        UserID => $Self->{UserID},
+    );
 
     # max length of strings
     my $MaxLength = 30;
@@ -233,10 +251,9 @@ sub Run {
                                 }
 
                                 # lookup the object name
-                                $Value = $Self->{ConditionObject}->ObjectLookup(
-                                    ObjectID => $HistoryEntry->{$ContentNewOrOld},
-                                    UserID   => $Self->{UserID},
-                                );
+                                $Value
+                                    = $Cache->{ObjectList}->{ $HistoryEntry->{$ContentNewOrOld} };
+
                             }
                             elsif ( $Type eq 'Attribute' ) {
 
@@ -248,10 +265,8 @@ sub Run {
                                 }
 
                                 # lookup the attribute name
-                                $Value = $Self->{ConditionObject}->AttributeLookup(
-                                    AttributeID => $HistoryEntry->{$ContentNewOrOld},
-                                    UserID      => $Self->{UserID},
-                                );
+                                $Value = $Cache->{AttributeList}
+                                    ->{ $HistoryEntry->{$ContentNewOrOld} };
                             }
                             elsif ( $Type eq 'Operator' ) {
 
@@ -263,10 +278,8 @@ sub Run {
                                 }
 
                                 # lookup the operator name
-                                $Value = $Self->{ConditionObject}->OperatorLookup(
-                                    OperatorID => $HistoryEntry->{$ContentNewOrOld},
-                                    UserID     => $Self->{UserID},
-                                );
+                                $Value
+                                    = $Cache->{OperatorList}->{ $HistoryEntry->{$ContentNewOrOld} };
                             }
                             else {
                                 return $Self->{LayoutObject}->ErrorScreen(
