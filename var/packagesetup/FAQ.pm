@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.16 2011-01-24 14:53:41 cr Exp $
+# $Id: FAQ.pm,v 1.17 2011-04-17 18:08:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -179,13 +179,19 @@ sub CodeInstall {
         Description => 'faq approval users',
     );
 
-    # install stats
-    $Self->{StatsObject}->StatsInstall(
-        FilePrefix => $Self->{FilePrefix},
+    # add the faq groups to the category 'Misc'
+    $Self->_CategoryGroupSet(
+        Category => 'Misc',
+        Groups => [ 'faq', 'faq_admin', 'faq_approval' ],
     );
 
     # create aditional FAQ languages
     $Self->_CreateAditionalFAQLanguages();
+
+    # install stats
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -622,6 +628,71 @@ sub _CreateAditionalFAQLanguages {
     return 1;
 }
 
+=item _CategoryGroupSet()
+
+Adds the given group permissions to the given category.
+
+    my $Result = $CodeObject->_CategoryGroupSet(
+        Category => 'Misc',
+        Groups   => [ 'faq', 'faq-admin', 'faq_approval' ],
+    );
+
+=cut
+
+sub _CategoryGroupSet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Category Groups)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check needed stuff
+    if ( ref $Param{Groups} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Groups must be an array reference!",
+        );
+        return;
+    }
+
+    # get all categories and their ids
+    my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
+        Valid  => 1,
+        UserID => 1,
+    );
+
+    # create lookup hash for the catory id
+    my %FAQ2ID = reverse %{$CategoryTree};
+
+    # lookup the category id
+    my $CategoryID = $FAQ2ID{ $Param{Category} };
+
+    # lookup the group ids
+    my @GroupIDs;
+    for my $Group ( @{ $Param{Groups} } ) {
+        my $GroupID = $Self->{GroupObject}->GroupLookup(
+            Group => $Group,
+        );
+        push @GroupIDs, $GroupID;
+    }
+
+    # set category group
+    $Self->{FAQObject}->SetCategoryGroup(
+        CategoryID => $CategoryID,
+        GroupIDs   => \@GroupIDs,
+        UserID     => 1,
+    );
+
+    return 1;
+}
+
 1;
 
 =back
@@ -638,6 +709,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2011-01-24 14:53:41 $
+$Revision: 1.17 $ $Date: 2011-04-17 18:08:25 $
 
 =cut
