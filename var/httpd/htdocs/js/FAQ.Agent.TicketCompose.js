@@ -2,7 +2,7 @@
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.6 2011-01-05 15:07:28 mn Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.7 2011-04-18 10:53:53 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -147,8 +147,10 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             // insert body and/or link to textarea (if possible to cursor position otherwise to the top)
             else {
                 // Get previously saved cursor position of textarea
-                StartRange = parent.$('#RichText', parent.document).data('Cursor').StartRange;
-                EndRange =  parent.$('#RichText', parent.document).data('Cursor').EndRange;
+                if (parent.$('#RichText', parent.document).data('Cursor')) {
+                    StartRange = parent.$('#RichText', parent.document).data('Cursor').StartRange;
+                    EndRange = parent.$('#RichText', parent.document).data('Cursor').EndRange;
+                }
 
                 // Add new text to textarea
                 $ParentBody.val(ParentBodyValue.substr(0, StartRange) + FAQContent + ParentBodyValue.substr(EndRange, ParentBodyValue.length));
