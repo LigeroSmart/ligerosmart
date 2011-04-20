@@ -2,7 +2,7 @@
 # Kernel/Language/fa_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ITSMTicket.pm,v 1.7 2011-01-24 19:54:42 ub Exp $
+# $Id: fa_ITSMTicket.pm,v 1.8 2011-04-20 10:30:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,21 +17,21 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '';
+    $Self->{Translation}->{'Change Decision of Ticket'} = 'تغییر تصمیم درخواست';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'تغییر فیلدهای ITSM درخواست';
-    $Self->{Translation}->{'Impact'} = '';
+    $Self->{Translation}->{'Impact'} = 'اثر';
 
     # Template: AgentTicketAddtlITSMField
 
     # Template: AgentTicketDecision
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '';
+    $Self->{Translation}->{'Link ticket'} = 'ارتباط درخواست';
 
     # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
+    $Self->{Translation}->{'Criticality'} = 'اهمیت';
 
     # Template: AgentTicketPhone
 
