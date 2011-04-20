@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.225 2011-04-07 18:57:43 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.226 2011-04-20 10:48:13 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -22,6 +22,7 @@
         <File Permission="644" Location="Kernel/Language/en_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/es_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_ITSMChangeManagement.pm"/>
+        <File Permission="644" Location="Kernel/Language/nb_NO_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Language/nl_ITSMChangeManagement.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMChangeCIPAllocate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AdminITSMChangeNotification.pm"/>
