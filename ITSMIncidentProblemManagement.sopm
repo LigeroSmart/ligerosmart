@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.71 2011-04-07 18:57:23 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.72 2011-04-20 10:48:20 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -23,6 +23,7 @@
         <File Permission="644" Location="Kernel/Language/fa_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/it_ITSMTicket.pm"/>
+        <File Permission="644" Location="Kernel/Language/nb_NO_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/nl_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/pl_ITSMTicket.pm"/>
         <File Permission="644" Location="Kernel/Language/pt_BR_ITSMTicket.pm"/>
