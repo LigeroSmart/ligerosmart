@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.19 2011-04-20 14:52:23 mh Exp $
+# $Id: Survey.t,v 1.20 2011-04-20 14:57:45 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -508,5 +508,10 @@ That\'s it.
         );
     }
 }
+
+# cleanup system
+$Self->{DBObject}->Do(
+    SQL => "DELETE FROM survey_request WHERE send_to LIKE '\%\@unittest.com\%'",
+);
 
 1;
