@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.18 2011-03-04 05:12:35 dz Exp $
+# $Id: Survey.t,v 1.19 2011-04-20 14:52:23 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,27 +21,32 @@ use Kernel::System::Survey;
 use Kernel::System::Ticket;
 use Kernel::System::User;
 
-# create local objects
-my $UserObject   = Kernel::System::User->new( %{$Self} );
-my $TicketObject = Kernel::System::Ticket->new( %{$Self} );
+# create local config object
+my $ConfigObject = Kernel::Config->new();
 
+# set config to not send emails
+$ConfigObject->Set(
+    Key   => 'SendmailModule',
+    Value => 'Kernel::System::Email::DoNotSendEmail',
+);
+
+# create local objects
+my $UserObject = Kernel::System::User->new(
+    %{$Self},
+    ConfigObject => $ConfigObject,
+);
+my $TicketObject = Kernel::System::Ticket->new(
+    %{$Self},
+    ConfigObject => $ConfigObject,
+);
 my $SurveyObject = Kernel::System::Survey->new(
-    ConfigObject => $Self->{ConfigObject},
+    ConfigObject => $ConfigObject,
     LogObject    => $Self->{LogObject},
     TimeObject   => $Self->{TimeObject},
     DBObject     => $Self->{DBObject},
     MainObject   => $Self->{MainObject},
     EncodeObject => $Self->{EncodeObject},
     UserObject   => $UserObject,
-);
-
-# save original sendmail config
-my $SendmailModule = $Self->{ConfigObject}->Get('SendmailModule');
-
-# set config to not send emails
-$Self->{ConfigObject}->Set(
-    Key   => 'SendmailModule',
-    Value => 'Kernel::System::Email::DoNotSendEmail',
 );
 
 # cleanup system
@@ -314,18 +319,22 @@ my @Tests = (
 );
 
 for my $Test (@Tests) {
+
     if ( $Test->{'Survey::SendPeriod'} ) {
-        $Self->{ConfigObject}->Set(
+        $ConfigObject->Set(
             Key   => 'Survey::SendPeriod',
             Value => $Test->{'Survey::SendPeriod'},
         );
     }
+
     if ( $Test->{Sleep} ) {
         sleep $Test->{Sleep};
     }
+
     my $TicketID = $TicketObject->TicketCreate(
         %{ $Test->{Ticket} },
     );
+
     my $ArticleID = $TicketObject->ArticleCreate(
         TicketID => $TicketID,
         %{ $Test->{Article} },
@@ -338,6 +347,7 @@ for my $Test (@Tests) {
 
     # check if survey got sent
     if ( $Test->{Result}->[0] ) {
+
         $Self->True(
             ${$HeaderRef},
             "$Test->{Name} RequestSend() - survey got sent",
@@ -497,6 +507,6 @@ That\'s it.
             "GetRichTextDocumentComplete Test - $TextType",
         );
     }
-
 }
+
 1;
