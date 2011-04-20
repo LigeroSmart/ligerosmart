@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.24 2011-03-28 10:56:51 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.145.2.3 2011/03/23 16:44:40 mp Exp $
+# $Id: AgentTicketZoom.pm,v 1.25 2011-04-20 10:12:39 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.145.2.4 2011/04/05 18:41:21 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1803,7 +1803,14 @@ sub _ArticleItem {
                     },
                     Article => \%Article,
                 );
-                next JOB if !%Data;
+
+                # check for the display of the filesize
+                if ( $Job eq '2-HTML-Viewer' && !%Data ) {
+                    $Data{DataFileSize} = ", " . $File{Filesize};
+                }
+                elsif ( $Job eq '2-HTML-Viewer' && %Data ) {
+                    $Data{DataFileSize} = ", " . $Data{Filesize};
+                }
                 $Self->{LayoutObject}->Block(
                     Name => $Data{Block} || 'ArticleAttachmentRowLink',
                     Data => {%Data},
