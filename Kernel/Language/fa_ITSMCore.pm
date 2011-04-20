@@ -2,7 +2,7 @@
 # Kernel/Language/fa_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ITSMCore.pm,v 1.12 2011-03-03 18:41:54 ub Exp $
+# $Id: fa_ITSMCore.pm,v 1.13 2011-04-20 10:30:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,8 +51,8 @@ sub Data {
 
     # Template: AdminITSMCIPAllocate
     $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'اهمیت <-> اثر <-> اولویت';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'مدیریت الویت ناشی از ترکیب اهمیت <-> اثر';
+    $Self->{Translation}->{'Priority allocation'} = 'تخصیص الویت';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'حداقل زمان بین دو رخداد';
@@ -65,42 +65,42 @@ sub Data {
     # Template: AgentITSMSLA
 
     # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'SLA-Info'} = 'اطلاعات SLA';
+    $Self->{Translation}->{'Last changed'} = 'آخرین تغییر';
+    $Self->{Translation}->{'Last changed by'} = 'آخرین تغییر توسط';
 
     # Template: AgentITSMSLAZoom
-    $Self->{Translation}->{'SLA Information'} = '';
-    $Self->{Translation}->{'Show or hide the content.'} = '';
+    $Self->{Translation}->{'SLA Information'} = 'اطلاعات SLA';
+    $Self->{Translation}->{'Show or hide the content.'} = 'نمایش یا عدم نمایش محتوا';
     $Self->{Translation}->{'Associated Services'} = 'سرویس‌های مرتبط';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
+    $Self->{Translation}->{'Service-Info'} = 'اطلاعات سرویس';
     $Self->{Translation}->{'Current Incident State'} = 'وضعیت جاری رخداد';
     $Self->{Translation}->{'Associated SLAs'} = 'SLAهای مرتبط';
 
     # Template: AgentITSMServiceZoom
-    $Self->{Translation}->{'Service Information'} = '';
-    $Self->{Translation}->{'Current incident state'} = '';
+    $Self->{Translation}->{'Service Information'} = 'اطلاعات سرویس';
+    $Self->{Translation}->{'Current incident state'} = 'وضعیت کنونی رخداد';
 
     # SysConfig
-    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';
-    $Self->{Translation}->{'Manage priority matrix.'} = '';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '';
+    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'ثبت ماژول برای پیکربندی AdminITSMCIPAllocate در بخش مدیریت';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'ثبت ماژول برای پیکربندی آبجکت AgentITSMSLA در واسط کاربری کارشناس';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'ثبت ماژول برای پیکربندی آبجکت AgentITSMSLAPrint در واسط کاربری کارشناس';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = 'ثبت ماژول برای پیکربندی آبجکت AgentITSMSLAZoom در واسط کاربری کارشناس';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'ثبت ماژول برای پیکربندی آبجکت AgentITSMService در واسط کاربری کارشناس';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'ثبت ماژول برای پیکربندی آبجکت AgentITSMServicePrint در واسط کاربری کارشناس';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'ثبت ماژول برای پیکربندی آبجکت AgentITSMServiceZoom در واسط کاربری کارشناس';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'مدیریت ماتریس الویت';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی سرویس';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'ماژولی برای نمایش لینک بازگشت در منوی SLA';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی سرویس';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'ماژولی برای نمایش لینک چاپ در منوی SLA';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = '';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = '';
-    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = '';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'پارامترهایی برای وضعیت‌های رخداد در نمای تنظیمات شخصی';
+    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'تنظیم نوع ارتباطی که باید برای محاسبه وضعیت رخداد استفاده شود.';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
@@ -129,7 +129,7 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
     $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = '';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'اندازه عرض کنترل‌های ورود متن ITSM';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
