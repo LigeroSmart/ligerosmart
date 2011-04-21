@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Operator.pm,v 1.29 2011-03-18 07:08:58 ub Exp $
+# $Id: Operator.pm,v 1.30 2011-04-21 15:09:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -349,7 +349,7 @@ sub OperatorDelete {
 
 =item OperatorExecute()
 
-Returns true or false (1/undef) if given values are equal.
+Executes the operator and returns true on success.
 
     my $Result = $ConditionObject->OperatorExecute(
         OperatorName => 'is',
@@ -464,7 +464,7 @@ sub OperatorExecute {
 
 =item _OperatorExecute()
 
-Returns true or false (1/undef) if given values are equal.
+Returns true or false (1/undef).
 
     my $Result = $ConditionObject->_OperatorExecute(
         OperatorName => 'is',
@@ -1238,6 +1238,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2011-03-18 07:08:58 $
+$Revision: 1.30 $ $Date: 2011-04-21 15:09:48 $
 
 =cut
