@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm - all itsm workorder operator functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.8 2011-04-07 11:57:37 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.9 2011-04-21 15:18:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
@@ -187,6 +187,9 @@ sub SetAll {
     # check objects
     return if ref $Param{Objects} ne 'ARRAY';
 
+    # this will be set to zero if any of the Set-Operations fails
+    my $SetAllSuccess = 1;
+
     # update each workorder object
     WORKORDEROBJECT:
     for my $WorkOrderObject ( @{ $Param{Objects} } ) {
@@ -196,18 +199,21 @@ sub SetAll {
         next WORKORDEROBJECT if ref $WorkOrderObject ne 'HASH';
 
         # update workorder object
-        $Self->Set(
+        my $Result = $Self->Set(
             Selector    => $WorkOrderObject->{WorkOrderID},
             Attribute   => $Param{Attribute},
             ActionValue => $Param{ActionValue},
             UserID      => $Param{UserID},
         );
 
-        # TODO: Add error handling here
-        # get the results of the Set function calls
+        # if a set operation was not successful,
+        # then the complete SetAll operation will not be successful
+        if ( !$Result ) {
+            $SetAllSuccess = 0;
+        }
     }
 
-    return 1;
+    return $SetAllSuccess;
 }
 
 1;
@@ -226,6 +232,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2011-04-07 11:57:37 $
+$Revision: 1.9 $ $Date: 2011-04-21 15:18:23 $
 
 =cut
