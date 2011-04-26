@@ -2,7 +2,7 @@
 # AgentTicketEmail.dtl - provides HTML form for agent email
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.dtl,v 1.27 2011-04-26 15:40:45 ub Exp $
+# $Id: AgentTicketEmail.dtl,v 1.28 2011-04-26 15:57:36 ub Exp $
 # $OldId: AgentTicketEmail.dtl,v 1.142 2010/12/20 15:35:05 martin Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -338,6 +338,7 @@ $('#FileUpload').bind('change', function () {
                         <div id="HourServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
                     </div>
                     <div class="Clear"></div>
+
 # ---
 # ITSM
 # ---
