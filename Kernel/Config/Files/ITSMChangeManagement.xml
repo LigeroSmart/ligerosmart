@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.258 2011-02-11 16:31:55 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.259 2011-04-26 08:11:08 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -1241,19 +1241,7 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::EventModule###01-Notification" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module that sends notifications.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChange::Event</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
-                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
-                <Item Key="Transaction">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChange::EventModule###02-HistoryAdd" Required="0" Valid="1">
+    <ConfigItem Name="ITSMChange::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChange::Event</SubGroup>
@@ -1261,6 +1249,18 @@
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
                 <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###02-Notification" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that sends notifications.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeCABUpdatePost|ChangeCABDeletePost|ChangeDeletePost|ChangeLinkAddPost|ChangeLinkDeletePost|ChangeAttachmentAddPost|ChangeAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
@@ -1325,25 +1325,25 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::EventModule###03-Notification" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module that sends notifications.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
-                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|WorkOrderAttachmentAddPost|WorkOrderAttachmentDeletePost)</Item>
-                <Item Key="Transaction">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMWorkOrder::EventModule###04-HistoryAdd" Required="0" Valid="1">
+    <ConfigItem Name="ITSMWorkOrder::EventModule###03-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module updates the history of workorders.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
+                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|WorkOrderAttachmentAddPost|WorkOrderAttachmentDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::EventModule###04-Notification" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that sends notifications.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
                 <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost|WorkOrderLinkAddPost|WorkOrderLinkDeletePost|WorkOrderAttachmentAddPost|WorkOrderAttachmentDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
@@ -1361,25 +1361,25 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChangeCronjob::EventModule###01-Notification" Required="0" Valid="1">
-        <Description Translatable="1">ITSM event module that sends notifications.</Description>
-        <Group>ITSM Change Management</Group>
-        <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
-                <Item Key="Event">(ChangePlannedStartTimeReachedPost|ChangePlannedEndTimeReachedPost|ChangeActualStartTimeReachedPost|ChangeActualEndTimeReachedPost|ChangeRequestedTimeReachedPost|WorkOrderPlannedStartTimeReachedPost|WorkOrderPlannedEndTimeReachedPost|WorkOrderActualStartTimeReachedPost|WorkOrderActualEndTimeReachedPost)</Item>
-                <Item Key="Transaction">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="ITSMChangeCronjob::EventModule###02-HistoryAdd" Required="0" Valid="1">
+    <ConfigItem Name="ITSMChangeCronjob::EventModule###01-HistoryAdd" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module updates the history of changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::HistoryAdd</Item>
+                <Item Key="Event">(ChangePlannedStartTimeReachedPost|ChangePlannedEndTimeReachedPost|ChangeActualStartTimeReachedPost|ChangeActualEndTimeReachedPost|ChangeRequestedTimeReachedPost|WorkOrderPlannedStartTimeReachedPost|WorkOrderPlannedEndTimeReachedPost|WorkOrderActualStartTimeReachedPost|WorkOrderActualEndTimeReachedPost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChangeCronjob::EventModule###02-Notification" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that sends notifications.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChangeCronjob::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::Notification</Item>
                 <Item Key="Event">(ChangePlannedStartTimeReachedPost|ChangePlannedEndTimeReachedPost|ChangeActualStartTimeReachedPost|ChangeActualEndTimeReachedPost|ChangeRequestedTimeReachedPost|WorkOrderPlannedStartTimeReachedPost|WorkOrderPlannedEndTimeReachedPost|WorkOrderActualStartTimeReachedPost|WorkOrderActualEndTimeReachedPost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
