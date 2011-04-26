@@ -2,8 +2,8 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.23 2011-03-17 16:25:24 ub Exp $
-# $OldId: AgentTicketActionCommon.dtl,v 1.39 2010/06/17 17:28:14 en Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.24 2011-04-26 16:00:58 ub Exp $
+# $OldId: AgentTicketActionCommon.dtl,v 1.46.2.16 2011/04/26 15:50:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -120,10 +120,14 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
-        var $Form = $('#Expand').val('3').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.submit();
-        return false;
+# ---
+# ITSM
+# ---
+#        var $Form = $('#Expand').val('3').closest('form');
+#        Core.Form.Validate.DisableValidation($Form);
+#        $Form.submit();
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', ['NewPriorityID', 'SLAID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16']);
+# ---
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -138,10 +142,14 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#SLAID').bind('change', function (Event) {
-        var $Form = $('#Expand').val('3').closest('form');
-        Core.Form.Validate.DisableValidation($Form);
-        $Form.submit();
-        return false;
+# ---
+# ITSM
+# ---
+#        var $Form = $('#Expand').val('3').closest('form');
+#        Core.Form.Validate.DisableValidation($Form);
+#        $Form.submit();
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', ['NewPriorityID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16']);
+# ---
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -272,7 +280,6 @@ $Include{"RichTextEditor"}
         var $Form = $('#FileUpload').closest('form');
         Core.Form.Validate.DisableValidation($Form);
         $Form.find('#AttachmentUpload').val('1').end().submit();
-
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -319,7 +326,6 @@ $Include{"RichTextEditor"}
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#TicketFreeText14').bind('change', function (Event) {
-        $('#Expand').val('3');
         Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'TicketFreeText14', ['NewPriorityID']);
     });
 //]]></script>

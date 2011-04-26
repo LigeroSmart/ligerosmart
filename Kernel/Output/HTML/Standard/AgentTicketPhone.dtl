@@ -1,8 +1,8 @@
 # --
 # AgentTicketPhone.dtl - provides HTML form for phone
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.23 2010-12-21 21:51:28 ub Exp $
+# $Id: AgentTicketPhone.dtl,v 1.24 2011-04-26 16:00:58 ub Exp $
 # $OldId: AgentTicketPhone.dtl,v 1.127 2010/12/21 18:20:59 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -298,11 +298,8 @@ $Include{"RichTextEditor"}
                     <div class="Clear"></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
-    $('#TicketFreeText14').bind('click', function (Event) {
-        $('#ExpandCustomerName').val('3');
-        $('#PriorityRC').val('1');
+    $('#TicketFreeText14').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'TicketFreeText14', ['PriorityID']);
-        return false;
     });
 <!--dtl:js_on_document_complete-->
 # ---
@@ -416,7 +413,7 @@ $Include{"RichTextEditor"}
 # ---
 # ITSM
 # ---
-$('a.AsPopup').bind('click', function (Event) { Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action'); return false;});
+    $('a.AsPopup').bind('click', function (Event) { Core.UI.Popup.OpenPopup($(this).attr('href'), 'Action'); return false;});
 # ---
 //]]></script>
 <!--dtl:js_on_document_complete-->
