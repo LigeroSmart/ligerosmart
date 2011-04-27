@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.190 2011-02-18 13:37:12 bes Exp $
+# $Id: ITSMChange.t,v 1.191 2011-04-27 15:17:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2796,6 +2796,83 @@ for my $Test (@ChangeTests) {
 # get executed each loop, even on next
 continue {
     $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# test for special ChangeSearch (with order by ChangeNumber)
+# bug# 5825 http://bugs.otrs.org/show_bug.cgi?id=5825
+# ------------------------------------------------------------ #
+{
+
+    # add a new change with CABCustomer $CustomerUserIDs[2]
+    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        ChangeTitle     => 'ABC',
+        Description     => 'DEF',
+        Justification   => 'XYZ',
+        ChangeManagerID => $UserIDs[0],
+        ChangeBuilderID => $UserIDs[0],
+        CABCustomers    => [
+            $CustomerUserIDs[2],
+        ],
+        UserID => $UserIDs[1],
+    );
+
+    # test if change was added successfully
+    $Self->True(
+        $ChangeID,
+        "Test "
+            . $TestCount++
+            . ' - adding of change for special search test (with order by ChangeNumber)',
+    );
+
+    # search for the change ids
+    my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+        CABCustomers     => [ $CustomerUserIDs[2] ],
+        OrderByDirection => ['Up'],
+        OrderBy          => ['ChangeNumber'],
+        Limit            => 1000,
+        ChangeStates     => [
+            'requested',
+            'pending approval',
+            'approved',
+            'in progress',
+            'pending pir'
+        ],
+        UserID => 1,
+    );
+
+    # check if search returned a result
+    $Self->True(
+        $ChangeIDs && ref $ChangeIDs eq 'ARRAY' && @{$ChangeIDs},
+        "Test "
+            . $TestCount++
+            . ' - search for CABCustomers, special search test (with order by ChangeNumber)',
+    );
+
+    # check if change was found
+    $Self->Is(
+        $ChangeIDs->[0],
+        $ChangeID,
+        'Test '
+            . $TestCount++
+            . ' - search for CABCustomers, special search test (with order by ChangeNumber) ',
+    );
+
+    # delete the Change
+    my $DeleteSuccess = $Self->{ChangeObject}->ChangeDelete(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    # check for successful deleting
+    $Self->True(
+        $DeleteSuccess,
+        "Test "
+            . $TestCount++
+            . ' - deleting of ChangeID '
+            . $ChangeID
+            . ' for special search test (with order by ChangeNumber)',
+    );
 }
 
 # ------------------------------------------------------------ #
