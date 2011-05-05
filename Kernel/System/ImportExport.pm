@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ImportExport.pm - all import and export functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.40 2010-09-08 18:51:10 en Exp $
+# $Id: ImportExport.pm,v 1.41 2011-05-05 09:20:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 =head1 NAME
 
@@ -2045,6 +2045,51 @@ sub Export {
         UserID     => $Param{UserID},
     );
 
+    # get format data
+    my $FormatData = $Self->FormatDataGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # if column headers should be included in the export
+    if ( $FormatData->{IncludeColumnHeaders} ) {
+
+        # get object attributes (the name of the columns)
+        my $MappingObjectAttributes = $Self->MappingObjectAttributesGet(
+            TemplateID => $Param{TemplateID},
+            UserID     => $Param{UserID},
+        );
+
+        # create a lookup hash for the object attribute names
+        my %AttributeLookup
+            = map { $_->{Key} => $_->{Value} } @{ $MappingObjectAttributes->[0]->{Input}->{Data} };
+
+        # get mapping data list
+        my $MappingList = $Self->MappingList(
+            TemplateID => $Param{TemplateID},
+            UserID     => $Param{UserID},
+        );
+
+        # get the column names
+        my @ColumnNames;
+        for my $MappingID ( @{$MappingList} ) {
+
+            # get mapping object data
+            my $MappingObjectData = $Self->MappingObjectDataGet(
+                MappingID => $MappingID,
+                UserID    => $Param{UserID},
+            );
+
+            # get the column name
+            my $ColumnName = $AttributeLookup{ $MappingObjectData->{Key} };
+
+            push @ColumnNames, $ColumnName;
+        }
+
+        # add column headers as first row
+        unshift @{$ExportData}, \@ColumnNames;
+    }
+
     my %Result = (
         Success            => 0,
         Failed             => 0,
@@ -2147,6 +2192,17 @@ sub Import {
     );
 
     return if !$ImportData;
+
+    # get format data
+    my $FormatData = $Self->FormatDataGet(
+        TemplateID => $Param{TemplateID},
+        UserID     => $Param{UserID},
+    );
+
+    # if column headers are activated, the first row must be removed
+    if ( $FormatData->{IncludeColumnHeaders} ) {
+        shift @{$ImportData};
+    }
 
     # Number of successfully and not successfully imported rows
     my %Result = (
@@ -2270,6 +2326,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.40 $ $Date: 2010-09-08 18:51:10 $
+$Revision: 1.41 $ $Date: 2011-05-05 09:20:45 $
 
 =cut

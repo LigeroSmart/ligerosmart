@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.28 2010-04-13 12:18:28 ub Exp $
+# $Id: CSV.pm,v 1.29 2011-05-05 09:20:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -150,6 +150,19 @@ sub FormatAttributesGet {
                 Translation  => 0,
                 Size         => 20,
                 MaxLength    => 20,
+            },
+        },
+        {
+            Key   => 'IncludeColumnHeaders',
+            Name  => 'Include Column Headers',
+            Input => {
+                Type => 'Selection',
+                Data => {
+                    0 => 'No',
+                    1 => 'Yes',
+                },
+                Translation  => 1,
+                PossibleNone => 0,
             },
         },
     ];
@@ -458,12 +471,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-04-13 12:18:28 $
+$Revision: 1.29 $ $Date: 2011-05-05 09:20:45 $
 
 =cut
