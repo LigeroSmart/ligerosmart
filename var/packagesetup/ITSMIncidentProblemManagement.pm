@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.11 2011-01-15 03:42:52 ep Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.12 2011-05-05 07:55:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -370,14 +370,16 @@ sub _SetTypeValid {
     %ValidList = reverse %ValidList;
     my $ValidID = $Param{Valid} ? $ValidList{valid} : $ValidList{invalid};
 
+    # get list of all types
+    my %TypeList = $Self->{TypeObject}->TypeList(
+        Valid => 0,
+    );
+
+    # reverse the type list for easier lookup
+    my %TypeListReverse = reverse %TypeList;
+
     TYPENAME:
     for my $TypeName ( @{ $Param{TypeNames} } ) {
-
-        # get list of all types
-        my %TypeList = $Self->{TypeObject}->TypeList();
-
-        # reverse the type list for easier lookup
-        my %TypeListReverse = reverse %TypeList;
 
         # lookup type id
         my $TypeID = $TypeListReverse{$TypeName};
@@ -416,6 +418,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2011-01-15 03:42:52 $
+$Revision: 1.12 $ $Date: 2011-05-05 07:55:10 $
 
 =cut
