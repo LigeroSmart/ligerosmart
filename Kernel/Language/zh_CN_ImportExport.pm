@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_ImportExport.pm,v 1.7 2011-01-24 20:49:14 ub Exp $
+# $Id: zh_CN_ImportExport.pm,v 1.8 2011-05-05 09:36:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,6 +25,7 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'} = '句号 (.)';
     $Self->{Translation}->{'Semicolon (;)'} = '分号 (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = '制表键 (TAB)';
+    $Self->{Translation}->{'Include Column Headers'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = '导入/导出管理';

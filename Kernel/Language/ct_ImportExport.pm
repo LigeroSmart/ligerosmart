@@ -2,7 +2,7 @@
 # Kernel/Language/ct_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ct_ImportExport.pm,v 1.8 2011-01-24 20:49:14 ub Exp $
+# $Id: ct_ImportExport.pm,v 1.9 2011-05-05 09:36:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,6 +25,7 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'} = 'Punt (.)';
     $Self->{Translation}->{'Semicolon (;)'} = 'Punt i coma (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulador (TAB)';
+    $Self->{Translation}->{'Include Column Headers'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestiò de Importar/Exportar';

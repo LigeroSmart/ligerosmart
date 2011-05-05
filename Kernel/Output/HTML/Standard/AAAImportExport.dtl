@@ -2,7 +2,7 @@
 # AAAImportExport.dtl - $Text variable file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AAAImportExport.dtl,v 1.1 2011-01-24 20:44:58 ub Exp $
+# $Id: AAAImportExport.dtl,v 1.2 2011-05-05 09:35:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,3 +18,4 @@ $Text{"Column Separator"}
 $Text{"Dot (.)"}
 $Text{"Semicolon (;)"}
 $Text{"Tabulator (TAB)"}
+$Text{"Include Column Headers"}
