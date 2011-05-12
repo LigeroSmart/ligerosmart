@@ -2,7 +2,7 @@
 # Kernel/Language/pt_BR_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_ITSMTicket.pm,v 1.8 2011-05-12 11:48:20 ub Exp $
+# $Id: pt_BR_ITSMTicket.pm,v 1.9 2011-05-12 11:51:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
+    # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = 'Alterar Decisão de Chamado';
     $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Alterar os campos ITSM do chamado';
     $Self->{Translation}->{'Impact'} = 'Impacto';
