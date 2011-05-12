@@ -2,7 +2,7 @@
 # Kernel/Language/pt_BR_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_GeneralCatalog.pm,v 1.5 2011-03-03 18:39:46 ub Exp $
+# $Id: pt_BR_GeneralCatalog.pm,v 1.6 2011-05-12 11:48:42 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,15 +26,19 @@ sub Data {
     $Self->{Translation}->{'Catalog Class'} = 'Classe do Catálogo';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Criar e gerenciar o Catálogo Geral.';
+    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = 'Módulo de registo da interface para a configuração AdminGeneralCatalog na área administrativa.';
     $Self->{Translation}->{'General Catalog'} = 'Catálogo Geral';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'Parâmetros para o comentário de exemplo 2 dos atributos do catálogo geral.';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = 'Parâmetros para os grupos de permissão de exemplo dos atributos do catálogo geral.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'Uma Classe de Catálogo deve ter um nome!';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'Uma Classe de Catálogo deve ter uma descrição!';
+    $Self->{Translation}->{'Catalog Class is required.'} = 'A Classe de Catálogo é obrigatória.';
+    $Self->{Translation}->{'Name is required.'} = 'O nome é obrigatório.';
 
 }
 
