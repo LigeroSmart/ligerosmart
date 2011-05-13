@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.74 2011-03-07 12:42:27 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.75 2011-05-13 08:41:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.74 $) [1];
+$VERSION = qw($Revision: 1.75 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1064,7 +1064,6 @@ sub _MaskForm {
             Key   => 'CABCustomer',
             Value => 'CAB Customer',
         },
-
         {
             Key      => '',
             Value    => '-',
@@ -1581,13 +1580,14 @@ sub _MaskForm {
 
     # show attributes
     my %AlreadyShown;
+    ITEM:
     for my $Item (@Attributes) {
         my $Key = $Item->{Key};
-        next if !$Key;
-        next if !defined $Param{$Key};
-        next if $Param{$Key} eq '';
+        next ITEM if !$Key;
+        next ITEM if !defined $Param{$Key};
+        next ITEM if $Param{$Key} eq '';
 
-        next if $AlreadyShown{$Key};
+        next ITEM if $AlreadyShown{$Key};
         $AlreadyShown{$Key} = 1;
         $Self->{LayoutObject}->Block(
             Name => 'SearchAJAXShow',
