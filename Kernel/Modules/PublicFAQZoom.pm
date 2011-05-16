@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.pm,v 1.10 2011-05-16 15:57:53 ub Exp $
+# $Id: PublicFAQZoom.pm,v 1.11 2011-05-16 16:10:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -131,8 +131,8 @@ sub Run {
     for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next FIELD if !$FAQData{$Field};
 
-        # rewrite links to embedded images public interface
-        if ( $Self->{Interface}{Name} eq 'public' ) {
+        # rewrite links to embedded images for public interface
+        if ( $Self->{Interface}->{Name} eq 'public' ) {
 
             # rewrite handle and action
             $FAQData{$Field}
