@@ -1,8 +1,8 @@
 # --
 # GeneralCatalog.t - general catalog tests
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.t,v 1.22 2010-05-31 15:37:58 cr Exp $
+# $Id: GeneralCatalog.t,v 1.23 2011-05-16 11:53:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -139,6 +139,18 @@ my $ItemData = [
         },
     },
 
+    # the preferences of the item one add-test before must be set
+    {
+        PreferencesSet => {
+            Hello => 'World',
+            Color => 'Red',
+        },
+        PreferencesGet => {
+            Hello => 'World',
+            Color => 'Red',
+        },
+    },
+
     # this item have the same name as one test before and must not be added
     {
         Add => {
@@ -164,6 +176,18 @@ my $ItemData = [
             Comment  => '',
             CreateBy => 1,
             ChangeBy => 1,
+        },
+    },
+
+    # the preferences of the item one add-test before must be set
+    {
+        PreferencesSet => {
+            Hello => 'NewWorld',
+            Color => 'Blue',
+        },
+        PreferencesGet => {
+            Hello => 'NewWorld',
+            Color => 'Blue',
         },
     },
 
@@ -464,7 +488,7 @@ for my $Item ( @{$ItemData} ) {
         }
 
         # get item data to check the values after creation of item using Class and Name
-        my $ItemGet = $Self->{GeneralCatalogObject}->ItemGet(
+        $ItemGet = $Self->{GeneralCatalogObject}->ItemGet(
             Class => $Item->{AddGet}->{Class},
             Name  => $Item->{AddGet}->{Name},
         );
@@ -652,6 +676,64 @@ for my $Class (@ExistingClasses) {
         $ListCount,
         $AddedItemCounter{$Class},
         "Test $TestCount: ItemList() - $Class correct number of items",
+    );
+
+    $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# ItemList test 3 - Item List with preferences (single hash entry)
+# ------------------------------------------------------------ #
+
+{
+
+    my $Class    = 'UnitTest::TestClass' . $ClassRand[0];
+    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+        Class       => $Class,
+        Valid       => 1,
+        Preferences => {
+            Hello => 'World',
+        },
+    );
+
+    my $ListCount = 'NULL';
+    if ( defined $ItemList && ref $ItemList eq 'HASH' ) {
+        $ListCount = keys %{$ItemList};
+    }
+
+    $Self->Is(
+        $ListCount,
+        1,
+        "Test $TestCount: ItemList() preferences (single hash entry) - $Class correct number of items",
+    );
+
+    $TestCount++;
+}
+
+# ------------------------------------------------------------ #
+# ItemList test 4 - Item List with preferences (array)
+# ------------------------------------------------------------ #
+
+{
+
+    my $Class    = 'UnitTest::TestClass' . $ClassRand[0];
+    my $ItemList = $Self->{GeneralCatalogObject}->ItemList(
+        Class       => $Class,
+        Valid       => 1,
+        Preferences => {
+            Color => [ 'Red', 'Blue' ],
+        },
+    );
+
+    my $ListCount = 'NULL';
+    if ( defined $ItemList && ref $ItemList eq 'HASH' ) {
+        $ListCount = keys %{$ItemList};
+    }
+
+    $Self->Is(
+        $ListCount,
+        2,
+        "Test $TestCount: ItemList() preferences (array) - $Class correct number of items",
     );
 
     $TestCount++;

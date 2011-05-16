@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.53 2011-04-07 16:47:50 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.54 2011-05-16 11:53:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 =head1 NAME
 
@@ -268,7 +268,9 @@ sub ItemList {
             $PreferencesCacheKey .= join q{####}, $Key, map {$_} @{ $Param{Preferences}->{$Key} };
         }
 
-        $PreferencesWhere = ' AND ' . join ' AND ', @Wheres;
+        $PreferencesWhere
+            = 'AND general_catalog.id = general_catalog_preferences.general_catalog_id';
+        $PreferencesWhere .= ' AND ' . join ' AND ', @Wheres;
     }
 
     # create sql string
@@ -711,6 +713,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2011-04-07 16:47:50 $
+$Revision: 1.54 $ $Date: 2011-05-16 11:53:43 $
 
 =cut
