@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.15 2011-01-11 16:10:56 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.16 2011-05-16 15:57:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,7 +50,7 @@ sub new {
         UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => ['public'],
+        Types  => $Self->{ConfigObject}->Get('FAQ::Public::StateTypes'),
         UserID => $Self->{UserID},
     );
 

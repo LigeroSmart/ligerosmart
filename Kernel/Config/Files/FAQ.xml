@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.104 2011-01-24 17:59:21 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.105 2011-05-16 15:57:54 ub Exp $</CVS>
+    <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
+        <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Interface</SubGroup>
+        <Setting>
+            <Array>
+                <Item>internal</Item>
+                <Item>external</Item>
+                <Item>public</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Customer::StateTypes" Required="1" Valid="1">
+        <Description Translatable="1">List of state types which can be used in the customer interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Interface</SubGroup>
+        <Setting>
+            <Array>
+                <Item>external</Item>
+                <Item>public</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Public::StateTypes" Required="1" Valid="1">
+        <Description Translatable="1">List of state types which can be used in the public interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Interface</SubGroup>
+        <Setting>
+            <Array>
+                <Item>public</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="FAQ::Default::RootCategoryName" Required="1" Valid="1">
         <Description Translatable="1">Default category name.</Description>
         <Group>FAQ</Group>

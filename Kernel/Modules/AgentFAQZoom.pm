@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.29 2011-01-05 15:21:43 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.30 2011-05-16 15:57:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,7 +50,7 @@ sub new {
         UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => [ 'internal', 'external', 'public' ],
+        Types  => $Self->{ConfigObject}->Get('FAQ::Agent::StateTypes'),
         UserID => $Self->{UserID},
     );
 

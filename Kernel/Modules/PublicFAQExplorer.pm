@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.7 2011-03-23 23:25:37 cr Exp $
+# $Id: PublicFAQExplorer.pm,v 1.8 2011-05-16 15:57:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,7 +51,7 @@ sub new {
         UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types  => ['public'],
+        Types  => $Self->{ConfigObject}->Get('FAQ::Public::StateTypes'),
         UserID => $Self->{UserID},
     );
 

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQAdd.pm - agent frontend to add faq articles
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.pm,v 1.19 2011-01-19 23:16:22 cr Exp $
+# $Id: AgentFAQAdd.pm,v 1.20 2011-05-16 15:57:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,7 +57,7 @@ sub new {
         UserID => $Self->{UserID},
     );
     $Self->{InterfaceStates} = $Self->{FAQObject}->StateTypeList(
-        Types => [ 'internal', 'external', 'public' ],
+        Types  => $Self->{ConfigObject}->Get('FAQ::Agent::StateTypes'),
         UserID => $Self->{UserID},
     );
 
