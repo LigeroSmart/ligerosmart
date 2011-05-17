@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.9 2011-04-14 16:51:55 ub Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.10 2011-05-17 10:07:31 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -174,38 +174,38 @@ sub Data {
 
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '';
-    $Self->{Translation}->{'Add Notification Rule'} = '';
-    $Self->{Translation}->{'Rule'} = '';
+    $Self->{Translation}->{'Add Notification Rule'} = 'Notificatie regel toevoegen';
+    $Self->{Translation}->{'Rule'} = 'Regel';
     $Self->{Translation}->{'A notification should have a name!'} = '';
 
     # Template: AdminITSMStateMachine
-    $Self->{Translation}->{'Admin State Machine'} = '';
-    $Self->{Translation}->{'Select a catalog class!'} = '';
-    $Self->{Translation}->{'A catalog class is required!'} = '';
+    $Self->{Translation}->{'Admin State Machine'} = 'Beheer status-machine.';
+    $Self->{Translation}->{'Select a catalog class!'} = 'Selecteer een catalogus-klasse';
+    $Self->{Translation}->{'A catalog class is required!'} = 'Een catalogus-klasse is verplicht.';
     $Self->{Translation}->{'Add a state transition'} = 'Nieuwe statusovergang toevoegen';
-    $Self->{Translation}->{'Catalog Class'} = '';
+    $Self->{Translation}->{'Catalog Class'} = 'Catalogus-klasse';
     $Self->{Translation}->{'Object Name'} = 'Object-naam';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Overzicht van statusovergangen voor';
     $Self->{Translation}->{'Add a new state transition for'} = 'Voeg een nieuwe statusovergang toe voor';
     $Self->{Translation}->{'Please select a state!'} = '';
     $Self->{Translation}->{'Please select a next state!'} = '';
     $Self->{Translation}->{'Edit a state transition for'} = 'Bewerken van statusovergangen voor';
-    $Self->{Translation}->{'Do you really want to delete the state transition'} = '';
-    $Self->{Translation}->{'from'} = '';
+    $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Wilt u deze statusovergang verwijderen';
+    $Self->{Translation}->{'from'} = 'van';
 
     # Template: AgentITSMCABMemberSearch
     $Self->{Translation}->{'Search Agent'} = '';
 
     # Template: AgentITSMChangeAdd
-    $Self->{Translation}->{'Add Change'} = '';
+    $Self->{Translation}->{'Add Change'} = 'Change toevoegen';
     $Self->{Translation}->{'Select Change Template'} = 'Change template kiezen';
     $Self->{Translation}->{'Template'} = 'Template';
     $Self->{Translation}->{'Time type'} = 'Tijd-type';
-    $Self->{Translation}->{'Invalid time type.'} = '';
+    $Self->{Translation}->{'Invalid time type.'} = 'Ongeldige tijdsoort';
     $Self->{Translation}->{'New time'} = 'Nieuw tijdstip';
     $Self->{Translation}->{'ITSM Change'} = 'Change';
     $Self->{Translation}->{'Justification'} = 'Rechtvaardiging';
-    $Self->{Translation}->{'Input invalid.'} = '';
+    $Self->{Translation}->{'Input invalid.'} = 'Ongeldige invoer.';
     $Self->{Translation}->{'Impact'} = 'Impact';
     $Self->{Translation}->{'Requested Date'} = 'Gevraagde implementatietijd';
 
@@ -213,17 +213,17 @@ sub Data {
     $Self->{Translation}->{'Save Change CAB as template'} = '';
     $Self->{Translation}->{'go to involved persons screen'} = '';
     $Self->{Translation}->{'This field is required'} = '';
-    $Self->{Translation}->{'Invalid Name'} = '';
+    $Self->{Translation}->{'Invalid Name'} = 'Ongeldige naam';
 
     # Template: AgentITSMChangeCondition
     $Self->{Translation}->{'Conditions and Actions'} = 'Condities en acties';
-    $Self->{Translation}->{'Delete Condition'} = '';
-    $Self->{Translation}->{'Add new condition'} = '';
+    $Self->{Translation}->{'Delete Condition'} = 'Verwijder conditie';
+    $Self->{Translation}->{'Add new condition'} = 'Conditie toevoegen';
 
     # Template: AgentITSMChangeConditionEdit
     $Self->{Translation}->{'Condition'} = 'Conditie';
-    $Self->{Translation}->{'Need a valid name.'} = '';
-    $Self->{Translation}->{'A a valid name is needed.'} = '';
+    $Self->{Translation}->{'Need a valid name.'} = 'Geen geldige naam.';
+    $Self->{Translation}->{'A a valid name is needed.'} = 'Vul een geldige naam in.';
     $Self->{Translation}->{'Matching'} = 'Matching';
     $Self->{Translation}->{'Any expression (OR)'} = 'Een voorwaarde (OR)';
     $Self->{Translation}->{'All expressions (AND)'} = 'Alle voorwaarden (AND)';
@@ -238,7 +238,7 @@ sub Data {
     # Template: AgentITSMChangeEdit
 
     # Template: AgentITSMChangeHistory
-    $Self->{Translation}->{'Details'} = '';
+    $Self->{Translation}->{'Details'} = 'Details';
     $Self->{Translation}->{'Workorder'} = 'Work Order';
     $Self->{Translation}->{'Show details'} = 'Toon details';
     $Self->{Translation}->{'Show workorder'} = 'Toon Work Order';
@@ -365,11 +365,11 @@ sub Data {
     $Self->{Translation}->{'Do you really want to take this workorder?'} = 'Deze Work Order overnemen?';
 
     # Template: AgentITSMWorkOrderTemplate
-    $Self->{Translation}->{'Save Workorder as Template'} = '';
+    $Self->{Translation}->{'Save Workorder as Template'} = 'Work Order opslaan als template';
 
     # Template: AgentITSMWorkOrderZoom
-    $Self->{Translation}->{'Workorder Information'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Workorder Information'} = 'Work Order-informatie';
+    $Self->{Translation}->{'Ok'} = 'OK';
 
     # Template: CustomerITSMChangeOverview
 
@@ -379,9 +379,9 @@ sub Data {
     $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} = '';
     $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} = '';
     $Self->{Translation}->{'Adapts the width of the autocomplete drop down to the length of the longest option.'} = '';
-    $Self->{Translation}->{'Admin of notification rules.'} = '';
-    $Self->{Translation}->{'Admin of the CIP matrix.'} = '';
-    $Self->{Translation}->{'Admin of the state machine.'} = '';
+    $Self->{Translation}->{'Admin of notification rules.'} = 'Beheer van notificatie-regels';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Beheer van CIP-matrix';
+    $Self->{Translation}->{'Admin of the state machine.'} = 'Beheer van statusovergangen';
     $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} = '';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} = '';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes.'} = '';
