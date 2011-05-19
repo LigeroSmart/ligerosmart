@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.46 2011-03-11 08:27:09 mab Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.47 2011-05-19 15:48:07 en Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -13,6 +13,7 @@
         <File Permission="644" Location="Kernel/Config/Files/TimeAccounting.xml"/>
         <File Permission="644" Location="Kernel/Language/de_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Language/es_TimeAccounting.pm"/>
+        <File Permission="644" Location="Kernel/Language/pt_BR_TimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTimeAccounting.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTimeAccountingEdit.dtl"/>
