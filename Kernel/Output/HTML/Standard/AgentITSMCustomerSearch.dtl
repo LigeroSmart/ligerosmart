@@ -1,8 +1,8 @@
 # --
 # AgentITSMCustomerSearch.dtl - provides autocomplete feature for customer search
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMCustomerSearch.dtl,v 1.4 2010-12-17 23:17:08 cr Exp $
+# $Id: AgentITSMCustomerSearch.dtl,v 1.5 2011-05-19 14:24:18 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,14 @@
 <!-- dtl:block:CustomerSearchInit -->
 <script type="text/javascript">//<![CDATA[
 /*global ITSM: true */
-    ITSM.Agent.CustomerSearch.Init($("#$QData{"ItemID"}"), $QData{"ActiveAutoComplete"});
+
+    var ItemID = '$QData{"ItemID"}';
+
+    // escape :: with two leading backslashes in front of each :
+    // this is necessary because jQuery can not handle a colon (:) in id attributes
+    ItemID = ItemID.replace(/::/g, '\\:\\:');
+
+    ITSM.Agent.CustomerSearch.Init($("#" + ItemID), $QData{"ActiveAutoComplete"});
 //]]></script>
 <!-- dtl:block:CustomerSearchInit -->
 
