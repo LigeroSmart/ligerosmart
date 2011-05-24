@@ -2,7 +2,7 @@
 # FAQ.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.17 2011-04-17 18:08:25 ub Exp $
+# $Id: FAQ.pm,v 1.18 2011-05-24 11:33:27 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -341,7 +341,7 @@ sub _InsertFAQStates {
         'public'   => 'public (all)',
     );
 
-    for my $Type (qw( internal external public )) {
+    for my $Type ( keys %State ) {
 
         # get the state type
         my $StateTypeRef = $Self->{FAQObject}->StateTypeGet(
@@ -709,6 +709,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2011-04-17 18:08:25 $
+$Revision: 1.18 $ $Date: 2011-05-24 11:33:27 $
 
 =cut
