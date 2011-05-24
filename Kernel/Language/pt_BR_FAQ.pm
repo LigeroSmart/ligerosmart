@@ -2,7 +2,7 @@
 # Kernel/Language/pt_BR_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_FAQ.pm,v 1.19 2011-05-17 12:27:48 cr Exp $
+# $Id: pt_BR_FAQ.pm,v 1.20 2011-05-24 11:18:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 sub Data {
     my $Self = shift;
 
-    # Template: AAAITSMChangeManagement
+    # Template: AAAFAQ
     $Self->{Translation}->{'internal'} = 'interno';
     $Self->{Translation}->{'public'} = 'público';
     $Self->{Translation}->{'external'} = 'externo';
