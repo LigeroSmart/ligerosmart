@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.18 2011-05-25 10:40:20 ub Exp $
+# $Id: CustomerFAQSearch.pm,v 1.19 2011-05-25 14:46:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -34,9 +34,6 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
         }
     }
-
-    # set UserID to root because in customer interface the UserID is the customer user login
-    $Self->{UserID} = 1;
 
     # create additional objects
     $Self->{FAQObject}           = Kernel::System::FAQ->new(%Param);

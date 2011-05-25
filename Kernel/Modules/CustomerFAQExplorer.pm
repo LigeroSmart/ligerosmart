@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQExplorer.pm - customer FAQ explorer
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.pm,v 1.10 2011-05-25 10:40:20 ub Exp $
+# $Id: CustomerFAQExplorer.pm,v 1.11 2011-05-25 14:46:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,9 +35,6 @@ sub new {
             $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
-
-    # set UserID to root because in customer interface the UserID is the customer user login
-    $Self->{UserID} = 1;
 
     # create needed objects
     $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
