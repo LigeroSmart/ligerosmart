@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq funktions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.146 2011-03-16 21:59:03 ub Exp $
+# $Id: FAQ.pm,v 1.147 2011-05-27 11:39:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.146 $) [1];
+$VERSION = qw($Revision: 1.147 $) [1];
 
 =head1 NAME
 
@@ -3809,8 +3809,9 @@ sub CustomerCategorySearch {
     else {
 
         my $SQL = 'SELECT faq_item.id, faq_item.category_id '
-            . 'FROM faq_item, faq_state_type '
-            . 'WHERE faq_state_type.id = faq_item.state_id '
+            . 'FROM faq_item, faq_state_type, faq_state '
+            . 'WHERE faq_state.id = faq_item.state_id '
+            . 'AND faq_state.type_id = faq_state_type.id '
             . "AND faq_state_type.name != 'internal' "
             . 'AND approved = 1';
 
@@ -3906,9 +3907,12 @@ sub PublicCategorySearch {
 
         # check if category contains articles with state public
         my $FoundArticle = 0;
-        my $SQL          = 'SELECT faq_item.id FROM faq_item, faq_state_type '
+
+        my $SQL = 'SELECT faq_item.id '
+            . 'FROM faq_item, faq_state_type, faq_state '
             . 'WHERE faq_item.category_id = ? '
-            . 'AND faq_state_type.id = faq_item.state_id '
+            . 'AND faq_state.id = faq_item.state_id '
+            . 'AND faq_state.type_id = faq_state_type.id '
             . "AND faq_state_type.name = 'public' "
             . 'AND approved = 1';
 
@@ -4427,6 +4431,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.146 $ $Date: 2011-03-16 21:59:03 $
+$Revision: 1.147 $ $Date: 2011-05-27 11:39:45 $
 
 =cut
