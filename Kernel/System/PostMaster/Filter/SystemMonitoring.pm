@@ -1,8 +1,8 @@
 # --
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.10 2010-02-20 00:58:05 ub Exp $
+# $Id: SystemMonitoring.pm,v 1.11 2011-06-06 19:11:25 jb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -108,12 +108,38 @@ sub Run {
         }
     }
 
-    # Try to get State, Host and Service from email body
+    #    # Try to get State, Host and Service from email body
+    #    my @BodyLines = split /\n/, $Param{GetParam}->{Body};
+    #    for my $Line (@BodyLines) {
+    #        for (qw(State Host Service)) {
+    #            if ( $Line =~ /$Self->{Config}->{ $_ . 'RegExp' }/ ) {
+    #                $Self->{$_} = $1;
+    #            }
+    #        }
+    #    }
+
+    # split the body into separate lines
     my @BodyLines = split /\n/, $Param{GetParam}->{Body};
+
+    # to remember if an element was found before
+    my %AlreadyMatched;
+
+    LINE:
     for my $Line (@BodyLines) {
-        for (qw(State Host Service)) {
-            if ( $Line =~ /$Self->{Config}->{ $_ . 'RegExp' }/ ) {
-                $Self->{$_} = $1;
+
+        # Try to get State, Host and Service from email body
+        ELEMENT:
+        for my $Element (qw(State Host Service)) {
+
+            next ELEMENT if $AlreadyMatched{$Element};
+
+            if ( $Line =~ /$Self->{Config}->{ $Element . 'RegExp' }/ ) {
+
+                # get the found element value
+                $Self->{$Element} = $1;
+
+                # remember that we found this element already
+                $AlreadyMatched{$Element} = 1;
             }
         }
     }
@@ -446,12 +472,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2010-02-20 00:58:05 $
+$Revision: 1.11 $ $Date: 2011-06-06 19:11:25 $
 
 =cut

@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # otrs.NagiosCheck.pl - OTRS Nagios checker
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.NagiosCheck.pl,v 1.8 2010-02-15 18:16:06 ub Exp $
+# $Id: otrs.NagiosCheck.pl,v 1.9 2011-06-06 19:11:25 jb Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -25,7 +25,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 use File::Basename;
 use FindBin qw($RealBin);
@@ -34,7 +34,7 @@ use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use Getopt::Std;
 my %opts;
-getopt( 'c', \%opts );
+getopts( 'hNvc:', \%opts );
 if ( $opts{h} ) {
     print
         "Usage: $FindBin::Script [-N (runs as Nagioschecker)] [-v (verbose)] [-c /path/to/config_file]\n";
