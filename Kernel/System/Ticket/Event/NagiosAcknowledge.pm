@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.9 2010-02-15 18:16:06 ub Exp $
+# $Id: NagiosAcknowledge.pm,v 1.10 2011-06-11 20:38:30 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,9 +14,10 @@ package Kernel::System::Ticket::Event::NagiosAcknowledge;
 use strict;
 use warnings;
 use LWP::UserAgent;
+use CGI;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -139,7 +140,7 @@ sub _Pipe {
     for my $Key ( keys %Ticket ) {
         next if !defined $Ticket{$Key};
 
-        # strip not allowd chars
+        # strip not allowed characters
         $Ticket{$Key} =~ s/'//g;
         $Ticket{$Key} =~ s/;//g;
         $Data         =~ s/<$Key>/$Ticket{$Key}/g;
@@ -205,10 +206,9 @@ sub _HTTP {
     for my $Key ( keys %Ticket ) {
         next if !defined $Ticket{$Key};
 
-        # strip not allowd chars
-        $Ticket{$Key} =~ s/'//g;
-        $Ticket{$Key} =~ s/;//g;
-        $URL          =~ s/<$Key>/$Ticket{$Key}/g;
+        # URLencode values
+        CGI::escape( $Ticket{$Key} );
+        $URL =~ s/<$Key>/$Ticket{$Key}/g;
     }
 
     # replace config tags
