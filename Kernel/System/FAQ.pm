@@ -1,8 +1,8 @@
 # --
-# Kernel/System/FAQ.pm - all faq funktions
+# Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.147 2011-05-27 11:39:45 ub Exp $
+# $Id: FAQ.pm,v 1.148 2011-06-15 03:49:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.147 $) [1];
+$VERSION = qw($Revision: 1.148 $) [1];
 
 =head1 NAME
 
@@ -123,6 +123,42 @@ get an faq
     my %FAQ = $FAQObject->FAQGet(
         ItemID => 123,
         UserID => 1,
+    );
+
+Returns:
+
+    %FAQ = (
+        ID                => 32,
+        ItemID            => 32,
+        FAQID             => 32,
+        Number            => 100032,
+        CategoryID        => '2',
+        CategoryName'     => 'CategoryA::CategoryB',
+        CategoryShortName => 'CategoryB',
+        LanguageID        => 1,
+        Language          => 'en',
+        Title             => 'Article Title',
+        Field1            => 'The Symptoms',
+        Field2            => 'The Problem',
+        Field3            => 'The Solution',
+        Field4            => undef,                          # Not active by default
+        Field5            => undef,                          # Not active by default
+        Field6            => 'Comments',
+        Approved          => 1,                              # or 0
+        Keywords          => 'KeyWord1 KeyWord2',
+        Votes             => 0,                              # number of votes
+        VoteResult        => '0.00',                         # a number between 0.00 and 100.00
+        StateID           => 1,
+        State             => 'internal (agent)',             # or 'external (customer)' or
+                                                             # 'public (all)'
+        StateTypeID       => 1,
+        StateTypeName     => 'internal',                     # or 'external' or 'public'
+        CreatedBy         => 1,
+        Changed'          => '2011-01-05 21:53:50',
+        ChangedBy         => '1',
+        Created           => '2011-01-05 21:53:50',
+        Name              => '1294286030-31.1697297104732',  # FAQ Article name or
+                                                             # systemtime + '-' + random number
     );
 
 =cut
@@ -259,6 +295,13 @@ Returns a hash reference with the number of votes and the vote result.
         UserID => 1,
     );
 
+Returns:
+
+    $VoteDataHashRef = {
+        Result => 75.0000,
+        Votes  => 5
+    };
+
 =cut
 
 sub ItemVoteDataGet {
@@ -326,6 +369,10 @@ add an article
         Approved   => 1,                # (optional)
         UserID     => 1,
     );
+
+Returns:
+
+    $ItemID = 34;
 
 =cut
 
@@ -495,7 +542,7 @@ sub FAQAdd {
 
 update an article
 
-    $FAQObject->FAQUpdate(
+   my $Success = $FAQObject->FAQUpdate(
         ItemID     => 123,
         CategoryID => 1,
         StateID    => 1,
@@ -506,6 +553,10 @@ update an article
         Field2     => 'Solution...',
         UserID     => 1,
     );
+
+Returns:
+
+    $Success = 1 ;          # or undef if can't update the FAQ article
 
 =cut
 
@@ -611,7 +662,7 @@ sub FAQUpdate {
 
 add article attachments, returns the attachment id
 
-    my $Ok = $FAQObject->AttachmentAdd(
+    my $AttachmentID = $FAQObject->AttachmentAdd(
         ItemID      => 123,
         Content     => $Content,
         ContentType => 'text/xml',
@@ -619,6 +670,10 @@ add article attachments, returns the attachment id
         Inline      => 1,   (0|1, default 0)
         UserID      => 1,
     );
+
+Returns:
+
+    $AttachmentID = 123 ;               # or undef if can't add the attachment
 
 =cut
 
@@ -737,6 +792,15 @@ get attachment of article
         UserID => 1,
     );
 
+Returns:
+
+    %File = (
+        Filesize    => '540286',                # file size in bytes
+        ContentType => 'image/jpeg',
+        Filename    => 'Error.jpg',
+        Content     => '...'                    # file binary content
+    );
+
 =cut
 
 sub AttachmentGet {
@@ -784,11 +848,15 @@ sub AttachmentGet {
 
 delete attachment of article
 
-    my $Ok = $FAQObject->AttachmentDelete(
+    my $Success = $FAQObject->AttachmentDelete(
         ItemID => 123,
         FileID => 1,
         UserID => 1,
     );
+
+Returns:
+
+    $Success = 1 ;              # or undef if attachment could not be deleted
 
 =cut
 
@@ -822,6 +890,35 @@ return an attachment index of an article
         ItemID     => 123,
         ShowInline => 0,   ( 0|1, default 1)
         UserID     => 1,
+    );
+
+Returns:
+
+    @Index = (
+        {
+            Filesize    => '527.6 KBytes',
+            ContentType => 'image/jpeg',
+            Filename    => 'Error.jpg',
+            FilesizeRaw => 540286,
+            FileID      => 6,
+            Inline      => 0,
+        },
+        {,
+            Filesize => '430.0 KBytes',
+            ContentType => 'image/jpeg',
+            Filename => 'Solution.jpg',
+            FilesizeRaw => 440286,
+            FileID => 5,
+            Inline => 1,
+        },
+        {
+            Filesize => '296 Bytes',
+            ContentType => 'text/plain',
+            Filename => 'AdditionalComments.txt',
+            FilesizeRaw => 296,
+            FileID => 7,
+            Inline => 0,
+        },
     );
 
 =cut
@@ -891,13 +988,17 @@ sub AttachmentIndex {
 
 =item FAQCount()
 
-count an article
+count the number of articles for a defined category
 
-    $FAQObject->FAQCount(
+    my $ArticleCount = $FAQObject->FAQCount(
         CategoryIDs  => [1,2,3,4],
         OnlyApproved = 1,   # optional (default 0)
         UserID       => 1,
     );
+
+Returns:
+
+    $ArticleCount = 3;
 
 =cut
 
@@ -952,7 +1053,7 @@ sub FAQCount {
 
 add a vote
 
-    my $Ok = $FAQObject->VoteAdd(
+    my $Success = $FAQObject->VoteAdd(
         CreatedBy => 'Some Text',
         ItemID    => '123456',
         IP        => '54.43.30.1',
@@ -960,6 +1061,10 @@ add a vote
         Rate      => 100,
         UserID    => 1,
     );
+
+Returns:
+
+    $Success = 1;              # or undef if vote could not be added
 
 =cut
 
@@ -998,7 +1103,7 @@ sub VoteAdd {
 
 =item VoteGet()
 
-get a vote
+get a vote information
 
     my %VoteData = $FAQObject->VoteGet(
         CreateBy  => 'Some Text',
@@ -1006,6 +1111,17 @@ get a vote
         IP        => '127.0.0.1',
         Interface => 'Some Text',
         UserID    => 1,
+    );
+
+Returns:
+
+    %VoteData = (
+        ItemID    => 23,
+        Rate      => 50,                            # or 0 or 25 or 75 or 100
+        IP        => '192.168.0.1',
+        Interface => 1,                             # interface ID
+        CreatedBy => 1,
+        Created   => '2011-06-14 12:32:03',
     );
 
 =cut
@@ -1076,6 +1192,13 @@ returns an array with VoteIDs
         UserID => 1,
     );
 
+Returns:
+
+    $VoteIDArrayref = [
+        23,
+        45,
+    ];
+
 =cut
 
 sub VoteSearch {
@@ -1108,10 +1231,14 @@ sub VoteSearch {
 
 delete a vote
 
-    my $Ok = $FAQObject->VoteDelete(
+    my $DeleteSuccess = $FAQObject->VoteDelete(
         VoteID => 1,
         UserID => 1,
     );
+
+Returns:
+
+    $DeleteSuccess = 1;              # or undef if vote could not be deleted
 
 =cut
 
@@ -1141,10 +1268,14 @@ sub VoteDelete {
 
 Delete an article.
 
-    $DeleteSuccess = $FAQObject->FAQDelete(
+    my $DeleteSuccess = $FAQObject->FAQDelete(
         ItemID => 1,
         UserID => 123,
     );
+
+Returns:
+
+    $DeleteSuccess = 1;              # or undef if article could not be deleted
 
 =cut
 
@@ -1215,11 +1346,15 @@ sub FAQDelete {
 
 add an history to an article
 
-    $AddSuccess = $FAQObject->FAQHistoryAdd(
+    my $AddSuccess = $FAQObject->FAQHistoryAdd(
         ItemID => 1,
         Name   => 'Updated Article.',
         UserID => 1,
     );
+
+Returns:
+
+    $AddSuccess = 1;               # or undef if article history could not be added
 
 =cut
 
@@ -1251,12 +1386,27 @@ sub FAQHistoryAdd {
 
 =item FAQHistoryGet()
 
-get an array with hashref (Name, Created) with history of an article back
+get an array with hashref with the history of an article
 
     my $HistoryDataArrayRef = $FAQObject->FAQHistoryGet(
         ItemID => 1,
         UserID => 1,
     );
+
+Returns:
+
+    $HistoryDataArrayRef = [
+        {
+            CreatedBy => 1,
+            Created   => '2010-11-02 07:45:15',
+            Name      => 'Created',
+        },
+        {
+            CreatedBy => 1,
+            Created   => '2011-06-14 12:53:55',
+            Name      => 'Updated',
+        },
+    ];
 
 =cut
 
@@ -1292,12 +1442,16 @@ sub FAQHistoryGet {
 
 =item FAQHistoryDelete()
 
-delete an history of an article
+delete the history of an article
 
-    $FAQObject->FAQHistoryDelete(
+    my $DeleteSuccess = $FAQObject->FAQHistoryDelete(
         ItemID => 1,
         UserID => 1,
     );
+
+Returns:
+
+    $DeleteDuccess = 1;                # or undef if history could not be deleted
 
 =cut
 
@@ -1330,6 +1484,29 @@ get the system history
     my $HistoryDataArrayRef = $FAQObject->HistoryGet(
         UserID => 1,
     );
+
+Returns:
+
+    $HistoryDataArrayRef = [
+        {
+            ItemID    => '32',
+            Number    => '10004',
+            Category  => 'My Category',
+            Subject   => 'New Article',
+            Action    => 'Created',
+            CreatedBy => '1',
+            Created   => '2011-01-05 21:53:50',
+        },
+        {
+            ItemID    => '4',
+            Number    => '10004',
+            Category  => 'My Category',
+            Subject   => "New Article",
+            Action    => 'Updated',
+            CreatedBy => '1',
+            Created   => '2011-01-05 21:55:32',
+        }
+    ];
 
 =cut
 
@@ -1391,6 +1568,19 @@ get the category list as hash
         UserID => 1,
     );
 
+Returns:
+
+    $CategoryHashRef = {
+        0 => {
+            1 => 'Misc',
+            2 => 'My Category',
+        },
+        2 => {
+            3 => 'Sub Category A',
+            4 => 'Sub Category B',
+        },
+    };
+
 =cut
 
 sub CategoryList {
@@ -1439,7 +1629,7 @@ sub CategoryList {
 
 =item CategorySearch()
 
-get the category search as hash
+get the category search as an array ref
 
     my $CategoryIDArrayRef = $FAQObject->CategorySearch(
         Name        => 'Test',
@@ -1450,6 +1640,12 @@ get the category search as hash
         SortBy      => 'down',
         UserID      => 1,
     );
+
+Returns:
+
+    $CategoryIDArrayRef = [
+        2,
+    ];
 
 =cut
 
@@ -1568,6 +1764,16 @@ get a category as hash
         UserID     => 1,
     );
 
+Returns:
+
+    %Category = (,
+        CategoryID => 2,
+        ParentID   => 0,
+        Name       => 'My Category',
+        Comment    => 'This is my first category.',
+        ValidID    => 1,
+    );
+
 =cut
 
 sub CategoryGet {
@@ -1636,6 +1842,15 @@ get all subcategory ids of of a category
         CustomerUser => 'tt',
         UserID       => 1,
     );
+
+Returns:
+
+    $SubCategoryIDArrayRef = [
+        3,
+        4,
+        5,
+        6,
+    ];
 
 =cut
 
@@ -1724,6 +1939,10 @@ add a category
         UserID   => 1,
     );
 
+Returns:
+
+    $CategoryID = 34;               # or undef if category could not be added
+
 =cut
 
 sub CategoryAdd {
@@ -1801,6 +2020,10 @@ update a category
         UserID     => 1,
     );
 
+Returns:
+
+    $Success = 1;                # or undef if category could not be updated
+
 =cut
 
 sub CategoryUpdate {
@@ -1869,7 +2092,7 @@ sub CategoryUpdate {
 
 =item CategoryDuplicateCheck()
 
-check a category
+check a category for duplicate name under the same parent
 
     my $Exists = $FAQObject->CategoryDuplicateCheck(
         CategoryID => 1,
@@ -1877,6 +2100,11 @@ check a category
         ParentID   => 1,
         UserID     => 1,
     );
+
+Returns:
+
+    $Exists = 1;                # if category name already exists with the same parent
+                                # or 0 if the name does not exists with the same parent
 
 =cut
 
@@ -1913,7 +2141,7 @@ sub CategoryDuplicateCheck {
     # prepare sql statement
     return if !$Self->{DBObject}->Prepare( SQL => $SQL );
 
-    # fetct the result
+    # fetch the result
     my $Exists;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Exists = 1;
@@ -1926,10 +2154,14 @@ sub CategoryDuplicateCheck {
 
 Count the number of categories.
 
-    $FAQObject->CategoryCount(
+    my $CategoryCount = $FAQObject->CategoryCount(
         ParentIDs => [ 1, 2, 3, 4 ],
         UserID    => 1,
     );
+
+Returns:
+
+    $CategoryCount = 6;
 
 =cut
 
@@ -1995,6 +2227,15 @@ get all categories as tree (with their long names)
         UserID => 1,
     );
 
+Returns:
+
+    $CategoryTree = {
+        1 => 'Misc',
+        2 => 'My Category',
+        3 => 'My Category::Sub Category A',
+        4 => 'My Category::Sub Category B',
+    };
+
 =cut
 
 sub CategoryTreeList {
@@ -2056,7 +2297,7 @@ sub CategoryTreeList {
             my $NewParentID = $ParentID;
             while ($NewParentID) {
 
-                # prepend parents category name
+                # preapend parents category name
                 if ( $CategoryNameLookup{$NewParentID} ) {
                     $CategoryName = $CategoryNameLookup{$NewParentID} . '::' . $CategoryName;
                 }
@@ -2084,6 +2325,14 @@ get groups of a category
         CategoryID => 3,
         UserID     => 1,
     );
+
+Returns:
+
+    $GroupArrayRef = [
+        2,
+        9,
+        10,
+    ];
 
 =cut
 
@@ -2120,6 +2369,33 @@ get all category-groups
     my $AllCategoryGroupHashRef = $FAQObject->CategoryGroupGetAll(
         UserID => 1,
     );
+
+Returns:
+
+    $AllCategoryGroupHashRef = {
+        1 => {
+            2  => 1,
+        },
+        2 => {
+            2  => 1,
+            9  => 1,
+            10 => 1,
+        },
+        3 => {
+            2  => 1,
+            9  => 1,
+            10 => 1,
+        },
+        4 => {
+            1  => 1,
+            2  => 1,
+            3  => 1,
+            4  => 1,
+            5  => 1,
+            9  => 1,
+            10 => 1,
+        },
+    };
 
 =cut
 
@@ -2159,10 +2435,14 @@ sub CategoryGroupGetAll {
 
 Delete a category.
 
-    my $Success = $FAQObject->CategoryDelete(
+    my $DeleteSuccess = $FAQObject->CategoryDelete(
         CategoryID => 123,
         UserID      => 1,
     );
+
+Returns:
+
+    DeleteSuccess = 1;              # or undef if category could not be deleted
 
 =cut
 
@@ -2265,6 +2545,14 @@ get the state type list as hashref
         UserID => 1,
     );
 
+Returns:
+
+    $StateTypeHashRef = {
+        1 => 'internal',
+        3 => 'public',
+        2 => 'external',
+    };
+
 =cut
 
 sub StateTypeList {
@@ -2317,6 +2605,14 @@ get the state list as hash
         UserID => 1,
     );
 
+Returns:
+
+    %States = (
+        1 => 'internal (agent)',
+        2 => 'external (customer)',
+        3 => 'public (all)',
+    );
+
 =cut
 
 sub StateList {
@@ -2344,12 +2640,16 @@ sub StateList {
 
 update a state
 
-    $FAQObject->StateUpdate(
+    my Success = $FAQObject->StateUpdate(
         StateID => 1,
         Name    => 'public',
         TypeID  => 1,
         UserID  => 1,
     );
+
+Returns:
+
+    Success = 1;             # or undef if state could not be updated
 
 =cut
 
@@ -2380,11 +2680,15 @@ sub StateUpdate {
 
 add a state
 
-    my $ID = $FAQObject->StateAdd(
+    my $Success = $FAQObject->StateAdd(
         Name   => 'public',
         TypeID => 1,
         UserID => 1,
     );
+
+Returns:
+
+    $Success = 1;               # or undef if state could not be added
 
 =cut
 
@@ -2417,6 +2721,14 @@ get a state as hash
     my %State = $FAQObject->StateGet(
         StateID => 1,
         UserID  => 1,
+    );
+
+Returns:
+
+    %State = (
+        StateID => 1,
+        Name    => 'internal (agent)',
+        Comment => undef,
     );
 
 =cut
@@ -2460,6 +2772,13 @@ get a state as hashref
         Name    => 'internal',
         UserID  => 1,
     );
+
+Returns:
+
+    $StateTypeHashRef = {
+        'StateID' => 1,
+        'Name'    => 'internal',
+    };
 
 =cut
 
@@ -2528,6 +2847,14 @@ get the language list as hash
         UserID => 1,
     );
 
+Returns:
+
+    %Languages = (
+        1 => 'en',
+        2 => 'de',
+        3 => 'es',
+    );
+
 =cut
 
 sub LanguageList {
@@ -2566,6 +2893,10 @@ update a language
         UserID     => 1,
     );
 
+Returns:
+
+    $Success = 1;               # or undef if language could not be updated
+
 =cut
 
 sub LanguageUpdate {
@@ -2600,6 +2931,10 @@ check a language
         LanguageID => 1, # for update
         UserID     => 1,
     );
+
+Returns:
+
+    $Exists = 1;                # if language already exists, or 0 if does not exist
 
 =cut
 
@@ -2649,6 +2984,10 @@ add a language
         UserID => 1,
     );
 
+Returns:
+
+    $Success = 1;               # or undef if language could not be added
+
 =cut
 
 sub LanguageAdd {
@@ -2680,6 +3019,13 @@ get a language as hash
     my %Language = $FAQObject->LanguageGet(
         LanguageID => 1,
         UserID     => 1,
+    );
+
+Returns:
+
+    %Language = (
+        LanguageID => '1',
+        Name       => 'en',
     );
 
 =cut
@@ -2726,6 +3072,12 @@ If the name of the language is given, the language id is returned.
     my $LanguageID = $FAQObject->LanguageLookup(
         Name => 'en',
     );
+
+Returns:
+
+    $LanguageName = 'en';
+
+    $LanguageID = 1;
 
 =cut
 
@@ -2788,10 +3140,14 @@ sub LanguageLookup {
 
 Delete a language.
 
-    my $Success = $FAQObject->LanguageDelete(
+    my $DeleteSuccess = $FAQObject->LanguageDelete(
         LanguageID => 123,
         UserID      => 1,
     );
+
+Returns
+
+    $DeleteSuccess = 1;             # or undef if language could not be deleted
 
 =cut
 
@@ -2845,7 +3201,7 @@ search in FAQ articles
 
         # Additional information for OrderBy:
         # The OrderByDirection can be specified for each OrderBy attribute.
-        # The pairing is made by the array indices.
+        # The pairing is made by the array indexes.
 
         OrderByDirection => [ 'Down', 'Up' ],                         # (optional)
         # default: [ 'Down' ]
@@ -2854,6 +3210,19 @@ search in FAQ articles
         Limit     => 150,
         Interface => 'public',      # public|external|internal (default internal)
         UserID    => 1,
+    );
+
+Returns:
+
+    @IDs = (
+        32,
+        13,
+        12,
+        9,
+        6,
+        5,
+        4,
+        1,
     );
 
 =cut
@@ -3205,6 +3574,25 @@ returns a category array reference
         UserID     => 1,
     );
 
+Returns:
+
+    $CategoryIDArrayRef = [
+        {
+            CategoryID => '2',
+            ParentID => '0',
+            Name => 'My Category',
+            Comment => 'My First Category',
+            ValidID => '1',
+        },
+        {
+            CategoryID => '4',
+            ParentID => '2',
+            Name => 'Sub Category A',
+            Comment => 'This Is Category A',
+            ValidID => '1',
+        },
+    ];
+
 =cut
 
 sub FAQPathListGet {
@@ -3246,6 +3634,10 @@ set groups to a category
         GroupIDs   => [ 2,4,1,5,77 ],
         UserID     => 1,
     );
+
+Returns:
+
+    $Success = 1;               # or undef if groups could not be set to a category
 
 =cut
 
@@ -3296,6 +3688,22 @@ get user category-groups
         Type   => 'rw',
         UserID => 1,
     );
+
+Returns:
+
+    $UserCategoryGroupHashRef = {
+        1 => {},
+        0 => {
+            1 => 'Misc',
+            2 => 'My Category',
+        },
+        2 => {
+            3 => 'Sub Category A',
+            4 => 'Sub Category B',
+        },
+        3 => {},
+        4 => {},
+    };
 
 =cut
 
@@ -3352,6 +3760,15 @@ get user category-groups (show category long names)
         Type   => 'rw',
         UserID => 1,
     );
+
+Returns:
+
+    $UserCategoryGroupHashRef = {
+        1 => 'Misc',
+        2 => 'My Category',
+        3 => 'My Category::Sub Category A',
+        4 => 'My Category::Sub Category A',
+    };
 
 =cut
 
@@ -3410,6 +3827,22 @@ get customer user categories
         UserID       => 1,
     );
 
+Returns:
+
+    $CustomerUserCategoryHashRef = {
+        1 => {},
+        0 => {
+            1 => 'Misc',
+            2 => 'My Category',
+        },
+        2 => {
+            3 => 'Sub Category A',
+            4 => 'Sub Category B',
+        },
+        3 => {},
+        4 => {},
+    };
+
 =cut
 
 sub GetCustomerCategories {
@@ -3432,7 +3865,7 @@ sub GetCustomerCategories {
         return $Self->{Cache}->{$CacheKey};
     }
 
-    # get all calid categories
+    # get all valid categories
     my $Categories = $Self->CategoryList(
         Valid  => 1,
         UserID => $Param{UserID},
@@ -3470,6 +3903,15 @@ get customer category-groups (show category long names)
         Type   => 'rw',
         UserID => 1,
     );
+
+Returns:
+
+    $CustomerCategoryGroupHashRef = {
+        1 => 'Misc',
+        2 => 'My Category',
+        3 => 'My Category::Sub Category A',
+        4 => 'My Category::Sub Category A',
+    };
 
 =cut
 
@@ -3559,6 +4001,15 @@ get public category-groups (show category long names)
         UserID => 1,
     );
 
+Returns:
+
+    $PublicCategoryGroupHashRef = {
+        1 => 'Misc',
+        2 => 'My Category',
+        3 => 'My Category::Sub Category A',
+        4 => 'My Category::Sub Category A',
+    };
+
 =cut
 
 sub GetPublicCategoriesLongNames {
@@ -3642,6 +4093,10 @@ get user permission for a category
         UserID     => 1,
     );
 
+Returns:
+
+    $PermissionString = 'rw';               # or 'ro' or ''
+
 =cut
 
 sub CheckCategoryUserPermission {
@@ -3685,6 +4140,10 @@ get customer user permission for a category
         UserID       => 1,
     );
 
+Returns:
+
+    $PermissionString = 'rw';               # or 'ro' or ''
+
 =cut
 
 sub CheckCategoryCustomerPermission {
@@ -3721,12 +4180,19 @@ sub CheckCategoryCustomerPermission {
 
 =item AgentCategorySearch()
 
-get the category search as hash
+get the category search as array ref
 
     my $CategoryIDArrayRef = $FAQObject->AgentCategorySearch(
         ParentID => 3,   # (optional, default 0)
         UserID   => 1,
     );
+
+Returns:
+
+    $CategoryIDArrayRef = [
+        '4',
+        '8',
+    ];
 
 =cut
 
@@ -3767,6 +4233,13 @@ get the category search as hash
         Mode          => 'Customer',
         UserID        => 1,
     )};
+
+Returns:
+
+    $CategoryIDArrayRef = [
+        '4',
+        '8',
+    ];
 
 =cut
 
@@ -3861,6 +4334,13 @@ get the category search as hash
         UserID        => 1,
     );
 
+Returns:
+
+    $CategoryIDArrayRef = [
+        '4',
+        '8',
+    ];
+
 =cut
 
 sub PublicCategorySearch {
@@ -3949,6 +4429,10 @@ adds accessed FAQ article to the access log table
         UserID    => 1,
     );
 
+Returns:
+
+    $Success =1;                # or undef if FAQLog could not be added
+
 =cut
 
 sub FAQLogAdd {
@@ -4023,6 +4507,61 @@ returns an array with the top 10 faq article ids
         Limit       => 10,           # (optional, default 10)
         UserID      => 1,
     );
+
+Returns:
+
+    $Top10IDsRef = [
+        {
+            'ItemID'    => 13,
+            'Count'     => 159,               # number of visits
+            'Interface' => 'public',
+        },
+        {
+            'ItemID'    => 6,
+            'Count'     => 78,
+            'Interface' => 'public',
+        },
+        {
+            'ItemID'    => 4,
+            'Count'     => 59,
+            'Interface' => 'internal',
+        },
+        {
+            'ItemID'    => 20,
+            'Count'     => 29,
+            'Interface' => 'public',
+        },
+        {
+            'ItemID'    => 1,
+            'Count'     => 24,
+            'Interface' => 'external',
+        },
+        {
+            'ItemID'    => 11,
+            'Count'     => 24,
+            'Interface' => 'internal',
+        },
+        {
+            'ItemID'    => 5,
+            'Count'     => 18,
+            'Interface' => 'internal',
+        },
+        {
+            'ItemID'    => 9,
+            'Count'     => 16,
+            'Interface' => 'external',
+        },
+        {
+            'ItemID'    => 2,
+            'Count'     => 14,
+            'Interface' => 'internal'
+        },
+        {
+            'ItemID'    => 14,
+            'Count'     => 6,
+            'Interface' => 'public',
+        }
+    ];
 
 =cut
 
@@ -4114,6 +4653,10 @@ Updates the URLs of uploaded inline attachments.
         UserID     => 1,
     );
 
+Returns:
+
+    $Success = 1;               # of undef if attachment URL could not be updated
+
 =cut
 
 sub FAQInlineAttachmentURLUpdate {
@@ -4152,7 +4695,7 @@ sub FAQInlineAttachmentURLUpdate {
     my $Search = "Action=PictureUpload .+ FormID=$Param{FormID} .+ "
         . "ContentID=$Param{Attachment}->{ContentID}";
 
-    # picture url in faq atttachment
+    # picture url in faq attachment
     my $Replace = "Action=AgentFAQZoom;Subaction=DownloadAttachment;"
         . "ItemID=$Param{ItemID};FileID=$Param{FileID}";
 
@@ -4295,7 +4838,7 @@ sub _FAQApprovalUpdate {
         ],
     );
 
-    # approval feature is activated and faq article is not appproved yet
+    # approval feature is activated and faq article is not approved yet
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{Approved} ) {
 
         # get faq data
@@ -4431,6 +4974,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.147 $ $Date: 2011-05-27 11:39:45 $
+$Revision: 1.148 $ $Date: 2011-06-15 03:49:21 $
 
 =cut
