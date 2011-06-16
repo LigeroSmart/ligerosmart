@@ -2,7 +2,7 @@
 # AgentFAQPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQPrint.dtl,v 1.5 2011-01-24 14:08:31 mb Exp $
+# $Id: AgentFAQPrint.dtl,v 1.6 2011-06-16 12:35:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,16 +24,16 @@
                         <table border="0" cellspacing="3" cellpadding="0" width="100%">
                             <tr>
                                 <td class="contentkey">$Text{"Category"}: </td>
-                                <td class="contentvalue"> $Quote{"$Data{"CategoryName"}"}</td>
+                                <td class="contentvalue">$Data{"CategoryName"}</td>
                             </tr>
                             <tr>
                                 <td class="contentkey">$Text{"State"}: </td>
-                                <td class="contentvalue"> $Text{"$Data{"State"}"}</td>
+                                <td class="contentvalue">$Text{"$Data{"State"}"}</td>
                             </tr>
 <!-- dtl:block:Language -->
                             <tr>
                                 <td class="contentkey">$Text{"Language"}: </td>
-                                <td class="contentvalue"> $Quote{"$Data{"Language"}"}</td>
+                                <td class="contentvalue">$Data{"Language"}</td>
                             </tr>
 <!-- dtl:block:Language -->
 
@@ -62,7 +62,7 @@
 
                             <tr>
                                 <td class="contentkey">$Text{"Last update"}: </td>
-                                <td class="contentvalue"> $Quote{"$TimeLong{"$Data{"Changed"}"}"}</td>
+                                <td class="contentvalue">$TimeLong{"$Data{"Changed"}"}</td>
                             </tr>
                         </table>
                     </td>
@@ -72,7 +72,7 @@
             <table border="0" cellspacing="3" cellpadding="0" width="100%">
                 <tr>
                     <td width="10%" class="contentkey">$Text{"Keywords"}: </td>
-                    <td width="90%" class="contentvalue">$Quote{"$Data{"Keywords"}"} </td>
+                    <td width="90%" class="contentvalue">$QData{"Keywords"}</td>
                 </tr>
             </table>
         </td>

@@ -2,7 +2,7 @@
 # AgentFAQOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.18 2011-04-05 12:57:19 cr Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.19 2011-06-16 12:35:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,7 +78,7 @@
 <!-- dtl:block:RecordTitle -->
 <!-- dtl:block:RecordCategory -->
                 <td>
-                    <div title="$Text{"$Data{"CategoryName"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","50"}</div>
+                    <div title="$Text{"$Data{"CategoryName"}"}">$Text{"$Data{"CategoryName"}","50"}</div>
                 </td>
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordLanguage -->

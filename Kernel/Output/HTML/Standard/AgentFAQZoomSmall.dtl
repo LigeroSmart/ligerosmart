@@ -2,7 +2,7 @@
 # AgentFAQZoomSmall.dtl - provides HTML small for AgentFAQZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoomSmall.dtl,v 1.8 2011-01-05 15:21:43 cr Exp $
+# $Id: AgentFAQZoomSmall.dtl,v 1.9 2011-06-16 12:35:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,7 +39,7 @@
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Category"}:</label>
-                        <p class="Value" title="$Quote{"$Text{"$Data{"CategoryName"}"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</p>
+                        <p class="Value" title="$Text{"$Data{"CategoryName"}"}">$Text{"$Data{"CategoryName"}"}</p>
                         <div class="Clear"></div>
                     </fieldset>
                     <fieldset class="TableLike FixedLabelSmall">
@@ -53,18 +53,18 @@
                     </fieldset>
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"State"}:</label>
-                        <p class="Value" title="$Quote{"$Text{"$Data{"State"}"}"}">$Quote{"$Text{"$Data{"State"}"}","25"}</p>
+                        <p class="Value" title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</p>
                         <div class="Clear"></div>
 
 <!-- dtl:block:Language -->
                         <label>$Text{"Language"}:</label>
-                        <p class="Value" title="$Quote{"$Text{"$Data{"Language"}"}"}">$Quote{"$Text{"$Data{"Language"}"}","18"}</p>
+                        <p class="Value" title="$Text{"$Data{"Language"}"}">$Text{"$Data{"Language"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Language -->
 
 <!-- dtl:block:ViewApproval -->
                         <label>$Text{"Approval"}:</label>
-                        <p class="Value" title="$Quote{"$Text{"$Data{"Approval"}"}"}">$Quote{"$Text{"$Data{"Approval"}"}","18"}</p>
+                        <p class="Value" title="$Text{"$Data{"Approval"}"}">$Text{"$Data{"Approval"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:ViewApproval -->
 
@@ -87,7 +87,7 @@
 
 <!-- dtl:block:ViewVotes -->
                         <label>$Text{"Votes"}:</label>
-                        <p class="Value" title="$Quote{"$Text{"$Data{"Votes"}"}"}">$Quote{"$Text{"$Data{"Votes"}"}","18"}</p>
+                        <p class="Value">$QData{"Votes"}</p>
 <!-- dtl:block:ViewVotes -->
 <!-- dtl:block:ViewNoVotes -->
                         <label>$Text{"Votes"}:</label>
@@ -96,11 +96,11 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Created"}:</label>
-                        <p class="Value" title="$TimeLong{"$Data{"Created"}"} ($Data{"CreatedByLogin"})">$TimeShort{"$Data{"Created"}"}  ($Data{"CreatedByLogin"})</p>
+                        <p class="Value" title="$TimeLong{"$Data{"Created"}"} ($QData{"CreatedByLogin"})">$TimeShort{"$Data{"Created"}"}  ($QData{"CreatedByLogin"})</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
-                        <p class="Value" title="$TimeLong{"$Data{"Changed"}"} ($Data{"CreatedByLogin"})">$TimeShort{"$Data{"Changed"}"}  ($Data{"CreatedByLogin"})</p>
+                        <p class="Value" title="$TimeLong{"$Data{"Changed"}"} ($QData{"CreatedByLogin"})">$TimeShort{"$Data{"Changed"}"}  ($QData{"CreatedByLogin"})</p>
                         <div class="Clear"></div>
                     </fieldset>
                 </div>

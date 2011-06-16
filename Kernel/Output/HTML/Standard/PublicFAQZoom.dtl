@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.20 2011-01-19 23:08:23 cr Exp $
+# $Id: PublicFAQZoom.dtl,v 1.21 2011-06-16 12:35:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,9 +27,9 @@
                 <span class="FAQHook">$QData{"Number"}</span>
             </h2>
             <ul id="Metadata">
-                <li><span class="Key">$Text{"Category"}:</span> <span title="$Text{"$Data{"CategoryName"}"}">$Quote{"$Text{"$Data{"CategoryName"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Category"}:</span> <span title="$Text{"$Data{"CategoryName"}"}">$Text{"$Data{"CategoryName"}"}</span></li>
 <!-- dtl:block:Language -->
-                <li><span class="Key">$Text{"Language"}:</span> <span title="$Text{"$Data{"Language"}"}">$Quote{"$Text{"$Data{"Language"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Language"}:</span> <span title="$Text{"$Data{"Language"}"}">$Text{"$Data{"Language"}"}</span></li>
 <!-- dtl:block:Language -->
 
 <!-- dtl:block:ViewRating -->
@@ -47,7 +47,7 @@
 <!-- dtl:block:ViewRating -->
 
 <!-- dtl:block:ViewVotes -->
-                <li><span class="Key">$Text{"Votes"}:</span> <span title="$Text{"$Data{"Votes"}"}">$Quote{"$Text{"$Data{"Votes"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Votes"}:</span> <span title="$Text{"$Data{"Votes"}"}">$QData{"Votes"}</span></li>
 <!-- dtl:block:ViewVotes -->
                 <li><a href="$Env{"Baselink"}Action=PublicFAQPrint;ItemID=$LQData{"ItemID"}" class="Print AsPopup" title="$Text{"Print"}">$Text{"Print"}</a></li>
             </ul>
