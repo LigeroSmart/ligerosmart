@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.53 2011-02-01 19:49:41 en Exp $
+# $Id: TimeAccounting.pm,v 1.54 2011-06-27 22:11:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1150,7 +1150,7 @@ sub WorkingUnitsCompletnessCheck {
                     Year     => $Year,
                     Month    => $Month,
                     Day      => $Day,
-                    Calendar => $Calendar,
+                    Calendar => $Calendar || '',
                 );
 
                 my $Date = sprintf( "%04d-%02d-%02d", $Year, $Month, $Day );
@@ -1160,7 +1160,7 @@ sub WorkingUnitsCompletnessCheck {
                     = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 23:59:59' );
 
                 # add time zone to calculation
-                my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $Calendar );
+                my $Zone = $Self->{ConfigObject}->Get( "TimeZone::Calendar" . $Calendar || '' );
                 if ($Zone) {
                     my $ZoneSeconds = $Zone * 60 * 60;
                     $DayStartTime = $DayStartTime - $ZoneSeconds;
@@ -1679,6 +1679,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.53 $ $Date: 2011-02-01 19:49:41 $
+$Revision: 1.54 $ $Date: 2011-06-27 22:11:24 $
 
 =cut

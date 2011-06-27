@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.85 2011-02-15 23:14:50 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.86 2011-06-27 22:11:24 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.85 $) [1];
+$VERSION = qw($Revision: 1.86 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1665,30 +1665,39 @@ sub Run {
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'Setting' ) {
 
+        # get user data
+        my %UserData = $Self->{TimeAccountingObject}->UserGet(
+            UserID => $Self->{UserID},
+        );
+
         # permission check
-        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' ) if !$Self->{AccessRw};
+        if ( $UserData{CreateProject} or $Self->{AccessRw} ) {
 
-        # get the user action to show a msg if an user was updated or added
-        my $Note = $Self->{ParamObject}->GetParam( Param => 'User' );
+            # get the user action to show a msg if an user was updated or added
+            my $Note = $Self->{ParamObject}->GetParam( Param => 'User' );
 
-        # build output
-        $Self->_SettingOverview();
-        my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+            # build output
+            $Self->_SettingOverview();
+            my $Output = $Self->{LayoutObject}->Header( Title => 'Setting' );
+            $Output .= $Self->{LayoutObject}->NavigationBar();
 
-        # show a notification msg if proper
-        if ($Note) {
-            $Output .= $Note eq 'EditUser'
-                ? $Self->{LayoutObject}->Notify( Info => 'User updated!' )
-                : $Self->{LayoutObject}->Notify( Info => 'User added!' );
+            # show a notification msg if proper
+            if ($Note) {
+                $Output .= $Note eq 'EditUser'
+                    ? $Self->{LayoutObject}->Notify( Info => 'User updated!' )
+                    : $Self->{LayoutObject}->Notify( Info => 'User added!' );
+            }
+
+            $Output .= $Self->{LayoutObject}->Output(
+                Data         => \%Param,
+                TemplateFile => 'AgentTimeAccountingSetting'
+            );
+            $Output .= $Self->{LayoutObject}->Footer();
+            return $Output;
         }
 
-        $Output .= $Self->{LayoutObject}->Output(
-            Data         => \%Param,
-            TemplateFile => 'AgentTimeAccountingSetting'
-        );
-        $Output .= $Self->{LayoutObject}->Footer();
-        return $Output;
+        # return no permission screen
+        return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
     }
 
     # ---------------------------------------------------------- #
@@ -2643,9 +2652,7 @@ sub Run {
     # ---------------------------------------------------------- #
     # show error screen
     # ---------------------------------------------------------- #
-    $Self->{LogObject}->Log( Priority => 'error', Message => "$Self->{Subaction}" );
-
-    #    return $Self->{LayoutObject}->ErrorScreen( Message => 'Invalid Subaction process!' );
+    return $Self->{LayoutObject}->ErrorScreen( Message => 'Invalid Subaction process!' );
 }
 
 sub _CheckValidityUserPeriods {
@@ -2747,7 +2754,6 @@ sub _ActionListConstraints {
 
     my %List;
     if ( $Param{ProjectID} && keys %{ $Param{ActionListConstraints} } ) {
-
         my $ProjectName;
 
         PROJECT:
@@ -3009,42 +3015,52 @@ sub _SettingOverview {
 
     # build output
     $Self->{LayoutObject}->Block( Name => 'Setting', );
-    $Self->{LayoutObject}->Block( Name => 'ProjectFilter' );
-    $Self->{LayoutObject}->Block( Name => 'TaskFilter' );
-    $Self->{LayoutObject}->Block( Name => 'UserFilter' );
     $Self->{LayoutObject}->Block( Name => 'ActionListSetting' );
     $Self->{LayoutObject}->Block( Name => 'ActionAddProject' );
-    $Self->{LayoutObject}->Block( Name => 'ActionAddTask' );
 
-    # get user data
-    my %ShownUsers = $Self->{UserObject}->UserList(
-        Type  => 'Long',
-        Valid => 1,
-    );
-
-    # get list of registered users (if any)
-    my %User = $Self->{TimeAccountingObject}->UserList();
-
-    USERID:
-    for my $UserInfo ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
-        next USERID if !$User{$UserInfo};
-
-        # delete already registered user from the 'new' list
-        delete $ShownUsers{$UserInfo};
+    if ( $Self->{AccessRw} ) {
+        $Self->{LayoutObject}->Block( Name => 'ActionAddTask' );
     }
 
-    if (%ShownUsers) {
-        $ShownUsers{''} = '';
-        my $NewUserOption = $Self->{LayoutObject}->BuildSelection(
-            Data        => \%ShownUsers,
-            SelectedID  => '',
-            Name        => 'NewUserID',
-            Translation => 0,
+    $Self->{LayoutObject}->Block( Name => 'ProjectFilter' );
+
+    # hash to save registered users
+    my %User;
+
+    if ( $Self->{AccessRw} ) {
+        $Self->{LayoutObject}->Block( Name => 'TaskFilter' );
+        $Self->{LayoutObject}->Block( Name => 'UserFilter' );
+
+        # get user data
+        my %ShownUsers = $Self->{UserObject}->UserList(
+            Type  => 'Long',
+            Valid => 1,
         );
-        $Self->{LayoutObject}->Block(
-            Name => 'ActionAddUser',
-            Data => { NewUserOption => $NewUserOption, },
-        );
+
+        # get list of registered users (if any)
+        %User = $Self->{TimeAccountingObject}->UserList();
+
+        USERID:
+        for my $UserInfo ( sort { $ShownUsers{$a} cmp $ShownUsers{$b} } keys %ShownUsers ) {
+            next USERID if !$User{$UserInfo};
+
+            # delete already registered user from the 'new' list
+            delete $ShownUsers{$UserInfo};
+        }
+
+        if (%ShownUsers) {
+            $ShownUsers{''} = '';
+            my $NewUserOption = $Self->{LayoutObject}->BuildSelection(
+                Data        => \%ShownUsers,
+                SelectedID  => '',
+                Name        => 'NewUserID',
+                Translation => 0,
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'ActionAddUser',
+                Data => { NewUserOption => $NewUserOption, },
+            );
+        }
     }
 
     # Show project data
@@ -3085,67 +3101,70 @@ sub _SettingOverview {
         $Self->{LayoutObject}->Block( Name => 'NoProjectDataFoundMsg' );
     }
 
-    # Show action data
-    my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
+    if ( $Self->{AccessRw} ) {
 
-    $Self->{LayoutObject}->Block(
-        Name => 'OverviewResultSetting',
-        Data => \%Param,
-    );
+        # Show action data
+        my %Action = $Self->{TimeAccountingObject}->ActionSettingsGet();
 
-    # show list of available tasks/actions (if any)
-    if (%Action) {
-        for my $ActionID ( sort { $Action{$a}{Action} cmp $Action{$b}{Action} } keys %Action ) {
-            $Param{Action}   = $Action{$ActionID}{Action};
-            $Param{ActionID} = $ActionID;
-            $Param{Status}   = $StatusList{ $Action{$ActionID}{ActionStatus} };
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewResultSetting',
+            Data => \%Param,
+        );
 
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewResultSettingRow',
-                Data => {%Param},
-            );
+        # show list of available tasks/actions (if any)
+        if (%Action) {
+            for my $ActionID ( sort { $Action{$a}{Action} cmp $Action{$b}{Action} } keys %Action ) {
+                $Param{Action}   = $Action{$ActionID}{Action};
+                $Param{ActionID} = $ActionID;
+                $Param{Status}   = $StatusList{ $Action{$ActionID}{ActionStatus} };
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'OverviewResultSettingRow',
+                    Data => {%Param},
+                );
+            }
         }
-    }
 
-    # otherwise, show a no data found msg
-    else {
-        $Self->{LayoutObject}->Block( Name => 'NoSettingDataFoundMsg' );
-    }
-
-    # show user data
-    $Self->{LayoutObject}->Block(
-        Name => 'OverviewResultUser',
-        Data => \%Param,
-    );
-
-    # show list of registered users (if any)
-    if (%User) {
-        for my $UserID ( sort { $User{$a} cmp $User{$b} } keys %User ) {
-
-            # get missing user data
-            my %UserData = $Self->{TimeAccountingObject}->UserGet( UserID => $UserID );
-            my %UserGeneralData = $Self->{UserObject}->GetUserData( UserID => $UserID );
-
-            $Param{User}
-                = "$UserGeneralData{UserFirstname} $UserGeneralData{UserLastname} ($UserGeneralData{UserLogin})";
-            $Param{UserID}     = $UserID;
-            $Param{Comment}    = $UserData{Description};
-            $Param{CalendarNo} = $UserData{Calendar};
-            $Param{Calendar}   = $Self->{ConfigObject}->Get(
-                "TimeZone::Calendar"
-                    . ( $Param{CalendarNo} || '' ) . "Name"
-            ) || 'Default';
-
-            $Self->{LayoutObject}->Block(
-                Name => 'OverviewResultUserRow',
-                Data => {%Param},
-            );
+        # otherwise, show a no data found msg
+        else {
+            $Self->{LayoutObject}->Block( Name => 'NoSettingDataFoundMsg' );
         }
-    }
 
-    # otherwise, show a no data found msg
-    else {
-        $Self->{LayoutObject}->Block( Name => 'NoUserDataFoundMsg' );
+        # show user data
+        $Self->{LayoutObject}->Block(
+            Name => 'OverviewResultUser',
+            Data => \%Param,
+        );
+
+        # show list of registered users (if any)
+        if (%User) {
+            for my $UserID ( sort { $User{$a} cmp $User{$b} } keys %User ) {
+
+                # get missing user data
+                my %UserData = $Self->{TimeAccountingObject}->UserGet( UserID => $UserID );
+                my %UserGeneralData = $Self->{UserObject}->GetUserData( UserID => $UserID );
+
+                $Param{User}
+                    = "$UserGeneralData{UserFirstname} $UserGeneralData{UserLastname} ($UserGeneralData{UserLogin})";
+                $Param{UserID}     = $UserID;
+                $Param{Comment}    = $UserData{Description};
+                $Param{CalendarNo} = $UserData{Calendar};
+                $Param{Calendar}   = $Self->{ConfigObject}->Get(
+                    "TimeZone::Calendar"
+                        . ( $Param{CalendarNo} || '' ) . "Name"
+                ) || 'Default';
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'OverviewResultUserRow',
+                    Data => {%Param},
+                );
+            }
+        }
+
+        # otherwise, show a no data found msg
+        else {
+            $Self->{LayoutObject}->Block( Name => 'NoUserDataFoundMsg' );
+        }
     }
 
     return 1;
