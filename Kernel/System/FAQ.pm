@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.150 2011-06-23 15:33:35 cr Exp $
+# $Id: FAQ.pm,v 1.151 2011-06-28 14:07:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.150 $) [1];
+$VERSION = qw($Revision: 1.151 $) [1];
 
 =head1 NAME
 
@@ -2573,15 +2573,17 @@ sub StateTypeList {
     # types are given
     if ( $Param{Types} ) {
 
-        # quote the types and add single quotes around them
-        for my $Type ( @{ $Param{Types} } ) {
-            $Type = "'" . $Self->{DBObject}->Quote($Type) . "'";
+        # copy $Param{Types} to a local value since it will be changed, if the reference value is
+        # changed it will bring side effects
+        my @Types = @{ $Param{Types} };
 
+        # quote the types and add single quotes around them
+        for my $Type (@Types) {
+            $Type = "'" . $Self->{DBObject}->Quote($Type) . "'";
         }
 
         # create string
-        my $InString = join ', ', @{ $Param{Types} };
-
+        my $InString = join ', ', @Types;
         $SQL .= ' WHERE name IN (' . $InString . ')';
     }
 
@@ -4974,6 +4976,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.150 $ $Date: 2011-06-23 15:33:35 $
+$Revision: 1.151 $ $Date: 2011-06-28 14:07:22 $
 
 =cut
