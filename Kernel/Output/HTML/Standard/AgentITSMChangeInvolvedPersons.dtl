@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.41 2010-12-22 19:48:00 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.42 2011-07-08 06:28:07 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -87,6 +87,7 @@ $Include{"AgentITSMCABMemberSearch"}
 
                         </div>
                     </fieldset>
+                    <button type="submit" name="Submit" value="$Text{"Submit"}"> $Text{"Submit"} </button>
                 </div>
             </div>
 
@@ -167,8 +168,6 @@ $Include{"AgentITSMCABMemberSearch"}
                 </div>
             </div>
         </div>
-        <div class="Footer">
-            <button type="submit" name="Submit" value="$Text{"Submit"}"> $Text{"Submit"} </button>
-        </div>
+        <div class="Footer"></div>
     </div>
 </form>
