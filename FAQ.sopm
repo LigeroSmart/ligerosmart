@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.108 2011-03-18 12:57:22 mb Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.109 2011-07-30 16:13:58 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -25,6 +25,7 @@
         <File Permission="644" Location="Kernel/Language/es_MX_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/fa_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/fr_FAQ.pm"/>
+        <File Permission="644" Location="Kernel/Language/hu_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/nb_NO_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/nl_FAQ.pm"/>
         <File Permission="644" Location="Kernel/Language/pl_FAQ.pm"/>
