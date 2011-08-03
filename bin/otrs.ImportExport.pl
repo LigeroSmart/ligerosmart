@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # otrs.ImportExport.pl - import/export script
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ImportExport.pl,v 1.1 2011-02-11 00:26:53 ub Exp $
+# $Id: otrs.ImportExport.pl,v 1.2 2011-08-03 10:00:18 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -38,7 +38,7 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 # get options
 my %Opts;
@@ -47,7 +47,7 @@ getopts( 'hn:a:i:o:', \%Opts );
 if ( $Opts{h} ) {
 
     print STDOUT "otrs.ImportExport.pl <Revision $VERSION> - an import/export tool\n";
-    print STDOUT "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+    print STDOUT "Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
     print STDOUT "\n";
     print STDOUT "usage: otrs.ImportExport.pl -n <TemplateNumber> -a import|export ";
     print STDOUT "[-i <SourceFile>] [-o <DestinationFile>]\n";
@@ -59,7 +59,7 @@ if ( $Opts{h} ) {
     exit 1;
 }
 
-# check tempalte number
+# check template number
 if ( !$Opts{n} ) {
     print STDERR "ERROR: Need -n TemplateNumber\n";
     exit 1;
@@ -200,6 +200,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2011-02-11 00:26:53 $
+$Revision: 1.2 $ $Date: 2011-08-03 10:00:18 $
 
 =cut
