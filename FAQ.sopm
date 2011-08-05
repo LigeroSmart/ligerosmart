@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.110 2011-08-05 12:02:56 mb Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.111 2011-08-05 19:47:14 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -110,8 +110,10 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-button-unchecked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/rate-indicator.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Default.IE7.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.IE7.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-checked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-unchecked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-indicator.png"/>
