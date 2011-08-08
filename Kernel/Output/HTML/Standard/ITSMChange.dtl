@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.37 2011-01-04 09:45:00 mn Exp $
+# $Id: ITSMChange.dtl,v 1.38 2011-08-08 11:00:42 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -64,7 +64,7 @@
             <div class="Flag Small" title="$Text{"$Data{"WorkOrderState"}"}">
                 <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
             </div>
-            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
+            <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
                 $QData{"WorkOrderNumber"}.
 <!-- dtl:block:WorkOrderItemState -->
                 - $Text{"$Data{"WorkOrderState"}"}
@@ -77,7 +77,7 @@
 
 <!-- dtl:block:WorkOrderItemGraph -->
         <div class="Workorder LabelMargin">
-            <a href="$Env{"Baselink"}$Data{"Link"};Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
+            <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
                 <span>
                     <span class="$QData{"WorkOrderType"}_planned $Data{"WorkOrderOpacity"}" style="$QData{"GraphDirection"}: $QData{"PlannedPadding"}%; width: $QData{"PlannedTicks"}%">&nbsp;</span>
                 </span>
