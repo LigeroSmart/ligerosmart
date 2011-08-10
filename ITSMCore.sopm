@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.136 2011-06-08 16:04:27 ub Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.137 2011-08-10 11:09:46 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -12,7 +12,6 @@
     <Description Lang="de">Das OTRS::ITSM Core Paket.</Description>
     <Filelist>
         <File Permission="644" Location="doc/itsm-core-database.png"/>
-        <File Permission="644" Location="Kernel/Language.pm"/>
         <File Permission="644" Location="Kernel/Config/Files/FrameworkITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMCore.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/ITSMService.xml"/>
