@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.2 2009-08-11 14:05:58 ub Exp $ -->
+<!-- $Id: FAQ.xml,v 1.3 2011-08-11 23:38:40 mb Exp $ -->
 
 <book lang="en">
 
@@ -169,8 +169,104 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
 
 <chapter>
     <title>Configuration</title>
-    <para>There is a group &quot;FAQ&quot; in the Admin area of the SysConfig. Here you can find various configuration options for the FAQ module; most of them are self-explaining.
-    </para>
+    <sect1>
+        <title>Approval function</title>
+    <para>The OTRS FAQ has an appoval feature. If you activate the approval feature all newly created FAQs also create
+    a new ticket in a predefined queue. The persons who need to approve the FAQ entries can then act on these tickets and
+    approve the FAQ articles if they see fit. As long as the article has not been approved the article will not be
+    visible in the public interface.</para>
+    <para>
+    You can activate the Approval function by setting the option FAQ::ApprovalRequired to Yes.</para>
+    <para>
+    The approval message can be defined under FAQ::ApprovalTicketBody. You can modify the text if you need, and you can
+    also use variables that will be substituted with their actual values when the approval note is generated. The list
+    of the available variables is listed below.</para>
+<table id="table-of-faq-approval-variables">
+<title>Variables for FAQ Approval message</title>
+  <tgroup cols="2">
+    <thead>
+      <row>
+        <entry>
+          Name
+        </entry>
+        <entry>
+          Description
+        </entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_CATEGORY&gt;
+        </entry>
+        <entry>
+          Category name of the FAQ article
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_CATEGORYID&gt;
+        </entry>
+        <entry>
+          Category ID of the FAQ article
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_LANGUAGE&gt;
+        </entry>
+        <entry>
+          Language of the FAQ article
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_ITEMID&gt;
+        </entry>
+        <entry>
+          Item ID of the FAQ article
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_NUMBER&gt;
+        </entry>
+        <entry>
+          FAQ Number of the FAQ article
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_TITLE&gt;
+        </entry>
+        <entry>
+          Title
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_AUTHOR&gt;
+        </entry>
+        <entry>
+          Author name
+        </entry>
+      </row>
+      <row>
+        <entry>
+          &lt;OTRS_FAQ_STATE&gt;
+        </entry>
+        <entry>
+          State (visibility) of the FAQ article
+        </entry>
+      </row>
+    </tbody>
+  </tgroup>
+</table>
+    </sect1>
+    <sect1>
+        <title>More Configuration Options</title>
+    <para>There is a group &quot;FAQ&quot; in the Admin area of the SysConfig. Here you can find various configuration options for the FAQ module; most of them are self-explaining.</para>
+    </sect1>
 </chapter>
 
 <chapter>

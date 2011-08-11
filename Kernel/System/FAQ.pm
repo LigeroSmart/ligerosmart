@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.151 2011-06-28 14:07:22 cr Exp $
+# $Id: FAQ.pm,v 1.152 2011-08-11 23:38:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.151 $) [1];
+$VERSION = qw($Revision: 1.152 $) [1];
 
 =head1 NAME
 
@@ -520,6 +520,7 @@ sub FAQAdd {
         my $Ok = $Self->_FAQApprovalTicketCreate(
             ItemID     => $ID,
             CategoryID => $Param{CategoryID},
+            LanguageID => $Param{LanguageID},
             FAQNumber  => $Number,
             Title      => $Param{Title},
             StateID    => $Param{StateID},
@@ -4878,6 +4879,7 @@ creates an approval ticket
     my $Success = $FAQObject->_FAQApprovalTicketCreate(
         ItemID     => 123,
         CategoryID => 2,
+        LanguageID => 1,
         FAQNumber  => 10211,
         Title      => 'Some Title',
         StateID    => 1,
@@ -4928,9 +4930,36 @@ sub _FAQApprovalTicketCreate {
             UserID  => $Param{UserID},
         );
 
+        # categories can be nested; you can have some::long::category.
+        my @CategoryNames;
+        my $CategoryID = $Param{CategoryID};
+        CATEGORY:
+        while (1) {
+            my %Category = $Self->CategoryGet(
+                CategoryID => $CategoryID,
+                UserID     => $Param{UserID},
+            );
+            push @CategoryNames, $Category{Name};
+            last CATEGORY if !$Category{ParentID};
+            $CategoryID = $Category{ParentID};
+        }
+        my $Category = join( '::', reverse @CategoryNames );
+
+        my $Language;
+        if ( $Self->{ConfigObject}->Get('FAQ::MultiLanguage') ) {
+            $Language = $Self->LanguageLookup(
+                LanguageID => $Param{LanguageID},
+            );
+        }
+        else {
+            $Language = '-';
+        }
+
         # get body from config
         my $Body = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketBody');
         $Body =~ s{ <OTRS_FAQ_CATEGORYID> }{$Param{CategoryID}}xms;
+        $Body =~ s{ <OTRS_FAQ_CATEGORY>   }{$Category}xms;
+        $Body =~ s{ <OTRS_FAQ_LANGUAGE>   }{$Language}xms;
         $Body =~ s{ <OTRS_FAQ_ITEMID>     }{$Param{ItemID}}xms;
         $Body =~ s{ <OTRS_FAQ_NUMBER>     }{$Param{FAQNumber}}xms;
         $Body =~ s{ <OTRS_FAQ_TITLE>      }{$Param{Title}}xms;
@@ -4976,6 +5005,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.151 $ $Date: 2011-06-28 14:07:22 $
+$Revision: 1.152 $ $Date: 2011-08-11 23:38:40 $
 
 =cut
