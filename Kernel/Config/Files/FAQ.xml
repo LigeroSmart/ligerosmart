@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.106 2011-08-05 19:47:14 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.107 2011-08-12 21:48:23 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -73,14 +73,6 @@
                 <Item Key="internal">internal (agent)</Item>
                 <Item Key="external">external (customer)</Item>
             </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="FAQ::Item::Voting::QuestionLangKey" Required="1" Valid="1">
-        <Description Translatable="1">Languagekey which is defined in the language file *_FAQ.pm.</Description>
-        <Group>FAQ</Group>
-        <SubGroup>Core::Item::Voting</SubGroup>
-        <Setting>
-            <String>ArticleVotingQuestion</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Explorer::Path::Show" Required="1" Valid="1">

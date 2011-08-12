@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.28 2011-06-16 12:35:40 mb Exp $
+# $Id: AgentFAQZoom.dtl,v 1.29 2011-08-12 21:48:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -208,7 +208,7 @@
                             <div class="Clear"></div>
                         </div>
                         <div class="ArticleFAQContent">
-                            <h3>$Text{"$Config{"FAQ::Item::Voting::QuestionLangKey"}"}</h3>
+                            <h3>$Text{"How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!"}</h3>
                             <div class="SpacingTop">
                                 <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="FAQVote">
                                     <div>

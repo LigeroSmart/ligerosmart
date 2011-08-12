@@ -2,7 +2,7 @@
 # Kernel/Language/hu_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: hu_FAQ.pm,v 1.1 2011-07-30 16:06:17 cr Exp $
+# $Id: hu_FAQ.pm,v 1.2 2011-08-12 21:48:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,20 +21,20 @@ sub Data {
     $Self->{Translation}->{'public'} = 'publikus';
     $Self->{Translation}->{'external'} = 'külsõ';
     $Self->{Translation}->{'FAQ Number'} = 'FAQ-sorszám';
-    $Self->{Translation}->{'LatestChangedItems'} = 'Legutóbb változott elemek';
-    $Self->{Translation}->{'LatestCreatedItems'} = 'Legutóbb létrehozott elemek';
-    $Self->{Translation}->{'Top10Items'} = 'Top 10 elemek';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Alkategóriája';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Legutóbb változott elemek';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Legutóbb létrehozott elemek';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 elemek';
+    $Self->{Translation}->{'Subcategory of'} = 'Alkategóriája';
     $Self->{Translation}->{'No rate selected!'} = 'Nincs értékelés kiválasztva!';
     $Self->{Translation}->{'public (all)'} = 'nyilvános (összes)';
     $Self->{Translation}->{'external (customer)'} = 'külsõ (ügyfél)';
     $Self->{Translation}->{'internal (agent)'} = 'belsõ (ügyintézõ)';
-    $Self->{Translation}->{'StartDay'} = 'Kezdõ nap';
-    $Self->{Translation}->{'StartMonth'} = 'Kezdõ hónap';
-    $Self->{Translation}->{'StartYear'} = 'Kezdõ év';
-    $Self->{Translation}->{'EndDay'} = 'Záró nap';
-    $Self->{Translation}->{'EndMonth'} = 'Záró hónap';
-    $Self->{Translation}->{'EndYear'} = 'Záró év';
+    $Self->{Translation}->{'Start day'} = 'Kezdõ nap';
+    $Self->{Translation}->{'Start month'} = 'Kezdõ hónap';
+    $Self->{Translation}->{'Start year'} = 'Kezdõ év';
+    $Self->{Translation}->{'End day'} = 'Záró nap';
+    $Self->{Translation}->{'End month'} = 'Záró hónap';
+    $Self->{Translation}->{'End year'} = 'Záró év';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Szavazatát köszönjük!';
     $Self->{Translation}->{'You have already voted!'} = 'Már szavazott!';
     $Self->{Translation}->{'FAQ Article Print'} = 'FAQ cikk nyomtatás';
@@ -131,7 +131,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Nincs szavazat!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Nincs szavazat! Legyen az elsõ, aki értékeli a FAQ cikket.';
     $Self->{Translation}->{'Download Attachment'} = 'Melléklet letöltése';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = 'ArticleVotingQuestion';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = 'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!';
     $Self->{Translation}->{'not helpful'} = 'nem segít';
     $Self->{Translation}->{'very helpful'} = 'nagyon segít';
 

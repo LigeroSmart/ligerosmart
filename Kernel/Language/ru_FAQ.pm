@@ -3,7 +3,7 @@
 # Copyright (C) 2011 Alex Savvin <savvin at mail.ru>
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_FAQ.pm,v 1.1 2011-08-05 12:02:56 mb Exp $
+# $Id: ru_FAQ.pm,v 1.2 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,20 +22,20 @@ sub Data {
     $Self->{Translation}->{'public'} = 'общедоступное';
     $Self->{Translation}->{'external'} = 'открытое';
     $Self->{Translation}->{'FAQ Number'} = 'Номер FAQ';
-    $Self->{Translation}->{'LatestChangedItems'} = 'Последние обновления статей FAQ';
-    $Self->{Translation}->{'LatestCreatedItems'} = 'Новые статьи FAQ';
-    $Self->{Translation}->{'Top10Items'} = 'Top 10 статей FAQ';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Подраздел';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Последние обновления статей FAQ';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Новые статьи FAQ';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 статей FAQ';
+    $Self->{Translation}->{'Subcategory of'} = 'Подраздел';
     $Self->{Translation}->{'No rate selected!'} = 'Оценка отсутствует!';
     $Self->{Translation}->{'public (all)'} = 'общедоступное (всем)';
     $Self->{Translation}->{'external (customer)'} = 'открытое (клиентам)';
     $Self->{Translation}->{'internal (agent)'} = 'служебное (агентам)';
-    $Self->{Translation}->{'StartDay'} = 'Начало дня';
-    $Self->{Translation}->{'StartMonth'} = 'Начала месяца';
-    $Self->{Translation}->{'StartYear'} = 'Начало года';
-    $Self->{Translation}->{'EndDay'} = 'Конец дня';
-    $Self->{Translation}->{'EndMonth'} = 'Конец месяца';
-    $Self->{Translation}->{'EndYear'} = 'Конец года';
+    $Self->{Translation}->{'Start day'} = 'Начало дня';
+    $Self->{Translation}->{'Start month'} = 'Начала месяца';
+    $Self->{Translation}->{'Start year'} = 'Начало года';
+    $Self->{Translation}->{'End day'} = 'Конец дня';
+    $Self->{Translation}->{'End month'} = 'Конец месяца';
+    $Self->{Translation}->{'End year'} = 'Конец года';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Спасибо за вашу оценку!';
     $Self->{Translation}->{'You have already voted!'} = 'Вы уже поставили оценку!';
     $Self->{Translation}->{'FAQ Article Print'} = 'Печать статьи FAQ';
@@ -132,7 +132,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Оценок не найдено!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Оценок не найдено! Оцените эту статью FAQ первым.';
     $Self->{Translation}->{'Download Attachment'} = 'Скачать вложение';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = 'Насколько была полезна эта статья? Пожалуйста, оцените её, чтобы мы могли улучшить базу FAQ. Спасибо!';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = 'Насколько была полезна эта статья? Пожалуйста, оцените её, чтобы мы могли улучшить базу FAQ. Спасибо!';
     $Self->{Translation}->{'not helpful'} = 'бесполезная';
     $Self->{Translation}->{'very helpful'} = 'очень полезная';
 

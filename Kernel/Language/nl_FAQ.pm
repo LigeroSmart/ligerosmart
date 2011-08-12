@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.24 2011-01-25 09:12:51 mb Exp $
+# $Id: nl_FAQ.pm,v 1.25 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,20 +21,20 @@ sub Data {
     $Self->{Translation}->{'public'} = 'publiek';
     $Self->{Translation}->{'external'} = 'extern';
     $Self->{Translation}->{'FAQ Number'} = 'FAQ nummer';
-    $Self->{Translation}->{'LatestChangedItems'} = 'Laatst gewijzigde artikelen';
-    $Self->{Translation}->{'LatestCreatedItems'} = 'Laatst aangemaakte artikelen';
-    $Self->{Translation}->{'Top10Items'} = 'Populairste artikelen';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Subcategorie van';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Laatst gewijzigde artikelen';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Laatst aangemaakte artikelen';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Populairste artikelen';
+    $Self->{Translation}->{'Subcategory of'} = 'Subcategorie van';
     $Self->{Translation}->{'No rate selected!'} = 'Geen waardering geselecteerd.';
     $Self->{Translation}->{'public (all)'} = 'publiek';
     $Self->{Translation}->{'external (customer)'} = 'extern (klanten)';
     $Self->{Translation}->{'internal (agent)'} = 'intern (gebruikers)';
-    $Self->{Translation}->{'StartDay'} = 'Eerste dag';
-    $Self->{Translation}->{'StartMonth'} = 'Eerste maand';
-    $Self->{Translation}->{'StartYear'} = 'Eerste jaar';
-    $Self->{Translation}->{'EndDay'} = 'Laatste dag';
-    $Self->{Translation}->{'EndMonth'} = 'Laatste maand';
-    $Self->{Translation}->{'EndYear'} = 'Laatste jaar';
+    $Self->{Translation}->{'Start day'} = 'Eerste dag';
+    $Self->{Translation}->{'Start month'} = 'Eerste maand';
+    $Self->{Translation}->{'Start year'} = 'Eerste jaar';
+    $Self->{Translation}->{'End day'} = 'Laatste dag';
+    $Self->{Translation}->{'End month'} = 'Laatste maand';
+    $Self->{Translation}->{'End year'} = 'Laatste jaar';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Bedankt voor uw stem!';
     $Self->{Translation}->{'You have already voted!'} = 'U heeft al gestemd.';
     $Self->{Translation}->{'FAQ Article Print'} = 'Artikel afdrukken';
@@ -130,7 +130,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Geen stemmen gevonden';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Geen stemmen gevonden. Wees de eerste om dit artikel te beoordelen.';
     $Self->{Translation}->{'Download Attachment'} = 'Sla bijlage op';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = 'Hielp dit artikel bij het beantwoorden van uw vraag?';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = 'Hielp dit artikel bij het beantwoorden van uw vraag?';
     $Self->{Translation}->{'not helpful'} = 'helemaal niet';
     $Self->{Translation}->{'very helpful'} = 'heel erg';
 

@@ -2,7 +2,7 @@
 # Kernel/Language/da_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_FAQ.pm,v 1.15 2011-01-24 18:06:53 cr Exp $
+# $Id: da_FAQ.pm,v 1.16 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,20 +21,20 @@ sub Data {
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'LatestChangedItems'} = 'Sidst ændrede artikler';
-    $Self->{Translation}->{'LatestCreatedItems'} = 'Nyeste artikler';
-    $Self->{Translation}->{'Top10Items'} = 'Top 10 artikler';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Underkategori af';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sidst ændrede artikler';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Nyeste artikler';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 artikler';
+    $Self->{Translation}->{'Subcategory of'} = 'Underkategori af';
     $Self->{Translation}->{'No rate selected!'} = 'Ingen rate valgt!';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'StartDay'} = 'Start dag';
-    $Self->{Translation}->{'StartMonth'} = 'Start måned';
-    $Self->{Translation}->{'StartYear'} = 'Start år';
-    $Self->{Translation}->{'EndDay'} = 'Slut dag';
-    $Self->{Translation}->{'EndMonth'} = 'Slut måned';
-    $Self->{Translation}->{'EndYear'} = 'Slut år';
+    $Self->{Translation}->{'Start day'} = 'Start dag';
+    $Self->{Translation}->{'Start month'} = 'Start måned';
+    $Self->{Translation}->{'Start year'} = 'Start år';
+    $Self->{Translation}->{'End day'} = 'Slut dag';
+    $Self->{Translation}->{'End month'} = 'Slut måned';
+    $Self->{Translation}->{'End year'} = 'Slut år';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Tak for din stemme!';
     $Self->{Translation}->{'You have already voted!'} = 'Du har allerede stemt!';
     $Self->{Translation}->{'FAQ Article Print'} = '';
@@ -134,7 +134,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = '';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '';
     $Self->{Translation}->{'Download Attachment'} = '';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = '';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = '';
     $Self->{Translation}->{'not helpful'} = '';
     $Self->{Translation}->{'very helpful'} = '';
 

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.47 2011-01-06 04:10:28 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.48 2011-08-12 21:48:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -696,12 +696,12 @@ sub FAQShowLatestNewsBox {
     my $RSSTitle;
     if ( $Param{Type} eq 'LastCreate' ) {
         $OrderBy  = 'Created';
-        $Header   = 'LatestCreatedItems';
+        $Header   = 'Latest created FAQ articles';
         $RSSTitle = 'FAQ Articles (new created)';
     }
     elsif ( $Param{Type} eq 'LastChange' ) {
         $OrderBy  = 'Changed';
-        $Header   = 'LatestChangedItems';
+        $Header   = 'Latest updated FAQ articles';
         $RSSTitle = 'FAQ Articles (recently changed)';
     }
 
@@ -892,7 +892,7 @@ sub FAQShowTop10 {
             $Self->Block(
                 Name => 'InfoBoxFAQMiniList',
                 Data => {
-                    Header => 'Top10Items',
+                    Header => 'Top 10 FAQ articles',
                 },
             );
 

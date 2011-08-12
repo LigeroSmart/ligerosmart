@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_FAQ.pm,v 1.20 2011-01-24 18:06:53 cr Exp $
+# $Id: zh_CN_FAQ.pm,v 1.21 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,20 +21,20 @@ sub Data {
     $Self->{Translation}->{'public'} = '公开';
     $Self->{Translation}->{'external'} = '外部';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'LatestChangedItems'} = '最近修改的文章';
-    $Self->{Translation}->{'LatestCreatedItems'} = '最新创建的文章';
-    $Self->{Translation}->{'Top10Items'} = '最常用的文章';
-    $Self->{Translation}->{'SubCategoryOf'} = '子目录于';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '最近修改的文章';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '最新创建的文章';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = '最常用的文章';
+    $Self->{Translation}->{'Subcategory of'} = '子目录于';
     $Self->{Translation}->{'No rate selected!'} = '没有选择评分!';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'StartDay'} = '开始日期';
-    $Self->{Translation}->{'StartMonth'} = '开始月份';
-    $Self->{Translation}->{'StartYear'} = '开始年份';
-    $Self->{Translation}->{'EndDay'} = '结束日期';
-    $Self->{Translation}->{'EndMonth'} = '开始月份';
-    $Self->{Translation}->{'EndYear'} = '结束年份';
+    $Self->{Translation}->{'Start day'} = '开始日期';
+    $Self->{Translation}->{'Start month'} = '开始月份';
+    $Self->{Translation}->{'Start year'} = '开始年份';
+    $Self->{Translation}->{'End day'} = '结束日期';
+    $Self->{Translation}->{'End month'} = '开始月份';
+    $Self->{Translation}->{'End year'} = '结束年份';
     $Self->{Translation}->{'Thanks for your vote!'} = '感谢您的评分';
     $Self->{Translation}->{'You have already voted!'} = '您已经评分!';
     $Self->{Translation}->{'FAQ Article Print'} = '';
@@ -131,7 +131,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = '没有找到评分!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '没有找到评分! 这将是该 FAQ 文章的第一个评分.';
     $Self->{Translation}->{'Download Attachment'} = '';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = '';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = '';
     $Self->{Translation}->{'not helpful'} = '没有帮助';
     $Self->{Translation}->{'very helpful'} = '很有帮助';
 

@@ -2,7 +2,7 @@
 # Kernel/Language/en_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: en_FAQ.pm,v 1.30 2011-01-24 13:25:22 ub Exp $
+# $Id: en_FAQ.pm,v 1.31 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,19 +22,19 @@ sub Data {
     $Self->{Translation}->{'internal'} = '';
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'LatestChangedItems'} = 'Latest updated FAQ articles';
-    $Self->{Translation}->{'LatestCreatedItems'} = 'Latest created FAQ articles';
-    $Self->{Translation}->{'Top10Items'} = 'Top 10 FAQ articles';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Subcategory of';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = '';
+    $Self->{Translation}->{'SubCategory of'} = '';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'StartDay'} = 'Start day';
-    $Self->{Translation}->{'StartMonth'} = 'Start month';
-    $Self->{Translation}->{'StartYear'} = 'Start year';
-    $Self->{Translation}->{'EndDay'} = 'End day';
-    $Self->{Translation}->{'EndMonth'} = 'End month';
-    $Self->{Translation}->{'EndYear'} = 'End year';
+    $Self->{Translation}->{'Start day'} = '';
+    $Self->{Translation}->{'Start month'} = '';
+    $Self->{Translation}->{'Start year'} = '';
+    $Self->{Translation}->{'End day'} = '';
+    $Self->{Translation}->{'End month'} = '';
+    $Self->{Translation}->{'End year'} = '';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = '';
@@ -179,7 +179,7 @@ sub Data {
     $Self->{Translation}->{'Linked Objects'} = '';
     $Self->{Translation}->{'Attachments'} = '';
     $Self->{Translation}->{'Download Attachment'} = '';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = 'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = '';
     $Self->{Translation}->{'not helpful'} = '';
     $Self->{Translation}->{'very helpful'} = '';
 

@@ -2,7 +2,7 @@
 # Kernel/Language/pl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_FAQ.pm,v 1.20 2011-01-24 18:06:54 cr Exp $
+# $Id: pl_FAQ.pm,v 1.21 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,20 +21,20 @@ sub Data {
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'LatestChangedItems'} = 'ostatnio zmienione artyku³y';
-    $Self->{Translation}->{'LatestCreatedItems'} = 'ostatnio utworzone artyku³y';
-    $Self->{Translation}->{'Top10Items'} = '10 najlepszych artyku³ów';
-    $Self->{Translation}->{'SubCategoryOf'} = 'Podkategoria';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'ostatnio zmienione artyku³y';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'ostatnio utworzone artyku³y';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = '10 najlepszych artyku³ów';
+    $Self->{Translation}->{'Subcategory of'} = 'Podkategoria';
     $Self->{Translation}->{'No rate selected!'} = 'Nie wybra³e¶ oceny!';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'StartDay'} = 'Dzieñ pocz±tkowy';
-    $Self->{Translation}->{'StartMonth'} = 'Miesi±c pocz±tkowy';
-    $Self->{Translation}->{'StartYear'} = 'Rok pocz±tkowy';
-    $Self->{Translation}->{'EndDay'} = 'Dzieñ koñcowy';
-    $Self->{Translation}->{'EndMonth'} = 'Miesi±c koñcowy';
-    $Self->{Translation}->{'EndYear'} = 'Rok koñcowy';
+    $Self->{Translation}->{'Start day'} = 'Dzieñ pocz±tkowy';
+    $Self->{Translation}->{'Start month'} = 'Miesi±c pocz±tkowy';
+    $Self->{Translation}->{'Start year'} = 'Rok pocz±tkowy';
+    $Self->{Translation}->{'End day'} = 'Dzieñ koñcowy';
+    $Self->{Translation}->{'End month'} = 'Miesi±c koñcowy';
+    $Self->{Translation}->{'End year'} = 'Rok koñcowy';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Dziêkujemy za oddanie g³osu!';
     $Self->{Translation}->{'You have already voted!'} = 'Ju¿ raz g³osowa³e¶!';
     $Self->{Translation}->{'FAQ Article Print'} = '';
@@ -131,7 +131,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = '';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '';
     $Self->{Translation}->{'Download Attachment'} = '';
-    $Self->{Translation}->{'ArticleVotingQuestion'} = '';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = '';
     $Self->{Translation}->{'not helpful'} = '';
     $Self->{Translation}->{'very helpful'} = '';
 

@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Static/FAQAccess.pm.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQAccess.pm,v 1.5 2010-12-08 12:01:29 mb Exp $
+# $Id: FAQAccess.pm,v 1.6 2011-08-12 21:48:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Days_in_Month);
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,7 +56,7 @@ sub Param {
     my %Day   = map { sprintf( "%02d", $_ ), sprintf( "%02d", $_ ) } ( 1 .. 31 );
 
     push @Params, {
-        Frontend   => 'StartDay',
+        Frontend   => 'Start day',
         Name       => 'StartDay',
         Multiple   => 0,
         Size       => 0,
@@ -66,7 +66,7 @@ sub Param {
         },
     };
     push @Params, {
-        Frontend   => 'StartMonth',
+        Frontend   => 'Start month',
         Name       => 'StartMonth',
         Multiple   => 0,
         Size       => 0,
@@ -76,7 +76,7 @@ sub Param {
         },
     };
     push @Params, {
-        Frontend   => 'StartYear',
+        Frontend   => 'Start year',
         Name       => 'StartYear',
         Multiple   => 0,
         Size       => 0,
@@ -86,7 +86,7 @@ sub Param {
         },
     };
     push @Params, {
-        Frontend   => 'EndDay',
+        Frontend   => 'End day',
         Name       => 'EndDay',
         Multiple   => 0,
         Size       => 0,
@@ -96,7 +96,7 @@ sub Param {
         },
     };
     push @Params, {
-        Frontend   => 'EndMonth',
+        Frontend   => 'End month',
         Name       => 'EndMonth',
         Multiple   => 0,
         Size       => 0,
@@ -106,7 +106,7 @@ sub Param {
         },
     };
     push @Params, {
-        Frontend   => 'EndYear',
+        Frontend   => 'End year',
         Name       => 'EndYear',
         Multiple   => 0,
         Size       => 0,
