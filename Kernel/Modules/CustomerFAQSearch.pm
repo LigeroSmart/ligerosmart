@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.19 2011-05-25 14:46:26 ub Exp $
+# $Id: CustomerFAQSearch.pm,v 1.20 2011-08-13 03:09:17 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -413,6 +413,108 @@ sub Run {
         # otherwise show a no data found msg
         else {
             $Self->{LayoutObject}->Block( Name => 'NoDataFoundMsg' );
+        }
+
+        # create a lookup table for attribute settings
+        my %AttributeMap = (
+            Number => {
+                Name         => $Self->{ConfigObject}->Get('FAQ::FAQHook'),
+                Translatable => 0,
+            },
+            Title => {
+                Name         => 'Title',
+                Translatable => 1,
+            },
+            Keyword => {
+                Name         => 'Keyword',
+                Translatable => 1,
+            },
+            Fulltext => {
+                Name         => 'Fulltext',
+                Translatable => 1,
+            },
+            CategoryIDs => {
+                Name         => 'Category',
+                Translatable => 1,
+            },
+            LanguageIDs => {
+                Name         => 'Language',
+                Translatable => 1,
+            },
+
+        );
+
+        # print each attribute in search results area.
+        for my $Attribute ( keys %AttributeMap ) {
+
+            # check if the attribute was defined by the user
+            if ( $GetParam{$Attribute} ) {
+
+                # set attribute name and translate it if applies
+                my $AttributeName = $AttributeMap{$Attribute}->{Name};
+                if ( $AttributeMap{$Attribute}->{Translatable} ) {
+                    $AttributeName = $Self->{LayoutObject}->{LanguageObject}->Get($AttributeName);
+                }
+
+                my $AttributeValue;
+
+                # check if the values is an array to parse each value
+                if ( ref $GetParam{$Attribute} eq 'ARRAY' ) {
+
+                    # Category attribute
+                    if ( $Attribute eq 'CategoryIDs' ) {
+
+                        # get the long name for all customer categories
+                        my $CategoryList = $Self->{FAQObject}->GetCustomerCategoriesLongNames(
+                            CustomerUser => $Self->{UserID},
+                            Type         => 'rw',
+                            UserID       => 1,
+                        );
+
+                        # convert each category id to category long name
+                        my @CategoryNames;
+                        CATEGORYID:
+                        for my $CatedoryID ( @{ $GetParam{$Attribute} } ) {
+                            next CATEGORYID if !$CategoryList->{$CatedoryID};
+                            push @CategoryNames, $CategoryList->{$CatedoryID};
+                        }
+
+                        # create a string with all selected category names
+                        $AttributeValue = join( " + ", @CategoryNames );
+                    }
+
+                    # LanguageIDs
+                    elsif ( $Attribute eq 'LanguageIDs' ) {
+
+                        # convert each language id to language name
+                        my @LanguageNames;
+                        LANGUAGEID:
+                        for my $LanguageID ( @{ $GetParam{$Attribute} } ) {
+                            my $LanguageName = $Self->{FAQObject}->LanguageLookup(
+                                LanguageID => $LanguageID,
+                            );
+                            next LANGUAGEID if !$LanguageName;
+                            push @LanguageNames, $LanguageName
+                        }
+
+                        # create a string with all selected language names
+                        $AttributeValue = join( " + ", @LanguageNames );
+                    }
+                }
+
+                # otherwise is an scalar and can be set directly
+                else {
+                    $AttributeValue = $GetParam{$Attribute}
+                }
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'SearchTerms',
+                    Data => {
+                        Attribute => $AttributeName,
+                        Value     => $AttributeValue,
+                    },
+                );
+            }
         }
 
         my $Link = 'Profile=' . $Self->{LayoutObject}->LinkEncode( $Self->{Profile} ) . ';';
