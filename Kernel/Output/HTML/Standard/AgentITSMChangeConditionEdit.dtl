@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.35 2011-03-15 14:11:34 ub Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.36 2011-08-15 14:51:45 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,6 +23,8 @@
                 $Text{"Edit"} $Text{"Condition"}: $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} $QData{"ChangeTitle","70"}
             </h1>
             <p>
+                <a href="$Env{"Baselink"}Action=AgentITSMChangeCondition;ChangeID=$QData{"ChangeID"}">$Text{"Back"}</a>
+                or
                 <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
             </p>
         </div>
@@ -270,8 +272,9 @@
 </form>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
-    $('#Cancel').bind('click', function (Event) {
-        location.href = '$Env{"Baselink"}Action=AgentITSMChangeCondition;ChangeID=$QData{"ChangeID"}';
+
+    $('.CancelClosePopup').bind('click', function () {
+        window.close();
     });
 
     $('.DeleteExpression').unbind('click.DeleteExpression').bind('click.DeleteExpression', function(Event) {
