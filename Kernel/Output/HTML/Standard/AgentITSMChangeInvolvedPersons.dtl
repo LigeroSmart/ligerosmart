@@ -2,7 +2,7 @@
 # AgentITSMChangeInvolvedPersons.dtl - provides HTML form for AgentITSMChangeInvolvedPersons
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.42 2011-07-08 06:28:07 mab Exp $
+# $Id: AgentITSMChangeInvolvedPersons.dtl,v 1.43 2011-08-16 13:01:01 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,21 +18,11 @@ $Include{"AgentITSMCABMemberSearch"}
         Core.Form.EnableForm($('#LoginBox form, #PasswordBox form'));
 
         $('#ChangeManager').bind('focus', function( Event ) {
-            $('#ChangeManager').val('');
-            $('#ChangeManager' + 'Selected').val('');
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-manager');
         });
 
         $('#ChangeBuilder').bind('focus', function( Event ) {
-            $('#ChangeBuilder').val('');
-            $('#ChangeBuilder' + 'Selected').val('');
             Core.Config.Set('UserAutocomplete.Groups', 'itsm-change-builder');
-        });
-
-        $('#NewCABMember').bind('focus', function( Event ) {
-            $('#NewCABMember').val('');
-            $('#NewCABMember' + 'Selected').val('');
-            $('#NewCABMember' + 'Type').val('');
         });
 
        $('#AddCABMember').bind('click', function (Event) {
