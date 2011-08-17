@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeHistory.pm - the OTRS::ITSM::ChangeManagement change history module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeHistory.pm,v 1.53 2011-04-15 12:37:24 ub Exp $
+# $Id: AgentITSMChangeHistory.pm,v 1.54 2011-08-17 09:45:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -99,6 +99,9 @@ sub Run {
             Comment => 'Please contact the administrator.',
         );
     }
+
+    # build a lookup hash with all workorder IDs of this change
+    my %WorkOrderIDLookup = map { $_ => 1 } @{ $Change->{WorkOrderIDs} };
 
     # get history entries
     my $HistoryEntriesRef = $Self->{HistoryObject}->ChangeHistoryGet(
@@ -519,21 +522,15 @@ sub Run {
         if (
             $HistoryEntry->{HistoryType} =~ m{ \A WorkOrder }xms
             && $HistoryEntry->{WorkOrderID}
+            && $WorkOrderIDLookup{ $HistoryEntry->{WorkOrderID} }
             )
         {
-            my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
-                WorkOrderID => $HistoryEntry->{WorkOrderID},
-                UserID      => $Self->{UserID},
-                LogNo       => 1,
-            );
 
             # show link
-            if ($WorkOrder) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'ShowWorkOrderZoom',
-                    Data => {%Data},
-                );
-            }
+            $Self->{LayoutObject}->Block(
+                Name => 'ShowWorkOrderZoom',
+                Data => {%Data},
+            );
         }
 
         # don't show any link
