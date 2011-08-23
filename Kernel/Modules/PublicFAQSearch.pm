@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.17 2011-08-13 03:09:17 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.18 2011-08-23 12:35:28 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -74,6 +74,34 @@ sub Run {
     $Self->{OrderBy} = $Self->{ParamObject}->GetParam( Param => 'Order' )
         || $Self->{Config}->{'Order::Default'}
         || 'Down';
+
+    # build output for open search description by FAQ number
+    if ( $Self->{Subaction} eq 'OpenSearchDescriptionFAQNumber' ) {
+        my $Output = $Self->{LayoutObject}->Output(
+            TemplateFile => 'PublicFAQSearchOpenSearchDescriptionFAQNumber',
+            Data         => \%Param,
+        );
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => 'OpenSearchDescriptionFAQNumber.xml',
+            ContentType => 'application/opensearchdescription+xml',
+            Content     => $Output,
+            Type        => 'inline',
+        );
+    }
+
+    # build output for open search description by fulltext
+    if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
+        my $Output = $Self->{LayoutObject}->Output(
+            TemplateFile => 'PublicFAQSearchOpenSearchDescription',
+            Data         => \%Param,
+        );
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => 'OpenSearchDescriptionFulltext.xml',
+            ContentType => 'application/opensearchdescription+xml',
+            Content     => $Output,
+            Type        => 'inline',
+        );
+    }
 
     # remember exclude attributes
     my @Excludes = $Self->{ParamObject}->GetArray( Param => 'Exclude' );
