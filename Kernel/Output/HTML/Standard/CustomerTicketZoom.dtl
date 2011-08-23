@@ -1,9 +1,9 @@
 # --
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.19 2010-12-06 19:33:09 en Exp $
-# $Id: CustomerTicketZoom.dtl,v 1.19 2010-12-06 19:33:09 en Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.20 2011-08-23 12:29:12 ub Exp $
+# $OldId: CustomerTicketZoom.dtl,v 1.106.2.4 2011/06/30 18:53:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,10 +30,10 @@
                 <li><span class="Key">$Text{"Type"}:</span> <span title="$QData{"Type"}">$QData{"Type","18"}</span></li>
 <!-- dtl:block:Type -->
 <!-- dtl:block:Service -->
-                <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Quote{"$Text{"$Data{"Service"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Text{"$Data{"Service"}"}</span></li>
 <!-- dtl:block:Service -->
 <!-- dtl:block:SLA -->
-                <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Quote{"$Text{"$Data{"SLA"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Text{"$Data{"SLA"}"}</span></li>
 <!-- dtl:block:SLA -->
 # ---
 # ITSM
@@ -42,14 +42,20 @@
                 <li><span class="Key">$Text{"Impact"}:</span> <span title="$Text{"$Data{"Impact"}"}">$Quote{"$Text{"$Data{"Impact"}"}","18"}</span></li>
 # ---
 <!-- dtl:block:State -->
-                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Quote{"$Text{"$Data{"State"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</span></li>
 <!-- dtl:block:State -->
 <!-- dtl:block:Priority -->
-                <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Quote{"$Text{"$Data{"Priority"}"}","18"}</span></li>
+                <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</span></li>
 <!-- dtl:block:Priority -->
 <!-- dtl:block:Queue -->
                 <li><span class="Key">$Text{"Queue"}:</span> <span title="$QData{"Queue"}">$QData{"Queue","18"}</span></li>
 <!-- dtl:block:Queue -->
+<!-- dtl:block:Owner -->
+                <li><span class="Key">$Text{"Owner"}:</span> <span title="$QData{"Owner"}">$QData{"Owner"}</span></li>
+<!-- dtl:block:Owner -->
+<!-- dtl:block:Responsible -->
+                <li><span class="Key">$Text{"Responsible"}:</span> <span title="$QData{"Responsible"}">$QData{"Responsible"}</span></li>
+<!-- dtl:block:Responsible -->
 # use this if you want to show TicketFreeKey1-16 and TicketFreeText1-16
 <!-- dtl:block:TicketFreeText -->
                 <li><span class="Key">$QData{"TicketFreeKey","20"}:</span> <span title="$QData{"TicketFreeText"}">$QData{"TicketFreeText","20"}</span></li>
@@ -84,7 +90,7 @@
             <input type="hidden" name="FormID" value="$QData{"FormID"}" />
             <ul id="Messages">
 <!-- dtl:block:Article -->
-                <li class="$QData{"SenderType"} $QData{"ArticleType"} $QData{"Class"}">
+                <li class="$QData{"SenderType"}-$QData{"ArticleType"} $QData{"Class"}">
                     <div class="MessageHeader">
 
 <!-- dtl:block:ArticleContracted -->
@@ -108,9 +114,18 @@
                             </div>
 <!-- dtl:block:ArticleRow -->
                             <div>
-                                <div class="Label">$Text{"Subject"}:</div> <span title="$QData{"Subject"}">$QData{"Subject","100"}</span>
+                                <div class="Label">$Text{"Subject"}:</div> <span title="$QData{"Subject"}">$QData{"Subject","150"}</span>
                                 <div class="Clear"></div>
                             </div>
+
+# show the ArticleFreeKey1-3 and ArticleFreeText1-3
+<!-- dtl:block:ArticleFreeText -->
+                            <div>
+                                <div class="Label" title="$QData{"Key"}">$QData{"Key", "11"}:</div> <span title="$QData{"Value"}">$QData{"Value","160"}</span>
+                                <div class="Clear"></div>
+                            </div>
+<!-- dtl:block:ArticleFreeText -->
+
 <!-- dtl:block:ArticleAttachment -->
                             <div class="Attachments">
                                 <div class="Label">$Text{"$Data{"Key"}"}:</div>
@@ -133,7 +148,7 @@
                         <div class="MessageContent">
 <!-- dtl:block:BodyPlain -->
                             $Data{"BodyNote"}
-                            <div class="message">
+                            <div class="ArticleBody">
                                 $Data{"Body"}
                             </div>
 <!-- dtl:block:BodyPlain -->
@@ -155,7 +170,7 @@
 <!-- dtl:block:RichText-->
                     $Include{"CustomerRichTextEditor"}
 <!-- dtl:block:RichText-->
-                    <textarea title="$Text{"Reply"}" id="RichText" class="RichText DontPrint Validate_Required $QData{"RichTextInvalid"}" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
+                    <textarea title="$Text{"Reply"}" id="RichText" class="RichText DontPrint Validate_RequiredRichText $QData{"RichTextInvalid"}" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
                     <div id="RichTextError" class="TooltipErrorMessage">
                         <p>$Text{"This field is required."}</p>
                     </div>
