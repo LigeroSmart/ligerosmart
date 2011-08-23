@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.90 2011-04-14 16:51:55 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.91 2011-08-23 19:13:17 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -286,14 +286,29 @@ sub Data {
 
     # Template: AgentITSMChangeSearch
     $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '(z. B. 10*5155 or 105658*)';
-    $Self->{Translation}->{'CABAgent'} = 'CAB Agent';
-    $Self->{Translation}->{'e.g.'} = 'z. B.';
-    $Self->{Translation}->{'CABCustomer'} = 'CAB Kunde';
-    $Self->{Translation}->{'Instruction'} = 'Anweisung';
-    $Self->{Translation}->{'Report'} = 'Bericht';
-    $Self->{Translation}->{'Change Category'} = 'Change-Kategorie';
-    $Self->{Translation}->{'(before/after)'} = '(vor/nach)';
-    $Self->{Translation}->{'(between)'} = '(zwischen)';
+    $Self->{Translation}->{'CABAgent'}                  = 'CAB Agent';
+    $Self->{Translation}->{'e.g.'}                      = 'z. B.';
+    $Self->{Translation}->{'CABCustomer'}               = 'CAB Kunde';
+    $Self->{Translation}->{'Instruction'}               = 'Anweisung';
+    $Self->{Translation}->{'Report'}                    = 'Bericht';
+    $Self->{Translation}->{'Change Category'}           = 'Change-Kategorie';
+    $Self->{Translation}->{'(before/after)'}            = '(vor/nach)';
+    $Self->{Translation}->{'(between)'}                 = '(zwischen)';
+    $Self->{Translation}->{'CAB Agent'}                 = 'CAB Agent';
+    $Self->{Translation}->{'CAB Customer'}              = 'CAB Kunde';
+    $Self->{Translation}->{'Change Description'}        = 'Change Beschreibung';
+    $Self->{Translation}->{'Change Impact'}             = 'Change Auswirkung';
+    $Self->{Translation}->{'Change Justification'}      = 'Change Begründung';
+    $Self->{Translation}->{'Change Number'}             = 'Change Nummer';
+    $Self->{Translation}->{'Change Priority'}           = 'Change Priorität';
+    $Self->{Translation}->{'Change State'}              = 'Change-Status';
+    $Self->{Translation}->{'Change Title'}              = 'Change-Titel';
+    $Self->{Translation}->{'Created By'}                = 'Erstellt von';
+    $Self->{Translation}->{'WorkOrder Agent'}           = 'Workorder-Agent';
+    $Self->{Translation}->{'WorkOrder Instruction'}     = 'Workorder Anweisung';
+    $Self->{Translation}->{'WorkOrder Report'}          = 'Workorder Bericht';
+    $Self->{Translation}->{'WorkOrder State'}           = 'Workorder-Status';
+    $Self->{Translation}->{'Work Order Title'}          = 'Workorder-Titel';
 
     # Template: AgentITSMChangeSearchResultPrint
     $Self->{Translation}->{'WorkOrders'} = 'Workorder';
