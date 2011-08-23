@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.20 2011-08-13 03:09:17 cr Exp $
+# $Id: CustomerFAQSearch.pm,v 1.21 2011-08-23 12:59:41 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -85,6 +85,34 @@ sub Run {
         return $Self->{LayoutObject}->Redirect(
             OP =>
                 "Action=CustomerFAQSearch;Subaction=Search;TakeLastSearch=1;SaveProfile=1;Profile=$Self->{Profile}",
+        );
+    }
+
+    # build output for open search description by FAQ number
+    if ( $Self->{Subaction} eq 'OpenSearchDescriptionFAQNumber' ) {
+        my $Output = $Self->{LayoutObject}->Output(
+            TemplateFile => 'PublicFAQSearchOpenSearchDescriptionFAQNumber',
+            Data         => \%Param,
+        );
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => 'OpenSearchDescriptionFAQNumber.xml',
+            ContentType => 'application/opensearchdescription+xml',
+            Content     => $Output,
+            Type        => 'inline',
+        );
+    }
+
+    # build output for open search description by fulltext
+    if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
+        my $Output = $Self->{LayoutObject}->Output(
+            TemplateFile => 'PublicFAQSearchOpenSearchDescription',
+            Data         => \%Param,
+        );
+        return $Self->{LayoutObject}->Attachment(
+            Filename    => 'OpenSearchDescriptionFulltext.xml',
+            ContentType => 'application/opensearchdescription+xml',
+            Content     => $Output,
+            Type        => 'inline',
         );
     }
 
