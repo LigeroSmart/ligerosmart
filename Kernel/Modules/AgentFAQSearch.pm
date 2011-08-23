@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.28 2011-05-16 15:57:53 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.29 2011-08-23 12:38:59 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -89,7 +89,7 @@ sub Run {
         );
         return $Self->{LayoutObject}->Attachment(
             Filename    => 'OpenSearchDescriptionFAQNumber.xml',
-            ContentType => 'text/xml',
+            ContentType => 'application/opensearchdescription+xml',
             Content     => $Output,
             Type        => 'inline',
         );
@@ -103,7 +103,7 @@ sub Run {
         );
         return $Self->{LayoutObject}->Attachment(
             Filename    => 'OpenSearchDescriptionFulltext.xml',
-            ContentType => 'text/xml',
+            ContentType => 'application/opensearchdescription+xml',
             Content     => $Output,
             Type        => 'inline',
         );
