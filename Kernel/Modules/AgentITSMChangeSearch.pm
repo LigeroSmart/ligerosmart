@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.75 2011-05-13 08:41:59 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.76 2011-08-25 20:14:27 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.75 $) [1];
+$VERSION = qw($Revision: 1.76 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1098,6 +1098,10 @@ sub _MaskForm {
 
     # get change FreeTextKeys
     for my $Number (@ConfiguredChangeFreeTextFields) {
+
+        # check if this freetext field should be available in this frontend
+        next if !$Self->{Config}->{ChangeFreeText}->{$Number};
+
         my $Config            = $Self->{ConfigObject}->Get( 'ChangeFreeKey' . $Number );
         my $FreeTextKeyString = $Self->_GetFreeTextKeyString(
             Number => $Number,
@@ -1114,6 +1118,10 @@ sub _MaskForm {
 
     # get change FreeTextKeys
     for my $Number (@ConfiguredWorkOrderFreeTextFields) {
+
+        # check if this freetext field should be available in this frontend
+        next if !$Self->{Config}->{WorkOrderFreeText}->{$Number};
+
         my $Config            = $Self->{ConfigObject}->Get( 'WorkOrderFreeKey' . $Number );
         my $FreeTextKeyString = $Self->_GetFreeTextKeyString(
             Number => $Number,
