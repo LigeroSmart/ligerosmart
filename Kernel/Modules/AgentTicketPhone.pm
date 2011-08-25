@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.33 2011-06-08 15:55:11 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.178.2.5 2011/05/09 19:30:43 mb Exp $
+# $Id: AgentTicketPhone.pm,v 1.34 2011-08-25 16:22:18 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.178.2.6 2011/07/22 12:49:48 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -592,7 +592,7 @@ sub Run {
         );
 
         # check pending date
-        if ( $StateData{TypeName} && $StateData{TypeName} =~ /^pending/i ) {
+        if ( !$ExpandCustomerName && $StateData{TypeName} && $StateData{TypeName} =~ /^pending/i ) {
             if ( !$Self->{TimeObject}->Date2SystemTime( %GetParam, Second => 0 ) ) {
                 if ( $IsUpload == 0 ) {
                     $Error{DateInvalid} = ' ServerError';

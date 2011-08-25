@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.13 2010-12-06 19:33:09 en Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.75 2010/11/26 21:16:50 en Exp $
+# $Id: CustomerTicketZoom.pm,v 1.14 2011-08-25 16:22:18 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.75.2.1 2011/06/22 08:43:47 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -513,6 +513,27 @@ sub _Mask {
     if ( $Self->{Config}->{AttributesView}->{Queue} ) {
         $Self->{LayoutObject}->Block(
             Name => 'Queue',
+            Data => \%Param,
+        );
+    }
+
+    # ticket owner
+    if ( $Self->{Config}->{AttributesView}->{Owner} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'Owner',
+            Data => \%Param,
+        );
+    }
+
+    # ticket responsible
+    if (
+        $Self->{ConfigObject}->Get('Ticket::Responsible')
+        &&
+        $Self->{Config}->{AttributesView}->{Responsible}
+        )
+    {
+        $Self->{LayoutObject}->Block(
+            Name => 'Responsible',
             Data => \%Param,
         );
     }

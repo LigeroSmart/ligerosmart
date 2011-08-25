@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.pm,v 1.6 2010-12-06 19:33:09 en Exp $
-# $OldId: CustomerTicketPrint.pm,v 1.40 2010/11/29 11:39:07 mb Exp $
+# $Id: CustomerTicketPrint.pm,v 1.7 2011-08-25 16:22:18 ub Exp $
+# $OldId: CustomerTicketPrint.pm,v 1.40.2.1 2011/06/29 19:01:31 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -315,27 +315,41 @@ sub _PDFOutputTicketInfos {
     my %Page   = %{ $Param{PageData} };
 
     # create left table
-    my $TableLeft = [
-        {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('State') . ':',
-            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Ticket{State} ),
-        },
+    my $TableLeft;
+
+    # add ticket data, respecting AttributesView configuration
 # ---
 # ITSM
 # ---
-#        {
-#            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Priority') . ':',
-#            Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Ticket{Priority} ),
-#        },
+#    for my $Attribute (qw(State Priority Queue Owner)) {
+    for my $Attribute (qw(State Queue Owner)) {
 # ---
-        {
-            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Queue') . ':',
-            Value => $Ticket{Queue},
-        },
-    ];
+        if ( $Self->{Config}->{AttributesView}->{$Attribute} ) {
+            my $Row = {
+                Key   => $Self->{LayoutObject}->{LanguageObject}->Get($Attribute) . ':',
+                Value => $Self->{LayoutObject}->{LanguageObject}->Get( $Ticket{$Attribute} )
+                    || $Ticket{$Attribute},
+            };
+            push( @{$TableLeft}, $Row );
+        }
+    }
+
+    # add ticket responsible
+    if (
+        $Self->{ConfigObject}->Get('Ticket::Responsible')
+        &&
+        $Self->{Config}->{AttributesView}->{Responsible}
+        )
+    {
+        my $Row = {
+            Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Responsible') . ':',
+            Value => $Ticket{Responsible},
+        };
+        push( @{$TableLeft}, $Row );
+    }
 
     # add type row, if feature is enabled
-    if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
+    if ( $Self->{ConfigObject}->Get('Ticket::Type') && $Self->{Config}->{AttributesView}->{Type} ) {
         my $Row = {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Type') . ':',
             Value => $Ticket{Type},
@@ -343,13 +357,22 @@ sub _PDFOutputTicketInfos {
         push( @{$TableLeft}, $Row );
     }
 
-    # add service and sla row, if feature is enabled
-    if ( $Self->{ConfigObject}->Get('Ticket::Service') ) {
+    # add service row, if feature is enabled
+    if (
+        $Self->{ConfigObject}->Get('Ticket::Service')
+        && $Self->{Config}->{AttributesView}->{Service}
+        )
+    {
         my $RowService = {
             Key => $Self->{LayoutObject}->{LanguageObject}->Get('Service') . ':',
             Value => $Ticket{Service} || '-',
         };
         push( @{$TableLeft}, $RowService );
+    }
+
+    # add sla row, if feature is enabled
+    if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Self->{Config}->{AttributesView}->{SLA} )
+    {
         my $RowSLA = {
             Key => $Self->{LayoutObject}->{LanguageObject}->Get('SLA') . ':',
             Value => $Ticket{SLA} || '-',
@@ -917,22 +940,76 @@ sub _PDFOutputArticles {
 sub _HTMLMask {
     my ( $Self, %Param ) = @_;
 
+    # output state
+    if ( $Self->{Config}->{AttributesView}->{State} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketState',
+            Data => { %Param, },
+        );
+    }
+
+    # output priority
+    if ( $Self->{Config}->{AttributesView}->{Priority} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketPriority',
+            Data => { %Param, },
+        );
+    }
+
+    # output queue
+    if ( $Self->{Config}->{AttributesView}->{Queue} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketQueue',
+            Data => { %Param, },
+        );
+    }
+
     # output type, if feature is enabled
-    if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
+    if ( $Self->{ConfigObject}->Get('Ticket::Type') && $Self->{Config}->{AttributesView}->{Type} ) {
         $Self->{LayoutObject}->Block(
             Name => 'TicketType',
             Data => { %Param, },
         );
     }
 
-    # output service and sla, if feature is enabled
-    if ( $Self->{ConfigObject}->Get('Ticket::Service') ) {
+    # output service, if feature is enabled
+    if (
+        $Self->{ConfigObject}->Get('Ticket::Service')
+        && $Self->{Config}->{AttributesView}->{Service}
+        )
+    {
         $Self->{LayoutObject}->Block(
             Name => 'TicketService',
             Data => {
                 Service => $Param{Service} || '-',
-                SLA     => $Param{SLA}     || '-',
             },
+        );
+    }
+
+    # output sla, if feature is enabled
+    if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Self->{Config}->{AttributesView}->{SLA} )
+    {
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketSLA',
+            Data => {
+                SLA => $Param{SLA} || '-',
+            },
+        );
+    }
+
+    # output owner
+    if ( $Self->{Config}->{AttributesView}->{Owner} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketOwner',
+            Data => { %Param, },
+        );
+    }
+
+    # output responsible
+    if ( $Self->{Config}->{AttributesView}->{Responsible} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketResponsible',
+            Data => { %Param, },
         );
     }
 
