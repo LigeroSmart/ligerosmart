@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.15 2011-04-20 10:12:39 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.16 2011-08-26 06:45:08 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.33.2.4 2011/04/11 18:18:39 mp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -198,7 +198,7 @@ sub Run {
     }
 
     # set service id from ticket
-    if (!defined($GetParam{ServiceID}) && $Ticket{ServiceID}) {
+    if ( !defined $GetParam{ServiceID} && $Ticket{ServiceID} ) {
         $GetParam{ServiceID} = $Ticket{ServiceID};
     }
 
@@ -207,21 +207,40 @@ sub Run {
         $GetParam{ImpactID} = $Ticket{TicketFreeText14};
     }
 
-    # get impact list
-    my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Impact',
-    );
-
     my %Service;
-    if ($GetParam{ServiceID}) {
+    my $ImpactList = {};
+    $ImpactList->{''} = '-';
+
+    if ( $GetParam{ServiceID} ) {
+
         # get service
         %Service = $Self->{ServiceObject}->ServiceGet(
             ServiceID => $GetParam{ServiceID},
             UserID => $Self->{UserID},
         );
+
+        # get impact list
+        $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
+            Class => 'ITSM::Core::Impact',
+        );
+
+        # recalculate impact if impact is not set until now
+        if ( !$GetParam{ImpactID} ) {
+
+            # get default selection
+            my $DefaultSelection = $Self->{ConfigObject}->Get('TicketFreeText14::DefaultSelection');
+
+            # get default impact id
+            my %ImpactListReverse = reverse %{$ImpactList};
+            $GetParam{ImpactID}   = $ImpactListReverse{$DefaultSelection};
+            $GetParam{PriorityRC} = 1;
+        }
+
         # recalculate priority
         if ( $GetParam{PriorityRC} && $Self->{Config}->{Priority} ) {
+
             if ($GetParam{ImpactID}) {
+
                 # get priority
                 $GetParam{PriorityIDFromImpact} = $Self->{CIPAllocateObject}->PriorityAllocationGet(
                     CriticalityID => $Service{CriticalityID},
@@ -940,8 +959,6 @@ sub Run {
 # ITSM
 # ---
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
-
-        $ImpactList->{''} = '-';
 
         my %PriorityList = $Self->{TicketObject}->PriorityList(
             UserID   => $Self->{UserID},
