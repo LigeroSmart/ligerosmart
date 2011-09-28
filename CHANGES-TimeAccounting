@@ -2,7 +2,7 @@
 # CHANGES - change log of TimeAccounting 2.x
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-TimeAccounting,v 1.14 2011-06-28 14:45:37 en Exp $
+# $Id: CHANGES-TimeAccounting,v 1.15 2011-09-28 08:02:21 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@
  - 2011-03-11 Fixed bug#7011 - Add a TimeAccounting statistic to the stats module.
 
 2.0.2 - 2011-??-??
- -
+ - 2011-09-28 Added Danish translation, thanks to Frank Kristensen!
 
 2.0.1 - 2011-03-15
  - 2011-06-27 Fixed bug#7383 - Setting "Allow project creation" for a user won't allow creation of new Projects.
