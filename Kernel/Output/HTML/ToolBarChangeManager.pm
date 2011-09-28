@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ToolBarChangeManager.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarChangeManager.pm,v 1.2 2010-10-28 12:51:28 ub Exp $
+# $Id: ToolBarChangeManager.pm,v 1.3 2011-09-28 00:14:16 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -88,10 +88,11 @@ sub Run {
     my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('Change Manager');
 
     # set ToolBar object
-    my $URL = $Self->{LayoutObject}->{Baselink};
+    my $URL      = $Self->{LayoutObject}->{Baselink};
+    my $Priority = $Param{Config}->{Priority};
     my %Return;
     if ($Count) {
-        $Return{'1000610'} = {
+        $Return{$Priority} = {
             Block       => 'ToolBarItem',
             Description => $Text,
             Count       => $Count,
