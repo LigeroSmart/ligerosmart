@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.48 2011-08-12 21:48:23 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.49 2011-10-07 04:47:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -705,6 +705,8 @@ sub FAQShowLatestNewsBox {
         $RSSTitle = 'FAQ Articles (recently changed)';
     }
 
+    my $Result = -1;
+
     # show last added/updated articles
     my $Show = $Self->{ConfigObject}->Get("FAQ::Explorer::$Param{Type}::Show");
     if ( $Show->{ $Param{Interface}->{Name} } ) {
@@ -749,6 +751,8 @@ sub FAQShowLatestNewsBox {
         # there is something to show
         if (@ItemIDs) {
 
+            $Result = 1;
+
             # show the info box
             $Self->Block(
                 Name => 'InfoBoxFAQMiniList',
@@ -789,7 +793,7 @@ sub FAQShowLatestNewsBox {
         }
     }
 
-    return 1;
+    return $Result;
 }
 
 =item FAQShowTop10()
@@ -854,6 +858,8 @@ sub FAQShowTop10 {
     # store FAQ object locally
     $Self->{FAQObject} = $Param{FAQObject};
 
+    my $Result = -1;
+
     # show last added/updated articles
     my $Show = $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Show');
     if ( $Show->{ $Param{Interface}->{Name} } ) {
@@ -887,6 +893,8 @@ sub FAQShowTop10 {
 
         # there is something to show
         if ( @{$Top10ItemIDsRef} ) {
+
+            $Result = 1;
 
             # show the info box
             $Self->Block(
@@ -940,7 +948,7 @@ sub FAQShowTop10 {
         }
     }
 
-    return 1;
+    return $Result;
 }
 
 =item FAQShowQuickSearch()

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.14 2011-05-16 15:57:53 ub Exp $
+# $Id: AgentFAQExplorer.pm,v 1.15 2011-10-07 04:47:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -303,6 +303,8 @@ sub Run {
         Nav             => $Nav,
     );
 
+    my %InfoBoxResults;
+
     # show last added and last updated articles
     for my $Type (qw(LastCreate LastChange)) {
 
@@ -321,6 +323,10 @@ sub Run {
         if ( !$ShowOk ) {
             return $Self->{LayoutObject}->ErrorScreen();
         }
+
+        # store the NewsBoxResult
+        $InfoBoxResults{$Type} = $ShowOk;
+
     }
 
     # show top ten articles
@@ -339,8 +345,22 @@ sub Run {
         return $Self->{LayoutObject}->ErrorScreen();
     }
 
+    # store the NewsBoxResult
+    $InfoBoxResults{Top10} = $ShowOk;
+
     # set the Sidebar width
     my $SidebarClass = 'Large';
+
+    # check if all InfoBoxes are empty and hide the Sidebar
+    if (
+        $InfoBoxResults{LastCreate}    eq -1
+        && $InfoBoxResults{LastChange} eq -1
+        && $InfoBoxResults{Top10}      eq -1
+        )
+    {
+        $SidebarClass = 'Hidden';
+    }
+
     if ( $Nav && $Nav eq 'None' ) {
         $SidebarClass = 'Medium';
     }
