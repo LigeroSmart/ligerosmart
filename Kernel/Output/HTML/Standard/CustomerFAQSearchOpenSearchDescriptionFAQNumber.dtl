@@ -1,15 +1,15 @@
 # --
-# CustomerFAQSearchOpenSearchDescription.dtl - provides opensearch form for CustomerFAQSearch
+# CustomerFAQSearchOpenSearchDescriptionFAQNumber.dtl - provides opensearch form for CustomerFAQSearch
 # Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearchOpenSearchDescription.dtl,v 1.1 2010-11-03 20:15:37 cr Exp $
+# $Id: CustomerFAQSearchOpenSearchDescriptionFAQNumber.dtl,v 1.1 2011-10-08 17:55:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 <?xml version="1.0" encoding="utf-8" ?>
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:ie="http://schemas.microsoft.com/Search/2008/">
 <ShortName>$Quote{"$Config{"ProductName"}"} - $Text{"Customer"} ($Quote{"$Config{"FAQ::FAQHook"}"})</ShortName>
 <Description>$Quote{"$Config{"ProductName"}"} - $Text{"Customer"} ($Quote{"$Config{"FAQ::FAQHook"}"})</Description>
 <InputEncoding>$Env{"UserCharset"}</InputEncoding>

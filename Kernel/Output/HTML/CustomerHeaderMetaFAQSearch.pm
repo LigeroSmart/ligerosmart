@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/CustomerHeaderMetaFAQSearch.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerHeaderMetaFAQSearch.pm,v 1.1 2011-08-23 12:40:44 mb Exp $
+# $Id: CustomerHeaderMetaFAQSearch.pm,v 1.2 2011-10-08 17:55:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -44,11 +44,12 @@ sub Run {
     # build open search description for FAQ number
     my $Title = $Self->{ConfigObject}->Get('ProductName');
 
-    $Title .= '(' . $Self->{ConfigObject}->Get('FAQ::FAQHook') . ')';
+    $Title .= ' - Customer (' . $Self->{ConfigObject}->Get('FAQ::FAQHook') . ')';
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
             Rel   => 'search',
+            Type  => 'application/opensearchdescription+xml',
             Title => $Title,
             Href  => '$Env{"Baselink"}Action=' . $Param{Config}->{Action}
                 . ';Subaction=OpenSearchDescriptionFAQNumber' . $Session,
@@ -58,11 +59,12 @@ sub Run {
     # build open search description for FAQ fulltext
     my $Fulltext = $Self->{LayoutObject}->{LanguageObject}->Get('FAQFulltext');
     $Title = $Self->{ConfigObject}->Get('ProductName');
-    $Title .= '(' . $Fulltext . ')';
+    $Title .= ' - Customer (' . $Fulltext . ')';
     $Self->{LayoutObject}->Block(
         Name => 'MetaLink',
         Data => {
             Rel   => 'search',
+            Type  => 'application/opensearchdescription+xml',
             Title => $Title,
             Href  => '$Env{"Baselink"}Action=' . $Param{Config}->{Action}
                 . ';Subaction=OpenSearchDescriptionFulltext' . $Session,

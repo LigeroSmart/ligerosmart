@@ -1,8 +1,8 @@
 # --
-# AgentFAQSearchOpenSearchDescriptionFAQNumber.dtl - provides opensearch form for AgentFAQSearch
+# PublicFAQSearchOpenSearchDescriptionFAQNumber.dtl - provides opensearch form for PublicFAQSearch
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchOpenSearchDescriptionFAQNumber.dtl,v 1.5 2011-10-08 17:55:21 cr Exp $
+# $Id: PublicFAQSearchOpenSearchDescriptionFAQNumber.dtl,v 1.1 2011-10-08 17:55:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -10,9 +10,9 @@
 # --
 <?xml version="1.0" encoding="utf-8" ?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:ie="http://schemas.microsoft.com/Search/2008/">
-<ShortName>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"})</ShortName>
-<Description>$Quote{"$Config{"ProductName"}"} ($Quote{"$Config{"FAQ::FAQHook"}"})</Description>
+<ShortName>$Quote{"$Config{"ProductName"}"} - $Text{"Public"} ($Quote{"$Config{"FAQ::FAQHook"}"})</ShortName>
+<Description>$Quote{"$Config{"ProductName"}"} - $Text{"Public"} ($Quote{"$Config{"FAQ::FAQHook"}"})</Description>
 <InputEncoding>$Env{"UserCharset"}</InputEncoding>
-<Url type="text/html" template="$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Baselink"}Action=AgentFAQSearch;Subaction=Search;Number={searchTerms}" />
+<Url type="text/html" template="$Config{"HttpType"}://$Env{"HTTP_HOST"}$Env{"Baselink"}Action=PublicFAQSearch;Subaction=Search;Fulltext={searchTerms}" />
 <Image height="16" width="16" type="image/x-icon">$Config{"HttpType"}://$Env{"HTTP_HOST"}$Config{"Frontend::ImagePath"}icons/product.ico</Image>
 </OpenSearchDescription>

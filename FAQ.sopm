@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.112 2011-08-23 12:41:29 mb Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.113 2011-10-08 17:55:21 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>2.0.9</Version>
     <Framework>3.0.x</Framework>
@@ -83,14 +83,16 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQExplorer.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearch.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescription.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchOpenSearchDescriptionFullText.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQSearchResultShort.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/CustomerFAQZoom.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQExplorer.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearch.dtl"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescription.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescriptionFAQNumber.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchOpenSearchDescriptionFullText.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQZoom.dtl"/>

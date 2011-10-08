@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.18 2011-08-23 12:35:28 mb Exp $
+# $Id: PublicFAQSearch.pm,v 1.19 2011-10-08 17:55:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -83,7 +83,7 @@ sub Run {
         );
         return $Self->{LayoutObject}->Attachment(
             Filename    => 'OpenSearchDescriptionFAQNumber.xml',
-            ContentType => 'application/opensearchdescription+xml',
+            ContentType => 'text/xml',
             Content     => $Output,
             Type        => 'inline',
         );
@@ -92,12 +92,12 @@ sub Run {
     # build output for open search description by fulltext
     if ( $Self->{Subaction} eq 'OpenSearchDescriptionFulltext' ) {
         my $Output = $Self->{LayoutObject}->Output(
-            TemplateFile => 'PublicFAQSearchOpenSearchDescription',
+            TemplateFile => 'PublicFAQSearchOpenSearchDescriptionFullText',
             Data         => \%Param,
         );
         return $Self->{LayoutObject}->Attachment(
             Filename    => 'OpenSearchDescriptionFulltext.xml',
-            ContentType => 'application/opensearchdescription+xml',
+            ContentType => 'text/xml',
             Content     => $Output,
             Type        => 'inline',
         );
