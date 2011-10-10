@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.1 2011-10-10 09:30:05 te Exp $</CVS>
+    <Name>OTRSMasterSlave</Name>
+    <Version>0.0.0</Version>
+    <Framework>3.0.x</Framework>
+    <Vendor>OTRS AG</Vendor>
+    <URL>http://otrs.org/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <Description Lang="en">Includes "Ticket Master/Slave" feature.</Description>
+    <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
+    <Filelist>
+        <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml"/>
+        <File Permission="644" Location="Kernel/Language/de_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentMasterSlavePrepareTicket.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketBulk.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketBulk.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentTicketMasterSlave.dtl"/>
+        <File Permission="644" Location="Kernel/System/Ticket/Event/MasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/System/MasterSlave.pm"/>
+    </Filelist>
+</otrs_package>

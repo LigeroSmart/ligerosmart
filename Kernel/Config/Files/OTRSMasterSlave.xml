@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<otrs_config version="1.0" init="Changes">
+    <CVS>$Id: OTRSMasterSlave.xml,v 1.1 2011-10-10 09:30:05 te Exp $</CVS>
+    <ConfigItem Name="MasterTicketFreeTextField" Required="0" Valid="1">
+        <Description Translatable="1">Define free text field for master ticket feature.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="12">
+                <Item Key="1">1</Item>
+                <Item Key="2">2</Item>
+                <Item Key="3">3</Item>
+                <Item Key="4">4</Item>
+                <Item Key="5">5</Item>
+                <Item Key="6">6</Item>
+                <Item Key="7">7</Item>
+                <Item Key="8">8</Item>
+                <Item Key="9">9</Item>
+                <Item Key="10">10</Item>
+                <Item Key="11">11</Item>
+                <Item Key="12">12</Item>
+                <Item Key="13">13</Item>
+                <Item Key="14">14</Item>
+                <Item Key="15">15</Item>
+                <Item Key="16">16</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="MasterSlave::AdvancedEnabled" Required="1" Valid="1">
+        <Description Translatable="1">Enable the advanced MasterSlave part of the feature.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="MasterSlave::UnsetMasterSlave" Required="1" Valid="1">
+        <Description Translatable="1">Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="MasterSlave::UpdateMasterSlave" Required="1" Valid="1">
+        <Description Translatable="1">Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="MasterSlave::FollowUpdatedMaster" Required="1" Valid="1">
+        <Description Translatable="1">Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="Ticket::EventModulePost###MasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Registration of the ticket event module.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::Ticket::Event::MasterSlave</Item>
+                <Item Key="Event">(ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate|TicketFreeTextUpdate)</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="PreApplicationModule###AgentMasterSlaveTicketPrepare" Required="0" Valid="1">
+        <Description Translatable="1">This module is preparing master/slave pulldown in email and phone ticket.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>MasterSlave</SubGroup>
+        <Setting>
+            <String Regex="">Kernel::Modules::AgentMasterSlavePrepareTicket</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeKey12" Required="0" Valid="1">
+        <Description Translatable="1">Define the free key field 12 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="MasterTicket">MasterTicket</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeKey12::DefaultSelection" Required="0" Valid="0">
+        <Description Translatable="1">The default selection of free key field 12 if more than one option is defined.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText12" Required="0" Valid="1">
+        <Description Translatable="1">Define the FreeTextField 12 for tickets. With this setting you can define a new ticket attribute.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="">-</Item>
+                <Item Key="Slave">Slave</Item>
+                <Item Key="Master">Master</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="TicketFreeText12::DefaultSelection" Required="0" Valid="0">
+        <Description Translatable="1">The default selection of FreeTextField 12 if more than one option is defined.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::TicketFreeText</SubGroup>
+        <Setting>
+            <String Regex=""></String>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="Frontend::Module###AgentTicketMasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description>Ticket MasterSlave</Description>
+                <Title>MasterSlave</Title>
+                <NavBarName>Ticket</NavBarName>
+                <Loader>
+                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
+                </Loader>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="Ticket::Frontend::MenuModule###480-MasterSlave" Required="0" Valid="1">
+        <Description Translatable="1">Shows a link in the menu to change the MasterSlave status of a ticket in the ticket zoom view of the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
+                <Item Key="Name">MasterSlave</Item>
+                <Item Key="Description" Translatable="1">Change the MasterSlave state of the ticket.</Item>
+                <Item Key="Action">AgentTicketMasterSlave</Item>
+                <Item Key="Link">Action=AgentTicketMasterSlave;TicketID=$QData{"TicketID"}</Item>
+                <Item Key="Target"></Item>
+                <Item Key="PopupType">TicketAction</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required permissions to use the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <String Regex="">MasterSlave</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###RequiredLock" Required="0" Valid="1">
+        <Description Translatable="1">Defines if a ticket lock is required in the ticket MasterSlave screen of a zoomed ticket in the agent interface (if the ticket isn't locked yet, the ticket gets locked and the current agent will be set automatically as its owner).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###TicketType" Required="0" Valid="1">
+        <Description Translatable="1">Sets the ticket type in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Service" Required="0" Valid="1">
+        <Description Translatable="1">Sets the service in the ticket MasterSlave screen of a zoomed ticket in the agent interface (Ticket::Service needs to be activated).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Owner" Required="0" Valid="1">
+        <Description Translatable="1">Sets the ticket owner in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###OwnerMandatory" Required="0" Valid="1">
+        <Description Translatable="1">Sets if ticket owner must be selected by the agent.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Responsible" Required="0" Valid="1">
+        <Description Translatable="1">Sets the responsible agent of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###State" Required="0" Valid="1">
+        <Description Translatable="1">If a note is added by an agent, sets the state of the ticket in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###StateType" Required="1" Valid="1">
+        <Description Translatable="1">Defines the next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Array>
+                <Item>open</Item>
+                <Item>closed</Item>
+                <Item>pending reminder</Item>
+                <Item>pending auto</Item>
+            </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###StateDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default next state of a ticket after adding a note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <ValidateModule>Kernel::System::SysConfig::StateValidate</ValidateModule>
+        <Setting>
+            <String Regex="">pending reminder</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Note" Required="0" Valid="1">
+        <Description Translatable="1">Allows adding notes in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Subject" Required="0" Valid="1">
+        <Description Translatable="1">Sets the default subject for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <String Regex="">$Text{"MasterSlave"}!</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Body" Required="0" Valid="1">
+        <Description Translatable="1">Sets the default body text for notes added in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <TextArea></TextArea>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###InvolvedAgent" Required="0" Valid="0">
+        <Description Translatable="1">Shows a list of all the involved agents on this ticket, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###InformAgent" Required="0" Valid="0">
+        <Description Translatable="1">Shows a list of all the possible agents (all agents with note permissions on the queue/ticket) to determine who should be informed about this note, in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypeDefault" Required="0" Valid="1">
+        <Description Translatable="1">Defines the default type of the note in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <String Regex="">note-internal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleTypes" Required="0" Valid="1">
+        <Description Translatable="1">Specifies the different note types that will be used in the system.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="note-internal">1</Item>
+                <Item Key="note-external">0</Item>
+                <Item Key="note-report">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Priority" Required="0" Valid="0">
+        <Description Translatable="1">Shows the ticket priority options in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###PriorityDefault" Required="0" Valid="0">
+        <Description Translatable="1">Defines the default ticket priority in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <ValidateModule>Kernel::System::SysConfig::PriorityValidate</ValidateModule>
+        <Setting>
+            <String Regex="">3 normal</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###Title" Required="0" Valid="1">
+        <Description Translatable="1">Shows the title fields in the ticket MasterSlave screen of a zoomed ticket in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###TicketFreeText" Required="0" Valid="1">
+        <Description Translatable="1">Ticket free text options shown in the ticket MasterSlave screen of a zoomed ticket in the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+                <Item Key="7">0</Item>
+                <Item Key="8">0</Item>
+                <Item Key="9">0</Item>
+                <Item Key="10">0</Item>
+                <Item Key="11">0</Item>
+                <Item Key="12">0</Item>
+                <Item Key="13">0</Item>
+                <Item Key="14">0</Item>
+                <Item Key="15">0</Item>
+                <Item Key="16">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###TicketFreeTime" Required="0" Valid="1">
+        <Description Translatable="1">Ticket free time options shown in the ticket MasterSlave screen of a zoomed ticket in the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+                <Item Key="4">0</Item>
+                <Item Key="5">0</Item>
+                <Item Key="6">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###ArticleFreeText" Required="0" Valid="1">
+        <Description Translatable="1">Article free text options shown in the ticket MasterSlave screen of a zoomed ticket in the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="1">0</Item>
+                <Item Key="2">0</Item>
+                <Item Key="3">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryType" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history type for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <String Regex="">AddNote</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketMasterSlave###HistoryComment" Required="0" Valid="1">
+        <Description Translatable="1">Defines the history comment for the ticket MasterSlave screen action, which gets used for ticket history in the agent interface.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewMasterSlave</SubGroup>
+        <Setting>
+            <String Regex="">%%MasterSlave</String>
+        </Setting>
+    </ConfigItem>
+</otrs_config>

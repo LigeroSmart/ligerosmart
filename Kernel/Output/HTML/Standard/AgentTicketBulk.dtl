@@ -1,0 +1,192 @@
+# --
+# AgentTicketBulk.dtl - provides HTML form for bulk mask
+# Copyright (C) 2003-2011 OTRS AG, http://otrs.com/
+# --
+# $Id: AgentTicketBulk.dtl,v 1.1 2011-10-10 09:30:05 te Exp $
+# $OldId: AgentTicketBulk.pm,v 1.75.2.4 2011/04/11 18:18:39 mp Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:BulkAction -->
+<form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="compose" class="Validate">
+    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+    <input type="hidden" name="Subaction" value="Do"/>
+
+    <div class="LayoutPopup ARIARoleMain">
+        <div class="Header">
+            <h1>$Text{"Ticket Bulk Action"}</h1>
+            <p>
+                <a class="CancelClosePopup" href="#">$Text{"Cancel & close window"}</a>
+            </p>
+        </div>
+        <div class="Content">
+
+            <div class="Header">
+                <h2>$Text{"Options"}</h2>
+            </div>
+
+            <div class="Content">
+<!-- dtl:block:UsedTicketID -->
+                <input type="hidden" name="TicketID" value="$QData{"TicketID"}" />
+<!-- dtl:block:UsedTicketID -->
+                <fieldset class="TableLike FixedLabel">
+                    <label class="Mandatory" for="Subject"><span class="Marker">*</span> $Text{"Subject"}:</label>
+                    <div class="Field">
+                        <input type="text" class="Validate_DependingRequiredAND Validate_Depending_Body $Data{"SubjectInvalid"} W75pc" id="Subject" name="Subject" value="$QData{"Subject"}" />
+                        <div id="SubjectError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        <div id="SubjectServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+
+<!-- dtl:block:SpellCheck -->
+                    <label>$Text{"Options"}:</label>
+                    <div class="Field">
+                        <a href="#" id="OptionSpellCheck">[ $Text{"Spell check"} ]</a>
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:SpellCheck -->
+
+                    <label class="Mandatory" for="Body"><span class="Marker">*</span> $Text{"Text"}:</label>
+                    <div class="RichTextField">
+<!-- dtl:block:RichText -->
+$Include{"RichTextEditor"}
+<!-- dtl:block:RichText -->
+                        <textarea id="Body" class="RichText Validate_DependingRequiredAND Validate_Depending_Subject $Data{"BodyInvalid"}" name="Body" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}">$QData{"Body"}</textarea>
+                        <div id="BodyError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                        <div id="BodyServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="ArticleTypeID">$Text{"Note type"}:</label>
+                    <div class="Field">
+                        $Data{"NoteStrg"}
+                    </div>
+                    <div class="Clear"></div>
+
+<!-- dtl:block:State -->
+                    <label for="StateID">$Text{"Next state"}:</label>
+                    <div class="Field">
+                        $Data{"NextStatesStrg"}
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:StatePending -->
+                    <label>$Text{"Pending date"}:</label>
+                    <div class="Field">
+                        $Data{"DateString"}
+                        <div id="DayServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                        <div id="HourServerError" class="TooltipErrorMessage"><p>$Text{"Date invalid!"}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:StatePending -->
+<!-- dtl:block:State -->
+
+<!-- dtl:block:Owner -->
+                    <label for="OwnerID">$Text{"Owner"}:</label>
+                    <div class="Field">
+                        $Data{"OwnerStrg"}
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:Owner -->
+
+<!-- dtl:block:Responsible -->
+                    <label for="ResponsibleID">$Text{"Responsible"}:</label>
+                    <div class="Field">
+                        $Data{"ResponsibleStrg"}
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:Responsible -->
+
+                    <label for="QueueID">$Text{"Queue"}:</label>
+                    <div class="Field">
+                        $Data{"MoveQueuesStrg"}
+                    </div>
+                    <div class="Clear"></div>
+
+<!-- dtl:block:Priority -->
+                    <label for="PriorityID">$Text{"Priority"}:</label>
+                    <div class="Field">
+                        $Data{"PriorityStrg"}
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:Priority -->
+
+                    <label>$Text{"Merge"}:</label>
+                    <div class="Field">
+                        <div>
+                            <input type="radio" name="MergeToSelection" id="OptionMergeTo" value="OptionMergeTo" $Data{"MergeToChecked"}/>
+                            <label for="MergeTo">$Text{"Merge to"} $Config{"Ticket::Hook"}:</label>
+                            <input type="text" class="$QData{"MergeToInvalid"} W50pc" id="MergeTo" name="MergeTo" value="$QData{"MergeTo"}"/>
+                            <div id="MergeToServerError" class="TooltipErrorMessage"><p>$Text{"Invalid ticket identifier!"}</p></div>
+                        </div>
+                        <div>
+                            <input type="radio" name="MergeToSelection" id="OptionMergeToOldest" value="OptionMergeToOldest" $Data{"MergeToOldestChecked"}/>
+                            <label for="OptionMergeToOldest">$Text{"Merge to oldest"}</label>
+                        </div>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="LinkTogether">$Text{"Link together"}:</label>
+                    <div class="Field">
+                        $Data{"LinkTogetherYesNoOption"}
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="LinkTogetherParent">$Text{"Link to parent"}:</label>
+                    <div class="Field">
+                        <input type="text" class="$QData{"LinkTogetherParentInvalid"} W50pc" id="LinkTogetherParent" name="LinkTogetherParent" value="$QData{"LinkTogetherParent"}"/>
+                        <div id="LinkTogetherParentServerError" class="TooltipErrorMessage"><p>$Text{"Invalid ticket identifier!"}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+
+                    <label for="Unlock">$Text{"Unlock tickets"}:</label>
+                    <div class="Field">
+                        $Data{"UnlockYesNoOption"}
+                    </div>
+                    <div class="Clear"></div>
+# ---
+# MasterSlave
+# ---
+<!-- dtl:block:MasterSlave -->
+                    <label for="$Data{"MasterSlaveTicketFreeTextCount"}">$Text{"MasterTicket"}:</label>
+                    <div class="Field">
+                        $Data{"MasterSlaveStrg"}
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:MasterSlave -->
+# ---
+<!-- dtl:block:TimeUnits -->
+                    <label for="TimeUnits">$Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</label>
+                    <div class="Field">
+                        <input type="text" class="Validate_TimeUnits W20pc $QData{"TimeUnitsRequired"} $QData{"TimeUnitsInvalid"}" id="TimeUnits" name="TimeUnits" value="$QData{"TimeUnits"}"/>
+                        <div id="TimeUnitsError" class="TooltipErrorMessage"><p>$Text{"Invalid time!"}</p></div>
+                        <div id="TimeUnitsServerError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
+                    </div>
+                    <div class="Clear"></div>
+<!-- dtl:block:TimeUnits -->
+
+                </fieldset>
+            </div>
+        </div>
+        <div class="Footer">
+            <button class="Primary" id="submitRichText" accesskey="g" title="$Text{"Submit"} (g)" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
+        </div>
+    </div>
+</form>
+<!-- dtl:block:ParentReload -->
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+window.opener.Core.UI.Popup.FirePopupEvent('Reload');
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:ParentReload -->
+
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.TicketAction.Init();
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!-- dtl:block:BulkAction -->
