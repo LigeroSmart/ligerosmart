@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.54 2011-06-27 22:11:24 en Exp $
+# $Id: TimeAccounting.pm,v 1.55 2011-10-13 16:53:09 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -406,7 +406,7 @@ This returns something like:
 
     or
 
-    my %ProjectData = $TimeAccountingObject->ProjectGet( Project => 'internal; );
+    my %ProjectData = $TimeAccountingObject->ProjectGet( Project => 'internal' );
 
 This returns something like:
 
@@ -1679,6 +1679,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2011-06-27 22:11:24 $
+$Revision: 1.55 $ $Date: 2011-10-13 16:53:09 $
 
 =cut
