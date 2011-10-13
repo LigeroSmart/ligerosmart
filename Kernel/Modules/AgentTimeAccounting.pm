@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.86 2011-06-27 22:11:24 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.87 2011-10-13 18:58:34 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.86 $) [1];
+$VERSION = qw($Revision: 1.87 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -3018,18 +3018,11 @@ sub _SettingOverview {
     $Self->{LayoutObject}->Block( Name => 'ActionListSetting' );
     $Self->{LayoutObject}->Block( Name => 'ActionAddProject' );
 
-    if ( $Self->{AccessRw} ) {
-        $Self->{LayoutObject}->Block( Name => 'ActionAddTask' );
-    }
-
-    $Self->{LayoutObject}->Block( Name => 'ProjectFilter' );
-
     # hash to save registered users
     my %User;
 
     if ( $Self->{AccessRw} ) {
-        $Self->{LayoutObject}->Block( Name => 'TaskFilter' );
-        $Self->{LayoutObject}->Block( Name => 'UserFilter' );
+        $Self->{LayoutObject}->Block( Name => 'ActionAddTask' );
 
         # get user data
         my %ShownUsers = $Self->{UserObject}->UserList(
@@ -3061,6 +3054,13 @@ sub _SettingOverview {
                 Data => { NewUserOption => $NewUserOption, },
             );
         }
+    }
+
+    $Self->{LayoutObject}->Block( Name => 'ProjectFilter' );
+
+    if ( $Self->{AccessRw} ) {
+        $Self->{LayoutObject}->Block( Name => 'TaskFilter' );
+        $Self->{LayoutObject}->Block( Name => 'UserFilter' );
     }
 
     # Show project data
