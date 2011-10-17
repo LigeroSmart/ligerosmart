@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # FAQImport.pl - FAQ import script
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQImport.pl,v 1.5 2010-12-01 10:14:17 ub Exp $
+# $Id: FAQImport.pl,v 1.6 2011-10-17 15:09:57 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -41,7 +41,7 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 # get options
 my %Opts;
@@ -50,7 +50,7 @@ getopt( 'hisq', \%Opts );
 if ( exists $Opts{h} ) {
     print STDOUT "\n";
     print STDOUT "FAQImport.pl <Revision $VERSION> - a FAQ import tool\n";
-    print STDOUT "Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+    print STDOUT "Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
     print STDOUT "   usage: \n";
     print STDOUT "      FAQImport.pl -i <ImportFile> [-s <separator>] [-q <quote>]\n";
     print STDOUT "\n";
@@ -108,10 +108,12 @@ my $DataRef = $CommonObject{CSVObject}->CSV2Array(
 die "\nError occurred. Import impossible! See Syslog for details.\n" if !defined $DataRef;
 
 # get all FAQ language ids
-my %LanguageID = reverse $CommonObject{FAQObject}->LanguageList();
+my %LanguageID = reverse $CommonObject{FAQObject}->LanguageList(
+    UserID => 1,
+);
 
 # get all state type ids
-my %StateTypeID = reverse %{ $CommonObject{FAQObject}->StateTypeList() };
+my %StateTypeID = reverse %{ $CommonObject{FAQObject}->StateTypeList( UserID => 1 ) };
 
 # get group id for faq group
 my $FAQGroupID = $CommonObject{GroupObject}->GroupLookup(
@@ -205,6 +207,7 @@ for my $RowRef ( @{$DataRef} ) {
         Field6     => $Field6,
         Keywords   => $Keywords || '',
         Approved   => 1,
+        UserID     => 1,
     );
 
     # check success
@@ -232,6 +235,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2010-12-01 10:14:17 $
+$Revision: 1.6 $ $Date: 2011-10-17 15:09:57 $
 
 =cut
