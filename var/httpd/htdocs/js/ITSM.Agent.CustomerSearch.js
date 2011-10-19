@@ -2,7 +2,7 @@
 // ITSM.Agent.CustomerSearch.js - provides the special module functions for the customer search
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.CustomerSearch.js,v 1.4 2011-05-19 14:24:18 ub Exp $
+// $Id: ITSM.Agent.CustomerSearch.js,v 1.5 2011-10-19 14:39:31 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -66,12 +66,15 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
                     });
                 },
                 select: function (Event, UI) {
-                    var CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
+
+                    var CustomerKey, ElementID;
+
+                    CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
 
                     $Element.val(UI.item.value);
 
                     // get the element id
-                    var ElementID = $Element.attr('id');
+                    ElementID = $Element.attr('id');
 
                     // escape :: with two leading backslashes in front of each :
                     // this is necessary because jQuery can not handle a colon (:) in id attributes
