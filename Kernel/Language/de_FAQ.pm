@@ -2,7 +2,7 @@
 # Kernel/Language/de_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_FAQ.pm,v 1.40 2011-08-12 21:48:23 cr Exp $
+# $Id: de_FAQ.pm,v 1.41 2011-10-28 12:51:16 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,7 +51,7 @@ sub Data {
     $Self->{Translation}->{'This language already exists!'} = 'Diese Sprache existiert bereits!';
 
     # Template: AgentFAQAdd
-    $Self->{Translation}->{'Add FAQ Article'} = 'FAQ-Artikel Hinzufügen';
+    $Self->{Translation}->{'Add FAQ Article'} = 'FAQ-Artikel hinzufügen';
     $Self->{Translation}->{'A category is required.'} = 'Eine Kategorie ist erforderlich.';
     $Self->{Translation}->{'Approval'} = 'Freigabe';
 
@@ -64,7 +64,7 @@ sub Data {
     $Self->{Translation}->{'Edit Category'} = 'Kategorie bearbeiten';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wird im Explorer als Kommentar angezeigt.';
     $Self->{Translation}->{'Please select at least one permission group.'} = 'Wählen Sie mindestens eine Berechtigungsgruppe.';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Agenten-Gruppen die berechtigt sind auf FAQ-Artikel in dieser Kategorie zuzugreifen.';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Agenten-Gruppen, die berechtigt sind, auf FAQ-Artikel in dieser Kategorie zuzugreifen.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Wollen Sie diese Kategorie wirklich löschen?';
     $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = 'Sie können diese Kategorie nicht löschen. Sie wird in mindestens einem FAQ-Artikel verwendet!';
     $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Diese Kategorie wird in den folgenden FAQ-Artikeln verwendet';
@@ -80,9 +80,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ-Explorer';
     $Self->{Translation}->{'Quick Search'} = 'Schnellsuche';
     $Self->{Translation}->{'Advanced Search'} = 'Erweiterte Suche';
-    $Self->{Translation}->{'Subcategories'} = 'Unter-Kategorien';
+    $Self->{Translation}->{'Subcategories'} = 'Unterkategorien';
     $Self->{Translation}->{'FAQ Articles'} = 'FAQ-Artikel';
-    $Self->{Translation}->{'No subcategories found.'} = 'Keine Unter-Kategorien gefunden.';
+    $Self->{Translation}->{'No subcategories found.'} = 'Keine Unterkategorien gefunden.';
 
     # Template: AgentFAQHistory
 
@@ -92,9 +92,9 @@ sub Data {
     # Template: AgentFAQLanguage
     $Self->{Translation}->{'FAQ Language Management'} = 'FAQ-Sprachen-Verwaltung';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = 'Verwenden Sie dieses Feature wenn Sie mit verschiedenen Sprachen arbeiten wollen.';
-    $Self->{Translation}->{'Add language'} = 'Sprache Hinzufügen';
+    $Self->{Translation}->{'Add language'} = 'Sprache hinzufügen';
     $Self->{Translation}->{'Delete Language'} = 'Sprache Löschen';
-    $Self->{Translation}->{'Add Language'} = 'Sprache Hinzufügen';
+    $Self->{Translation}->{'Add Language'} = 'Sprache hinzufügen';
     $Self->{Translation}->{'Edit Language'} = 'Sprache Bearbeiten';
     $Self->{Translation}->{'Do you really want to delete this language?'} = 'Wollen Sie diese Sprache wirklich löschen?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = 'Sie können diese Sprache nicht löschen. Sie wird in mindestens einem FAQ-Artikel verwendet!';
@@ -105,7 +105,7 @@ sub Data {
     $Self->{Translation}->{'FAQ articles per page'} = 'FAQ-Artikel pro Seite';
 
     # Template: AgentFAQOverviewSmall
-    $Self->{Translation}->{'No FAQ data found.'} = 'Keine FAQ Daten gefunden.';
+    $Self->{Translation}->{'No FAQ data found.'} = 'Keine FAQ-Daten gefunden.';
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = 'FAQ Informationen';
@@ -131,7 +131,7 @@ sub Data {
     $Self->{Translation}->{'No votes found!'} = 'Keine Bewertungen gefunden!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'Keine Bewertungen gefunden! Seien Sie der erste der diesen FAQ-Artikel bewertet.';
     $Self->{Translation}->{'Download Attachment'} = 'Attachment Herunterladen';
-    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = 'Wie hilfreich war dieser Artikel? Bitte geben Sie Ihre Bewertung ab und helfen Sie mit die Qualität der FAQ Datenbank zu verbessern. Vielen Dank!';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = 'Wie hilfreich war dieser Artikel? Bitte geben Sie Ihre Bewertung ab und helfen Sie mit die Qualität der FAQ-Datenbank zu verbessern. Vielen Dank!';
     $Self->{Translation}->{'not helpful'} = 'nicht hilfreich';
     $Self->{Translation}->{'very helpful'} = 'sehr hilfreich';
 
