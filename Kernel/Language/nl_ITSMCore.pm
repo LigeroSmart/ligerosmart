@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMCore.pm,v 1.12 2011-03-03 18:41:54 ub Exp $
+# $Id: nl_ITSMCore.pm,v 1.13 2011-11-02 16:08:04 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -65,25 +65,25 @@ sub Data {
     # Template: AgentITSMSLA
 
     # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'SLA-Info'} = 'SLA Informatie';
+    $Self->{Translation}->{'Last changed'} = 'Laatst aangepast op';
+    $Self->{Translation}->{'Last changed by'} = 'Laatst aangepast door';
 
     # Template: AgentITSMSLAZoom
-    $Self->{Translation}->{'SLA Information'} = '';
-    $Self->{Translation}->{'Show or hide the content.'} = '';
+    $Self->{Translation}->{'SLA Information'} = 'SLA Informatie';
+    $Self->{Translation}->{'Show or hide the content.'} = 'Toon of verberg de inhoud.';
     $Self->{Translation}->{'Associated Services'} = 'Bijbehorende Services';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
+    $Self->{Translation}->{'Service-Info'} = 'Service Informatie';
     $Self->{Translation}->{'Current Incident State'} = 'Huidige incident status';
     $Self->{Translation}->{'Associated SLAs'} = 'Bijbehorende SLAs';
 
     # Template: AgentITSMServiceZoom
-    $Self->{Translation}->{'Service Information'} = '';
-    $Self->{Translation}->{'Current incident state'} = '';
+    $Self->{Translation}->{'Service Information'} = 'Service Informatie';
+    $Self->{Translation}->{'Current incident state'} = 'Huidige incident-status';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = '';
@@ -93,7 +93,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';
-    $Self->{Translation}->{'Manage priority matrix.'} = '';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Beheer prioriteiten-matrix';
     $Self->{Translation}->{'Module to show back link in service menu.'} = '';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show print link in service menu.'} = '';
