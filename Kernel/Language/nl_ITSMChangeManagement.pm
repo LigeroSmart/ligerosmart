@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.10 2011-05-17 10:07:31 mb Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.11 2011-11-02 16:05:59 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -89,15 +89,16 @@ sub Data {
     $Self->{Translation}->{'Move all workorders in time'} = 'Verplaats alle workorders in tijd';
     $Self->{Translation}->{'My CABs'} = 'Mijn CABs';
     $Self->{Translation}->{'My Changes'} = 'Mijn changes';
-    $Self->{Translation}->{'My Workorders'} = 'Mijn workorders';
+    $Self->{Translation}->{'My Work Orders'} = 'Mijn workorders';
     $Self->{Translation}->{'No XXX settings'} = 'Geen \'%s\' gekozen';
+    $Self->{Translation}->{'PIR'} = 'PIR';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';
     $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability)';
     $Self->{Translation}->{'Please select first a catalog class!'} = 'Kies een Catalog klasse.';
     $Self->{Translation}->{'Print the change'} = 'Change afdrukken';
     $Self->{Translation}->{'Print the workorder'} = 'Work Order afdrukken';
     $Self->{Translation}->{'RequestedTime'} = 'Gevraagde implementatietijd';
-    $Self->{Translation}->{'Save Change CAB as Template'} = '';
+    $Self->{Translation}->{'Save Change CAB as Template'} = 'Bewaar deze CAB als sjabloon';
     $Self->{Translation}->{'Save change as a template'} = 'Sla deze change op als template';
     $Self->{Translation}->{'Save workorder as a template'} = 'Workorder als template opslaan';
     $Self->{Translation}->{'Search Changes'} = 'Zoek Changes';
@@ -137,6 +138,9 @@ sub Data {
     $Self->{Translation}->{'WorkOrderNumber'} = 'Work Order-nummer';
     $Self->{Translation}->{'accepted'} = 'Geaccepteerd';
     $Self->{Translation}->{'any'} = 'enkele';
+    $Self->{Translation}->{'*START*'} = '*START*';
+    $Self->{Translation}->{'*END*'} = '*EINDE*';
+    $Self->{Translation}->{'awaiting approval'} = 'Wacht op goedkeuring';
     $Self->{Translation}->{'approval'} = 'Goedkeuring';
     $Self->{Translation}->{'approved'} = 'Goedgekeurd';
     $Self->{Translation}->{'backout'} = 'Backout Plan';
@@ -169,14 +173,14 @@ sub Data {
 
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Categorie <-> Impact <-> Prioriteit';
-    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} = '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} = 'Beheer de prioriteit op basis van de Categorie <-> Impact combinatie.';
+    $Self->{Translation}->{'Priority allocation'} = 'Prioriteit-toewijzing';
 
     # Template: AdminITSMChangeNotification
-    $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = '';
+    $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM Change Management notificiatie beheer';
     $Self->{Translation}->{'Add Notification Rule'} = 'Notificatie regel toevoegen';
     $Self->{Translation}->{'Rule'} = 'Regel';
-    $Self->{Translation}->{'A notification should have a name!'} = '';
+    $Self->{Translation}->{'A notification should have a name!'} = 'Geef een naam voor de notificatie.';
 
     # Template: AdminITSMStateMachine
     $Self->{Translation}->{'Admin State Machine'} = 'Beheer status-machine.';
@@ -187,14 +191,14 @@ sub Data {
     $Self->{Translation}->{'Object Name'} = 'Object-naam';
     $Self->{Translation}->{'Overview over state transitions for'} = 'Overzicht van statusovergangen voor';
     $Self->{Translation}->{'Add a new state transition for'} = 'Voeg een nieuwe statusovergang toe voor';
-    $Self->{Translation}->{'Please select a state!'} = '';
-    $Self->{Translation}->{'Please select a next state!'} = '';
+    $Self->{Translation}->{'Please select a state!'} = 'Selecteer een status.';
+    $Self->{Translation}->{'Please select a next state!'} = 'Selecteer een volgende status.';
     $Self->{Translation}->{'Edit a state transition for'} = 'Bewerken van statusovergangen voor';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Wilt u deze statusovergang verwijderen';
     $Self->{Translation}->{'from'} = 'van';
 
     # Template: AgentITSMCABMemberSearch
-    $Self->{Translation}->{'Search Agent'} = '';
+    $Self->{Translation}->{'Search Agent'} = 'Zoek gebruiker';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Change toevoegen';
@@ -210,9 +214,9 @@ sub Data {
     $Self->{Translation}->{'Requested Date'} = 'Gevraagde implementatietijd';
 
     # Template: AgentITSMChangeCABTemplate
-    $Self->{Translation}->{'Save Change CAB as template'} = '';
-    $Self->{Translation}->{'go to involved persons screen'} = '';
-    $Self->{Translation}->{'This field is required'} = '';
+    $Self->{Translation}->{'Save Change CAB as template'} = 'Bewaar Change CAB als sjabloon';
+    $Self->{Translation}->{'go to involved persons screen'} = 'ga naar betrokken personen';
+    $Self->{Translation}->{'This field is required'} = 'Dit veld is verplicht';
     $Self->{Translation}->{'Invalid Name'} = 'Ongeldige naam';
 
     # Template: AgentITSMChangeCondition
@@ -228,11 +232,11 @@ sub Data {
     $Self->{Translation}->{'Any expression (OR)'} = 'Een voorwaarde (OR)';
     $Self->{Translation}->{'All expressions (AND)'} = 'Alle voorwaarden (AND)';
     $Self->{Translation}->{'Expressions'} = 'Voorwaarden';
-    $Self->{Translation}->{'Selector'} = '';
-    $Self->{Translation}->{'Operator'} = '';
-    $Self->{Translation}->{'No Expressions found.'} = '';
+    $Self->{Translation}->{'Selector'} = 'Selectie';
+    $Self->{Translation}->{'Operator'} = 'Operator';
+    $Self->{Translation}->{'No Expressions found.'} = 'Geen expressies gevonden.';
     $Self->{Translation}->{'Add new expression'} = 'Nieuwe voorwaarde toevoegen';
-    $Self->{Translation}->{'No Actions found.'} = '';
+    $Self->{Translation}->{'No Actions found.'} = 'Geen acties gevonden.';
     $Self->{Translation}->{'Add new action'} = 'Nieuwe actie toevoegen';
 
     # Template: AgentITSMChangeEdit
@@ -251,29 +255,29 @@ sub Data {
     # Template: AgentITSMChangeInvolvedPersons
     $Self->{Translation}->{'Involved Persons'} = 'Betrokken personen';
     $Self->{Translation}->{'ChangeManager'} = 'Change Manager';
-    $Self->{Translation}->{'User invalid.'} = '';
+    $Self->{Translation}->{'User invalid.'} = 'Gebruiker ongeldig.';
     $Self->{Translation}->{'ChangeBuilder'} = 'Change-samensteller';
     $Self->{Translation}->{'Change Advisory Board'} = 'Change Advisory Board';
-    $Self->{Translation}->{'CAB Template'} = '';
-    $Self->{Translation}->{'Apply Template'} = 'Kies template';
-    $Self->{Translation}->{'NewTemplate'} = '';
-    $Self->{Translation}->{'Save this CAB as template'} = 'Bewaar dit CAB als template';
+    $Self->{Translation}->{'CAB Template'} = 'CAB sjabloon';
+    $Self->{Translation}->{'Apply Template'} = 'Kies sjabloon';
+    $Self->{Translation}->{'NewTemplate'} = 'Nieuw sjabloon';
+    $Self->{Translation}->{'Save this CAB as template'} = 'Bewaar dit CAB als sjabloon';
     $Self->{Translation}->{'Add to CAB'} = 'Toevoegen aan CAB';
-    $Self->{Translation}->{'Invalid User'} = '';
+    $Self->{Translation}->{'Invalid User'} = 'Ongeldige gebruiker';
     $Self->{Translation}->{'Current CAB'} = 'Actueel CAB';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Changes per page'} = '';
+    $Self->{Translation}->{'Changes per page'} = 'Changes per pagina';
 
     # Template: AgentITSMChangeOverviewSmall
     $Self->{Translation}->{'WorkOrderTitle'} = 'Work Order-titel';
     $Self->{Translation}->{'ChangeTitle'} = 'Change-titel';
     $Self->{Translation}->{'WorkOrderAgent'} = 'Work Order-gebruiker';
-    $Self->{Translation}->{'Workorders'} = '';
+    $Self->{Translation}->{'Workorders'} = 'Workorders';
     $Self->{Translation}->{'ChangeState'} = 'Change-status';
     $Self->{Translation}->{'WorkOrderState'} = 'Work Order-status';
     $Self->{Translation}->{'WorkOrderType'} = 'Work Order-type';
-    $Self->{Translation}->{'Requested Time'} = '';
+    $Self->{Translation}->{'Requested Time'} = 'Aangevraagd tijdstip';
     $Self->{Translation}->{'PlannedStartTime'} = 'Geplande starttijd';
     $Self->{Translation}->{'PlannedEndTime'} = 'Geplande eindtijd';
     $Self->{Translation}->{'ActualStartTime'} = 'Werkelijke starttijd';
@@ -283,40 +287,40 @@ sub Data {
     $Self->{Translation}->{'ITSM Workorder'} = 'Workorder';
 
     # Template: AgentITSMChangeSearch
-    $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = '';
+    $Self->{Translation}->{'(e.g. 10*5155 or 105658*)'} = 'bijvoorbeeld 10*5155';
     $Self->{Translation}->{'CABAgent'} = 'CAB gebruiker';
     $Self->{Translation}->{'e.g.'} = 'bijvoorbeeld';
     $Self->{Translation}->{'CABCustomer'} = 'CAB klant';
     $Self->{Translation}->{'Instruction'} = 'Instructie';
     $Self->{Translation}->{'Report'} = 'Bericht';
-    $Self->{Translation}->{'Change Category'} = '';
-    $Self->{Translation}->{'(before/after)'} = '';
-    $Self->{Translation}->{'(between)'} = '';
+    $Self->{Translation}->{'Change Category'} = 'Change categorie';
+    $Self->{Translation}->{'(before/after)'} = '(voor/na)';
+    $Self->{Translation}->{'(between)'} = '(tussen)';
 
     # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'WorkOrders'} = '';
+    $Self->{Translation}->{'WorkOrders'} = 'Work Orders';
 
     # Template: AgentITSMChangeTemplate
-    $Self->{Translation}->{'Save Change as Template'} = 'Bewaar Change als template';
-    $Self->{Translation}->{'A template should have a name!'} = '';
-    $Self->{Translation}->{'The template name is required.'} = '';
+    $Self->{Translation}->{'Save Change as Template'} = 'Bewaar Change als sjabloon';
+    $Self->{Translation}->{'A template should have a name!'} = 'Geef een naam op voor dit sjabloon.';
+    $Self->{Translation}->{'The template name is required.'} = 'De naam is een verplicht veld.';
     $Self->{Translation}->{'Reset States'} = 'Statussen resetten';
 
     # Template: AgentITSMChangeTimeSlot
     $Self->{Translation}->{'Move Time Slot'} = 'Verplaats timeslot';
 
     # Template: AgentITSMChangeZoom
-    $Self->{Translation}->{'Change Information'} = '';
+    $Self->{Translation}->{'Change Information'} = 'Change-informatie';
     $Self->{Translation}->{'PlannedEffort'} = 'Geplande inspanning';
     $Self->{Translation}->{'AccountedTime'} = 'Vastgelegde tijd';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Change initiator(s)';
-    $Self->{Translation}->{'Change Manager'} = '';
-    $Self->{Translation}->{'Change Builder'} = '';
+    $Self->{Translation}->{'Change Manager'} = 'Change Manager';
+    $Self->{Translation}->{'Change Builder'} = 'Operationeel Change Manager';
     $Self->{Translation}->{'CAB'} = 'CAB';
     $Self->{Translation}->{'Last changed'} = 'Laatst aangepast op';
     $Self->{Translation}->{'Last changed by'} = 'Laatst aangepast door';
-    $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'Download Attachment'} = '';
+    $Self->{Translation}->{'Show or hide the content.'} = 'Toon of verberg de inhoud.';
+    $Self->{Translation}->{'Download Attachment'} = 'Download bijlage';
 
     # Template: AgentITSMTemplateDelete
     $Self->{Translation}->{'Do you really want to delete this template?'} = 'Wilt u deze template echt verwijderen?';
@@ -326,22 +330,22 @@ sub Data {
     # Template: AgentITSMTemplateOverviewNavBar
 
     # Template: AgentITSMTemplateOverviewSmall
-    $Self->{Translation}->{'TemplateID'} = '';
+    $Self->{Translation}->{'TemplateID'} = 'SjabloonID';
     $Self->{Translation}->{'CreateBy'} = 'Aangemaakt door';
     $Self->{Translation}->{'CreateTime'} = 'Aangemaakt op';
     $Self->{Translation}->{'ChangeBy'} = 'Aangepast door';
     $Self->{Translation}->{'ChangeTime'} = 'Aangepast op';
-    $Self->{Translation}->{'Delete: '} = '';
-    $Self->{Translation}->{'Delete Template'} = '';
+    $Self->{Translation}->{'Delete: '} = 'Verwijder:';
+    $Self->{Translation}->{'Delete Template'} = 'Verwijder Template';
 
     # Template: AgentITSMUserSearch
 
     # Template: AgentITSMWorkOrderAdd
     $Self->{Translation}->{'Add Workorder to'} = 'Voeg werkorder toe aan';
     $Self->{Translation}->{'Select Workorder Template'} = 'Workorder template kiezen';
-    $Self->{Translation}->{'Invalid workorder type.'} = '';
+    $Self->{Translation}->{'Invalid workorder type.'} = 'Ongeldig workorder-type';
     $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'De gepande starttijd moet eerder zijn dan de einddatum.';
-    $Self->{Translation}->{'Invalid format.'} = '';
+    $Self->{Translation}->{'Invalid format.'} = 'Ongeldig formaat.';
 
     # Template: AgentITSMWorkOrderAgent
 
@@ -357,11 +361,11 @@ sub Data {
     # Template: AgentITSMWorkOrderHistoryZoom
 
     # Template: AgentITSMWorkOrderReport
-    $Self->{Translation}->{'The actual start time must be before the actual end time!'} = '';
-    $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} = '';
+    $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'De werkelijke starttijd moet eerder zijn dan de werkelijke eindtijd.';
+    $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} = 'De werkelijke starttijd moet gevuld zijn als de werkelijke eindtijd gevuld is.';
 
     # Template: AgentITSMWorkOrderTake
-    $Self->{Translation}->{'Current Agent'} = 'Aktuele gebruiker';
+    $Self->{Translation}->{'Current Agent'} = 'Actuele gebruiker';
     $Self->{Translation}->{'Do you really want to take this workorder?'} = 'Deze Work Order overnemen?';
 
     # Template: AgentITSMWorkOrderTemplate
