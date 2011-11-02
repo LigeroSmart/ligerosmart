@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.60 2011-01-15 20:04:55 mb Exp $
+# $Id: LayoutITSMChange.pm,v 1.61 2011-11-02 16:07:17 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 =over 4
 
@@ -458,9 +458,10 @@ sub ITSMChangeListShow {
     $Param{Group}           = $Group;
     $Param{PreferencesKey}  = $PageShownPreferencesKey;
     $Param{PageShownString} = $Self->BuildSelection(
-        Name       => $PageShownPreferencesKey,
-        SelectedID => $PageShown,
-        Data       => \%Data,
+        Name        => $PageShownPreferencesKey,
+        SelectedID  => $PageShown,
+        Data        => \%Data,
+        Translation => 0,
     );
 
     # build navbar content
