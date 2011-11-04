@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.48 2011-02-03 22:46:14 dz Exp $
+# $Id: AgentSurvey.pm,v 1.49 2011-11-04 12:40:01 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -107,9 +107,18 @@ sub Run {
         @{ $FormElements{Queues} } = $Self->{ParamObject}->GetArray( Param => "Queues" );
 
         if ( $Self->{ConfigObject}->Get('Frontend::RichText') ) {
-            $FormElements{Introduction}     = "\$html/text\$ $FormElements{Introduction}";
-            $FormElements{NotificationBody} = "\$html/text\$ $FormElements{NotificationBody}";
-            $FormElements{Description}      = "\$html/text\$ $FormElements{Description}";
+            $FormElements{Introduction}
+                = ( length $FormElements{Introduction} )
+                ? "\$html/text\$ $FormElements{Introduction}"
+                : '';
+            $FormElements{NotificationBody}
+                = ( length $FormElements{NotificationBody} )
+                ? "\$html/text\$ $FormElements{NotificationBody}"
+                : '';
+            $FormElements{Description}
+                = ( length $FormElements{Description} )
+                ? "\$html/text\$ $FormElements{Description}"
+                : '';
         }
 
         # save if no errors

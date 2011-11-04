@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.24 2011-02-03 17:47:12 dz Exp $
+# $Id: PublicSurvey.pm,v 1.25 2011-11-04 12:40:01 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -100,7 +100,10 @@ sub Run {
 
                     # check if rich text is enabled
                     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
-                        $PublicSurveyVote4 = "\$html/text\$ $PublicSurveyVote4";
+                        $PublicSurveyVote4
+                            = ( length $PublicSurveyVote4 )
+                            ? "\$html/text\$ $PublicSurveyVote4"
+                            : '';
                     }
 
                     $Self->{SurveyObject}->PublicAnswerSave(
