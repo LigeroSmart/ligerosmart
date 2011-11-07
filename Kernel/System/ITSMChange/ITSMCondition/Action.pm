@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Action.pm,v 1.11 2010-05-21 10:22:12 ub Exp $
+# $Id: Action.pm,v 1.12 2011-11-07 16:26:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -39,7 +39,7 @@ Add a new condition action.
         ObjectID     => 234,
         AttributeID  => 345,
         OperatorID   => 456,
-        Selector     => 1234',
+        Selector     => 1234,
         ActionValue  => 'rejected',
         UserID       => 1,
     );
@@ -795,12 +795,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-05-21 10:22:12 $
+$Revision: 1.12 $ $Date: 2011-11-07 16:26:43 $
 
 =cut
