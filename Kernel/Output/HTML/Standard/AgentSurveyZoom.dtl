@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.16 2011-02-17 03:27:47 dz Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.17 2011-11-07 09:49:34 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@
 
                         <label>$Text{"Changed by"}:</label>
                         <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
-                            $Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})","18"}
+                            $Quote{"$Data{"ChangeUserLogin"} ($Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"})","18"}
                         </p>
                         <div class="Clear"></div>
 
