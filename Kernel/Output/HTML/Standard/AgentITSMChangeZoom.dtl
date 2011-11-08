@@ -2,7 +2,7 @@
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.62 2011-08-09 10:32:56 mab Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.63 2011-11-08 07:04:07 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@
 <!-- dtl:block:Meta -->
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"ChangeState"}:</label>
-                        <div class="Value" title="$Text{"$Data{"ChangeState"}"}">
+                        <div class="Value">
                             <div class="Flag Small">
                                 <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
                             </div>
@@ -46,7 +46,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedStartTime -->
 <!-- dtl:block:PlannedStartTime -->
-                        <p class="Value" title="$QData{"PlannedStartTime"}">$TimeLong{"$Data{"PlannedStartTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"PlannedStartTime"}"}</p>
 <!-- dtl:block:PlannedStartTime -->
                         <div class="Clear"></div>
 
@@ -55,7 +55,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedEndTime -->
 <!-- dtl:block:PlannedEndTime -->
-                        <p class="Value" title="$QData{"PlannedEndTime"}">$TimeLong{"$Data{"PlannedEndTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"PlannedEndTime"}"}</p>
 <!-- dtl:block:PlannedEndTime -->
                         <div class="Clear"></div>
 
@@ -64,7 +64,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyActualStartTime -->
 <!-- dtl:block:ActualStartTime -->
-                        <p class="Value" title="$QData{"ActualStartTime"}">$TimeLong{"$Data{"ActualStartTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"ActualStartTime"}"}</p>
 <!-- dtl:block:ActualStartTime -->
                         <div class="Clear"></div>
 
@@ -73,7 +73,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyActualEndTime -->
 <!-- dtl:block:ActualEndTime -->
-                        <p class="Value" title="$QData{"ActualEndTime"}">$TimeLong{"$Data{"ActualEndTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"ActualEndTime"}"}</p>
 <!-- dtl:block:ActualEndTime -->
                         <div class="Clear"></div>
                     </fieldset>
@@ -85,7 +85,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyRequestedTime -->
 <!-- dtl:block:RequestedTime -->
-                        <p class="Value" title="$QData{"RequestedTime"}">$TimeLong{"$Data{"RequestedTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"RequestedTime"}"}</p>
 <!-- dtl:block:RequestedTime -->
                         <div class="Clear"></div>
                     </fieldset>
@@ -98,7 +98,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedEffort -->
 <!-- dtl:block:PlannedEffort -->
-                        <p class="Value" title="$QData{"PlannedEffort"}">$QData{"PlannedEffort"}</p>
+                        <p class="Value">$QData{"PlannedEffort"}</p>
 <!-- dtl:block:PlannedEffort -->
                         <div class="Clear"></div>
 <!-- dtl:block:ShowPlannedEffort -->
@@ -109,7 +109,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyAccountedTime -->
 <!-- dtl:block:AccountedTime -->
-                        <p class="Value" title="$QData{"AccountedTime"}">$QData{"AccountedTime"}</p>
+                        <p class="Value">$QData{"AccountedTime"}</p>
 <!-- dtl:block:AccountedTime -->
                         <div class="Clear"></div>
 <!-- dtl:block:ShowAccountedTime -->
@@ -119,19 +119,19 @@
                     <fieldset class="TableLike FixedLabelSmall">
 <!-- dtl:block:Category -->
                         <label>$Text{"Category"}:</label>
-                        <p class="Value" title="$QData{"Category"}">$Text{"$Data{"Category"}"}</p>
+                        <p class="Value">$Text{"$Data{"Category"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Category -->
 
 <!-- dtl:block:Impact -->
                         <label>$Text{"Impact"}:</label>
-                        <p class="Value" title="$QData{"Impact"}">$Text{"$Data{"Impact"}"}</p>
+                        <p class="Value">$Text{"$Data{"Impact"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Impact -->
 
 <!-- dtl:block:Priority -->
                         <label>$Text{"Priority"}:</label>
-                        <p class="Value" title="$QData{"Priority"}">$Text{"$Data{"Priority"}"}</p>
+                        <p class="Value">$Text{"$Data{"Priority"}"}</p>
                         <div class="Clear"></div>
 <!-- dtl:block:Priority -->
                     </fieldset>
@@ -296,19 +296,19 @@
                 <div class="Content">
                     <fieldset class="TableLike FixedLabelSmall">
 
-                        <label title="$Text{"Description"}">$Text{"Description"}: </label>
+                        <label>$Text{"Description"}: </label>
                         <div class="Field RTEContent">
                             $Data{"Description"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Justification"}">$Text{"Justification"}: </label>
+                        <label>$Text{"Justification"}: </label>
                         <div class="Field RTEContent">
                             $Data{"Justification"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Attachment"}">$Text{"Attachment"}:</label>
+                        <label>$Text{"Attachment"}:</label>
                         <div class="Field">
 <!-- dtl:block:AttachmentRow -->
                             <span class="DownloadAttachment" title="$Text{"Download Attachment"}">

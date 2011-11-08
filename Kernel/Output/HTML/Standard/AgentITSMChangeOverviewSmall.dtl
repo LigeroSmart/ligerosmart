@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.33 2011-04-05 15:33:31 ub Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.34 2011-11-08 07:04:07 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -148,14 +148,14 @@
 <!-- dtl:block:Record -->
                 <tr class="MasterAction">
 <!-- dtl:block:RecordChangeStateSignal -->
-                    <td title="$Text{"$Data{"ChangeState"}"}">
+                    <td>
                         <div class="Flag Small">
                             <span class="$QData{"ChangeStateSignal"}">"$QData{"ChangeState"}"</span>
                         </div>
                     </td>
 <!-- dtl:block:RecordChangeStateSignal -->
 <!-- dtl:block:RecordWorkOrderStateSignal -->
-                    <td title="$Text{"$Data{"WorkOrderState"}"}">
+                    <td>
                         <div class="Flag Small">
                             <span class="$QData{"WorkOrderStateSignal"}">"$QData{"WorkOrderState"}"</span>
                         </div>
@@ -164,7 +164,7 @@
 <!-- dtl:block:RecordChangeNumber -->
                     <td>
 <!-- dtl:block:RecordChangeNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" title="$LQData{"ChangeNumber"}" class="MasterActionLink">
+                        <a href="$Env{"Baselink"}Action=AgentITSMChangeZoom;ChangeID=$LQData{"ChangeID"}" class="MasterActionLink">
 <!-- dtl:block:RecordChangeNumberLinkStart -->
                             $QData{"ChangeNumber"}
 <!-- dtl:block:RecordChangeNumberLinkEnd -->
@@ -175,7 +175,7 @@
 <!-- dtl:block:RecordWorkOrderNumber -->
                     <td>
 <!-- dtl:block:RecordWorkOrderNumberLinkStart -->
-                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" title="$LQData{"ChangeNumber"}-$LQData{"WorkOrderNumber"}" class="MasterActionLink">
+                        <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}" class="MasterActionLink">
 <!-- dtl:block:RecordWorkOrderNumberLinkStart -->
                             $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}
 <!-- dtl:block:RecordWorkOrderNumberLinkEnd -->
@@ -222,37 +222,37 @@
 <!-- dtl:block:RecordChangeManager -->
 <!-- dtl:block:RecordWorkOrderCount -->
                     <td>
-                        <div title="$QData{"WorkOrderCount"}" class="Center">$QData{"WorkOrderCount"}</div>
+                        <div class="Center">$QData{"WorkOrderCount"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderCount -->
 <!-- dtl:block:RecordChangeState -->
                     <td>
-                        <div title="$Text{"$Data{"ChangeState"}"}">$Text{"$Data{"ChangeState"}"}</div>
+                        <div>$Text{"$Data{"ChangeState"}"}</div>
                     </td>
 <!-- dtl:block:RecordChangeState -->
 <!-- dtl:block:RecordWorkOrderState -->
                     <td>
-                        <div title="$Text{"$Data{"WorkOrderState"}"}">$Text{"$Data{"WorkOrderState"}"}</div>
+                        <div>$Text{"$Data{"WorkOrderState"}"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderState -->
 <!-- dtl:block:RecordWorkOrderType -->
                     <td>
-                        <div title="$Text{"$Data{"WorkOrderType"}"}">$Text{"$Data{"WorkOrderType"}"}</div>
+                        <div>$Text{"$Data{"WorkOrderType"}"}</div>
                     </td>
 <!-- dtl:block:RecordWorkOrderType -->
 <!-- dtl:block:RecordCategory -->
                     <td>
-                        <div title="$Text{"$Data{"Category"}"}">$Text{"$Data{"Category"}"}</div>
+                        <div>$Text{"$Data{"Category"}"}</div>
                     </td>
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordImpact -->
                     <td>
-                        <div title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</div>
+                        <div>$Text{"$Data{"Impact"}"}</div>
                     </td>
 <!-- dtl:block:RecordImpact -->
 <!-- dtl:block:RecordPriority -->
                     <td>
-                        <div title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</div>
+                        <div>$Text{"$Data{"Priority"}"}</div>
                     </td>
 <!-- dtl:block:RecordPriority -->
 <!-- dtl:block:RecordServices -->
@@ -262,7 +262,7 @@
                             <li>
                                 <div title="$Text{"$Data{"Name"}"}">
                                     <div class="Value">
-                                        <div class="Flag Small" title="$Text{"$Data{"CurInciState"}"}">
+                                        <div class="Flag Small">
                                             <span class="$QData{"CurInciSignal"}">"$QData{"CurrInciState"}"</span>
                                         </div>
                                     </div>
@@ -278,32 +278,32 @@
 <!-- dtl:block:RecordServices -->
 <!-- dtl:block:RecordRequestedTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"RequestedTime"}"}">$TimeLong{"$QData{"RequestedTime"}"}</div>
+                        <div>$TimeLong{"$QData{"RequestedTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordRequestedTime -->
 <!-- dtl:block:RecordPlannedStartTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"PlannedStartTime"}"}">$TimeLong{"$QData{"PlannedStartTime"}"}</div>
+                        <div>$TimeLong{"$QData{"PlannedStartTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordPlannedStartTime -->
 <!-- dtl:block:RecordPlannedEndTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"PlannedEndTime"}"}">$TimeLong{"$QData{"PlannedEndTime"}"}</div>
+                        <div>$TimeLong{"$QData{"PlannedEndTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordPlannedEndTime -->
 <!-- dtl:block:RecordActualStartTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"ActualStartTime"}"}">$TimeLong{"$QData{"ActualStartTime"}"}</div>
+                        <div>$TimeLong{"$QData{"ActualStartTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordActualStartTime -->
 <!-- dtl:block:RecordActualEndTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"ActualEndTime"}"}">$TimeLong{"$QData{"ActualEndTime"}"}</div>
+                        <div>$TimeLong{"$QData{"ActualEndTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordActualEndTime -->
 <!-- dtl:block:RecordCreateTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"CreateTime"}"}">$TimeLong{"$QData{"CreateTime"}"}</div>
+                        <div>$TimeLong{"$QData{"CreateTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordCreateTime -->
                 </tr>

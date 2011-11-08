@@ -2,7 +2,7 @@
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.63 2011-08-09 10:32:56 mab Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.64 2011-11-08 07:04:07 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,7 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <div class="Flag" title="$Text{"$Data{"WorkOrderState"}"}">
+        <div class="Flag">
             <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
         </div>
         <h1 title="$Config{"ITSMWorkOrder::Hook"}: $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"} &ndash; $QData{"WorkOrderTitle"}">
@@ -30,7 +30,7 @@
 <!-- dtl:block:Meta -->
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"WorkOrderState"}:</label>
-                        <div class="Value" title="$Text{"$Data{"WorkOrderState"}"}">
+                        <div class="Value">
                             <div class="Flag Small">
                                 <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
                             </div>
@@ -43,7 +43,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyWorkOrderType -->
 <!-- dtl:block:WorkOrderType -->
-                        <p class="Value" title="$QData{"WorkOrderType"}">$QData{"WorkOrderType"}</p>
+                        <p class="Value">$QData{"WorkOrderType"}</p>
 <!-- dtl:block:WorkOrderType -->
                         <div class="Clear"></div>
                     </fieldset>
@@ -54,7 +54,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedStartTime -->
 <!-- dtl:block:PlannedStartTime -->
-                        <p class="Value" title="$QData{"PlannedStartTime"}">$TimeLong{"$Data{"PlannedStartTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"PlannedStartTime"}"}</p>
 <!-- dtl:block:PlannedStartTime -->
                         <div class="Clear"></div>
 
@@ -64,7 +64,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedEndTime -->
 <!-- dtl:block:PlannedEndTime -->
-                        <p class="Value" title="$QData{"PlannedEndTime"}">$TimeLong{"$Data{"PlannedEndTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"PlannedEndTime"}"}</p>
 <!-- dtl:block:PlannedEndTime -->
                         <div class="Clear"></div>
 
@@ -73,7 +73,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyActualStartTime -->
 <!-- dtl:block:ActualStartTime -->
-                        <p class="Value" title="$QData{"ActualStartTime"}">$TimeLong{"$Data{"ActualStartTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"ActualStartTime"}"}</p>
 <!-- dtl:block:ActualStartTime -->
                         <div class="Clear"></div>
 
@@ -82,7 +82,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyActualEndTime -->
 <!-- dtl:block:ActualEndTime -->
-                        <p class="Value" title="$QData{"ActualEndTime"}">$TimeLong{"$Data{"ActualEndTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"ActualEndTime"}"}</p>
 <!-- dtl:block:ActualEndTime -->
                         <div class="Clear"></div>
                     </fieldset>
@@ -94,7 +94,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyPlannedEffort -->
 <!-- dtl:block:PlannedEffort -->
-                        <p class="Value" title="$QData{"PlannedEffort"}">$QData{"PlannedEffort"}</p>
+                        <p class="Value">$QData{"PlannedEffort"}</p>
 <!-- dtl:block:PlannedEffort -->
                         <div class="Clear"></div>
 <!-- dtl:block:ShowPlannedEffort -->
@@ -105,7 +105,7 @@
                         <p class="Value" title="-">-</p>
 <!-- dtl:block:EmptyAccountedTime -->
 <!-- dtl:block:AccountedTime -->
-                        <p class="Value" title="$QData{"AccountedTime"}">$QData{"AccountedTime"}</p>
+                        <p class="Value">$QData{"AccountedTime"}</p>
 <!-- dtl:block:AccountedTime -->
                         <div class="Clear"></div>
 <!-- dtl:block:ShowAccountedTime -->
@@ -184,7 +184,7 @@
 
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Created"}:</label>
-                        <p class="Value" title="$QData{"CreateTime"}">$TimeLong{"$Data{"CreateTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"CreateTime"}"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
@@ -196,7 +196,7 @@
 
                     <fieldset class="TableLike FixedLabelSmall">
                         <label>$Text{"Last changed"}:</label>
-                        <p class="Value" title="$QData{"ChangeTime"}">$TimeLong{"$Data{"ChangeTime"}"}</p>
+                        <p class="Value">$TimeLong{"$Data{"ChangeTime"}"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Last changed by"}:</label>
@@ -258,7 +258,7 @@
                     <fieldset class="TableLike FixedLabelSmall">
                         <label><strong>$Text{"ITSMChange"}</strong></label>
                         <div class="Value">
-                            <div class="Flag Small" title="$Text{"$Data{"ChangeState"}"}">
+                            <div class="Flag Small">
                                 <span class="$QData{"ChangeStateSignal"}">$Text{"$Data{"ChangeState"}"}</span>
                             </div>
                             $QData{"ChangeNumber"}
@@ -270,7 +270,7 @@
 
                         <label><strong>$Text{"Workorder"}</strong></label>
                         <div class="Value">
-                            <div class="Flag Small" title="$Text{"$Data{"WorkOrderState"}"}">
+                            <div class="Flag Small">
                                 <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
                             </div>
                             $QData{"ChangeNumber"} - $QData{"WorkOrderNumber"}
@@ -278,19 +278,19 @@
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Instruction"}">$Text{"Instruction"}: </label>
+                        <label>$Text{"Instruction"}: </label>
                         <div class="Field RTEContent">
                             $Data{"Instruction"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Report"}">$Text{"Report"}: </label>
+                        <label>$Text{"Report"}: </label>
                         <div class="Field RTEContent">
                             $Data{"Report"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Attachment"}">$Text{"Attachment"}:</label>
+                        <label>$Text{"Attachment"}:</label>
                         <div class="Field">
 <!-- dtl:block:AttachmentRow -->
                             <span class="DownloadAttachment" title="$Text{"Download Attachment"}">

@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.38 2011-08-08 11:00:42 sb Exp $
+# $Id: ITSMChange.dtl,v 1.39 2011-11-08 07:04:07 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -61,7 +61,7 @@
 
 <!-- dtl:block:WorkOrderItem -->
         <div class="WorkorderLabel" title="$QData{"WorkOrderLabel"}">
-            <div class="Flag Small" title="$Text{"$Data{"WorkOrderState"}"}">
+            <div class="Flag Small">
                 <span class="$QData{"WorkOrderStateSignal"}">$Text{"$Data{"WorkOrderState"}"}</span>
             </div>
             <a href="$Env{"Baselink"}Action=AgentITSMWorkOrderZoom;WorkOrderID=$LQData{"WorkOrderID"}">
