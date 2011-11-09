@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Object.pm,v 1.26 2010-07-14 11:58:14 ub Exp $
+# $Id: Object.pm,v 1.27 2011-11-09 13:47:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -90,6 +90,12 @@ sub ObjectAdd {
         return;
     }
 
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ObjectList',
+    );
+
     return $ObjectID;
 }
 
@@ -145,6 +151,20 @@ sub ObjectUpdate {
         ],
     );
 
+    # delete cache
+    for my $Key (
+        'ObjectList',
+        'ObjectGet::ObjectID::' . $Param{ObjectID},
+        'ObjectLookup::ObjectID::' . $Param{ObjectID},
+        'ObjectLookup::Name::' . $ObjectData->{Name},    # use the old name
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     return 1;
 }
 
@@ -179,6 +199,14 @@ sub ObjectGet {
         }
     }
 
+    # check cache
+    my $CacheKey = 'ObjectGet::ObjectID::' . $Param{ObjectID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT id, name FROM condition_object WHERE id = ?',
@@ -201,6 +229,14 @@ sub ObjectGet {
         );
         return;
     }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%ObjectData,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \%ObjectData;
 }
@@ -251,8 +287,19 @@ sub ObjectLookup {
         return;
     }
 
+    my $CacheKey;
+
     # prepare SQL statements
     if ( $Param{ObjectID} ) {
+
+        # check cache
+        $CacheKey = 'ObjectLookup::ObjectID::' . $Param{ObjectID};
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
+        return $Cache if $Cache;
+
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT name FROM condition_object WHERE id = ?',
             Bind  => [ \$Param{ObjectID} ],
@@ -260,6 +307,15 @@ sub ObjectLookup {
         );
     }
     elsif ( $Param{Name} ) {
+
+        # check cache
+        $CacheKey = 'ObjectLookup::Name::' . $Param{Name};
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
+        return $Cache if $Cache;
+
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT id FROM condition_object WHERE name = ?',
             Bind  => [ \$Param{Name} ],
@@ -272,6 +328,14 @@ sub ObjectLookup {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => $Lookup,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return $Lookup;
 }
@@ -302,6 +366,14 @@ sub ObjectList {
         return;
     }
 
+    # check cache
+    my $CacheKey = 'ObjectList';
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, name FROM condition_object',
@@ -311,6 +383,18 @@ sub ObjectList {
     my %ObjectList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ObjectList{ $Row[0] } = $Row[1];
+    }
+
+    # set cache only if object list exists
+    if (%ObjectList) {
+
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%ObjectList,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \%ObjectList;
@@ -341,12 +425,31 @@ sub ObjectDelete {
         }
     }
 
+    # lookup object name
+    my $ObjectName = $Self->ObjectLookup(
+        ObjectID => $Param{ObjectID},
+    );
+
     # delete condition object from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_object '
             . 'WHERE id = ?',
         Bind => [ \$Param{ObjectID} ],
     );
+
+    # delete cache
+    for my $Key (
+        'ObjectList',
+        'ObjectGet::ObjectID::' . $Param{ObjectID},
+        'ObjectLookup::ObjectID::' . $Param{ObjectID},
+        'ObjectLookup::Name::' . $ObjectName,
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     return 1;
 }
@@ -669,6 +772,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2010-07-14 11:58:14 $
+$Revision: 1.27 $ $Date: 2011-11-09 13:47:05 $
 
 =cut

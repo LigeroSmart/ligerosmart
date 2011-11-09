@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Action.pm,v 1.12 2011-11-07 16:26:43 ub Exp $
+# $Id: Action.pm,v 1.13 2011-11-09 13:45:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -137,6 +137,12 @@ sub ActionAdd {
         return;
     }
 
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ActionList::ConditionID::' . $Param{ConditionID},
+    );
+
     # trigger ActionAddPost-Event
     $Self->EventHandler(
         Event => 'ActionAddPost',
@@ -249,6 +255,18 @@ sub ActionUpdate {
         Bind => \@Bind,
     );
 
+    # delete cache
+    for my $Key (
+        'ActionList::ConditionID::' . $Action->{ConditionID},
+        'ActionGet::' . $Param{ActionID},
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     # trigger ActionUpdatePost-Event
     $Self->EventHandler(
         Event => 'ActionUpdatePost',
@@ -300,6 +318,14 @@ sub ActionGet {
         }
     }
 
+    # check cache
+    my $CacheKey = 'ActionGet::' . $Param{ActionID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, condition_id, action_number, object_id, '
@@ -331,6 +357,14 @@ sub ActionGet {
         return;
     }
 
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%ActionData,
+        TTL   => $Self->{CacheTTL},
+    );
+
     return \%ActionData;
 }
 
@@ -360,6 +394,14 @@ sub ActionList {
         }
     }
 
+    # check cache
+    my $CacheKey = 'ActionList::ConditionID::' . $Param{ConditionID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM condition_action '
@@ -372,6 +414,18 @@ sub ActionList {
     my @ActionList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @ActionList, $Row[0];
+    }
+
+    # set cache only if action ids exist
+    if (@ActionList) {
+
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \@ActionList,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \@ActionList;
@@ -437,6 +491,18 @@ sub ActionDelete {
         Bind => [ \$Param{ActionID} ],
     );
 
+    # delete cache
+    for my $Key (
+        'ActionList::ConditionID::' . $Action->{ConditionID},
+        'ActionGet::' . $Param{ActionID},
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     # trigger ActionDeletePost-Event
     $Self->EventHandler(
         Event => 'ActionDeletePost',
@@ -484,6 +550,12 @@ sub ActionDeleteAll {
     # check condition
     return if !$Condition;
 
+    # get all actions for the given condition id
+    my $ActionIDsRef = $Self->ActionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
     # trigger ActionDeleteAllPre-Event
     $Self->EventHandler(
         Event => 'ActionDeleteAllPre',
@@ -501,6 +573,22 @@ sub ActionDeleteAll {
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
     );
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ActionList::ConditionID::' . $Param{ConditionID},
+    );
+
+    # delete cache
+    if ( $ActionIDsRef && @{$ActionIDsRef} ) {
+        for my $ActionID ( @{$ActionIDsRef} ) {
+            $Self->{CacheObject}->Delete(
+                Type => 'ITSMChangeManagement',
+                Key  => 'ActionGet::' . $ActionID,
+            );
+        }
+    }
 
     # trigger ActionDeleteAllPost-Event
     $Self->EventHandler(
@@ -801,6 +889,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2011-11-07 16:26:43 $
+$Revision: 1.13 $ $Date: 2011-11-09 13:45:48 $
 
 =cut

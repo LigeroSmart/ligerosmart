@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Expression.pm,v 1.28 2010-01-31 13:23:05 mae Exp $
+# $Id: Expression.pm,v 1.29 2011-11-09 13:46:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -125,6 +125,12 @@ sub ExpressionAdd {
         );
         return;
     }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ExpressionList::ConditionID::' . $Param{ConditionID},
+    );
 
     # trigger ExpressionAddPost-Event
     $Self->EventHandler(
@@ -236,6 +242,18 @@ sub ExpressionUpdate {
         Bind => \@Bind,
     );
 
+    # delete cache
+    for my $Key (
+        'ExpressionList::ConditionID::' . $Expression->{ConditionID},
+        'ExpressionGet::' . $Param{ExpressionID},
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     # trigger ExpressionUpdatePost-Event
     $Self->EventHandler(
         Event => 'ExpressionUpdatePost',
@@ -286,6 +304,14 @@ sub ExpressionGet {
         }
     }
 
+    # check cache
+    my $CacheKey = 'ExpressionGet::' . $Param{ExpressionID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, condition_id, object_id, attribute_id, '
@@ -316,6 +342,14 @@ sub ExpressionGet {
         return;
     }
 
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%ExpressionData,
+        TTL   => $Self->{CacheTTL},
+    );
+
     return \%ExpressionData;
 }
 
@@ -345,6 +379,14 @@ sub ExpressionList {
         }
     }
 
+    # check cache
+    my $CacheKey = 'ExpressionList::ConditionID::' . $Param{ConditionID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id FROM condition_expression '
@@ -356,6 +398,18 @@ sub ExpressionList {
     my @ExpressionList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @ExpressionList, $Row[0];
+    }
+
+    # set cache only if expression ids exist
+    if (@ExpressionList) {
+
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \@ExpressionList,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \@ExpressionList;
@@ -421,6 +475,18 @@ sub ExpressionDelete {
         Bind => [ \$Param{ExpressionID} ],
     );
 
+    # delete cache
+    for my $Key (
+        'ExpressionList::ConditionID::' . $Expression->{ConditionID},
+        'ExpressionGet::' . $Param{ExpressionID},
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     # trigger ExpressionDeletePost-Event
     $Self->EventHandler(
         Event => 'ExpressionDeletePost',
@@ -468,6 +534,12 @@ sub ExpressionDeleteAll {
     # check condition
     return if !$Condition;
 
+    # get all expressions for the given condition id
+    my $ExpressionIDsRef = $Self->ExpressionList(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
     # trigger ExpressionDeleteAllPre-Event
     $Self->EventHandler(
         Event => 'ExpressionDeleteAllPre',
@@ -485,6 +557,22 @@ sub ExpressionDeleteAll {
             . 'WHERE condition_id = ?',
         Bind => [ \$Param{ConditionID} ],
     );
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'ExpressionList::ConditionID::' . $Param{ConditionID},
+    );
+
+    # delete cache
+    if ( $ExpressionIDsRef && @{$ExpressionIDsRef} ) {
+        for my $ExpressionID ( @{$ExpressionIDsRef} ) {
+            $Self->{CacheObject}->Delete(
+                Type => 'ITSMChangeManagement',
+                Key  => 'ExpressionGet::' . $ExpressionID,
+            );
+        }
+    }
 
     # trigger ExpressionDeleteAllPost-Event
     $Self->EventHandler(
@@ -726,12 +814,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2010-01-31 13:23:05 $
+$Revision: 1.29 $ $Date: 2011-11-09 13:46:06 $
 
 =cut

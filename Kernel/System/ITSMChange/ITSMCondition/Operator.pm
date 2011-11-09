@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Operator.pm - all condition operator functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Operator.pm,v 1.30 2011-04-21 15:09:48 ub Exp $
+# $Id: Operator.pm,v 1.31 2011-11-09 13:47:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -75,7 +75,9 @@ sub OperatorAdd {
     );
 
     # get id of created operator
-    $OperatorID = $Self->OperatorLookup( Name => $Param{Name} );
+    $OperatorID = $Self->OperatorLookup(
+        Name => $Param{Name},
+    );
 
     # check if operator could be added
     if ( !$OperatorID ) {
@@ -85,6 +87,12 @@ sub OperatorAdd {
         );
         return;
     }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'OperatorList',
+    );
 
     return $OperatorID;
 }
@@ -141,6 +149,20 @@ sub OperatorUpdate {
         ],
     );
 
+    # delete cache
+    for my $Key (
+        'OperatorList',
+        'OperatorGet::OperatorID::' . $Param{OperatorID},
+        'OperatorLookup::OperatorID::' . $Param{OperatorID},
+        'OperatorLookup::Name::' . $OperatorData->{Name},    # use the old name
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     return 1;
 }
 
@@ -175,6 +197,14 @@ sub OperatorGet {
         }
     }
 
+    # check cache
+    my $CacheKey = 'OperatorGet::OperatorID::' . $Param{OperatorID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT id, name FROM condition_operator WHERE id = ?',
@@ -197,6 +227,14 @@ sub OperatorGet {
         );
         return;
     }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%OperatorData,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \%OperatorData;
 }
@@ -247,8 +285,19 @@ sub OperatorLookup {
         return;
     }
 
+    my $CacheKey;
+
     # prepare SQL statements
     if ( $Param{OperatorID} ) {
+
+        # check cache
+        $CacheKey = 'OperatorLookup::OperatorID::' . $Param{OperatorID};
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
+        return $Cache if $Cache;
+
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT name FROM condition_operator WHERE id = ?',
             Bind  => [ \$Param{OperatorID} ],
@@ -256,6 +305,15 @@ sub OperatorLookup {
         );
     }
     elsif ( $Param{Name} ) {
+
+        # check cache
+        $CacheKey = 'OperatorLookup::Name::' . $Param{Name};
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
+        return $Cache if $Cache;
+
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT id FROM condition_operator WHERE name = ?',
             Bind  => [ \$Param{Name} ],
@@ -268,6 +326,14 @@ sub OperatorLookup {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => $Lookup,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return $Lookup;
 }
@@ -298,6 +364,14 @@ sub OperatorList {
         return;
     }
 
+    # check cache
+    my $CacheKey = 'OperatorList';
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, name FROM condition_operator',
@@ -307,6 +381,18 @@ sub OperatorList {
     my %OperatorList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $OperatorList{ $Row[0] } = $Row[1];
+    }
+
+    # set cache only if operator list exists
+    if (%OperatorList) {
+
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%OperatorList,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \%OperatorList;
@@ -337,12 +423,31 @@ sub OperatorDelete {
         }
     }
 
+    # lookup operator name
+    my $OperatorName = $Self->OperatorLookup(
+        OperatorID => $Param{OperatorID},
+    );
+
     # delete condition operator from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_operator '
             . 'WHERE id = ?',
         Bind => [ \$Param{OperatorID} ],
     );
+
+    # delete cache
+    for my $Key (
+        'OperatorList',
+        'OperatorGet::OperatorID::' . $Param{OperatorID},
+        'OperatorLookup::OperatorID::' . $Param{OperatorID},
+        'OperatorLookup::Name::' . $OperatorName,
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     return 1;
 }
@@ -1238,6 +1343,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2011-04-21 15:09:48 $
+$Revision: 1.31 $ $Date: 2011-11-09 13:47:05 $
 
 =cut

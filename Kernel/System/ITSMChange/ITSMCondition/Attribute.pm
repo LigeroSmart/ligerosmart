@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Attribute.pm,v 1.11 2010-06-15 01:04:47 ub Exp $
+# $Id: Attribute.pm,v 1.12 2011-11-09 13:45:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -55,7 +55,9 @@ sub AttributeAdd {
     }
 
     # make lookup with given name for checks
-    my $AttributeID = $Self->AttributeLookup( Name => $Param{Name} );
+    my $AttributeID = $Self->AttributeLookup(
+        Name => $Param{Name},
+    );
 
     # check if attribute name already exists
     if ($AttributeID) {
@@ -75,7 +77,9 @@ sub AttributeAdd {
     );
 
     # get id of created attribute
-    $AttributeID = $Self->AttributeLookup( Name => $Param{Name} );
+    $AttributeID = $Self->AttributeLookup(
+        Name => $Param{Name},
+    );
 
     # check if attribute could be added
     if ( !$AttributeID ) {
@@ -85,6 +89,12 @@ sub AttributeAdd {
         );
         return;
     }
+
+    # delete cache
+    $Self->{CacheObject}->Delete(
+        Type => 'ITSMChangeManagement',
+        Key  => 'AttributeList',
+    );
 
     return $AttributeID;
 }
@@ -141,6 +151,20 @@ sub AttributeUpdate {
         ],
     );
 
+    # delete cache
+    for my $Key (
+        'AttributeList',
+        'AttributeGet::AttributeID::' . $Param{AttributeID},
+        'AttributeLookup::AttributeID::' . $Param{AttributeID},
+        'AttributeLookup::Name::' . $AttributeData->{Name},    # use the old name
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     return 1;
 }
 
@@ -175,6 +199,14 @@ sub AttributeGet {
         }
     }
 
+    # check cache
+    my $CacheKey = 'AttributeGet::AttributeID::' . $Param{AttributeID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL   => 'SELECT id, name FROM condition_attribute WHERE id = ?',
@@ -197,6 +229,14 @@ sub AttributeGet {
         );
         return;
     }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%AttributeData,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \%AttributeData;
 }
@@ -247,8 +287,19 @@ sub AttributeLookup {
         return;
     }
 
+    my $CacheKey;
+
     # prepare SQL statements
     if ( $Param{AttributeID} ) {
+
+        # check cache
+        $CacheKey = 'AttributeLookup::AttributeID::' . $Param{AttributeID};
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
+        return $Cache if $Cache;
+
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT name FROM condition_attribute WHERE id = ?',
             Bind  => [ \$Param{AttributeID} ],
@@ -256,6 +307,15 @@ sub AttributeLookup {
         );
     }
     elsif ( $Param{Name} ) {
+
+        # check cache
+        $CacheKey = 'AttributeLookup::Name::' . $Param{Name};
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => 'ITSMChangeManagement',
+            Key  => $CacheKey,
+        );
+        return $Cache if $Cache;
+
         return if !$Self->{DBObject}->Prepare(
             SQL   => 'SELECT id FROM condition_attribute WHERE name = ?',
             Bind  => [ \$Param{Name} ],
@@ -268,6 +328,14 @@ sub AttributeLookup {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Lookup = $Row[0];
     }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => $Lookup,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return $Lookup;
 }
@@ -298,6 +366,14 @@ sub AttributeList {
         return;
     }
 
+    # check cache
+    my $CacheKey = 'AttributeList';
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, name FROM condition_attribute',
@@ -307,6 +383,18 @@ sub AttributeList {
     my %AttributeList;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $AttributeList{ $Row[0] } = $Row[1];
+    }
+
+    # set cache only if attribute list exists
+    if (%AttributeList) {
+
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%AttributeList,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \%AttributeList;
@@ -337,12 +425,31 @@ sub AttributeDelete {
         }
     }
 
+    # lookup attribute name
+    my $AttributeName = $Self->AttributeLookup(
+        AttributeID => $Param{AttributeID},
+    );
+
     # delete condition attribute from database
     return if !$Self->{DBObject}->Do(
         SQL => 'DELETE FROM condition_attribute '
             . 'WHERE id = ?',
         Bind => [ \$Param{AttributeID} ],
     );
+
+    # delete cache
+    for my $Key (
+        'AttributeList',
+        'AttributeGet::AttributeID::' . $Param{AttributeID},
+        'AttributeLookup::AttributeID::' . $Param{AttributeID},
+        'AttributeLookup::Name::' . $AttributeName,
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     return 1;
 }
@@ -357,12 +464,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-06-15 01:04:47 $
+$Revision: 1.12 $ $Date: 2011-11-09 13:45:48 $
 
 =cut

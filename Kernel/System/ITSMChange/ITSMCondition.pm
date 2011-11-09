@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.57 2011-03-02 22:21:12 ub Exp $
+# $Id: ITSMCondition.pm,v 1.58 2011-11-09 13:44:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,6 +14,7 @@ package Kernel::System::ITSMChange::ITSMCondition;
 use strict;
 use warnings;
 
+use Kernel::System::Cache;
 use Kernel::System::Valid;
 
 use Kernel::System::EventHandler;
@@ -24,7 +25,7 @@ use Kernel::System::ITSMChange::ITSMCondition::Expression;
 use Kernel::System::ITSMChange::ITSMCondition::Action;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -114,7 +115,11 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # create additional objects
+    $Self->{CacheObject} = Kernel::System::Cache->new( %{$Self} );
     $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
+
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
 
     # init of event handler
     $Self->EventHandlerInit(
@@ -228,6 +233,18 @@ sub ConditionAdd {
         return;
     }
 
+    # delete cache
+    for my $Key (
+        'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::0',
+        'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::1',
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     # trigger ConditionAddPost-Event
     $Self->EventHandler(
         Event => 'ConditionAddPost',
@@ -270,6 +287,15 @@ sub ConditionUpdate {
         }
     }
 
+    # get current condition data for event handler
+    my $ConditionData = $Self->ConditionGet(
+        ConditionID => $Param{ConditionID},
+        UserID      => $Param{UserID},
+    );
+
+    # check condition
+    return if !$ConditionData;
+
     # trigger ConditionUpdatePre-Event
     $Self->EventHandler(
         Event => 'ConditionUpdatePre',
@@ -277,12 +303,6 @@ sub ConditionUpdate {
             %Param,
         },
         UserID => $Param{UserID},
-    );
-
-    # get current condition data for event handler
-    my $ConditionData = $Self->ConditionGet(
-        ConditionID => $Param{ConditionID},
-        UserID      => $Param{UserID},
     );
 
     # map update attributes to column names
@@ -321,6 +341,19 @@ sub ConditionUpdate {
         SQL  => $SQL,
         Bind => \@Bind,
     );
+
+    # delete cache
+    for my $Key (
+        'ConditionList::ChangeID::' . $ConditionData->{ChangeID} . '::Valid::0',
+        'ConditionList::ChangeID::' . $ConditionData->{ChangeID} . '::Valid::1',
+        'ConditionGet::ConditionID::' . $Param{ConditionID},
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger ConditionUpdatePost-Event
     $Self->EventHandler(
@@ -373,6 +406,14 @@ sub ConditionGet {
         }
     }
 
+    # check cache
+    my $CacheKey = 'ConditionGet::ConditionID::' . $Param{ConditionID};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # prepare SQL statement
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT id, change_id, name, expression_conjunction, comments, '
@@ -415,6 +456,14 @@ sub ConditionGet {
             =~ s{ \A ( \d\d\d\d - \d\d - \d\d \s \d\d:\d\d:\d\d ) \. .+? \z }{$1}xms;
     }
 
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%ConditionData,
+        TTL   => $Self->{CacheTTL},
+    );
+
     return \%ConditionData;
 }
 
@@ -450,6 +499,14 @@ sub ConditionList {
         $Param{Valid} = 1;
     }
 
+    # check cache
+    my $CacheKey = 'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::' . $Param{Valid};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'ITSMChangeManagement',
+        Key  => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # define SQL statement
     my $SQL = 'SELECT id '
         . 'FROM change_condition '
@@ -477,6 +534,18 @@ sub ConditionList {
     my @ConditionIDs;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @ConditionIDs, $Row[0];
+    }
+
+    # set cache only if condition ids exist
+    if (@ConditionIDs) {
+
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \@ConditionIDs,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \@ConditionIDs;
@@ -544,6 +613,19 @@ sub ConditionDelete {
             . 'WHERE id = ?',
         Bind => [ \$Param{ConditionID} ],
     );
+
+    # delete cache
+    for my $Key (
+        'ConditionList::ChangeID::' . $ConditionData->{ChangeID} . '::Valid::0',
+        'ConditionList::ChangeID::' . $ConditionData->{ChangeID} . '::Valid::1',
+        'ConditionGet::ConditionID::' . $Param{ConditionID},
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger ConditionDeletePost-Event
     $Self->EventHandler(
@@ -617,6 +699,12 @@ sub ConditionDeleteAll {
         );
 
         return if !$Success;
+
+        # delete cache for ConditionGet
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => 'ConditionGet::ConditionID::' . $ConditionID,
+        );
     }
 
     # delete conditions from database
@@ -625,6 +713,18 @@ sub ConditionDeleteAll {
             . 'WHERE change_id = ?',
         Bind => [ \$Param{ChangeID} ],
     );
+
+    # delete cache
+    for my $Key (
+        'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::0',
+        'ConditionList::ChangeID::' . $Param{ChangeID} . '::Valid::1',
+        )
+    {
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
 
     # trigger ConditionDeleteAllPost-Event
     $Self->EventHandler(
@@ -1396,6 +1496,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2011-03-02 22:21:12 $
+$Revision: 1.58 $ $Date: 2011-11-09 13:44:37 $
 
 =cut
