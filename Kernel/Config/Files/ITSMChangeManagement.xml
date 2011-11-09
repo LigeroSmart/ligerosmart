@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.261 2011-09-28 00:14:16 sb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.262 2011-11-09 13:41:36 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -3800,11 +3800,11 @@
     </ConfigItem>
 
     <ConfigItem Name="ITSMChange::CacheTTL" Required="1" Valid="1">
-        <Description Translatable="1">Cache time in minutes for the change management.</Description>
+        <Description Translatable="1">Cache time in minutes for the change management. Default: 5 days (7200 minutes).</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Core::Cache</SubGroup>
         <Setting>
-            <String Regex="">180</String>
+            <String Regex="">7200</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">
