@@ -1,9 +1,9 @@
 # --
 # Service.t - Service tests
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.4 2010-11-04 14:06:53 ub Exp $
-# $OldId: Service.t,v 1.14 2010/10/29 22:16:59 en Exp $
+# $Id: Service.t,v 1.5 2011-11-10 17:13:07 ub Exp $
+# $OldId: Service.t,v 1.16 2011/06/20 09:06:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -881,6 +881,17 @@ for my $Item ( @{$ItemData} ) {
                 "Test $TestCount: ServiceUpdate()",
             );
         }
+
+        # update non-existing service
+        my $NonexistingServiceID = 32567 - 1;
+        my $UpdateNonSucess      = $ServiceObject->ServiceUpdate(
+            %{ $Item->{Update} },
+            ServiceID => $NonexistingServiceID,
+        );
+        $Self->False(
+            $UpdateNonSucess,
+            "Test $TestCount: ServiceUpdate() for nonexisting service",
+        );
 
         # prepare parent id
         if ( $Item->{UpdateGet}->{ParentID} && $Item->{UpdateGet}->{ParentID} eq 'LASTADDID' ) {

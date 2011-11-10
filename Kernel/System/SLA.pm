@@ -1,9 +1,9 @@
 # --
 # Kernel/System/SLA.pm - all sla function
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.7 2010-08-20 20:46:17 en Exp $
-# $OldId: SLA.pm,v 1.37 2010/06/17 21:39:40 cr Exp $
+# $Id: SLA.pm,v 1.8 2011-11-10 17:13:07 ub Exp $
+# $OldId: SLA.pm,v 1.40 2011/06/17 08:14:12 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -177,36 +177,43 @@ sub SLAList {
 
 =item SLAGet()
 
-return a sla as hash
-
-Return
-    $SLAData{SLAID}
-    $SLAData{ServiceIDs}
-    $SLAData{Name}
-    $SLAData{Calendar}
-    $SLAData{FirstResponseTime}
-    $SLAData{FirstResponseNotify}
-    $SLAData{UpdateTime}
-    $SLAData{UpdateNotify}
-    $SLAData{SolutionTime}
-    $SLAData{SolutionNotify}
-    $SLAData{ValidID}
-    $SLAData{Comment}
-    $SLAData{CreateTime}
-    $SLAData{CreateBy}
-    $SLAData{ChangeTime}
-    $SLAData{ChangeBy}
-# ---
-# ITSM
-# ---
-    $SLAData{TypeID}
-    $SLAData{Type}
-    $SLAData{MinTimeBetweenIncidents}
-# ---
+Returns an SLA as a hash
 
     my %SLAData = $SLAObject->SLAGet(
         SLAID  => 123,
         UserID => 1,
+    );
+
+Returns:
+
+    my %SLAData = (
+          'SLAID'               => '2',
+          'Name'                => 'Diamond Pacific - S2',
+          'Calendar'            => '2',
+          'FirstResponseTime'   => '60',  # in minutes according to business hours
+          'FirstResponseNotify' => '70',  # in percent
+          'UpdateTime'          => '360', # in minutes according to business hours
+          'UpdateNotify'        => '70',  # in percent
+          'SolutionTime'        => '960', # in minutes according to business hours
+          'SolutionNotify'      => '80',  # in percent
+          'ServiceIDs'          => [
+                                     '4'
+                                     '7'
+                                     '8'
+                                   ],
+          'ValidID'             => '1',
+          'Comment'             => 'Some Comment',
+# ---
+# ITSM
+# ---
+          'TypeID'                  => '5',
+          'Type'                    => 'Incident',
+          'MinTimeBetweenIncidents' => '4000',  # in minutes
+# ---
+          'CreateBy'            => '93',
+          'CreateTime'          => '2011-06-16 22:54:54',
+          'ChangeBy'            => '93',
+          'ChangeTime'          => '2011-06-16 22:54:54',
     );
 
 =cut
@@ -304,7 +311,7 @@ sub SLAGet {
     # add the ids
     $SLAData{ServiceIDs} = \@ServiceIDs;
 
-    # get queue preferences
+    # get sla preferences
     my %Preferences = $Self->SLAPreferencesGet( SLAID => $Param{SLAID} );
 
     # merge hash
@@ -320,7 +327,7 @@ sub SLAGet {
 
 =item SLALookup()
 
-return the name or the sla id
+returns the name or the sla id
 
     my $SLAName = $SLAObject->SLALookup(
         SLAID => 123,
@@ -406,7 +413,7 @@ add a sla
 
     my $SLAID = $SLAObject->SLAAdd(
         ServiceIDs          => [ 1, 5, 7 ],  # (optional)
-        Name                => 'Service Name',
+        Name                => 'SLA Name',
         Calendar            => 'Calendar1',  # (optional)
         FirstResponseTime   => 120,          # (optional)
         FirstResponseNotify => 60,           # (optional) notify agent if first response escalation is 60% reached
@@ -421,7 +428,7 @@ add a sla
 # ITSM
 # ---
         TypeID                  => 2,
-        MinTimeBetweenIncidents => 3443,  # (optional)
+        MinTimeBetweenIncidents => 3443,     # (optional)
 # ---
     );
 
@@ -450,7 +457,7 @@ sub SLAAdd {
     if ( defined $Param{ServiceIDs} && ref $Param{ServiceIDs} ne 'ARRAY' ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'ServiceIDs need to be an array reference!',
+            Message  => 'ServiceIDs needs to be an array reference!',
         );
         return;
     }
@@ -736,7 +743,7 @@ sub SLAUpdate {
 
 =item SLAPreferencesSet()
 
-set queue preferences
+set SLA preferences
 
     $SLAObject->SLAPreferencesSet(
         SLAID => 123,
@@ -755,7 +762,7 @@ sub SLAPreferencesSet {
 
 =item SLAPreferencesGet()
 
-get queue preferences
+get SLA preferences
 
     my %Preferences = $SLAObject->SLAPreferencesGet(
         SLAID => 123,
@@ -786,6 +793,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-08-20 20:46:17 $
+$Revision: 1.8 $ $Date: 2011-11-10 17:13:07 $
 
 =cut

@@ -1,9 +1,9 @@
 # --
 # Kernel/System/Service.pm - all service function
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.21 2010-11-04 14:06:53 ub Exp $
-# $OldId: Service.pm,v 1.46 2010/10/26 03:58:49 dz Exp $
+# $Id: Service.pm,v 1.22 2011-11-10 17:13:07 ub Exp $
+# $OldId: Service.pm,v 1.47 2011/06/20 08:42:09 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 =head1 NAME
 
@@ -767,6 +767,14 @@ sub ServiceUpdate {
     # get old name of service
     my $OldServiceName = $Self->ServiceLookup( ServiceID => $Param{ServiceID}, );
 
+    if ( !$OldServiceName ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Can't update service! Service '$Param{ServiceID}' does not exist.",
+        );
+        return;
+    }
+
     # reset cache
     delete $Self->{ 'Cache::ServiceLookup::ID::' . $Param{ServiceID} };
     delete $Self->{ 'Cache::ServiceLookup::Name::' . $OldServiceName };
@@ -1200,6 +1208,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.21 $ $Date: 2010-11-04 14:06:53 $
+$Revision: 1.22 $ $Date: 2011-11-10 17:13:07 $
 
 =cut

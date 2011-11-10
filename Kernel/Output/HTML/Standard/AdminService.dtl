@@ -1,9 +1,9 @@
 # --
 # AdminService.dtl - provides HTML form for AdminService
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.dtl,v 1.7 2010-12-06 16:52:53 en Exp $
-# $OldId: AdminService.dtl,v 1.35 2010/11/05 17:38:16 ub Exp $
+# $Id: AdminService.dtl,v 1.8 2011-11-10 17:13:07 ub Exp $
+# $OldId: AdminService.dtl,v 1.37 2011/05/16 09:24:01 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,7 +51,7 @@
                         <tr>
                             <th>$Text{"Service"}</th>
                             <th>$Text{"Comment"}</th>
-                            <th>$Text{"Valid"}</th>
+                            <th>$Text{"Validity"}</th>
                             <th>$Text{"Changed"}</th>
                             <th>$Text{"Created"}</th>
                         </tr>
@@ -125,7 +125,7 @@
                         <div class="Clear"></div>
 # ---
 
-                        <label for="ValidID">$Text{"Valid"}: </label>
+                        <label for="ValidID">$Text{"Validity"}: </label>
                         <div class="Field">
                             $Data{"ValidOptionStrg"}
                         </div>
@@ -133,7 +133,7 @@
 
                         <label for="Comment">$Text{"Comment"}: </label>
                         <div class="Field">
-                            <input type="text" name="Comment" id="Comment" value="$QData{"Comment"}" class="W50pc" maxlength="150"/>
+                            <input type="text" name="Comment" id="Comment" value="$QData{"Comment"}" class="W50pc" maxlength="250"/>
                         </div>
                         <div class="Clear"></div>
 
