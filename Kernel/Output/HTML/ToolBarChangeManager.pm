@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarChangeManager.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarChangeManager.pm,v 1.3 2011-09-28 00:14:16 sb Exp $
+# $Id: ToolBarChangeManager.pm,v 1.4 2011-11-10 11:20:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,6 +79,7 @@ sub Run {
             ChangeStates     => $Config->{'Filter::ChangeStates'},
             Limit            => 1000,
             Result           => 'COUNT',
+            MirrorDB         => 1,
             UserID           => $Self->{UserID},
         );
     }

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.268 2011-04-27 15:17:23 ub Exp $
+# $Id: ITSMChange.pm,v 1.269 2011-11-10 11:20:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.268 $) [1];
+$VERSION = qw($Revision: 1.269 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1421,6 +1421,13 @@ is ignored.
         Limit => 100,                                                  # (optional)
         # ignored when the result type is 'COUNT'
 
+        MirrorDB => 1,                                                 # (optional)
+        # (0 | 1) default 0
+        # if set to 1 and ITSMChange::ChangeSearch::MirrorDB
+        # is activated and a mirror db is configured in
+        # Core::MirrorDB::DSN the change search will then use
+        # the mirror db
+
         UserID => 1,
     );
 
@@ -1477,6 +1484,41 @@ sub ChangeSearch {
             );
             return;
         }
+    }
+
+    # define a local database object
+    my $DBObject = $Self->{DBObject};
+
+    # if we need to do a change search on an external mirror database
+    if (
+        $Param{MirrorDB}
+        && $Self->{ConfigObject}->Get('ITSMChange::ChangeSearch::MirrorDB')
+        && $Self->{ConfigObject}->Get('Core::MirrorDB::DSN')
+        && $Self->{ConfigObject}->Get('Core::MirrorDB::User')
+        && $Self->{ConfigObject}->Get('Core::MirrorDB::Password')
+        )
+    {
+
+        # create an extra database object for the mirror db
+        my $ExtraDatabaseObject = Kernel::System::DB->new(
+            LogObject    => $Self->{LogObject},
+            ConfigObject => $Self->{ConfigObject},
+            MainObject   => $Self->{MainObject},
+            EncodeObject => $Self->{EncodeObject},
+            DatabaseDSN  => $Self->{ConfigObject}->Get('Core::MirrorDB::DSN'),
+            DatabaseUser => $Self->{ConfigObject}->Get('Core::MirrorDB::User'),
+            DatabasePw   => $Self->{ConfigObject}->Get('Core::MirrorDB::Password'),
+        );
+
+        # check error
+        if ( !$ExtraDatabaseObject ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Could not create database object for MirrorDB!',
+            );
+            return;
+        }
+        $DBObject = $ExtraDatabaseObject;
     }
 
     # define order table
@@ -1693,16 +1735,16 @@ sub ChangeSearch {
         next STRINGPARAM if $Param{$StringParam} eq '';
 
         # quote
-        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+        $Param{$StringParam} = $DBObject->Quote( $Param{$StringParam} );
 
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
             # get like escape string needed for some databases (e.g. oracle)
-            my $LikeEscapeString = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+            my $LikeEscapeString = $DBObject->GetDatabaseFunction('LikeEscapeString');
 
             # Quote
-            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+            $Param{$StringParam} = $DBObject->Quote( $Param{$StringParam}, 'Like' );
 
             # replace * with %
             $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
@@ -1776,7 +1818,7 @@ sub ChangeSearch {
 
         # quote
         for my $OneParam ( @{ $Param{$ArrayParam} } ) {
-            $OneParam = $Self->{DBObject}->Quote($OneParam);
+            $OneParam = $DBObject->Quote($OneParam);
         }
 
         # create string
@@ -1822,7 +1864,7 @@ sub ChangeSearch {
             return;
         }
 
-        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+        $Param{$TimeParam} = $DBObject->Quote( $Param{$TimeParam} );
 
         if ( $TimeParams{$TimeParam} =~ m{ wo1 }xms ) {
 
@@ -1850,7 +1892,7 @@ sub ChangeSearch {
 
         # quote
         for my $OneParam ( @{ $Param{$CABParam} } ) {
-            $OneParam = $Self->{DBObject}->Quote($OneParam);
+            $OneParam = $DBObject->Quote($OneParam);
         }
 
         if ( $CABParam eq 'CABAgents' ) {
@@ -1883,7 +1925,7 @@ sub ChangeSearch {
 
         # quote
         for my $OneParam ( @{ $Param{$WorkOrderParam} } ) {
-            $OneParam = $Self->{DBObject}->Quote($OneParam);
+            $OneParam = $DBObject->Quote($OneParam);
         }
 
         # create string
@@ -2109,14 +2151,14 @@ sub ChangeSearch {
     }
 
     # ask database
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
     # fetch the result
     my @IDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @IDs, $Row[0];
     }
 
@@ -3705,6 +3747,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.268 $ $Date: 2011-04-27 15:17:23 $
+$Revision: 1.269 $ $Date: 2011-11-10 11:20:36 $
 
 =cut

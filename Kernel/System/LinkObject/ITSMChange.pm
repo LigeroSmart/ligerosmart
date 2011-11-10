@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/ITSMChange.pm - to link change objects
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.9 2010-10-28 12:54:30 ub Exp $
+# $Id: ITSMChange.pm,v 1.10 2011-11-10 11:20:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Group;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -218,6 +218,7 @@ sub ObjectSearch {
         %{ $Param{SearchParams} },
         %Search,
         UsingWildcards => 1,
+        MirrorDB       => 1,
 
         # TODO:
         # use sysconfig option for 'limit' instead, decide wheater this option would be only

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.123 2011-03-04 14:27:48 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.124 2011-11-10 11:20:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.123 $) [1];
+$VERSION = qw($Revision: 1.124 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1047,6 +1047,13 @@ is ignored.
         Limit => 100,                                                  # (optional)
         # ignored when the result type is 'COUNT'
 
+        MirrorDB => 1,                                                 # (optional)
+        # (0 | 1) default 0
+        # if set to 1 and ITSMChange::ChangeSearch::MirrorDB
+        # is activated and a mirror db is configured in
+        # Core::MirrorDB::DSN the workorder search will then use
+        # the mirror db
+
         UserID => 1,
     );
 
@@ -1094,6 +1101,41 @@ sub WorkOrderSearch {
             );
             return;
         }
+    }
+
+    # define a local database object
+    my $DBObject = $Self->{DBObject};
+
+    # if we need to do a workorder search on an external mirror database
+    if (
+        $Param{MirrorDB}
+        && $Self->{ConfigObject}->Get('ITSMChange::ChangeSearch::MirrorDB')
+        && $Self->{ConfigObject}->Get('Core::MirrorDB::DSN')
+        && $Self->{ConfigObject}->Get('Core::MirrorDB::User')
+        && $Self->{ConfigObject}->Get('Core::MirrorDB::Password')
+        )
+    {
+
+        # create an extra database object for the mirror db
+        my $ExtraDatabaseObject = Kernel::System::DB->new(
+            LogObject    => $Self->{LogObject},
+            ConfigObject => $Self->{ConfigObject},
+            MainObject   => $Self->{MainObject},
+            EncodeObject => $Self->{EncodeObject},
+            DatabaseDSN  => $Self->{ConfigObject}->Get('Core::MirrorDB::DSN'),
+            DatabaseUser => $Self->{ConfigObject}->Get('Core::MirrorDB::User'),
+            DatabasePw   => $Self->{ConfigObject}->Get('Core::MirrorDB::Password'),
+        );
+
+        # check error
+        if ( !$ExtraDatabaseObject ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Could not create database object for MirrorDB!',
+            );
+            return;
+        }
+        $DBObject = $ExtraDatabaseObject;
     }
 
     my @SQLWhere;           # assemble the conditions used in the WHERE clause
@@ -1277,16 +1319,16 @@ sub WorkOrderSearch {
         next STRINGPARAM if $Param{$StringParam} eq '';
 
         # quote
-        $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam} );
+        $Param{$StringParam} = $DBObject->Quote( $Param{$StringParam} );
 
         # wildcards are used
         if ( $Param{UsingWildcards} ) {
 
             # get like escape string needed for some databases (e.g. oracle)
-            my $LikeEscapeString = $Self->{DBObject}->GetDatabaseFunction('LikeEscapeString');
+            my $LikeEscapeString = $DBObject->GetDatabaseFunction('LikeEscapeString');
 
             # Quote
-            $Param{$StringParam} = $Self->{DBObject}->Quote( $Param{$StringParam}, 'Like' );
+            $Param{$StringParam} = $DBObject->Quote( $Param{$StringParam}, 'Like' );
 
             # replace * with %
             $Param{$StringParam} =~ s{ \*+ }{%}xmsg;
@@ -1343,7 +1385,7 @@ sub WorkOrderSearch {
 
         # quote
         for my $OneParam ( @{ $Param{$ArrayParam} } ) {
-            $OneParam = $Self->{DBObject}->Quote($OneParam);
+            $OneParam = $DBObject->Quote($OneParam);
         }
 
         # create string
@@ -1381,7 +1423,7 @@ sub WorkOrderSearch {
         }
 
         # quote
-        $Param{$TimeParam} = $Self->{DBObject}->Quote( $Param{$TimeParam} );
+        $Param{$TimeParam} = $DBObject->Quote( $Param{$TimeParam} );
 
         push @SQLWhere, "$TimeParams{$TimeParam} '$Param{$TimeParam}'";
     }
@@ -1491,14 +1533,14 @@ sub WorkOrderSearch {
     }
 
     # ask database
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => $SQL,
         Limit => $Param{Limit},
     );
 
     # fetch the result
     my @IDs;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         push @IDs, $Row[0];
     }
 
@@ -3425,6 +3467,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.123 $ $Date: 2011-03-04 14:27:48 $
+$Revision: 1.124 $ $Date: 2011-11-10 11:20:35 $
 
 =cut

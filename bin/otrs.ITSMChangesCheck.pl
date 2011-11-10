@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.12 2011-02-14 13:52:58 ub Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.13 2011-11-10 11:20:36 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 use Kernel::Config;
 use Kernel::System::Encode;
@@ -121,6 +121,7 @@ for my $Type (qw(StartTime EndTime)) {
     # get changes with PlannedStartTime older than now
     my $PlannedChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
         "Planned${Type}OlderDate" => $Now,
+        MirrorDB                  => 1,
         UserID                    => 1,
     ) || [];
 
@@ -156,6 +157,7 @@ for my $Type (qw(StartTime EndTime)) {
     # get changes with actualxxxtime
     my $ActualChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
         "Actual${Type}OlderDate" => $Now,
+        MirrorDB                 => 1,
         UserID                   => 1,
     ) || [];
 
@@ -188,8 +190,9 @@ for my $Type (qw(StartTime EndTime)) {
 
 # get changes with actualxxxtime
 my $RequestedTimeChangeIDs = $CommonObject{ChangeObject}->ChangeSearch(
-    "RequestedTimeOlderDate" => $Now,
-    UserID                   => 1,
+    RequestedTimeOlderDate => $Now,
+    MirrorDB               => 1,
+    UserID                 => 1,
 ) || [];
 
 CHANGEID:
@@ -224,6 +227,7 @@ for my $Type (qw(StartTime EndTime)) {
     # get workorders with PlannedStartTime older than now
     my $PlannedWorkOrderIDs = $CommonObject{WorkOrderObject}->WorkOrderSearch(
         "Planned${Type}OlderDate" => $Now,
+        MirrorDB                  => 1,
         UserID                    => 1,
     ) || [];
 
@@ -260,6 +264,7 @@ for my $Type (qw(StartTime EndTime)) {
     # get workorders with actualxxxtime
     my $ActualWorkOrderIDs = $CommonObject{WorkOrderObject}->WorkOrderSearch(
         "Actual${Type}OlderDate" => $Now,
+        MirrorDB                 => 1,
         UserID                   => 1,
     ) || [];
 
