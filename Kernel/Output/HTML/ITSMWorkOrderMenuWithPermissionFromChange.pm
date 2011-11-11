@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMWorkOrderMenuWithPermissionFromChange.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.7 2010-10-28 12:51:28 ub Exp $
+# $Id: ITSMWorkOrderMenuWithPermissionFromChange.pm,v 1.8 2011-11-11 16:40:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -81,6 +81,12 @@ sub Run {
 
     return $Param{Counter} if !$Access;
 
+    # get the change data
+    my $Change = $Self->{ChangeObject}->ChangeGet(
+        ChangeID => $Param{WorkOrder}->{ChangeID},
+        UserID   => $Self->{UserID},
+    );
+
     # output menu block
     $Self->{LayoutObject}->Block( Name => 'Menu' );
 
@@ -89,6 +95,7 @@ sub Run {
         Name => 'MenuItem',
         Data => {
             %Param,
+            %{$Change},
             %{ $Param{WorkOrder} },
             %{ $Param{Config} },
         },
@@ -102,6 +109,7 @@ sub Run {
             Name => 'ShowConfirmationDialog',
             Data => {
                 %Param,
+                %{$Change},
                 %{ $Param{WorkOrder} },
                 %{ $Param{Config} },
             },

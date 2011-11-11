@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.263 2011-11-10 11:20:36 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.264 2011-11-11 16:40:44 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -1072,7 +1072,7 @@
                 <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
                 <Item Key="DialogContentQueryString">Action=AgentITSMWorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
                 <Item Key="ConfirmedActionQueryString">Action=AgentITSMWorkOrderDelete;Subaction=WorkOrderDelete;WorkOrderID=$QData{"WorkOrderID"}</Item>
-                <Item Key="DialogTitle">$Text{"Delete"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"} $QData{"WorkOrderNumber"}: $QData{"WorkOrderTitle"}</Item>
+                <Item Key="DialogTitle">$Text{"Delete"} $Config{"ITSMWorkOrder::Hook"} $QData{"ChangeNumber"}-$QData{"WorkOrderNumber"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
