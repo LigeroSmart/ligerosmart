@@ -1,8 +1,8 @@
 // --
 // Core.Agent.TicketZoom.js - provides the special module functions for TicketZoom
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.Zoom.js,v 1.1 2010-08-20 17:13:02 cr Exp $
+// $Id: ITSM.Agent.Zoom.js,v 1.2 2011-11-21 11:45:24 ub Exp $
 // $OldId: Core.Agent.TicketZoom.js,v 1.17 2010/08/11 15:23:23 martin Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -53,7 +53,6 @@ ITSM.Agent.Zoom = (function (TargetNS) {
             $TBody = $('#FixedTable tbody'),
             ZoomExpand = !$('div.ITSMItemView a.OneITSMItem').hasClass('Active'),
             URLHash;
-//            $ArticleElement;
         Core.UI.Resizable.Init($('#ITSMTableBody'), ITSMTableHeight, function (event, ui, Height, Width) {
 
             // remember new height for next reload
@@ -70,10 +69,6 @@ ITSM.Agent.Zoom = (function (TargetNS) {
                 Core.UI.AdjustTableHead($THead, $TBody);
             }, 500);
         });
-
-//        Core.UI.Dialog.RegisterAttachmentDialog($('.TableSmall tbody td a.Attachment'));
-
-
     };
 
     return TargetNS;
