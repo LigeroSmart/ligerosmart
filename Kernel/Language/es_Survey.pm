@@ -2,7 +2,7 @@
 # Kernel/Language/es_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_Survey.pm,v 1.3 2011-02-16 22:15:11 dz Exp $
+# $Id: es_Survey.pm,v 1.4 2011-11-21 12:09:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -90,6 +90,7 @@ sub Data {
         'Define una módulo resumen para mostrar la vista pequeña de la lista de encuestas.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
         'Define las columnas mostradas en la vista \'Resumen de Estadisticas\'.';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         'Registro de módulo frontend SurveyZoom en la interface del agente.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =

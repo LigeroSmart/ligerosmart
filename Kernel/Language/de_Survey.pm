@@ -2,7 +2,7 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.5 2011-02-17 17:16:49 dz Exp $
+# $Id: de_Survey.pm,v 1.6 2011-11-21 12:09:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = 'Voreingestellter Betreff für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} = 'Definiert ein Übersichts-Modul, dass eine Liste aller Umfragen anzeigt.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = 'Definiert die angezeigten Spalten in der Umfrage-Übersicht. Die Einstellung hat keinen Effekt auf die angezeigte Reihenfolge der Spalten.';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = 'Alle Parameter des Befragungs-Objekts im Agent-Interface.';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} = 'Frontend-Modul-Registrierung für die Umfrage-Detailansicht im Agenten-Interface.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = 'Frontend-Modul-Registrierung für die öffentliche Umfrage-Übersicht.';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Wenn dieser reguläre Ausdruck zutrifft, wird keine Umfrage an den Kunden gesendet.';

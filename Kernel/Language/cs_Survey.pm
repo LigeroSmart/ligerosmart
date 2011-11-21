@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cs_Survey.pm,v 1.1 2011-04-12 05:23:21 mb Exp $
+# $Id: cs_Survey.pm,v 1.2 2011-11-21 12:09:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub Data {
     my $Self = shift;
@@ -51,7 +51,7 @@ sub Data {
     $Self->{Translation}->{'YesNo'} = 'Ano anebo Ne';
     $Self->{Translation}->{'List'} = 'seznam';
     $Self->{Translation}->{'Textarea'} = 'textové pole';
-    
+
     $Self->{Translation}->{'Survey Introduction'} = '';
     $Self->{Translation}->{'Survey Description'} = '';
     $Self->{Translation}->{'This field is required'} = '';
@@ -61,10 +61,11 @@ sub Data {
     $Self->{Translation}->{'Incomplete'} = '';
     $Self->{Translation}->{'Survey#'} = '';
     $Self->{Translation}->{'Default value'} = '';
-    
+
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
 
     return 1;
 }

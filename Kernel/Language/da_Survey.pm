@@ -2,7 +2,7 @@
 # Kernel/Language/da_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_Survey.pm,v 1.3 2011-04-12 05:39:27 mb Exp $
+# $Id: da_Survey.pm,v 1.4 2011-11-21 12:09:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -112,6 +112,7 @@ sub Data {
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = '';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = '';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';

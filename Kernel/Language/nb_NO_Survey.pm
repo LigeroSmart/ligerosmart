@@ -2,7 +2,7 @@
 # Kernel/Language/nb_NO_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nb_NO_Survey.pm,v 1.2 2011-02-16 22:15:11 dz Exp $
+# $Id: nb_NO_Survey.pm,v 1.3 2011-11-21 12:09:24 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,6 +83,7 @@ sub Data {
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = 'Standard overskrift i varsel-e-post til kunder om en ny spørreundersøkelse.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} = '';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = '';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Hvis denne regexen stemmer, vil det ikke bli sendt ut en spørreundersøkelse til kunden.';
