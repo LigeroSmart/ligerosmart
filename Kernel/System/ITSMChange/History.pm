@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: History.pm,v 1.29 2011-01-04 14:35:27 ub Exp $
+# $Id: History.pm,v 1.30 2011-11-21 17:18:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,8 +14,10 @@ package Kernel::System::ITSMChange::History;
 use strict;
 use warnings;
 
+use Kernel::System::CacheInternal;
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -89,6 +91,16 @@ sub new {
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
     }
+
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+
+    # create additional objects
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %{$Self},
+        Type => 'ITSMChangeManagement',
+        TTL  => $Self->{CacheTTL},
+    );
 
     # set default debug flag
     $Self->{Debug} ||= 0;
@@ -850,9 +862,13 @@ sub HistoryTypeLookup {
         $Key = 'HistoryTypeID';
     }
 
+    # check the cache
+    my $Cache = $Self->{CacheInternalObject}->Get(
+        Key => 'HistoryTypeLookup::' . $Key . '::' . $Param{$Key},
+    );
+
     # if result is cached return that result
-    return $Self->{Cache}->{HistoryTypeLookup}->{ $Param{$Key} }
-        if $Self->{Cache}->{HistoryTypeLookup}->{ $Param{$Key} };
+    return $Cache if $Cache;
 
     # set the appropriate SQL statement
     my $SQL = 'SELECT name FROM change_history_type WHERE id = ?';
@@ -874,7 +890,10 @@ sub HistoryTypeLookup {
     }
 
     # save value in cache
-    $Self->{Cache}->{HistoryTypeLookup}->{ $Param{$Key} } = $Value;
+    $Self->{CacheInternalObject}->Set(
+        Key   => 'HistoryTypeLookup::' . $Key . '::' . $Param{$Key},
+        Value => $Value,
+    );
 
     return $Value;
 }
@@ -888,6 +907,14 @@ of an recipient and the name is the value.
 
 sub HistoryTypeList {
     my ( $Self, %Param ) = @_;
+
+    # check the cache
+    my $Cache = $Self->{CacheInternalObject}->Get(
+        Key => 'HistoryTypeList',
+    );
+
+    # if result is cached return that result
+    return $Cache if $Cache;
 
     # prepare db query
     return if !$Self->{DBObject}->Prepare(
@@ -903,6 +930,12 @@ sub HistoryTypeList {
         };
         push @HistoryTypes, $Entry;
     }
+
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => 'HistoryTypeList',
+        Value => \@HistoryTypes,
+    );
 
     return \@HistoryTypes;
 }
@@ -923,6 +956,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2011-01-04 14:35:27 $
+$Revision: 1.30 $ $Date: 2011-11-21 17:18:16 $
 
 =cut
