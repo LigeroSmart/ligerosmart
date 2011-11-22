@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.15 2011-11-22 23:02:36 ub Exp $
+# $Id: CustomerTicketZoom.pm,v 1.16 2011-11-22 23:08:04 ub Exp $
 # $OldId: CustomerTicketZoom.pm,v 1.86 2011/11/08 20:17:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -52,8 +52,8 @@ sub new {
     $Self->{AgentUserObject} = Kernel::System::User->new(%Param);
 
     # needed objects
-    $Self->{StateObject}       = Kernel::System::State->new(%Param);
-    $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{StateObject}        = Kernel::System::State->new(%Param);
+    $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 # ---
@@ -296,6 +296,7 @@ sub Run {
                 UserID   => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
             );
         }
+
         my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
 
         my $MimeType = 'text/plain';

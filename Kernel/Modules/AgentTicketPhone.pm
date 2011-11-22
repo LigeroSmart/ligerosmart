@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.36 2011-11-22 14:44:36 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.37 2011-11-22 23:06:12 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.206 2011/11/16 23:55:05 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -132,22 +132,22 @@ sub Run {
                 my $CustomerDisabled = '';
 
                 if ( !$IsUpload ) {
-                $GetParam{From} .= $CustomerElement . ',';
+                    $GetParam{From} .= $CustomerElement . ',';
 
-                # check email address
-                for my $Email ( Mail::Address->parse($CustomerElement) ) {
+                    # check email address
+                    for my $Email ( Mail::Address->parse($CustomerElement) ) {
                         if ( !$Self->{CheckItemObject}->CheckEmail( Address => $Email->address() ) )
                         {
-                        $CustomerErrorMsg = $Self->{CheckItemObject}->CheckErrorType()
-                            . 'ServerErrorMsg';
-                        $CustomerError = 'ServerError';
+                            $CustomerErrorMsg = $Self->{CheckItemObject}->CheckErrorType()
+                                . 'ServerErrorMsg';
+                            $CustomerError = 'ServerError';
+                        }
                     }
-                }
 
-                if ( $CustomerError ne '' ) {
-                    $CustomerDisabled = 'disabled="disabled"';
-                    $CountAux         = $Count . 'Error';
-                }
+                    if ( $CustomerError ne '' ) {
+                        $CustomerDisabled = 'disabled="disabled"';
+                        $CountAux         = $Count . 'Error';
+                    }
                 }
 
                 push @MultipleCustomer, {
@@ -183,7 +183,7 @@ sub Run {
             DynamicFieldConfig => $DynamicFieldConfig,
             ParamObject        => $Self->{ParamObject},
             LayoutObject       => $Self->{LayoutObject},
-        );
+            );
 # ---
 # ITSM
 # ---
@@ -423,7 +423,7 @@ sub Run {
             # from DB this cases
             if ( $Self->{TicketID} && $Article{ArticleID} ) {
 
-                # select TicketID or ArticleID go get the value depending on dynamic field configuration
+            # select TicketID or ArticleID go get the value depending on dynamic field configuration
                 my $ObjectID
                     = $DynamicFieldConfig->{ObjectType} eq 'Ticket'
                     ? $Self->{TicketID}
@@ -931,8 +931,8 @@ sub Run {
                 Errors       => \%Error,
                 Attachments  => \@Attachments,
                 %GetParam,
-                DynamicFieldHTML => \%DynamicFieldHTML,
-                MultipleCustomer => \@MultipleCustomer,
+                DynamicFieldHTML     => \%DynamicFieldHTML,
+                MultipleCustomer     => \@MultipleCustomer,
                 FromExternalCustomer => \%FromExternalCustomer,
             );
 
@@ -1305,22 +1305,22 @@ sub Run {
         my $NextStates = $Self->_GetNextStates(
             %GetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID        => $QueueID || 1,
+            QueueID        => $QueueID      || 1,
         );
         my $Priorities = $Self->_GetPriorities(
             %GetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID        => $QueueID || 1,
+            QueueID        => $QueueID      || 1,
         );
         my $Services = $Self->_GetServices(
             %GetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID        => $QueueID || 1,
+            QueueID        => $QueueID      || 1,
         );
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID        => $QueueID || 1,
+            QueueID        => $QueueID      || 1,
             Services       => $Services,
         );
 
