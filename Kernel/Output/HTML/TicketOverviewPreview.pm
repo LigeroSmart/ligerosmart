@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.10 2011-03-03 15:20:08 ub Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.49.2.1 2011/03/01 18:17:20 cg Exp $
+# $Id: TicketOverviewPreview.pm,v 1.11 2011-11-22 22:50:05 ub Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.61 2011/11/06 15:36:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,12 @@ use warnings;
 
 use Kernel::System::CustomerUser;
 use Kernel::System::SystemAddress;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,6 +41,19 @@ sub new {
 
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
     $Self->{SystemAddress}      = Kernel::System::SystemAddress->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+
+    # get dynamic field config for frontend module
+    $Self->{DynamicFieldFilter}
+        = $Self->{ConfigObject}->Get("Ticket::Frontend::OverviewPreview")->{DynamicField};
+
+    # get the dynamic fields for this screen
+    $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => ['Ticket'],
+        FieldFilter => $Self->{DynamicFieldFilter} || {},
+    );
 # ---
 # ITSM
 # ---
@@ -232,14 +248,31 @@ sub _Show {
         );
     }
 
-    # get last 5 articles
-    my @ArticleBody = $Self->{TicketObject}->ArticleGet(
+    # collect params for ArticleGet
+    my %ArticleGetParams = (
         TicketID => $Param{TicketID},
         UserID   => $Self->{UserID},
         Order    => 'DESC',
         Limit    => 5,
     );
-    my %Article = %{ $ArticleBody[0] || {} };
+
+    # check if certain article sender types should be excluded from preview
+    my $PreviewArticleSenderTypes
+        = $Self->{ConfigObject}->Get('Ticket::Frontend::Overview::PreviewArticleSenderTypes');
+    my @ActiveArticleSenderTypes;
+    if ( ref $PreviewArticleSenderTypes eq 'HASH' ) {
+        @ActiveArticleSenderTypes
+            = grep { $PreviewArticleSenderTypes->{$_} == 1 } keys %{$PreviewArticleSenderTypes};
+    }
+
+    # if a list of active article sender types has been determined, add them to params hash
+    if (@ActiveArticleSenderTypes) {
+        $ArticleGetParams{ArticleSenderType} = \@ActiveArticleSenderTypes;
+    }
+
+    # get last 5 articles
+    my @ArticleBody  = $Self->{TicketObject}->ArticleGet(%ArticleGetParams);
+    my %Article      = %{ $ArticleBody[0] || {} };
     my $ArticleCount = scalar @ArticleBody;
 
     # user info
@@ -252,21 +285,21 @@ sub _Show {
 # ---
     # lookup criticality
     $Article{Criticality} = '-';
-    if ($Article{TicketFreeText13}) {
+    if ( $Article{DynamicField_TicketFreeText13} ) {
         # get criticality list
         my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Criticality',
         );
-        $Article{Criticality} = $CriticalityList->{$Article{TicketFreeText13}};
+        $Article{Criticality} = $CriticalityList->{ $Article{DynamicField_TicketFreeText13} };
     }
     # lookup impact
     $Article{Impact} = '-';
-    if ($Article{TicketFreeText14}) {
+    if ( $Article{DynamicField_TicketFreeText14} ) {
         # get impact list
         my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Impact',
         );
-        $Article{Impact} = $ImpactList->{$Article{TicketFreeText14}};
+        $Article{Impact} = $ImpactList->{ $Article{DynamicField_TicketFreeText14} };
     }
 # ---
 
@@ -493,84 +526,6 @@ sub _Show {
         }
     }
 
-    # ticket free text
-    for my $Count ( 1 .. 16 ) {
-# ---
-# ITSM
-# ---
-        # disable ticket free text 13 to 16
-        if ( $Count >= 13 && $Count <= 16 ) {
-            next;
-        }
-# ---
-        if ( $Article{ 'TicketFreeText' . $Count } ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeText' . $Count,
-                Data => { %Param, %Article, %AclAction },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeText',
-                Data => {
-                    %Param, %Article, %AclAction,
-                    TicketFreeKey  => $Article{ 'TicketFreeKey' . $Count },
-                    TicketFreeText => $Article{ 'TicketFreeText' . $Count },
-                    Count          => $Count,
-                },
-            );
-            if ( !$Self->{ConfigObject}->Get( 'TicketFreeText' . $Count . '::Link' ) ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'TicketFreeTextPlain' . $Count,
-                    Data => { %Param, %Article, %AclAction },
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'TicketFreeTextPlain',
-                    Data => {
-                        %Param, %Article, %AclAction,
-                        TicketFreeKey  => $Article{ 'TicketFreeKey' . $Count },
-                        TicketFreeText => $Article{ 'TicketFreeText' . $Count },
-                        Count          => $Count,
-                    },
-                );
-            }
-            else {
-                $Self->{LayoutObject}->Block(
-                    Name => 'TicketFreeTextLink' . $Count,
-                    Data => { %Param, %Article, %AclAction },
-                );
-                $Self->{LayoutObject}->Block(
-                    Name => 'TicketFreeTextLink',
-                    Data => {
-                        %Param, %Article, %AclAction,
-                        TicketFreeTextLink =>
-                            $Self->{ConfigObject}->Get( 'TicketFreeText' . $Count . '::Link' ),
-                        TicketFreeKey  => $Article{ 'TicketFreeKey' . $Count },
-                        TicketFreeText => $Article{ 'TicketFreeText' . $Count },
-                        Count          => $Count,
-                    },
-                );
-            }
-        }
-    }
-
-    # ticket free time
-    for my $Count ( 1 .. 6 ) {
-        if ( $Article{ 'TicketFreeTime' . $Count } ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeTime' . $Count,
-                Data => { %Param, %Article, %AclAction },
-            );
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketFreeTime',
-                Data => {
-                    %Param, %Article, %AclAction,
-                    TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
-                    TicketFreeTime    => $Article{ 'TicketFreeTime' . $Count },
-                    Count             => $Count,
-                },
-            );
-        }
-    }
-
     # create output
     $Self->{LayoutObject}->Block(
         Name => 'AgentAnswer',
@@ -724,14 +679,174 @@ sub _Show {
         );
     }
 
+    # Dynamic fields
+    my $Counter = 0;
+    my $Class   = 'Middle';
+
+    # cycle trough the activated Dynamic Fields for this screen
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+        $Counter++;
+
+        # get field value
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ValueMaxChars      => 20,
+            LayoutObject       => $Self->{LayoutObject},
+        );
+
+        my $Label = $DynamicFieldConfig->{Label};
+
+        # create a new row if counter is starting
+        if ( $Counter == 1 ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicFieldTableRow',
+                Data => {
+                    Class => $Class,
+                },
+            );
+        }
+
+        # display separation row just once
+        $Class = '';
+
+        # outout dynamic field label
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicFieldTableRowRecord',
+            Data => {
+                Label => $Label,
+            },
+        );
+
+        if ( $ValueStrg->{Link} ) {
+
+            # outout dynamic field value link
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicFieldTableRowRecordLink',
+                Data => {
+                    Value                       => $ValueStrg->{Value},
+                    Title                       => $ValueStrg->{Title},
+                    Link                        => $ValueStrg->{Link},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+                },
+            );
+        }
+        else {
+
+            # outout dynamic field value plain
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicFieldTableRowRecordPlain',
+                Data => {
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
+                },
+            );
+        }
+
+        # only 2 dynamic fields by row are allowed, reset couter if needed
+        if ( $Counter == 2 ) {
+            $Counter = 0;
+        }
+
+        # example of dynamic fields order customization
+        # outout dynamic field label
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField_' . $DynamicFieldConfig->{Name} . '_TableRowRecord',
+            Data => {
+                Label => $Label,
+            },
+        );
+
+        if ( $ValueStrg->{Link} ) {
+
+            # outout dynamic field value link
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicField_' . $DynamicFieldConfig->{Name} . '_TableRowRecordLink',
+                Data => {
+                    Value                       => $ValueStrg->{Value},
+                    Title                       => $ValueStrg->{Title},
+                    Link                        => $ValueStrg->{Link},
+                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+                },
+            );
+        }
+        else {
+
+            # outout dynamic field value plain
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicField_' . $DynamicFieldConfig->{Name} . '_TableRowRecordPlain',
+                Data => {
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
+                },
+            );
+        }
+    }
+
+    # fill the rest of the Dyanmic Fields row with empty cells, this will look better
+    if ( $Counter > 0 && $Counter < 2 ) {
+
+        for ( $Counter + 1 ... 2 ) {
+
+            # outout dynamic field label
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicFieldTableRowRecord',
+                Data => {
+                    Label => '',
+                },
+            );
+
+            # outout dynamic field value plain
+            $Self->{LayoutObject}->Block(
+                Name => 'DynamicFieldTableRowRecordPlain',
+                Data => {
+                    Value => '',
+                    Title => '',
+                },
+            );
+        }
+    }
+
+    # check if a certain article type should be displayed as expanded
+    my $PreviewArticleTypeExpanded
+        = $Self->{ConfigObject}->Get('Ticket::Frontend::Overview::PreviewArticleTypeExpanded')
+        || '';
+
+    # if a certain article type should be shown as expanded, set the
+    # last article of this type as active
+    if ($PreviewArticleTypeExpanded) {
+
+        my $ClassCount = 0;
+        for my $ArticleItem (@ArticleBody) {
+            next if !$ArticleItem;
+
+            # check if current article type should be shown as expanded
+            if ( $ArticleItem->{ArticleType} eq $PreviewArticleTypeExpanded ) {
+                $ArticleItem->{Class} = 'Active';
+                last;
+            }
+
+            # otherwise display the last article in the list as expanded (default)
+            elsif ( $ClassCount == $#ArticleBody ) {
+                $ArticleBody[0]->{Class} = 'Active';
+            }
+            $ClassCount++;
+        }
+    }
+
     # show inline article
     my $Count = 0;
     for my $ArticleItem ( reverse @ArticleBody ) {
         next if !$ArticleItem;
-        if ( $Count == $#ArticleBody ) {
-            $ArticleItem->{Class} = 'Active';
+        if ( !$PreviewArticleTypeExpanded ) {
+            if ( $Count == $#ArticleBody ) {
+                $ArticleItem->{Class} = 'Active';
+            }
+            $Count++;
         }
-        $Count++;
 
         # check if just a only html email
         my $MimeTypeText = $Self->{LayoutObject}->CheckMimeType(
@@ -746,12 +861,12 @@ sub _Show {
 
             # html quoting
             $ArticleItem->{Body} = $Self->{LayoutObject}->Ascii2Html(
-                NewLine => $Self->{Config}->{DefaultViewNewLine}  || 90,
+                NewLine => $Param{Config}->{DefaultViewNewLine}  || 90,
                 Text    => $ArticleItem->{Body},
-                VMax    => $Self->{Config}->{DefaultPreViewLines} || 25,
+                VMax    => $Param{Config}->{DefaultPreViewLines} || 25,
                 LinkFeature     => 1,
                 HTMLResultMode  => 1,
-                StripEmptyLines => $Self->{Config}->{StripEmptyLines},
+                StripEmptyLines => $Param{Config}->{StripEmptyLines},
             );
 
             # do charset check

@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.16 2011-04-20 10:12:39 ub Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.66.2.2 2011/04/05 09:34:46 mg Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.17 2011-11-22 22:50:46 ub Exp $
+# $OldId: AgentTicketOverviewPreview.dtl,v 1.75 2011/11/07 08:41:20 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -115,7 +115,7 @@
                                 <label>$Text{"Created"}</label>$TimeLong{"$Data{"Created"}"}
                             </td>
                             <td>
-                                <label>$Text{"State"}</label><div title="$Quote{"$Text{"$Data{"State"}"}"}">$Quote{"$Text{"$Data{"State"}"}","26"}</div>
+                                <label>$Text{"State"}</label><div title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}","26"}</div>
                             </td>
                         </tr>
 <!-- dtl:block:Service -->
@@ -135,7 +135,7 @@
                                 <label>$Text{"Owner"}</label><div title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"Owner"})">$QData{"UserFirstname","15"} $QData{"UserLastname","15"}</div>
                             </td>
                             <td>
-                                <label>$Text{"Lock"}</label><div title="$Quote{"$Text{"$Data{"Lock"}"}"}">$Quote{"$Text{"$Data{"Lock"}"}","26"}</div>
+                                <label>$Text{"Lock"}</label><div title="$Text{"$Data{"Lock"}"}">$Text{"$Data{"Lock"}","26"}</div>
                             </td>
                         </tr>
                         <tr class="Middle">
@@ -191,6 +191,53 @@
                             </td>
                         </tr>
 # ---
+
+<!-- dtl:block:DynamicFieldTableRow -->
+                        <tr class="$Data{"Class"}">
+<!-- dtl:block:DynamicFieldTableRowRecord -->
+                            <td>
+                                <label>$Text{"$Data{"Label"}"}</label>
+<!-- dtl:block:DynamicFieldTableRowRecordLink -->
+                                <div title="$Data{"Title"}"><a href="$Data{"Link"}" class="DynamicFieldLink">$Data{"Value"}</a></div>
+<!-- dtl:block:DynamicFieldTableRowRecordLink -->
+<!-- dtl:block:DynamicFieldTableRowRecordPlain -->
+                                <div title="$Data{"Title"}"><span>$Data{"Value"}</span></div>
+<!-- dtl:block:DynamicFieldTableRowRecordPlain -->
+                            </td>
+<!-- dtl:block:DynamicFieldTableRowRecord -->
+                        </tr>
+<!-- dtl:block:DynamicFieldTableRow -->
+
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#                    <tr>
+#<!-- dtl:block:DynamicField_Field1_TableRowRecord -->
+#                        <td>
+#                            <label>$Text{"$Data{"Label"}"}</label>
+#<!-- dtl:block:DynamicField_Field1_TableRowRecordLink -->
+#                            <div title="$Data{"Title"}"><a href="$Data{"Link"}" class="DynamicFieldLink">$Data{"Value"}</a></div>
+#<!-- dtl:block:DynamicField_Field1_TableRowRecordLink -->
+#<!-- dtl:block:DynamicField_Field1_TableRowRecordPlain -->
+#                            <div title="$Data{"Title"}"><span>$Data{"Value"}</span></div>
+#<!-- dtl:block:DynamicField_Field1_TableRowRecordPlain -->
+#                        </td>
+#<!-- dtl:block:DynamicField_Field1_TableRowRecord -->
+#                    </tr>
+#                    <tr>
+#<!-- dtl:block:DynamicField_Field2_TableRowRecord -->
+#                        <td>
+#                            <label>$Text{"$Data{"Label"}"}</label>
+#<!-- dtl:block:DynamicField_Field2_TableRowRecordLink -->
+#                            <div title="$Data{"Title"}"><a href="$Data{"Link"}" class="DynamicFieldLink">$Data{"Value"}</a></div>
+#<!-- dtl:block:DynamicField_Field2_TableRowRecordLink -->
+#<!-- dtl:block:DynamicField_Field2_TableRowRecordPlain -->
+#                            <div title="$Data{"Title"}"><span>$Data{"Value"}</span></div>
+#<!-- dtl:block:DynamicField_Field2_TableRowRecordPlain -->
+#                        </td>
+#<!-- dtl:block:DynamicField_Field2_TableRowRecord -->
+#                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -336,6 +383,10 @@ $Data{"Body"}
         }
 
         Core.UI.Popup.OpenPopup($(this).attr('href'), PopupType);
+        return false;
+    });
+    $('a.DynamicFieldLink').bind('click', function (Event) {
+        Core.UI.Popup.OpenPopup($(this).attr('href'), 'DynamicFieldLink');
         return false;
     });
 //]]></script>
