@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.14 2011-08-25 16:22:18 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.75.2.1 2011/06/22 08:43:47 mb Exp $
+# $Id: CustomerTicketZoom.pm,v 1.15 2011-11-22 23:02:36 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.86 2011/11/08 20:17:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,10 @@ use warnings;
 
 use Kernel::System::Web::UploadCache;
 use Kernel::System::State;
+use Kernel::System::User;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
+use Kernel::System::VariableCheck qw(:all);
 # ---
 # ITSM
 # ---
@@ -24,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -45,9 +49,13 @@ sub new {
         }
     }
 
+    $Self->{AgentUserObject} = Kernel::System::User->new(%Param);
+
     # needed objects
     $Self->{StateObject}       = Kernel::System::State->new(%Param);
     $Self->{UploadCacheObject} = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 # ---
 # ITSM
 # ---
@@ -64,11 +72,22 @@ sub new {
 
     $Self->{Config} = $Self->{ConfigObject}->Get("Ticket::Frontend::$Self->{Action}");
 
+    # get dynamic field config for frontend module
+    $Self->{DynamicFieldFilter} = $Self->{Config}->{DynamicField};
+
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    # ticket id lookup
+    if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
+        $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
+            TicketNumber => $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ),
+            UserID => $Self->{UserID},
+        );
+    }
 
     # check needed stuff
     if ( !$Self->{TicketID} ) {
@@ -130,27 +149,27 @@ sub Run {
     # lookup criticality
     $Ticket{Criticality} = '-';
 
-    if ($Ticket{TicketFreeText13}) {
+    if ( $Ticket{DynamicField_TicketFreeText13} ) {
 
         # get criticality list
         my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Criticality',
         );
 
-        $Ticket{Criticality} = $CriticalityList->{$Ticket{TicketFreeText13}};
+        $Ticket{Criticality} = $CriticalityList->{ $Ticket{DynamicField_TicketFreeText13} };
     }
 
     # lookup impact
     $Ticket{Impact} = '-';
 
-    if ($Ticket{TicketFreeText14}) {
+    if ( $Ticket{DynamicField_TicketFreeText14} ) {
 
         # get impact list
         my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Impact',
         );
 
-        $Ticket{Impact} = $ImpactList->{$Ticket{TicketFreeText14}};
+        $Ticket{Impact} = $ImpactList->{ $Ticket{DynamicField_TicketFreeText14} };
     }
 # ---
 
@@ -248,12 +267,33 @@ sub Run {
             return $Output;
         }
 
+        # unlock ticket if agent is on vacation
+        my $LockAction;
+        if ( $Ticket{OwnerID} ) {
+            my %User = $Self->{AgentUserObject}->GetUserData(
+                UserID => $Ticket{OwnerID},
+            );
+            if ( %User && $User{OutOfOffice} && $User{OutOfOfficeMessage} ) {
+                $LockAction = 'unlock';
+            }
+        }
+
         # set lock if ticket was closed
-        if ( $Lock && $State{TypeName} =~ /^close/i && $Ticket{OwnerID} ne '1' ) {
+        if (
+            !$LockAction
+            && $Lock
+            && $State{TypeName} =~ /^close/i && $Ticket{OwnerID} ne '1'
+            )
+        {
+
+            $LockAction = 'lock';
+        }
+
+        if ($LockAction) {
             $Self->{TicketObject}->TicketLockSet(
                 TicketID => $Self->{TicketID},
-                Lock     => 'lock',
-                UserID   => => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
+                Lock     => $LockAction,
+                UserID   => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
             );
         }
         my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
@@ -407,14 +447,6 @@ sub _Mask {
         );
     }
 
-    # set generic state type
-    if ( $Param{StateType} =~ /^closed/i ) {
-        $Param{StateTypeGeneric} = 'Closed';
-    }
-    else {
-        $Param{StateTypeGeneric} = 'Open';
-    }
-
     # build article stuff
     my $SelectedArticleID = $Self->{ParamObject}->GetParam( Param => 'ArticleID' );
     my $BaseLink          = $Self->{LayoutObject}->{Baselink} . "TicketID=$Self->{TicketID}&";
@@ -465,6 +497,14 @@ sub _Mask {
         $SelectedArticleID = $ArticleID;
     }
 
+    # ticket priority flag
+    if ( $Self->{Config}->{AttributesView}->{Priority} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'PriorityFlag',
+            Data => \%Param,
+        );
+    }
+
     # ticket type
     if ( $Self->{ConfigObject}->Get('Ticket::Type') && $Self->{Config}->{AttributesView}->{Type} ) {
         $Self->{LayoutObject}->Block(
@@ -485,7 +525,12 @@ sub _Mask {
             Name => 'Service',
             Data => \%Param,
         );
-        if ( $Param{SLA} ) {
+        if (
+            $Param{SLA}
+            && $Self->{ConfigObject}->Get('Ticket::Service')
+            && $Self->{Config}->{AttributesView}->{SLA}
+            )
+        {
             $Self->{LayoutObject}->Block(
                 Name => 'SLA',
                 Data => \%Param,
@@ -538,48 +583,46 @@ sub _Mask {
         );
     }
 
-    # ticket free text
-    for my $Count ( 1 .. 16 ) {
-# ---
-# ITSM
-# ---
-        # disable ticket free text 13 and 14
-        if ($Count eq 13 || $Count eq 14) {
-            next;
-        }
-# ---
-        next if !$Param{ 'TicketFreeText' . $Count };
-        next if !$Self->{Config}->{AttributesView}->{ 'TicketFreeText' . $Count };
-        $Self->{LayoutObject}->Block(
-            Name => 'TicketFreeText' . $Count,
-            Data => \%Param,
+    # get the dynamic fields for ticket object
+    my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid       => 1,
+        ObjectType  => ['Ticket'],
+        FieldFilter => $Self->{DynamicFieldFilter} || {},
+    );
+
+    # cycle trough the activated Dynamic Fields for ticket object
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @{$DynamicField} ) {
+        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+        next DYNAMICFIELD if !defined $Param{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
+        next DYNAMICFIELD if $Param{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq '';
+
+        # get print string for this dynamic field
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Param{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            ValueMaxChars      => 25,
+            LayoutObject       => $Self->{LayoutObject},
         );
+
+        my $Label = $DynamicFieldConfig->{Label};
+
         $Self->{LayoutObject}->Block(
-            Name => 'TicketFreeText',
+            Name => 'TicketDynamicField',
             Data => {
-                %Param,
-                TicketFreeKey  => $Param{ 'TicketFreeKey' . $Count },
-                TicketFreeText => $Param{ 'TicketFreeText' . $Count },
-                Count          => $Count,
+                Label => $Label,
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
             },
         );
-    }
 
-    # ticket free time
-    for my $Count ( 1 .. 6 ) {
-        next if !$Param{ 'TicketFreeTime' . $Count };
-        next if !$Self->{Config}->{AttributesView}->{ 'TicketFreeTime' . $Count };
+        # example of dynamic fields order customization
         $Self->{LayoutObject}->Block(
-            Name => 'TicketFreeTime' . $Count,
-            Data => \%Param,
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'TicketFreeTime',
+            Name => 'TicketDynamicField_' . $DynamicFieldConfig->{Name},
             Data => {
-                %Param,
-                TicketFreeTimeKey => $Self->{ConfigObject}->Get( 'TicketFreeTimeKey' . $Count ),
-                TicketFreeTime    => $Param{ 'TicketFreeTime' . $Count },
-                Count             => $Count,
+                Label => $Label,
+                Value => $ValueStrg->{Value},
+                Title => $ValueStrg->{Title},
             },
         );
     }
@@ -647,15 +690,46 @@ sub _Mask {
             );
         }
 
-        # show article free text
-        for my $Count ( 1 .. 3 ) {
-            next if !$Article{ 'ArticleFreeText' . $Count };
-            next if !$Self->{Config}->{AttributesView}->{ 'ArticleFreeText' . $Count };
+        # get the dynamic fields for article object
+        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+            Valid       => 1,
+            ObjectType  => ['Article'],
+            FieldFilter => $Self->{DynamicFieldFilter} || {},
+        );
+
+        # cycle trough the activated Dynamic Fields for ticket object
+        DYNAMICFIELD:
+        for my $DynamicFieldConfig ( @{$DynamicField} ) {
+            next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+            next DYNAMICFIELD if !defined $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
+            next DYNAMICFIELD if $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq '';
+
+            # get print string for this dynamic field
+            my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Value              => $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                ValueMaxChars      => 160,
+                LayoutObject       => $Self->{LayoutObject},
+            );
+
+            my $Label = $DynamicFieldConfig->{Label};
+
             $Self->{LayoutObject}->Block(
-                Name => 'ArticleFreeText',
+                Name => 'ArticleDynamicField',
                 Data => {
-                    Key   => $Article{ 'ArticleFreeKey' . $Count },
-                    Value => $Article{ 'ArticleFreeText' . $Count },
+                    Label => $Label,
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
+                },
+            );
+
+            # example of dynamic fields order customization
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleDynamicField_' . $DynamicFieldConfig->{Name},
+                Data => {
+                    Label => $Label,
+                    Value => $ValueStrg->{Value},
+                    Title => $ValueStrg->{Title},
                 },
             );
         }
@@ -696,11 +770,20 @@ sub _Mask {
                 );
             }
             else {
+                my $SessionInformation;
+
+                # Append session information to URL if needed
+                if ( !$Self->{LayoutObject}->{SessionIDCookie} ) {
+                    $SessionInformation = $Self->{LayoutObject}->{SessionName} . '='
+                        . $Self->{LayoutObject}->{SessionID};
+                }
+
                 $Self->{LayoutObject}->Block(
                     Name => 'BodyHTMLPlaceholder',
                     Data => {
                         %Param,
                         %Article,
+                        SessionInformation => $SessionInformation,
                     },
                 );
             }
