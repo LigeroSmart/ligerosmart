@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMTicket.xml,v 1.13 2011-01-24 19:54:42 ub Exp $</CVS>
+    <CVS>$Id: ITSMTicket.xml,v 1.14 2011-11-22 22:10:51 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTicketAddtlITSMField" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>Ticket</Group>
@@ -257,55 +257,15 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">0</Item>
-                <Item Key="7">0</Item>
-                <Item Key="8">0</Item>
-                <Item Key="9">0</Item>
-                <Item Key="10">0</Item>
-                <Item Key="11">0</Item>
-                <Item Key="12">0</Item>
-                <Item Key="13">0</Item>
-                <Item Key="14">0</Item>
-                <Item Key="15">0</Item>
-                <Item Key="16">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###TicketFreeTime" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free time options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">1</Item>
-                <Item Key="4">1</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">1</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketAddtlITSMField###ArticleFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewAddtlITSMField</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
+                <Item Key="TicketFreeTime3">1</Item>
+                <Item Key="TicketFreeTime4">1</Item>
+                <Item Key="TicketFreeTime6">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -519,55 +479,14 @@
             </Option>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">0</Item>
-                <Item Key="7">0</Item>
-                <Item Key="8">0</Item>
-                <Item Key="9">0</Item>
-                <Item Key="10">0</Item>
-                <Item Key="11">0</Item>
-                <Item Key="12">0</Item>
-                <Item Key="13">0</Item>
-                <Item Key="14">0</Item>
-                <Item Key="15">0</Item>
-                <Item Key="16">1</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###TicketFreeTime" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free time options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">1</Item>
-                <Item Key="6">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketDecision###ArticleFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewDecision</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
+                <Item Key="TicketFreeText16">1</Item>
+                <Item Key="TicketFreeTime5">1</Item>
             </Hash>
         </Setting>
     </ConfigItem>

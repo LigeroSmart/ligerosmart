@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.18 2011-03-03 15:47:22 ub Exp $</CVS>
-    <CVS>$OldId: Ticket.xml,v 1.425 2011/01/28 15:56:21 mb Exp $</CVS>
-    <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
-        <Description Translatable="1">Allows defining new types for ticket (if ticket type feature is enabled).</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Core::Ticket</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
-        </Setting>
-    </ConfigItem>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.19 2011-11-22 22:10:51 ub Exp $</CVS>
+    <CVS>$OldId: Ticket.xml,v 1.490 2011/11/07 16:52:00 cr Exp $</CVS>
+
+<!--
     <ConfigItem Name="TicketFreeKey13" Required="0" Valid="1">
         <Description Translatable="1">Defines the the free key field number 13 for tickets to add a new ticket attribute.</Description>
         <Group>Ticket</Group>
@@ -206,6 +197,85 @@
             </Hash>
         </Setting>
     </ConfigItem>
+ -->
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPhone###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket phone screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPhoneNew</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText14">1</Item>
+                <Item Key="TicketFreeTime6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketEmail###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket email screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewEmailNew</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText14">1</Item>
+                <Item Key="TicketFreeTime6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketSearch###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText15">1</Item>
+                <Item Key="TicketFreeText16">1</Item>
+                <Item Key="TicketFreeTime3">1</Item>
+                <Item Key="TicketFreeTime4">1</Item>
+                <Item Key="TicketFreeTime5">1</Item>
+                <Item Key="TicketFreeTime6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketPriority###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket priority screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewPriority</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText14">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketClose###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket close screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewClose</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText15">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketCompose###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket compose screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewCompose</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText15">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
+        <Description Translatable="1">Allows defining new types for ticket (if ticket type feature is enabled).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::Ticket</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentTicketFreeText" Required="0" Valid="0">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>Ticket</Group>
@@ -219,86 +289,6 @@
                     <JavaScript>Core.Agent.TicketAction.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketClose###TicketFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free text options shown in the close ticket screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewClose</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">0</Item>
-                <Item Key="7">0</Item>
-                <Item Key="8">0</Item>
-                <Item Key="9">0</Item>
-                <Item Key="10">0</Item>
-                <Item Key="11">0</Item>
-                <Item Key="12">0</Item>
-                <Item Key="13">0</Item>
-                <Item Key="14">0</Item>
-                <Item Key="15">1</Item>
-                <Item Key="16">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketCompose###TicketFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free text options shown in the ticket compose screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewCompose</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">0</Item>
-                <Item Key="7">0</Item>
-                <Item Key="8">0</Item>
-                <Item Key="9">0</Item>
-                <Item Key="10">0</Item>
-                <Item Key="11">0</Item>
-                <Item Key="12">0</Item>
-                <Item Key="13">0</Item>
-                <Item Key="14">0</Item>
-                <Item Key="15">1</Item>
-                <Item Key="16">0</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketEmail###TicketFreeTime" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free time options shown in the email ticket screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewEmailNew</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">1</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketPhone###TicketFreeTime" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free time options shown in the phone ticket screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewPhoneNew</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">1</Item>
-            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketPriority###TicketType" Required="0" Valid="1">
@@ -321,46 +311,6 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketSearch###TicketFreeText" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free text options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">0</Item>
-                <Item Key="4">0</Item>
-                <Item Key="5">0</Item>
-                <Item Key="6">0</Item>
-                <Item Key="7">0</Item>
-                <Item Key="8">0</Item>
-                <Item Key="9">0</Item>
-                <Item Key="10">0</Item>
-                <Item Key="11">0</Item>
-                <Item Key="12">0</Item>
-                <Item Key="13">0</Item>
-                <Item Key="14">0</Item>
-                <Item Key="15">1</Item>
-                <Item Key="16">1</Item>
-            </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::AgentTicketSearch###TicketFreeTime" Required="0" Valid="1">
-        <Description Translatable="1">Ticket free time options shown in the ticket search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="1">0</Item>
-                <Item Key="2">0</Item>
-                <Item Key="3">1</Item>
-                <Item Key="4">1</Item>
-                <Item Key="5">1</Item>
-                <Item Key="6">1</Item>
-            </Hash>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::MenuModule###310-FreeText" Required="0" Valid="0">
