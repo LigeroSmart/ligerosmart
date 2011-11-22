@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.12 2011-05-05 07:55:10 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.13 2011-11-22 23:40:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -254,6 +254,39 @@ sub CodeReinstall {
     return 1;
 }
 
+=item CodeUpgrade()
+
+run the code upgrade part
+
+    my $Result = $CodeObject->CodeUpgrade();
+
+=cut
+
+sub CodeUpgrade {
+    my ( $Self, %Param ) = @_;
+
+    # install stats
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
+
+    return 1;
+}
+
+=item CodeUpgradeFromLowerThan_3_0_91()
+
+This function is only executed if the installed module version is smaller than 3.0.91.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_91();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_3_0_91 {
+    my ( $Self, %Param ) = @_;
+
+    return 1;
+}
+
 =item CodeUninstall()
 
 run the code uninstall part
@@ -418,6 +451,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2011-05-05 07:55:10 $
+$Revision: 1.13 $ $Date: 2011-11-22 23:40:35 $
 
 =cut

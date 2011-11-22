@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.76 2011-11-09 13:59:40 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.77 2011-11-22 23:40:35 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -185,6 +185,87 @@
         }
 
     ]]></CodeReinstall>
+    <CodeUpgrade Type="post"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgrade';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # The code module has just recently been copied to it's location in the file system.
+        # In a persistent Perl environment an old version of the module might still be loaded,
+        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
+        # So we need to make sure that the new version is being loaded.
+        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
+        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
+        my $CodeModulePath = $CodeModule;
+        $CodeModulePath =~ s/::/\//g;
+        $CodeModulePath .= '.pm';
+        delete $INC{$CodeModulePath};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm.",
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm.",
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post" Version="3.0.91"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromLowerThan_3_0_91';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
     <CodeUninstall Type="pre"><![CDATA[
 
         # define function name
