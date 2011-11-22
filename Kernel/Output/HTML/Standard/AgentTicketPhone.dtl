@@ -2,8 +2,8 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.24 2011-04-26 16:00:58 ub Exp $
-# $OldId: AgentTicketPhone.dtl,v 1.127 2010/12/21 18:20:59 cg Exp $
+# $Id: AgentTicketPhone.dtl,v 1.25 2011-11-22 12:05:23 ub Exp $
+# $OldId: AgentTicketPhone.dtl,v 1.135 2011/11/14 18:24:15 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,7 +63,7 @@ $Include{"AgentCustomerSearch"}
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#TypeID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'TypeID', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16', 'To', 'Cc', 'Bcc']);
+        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'TypeID', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', $Data{"DynamicFieldNamesStrg"}, 'To', 'Cc', 'Bcc']);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -71,29 +71,99 @@ $Include{"AgentCustomerSearch"}
                     <div class="Clear"></div>
 <!-- dtl:block:TicketType -->
 
-                    <label class="Mandatory" for="CustomerAutoComplete"><span class="Marker">*</span> $Text{"From customer"}:</label>
-                    <div class="Field">
 
-                        <input id="CustomerAutoComplete" type="text" name="From" value="$QData{"From"}" class="W75pc AutocompleteOff Validate_Required $QData{"FromInvalid"}"/>
-                        <div id="CustomerAutoCompleteError" class="TooltipErrorMessage">
-                            <p>$Text{"This field is required."}</p>
+                    <div class="Field $QData{"CustomerHiddenContainer"}">
+                        <div class="CustomerTicketTemplateFromCustomer SpacingTopSmall Hidden">
+                            <input name="CustomerSelected" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value=""/>
+                            <input name="CustomerKey" id="CustomerKey" class="CustomerKey" type="hidden" value=""/>
+                            <input class="CustomerTicketText W75pc" name="CustomerTicketText" id="CustomerTicketText" type="text" value="" readonly="readonly" />
+                            <button type="button" id="RemoveCustomerTicket" class="Remove CustomerTicketRemove" value="$Text{"Remove Ticket Customer"}">$Text{"Remove Ticket Customer"}</button>
                         </div>
-                        <div id="CustomerAutoCompleteServerError" class="TooltipErrorMessage">
-<!-- dtl:block:GenericServerErrorMsg -->
-                            <p>$Text{"This field is required."}</p>
-<!-- dtl:block:GenericServerErrorMsg -->
-<!-- dtl:block:EmailInvalidConfigServerErrorMsg -->
-                            <p>$Text{"This email address is not allowed due to the system configuration."}</p>
-<!-- dtl:block:EmailInvalidConfigServerErrorMsg -->
-<!-- dtl:block:EmailInvalidMXServerErrorMsg -->
-                            <p>$Text{"This email address failed MX check."}</p>
-<!-- dtl:block:EmailInvalidMXServerErrorMsg -->
-<!-- dtl:block:EmailInvalidSyntaxServerErrorMsg -->
-                            <p>$Text{"The syntax of this email address is incorrect."}</p>
-<!-- dtl:block:EmailInvalidSyntaxServerErrorMsg -->
+
+                        <div id="TicketCustomerContentFromCustomer" class="CustomerContainer">
+<!-- dtl:block:MultipleCustomer -->
+                            <div class="SpacingTopSmall ">
+                                <input name="CustomerSelected" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value="$QData{"Count"}" $QData{"CustomerSelected"}  $QData{"CustomerDisabled"} />
+                                <input name="CustomerKey_$QData{"Count"}" id="CustomerKey_$QData{"Count"}" class="CustomerKey" type="hidden" value="$QData{"CustomerKey"}"/>
+                                <input class="CustomerTicketText W75pc $QData{"CustomerError"}" name="CustomerTicketText_$Data{"Count"}" id="CustomerTicketText_$Data{"Count"}" type="text" value="$QData{"CustomerElement"}" readonly="readonly" />
+                                <button type="button" id="RemoveCustomerTicket_$Data{"Count"}" class="Remove CustomerTicketRemove" value="$Text{"Remove Ticket Customer"}">$Text{"Remove Ticket Customer"}</button>
+
+<!-- dtl:block:CustomerErrorExplantion -->
+                                <p class="Explanation Error">$Text{"Please remove this entry and enter a new one with the correct value."}</p>
+<!-- dtl:block:CustomerErrorExplantion -->
+
+                                <div id="CustomerTicketText_$Data{"Count"}ServerError" class="TooltipErrorMessage">
+<!-- dtl:block:CustomerGenericServerErrorMsg -->
+                                    <p>$Text{"This field is required."}</p>
+<!-- dtl:block:CustomerGenericServerErrorMsg -->
+<!-- dtl:block:InvalidConfigServerErrorMsg -->
+                                    <p>$Text{"This email address is not allowed due to the system configuration."}</p>
+<!-- dtl:block:InvalidConfigServerErrorMsg -->
+<!-- dtl:block:InvalidMXServerErrorMsg -->
+                                    <p>$Text{"This email address failed MX check."}</p>
+<!-- dtl:block:InvalidMXServerErrorMsg -->
+<!-- dtl:block:InvalidDNSServerErrorMsg -->
+                                    <p>$Text{"DNS problem, please check your configuration and the error log."}</p>
+<!-- dtl:block:InvalidDNSServerErrorMsg -->
+<!-- dtl:block:InvalidSyntaxServerErrorMsg -->
+                                    <p>$Text{"The syntax of this email address is incorrect."}</p>
+<!-- dtl:block:InvalidSyntaxServerErrorMsg -->
+                                </div>
+                            </div>
+<!-- dtl:block:MultipleCustomer -->
+
+                        </div>
+<!-- dtl:block:MultipleCustomerCounter -->
+                        <input name="CustomerTicketCounterFromCustomer" id="CustomerTicketCounterFromCustomer" type="hidden" value="$QData{"CustomerCounter"}"/>
+<!-- dtl:block:MultipleCustomerCounter -->
+                    </div>
+                    <div class="Clear"></div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('.CustomerTicketRadio').bind('change', function () {
+        var CustomerKey;
+        if ( $(this).attr('checked') ){
+
+            CustomerKey = $( '#CustomerKey_' +$(this).val() ).val();
+            // get customer tickets
+            Core.Agent.CustomerSearch.ReloadCustomerInfo(CustomerKey);
+        }
+        return false;
+    });
+
+    $('.CustomerTicketRemove').bind('click', function () {
+        Core.Agent.CustomerSearch.RemoveCustomerTicket( $(this) );
+        return false;
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+                    <label for="FromCustomer">$Text{"From customer"}:</label>
+                    <div class="Field">
+                        <input id="FromCustomer" type="text" name="FromCustomer" value="" class="CustomerAutoComplete W75pc AutocompleteOff $QData{"FromInvalid"}"/>
+                        <button type="button" id="AddTicketCustomer" name="AddTicketCustomer" value="$Text{"Add"}">$Text{"Add"}</button>
+                        <div id="FromCustomerServerError" class="TooltipErrorMessage">
+<!-- dtl:block:FromServerErrorMsg -->
+                            <p>$Text{"Please include at least one customer for the ticket."}</p>
+<!-- dtl:block:FromServerErrorMsg -->
                         </div>
                     </div>
                     <div class="Clear"></div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#AddTicketCustomer').bind('click', function () {
+        Core.Agent.CustomerSearch.AddTicketCustomer( 'FromCustomer', $('#FromCustomer').val() );
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+
+<!-- dtl:block:FromExternalCustomer -->
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    Core.Agent.CustomerSearch.AddTicketCustomer( 'FromCustomer', '$QData{"Email"}', '$QData{"Customer"}', true );
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:FromExternalCustomer -->
 
                     <label class="Mandatory" for="Dest"><span class="Marker">*</span> $Text{"To queue"}:</label>
                     <div class="Field">
@@ -103,7 +173,7 @@ $Include{"AgentCustomerSearch"}
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#Dest').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'Dest', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16', 'To', 'Cc', 'Bcc']);
+        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'Dest', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'ServiceID', 'SLAID', 'SignKeyID', 'CryptKeyID', $Data{"DynamicFieldNamesStrg"}, 'To', 'Cc', 'Bcc']);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -118,7 +188,7 @@ $Include{"AgentCustomerSearch"}
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16', 'To', 'Cc', 'Bcc']);
+        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', $Data{"DynamicFieldNamesStrg"}, 'To', 'Cc', 'Bcc']);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -133,7 +203,7 @@ $Include{"AgentCustomerSearch"}
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#SLAID').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'SLAID', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SignKeyID', 'CryptKeyID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16', 'To', 'Cc', 'Bcc']);
+        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'SLAID', ['NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SignKeyID', 'CryptKeyID', $Data{"DynamicFieldNamesStrg"}, 'To', 'Cc', 'Bcc']);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -242,7 +312,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:Attachment -->
                             <li>
                                 $QData{"Filename"} ($QData{"Filesize"})
-                                <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+                                <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}" class="SpacingLeft">$Text{"Delete"}</button>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#AttachmentDelete$QData{"FileID"}').bind('click', function () {
@@ -291,17 +361,17 @@ $Include{"RichTextEditor"}
 # ---
 # ITSM
 # ---
-                    <label for="TicketFreeText14">$Text{"Impact"}:</label>
-                    <div class="Field">
-                        $Data{"ImpactStrg"}
+
+# show the impact
+<!-- dtl:block:DynamicField_TicketFreeText14 -->
+                    <div class="Row Row_DynamicField_$QData{"Name"}">
+                        $Data{"Label"}
+                        <div class="Field">
+                            $Data{"Field"}
+                        </div>
+                        <div class="Clear"></div>
                     </div>
-                    <div class="Clear"></div>
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-    $('#TicketFreeText14').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'TicketFreeText14', ['PriorityID']);
-    });
-<!--dtl:js_on_document_complete-->
+<!-- dtl:block:DynamicField_TicketFreeText14 -->
 # ---
 
                     <label for="PriorityID">$Text{"Priority"}:</label>
@@ -310,78 +380,37 @@ $Include{"RichTextEditor"}
                     </div>
                     <div class="Clear"></div>
 
-<!-- dtl:block:TicketFreeText -->
-                    $Data{"TicketFreeKeyField"}
-                    <div class="Field">
-                        $Data{"TicketFreeTextField"}
+<!-- dtl:block:DynamicField -->
+                    <div class="Row Row_DynamicField_$QData{"Name"}">
+                        $Data{"Label"}
+                        <div class="Field">
+                            $Data{"Field"}
+                        </div>
+                        <div class="Clear"></div>
                     </div>
-                    <div class="Clear"></div>
-<!-- dtl:block:TicketFreeText -->
+<!-- dtl:block:DynamicField -->
 
-# example of how to use fixed ticket freetext blocks for customizations
-#<!-- dtl:block:TicketFreeText1 -->
-#                    $Data{"TicketFreeKeyField1"}
-#                    <div class="Field">
-#                        $Data{"TicketFreeTextField1"}
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:DynamicField_Field1 -->
+#                    <div class="Row Row_DynamicField_$QData{"Name"}">
+#                        $Data{"Label"}
+#                        <div class="Field">
+#                            $Data{"Field"}
+#                        </div>
+#                        <div class="Clear"></div>
 #                    </div>
-#                    <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeText1 -->
-#<!-- dtl:block:TicketFreeText2 -->
-#                    $Data{"TicketFreeKeyField2"}
-#                    <div class="Field">
-#                        $Data{"TicketFreeTextField2"}
+#<!-- dtl:block:DynamicField_Field1 -->
+#<!-- dtl:block:DynamicField_Field2 -->
+#                    <div class="Row Row_DynamicField_$QData{"Name"}">
+#                        $Data{"Label"}
+#                        <div class="Field">
+#                            $Data{"Field"}
+#                        </div>
+#                        <div class="Clear"></div>
 #                    </div>
-#                    <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeText2 -->
-
-<!-- dtl:block:TicketFreeTime -->
-                    $Data{"TicketFreeTimeKey"}
-                    <div class="Field">
-                        $Data{"TicketFreeTime"}
-                        <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
-                    </div>
-                    <div class="Clear"></div>
-<!-- dtl:block:TicketFreeTime -->
-
-# example of how to use fixed ticket freetime blocks for customizations
-#<!-- dtl:block:TicketFreeTime1 -->
-#                        <label>$Data{"TicketFreeTimeKey1"}:</label>
-#                        <div class="Field">
-#                            $Data{"TicketFreeTime1"}
-#                        </div>
-#                        <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeTime1 -->
-#<!-- dtl:block:TicketFreeTime2 -->
-#                        <label>$Data{"TicketFreeTimeKey2"}:</label>
-#                        <div class="Field">
-#                            $Data{"TicketFreeTime2"}
-#                        </div>
-#                        <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeTime2 -->
-
-<!-- dtl:block:ArticleFreeText -->
-                    $Data{"ArticleFreeKeyField"}
-                    <div class="Field">
-                        $Data{"ArticleFreeTextField"}
-                    </div>
-                    <div class="Clear"></div>
-<!-- dtl:block:ArticleFreeText -->
-
-# example of how to use fixed article freetext blocks for customizations
-#<!-- dtl:block:ArticleFreeText1 -->
-#                        <label>$Data{"ArticleFreeKeyField1"}:</label>
-#                        <div class="Field">
-#                            $Data{"ArticleFreeKeyField1"}
-#                        </div>
-#                        <div class="Clear"></div>
-#<!-- dtl:block:ArticleFreeText1 -->
-#<!-- dtl:block:ArticleFreeText2 -->
-#                        <label>$Data{"ArticleFreeKeyField2"}:</label>
-#                        <div class="Field">
-#                            $Data{"ArticleFreeTextField2"}
-#                        </div>
-#                        <div class="Clear"></div>
-#<!-- dtl:block:ArticleFreeText2 -->
+#<!-- dtl:block:DynamicField_Field2 -->
 
 <!-- dtl:block:TimeUnitsLabel -->
                     <label for="TimeUnits">$Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</label>
