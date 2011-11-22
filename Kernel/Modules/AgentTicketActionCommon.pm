@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.17 2011-11-22 22:00:00 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.18 2011-11-22 23:10:08 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.64 2011/11/22 21:56:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -318,7 +318,6 @@ sub Run {
     # set the selected impact id
     $DynamicFieldValues{TicketFreeText14} = $GetParam{DynamicField_TicketFreeText14};
 # ---
-
     # convert dynamic field values into a structure for ACLs
     my %DynamicFieldACLParameters;
     DYNAMICFIELD:
@@ -1723,7 +1722,7 @@ sub _GetOwners {
     my $ACL = $Self->{TicketObject}->TicketAcl(
         %Param,
         ReturnType    => 'Ticket',
-        ReturnSubType => 'Owner',
+        ReturnSubType => 'NewOwner',
         Data          => \%ShownUsers,
         UserID        => $Self->{UserID},
     );
@@ -1754,7 +1753,7 @@ sub _GetOldOwners {
     my $ACL = $Self->{TicketObject}->TicketAcl(
         %Param,
         ReturnType    => 'Ticket',
-        ReturnSubType => 'Owner',
+        ReturnSubType => 'OldOwner',
         Data          => \%UserHash,
         UserID        => $Self->{UserID},
     );

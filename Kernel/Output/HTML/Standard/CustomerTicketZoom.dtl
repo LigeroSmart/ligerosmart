@@ -2,8 +2,8 @@
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.20 2011-08-23 12:29:12 ub Exp $
-# $OldId: CustomerTicketZoom.dtl,v 1.106.2.4 2011/06/30 18:53:24 mb Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.21 2011-11-22 23:10:45 ub Exp $
+# $OldId: CustomerTicketZoom.dtl,v 1.116 2011/10/25 12:37:37 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,9 @@
     <div class="Content">
         <div class="TicketHeader">
             <h2 title="$QData{"Title"}">
-                <span title="$Text{"$Data{"StateTypeGeneric"}"}" id="Flag" class="$QData{"StateTypeGeneric"}"><span>$Text{"$Data{"StateTypeGeneric"}"}</span></span>
+<!-- dtl:block:PriorityFlag -->
+                <div class="Flag" title="$Text{"$Data{"Priority"}"}"><span class="PriorityID-$QData{"PriorityID"}">$Text{"$Data{"Priority"}"}</span></div>
+<!-- dtl:block:PriorityFlag -->
                 $QData{"Title","65"}
                 <span class="TicketHook">$QData{"TicketNumber"}</span>
             </h2>
@@ -30,10 +32,10 @@
                 <li><span class="Key">$Text{"Type"}:</span> <span title="$QData{"Type"}">$QData{"Type","18"}</span></li>
 <!-- dtl:block:Type -->
 <!-- dtl:block:Service -->
-                <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Text{"$Data{"Service"}"}</span></li>
+                <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Text{"$Data{"Service"}","18"}</span></li>
 <!-- dtl:block:Service -->
 <!-- dtl:block:SLA -->
-                <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Text{"$Data{"SLA"}"}</span></li>
+                <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Text{"$Data{"SLA"}","18"}</span></li>
 <!-- dtl:block:SLA -->
 # ---
 # ITSM
@@ -42,10 +44,10 @@
                 <li><span class="Key">$Text{"Impact"}:</span> <span title="$Text{"$Data{"Impact"}"}">$Quote{"$Text{"$Data{"Impact"}"}","18"}</span></li>
 # ---
 <!-- dtl:block:State -->
-                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</span></li>
+                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}","18"}</span></li>
 <!-- dtl:block:State -->
 <!-- dtl:block:Priority -->
-                <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</span></li>
+                <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}","18"}</span></li>
 <!-- dtl:block:Priority -->
 <!-- dtl:block:Queue -->
                 <li><span class="Key">$Text{"Queue"}:</span> <span title="$QData{"Queue"}">$QData{"Queue","18"}</span></li>
@@ -56,26 +58,30 @@
 <!-- dtl:block:Responsible -->
                 <li><span class="Key">$Text{"Responsible"}:</span> <span title="$QData{"Responsible"}">$QData{"Responsible"}</span></li>
 <!-- dtl:block:Responsible -->
-# use this if you want to show TicketFreeKey1-16 and TicketFreeText1-16
-<!-- dtl:block:TicketFreeText -->
-                <li><span class="Key">$QData{"TicketFreeKey","20"}:</span> <span title="$QData{"TicketFreeText"}">$QData{"TicketFreeText","20"}</span></li>
-<!-- dtl:block:TicketFreeText -->
-#<!-- dtl:block:TicketFreeText1 -->
-#                    <li><span class="Key">$QData{"TicketFreeKey1","20"}:</span> <span title="$QData{"TicketFreeText1"}">$QData{"TicketFreeText1","20"}</span></li>
-#<!-- dtl:block:TicketFreeText1 -->
-#<!-- dtl:block:TicketFreeText2 -->
-#                    <li><span class="Key">$QData{"TicketFreeKey2","20"}:</span> <span title="$QData{"TicketFreeText2"}">$QData{"TicketFreeText2","20"}</span></li>
-#<!-- dtl:block:TicketFreeText2 -->
-# use this if you want to show TicketFreeTime1-6
-<!-- dtl:block:TicketFreeTime -->
-                <li><span class="Key">$Text{"$Data{"TicketFreeTimeKey"}"}:</span> <span title="$TimeShort{"$QData{"TicketFreeTime"}"}">$TimeShort{"$QData{"TicketFreeTime"}"}</span></li>
-<!-- dtl:block:TicketFreeTime -->
-#<!-- dtl:block:TicketFreeTime1 -->
-#                    <li><span class="Key">$Text{"$Data{"TicketFreeTimeKey1"}"}:</span> <span title="$TimeShort{"$QData{"TicketFreeTime1"}"}">$TimeShort{"$QData{"TicketFreeTime1"}"}</span></li>
-#<!-- dtl:block:TicketFreeTime1 -->
-#<!-- dtl:block:TicketFreeTime2 -->
-#                    <li><span class="Key">$Text{"$Data{"TicketFreeTimeKey2"}"}:</span> <span title="$TimeShort{"$QData{"TicketFreeTime2"}"}">$TimeShort{"$QData{"TicketFreeTime2"}"}</span></li>
-#<!-- dtl:block:TicketFreeTime2 -->
+
+# show ticket dynamic fields
+<!-- dtl:block:TicketDynamicField -->
+                <li>
+                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+                    <span title="$QData{"Title"}">$Data{"Value"}</span>
+                </li>
+<!-- dtl:block:TicketDynamicField -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:TicketDynamicField_Field1 -->
+#                <li>
+#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                    <span title="$QData{"Title1"}">$Data{"Value"}</span>
+#                </li>
+#<!-- dtl:block:TicketDynamicField_Field1 -->
+#<!-- dtl:block:TicketDynamicField_Field2 -->
+#                <li>
+#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                    <span title="$QData{"Title2"}">$Data{"Value"}</span>
+#                </li>
+#<!-- dtl:block:TicketDynamicField_Field2 -->
+
 <!-- dtl:block:Print -->
                 <li><a href="$Env{"Baselink"}Action=CustomerTicketPrint;TicketID=$LQData{"TicketID"}" class="Print AsPopup" title="$Text{"Print"}">$Text{"Print"}</a></li>
 <!-- dtl:block:Print -->
@@ -94,11 +100,11 @@
                     <div class="MessageHeader">
 
 <!-- dtl:block:ArticleContracted -->
-                        <h3><a href="$Env{"Baselink"}Action=$Env{"Action"};TicketID=$LQData{"TicketID"};ArticleID=$LQData{"ArticleID"}">$QData{"FromRealname","60"} &ndash; <span title="$Text{"Expand article"}...">$QData{"Subject","120"}</span></a></h3>
+                        <h3><a href="$Env{"Baselink"}Action=$Env{"Action"};TicketNumber=$LQData{"TicketNumber"};ArticleID=$LQData{"ArticleID"}">$QData{"FromRealname","60"} &ndash; <span title="$Text{"Expand article"}...">$QData{"Subject","120"}</span></a></h3>
 <!-- dtl:block:ArticleContracted -->
 
 <!-- dtl:block:ArticleExpanded -->
-                        <h3><a href="$Env{"Baselink"}Action=$Env{"Action"};TicketID=$LQData{"TicketID"};ArticleID=$LQData{"ArticleID"}">$QData{"FromRealname","60"} &ndash; <span title="$QData{"Subject"}">$QData{"Subject","120"}</span></a></h3>
+                        <h3><a href="$Env{"Baselink"}Action=$Env{"Action"};TicketNumber=$LQData{"TicketNumber"};ArticleID=$LQData{"ArticleID"}">$QData{"FromRealname","60"} &ndash; <span title="$QData{"Subject"}">$QData{"Subject","120"}</span></a></h3>
 <!-- dtl:block:ArticleExpanded -->
 
                         <span class="Age" title="$TimeLong{"$QData{"Created"}"}">$Data{"Age"}</span>
@@ -118,13 +124,31 @@
                                 <div class="Clear"></div>
                             </div>
 
-# show the ArticleFreeKey1-3 and ArticleFreeText1-3
-<!-- dtl:block:ArticleFreeText -->
+# show article dynamic fields
+<!-- dtl:block:ArticleDynamicField -->
                             <div>
-                                <div class="Label" title="$QData{"Key"}">$QData{"Key", "11"}:</div> <span title="$QData{"Value"}">$QData{"Value","160"}</span>
+                                <div class="Label" title="$QData{"Label"}">$Text{"$Data{"Label"}"}:</div>
+                                <span title="$QData{"Title"}">$Data{"Value"}</span>
                                 <div class="Clear"></div>
                             </div>
-<!-- dtl:block:ArticleFreeText -->
+<!-- dtl:block:ArticleDynamicField -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:ArticleDynamicField_Field1 -->
+#                            <div>
+#                                <div class="Label" title="$QData{"Label"}">$Text{"$Data{"Label"}"}:</div>
+#                                <span title="$QData{"Title"}">$Data{"Value"}</span>
+#                                <div class="Clear"></div>
+#                            </div>
+#<!-- dtl:block:ArticleDynamicField_Field1 -->
+#<!-- dtl:block:ArticleDynamicField_Field2 -->
+#                            <div>
+#                                <div class="Label" title="$QData{"Label"}">$Text{"$Data{"Label"}"}:</div>
+#                                <span title="$QData{"Title"}">$Data{"Value"}</span>
+#                                <div class="Clear"></div>
+#                            </div>
+#<!-- dtl:block:ArticleDynamicField_Field2 -->
 
 <!-- dtl:block:ArticleAttachment -->
                             <div class="Attachments">
@@ -156,7 +180,8 @@
                             <iframe title="about:blank" frameborder="0" id="VisibleFrame" src="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
 <!-- dtl:block:BodyHTMLLoad -->
 <!-- dtl:block:BodyHTMLPlaceholder -->
-                            <iframe src="about:blank" frameborder="0" title="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"}"></iframe>
+#                           <!-- Here we need to append the session info if cookies are disabled, because the layout object cannot automatically do that here, like in the other iframe (only for src attribute). -->
+                            <iframe src="about:blank" frameborder="0" title="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"};$QData{"SessionInformation"}"></iframe>
 <!-- dtl:block:BodyHTMLPlaceholder -->
                         </div>
                     </div>
