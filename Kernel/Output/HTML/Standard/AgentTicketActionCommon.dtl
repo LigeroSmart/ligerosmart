@@ -2,8 +2,8 @@
 # AgentTicketActionCommon.dtl - provides common HTML form for several masks
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.dtl,v 1.24 2011-04-26 16:00:58 ub Exp $
-# $OldId: AgentTicketActionCommon.dtl,v 1.46.2.16 2011/04/26 15:50:46 ub Exp $
+# $Id: AgentTicketActionCommon.dtl,v 1.25 2011-11-22 22:00:00 ub Exp $
+# $OldId: AgentTicketActionCommon.dtl,v 1.63 2011/11/21 22:56:31 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,7 +62,6 @@
 <!-- dtl:block:HeaderAgentTicketDecision -->
                 $Text{"Change Decision of Ticket"}
 <!-- dtl:block:HeaderAgentTicketDecision -->
-
 <!-- dtl:block:HeaderAgentTicketAddtlITSMField -->
                 $Text{"Change ITSM fields of ticket"}
 <!-- dtl:block:HeaderAgentTicketAddtlITSMField -->
@@ -120,14 +119,7 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
-# ---
-# ITSM
-# ---
-#        var $Form = $('#Expand').val('3').closest('form');
-#        Core.Form.Validate.DisableValidation($Form);
-#        $Form.submit();
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', ['NewPriorityID', 'SLAID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16']);
-# ---
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'ServiceID', [ 'TypeID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -142,14 +134,7 @@
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#SLAID').bind('change', function (Event) {
-# ---
-# ITSM
-# ---
-#        var $Form = $('#Expand').val('3').closest('form');
-#        Core.Form.Validate.DisableValidation($Form);
-#        $Form.submit();
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', ['NewPriorityID', 'TicketFreeText1', 'TicketFreeText2', 'TicketFreeText3', 'TicketFreeText4', 'TicketFreeText5', 'TicketFreeText6', 'TicketFreeText7', 'TicketFreeText8', 'TicketFreeText9', 'TicketFreeText10', 'TicketFreeText11', 'TicketFreeText12', 'TicketFreeText13', 'TicketFreeText14', 'TicketFreeText15', 'TicketFreeText16']);
-# ---
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'SLAID', [ 'TypeID', 'ServiceID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -165,6 +150,9 @@
                     <div id="NewOwnerIDServerError" class="TooltipErrorMessage"><p>$Text{"Please set a new owner!"}</p></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+    $('#NewOwnerID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
     $('#NewOwnerID').bind('click', function () {
         Core.Agent.TicketAction.SelectRadioButton('New','NewOwnerType');
     });
@@ -180,6 +168,9 @@
                     <div id="OldOwnerIDServerError" class="TooltipErrorMessage"><p>$Text{"Please set a new owner!"}</p></div>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
+    $('#OldOwnerID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'OldOwnerID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'NewResponsibleID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
     $('#OldOwnerID').bind('click', function () {
         Core.Agent.TicketAction.SelectRadioButton('Old','NewOwnerType');
     });
@@ -193,6 +184,13 @@
                 <label for="NewResponsibleID">$Text{"Responsible"}:</label>
                 <div class="Field">
                     $Data{"ResponsibleStrg"}
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#NewResponsibleID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewResponsibleID', [ 'TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewStateID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:Responsible -->
@@ -259,7 +257,7 @@ $Include{"RichTextEditor"}
 <!-- dtl:block:Attachment -->
                         <li>
                             $QData{"Filename"} ($QData{"Filesize"})
-                            <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}">$Text{"Delete"}</button>
+                            <button type="submit" id="AttachmentDelete$QData{"FileID"}" name="AttachmentDelete$QData{"FileID"}" value="$Text{"Delete"}" class="SpacingLeft">$Text{"Delete"}</button>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#AttachmentDelete$QData{"FileID"}').bind('click', function () {
@@ -280,6 +278,7 @@ $Include{"RichTextEditor"}
         var $Form = $('#FileUpload').closest('form');
         Core.Form.Validate.DisableValidation($Form);
         $Form.find('#AttachmentUpload').val('1').end().submit();
+
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -299,6 +298,13 @@ $Include{"RichTextEditor"}
                 <label for="NewStateID">$Text{"Next state"}:</label>
                 <div class="Field">
                     $Data{"StateStrg"}
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#NewStateID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewStateID', ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewPriorityID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
                 </div>
                 <div class="Clear"></div>
 
@@ -312,105 +318,68 @@ $Include{"RichTextEditor"}
                 <div class="Clear"></div>
 <!-- dtl:block:StatePending -->
 <!-- dtl:block:State -->
-
 # ---
 # ITSM
 # ---
-<!-- dtl:block:Impact -->
-                <label>$Text{"Impact"}:</label>
-                <div class="Field">
-                    $Data{"ImpactStrg"}
+
+# show the impact
+<!-- dtl:block:DynamicField_TicketFreeText14 -->
+                <div class="Row Row_DynamicField_$QData{"Name"}">
+                    $Data{"Label"}
+                    <div class="Field">
+                        $Data{"Field"}
+                    </div>
+                    <div class="Clear"></div>
                 </div>
-                <div class="Clear"></div>
-<!-- dtl:block:Impact -->
-<!--dtl:js_on_document_complete-->
-<script type="text/javascript">//<![CDATA[
-    $('#TicketFreeText14').bind('change', function (Event) {
-        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'TicketFreeText14', ['NewPriorityID']);
-    });
-//]]></script>
-<!--dtl:js_on_document_complete-->
+<!-- dtl:block:DynamicField_TicketFreeText14 -->
 # ---
+
 <!-- dtl:block:Priority -->
                 <label for="NewPriorityID">$Text{"Priority"}:</label>
                 <div class="Field">
                     $Data{"PriorityStrg"}
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#NewPriorityID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#Compose'), 'AJAXUpdate', 'NewPriorityID', ['TypeID', 'ServiceID', 'SLAID', 'NewOwnerID', 'OldOwnerID', 'NewResponsibleID', 'NewStateID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
                 </div>
                 <div class="Clear"></div>
 <!-- dtl:block:Priority -->
 
-<!-- dtl:block:TicketFreeText -->
-                $Data{"TicketFreeKeyField"}
-                <div class="Field">
-                    $Data{"TicketFreeTextField"}
+<!-- dtl:block:DynamicField -->
+                <div class="Row Row_DynamicField_$QData{"Name"}">
+                    $Data{"Label"}
+                    <div class="Field">
+                        $Data{"Field"}
+                    </div>
+                    <div class="Clear"></div>
                 </div>
-                <div class="Clear"></div>
-<!-- dtl:block:TicketFreeText -->
+<!-- dtl:block:DynamicField -->
 
-# example of how to use fixed ticket freetext blocks for customizations
-#<!-- dtl:block:TicketFreeText1 -->
-#                $Data{"TicketFreeKeyField1"}
-#                <div class="Field">
-#                    $Data{"TicketFreeTextField1"}
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:DynamicField_Field1 -->
+#                <div class="Row Row_DynamicField_$QData{"Name"}">
+#                    $Data{"Label"}
+#                    <div class="Field">
+#                        $Data{"Field"}
+#                    </div>
+#                    <div class="Clear"></div>
 #                </div>
-#                <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeText1 -->
-#<!-- dtl:block:TicketFreeText2 -->
-#                $Data{"TicketFreeKeyField2"}
-#                <div class="Field">
-#                    $Data{"TicketFreeTextField2"}
+#<!-- dtl:block:DynamicField_Field1 -->
+#<!-- dtl:block:DynamicField_Field2 -->
+#                <div class="Row Row_DynamicField_$QData{"Name"}">
+#                    $Data{"Label"}
+#                    <div class="Field">
+#                        $Data{"Field"}
+#                    </div>
+#                    <div class="Clear"></div>
 #                </div>
-#                <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeText2 -->
-
-<!-- dtl:block:TicketFreeTime -->
-                $Data{"TicketFreeTimeKey"}
-                <div class="Field">
-                    $Data{"TicketFreeTime"}
-                    <div id="TicketFreeTime$Data{"Count"}UsedError" class="TooltipErrorMessage"><p>$Text{"This field is required."}</p></div>
-                </div>
-                <div class="Clear"></div>
-<!-- dtl:block:TicketFreeTime -->
-
-# example of how to use fixed ticket freetime blocks for customizations
-#<!-- dtl:block:TicketFreeTime1 -->
-#                        <label>$Data{"TicketFreeTimeKey1"}:</label>
-#                        <div class="Field">
-#                            $Data{"TicketFreeTime1"}
-#                        </div>
-#                        <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeTime1 -->
-#<!-- dtl:block:TicketFreeTime2 -->
-#                        <label>$Data{"TicketFreeTimeKey2"}:</label>
-#                        <div class="Field">
-#                            $Data{"TicketFreeTime2"}
-#                        </div>
-#                        <div class="Clear"></div>
-#<!-- dtl:block:TicketFreeTime2 -->
-
-<!-- dtl:block:ArticleFreeText -->
-                $Data{"ArticleFreeKeyField"}
-                <div class="Field">
-                    $Data{"ArticleFreeTextField"}
-                </div>
-                <div class="Clear"></div>
-<!-- dtl:block:ArticleFreeText -->
-
-# example of how to use fixed article freetext blocks for customizations
-#<!-- dtl:block:ArticleFreeText1 -->
-#                $Data{"ArticleFreeKeyField1"}
-#                <div class="Field">
-#                    $Data{"ArticleFreeTextField1"}
-#                </div>
-#                <div class="Clear"></div>
-#<!-- dtl:block:ArticleFreeText1 -->
-#<!-- dtl:block:ArticleFreeText2 -->
-#                $Data{"ArticleFreeKeyField2"}
-#                <div class="Field">
-#                    $Data{"ArticleFreeTextField2"}
-#                </div>
-#                <div class="Clear"></div>
-#<!-- dtl:block:ArticleFreeText2 -->
+#<!-- dtl:block:DynamicField_Field2 -->
 
 <!-- dtl:block:TimeUnitsLabel -->
                 <label for="TimeUnits">$Text{"Time units"}$Text{"$Config{"Ticket::Frontend::TimeUnits"}"}:</label>
