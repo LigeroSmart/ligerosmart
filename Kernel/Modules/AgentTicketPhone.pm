@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.35 2011-11-22 12:05:23 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.36 2011-11-22 14:44:36 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.206 2011/11/16 23:55:05 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1895,6 +1895,11 @@ sub _MaskPhoneNew {
             Data => \%Param,
         );
     }
+# ---
+# ITSM
+# ---
+    my @IndividualDynamicFields;
+# ---
 
     # Dynamic fields
     # cycle trough the activated Dynamic Fields for this screen
@@ -1909,21 +1914,13 @@ sub _MaskPhoneNew {
 
         # get the html strings form $Param
         my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
+
 # ---
 # ITSM
 # ---
+        # remember dynamic fields that should be displayed individually
         if ( $DynamicFieldConfig->{Name} eq 'TicketFreeText14' ) {
-
-            # example of dynamic fields order customization
-            $Self->{LayoutObject}->Block(
-                Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                Data => {
-                    Name  => $DynamicFieldConfig->{Name},
-                    Label => $DynamicFieldHTML->{Label},
-                    Field => $DynamicFieldHTML->{Field},
-                },
-            );
-
+            push @IndividualDynamicFields, $DynamicFieldConfig;
             next DYNAMICFIELD;
         }
 # ---
@@ -1946,6 +1943,27 @@ sub _MaskPhoneNew {
             },
         );
     }
+# ---
+# ITSM
+# ---
+    # cycle trough dynamic fields that should be displayed individually
+    DYNAMICFIELD:
+    for my $DynamicFieldConfig ( @IndividualDynamicFields ) {
+
+        # get the html strings form $Param
+        my $DynamicFieldHTML = $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} };
+
+        # example of dynamic fields order customization
+        $Self->{LayoutObject}->Block(
+            Name => 'DynamicField_' . $DynamicFieldConfig->{Name},
+            Data => {
+                Name  => $DynamicFieldConfig->{Name},
+                Label => $DynamicFieldHTML->{Label},
+                Field => $DynamicFieldHTML->{Field},
+            },
+        );
+    }
+# ---
 
     # show time accounting box
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
