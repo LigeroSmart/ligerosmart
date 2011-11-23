@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.15 2011-11-23 12:20:33 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.16 2011-11-23 19:24:05 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -289,8 +289,38 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_91();
 sub CodeUpgradeFromLowerThan_3_0_91 {
     my ( $Self, %Param ) = @_;
 
+    # get the definition for all dynamic fields for ITSM
+    my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
+
     # clean up the migrated freetext and freetime fields
     # e.g. delete the possible values for fields that use the general catalog
+    DYNAMICFIELD:
+    for my $DynamicFieldNew (@DynamicFields) {
+
+        # get existing dynamic field data
+        my $DynamicFieldOld = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $DynamicFieldNew->{Name},
+        );
+
+        # update the dynamic field
+        my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+            ID         => $DynamicFieldOld->{ID},
+            FieldOrder => $DynamicFieldOld->{FieldOrder},
+            Name       => $DynamicFieldNew->{Name},
+            Label      => $DynamicFieldNew->{Label},
+            FieldType  => $DynamicFieldNew->{FieldType},
+            ObjectType => $DynamicFieldNew->{ObjectType},
+            Config     => $DynamicFieldNew->{Config},
+            ValidID    => 1,
+            Reorder    => 0,
+            UserID     => 1,
+        );
+    }
+
+    # install stats
+    $Self->{StatsObject}->StatsInstall(
+        FilePrefix => $Self->{FilePrefix},
+    );
 
     return 1;
 }
@@ -475,6 +505,45 @@ sub _CreateITSMDynamicFields {
         $NextOrderNumber = $DynamicfieldOrderList[-1] + 1;
     }
 
+    # get the definition for all dynamic fields for ITSM
+    my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
+
+    # create dynamic fields
+    DYNAMICFIELD:
+    for my $DynamicField (@DynamicFields) {
+
+        # create a new field
+        my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+            Name       => $DynamicField->{Name},
+            Label      => $DynamicField->{Label},
+            FieldOrder => $NextOrderNumber,
+            FieldType  => $DynamicField->{FieldType},
+            ObjectType => $DynamicField->{ObjectType},
+            Config     => $DynamicField->{Config},
+            ValidID    => $ValidID,
+            UserID     => 1,
+        );
+
+        next DYNAMICFIELD if !$FieldID;
+
+        # increase the order number
+        $NextOrderNumber++;
+    }
+
+    return 1;
+}
+
+=item _GetITSMDynamicFieldsDefinition()
+
+returns the definition for ITSM related dynamic fields
+
+    my $Result = $CodeObject->_GetITSMDynamicFieldsDefinition();
+
+=cut
+
+sub _GetITSMDynamicFieldsDefinition {
+    my ( $Self, %Param ) = @_;
+
     # define all dynamic fields for ITSM
     my @DynamicFields = (
         {
@@ -585,29 +654,7 @@ sub _CreateITSMDynamicFields {
         },
     );
 
-    # create dynamic fields
-    DYNAMICFIELD:
-    for my $DynamicField (@DynamicFields) {
-
-        # create a new field
-        my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
-            Name       => $DynamicField->{Name},
-            Label      => $DynamicField->{Label},
-            FieldOrder => $NextOrderNumber,
-            FieldType  => $DynamicField->{FieldType},
-            ObjectType => $DynamicField->{ObjectType},
-            Config     => $DynamicField->{Config},
-            ValidID    => $ValidID,
-            UserID     => 1,
-        );
-
-        next DYNAMICFIELD if !$FieldID;
-
-        # increase the order number
-        $NextOrderNumber++;
-    }
-
-    return 1;
+    return @DynamicFields;
 }
 
 1;
@@ -626,6 +673,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2011-11-23 12:20:33 $
+$Revision: 1.16 $ $Date: 2011-11-23 19:24:05 $
 
 =cut
