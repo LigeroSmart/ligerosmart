@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.14 2011-11-23 12:02:41 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.15 2011-11-23 12:20:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -470,7 +470,10 @@ sub _CreateITSMDynamicFields {
     }
 
     # get the last element from the order list and add 1
-    my $NextOrderNumber = $DynamicfieldOrderList[-1] + 1;
+    my $NextOrderNumber = 1;
+    if (@DynamicfieldOrderList) {
+        $NextOrderNumber = $DynamicfieldOrderList[-1] + 1;
+    }
 
     # define all dynamic fields for ITSM
     my @DynamicFields = (
@@ -623,6 +626,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2011-11-23 12:02:41 $
+$Revision: 1.15 $ $Date: 2011-11-23 12:20:33 $
 
 =cut
