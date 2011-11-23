@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.13 2011-11-22 23:40:35 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.14 2011-11-23 12:02:41 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,9 +23,10 @@ use Kernel::System::Stats;
 use Kernel::System::Type;
 use Kernel::System::User;
 use Kernel::System::Valid;
+use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -136,14 +137,15 @@ sub new {
     }
 
     # create needed objects
-    $Self->{ConfigObject} = Kernel::Config->new();
-    $Self->{CSVObject}    = Kernel::System::CSV->new( %{$Self} );
-    $Self->{GroupObject}  = Kernel::System::Group->new( %{$Self} );
-    $Self->{UserObject}   = Kernel::System::User->new( %{$Self} );
-    $Self->{StateObject}  = Kernel::System::State->new( %{$Self} );
-    $Self->{TypeObject}   = Kernel::System::Type->new( %{$Self} );
-    $Self->{ValidObject}  = Kernel::System::Valid->new( %{$Self} );
-    $Self->{StatsObject}  = Kernel::System::Stats->new(
+    $Self->{ConfigObject}       = Kernel::Config->new();
+    $Self->{CSVObject}          = Kernel::System::CSV->new( %{$Self} );
+    $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
+    $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
+    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
+    $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
+    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{StatsObject}        = Kernel::System::Stats->new(
         %{$Self},
         UserID => 1,
     );
@@ -195,6 +197,9 @@ sub CodeInstall {
             Valid     => 1,
         );
     }
+
+    # create dynamic fields for ITSM
+    $Self->_CreateITSMDynamicFields();
 
     # install stats
     $Self->{StatsObject}->StatsInstall(
@@ -283,6 +288,9 @@ my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_91();
 
 sub CodeUpgradeFromLowerThan_3_0_91 {
     my ( $Self, %Param ) = @_;
+
+    # clean up the migrated freetext and freetime fields
+    # e.g. delete the possible values for fields that use the general catalog
 
     return 1;
 }
@@ -435,6 +443,170 @@ sub _SetTypeValid {
     return 1;
 }
 
+=item _CreateITSMDynamicFields()
+
+creates all dynamic fields that are necessary for ITSM
+
+    my $Result = $CodeObject->_CreateITSMDynamicFields();
+
+=cut
+
+sub _CreateITSMDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    my $ValidID = $Self->{ValidObject}->ValidLookup(
+        Valid => 'valid',
+    );
+
+    # get all current dynamic fields
+    my $DynamicFieldList = $Self->{DynamicFieldObject}->DynamicFieldListGet(
+        Valid => 0,
+    );
+
+    # get the list of order numbers (is already sorted).
+    my @DynamicfieldOrderList;
+    for my $Dynamicfield ( @{$DynamicFieldList} ) {
+        push @DynamicfieldOrderList, $Dynamicfield->{FieldOrder};
+    }
+
+    # get the last element from the order list and add 1
+    my $NextOrderNumber = $DynamicfieldOrderList[-1] + 1;
+
+    # define all dynamic fields for ITSM
+    my @DynamicFields = (
+        {
+            Name       => 'TicketFreeText13',
+            Label      => 'Criticality',
+            FieldType  => 'Text',
+            ObjectType => 'Ticket',
+            Config     => {
+                TranslatableValues => 1,
+            },
+        },
+        {
+            Name       => 'TicketFreeText14',
+            Label      => 'Impact',
+            FieldType  => 'Dropdown',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue       => '3 normal',
+                TranslatableValues => 1,
+            },
+        },
+        {
+            Name       => 'TicketFreeText15',
+            Label      => 'Review Required',
+            FieldType  => 'Dropdown',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue   => 'No',
+                Link           => '',
+                PossibleNone   => 0,
+                PossibleValues => {
+                    No  => 'No',
+                    Yes => 'Yes',
+                },
+                TranslatableValues => 1,
+            },
+        },
+        {
+            Name       => 'TicketFreeText16',
+            Label      => 'Decision Result',
+            FieldType  => 'Dropdown',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue       => 'Pending',
+                Link               => '',
+                TranslatableValues => 1,
+                PossibleNone       => 1,
+                PossibleValues     => {
+                    'Approved'     => 'Approved',
+                    'Pending'      => 'Pending',
+                    'Postponed'    => 'Postponed',
+                    'Pre-approved' => 'Pre-approved',
+                    'Rejected'     => 'Rejected',
+                },
+            },
+        },
+        {
+            Name       => 'TicketFreeTime3',
+            Label      => 'Repair Start Time',
+            FieldType  => 'DateTime',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue  => 0,
+                Link          => '',
+                YearsInFuture => 5,
+                YearsInPast   => 5,
+                YearsPeriod   => 1,
+            },
+        },
+        {
+            Name       => 'TicketFreeTime4',
+            Label      => 'Recovery Start Time',
+            FieldType  => 'DateTime',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue  => 0,
+                Link          => '',
+                YearsInFuture => 5,
+                YearsInPast   => 5,
+                YearsPeriod   => 1,
+            },
+        },
+        {
+            Name       => 'TicketFreeTime5',
+            Label      => 'Decision Date',
+            FieldType  => 'DateTime',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue  => 0,
+                Link          => '',
+                YearsInFuture => 5,
+                YearsInPast   => 5,
+                YearsPeriod   => 1,
+            },
+        },
+        {
+            Name       => 'TicketFreeTime6',
+            Label      => 'Due Date',
+            FieldType  => 'DateTime',
+            ObjectType => 'Ticket',
+            Config     => {
+                DefaultValue  => 259200,
+                Link          => '',
+                YearsInFuture => 1,
+                YearsInPast   => 9,
+                YearsPeriod   => 1,
+            },
+        },
+    );
+
+    # create dynamic fields
+    DYNAMICFIELD:
+    for my $DynamicField (@DynamicFields) {
+
+        # create a new field
+        my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+            Name       => $DynamicField->{Name},
+            Label      => $DynamicField->{Label},
+            FieldOrder => $NextOrderNumber,
+            FieldType  => $DynamicField->{FieldType},
+            ObjectType => $DynamicField->{ObjectType},
+            Config     => $DynamicField->{Config},
+            ValidID    => $ValidID,
+            UserID     => 1,
+        );
+
+        next DYNAMICFIELD if !$FieldID;
+
+        # increase the order number
+        $NextOrderNumber++;
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -451,6 +623,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2011-11-22 23:40:35 $
+$Revision: 1.14 $ $Date: 2011-11-23 12:02:41 $
 
 =cut
