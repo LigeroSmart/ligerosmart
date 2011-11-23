@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.19 2011-11-22 22:10:51 ub Exp $</CVS>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.20 2011-11-23 12:32:14 ub Exp $</CVS>
     <CVS>$OldId: Ticket.xml,v 1.490 2011/11/07 16:52:00 cr Exp $</CVS>
 
 <!--
@@ -198,6 +198,17 @@
         </Setting>
     </ConfigItem>
  -->
+    <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
+        <Description Translatable="1">Allows defining new types for ticket (if ticket type feature is enabled).</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Core::Ticket</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketPhone###DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Dynamic fields shown in the ticket phone screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.</Description>
         <Group>Ticket</Group>
@@ -224,6 +235,21 @@
         <Description Translatable="1">Dynamic fields shown in the ticket search screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
         <Group>Ticket</Group>
         <SubGroup>Frontend::Agent::Ticket::ViewSearch</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TicketFreeText15">1</Item>
+                <Item Key="TicketFreeText16">1</Item>
+                <Item Key="TicketFreeTime3">1</Item>
+                <Item Key="TicketFreeTime4">1</Item>
+                <Item Key="TicketFreeTime5">1</Item>
+                <Item Key="TicketFreeTime6">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Ticket::Frontend::AgentTicketZoom###DynamicField" Required="0" Valid="1">
+        <Description Translatable="1">Dynamic fields shown in the ticket zoom screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.</Description>
+        <Group>Ticket</Group>
+        <SubGroup>Frontend::Agent::Ticket::ViewZoom</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="TicketFreeText15">1</Item>
@@ -263,17 +289,6 @@
             <Hash>
                 <Item Key="TicketFreeText15">1</Item>
             </Hash>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
-        <Description Translatable="1">Allows defining new types for ticket (if ticket type feature is enabled).</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Core::Ticket</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentTicketFreeText" Required="0" Valid="0">
