@@ -2,7 +2,7 @@
 # Kernel/Language/bg_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_GeneralCatalog.pm,v 1.15 2011-03-03 18:39:46 ub Exp $
+# $Id: bg_GeneralCatalog.pm,v 1.16 2011-11-24 15:22:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,18 +17,18 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAGeneralCatalog
-    $Self->{Translation}->{'Functionality'} = 'Ôóíêöèîíàëíîñò';
+    $Self->{Translation}->{'Functionality'} = 'Ð¤ÑƒÐ½ÐºÑ†Ð¸Ð¾Ð½Ð°Ð»Ð½Ð¾ÑÑ‚';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = 'Óïðàâëåíèå íà îñíîâíèÿ êàòàëîã';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Äîáàâè åëåìåíò êúì êàòàëîãà';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Äîáàâè êëàñ â êàòàëîãà';
-    $Self->{Translation}->{'Catalog Class'} = 'Êëàñîâå â êàòàëîãà';
+    $Self->{Translation}->{'General Catalog Management'} = 'Ð£Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ð½Ð¸Ñ ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Ð”Ð¾Ð±Ð°Ð²Ð¸ ÐµÐ»ÐµÐ¼ÐµÐ½Ñ‚ ÐºÑŠÐ¼ ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³Ð°';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Ð”Ð¾Ð±Ð°Ð²Ð¸ ÐºÐ»Ð°Ñ Ð² ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³Ð°';
+    $Self->{Translation}->{'Catalog Class'} = 'ÐšÐ»Ð°ÑÐ¾Ð²Ðµ Ð² ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³Ð°';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
-    $Self->{Translation}->{'General Catalog'} = 'Îñíîâåí êàòàëîã';
+    $Self->{Translation}->{'General Catalog'} = 'ÐžÑÐ½Ð¾Ð²ÐµÐ½ ÐºÐ°Ñ‚Ð°Ð»Ð¾Ð³';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
 

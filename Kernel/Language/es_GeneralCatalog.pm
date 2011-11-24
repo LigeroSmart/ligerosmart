@@ -2,7 +2,7 @@
 # Kernel/Language/es_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_GeneralCatalog.pm,v 1.10 2011-03-03 18:39:46 ub Exp $
+# $Id: es_GeneralCatalog.pm,v 1.11 2011-11-24 15:22:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,17 +20,17 @@ sub Data {
     $Self->{Translation}->{'Functionality'} = 'Funcionalidad';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = 'Gestión del Catálogo General';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Añadir Elemento al Catálogo';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Añadir Clase al Catálogo';
-    $Self->{Translation}->{'Catalog Class'} = 'Clase de Catálogo';
+    $Self->{Translation}->{'General Catalog Management'} = 'GestiÃ³n del CatÃ¡logo General';
+    $Self->{Translation}->{'Add Catalog Item'} = 'AÃ±adir Elemento al CatÃ¡logo';
+    $Self->{Translation}->{'Add Catalog Class'} = 'AÃ±adir Clase al CatÃ¡logo';
+    $Self->{Translation}->{'Catalog Class'} = 'Clase de CatÃ¡logo';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
-    $Self->{Translation}->{'General Catalog'} = 'Catálogo General';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'Parámetros para el ejemplo comentario 2 de los atributos del catálogo general.';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = 'Parámetros para los permisos de ejemplo de los atributos del catálogo general.';
+    $Self->{Translation}->{'General Catalog'} = 'CatÃ¡logo General';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'ParÃ¡metros para el ejemplo comentario 2 de los atributos del catÃ¡logo general.';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = 'ParÃ¡metros para los permisos de ejemplo de los atributos del catÃ¡logo general.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

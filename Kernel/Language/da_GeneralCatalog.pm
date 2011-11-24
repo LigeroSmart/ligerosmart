@@ -2,7 +2,7 @@
 # Kernel/Language/da_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_GeneralCatalog.pm,v 1.5 2011-03-03 18:39:46 ub Exp $
+# $Id: da_GeneralCatalog.pm,v 1.6 2011-11-24 15:22:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,8 +21,8 @@ sub Data {
 
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'General Katalog Management';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Tilføj katalog post';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Tilføj Katalog klasse';
+    $Self->{Translation}->{'Add Catalog Item'} = 'TilfÃ¸j katalog post';
+    $Self->{Translation}->{'Add Catalog Class'} = 'TilfÃ¸j Katalog klasse';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog Klasse';
 
     # SysConfig

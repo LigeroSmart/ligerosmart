@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2011 Eirik Wulff <eirik at epledoktor.no>
 # --
-# $Id: nb_NO_GeneralCatalog.pm,v 1.1 2011-04-20 10:47:41 ub Exp $
+# $Id: nb_NO_GeneralCatalog.pm,v 1.2 2011-11-24 15:22:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,13 +25,13 @@ sub Data {
     $Self->{Translation}->{'Add Catalog Item'} = 'Legg til katalogobjekt';
     $Self->{Translation}->{'Add Catalog Class'} = 'Legg til katalog-klasse';
     $Self->{Translation}->{'Catalog Class'} = 'Katalog-klasse';
-    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'En katalog-klasse må ha en beskrivelse!';
-    $Self->{Translation}->{'Catalog Class is required.'} = 'Katalogklasse er påkrevd.';
-    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'En katalogklasse må ha et navn';
-    $Self->{Translation}->{'Name is required.'} = 'Navn er påkrevd.';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'En katalog-klasse mÃ¥ ha en beskrivelse!';
+    $Self->{Translation}->{'Catalog Class is required.'} = 'Katalogklasse er pÃ¥krevd.';
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'En katalogklasse mÃ¥ ha et navn';
+    $Self->{Translation}->{'Name is required.'} = 'Navn er pÃ¥krevd.';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Opprett og administrér den generelle katalogen';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Opprett og administrÃ©r den generelle katalogen';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = 'Forsidemodul-registrering for AdminGeneralCatalog-oppsett i admin-delen.';
     $Self->{Translation}->{'General Catalog'} = 'Generell Katalog';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'Parametre for eksempelkommentar 2 i attributtene for generell katalog';

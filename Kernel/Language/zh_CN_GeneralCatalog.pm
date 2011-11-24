@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_GeneralCatalog.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_GeneralCatalog.pm,v 1.6 2011-03-03 18:39:46 ub Exp $
+# $Id: zh_CN_GeneralCatalog.pm,v 1.7 2011-11-24 15:22:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,13 +17,13 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAGeneralCatalog
-    $Self->{Translation}->{'Functionality'} = '¹¦ÄÜÓÃÍ¾';
+    $Self->{Translation}->{'Functionality'} = 'åŠŸèƒ½ç”¨é€”';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = '×ÜÄ¿Â¼¹ÜÀí';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Ôö¼ÓÄ¿Â¼ÏîÄ¿';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Ôö¼ÓĞÂÄ¿Â¼·Ö¼¶';
-    $Self->{Translation}->{'Catalog Class'} = 'Ä¿Â¼·Ö¼¶';
+    $Self->{Translation}->{'General Catalog Management'} = 'æ€»ç›®å½•ç®¡ç†';
+    $Self->{Translation}->{'Add Catalog Item'} = 'å¢åŠ ç›®å½•é¡¹ç›®';
+    $Self->{Translation}->{'Add Catalog Class'} = 'å¢åŠ æ–°ç›®å½•åˆ†çº§';
+    $Self->{Translation}->{'Catalog Class'} = 'ç›®å½•åˆ†çº§';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
