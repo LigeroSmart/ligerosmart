@@ -2,7 +2,7 @@
 # Kernel/Language/zh_CN_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: zh_CN_ITSMTicket.pm,v 1.8 2011-01-24 19:54:42 ub Exp $
+# $Id: zh_CN_ITSMTicket.pm,v 1.9 2011-11-24 15:13:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ sub Data {
 
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Îª¸Ã Ticket ¸ü¸Ä ITSM Óò';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'ä¸ºè¯¥ Ticket æ›´æ”¹ ITSM åŸŸ';
     $Self->{Translation}->{'Impact'} = '';
 
     # Template: AgentTicketAddtlITSMField
@@ -38,25 +38,25 @@ sub Data {
     # Template: AgentTicketPrint
 
     # Template: AgentTicketZoom
-    $Self->{Translation}->{'Decision Result'} = '¾ö¶¨½á¹û';
-    $Self->{Translation}->{'Decision Date'} = '¾ö¶¨ÈÕÆÚ';
-    $Self->{Translation}->{'Repair Start Time'} = 'ÐÞ¸´¿ªÊ¼Ê±¼ä';
-    $Self->{Translation}->{'Recovery Start Time'} = '»Ö¸´ÔË×÷Ê±¼ä';
-    $Self->{Translation}->{'Due date'} = '½ØÖ¹ÈÕÆÚ';
+    $Self->{Translation}->{'Decision Result'} = 'å†³å®šç»“æžœ';
+    $Self->{Translation}->{'Decision Date'} = 'å†³å®šæ—¥æœŸ';
+    $Self->{Translation}->{'Repair Start Time'} = 'ä¿®å¤å¼€å§‹æ—¶é—´';
+    $Self->{Translation}->{'Recovery Start Time'} = 'æ¢å¤è¿ä½œæ—¶é—´';
+    $Self->{Translation}->{'Due date'} = 'æˆªæ­¢æ—¥æœŸ';
 
     # Template: CustomerTicketPrint
 
     # Template: CustomerTicketZoom
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Ôö¼ÓÒ»¸ö¾öÒé!';
-    $Self->{Translation}->{'Additional ITSM Fields'} = '¶îÍâµÄ ITSM Óò';
+    $Self->{Translation}->{'Add a decision!'} = 'å¢žåŠ ä¸€ä¸ªå†³è®®!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'é¢å¤–çš„ ITSM åŸŸ';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = '¸ü¸Ä ITSM Óò!';
-    $Self->{Translation}->{'Decision'} = '¾ö¶¨';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'æ›´æ”¹ ITSM åŸŸ!';
+    $Self->{Translation}->{'Decision'} = 'å†³å®š';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} = '';
@@ -111,14 +111,14 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Ôö¼Ó¾ö¶¨µ½ Ticket';
-    $Self->{Translation}->{'Approved'} = 'Åú×¼';
-    $Self->{Translation}->{'Postponed'} = 'ÍÆ³Ù';
-    $Self->{Translation}->{'Pre-approved'} = 'Ô¤ÏÈºË×¼';
-    $Self->{Translation}->{'Reason'} = 'ÀíÓÉ';
-    $Self->{Translation}->{'Rejected'} = '¾Ü¾ø';
-    $Self->{Translation}->{'Review Required'} = 'Éó²éÉêÇë';
-    $Self->{Translation}->{'closed with workaround'} = 'Ìæ´ú·½·¨¶ø¹Ø±Õ';
+    $Self->{Translation}->{'Add decision to ticket'} = 'å¢žåŠ å†³å®šåˆ° Ticket';
+    $Self->{Translation}->{'Approved'} = 'æ‰¹å‡†';
+    $Self->{Translation}->{'Postponed'} = 'æŽ¨è¿Ÿ';
+    $Self->{Translation}->{'Pre-approved'} = 'é¢„å…ˆæ ¸å‡†';
+    $Self->{Translation}->{'Reason'} = 'ç†ç”±';
+    $Self->{Translation}->{'Rejected'} = 'æ‹’ç»';
+    $Self->{Translation}->{'Review Required'} = 'å®¡æŸ¥ç”³è¯·';
+    $Self->{Translation}->{'closed with workaround'} = 'æ›¿ä»£æ–¹æ³•è€Œå…³é—­';
 
 }
 

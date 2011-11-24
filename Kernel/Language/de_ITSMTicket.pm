@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMTicket.pm,v 1.9 2011-01-24 19:54:42 ub Exp $
+# $Id: de_ITSMTicket.pm,v 1.10 2011-11-24 15:13:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,8 +17,8 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = 'Die Entscheidung des Tickets ändern';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Ändern der ITSM Felder des Tickets';
+    $Self->{Translation}->{'Change Decision of Ticket'} = 'Die Entscheidung des Tickets Ã¤ndern';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Ã„ndern der ITSM Felder des Tickets';
     $Self->{Translation}->{'Impact'} = 'Auswirkung';
 
     # Template: AgentTicketAddtlITSMField
@@ -26,12 +26,12 @@ sub Data {
     # Template: AgentTicketDecision
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = 'Ticket verknüpfen';
+    $Self->{Translation}->{'Link ticket'} = 'Ticket verknÃ¼pfen';
 
     # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = 'Kritikalität';
+    $Self->{Translation}->{'Criticality'} = 'KritikalitÃ¤t';
 
     # Template: AgentTicketPhone
 
@@ -42,20 +42,20 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'Entscheidungsdatum';
     $Self->{Translation}->{'Repair Start Time'} = 'Reparatur Startzeit';
     $Self->{Translation}->{'Recovery Start Time'} = 'Wiederherstellung Startzeit';
-    $Self->{Translation}->{'Due date'} = 'Fälligkeitsdatum';
+    $Self->{Translation}->{'Due date'} = 'FÃ¤lligkeitsdatum';
 
     # Template: CustomerTicketPrint
 
     # Template: CustomerTicketZoom
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Hinzufügen einer Entscheidung!';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Zusätzliche ITSM Felder';
+    $Self->{Translation}->{'Add a decision!'} = 'HinzufÃ¼gen einer Entscheidung!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'ZusÃ¤tzliche ITSM Felder';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = 'Ändern der ITSM-Felder!';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Ã„ndern der ITSM-Felder!';
     $Self->{Translation}->{'Decision'} = 'Entscheidung';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
@@ -111,8 +111,8 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Entscheidung an Ticket hängen';
-    $Self->{Translation}->{'Reason'} = 'Begründung';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Entscheidung an Ticket hÃ¤ngen';
+    $Self->{Translation}->{'Reason'} = 'BegrÃ¼ndung';
     $Self->{Translation}->{'Review Required'} = 'Nachbearbeitung erforderlich';
     $Self->{Translation}->{'closed with workaround'} = 'provisorisch geschlossen';
 

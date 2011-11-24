@@ -2,7 +2,7 @@
 # Kernel/Language/bg_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: bg_ITSMTicket.pm,v 1.11 2011-01-24 19:54:42 ub Exp $
+# $Id: bg_ITSMTicket.pm,v 1.12 2011-11-24 15:13:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ sub Data {
 
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Промени ITSM полетата на билета';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'РџСЂРѕРјРµРЅРё ITSM РїРѕР»РµС‚Р°С‚Р° РЅР° Р±РёР»РµС‚Р°';
     $Self->{Translation}->{'Impact'} = '';
 
     # Template: AgentTicketAddtlITSMField
@@ -38,11 +38,11 @@ sub Data {
     # Template: AgentTicketPrint
 
     # Template: AgentTicketZoom
-    $Self->{Translation}->{'Decision Result'} = 'Резултат от решението';
-    $Self->{Translation}->{'Decision Date'} = 'Дата за решаване';
-    $Self->{Translation}->{'Repair Start Time'} = 'Време на стартиране на ремонта';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Време на стартиране на възстановяването';
-    $Self->{Translation}->{'Due date'} = 'Крайна дата';
+    $Self->{Translation}->{'Decision Result'} = 'Р РµР·СѓР»С‚Р°С‚ РѕС‚ СЂРµС€РµРЅРёРµС‚Рѕ';
+    $Self->{Translation}->{'Decision Date'} = 'Р”Р°С‚Р° Р·Р° СЂРµС€Р°РІР°РЅРµ';
+    $Self->{Translation}->{'Repair Start Time'} = 'Р’СЂРµРјРµ РЅР° СЃС‚Р°СЂС‚РёСЂР°РЅРµ РЅР° СЂРµРјРѕРЅС‚Р°';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Р’СЂРµРјРµ РЅР° СЃС‚Р°СЂС‚РёСЂР°РЅРµ РЅР° РІСЉР·СЃС‚Р°РЅРѕРІСЏРІР°РЅРµС‚Рѕ';
+    $Self->{Translation}->{'Due date'} = 'РљСЂР°Р№РЅР° РґР°С‚Р°';
 
     # Template: CustomerTicketPrint
 
@@ -50,13 +50,13 @@ sub Data {
 
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = '';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Допълнителни ITSM полета';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'Р”РѕРїСЉР»РЅРёС‚РµР»РЅРё ITSM РїРѕР»РµС‚Р°';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Change the ITSM fields!'} = '';
-    $Self->{Translation}->{'Decision'} = 'Решение';
+    $Self->{Translation}->{'Decision'} = 'Р РµС€РµРЅРёРµ';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} = '';
@@ -111,10 +111,10 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Добави решение към билета';
-    $Self->{Translation}->{'Reason'} = 'Основание';
-    $Self->{Translation}->{'Review Required'} = 'Изисква преглеждане';
-    $Self->{Translation}->{'closed with workaround'} = 'приключен с обходно решение';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Р”РѕР±Р°РІРё СЂРµС€РµРЅРёРµ РєСЉРј Р±РёР»РµС‚Р°';
+    $Self->{Translation}->{'Reason'} = 'РћСЃРЅРѕРІР°РЅРёРµ';
+    $Self->{Translation}->{'Review Required'} = 'РР·РёСЃРєРІР° РїСЂРµРіР»РµР¶РґР°РЅРµ';
+    $Self->{Translation}->{'closed with workaround'} = 'РїСЂРёРєР»СЋС‡РµРЅ СЃ РѕР±С…РѕРґРЅРѕ СЂРµС€РµРЅРёРµ';
 
 }
 

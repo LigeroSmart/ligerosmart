@@ -2,7 +2,7 @@
 # Kernel/Language/pl_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_ITSMTicket.pm,v 1.11 2011-01-24 19:54:42 ub Exp $
+# $Id: pl_ITSMTicket.pm,v 1.12 2011-11-24 15:13:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ sub Data {
 
     # Template: AgentTicketActionCommon
     $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Zmieñ pola ITSM dla biletu';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'ZmieÅ„ pola ITSM dla biletu';
     $Self->{Translation}->{'Impact'} = '';
 
     # Template: AgentTicketAddtlITSMField
@@ -40,8 +40,8 @@ sub Data {
     # Template: AgentTicketZoom
     $Self->{Translation}->{'Decision Result'} = 'Rezultat decyzji';
     $Self->{Translation}->{'Decision Date'} = 'Data decyzji';
-    $Self->{Translation}->{'Repair Start Time'} = 'Czas rozpoczêcia naprawy';
-    $Self->{Translation}->{'Recovery Start Time'} = 'Czas rozpoczêcia odzyskiwania';
+    $Self->{Translation}->{'Repair Start Time'} = 'Czas rozpoczÄ™cia naprawy';
+    $Self->{Translation}->{'Recovery Start Time'} = 'Czas rozpoczÄ™cia odzyskiwania';
     $Self->{Translation}->{'Due date'} = 'Czas przybycia';
 
     # Template: CustomerTicketPrint
@@ -112,8 +112,8 @@ sub Data {
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
     $Self->{Translation}->{'Add decision to ticket'} = 'Dodaj decyzje do biletu';
-    $Self->{Translation}->{'Reason'} = 'Powód';
-    $Self->{Translation}->{'closed with workaround'} = 'Rozwi±zane z obej¶ciem';
+    $Self->{Translation}->{'Reason'} = 'PowÃ³d';
+    $Self->{Translation}->{'closed with workaround'} = 'RozwiÄ…zane z obejÅ›ciem';
 
 }
 

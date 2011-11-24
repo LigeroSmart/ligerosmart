@@ -2,7 +2,7 @@
 # Kernel/Language/da_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_ITSMTicket.pm,v 1.7 2011-01-24 19:54:42 ub Exp $
+# $Id: da_ITSMTicket.pm,v 1.8 2011-11-24 15:13:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -49,7 +49,7 @@ sub Data {
     # Template: CustomerTicketZoom
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = 'Tilføj en beslutning!';
+    $Self->{Translation}->{'Add a decision!'} = 'TilfÃ¸j en beslutning!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Yderlige ITSM felter';
     $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
@@ -111,9 +111,9 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Tilføj beslutning til sag';
+    $Self->{Translation}->{'Add decision to ticket'} = 'TilfÃ¸j beslutning til sag';
     $Self->{Translation}->{'Reason'} = 'Begrundelse';
-    $Self->{Translation}->{'Review Required'} = 'Anmeldelse kræves';
+    $Self->{Translation}->{'Review Required'} = 'Anmeldelse krÃ¦ves';
     $Self->{Translation}->{'closed with workaround'} = 'Lukket med workaround';
 
 }

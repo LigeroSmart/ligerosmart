@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2011 Eirik Wulff <eirik at epledoktor.no>
 # --
-# $Id: nb_NO_ITSMTicket.pm,v 1.1 2011-04-20 10:48:20 ub Exp $
+# $Id: nb_NO_ITSMTicket.pm,v 1.2 2011-11-24 15:13:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -52,7 +52,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'Add a decision!'} = 'Legg til en beslutning!';
     $Self->{Translation}->{'Additional ITSM Fields'} = 'Ekstra ITSM-felt';
-    $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = 'Tillater Â legge til notiser i de ekstra ITSM-feltene i saksbehandlerdelen';
+    $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = 'Tillater √• legge til notiser i de ekstra ITSM-feltene i saksbehandlerdelen';
     $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
@@ -115,7 +115,7 @@ sub Data {
     $Self->{Translation}->{'Add decision to ticket'} = 'Legg til beslutning for sak';
     $Self->{Translation}->{'Reason'} = 'Begrunnelse';
     $Self->{Translation}->{'Review Required'} = 'Evaluering kreves';
-    $Self->{Translation}->{'closed with workaround'} = 'Lukket med midlertidig l¯sning';
+    $Self->{Translation}->{'closed with workaround'} = 'Lukket med midlertidig l√∏sning';
 
 }
 
