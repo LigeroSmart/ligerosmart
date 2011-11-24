@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.109 2011-10-08 17:55:21 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.110 2011-11-24 17:21:33 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1513,6 +1513,16 @@ Your OTRS Notification Master
         <SubGroup>Core</SubGroup>
         <Setting>
             <String>en</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Loader::Agent::CommonCSS###200-FAQ" Required="1" Valid="1">
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
+        <Group>Framework</Group>
+        <SubGroup>Core::Web</SubGroup>
+        <Setting>
+            <Array>
+                <Item>FAQ.Agent.Default.css</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Loader::Agent::CommonJS###200-FAQ" Required="1" Valid="1">
