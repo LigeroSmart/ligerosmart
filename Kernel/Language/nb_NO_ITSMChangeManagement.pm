@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2011 Eirik Wulff <eirik at epledoktor.no>
 # --
-# $Id: nb_NO_ITSMChangeManagement.pm,v 1.1 2011-04-20 10:48:13 ub Exp $
+# $Id: nb_NO_ITSMChangeManagement.pm,v 1.2 2011-11-24 16:19:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,16 +22,16 @@ sub Data {
     $Self->{Translation}->{'ITSMChanges'} = 'Endringer';
     $Self->{Translation}->{'ITSM Changes'} = 'Endringer';
     $Self->{Translation}->{'workorder'} = 'Arbeidsordre';
-    $Self->{Translation}->{'A change must have a title!'} = 'En endring mÂ ha en tittel!';
-    $Self->{Translation}->{'A condition must have a name!'} = 'En forutsetning mÂ ha et navn!';
-    $Self->{Translation}->{'A template must have a name!'} = 'En mal mÂ ha et navn!';
-    $Self->{Translation}->{'A workorder must have a title!'} = 'En arbeidsordre mÂ ha en tittel!';
+    $Self->{Translation}->{'A change must have a title!'} = 'En endring m√• ha en tittel!';
+    $Self->{Translation}->{'A condition must have a name!'} = 'En forutsetning m√• ha et navn!';
+    $Self->{Translation}->{'A template must have a name!'} = 'En mal m√• ha et navn!';
+    $Self->{Translation}->{'A workorder must have a title!'} = 'En arbeidsordre m√• ha en tittel!';
     $Self->{Translation}->{'ActionExecute::successfully'} = 'Vellykket';
     $Self->{Translation}->{'ActionExecute::unsuccessfully'} = 'Mislykket';
     $Self->{Translation}->{'Add CAB Template'} = 'Legg til CAB-mal';
     $Self->{Translation}->{'Add Workorder'} = 'Legg til Arbeidordre';
     $Self->{Translation}->{'Add a workorder to the change'} = 'Legg en arbeidsordre til endringen';
-    $Self->{Translation}->{'Add new condition and action pair'} = 'Legg til nytt forutsetning-gj¯remÂl-par';
+    $Self->{Translation}->{'Add new condition and action pair'} = 'Legg til nytt forutsetning-gj√∏rem√•l-par';
     $Self->{Translation}->{'Agent interface module to show the ChangeManager overview icon.'} = '';
     $Self->{Translation}->{'Agent interface module to show the MyCAB overview icon.'} = '';
     $Self->{Translation}->{'Agent interface module to show the MyChanges overview icon.'} = '';
@@ -43,13 +43,13 @@ sub Data {
     $Self->{Translation}->{'Change Schedule'} = 'Endre tidsplan';
     $Self->{Translation}->{'Change involved persons of the change'} = 'Endre involverte personer i endringen';
     $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Nytt gj¯remÂl (ID=%s)';
-    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Gj¯remÂl (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Alle gj¯remÂl for forutsetning (ID=%s) slettet';
-    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Gj¯remÂl (ID=%s) utf¯rt: %s';
-    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Gj¯remÂl ID=%s): Ny: %s -> Gammel: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Endring (ID=%s) har nÂdd faktisk sluttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Endring (ID=%s) har nÂdd faktisk starttid.';
+    $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Nytt gj√∏rem√•l (ID=%s)';
+    $Self->{Translation}->{'ChangeHistory::ActionDelete'} = 'Gj√∏rem√•l (ID=%s) slettet';
+    $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Alle gj√∏rem√•l for forutsetning (ID=%s) slettet';
+    $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Gj√∏rem√•l (ID=%s) utf√∏rt: %s';
+    $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Gj√∏rem√•l ID=%s): Ny: %s -> Gammel: %s';
+    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Endring (ID=%s) har n√•dd faktisk sluttid.';
+    $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Endring (ID=%s) har n√•dd faktisk starttid.';
     $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Ny Endring (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Nytt Vedlegg: %s';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentDelete'} = 'Slettet Vedlegg %s';
@@ -58,9 +58,9 @@ sub Data {
     $Self->{Translation}->{'ChangeHistory::ChangeLinkAdd'} = 'Kobling til %s (ID=%s) lagt til';
     $Self->{Translation}->{'ChangeHistory::ChangeLinkDelete'} = 'Kobling til %s (ID=%s) slettet';
     $Self->{Translation}->{'ChangeHistory::ChangeNotificationSent'} = 'Melding sendt til %s (Hendelse: %s)';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Endring (ID=%s) har nÂdd planlagt sluttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Endring (ID=%s) har nÂdd planlagt starttid.';
-    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Endring (ID=%s) har nÂdd forespurt tid.';
+    $Self->{Translation}->{'ChangeHistory::ChangePlannedEndTimeReached'} = 'Endring (ID=%s) har n√•dd planlagt sluttid.';
+    $Self->{Translation}->{'ChangeHistory::ChangePlannedStartTimeReached'} = 'Endring (ID=%s) har n√•dd planlagt starttid.';
+    $Self->{Translation}->{'ChangeHistory::ChangeRequestedTimeReached'} = 'Endring (ID=%s) har n√•dd forespurt tid.';
     $Self->{Translation}->{'ChangeHistory::ChangeUpdate'} = '%s: Ny: %s -> Gammel: %s';
     $Self->{Translation}->{'ChangeHistory::ConditionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ConditionAddID'} = 'Ny forutsetning (ID=%s)';
@@ -83,28 +83,28 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change'} = 'Endre forutsetningene for denne endringen';
     $Self->{Translation}->{'Edit the workorder'} = 'Endre arbeidsordren';
     $Self->{Translation}->{'Expression'} = 'Uttrykk';
-    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Fullteksts¯k i Endring og Arbeidsordre';
+    $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Fullteksts√∏k i Endring og Arbeidsordre';
     $Self->{Translation}->{'ITSMCondition'} = 'Forutsetning';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'Arbeidsordre';
     $Self->{Translation}->{'Link another object to the change'} = 'Koble et annet objekt til endringen';
     $Self->{Translation}->{'Link another object to the workorder'} = 'Koble et annet objekt til arbeidsordren';
     $Self->{Translation}->{'Move all workorders in time'} = 'Flytt alle arbeidsordre i tid';
-    $Self->{Translation}->{'My CABs'} = 'Mine EndringsrÂd';
+    $Self->{Translation}->{'My CABs'} = 'Mine Endringsr√•d';
     $Self->{Translation}->{'My Changes'} = 'Mine Endringer';
     $Self->{Translation}->{'My Workorders'} = 'Mine Arbeidsordre';
     $Self->{Translation}->{'No XXX settings'} = 'Ingen innstillinger for \'%s\'';
     $Self->{Translation}->{'PIR'} = 'PIR (Sluttevaluering)';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Sluttevaluering)';
     $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Forventet tjenestetilgjengelighet)';
-    $Self->{Translation}->{'Please select first a catalog class!'} = 'Vennligst velg en katalogklasse f¯rst!';
+    $Self->{Translation}->{'Please select first a catalog class!'} = 'Vennligst velg en katalogklasse f√∏rst!';
     $Self->{Translation}->{'Print the change'} = 'Skriv ut endringen';
     $Self->{Translation}->{'Print the workorder'} = 'Skriv ut arbeidsordren';
     $Self->{Translation}->{'Projected Service Availability'} = 'PSA (Forventet tjenestetilgjengelighet)';
     $Self->{Translation}->{'RequestedTime'} = 'Forespurt tid';
-    $Self->{Translation}->{'Save Change CAB as Template'} = 'Lagre EndringsrÂd som mal';
+    $Self->{Translation}->{'Save Change CAB as Template'} = 'Lagre Endringsr√•d som mal';
     $Self->{Translation}->{'Save change as a template'} = 'Lagre Endring som mal';
     $Self->{Translation}->{'Save workorder as a template'} = 'Lagre Arbeidsordre som mal';
-    $Self->{Translation}->{'Search Changes'} = 'S¯k i Endringer';
+    $Self->{Translation}->{'Search Changes'} = 'S√∏k i Endringer';
     $Self->{Translation}->{'Set the agent for the workorder'} = 'Sett saksbehandler for arbeidsordren';
     $Self->{Translation}->{'Take Workorder'} = 'Ta arbeidsordre';
     $Self->{Translation}->{'Take the workorder'} = 'Ta arbeidsordren';
@@ -114,10 +114,10 @@ sub Data {
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Planlagt starttid er ugyldig!';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Planlagt tid er ugyldig!';
     $Self->{Translation}->{'The requested time is invalid!'} = 'Forespurt tid er ugyldig!';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Arbeidsordre (ID=%s) har nÂdd faktisk sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har nÂdd faktisk sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Arbeidsordre (ID=%s) har nÂdd faktisk starttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har nÂdd faktisk starttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Arbeidsordre (ID=%s) har n√•dd faktisk sluttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har n√•dd faktisk sluttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Arbeidsordre (ID=%s) har n√•dd faktisk starttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har n√•dd faktisk starttid.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'Ny Arbeidsordre (ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAddWithWorkOrderID'} = 'Ny Arbeidsordre (ID=%s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAttachmentAdd'} = 'Nytt vedlegg til Arbeidsordre: %s';
@@ -132,10 +132,10 @@ sub Data {
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderLinkDeleteWithWorkOrderID'} = '(ID=%s) Kobling til %s (ID=%s) slettet';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSent'} = 'Melding sendt til %s (Hendelse: %s)';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderNotificationSentWithWorkOrderID'} = '(ID=%s) Melding sent til %s (Hendelse: %s)';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'Arbeidsordre (ID=%s) har nÂdd planlagt sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har nÂdd planlagt sluttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Arbeidsordre (ID=%s) har nÂdd planlagt starttid.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har nÂdd planlagt starttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReached'} = 'Arbeidsordre (ID=%s) har n√•dd planlagt sluttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedEndTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har n√•dd planlagt sluttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReached'} = 'Arbeidsordre (ID=%s) har n√•dd planlagt starttid.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderPlannedStartTimeReachedWithWorkOrderID'} = 'Arbeidsordre (ID=%s) har n√•dd planlagt starttid.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdate'} = '%s: Ny: %s -> Gammel: %s';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderUpdateWithWorkOrderID'} = '(ID=%s) %s: Ny: %s -> Gammel: %s';
     $Self->{Translation}->{'WorkOrderNumber'} = 'Arbeidsordre nr';
@@ -154,9 +154,9 @@ sub Data {
     $Self->{Translation}->{'in progress'} = 'Under arbeid';
     $Self->{Translation}->{'is'} = 'er';
     $Self->{Translation}->{'is after'} = 'er etter';
-    $Self->{Translation}->{'is before'} = 'er f¯r';
+    $Self->{Translation}->{'is before'} = 'er f√∏r';
     $Self->{Translation}->{'is empty'} = 'er tom';
-    $Self->{Translation}->{'is greater than'} = 'er st¯rre enn';
+    $Self->{Translation}->{'is greater than'} = 'er st√∏rre enn';
     $Self->{Translation}->{'is less than'} = 'er mindre enn';
     $Self->{Translation}->{'is not'} = 'er ikke';
     $Self->{Translation}->{'is not empty'} = 'er ikke tom';
@@ -174,13 +174,13 @@ sub Data {
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategori <-> Omfang <-> Prioritet';
     $Self->{Translation}->{'Note'} = 'Merknad';
-    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} = 'Sett opp valg av prioritet basert pÂ Kategori <-> Omfang';
+    $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} = 'Sett opp valg av prioritet basert p√• Kategori <-> Omfang';
     $Self->{Translation}->{'Priority allocation'} = 'Tildeling av prioritet';
     $Self->{Translation}->{'Submit'} = 'Send';
 
     # Template: AdminITSMChangeNotification
     $Self->{Translation}->{'ITSM ChangeManagement Notification Management'} = 'ITSM Endringer - Meldingsoppsett';
-    $Self->{Translation}->{'Actions'} = 'Gj¯remÂl';
+    $Self->{Translation}->{'Actions'} = 'Gj√∏rem√•l';
     $Self->{Translation}->{'Go to overview'} = 'Vis oversikt';
     $Self->{Translation}->{'Add Notification Rule'} = 'Legg til Meldingsregel';
     $Self->{Translation}->{'List'} = 'Liste';
@@ -191,8 +191,8 @@ sub Data {
     $Self->{Translation}->{'Recipients'} = 'Mottakere';
     $Self->{Translation}->{'valid'} = 'gyldig';
     $Self->{Translation}->{'invalid'} = 'ugyldig';
-    $Self->{Translation}->{'A notification should have a name!'} = 'En melding mÂ ha et navn!';
-    $Self->{Translation}->{'Name is required.'} = 'Navn er pÂkrevd';
+    $Self->{Translation}->{'A notification should have a name!'} = 'En melding m√• ha et navn!';
+    $Self->{Translation}->{'Name is required.'} = 'Navn er p√•krevd';
     $Self->{Translation}->{'Valid'} = 'Gyldig';
     $Self->{Translation}->{'Comment'} = 'Kommentar';
     $Self->{Translation}->{'or'} = 'eller';
@@ -201,7 +201,7 @@ sub Data {
     # Template: AdminITSMStateMachine
     $Self->{Translation}->{'Admin State Machine'} = '';
     $Self->{Translation}->{'Select a catalog class!'} = 'Velg en katalogklasse';
-    $Self->{Translation}->{'A catalog class is required!'} = 'En katalogklasse er pÂkrevd!';
+    $Self->{Translation}->{'A catalog class is required!'} = 'En katalogklasse er p√•krevd!';
     $Self->{Translation}->{'Add'} = 'Legg til';
     $Self->{Translation}->{'Add a state transition'} = 'Legg til en tilstandsendring';
     $Self->{Translation}->{'Catalog Class'} = 'Katalogklasse';
@@ -214,7 +214,7 @@ sub Data {
     $Self->{Translation}->{'Add a new state transition for'} = 'Ny tilstandsendring for';
     $Self->{Translation}->{'Please select a state!'} = 'Vennligst velg en tilstand!';
     $Self->{Translation}->{'Please select a next state!'} = 'Vennligst velg neste tilstand!';
-    $Self->{Translation}->{'Edit a state transition for'} = 'RedigÈr en tilstandsendring for';
+    $Self->{Translation}->{'Edit a state transition for'} = 'Redig√©r en tilstandsendring for';
     $Self->{Translation}->{'Save'} = 'Lagre';
     $Self->{Translation}->{'Do you really want to delete the state transition'} = 'Vil du virkelig slette tilstandsendringen?';
     $Self->{Translation}->{'from'} = 'fra';
@@ -223,7 +223,7 @@ sub Data {
     $Self->{Translation}->{'Yes'} = 'Ja';
 
     # Template: AgentITSMCABMemberSearch
-    $Self->{Translation}->{'Search Agent'} = 'S¯k etter Saksbehandler';
+    $Self->{Translation}->{'Search Agent'} = 'S√∏k etter Saksbehandler';
 
     # Template: AgentITSMChangeAdd
     $Self->{Translation}->{'Add Change'} = 'Legg til Endring';
@@ -249,14 +249,14 @@ sub Data {
     # Template: AgentITSMChangeCABTemplate
     $Self->{Translation}->{'Save Change CAB as template'} = 'Lagre Endring-CAB som mal';
     $Self->{Translation}->{'Cancel & close window'} = 'Avbryt og lukk vinduet';
-    $Self->{Translation}->{'go to involved persons screen'} = 'GÂ til involverte personer';
+    $Self->{Translation}->{'go to involved persons screen'} = 'G√• til involverte personer';
     $Self->{Translation}->{'Template Name'} = 'Malnavn';
     $Self->{Translation}->{'This field is required'} = 'Dette feltet er obligatorisk';
     $Self->{Translation}->{'Invalid Name'} = 'Ugyldig navn';
 
     # Template: AgentITSMChangeCondition
     $Self->{Translation}->{'Overview'} = 'Oversikt';
-    $Self->{Translation}->{'Conditions and Actions'} = 'Forutsetninger og Gj¯remÂl';
+    $Self->{Translation}->{'Conditions and Actions'} = 'Forutsetninger og Gj√∏rem√•l';
     $Self->{Translation}->{'Changed'} = 'Endret';
     $Self->{Translation}->{'Delete Condition'} = 'Slett forutsetning';
     $Self->{Translation}->{'Add new condition'} = 'Legg til ny forutsetning';
@@ -276,15 +276,15 @@ sub Data {
     $Self->{Translation}->{'Value'} = 'Verdi';
     $Self->{Translation}->{'No Expressions found.'} = 'Ingen uttrykk funnet.';
     $Self->{Translation}->{'Add new expression'} = 'Legg til nytt uttrykk';
-    $Self->{Translation}->{'No Actions found.'} = 'Ingen gj¯remÂl funnet';
-    $Self->{Translation}->{'Add new action'} = 'Legg til gj¯remÂl';
+    $Self->{Translation}->{'No Actions found.'} = 'Ingen gj√∏rem√•l funnet';
+    $Self->{Translation}->{'Add new action'} = 'Legg til gj√∏rem√•l';
 
     # Template: AgentITSMChangeEdit
 
     # Template: AgentITSMChangeHistory
     $Self->{Translation}->{'History of'} = 'Historikken for';
     $Self->{Translation}->{'History Content'} = 'Historikk';
-    $Self->{Translation}->{'Action'} = 'Gj¯remÂl';
+    $Self->{Translation}->{'Action'} = 'Gj√∏rem√•l';
     $Self->{Translation}->{'Details'} = 'Detaljer';
     $Self->{Translation}->{'Workorder'} = 'Arbeidsordre';
     $Self->{Translation}->{'User'} = 'Bruker';
@@ -305,19 +305,19 @@ sub Data {
     $Self->{Translation}->{'ChangeManager'} = 'Endringsansvarlig';
     $Self->{Translation}->{'User invalid.'} = 'Ugyldig bruker';
     $Self->{Translation}->{'ChangeBuilder'} = 'Opprettet av';
-    $Self->{Translation}->{'Change Advisory Board'} = 'EndringsrÂd';
+    $Self->{Translation}->{'Change Advisory Board'} = 'Endringsr√•d';
     $Self->{Translation}->{'CAB Template'} = 'CAB-mal';
     $Self->{Translation}->{'Apply Template'} = 'Bruk mal';
     $Self->{Translation}->{'NewTemplate'} = 'Ny mal';
-    $Self->{Translation}->{'Save this CAB as template'} = 'Lagre dette EndringsrÂd som mal';
+    $Self->{Translation}->{'Save this CAB as template'} = 'Lagre dette Endringsr√•d som mal';
     $Self->{Translation}->{'Add to CAB'} = 'Legg til CAB';
     $Self->{Translation}->{'Invalid User'} = 'Ugyldig bruker';
-    $Self->{Translation}->{'Current CAB'} = 'NÂvÊrende CAB';
+    $Self->{Translation}->{'Current CAB'} = 'N√•v√¶rende CAB';
     $Self->{Translation}->{'Type'} = 'Type';
     $Self->{Translation}->{'Login'} = 'Innlogging';
 
     # Template: AgentITSMChangeOverviewNavBar
-    $Self->{Translation}->{'Change search options'} = 'Endre valg for s¯k';
+    $Self->{Translation}->{'Change search options'} = 'Endre valg for s√∏k';
     $Self->{Translation}->{'Context Settings'} = 'Kontekstvalg';
     $Self->{Translation}->{'Changes per page'} = 'Endringer per side';
     $Self->{Translation}->{'Settings'} = 'Innstillinger';
@@ -345,7 +345,7 @@ sub Data {
     $Self->{Translation}->{'Linked-Object'} = 'Koblet objekt';
 
     # Template: AgentITSMChangeSearch
-    $Self->{Translation}->{'Search template'} = 'S¯kemal';
+    $Self->{Translation}->{'Search template'} = 'S√∏kemal';
     $Self->{Translation}->{'Create New'} = 'Lag ny';
     $Self->{Translation}->{'Create Template'} = 'Opprett Mal';
     $Self->{Translation}->{'Save changes in template'} = 'Lagre endringer i malen';
@@ -362,19 +362,19 @@ sub Data {
     $Self->{Translation}->{'Report'} = 'Rapport';
     $Self->{Translation}->{'Change Category'} = 'Endre kategori';
     $Self->{Translation}->{'Created by'} = 'Opprettet av';
-    $Self->{Translation}->{'(before/after)'} = '(f¯r/etter)';
+    $Self->{Translation}->{'(before/after)'} = '(f√∏r/etter)';
     $Self->{Translation}->{'(between)'} = '(mellom)';
     $Self->{Translation}->{'and'} = 'og';
-    $Self->{Translation}->{'Run Search'} = 'Utf¯r s¯ket';
+    $Self->{Translation}->{'Run Search'} = 'Utf√∏r s√∏ket';
 
     # Template: AgentITSMChangeSearchResultPrint
-    $Self->{Translation}->{'Search'} = 'S¯k';
+    $Self->{Translation}->{'Search'} = 'S√∏k';
     $Self->{Translation}->{'WorkOrders'} = 'Arbeidsordre';
 
     # Template: AgentITSMChangeTemplate
     $Self->{Translation}->{'Save Change as Template'} = 'Lagre Endring som Mal';
-    $Self->{Translation}->{'A template should have a name!'} = 'En mal mÂ ha et navn!';
-    $Self->{Translation}->{'The template name is required.'} = 'Malnavnet er pÂkrevd.';
+    $Self->{Translation}->{'A template should have a name!'} = 'En mal m√• ha et navn!';
+    $Self->{Translation}->{'The template name is required.'} = 'Malnavnet er p√•krevd.';
     $Self->{Translation}->{'Reset States'} = 'Nullstill tilstander';
 
     # Template: AgentITSMChangeTimeSlot
@@ -385,7 +385,7 @@ sub Data {
     # Template: AgentITSMChangeZoom
     $Self->{Translation}->{'Change Information'} = 'Endringsinfo';
     $Self->{Translation}->{'PlannedEffort'} = 'Planlagt innsats';
-    $Self->{Translation}->{'AccountedTime'} = 'Utf¯rt tid';
+    $Self->{Translation}->{'AccountedTime'} = 'Utf√∏rt tid';
     $Self->{Translation}->{'Change Initiator(s)'} = 'Initiativtaker(e) til Endring';
     $Self->{Translation}->{'Change Manager'} = 'Endringsansvarlig';
     $Self->{Translation}->{'Change Builder'} = 'Den som opprettet Endringen';
@@ -418,15 +418,15 @@ sub Data {
     $Self->{Translation}->{'Add Workorder to'} = 'Legg Arbeidsordre til';
     $Self->{Translation}->{'Select Workorder Template'} = 'Velg mal for Arbeidsordren';
     $Self->{Translation}->{'Invalid workorder type.'} = 'Ugyldig type arbeidsordre';
-    $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'Planlagt starttid mÂ vÊre f¯r planlagt sluttid';
+    $Self->{Translation}->{'The planned start time must be before the planned end time!'} = 'Planlagt starttid m√• v√¶re f√∏r planlagt sluttid';
     $Self->{Translation}->{'Invalid format.'} = 'Ugyldig format.';
 
     # Template: AgentITSMWorkOrderAgent
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Virkelig slette denne arbeidsordren?';
-    $Self->{Translation}->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Du kan ikke slette arbeidsordren. Den er i bruk av minst Èn forutsetning!';
-    $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Denne arbeidsordren brukes av f¯lgende Forutsetning(er)';
+    $Self->{Translation}->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Du kan ikke slette arbeidsordren. Den er i bruk av minst √©n forutsetning!';
+    $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Denne arbeidsordren brukes av f√∏lgende Forutsetning(er)';
 
     # Template: AgentITSMWorkOrderEdit
 
@@ -435,11 +435,11 @@ sub Data {
     # Template: AgentITSMWorkOrderHistoryZoom
 
     # Template: AgentITSMWorkOrderReport
-    $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'Faktisk starttid mÂ vÊre f¯r faktisk sluttid';
-    $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} = 'Hvis sluttiden settes mÂ ogsÂ starttid settes!';
+    $Self->{Translation}->{'The actual start time must be before the actual end time!'} = 'Faktisk starttid m√• v√¶re f√∏r faktisk sluttid';
+    $Self->{Translation}->{'The actual start time must be set, when the actual end time is set!'} = 'Hvis sluttiden settes m√• ogs√• starttid settes!';
 
     # Template: AgentITSMWorkOrderTake
-    $Self->{Translation}->{'Current Agent'} = 'NÂvÊrende saksbehandler';
+    $Self->{Translation}->{'Current Agent'} = 'N√•v√¶rende saksbehandler';
     $Self->{Translation}->{'Do you really want to take this workorder?'} = 'Vil du virkelig ta denne arbeidsordren?';
 
     # Template: AgentITSMWorkOrderTemplate
@@ -454,46 +454,46 @@ sub Data {
     # Template: ITSMChange
 
     # SysConfig
-    $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} = 'Liste over saksbehandlere som har tilgang til Â ta arbeidsordre. Innholdet er 0 eller 1.';
-    $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} = 'Liste over arbeidsordretilstander som vil utl¯se at faktisk starttid blir satt (hvis tom fra f¯r).';
-    $Self->{Translation}->{'Activates time accounting.'} = 'SlÂr pÂ tidskontering';
+    $Self->{Translation}->{'A list of the agents who have permission to take workorders. Key is a login name. Content is 0 or 1.'} = 'Liste over saksbehandlere som har tilgang til √• ta arbeidsordre. Innholdet er 0 eller 1.';
+    $Self->{Translation}->{'A list of workorder states, at which the ActualStartTime of a workorder will be set if it was empty at this point.'} = 'Liste over arbeidsordretilstander som vil utl√∏se at faktisk starttid blir satt (hvis tom fra f√∏r).';
+    $Self->{Translation}->{'Activates time accounting.'} = 'Sl√•r p√• tidskontering';
     $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Administrasjon av CIP-matrisen';
     $Self->{Translation}->{'Admin of the state machine.'} = 'Administrasjon av tilstandsendringer';
-    $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} = 'Saksbehandlermodul som viser antallet endringsrÂd.';
+    $Self->{Translation}->{'Agent interface notification module to see the number of change advisory boards.'} = 'Saksbehandlermodul som viser antallet endringsr√•d.';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes managed by the user.'} = 'Saksbehandlermodul som viser antallet endringer styrt av brukeren.';
     $Self->{Translation}->{'Agent interface notification module to see the number of changes.'} = 'Saksbehandlermodul som viser antallet endringer.';
     $Self->{Translation}->{'Agent interface notification module to see the number of tickets an agent is responsible for.'} = 'Saksbehandlermodul som viser antallet saker en saksbehandler er ansvarlig for.';
-    $Self->{Translation}->{'Agent interface notification module to see the number of watched tickets.'} = 'Saksbehandlermodul som viser antallet overvÂkede saker.';
+    $Self->{Translation}->{'Agent interface notification module to see the number of watched tickets.'} = 'Saksbehandlermodul som viser antallet overv√•kede saker.';
     $Self->{Translation}->{'Agent interface notification module to see the number of work orders.'} = 'Saksbehandlermodul som viser antallet arbeidsordre.';
     $Self->{Translation}->{'Automated line break in text messages after x number of chars.'} = 'Automatisk linjeskift i tekst etter x tegn.';
    $Self->{Translation}->{'Cache time in minutes for the change management.'} = 'Mellomlagringstid i minutter for endringsstyring';
-    $Self->{Translation}->{'Change free text options shown in the change add of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = 'Vis fritekstfelt for innlegg vist i "Legg til Endring"-skjermen. Mulige innstillinger: 0 = Av, 1 = PÂ, 2 = PÂ og obligatorisk';
-    $Self->{Translation}->{'Change free text options shown in the change edit of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = 'Vis fritekstfelt for innlegg vist i "Endringsredigering"-skjermen. Mulige innstillinger: 0 = Av, 1 = PÂ, 2 = PÂ og obligatorisk';
-    $Self->{Translation}->{'Change free text options shown in the change search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} = 'Vis fritekstfelt for innlegg vist i S¯k etter Endringer. Mulige innstillinger: 0 = Av, 1 = PÂ, 2 = PÂ og obligatorisk';
+    $Self->{Translation}->{'Change free text options shown in the change add of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = 'Vis fritekstfelt for innlegg vist i "Legg til Endring"-skjermen. Mulige innstillinger: 0 = Av, 1 = P√•, 2 = P√• og obligatorisk';
+    $Self->{Translation}->{'Change free text options shown in the change edit of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = 'Vis fritekstfelt for innlegg vist i "Endringsredigering"-skjermen. Mulige innstillinger: 0 = Av, 1 = P√•, 2 = P√• og obligatorisk';
+    $Self->{Translation}->{'Change free text options shown in the change search of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled.'} = 'Vis fritekstfelt for innlegg vist i S√∏k etter Endringer. Mulige innstillinger: 0 = Av, 1 = P√•, 2 = P√• og obligatorisk';
     $Self->{Translation}->{'Change limit per page for Change Overview "Small"'} = 'Endre antall viste Endringer per side i "Liten" visning';
-     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} = 'Setter opp hvor ofte meldinger blir sendt ut nÂr planlagt starttid eller andre tidspunkter nÂs eller passeres';
-    $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} = 'Forvalgt type for en arbeidsordre. Denne verdien mÂ finnes i generell katalog.';
+     $Self->{Translation}->{'Configures how often the notifications are sent when planned the start time or other time values have been reached/passed.'} = 'Setter opp hvor ofte meldinger blir sendt ut n√•r planlagt starttid eller andre tidspunkter n√•s eller passeres';
+    $Self->{Translation}->{'Default type for a workorder. This entry must exist in general catalog class \'ITSM::ChangeManagement::WorkOrder::Type\'.'} = 'Forvalgt type for en arbeidsordre. Denne verdien m√• finnes i generell katalog.';
     $Self->{Translation}->{'Define the signals for each workorder state.'} = 'Sett opp signaler for hver arbeidsordretilstand';
-    $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} = 'Setter opp en oversiktsmodul til Â vise "Liten" visning av endringslisten';
-    $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} = 'Setter opp en oversiktsmodul til Â vise "Liten" visning av mal-listen';
-    $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = 'Spesifiserer om det er mulig Â skrive ut kontert tid.';
-    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = 'Spesifiserer om det er mulig Â skrive ut planlagt innsats.';
+    $Self->{Translation}->{'Defines an overview module to show the small view of a change list.'} = 'Setter opp en oversiktsmodul til √• vise "Liten" visning av endringslisten';
+    $Self->{Translation}->{'Defines an overview module to show the small view of a template list.'} = 'Setter opp en oversiktsmodul til √• vise "Liten" visning av mal-listen';
+    $Self->{Translation}->{'Defines if it will be possible to print the accounted time.'} = 'Spesifiserer om det er mulig √• skrive ut kontert tid.';
+    $Self->{Translation}->{'Defines if it will be possible to print the planned effort.'} = 'Spesifiserer om det er mulig √• skrive ut planlagt innsats.';
     $Self->{Translation}->{'Defines if the accounted time should be shown.'} = 'Spesifiserer om tidskontering skal vises.';
-    $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Spesifiserer om faktisk start- og sluttid b¯r settes.';
+    $Self->{Translation}->{'Defines if the actual start and end times should be set.'} = 'Spesifiserer om faktisk start- og sluttid b√∏r settes.';
     $Self->{Translation}->{'Defines if the change state can be set in AgentITSMChangeEdit.'} = 'Spesifiserer om Endringstilstand kan settes i "Endre Endring"';
     $Self->{Translation}->{'Defines if the planned effort should be shown.'} = 'Spesifiserer om planlagt innsats skal vises.';
     $Self->{Translation}->{'Defines if the requested date should be print by customer.'} = 'Spesifiserer om forespurt dato skal kunne skrives ut av kunden';
-    $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} = 'Spesifiserer om forespurt dato skal vÊre s¯kbar av kunden';
+    $Self->{Translation}->{'Defines if the requested date should be searched by customer.'} = 'Spesifiserer om forespurt dato skal v√¶re s√∏kbar av kunden';
     $Self->{Translation}->{'Defines if the requested date should be set by customer.'} = 'Spesifiserer om forespurt dato skal kunne settes av kunden.';
     $Self->{Translation}->{'Defines if the requested date should be shown by customer.'} = 'Spesifiserer om forespurt dato skal vises til kunden.';
     $Self->{Translation}->{'Defines if the workorder state should be shown.'} = 'Spesifiserer om arbeidsordrens tilstand skal vises.';
     $Self->{Translation}->{'Defines if the workorder title should be shown.'} = 'Spesifiserer om arbeidsordrens tittel skal vises.';
     $Self->{Translation}->{'Defines if time accounting is mandatory in the agent interface.'} = 'Spesifiserer om tidskontering er obligatorisk i saksbehandlerdelen.';
-    $Self->{Translation}->{'Defines if time accounting must be set to all tickets in bulk action.'} = 'Spesifiserer om tidskontering mÂ settes for alle saker i masseendringer';
-    $Self->{Translation}->{'Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.'} = 'Spesifiserer at kun Endringer som inneholder Arbeidsordre som er koblet til Tjenester som kunden har tilgang til Â bruke skal vises. Alle andre endringer vil ikke bli viste.';
+    $Self->{Translation}->{'Defines if time accounting must be set to all tickets in bulk action.'} = 'Spesifiserer om tidskontering m√• settes for alle saker i masseendringer';
+    $Self->{Translation}->{'Defines that only changes containing Workorders linked with services, which the customer user has permission to use will be shown. Any other changes will not be displayed.'} = 'Spesifiserer at kun Endringer som inneholder Arbeidsordre som er koblet til Tjenester som kunden har tilgang til √• bruke skal vises. Alle andre endringer vil ikke bli viste.';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change PSA overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i oversikten over Forventet Tilgjengelighet (PSA)';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the Change Schedule overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i Endringsplan-oversikten';
-    $Self->{Translation}->{'Defines the change states that will be used as filters in the MyCAB overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i "Mine EndringsrÂd"';
+    $Self->{Translation}->{'Defines the change states that will be used as filters in the MyCAB overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i "Mine Endringsr√•d"';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the MyChanges overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i "Mine Endringer"';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change manager overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i Endringsansvarlig-oversikten';
     $Self->{Translation}->{'Defines the change states that will be used as filters in the change overview.'} = 'Spesifiserer Endringstilstander som kan brukes som filtre i Endringsoversikten';
@@ -502,22 +502,22 @@ sub Data {
     $Self->{Translation}->{'Defines the default sort criteria in the change manager overview.'} = 'Definerer standard sorteringskriterier for endringsansvarlig-oversikten';
     $Self->{Translation}->{'Defines the default sort criteria in the change overview.'} = 'Definerer standard sorteringskriterier for Endringsoversikten';
     $Self->{Translation}->{'Defines the default sort criteria in the change schedule overview.'} = 'Definerer standard sorteringskriterier for Endringsplan-oversikten';
-    $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} = 'Definerer standard sorteringskriterier for "Mine EndringsrÂd"';
+    $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyCAB overview.'} = 'Definerer standard sorteringskriterier for "Mine Endringsr√•d"';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyChanges overview.'} = 'Definerer standard sorteringskriterier for "Mine Endringer"';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the MyWorkorders overview.'} = 'Definerer standard sorteringskriterier for "Mine Arbeidsordre"';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the PIR overview.'} = 'Definerer standard sorteringskriterier for Sluttevalueringsoversikten';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the customer change schedule overview.'} = 'Definerer standard sorteringskriterier for Endringsplan-oversikten for kunder';
     $Self->{Translation}->{'Defines the default sort criteria of the changes in the template overview.'} = 'Definerer standard sorteringskriterier for mal-oversikten';
-    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Definerer standard sorteringsrekkef¯lge for "Mine EndringsrÂd"';
-    $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = 'Definerer standard sorteringsrekkef¯lge for "Mine Endringer"';
-    $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} = 'Definerer standard sorteringsrekkef¯lge for "Mine Arbeidsordre"';
-    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Definerer standard sorteringsrekkef¯lge for Sluttevaluering-oversikten';
-    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Definerer standard sorteringsrekkef¯lge for Forventet Tilgjengelighet (PSA)-oversikten';
-    $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} = 'Definerer standard sorteringsrekkef¯lge for Endringsansvarlig-oversikten';
-    $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Definerer standard sorteringsrekkef¯lge for Endringsoversikten';
-    $Self->{Translation}->{'Defines the default sort order in the change schedule overview.'} = 'Definerer standard sorteringsrekkef¯lge for Endringsplan-oversikten';
-    $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} = 'Definerer standard sorteringsrekkef¯lge for Endringsplan-oversikten for kunder';
-    $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Definerer standard sorteringsrekkef¯lge for mal-oversikten';
+    $Self->{Translation}->{'Defines the default sort order in the MyCAB overview.'} = 'Definerer standard sorteringsrekkef√∏lge for "Mine Endringsr√•d"';
+    $Self->{Translation}->{'Defines the default sort order in the MyChanges overview.'} = 'Definerer standard sorteringsrekkef√∏lge for "Mine Endringer"';
+    $Self->{Translation}->{'Defines the default sort order in the MyWorkorders overview.'} = 'Definerer standard sorteringsrekkef√∏lge for "Mine Arbeidsordre"';
+    $Self->{Translation}->{'Defines the default sort order in the PIR overview.'} = 'Definerer standard sorteringsrekkef√∏lge for Sluttevaluering-oversikten';
+    $Self->{Translation}->{'Defines the default sort order in the change PSA overview.'} = 'Definerer standard sorteringsrekkef√∏lge for Forventet Tilgjengelighet (PSA)-oversikten';
+    $Self->{Translation}->{'Defines the default sort order in the change manager overview.'} = 'Definerer standard sorteringsrekkef√∏lge for Endringsansvarlig-oversikten';
+    $Self->{Translation}->{'Defines the default sort order in the change overview.'} = 'Definerer standard sorteringsrekkef√∏lge for Endringsoversikten';
+    $Self->{Translation}->{'Defines the default sort order in the change schedule overview.'} = 'Definerer standard sorteringsrekkef√∏lge for Endringsplan-oversikten';
+    $Self->{Translation}->{'Defines the default sort order in the customer change schedule overview.'} = 'Definerer standard sorteringsrekkef√∏lge for Endringsplan-oversikten for kunder';
+    $Self->{Translation}->{'Defines the default sort order in the template overview.'} = 'Definerer standard sorteringsrekkef√∏lge for mal-oversikten';
     $Self->{Translation}->{'Defines the default value for the category of a change.'} = 'Definerer forvalgt kategori for en Endring';
     $Self->{Translation}->{'Defines the default value for the impact of a change.'} = 'Definerer en forvalgt verdi for omfanget til en Endring';
     $Self->{Translation}->{'Defines the field type of CompareValue fields for change attributes used in AgentITSMChangeConditionEdit. Valid values are Selection, Text and Date. If a type is not defined, the field will not be shown.'} = '';
@@ -937,15 +937,15 @@ sub Data {
     $Self->{Translation}->{'ITSM event module updates the history of changes.'} = '';
     $Self->{Translation}->{'ITSM event module updates the history of conditions.'} = '';
     $Self->{Translation}->{'ITSM event module updates the history of workorders.'} = '';
-    $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} = 'Loggfil for ITSM Endringsteller. Denne filen brukes for Â opprett endringsnumrene';
+    $Self->{Translation}->{'Logfile for the ITSM change counter. This file is used for creating the change numbers.'} = 'Loggfil for ITSM Endringsteller. Denne filen brukes for √• opprett endringsnumrene';
     $Self->{Translation}->{'Look into a ticket!'} = 'Se inn i en sak!';
-    $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul for Â sjekke CAB-medlemmer';
-    $Self->{Translation}->{'Module to check the agent.'} = 'Modul for Â sjekke saksbehandleren';
-    $Self->{Translation}->{'Module to check the change builder.'} = 'Modul for Â sjekke den som opprettet Endringen';
-    $Self->{Translation}->{'Module to check the change manager.'} = 'Modul for Â sjekke Endringsansvarlig';
-    $Self->{Translation}->{'Module to check the group permissions for the access to customer tickets.'} = 'Modul for Â sjekke grupperettigheter for tilgang til kundesaker';
-    $Self->{Translation}->{'Module to check the workorder agent.'} = 'Modul for Â sjekke saksbehandler for en arbeidsordre';
-    $Self->{Translation}->{'Module to check whether no workorder agent is set.'} = 'Modul for Â sjekk om ingen saksbehandler er satt for arbeidsordren';
+    $Self->{Translation}->{'Module to check the CAB members.'} = 'Modul for √• sjekke CAB-medlemmer';
+    $Self->{Translation}->{'Module to check the agent.'} = 'Modul for √• sjekke saksbehandleren';
+    $Self->{Translation}->{'Module to check the change builder.'} = 'Modul for √• sjekke den som opprettet Endringen';
+    $Self->{Translation}->{'Module to check the change manager.'} = 'Modul for √• sjekke Endringsansvarlig';
+    $Self->{Translation}->{'Module to check the group permissions for the access to customer tickets.'} = 'Modul for √• sjekke grupperettigheter for tilgang til kundesaker';
+    $Self->{Translation}->{'Module to check the workorder agent.'} = 'Modul for √• sjekke saksbehandler for en arbeidsordre';
+    $Self->{Translation}->{'Module to check whether no workorder agent is set.'} = 'Modul for √• sjekk om ingen saksbehandler er satt for arbeidsordren';
     $Self->{Translation}->{'Module to check whether the agent is contained in the configured list.'} = 'Modul som sjekker om saksbehandleren befinner seg i den konfigurerte listen.';
     $Self->{Translation}->{'Module to generate accounted time ticket statistics.'} = 'Modul som genererer statistikk for tidskontering';
     $Self->{Translation}->{'Notification (ITSM Change Management)'} = 'Meldinger (ITSM Endringsstyring)';
@@ -960,38 +960,38 @@ sub Data {
     $Self->{Translation}->{'Parameters of the example service attribute Comment2.'} = '';
     $Self->{Translation}->{'Presents a link in the menu to show the involved persons in a change, in the zoom view of such change in the agent interface.'} = '';
     $Self->{Translation}->{'Required privileges in order for an agent to take a workorder.'} = 'Rettigheter som kreves for at en saksbehandler skal kunne ta en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Rettigheter som kreves for Â se oversikt over alle endringer';
-    $Self->{Translation}->{'Required privileges to add a workorder.'} = 'Rettigheter som kreves for Â opprette en arbeidsordre.';
-    $Self->{Translation}->{'Required privileges to change the workorder agent.'} = 'Rettigheter som kreves for Â endre saksbehandler pÂ en arbeidsordre.';
-    $Self->{Translation}->{'Required privileges to create a template from a change.'} = 'Rettigheter som kreves for Â opprett en mal fra en endring';
-    $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} = 'Rettigheter som kreves for Â opprette en mal fra en endrings endringsrÂd (CAB).';
-    $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'Rettigheter som kreves for Â opprett en mal fra en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to create changes.'} = 'Rettigheter som kreves for Â opprette endringer.';
-    $Self->{Translation}->{'Required privileges to delete a template.'} = 'Rettighter som kreves for Â slette en mal';
-    $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Rettigheter som kreves for Â slette en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to edit a template.'} = 'Rettigheter som kreves for Â redigere en mal';
-    $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Rettigheter som kreves for Â redigere en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to edit changes.'} = 'Rettigheter som kreves for Â redigere endringer';
-    $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Rettigheter som kreves for Â endre forutsetninger for en endring';
-    $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} = 'Rettigheter som kreves for Â endre involverte personer i en endring';
-    $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Rettigheter som kreves for Â flytte endringer i tid';
-    $Self->{Translation}->{'Required privileges to print a change.'} = 'Rettigheter som kreves for Â skrive ut en endring';
-    $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Rettigheter som kreves for Â se en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to view changes.'} = 'Rettigheter som kreves for Â se endringer';
-    $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} = 'Rettigheter som kreves for Â se listen over endringer der brukeren er medlem av CAB';
-    $Self->{Translation}->{'Required privileges to view list of changes where the user is the change manager.'} = 'Rettigheter som kreves for Â se listen over endringer der brukeren er endringsansvarlig';
-    $Self->{Translation}->{'Required privileges to view overview over all templates.'} = 'Rettigheter som kreves for Â se oversikten over alle maler.';
-    $Self->{Translation}->{'Required privileges to view the conditions of changes.'} = 'Rettigheter som kreves for Â se forutsetningene til endringer';
-    $Self->{Translation}->{'Required privileges to view the history of a change.'} = 'Rettigheter som kreves for Â se historikken til en endring';
-    $Self->{Translation}->{'Required privileges to view the history of a workorder.'} = 'Rettigheter som kreves for Â se historikken til en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to view the history zoom of a change.'} = 'Rettigheter som kreves for Â se detaljert historikk for en endring';
-    $Self->{Translation}->{'Required privileges to view the history zoom of a workorder.'} = 'Rettigheter som kreves for Â se detaljert historikk for en arbeidsordre';
-    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'Rettigheter som kreves for Â se listen over Endringsplaner';
-    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Rettigheter som kreves for Â se listen over endringers forventede tjenestetilgjengelighet';
-    $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} = 'Rettigheter som kreves for Â se listen over endringer med kommende Sluttevalueringer';
-    $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Rettigheter som kreves for Â se listen over egne endringer';
-    $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Rettigheter som kreves for Â se listen over egne arbeidsordre';
-    $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Rettigheter som kreves for Â skrive en rapport for arbeidsordren';
+    $Self->{Translation}->{'Required privileges to access the overview of all changes.'} = 'Rettigheter som kreves for √• se oversikt over alle endringer';
+    $Self->{Translation}->{'Required privileges to add a workorder.'} = 'Rettigheter som kreves for √• opprette en arbeidsordre.';
+    $Self->{Translation}->{'Required privileges to change the workorder agent.'} = 'Rettigheter som kreves for √• endre saksbehandler p√• en arbeidsordre.';
+    $Self->{Translation}->{'Required privileges to create a template from a change.'} = 'Rettigheter som kreves for √• opprett en mal fra en endring';
+    $Self->{Translation}->{'Required privileges to create a template from a changes\' CAB.'} = 'Rettigheter som kreves for √• opprette en mal fra en endrings endringsr√•d (CAB).';
+    $Self->{Translation}->{'Required privileges to create a template from a workorder.'} = 'Rettigheter som kreves for √• opprett en mal fra en arbeidsordre';
+    $Self->{Translation}->{'Required privileges to create changes.'} = 'Rettigheter som kreves for √• opprette endringer.';
+    $Self->{Translation}->{'Required privileges to delete a template.'} = 'Rettighter som kreves for √• slette en mal';
+    $Self->{Translation}->{'Required privileges to delete a workorder.'} = 'Rettigheter som kreves for √• slette en arbeidsordre';
+    $Self->{Translation}->{'Required privileges to edit a template.'} = 'Rettigheter som kreves for √• redigere en mal';
+    $Self->{Translation}->{'Required privileges to edit a workorder.'} = 'Rettigheter som kreves for √• redigere en arbeidsordre';
+    $Self->{Translation}->{'Required privileges to edit changes.'} = 'Rettigheter som kreves for √• redigere endringer';
+    $Self->{Translation}->{'Required privileges to edit the conditions of changes.'} = 'Rettigheter som kreves for √• endre forutsetninger for en endring';
+    $Self->{Translation}->{'Required privileges to edit the involved persons of a change.'} = 'Rettigheter som kreves for √• endre involverte personer i en endring';
+    $Self->{Translation}->{'Required privileges to move changes in time.'} = 'Rettigheter som kreves for √• flytte endringer i tid';
+    $Self->{Translation}->{'Required privileges to print a change.'} = 'Rettigheter som kreves for √• skrive ut en endring';
+    $Self->{Translation}->{'Required privileges to view a workorder.'} = 'Rettigheter som kreves for √• se en arbeidsordre';
+    $Self->{Translation}->{'Required privileges to view changes.'} = 'Rettigheter som kreves for √• se endringer';
+    $Self->{Translation}->{'Required privileges to view list of changes where the user is a CAB member.'} = 'Rettigheter som kreves for √• se listen over endringer der brukeren er medlem av CAB';
+    $Self->{Translation}->{'Required privileges to view list of changes where the user is the change manager.'} = 'Rettigheter som kreves for √• se listen over endringer der brukeren er endringsansvarlig';
+    $Self->{Translation}->{'Required privileges to view overview over all templates.'} = 'Rettigheter som kreves for √• se oversikten over alle maler.';
+    $Self->{Translation}->{'Required privileges to view the conditions of changes.'} = 'Rettigheter som kreves for √• se forutsetningene til endringer';
+    $Self->{Translation}->{'Required privileges to view the history of a change.'} = 'Rettigheter som kreves for √• se historikken til en endring';
+    $Self->{Translation}->{'Required privileges to view the history of a workorder.'} = 'Rettigheter som kreves for √• se historikken til en arbeidsordre';
+    $Self->{Translation}->{'Required privileges to view the history zoom of a change.'} = 'Rettigheter som kreves for √• se detaljert historikk for en endring';
+    $Self->{Translation}->{'Required privileges to view the history zoom of a workorder.'} = 'Rettigheter som kreves for √• se detaljert historikk for en arbeidsordre';
+    $Self->{Translation}->{'Required privileges to view the list of Change Schedule.'} = 'Rettigheter som kreves for √• se listen over Endringsplaner';
+    $Self->{Translation}->{'Required privileges to view the list of change PSA.'} = 'Rettigheter som kreves for √• se listen over endringers forventede tjenestetilgjengelighet';
+    $Self->{Translation}->{'Required privileges to view the list of changes with an upcoming PIR (Post Implementation Review).'} = 'Rettigheter som kreves for √• se listen over endringer med kommende Sluttevalueringer';
+    $Self->{Translation}->{'Required privileges to view the list of own changes.'} = 'Rettigheter som kreves for √• se listen over egne endringer';
+    $Self->{Translation}->{'Required privileges to view the list of own workorders.'} = 'Rettigheter som kreves for √• se listen over egne arbeidsordre';
+    $Self->{Translation}->{'Required privileges to write a report for the workorder.'} = 'Rettigheter som kreves for √• skrive en rapport for arbeidsordren';
     $Self->{Translation}->{'Service Level Agreements'} = 'Tjenesteleveranse-avtaler';
     $Self->{Translation}->{'Sets up the state machine for changes.'} = 'Setter opp tilstandsendringer for Endringer';
     $Self->{Translation}->{'Sets up the state machine for workorders.'} = 'Setter opp tilstandsendringer for Arbeidsordre';
@@ -1013,7 +1013,7 @@ sub Data {
     $Self->{Translation}->{'Workorder free text options shown in the workorder add of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Workorder free text options shown in the workorder edit of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Workorder free text options shown in the workorder report of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
-    $Self->{Translation}->{'Your language'} = 'Ditt sprÂk';
+    $Self->{Translation}->{'Your language'} = 'Ditt spr√•k';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

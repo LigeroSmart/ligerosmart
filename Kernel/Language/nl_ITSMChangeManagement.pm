@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMChangeManagement.pm,v 1.11 2011-11-02 16:05:59 mb Exp $
+# $Id: nl_ITSMChangeManagement.pm,v 1.12 2011-11-24 16:19:49 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -46,7 +46,7 @@ sub Data {
     $Self->{Translation}->{'ChangeHistory::ActionDeleteAll'} = 'Alle akties (ID=%s) verwijderd';
     $Self->{Translation}->{'ChangeHistory::ActionExecute'} = 'Actie (ID=%s) uitgevoerd: %s';
     $Self->{Translation}->{'ChangeHistory::ActionUpdate'} = '%s (Actie-ID=%s): nieuw: %s <- Old: %s';
-    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Change (ID=%s) is beëindigd.';
+    $Self->{Translation}->{'ChangeHistory::ChangeActualEndTimeReached'} = 'Change (ID=%s) is beÃ«indigd.';
     $Self->{Translation}->{'ChangeHistory::ChangeActualStartTimeReached'} = 'Change (ID=%s) is begonnen.';
     $Self->{Translation}->{'ChangeHistory::ChangeAdd'} = 'Nieuwe Change (ID=%s)';
     $Self->{Translation}->{'ChangeHistory::ChangeAttachmentAdd'} = 'Nieuwe bijlage: %s';
@@ -110,9 +110,9 @@ sub Data {
     $Self->{Translation}->{'The planned end time is invalid!'} = 'De geplande eindtijd is ongeldig';
     $Self->{Translation}->{'The planned start time is invalid!'} = 'Die geplande eindtijd is';
     $Self->{Translation}->{'The planned time is invalid!'} = 'Het geplande tijdstip is ongeldig';
-    $Self->{Translation}->{'The requested time is invalid!'} = 'Die angegebene Zeit ist ungültig!';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Work Order (ID=%s) is beëindigd.';
-    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} = 'Work Order (ID=%s) is beëindigd.';
+    $Self->{Translation}->{'The requested time is invalid!'} = 'Die angegebene Zeit ist ungÃ¼ltig!';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReached'} = 'Work Order (ID=%s) is beÃ«indigd.';
+    $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualEndTimeReachedWithWorkOrderID'} = 'Work Order (ID=%s) is beÃ«indigd.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReached'} = 'Work Order (ID=%s) is begonnen.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderActualStartTimeReachedWithWorkOrderID'} = 'Work Order (ID=%s) is begonnen.';
     $Self->{Translation}->{'WorkOrderHistory::WorkOrderAdd'} = 'nieuwe Workorder (ID=%s)';
@@ -351,7 +351,7 @@ sub Data {
 
     # Template: AgentITSMWorkOrderDelete
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Wilt u deze Work Order verwijderen?';
-    $Self->{Translation}->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Deze Work Order kan niet verwijderd worden. Hij is in tenminste één conditie gebruikt.';
+    $Self->{Translation}->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Deze Work Order kan niet verwijderd worden. Hij is in tenminste Ã©Ã©n conditie gebruikt.';
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Deze Work Order is gebruikt in de volgende conditie(s)';
 
     # Template: AgentITSMWorkOrderEdit
