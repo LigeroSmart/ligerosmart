@@ -2,7 +2,7 @@
 # Kernel/Language/pt_BR_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_ImportExport.pm,v 1.8 2011-05-12 11:48:36 ub Exp $
+# $Id: pt_BR_ImportExport.pm,v 1.9 2011-11-24 15:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,40 +18,40 @@ sub Data {
 
     # Template: AAAImportExport
     $Self->{Translation}->{'Add mapping template'} = 'Adicionar modelo de mapeamento';
-    $Self->{Translation}->{'Charset'} = 'CodificaÁ„o de Caracteres';
+    $Self->{Translation}->{'Charset'} = 'Codifica√ß√£o de Caracteres';
     $Self->{Translation}->{'Colon (:)'} = 'Dois Pontos (:)';
     $Self->{Translation}->{'Column'} = 'Coluna';
     $Self->{Translation}->{'Column Separator'} = 'Separador de Colunas';
     $Self->{Translation}->{'Dot (.)'} = 'Ponto (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = 'Ponto e VÌrgula (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = 'TabulaÁ„o (TAB)';
+    $Self->{Translation}->{'Semicolon (;)'} = 'Ponto e V√≠rgula (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabula√ß√£o (TAB)';
 
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = 'Gerenciamento de ImportaÁ„o/ExportaÁ„o';
+    $Self->{Translation}->{'Import/Export Management'} = 'Gerenciamento de Importa√ß√£o/Exporta√ß√£o';
     $Self->{Translation}->{'Add template'} = 'Adicionar modelo';
-    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Criar um modelo para importar e exportar informaÁıes de objeto.';
-    $Self->{Translation}->{'Start Import'} = 'Iniciar ImportaÁ„o';
-    $Self->{Translation}->{'Start Export'} = 'Iniciar ExportaÁ„o';
+    $Self->{Translation}->{'Create a template to import and export object information.'} = 'Criar um modelo para importar e exportar informa√ß√µes de objeto.';
+    $Self->{Translation}->{'Start Import'} = 'Iniciar Importa√ß√£o';
+    $Self->{Translation}->{'Start Export'} = 'Iniciar Exporta√ß√£o';
     $Self->{Translation}->{'Delete Template'} = 'Excluir Modelo';
     $Self->{Translation}->{'Step'} = 'Passo';
-    $Self->{Translation}->{'Edit common information'} = 'Editar informaÁıes comuns';
-    $Self->{Translation}->{'Object is required!'} = 'Objeto È necess·rio!';
-    $Self->{Translation}->{'Format is required!'} = 'O formato È necess·rio!';
-    $Self->{Translation}->{'Edit object information'} = 'Editar informaÁıes do objeto';
-    $Self->{Translation}->{'Edit format information'} = 'Editar informaÁıes do formato';
-    $Self->{Translation}->{' is required!'} = ' È necess·rio!';
-    $Self->{Translation}->{'Edit mapping information'} = 'Editar informaÁıes do mapeamento';
-    $Self->{Translation}->{'No map elements found.'} = 'N„o h· elementos mapa encontrado.';
+    $Self->{Translation}->{'Edit common information'} = 'Editar informa√ß√µes comuns';
+    $Self->{Translation}->{'Object is required!'} = 'Objeto √© necess√°rio!';
+    $Self->{Translation}->{'Format is required!'} = 'O formato √© necess√°rio!';
+    $Self->{Translation}->{'Edit object information'} = 'Editar informa√ß√µes do objeto';
+    $Self->{Translation}->{'Edit format information'} = 'Editar informa√ß√µes do formato';
+    $Self->{Translation}->{' is required!'} = ' √© necess√°rio!';
+    $Self->{Translation}->{'Edit mapping information'} = 'Editar informa√ß√µes do mapeamento';
+    $Self->{Translation}->{'No map elements found.'} = 'N√£o h√° elementos mapa encontrado.';
     $Self->{Translation}->{'Add Mapping Element'} = 'Adicionar elemento de mapeamento';
-    $Self->{Translation}->{'Edit search information'} = 'Editar informaÁıes de pesquisa';
-    $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportaÁ„o por pesquisa';
-    $Self->{Translation}->{'Import information'} = 'InformaÁıes de importaÁ„o';
+    $Self->{Translation}->{'Edit search information'} = 'Editar informa√ß√µes de pesquisa';
+    $Self->{Translation}->{'Restrict export per search'} = 'Restringir exporta√ß√£o por pesquisa';
+    $Self->{Translation}->{'Import information'} = 'Informa√ß√µes de importa√ß√£o';
     $Self->{Translation}->{'Source File'} = 'Arquivo de Origem';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'Formato de registro backend do mÛdulo de importaÁ„o / exportaÁ„o mÛdulo.';
-    $Self->{Translation}->{'Import and export object information.'} = 'Importar e exportar informaÁıes de objeto.';
-    $Self->{Translation}->{'Import/Export'} = 'ImportaÁ„o/ExportaÁ„o';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'Formato de registro backend do m√≥dulo de importa√ß√£o / exporta√ß√£o m√≥dulo.';
+    $Self->{Translation}->{'Import and export object information.'} = 'Importar e exportar informa√ß√µes de objeto.';
+    $Self->{Translation}->{'Import/Export'} = 'Importa√ß√£o/Exporta√ß√£o';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

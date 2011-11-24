@@ -2,7 +2,7 @@
 # Kernel/Language/pl_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_ImportExport.pm,v 1.10 2011-05-05 09:36:13 ub Exp $
+# $Id: pl_ImportExport.pm,v 1.11 2011-11-24 15:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,7 +47,7 @@ sub Data {
     $Self->{Translation}->{'Edit search information'} = '';
     $Self->{Translation}->{'Restrict export per search'} = '';
     $Self->{Translation}->{'Import information'} = '';
-    $Self->{Translation}->{'Source File'} = 'Plik Yród3owy';
+    $Self->{Translation}->{'Source File'} = 'Plik YrÃ³d3owy';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';

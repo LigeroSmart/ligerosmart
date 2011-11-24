@@ -2,7 +2,7 @@
 # Kernel/Language/ct_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ct_ImportExport.pm,v 1.9 2011-05-05 09:36:13 ub Exp $
+# $Id: ct_ImportExport.pm,v 1.10 2011-11-24 15:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ sub Data {
 
     # Template: AAAImportExport
     $Self->{Translation}->{'Add mapping template'} = 'Afegir plantilla de mapatge';
-    $Self->{Translation}->{'Charset'} = 'Conjunt de caràcters';
+    $Self->{Translation}->{'Charset'} = 'Conjunt de carÃ cters';
     $Self->{Translation}->{'Colon (:)'} = 'Dos punts (:)';
     $Self->{Translation}->{'Column'} = 'Columna';
     $Self->{Translation}->{'Column Separator'} = 'Separador de columna';
@@ -28,25 +28,25 @@ sub Data {
     $Self->{Translation}->{'Include Column Headers'} = '';
 
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = 'Gestiò de Importar/Exportar';
+    $Self->{Translation}->{'Import/Export Management'} = 'GestiÃ² de Importar/Exportar';
     $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
-    $Self->{Translation}->{'Start Import'} = 'Començar importació';
-    $Self->{Translation}->{'Start Export'} = 'Començar exportació';
+    $Self->{Translation}->{'Start Import'} = 'ComenÃ§ar importaciÃ³';
+    $Self->{Translation}->{'Start Export'} = 'ComenÃ§ar exportaciÃ³';
     $Self->{Translation}->{'Delete Template'} = '';
     $Self->{Translation}->{'Step'} = 'Pas';
-    $Self->{Translation}->{'Edit common information'} = 'Editar informació comuna';
+    $Self->{Translation}->{'Edit common information'} = 'Editar informaciÃ³ comuna';
     $Self->{Translation}->{'Object is required!'} = '';
     $Self->{Translation}->{'Format is required!'} = '';
-    $Self->{Translation}->{'Edit object information'} = 'Editar informació d\'objecte';
-    $Self->{Translation}->{'Edit format information'} = 'Editar informació de format';
+    $Self->{Translation}->{'Edit object information'} = 'Editar informaciÃ³ d\'objecte';
+    $Self->{Translation}->{'Edit format information'} = 'Editar informaciÃ³ de format';
     $Self->{Translation}->{' is required!'} = '';
-    $Self->{Translation}->{'Edit mapping information'} = 'Editar informació de mapatge';
+    $Self->{Translation}->{'Edit mapping information'} = 'Editar informaciÃ³ de mapatge';
     $Self->{Translation}->{'No map elements found.'} = '';
     $Self->{Translation}->{'Add Mapping Element'} = '';
-    $Self->{Translation}->{'Edit search information'} = 'Editar informació de recerca';
-    $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportació per recerca';
-    $Self->{Translation}->{'Import information'} = 'Importar informació';
+    $Self->{Translation}->{'Edit search information'} = 'Editar informaciÃ³ de recerca';
+    $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportaciÃ³ per recerca';
+    $Self->{Translation}->{'Import information'} = 'Importar informaciÃ³';
     $Self->{Translation}->{'Source File'} = 'Fitxer font';
 
     # SysConfig

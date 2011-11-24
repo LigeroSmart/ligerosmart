@@ -2,7 +2,7 @@
 # Kernel/Language/de_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.27 2011-05-05 09:36:13 ub Exp $
+# $Id: de_ImportExport.pm,v 1.28 2011-11-24 15:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'Mapping-Template hinzufügen';
+    $Self->{Translation}->{'Add mapping template'} = 'Mapping-Template hinzufÃ¼gen';
     $Self->{Translation}->{'Charset'} = 'Zeichensatz';
     $Self->{Translation}->{'Colon (:)'} = 'Doppelpunkt (:)';
     $Self->{Translation}->{'Column'} = 'Spalte';
@@ -25,27 +25,27 @@ sub Data {
     $Self->{Translation}->{'Dot (.)'} = 'Punkt (.)';
     $Self->{Translation}->{'Semicolon (;)'} = 'Semicolon (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
-    $Self->{Translation}->{'Include Column Headers'} = 'Mit Spaltenüberschriften';
+    $Self->{Translation}->{'Include Column Headers'} = 'Mit SpaltenÃ¼berschriften';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export-Verwaltung';
-    $Self->{Translation}->{'Add template'} = 'Template hinzufügen';
+    $Self->{Translation}->{'Add template'} = 'Template hinzufÃ¼gen';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Erstellen einer Vorlage zum Importieren und Exportieren von Objekt-Informationen.';
     $Self->{Translation}->{'Start Import'} = 'Import starten';
     $Self->{Translation}->{'Start Export'} = 'Export starten';
-    $Self->{Translation}->{'Delete Template'} = 'Template löschen';
+    $Self->{Translation}->{'Delete Template'} = 'Template lÃ¶schen';
     $Self->{Translation}->{'Step'} = 'Schritt';
     $Self->{Translation}->{'Edit common information'} = 'Allgemeine Informationen bearbeiten';
     $Self->{Translation}->{'Object is required!'} = 'Objekt ist erforderlich!';
     $Self->{Translation}->{'Format is required!'} = 'Format ist erforderlich!';
     $Self->{Translation}->{'Edit object information'} = 'Objekt-Informationen bearbeiten';
     $Self->{Translation}->{'Edit format information'} = 'Format-Informationen bearbeiten';
-    $Self->{Translation}->{' is required!'} = ' wird benötigt!';
+    $Self->{Translation}->{' is required!'} = ' wird benÃ¶tigt!';
     $Self->{Translation}->{'Edit mapping information'} = 'Mapping-Informationen bearbeiten';
     $Self->{Translation}->{'No map elements found.'} = 'Keine Mapping-Elemente gefunden.';
-    $Self->{Translation}->{'Add Mapping Element'} = 'Mapping-Element hinzufügen';
+    $Self->{Translation}->{'Add Mapping Element'} = 'Mapping-Element hinzufÃ¼gen';
     $Self->{Translation}->{'Edit search information'} = 'Such-Informationen bearbeiten';
-    $Self->{Translation}->{'Restrict export per search'} = 'Export per Suche einschränken';
+    $Self->{Translation}->{'Restrict export per search'} = 'Export per Suche einschrÃ¤nken';
     $Self->{Translation}->{'Import information'} = 'Import-Informationen';
     $Self->{Translation}->{'Source File'} = 'Quell-Datei';
 

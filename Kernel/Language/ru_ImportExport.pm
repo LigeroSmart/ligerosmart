@@ -2,7 +2,7 @@
 # Kernel/Language/ru_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_ImportExport.pm,v 1.8 2011-05-05 09:36:13 ub Exp $
+# $Id: ru_ImportExport.pm,v 1.9 2011-11-24 15:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,42 +17,42 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAImportExport
-    $Self->{Translation}->{'Add mapping template'} = 'ƒÓ·‡‚ÎÂÌËÂ ¯‡·ÎÓÌ‡ ÒÓÓÚ‚ÂÚÒÚ‚Ëˇ';
-    $Self->{Translation}->{'Charset'} = ' Ó‰ËÓ‚Í‡';
-    $Self->{Translation}->{'Colon (:)'} = 'ƒ‚ÓÂÚÓ˜ËÂ (:)';
-    $Self->{Translation}->{'Column'} = '—ÚÓÎ·Âˆ';
-    $Self->{Translation}->{'Column Separator'} = '–‡Á‰ÂÎËÚÂÎ¸';
-    $Self->{Translation}->{'Dot (.)'} = '“Ó˜Í‡ (.)';
-    $Self->{Translation}->{'Semicolon (;)'} = '“Ó˜Í‡ Ò Á‡ÔˇÚÓÈ (;)';
-    $Self->{Translation}->{'Tabulator (TAB)'} = '“‡·ÛÎˇˆËˇ (TAB)';
+    $Self->{Translation}->{'Add mapping template'} = '–î–æ–±–∞–≤–ª–µ–Ω–∏–µ —à–∞–±–ª–æ–Ω–∞ —Å–æ–æ—Ç–≤–µ—Ç—Å—Ç–≤–∏—è';
+    $Self->{Translation}->{'Charset'} = '–ö–æ–¥–∏—Ä–æ–≤–∫–∞';
+    $Self->{Translation}->{'Colon (:)'} = '–î–≤–æ–µ—Ç–æ—á–∏–µ (:)';
+    $Self->{Translation}->{'Column'} = '–°—Ç–æ–ª–±–µ—Ü';
+    $Self->{Translation}->{'Column Separator'} = '–†–∞–∑–¥–µ–ª–∏—Ç–µ–ª—å';
+    $Self->{Translation}->{'Dot (.)'} = '–¢–æ—á–∫–∞ (.)';
+    $Self->{Translation}->{'Semicolon (;)'} = '–¢–æ—á–∫–∞ —Å –∑–∞–ø—è—Ç–æ–π (;)';
+    $Self->{Translation}->{'Tabulator (TAB)'} = '–¢–∞–±—É–ª—è—Ü–∏—è (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '';
 
     # Template: AdminImportExport
-    $Self->{Translation}->{'Import/Export Management'} = '”Ô‡‚ÎÂÌËÂ »ÏÔÓÚÓÏ/›ÍÒÔÓÚÓÏ';
+    $Self->{Translation}->{'Import/Export Management'} = '–£–ø—Ä–∞–≤–ª–µ–Ω–∏–µ –ò–º–ø–æ—Ä—Ç–æ–º/–≠–∫—Å–ø–æ—Ä—Ç–æ–º';
     $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
-    $Self->{Translation}->{'Start Import'} = 'Õ‡˜‡Ú¸ ËÏÔÓÚ';
-    $Self->{Translation}->{'Start Export'} = 'Õ‡˜‡Ú¸ ˝ÍÒÔÓÚ';
+    $Self->{Translation}->{'Start Import'} = '–ù–∞—á–∞—Ç—å –∏–º–ø–æ—Ä—Ç';
+    $Self->{Translation}->{'Start Export'} = '–ù–∞—á–∞—Ç—å —ç–∫—Å–ø–æ—Ä—Ç';
     $Self->{Translation}->{'Delete Template'} = '';
-    $Self->{Translation}->{'Step'} = 'ÿ‡„';
-    $Self->{Translation}->{'Edit common information'} = '–Â‰‡ÍÚËÓ‚‡Ú¸ Ó·˘Û˛ ËÌÙÓÏ‡ˆË˛';
+    $Self->{Translation}->{'Step'} = '–®–∞–≥';
+    $Self->{Translation}->{'Edit common information'} = '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å –æ–±—â—É—é –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é';
     $Self->{Translation}->{'Object is required!'} = '';
     $Self->{Translation}->{'Format is required!'} = '';
-    $Self->{Translation}->{'Edit object information'} = '–Â‰‡ÍÚËÓ‚‡Ú¸ ËÌÙÓÏ‡ˆË˛ Ó· Ó·˙ÂÍÚÂ';
-    $Self->{Translation}->{'Edit format information'} = '–Â‰‡ÍÚËÓ‚‡Ú¸ ÙÓÏ‡Ú ‰‡ÌÌ˚ı';
+    $Self->{Translation}->{'Edit object information'} = '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é –æ–± –æ–±—ä–µ–∫—Ç–µ';
+    $Self->{Translation}->{'Edit format information'} = '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å —Ñ–æ—Ä–º–∞—Ç –¥–∞–Ω–Ω—ã—Ö';
     $Self->{Translation}->{' is required!'} = '';
-    $Self->{Translation}->{'Edit mapping information'} = '–Â‰‡ÍÚËÓ‚‡Ú¸ ËÌÙÓÏ‡ˆË˛ ÒÓÓÚ‚ÂÚÒÚ‚Ëˇ';
+    $Self->{Translation}->{'Edit mapping information'} = '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é —Å–æ–æ—Ç–≤–µ—Ç—Å—Ç–≤–∏—è';
     $Self->{Translation}->{'No map elements found.'} = '';
     $Self->{Translation}->{'Add Mapping Element'} = '';
-    $Self->{Translation}->{'Edit search information'} = '–Â‰‡ÍÚËÓ‚‡Ú¸ ÔÓËÒÍÓ‚Û˛ ËÌÙÓÏ‡ˆË˛';
-    $Self->{Translation}->{'Restrict export per search'} = 'Œ„‡ÌË˜ËÚ¸ ˝ÍÒÔÓÚ ÔÓËÒÍÓÏ';
-    $Self->{Translation}->{'Import information'} = '»ÌÙÓÏ‡ˆËˇ ËÏÔÓÚ‡';
-    $Self->{Translation}->{'Source File'} = '»ÒıÓ‰Ì˚È Ù‡ÈÎ';
+    $Self->{Translation}->{'Edit search information'} = '–†–µ–¥–∞–∫—Ç–∏—Ä–æ–≤–∞—Ç—å –ø–æ–∏—Å–∫–æ–≤—É—é –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏—é';
+    $Self->{Translation}->{'Restrict export per search'} = '–û–≥—Ä–∞–Ω–∏—á–∏—Ç—å —ç–∫—Å–ø–æ—Ä—Ç –ø–æ–∏—Å–∫–æ–º';
+    $Self->{Translation}->{'Import information'} = '–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è –∏–º–ø–æ—Ä—Ç–∞';
+    $Self->{Translation}->{'Source File'} = '–ò—Å—Ö–æ–¥–Ω—ã–π —Ñ–∞–π–ª';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
     $Self->{Translation}->{'Import and export object information.'} = '';
-    $Self->{Translation}->{'Import/Export'} = '»ÏÔÓÚ/›ÍÒÔÓÚ';
+    $Self->{Translation}->{'Import/Export'} = '–ò–º–ø–æ—Ä—Ç/–≠–∫—Å–ø–æ—Ä—Ç';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

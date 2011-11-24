@@ -2,7 +2,7 @@
 # Kernel/Language/fr_ImportExport.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fr_ImportExport.pm,v 1.8 2011-05-05 09:36:13 ub Exp $
+# $Id: fr_ImportExport.pm,v 1.9 2011-11-24 15:42:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,10 +18,10 @@ sub Data {
 
     # Template: AAAImportExport
     $Self->{Translation}->{'Add mapping template'} = 'Ajouter un template de mappage';
-    $Self->{Translation}->{'Charset'} = 'Jeu de caractères';
+    $Self->{Translation}->{'Charset'} = 'Jeu de caractÃ¨res';
     $Self->{Translation}->{'Colon (:)'} = 'Deux points (:)';
     $Self->{Translation}->{'Column'} = 'Colonne';
-    $Self->{Translation}->{'Column Separator'} = 'Séparateur de colonne';
+    $Self->{Translation}->{'Column Separator'} = 'SÃ©parateur de colonne';
     $Self->{Translation}->{'Dot (.)'} = 'Point (.)';
     $Self->{Translation}->{'Semicolon (;)'} = 'Point virgule (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulation (TAB)';
@@ -31,8 +31,8 @@ sub Data {
     $Self->{Translation}->{'Import/Export Management'} = 'Gestion de l\'Import/Export';
     $Self->{Translation}->{'Add template'} = '';
     $Self->{Translation}->{'Create a template to import and export object information.'} = '';
-    $Self->{Translation}->{'Start Import'} = 'Démarrer Import';
-    $Self->{Translation}->{'Start Export'} = 'Démarrer Export';
+    $Self->{Translation}->{'Start Import'} = 'DÃ©marrer Import';
+    $Self->{Translation}->{'Start Export'} = 'DÃ©marrer Export';
     $Self->{Translation}->{'Delete Template'} = '';
     $Self->{Translation}->{'Step'} = 'Etape';
     $Self->{Translation}->{'Edit common information'} = 'Editer les informations communes';
