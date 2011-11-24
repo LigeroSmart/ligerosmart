@@ -2,7 +2,7 @@
 # Kernel/Language/fr_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fr_ITSMCore.pm,v 1.13 2011-03-03 18:41:54 ub Exp $
+# $Id: fr_ITSMCore.pm,v 1.14 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,32 +17,32 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = 'Alternative à';
-    $Self->{Translation}->{'Availability'} = 'Disponibilité';
+    $Self->{Translation}->{'Alternative to'} = 'Alternative Ã ';
+    $Self->{Translation}->{'Availability'} = 'DisponibilitÃ©';
     $Self->{Translation}->{'Back End'} = 'Backend';
-    $Self->{Translation}->{'Connected to'} = 'Lié à';
+    $Self->{Translation}->{'Connected to'} = 'LiÃ© Ã ';
     $Self->{Translation}->{'Current State'} = 'Etat actuel';
-    $Self->{Translation}->{'Demonstration'} = 'Démonstration';
-    $Self->{Translation}->{'Depends on'} = 'Dépend de';
+    $Self->{Translation}->{'Demonstration'} = 'DÃ©monstration';
+    $Self->{Translation}->{'Depends on'} = 'DÃ©pend de';
     $Self->{Translation}->{'End User Service'} = 'Service utilisateur';
     $Self->{Translation}->{'Errors'} = 'Erreurs';
     $Self->{Translation}->{'Front End'} = 'Frontend';
     $Self->{Translation}->{'IT Management'} = 'Gestion IT';
-    $Self->{Translation}->{'IT Operational'} = 'Opérations IT';
+    $Self->{Translation}->{'IT Operational'} = 'OpÃ©rations IT';
     $Self->{Translation}->{'Impact'} = 'Impact';
     $Self->{Translation}->{'Incident State'} = 'Etat d\'incident';
     $Self->{Translation}->{'Includes'} = 'Inclus';
     $Self->{Translation}->{'Other'} = 'Autre';
     $Self->{Translation}->{'Part of'} = 'Part de';
     $Self->{Translation}->{'Project'} = 'Projet';
-    $Self->{Translation}->{'Recovery Time'} = 'Temps de réparation';
-    $Self->{Translation}->{'Relevant to'} = 'Correspond à';
+    $Self->{Translation}->{'Recovery Time'} = 'Temps de rÃ©paration';
+    $Self->{Translation}->{'Relevant to'} = 'Correspond Ã ';
     $Self->{Translation}->{'Reporting'} = 'Rapport';
     $Self->{Translation}->{'Required for'} = 'Requis pour';
-    $Self->{Translation}->{'Resolution Rate'} = 'Taux de résolution';
-    $Self->{Translation}->{'Response Time'} = 'Temps de réponse';
-    $Self->{Translation}->{'SLA Overview'} = 'Aperçu des SLA';
-    $Self->{Translation}->{'Service Overview'} = 'Aperçu des services';
+    $Self->{Translation}->{'Resolution Rate'} = 'Taux de rÃ©solution';
+    $Self->{Translation}->{'Response Time'} = 'Temps de rÃ©ponse';
+    $Self->{Translation}->{'SLA Overview'} = 'AperÃ§u des SLA';
+    $Self->{Translation}->{'Service Overview'} = 'AperÃ§u des services';
     $Self->{Translation}->{'Service-Area'} = 'Zone de service';
     $Self->{Translation}->{'Training'} = 'Formation';
     $Self->{Translation}->{'Transactions'} = 'Transactions';
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'allocation'} = 'alloue';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Criticité <-> Impact <-> Priorité';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'CriticitÃ© <-> Impact <-> PrioritÃ©';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
 
@@ -58,7 +58,7 @@ sub Data {
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Temps minimal entre les incidents';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = 'Criticité';
+    $Self->{Translation}->{'Criticality'} = 'CriticitÃ©';
 
     # Template: AgentITSMCustomerSearch
 
@@ -72,14 +72,14 @@ sub Data {
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = '';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'Associated Services'} = 'Services associés';
+    $Self->{Translation}->{'Associated Services'} = 'Services associÃ©s';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = '';
     $Self->{Translation}->{'Current Incident State'} = 'Etat actuel d\'incident';
-    $Self->{Translation}->{'Associated SLAs'} = 'SLAs associées';
+    $Self->{Translation}->{'Associated SLAs'} = 'SLAs associÃ©es';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';

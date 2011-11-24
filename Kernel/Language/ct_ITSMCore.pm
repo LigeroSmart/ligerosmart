@@ -2,7 +2,7 @@
 # Kernel/Language/ct_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ct_ITSMCore.pm,v 1.14 2011-03-03 18:41:54 ub Exp $
+# $Id: ct_ITSMCore.pm,v 1.15 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,43 +22,43 @@ sub Data {
     $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Connectat a';
     $Self->{Translation}->{'Current State'} = 'Estat actual';
-    $Self->{Translation}->{'Demonstration'} = 'DemostraciÛ';
-    $Self->{Translation}->{'Depends on'} = 'DepËn de';
+    $Self->{Translation}->{'Demonstration'} = 'Demostraci√≥';
+    $Self->{Translation}->{'Depends on'} = 'Dep√®n de';
     $Self->{Translation}->{'End User Service'} = 'Servei usuari final';
     $Self->{Translation}->{'Errors'} = 'Errors';
     $Self->{Translation}->{'Front End'} = 'Frontend';
-    $Self->{Translation}->{'IT Management'} = 'GestiÛ IT';
-    $Self->{Translation}->{'IT Operational'} = 'OperaciÛ IT';
+    $Self->{Translation}->{'IT Management'} = 'Gesti√≥ IT';
+    $Self->{Translation}->{'IT Operational'} = 'Operaci√≥ IT';
     $Self->{Translation}->{'Impact'} = 'Impacte';
     $Self->{Translation}->{'Incident State'} = 'Estat de l\'incident';
     $Self->{Translation}->{'Includes'} = 'Inclou';
     $Self->{Translation}->{'Other'} = 'Altres';
     $Self->{Translation}->{'Part of'} = 'Part de';
     $Self->{Translation}->{'Project'} = 'Projecte';
-    $Self->{Translation}->{'Recovery Time'} = 'Temps de recuperaciÛ';
+    $Self->{Translation}->{'Recovery Time'} = 'Temps de recuperaci√≥';
     $Self->{Translation}->{'Relevant to'} = 'Relevant per';
     $Self->{Translation}->{'Reporting'} = 'Informes';
     $Self->{Translation}->{'Required for'} = 'Requerit per';
-    $Self->{Translation}->{'Resolution Rate'} = 'Percentatge de resoluciÛ';
+    $Self->{Translation}->{'Resolution Rate'} = 'Percentatge de resoluci√≥';
     $Self->{Translation}->{'Response Time'} = 'Temps de resposta';
-    $Self->{Translation}->{'SLA Overview'} = 'VisiÛ general de SLA';
-    $Self->{Translation}->{'Service Overview'} = 'VisiÛ general del servei';
-    $Self->{Translation}->{'Service-Area'} = 'Servei-¿rea';
-    $Self->{Translation}->{'Training'} = 'FormaciÛ';
+    $Self->{Translation}->{'SLA Overview'} = 'Visi√≥ general de SLA';
+    $Self->{Translation}->{'Service Overview'} = 'Visi√≥ general del servei';
+    $Self->{Translation}->{'Service-Area'} = 'Servei-√Ärea';
+    $Self->{Translation}->{'Training'} = 'Formaci√≥';
     $Self->{Translation}->{'Transactions'} = 'Transaccions';
     $Self->{Translation}->{'Underpinning Contract'} = 'Contracte de suport';
     $Self->{Translation}->{'allocation'} = 'assignar';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Estat crÌtic <-> Impacte <-> Prioritat';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Estat cr√≠tic <-> Impacte <-> Prioritat';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Temps mÌnim entre incidents';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Temps m√≠nim entre incidents';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = 'Estat crÌtic';
+    $Self->{Translation}->{'Criticality'} = 'Estat cr√≠tic';
 
     # Template: AgentITSMCustomerSearch
 

@@ -2,7 +2,7 @@
 # Kernel/Language/pl_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_ITSMCore.pm,v 1.15 2011-03-03 18:41:54 ub Exp $
+# $Id: pl_ITSMCore.pm,v 1.16 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,14 +18,14 @@ sub Data {
 
     # Template: AAAITSMCore
     $Self->{Translation}->{'Alternative to'} = '';
-    $Self->{Translation}->{'Availability'} = 'Dostêpno¶æ';
+    $Self->{Translation}->{'Availability'} = 'DostÄ™pnoÅ›Ä‡';
     $Self->{Translation}->{'Back End'} = '';
-    $Self->{Translation}->{'Connected to'} = 'Pod³±czone do';
+    $Self->{Translation}->{'Connected to'} = 'PodÅ‚Ä…czone do';
     $Self->{Translation}->{'Current State'} = 'Aktualny stan';
     $Self->{Translation}->{'Demonstration'} = 'Demonstracja';
-    $Self->{Translation}->{'Depends on'} = 'Zale¿ne od';
+    $Self->{Translation}->{'Depends on'} = 'ZaleÅ¼ne od';
     $Self->{Translation}->{'End User Service'} = '';
-    $Self->{Translation}->{'Errors'} = 'B³êdy';
+    $Self->{Translation}->{'Errors'} = 'BÅ‚Ä™dy';
     $Self->{Translation}->{'Front End'} = '';
     $Self->{Translation}->{'IT Management'} = '';
     $Self->{Translation}->{'IT Operational'} = '';
@@ -39,7 +39,7 @@ sub Data {
     $Self->{Translation}->{'Relevant to'} = '';
     $Self->{Translation}->{'Reporting'} = 'Raportowanie';
     $Self->{Translation}->{'Required for'} = 'Potrzebne do';
-    $Self->{Translation}->{'Resolution Rate'} = 'Czas rozwi±zania';
+    $Self->{Translation}->{'Resolution Rate'} = 'Czas rozwiÄ…zania';
     $Self->{Translation}->{'Response Time'} = 'Czas odpowiedzi';
     $Self->{Translation}->{'SLA Overview'} = '';
     $Self->{Translation}->{'Service Overview'} = '';
@@ -55,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'Priority allocation'} = '';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimalny czas miêdzy zdarzeniami';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimalny czas miÄ™dzy zdarzeniami';
 
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = '';
@@ -72,14 +72,14 @@ sub Data {
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = '';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'Associated Services'} = 'Po³±czone us³ugi';
+    $Self->{Translation}->{'Associated Services'} = 'PoÅ‚Ä…czone usÅ‚ugi';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = '';
     $Self->{Translation}->{'Current Incident State'} = 'Aktualny stan zdarzenia';
-    $Self->{Translation}->{'Associated SLAs'} = 'Po³±czone SLA';
+    $Self->{Translation}->{'Associated SLAs'} = 'PoÅ‚Ä…czone SLA';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';

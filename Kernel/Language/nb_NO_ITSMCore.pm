@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # Copyright (C) 2011 Eirik Wulff <eirik at epledoktor.no>
 # --
-# $Id: nb_NO_ITSMCore.pm,v 1.1 2011-04-20 10:48:04 ub Exp $
+# $Id: nb_NO_ITSMCore.pm,v 1.2 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ sub Data {
     $Self->{Translation}->{'Availability'} = 'Tilgjengelighet';
     $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Koblet til';
-    $Self->{Translation}->{'Current State'} = 'NÂvÊrende tilstand';
+    $Self->{Translation}->{'Current State'} = 'N√•v√¶rende tilstand';
     $Self->{Translation}->{'Demonstration'} = 'Demonstrasjon';
     $Self->{Translation}->{'Depends on'} = 'Avhenger av';
     $Self->{Translation}->{'End User Service'} = 'Sluttbruker-tjeneste';
@@ -39,12 +39,12 @@ sub Data {
     $Self->{Translation}->{'Recovery Time'} = 'Gjenoppretningstid';
     $Self->{Translation}->{'Relevant to'} = 'Relevant for';
     $Self->{Translation}->{'Reporting'} = 'Rapportering';
-    $Self->{Translation}->{'Required for'} = 'PÂkrevd for';
+    $Self->{Translation}->{'Required for'} = 'P√•krevd for';
     $Self->{Translation}->{'Resolution Rate'} = 'Opprettingsratio';
     $Self->{Translation}->{'Response Time'} = 'Responstid';
     $Self->{Translation}->{'SLA Overview'} = 'SLA-oversikt';
     $Self->{Translation}->{'Service Overview'} = 'Tjeneste-oversikt';
-    $Self->{Translation}->{'Service-Area'} = 'TjenesteomrÂde';
+    $Self->{Translation}->{'Service-Area'} = 'Tjenesteomr√•de';
     $Self->{Translation}->{'Training'} = 'Trening';
     $Self->{Translation}->{'Transactions'} = 'Transaksjoner';
     $Self->{Translation}->{'Underpinning Contract'} = 'Underliggende kontrakt';
@@ -80,29 +80,29 @@ sub Data {
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = 'Tjeneste-info';
-    $Self->{Translation}->{'Current Incident State'} = 'Tilstand pÂ nÂvÊrende hendelse';
+    $Self->{Translation}->{'Current Incident State'} = 'Tilstand p√• n√•v√¶rende hendelse';
     $Self->{Translation}->{'Associated SLAs'} = 'Tilknyttede SLAer';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Informasjon om Tjeneste';
-    $Self->{Translation}->{'Current incident state'} = 'Tilstand pÂ nÂvÊrende hendelse';
+    $Self->{Translation}->{'Current incident state'} = 'Tilstand p√• n√•v√¶rende hendelse';
 
     # SysConfig
-    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registrering av frontend-modul for konfigurasjon av AdminITSMCIPAllocate i admin-omrÂdet.';
+    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registrering av frontend-modul for konfigurasjon av AdminITSMCIPAllocate i admin-omr√•det.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Registrering av frontend-modul for AgentITSMSLA-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'Registrering av frontend-modul for AgentITSMSLAPrint-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = 'Registrering av frontend-modul for AgentITSMSLAZoom-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Registrering av frontend-modul for AgentITSMService-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Registrering av frontend-modul for AgentITSMServicePrint-objektet i saksbehandler-delen';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Registrering av frontend-modul for AgentITSMServiceZoom-objektet i saksbehandler-delen';
-    $Self->{Translation}->{'Manage priority matrix.'} = 'AdministrÈr prioritetsmatrise';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Administr√©r prioritetsmatrise';
     $Self->{Translation}->{'Module to show back link in service menu.'} = 'Modul som viser tilbake-lenken i tjenestemenyen';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Modul som viser tilbake-lenken i SLA-menyen';
     $Self->{Translation}->{'Module to show print link in service menu.'} = 'Modul som viser skriv-ut-lenken i tjenestemenyen';
     $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Modul som viser skriv-ut-lenken i SLA-menyen';
     $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Modul som viser lenke-lenken i tjeneste-menyen';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parametre for hendelsestilstander i valgvisningen';
-    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'Velg type lenke som skal brukes for Â regne ut hendelsestilstand';
+    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'Velg type lenke som skal brukes for √• regne ut hendelsestilstand';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
@@ -131,7 +131,7 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
     $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Bredde pÂ ITSM sine tekstomrÂder.';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Bredde p√• ITSM sine tekstomr√•der.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

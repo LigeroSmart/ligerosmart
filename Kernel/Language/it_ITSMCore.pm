@@ -2,7 +2,7 @@
 # Kernel/Language/it_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: it_ITSMCore.pm,v 1.12 2011-03-03 18:41:54 ub Exp $
+# $Id: it_ITSMCore.pm,v 1.13 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ sub Data {
 
     # Template: AAAITSMCore
     $Self->{Translation}->{'Alternative to'} = 'Alternativo a';
-    $Self->{Translation}->{'Availability'} = 'Disponibilità';
+    $Self->{Translation}->{'Availability'} = 'DisponibilitÃ ';
     $Self->{Translation}->{'Back End'} = 'Back End';
     $Self->{Translation}->{'Connected to'} = 'Connesso a';
     $Self->{Translation}->{'Current State'} = 'Stato Attuale';
@@ -50,7 +50,7 @@ sub Data {
     $Self->{Translation}->{'allocation'} = 'assegnare';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Urgenza <-> Impatto <-> Priorità';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Urgenza <-> Impatto <-> PrioritÃ ';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
 

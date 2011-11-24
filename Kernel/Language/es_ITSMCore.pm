@@ -2,7 +2,7 @@
 # Kernel/Language/es_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_ITSMCore.pm,v 1.18 2011-03-03 18:41:54 ub Exp $
+# $Id: es_ITSMCore.pm,v 1.19 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,27 +22,27 @@ sub Data {
     $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Conectado a';
     $Self->{Translation}->{'Current State'} = 'Estado Actual';
-    $Self->{Translation}->{'Demonstration'} = 'Demostración';
+    $Self->{Translation}->{'Demonstration'} = 'DemostraciÃ³n';
     $Self->{Translation}->{'Depends on'} = 'Depende en';
     $Self->{Translation}->{'End User Service'} = 'Servicio de Usuario Final';
     $Self->{Translation}->{'Errors'} = 'Errores';
     $Self->{Translation}->{'Front End'} = 'Frontend';
-    $Self->{Translation}->{'IT Management'} = 'Administración de TI';
-    $Self->{Translation}->{'IT Operational'} = 'Operación de TI';
+    $Self->{Translation}->{'IT Management'} = 'AdministraciÃ³n de TI';
+    $Self->{Translation}->{'IT Operational'} = 'OperaciÃ³n de TI';
     $Self->{Translation}->{'Impact'} = 'Impacto';
     $Self->{Translation}->{'Incident State'} = 'Estado del Incidente';
     $Self->{Translation}->{'Includes'} = 'Incluye';
     $Self->{Translation}->{'Other'} = 'Otro';
     $Self->{Translation}->{'Part of'} = 'Parte de';
     $Self->{Translation}->{'Project'} = 'Proyecto';
-    $Self->{Translation}->{'Recovery Time'} = 'Tiempo de Recuperación';
+    $Self->{Translation}->{'Recovery Time'} = 'Tiempo de RecuperaciÃ³n';
     $Self->{Translation}->{'Relevant to'} = 'Relevante a';
     $Self->{Translation}->{'Reporting'} = 'Informes';
     $Self->{Translation}->{'Required for'} = 'Requerido para';
-    $Self->{Translation}->{'Resolution Rate'} = 'Tasa de Resolución';
+    $Self->{Translation}->{'Resolution Rate'} = 'Tasa de ResoluciÃ³n';
     $Self->{Translation}->{'Response Time'} = 'Tiempo de Respuesta';
-    $Self->{Translation}->{'SLA Overview'} = 'Descripción de SLA';
-    $Self->{Translation}->{'Service Overview'} = 'Descripción de Servicios';
+    $Self->{Translation}->{'SLA Overview'} = 'DescripciÃ³n de SLA';
+    $Self->{Translation}->{'Service Overview'} = 'DescripciÃ³n de Servicios';
     $Self->{Translation}->{'Service-Area'} = 'Area-Servicio';
     $Self->{Translation}->{'Training'} = 'Entrenamiento';
     $Self->{Translation}->{'Transactions'} = 'Transacciones';
@@ -55,7 +55,7 @@ sub Data {
     $Self->{Translation}->{'Priority allocation'} = 'Asignar prioridad';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Tiempo Mínimo entre Incidentes';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Tiempo MÃ­nimo entre Incidentes';
 
     # Template: AdminService
     $Self->{Translation}->{'Criticality'} = 'Urgencia';
@@ -86,49 +86,49 @@ sub Data {
     $Self->{Translation}->{'Current incident state'} = 'Estado ctual del incidente';
 
     # SysConfig
-    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registro del módulo frontend para la configuración de AdminITSMCIPAllocate en el área de administrar.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMSLA en la interfaz del agente.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMSLAPrint en la interfaz del agente.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMSLAZoom en la interfaz del agente.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMService en la interfaz del agente.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMServicePrint en la interfaz del agente.';
-    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Registro del módulo frontend para el objeto AgentITSMServiceZoom en la interfaz del agente.';
-    $Self->{Translation}->{'Manage priority matrix.'} = 'Administrar la matríz de prioridades.';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de servicio.';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'Módulo para mostar un vínculo para regresar en el menú de SLA.';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = 'Módulo para mostar un vínculo para imprimir en el menú de servicio.';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'Módulo para mostar un vínculo para imprimir en el menú de SLA.';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'Módulo para mostar el vínculo "Vincular" en el menú de servicio.';
-    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parámetros para los estados de los incidentes en la vista de preferencias.';
-    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'Define el tipo de vínculo usado para calcular el estado del incidente.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMChange\' puede ser vinculado con objetos \'Ticket\' usando el vínculo de tipo \'Normal\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vínculo de tipo \'Normal\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vínculo de tipo \'ParentChild\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vínculo de tipo \'RelevantTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vínculo de tipo \'AlternativeTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vínculo de tipo \'DependsOn\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vínculo de tipo \'RelevantTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vínculo de tipo \'AlternativeTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vínculo de tipo \'AlternativeTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vínculo de tipo \'RelevantTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vínculo de tipo \'AlternativeTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vínculo de tipo \'ConnectedTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vínculo de tipo \'DependsOn\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vínculo de tipo \'Includes\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vínculo \'RelevantTo\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'ITSMConfigItem\' usando el vínculo de tipo \'DependsOn\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'ITSMConfigItem\' usando el vínculo de tipo \'Normal\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Service\' usando el vínculo de tipo \'DependsOn\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Service\' usando el vínculo de tipo \'Normal\'.';
-    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Ticket\' usando el vínculo de tipo \'Normal\'.';
-    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vínculo de tipo \'Normal\'.';
-    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vínculo de tipo \'ParentChild\'.';
-    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vínculo de tipo \'RelevantTo\'.';
-    $Self->{Translation}->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'AlternativeTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
-    $Self->{Translation}->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'ConnectedTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
-    $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'DependsOn\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
-    $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'Includes\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
-    $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vínculo \'RelevantTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vínculo no direccionado. Si los valores son diferentes, el resultado es un vínculo direccionado.';
+    $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = 'Registro del mÃ³dulo frontend para la configuraciÃ³n de AdminITSMCIPAllocate en el Ã¡rea de administrar.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLA object in the agent interface.'} = 'Registro del mÃ³dulo frontend para el objeto AgentITSMSLA en la interfaz del agente.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAPrint object in the agent interface.'} = 'Registro del mÃ³dulo frontend para el objeto AgentITSMSLAPrint en la interfaz del agente.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMSLAZoom object in the agent interface.'} = 'Registro del mÃ³dulo frontend para el objeto AgentITSMSLAZoom en la interfaz del agente.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Registro del mÃ³dulo frontend para el objeto AgentITSMService en la interfaz del agente.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Registro del mÃ³dulo frontend para el objeto AgentITSMServicePrint en la interfaz del agente.';
+    $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Registro del mÃ³dulo frontend para el objeto AgentITSMServiceZoom en la interfaz del agente.';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Administrar la matrÃ­z de prioridades.';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = 'MÃ³dulo para mostar un vÃ­nculo para regresar en el menÃº de servicio.';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = 'MÃ³dulo para mostar un vÃ­nculo para regresar en el menÃº de SLA.';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = 'MÃ³dulo para mostar un vÃ­nculo para imprimir en el menÃº de servicio.';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = 'MÃ³dulo para mostar un vÃ­nculo para imprimir en el menÃº de SLA.';
+    $Self->{Translation}->{'Module to show the link link in service menu.'} = 'MÃ³dulo para mostar el vÃ­nculo "Vincular" en el menÃº de servicio.';
+    $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'ParÃ¡metros para los estados de los incidentes en la vista de preferencias.';
+    $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'Define el tipo de vÃ­nculo usado para calcular el estado del incidente.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMChange\' puede ser vinculado con objetos \'Ticket\' usando el vÃ­nculo de tipo \'Normal\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vÃ­nculo de tipo \'Normal\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vÃ­nculo de tipo \'ParentChild\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'FAQ\' usando el vÃ­nculo de tipo \'RelevantTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vÃ­nculo de tipo \'AlternativeTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vÃ­nculo de tipo \'DependsOn\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Service\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Service\' usando el vÃ­nculo de tipo \'RelevantTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vÃ­nculo de tipo \'AlternativeTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vÃ­nculo de tipo \'AlternativeTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with \'Ticket\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con objetos \'Ticket\' usando el vÃ­nculo de tipo \'RelevantTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'AlternativeTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vÃ­nculo de tipo \'AlternativeTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'ConnectedTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vÃ­nculo de tipo \'ConnectedTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vÃ­nculo de tipo \'DependsOn\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'Includes\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vÃ­nculo de tipo \'Includes\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMConfigItem\' object can be linked with other \'ITSMConfigItem\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'ITSMConfigItem\' puede ser vinculado con otros objetos \'ITSMConfigItem\' usando el vÃ­nculo \'RelevantTo\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'ITSMConfigItem\' usando el vÃ­nculo de tipo \'DependsOn\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'ITSMConfigItem\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'ITSMConfigItem\' usando el vÃ­nculo de tipo \'Normal\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'DependsOn\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Service\' usando el vÃ­nculo de tipo \'DependsOn\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Service\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Service\' usando el vÃ­nculo de tipo \'Normal\'.';
+    $Self->{Translation}->{'This setting defines that a \'ITSMWorkOrder\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'ITSMWorkOrder\' puede ser vinculado con objetos \'Ticket\' usando el vÃ­nculo de tipo \'Normal\'.';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'Normal\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vÃ­nculo de tipo \'Normal\'.';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'ParentChild\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vÃ­nculo de tipo \'ParentChild\'.';
+    $Self->{Translation}->{'This setting defines that a \'Service\' object can be linked with \'FAQ\' objects using the \'RelevantTo\' link type.'} = 'Define que un objeto \'Service\' puede ser vinculado con objetos \'FAQ\' usando el vÃ­nculo de tipo \'RelevantTo\'.';
+    $Self->{Translation}->{'This setting defines the link type \'AlternativeTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vÃ­nculo \'AlternativeTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vÃ­nculo no direccionado. Si los valores son diferentes, el resultado es un vÃ­nculo direccionado.';
+    $Self->{Translation}->{'This setting defines the link type \'ConnectedTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vÃ­nculo \'ConnectedTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vÃ­nculo no direccionado. Si los valores son diferentes, el resultado es un vÃ­nculo direccionado.';
+    $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vÃ­nculo \'DependsOn\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vÃ­nculo no direccionado. Si los valores son diferentes, el resultado es un vÃ­nculo direccionado.';
+    $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vÃ­nculo \'Includes\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vÃ­nculo no direccionado. Si los valores son diferentes, el resultado es un vÃ­nculo direccionado.';
+    $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = 'Define el tipo de vÃ­nculo \'RelevantTo\'. Si el SourceName y el TargetName contienen el mismo valor, el resultado es un vÃ­nculo no direccionado. Si los valores son diferentes, el resultado es un vÃ­nculo direccionado.';
     $Self->{Translation}->{'Width of ITSM textareas.'} = 'Define el ancho de las textareas del ITSM.';
 
     #

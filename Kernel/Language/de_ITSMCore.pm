@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMCore.pm,v 1.26 2011-03-03 18:41:54 ub Exp $
+# $Id: de_ITSMCore.pm,v 1.27 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,12 +18,12 @@ sub Data {
 
     # Template: AAAITSMCore
     $Self->{Translation}->{'Alternative to'} = 'Alternativ zu';
-    $Self->{Translation}->{'Availability'} = 'Verf¸gbarkeit';
+    $Self->{Translation}->{'Availability'} = 'Verf√ºgbarkeit';
     $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Verbunden mit';
     $Self->{Translation}->{'Current State'} = 'Aktueller Status';
     $Self->{Translation}->{'Demonstration'} = 'Demonstration';
-    $Self->{Translation}->{'Depends on'} = 'H‰ngt ab von';
+    $Self->{Translation}->{'Depends on'} = 'H√§ngt ab von';
     $Self->{Translation}->{'End User Service'} = 'Anwender-Service';
     $Self->{Translation}->{'Errors'} = 'Fehler';
     $Self->{Translation}->{'Front End'} = 'Frontend';
@@ -36,13 +36,13 @@ sub Data {
     $Self->{Translation}->{'Part of'} = 'Teil von';
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Recovery Time'} = 'Wiederherstellungszeit';
-    $Self->{Translation}->{'Relevant to'} = 'Relevant f¸r';
+    $Self->{Translation}->{'Relevant to'} = 'Relevant f√ºr';
     $Self->{Translation}->{'Reporting'} = 'Reporting';
-    $Self->{Translation}->{'Required for'} = 'Benˆtigt f¸r';
-    $Self->{Translation}->{'Resolution Rate'} = 'Lˆsungszeit';
+    $Self->{Translation}->{'Required for'} = 'Ben√∂tigt f√ºr';
+    $Self->{Translation}->{'Resolution Rate'} = 'L√∂sungszeit';
     $Self->{Translation}->{'Response Time'} = 'Reaktionszeit';
-    $Self->{Translation}->{'SLA Overview'} = 'SLA ‹bersicht';
-    $Self->{Translation}->{'Service Overview'} = 'Service ‹bersicht';
+    $Self->{Translation}->{'SLA Overview'} = 'SLA √úbersicht';
+    $Self->{Translation}->{'Service Overview'} = 'Service √úbersicht';
     $Self->{Translation}->{'Service-Area'} = 'Service-Bereich';
     $Self->{Translation}->{'Training'} = 'Training';
     $Self->{Translation}->{'Transactions'} = 'Transaktionen';
@@ -50,15 +50,15 @@ sub Data {
     $Self->{Translation}->{'allocation'} = 'zuordnen';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalit‰t <-> Auswirkung <-> Priorit‰t';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Verwaltung der Priorit‰t aus der Kombination von Kritikalit‰t <-> Impact.';
-    $Self->{Translation}->{'Priority allocation'} = 'Priorit‰t zuordnen';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalit√§t <-> Auswirkung <-> Priorit√§t';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Verwaltung der Priorit√§t aus der Kombination von Kritikalit√§t <-> Impact.';
+    $Self->{Translation}->{'Priority allocation'} = 'Priorit√§t zuordnen';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Mindestzeit zwischen Incidents';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = 'Kritikalit‰t';
+    $Self->{Translation}->{'Criticality'} = 'Kritikalit√§t';
 
     # Template: AgentITSMCustomerSearch
 
@@ -66,20 +66,20 @@ sub Data {
 
     # Template: AgentITSMSLAPrint
     $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
-    $Self->{Translation}->{'Last changed'} = 'Zuletzt ge‰ndert';
-    $Self->{Translation}->{'Last changed by'} = 'Zuletzt ge‰ndert von';
+    $Self->{Translation}->{'Last changed'} = 'Zuletzt ge√§ndert';
+    $Self->{Translation}->{'Last changed by'} = 'Zuletzt ge√§ndert von';
 
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = 'SLA-Informationen';
     $Self->{Translation}->{'Show or hide the content.'} = 'Den Inhalt anzeigen oder verbergen.';
-    $Self->{Translation}->{'Associated Services'} = 'Zugehˆrige Services';
+    $Self->{Translation}->{'Associated Services'} = 'Zugeh√∂rige Services';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = 'Service-Info';
     $Self->{Translation}->{'Current Incident State'} = 'Aktueller Vorfallsstatus';
-    $Self->{Translation}->{'Associated SLAs'} = 'Zugehˆrige SLAs';
+    $Self->{Translation}->{'Associated SLAs'} = 'Zugeh√∂rige SLAs';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = 'Service-Informationen';
@@ -93,12 +93,12 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = 'Frontendmodul-Registration des AgentITSMService-Objekts im Agent-Interface.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = 'Frontendmodul-Registration des AgentITSMServicePrint-Objekts im Agent-Interface.';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = 'Frontendmodul-Registration des AgentITSMServiceZoom-Objekts im Agent-Interface.';
-    $Self->{Translation}->{'Manage priority matrix.'} = 'Priorit‰ts-Matrix verwalten';
-    $Self->{Translation}->{'Module to show back link in service menu.'} = '‹ber dieses Modul wird der Zur¸ck-Link in der Linkleiste der Service-Ansicht angezeigt.';
-    $Self->{Translation}->{'Module to show back link in sla menu.'} = '‹ber dieses Modul wird der Zur¸ck-Link in der Linkleiste der SLA-Ansicht angezeigt.';
-    $Self->{Translation}->{'Module to show print link in service menu.'} = '‹ber dieses Modul wird der Drucken-Link in der Linkleiste der Service-Ansicht angezeigt.';
-    $Self->{Translation}->{'Module to show print link in sla menu.'} = '‹ber dieses Modul wird der Drucken-Link in der Linkleiste der SLA-Ansicht angezeigt.';
-    $Self->{Translation}->{'Module to show the link link in service menu.'} = '‹ber dieses Modul wird der Link-Link in der Linkleiste der Service-Ansicht angezeigt.';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Priorit√§ts-Matrix verwalten';
+    $Self->{Translation}->{'Module to show back link in service menu.'} = '√úber dieses Modul wird der Zur√ºck-Link in der Linkleiste der Service-Ansicht angezeigt.';
+    $Self->{Translation}->{'Module to show back link in sla menu.'} = '√úber dieses Modul wird der Zur√ºck-Link in der Linkleiste der SLA-Ansicht angezeigt.';
+    $Self->{Translation}->{'Module to show print link in service menu.'} = '√úber dieses Modul wird der Drucken-Link in der Linkleiste der Service-Ansicht angezeigt.';
+    $Self->{Translation}->{'Module to show print link in sla menu.'} = '√úber dieses Modul wird der Drucken-Link in der Linkleiste der SLA-Ansicht angezeigt.';
+    $Self->{Translation}->{'Module to show the link link in service menu.'} = '√úber dieses Modul wird der Link-Link in der Linkleiste der Service-Ansicht angezeigt.';
     $Self->{Translation}->{'Parameters for the incident states in the preference view.'} = 'Parameter fuer den Vorfallsstatus in der Ansicht fuer die Einstellungen.';
     $Self->{Translation}->{'Set the type of link to be used to calculate the incident state.'} = 'Legt den Linktyp fest, der zur Berechnung des Vorfallstatus verwendet wird.';
     $Self->{Translation}->{'This setting defines that a \'ITSMChange\' object can be linked with \'Ticket\' objects using the \'Normal\' link type.'} = 'Definiert, dass ein \'ITSMChange\'-Objekt mit dem Linktyp \'Normal\' mit \'Ticket\'-Objekten verlinkt werden kann.';

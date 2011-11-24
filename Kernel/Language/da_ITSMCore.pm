@@ -2,7 +2,7 @@
 # Kernel/Language/da_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_ITSMCore.pm,v 1.10 2011-03-03 18:41:54 ub Exp $
+# $Id: da_ITSMCore.pm,v 1.11 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,18 +18,18 @@ sub Data {
 
     # Template: AAAITSMCore
     $Self->{Translation}->{'Alternative to'} = 'Alternativ til';
-    $Self->{Translation}->{'Availability'} = 'Tilgængelighed';
+    $Self->{Translation}->{'Availability'} = 'TilgÃ¦ngelighed';
     $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Forbundet til';
-    $Self->{Translation}->{'Current State'} = 'Nuværende tilstand';
+    $Self->{Translation}->{'Current State'} = 'NuvÃ¦rende tilstand';
     $Self->{Translation}->{'Demonstration'} = 'Demonstration';
-    $Self->{Translation}->{'Depends on'} = 'Afhænger af';
+    $Self->{Translation}->{'Depends on'} = 'AfhÃ¦nger af';
     $Self->{Translation}->{'End User Service'} = 'Kundeservice';
     $Self->{Translation}->{'Errors'} = 'Fejl';
     $Self->{Translation}->{'Front End'} = 'Frontend';
     $Self->{Translation}->{'IT Management'} = 'IT Management';
     $Self->{Translation}->{'IT Operational'} = 'IT operationel';
-    $Self->{Translation}->{'Impact'} = 'Påvirkning';
+    $Self->{Translation}->{'Impact'} = 'PÃ¥virkning';
     $Self->{Translation}->{'Incident State'} = 'Incident tilstand';
     $Self->{Translation}->{'Includes'} = 'Indkludere';
     $Self->{Translation}->{'Other'} = 'Andre';
@@ -38,19 +38,19 @@ sub Data {
     $Self->{Translation}->{'Recovery Time'} = 'Genetableringstid';
     $Self->{Translation}->{'Relevant to'} = 'Relevant for';
     $Self->{Translation}->{'Reporting'} = 'Reportering';
-    $Self->{Translation}->{'Required for'} = 'Kræves for';
-    $Self->{Translation}->{'Resolution Rate'} = 'Løsningsrate';
+    $Self->{Translation}->{'Required for'} = 'KrÃ¦ves for';
+    $Self->{Translation}->{'Resolution Rate'} = 'LÃ¸sningsrate';
     $Self->{Translation}->{'Response Time'} = 'Reaktionstid';
     $Self->{Translation}->{'SLA Overview'} = 'SLA oversigt';
     $Self->{Translation}->{'Service Overview'} = 'Service oversigt';
-    $Self->{Translation}->{'Service-Area'} = 'Service område';
-    $Self->{Translation}->{'Training'} = 'Træning';
+    $Self->{Translation}->{'Service-Area'} = 'Service omrÃ¥de';
+    $Self->{Translation}->{'Training'} = 'TrÃ¦ning';
     $Self->{Translation}->{'Transactions'} = 'Transaktioner';
     $Self->{Translation}->{'Underpinning Contract'} = 'Underliggende kontrakt';
     $Self->{Translation}->{'allocation'} = '';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalitet <-> Påvirkning <-> Prioritet';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritikalitet <-> PÃ¥virkning <-> Prioritet';
     $Self->{Translation}->{'Note'} = '';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
@@ -79,7 +79,7 @@ sub Data {
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Nuværende Incident tilstand';
+    $Self->{Translation}->{'Current Incident State'} = 'NuvÃ¦rende Incident tilstand';
     $Self->{Translation}->{'Associated SLAs'} = 'Tilknyttede SLAs';
 
     # Template: AgentITSMServiceZoom

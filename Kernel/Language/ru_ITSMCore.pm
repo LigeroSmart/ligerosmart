@@ -2,7 +2,7 @@
 # Kernel/Language/ru_ITSMCore.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_ITSMCore.pm,v 1.13 2011-03-03 18:41:54 ub Exp $
+# $Id: ru_ITSMCore.pm,v 1.14 2011-11-24 15:32:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,48 +17,48 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = 'Замена для';
-    $Self->{Translation}->{'Availability'} = 'Доступность';
-    $Self->{Translation}->{'Back End'} = 'Серверная часть';
-    $Self->{Translation}->{'Connected to'} = 'Связан с';
-    $Self->{Translation}->{'Current State'} = 'Текущее состояние';
-    $Self->{Translation}->{'Demonstration'} = 'Демонстрация';
-    $Self->{Translation}->{'Depends on'} = 'Зависит от';
-    $Self->{Translation}->{'End User Service'} = 'Конечный сервис пользователя';
-    $Self->{Translation}->{'Errors'} = 'Ошибки';
-    $Self->{Translation}->{'Front End'} = 'Интерфейсная часть';
-    $Self->{Translation}->{'IT Management'} = 'Управление ИТ';
-    $Self->{Translation}->{'IT Operational'} = 'Эксплуатация ИТ';
-    $Self->{Translation}->{'Impact'} = 'Влияние';
-    $Self->{Translation}->{'Incident State'} = 'Состояние инцидента';
-    $Self->{Translation}->{'Includes'} = 'Включает';
-    $Self->{Translation}->{'Other'} = 'Другое';
-    $Self->{Translation}->{'Part of'} = 'Состоит из';
-    $Self->{Translation}->{'Project'} = 'Планирование';
-    $Self->{Translation}->{'Recovery Time'} = 'Время восстановления';
-    $Self->{Translation}->{'Relevant to'} = 'Относится к';
-    $Self->{Translation}->{'Reporting'} = 'Составление отчетов';
-    $Self->{Translation}->{'Required for'} = 'Требуется для';
-    $Self->{Translation}->{'Resolution Rate'} = 'Относительная скорость решения';
-    $Self->{Translation}->{'Response Time'} = 'Время реакции';
-    $Self->{Translation}->{'SLA Overview'} = 'Обзор SLA';
-    $Self->{Translation}->{'Service Overview'} = 'Обзор сервисов';
-    $Self->{Translation}->{'Service-Area'} = 'Обзор сервисов';
-    $Self->{Translation}->{'Training'} = 'Обучение';
-    $Self->{Translation}->{'Transactions'} = 'Финансовые операции';
-    $Self->{Translation}->{'Underpinning Contract'} = 'Контракт поддержки';
-    $Self->{Translation}->{'allocation'} = 'Назначение приоритетов ';
+    $Self->{Translation}->{'Alternative to'} = 'Р—Р°РјРµРЅР° РґР»СЏ';
+    $Self->{Translation}->{'Availability'} = 'Р”РѕСЃС‚СѓРїРЅРѕСЃС‚СЊ';
+    $Self->{Translation}->{'Back End'} = 'РЎРµСЂРІРµСЂРЅР°СЏ С‡Р°СЃС‚СЊ';
+    $Self->{Translation}->{'Connected to'} = 'РЎРІСЏР·Р°РЅ СЃ';
+    $Self->{Translation}->{'Current State'} = 'РўРµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ';
+    $Self->{Translation}->{'Demonstration'} = 'Р”РµРјРѕРЅСЃС‚СЂР°С†РёСЏ';
+    $Self->{Translation}->{'Depends on'} = 'Р—Р°РІРёСЃРёС‚ РѕС‚';
+    $Self->{Translation}->{'End User Service'} = 'РљРѕРЅРµС‡РЅС‹Р№ СЃРµСЂРІРёСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ';
+    $Self->{Translation}->{'Errors'} = 'РћС€РёР±РєРё';
+    $Self->{Translation}->{'Front End'} = 'РРЅС‚РµСЂС„РµР№СЃРЅР°СЏ С‡Р°СЃС‚СЊ';
+    $Self->{Translation}->{'IT Management'} = 'РЈРїСЂР°РІР»РµРЅРёРµ РРў';
+    $Self->{Translation}->{'IT Operational'} = 'Р­РєСЃРїР»СѓР°С‚Р°С†РёСЏ РРў';
+    $Self->{Translation}->{'Impact'} = 'Р’Р»РёСЏРЅРёРµ';
+    $Self->{Translation}->{'Incident State'} = 'РЎРѕСЃС‚РѕСЏРЅРёРµ РёРЅС†РёРґРµРЅС‚Р°';
+    $Self->{Translation}->{'Includes'} = 'Р’РєР»СЋС‡Р°РµС‚';
+    $Self->{Translation}->{'Other'} = 'Р”СЂСѓРіРѕРµ';
+    $Self->{Translation}->{'Part of'} = 'РЎРѕСЃС‚РѕРёС‚ РёР·';
+    $Self->{Translation}->{'Project'} = 'РџР»Р°РЅРёСЂРѕРІР°РЅРёРµ';
+    $Self->{Translation}->{'Recovery Time'} = 'Р’СЂРµРјСЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ';
+    $Self->{Translation}->{'Relevant to'} = 'РћС‚РЅРѕСЃРёС‚СЃСЏ Рє';
+    $Self->{Translation}->{'Reporting'} = 'РЎРѕСЃС‚Р°РІР»РµРЅРёРµ РѕС‚С‡РµС‚РѕРІ';
+    $Self->{Translation}->{'Required for'} = 'РўСЂРµР±СѓРµС‚СЃСЏ РґР»СЏ';
+    $Self->{Translation}->{'Resolution Rate'} = 'РћС‚РЅРѕСЃРёС‚РµР»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ СЂРµС€РµРЅРёСЏ';
+    $Self->{Translation}->{'Response Time'} = 'Р’СЂРµРјСЏ СЂРµР°РєС†РёРё';
+    $Self->{Translation}->{'SLA Overview'} = 'РћР±Р·РѕСЂ SLA';
+    $Self->{Translation}->{'Service Overview'} = 'РћР±Р·РѕСЂ СЃРµСЂРІРёСЃРѕРІ';
+    $Self->{Translation}->{'Service-Area'} = 'РћР±Р·РѕСЂ СЃРµСЂРІРёСЃРѕРІ';
+    $Self->{Translation}->{'Training'} = 'РћР±СѓС‡РµРЅРёРµ';
+    $Self->{Translation}->{'Transactions'} = 'Р¤РёРЅР°РЅСЃРѕРІС‹Рµ РѕРїРµСЂР°С†РёРё';
+    $Self->{Translation}->{'Underpinning Contract'} = 'РљРѕРЅС‚СЂР°РєС‚ РїРѕРґРґРµСЂР¶РєРё';
+    $Self->{Translation}->{'allocation'} = 'РќР°Р·РЅР°С‡РµРЅРёРµ РїСЂРёРѕСЂРёС‚РµС‚РѕРІ ';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Критичность <-> Влияние <-> Приоритет';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'РљСЂРёС‚РёС‡РЅРѕСЃС‚СЊ <-> Р’Р»РёСЏРЅРёРµ <-> РџСЂРёРѕСЂРёС‚РµС‚';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Минимальное время между инцидентами';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'РњРёРЅРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ РјРµР¶РґСѓ РёРЅС†РёРґРµРЅС‚Р°РјРё';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = 'Критичность';
+    $Self->{Translation}->{'Criticality'} = 'РљСЂРёС‚РёС‡РЅРѕСЃС‚СЊ';
 
     # Template: AgentITSMCustomerSearch
 
@@ -72,14 +72,14 @@ sub Data {
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = '';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'Associated Services'} = 'Связанные сервисы';
+    $Self->{Translation}->{'Associated Services'} = 'РЎРІСЏР·Р°РЅРЅС‹Рµ СЃРµСЂРІРёСЃС‹';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Текущее состояние инцидента';
-    $Self->{Translation}->{'Associated SLAs'} = 'Связанные SLA';
+    $Self->{Translation}->{'Current Incident State'} = 'РўРµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРЅС†РёРґРµРЅС‚Р°';
+    $Self->{Translation}->{'Associated SLAs'} = 'РЎРІСЏР·Р°РЅРЅС‹Рµ SLA';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';
