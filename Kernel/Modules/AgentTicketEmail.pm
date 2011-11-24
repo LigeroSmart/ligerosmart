@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.32 2011-11-22 17:34:55 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.190 2011/11/22 17:31:56 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.33 2011-11-24 12:46:40 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.193 2011/11/24 12:40:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -101,7 +101,7 @@ sub Run {
     my $Output;
 
     # store last queue screen
-    if ( $Self->{LastScreenOverview} !~ /Action=AgentTicketEmail/ ) {
+    if ( $Self->{LastScreenOverview} && $Self->{LastScreenOverview} !~ /Action=AgentTicketEmail/ ) {
         $Self->{SessionObject}->UpdateSessionID(
             SessionID => $Self->{SessionID},
             Key       => 'LastScreenOverview',
@@ -121,6 +121,10 @@ sub Run {
     {
         $GetParam{$Key} = $Self->{ParamObject}->GetParam( Param => $Key );
     }
+
+    # ACL compatibility translation
+    my %ACLCompatGetParam;
+    $ACLCompatGetParam{OwnerID} = $GetParam{NewUserID};
 
     # If is an action about attachments
     my $IsUpload = ( $Self->{ParamObject}->GetParam( Param => 'AttachmentUpload' ) ? 1 : 0 );
@@ -314,6 +318,18 @@ sub Run {
         }
 # ---
     }
+
+    # convert dynamic field values into a structure for ACLs
+    my %DynamicFieldACLParameters;
+    DYNAMICFIELD:
+    for my $DynamcField ( keys %DynamicFieldValues ) {
+        next DYNAMICFIELD if !$DynamcField;
+        next DYNAMICFIELD if !$DynamicFieldValues{$DynamcField};
+
+        $DynamicFieldACLParameters{ 'DynamicField_' . $DynamcField }
+            = $DynamicFieldValues{$DynamcField};
+    }
+    $GetParam{DynamicField} = \%DynamicFieldACLParameters;
 # ---
 # ITSM
 # ---
@@ -461,6 +477,7 @@ sub Run {
                     # set possible values filter from ACLs
                     my $ACL = $Self->{TicketObject}->TicketAcl(
                         %GetParam,
+                        %ACLCompatGetParam,
                         Action        => $Self->{Action},
                         Type          => 'DynamicField_' . $DynamicFieldConfig->{Name},
                         ReturnType    => 'Ticket',
@@ -550,20 +567,45 @@ sub Run {
                 QueueID => $Self->{QueueID} || 1,
                 Services => $Services,
                 %GetParam,
+                %ACLCompatGetParam,
             );
             $Output .= $Self->_MaskEmailNew(
                 QueueID    => $Self->{QueueID},
-                NextStates => $Self->_GetNextStates( QueueID => $Self->{QueueID} || 1 ),
-                Priorities => $Self->_GetPriorities( QueueID => $Self->{QueueID} || 1 ),
-                Types      => $Self->_GetTypes( QueueID => $Self->{QueueID} || 1 ),
-                Services   => $Services,
-                SLAs       => $SLAs,
-                Users            => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
-                ResponsibleUsers => $Self->_GetUsers( QueueID => $Self->{QueueID} ),
-                FromList => $Self->_GetTos( QueueID => $Self->{QueueID} ),
-                To       => '',
-                Subject  => $Subject,
-                Body     => $Body,
+                NextStates => $Self->_GetNextStates(
+                    %GetParam,
+                    %ACLCompatGetParam,
+                    QueueID => $Self->{QueueID} || 1
+                ),
+                Priorities => $Self->_GetPriorities(
+                    %GetParam,
+                    %ACLCompatGetParam,
+                    QueueID => $Self->{QueueID} || 1
+                ),
+                Types => $Self->_GetTypes(
+                    %GetParam,
+                    %ACLCompatGetParam,
+                    QueueID => $Self->{QueueID} || 1
+                ),
+                Services => $Services,
+                SLAs     => $SLAs,
+                Users    => $Self->_GetUsers(
+                    %GetParam,
+                    %ACLCompatGetParam,
+                    QueueID => $Self->{QueueID}
+                ),
+                ResponsibleUsers => $Self->_GetResponsibles(
+                    %GetParam,
+                    %ACLCompatGetParam,
+                    QueueID => $Self->{QueueID}
+                ),
+                FromList => $Self->_GetTos(
+                    %GetParam,
+                    %ACLCompatGetParam,
+                    QueueID => $Self->{QueueID}
+                ),
+                To                => '',
+                Subject           => $Subject,
+                Body              => $Body,
                 CustomerID        => '',
                 CustomerUser      => '',
                 CustomerData      => {},
@@ -696,18 +738,6 @@ sub Run {
             );
         }
 
-        # convert dynamic field values into a structure for ACLs
-        my %DynamicFieldACLParameters;
-        DYNAMICFIELD:
-        for my $DynamcField ( keys %DynamicFieldValues ) {
-            next DYNAMICFIELD if !$DynamcField;
-            next DYNAMICFIELD if !$DynamicFieldValues{$DynamcField};
-
-            $DynamicFieldACLParameters{ 'DynamicField_' . $DynamcField }
-                = $DynamicFieldValues{$DynamcField};
-        }
-        $GetParam{DynamicField} = \%DynamicFieldACLParameters;
-
         # create html strings for all dynamic fields
         my %DynamicFieldHTML;
 
@@ -724,6 +754,7 @@ sub Run {
                 # set possible values filter from ACLs
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
+                    %ACLCompatGetParam,
                     Action        => $Self->{Action},
                     Type          => 'DynamicField_' . $DynamicFieldConfig->{Name},
                     ReturnType    => 'Ticket',
@@ -989,13 +1020,15 @@ sub Run {
             # get services
             my $Services = $Self->_GetServices(
                 %GetParam,
+                %ACLCompatGetParam,
                 CustomerUserID => $CustomerUser || '',
                 QueueID        => $NewQueueID   || 1,
             );
             my $SLAs = $Self->_GetSLAs(
+                %GetParam,
+                %ACLCompatGetParam,
                 QueueID => $NewQueueID || 1,
                 Services => $Services,
-                %GetParam,
             );
 
             # reset previous ServiceID to reset SLA-List if no service is selected
@@ -1011,28 +1044,35 @@ sub Run {
             $Output .= $Self->_MaskEmailNew(
                 QueueID => $Self->{QueueID},
                 Users   => $Self->_GetUsers(
+                    %GetParam,
+                    %ACLCompatGetParam,
                     QueueID  => $NewQueueID,
                     AllUsers => $GetParam{OwnerAll}
                 ),
                 UserSelected     => $NewUserID,
-                ResponsibleUsers => $Self->_GetUsers(
+                ResponsibleUsers => $Self->_GetResponsibles(
+                    %GetParam,
+                    %ACLCompatGetParam,
                     QueueID  => $NewQueueID,
                     AllUsers => $GetParam{ResponsibleAll}
                 ),
                 ResponsibleUserSelected => $NewResponsibleID,
                 NextStates              => $Self->_GetNextStates(
                     %GetParam,
+                    %ACLCompatGetParam,
                     CustomerUserID => $CustomerUser || '',
                     QueueID        => $NewQueueID   || 1,
                 ),
                 NextState  => $NextState,
                 Priorities => $Self->_GetPriorities(
                     %GetParam,
+                    %ACLCompatGetParam,
                     CustomerUserID => $CustomerUser || '',
                     QueueID        => $NewQueueID   || 1,
                 ),
                 Types => $Self->_GetTypes(
                     %GetParam,
+                    %ACLCompatGetParam,
                     CustomerUserID => $CustomerUser || '',
                     QueueID        => $NewQueueID   || 1,
                 ),
@@ -1384,18 +1424,6 @@ sub Run {
             $GetParam{From} = $Queue{Email};
         }
 
-        # convert dynamic field values into a structure for ACLs
-        my %DynamicFieldACLParameters;
-        DYNAMICFIELD:
-        for my $DynamcField ( keys %DynamicFieldValues ) {
-            next DYNAMICFIELD if !$DynamcField;
-            next DYNAMICFIELD if !$DynamicFieldValues{$DynamcField};
-
-            $DynamicFieldACLParameters{ 'DynamicField_' . $DynamcField }
-                = $DynamicFieldValues{$DynamcField};
-        }
-        $GetParam{DynamicField} = \%DynamicFieldACLParameters;
-
         # get list type
         my $TreeView = 0;
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::ListType') eq 'tree' ) {
@@ -1407,30 +1435,38 @@ sub Run {
             $Signature = $Self->_GetSignature( QueueID => $QueueID );
         }
         my $Users = $Self->_GetUsers(
+            %GetParam,
+            %ACLCompatGetParam,
             QueueID  => $QueueID,
             AllUsers => $GetParam{OwnerAll},
         );
-        my $ResponsibleUsers = $Self->_GetUsers(
+        my $ResponsibleUsers = $Self->_GetResponsibles(
+            %GetParam,
+            %ACLCompatGetParam,
             QueueID  => $QueueID,
             AllUsers => $GetParam{ResponsibleAll},
         );
         my $NextStates = $Self->_GetNextStates(
             %GetParam,
+            %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
         my $Priorities = $Self->_GetPriorities(
             %GetParam,
+            %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
         my $Services = $Self->_GetServices(
             %GetParam,
+            %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
         );
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
+            %ACLCompatGetParam,
             CustomerUserID => $CustomerUser || '',
             QueueID        => $QueueID      || 1,
             Services       => $Services,
@@ -1452,6 +1488,7 @@ sub Run {
             # set possible values filter from ACLs
             my $ACL = $Self->{TicketObject}->TicketAcl(
                 %GetParam,
+                %ACLCompatGetParam,
                 Action        => $Self->{Action},
                 TicketID      => $Self->{TicketID},
                 QueueID       => $QueueID || 0,
@@ -1655,6 +1692,78 @@ sub _GetUsers {
             }
         }
     }
+
+    # workflow
+    my $ACL = $Self->{TicketObject}->TicketAcl(
+        %Param,
+        ReturnType    => 'Ticket',
+        ReturnSubType => 'Owner',
+        Data          => \%ShownUsers,
+        UserID        => $Self->{UserID},
+    );
+
+    return { $Self->{TicketObject}->TicketAclData() } if $ACL;
+
+    return \%ShownUsers;
+}
+
+sub _GetResponsibles {
+    my ( $Self, %Param ) = @_;
+
+    # get users
+    my %ShownUsers;
+    my %AllGroupsMembers = $Self->{UserObject}->UserList(
+        Type  => 'Long',
+        Valid => 1,
+    );
+
+    # just show only users with selected custom queue
+    if ( $Param{QueueID} && !$Param{AllUsers} ) {
+        my @UserIDs = $Self->{TicketObject}->GetSubscribedUserIDsByQueueID(%Param);
+        for my $GroupMemberKey ( keys %AllGroupsMembers ) {
+            my $Hit = 0;
+            for my $UID (@UserIDs) {
+                if ( $UID eq $GroupMemberKey ) {
+                    $Hit = 1;
+                }
+            }
+            if ( !$Hit ) {
+                delete $AllGroupsMembers{$GroupMemberKey};
+            }
+        }
+    }
+
+    # check show users
+    if ( $Self->{ConfigObject}->Get('Ticket::ChangeOwnerToEveryone') ) {
+        %ShownUsers = %AllGroupsMembers;
+    }
+
+    # show all users who are rw in the queue group
+    elsif ( $Param{QueueID} ) {
+        my $GID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Param{QueueID} );
+        my %MemberList = $Self->{GroupObject}->GroupMemberList(
+            GroupID => $GID,
+            Type    => 'rw',
+            Result  => 'HASH',
+        );
+        for my $MemberKey ( keys %MemberList ) {
+            if ( $AllGroupsMembers{$MemberKey} ) {
+                $ShownUsers{$MemberKey} = $AllGroupsMembers{$MemberKey};
+            }
+        }
+    }
+
+    # workflow
+    my $ACL = $Self->{TicketObject}->TicketAcl(
+        %Param,
+        ReturnType    => 'Ticket',
+        ReturnSubType => 'Responsible',
+        Data          => \%ShownUsers,
+        UserID        => $Self->{UserID},
+    );
+
+    return { $Self->{TicketObject}->TicketAclData() } if $ACL;
+
     return \%ShownUsers;
 }
 
@@ -1734,6 +1843,7 @@ sub _GetTos {
         my %Tos;
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionType') eq 'Queue' ) {
             %Tos = $Self->{TicketObject}->MoveList(
+                %Param,
                 Type   => 'create',
                 Action => $Self->{Action},
                 UserID => $Self->{UserID},
@@ -2048,24 +2158,24 @@ sub _MaskEmailNew {
         $Param{BccInvalid} = '';
     }
 
-    my @DynamicFieldNames;
-
-    # Dynamic fields
-    # cycle trough the activated Dynamic Fields for this screen
-    DYNAMICFIELD:
-    for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
-        next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-
-        # skip fields that HTML could not be retrieved
-        next DYNAMICFIELD if !IsHashRefWithData(
-            $Param{DynamicFieldHTML}->{ $DynamicFieldConfig->{Name} }
-        );
-
-        push @DynamicFieldNames, $DynamicFieldConfig->{Name};
-    }
+    my $DynamicFieldNames = $Self->_GetFieldsToUpdate(
+        OnlyDynamicFields => 1
+    );
 
     # create a string with the quoted dynamic field names separated by a commas
-    $Param{DynamicFieldNamesStrg} = join ',', map "'DynamicField_$_'", @DynamicFieldNames;
+    if ( IsArrayRefWithData($DynamicFieldNames) ) {
+        my $FirstItem = 1;
+        FIELD:
+        for my $Field ( @{$DynamicFieldNames} ) {
+            if ($FirstItem) {
+                $FirstItem = 0;
+            }
+            else {
+                $Param{DynamicFieldNamesStrg} .= ', ';
+            }
+            $Param{DynamicFieldNamesStrg} .= "'" . $Field . "'";
+        }
+    }
 
     # build type string
     if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
@@ -2368,9 +2478,15 @@ sub _MaskEmailNew {
 sub _GetFieldsToUpdate {
     my ( $Self, %Param ) = @_;
 
+    my @UpdatableFields;
+
     # set the fields that can be updatable via AJAXUpdate
-    my @UpdatableFields
-        = qw( Dest NextStateID PriorityID ServiceID SLAID SignKeyID CryptKeyID To Cc Bcc );
+    if ( !$Param{OnlyDynamicFields} ) {
+        @UpdatableFields
+            = qw(
+            TypeID Dest NextStateID PriorityID ServiceID SLAID SignKeyID CryptKeyID To Cc Bcc
+        );
+    }
 
     # cycle trough the activated Dynamic Fields for this screen
     DYNAMICFIELD:
