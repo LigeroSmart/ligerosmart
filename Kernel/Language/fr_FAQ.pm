@@ -2,7 +2,7 @@
 # Kernel/Language/fr_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: fr_FAQ.pm,v 1.18 2011-08-12 21:48:23 cr Exp $
+# $Id: fr_FAQ.pm,v 1.19 2011-11-24 17:15:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,22 +21,22 @@ sub Data {
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'DerniËres questions modifiÈes';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'DerniËres questions crÈÈes';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Derni√®res questions modifi√©es';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'Derni√®res questions cr√©√©es';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 des questions';
-    $Self->{Translation}->{'Subcategory of'} = 'Sous catÈgorie de';
-    $Self->{Translation}->{'No rate selected!'} = 'Pas de sÈlection !';
+    $Self->{Translation}->{'Subcategory of'} = 'Sous cat√©gorie de';
+    $Self->{Translation}->{'No rate selected!'} = 'Pas de s√©lection !';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'Start day'} = 'Jour DÈbut';
-    $Self->{Translation}->{'Start month'} = 'Mois DÈbut';
-    $Self->{Translation}->{'Start year'} = 'AnnÈe DÈbut';
+    $Self->{Translation}->{'Start day'} = 'Jour D√©but';
+    $Self->{Translation}->{'Start month'} = 'Mois D√©but';
+    $Self->{Translation}->{'Start year'} = 'Ann√©e D√©but';
     $Self->{Translation}->{'End day'} = 'Jour Fin';
     $Self->{Translation}->{'End month'} = 'Mois Fin';
-    $Self->{Translation}->{'End year'} = 'AnnÈe Fin';
+    $Self->{Translation}->{'End year'} = 'Ann√©e Fin';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Merci pour votre vote !';
-    $Self->{Translation}->{'You have already voted!'} = 'Vous avez dÈj‡ votÈ !';
+    $Self->{Translation}->{'You have already voted!'} = 'Vous avez d√©j√† vot√© !';
     $Self->{Translation}->{'FAQ Article Print'} = '';
     $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'FAQ Articles (Top 10)';
     $Self->{Translation}->{'FAQ Articles (new created)'} = 'FAQ Articles (nouvelles questions)';
@@ -62,7 +62,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = '';
     $Self->{Translation}->{'Add Category'} = '';
     $Self->{Translation}->{'Edit Category'} = '';
-    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Sera affichÈ comme un commentaire dans l\'Explorer.';
+    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Sera affich√© comme un commentaire dans l\'Explorer.';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '';
     $Self->{Translation}->{'Do you really want to delete this category?'} = '';
@@ -273,12 +273,12 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Groupes d\'Agents pouvant accÈder ‡ cette catÈgorie';
-    $Self->{Translation}->{'Categories'} = 'CatÈgories';
-    $Self->{Translation}->{'DetailSearch'} = 'DÈtails de la recherche';
-    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Aucun catÈgorie accessible. Pour crÈer une question, vous devez avoir accËs ‡ au moins une catÈgorie. SVP vÈrifiez les permissions de votre groupe/catÈgorie via le menu -catÈgorie- !';
+    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Groupes d\'Agents pouvant acc√©der √† cette cat√©gorie';
+    $Self->{Translation}->{'Categories'} = 'Cat√©gories';
+    $Self->{Translation}->{'DetailSearch'} = 'D√©tails de la recherche';
+    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Aucun cat√©gorie accessible. Pour cr√©er une question, vous devez avoir acc√®s √† au moins une cat√©gorie. SVP v√©rifiez les permissions de votre groupe/cat√©gorie via le menu -cat√©gorie- !';
     $Self->{Translation}->{'QuickSearch'} = 'Recherche rapide';
-    $Self->{Translation}->{'SubCategories'} = 'Sous-catÈgories';
+    $Self->{Translation}->{'SubCategories'} = 'Sous-cat√©gories';
 
 }
 

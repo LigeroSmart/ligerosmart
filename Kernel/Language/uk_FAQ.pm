@@ -2,7 +2,7 @@
 # Kernel/Language/uk_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: uk_FAQ.pm,v 1.17 2011-08-12 21:48:22 cr Exp $
+# $Id: uk_FAQ.pm,v 1.18 2011-11-24 17:15:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,22 +21,22 @@ sub Data {
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Остання змінена стаття';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'Остання створена стаття';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Топ 10 статтей';
-    $Self->{Translation}->{'Subcategory of'} = 'Підкатегорії';
-    $Self->{Translation}->{'No rate selected!'} = 'Немає обраної категорії!';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'РћСЃС‚Р°РЅРЅСЏ Р·РјС–РЅРµРЅР° СЃС‚Р°С‚С‚СЏ';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'РћСЃС‚Р°РЅРЅСЏ СЃС‚РІРѕСЂРµРЅР° СЃС‚Р°С‚С‚СЏ';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'РўРѕРї 10 СЃС‚Р°С‚С‚РµР№';
+    $Self->{Translation}->{'Subcategory of'} = 'РџС–РґРєР°С‚РµРіРѕСЂС–С—';
+    $Self->{Translation}->{'No rate selected!'} = 'РќРµРјР°С” РѕР±СЂР°РЅРѕС— РєР°С‚РµРіРѕСЂС–С—!';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'Start day'} = 'Початок доби';
-    $Self->{Translation}->{'Start month'} = 'Початок місяця';
-    $Self->{Translation}->{'Start year'} = 'Початок року';
-    $Self->{Translation}->{'End day'} = 'Кінець дня';
-    $Self->{Translation}->{'End month'} = 'Кінець місяця';
-    $Self->{Translation}->{'End year'} = 'Кінець року';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Дякуємо, за те, що проголосували!';
-    $Self->{Translation}->{'You have already voted!'} = 'Ви вже голосували!';
+    $Self->{Translation}->{'Start day'} = 'РџРѕС‡Р°С‚РѕРє РґРѕР±Рё';
+    $Self->{Translation}->{'Start month'} = 'РџРѕС‡Р°С‚РѕРє РјС–СЃСЏС†СЏ';
+    $Self->{Translation}->{'Start year'} = 'РџРѕС‡Р°С‚РѕРє СЂРѕРєСѓ';
+    $Self->{Translation}->{'End day'} = 'РљС–РЅРµС†СЊ РґРЅСЏ';
+    $Self->{Translation}->{'End month'} = 'РљС–РЅРµС†СЊ РјС–СЃСЏС†СЏ';
+    $Self->{Translation}->{'End year'} = 'РљС–РЅРµС†СЊ СЂРѕРєСѓ';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'Р”СЏРєСѓС”РјРѕ, Р·Р° С‚Рµ, С‰Рѕ РїСЂРѕРіРѕР»РѕСЃСѓРІР°Р»Рё!';
+    $Self->{Translation}->{'You have already voted!'} = 'Р’Рё РІР¶Рµ РіРѕР»РѕСЃСѓРІР°Р»Рё!';
     $Self->{Translation}->{'FAQ Article Print'} = '';
     $Self->{Translation}->{'FAQ Articles (Top 10)'} = '';
     $Self->{Translation}->{'FAQ Articles (new created)'} = '';
@@ -53,7 +53,7 @@ sub Data {
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = '';
     $Self->{Translation}->{'A category is required.'} = '';
-    $Self->{Translation}->{'Approval'} = 'Уточнить смысл и изменить(Approval)';
+    $Self->{Translation}->{'Approval'} = 'РЈС‚РѕС‡РЅРёС‚СЊ СЃРјС‹СЃР» Рё РёР·РјРµРЅРёС‚СЊ(Approval)';
 
     # Template: AgentFAQCategory
     $Self->{Translation}->{'FAQ Category Management'} = '';
@@ -62,7 +62,7 @@ sub Data {
     $Self->{Translation}->{'Ok'} = '';
     $Self->{Translation}->{'Add Category'} = '';
     $Self->{Translation}->{'Edit Category'} = '';
-    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Буде показано, як коментар у Провіднику';
+    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Р‘СѓРґРµ РїРѕРєР°Р·Р°РЅРѕ, СЏРє РєРѕРјРµРЅС‚Р°СЂ Сѓ РџСЂРѕРІС–РґРЅРёРєСѓ';
     $Self->{Translation}->{'Please select at least one permission group.'} = '';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '';
     $Self->{Translation}->{'Do you really want to delete this category?'} = '';
@@ -74,7 +74,7 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = '';
 
     # Template: AgentFAQEdit
-    $Self->{Translation}->{'FAQ'} = 'База знань';
+    $Self->{Translation}->{'FAQ'} = 'Р‘Р°Р·Р° Р·РЅР°РЅСЊ';
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = '';
@@ -109,7 +109,7 @@ sub Data {
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = '';
-    $Self->{Translation}->{'Votes'} = 'Голосів';
+    $Self->{Translation}->{'Votes'} = 'Р“РѕР»РѕСЃС–РІ';
 
     # Template: AgentFAQSearch
 
@@ -217,7 +217,7 @@ sub Data {
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ path separator.'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'FAQ-Area'} = 'База знань';
+    $Self->{Translation}->{'FAQ-Area'} = 'Р‘Р°Р·Р° Р·РЅР°РЅСЊ';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'History of this FAQ'} = '';
@@ -237,7 +237,7 @@ sub Data {
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
-    $Self->{Translation}->{'New FAQ Article'} = 'нова стаття БЗ';
+    $Self->{Translation}->{'New FAQ Article'} = 'РЅРѕРІР° СЃС‚Р°С‚С‚СЏ Р‘Р—';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '';
@@ -284,18 +284,18 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Виділіть групи, якиі можуть отримати доступ до категорії';
-    $Self->{Translation}->{'Categories'} = 'Категорії';
-    $Self->{Translation}->{'DetailSearch'} = 'Деталізований пошук';
-    $Self->{Translation}->{'Explorer'} = 'Провідник';
-    $Self->{Translation}->{'FAQ Category'} = 'Категорії БЗ';
-    $Self->{Translation}->{'FAQ News (Top 10)'} = 'Новини БЗ(ТОП 10)';
-    $Self->{Translation}->{'FAQ News (new created)'} = 'Новини БЗ(нові статті)';
-    $Self->{Translation}->{'FAQ News (recently changed)'} = 'Новини БЗ(недавно змінені)';
-    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Немає доступних категорій. Щоб створити статтю вам необхідно одержати доступ, принаймні до одній категорії. Будь ласка, перевірте вашу групу/категорію доступу для -категорії меню-!';
-    $Self->{Translation}->{'QuickSearch'} = 'Швидкий пошук';
-    $Self->{Translation}->{'SubCategories'} = 'Підкатегорії';
-    $Self->{Translation}->{'Здрастуйте'} = 'Вітаємо';
+    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Р’РёРґС–Р»С–С‚СЊ РіСЂСѓРїРё, СЏРєРёС– РјРѕР¶СѓС‚СЊ РѕС‚СЂРёРјР°С‚Рё РґРѕСЃС‚СѓРї РґРѕ РєР°С‚РµРіРѕСЂС–С—';
+    $Self->{Translation}->{'Categories'} = 'РљР°С‚РµРіРѕСЂС–С—';
+    $Self->{Translation}->{'DetailSearch'} = 'Р”РµС‚Р°Р»С–Р·РѕРІР°РЅРёР№ РїРѕС€СѓРє';
+    $Self->{Translation}->{'Explorer'} = 'РџСЂРѕРІС–РґРЅРёРє';
+    $Self->{Translation}->{'FAQ Category'} = 'РљР°С‚РµРіРѕСЂС–С— Р‘Р—';
+    $Self->{Translation}->{'FAQ News (Top 10)'} = 'РќРѕРІРёРЅРё Р‘Р—(РўРћРџ 10)';
+    $Self->{Translation}->{'FAQ News (new created)'} = 'РќРѕРІРёРЅРё Р‘Р—(РЅРѕРІС– СЃС‚Р°С‚С‚С–)';
+    $Self->{Translation}->{'FAQ News (recently changed)'} = 'РќРѕРІРёРЅРё Р‘Р—(РЅРµРґР°РІРЅРѕ Р·РјС–РЅРµРЅС–)';
+    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'РќРµРјР°С” РґРѕСЃС‚СѓРїРЅРёС… РєР°С‚РµРіРѕСЂС–Р№. Р©РѕР± СЃС‚РІРѕСЂРёС‚Рё СЃС‚Р°С‚С‚СЋ РІР°Рј РЅРµРѕР±С…С–РґРЅРѕ РѕРґРµСЂР¶Р°С‚Рё РґРѕСЃС‚СѓРї, РїСЂРёРЅР°Р№РјРЅС– РґРѕ РѕРґРЅС–Р№ РєР°С‚РµРіРѕСЂС–С—. Р‘СѓРґСЊ Р»Р°СЃРєР°, РїРµСЂРµРІС–СЂС‚Рµ РІР°С€Сѓ РіСЂСѓРїСѓ/РєР°С‚РµРіРѕСЂС–СЋ РґРѕСЃС‚СѓРїСѓ РґР»СЏ -РєР°С‚РµРіРѕСЂС–С— РјРµРЅСЋ-!';
+    $Self->{Translation}->{'QuickSearch'} = 'РЁРІРёРґРєРёР№ РїРѕС€СѓРє';
+    $Self->{Translation}->{'SubCategories'} = 'РџС–РґРєР°С‚РµРіРѕСЂС–С—';
+    $Self->{Translation}->{'Р—РґСЂР°СЃС‚СѓР№С‚Рµ'} = 'Р’С–С‚Р°С”РјРѕ';
 
 }
 

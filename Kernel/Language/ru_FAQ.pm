@@ -3,7 +3,7 @@
 # Copyright (C) 2011 Alex Savvin <savvin at mail.ru>
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_FAQ.pm,v 1.2 2011-08-12 21:48:22 cr Exp $
+# $Id: ru_FAQ.pm,v 1.3 2011-11-24 17:15:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,99 +18,99 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAFAQ
-    $Self->{Translation}->{'internal'} = 'ÒÎÛÊÂ·ÌÓÂ';
-    $Self->{Translation}->{'public'} = 'Ó·˘Â‰ÓÒÚÛÔÌÓÂ';
-    $Self->{Translation}->{'external'} = 'ÓÚÍ˚ÚÓÂ';
-    $Self->{Translation}->{'FAQ Number'} = 'ÕÓÏÂ FAQ';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'œÓÒÎÂ‰ÌËÂ Ó·ÌÓ‚ÎÂÌËˇ ÒÚ‡ÚÂÈ FAQ';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'ÕÓ‚˚Â ÒÚ‡Ú¸Ë FAQ';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 ÒÚ‡ÚÂÈ FAQ';
-    $Self->{Translation}->{'Subcategory of'} = 'œÓ‰‡Á‰ÂÎ';
-    $Self->{Translation}->{'No rate selected!'} = 'ŒˆÂÌÍ‡ ÓÚÒÛÚÒÚ‚ÛÂÚ!';
-    $Self->{Translation}->{'public (all)'} = 'Ó·˘Â‰ÓÒÚÛÔÌÓÂ (‚ÒÂÏ)';
-    $Self->{Translation}->{'external (customer)'} = 'ÓÚÍ˚ÚÓÂ (ÍÎËÂÌÚ‡Ï)';
-    $Self->{Translation}->{'internal (agent)'} = 'ÒÎÛÊÂ·ÌÓÂ (‡„ÂÌÚ‡Ï)';
-    $Self->{Translation}->{'Start day'} = 'Õ‡˜‡ÎÓ ‰Ìˇ';
-    $Self->{Translation}->{'Start month'} = 'Õ‡˜‡Î‡ ÏÂÒˇˆ‡';
-    $Self->{Translation}->{'Start year'} = 'Õ‡˜‡ÎÓ „Ó‰‡';
-    $Self->{Translation}->{'End day'} = ' ÓÌÂˆ ‰Ìˇ';
-    $Self->{Translation}->{'End month'} = ' ÓÌÂˆ ÏÂÒˇˆ‡';
-    $Self->{Translation}->{'End year'} = ' ÓÌÂˆ „Ó‰‡';
-    $Self->{Translation}->{'Thanks for your vote!'} = '—Ô‡ÒË·Ó Á‡ ‚‡¯Û ÓˆÂÌÍÛ!';
-    $Self->{Translation}->{'You have already voted!'} = '¬˚ ÛÊÂ ÔÓÒÚ‡‚ËÎË ÓˆÂÌÍÛ!';
-    $Self->{Translation}->{'FAQ Article Print'} = 'œÂ˜‡Ú¸ ÒÚ‡Ú¸Ë FAQ';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '—Ú‡Ú¸Ë FAQ (Top 10)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = '—Ú‡Ú¸Ë FAQ (ÌÓ‚˚Â)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '—Ú‡Ú¸Ë FAQ (Ó·ÌÓ‚Î∏ÌÌ˚Â)';
-    $Self->{Translation}->{'FAQ category updated!'} = ' ‡ÚÂ„ÓËˇ FAQ ËÁÏÂÌÂÌ‡!';
-    $Self->{Translation}->{'FAQ category added!'} = ' ‡ÚÂ„ÓËˇ FAQ ‰Ó·‡‚ÎÂÌ‡!';
-    $Self->{Translation}->{'A category should have a name!'} = '” Í‡ÚÂ„ÓËË ‰ÓÎÊÌÓ ·˚Ú¸ Ì‡Á‚‡ÌËÂ!';
-    $Self->{Translation}->{'This category already exists'} = '“‡Í‡ˇ Í‡ÚÂ„ÓËˇ ÛÊÂ ÒÛ˘ÂÒÚ‚ÛÂÚ!';
-    $Self->{Translation}->{'FAQ language added!'} = 'ﬂÁ˚Í ‰Îˇ FAQ ‰Ó·‡‚ÎÂÌ!';
-    $Self->{Translation}->{'FAQ language updated!'} = 'ﬂÁ˚Í ‰Îˇ FAQ ËÁÏÂÌ∏Ì!';
-    $Self->{Translation}->{'The name is required!'} = 'ÕÂÓ·ıÓ‰ËÏÓ Á‡‰‡Ú¸ Ì‡Á‚‡ÌËÂ!';
-    $Self->{Translation}->{'This language already exists!'} = '“‡ÍÓÈ ˇÁ˚Í ÛÊÂ ÒÛ˘ÂÒÚ‚ÛÂÚ!';
+    $Self->{Translation}->{'internal'} = '—Å–ª—É–∂–µ–±–Ω–æ–µ';
+    $Self->{Translation}->{'public'} = '–æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–µ';
+    $Self->{Translation}->{'external'} = '–æ—Ç–∫—Ä—ã—Ç–æ–µ';
+    $Self->{Translation}->{'FAQ Number'} = '–ù–æ–º–µ—Ä FAQ';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = '–ü–æ—Å–ª–µ–¥–Ω–∏–µ –æ–±–Ω–æ–≤–ª–µ–Ω–∏—è —Å—Ç–∞—Ç–µ–π FAQ';
+    $Self->{Translation}->{'Latest created FAQ articles'} = '–ù–æ–≤—ã–µ —Å—Ç–∞—Ç—å–∏ FAQ';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 —Å—Ç–∞—Ç–µ–π FAQ';
+    $Self->{Translation}->{'Subcategory of'} = '–ü–æ–¥—Ä–∞–∑–¥–µ–ª';
+    $Self->{Translation}->{'No rate selected!'} = '–û—Ü–µ–Ω–∫–∞ –æ—Ç—Å—É—Ç—Å—Ç–≤—É–µ—Ç!';
+    $Self->{Translation}->{'public (all)'} = '–æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–µ (–≤—Å–µ–º)';
+    $Self->{Translation}->{'external (customer)'} = '–æ—Ç–∫—Ä—ã—Ç–æ–µ (–∫–ª–∏–µ–Ω—Ç–∞–º)';
+    $Self->{Translation}->{'internal (agent)'} = '—Å–ª—É–∂–µ–±–Ω–æ–µ (–∞–≥–µ–Ω—Ç–∞–º)';
+    $Self->{Translation}->{'Start day'} = '–ù–∞—á–∞–ª–æ –¥–Ω—è';
+    $Self->{Translation}->{'Start month'} = '–ù–∞—á–∞–ª–∞ –º–µ—Å—è—Ü–∞';
+    $Self->{Translation}->{'Start year'} = '–ù–∞—á–∞–ª–æ –≥–æ–¥–∞';
+    $Self->{Translation}->{'End day'} = '–ö–æ–Ω–µ—Ü –¥–Ω—è';
+    $Self->{Translation}->{'End month'} = '–ö–æ–Ω–µ—Ü –º–µ—Å—è—Ü–∞';
+    $Self->{Translation}->{'End year'} = '–ö–æ–Ω–µ—Ü –≥–æ–¥–∞';
+    $Self->{Translation}->{'Thanks for your vote!'} = '–°–ø–∞—Å–∏–±–æ –∑–∞ –≤–∞—à—É –æ—Ü–µ–Ω–∫—É!';
+    $Self->{Translation}->{'You have already voted!'} = '–í—ã —É–∂–µ –ø–æ—Å—Ç–∞–≤–∏–ª–∏ –æ—Ü–µ–Ω–∫—É!';
+    $Self->{Translation}->{'FAQ Article Print'} = '–ü–µ—á–∞—Ç—å —Å—Ç–∞—Ç—å–∏ FAQ';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = '–°—Ç–∞—Ç—å–∏ FAQ (Top 10)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = '–°—Ç–∞—Ç—å–∏ FAQ (–Ω–æ–≤—ã–µ)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = '–°—Ç–∞—Ç—å–∏ FAQ (–æ–±–Ω–æ–≤–ª—ë–Ω–Ω—ã–µ)';
+    $Self->{Translation}->{'FAQ category updated!'} = '–ö–∞—Ç–µ–≥–æ—Ä–∏—è FAQ –∏–∑–º–µ–Ω–µ–Ω–∞!';
+    $Self->{Translation}->{'FAQ category added!'} = '–ö–∞—Ç–µ–≥–æ—Ä–∏—è FAQ –¥–æ–±–∞–≤–ª–µ–Ω–∞!';
+    $Self->{Translation}->{'A category should have a name!'} = '–£ –∫–∞—Ç–µ–≥–æ—Ä–∏–∏ –¥–æ–ª–∂–Ω–æ –±—ã—Ç—å –Ω–∞–∑–≤–∞–Ω–∏–µ!';
+    $Self->{Translation}->{'This category already exists'} = '–¢–∞–∫–∞—è –∫–∞—Ç–µ–≥–æ—Ä–∏—è —É–∂–µ —Å—É—â–µ—Å—Ç–≤—É–µ—Ç!';
+    $Self->{Translation}->{'FAQ language added!'} = '–Ø–∑—ã–∫ –¥–ª—è FAQ –¥–æ–±–∞–≤–ª–µ–Ω!';
+    $Self->{Translation}->{'FAQ language updated!'} = '–Ø–∑—ã–∫ –¥–ª—è FAQ –∏–∑–º–µ–Ω—ë–Ω!';
+    $Self->{Translation}->{'The name is required!'} = '–ù–µ–æ–±—Ö–æ–¥–∏–º–æ –∑–∞–¥–∞—Ç—å –Ω–∞–∑–≤–∞–Ω–∏–µ!';
+    $Self->{Translation}->{'This language already exists!'} = '–¢–∞–∫–æ–π —è–∑—ã–∫ —É–∂–µ —Å—É—â–µ—Å—Ç–≤—É–µ—Ç!';
 
     # Template: AgentFAQAdd
-    $Self->{Translation}->{'Add FAQ Article'} = 'ƒÓ·‡‚ËÚ¸ ÒÚ‡Ú¸˛ FAQ';
-    $Self->{Translation}->{'A category is required.'} = 'ÕÛÊÌÓ ‚˚·‡Ú¸ Í‡ÚÂ„ÓË˛.';
-    $Self->{Translation}->{'Approval'} = 'Œ‰Ó·ÂÌÓ';
+    $Self->{Translation}->{'Add FAQ Article'} = '–î–æ–±–∞–≤–∏—Ç—å —Å—Ç–∞—Ç—å—é FAQ';
+    $Self->{Translation}->{'A category is required.'} = '–ù—É–∂–Ω–æ –≤—ã–±—Ä–∞—Ç—å –∫–∞—Ç–µ–≥–æ—Ä–∏—é.';
+    $Self->{Translation}->{'Approval'} = '–û–¥–æ–±—Ä–µ–Ω–æ';
 
     # Template: AgentFAQCategory
-    $Self->{Translation}->{'FAQ Category Management'} = '”Ô‡‚ÎÂÌËÂ Í‡ÚÂ„ÓËˇÏË FAQ';
-    $Self->{Translation}->{'Add category'} = 'ƒÓ·‡‚ËÚ¸ Í‡ÚÂ„ÓË˛';
-    $Self->{Translation}->{'Delete Category'} = '”‰‡ÎËÚ¸ Í‡ÚÂ„ÓË˛';
+    $Self->{Translation}->{'FAQ Category Management'} = '–£–ø—Ä–∞–≤–ª–µ–Ω–∏–µ –∫–∞—Ç–µ–≥–æ—Ä–∏—è–º–∏ FAQ';
+    $Self->{Translation}->{'Add category'} = '–î–æ–±–∞–≤–∏—Ç—å –∫–∞—Ç–µ–≥–æ—Ä–∏—é';
+    $Self->{Translation}->{'Delete Category'} = '–£–¥–∞–ª–∏—Ç—å –∫–∞—Ç–µ–≥–æ—Ä–∏—é';
     $Self->{Translation}->{'Ok'} = 'Ok';
-    $Self->{Translation}->{'Add Category'} = 'ƒÓ·‡‚ËÚ¸ Í‡ÚÂ„ÓË˛';
-    $Self->{Translation}->{'Edit Category'} = '”‰‡ÎËÚ¸ Í‡ÚÂ„ÓË˛';
-    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '¡Û‰ÂÚ ÔÓÍ‡Á‡ÌÓ ‚ Explorer Í‡Í ÍÓÏÏÂÌÚ‡ËÈ.';
-    $Self->{Translation}->{'Please select at least one permission group.'} = '”Í‡ÊËÚÂ ıÓÚˇ ·˚ Ó‰ÌÛ „ÛÔÔÛ.';
-    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '√ÛÔÔ˚ ‡„ÂÌÚÓ‚, ËÏÂ˛˘Ëı ‰ÓÒÚÛÔ Í ÒÚ‡Ú¸ˇÏ ˝ÚÓÈ Í‡ÚÂ„ÓËË.';
-    $Self->{Translation}->{'Do you really want to delete this category?'} = 'œÓ‰Ú‚Â‰ËÚÂ Û‰‡ÎÂÌËÂ ˝ÚÓÈ Í‡ÚÂ„ÓËË!';
-    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = '›ÚÛ Í‡ÚÂ„ÓË˛ Û‰‡ÎˇÚ¸ ÌÂÎ¸Áˇ! ¬ ÌÂÈ ÒÓ‰ÂÊËÚÒˇ Í‡Í ÏËÌËÏÛÏ Ó‰Ì‡ ÒÚ‡Ú¸ˇ FAQ Ë/ËÎË ÓÌ‡ ˇ‚ÎˇÂÚÒˇ Ó‰ËÚÂÎ¸ÒÍÓÈ ‰Îˇ ‰Û„Ëı Í‡ÚÂ„ÓËÈ';
-    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '¬ ˝ÚÓÈ Í‡ÚÂ„ÓËË ËÏÂ˛ÚÒˇ ÒÎÂ‰Û˛˘ËÂ ÒÚ‡Ú¸Ë FAQ';
-    $Self->{Translation}->{'This category is parent of the following subcategories'} = '›Ú‡ Í‡ÚÂ„ÓËˇ ˇ‚ÎˇÂÚÒˇ Ó‰ËÚÂÎ¸ÒÍÓÈ ‰Îˇ ÒÎÂ‰Û˛˘Ëı ÔÓ‰‡Á‰ÂÎÓ‚';
+    $Self->{Translation}->{'Add Category'} = '–î–æ–±–∞–≤–∏—Ç—å –∫–∞—Ç–µ–≥–æ—Ä–∏—é';
+    $Self->{Translation}->{'Edit Category'} = '–£–¥–∞–ª–∏—Ç—å –∫–∞—Ç–µ–≥–æ—Ä–∏—é';
+    $Self->{Translation}->{'Will be shown as comment in Explorer.'} = '–ë—É–¥–µ—Ç –ø–æ–∫–∞–∑–∞–Ω–æ –≤ Explorer –∫–∞–∫ –∫–æ–º–º–µ–Ω—Ç–∞—Ä–∏–π.';
+    $Self->{Translation}->{'Please select at least one permission group.'} = '–£–∫–∞–∂–∏—Ç–µ —Ö–æ—Ç—è –±—ã –æ–¥–Ω—É –≥—Ä—É–ø–ø—É.';
+    $Self->{Translation}->{'Agent groups that can access articles in this category.'} = '–ì—Ä—É–ø–ø—ã –∞–≥–µ–Ω—Ç–æ–≤, –∏–º–µ—é—â–∏—Ö –¥–æ—Å—Ç—É–ø –∫ —Å—Ç–∞—Ç—å—è–º —ç—Ç–æ–π –∫–∞—Ç–µ–≥–æ—Ä–∏–∏.';
+    $Self->{Translation}->{'Do you really want to delete this category?'} = '–ü–æ–¥—Ç–≤–µ—Ä–¥–∏—Ç–µ —É–¥–∞–ª–µ–Ω–∏–µ —ç—Ç–æ–π –∫–∞—Ç–µ–≥–æ—Ä–∏–∏!';
+    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = '–≠—Ç—É –∫–∞—Ç–µ–≥–æ—Ä–∏—é —É–¥–∞–ª—è—Ç—å –Ω–µ–ª—å–∑—è! –í –Ω–µ–π —Å–æ–¥–µ—Ä–∂–∏—Ç—Å—è –∫–∞–∫ –º–∏–Ω–∏–º—É–º –æ–¥–Ω–∞ —Å—Ç–∞—Ç—å—è FAQ –∏/–∏–ª–∏ –æ–Ω–∞ —è–≤–ª—è–µ—Ç—Å—è —Ä–æ–¥–∏—Ç–µ–ª—å—Å–∫–æ–π –¥–ª—è –¥—Ä—É–≥–∏—Ö –∫–∞—Ç–µ–≥–æ—Ä–∏–π';
+    $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = '–í —ç—Ç–æ–π –∫–∞—Ç–µ–≥–æ—Ä–∏–∏ –∏–º–µ—é—Ç—Å—è —Å–ª–µ–¥—É—é—â–∏–µ —Å—Ç–∞—Ç—å–∏ FAQ';
+    $Self->{Translation}->{'This category is parent of the following subcategories'} = '–≠—Ç–∞ –∫–∞—Ç–µ–≥–æ—Ä–∏—è —è–≤–ª—è–µ—Ç—Å—è —Ä–æ–¥–∏—Ç–µ–ª—å—Å–∫–æ–π –¥–ª—è —Å–ª–µ–¥—É—é—â–∏—Ö –ø–æ–¥—Ä–∞–∑–¥–µ–ª–æ–≤';
 
     # Template: AgentFAQDelete
-    $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = 'œÓ‰Ú‚Â‰ËÚÂ Û‰‡ÎÂÌËÂ ˝ÚÓÈ ÒÚ‡Ú¸Ë FAQ!';
+    $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = '–ü–æ–¥—Ç–≤–µ—Ä–¥–∏—Ç–µ —É–¥–∞–ª–µ–Ω–∏–µ —ç—Ç–æ–π —Å—Ç–∞—Ç—å–∏ FAQ!';
 
     # Template: AgentFAQEdit
     $Self->{Translation}->{'FAQ'} = 'FAQ';
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ Explorer';
-    $Self->{Translation}->{'Quick Search'} = '¡˚ÒÚ˚È ÔÓËÒÍ';
-    $Self->{Translation}->{'Advanced Search'} = '–‡Ò¯ËÂÌÌ˚È ÔÓËÒÍ';
-    $Self->{Translation}->{'Subcategories'} = 'œÓ‰‡Á‰ÂÎ˚';
-    $Self->{Translation}->{'FAQ Articles'} = '—Ú‡Ú¸Ë FAQ';
-    $Self->{Translation}->{'No subcategories found.'} = 'œÓ‰‡Á‰ÂÎ˚ ÌÂ Ì‡È‰ÂÌ˚.';
+    $Self->{Translation}->{'Quick Search'} = '–ë—ã—Å—Ç—Ä—ã–π –ø–æ–∏—Å–∫';
+    $Self->{Translation}->{'Advanced Search'} = '–†–∞—Å—à–∏—Ä–µ–Ω–Ω—ã–π –ø–æ–∏—Å–∫';
+    $Self->{Translation}->{'Subcategories'} = '–ü–æ–¥—Ä–∞–∑–¥–µ–ª—ã';
+    $Self->{Translation}->{'FAQ Articles'} = '–°—Ç–∞—Ç—å–∏ FAQ';
+    $Self->{Translation}->{'No subcategories found.'} = '–ü–æ–¥—Ä–∞–∑–¥–µ–ª—ã –Ω–µ –Ω–∞–π–¥–µ–Ω—ã.';
 
     # Template: AgentFAQHistory
 
     # Template: AgentFAQJournalOverviewSmall
-    $Self->{Translation}->{'No FAQ Journal data found.'} = 'ƒ‡ÌÌ˚ı ÊÛÌ‡Î‡ FAQ ÌÂÚ.';
+    $Self->{Translation}->{'No FAQ Journal data found.'} = '–î–∞–Ω–Ω—ã—Ö –∂—É—Ä–Ω–∞–ª–∞ FAQ –Ω–µ—Ç.';
 
     # Template: AgentFAQLanguage
-    $Self->{Translation}->{'FAQ Language Management'} = '”Ô‡‚ÎÂÌËÂ ˇÁ˚Í‡ÏË FAQ';
-    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = '»ÒÔÓÎ¸ÁÛÈÚÂ ˝ÚÛ ÙÛÌÍˆË˛ ÔË ÌÂÓ·ıÓ‰ËÏÓÒÚË ‡·ÓÚ˚ Ò ÌÂÒÍÓÎ¸ÍËÏË ˇÁ˚Í‡ÏË.';
-    $Self->{Translation}->{'Add language'} = 'ƒÓ·‡‚ËÚ¸ ˇÁ˚Í';
-    $Self->{Translation}->{'Delete Language'} = '”‰‡ÎËÚ¸ ˇÁ˚Í';
-    $Self->{Translation}->{'Add Language'} = 'ƒÓ·‡‚ËÚ¸ ˇÁ˚Í';
-    $Self->{Translation}->{'Edit Language'} = '»ÁÏÂÌËÚ¸ ˇÁ˚Í';
-    $Self->{Translation}->{'Do you really want to delete this language?'} = 'œÓ‰Ú‚Â‰ËÚÂ Û‰‡ÎÂÌËÂ ˝ÚÓ„Ó ˇÁ˚Í‡!';
-    $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = '›ÚÓÚ ˇÁ˚Í Û‰‡ÎˇÚ¸ ÌÂÎ¸Áˇ. Õ‡ Ì∏Ï Ì‡ÔËÒ‡Ì‡ Í‡Í ÏËÌËÏÛÏ Ó‰Ì‡ ÒÚ‡Ú¸ˇ FAQ!';
-    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '›ÚÓÚ ˇÁ˚Í ËÒÔÓÎ¸ÁÓ‚‡Ì ‚ ÒÎÂ‰Û˛˘Ëı ÒÚ‡Ú¸ˇı FAQ';
+    $Self->{Translation}->{'FAQ Language Management'} = '–£–ø—Ä–∞–≤–ª–µ–Ω–∏–µ —è–∑—ã–∫–∞–º–∏ FAQ';
+    $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = '–ò—Å–ø–æ–ª—å–∑—É–π—Ç–µ —ç—Ç—É —Ñ—É–Ω–∫—Ü–∏—é –ø—Ä–∏ –Ω–µ–æ–±—Ö–æ–¥–∏–º–æ—Å—Ç–∏ —Ä–∞–±–æ—Ç—ã —Å –Ω–µ—Å–∫–æ–ª—å–∫–∏–º–∏ —è–∑—ã–∫–∞–º–∏.';
+    $Self->{Translation}->{'Add language'} = '–î–æ–±–∞–≤–∏—Ç—å —è–∑—ã–∫';
+    $Self->{Translation}->{'Delete Language'} = '–£–¥–∞–ª–∏—Ç—å —è–∑—ã–∫';
+    $Self->{Translation}->{'Add Language'} = '–î–æ–±–∞–≤–∏—Ç—å —è–∑—ã–∫';
+    $Self->{Translation}->{'Edit Language'} = '–ò–∑–º–µ–Ω–∏—Ç—å —è–∑—ã–∫';
+    $Self->{Translation}->{'Do you really want to delete this language?'} = '–ü–æ–¥—Ç–≤–µ—Ä–¥–∏—Ç–µ —É–¥–∞–ª–µ–Ω–∏–µ —ç—Ç–æ–≥–æ —è–∑—ã–∫–∞!';
+    $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = '–≠—Ç–æ—Ç —è–∑—ã–∫ —É–¥–∞–ª—è—Ç—å –Ω–µ–ª—å–∑—è. –ù–∞ –Ω—ë–º –Ω–∞–ø–∏—Å–∞–Ω–∞ –∫–∞–∫ –º–∏–Ω–∏–º—É–º –æ–¥–Ω–∞ —Å—Ç–∞—Ç—å—è FAQ!';
+    $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = '–≠—Ç–æ—Ç —è–∑—ã–∫ –∏—Å–ø–æ–ª—å–∑–æ–≤–∞–Ω –≤ —Å–ª–µ–¥—É—é—â–∏—Ö —Å—Ç–∞—Ç—å—è—Ö FAQ';
 
     # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Õ‡ÒÚÓÈÍ‡ ÍÓÌÚÂÍÒÚ‡';
-    $Self->{Translation}->{'FAQ articles per page'} = ' ÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ Ì‡ ÒÚ‡ÌËˆÛ';
+    $Self->{Translation}->{'Context Settings'} = '–ù–∞—Å—Ç—Ä–æ–π–∫–∞ –∫–æ–Ω—Ç–µ–∫—Å—Ç–∞';
+    $Self->{Translation}->{'FAQ articles per page'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π –Ω–∞ —Å—Ç—Ä–∞–Ω–∏—Ü—É';
 
     # Template: AgentFAQOverviewSmall
-    $Self->{Translation}->{'No FAQ data found.'} = 'ƒ‡ÌÌ˚Â FAQ ÌÂ Ì‡È‰ÂÌ˚.';
+    $Self->{Translation}->{'No FAQ data found.'} = '–î–∞–Ω–Ω—ã–µ FAQ –Ω–µ –Ω–∞–π–¥–µ–Ω—ã.';
 
     # Template: AgentFAQPrint
-    $Self->{Translation}->{'FAQ-Info'} = '»ÌÙÓÏ‡ˆËˇ FAQ';
-    $Self->{Translation}->{'Votes'} = '√ÓÎÓÒ‡';
+    $Self->{Translation}->{'FAQ-Info'} = '–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è FAQ';
+    $Self->{Translation}->{'Votes'} = '–ì–æ–ª–æ—Å–∞';
 
     # Template: AgentFAQSearch
 
@@ -122,32 +122,32 @@ sub Data {
     # Template: AgentFAQSearchResultPrint
 
     # Template: AgentFAQSearchSmall
-    $Self->{Translation}->{'FAQ Search'} = 'œÓËÒÍ ‚ FAQ';
+    $Self->{Translation}->{'FAQ Search'} = '–ü–æ–∏—Å–∫ –≤ FAQ';
 
     # Template: AgentFAQZoom
-    $Self->{Translation}->{'FAQ Information'} = '»ÌÙÓÏ‡ˆËˇ FAQ';
-    $Self->{Translation}->{'Rating'} = 'ŒˆÂÌÍ‡';
-    $Self->{Translation}->{'Rating %'} = 'ŒˆÂÌÍ‡ %';
-    $Self->{Translation}->{'out of 5'} = 'ËÁ 5';
-    $Self->{Translation}->{'No votes found!'} = 'ŒˆÂÌÓÍ ÌÂ Ì‡È‰ÂÌÓ!';
-    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'ŒˆÂÌÓÍ ÌÂ Ì‡È‰ÂÌÓ! ŒˆÂÌËÚÂ ˝ÚÛ ÒÚ‡Ú¸˛ FAQ ÔÂ‚˚Ï.';
-    $Self->{Translation}->{'Download Attachment'} = '—Í‡˜‡Ú¸ ‚ÎÓÊÂÌËÂ';
-    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = 'Õ‡ÒÍÓÎ¸ÍÓ ·˚Î‡ ÔÓÎÂÁÌ‡ ˝Ú‡ ÒÚ‡Ú¸ˇ? œÓÊ‡ÎÛÈÒÚ‡, ÓˆÂÌËÚÂ Â∏, ˜ÚÓ·˚ Ï˚ ÏÓ„ÎË ÛÎÛ˜¯ËÚ¸ ·‡ÁÛ FAQ. —Ô‡ÒË·Ó!';
-    $Self->{Translation}->{'not helpful'} = '·ÂÒÔÓÎÂÁÌ‡ˇ';
-    $Self->{Translation}->{'very helpful'} = 'Ó˜ÂÌ¸ ÔÓÎÂÁÌ‡ˇ';
+    $Self->{Translation}->{'FAQ Information'} = '–ò–Ω—Ñ–æ—Ä–º–∞—Ü–∏—è FAQ';
+    $Self->{Translation}->{'Rating'} = '–û—Ü–µ–Ω–∫–∞';
+    $Self->{Translation}->{'Rating %'} = '–û—Ü–µ–Ω–∫–∞ %';
+    $Self->{Translation}->{'out of 5'} = '–∏–∑ 5';
+    $Self->{Translation}->{'No votes found!'} = '–û—Ü–µ–Ω–æ–∫ –Ω–µ –Ω–∞–π–¥–µ–Ω–æ!';
+    $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = '–û—Ü–µ–Ω–æ–∫ –Ω–µ –Ω–∞–π–¥–µ–Ω–æ! –û—Ü–µ–Ω–∏—Ç–µ —ç—Ç—É —Å—Ç–∞—Ç—å—é FAQ –ø–µ—Ä–≤—ã–º.';
+    $Self->{Translation}->{'Download Attachment'} = '–°–∫–∞—á–∞—Ç—å –≤–ª–æ–∂–µ–Ω–∏–µ';
+    $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = '–ù–∞—Å–∫–æ–ª—å–∫–æ –±—ã–ª–∞ –ø–æ–ª–µ–∑–Ω–∞ —ç—Ç–∞ —Å—Ç–∞—Ç—å—è? –ü–æ–∂–∞–ª—É–π—Å—Ç–∞, –æ—Ü–µ–Ω–∏—Ç–µ –µ—ë, —á—Ç–æ–±—ã –º—ã –º–æ–≥–ª–∏ —É–ª—É—á—à–∏—Ç—å –±–∞–∑—É FAQ. –°–ø–∞—Å–∏–±–æ!';
+    $Self->{Translation}->{'not helpful'} = '–±–µ—Å–ø–æ–ª–µ–∑–Ω–∞—è';
+    $Self->{Translation}->{'very helpful'} = '–æ—á–µ–Ω—å –ø–æ–ª–µ–∑–Ω–∞—è';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Insert FAQ Text'} = '¬ÒÚ‡‚ËÚ¸ ÚÂÍÒÚ FAQ';
-    $Self->{Translation}->{'Insert FAQ Link'} = '¬ÒÚ‡‚ËÚ¸ ÒÒ˚ÎÍÛ Ì‡ FAQ';
-    $Self->{Translation}->{'Insert FAQ Text & Link'} = '¬ÒÚ‡‚ËÚ¸ ÚÂÍÒÚ FAQ Ë ÒÒ˚ÎÍÛ';
+    $Self->{Translation}->{'Insert FAQ Text'} = '–í—Å—Ç–∞–≤–∏—Ç—å —Ç–µ–∫—Å—Ç FAQ';
+    $Self->{Translation}->{'Insert FAQ Link'} = '–í—Å—Ç–∞–≤–∏—Ç—å —Å—Å—ã–ª–∫—É –Ω–∞ FAQ';
+    $Self->{Translation}->{'Insert FAQ Text & Link'} = '–í—Å—Ç–∞–≤–∏—Ç—å —Ç–µ–∫—Å—Ç FAQ –∏ —Å—Å—ã–ª–∫—É';
 
     # Template: CustomerFAQExplorer
-    $Self->{Translation}->{'No FAQ articles found.'} = '—Ú‡Ú¸Ë FAQ ÌÂ Ì‡È‰ÂÌ˚.';
+    $Self->{Translation}->{'No FAQ articles found.'} = '–°—Ç–∞—Ç—å–∏ FAQ –Ω–µ –Ω–∞–π–¥–µ–Ω—ã.';
 
     # Template: CustomerFAQPrint
 
     # Template: CustomerFAQSearch
-    $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = 'œÓÎÌÓÚÂÍÒÚÓ‚˚È ÔÓËÒÍ ‚ ÒÚ‡Ú¸ˇı FAQ (Ì‡ÔËÏÂ, "‡‚ÚÓÏ*ÍË" ËÎË "ÃÓÒÍ*")';
+    $Self->{Translation}->{'Fulltext search in FAQ articles (e. g. "John*n" or "Will*")'} = '–ü–æ–ª–Ω–æ—Ç–µ–∫—Å—Ç–æ–≤—ã–π –ø–æ–∏—Å–∫ –≤ —Å—Ç–∞—Ç—å—è—Ö FAQ (–Ω–∞–ø—Ä–∏–º–µ—Ä, "–∞–≤—Ç–æ–º*–∫–∏" –∏–ª–∏ "–ú–æ—Å–∫*")';
 
     # Template: CustomerFAQSearchOpenSearchDescription
 
@@ -156,8 +156,8 @@ sub Data {
     # Template: CustomerFAQSearchResultShort
 
     # Template: CustomerFAQZoom
-    $Self->{Translation}->{'Details'} = 'œÓ‰Ó·ÌÂÂ';
-    $Self->{Translation}->{'Search for articles with keyword'} = 'œÓËÒÍ ÒÚ‡ÚÂÈ ÔÓ ÍÎ˛˜Â‚ÓÏÛ ÒÎÓ‚Û';
+    $Self->{Translation}->{'Details'} = '–ü–æ–¥—Ä–æ–±–Ω–µ–µ';
+    $Self->{Translation}->{'Search for articles with keyword'} = '–ü–æ–∏—Å–∫ —Å—Ç–∞—Ç–µ–π –ø–æ –∫–ª—é—á–µ–≤–æ–º—É —Å–ª–æ–≤—É';
 
     # Template: PublicFAQExplorer
 
@@ -166,7 +166,7 @@ sub Data {
     # Template: PublicFAQSearch
 
     # Template: PublicFAQSearchOpenSearchDescription
-    $Self->{Translation}->{'Public'} = 'Œ·˘Â‰ÓÒÚÛÔÌÓÂ';
+    $Self->{Translation}->{'Public'} = '–û–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–µ';
 
     # Template: PublicFAQSearchResultPrint
 
@@ -175,27 +175,27 @@ sub Data {
     # Template: PublicFAQZoom
 
     # SysConfig
-    $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} = 'Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Grafik-Verzeichnis des OTRS zugegriffen. Als zweite Mˆglichkeit kann man aber auch den direkten Link zur Grafik angeben (z. B. http://otrs.org/faq.png).';
-    $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS-Farbe f¸r das Bewertungs-Ergebnis.';
-    $Self->{Translation}->{'Category Management'} = '”Ô‡‚ÎÂÌËÂ Í‡ÚÂ„ÓËˇÏË';
+    $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} = 'Ein Filter zur automatischen Generierung von FAQ-Links, wenn ein Hinweis auf einen FAQ-Artikel identifiziert wird. Das Element Image erlaubt zwei Eingabeformen: Erstens der Name eines Icons (z. B. faq.png). In diesem Fall wird auf das Grafik-Verzeichnis des OTRS zugegriffen. Als zweite M—Üglichkeit kann man aber auch den direkten Link zur Grafik angeben (z. B. http://otrs.org/faq.png).';
+    $Self->{Translation}->{'CSS color for the voting result.'} = 'CSS-Farbe f—år das Bewertungs-Ergebnis.';
+    $Self->{Translation}->{'Category Management'} = '–£–ø—Ä–∞–≤–ª–µ–Ω–∏–µ –∫–∞—Ç–µ–≥–æ—Ä–∏—è–º–∏';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '';
-    $Self->{Translation}->{'Default category name.'} = 'Õ‡Á‚‡ÌËÂ Í‡ÚÂ„ÓËË ÔÓ-ÛÏÓÎ˜‡ÌË˛.';
-    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'ﬂÁ˚Í ÒÚ‡ÚÂÈ FAQ ÔÓ-ÛÏÓÎ˜‡ÌË˛ ‚ Ó‰ÌÓˇÁ˚˜ÌÓÏ ÂÊËÏÂ.';
-    $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} = 'œËÓËÚÂÚ Á‡ˇ‚ÓÍ Ì‡ Ó‰Ó·ÂÌËÂ ÒÚ‡ÚÂÈ FAQ ÔÓ-ÛÏÓÎ˜‡ÌË˛.';
-    $Self->{Translation}->{'Default state for FAQ entry.'} = '—Ú‡ÚÛÒ Á‡ÔËÒË FAQ ÔÓ-ÛÏÓÎ˜‡ÌË˛.';
-    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = '—Ú‡ÚÛÒ Á‡ˇ‚ÓÍ Ì‡ Ó‰Ó·ÂÌËÂ ÒÚ‡ÚÂÈ FAQ ÔÓ-ÛÏÓÎ˜‡ÌË˛.';
-    $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} = '«Ì‡˜ÂÌËÂ ÔÓ ÛÏÓÎ˜‡ÌË˛ Ô‡‡ÏÂÚ‡ Action ‰Îˇ Ó·˘Â‰ÓÒÚÛÔÌÓ„Ó ÙÓÌÚÂÌ‰‡. œ‡‡ÏÂÚ Action ËÒÔÓÎ¸ÁÛÂÚÒˇ ‚ ÒÍËÔÚ‡ı ÒËÒÚÂÏ˚.';
+    $Self->{Translation}->{'Default category name.'} = '–ù–∞–∑–≤–∞–Ω–∏–µ –∫–∞—Ç–µ–≥–æ—Ä–∏–∏ –ø–æ-—É–º–æ–ª—á–∞–Ω–∏—é.';
+    $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '–Ø–∑—ã–∫ —Å—Ç–∞—Ç–µ–π FAQ –ø–æ-—É–º–æ–ª—á–∞–Ω–∏—é –≤ –æ–¥–Ω–æ—è–∑—ã—á–Ω–æ–º —Ä–µ–∂–∏–º–µ.';
+    $Self->{Translation}->{'Default priority of tickets for the approval of FAQ articles.'} = '–ü—Ä–∏–æ—Ä–∏—Ç–µ—Ç –∑–∞—è–≤–æ–∫ –Ω–∞ –æ–¥–æ–±—Ä–µ–Ω–∏–µ —Å—Ç–∞—Ç–µ–π FAQ –ø–æ-—É–º–æ–ª—á–∞–Ω–∏—é.';
+    $Self->{Translation}->{'Default state for FAQ entry.'} = '–°—Ç–∞—Ç—É—Å –∑–∞–ø–∏—Å–∏ FAQ –ø–æ-—É–º–æ–ª—á–∞–Ω–∏—é.';
+    $Self->{Translation}->{'Default state of tickets for the approval of FAQ articles.'} = '–°—Ç–∞—Ç—É—Å –∑–∞—è–≤–æ–∫ –Ω–∞ –æ–¥–æ–±—Ä–µ–Ω–∏–µ —Å—Ç–∞—Ç–µ–π FAQ –ø–æ-—É–º–æ–ª—á–∞–Ω–∏—é.';
+    $Self->{Translation}->{'Default value for the Action parameter for the public frontend. The Action parameter is used in the scripts of the system.'} = '–ó–Ω–∞—á–µ–Ω–∏–µ –ø–æ —É–º–æ–ª—á–∞–Ω–∏—é –ø–∞—Ä–∞–º–µ—Ç—Ä–∞ Action –¥–ª—è –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–≥–æ —Ñ—Ä–æ–Ω—Ç–µ–Ω–¥–∞. –ü–∞—Ä–∞–º–µ—Ç—Ä Action –∏—Å–ø–æ–ª—å–∑—É–µ—Ç—Å—è –≤ —Å–∫—Ä–∏–ø—Ç–∞—Ö —Å–∏—Å—Ç–µ–º—ã.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ journal.'} = '';
     $Self->{Translation}->{'Defines an overview module to show the small view of a FAQ list.'} = '';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌÓÂ ÁÌ‡˜ÂÌËÂ ‡ÚË·ÛÚ‡ FAQ ‰Îˇ ÒÓÚËÓ‚ÍË ÂÁÛÎ¸Ú‡ÚÓ‚ ÔÓËÒÍ‡ ‚ FAQ ‚ ËÌÚÂÙÂÈÒÂ ‡„ÂÌÚ‡.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌÓÂ ÁÌ‡˜ÂÌËÂ ‡ÚË·ÛÚ‡ FAQ ‰Îˇ ÒÓÚËÓ‚ÍË ÂÁÛÎ¸Ú‡ÚÓ‚ ÔÓËÒÍ‡ ‚ FAQ ‚ ËÌÚÂÙÂÈÒÂ ÍÎËÂÌÚ‡.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌÓÂ ÁÌ‡˜ÂÌËÂ ‡ÚË·ÛÚ‡ ÒÓÚËÓ‚ÍË ÂÁÛÎ¸Ú‡Ú‡ ÔÓËÒÍ‡ ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ ËÌÚÂÙÂÈÒÂ.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌÓÂ ÁÌ‡˜ÂÌËÂ ‡ÚË·ÛÚ‡ ÒÓÚËÓ‚ÍË ‚ FAQ Explorere ËÌÚÂÙÂÈÒ‡ ‡„ÂÌÚ‡.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌÓÂ ÁÌ‡˜ÂÌËÂ ‡ÚË·ÛÚ‡ ÒÓÚËÓ‚ÍË ‚ FAQ Explorere ËÌÚÂÙÂÈÒ‡ ÍÎËÂÌÚ‡.';
-    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌÓÂ ÁÌ‡˜ÂÌËÂ ‡ÚË·ÛÚ‡ ÒÓÚËÓ‚ÍË ‚ FAQ Explorere ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ  ËÌÚÂÙÂÈÒÂ.';
-    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌ˚È ÔÓˇ‰ÓÍ ‚ ÂÁÛÎ¸Ú‡Ú‡ı FAQ Explorer ËÌÚÂÙÂÈÒ‡ ‡„ÂÌÚ‡. Up: ÔÓÁ‰ÌÂÂ Ì‡‚ÂıÛ. Down: ÌÓ‚ÓÂ Ì‡‚ÂıÛ.';
-    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌ˚È ÔÓˇ‰ÓÍ ‚ ÂÁÛÎ¸Ú‡Ú‡ı FAQ Explorer ËÌÚÂÙÂÈÒ‡ ÍÎËÂÌÚ‡. Up: ÔÓÁ‰ÌÂÂ Ì‡‚ÂıÛ. Down: ÌÓ‚ÓÂ Ì‡‚ÂıÛ.';
-    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} = '”Í‡ÊËÚÂ ÒÚ‡Ì‰‡ÚÌ˚È ÔÓˇ‰ÓÍ ‚ ÂÁÛÎ¸Ú‡Ú‡ı FAQ Explorer ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ ËÌÚÂÙÂÈÒÂ. Up: ÔÓÁ‰ÌÂÂ Ì‡‚ÂıÛ. Down: ÌÓ‚ÓÂ Ì‡‚ÂıÛ.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the agent interface.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω–æ–µ –∑–Ω–∞—á–µ–Ω–∏–µ –∞—Ç—Ä–∏–±—É—Ç–∞ FAQ –¥–ª—è —Å–æ—Ä—Ç–∏—Ä–æ–≤–∫–∏ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–æ–≤ –ø–æ–∏—Å–∫–∞ –≤ FAQ –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∞–≥–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the customer interface.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω–æ–µ –∑–Ω–∞—á–µ–Ω–∏–µ –∞—Ç—Ä–∏–±—É—Ç–∞ FAQ –¥–ª—è —Å–æ—Ä—Ç–∏—Ä–æ–≤–∫–∏ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–æ–≤ –ø–æ–∏—Å–∫–∞ –≤ FAQ –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∫–ª–∏–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in a FAQ search of the public interface.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω–æ–µ –∑–Ω–∞—á–µ–Ω–∏–µ –∞—Ç—Ä–∏–±—É—Ç–∞ —Å–æ—Ä—Ç–∏—Ä–æ–≤–∫–∏ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞ –ø–æ–∏—Å–∫–∞ –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the agent interface.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω–æ–µ –∑–Ω–∞—á–µ–Ω–∏–µ –∞—Ç—Ä–∏–±—É—Ç–∞ —Å–æ—Ä—Ç–∏—Ä–æ–≤–∫–∏ –≤ FAQ Explorere –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞ –∞–≥–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the customer interface.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω–æ–µ –∑–Ω–∞—á–µ–Ω–∏–µ –∞—Ç—Ä–∏–±—É—Ç–∞ —Å–æ—Ä—Ç–∏—Ä–æ–≤–∫–∏ –≤ FAQ Explorere –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞ –∫–ª–∏–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Defines the default FAQ attribute for FAQ sorting in the FAQ Explorer of the public interface.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω–æ–µ –∑–Ω–∞—á–µ–Ω–∏–µ –∞—Ç—Ä–∏–±—É—Ç–∞ —Å–æ—Ä—Ç–∏—Ä–æ–≤–∫–∏ –≤ FAQ Explorere –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º  –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ.';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the agent interface. Up: oldest on top. Down: latest on top.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω—ã–π –ø–æ—Ä—è–¥–æ–∫ –≤ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞—Ö FAQ Explorer –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞ –∞–≥–µ–Ω—Ç–∞. Up: –ø–æ–∑–¥–Ω–µ–µ –Ω–∞–≤–µ—Ä—Ö—É. Down: –Ω–æ–≤–æ–µ –Ω–∞–≤–µ—Ä—Ö—É.';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the customer interface. Up: oldest on top. Down: latest on top.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω—ã–π –ø–æ—Ä—è–¥–æ–∫ –≤ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞—Ö FAQ Explorer –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞ –∫–ª–∏–µ–Ω—Ç–∞. Up: –ø–æ–∑–¥–Ω–µ–µ –Ω–∞–≤–µ—Ä—Ö—É. Down: –Ω–æ–≤–æ–µ –Ω–∞–≤–µ—Ä—Ö—É.';
+    $Self->{Translation}->{'Defines the default FAQ order in the FAQ Explorer result of the public interface. Up: oldest on top. Down: latest on top.'} = '–£–∫–∞–∂–∏—Ç–µ —Å—Ç–∞–Ω–¥–∞—Ä—Ç–Ω—ã–π –ø–æ—Ä—è–¥–æ–∫ –≤ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞—Ö FAQ Explorer –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ. Up: –ø–æ–∑–¥–Ω–µ–µ –Ω–∞–≤–µ—Ä—Ö—É. Down: –Ω–æ–≤–æ–µ –Ω–∞–≤–µ—Ä—Ö—É.';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the agent interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the customer interface. Up: oldest on top. Down: latest on top.'} = '';
     $Self->{Translation}->{'Defines the default FAQ order of a search result in the public interface. Up: oldest on top. Down: latest on top.'} = '';
@@ -204,75 +204,75 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} = '';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '';
-    $Self->{Translation}->{'Delete this FAQ'} = '”‰‡ÎËÚ¸ ˝ÚÓÚ FAQ';
-    $Self->{Translation}->{'Edit this FAQ'} = '»ÁÏÂÌËÚ¸ ˝ÚÓÚ FAQ';
-    $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '–‡ÁÂ¯ËÚ¸ ÏÌÓ„ÓˇÁ˚˜ÌÓÒÚ¸ ‚ ÏÓ‰ÛÎÂ FAQ.';
-    $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '–‡ÁÂ¯ËÚ¸ ÙÛÌÍˆË˛ ÓˆÂÌÍË ‚ ÏÓ‰ÛÎÂ FAQ.';
-    $Self->{Translation}->{'FAQ Journal'} = '∆ÛÌ‡Î FAQ';
+    $Self->{Translation}->{'Delete this FAQ'} = '–£–¥–∞–ª–∏—Ç—å —ç—Ç–æ—Ç FAQ';
+    $Self->{Translation}->{'Edit this FAQ'} = '–ò–∑–º–µ–Ω–∏—Ç—å —ç—Ç–æ—Ç FAQ';
+    $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '–†–∞–∑—Ä–µ—à–∏—Ç—å –º–Ω–æ–≥–æ—è–∑—ã—á–Ω–æ—Å—Ç—å –≤ –º–æ–¥—É–ª–µ FAQ.';
+    $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '–†–∞–∑—Ä–µ—à–∏—Ç—å —Ñ—É–Ω–∫—Ü–∏—é –æ—Ü–µ–Ω–∫–∏ –≤ –º–æ–¥—É–ª–µ FAQ.';
+    $Self->{Translation}->{'FAQ Journal'} = '–ñ—É—Ä–Ω–∞–ª FAQ';
     $Self->{Translation}->{'FAQ Journal Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ Overview "Small" Limit'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Journal Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
-    $Self->{Translation}->{'FAQ path separator.'} = '–‡Á‰ÂÎËÚÂÎ¸ ÔÛÚË FAQ.';
+    $Self->{Translation}->{'FAQ path separator.'} = '–†–∞–∑–¥–µ–ª–∏—Ç–µ–ª—å –ø—É—Ç–∏ FAQ.';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
     $Self->{Translation}->{'FAQ-Area'} = '';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
-    $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '√ÛÔÔ‡ ‰Îˇ Ó‰Ó·ÂÌËˇ ÒÚ‡ÚÂÈ FAQ.';
-    $Self->{Translation}->{'History of this FAQ'} = '»ÒÚÓËˇ ˝ÚÓ„Ó FAQ';
+    $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '–ì—Ä—É–ø–ø–∞ –¥–ª—è –æ–¥–æ–±—Ä–µ–Ω–∏—è —Å—Ç–∞—Ç–µ–π FAQ.';
+    $Self->{Translation}->{'History of this FAQ'} = '–ò—Å—Ç–æ—Ä–∏—è —ç—Ç–æ–≥–æ FAQ';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
-    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '»ÌÚÂÙÂÈÒ˚, ‚ ÍÓÚÓ˚ı ÔÓÍ‡Á˚‚‡ÂÚÒˇ ·˚ÒÚ˚È ÔÓËÒÍ.';
-    $Self->{Translation}->{'Journal'} = '∆ÛÌ‡Î';
-    $Self->{Translation}->{'Language Management'} = '”Ô‡‚ÎÂÌËÂ ˇÁ˚Í‡ÏË';
-    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = ' Î˛˜ ˇÁ˚Í‡, ÛÍ‡Á‡ÌÌ˚È ‚ ˇÁ˚ÍÓ‚ÓÏ Ù‡ÈÎÂ *_FAQ.pm.';
-    $Self->{Translation}->{'Link another object to this FAQ item'} = 'œË‚ˇÁ‡Ú¸ ‰Û„ÓÈ Ó·˙ÂÍÚ Í ˝ÚÓÏÛ ˝ÎÂÏÂÌÚÛ FAQ';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏÓÂ ‚ FAQ Explorer ‚ ËÌÚÂÙÂÈÒÂ ‡„ÂÌÚ‡.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏÓÂ ‚ FAQ Explorer ‚ ËÌÚÂÙÂÈÒÂ ÍÎËÂÌÚ‡.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏÓÂ ‚ FAQ Explorer ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ ËÌÚÂÙÂÈÒÂ.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı ‚ ÊÛÌ‡ÎÂ FAQ ‚ ËÌÚÂÙÂÈÒÂ ‡„ÂÌÚ‡.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı ‚ ÂÁÛÎ¸Ú‡ÚÂ ÔÓËÒÍ‡ ‚ ËÌÚÂÙÂÈÒÂ ‡„ÂÌÚ‡.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı ‚ ÂÁÛÎ¸Ú‡ÚÂ ÔÓËÒÍ‡ ‚ ËÌÚÂÙÂÈÒÂ ÍÎËÂÌÚ‡.';
-    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = 'Ã‡ÍÒËÏ‡Î¸ÌÓÂ ÍÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı ‚ ÂÁÛÎ¸Ú‡ÚÂ ÔÓËÒÍ‡ ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ ËÌÚÂÙÂÈÒÂ.';
+    $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '–ò–Ω—Ç–µ—Ä—Ñ–µ–π—Å—ã, –≤ –∫–æ—Ç–æ—Ä—ã—Ö –ø–æ–∫–∞–∑—ã–≤–∞–µ—Ç—Å—è –±—ã—Å—Ç—Ä—ã–π –ø–æ–∏—Å–∫.';
+    $Self->{Translation}->{'Journal'} = '–ñ—É—Ä–Ω–∞–ª';
+    $Self->{Translation}->{'Language Management'} = '–£–ø—Ä–∞–≤–ª–µ–Ω–∏–µ —è–∑—ã–∫–∞–º–∏';
+    $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '–ö–ª—é—á —è–∑—ã–∫–∞, —É–∫–∞–∑–∞–Ω–Ω—ã–π –≤ —è–∑—ã–∫–æ–≤–æ–º —Ñ–∞–π–ª–µ *_FAQ.pm.';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = '–ü—Ä–∏–≤—è–∑–∞—Ç—å –¥—Ä—É–≥–æ–π –æ–±—ä–µ–∫—Ç –∫ —ç—Ç–æ–º—É —ç–ª–µ–º–µ–Ω—Ç—É FAQ';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º–æ–µ –≤ FAQ Explorer –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∞–≥–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º–æ–µ –≤ FAQ Explorer –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∫–ª–∏–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º–æ–µ –≤ FAQ Explorer –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ journal in the agent interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –≤ –∂—É—Ä–Ω–∞–ª–µ FAQ –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∞–≥–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the agent interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –≤ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–µ –ø–æ–∏—Å–∫–∞ –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∞–≥–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –≤ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–µ –ø–æ–∏—Å–∫–∞ –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∫–ª–∏–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '–ú–∞–∫—Å–∏–º–∞–ª—å–Ω–æ–µ –∫–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –≤ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–µ –ø–æ–∏—Å–∫–∞ –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ.';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
-    $Self->{Translation}->{'New FAQ Article'} = 'ÕÓ‚‡ˇ ÒÚ‡Ú¸ˇ ‚ FAQ';
-    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = 'ÕÓ‚‡ˇ ÒÚ‡Ú¸ˇ FAQ ÔÂÂ‰ ÔÛ·ÎËÍ‡ˆËÂÈ ÚÂ·ÛÂÚ Ó‰Ó·ÂÌËˇ.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = ' ÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı ‚ FAQ Explorer ‚ ËÌÚÂÙÂÈÒÂ ÍÎËÂÌÚ‡.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = ' ÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı ‚ FAQ Explorer ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ ËÌÚÂÙÂÈÒÂ.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} = ' ÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı Ì‡ Í‡Ê‰ÓÈ ÒÚ‡ÌËˆÂ ÂÁÛÎ¸Ú‡Ú‡ ÔÓËÒÍ‡ ‚  ËÌÚÂÙÂÈÒÂ ÍÎËÂÌÚ‡.';
-    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} = ' ÓÎË˜ÂÒÚ‚Ó ÒÚ‡ÚÂÈ, ‚˚‚Ó‰ËÏ˚ı Ì‡ Í‡Ê‰ÓÈ ÒÚ‡ÌËˆÂ ÂÁÛÎ¸Ú‡Ú‡ ÔÓËÒÍ‡ ‚ Ó·˘Â‰ÓÒÚÛÔÌÓÏ ËÌÚÂÙÂÈÒÂ.';
-    $Self->{Translation}->{'Number of shown items in last changes.'} = ' ÓÎË˜ÂÒÚ‚Ó ÓÚÓ·‡Ê‡ÂÏ˚ı ÔÓÁËˆËÈ ‚ ÔÓÒÎÂ‰ÌËı ËÁÏÂÌÂÌËˇı.';
-    $Self->{Translation}->{'Number of shown items in last created.'} = ' ÓÎË˜ÂÒÚ‚Ó ÓÚÓ·‡Ê‡ÂÏ˚ı ÔÓÁËˆËÈ ‚ ÌÓ‚˚ı ÒÚ‡Ú¸ˇı.';
-    $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = ' ÓÎË˜ÂÒÚ‚Ó ÓÚÓ·‡Ê‡ÂÏ˚ı ÔÓÁËˆËÈ ‚ ÙÛÌÍˆËË Top 10.';
+    $Self->{Translation}->{'New FAQ Article'} = '–ù–æ–≤–∞—è —Å—Ç–∞—Ç—å—è –≤ FAQ';
+    $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '–ù–æ–≤–∞—è —Å—Ç–∞—Ç—å—è FAQ –ø–µ—Ä–µ–¥ –ø—É–±–ª–∏–∫–∞—Ü–∏–µ–π —Ç—Ä–µ–±—É–µ—Ç –æ–¥–æ–±—Ä–µ–Ω–∏—è.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –≤ FAQ Explorer –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∫–ª–∏–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –≤ FAQ Explorer –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the customer interface.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –Ω–∞ –∫–∞–∂–¥–æ–π —Å—Ç—Ä–∞–Ω–∏—Ü–µ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞ –ø–æ–∏—Å–∫–∞ –≤  –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∫–ª–∏–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Number of FAQ articles to be displayed on each page of a search result in the public interface.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ —Å—Ç–∞—Ç–µ–π, –≤—ã–≤–æ–¥–∏–º—ã—Ö –Ω–∞ –∫–∞–∂–¥–æ–π —Å—Ç—Ä–∞–Ω–∏—Ü–µ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞ –ø–æ–∏—Å–∫–∞ –≤ –æ–±—â–µ–¥–æ—Å—Ç—É–ø–Ω–æ–º –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ.';
+    $Self->{Translation}->{'Number of shown items in last changes.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ –æ—Ç–æ–±—Ä–∞–∂–∞–µ–º—ã—Ö –ø–æ–∑–∏—Ü–∏–π –≤ –ø–æ—Å–ª–µ–¥–Ω–∏—Ö –∏–∑–º–µ–Ω–µ–Ω–∏—è—Ö.';
+    $Self->{Translation}->{'Number of shown items in last created.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ –æ—Ç–æ–±—Ä–∞–∂–∞–µ–º—ã—Ö –ø–æ–∑–∏—Ü–∏–π –≤ –Ω–æ–≤—ã—Ö —Å—Ç–∞—Ç—å—è—Ö.';
+    $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '–ö–æ–ª–∏—á–µ—Å—Ç–≤–æ –æ—Ç–æ–±—Ä–∞–∂–∞–µ–º—ã—Ö –ø–æ–∑–∏—Ü–∏–π –≤ —Ñ—É–Ω–∫—Ü–∏–∏ Top 10.';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} = '';
-    $Self->{Translation}->{'Print this FAQ'} = 'œÂ˜‡Ú¸ ˝ÚÓ„Ó FAQ';
-    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = 'Œ˜ÂÂ‰¸ Ì‡ Ó‰Ó·ÂÌËÂ ÒÚ‡ÚÂÈ FAQ.';
+    $Self->{Translation}->{'Print this FAQ'} = '–ü–µ—á–∞—Ç—å —ç—Ç–æ–≥–æ FAQ';
+    $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '–û—á–µ—Ä–µ–¥—å –Ω–∞ –æ–¥–æ–±—Ä–µ–Ω–∏–µ —Å—Ç–∞—Ç–µ–π FAQ.';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
-    $Self->{Translation}->{'Search FAQ'} = 'œÓËÒÍ ‚ FAQ';
+    $Self->{Translation}->{'Search FAQ'} = '–ü–æ–∏—Å–∫ –≤ FAQ';
     $Self->{Translation}->{'Show "Insert FAQ Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
     $Self->{Translation}->{'Show "Insert FAQ Text & Link" Button in AgentFAQZoomSmall for public FAQ Articles.'} = '';
     $Self->{Translation}->{'Show "Insert FAQ Text" Button in AgentFAQZoomSmall.'} = '';
-    $Self->{Translation}->{'Show FAQ Article with HTML.'} = 'œÓÍ‡Á˚‚‡Ú¸ ÒÚ‡Ú¸˛ FAQ ‚ HTML.';
-    $Self->{Translation}->{'Show FAQ path yes/no.'} = 'œÓÍ‡Á˚‚‡Ú¸ ÔÛÚ¸ FAQ ‰‡/ÌÂÚ.';
-    $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = 'œÓÍ‡Á˚‚‡Ú¸ WYSIWYG Â‰‡ÍÚÓ ‚ ËÌÚÂÙÂÈÒÂ ‡„ÂÌÚ‡.';
-    $Self->{Translation}->{'Show items of subcategories.'} = 'œÓÍ‡Á˚‚‡Ú¸ ÒÓ‰ÂÊËÏÓÂ ÔÓ‰‡Á‰ÂÎÓ‚.';
-    $Self->{Translation}->{'Show last change items in defined interfaces.'} = 'œÓÍ‡Á˚‚‡Ú¸ ÔÓÒÎÂ‰ÌËÂ ËÁÏÂÌÂÌËˇ ‚ ÛÍ‡Á‡Ì˚ı ËÌÚÂÙÂÈÒ‡ı.';
-    $Self->{Translation}->{'Show last created items in defined interfaces.'} = 'œÓÍ‡Á˚‚‡Ú¸ ÌÓ‚˚Â ÔÛÌÍÚ˚ ‚ ÛÍ‡Á‡ÌÌ˚ı ËÌÚÂÙÂÈÒ‡ı.';
-    $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = 'œÓÍ‡Á˚‚‡Ú¸ Top 10 ‚ ÛÍ‡Á‡ÌÌ˚ı ËÌÚÂÙÂÈÒ‡ı.';
-    $Self->{Translation}->{'Show voting in defined interfaces.'} = 'œÓÍ‡Á˚‚‡Ú¸ ÓˆÂÌÍÛ ‚ ÛÍ‡Á‡ÌÌ˚ı ËÌÚÂÙÂÈÒ‡ı.';
+    $Self->{Translation}->{'Show FAQ Article with HTML.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å —Å—Ç–∞—Ç—å—é FAQ –≤ HTML.';
+    $Self->{Translation}->{'Show FAQ path yes/no.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å –ø—É—Ç—å FAQ –¥–∞/–Ω–µ—Ç.';
+    $Self->{Translation}->{'Show WYSIWYG editor in agent interface.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å WYSIWYG —Ä–µ–¥–∞–∫—Ç–æ—Ä –≤ –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–µ –∞–≥–µ–Ω—Ç–∞.';
+    $Self->{Translation}->{'Show items of subcategories.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å —Å–æ–¥–µ—Ä–∂–∏–º–æ–µ –ø–æ–¥—Ä–∞–∑–¥–µ–ª–æ–≤.';
+    $Self->{Translation}->{'Show last change items in defined interfaces.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å –ø–æ—Å–ª–µ–¥–Ω–∏–µ –∏–∑–º–µ–Ω–µ–Ω–∏—è –≤ —É–∫–∞–∑–∞–Ω—ã—Ö –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞—Ö.';
+    $Self->{Translation}->{'Show last created items in defined interfaces.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å –Ω–æ–≤—ã–µ –ø—É–Ω–∫—Ç—ã –≤ —É–∫–∞–∑–∞–Ω–Ω—ã—Ö –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞—Ö.';
+    $Self->{Translation}->{'Show top 10 items in defined interfaces.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å Top 10 –≤ —É–∫–∞–∑–∞–Ω–Ω—ã—Ö –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞—Ö.';
+    $Self->{Translation}->{'Show voting in defined interfaces.'} = '–ü–æ–∫–∞–∑—ã–≤–∞—Ç—å –æ—Ü–µ–Ω–∫—É –≤ —É–∫–∞–∑–∞–Ω–Ω—ã—Ö –∏–Ω—Ç–µ—Ä—Ñ–µ–π—Å–∞—Ö.';
     $Self->{Translation}->{'Shows a link in the menu that allows linking a FAQ with another object in the zoom view of such FAQ of the agent interface.'} = '';
     $Self->{Translation}->{'Shows a link in the menu that allows to delete a FAQ in its zoom view in the agent interface.'} = '';
     $Self->{Translation}->{'Shows a link in the menu to access the history of a FAQ in its zoom view of the agent interface.'} = '';
     $Self->{Translation}->{'Shows a link in the menu to edit a FAQ in the its zoom view of the agent interface.'} = '';
     $Self->{Translation}->{'Shows a link in the menu to go back in the FAQ zoom view of the agent interface.'} = '';
     $Self->{Translation}->{'Shows a link in the menu to print a FAQ in the its zoom view of the agent interface.'} = '';
-    $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} = '»‰ÂÌÚËÙËÍ‡ÚÓ FAQ, Ì‡ÔËÏÂ, FAQ#, KB#, MyFAQ#. œÓ ÛÏÓÎ˜‡ÌË˛ - FAQ#.';
+    $Self->{Translation}->{'The identifier for a FAQ, e.g. FAQ#, KB#, MyFAQ#. The default is FAQ#.'} = '–ò–¥–µ–Ω—Ç–∏—Ñ–∏–∫–∞—Ç–æ—Ä FAQ, –Ω–∞–ø—Ä–∏–º–µ—Ä, FAQ#, KB#, MyFAQ#. –ü–æ —É–º–æ–ª—á–∞–Ω–∏—é - FAQ#.';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'Normal\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'FAQ\' objects using the \'ParentChild\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'Ticket\' objects using the \'Normal\' link type.'} = '';
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'Ticket\' objects using the \'ParentChild\' link type.'} = '';
-    $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '“ÂÎÓ Á‡ˇ‚ÍË Ì‡ Ó‰Ó·ÂÌËÂ ÒÚ‡Ú¸Ë FAQ.';
-    $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '“ÂÏ‡ Á‡ˇ‚ÍË Ì‡ Ó‰Ó·ÂÌËÂ ÒÚ‡Ú¸Ë FAQ.';
+    $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = '–¢–µ–ª–æ –∑–∞—è–≤–∫–∏ –Ω–∞ –æ–¥–æ–±—Ä–µ–Ω–∏–µ —Å—Ç–∞—Ç—å–∏ FAQ.';
+    $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = '–¢–µ–º–∞ –∑–∞—è–≤–∫–∏ –Ω–∞ –æ–¥–æ–±—Ä–µ–Ω–∏–µ —Å—Ç–∞—Ç—å–∏ FAQ.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!

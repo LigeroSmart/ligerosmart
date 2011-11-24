@@ -2,7 +2,7 @@
 # Kernel/Language/da_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: da_FAQ.pm,v 1.16 2011-08-12 21:48:22 cr Exp $
+# $Id: da_FAQ.pm,v 1.17 2011-11-24 17:12:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ sub Data {
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sidst ændrede artikler';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'Sidst Ã¦ndrede artikler';
     $Self->{Translation}->{'Latest created FAQ articles'} = 'Nyeste artikler';
     $Self->{Translation}->{'Top 10 FAQ articles'} = 'Top 10 artikler';
     $Self->{Translation}->{'Subcategory of'} = 'Underkategori af';
@@ -30,11 +30,11 @@ sub Data {
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
     $Self->{Translation}->{'Start day'} = 'Start dag';
-    $Self->{Translation}->{'Start month'} = 'Start måned';
-    $Self->{Translation}->{'Start year'} = 'Start år';
+    $Self->{Translation}->{'Start month'} = 'Start mÃ¥ned';
+    $Self->{Translation}->{'Start year'} = 'Start Ã¥r';
     $Self->{Translation}->{'End day'} = 'Slut dag';
-    $Self->{Translation}->{'End month'} = 'Slut måned';
-    $Self->{Translation}->{'End year'} = 'Slut år';
+    $Self->{Translation}->{'End month'} = 'Slut mÃ¥ned';
+    $Self->{Translation}->{'End year'} = 'Slut Ã¥r';
     $Self->{Translation}->{'Thanks for your vote!'} = 'Tak for din stemme!';
     $Self->{Translation}->{'You have already voted!'} = 'Du har allerede stemt!';
     $Self->{Translation}->{'FAQ Article Print'} = '';
@@ -304,16 +304,16 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'A category needs min. one permission group!'} = 'En kategori behøver mindst en rettighedsgruppe.';
-    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Agentgrupper som kan tilgå denne kategori.';
+    $Self->{Translation}->{'A category needs min. one permission group!'} = 'En kategori behÃ¸ver mindst en rettighedsgruppe.';
+    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Agentgrupper som kan tilgÃ¥ denne kategori.';
     $Self->{Translation}->{'Categories'} = 'Kategorier';
-    $Self->{Translation}->{'DetailSearch'} = 'Detaljeret søgning';
+    $Self->{Translation}->{'DetailSearch'} = 'Detaljeret sÃ¸gning';
     $Self->{Translation}->{'FAQ Category'} = 'FAQ Kategorier';
     $Self->{Translation}->{'FAQ News (Top 10)'} = 'FAQ Nyheder (Top 10)';
     $Self->{Translation}->{'FAQ News (new created)'} = 'FAQ Nyheder (nyoprettet)';
-    $Self->{Translation}->{'FAQ News (recently changed)'} = 'FAQ Nyheder (sidst ændrede)';
+    $Self->{Translation}->{'FAQ News (recently changed)'} = 'FAQ Nyheder (sidst Ã¦ndrede)';
     $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Der er ikke valgt kategori. For at oprette en ny artikel skal du have adgang til mindst en kategori. Tjek dine Gruppe/Kategori rettigheder under -Kategori menuen-!';
-    $Self->{Translation}->{'QuickSearch'} = 'Søgning';
+    $Self->{Translation}->{'QuickSearch'} = 'SÃ¸gning';
     $Self->{Translation}->{'SubCategories'} = 'Underkategorier';
 
 }

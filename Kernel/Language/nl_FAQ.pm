@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.25 2011-08-12 21:48:22 cr Exp $
+# $Id: nl_FAQ.pm,v 1.26 2011-11-24 17:15:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -63,12 +63,12 @@ sub Data {
     $Self->{Translation}->{'Add Category'} = 'Categorie toevoegen';
     $Self->{Translation}->{'Edit Category'} = 'Categorie bewerken';
     $Self->{Translation}->{'Will be shown as comment in Explorer.'} = 'Wordt in webinterface getoond.';
-    $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer tenminste één permissiegroep.';
+    $Self->{Translation}->{'Please select at least one permission group.'} = 'Selecteer tenminste Ã©Ã©n permissiegroep.';
     $Self->{Translation}->{'Agent groups that can access articles in this category.'} = 'Gebruikers met rechten op artikelen in deze categorie.';
     $Self->{Translation}->{'Do you really want to delete this category?'} = 'Wilt u deze categorie verwijderen?';
-    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = 'U kunt deze categorie niet verwijderen. Hij wordt gebruikt in een of meer artikelen en/of heeft onderliggende categoriën.';
+    $Self->{Translation}->{'You can not delete this category. It is used in at least one FAQ article and/or is parent of at least one other category'} = 'U kunt deze categorie niet verwijderen. Hij wordt gebruikt in een of meer artikelen en/of heeft onderliggende categoriÃ«n.';
     $Self->{Translation}->{'This category is used in the following FAQ article(s)'} = 'Deze categorie wordt gebruikt door de volgende artikelen';
-    $Self->{Translation}->{'This category is parent of the following subcategories'} = 'Deze categorie heeft de volgende subcategoriën';
+    $Self->{Translation}->{'This category is parent of the following subcategories'} = 'Deze categorie heeft de volgende subcategoriÃ«n';
 
     # Template: AgentFAQDelete
     $Self->{Translation}->{'Do you really want to delete this FAQ article?'} = 'Wilt u dit artikel verwijderen?';
@@ -80,9 +80,9 @@ sub Data {
     $Self->{Translation}->{'FAQ Explorer'} = 'FAQ verkenner';
     $Self->{Translation}->{'Quick Search'} = 'Zoeken';
     $Self->{Translation}->{'Advanced Search'} = 'Uitgebreid zoeken';
-    $Self->{Translation}->{'Subcategories'} = 'Subcategoriën';
+    $Self->{Translation}->{'Subcategories'} = 'SubcategoriÃ«n';
     $Self->{Translation}->{'FAQ Articles'} = 'Artikelen';
-    $Self->{Translation}->{'No subcategories found.'} = 'Geen subcategoriën gevonden.';
+    $Self->{Translation}->{'No subcategories found.'} = 'Geen subcategoriÃ«n gevonden.';
 
     # Template: AgentFAQHistory
 
@@ -175,7 +175,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} = '';
     $Self->{Translation}->{'CSS color for the voting result.'} = '';
-    $Self->{Translation}->{'Category Management'} = 'Beheer categoriën';
+    $Self->{Translation}->{'Category Management'} = 'Beheer categoriÃ«n';
     $Self->{Translation}->{'Decimal places of the voting result.'} = '';
     $Self->{Translation}->{'Default category name.'} = 'Standaard categorie';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = '';

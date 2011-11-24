@@ -2,7 +2,7 @@
 # Kernel/Language/pl_FAQ.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_FAQ.pm,v 1.21 2011-08-12 21:48:22 cr Exp $
+# $Id: pl_FAQ.pm,v 1.22 2011-11-24 17:15:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,26 +21,26 @@ sub Data {
     $Self->{Translation}->{'public'} = '';
     $Self->{Translation}->{'external'} = '';
     $Self->{Translation}->{'FAQ Number'} = '';
-    $Self->{Translation}->{'Latest updated FAQ articles'} = 'ostatnio zmienione artyku³y';
-    $Self->{Translation}->{'Latest created FAQ articles'} = 'ostatnio utworzone artyku³y';
-    $Self->{Translation}->{'Top 10 FAQ articles'} = '10 najlepszych artyku³ów';
+    $Self->{Translation}->{'Latest updated FAQ articles'} = 'ostatnio zmienione artykuÅ‚y';
+    $Self->{Translation}->{'Latest created FAQ articles'} = 'ostatnio utworzone artykuÅ‚y';
+    $Self->{Translation}->{'Top 10 FAQ articles'} = '10 najlepszych artykuÅ‚Ã³w';
     $Self->{Translation}->{'Subcategory of'} = 'Podkategoria';
-    $Self->{Translation}->{'No rate selected!'} = 'Nie wybra³e¶ oceny!';
+    $Self->{Translation}->{'No rate selected!'} = 'Nie wybraÅ‚eÅ› oceny!';
     $Self->{Translation}->{'public (all)'} = '';
     $Self->{Translation}->{'external (customer)'} = '';
     $Self->{Translation}->{'internal (agent)'} = '';
-    $Self->{Translation}->{'Start day'} = 'Dzieñ pocz±tkowy';
-    $Self->{Translation}->{'Start month'} = 'Miesi±c pocz±tkowy';
-    $Self->{Translation}->{'Start year'} = 'Rok pocz±tkowy';
-    $Self->{Translation}->{'End day'} = 'Dzieñ koñcowy';
-    $Self->{Translation}->{'End month'} = 'Miesi±c koñcowy';
-    $Self->{Translation}->{'End year'} = 'Rok koñcowy';
-    $Self->{Translation}->{'Thanks for your vote!'} = 'Dziêkujemy za oddanie g³osu!';
-    $Self->{Translation}->{'You have already voted!'} = 'Ju¿ raz g³osowa³e¶!';
+    $Self->{Translation}->{'Start day'} = 'DzieÅ„ poczÄ…tkowy';
+    $Self->{Translation}->{'Start month'} = 'MiesiÄ…c poczÄ…tkowy';
+    $Self->{Translation}->{'Start year'} = 'Rok poczÄ…tkowy';
+    $Self->{Translation}->{'End day'} = 'DzieÅ„ koÅ„cowy';
+    $Self->{Translation}->{'End month'} = 'MiesiÄ…c koÅ„cowy';
+    $Self->{Translation}->{'End year'} = 'Rok koÅ„cowy';
+    $Self->{Translation}->{'Thanks for your vote!'} = 'DziÄ™kujemy za oddanie gÅ‚osu!';
+    $Self->{Translation}->{'You have already voted!'} = 'JuÅ¼ raz gÅ‚osowaÅ‚eÅ›!';
     $Self->{Translation}->{'FAQ Article Print'} = '';
-    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Zmiany w FAQ (10 najlepszych artyku³ów)';
-    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Zmiany w FAQ (nowe artyku³y)';
-    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Zmiany w FAQ (zmienione artyku³y)';
+    $Self->{Translation}->{'FAQ Articles (Top 10)'} = 'Zmiany w FAQ (10 najlepszych artykuÅ‚Ã³w)';
+    $Self->{Translation}->{'FAQ Articles (new created)'} = 'Zmiany w FAQ (nowe artykuÅ‚y)';
+    $Self->{Translation}->{'FAQ Articles (recently changed)'} = 'Zmiany w FAQ (zmienione artykuÅ‚y)';
     $Self->{Translation}->{'FAQ category updated!'} = '';
     $Self->{Translation}->{'FAQ category added!'} = '';
     $Self->{Translation}->{'A category should have a name!'} = '';
@@ -109,7 +109,7 @@ sub Data {
 
     # Template: AgentFAQPrint
     $Self->{Translation}->{'FAQ-Info'} = '';
-    $Self->{Translation}->{'Votes'} = 'G³osy';
+    $Self->{Translation}->{'Votes'} = 'GÅ‚osy';
 
     # Template: AgentFAQSearch
 
@@ -217,7 +217,7 @@ sub Data {
     $Self->{Translation}->{'FAQ limit per page for FAQ Overview "Small"'} = '';
     $Self->{Translation}->{'FAQ path separator.'} = '';
     $Self->{Translation}->{'FAQ search backend router of the agent interface.'} = '';
-    $Self->{Translation}->{'FAQ-Area'} = 'FAQ: czêsto zadawane pytania';
+    $Self->{Translation}->{'FAQ-Area'} = 'FAQ: czÄ™sto zadawane pytania';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'History of this FAQ'} = '';
@@ -237,7 +237,7 @@ sub Data {
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the result of a search in the public interface.'} = '';
     $Self->{Translation}->{'Module to generate html OpenSearch profile for short faq search.'} = '';
-    $Self->{Translation}->{'New FAQ Article'} = 'Nowy artyku³ FAQ';
+    $Self->{Translation}->{'New FAQ Article'} = 'Nowy artykuÅ‚ FAQ';
     $Self->{Translation}->{'New FAQ articles need approval before they get published.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the customer interface.'} = '';
     $Self->{Translation}->{'Number of FAQ articles to be displayed in the FAQ Explorer of the public interface.'} = '';
@@ -284,11 +284,11 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Grupy agentów, które maj± dostêp do tej kategorii';
+    $Self->{Translation}->{'Agent groups which can access this category.'} = 'Grupy agentÃ³w, ktÃ³re majÄ… dostÄ™p do tej kategorii';
     $Self->{Translation}->{'Categories'} = 'Kategorie';
-    $Self->{Translation}->{'DetailSearch'} = 'Dok³adne wyszukiwanie';
+    $Self->{Translation}->{'DetailSearch'} = 'DokÅ‚adne wyszukiwanie';
     $Self->{Translation}->{'FAQ Category'} = 'Kategoria FAQ';
-    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Brak zdefiniowanych kategorii. Abu utworzyæ artyku³ musi istnieæ co najmniej jedna kategoria. Sprawd¼ proszê swoje uprawnienia w menu Kategorie.';
+    $Self->{Translation}->{'No category accessible. To create an article you need access to at least one category. Please check your group/category permission under -category menu-!'} = 'Brak zdefiniowanych kategorii. Abu utworzyÄ‡ artykuÅ‚ musi istnieÄ‡ co najmniej jedna kategoria. SprawdÅº proszÄ™ swoje uprawnienia w menu Kategorie.';
     $Self->{Translation}->{'QuickSearch'} = 'Szybkie wyszukiwanie';
     $Self->{Translation}->{'SubCategories'} = 'Podkategorie';
 
