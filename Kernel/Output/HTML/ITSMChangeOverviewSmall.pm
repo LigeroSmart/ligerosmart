@@ -1,8 +1,8 @@
 # --
-# Kernel/Output/HTML/ITSMChangeOverviewSmall.pm.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Kernel/Output/HTML/ITSMChangeOverviewSmall.pm
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeOverviewSmall.pm,v 1.20 2010-12-14 19:12:11 ub Exp $
+# $Id: ITSMChangeOverviewSmall.pm,v 1.21 2011-11-28 17:34:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -118,6 +118,9 @@ sub Run {
     if ( $Param{ShowColumns} && ref $Param{ShowColumns} eq 'ARRAY' ) {
         @ShowColumns = @{ $Param{ShowColumns} };
     }
+
+    # build lookup hash for ShowColumns
+    my %ShowColumnsLookup = map { $_ => 1 } @ShowColumns;
 
     # build column header blocks
     if (@ShowColumns) {
@@ -229,6 +232,9 @@ sub Run {
                 USERTYPE:
                 for my $UserType (qw(ChangeBuilder ChangeManager WorkOrderAgent)) {
 
+                    # only show the data if enabled in ShowColumns config
+                    next USERTYPE if !$ShowColumnsLookup{$UserType};
+
                     # check if UserType attribute exists either in change or workorder
                     if ( !$Change->{ $UserType . 'ID' } && !$Data{ $UserType . 'ID' } ) {
                         next USERTYPE;
@@ -248,92 +254,124 @@ sub Run {
                     $Data{ $UserType . 'RightParenthesis' } = ')';
                 }
 
-                # to store the linked service data
-                my $LinkListWithData = {};
+                # if the services column should be shown
+                if ( $ShowColumnsLookup{Services} ) {
 
-                my @WorkOrderIDs;
+                    # to store the linked service data
+                    my $LinkListWithData = {};
 
-                # store the combined linked services data from all workorders of this change
-                if ( $Param{ChangeIDs} ) {
-                    @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
-                }
+                    my @WorkOrderIDs;
 
-                # store only the linked services for this workorder
-                elsif ( $Param{WorkOrderIDs} ) {
-                    @WorkOrderIDs = ($ID);
-                }
+                    # store the combined linked services data from all workorders of this change
+                    if ( $Param{ChangeIDs} ) {
+                        @WorkOrderIDs = @{ $Change->{WorkOrderIDs} };
+                    }
 
-                # store the combined linked services data
-                for my $WorkOrderID (@WorkOrderIDs) {
+                    # store only the linked services for this workorder
+                    elsif ( $Param{WorkOrderIDs} ) {
+                        @WorkOrderIDs = ($ID);
+                    }
 
-                    # get linked objects of this workorder
-                    my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
-                        Object => 'ITSMWorkOrder',
-                        Key    => $WorkOrderID,
-                        State  => 'Valid',
-                        UserID => $Self->{UserID},
-                    );
+                    # store the combined linked services data
+                    for my $WorkOrderID (@WorkOrderIDs) {
 
-                    OBJECT:
-                    for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
+                        # get linked objects of this workorder
+                        my $LinkListWithDataWorkOrder = $Self->{LinkObject}->LinkListWithData(
+                            Object => 'ITSMWorkOrder',
+                            Key    => $WorkOrderID,
+                            State  => 'Valid',
+                            UserID => $Self->{UserID},
+                        );
 
-                        # only show linked services of workorder
-                        if ( $Object ne 'Service' ) {
-                            next OBJECT;
-                        }
+                        OBJECT:
+                        for my $Object ( keys %{$LinkListWithDataWorkOrder} ) {
 
-                        LINKTYPE:
-                        for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
+                            # only show linked services of workorder
+                            if ( $Object ne 'Service' ) {
+                                next OBJECT;
+                            }
 
-                            DIRECTION:
-                            for my $Direction (
-                                keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
-                                )
-                            {
+                            LINKTYPE:
+                            for my $LinkType ( keys %{ $LinkListWithDataWorkOrder->{$Object} } ) {
 
-                                ID:
-                                for my $ID (
-                                    keys %{
-                                        $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                            ->{$Direction}
-                                    }
+                                DIRECTION:
+                                for my $Direction (
+                                    keys %{ $LinkListWithDataWorkOrder->{$Object}->{$LinkType} }
                                     )
                                 {
 
-                                    # combine the linked object data from all workorders
-                                    $LinkListWithData->{$Object}->{$LinkType}->{$Direction}->{$ID}
-                                        = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
-                                        ->{$Direction}->{$ID};
+                                    ID:
+                                    for my $ID (
+                                        keys %{
+                                            $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                                ->{$Direction}
+                                        }
+                                        )
+                                    {
+
+                                        # combine the linked object data from all workorders
+                                        $LinkListWithData->{$Object}->{$LinkType}->{$Direction}
+                                            ->{$ID}
+                                            = $LinkListWithDataWorkOrder->{$Object}->{$LinkType}
+                                            ->{$Direction}->{$ID};
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                # get unique service ids
-                my %UniqueServiceIDs;
-                my $ServicesRef = $LinkListWithData->{Service} || {};
-                for my $LinkType ( keys %{$ServicesRef} ) {
+                    # get unique service ids
+                    my %UniqueServiceIDs;
+                    my $ServicesRef = $LinkListWithData->{Service} || {};
+                    for my $LinkType ( keys %{$ServicesRef} ) {
 
-                    # extract link type List
-                    my $LinkTypeList = $ServicesRef->{$LinkType};
+                        # extract link type List
+                        my $LinkTypeList = $ServicesRef->{$LinkType};
 
-                    for my $Direction ( keys %{$LinkTypeList} ) {
+                        for my $Direction ( keys %{$LinkTypeList} ) {
 
-                        # extract direction list
-                        my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
+                            # extract direction list
+                            my $DirectionList = $ServicesRef->{$LinkType}->{$Direction};
 
-                        # collect unique service ids
-                        for my $ServiceID ( keys %{$DirectionList} ) {
-                            $UniqueServiceIDs{$ServiceID}++;
+                            # collect unique service ids
+                            for my $ServiceID ( keys %{$DirectionList} ) {
+                                $UniqueServiceIDs{$ServiceID}++;
+                            }
                         }
                     }
-                }
 
-                # get the data for each service
-                my @ServicesData;
-                SERVICEID:
-                for my $ServiceID ( keys %UniqueServiceIDs ) {
+                    # get the data for each service
+                    my @ServicesData;
+                    SERVICEID:
+                    for my $ServiceID ( keys %UniqueServiceIDs ) {
+
+                        # in the customer frontend
+                        if (
+                            $Param{Frontend} eq 'Customer'
+                            && $Self->{Config}->{ShowOnlyChangesWithAllowedServices}
+                            )
+                        {
+
+                            # do not show this service if customer is not allowed to use it
+                            next SERVICEID if !$CustomerUserServices{$ServiceID};
+                        }
+
+                        # get service data
+                        my %ServiceData = $Self->{ServiceObject}->ServiceGet(
+                            ServiceID => $ServiceID,
+                            UserID    => $Self->{UserID},
+                        );
+
+                        # add current incident signal
+                        $ServiceData{CurInciSignal}
+                            = $InciSignals{ $ServiceData{CurInciStateType} };
+
+                        # store service data
+                        push @ServicesData, \%ServiceData;
+                    }
+
+                    # sort services data by service name
+                    @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
 
                     # in the customer frontend
                     if (
@@ -342,39 +380,13 @@ sub Run {
                         )
                     {
 
-                        # do not show this service if customer is not allowed to use it
-                        next SERVICEID if !$CustomerUserServices{$ServiceID};
+                        # do not show the change if it has no services
+                        next ID if !@ServicesData;
                     }
 
-                    # get service data
-                    my %ServiceData = $Self->{ServiceObject}->ServiceGet(
-                        ServiceID => $ServiceID,
-                        UserID    => $Self->{UserID},
-                    );
-
-                    # add current incident signal
-                    $ServiceData{CurInciSignal} = $InciSignals{ $ServiceData{CurInciStateType} };
-
-                    # store service data
-                    push @ServicesData, \%ServiceData;
+                    # store services data
+                    $SubElementData{Services} = \@ServicesData;
                 }
-
-                # sort services data by service name
-                @ServicesData = sort { $a->{Name} cmp $b->{Name} } @ServicesData;
-
-                # in the customer frontend
-                if (
-                    $Param{Frontend} eq 'Customer'
-                    && $Self->{Config}->{ShowOnlyChangesWithAllowedServices}
-                    )
-                {
-
-                    # do not show the change if it has no services
-                    next ID if !@ServicesData;
-                }
-
-                # store services data
-                $SubElementData{Services} = \@ServicesData;
 
                 # build record block
                 $Self->{LayoutObject}->Block(
@@ -414,7 +426,7 @@ sub Run {
                             }
                         }
 
-                        if ( !@ServicesData ) {
+                        if ( !$SubElementData{Services} ) {
                             $Self->{LayoutObject}->Block(
                                 Name => 'Record' . $Column . 'SubElementEmpty',
                                 Data => {},
