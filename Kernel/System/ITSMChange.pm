@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.269 2011-11-10 11:20:36 ub Exp $
+# $Id: ITSMChange.pm,v 1.270 2011-11-28 17:29:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.269 $) [1];
+$VERSION = qw($Revision: 1.270 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -3616,47 +3616,56 @@ sub _ChangeFreeTextUpdate {
             @FieldIDs  = @FreeTextFieldIDs;
         }
 
+        # get all existing entries for this workorder_id
+        # and type (ChangeFreeKey or ChangeFreeText)
+        $Self->{DBObject}->Prepare(
+            SQL => 'SELECT id, field_id '
+                . 'FROM ' . $TableName
+                . ' WHERE change_id = ?',
+            Bind => [ \$Param{ChangeID} ],
+        );
+        my %FieldData;
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            my $ID      = $Row[0];
+            my $FieldID = $Row[1];
+
+            $FieldData{$FieldID} = {
+                ID => $ID,
+            };
+        }
+
         # update all given change freekey and freetext fields
         for my $FieldID (@FieldIDs) {
-
-            # check if entry exists for this combination
-            # of change_id, field_id and type (ChangeFreeKey or ChangeFreeText)
-            my $ID;
-            $Self->{DBObject}->Prepare(
-                SQL => 'SELECT id FROM ' . $TableName
-                    . ' WHERE change_id = ? '
-                    . ' AND field_id = ? ',
-                Bind => [ \$Param{ChangeID}, \$FieldID ],
-                Limit => 1,
-            );
-            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-                $ID = $Row[0];
-            }
 
             # get new value from parameter
             my $Value = $Param{ $Type . $FieldID };
 
-            # entry exists and needs an update
-            if ( $ID && $Value ne '' ) {
-                return if !$Self->{DBObject}->Do(
-                    SQL => 'UPDATE ' . $TableName
-                        . ' SET field_value = ?'
-                        . ' WHERE id = ?',
-                    Bind => [ \$Value, \$ID ],
-                );
+            # freetext/freekey field exists in database
+            if ( $FieldData{$FieldID} ) {
+
+                # new value is not en empty string, the field needs an update
+                if ( $Value ne '' ) {
+                    return if !$Self->{DBObject}->Do(
+                        SQL => 'UPDATE ' . $TableName
+                            . ' SET field_value = ?'
+                            . ' WHERE id = ?',
+                        Bind => [ \$Value, \$FieldData{$FieldID}->{ID} ],
+                    );
+                }
+
+                # new value is an empty string, the field must be deleted
+                else {
+                    return if !$Self->{DBObject}->Do(
+                        SQL => 'DELETE FROM ' . $TableName
+                            . ' WHERE id = ?',
+                        Bind => [ \$FieldData{$FieldID}->{ID} ],
+                    );
+                }
             }
 
-            # entry exists but new value is an empty string
-            elsif ( $ID && $Value eq '' ) {
-                return if !$Self->{DBObject}->Do(
-                    SQL => 'DELETE FROM ' . $TableName
-                        . ' WHERE id = ?',
-                    Bind => [ \$ID ],
-                );
-            }
-
-            # entry does not exist, create a new entry
-            elsif ( !$ID && $Value ne '' ) {
+            # freetext/freekey field does not exist in database
+            # and new value is not an empty string
+            elsif ( $Value ne '' ) {
                 return if !$Self->{DBObject}->Do(
                     SQL => 'INSERT INTO ' . $TableName
                         . ' (change_id, field_id, field_value)'
@@ -3747,6 +3756,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.269 $ $Date: 2011-11-10 11:20:36 $
+$Revision: 1.270 $ $Date: 2011-11-28 17:29:48 $
 
 =cut
