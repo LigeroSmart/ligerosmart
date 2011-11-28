@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.271 2011-11-28 18:27:03 ub Exp $
+# $Id: ITSMChange.pm,v 1.272 2011-11-28 18:54:26 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.271 $) [1];
+$VERSION = qw($Revision: 1.272 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -3616,7 +3616,7 @@ sub _ChangeFreeTextUpdate {
             @FieldIDs  = @FreeTextFieldIDs;
         }
 
-        # get all existing entries for this workorder_id
+        # get all existing entries for this change_id
         # and type (ChangeFreeKey or ChangeFreeText)
         $Self->{DBObject}->Prepare(
             SQL => 'SELECT id, field_id '
@@ -3756,6 +3756,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.271 $ $Date: 2011-11-28 18:27:03 $
+$Revision: 1.272 $ $Date: 2011-11-28 18:54:26 $
 
 =cut
