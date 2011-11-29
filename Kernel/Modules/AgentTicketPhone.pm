@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.38 2011-11-24 12:46:40 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.209 2011/11/24 12:40:19 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.39 2011-11-29 13:52:57 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.212 2011/11/29 13:48:12 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -166,6 +166,9 @@ sub Run {
             }
         }
     }
+
+    # get FromCustomer value
+    $GetParam{From} .= $Self->{ParamObject}->GetParam( Param => 'FromCustomer' ) || '';
 
     # get Dynamic fields form ParamObject
     my %DynamicFieldValues;
@@ -599,6 +602,9 @@ sub Run {
         $FromExternalCustomer{Customer}
             = $Self->{ParamObject}->GetParam( Param => 'PreSelectedCustomerUser' )
             || $Self->{ParamObject}->GetParam( Param => 'CustomerUser' )
+            || '';
+        $FromExternalCustomer{Email}
+            = $Self->{ParamObject}->GetParam( Param => 'FromCustomer' )
             || '';
 
         if ( $Self->{ParamObject}->GetParam( Param => 'OwnerAllRefresh' ) ) {
@@ -1820,14 +1826,14 @@ sub _MaskPhoneNew {
 
     # From external
     my $ShowErrors = 1;
-    if (
-        defined $Param{FromExternalCustomer}
-        &&
-        defined $Param{FromExternalCustomer}->{Email} &&
-        defined $Param{FromExternalCustomer}->{Customer}
-        )
-    {
-        $ShowErrors = 0;
+    if ( defined $Param{FromExternalCustomer} && defined $Param{FromExternalCustomer}->{Email} ) {
+        if (
+            defined $Param{FromExternalCustomer}->{Customer}
+            && $Param{FromExternalCustomer}->{Customer} ne ''
+            )
+        {
+            $ShowErrors = 0;
+        }
         $Self->{LayoutObject}->Block(
             Name => 'FromExternalCustomer',
             Data => $Param{FromExternalCustomer},

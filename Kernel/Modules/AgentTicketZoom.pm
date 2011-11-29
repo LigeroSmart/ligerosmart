@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.27 2011-11-24 12:46:40 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.162 2011/11/23 22:08:33 mb Exp $
+# $Id: AgentTicketZoom.pm,v 1.28 2011-11-29 13:52:57 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.164 2011/11/29 07:23:01 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -127,7 +127,10 @@ sub Run {
     }
 
     # get ticket attributes
-    my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
+    my %Ticket = $Self->{TicketObject}->TicketGet(
+        TicketID     => $Self->{TicketID},
+        DynamicField => 1,
+    );
 
     # get acl actions
     $Self->{TicketObject}->TicketAcl(
@@ -418,6 +421,7 @@ sub MaskAgentZoom {
         TicketID                   => $Self->{TicketID},
         StripPlainBodyAsAttachment => $Self->{StripPlainBodyAsAttachment},
         UserID                     => $Self->{UserID},
+        DynamicFields => 0,    # fetch later only for the article(s) to display
     );
 
     # add counter
@@ -1397,6 +1401,15 @@ sub _ArticleItem {
         Data => { %Param, %Article, %AclAction },
     );
 
+    # show created by if different from User ID 1
+    if ( $Article{CreatedBy} > 1 ) {
+        $Article{CreatedByUser} = $Self->{UserObject}->UserName( UserID => $Article{CreatedBy} );
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticleCreatedBy',
+            Data => {%Article},
+        );
+    }
+
     # mark shown article as seen
     if ( $Param{Type} eq 'OnLoad' ) {
         $Self->_ArticleItemSeen( ArticleID => $Article{ArticleID} );
@@ -1870,13 +1883,16 @@ sub _ArticleItem {
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-        next DYNAMICFIELD if !defined $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
-        next DYNAMICFIELD if $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq '';
+
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Article{ArticleID},
+        );
 
         # get print string for this dynamic field
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value              => $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            Value              => $Value,
             ValueMaxChars      => 160,
             LayoutObject       => $Self->{LayoutObject},
         );
@@ -1994,7 +2010,10 @@ sub _ArticleItem {
         }
     }
 
-    %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Article{ArticleID} );
+    %Article = $Self->{TicketObject}->ArticleGet(
+        ArticleID     => $Article{ArticleID},
+        DynamicFields => 0,
+    );
 
     # get attachment index (without attachments)
     my %AtmIndex = $Self->{TicketObject}->ArticleAttachmentIndex(
