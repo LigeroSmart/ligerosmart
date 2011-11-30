@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Action.pm - all condition action functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Action.pm,v 1.13 2011-11-09 13:45:48 ub Exp $
+# $Id: Action.pm,v 1.14 2011-11-30 16:59:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -416,17 +416,13 @@ sub ActionList {
         push @ActionList, $Row[0];
     }
 
-    # set cache only if action ids exist
-    if (@ActionList) {
-
-        # set cache
-        $Self->{CacheObject}->Set(
-            Type  => 'ITSMChangeManagement',
-            Key   => $CacheKey,
-            Value => \@ActionList,
-            TTL   => $Self->{CacheTTL},
-        );
-    }
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \@ActionList,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \@ActionList;
 }
@@ -889,6 +885,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2011-11-09 13:45:48 $
+$Revision: 1.14 $ $Date: 2011-11-30 16:59:13 $
 
 =cut

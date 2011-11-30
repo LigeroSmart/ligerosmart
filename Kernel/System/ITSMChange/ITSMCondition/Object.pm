@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Object.pm - all condition object functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Object.pm,v 1.27 2011-11-09 13:47:05 ub Exp $
+# $Id: Object.pm,v 1.28 2011-11-30 16:59:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -385,17 +385,13 @@ sub ObjectList {
         $ObjectList{ $Row[0] } = $Row[1];
     }
 
-    # set cache only if object list exists
-    if (%ObjectList) {
-
-        # set cache
-        $Self->{CacheObject}->Set(
-            Type  => 'ITSMChangeManagement',
-            Key   => $CacheKey,
-            Value => \%ObjectList,
-            TTL   => $Self->{CacheTTL},
-        );
-    }
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%ObjectList,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \%ObjectList;
 }
@@ -772,6 +768,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2011-11-09 13:47:05 $
+$Revision: 1.28 $ $Date: 2011-11-30 16:59:13 $
 
 =cut

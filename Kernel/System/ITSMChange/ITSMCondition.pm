@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.58 2011-11-09 13:44:37 ub Exp $
+# $Id: ITSMCondition.pm,v 1.59 2011-11-30 16:58:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::ITSMChange::ITSMCondition::Expression;
 use Kernel::System::ITSMChange::ITSMCondition::Action;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.58 $) [1];
+$VERSION = qw($Revision: 1.59 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -536,17 +536,13 @@ sub ConditionList {
         push @ConditionIDs, $Row[0];
     }
 
-    # set cache only if condition ids exist
-    if (@ConditionIDs) {
-
-        # set cache
-        $Self->{CacheObject}->Set(
-            Type  => 'ITSMChangeManagement',
-            Key   => $CacheKey,
-            Value => \@ConditionIDs,
-            TTL   => $Self->{CacheTTL},
-        );
-    }
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \@ConditionIDs,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \@ConditionIDs;
 }
@@ -1496,6 +1492,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.58 $ $Date: 2011-11-09 13:44:37 $
+$Revision: 1.59 $ $Date: 2011-11-30 16:58:06 $
 
 =cut

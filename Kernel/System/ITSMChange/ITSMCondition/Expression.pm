@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Expression.pm - all condition expression functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Expression.pm,v 1.29 2011-11-09 13:46:06 ub Exp $
+# $Id: Expression.pm,v 1.30 2011-11-30 16:59:13 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -400,17 +400,13 @@ sub ExpressionList {
         push @ExpressionList, $Row[0];
     }
 
-    # set cache only if expression ids exist
-    if (@ExpressionList) {
-
-        # set cache
-        $Self->{CacheObject}->Set(
-            Type  => 'ITSMChangeManagement',
-            Key   => $CacheKey,
-            Value => \@ExpressionList,
-            TTL   => $Self->{CacheTTL},
-        );
-    }
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \@ExpressionList,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \@ExpressionList;
 }
@@ -820,6 +816,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2011-11-09 13:46:06 $
+$Revision: 1.30 $ $Date: 2011-11-30 16:59:13 $
 
 =cut

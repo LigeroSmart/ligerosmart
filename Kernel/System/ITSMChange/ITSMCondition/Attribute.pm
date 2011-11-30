@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMCondition/Attribute.pm - all condition attribute functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Attribute.pm,v 1.12 2011-11-09 13:45:48 ub Exp $
+# $Id: Attribute.pm,v 1.13 2011-11-30 16:59:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -385,17 +385,13 @@ sub AttributeList {
         $AttributeList{ $Row[0] } = $Row[1];
     }
 
-    # set cache only if attribute list exists
-    if (%AttributeList) {
-
-        # set cache
-        $Self->{CacheObject}->Set(
-            Type  => 'ITSMChangeManagement',
-            Key   => $CacheKey,
-            Value => \%AttributeList,
-            TTL   => $Self->{CacheTTL},
-        );
-    }
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'ITSMChangeManagement',
+        Key   => $CacheKey,
+        Value => \%AttributeList,
+        TTL   => $Self->{CacheTTL},
+    );
 
     return \%AttributeList;
 }
@@ -470,6 +466,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2011-11-09 13:45:48 $
+$Revision: 1.13 $ $Date: 2011-11-30 16:59:14 $
 
 =cut
