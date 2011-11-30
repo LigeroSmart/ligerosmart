@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.54 2011-05-16 11:53:43 ub Exp $
+# $Id: GeneralCatalog.pm,v 1.55 2011-11-30 07:56:44 ep Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 =head1 NAME
 
@@ -307,7 +307,7 @@ sub ItemList {
     if ( !%Data ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => 'Class not found in database!',
+            Message  => "Class $Param{Class} not found in database!",
         );
         return;
     }
@@ -713,6 +713,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.54 $ $Date: 2011-05-16 11:53:43 $
+$Revision: 1.55 $ $Date: 2011-11-30 07:56:44 $
 
 =cut
