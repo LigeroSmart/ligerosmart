@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.125 2011-11-28 17:30:36 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.126 2011-11-30 15:05:37 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.125 $) [1];
+$VERSION = qw($Revision: 1.126 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1723,7 +1723,6 @@ sub WorkOrderChangeTimeGet {
         # get data from cache
         %TimeReturn = %{$Cache};
     }
-
     else {
 
         # build sql, using min and max functions
@@ -1765,51 +1764,41 @@ sub WorkOrderChangeTimeGet {
             }
         }
 
-        # set cache only if at least one of the times is defined
-        if (
-            $TimeReturn{PlannedStartTime}
-            || $TimeReturn{PlannedEndTime}
-            || $TimeReturn{ActualStartTime}
-            || $TimeReturn{ActualEndTime}
-            )
-        {
+        # check if change has workorders with not yet defined planned_start_time entries
+        if ( $TimeReturn{PlannedStartTime} ) {
 
-            # set cache
-            $Self->{CacheObject}->Set(
-                Type  => 'ITSMChangeManagement',
-                Key   => $CacheKey,
-                Value => \%TimeReturn,
-                TTL   => $Self->{CacheTTL},
+            # build SQL
+            my $SQL = 'SELECT count(*) '
+                . 'FROM change_workorder '
+                . "WHERE planned_start_time = '9999-01-01 00:00:00' "
+                . 'AND change_id = ?';
+
+            # retrieve number of not defined entries
+            return if !$Self->{DBObject}->Prepare(
+                SQL   => $SQL,
+                Bind  => [ \$Param{ChangeID} ],
+                Limit => 1,
             );
+
+            # fetch the result
+            my $Count;
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                $Count = $Row[0];
+            }
+
+            # reset PlannedStartTime
+            if ($Count) {
+                $TimeReturn{PlannedStartTime} = '';
+            }
         }
-    }
 
-    # check if change has workorders with not yet defined planned_start_time entries
-    if ( $TimeReturn{PlannedStartTime} ) {
-
-        # build SQL
-        my $SQL = 'SELECT count(*) '
-            . 'FROM change_workorder '
-            . "WHERE planned_start_time = '9999-01-01 00:00:00' "
-            . 'AND change_id = ?';
-
-        # retrieve number of not defined entries
-        return if !$Self->{DBObject}->Prepare(
-            SQL   => $SQL,
-            Bind  => [ \$Param{ChangeID} ],
-            Limit => 1,
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%TimeReturn,
+            TTL   => $Self->{CacheTTL},
         );
-
-        # fetch the result
-        my $Count;
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-            $Count = $Row[0];
-        }
-
-        # reset PlannedStartTime
-        if ($Count) {
-            $TimeReturn{PlannedStartTime} = '';
-        }
     }
 
     return \%TimeReturn;
@@ -2699,17 +2688,13 @@ sub WorkOrderChangeEffortsGet {
             $ChangeEfforts{$Attribute} = sprintf '%.2f', $ChangeEfforts{$Attribute};
         }
 
-        # set cache only if PlannedEffort or AccountedTime is defined
-        if ( $ChangeEfforts{PlannedEffort} || $ChangeEfforts{AccountedTime} ) {
-
-            # set cache
-            $Self->{CacheObject}->Set(
-                Type  => 'ITSMChangeManagement',
-                Key   => $CacheKey,
-                Value => \%ChangeEfforts,
-                TTL   => $Self->{CacheTTL},
-            );
-        }
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%ChangeEfforts,
+            TTL   => $Self->{CacheTTL},
+        );
     }
 
     return \%ChangeEfforts;
@@ -3476,6 +3461,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.125 $ $Date: 2011-11-28 17:30:36 $
+$Revision: 1.126 $ $Date: 2011-11-30 15:05:37 $
 
 =cut
