@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.272 2011-11-28 18:54:26 ub Exp $
+# $Id: ITSMChange.pm,v 1.273 2011-11-30 15:04:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.272 $) [1];
+$VERSION = qw($Revision: 1.273 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -712,8 +712,14 @@ sub ChangeGet {
             UserID   => $Param{UserID},
         );
 
+        # get CAB data
+        my $CAB = $Self->ChangeCABGet(
+            ChangeID => $Param{ChangeID},
+            UserID   => $Param{UserID},
+        ) || {};
+
         # add result to change data
-        %ChangeData = ( %ChangeData, %{$ChangeFreeText} );
+        %ChangeData = ( %ChangeData, %{$ChangeFreeText}, %{$CAB} );
 
         # set cache (change data exists at this point, it was checked before)
         $Self->{CacheObject}->Set(
@@ -749,15 +755,6 @@ sub ChangeGet {
 
         $ChangeData{ChangeStateSignal} = $StateSignal->{ $ChangeData{ChangeState} };
     }
-
-    # get CAB data
-    my $CAB = $Self->ChangeCABGet(
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
-    ) || {};
-
-    # add result to change data
-    %ChangeData = ( %ChangeData, %{$CAB} );
 
     # get all workorder ids for this change
     my $WorkOrderIDsRef = $Self->{WorkOrderObject}->WorkOrderList(
@@ -1038,17 +1035,15 @@ sub ChangeCABGet {
         @{ $CAB{CABAgents} }    = sort @{ $CAB{CABAgents} };
         @{ $CAB{CABCustomers} } = sort @{ $CAB{CABCustomers} };
 
-        if ( @{ $CAB{CABAgents} } || @{ $CAB{CABCustomers} } ) {
-
-            # set cache
-            $Self->{CacheObject}->Set(
-                Type  => 'ITSMChangeManagement',
-                Key   => $CacheKey,
-                Value => \%CAB,
-                TTL   => $Self->{CacheTTL},
-            );
-        }
+        # set cache
+        $Self->{CacheObject}->Set(
+            Type  => 'ITSMChangeManagement',
+            Key   => $CacheKey,
+            Value => \%CAB,
+            TTL   => $Self->{CacheTTL},
+        );
     }
+
     return \%CAB;
 }
 
@@ -3756,6 +3751,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.272 $ $Date: 2011-11-28 18:54:26 $
+$Revision: 1.273 $ $Date: 2011-11-30 15:04:53 $
 
 =cut
