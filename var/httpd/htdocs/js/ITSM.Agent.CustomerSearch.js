@@ -2,7 +2,7 @@
 // ITSM.Agent.CustomerSearch.js - provides the special module functions for the customer search
 // Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.CustomerSearch.js,v 1.5 2011-10-19 14:39:31 ub Exp $
+// $Id: ITSM.Agent.CustomerSearch.js,v 1.6 2011-12-01 14:00:33 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -67,29 +67,25 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
                 },
                 select: function (Event, UI) {
 
-                    var CustomerKey, ElementID;
-
-                    CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
+                    var CustomerKey = UI.item.label.replace(/.*\((.*)\)$/, '$1');
 
                     $Element.val(UI.item.value);
 
-                    // get the element id
-                    ElementID = $Element.attr('id');
-
-                    // escape :: with two leading backslashes in front of each :
-                    // this is necessary because jQuery can not handle a colon (:) in id attributes
-                    ElementID = ElementID.replace(/::/g, '\\:\\:');
-
                     // set hidden field SelectedCustomerUser
-                    $('#' + ElementID + 'Selected').val(CustomerKey);
+                    // escape : with two leading backslashes in front of each :
+                    // this is necessary because jQuery can not handle a colon (:) in id attributes
+                    $('#' + $Element.attr('id').replace(/:/g, '\\:') + 'Selected').val(CustomerKey);
 
                     return false;
                 }
             });
 
             if (!ActiveAutoComplete) {
+
                 $Element.after('<button id="' + $Element.attr('id') + 'Search" type="button">' + Core.Config.Get('CustomerAutocomplete.SearchButtonText') + '</button>');
-                $('#' + $Element.attr('id') + 'Search').click(function () {
+                // escape : with two leading backslashes in front of each :
+                // this is necessary because jQuery can not handle a colon (:) in id attributes
+                $('#' + $Element.attr('id').replace(/:/g, '\\:') + 'Search').click(function () {
                     $Element.autocomplete("option", "minLength", 0);
                     $Element.autocomplete("search");
                     $Element.autocomplete("option", "minLength", 500);
@@ -99,7 +95,9 @@ ITSM.Agent.CustomerSearch = (function (TargetNS) {
 
         // On unload remove old selected data. If the page is reloaded (with F5) this data stays in the field and invokes an ajax request otherwise
         $(window).bind('unload', function () {
-           $('#' + $Element.attr('id') + 'Selected').val('');
+            // escape : with two leading backslashes in front of each :
+            // this is necessary because jQuery can not handle a colon (:) in id attributes
+            $('#' + $Element.attr('id').replace(/:/g, '\\:') + 'Selected').val('');
         });
     };
 
