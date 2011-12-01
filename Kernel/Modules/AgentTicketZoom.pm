@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.28 2011-11-29 13:52:57 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.164 2011/11/29 07:23:01 mb Exp $
+# $Id: AgentTicketZoom.pm,v 1.29 2011-12-01 15:22:12 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.165 2011/11/30 08:25:36 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -397,9 +397,6 @@ sub MaskAgentZoom {
         Type     => 'move_into',
     );
 
-    # don't offer to move to current queue
-    delete $MoveQueues{ $Ticket{QueueID} };
-
     # fetch all std. responses
     my %StandardResponses
         = $Self->{QueueObject}->GetStandardResponses( QueueID => $Ticket{QueueID} );
@@ -654,8 +651,9 @@ sub MaskAgentZoom {
         $MoveQueues{0}
             = '- ' . $Self->{LayoutObject}->{LanguageObject}->Get('Move') . ' -';
         $Param{MoveQueuesStrg} = $Self->{LayoutObject}->AgentQueueListOption(
-            Name => 'DestQueueID',
-            Data => \%MoveQueues,
+            Name           => 'DestQueueID',
+            Data           => \%MoveQueues,
+            CurrentQueueID => $Ticket{QueueID},
         );
     }
     if (
