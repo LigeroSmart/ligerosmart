@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- $Id: OTRSMasterSlave.xml,v 1.1 2011-12-01 11:41:24 te Exp $ -->
+
+<book lang='de'>
+
+<bookinfo>
+
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<preface id="preface" >
+    <title>Vorwort</title>
+    <para>
+        Dieses Paket beinhaltet die Funktionalität "OTRSMasterSlave".
+    </para>
+    <para>
+        Bei Fragen betreffend dieses Dokumentes, kontaktieren Sie bitte Ihren Support (support@otrs.com) für weitere
+        Informationen.
+    </para>
+</preface>
+
+<chapter>
+    <title>Funktionsliste</title>
+    <sect1>
+        <title>MasterSlave Funktion</title>
+        <para>
+            Dieses Modul erweitert das MasterSlave Modul um zusätzliche Funktionalitäten. Um diese zu nutzen muss in der SysConfig
+            die Einstellung "MasterSlave::AdvancedEnabled" aktiviert werden. Ohne diese Einstellung verhält sich das Modul wie
+            das eingeschränkte MasterSlave Modul.
+        </para>
+        <para>
+            Durch die Aktivierung der erweiterten Funktionalität sind folgendes Features nutzbar:
+            - Masterstatus eines/mehrerer Tickets entfernen
+            - Slavestatus eines/mehrerer Tickets entfernen
+            - Tickets in den Masterstatus setzen
+            - Tickets in den Slavestatus setzen
+            - Masterticket eines/mehrerer Slavetickets ändern
+        </para>
+        <para>
+            Zusätzlich sind weitere Einstellungen im erweiterten Modus des Moduls verfügbar, diese sind im Kapitel "Konfiguration" beschrieben und zu finden.
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Systemvoraussetzung</title>
+    <sect1>
+        <title>Framework</title>
+        <para>Folgender OTRS Framework wird benötigt:</para>
+        <para>
+            $Framework
+        </para>
+    </sect1>
+    <sect1>
+        <title>Pakete</title>
+        <para>Folgende Pakete werden benötigt:</para>
+        <para>
+            $PackageRequired
+        </para>
+    </sect1>
+    <sect1>
+        <title>Betriebssystem</title>
+        <para>Folgende Betriebssysteme sind als Abhängigkeit zu beachten:</para>
+        <para>
+            $OS
+        </para>
+    </sect1>
+    <sect1>
+        <title>Third Party Software</title>
+        <para>Folgende Software wird zum Betrieb des Paketes benötigt:</para>
+        <para>
+            <itemizedlist>
+                <listitem><para>Keine</para></listitem>
+            </itemizedlist>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Installation</title>
+    <para>
+        Die folgenden Instruktionen zeigen wie man das Paket installiert. Es gibt grundsätzlich zwei Möglichkeiten.
+        Entweder über das Admin-Interface oder über die System-Eingabe.
+    </para>
+    <sect1>
+        <title>Admin-Interface</title>
+        <para>
+            Über die folgende URL kann das Paket über das Admin-Interface installiert bzw. wenn nötig auch aktualisiert
+            oder deinstalliert werden (bitte vorher prüfen ob der Benutzer auch in der Admin-Gruppe ist).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Kommandozeile</title>
+        <para>
+            Ist es nicht möglich das Admin-Interface zu benutzen, kann das folgendes
+            Kommandozeilen-Tool ("bin/opm.pl") benutzt werden.
+        </para>
+        <para>
+            <screen>
+                shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
+            </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Konfiguration</title>
+    <sect1>
+        <title>MasterTicketFreeTextField</title>
+        <para>
+            Das Freitextfeld für die MasterSlave Erweiterung festlegen.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::AdvancedEnabled</title>
+        <para>
+            Das erweiterte Verhalten der MasterSlave Erweiterung aktivieren.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::UnsetMasterSlave</title>
+        <para>
+            Aktiviere den Modus um den MasterSlave Status eines Tickets im erweiterten MasterSlave Verhalten aufzuheben.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::UpdateMasterSlave</title>
+        <para>
+            Aktiviere den Modus um den MasterSlave Status eines Tickets im erweiterten MasterSlave Verhalten zu ändern.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::FollowUpdatedMaster</title>
+        <para>
+            Aktiviere den Modus das Slave Tickets dem Master Ticket im erweiterten MasterSlave Verhalten zum neuen Master folgen.
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Kontakt</title>
+    <para>Personen welche am der Implementierung des Pakets beteiligt waren.</para>
+    <sect1>
+        <title>OTRS AG</title>
+        <para>
+            Accounting: Rene Bakker &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+        <para>
+            Technical: Manuel Hecht &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Manifest</title>
+    <para>Dieses Manifest führt alle im Paket befindlichen Dateinamen mit Rechten auf.</para>
+    <sect1>
+        <title>Dateiliste</title>
+        <para>
+            $Filelist
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Änderungsliste</title>
+    <para>
+        $ChangeLog
+    </para>
+</chapter>
+
+</book>

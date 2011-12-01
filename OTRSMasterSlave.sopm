@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: OTRSMasterSlave.sopm,v 1.1 2011-10-10 09:30:05 te Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.2 2011-12-01 11:41:24 te Exp $</CVS>
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
     <Framework>3.0.x</Framework>
@@ -11,6 +11,7 @@
     <Description Lang="de">Enthält "Ticket Master/Slave" Funktionalität.</Description>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml"/>
+        <File Permission="644" Location="Kernel/doc/de/OTRSMasterSlave.xml"/>
         <File Permission="644" Location="Kernel/Language/de_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentMasterSlavePrepareTicket.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketBulk.pm"/>
