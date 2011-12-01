@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.152 2011-08-11 23:38:40 mb Exp $
+# $Id: FAQ.pm,v 1.153 2011-12-01 17:31:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.152 $) [1];
+$VERSION = qw($Revision: 1.153 $) [1];
 
 =head1 NAME
 
@@ -544,15 +544,16 @@ sub FAQAdd {
 update an article
 
    my $Success = $FAQObject->FAQUpdate(
-        ItemID     => 123,
-        CategoryID => 1,
-        StateID    => 1,
-        LanguageID => 1,
-        Approved   => 1,
-        Title      => 'Some Text',
-        Field1     => 'Problem...',
-        Field2     => 'Solution...',
-        UserID     => 1,
+        ItemID      => 123,
+        CategoryID  => 1,
+        StateID     => 1,
+        LanguageID  => 1,
+        Approved    => 1,
+        Title       => 'Some Text',
+        Field1      => 'Problem...',
+        Field2      => 'Solution...',
+        UserID      => 1,
+        ApprovalOff => 1, (optional, if set to 1 approval is ignored. This is important when called from FAQInlineAttachmentURLUpdate)
     );
 
 Returns:
@@ -612,7 +613,7 @@ sub FAQUpdate {
     );
 
     # update approval
-    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+    if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{ApprovalOff} ) {
 
         # check permission
         my %Groups = reverse $Self->{GroupObject}->GroupMemberList(
@@ -4719,8 +4720,9 @@ sub FAQInlineAttachmentURLUpdate {
     # update FAQ article without writing a history entry
     my $Ok = $Self->FAQUpdate(
         %FAQData,
-        HistoryOff => 1,
-        UserID     => $Param{UserID},
+        HistoryOff  => 1,
+        ApprovalOff => 1,
+        UserID      => $Param{UserID},
     );
 
     # check if update was successful
@@ -4854,6 +4856,7 @@ sub _FAQApprovalUpdate {
         my $Ok = $Self->_FAQApprovalTicketCreate(
             ItemID     => $Param{ItemID},
             CategoryID => $FAQData{CategoryID},
+            LanguageID => $FAQData{LanguageID},
             FAQNumber  => $FAQData{Number},
             Title      => $FAQData{Title},
             StateID    => $FAQData{StateID},
@@ -5005,6 +5008,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.152 $ $Date: 2011-08-11 23:38:40 $
+$Revision: 1.153 $ $Date: 2011-12-01 17:31:47 $
 
 =cut
