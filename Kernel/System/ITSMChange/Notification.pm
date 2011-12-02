@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.47 2011-04-25 10:21:01 ub Exp $
+# $Id: Notification.pm,v 1.48 2011-12-02 13:28:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,6 +15,7 @@ use strict;
 use warnings;
 
 use Kernel::System::EventHandler;
+use Kernel::System::CacheInternal;
 use Kernel::System::CustomerUser;
 use Kernel::System::Email;
 use Kernel::System::HTMLUtils;
@@ -25,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::Language;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -117,6 +118,16 @@ sub new {
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new( %{$Self} );
     $Self->{SendmailObject}     = Kernel::System::Email->new( %{$Self} );
     $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
+
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+
+    # create additional objects
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %{$Self},
+        Type => 'ITSMChangeManagement',
+        TTL  => $Self->{CacheTTL},
+    );
 
     # do we use richtext
     $Self->{RichText} = $Self->{ConfigObject}->Get('Frontend::RichText');
@@ -522,6 +533,13 @@ sub NotificationRuleGet {
         return;
     }
 
+    # check the cache
+    my $CacheKey = 'NotificationRuleGet::ID::' . $Param{ID};
+    my $Cache    = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # do sql query
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT cn.id, cn.name, item_attribute, event_id, cht.name, '
@@ -571,6 +589,12 @@ sub NotificationRuleGet {
         $NotificationRule{Recipients}   = \@Recipients;
         $NotificationRule{RecipientIDs} = \@RecipientIDs;
     }
+
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \%NotificationRule,
+    );
 
     return \%NotificationRule;
 }
@@ -653,6 +677,22 @@ sub NotificationRuleAdd {
         );
     }
 
+    # delete cache
+    for my $Key (
+        'NotificationRuleList',
+        'NotificationRuleSearch::Valid::0',
+        'NotificationRuleSearch::Valid::1',
+        'NotificationRuleSearch::Valid::0::EventID::' . $Param{EventID},
+        'NotificationRuleSearch::Valid::1::EventID::' . $Param{EventID},
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     return $RuleID;
 }
 
@@ -722,6 +762,23 @@ sub NotificationRuleUpdate {
         );
     }
 
+    # delete cache
+    for my $Key (
+        'NotificationRuleGet::ID::' . $Param{ID},
+        'NotificationRuleList',
+        'NotificationRuleSearch::Valid::0',
+        'NotificationRuleSearch::Valid::1',
+        'NotificationRuleSearch::Valid::0::EventID::' . $Param{EventID},
+        'NotificationRuleSearch::Valid::1::EventID::' . $Param{EventID},
+        )
+    {
+
+        $Self->{CacheObject}->Delete(
+            Type => 'ITSMChangeManagement',
+            Key  => $Key,
+        );
+    }
+
     return 1;
 }
 
@@ -740,6 +797,13 @@ returns
 sub NotificationRuleList {
     my $Self = shift;
 
+    # check the cache
+    my $CacheKey = 'NotificationRuleList';
+    my $Cache    = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # do sql query,
     # sort in a userfriendly fashion
     return if !$Self->{DBObject}->Prepare(
@@ -752,6 +816,12 @@ sub NotificationRuleList {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @IDs, $Row[0],
     }
+
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \@IDs,
+    );
 
     return \@IDs;
 }
@@ -780,11 +850,20 @@ sub NotificationRuleSearch {
     my @SQLWhere;    # assemble the conditions used in the WHERE clause
     my @SQLBind;     # parameters for the WHERE clause
 
+    # define the cache key
+    my $CacheKey = 'NotificationRuleSearch::Valid::' . $Valid;
+
     # for now we only have a single search param
     if ( $Param{EventID} ) {
         push @SQLWhere, 'cn.event_id = ?';
         push @SQLBind,  \$Param{EventID};
+        $CacheKey .= '::EventID::' . $Param{EventID};
     }
+
+    my $Cache = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
 
     my $SQL = 'SELECT id FROM change_notification cn ';
 
@@ -814,6 +893,12 @@ sub NotificationRuleSearch {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @IDs, $Row[0],
     }
+
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \@IDs,
+    );
 
     return \@IDs;
 }
@@ -853,6 +938,19 @@ sub RecipientLookup {
         return;
     }
 
+    # check the cache
+    my $CacheKey;
+    if ( $Param{ID} ) {
+        $CacheKey = 'RecipientLookup::ID::' . $Param{ID};
+    }
+    elsif ( $Param{Name} ) {
+        $CacheKey = 'RecipientLookup::Name::' . $Param{Name};
+    }
+    my $Cache = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # determine sql statement and bind parameters
     my $SQL;
     my @Binds;
@@ -877,6 +975,12 @@ sub RecipientLookup {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Value = $Row[0];
     }
+
+    # save value in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => $Value,
+    );
 
     return $Value;
 }
@@ -1430,6 +1534,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.47 $ $Date: 2011-04-25 10:21:01 $
+$Revision: 1.48 $ $Date: 2011-12-02 13:28:30 $
 
 =cut
