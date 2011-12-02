@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarMyCAB.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarMyCAB.pm,v 1.4 2011-11-10 11:20:35 ub Exp $
+# $Id: ToolBarMyCAB.pm,v 1.5 2011-12-02 11:08:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,6 +47,9 @@ sub Run {
     my $Action = 'AgentITSMChangeMyCAB';
     my $Group  = 'itsm-change';
 
+    # do not show icon if frontend module is not registered
+    return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
+
     # get config of frontend module
     my $Config = $Self->{ConfigObject}->Get("ITSMChange::Frontend::$Action");
 
@@ -65,9 +68,6 @@ sub Run {
 
     # deny access if the agent doesn't have the appropriate type in the appropriate group
     return if !$Groups{$GroupID};
-
-    # do not show icon if frontend module is not registered
-    return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
 
     # get the number of viewable changes
     my $Count = 0;
