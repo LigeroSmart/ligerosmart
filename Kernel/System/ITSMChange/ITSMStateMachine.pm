@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMStateMachine.pm - all state machine functions
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMStateMachine.pm,v 1.11 2010-01-30 20:45:17 ub Exp $
+# $Id: ITSMStateMachine.pm,v 1.12 2011-12-02 13:24:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,10 +14,11 @@ package Kernel::System::ITSMChange::ITSMStateMachine;
 use strict;
 use warnings;
 
+use Kernel::System::CacheInternal;
 use Kernel::System::GeneralCatalog;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -96,6 +97,16 @@ sub new {
 
     # create additional objects
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
+
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::CacheTTL') * 60;
+
+    # create additional objects
+    $Self->{CacheInternalObject} = Kernel::System::CacheInternal->new(
+        %{$Self},
+        Type => 'ITSMStateMachine',
+        TTL  => $Self->{CacheTTL},
+    );
 
     return $Self;
 }
@@ -246,7 +257,8 @@ sub StateTransitionAdd {
         }
     }
 
-   # prevent the adding of other next states if an end state is already defined for this start state
+    # prevent the adding of other next states if an end state is already defined
+    # for this start state
     elsif ( $Param{StateID} && $Param{NextStateID} ) {
 
         # check if other state transistions exist for the given StateID
@@ -300,6 +312,9 @@ sub StateTransitionAdd {
         return;
     }
 
+    # cleanup statemachine cache
+    $Self->{CacheInternalObject}->CleanUp();
+
     return $TransitionID;
 }
 
@@ -336,6 +351,9 @@ sub StateTransitionDelete {
             \$Param{StateID}, \$Param{NextStateID},
         ],
     );
+
+    # cleanup statemachine cache
+    $Self->{CacheInternalObject}->CleanUp();
 
     return 1;
 }
@@ -388,6 +406,9 @@ sub StateTransitionDeleteAll {
             . "OR next_state_id IN ( $IDString )",
     );
 
+    # cleanup statemachine cache
+    $Self->{CacheInternalObject}->CleanUp();
+
     return 1;
 
 }
@@ -426,6 +447,13 @@ sub StateTransitionGet {
         );
         return;
     }
+
+    # check the cache
+    my $CacheKey = 'StateTransitionGet::StateID::' . $Param{StateID} . '::Class::' . $Param{Class};
+    my $Cache    = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
 
     # check if StateID belongs to the given class, but only if state id is not a start state (=0)
     if ( $Param{StateID} ) {
@@ -481,6 +509,12 @@ sub StateTransitionGet {
         }
     }
 
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \@NextStateIDs,
+    );
+
     return \@NextStateIDs;
 }
 
@@ -518,6 +552,14 @@ sub StateTransitionGetEndStates {
         );
         return;
     }
+
+    # check the cache
+    my $CacheKey
+        = 'StateTransitionGetEndStates::StateID::' . $Param{StateID} . '::Class::' . $Param{Class};
+    my $Cache = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
 
     # check if StateID belongs to the given class, but only if state id is not a start state (=0)
     if ( $Param{StateID} ) {
@@ -589,6 +631,12 @@ sub StateTransitionGetEndStates {
         push @NextEndStateIDs, $Row[0];
     }
 
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \@NextEndStateIDs,
+    );
+
     return \@NextEndStateIDs;
 }
 
@@ -628,6 +676,13 @@ sub StateTransitionList {
         return;
     }
 
+    # check the cache
+    my $CacheKey = 'StateTransitionList::Class::' . $Param{Class};
+    my $Cache    = $Self->{CacheInternalObject}->Get(
+        Key => $CacheKey,
+    );
+    return $Cache if $Cache;
+
     # get state transitions
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT DISTINCT s.id , s.state_id , s.next_state_id , g.general_catalog_class '
@@ -642,6 +697,12 @@ sub StateTransitionList {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @{ $StateTransition{ $Row[1] } }, $Row[2];
     }
+
+    # save values in cache
+    $Self->{CacheInternalObject}->Set(
+        Key   => $CacheKey,
+        Value => \%StateTransition,
+    );
 
     return \%StateTransition;
 }
@@ -790,6 +851,9 @@ sub StateTransitionUpdate {
             . 'WHERE id = ?',
         Bind => [ \$Param{NewNextStateID}, \$TransitionID ],
     );
+
+    # cleanup statemachine cache
+    $Self->{CacheInternalObject}->CleanUp();
 
     return 1;
 }
@@ -965,12 +1029,12 @@ This software is part of the OTRS project (http://otrs.org/).
 
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
-did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2010-01-30 20:45:17 $
+$Revision: 1.12 $ $Date: 2011-12-02 13:24:58 $
 
 =cut
