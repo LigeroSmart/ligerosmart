@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: HistoryAdd.pm,v 1.49 2011-04-21 15:07:44 ub Exp $
+# $Id: HistoryAdd.pm,v 1.50 2011-12-06 12:40:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 =head1 NAME
 
@@ -181,6 +181,7 @@ sub Run {
             UserID      => $Param{UserID},
         );
     }
+
     elsif ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
 
         # get old data, either from change or workorder
@@ -261,6 +262,7 @@ sub Run {
             }
         }
     }
+
     elsif ( $Event eq 'WorkOrderDelete' ) {
 
         # get old data
@@ -416,7 +418,7 @@ sub Run {
         );
 
         # create history for all condition fields
-        my @ConditionStatic = qw( ConditionID UserID ChangeID);
+        my @ConditionStatic = qw(ConditionID UserID ChangeID);
         CONDITIONFIELD:
         for my $ConditionField ( keys %{ $Param{Data} } ) {
 
@@ -443,7 +445,7 @@ sub Run {
         my $OldData = $Param{Data}->{OldConditionData};
 
         # create history for all condition fields
-        my @ConditionStatic = qw( ConditionID UserID ChangeID OldConditionData );
+        my @ConditionStatic = qw(ConditionID UserID ChangeID OldConditionData);
         CONDITIONFIELD:
         for my $ConditionField ( keys %{ $Param{Data} } ) {
 
@@ -466,8 +468,6 @@ sub Run {
                 ChangeID    => $OldData->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ConditionField,
-                ContentNew  => $Param{Data}->{$ConditionField},
-                ContentOld  => $OldData->{$ConditionField},
                 ContentNew  => $Param{Data}->{ConditionID} . '%%' . $Param{Data}->{$ConditionField},
                 ContentOld  => $Param{Data}->{ConditionID} . '%%' . $OldData->{$ConditionField},
                 UserID      => $Param{UserID},
@@ -784,6 +784,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2011-04-21 15:07:44 $
+$Revision: 1.50 $ $Date: 2011-12-06 12:40:25 $
 
 =cut
