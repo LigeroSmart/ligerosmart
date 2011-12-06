@@ -1,8 +1,8 @@
 # --
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.16 2010-12-10 17:40:03 ub Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.17 2011-12-06 20:46:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -31,7 +31,7 @@
 <!-- dtl:block:RecordCommentHeader -->
 <!-- dtl:block:RecordValidHeader -->
                 <th class="ValidID $QData{"SortValidID"}">
-                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ValidID;OrderBy=$LQData{"OrderByValidID"}">$Text{"Valid"}</a>
+                    <a name="OverviewControl" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ValidID;OrderBy=$LQData{"OrderByValidID"}">$Text{"Validity"}</a>
                 </th>
 <!-- dtl:block:RecordValidHeader -->
 <!-- dtl:block:RecordDeleteHeader -->
