@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.12 2011-11-29 13:52:57 ub Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.51 2011/11/28 07:57:29 mg Exp $
+# $Id: TicketOverviewMedium.pm,v 1.13 2011-12-07 11:08:26 ub Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.52 2011/12/05 20:56:04 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -770,7 +770,7 @@ sub _Show {
         }
     }
 
-    # fill the rest of the Dyanmic Fields row with empty cells, this will look better
+    # fill the rest of the Dynamic Fields row with empty cells, this will look better
     if ( $Counter > 0 && $Counter < 5 ) {
 
         for ( $Counter + 1 ... 5 ) {
@@ -793,6 +793,35 @@ sub _Show {
             );
         }
     }
+
+    # test access to frontend module for Customer
+    my $Access = $Self->{LayoutObject}->Permission(
+        Action => 'AgentTicketCustomer',
+        Type   => 'rw',
+    );
+    if ($Access) {
+
+        # test access to ticket
+        my $Config = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketCustomer');
+        if ( $Config->{Permission} ) {
+            my $OK = $Self->{TicketObject}->Permission(
+                Type     => $Config->{Permission},
+                TicketID => $Param{TicketID},
+                UserID   => $Self->{UserID},
+                LogNo    => 1,
+            );
+            if ( !$OK ) {
+                $Access = 0;
+            }
+        }
+    }
+
+    # define proper DTL block based on permissions
+    my $CustomerIDBlock = $Access ? 'CustomerIDRW' : 'CustomerIDRO';
+    $Self->{LayoutObject}->Block(
+        Name => $CustomerIDBlock,
+        Data => { %Param, %Article },
+    );
 
     # get MoveQueuesStrg
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::MoveType') =~ /^form$/i ) {

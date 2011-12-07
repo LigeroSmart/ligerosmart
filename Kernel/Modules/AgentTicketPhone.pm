@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.40 2011-12-01 15:22:12 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.213 2011/11/29 18:17:07 cg Exp $
+# $Id: AgentTicketPhone.pm,v 1.41 2011-12-07 11:08:26 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.216 2011/12/05 21:11:32 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -422,7 +422,6 @@ sub Run {
                     %GetParam,
                     %ACLCompatGetParam,
                     Action        => $Self->{Action},
-                    Type          => 'DynamicField_' . $DynamicFieldConfig->{Name},
                     ReturnType    => 'Ticket',
                     ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
                     Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
@@ -696,7 +695,6 @@ sub Run {
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
                     Action        => $Self->{Action},
-                    Type          => 'DynamicField_' . $DynamicFieldConfig->{Name},
                     ReturnType    => 'Ticket',
                     ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
                     Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
@@ -1367,10 +1365,14 @@ sub Run {
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
             next DYNAMICFIELD
-                if !IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} );
+                if !$Self->{BackendObject}->IsAJAXUpdateable(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                );
             next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'Ticket';
 
-            my $PossibleValues = $DynamicFieldConfig->{Config}->{PossibleValues};
+            my $PossibleValues = $Self->{BackendObject}->AJAXPossibleValuesGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
 
             # set possible values filter from ACLs
             my $ACL = $Self->{TicketObject}->TicketAcl(
@@ -1378,10 +1380,9 @@ sub Run {
                 %ACLCompatGetParam,
                 Action        => $Self->{Action},
                 QueueID       => $QueueID || 0,
-                Type          => 'DynamicField_' . $DynamicFieldConfig->{Name},
                 ReturnType    => 'Ticket',
                 ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
+                Data          => $PossibleValues,
                 UserID        => $Self->{UserID},
             );
             if ($ACL) {
