@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.191 2011-04-27 15:17:23 ub Exp $
+# $Id: ITSMChange.t,v 1.192 2011-12-07 17:27:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -2504,6 +2504,7 @@ for my $Test (@ChangeTests) {
 
         # remember current ChangeID
         if ($ChangeID) {
+
             $TestedChangeID{$ChangeID} = 1;
 
             # save changeid for use in search tests
@@ -6258,6 +6259,71 @@ for my $TestFile (@TestFileList) {
 }
 
 # ------------------------------------------------------------ #
+# test HistoryAddMultiple() function
+# ------------------------------------------------------------ #
+
+{
+
+    # define old values for change
+    my %OldValues = (
+        ChangeTitle   => 'AAA',
+        Description   => 'BBB',
+        Justification => 'CCC',
+    );
+
+    # add a new test change
+    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        %OldValues,
+        UserID => 1,
+    );
+
+    # remember change id for automatic deletion
+    $TestedChangeID{$ChangeID} = 1;
+
+    # define new values for change update
+    my %NewValues = (
+        ChangeTitle   => 'XXX',
+        Description   => 'YYY',
+        Justification => 'ZZZ',
+    );
+
+    # update the change
+    my $Success = $Self->{ChangeObject}->ChangeUpdate(
+        %NewValues,
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    # get the change history
+    my $HistoryEntries = $Self->{HistoryObject}->ChangeHistoryGet(
+        ChangeID => $ChangeID,
+        UserID   => 1,
+    );
+
+    # get reverse history entries
+    my @ReverseHistory = reverse @{$HistoryEntries};
+
+    # get the last 3 history entries and put them in a hash
+    # key is the fieldname, value is the complete history data of that line
+    my %HistoryLookupByFieldname = map { $_->{Fieldname} => $_ } @ReverseHistory[ 0, 1, 2 ];
+
+    for my $Fieldname ( keys %NewValues ) {
+
+        $Self->Is(
+            $HistoryLookupByFieldname{$Fieldname}->{ContentOld},
+            $OldValues{$Fieldname},
+            "Checking History for Field: $Fieldname, ContentOld: $OldValues{$Fieldname}",
+        );
+
+        $Self->Is(
+            $HistoryLookupByFieldname{$Fieldname}->{ContentNew},
+            $NewValues{$Fieldname},
+            "Checking History for Field: $Fieldname, ContentNew: $NewValues{$Fieldname}",
+        );
+    }
+}
+
+# ------------------------------------------------------------ #
 # clean the system
 # ------------------------------------------------------------ #
 
@@ -6296,6 +6362,7 @@ $Self->{ConfigObject}->Set(
 # delete the test changes
 my $DeleteTestCount = 1;
 for my $ChangeID ( keys %TestedChangeID ) {
+
     my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/HistoryAdd.pm - HistoryAdd event module for ITSMChange
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: HistoryAdd.pm,v 1.50 2011-12-06 12:40:25 ub Exp $
+# $Id: HistoryAdd.pm,v 1.51 2011-12-07 17:27:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 =head1 NAME
 
@@ -169,17 +169,20 @@ sub Run {
         return;
     }
 
+    # store all history add data
+    my @HistoryAddData;
+
     # do history stuff
     if ( $Event eq 'ChangeAdd' || $Event eq 'WorkOrderAdd' ) {
 
         # tell history that a change was added
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ $Type . 'ID' },
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     elsif ( $Event eq 'ChangeUpdate' || $Event eq 'WorkOrderUpdate' ) {
@@ -226,7 +229,7 @@ sub Run {
                 );
 
                 # save history if accounted time has changed
-                $Self->{HistoryObject}->HistoryAdd(
+                push @HistoryAddData, {
                     ChangeID    => $ChangeID,
                     WorkOrderID => $Param{Data}->{WorkOrderID},
                     HistoryType => $Event,
@@ -234,7 +237,7 @@ sub Run {
                     ContentNew  => $WorkOrder->{$Field},
                     ContentOld  => $OldData->{$Field},
                     UserID      => $Param{UserID},
-                );
+                };
 
                 next FIELD;
             }
@@ -245,10 +248,10 @@ sub Run {
                 Old => $OldData->{$Field},
             );
 
-            # save history if field changed
+            # save history if field has changed
             if ($FieldHasChanged) {
 
-                my $Success = $Self->{HistoryObject}->HistoryAdd(
+                push @HistoryAddData, {
                     ChangeID    => $ChangeID,
                     WorkOrderID => $Param{Data}->{WorkOrderID},
                     HistoryType => $Event,
@@ -256,9 +259,7 @@ sub Run {
                     ContentNew  => $Param{Data}->{$Field},
                     ContentOld  => $OldData->{$Field},
                     UserID      => $Param{UserID},
-                );
-
-                next FIELD if !$Success;
+                };
             }
         }
     }
@@ -285,6 +286,9 @@ sub Run {
         }
 
         # add history entry for WorkOrder deletion
+        # call HistoryAdd directly from here instead of using the @HistoryAddData
+        # as we want this to appear next to the line in history that HistoryUpdate
+        # just added in the code block before
         return if !$Self->{HistoryObject}->HistoryAdd(
             ChangeID    => $OldData->{ChangeID},
             HistoryType => $Event,
@@ -311,19 +315,17 @@ sub Run {
                 Old => $OldData->{$Field},
             );
 
-            # save history if field changed
+            # save history if field has changed
             if ($FieldHasChanged) {
 
-                my $Success = $Self->{HistoryObject}->HistoryAdd(
+                push @HistoryAddData, {
                     ChangeID    => $Param{Data}->{ChangeID},
                     HistoryType => $Event,
                     Fieldname   => $Field,
                     ContentNew  => join( '%%', @{ $Param{Data}->{$Field} } ),
                     ContentOld  => join( '%%', @{ $OldData->{$Field} } ),
                     UserID      => $Param{UserID},
-                );
-
-                next FIELD if !$Success;
+                };
             }
         }
     }
@@ -352,13 +354,13 @@ sub Run {
             $Param{Data}->{SourceKey} || $Param{Data}->{TargetKey};
 
         # tell history that a link was added
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
             ContentNew  => $ContentNew,
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle attachment events
@@ -371,51 +373,55 @@ sub Run {
     {
 
         # tell history that an attachment event was triggered
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{Filename},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle xxxTimeReached events
     elsif ( $Event =~ m{ TimeReached \z }xms ) {
+
+        # get either WorkOrderID or ChangeID
         my $ID = $Param{Data}->{WorkOrderID} || $Param{Data}->{ChangeID};
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
             ContentNew  => $ID . '%%Notification Sent',
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # add history entry when notification was sent
     elsif ( $Event =~ m{ NotificationSent \z }xms ) {
+
+        # get either WorkOrderID or ChangeID
         my $ID = $Param{Data}->{WorkOrderID} || $Param{Data}->{ChangeID};
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             WorkOrderID => $Param{Data}->{WorkOrderID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{To} . '%%' . $Param{Data}->{EventType},
-            UserID      => $Param{UserID},
-        );
+            UserID      => $Param{UserID}
+        };
     }
 
     # handle condition events
     elsif ( $Event eq 'ConditionAdd' ) {
 
-        # create history for id
-        $Self->{HistoryObject}->HistoryAdd(
+        # create history for condition
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ConditionID},
             UserID      => $Param{UserID},
-        );
+        };
 
         # create history for all condition fields
         my @ConditionStatic = qw(ConditionID UserID ChangeID);
@@ -428,13 +434,13 @@ sub Run {
             # do not add empty fields to history
             next CONDITIONFIELD if !$Param{Data}->{$ConditionField};
 
-            $Self->{HistoryObject}->HistoryAdd(
+            push @HistoryAddData, {
                 ChangeID    => $Param{Data}->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ConditionField,
                 ContentNew  => $Param{Data}->{$ConditionField},
                 UserID      => $Param{UserID},
-            );
+            };
         }
     }
 
@@ -464,14 +470,14 @@ sub Run {
             # create history only for changed fields
             next CONDITIONFIELD if !$FieldHasChanged;
 
-            $Self->{HistoryObject}->HistoryAdd(
+            push @HistoryAddData, {
                 ChangeID    => $OldData->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ConditionField,
                 ContentNew  => $Param{Data}->{ConditionID} . '%%' . $Param{Data}->{$ConditionField},
                 ContentOld  => $Param{Data}->{ConditionID} . '%%' . $OldData->{$ConditionField},
                 UserID      => $Param{UserID},
-            );
+            };
         }
     }
 
@@ -481,12 +487,12 @@ sub Run {
         # get old data
         my $OldData = $Param{Data}->{OldConditionData};
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $OldData->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $OldData->{ConditionID},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle condition delete events
@@ -503,13 +509,13 @@ sub Run {
     # handle expression events
     elsif ( $Event eq 'ExpressionAdd' ) {
 
-        # create history for id
-        $Self->{HistoryObject}->HistoryAdd(
+        # create history for expression
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ExpressionID},
             UserID      => $Param{UserID},
-        );
+        };
 
         # create history for all expression fields
         my @ExpressionStatic = qw( ExpressionID UserID ChangeID);
@@ -522,13 +528,13 @@ sub Run {
             # do not add empty fields to history
             next EXPRESSIONFIELD if !$Param{Data}->{$ExpressionField};
 
-            $Self->{HistoryObject}->HistoryAdd(
+            push @HistoryAddData, {
                 ChangeID    => $Param{Data}->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ExpressionField,
                 ContentNew  => $Param{Data}->{$ExpressionField},
                 UserID      => $Param{UserID},
-            );
+            };
         }
     }
 
@@ -558,7 +564,7 @@ sub Run {
             # create history only for changed fields
             next EXPRESSIONFIELD if !$FieldHasChanged;
 
-            $Self->{HistoryObject}->HistoryAdd(
+            push @HistoryAddData, {
                 ChangeID    => $Param{Data}->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ExpressionField,
@@ -566,42 +572,42 @@ sub Run {
                     . $Param{Data}->{$ExpressionField},
                 ContentOld => $Param{Data}->{ExpressionID} . '%%' . $OldData->{$ExpressionField},
                 UserID     => $Param{UserID},
-            );
+            };
         }
     }
 
     # handle expression delete events
     elsif ( $Event eq 'ExpressionDelete' ) {
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ExpressionID},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle delete all expressions events
     elsif ( $Event eq 'ExpressionDeleteAll' ) {
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ConditionID},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle action events
     elsif ( $Event eq 'ActionAdd' ) {
 
-        # create history for id
-        $Self->{HistoryObject}->HistoryAdd(
+        # create history for action
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ActionID},
             UserID      => $Param{UserID},
-        );
+        };
 
         # create history for all action fields
         my @ActionStatic = qw( ActionID UserID ChangeID);
@@ -614,13 +620,13 @@ sub Run {
             # do not add empty fields to history
             next ACTIONFIELD if !$Param{Data}->{$ActionField};
 
-            $Self->{HistoryObject}->HistoryAdd(
+            push @HistoryAddData, {
                 ChangeID    => $Param{Data}->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ActionField,
                 ContentNew  => $Param{Data}->{$ActionField},
                 UserID      => $Param{UserID},
-            );
+            };
         }
     }
 
@@ -650,48 +656,48 @@ sub Run {
             # create history only for changed fields
             next ACTIONFIELD if !$FieldHasChanged;
 
-            $Self->{HistoryObject}->HistoryAdd(
+            push @HistoryAddData, {
                 ChangeID    => $Param{Data}->{ChangeID},
                 HistoryType => $Event,
                 Fieldname   => $ActionField,
                 ContentNew  => $Param{Data}->{ActionID} . '%%' . $Param{Data}->{$ActionField},
                 ContentOld  => $Param{Data}->{ActionID} . '%%' . $OldData->{$ActionField},
                 UserID      => $Param{UserID},
-            );
+            };
         }
     }
 
     # handle action delete events
     elsif ( $Event eq 'ActionDelete' ) {
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ActionID},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle delete all actions events
     elsif ( $Event eq 'ActionDeleteAll' ) {
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ConditionID},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # handle action execute events
     elsif ( $Event eq 'ActionExecute' ) {
 
-        return if !$Self->{HistoryObject}->HistoryAdd(
+        push @HistoryAddData, {
             ChangeID    => $Param{Data}->{ChangeID},
             HistoryType => $Event,
             ContentNew  => $Param{Data}->{ActionID} . '%%' . $Param{Data}->{ActionResult},
             UserID      => $Param{UserID},
-        );
+        };
     }
 
     # error
@@ -704,6 +710,26 @@ sub Run {
         );
 
         return;
+    }
+
+    # if there is nothing to write to the history
+    return 1 if !@HistoryAddData;
+
+    # if there is just one history entry to write
+    if ( scalar @HistoryAddData == 1 ) {
+
+        # write the first and only entry of the array to the history
+        $Self->{HistoryObject}->HistoryAdd(
+            %{ $HistoryAddData[0] },
+        );
+    }
+
+    # there is more than one entry to write
+    # let the HistoryAddMultiple function handle that
+    else {
+        $Self->{HistoryObject}->HistoryAddMultiple(
+            Data => \@HistoryAddData,
+        );
     }
 
     return 1;
@@ -784,6 +810,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.50 $ $Date: 2011-12-06 12:40:25 $
+$Revision: 1.51 $ $Date: 2011-12-07 17:27:21 $
 
 =cut

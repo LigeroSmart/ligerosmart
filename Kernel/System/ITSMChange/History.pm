@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: History.pm,v 1.30 2011-11-21 17:18:16 ub Exp $
+# $Id: History.pm,v 1.31 2011-12-07 17:27:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 =head1 NAME
 
@@ -149,9 +149,13 @@ sub HistoryAdd {
         return;
     }
 
-    # get history type id from history type if history type is given.
+    # get history type id from history type if history type is given
     if ( $Param{HistoryType} ) {
-        my $ID = $Self->HistoryTypeLookup( HistoryType => $Param{HistoryType} );
+
+        # lookup the history type id
+        my $ID = $Self->HistoryTypeLookup(
+            HistoryType => $Param{HistoryType},
+        );
 
         # no valid history type given
         if ( !$ID ) {
@@ -180,6 +184,200 @@ sub HistoryAdd {
             \$Param{Fieldname},
         ],
     );
+
+    return 1;
+}
+
+=item HistoryAddMultiple()
+
+Adds multiple history entries to the history. Returns 1 on success, C<undef> otherwise.
+
+    my $Success = $HistoryObject->HistoryAddMultiple(
+        Data => \@HistoryAddData,
+    );
+
+=cut
+
+sub HistoryAddMultiple {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{Data} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need Data!",
+        );
+        return;
+    }
+
+    # check needed stuff
+    if ( ref $Param{Data} ne 'ARRAY' ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Data must be an array reference!",
+        );
+        return;
+    }
+
+    # check needed stuff
+    if ( !@{ $Param{Data} } ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Data array must not be empty!",
+        );
+        return;
+    }
+
+    # define database specific SQL for the multiline inserts
+    my %DatabaseSQL;
+
+    # mysql
+    $DatabaseSQL{mysql} = {
+        Start => 'INSERT INTO change_history ( change_id, workorder_id, content_new, '
+            . 'content_old, create_by, create_time, type_id, fieldname ) ',
+        FirstLine => 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ?, ? )',
+        NextLine  => ', ( ?, ?, ?, ?, ?, current_timestamp, ?, ? ) ',
+        End       => '',
+    };
+
+    # postgres 8.2 and newer (same SQL code as for mysql)
+    $DatabaseSQL{postgres} = $DatabaseSQL{mysql};
+
+    # oracle
+    $DatabaseSQL{oracle} = {
+        Start     => 'INSERT ALL ',
+        FirstLine => 'INTO change_history ( change_id, workorder_id, content_new, '
+            . 'content_old, create_by, create_time, type_id, fieldname )  '
+            . 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ?, ? ) ',
+        NextLine => 'INTO change_history ( change_id, workorder_id, content_new, '
+            . 'content_old, create_by, create_time, type_id, fieldname )  '
+            . 'VALUES ( ?, ?, ?, ?, ?, current_timestamp, ?, ? ) ',
+        End => 'SELECT * FROM DUAL',
+    };
+
+    # get the database type
+    my $DBType = $Self->{DBObject}->{'DB::Type'};
+
+    # make multiline inserts for defined databases
+    if ( $DatabaseSQL{$DBType} ) {
+
+        my $SQL = '';
+        my @Bind;
+
+        HISTORYENTRY:
+        for my $HistoryEntry ( @{ $Param{Data} } ) {
+
+            # check needed stuff
+            # ChangeID is always needed, workorder id is only needed for workorder events
+            for my $Needed (qw(UserID ChangeID)) {
+                if ( !$HistoryEntry->{$Needed} ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Need $Needed!",
+                    );
+                    next HISTORYENTRY;
+                }
+            }
+
+            # either HistoryType or HistoryTypeID is needed
+            if ( !( $HistoryEntry->{HistoryType} || $HistoryEntry->{HistoryTypeID} ) ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => 'Need HistoryType or HistoryTypeID!',
+                );
+                next HISTORYENTRY;
+            }
+
+            # get history type id from history type if history type is given
+            if ( $HistoryEntry->{HistoryType} ) {
+
+                # lookup the history type id
+                my $ID = $Self->HistoryTypeLookup(
+                    HistoryType => $HistoryEntry->{HistoryType},
+                );
+
+                # no valid history type given
+                if ( !$ID ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Invalid history type '$HistoryEntry->{HistoryType}' given!",
+                    );
+                    next HISTORYENTRY;
+                }
+
+                $HistoryEntry->{HistoryTypeID} = $ID;
+            }
+
+            # now the history entry is validated and can be added to sql
+            if ( !$SQL ) {
+                $SQL = $DatabaseSQL{$DBType}->{Start} . $DatabaseSQL{$DBType}->{FirstLine};
+            }
+            else {
+                $SQL .= $DatabaseSQL{$DBType}->{NextLine};
+            }
+            push @Bind, (
+                \$HistoryEntry->{ChangeID},
+                \$HistoryEntry->{WorkOrderID},
+                \$HistoryEntry->{ContentNew},
+                \$HistoryEntry->{ContentOld},
+                \$HistoryEntry->{UserID},
+                \$HistoryEntry->{HistoryTypeID},
+                \$HistoryEntry->{Fieldname},
+            );
+
+            # check the length of the SQL string
+            # (some databases only accept SQL strings up to 4k,
+            # so we want to stay safe here with just 3500 bytes)
+            if ( length $SQL > 3500 ) {
+
+                # add the end line to sql string
+                $SQL .= $DatabaseSQL{$DBType}->{End};
+
+                # insert multiple history entries
+                return if !$Self->{DBObject}->Do(
+                    SQL  => $SQL,
+                    Bind => \@Bind,
+                );
+
+                # reset the SQL string and the Bind array
+                $SQL  = '';
+                @Bind = ();
+            }
+        }
+
+        # if there is some SQL left to execute
+        if ($SQL) {
+
+            # add the end line to sql string
+            $SQL .= $DatabaseSQL{$DBType}->{End};
+
+            # insert multiple history entries
+            return if !$Self->{DBObject}->Do(
+                SQL  => $SQL,
+                Bind => \@Bind,
+            );
+        }
+    }
+
+    # database supports no muliline inserts, so we do it line by line
+    else {
+
+        my $Error;
+        for my $HistoryEntry ( @{ $Param{Data} } ) {
+
+            # add history entries one by one with the HistoryAdd function
+            my $Success = $Self->HistoryAdd(
+                %{$HistoryEntry},
+            );
+
+            # check error
+            if ( !$Success ) {
+                $Error = 1;
+            }
+        }
+
+        return if $Error;
+    }
 
     return 1;
 }
@@ -956,6 +1154,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.30 $ $Date: 2011-11-21 17:18:16 $
+$Revision: 1.31 $ $Date: 2011-12-07 17:27:21 $
 
 =cut
