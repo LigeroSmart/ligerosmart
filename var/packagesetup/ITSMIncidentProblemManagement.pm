@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.16 2011-11-23 19:24:05 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.17 2011-12-09 15:41:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -278,15 +278,15 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_3_0_91()
+=item CodeUpgradeFromLowerThan_3_0_93()
 
-This function is only executed if the installed module version is smaller than 3.0.91.
+This function is only executed if the installed module version is smaller than 3.0.93.
 
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_91();
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_93();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_3_0_91 {
+sub CodeUpgradeFromLowerThan_3_0_93 {
     my ( $Self, %Param ) = @_;
 
     # get the definition for all dynamic fields for ITSM
@@ -314,6 +314,72 @@ sub CodeUpgradeFromLowerThan_3_0_91 {
             ValidID    => 1,
             Reorder    => 0,
             UserID     => 1,
+        );
+    }
+
+    # define the enabled dynamic fields for each screen
+    # (taken from sysconfig of ITSMIncidentProblemManagement)
+    my %ScreenDynamicFieldConfig = (
+        AgentTicketAddtlITSMField => {
+            TicketFreeTime3 => 1,
+            TicketFreeTime4 => 1,
+            TicketFreeTime6 => 1,
+        },
+        AgentTicketDecision => {
+            TicketFreeText16 => 1,
+            TicketFreeTime5  => 1,
+        },
+        AgentTicketPhone => {
+            TicketFreeText14 => 1,
+            TicketFreeTime6  => 1,
+        },
+        AgentTicketEmail => {
+            TicketFreeText14 => 1,
+            TicketFreeTime6  => 1,
+        },
+        AgentTicketSearch => {
+            TicketFreeText15 => 1,
+            TicketFreeText16 => 1,
+            TicketFreeTime3  => 1,
+            TicketFreeTime4  => 1,
+            TicketFreeTime5  => 1,
+            TicketFreeTime6  => 1,
+        },
+        AgentTicketZoom => {
+            TicketFreeText15 => 1,
+            TicketFreeText16 => 1,
+            TicketFreeTime3  => 1,
+            TicketFreeTime4  => 1,
+            TicketFreeTime5  => 1,
+            TicketFreeTime6  => 1,
+        },
+        AgentTicketPriority => {
+            TicketFreeText14 => 1,
+        },
+        AgentTicketClose => {
+            TicketFreeText15 => 1,
+        },
+        AgentTicketCompose => {
+            TicketFreeText15 => 1,
+        },
+    );
+
+    for my $Screen ( keys %ScreenDynamicFieldConfig ) {
+
+        # get existing config for each screen
+        my $Config = $Self->{ConfigObject}->Get("Ticket::Frontend::$Screen");
+
+        # get existing dynamic field config
+        my %ExistingSetting = %{ $Config->{DynamicField} || {} };
+
+        # add the new settings
+        my %NewSetting = ( %ExistingSetting, %{ $ScreenDynamicFieldConfig{$Screen} } );
+
+        # update the sysconfig
+        my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
+            Valid => 1,
+            Key   => 'Ticket::Frontend::' . $Screen . '###DynamicField',
+            Value => \%NewSetting,
         );
     }
 
@@ -673,6 +739,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2011-11-23 19:24:05 $
+$Revision: 1.17 $ $Date: 2011-12-09 15:41:34 $
 
 =cut
