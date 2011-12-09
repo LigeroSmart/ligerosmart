@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: GeneralCatalog.sopm,v 1.52 2011-11-09 13:57:22 ub Exp $</CVS>
+    <CVS>$Id: GeneralCatalog.sopm,v 1.53 2011-12-09 16:11:08 ub Exp $</CVS>
     <Name>GeneralCatalog</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -22,6 +22,7 @@
         <File Permission="644" Location="Kernel/Language/fr_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/es_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/it_GeneralCatalog.pm"/>
+        <File Permission="644" Location="Kernel/Language/ja_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/nb_NO_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/nl_GeneralCatalog.pm"/>
         <File Permission="644" Location="Kernel/Language/pl_GeneralCatalog.pm"/>
