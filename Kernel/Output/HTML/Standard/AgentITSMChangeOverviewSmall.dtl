@@ -2,7 +2,7 @@
 # AgentITSMChangeOverviewSmall.dtl - html for change overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.34 2011-11-08 07:04:07 mb Exp $
+# $Id: AgentITSMChangeOverviewSmall.dtl,v 1.35 2011-12-12 20:13:09 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@
 <!-- dtl:block:RecordChangeStateSignalHeader -->
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
                     <th class="Fixed">
-                        <span>$Text{"Services"}</span>
+                        <span>$Text{"State"}</span>
                     </th>
 <!-- dtl:block:RecordWorkOrderStateSignalHeader -->
 <!-- dtl:block:RecordChangeNumberHeader -->
