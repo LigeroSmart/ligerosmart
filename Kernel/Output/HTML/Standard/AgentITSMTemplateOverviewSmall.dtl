@@ -2,7 +2,7 @@
 # AgentITSMTemplateOverviewSmall.dtl - html for template overview table
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.17 2011-12-06 20:46:24 mb Exp $
+# $Id: AgentITSMTemplateOverviewSmall.dtl,v 1.18 2011-12-13 10:25:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -109,7 +109,7 @@
         ElementSelector:            '#DeleteTemplateID$QData{"TemplateID"}',
         DialogContentQueryString:   'Action=AgentITSMTemplateDelete;TemplateID=$LQData{"TemplateID"}',
         ConfirmedActionQueryString: 'Action=AgentITSMTemplateDelete;Subaction=TemplateDelete;TemplateID=$LQData{"TemplateID"}',
-        DialogTitle:                '$JSText{"Delete Template"} $QData{"Name"}',
+        DialogTitle:                '$JSText{"Delete Template"}',
         TranslatedText:             {
             Yes: '$JSText{"Yes"}',
             No:  '$JSText{"No"}'
