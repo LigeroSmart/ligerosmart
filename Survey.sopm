@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.47 2011-11-21 12:09:24 mh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.48 2011-12-15 15:36:33 jh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -49,6 +49,10 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_arrow_down.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_arrow_down_disabled.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/img/icons/survey_see_details.png"/>
+        <File Permission="644" Location="var/packagesetup/Survey.pm"/>
+        <File Permission="644" Location="var/cron/generic_agent_survey.dist"/>
+        <File Permission="755" Location="bin/otrs.SuveyTriggerSendRequests.pl"/>
+
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="survey">
@@ -153,6 +157,9 @@
             <Column Name="survey_id" Required="true" Type="BIGINT"/>
             <Column Name="queue_id" Required="true" Type="INTEGER"/>
         </TableCreate>
+        <TableAlter Name="survey_request" Version="2.0.92">
+            <ColumnAdd Name="create_time" Required="false" Type="DATE"/>
+        </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
         <TableDrop Name="survey"/>
@@ -162,6 +169,52 @@
         <TableDrop Name="survey_request"/>
         <TableDrop Name="survey_vote"/>
     </DatabaseUninstall>
+    <CodeUpgrade Type="post" Version="2.0.92"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgradeFromLowerThan_2_0_92';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # The code module has just recently been copied to it's location in the file system.
+        # In a persistent Perl environment an old version of the module might still be loaded,
+        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
+        # So we need to make sure that the new version is being loaded.
+        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
+        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
+        my $CodeModulePath = $CodeModule;
+        $CodeModulePath =~ s/::/\//g;
+        $CodeModulePath .= '.pm';
+        delete $INC{$CodeModulePath};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
     <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
 
         <br>
