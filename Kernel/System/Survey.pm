@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.62 2011-03-04 05:12:35 dz Exp $
+# $Id: Survey.pm,v 1.63 2011-12-15 15:38:10 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 =head1 NAME
 
@@ -111,7 +111,9 @@ sub new {
 
     $Self->{HTMLUtilsObject} = $Param{HTMLUtilsObject}
         || Kernel::System::HTMLUtils->new( %{$Self} );
+
     $Self->{SendmailObject} = $Param{SendmailObject} || Kernel::System::Email->new( %{$Self} );
+
     $Self->{CustomerUserObject} = $Param{CustomerUserObject}
         || Kernel::System::CustomerUser->new( %{$Self} );
     $Self->{TicketObject} = $Param{TicketObject} || Kernel::System::Ticket->new( %{$Self} );
@@ -1968,6 +1970,39 @@ sub RequestSend {
     # quote
     $To = $Self->{DBObject}->Quote($To);
 
+    # Only if we haven't been called by cron
+    if ( !$Param{TriggerSendRequests} ) {
+        my $AmountOfSurveysPer30Days
+            = $Self->{ConfigObject}->Get('Survey::AmountOfSurveysPer30Days');
+
+        # if we should just send a certain amount of surveys per 30 days & recipient
+        if ($AmountOfSurveysPer30Days) {
+            my $Now = $Self->{TimeObject}->SystemTime();
+
+            # Find all surveys that were created in the last 30 days
+            my $ThirtyDaysAgo = $Now - 30 * 86400;
+            $ThirtyDaysAgo
+                = $Self->{TimeObject}->SystemTime2TimeStamp( SystemTime => $ThirtyDaysAgo );
+            my $LastSentTime = 0;
+
+            $Self->{DBObject}->Prepare(
+                SQL => "SELECT create_time FROM survey_request WHERE LOWER(send_to) = '$To' "
+                    . "AND create_time >= '$ThirtyDaysAgo' ORDER BY create_time DESC"
+            );
+
+            # fetch the result
+            my @Rows;
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                push @Rows, $Row[0];
+            }
+
+            # If we have reached the maximum amount of surveys per month
+            if ( scalar @Rows >= $AmountOfSurveysPer30Days ) {
+                return;
+            }
+        }
+    }
+
     # check if a survey is sent in the last time
     my $SendPeriod = $Self->{ConfigObject}->Get('Survey::SendPeriod');
     if ($SendPeriod) {
@@ -1989,26 +2024,76 @@ sub RequestSend {
             $LastSentTime = $Self->{TimeObject}->TimeStamp2SystemTime( String => $LastSentTime );
 
             return if ( $LastSentTime + $SendPeriod * 60 * 60 * 24 ) > $Now;
+
         }
     }
-
-    # insert request
+    my $SendInHoursAfterClose = $Self->{ConfigObject}->Get('Survey::SendInHoursAfterClose');
     $Param{TicketID} = $Self->{DBObject}->Quote( $Param{TicketID}, 'Integer' );
-    $Self->{DBObject}->Do(
-        SQL => "INSERT INTO survey_request "
-            . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time) "
-            . " VALUES ($Param{TicketID}, $SurveyID, 1, '"
-            . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
-            . "'$To', current_timestamp)",
-    );
 
-    # log action on ticket
-    $Self->{TicketObject}->HistoryAdd(
-        TicketID     => $Param{TicketID},
-        CreateUserID => 1,
-        HistoryType  => 'Misc',
-        Name         => "Sent customer survey to '$To'.",
-    );
+    # If no Delayed Sending is configured
+    # send immediately, log it to Ticket History and insert it to survey_requests
+    # including sent_time
+    if ( !$SendInHoursAfterClose && !$Param{TriggerSendRequests} ) {
+
+        # insert request
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey_request "
+                . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, send_time, create_time) "
+                . " VALUES ($Param{TicketID}, $SurveyID, 1, '"
+                . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
+                . "'$To', current_timestamp, current_timestamp)",
+        );
+
+        # log action on ticket
+        $Self->{TicketObject}->HistoryAdd(
+            TicketID     => $Param{TicketID},
+            CreateUserID => 1,
+            HistoryType  => 'Misc',
+            Name         => "Sent customer survey to '$To'.",
+        );
+    }
+
+    # If we should send delayed just cronjobs deliver "TriggerSendRequests",
+    # so we were called by a closed ticket
+    # and have to create the survey_request record with no send_time
+    # (will be filled in by cronjob as soon as it really got delivered)
+    # additionally no Ticket History yet, cause no send has happened
+    elsif ( $SendInHoursAfterClose && !$Param{TriggerSendRequests} ) {
+
+        # insert request
+        $Self->{DBObject}->Do(
+            SQL => "INSERT INTO survey_request "
+                . " (ticket_id, survey_id, valid_id, public_survey_key, send_to, create_time) "
+                . " VALUES ($Param{TicketID}, $SurveyID, 1, '"
+                . $Self->{DBObject}->Quote($PublicSurveyKey) . "', "
+                . "'$To', current_timestamp)",
+        );
+
+    }
+
+    # here we got called by cron, and no matter if SendInHoursAfterClose is configured
+    # or not, we have to send the survey requests that weren't sent yet
+    # this time we have to update the survey_request line
+    # to fill in the send_time and create the Ticket History entry
+    elsif (
+        $Param{TriggerSendRequests}
+        && $Param{SurveyRequestID}
+        && $Param{SurveyRequestID} =~ /^\d+$/
+        )
+    {
+        $Self->{DBObject}->Do(
+            SQL => "UPDATE survey_request "
+                . "SET send_time = current_timestamp WHERE id = $Param{SurveyRequestID}",
+        );
+
+        # log action on ticket
+        $Self->{TicketObject}->HistoryAdd(
+            TicketID     => $Param{TicketID},
+            CreateUserID => 1,
+            HistoryType  => 'Misc',
+            Name         => "Sent customer survey to '$To'.",
+        );
+    }
 
     # get charset
     my $Charset = $Self->{ConfigObject}->Get('DefaultCharset') || 'uft-8';
@@ -2042,7 +2127,7 @@ sub RequestSend {
         MimeType => 'text/html',
         Charset  => $Charset,
         Body     => $Body,
-    );
+    ) if ( !$SendInHoursAfterClose || $Param{TriggerSendRequests} );
 }
 
 =item RequestGet()
@@ -2794,6 +2879,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.62 $ $Date: 2011-03-04 05:12:35 $
+$Revision: 1.63 $ $Date: 2011-12-15 15:38:10 $
 
 =cut

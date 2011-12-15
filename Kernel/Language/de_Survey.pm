@@ -2,7 +2,7 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.6 2011-11-21 12:09:24 mh Exp $
+# $Id: de_Survey.pm,v 1.7 2011-12-15 15:37:04 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -94,6 +94,8 @@ sub Data {
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Umfrage-Limit pro Seite in der Umfrage-Übersicht';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} = 'Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = 'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, when ein Ticket geschlossen wird.';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey. ( 0 means send immediately after close )'} = 'Definiert die Anzahl an Stunden für die ein Ticket geschlossen sein muss um den Versand einer Umfrage auszulösen ( 0 bedeutet, dass Umfrage sofort nach Schließen eines Tickets versandt wird ).';
+    $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days.'} = 'Definiert die maximale Anzahl an Umfragen die ein Kunde pro 30 Tage erhält.';
 
     $Self->{Translation}->{'Survey Introduction'} = 'Umfrage-Einleitung';
     $Self->{Translation}->{'Survey Description'} = 'Umfrage-Beschreibung';
@@ -108,6 +110,32 @@ sub Data {
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = 'Alle Parameter für das Umfrage-Modul im Agenten-Interface.';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = 'Definiert die  Standardhöhe eines WYSIWYG-Bereichs für die Umfrage-Detailansicht.';
 
+    # Template: AAASurvey
+    $Self->{Translation}->{'- Change Status -'} = '- Status Ändern -';
+    $Self->{Translation}->{'Add New Survey'} = 'Neue Umfrage hinzufügen';
+    $Self->{Translation}->{'Survey Edit'} = 'Umfrage bearbeiten';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Fragen der Umfrage bearbeiten';
+    $Self->{Translation}->{'Question Edit'} = 'Frage bearbeiten';
+    $Self->{Translation}->{'Answer Edit'} = 'Antwort bearbeiten';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Status konnte nicht gesetzt werden! Keine Fragen definiert.';
+    $Self->{Translation}->{'Status changed.'} = 'Status geändert.';
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Danke für Ihr Feedback.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Die Umfrage ist beendet.';
+    $Self->{Translation}->{'Complete'} = 'Vollständig';
+    $Self->{Translation}->{'Incomplete'} = 'Unvollständig';
+    $Self->{Translation}->{'Checkbox'} = 'Kontrollkästchen';
+    $Self->{Translation}->{'Checkbox (List)'} = 'Kontrollkästchen (Liste)';
+    $Self->{Translation}->{'Radio'} = 'Optionsschalter';
+    $Self->{Translation}->{'Radio (List)'} = 'Optionsschalter (Liste)';
+    $Self->{Translation}->{'Stats Overview'} = 'Statistik Übersicht';
+    $Self->{Translation}->{'Survey Description'} = 'Umfrage Beschreibung';
+    $Self->{Translation}->{'Survey Introduction'} = 'Umfrage Einleitung';
+    $Self->{Translation}->{'Textarea'} = 'Textbereich';
+    $Self->{Translation}->{'Yes/No'} = 'Ja/Nein';
+    $Self->{Translation}->{'YesNo'} = 'JaNein';
+    $Self->{Translation}->{'answered'} = 'beantwortet';
+    $Self->{Translation}->{'not answered'} = 'nicht beantwortet';
+    $Self->{Translation}->{'Stats Detail'} = 'Statistik Detail';
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
