@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.27 2011-12-15 15:36:48 jh Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.28 2011-12-15 16:30:11 jh Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Translatable="1">All parameters for the Survey object in the agent interface.</Description>
         <Group>Survey</Group>
@@ -218,15 +218,15 @@ Your OTRS-Team
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::SendInHoursAfterClose" Required="1" Valid="1">
-        <Description Translatable="1">Defines the amount in hours a ticket has to be closed to trigger the sending of a survey. ( 0 means send immediately after close )</Description>
+        <Description Translatable="1">Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,5}$">0</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Survey::AmountOfSurveysPer30Days" Required="1" Valid="1">
-        <Description Translatable="1">Defines maximum amount of surveys that get sent to a customer per 30 days.</Description>
+    <ConfigItem Name="Survey::AmountOfSurveysPer30Days" Required="0" Valid="1">
+        <Description Translatable="1">Defines maximum amount of surveys that get sent to a customer per 30 days, ( 0 means no maximum, all survey requests get sent ).</Description>
         <Group>Survey</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
