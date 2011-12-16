@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.153 2011-12-01 17:31:47 ub Exp $
+# $Id: FAQ.pm,v 1.154 2011-12-16 11:20:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.153 $) [1];
+$VERSION = qw($Revision: 1.154 $) [1];
 
 =head1 NAME
 
@@ -994,7 +994,7 @@ count the number of articles for a defined category
 
     my $ArticleCount = $FAQObject->FAQCount(
         CategoryIDs  => [1,2,3,4],
-        OnlyApproved = 1,   # optional (default 0)
+        OnlyApproved => 1,   # optional (default 0)
         UserID       => 1,
     );
 
@@ -5008,6 +5008,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.153 $ $Date: 2011-12-01 17:31:47 $
+$Revision: 1.154 $ $Date: 2011-12-16 11:20:24 $
 
 =cut
