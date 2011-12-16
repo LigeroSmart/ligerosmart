@@ -2,8 +2,8 @@
 # AgentTicketEmail.dtl - provides HTML form for agent email
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.dtl,v 1.35 2011-12-07 11:08:26 ub Exp $
-# $OldId: AgentTicketEmail.dtl,v 1.156 2011/12/06 20:04:50 cg Exp $
+# $Id: AgentTicketEmail.dtl,v 1.36 2011-12-16 09:49:48 ub Exp $
+# $OldId: AgentTicketEmail.dtl,v 1.157 2011/12/15 19:16:58 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -129,6 +129,9 @@ $('#Dest').bind('change', function (Event) {
 <!-- dtl:block:InvalidSyntaxServerErrorMsg -->
                                     <p>$Text{"The syntax of this email address is incorrect."}</p>
 <!-- dtl:block:InvalidSyntaxServerErrorMsg -->
+<!-- dtl:block:IsDuplicatedServerErrorMsg -->
+                                    <p>$Text{"This address already exists on the address list."}</p>
+<!-- dtl:block:IsDuplicatedServerErrorMsg -->
                                 </div>
                             </div>
 <!-- dtl:block:MultipleCustomer -->
@@ -212,6 +215,9 @@ $('#Dest').bind('change', function (Event) {
 <!-- dtl:block:CcInvalidSyntaxServerErrorMsg -->
                                     <p>$Text{"The syntax of this email address is incorrect."}</p>
 <!-- dtl:block:CcInvalidSyntaxServerErrorMsg -->
+<!-- dtl:block:CcIsDuplicatedServerErrorMsg -->
+                                    <p>$Text{"This address already exists on the address list."}</p>
+<!-- dtl:block:CcIsDuplicatedServerErrorMsg -->
                                 </div>
                             </div>
 <!-- dtl:block:CcMultipleCustomer -->
@@ -263,6 +269,9 @@ $('#Dest').bind('change', function (Event) {
 <!-- dtl:block:BccInvalidSyntaxServerErrorMsg -->
                                     <p>$Text{"The syntax of this email address is incorrect."}</p>
 <!-- dtl:block:BccInvalidSyntaxServerErrorMsg -->
+<!-- dtl:block:BccIsDuplicatedServerErrorMsg -->
+                                    <p>$Text{"This address already exists on the address list."}</p>
+<!-- dtl:block:BccIsDuplicatedServerErrorMsg -->
                                 </div>
                             </div>
 <!-- dtl:block:BccMultipleCustomer -->

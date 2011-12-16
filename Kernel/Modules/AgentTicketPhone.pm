@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.41 2011-12-07 11:08:26 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.216 2011/12/05 21:11:32 cr Exp $
+# $Id: AgentTicketPhone.pm,v 1.42 2011-12-16 09:49:47 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.221 2011/12/15 19:47:03 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,16 +25,16 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 use Mail::Address;
+use Kernel::System::Service;
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
-use Kernel::System::Service;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,12 +62,12 @@ sub new {
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
 # ---
 # ITSM
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
-    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
 # ---
 
     # get form id
@@ -119,6 +119,9 @@ sub Run {
         = $Self->{ParamObject}->GetParam( Param => 'CustomerTicketCounterFromCustomer' ) || 0;
     my $Selected = $Self->{ParamObject}->GetParam( Param => 'CustomerSelected' ) || '';
 
+    # hash for check duplicated entries
+    my %AddressesList;
+
     if ($CustomersNumber) {
         my $CustomerCounter = 1;
         for my $Count ( 1 ... $CustomersNumber ) {
@@ -148,6 +151,12 @@ sub Run {
                         }
                     }
 
+                    # check for duplicated entries
+                    if ( defined $AddressesList{$CustomerElement} && $CustomerError eq '' ) {
+                        $CustomerErrorMsg = 'IsDuplicatedServerErrorMsg';
+                        $CustomerError    = 'ServerError';
+                    }
+
                     if ( $CustomerError ne '' ) {
                         $CustomerDisabled = 'disabled="disabled"';
                         $CountAux         = $Count . 'Error';
@@ -163,6 +172,7 @@ sub Run {
                     CustomerErrorMsg => $CustomerErrorMsg,
                     CustomerDisabled => $CustomerDisabled,
                 };
+                $AddressesList{$CustomerElement} = 1;
             }
         }
     }
@@ -328,7 +338,10 @@ sub Run {
         my %Article;
         my %CustomerData;
         if ( $GetParam{ArticleID} ) {
-            %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $GetParam{ArticleID} );
+            %Article = $Self->{TicketObject}->ArticleGet(
+                ArticleID     => $GetParam{ArticleID},
+                DynamicFields => 0,
+            );
             $Article{Subject} = $Self->{TicketObject}->TicketSubjectClean(
                 TicketNumber => $Article{TicketNumber},
                 Subject => $Article{Subject} || '',
@@ -901,8 +914,17 @@ sub Run {
                 QueueID        => $NewQueueID   || 1,
             );
 
+            my $SelectedService;
+            SERVICE:
+            for my $Service ( @{$Services} ) {
+                next SERVICE if !$Service->{Key} eq $GetParam{ServiceID};
+
+                $SelectedService = $Service->{Key};
+                last SERVICE;
+            }
+
             # reset previous ServiceID to reset SLA-List if no service is selected
-            if ( !$GetParam{ServiceID} || !$Services->{ $GetParam{ServiceID} } ) {
+            if ( !$GetParam{ServiceID} || !$SelectedService ) {
                 $GetParam{ServiceID} = '';
             }
 
@@ -1639,18 +1661,54 @@ sub _GetServices {
 
     # get service
     my %Service;
+    my @ServiceList;
     if ( ( $Param{QueueID} || $Param{TicketID} ) && $Param{CustomerUserID} ) {
         %Service = $Self->{TicketObject}->TicketServiceList(
             %Param,
             Action => $Self->{Action},
             UserID => $Self->{UserID},
         );
+
+        my %OrigService = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+            Result            => 'HASH',
+            CustomerUserLogin => $Param{CustomerUserID},
+            UserID            => 1,
+        );
+
+        for my $ServiceKey ( sort { $OrigService{$a} cmp $OrigService{$b} } keys %OrigService ) {
+
+            # set default service structure
+            my %ServiceRegister = (
+                Key   => $ServiceKey,
+                Value => $OrigService{$ServiceKey},
+            );
+
+            # check if service is selected
+            if ( $Param{ServiceID} && $Param{ServiceID} eq $ServiceKey ) {
+                $ServiceRegister{Selected} = 1;
+            }
+
+            # check if service is disabled
+            if ( !$Service{$ServiceKey} ) {
+                $ServiceRegister{Disabled} = 1;
+            }
+            push @ServiceList, \%ServiceRegister;
+        }
     }
-    return \%Service;
+    return \@ServiceList;
 }
 
 sub _GetSLAs {
     my ( $Self, %Param ) = @_;
+
+    # convert service ArrayHashRef to hashref
+    my %Services;
+    SERVICE:
+    for my $Service ( @{ $Param{Services} } ) {
+        next SERVICE if !$Service;
+        $Services{ $Service->{Key} } = $Service->{Value};
+    }
+    $Param{Services} = \%Services;
 
     # get sla
     my %SLA;
@@ -1921,10 +1979,8 @@ sub _MaskPhoneNew {
             Data         => $Param{Services},
             Name         => 'ServiceID',
             Class        => $Param{Errors}->{ServiceInvalid} || ' ',
-            SelectedID   => $Param{ServiceID},
             PossibleNone => 1,
             TreeView     => $TreeView,
-            Sort         => 'TreeView',
             Translation  => 0,
             Max          => 200,
         );

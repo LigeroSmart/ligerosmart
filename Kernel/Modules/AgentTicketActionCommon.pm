@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.20 2011-12-07 11:08:26 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.68 2011/12/05 21:12:14 cr Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.21 2011-12-16 09:49:47 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.69 2011/12/09 22:29:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,12 +20,12 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::System::Service;
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
-use Kernel::System::Service;
 # ---
 
 sub new {
@@ -48,12 +48,12 @@ sub new {
     $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
+    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
 # ---
 # ITSM
 # ---
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
-    $Self->{ServiceObject}        = Kernel::System::Service->new(%Param);
 # ---
 
     # get form id
@@ -1205,9 +1205,11 @@ sub _Mask {
 
     # services
     if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Self->{Config}->{Service} ) {
-        my %Service;
+
+        # my %Service;
+        my $Services;
         if ( $Ticket{CustomerUserID} ) {
-            %Service = $Self->{TicketObject}->TicketServiceList(
+            $Services = $Self->_GetServices(
                 %Param,
                 Action         => $Self->{Action},
                 CustomerUserID => $Ticket{CustomerUserID},
@@ -1215,13 +1217,11 @@ sub _Mask {
             );
         }
         $Param{ServiceStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data         => \%Service,
-            Name         => 'ServiceID',
-            SelectedID   => $Param{ServiceID},
-            Class        => $Param{ServiceInvalid} || ' ',
+            Data  => $Services              || [],
+            Name  => 'ServiceID',
+            Class => $Param{ServiceInvalid} || ' ',
             PossibleNone => 1,
             TreeView     => $TreeView,
-            Sort         => 'TreeView',
             Translation  => 0,
             Max          => 200,
         );
@@ -1766,18 +1766,55 @@ sub _GetOldOwners {
 sub _GetServices {
     my ( $Self, %Param ) = @_;
     my %Service;
+    my @ServiceList;
     if ( $Param{CustomerUserID} ) {
         %Service = $Self->{TicketObject}->TicketServiceList(
             %Param,
             Action => $Self->{Action},
             UserID => $Self->{UserID},
         );
+
+        my %OrigService = $Self->{ServiceObject}->CustomerUserServiceMemberList(
+            Result            => 'HASH',
+            CustomerUserLogin => $Param{CustomerUserID},
+            UserID            => 1,
+        );
+
+        for my $ServiceKey ( sort { $OrigService{$a} cmp $OrigService{$b} } keys %OrigService ) {
+
+            # set default service structure
+            my %ServiceRegister = (
+                Key   => $ServiceKey,
+                Value => $OrigService{$ServiceKey},
+            );
+
+            # check if service is selected
+            if ( $Param{ServiceID} && $Param{ServiceID} eq $ServiceKey ) {
+                $ServiceRegister{Selected} = 1;
+            }
+
+            # check if service is disabled
+            if ( !$Service{$ServiceKey} ) {
+                $ServiceRegister{Disabled} = 1;
+            }
+            push @ServiceList, \%ServiceRegister;
+        }
     }
-    return \%Service;
+    return \@ServiceList;
 }
 
 sub _GetSLAs {
     my ( $Self, %Param ) = @_;
+
+    # convert service ArrayHashRef to hashref
+    my %Services;
+    SERVICE:
+    for my $Service ( @{ $Param{Services} } ) {
+        next SERVICE if !$Service;
+        $Services{ $Service->{Key} } = $Service->{Value};
+    }
+    $Param{Services} = \%Services;
+
     my %SLA;
     if ( $Param{ServiceID} ) {
         %SLA = $Self->{TicketObject}->TicketSLAList(

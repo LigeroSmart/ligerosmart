@@ -2,8 +2,8 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.42 2011-12-07 11:08:26 ub Exp $
-# $OldId: AgentTicketZoom.dtl,v 1.201 2011/12/05 20:56:03 mb Exp $
+# $Id: AgentTicketZoom.dtl,v 1.43 2011-12-16 09:49:48 ub Exp $
+# $OldId: AgentTicketZoom.dtl,v 1.204 2011/12/13 10:34:04 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -762,8 +762,12 @@ $Data{"Body"}
 <!-- dtl:js_on_document_complete -->
 <!-- dtl:block:TicketItemMarkAsSeen -->
 
+<!-- dtl:block:TicketZoomInit -->
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
     Core.Agent.TicketZoom.Init({ ArticleTableHeight: parseInt('$Env{"UserTicketZoomArticleTableHeight"}', 10)});
+    Core.Config.Set('Ticket::Frontend::HTMLArticleHeightDefault', parseInt("$Config{"Ticket::Frontend::HTMLArticleHeightDefault"}" || 0, 10));
+    Core.Config.Set('Ticket::Frontend::HTMLArticleHeightMax', parseInt("$Config{"Ticket::Frontend::HTMLArticleHeightMax"}" || 0, 10));
 //]]></script>
 <!-- dtl:js_on_document_complete -->
+<!-- dtl:block:TicketZoomInit -->

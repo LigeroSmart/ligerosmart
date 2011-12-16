@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.30 2011-12-07 11:08:26 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.166 2011/12/05 20:56:03 mb Exp $
+# $Id: AgentTicketZoom.pm,v 1.31 2011-12-16 09:49:47 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.172 2011/12/13 10:34:03 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -128,8 +128,8 @@ sub Run {
 
     # get ticket attributes
     my %Ticket = $Self->{TicketObject}->TicketGet(
-        TicketID     => $Self->{TicketID},
-        DynamicField => 1,
+        TicketID      => $Self->{TicketID},
+        DynamicFields => 1,
     );
 
     # get acl actions
@@ -170,7 +170,10 @@ sub Run {
     # article update
     elsif ( $Self->{Subaction} eq 'ArticleUpdate' ) {
         my $Count = $Self->{ParamObject}->GetParam( Param => 'Count' );
-        my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Self->{ArticleID} );
+        my %Article = $Self->{TicketObject}->ArticleGet(
+            ArticleID     => $Self->{ArticleID},
+            DynamicFields => 0,
+        );
         $Article{Count} = $Count;
 
         # get attachment index (without attachments)
@@ -357,7 +360,10 @@ sub Run {
         }
 
         # get article data
-        my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Self->{ArticleID} );
+        my %Article = $Self->{TicketObject}->ArticleGet(
+            ArticleID     => $Self->{ArticleID},
+            DynamicFields => 0,
+        );
 
         # check if article data exists
         if ( !%Article ) {
@@ -1101,6 +1107,12 @@ sub MaskAgentZoom {
             UserID   => $Self->{UserID},
         );
     }
+
+    # init js
+    $Self->{LayoutObject}->Block(
+        Name => 'TicketZoomInit',
+        Data => {%Param},
+    );
 
     # return output
     return $Self->{LayoutObject}->Output(
@@ -1906,7 +1918,7 @@ sub _ArticleItem {
         FieldFilter => $Self->{DynamicFieldFilter} || {},
     );
 
-    # cycle trough the activated Dynamic Fields for ticket object
+    # cycle trough the activated Dynamic Fields
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1915,6 +1927,9 @@ sub _ArticleItem {
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $Article{ArticleID},
         );
+
+        next if !$Value;
+        next if $Value eq '';
 
         # get print string for this dynamic field
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.8 2011-11-22 23:26:36 ub Exp $
-# $OldId: AgentTicketPrint.pm,v 1.84 2011/10/24 21:47:16 cr Exp $
+# $Id: AgentTicketPrint.pm,v 1.9 2011-12-16 09:49:47 ub Exp $
+# $OldId: AgentTicketPrint.pm,v 1.85 2011/12/12 10:47:42 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -142,6 +142,7 @@ sub Run {
         TicketID                   => $Self->{TicketID},
         StripPlainBodyAsAttachment => 1,
         UserID                     => $Self->{UserID},
+        DynamicFields              => 0,
     );
 
     # check if only one article need printed
@@ -757,16 +758,23 @@ sub _PDFOutputTicketDynamicFields {
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-        next DYNAMICFIELD if !$Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
-        next DYNAMICFIELD if $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq "";
+
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Ticket{TicketID},
+        );
+
+        next DYNAMICFIELD if !$Value;
+        next DYNAMICFIELD if $Value eq "";
 
         # get print string for this dynamic field
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            Value              => $Value,
             HTMLOutput         => 0,
             LayoutObject       => $Self->{LayoutObject},
         );
+
         $TableParam{CellData}[$Row][0]{Content}
             = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} ) . ':';
         $TableParam{CellData}[$Row][0]{Font}    = 'ProportionalBold';
@@ -1036,13 +1044,19 @@ sub _PDFOutputArticles {
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-            next DYNAMICFIELD if !$Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
-            next DYNAMICFIELD if $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq "";
+
+            my $Value = $Self->{BackendObject}->ValueGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $Article{ArticleID},
+            );
+
+            next DYNAMICFIELD if !$Value;
+            next DYNAMICFIELD if $Value eq "";
 
             # get print string for this dynamic field
             my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
-                Value              => $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                Value              => $Value,
                 HTMLOutput         => 0,
                 LayoutObject       => $Self->{LayoutObject},
             );
@@ -1209,13 +1223,19 @@ sub _HTMLMask {
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{$DynamicField} ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-        next DYNAMICFIELD if !$Param{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
-        next DYNAMICFIELD if $Param{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq "";
+
+        my $Value = $Self->{BackendObject}->ValueGet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $Param{TicketID},
+        );
+
+        next DYNAMICFIELD if !$Value;
+        next DYNAMICFIELD if $Value eq "";
 
         # get print string for this dynamic field
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
-            Value              => $Param{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            Value              => $Value,
             HTMLOutput         => 1,
             ValueMaxChars      => 20,
             LayoutObject       => $Self->{LayoutObject},
@@ -1338,13 +1358,19 @@ sub _HTMLMask {
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{$DynamicField} ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
-            next DYNAMICFIELD if !$Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} };
-            next DYNAMICFIELD if $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} } eq "";
+
+            my $Value = $Self->{BackendObject}->ValueGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                ObjectID           => $Article{ArticleID},
+            );
+
+            next DYNAMICFIELD if !$Value;
+            next DYNAMICFIELD if $Value eq "";
 
             # get print string for this dynamic field
             my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
                 DynamicFieldConfig => $DynamicFieldConfig,
-                Value              => $Article{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                Value              => $Value,
                 HTMLOutput         => 1,
                 ValueMaxChars      => 20,
                 LayoutObject       => $Self->{LayoutObject},
