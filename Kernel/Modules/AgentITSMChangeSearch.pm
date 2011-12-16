@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.77 2011-11-10 11:20:35 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.78 2011-12-16 15:24:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.77 $) [1];
+$VERSION = qw($Revision: 1.78 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1117,7 +1117,7 @@ sub _MaskForm {
         );
     }
 
-    # get change FreeTextKeys
+    # get workorder FreeTextKeys
     for my $Number (@ConfiguredWorkOrderFreeTextFields) {
 
         # check if this freetext field should be available in this frontend
