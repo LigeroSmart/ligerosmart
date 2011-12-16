@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.48 2011-12-02 13:28:30 ub Exp $
+# $Id: Notification.pm,v 1.49 2011-12-16 12:12:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::Language;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -687,7 +687,7 @@ sub NotificationRuleAdd {
         )
     {
 
-        $Self->{CacheObject}->Delete(
+        $Self->{CacheInternalObject}->Delete(
             Type => 'ITSMChangeManagement',
             Key  => $Key,
         );
@@ -773,7 +773,7 @@ sub NotificationRuleUpdate {
         )
     {
 
-        $Self->{CacheObject}->Delete(
+        $Self->{CacheInternalObject}->Delete(
             Type => 'ITSMChangeManagement',
             Key  => $Key,
         );
@@ -1534,6 +1534,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.48 $ $Date: 2011-12-02 13:28:30 $
+$Revision: 1.49 $ $Date: 2011-12-16 12:12:53 $
 
 =cut
