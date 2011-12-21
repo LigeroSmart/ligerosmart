@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.10 2011-02-22 11:53:30 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.11 2011-12-21 13:32:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 =head1 NAME
 
@@ -518,8 +518,13 @@ sub _AttachmentAdd {
         }
     }
 
+    # build a lookup hash from new workorder id to old workorder id
+    my %NewWorkOrderID2OldWorkOrderID = reverse %{ $Param{OldWorkOrderIDs} };
+
+    my $OldWorkOrderID = $NewWorkOrderID2OldWorkOrderID{ $Param{WorkOrderID} };
+
     my $Attachment = $Self->{WorkOrderObject}->WorkOrderAttachmentGet(
-        WorkOrderID => $Param{Data}->{WorkOrderID},
+        WorkOrderID => $OldWorkOrderID,
         Filename    => $Param{Data}->{Filename},
     );
 
@@ -615,6 +620,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.10 $ $Date: 2011-02-22 11:53:30 $
+$Revision: 1.11 $ $Date: 2011-12-21 13:32:52 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMChange.pm - all template functions for changes
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.9 2011-02-22 11:53:30 ub Exp $
+# $Id: ITSMChange.pm,v 1.10 2011-12-21 13:32:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -507,7 +507,7 @@ sub _AttachmentAdd {
     }
 
     my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
-        ChangeID => $Param{ChangeID},
+        ChangeID => $Param{OldChangeID},
         Filename => $Param{Data}->{Filename},
     );
 
@@ -602,6 +602,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2011-02-22 11:53:30 $
+$Revision: 1.10 $ $Date: 2011-12-21 13:32:52 $
 
 =cut
