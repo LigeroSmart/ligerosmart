@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.51 2011-12-21 09:15:35 jh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.52 2011-12-21 09:19:30 jh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -120,7 +120,7 @@
             <Column Name="send_to" Required="true" Size="250" Type="VARCHAR"/>
             <Column Name="send_time" Required="false" Type="DATE"/>
             <Column Name="vote_time" Required="false" Type="DATE"/>
-            <ColumnAdd Name="create_time" Required="false" Type="DATE"/>
+            <Column Name="create_time" Required="false" Type="DATE"/>
             <Index Name="survey_request_ticket_id">
                 <IndexColumn Name="ticket_id"/>
             </Index>
