@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.48 2011-09-28 08:02:21 mb Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.49 2011-12-27 09:36:44 mn Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
-    <Framework>3.0.x</Framework>
+    <Framework>3.1.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -29,7 +29,7 @@
         <File Permission="644" Location="Kernel/System/Stats/Dynamic/TimeAccounting.pm"/>
         <File Permission="644" Location="scripts/test/TimeAccounting.t"/>
         <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-combobox/jquery-combobox.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-ui-button-1.8.7/jquery-ui-button.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/thirdparty/jquery-ui-button-1.8.16/jquery-ui-button.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.ComboBox.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.ConfirmationDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/js/TimeAccounting.Agent.Datepicker.js"/>
