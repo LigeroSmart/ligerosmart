@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.26 2011-03-11 08:27:09 mab Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.27 2011-12-27 09:59:04 mn Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -74,7 +74,7 @@
                 <Loader>
                     <CSS>TimeAccounting.Defaults.css</CSS>
                     <CSS>TimeAccounting.Table.css</CSS>
-                    <JavaScript>thirdparty/jquery-ui-button-1.8.7/jquery-ui-button.js</JavaScript>
+                    <JavaScript>thirdparty/jquery-ui-button-1.8.16/jquery-ui-button.js</JavaScript>
                     <JavaScript>thirdparty/jquery-combobox/jquery-combobox.js</JavaScript>
                     <JavaScript>Core.UI.ComboBox.js</JavaScript>
                     <JavaScript>TimeAccounting.Agent.ConfirmationDialog.js</JavaScript>

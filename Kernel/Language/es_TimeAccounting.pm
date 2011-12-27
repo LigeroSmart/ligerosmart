@@ -1,8 +1,8 @@
-# --
+ï»¿# --
 # Kernel/Language/es_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 # --
-# $Id: es_TimeAccounting.pm,v 1.5 2011-01-20 04:46:02 en Exp $
+# $Id: es_TimeAccounting.pm,v 1.6 2011-12-27 09:59:04 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,60 +17,60 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTimeAccountingDelete
-    $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} = '¿Realmente desea eliminar la Contabilidad de Tiempo de este día?';
+    $Self->{Translation}->{'Do you really want to delete the Time Accounting of this day?'} = 'Â¿Realmente desea eliminar la Contabilidad de Tiempo de este dÃ­a?';
 
     # Template: AgentTimeAccountingEdit
     $Self->{Translation}->{'Edit Time Record'} = 'Modificar Registro de Tiempo';
     $Self->{Translation}->{'Project settings'} = 'Configuraciones de proyecto';
-    $Self->{Translation}->{'Previous day'} = 'Día anterior';
-    $Self->{Translation}->{'Next day'} = 'Día siguiente';
-    $Self->{Translation}->{'Days without entries'} = 'Días sin registro';
-    $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Los campos requeridos están marcados con un "*".';
-    $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Es necesario que proporcione una hora de inicio y una de finalización o un periodo.';
+    $Self->{Translation}->{'Previous day'} = 'DÃ­a anterior';
+    $Self->{Translation}->{'Next day'} = 'DÃ­a siguiente';
+    $Self->{Translation}->{'Days without entries'} = 'DÃ­as sin registro';
+    $Self->{Translation}->{'Required fields are marked with a "*".'} = 'Los campos requeridos estÃ¡n marcados con un "*".';
+    $Self->{Translation}->{'You have to fill in start and end time or a time period.'} = 'Es necesario que proporcione una hora de inicio y una de finalizaciÃ³n o un periodo.';
     $Self->{Translation}->{'Project'} = 'Proyecto';
     $Self->{Translation}->{'Task'} = 'Tarea';
     $Self->{Translation}->{'Remark'} = 'Comentario';
-    $Self->{Translation}->{'Date Navigation'} = 'Navegación por Fecha';
-    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = '¡Por favor, escriba un comentario de más de 8 caracteres!';
-    $Self->{Translation}->{'Negative times are not allowed.'} = 'No se permite la inserción de horas negativas.';
-    $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} = 'No se permite la inserción de horas repetidas. La hora de inicio está incluída en otro intervalo.';
-    $Self->{Translation}->{'End time must be after start time.'} = 'La hora de finalización debe ser posterior a la de inicio.';
-    $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} = 'No se permite la inserción de horas repetidas. La hora de finalización está incluída en otro intervalo.';
-    $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} = '¡El periodo es mayor al intervalo entre las horas de inicio y finalización!';
-    $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = '¡Periodo inválido! Un día sólo tiene 24 horas.';
-    $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Un periodo válido debe ser mayor a cero.';
-    $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = '¡Periodo inválido! No se permiten periodos negativos.';
-    $Self->{Translation}->{'Add one row'} = 'Añadir una fila';
+    $Self->{Translation}->{'Date Navigation'} = 'NavegaciÃ³n por Fecha';
+    $Self->{Translation}->{'Please add a remark with more than 8 characters!.'} = 'Â¡Por favor, escriba un comentario de mÃ¡s de 8 caracteres!';
+    $Self->{Translation}->{'Negative times are not allowed.'} = 'No se permite la inserciÃ³n de horas negativas.';
+    $Self->{Translation}->{'Repeated hours are not allowed. Start time matches another interval.'} = 'No se permite la inserciÃ³n de horas repetidas. La hora de inicio estÃ¡ incluÃ­da en otro intervalo.';
+    $Self->{Translation}->{'End time must be after start time.'} = 'La hora de finalizaciÃ³n debe ser posterior a la de inicio.';
+    $Self->{Translation}->{'Repeated hours are not allowed. End time matches another interval.'} = 'No se permite la inserciÃ³n de horas repetidas. La hora de finalizaciÃ³n estÃ¡ incluÃ­da en otro intervalo.';
+    $Self->{Translation}->{'Period is bigger than the interval between start and end times!'} = 'Â¡El periodo es mayor al intervalo entre las horas de inicio y finalizaciÃ³n!';
+    $Self->{Translation}->{'Invalid period! A day has only 24 hours.'} = 'Â¡Periodo invÃ¡lido! Un dÃ­a sÃ³lo tiene 24 horas.';
+    $Self->{Translation}->{'A valid period must be greater than zero.'} = 'Un periodo vÃ¡lido debe ser mayor a cero.';
+    $Self->{Translation}->{'Invalid period! Negative periods are not allowed.'} = 'Â¡Periodo invÃ¡lido! No se permiten periodos negativos.';
+    $Self->{Translation}->{'Add one row'} = 'AÃ±adir una fila';
     $Self->{Translation}->{'Total'} = 'Total';
     $Self->{Translation}->{'On vacation'} = 'De vacaciones';
-    $Self->{Translation}->{'You can only select one checkbox element!'} = '¡Sólo se permite elegir un elemento checkbox!';
+    $Self->{Translation}->{'You can only select one checkbox element!'} = 'Â¡SÃ³lo se permite elegir un elemento checkbox!';
     $Self->{Translation}->{'On sick leave'} = 'Ausente por enfermedad';
     $Self->{Translation}->{'On overtime leave'} = 'Ausente por haber trabajado horas extras';
     $Self->{Translation}->{'Show all items'} = 'Mostrar todos los elementos';
     $Self->{Translation}->{'Delete Time Accounting Entry'} = 'Eliminar Registro de Contabilidad de Tiempo';
-    $Self->{Translation}->{'Confirm insert'} = 'Confirmar inserción';
-    $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = '¿Está seguro que trabajó durante su ausencia por enfermedad?';
-    $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = '¿Está seguro que trabajó durante sus vacaciones?';
-    $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} = '¿Está seguro que trabajó durante su ausencia por haber trabajado horas extras?';
-    $Self->{Translation}->{'Are you sure that you worked more than 16 hours?'} = '¿Está seguro que trabajó más de 16 horas?';
+    $Self->{Translation}->{'Confirm insert'} = 'Confirmar inserciÃ³n';
+    $Self->{Translation}->{'Are you sure that you worked while you were on sick leave?'} = 'Â¿EstÃ¡ seguro que trabajÃ³ durante su ausencia por enfermedad?';
+    $Self->{Translation}->{'Are you sure that you worked while you were on vacation?'} = 'Â¿EstÃ¡ seguro que trabajÃ³ durante sus vacaciones?';
+    $Self->{Translation}->{'Are you sure that you worked while you were on overtime leave?'} = 'Â¿EstÃ¡ seguro que trabajÃ³ durante su ausencia por haber trabajado horas extras?';
+    $Self->{Translation}->{'Are you sure that you worked more than 16 hours?'} = 'Â¿EstÃ¡ seguro que trabajÃ³ mÃ¡s de 16 horas?';
 
     # Template: AgentTimeAccountingOverview
     $Self->{Translation}->{'Time reporting monthly overview'} = 'Vista mensual de tiempos reportados';
-    $Self->{Translation}->{'Overtime (Hours)'} = 'Número de horas extras';
+    $Self->{Translation}->{'Overtime (Hours)'} = 'NÃºmero de horas extras';
     $Self->{Translation}->{'Overtime (this month)'} = 'Horas extras trabajadas (este mes)';
     $Self->{Translation}->{'Overtime (total)'} = 'Total de horas extras';
     $Self->{Translation}->{'Remaining overtime leave'} = 'Horas restantes para ausentarse por haber trabajado horas extras';
-    $Self->{Translation}->{'Vacation (Days)'} = 'Vacaciones (días)';
+    $Self->{Translation}->{'Vacation (Days)'} = 'Vacaciones (dÃ­as)';
     $Self->{Translation}->{'Vacation taken (this month)'} = 'Vacaciones (este mes)';
     $Self->{Translation}->{'Vacation taken (total)'} = 'Vacaciones tomadas (total)';
-    $Self->{Translation}->{'Remaining vacation'} = 'Días de vacaciones restantes';
-    $Self->{Translation}->{'Sick Leave (Days)'} = 'Ausencia por enfermedad (días)';
+    $Self->{Translation}->{'Remaining vacation'} = 'DÃ­as de vacaciones restantes';
+    $Self->{Translation}->{'Sick Leave (Days)'} = 'Ausencia por enfermedad (dÃ­as)';
     $Self->{Translation}->{'Sick leave taken (this month)'} = 'Ausencias por enfermedad (este mes)';
     $Self->{Translation}->{'Sick leave taken (total)'} = 'Ausencias por enfermedad (total)';
     $Self->{Translation}->{'Previous month'} = 'Mes anterior';
     $Self->{Translation}->{'Next month'} = 'Mes siguiente';
-    $Self->{Translation}->{'Day'} = 'Día';
-    $Self->{Translation}->{'Weekday'} = 'Día de la semana';
+    $Self->{Translation}->{'Day'} = 'DÃ­a';
+    $Self->{Translation}->{'Weekday'} = 'DÃ­a de la semana';
     $Self->{Translation}->{'Working Hours'} = 'Horas trabajadas';
     $Self->{Translation}->{'Total worked hours'} = 'Total de horas trabajadas';
     $Self->{Translation}->{'User\'s project overview'} = 'Vista de proyecto de usuario';
@@ -83,23 +83,23 @@ sub Data {
 
     # Template: AgentTimeAccountingReporting
     $Self->{Translation}->{'Time reporting'} = 'Reporte de tiempos';
-    $Self->{Translation}->{'Month Navigation'} = 'Navegación por mes';
+    $Self->{Translation}->{'Month Navigation'} = 'NavegaciÃ³n por mes';
     $Self->{Translation}->{'User reports'} = 'Reportes de usuario';
     $Self->{Translation}->{'Monthly total'} = 'Total mensual';
     $Self->{Translation}->{'Lifetime total'} = 'Tiempo total de vida';
     $Self->{Translation}->{'Overtime leave'} = 'Ausencia por haber trabajado horas extras';
     $Self->{Translation}->{'Vacation'} = 'Vacaciones';
     $Self->{Translation}->{'Sick leave'} = 'Ausencia por enfermedad';
-    $Self->{Translation}->{'LeaveDay Remaining'} = 'Días libres restantes';
+    $Self->{Translation}->{'LeaveDay Remaining'} = 'DÃ­as libres restantes';
     $Self->{Translation}->{'Project reports'} = 'Reportes de proyecto';
 
     # Template: AgentTimeAccountingSetting
-    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificar la configuración del proyecto de contabilidad de tiempo.';
+    $Self->{Translation}->{'Edit Time Accounting Project Settings'} = 'Modificar la configuraciÃ³n del proyecto de contabilidad de tiempo.';
     $Self->{Translation}->{'Add project'} = 'Agregar proyecto';
     $Self->{Translation}->{'Add Project'} = 'Agregar Proyecto';
-    $Self->{Translation}->{'Edit Project Settings'} = 'Modificar la Configuración del Proyecto';
+    $Self->{Translation}->{'Edit Project Settings'} = 'Modificar la ConfiguraciÃ³n del Proyecto';
     $Self->{Translation}->{'There is already a project with this name. Please, choose a different one.'} = 'Ya existe un proyecto con este nombre. Por favor, elija uno diferente.';
-    $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Modificar la Configuración de la Contabilidad de Tiempo';
+    $Self->{Translation}->{'Edit Time Accounting Settings'} = 'Modificar la ConfiguraciÃ³n de la Contabilidad de Tiempo';
     $Self->{Translation}->{'Add task'} = 'Agregar tarea';
     $Self->{Translation}->{'New user'} = 'Usuario nuevo';
     $Self->{Translation}->{'Filter for Projects'} = 'Filtro para Proyectos';
@@ -108,63 +108,63 @@ sub Data {
     $Self->{Translation}->{'Project List'} = 'Lista de Proyectos';
     $Self->{Translation}->{'Task List'} = 'Lista de Tareas';
     $Self->{Translation}->{'Add Task'} = 'Agregar Tarea';
-    $Self->{Translation}->{'Edit Task Settings'} = 'Modificar la Configuración de la Tarea';
+    $Self->{Translation}->{'Edit Task Settings'} = 'Modificar la ConfiguraciÃ³n de la Tarea';
     $Self->{Translation}->{'There is already a task with this name. Please, choose a different one.'} = 'Ya existe una tarea con este nombre. Por favor, elija uno diferente.';
     $Self->{Translation}->{'User List'} = 'Lista de Usuarios';
-    $Self->{Translation}->{'New User Settings'} = 'Configuración de Usuario Nuevo';
-    $Self->{Translation}->{'Edit User Settings'} = 'Modificar la Configuración del Usuario';
+    $Self->{Translation}->{'New User Settings'} = 'ConfiguraciÃ³n de Usuario Nuevo';
+    $Self->{Translation}->{'Edit User Settings'} = 'Modificar la ConfiguraciÃ³n del Usuario';
     $Self->{Translation}->{'Comments'} = 'Comentarios';
     $Self->{Translation}->{'Show Overtime'} = 'Mostrar horas extra';
-    $Self->{Translation}->{'Allow project creation'} = 'Permitir creación de proyectos';
+    $Self->{Translation}->{'Allow project creation'} = 'Permitir creaciÃ³n de proyectos';
     $Self->{Translation}->{'Period Begin'} = 'Periodo de inicio';
-    $Self->{Translation}->{'Period End'} = 'Periodo de finalización';
-    $Self->{Translation}->{'Days of Vacation'} = 'Días de Vacaciones';
+    $Self->{Translation}->{'Period End'} = 'Periodo de finalizaciÃ³n';
+    $Self->{Translation}->{'Days of Vacation'} = 'DÃ­as de Vacaciones';
     $Self->{Translation}->{'Hours per Week'} = 'Horas por Semana';
     $Self->{Translation}->{'Authorized Overtime'} = 'Tiempo Extra Autorizado';
-    $Self->{Translation}->{'Period end must be after period begin.'} = 'El periodo de finalización debe ser posterior al de inicio.';
+    $Self->{Translation}->{'Period end must be after period begin.'} = 'El periodo de finalizaciÃ³n debe ser posterior al de inicio.';
     $Self->{Translation}->{'No time periods found.'} = 'No se encontraron periodos de tiempo.';
     $Self->{Translation}->{'Add time period'} = 'Agregar periodo de tiempo';
 
     # Template: AgentTimeAccountingView
     $Self->{Translation}->{'View Time Record'} = 'Ver registro de tiempo';
     $Self->{Translation}->{'View of '} = 'Resumen de ';
-    $Self->{Translation}->{'Date navigation'} = 'Navegación por fecha';
-    $Self->{Translation}->{'No data found for this day.'} = 'No se encontraron datos de este día.';
+    $Self->{Translation}->{'Date navigation'} = 'NavegaciÃ³n por fecha';
+    $Self->{Translation}->{'No data found for this day.'} = 'No se encontraron datos de este dÃ­a.';
 
     # SysConfig
-    $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} = 'Módulo de notificación de la interfaz del agente, necesario para visualizar el número de días incompletos de un usuario.';
+    $Self->{Translation}->{'Agent interface notification module to see the number of incomplete working days for the user.'} = 'MÃ³dulo de notificaciÃ³n de la interfaz del agente, necesario para visualizar el nÃºmero de dÃ­as incompletos de un usuario.';
     $Self->{Translation}->{'Default name for new actions.'} = 'Nombre por defecto para acciones nuevas.';
     $Self->{Translation}->{'Default name for new projects.'} = 'Nombre por defecto para proyectos nuevos.';
-    $Self->{Translation}->{'Default setting for date end.'} = 'Configuración por defecto para la fecha de finalización.';
-    $Self->{Translation}->{'Default setting for date start.'} = 'Configuración por defecto para la fecha de inicio.';
-    $Self->{Translation}->{'Default setting for leave days.'} = 'Configuración por defecto para las faltas (días de ausencia).';
-    $Self->{Translation}->{'Default setting for overtime.'} = 'Configuración por defecto para las horas extras.';
-    $Self->{Translation}->{'Default setting for the standard weekly hours.'} = 'Configuración por defecto para las horas semanales estándar.';
+    $Self->{Translation}->{'Default setting for date end.'} = 'ConfiguraciÃ³n por defecto para la fecha de finalizaciÃ³n.';
+    $Self->{Translation}->{'Default setting for date start.'} = 'ConfiguraciÃ³n por defecto para la fecha de inicio.';
+    $Self->{Translation}->{'Default setting for leave days.'} = 'ConfiguraciÃ³n por defecto para las faltas (dÃ­as de ausencia).';
+    $Self->{Translation}->{'Default setting for overtime.'} = 'ConfiguraciÃ³n por defecto para las horas extras.';
+    $Self->{Translation}->{'Default setting for the standard weekly hours.'} = 'ConfiguraciÃ³n por defecto para las horas semanales estÃ¡ndar.';
     $Self->{Translation}->{'Default status for new actions.'} = 'Estado por defecto para acciones nuevas.';
     $Self->{Translation}->{'Default status for new projects.'} = 'Estado por defecto para proyectos nuevos.';
     $Self->{Translation}->{'Default status for new users.'} = 'Estado por defecto para usuarios nuevos.';
-    $Self->{Translation}->{'Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.'} = 'Define para cuáles proyectos es obligatoria la inserción de comentarios. Si la expresión regular coincide con el proyecto, se tiene que escribir un comentario. La expresión regular usa el parámetro smx.';
-    $Self->{Translation}->{'Edit time accounting settings'} = 'Modificar la configuración de la contabilidad de tiempo';
+    $Self->{Translation}->{'Defines the projects for which a remark is required. If the RegExp matches on the project, you have to insert a remark too. The RegExp use the smx parameter.'} = 'Define para cuÃ¡les proyectos es obligatoria la inserciÃ³n de comentarios. Si la expresiÃ³n regular coincide con el proyecto, se tiene que escribir un comentario. La expresiÃ³n regular usa el parÃ¡metro smx.';
+    $Self->{Translation}->{'Edit time accounting settings'} = 'Modificar la configuraciÃ³n de la contabilidad de tiempo';
     $Self->{Translation}->{'Edit time record'} = 'Modificar registro de tiempo';
-    $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Especifica el número máximo de días para registrar horas de trabajo atrasadas (por ejemplo: 10 días de antigüedad).';
-    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} = 'Si se habilita, los elementos desplegables de la ventana de edición se cambian por campos de autocompletado.';
-    $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} = 'Número máximo de días laborales después de los cuales es obligatorio reportar las horas trabajadas.';
-    $Self->{Translation}->{'Maximum number of working days withouth working units entry after which a warning will be shown.'} = 'Número máximo de días laborales sin registro de horas trabajadas después de los cuales se mostrará una advertencia.';
+    $Self->{Translation}->{'For how many days ago you can insert working units.'} = 'Especifica el nÃºmero mÃ¡ximo de dÃ­as para registrar horas de trabajo atrasadas (por ejemplo: 10 dÃ­as de antigÃ¼edad).';
+    $Self->{Translation}->{'If enabled, the dropdown elements in the edit screen are changed to autocompletion fields.'} = 'Si se habilita, los elementos desplegables de la ventana de ediciÃ³n se cambian por campos de autocompletado.';
+    $Self->{Translation}->{'Maximum number of working days after which the working units have to be inserted.'} = 'NÃºmero mÃ¡ximo de dÃ­as laborales despuÃ©s de los cuales es obligatorio reportar las horas trabajadas.';
+    $Self->{Translation}->{'Maximum number of working days withouth working units entry after which a warning will be shown.'} = 'NÃºmero mÃ¡ximo de dÃ­as laborales sin registro de horas trabajadas despuÃ©s de los cuales se mostrarÃ¡ una advertencia.';
     $Self->{Translation}->{'Project time reporting'} = 'Reporte de tiempos de proyecto';
-    $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} = 'Expresiones regulares para restringir la lista de acciones, de acuerdo al proyecto seleccionado. Key contiene la expresión regular para los proyectos y Content, las expresiones regulares para las acciones.';
-    $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} = 'Expresiones regulares para restringir la lista de proyectos, de acuerdo a los grupos de usuarios. Key contiene la expresión regular para los proyectos y Content, una lista de grupos, separados por comas.';
-    $Self->{Translation}->{'Specifies if working hours can be inserted without start and end times.'} = 'Especifica si es posible insertar las horas trabajadas sin definir los tiempos de inicio y finalización de las tareas.';
-    $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Este módulo hace obligatoria la inserción de horas trabajadas.';
-    $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} = 'Módulo de notificación que muestra una advertencia si hay demasiados días sin registro de horas trabajadas.';
+    $Self->{Translation}->{'Regular expressions for constraining action list according to selected project. Key contains regular expression for project(s), content contains regular expressions for action(s).'} = 'Expresiones regulares para restringir la lista de acciones, de acuerdo al proyecto seleccionado. Key contiene la expresiÃ³n regular para los proyectos y Content, las expresiones regulares para las acciones.';
+    $Self->{Translation}->{'Regular expressions for constraining project list according to user groups. Key contains regular expression for project(s), content contains comma separated list of groups.'} = 'Expresiones regulares para restringir la lista de proyectos, de acuerdo a los grupos de usuarios. Key contiene la expresiÃ³n regular para los proyectos y Content, una lista de grupos, separados por comas.';
+    $Self->{Translation}->{'Specifies if working hours can be inserted without start and end times.'} = 'Especifica si es posible insertar las horas trabajadas sin definir los tiempos de inicio y finalizaciÃ³n de las tareas.';
+    $Self->{Translation}->{'This module forces inserts in TimeAccounting.'} = 'Este mÃ³dulo hace obligatoria la inserciÃ³n de horas trabajadas.';
+    $Self->{Translation}->{'This notification module gives a warning if there are too many incomplete working days.'} = 'MÃ³dulo de notificaciÃ³n que muestra una advertencia si hay demasiados dÃ­as sin registro de horas trabajadas.';
     $Self->{Translation}->{'Time accounting.'} = 'Contabilidad de tiempo.';
-    $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} = 'Se usa si algunas acciones reducen el número de horas trabajadas (por ejemplo: si sólo se paga la mitad del tiempo de viaje puede especificarse Key => Viaje; Content => 50).';
+    $Self->{Translation}->{'To use if some actions reduced the working hours (for example, if only half of the traveling time is paid Key => traveling; Content => 50).'} = 'Se usa si algunas acciones reducen el nÃºmero de horas trabajadas (por ejemplo: si sÃ³lo se paga la mitad del tiempo de viaje puede especificarse Key => Viaje; Content => 50).';
 
     $Self->{Translation}->{'Mon'} = 'Lun';
     $Self->{Translation}->{'Tue'} = 'Mar';
-    $Self->{Translation}->{'Wed'} = 'Miér';
+    $Self->{Translation}->{'Wed'} = 'MiÃ©r';
     $Self->{Translation}->{'Thu'} = 'Jue';
     $Self->{Translation}->{'Fri'} = 'Vier';
-    $Self->{Translation}->{'Sat'} = 'Sáb';
+    $Self->{Translation}->{'Sat'} = 'SÃ¡b';
     $Self->{Translation}->{'Sun'} = 'Dom';
     $Self->{Translation}->{'January'} = 'Enero';
     $Self->{Translation}->{'February'} = 'Febrero';
@@ -180,25 +180,25 @@ sub Data {
     $Self->{Translation}->{'December'} = 'Diciembre';
 
     $Self->{Translation}->{'Show all projects'} = 'Mostrar todos los proyectos';
-    $Self->{Translation}->{'Show valid projects'} = 'Mostrar todos los proyectos válidos';
+    $Self->{Translation}->{'Show valid projects'} = 'Mostrar todos los proyectos vÃ¡lidos';
     $Self->{Translation}->{'TimeAccounting'} = 'Contabilidad De Tiempo';
     $Self->{Translation}->{'Actions'} = 'Acciones';
-    $Self->{Translation}->{'User updated!'} = '¡Usuario actualizado!';
-    $Self->{Translation}->{'User added!'} = '¡Usuario añadido!';
-    $Self->{Translation}->{'Project added!'} = '¡Proyecto añadido!';
-    $Self->{Translation}->{'Project updated!'} = '¡Proyecto actualizado!';
-    $Self->{Translation}->{'Task added!'} = '¡Tarea añadida!';
-    $Self->{Translation}->{'Task updated!'} = '¡Tarea actualizada!';
+    $Self->{Translation}->{'User updated!'} = 'Â¡Usuario actualizado!';
+    $Self->{Translation}->{'User added!'} = 'Â¡Usuario aÃ±adido!';
+    $Self->{Translation}->{'Project added!'} = 'Â¡Proyecto aÃ±adido!';
+    $Self->{Translation}->{'Project updated!'} = 'Â¡Proyecto actualizado!';
+    $Self->{Translation}->{'Task added!'} = 'Â¡Tarea aÃ±adida!';
+    $Self->{Translation}->{'Task updated!'} = 'Â¡Tarea actualizada!';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
 
     $Self->{Translation}->{'Reporting'} = 'Reporte';
-    $Self->{Translation}->{'Successful insert!'} = '¡Inserción exitosa!';
-    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = '¡Imposible guardar la configuración porque un día sólo tiene 24 horas!';
-    $Self->{Translation}->{'Can\'t delete Working Units!'} = '¡Imposible eliminar las unidades de trabajo!';
-    $Self->{Translation}->{'Please insert your working hours!'} = '¡Favor de insertar sus horas de trabajo!';
+    $Self->{Translation}->{'Successful insert!'} = 'Â¡InserciÃ³n exitosa!';
+    $Self->{Translation}->{'Can\'t save settings, because a day has only 24 hours!'} = 'Â¡Imposible guardar la configuraciÃ³n porque un dÃ­a sÃ³lo tiene 24 horas!';
+    $Self->{Translation}->{'Can\'t delete Working Units!'} = 'Â¡Imposible eliminar las unidades de trabajo!';
+    $Self->{Translation}->{'Please insert your working hours!'} = 'Â¡Favor de insertar sus horas de trabajo!';
 }
 
 1;
