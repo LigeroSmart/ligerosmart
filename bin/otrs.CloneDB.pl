@@ -3,7 +3,7 @@
 # bin/otrs.CloneDB.pl - migrate OTRS databases
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: otrs.CloneDB.pl,v 1.1 2012-01-06 10:37:02 mg Exp $
+# $Id: otrs.CloneDB.pl,v 1.2 2012-01-06 10:42:09 mg Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -33,7 +33,7 @@ use Getopt::Std;
 use MIME::Base64;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Kernel::Config;
 use Kernel::System::Encode;
@@ -110,7 +110,9 @@ Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
 Usage: $0 -r
 
 This little script clones an OTRS database into a target database, even
-on another database platform.
+on another database platform. It will dynamically get the list of tables in the
+source DB, and copy the data of each table to the target DB.
+
 Currently, only PostgreSQL is supported as a source platform, but this will
 be extended in future.
 
@@ -171,6 +173,8 @@ sub DataTransfer {
     for my $Table (@Tables) {
         print "Converting table $Table...\n";
 
+        # Get the list of columns of this table to be able to
+        #   generate correct INSERT statements.
         my @Columns = _ColumnsList(
             Table    => $Table,
             DBObject => $CommonObject{SourceDBObject},
@@ -185,6 +189,7 @@ sub DataTransfer {
         );
         my $Counter = 1;
 
+        # Now fetch all the data and insert it to the target DB.
         $CommonObject{SourceDBObject}->Prepare(
             SQL => "
                 SELECT *
@@ -235,7 +240,7 @@ sub DataTransfer {
 }
 
 #
-# List all tables in the source database
+# List all tables in the source database in alphabetical order.
 #
 sub _TablesList {
     my %Param = @_;
@@ -264,7 +269,7 @@ sub _TablesList {
 }
 
 #
-# List all columns of a table
+# List all columns of a table in the order of their position.
 #
 sub _ColumnsList {
     my %Param = @_;
@@ -296,7 +301,7 @@ sub _ColumnsList {
 }
 
 #
-# Get row count of a table
+# Get row count of a table.
 #
 sub _RowCount {
     my %Param = @_;
