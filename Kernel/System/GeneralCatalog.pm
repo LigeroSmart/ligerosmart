@@ -2,7 +2,7 @@
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.56 2012-01-12 16:06:55 mb Exp $
+# $Id: GeneralCatalog.pm,v 1.57 2012-01-12 16:17:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 =head1 NAME
 
@@ -338,7 +338,7 @@ get item attributes
 
 returns
 
-    my $Item = (
+    my $Item = {
         'ItemID'     => '23',
         'Class'      => 'ITSM::Service::Type',
         'Name'       => 'Underpinning Contract'
@@ -348,7 +348,7 @@ returns
         'CreateBy'   => '1',
         'ChangeTime' => '2012-01-12 09:36:24',
         'ChangeBy'   => '1',
-    );
+    };
 
 =cut
 
@@ -716,6 +716,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2012-01-12 16:06:55 $
+$Revision: 1.57 $ $Date: 2012-01-12 16:17:24 $
 
 =cut
