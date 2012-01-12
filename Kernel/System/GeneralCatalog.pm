@@ -1,8 +1,8 @@
 # --
 # Kernel/System/GeneralCatalog.pm - all general catalog functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: GeneralCatalog.pm,v 1.55 2011-11-30 07:56:44 ep Exp $
+# $Id: GeneralCatalog.pm,v 1.56 2012-01-12 16:06:55 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::CheckItem;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 =head1 NAME
 
@@ -210,7 +210,7 @@ sub ClassRename {
 
 =item ItemList()
 
-return a list as hash reference of one general catalog class
+returns a list as a hash reference of one general catalog class
 
     my $HashRef = $GeneralCatalogObject->ItemList(
         Class         => 'ITSM::Service::Type',
@@ -323,18 +323,7 @@ sub ItemList {
 
 =item ItemGet()
 
-get a general catalog item
-
-Return
-    $ItemData{ItemID}
-    $ItemData{Class}
-    $ItemData{Name}
-    $ItemData{ValidID}
-    $ItemData{Comment}
-    $ItemData{CreateTime}
-    $ItemData{CreateBy}
-    $ItemData{ChangeTime}
-    $ItemData{ChangeBy}
+get item attributes
 
     my $ItemDataRef = $GeneralCatalogObject->ItemGet(
         ItemID => 3,
@@ -344,7 +333,21 @@ Return
 
     my $ItemDataRef = $GeneralCatalogObject->ItemGet(
         Class => 'ITSM::Service::Type',
-        Name  => 'Item Name',
+        Name  => 'Underpinning Contract',
+    );
+
+returns
+
+    my $Item = (
+        'ItemID'     => '23',
+        'Class'      => 'ITSM::Service::Type',
+        'Name'       => 'Underpinning Contract'
+        'Comment'    => 'Some Comment',
+        'ValidID'    => '1',
+        'CreateTime' => '2012-01-12 09:36:24',
+        'CreateBy'   => '1',
+        'ChangeTime' => '2012-01-12 09:36:24',
+        'ChangeBy'   => '1',
     );
 
 =cut
@@ -551,7 +554,7 @@ sub ItemAdd {
 
 =item ItemUpdate()
 
-update a existing general catalog item
+update an existing general catalog item
 
     my $True = $GeneralCatalogObject->ItemUpdate(
         ItemID        => 123,
@@ -713,6 +716,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.55 $ $Date: 2011-11-30 07:56:44 $
+$Revision: 1.56 $ $Date: 2012-01-12 16:06:55 $
 
 =cut
