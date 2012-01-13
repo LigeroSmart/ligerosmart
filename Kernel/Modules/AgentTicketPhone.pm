@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.42 2011-12-16 09:49:47 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.221 2011/12/15 19:47:03 cg Exp $
+# $Id: AgentTicketPhone.pm,v 1.43 2012-01-13 09:56:38 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.227 2012/01/06 13:54:31 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -337,6 +337,7 @@ sub Run {
         # get ArticleID
         my %Article;
         my %CustomerData;
+        my $ArticleFrom = '';
         if ( $GetParam{ArticleID} ) {
             %Article = $Self->{TicketObject}->ArticleGet(
                 ArticleID     => $GetParam{ArticleID},
@@ -346,6 +347,9 @@ sub Run {
                 TicketNumber => $Article{TicketNumber},
                 Subject => $Article{Subject} || '',
             );
+
+            # save article from for addresses list
+            $ArticleFrom = $Article{From};
 
             # body preparation for plain text processing
             $Article{Body} = $Self->{LayoutObject}->ArticleQuote(
@@ -383,6 +387,55 @@ sub Run {
                     $Article{From} = $CustomerUserList{$KeyCustomerUserList};
                 }
             }
+        }
+
+        # multiple addresses list
+        # check email address
+        my $CountFrom = scalar @MultipleCustomer || 1;
+        my %CustomerDataFrom = $Self->{CustomerUserObject}->CustomerUserDataGet(
+            User => $Article{CustomerUserID},
+        );
+
+        for my $Email ( Mail::Address->parse($ArticleFrom) ) {
+
+            my $CountAux         = $CountFrom;
+            my $CustomerError    = '';
+            my $CustomerErrorMsg = 'CustomerGenericServerErrorMsg';
+            my $CustomerDisabled = '';
+            my $CustomerSelected = ( $CountFrom eq '1' ? 'checked="checked"' : '' );
+            my $EmailAddress     = $Email->address();
+            if ( !$Self->{CheckItemObject}->CheckEmail( Address => $EmailAddress ) )
+            {
+                $CustomerErrorMsg = $Self->{CheckItemObject}->CheckErrorType()
+                    . 'ServerErrorMsg';
+                $CustomerError = 'ServerError';
+            }
+
+            # check for duplicated entries
+            if ( defined $AddressesList{$Email} && $CustomerError eq '' ) {
+                $CustomerErrorMsg = 'IsDuplicatedServerErrorMsg';
+                $CustomerError    = 'ServerError';
+            }
+
+            if ( $CustomerError ne '' ) {
+                $CustomerDisabled = 'disabled="disabled"';
+                $CountAux         = $CountFrom . 'Error';
+            }
+
+            my $CustomerKey
+                = ( $CustomerDataFrom{UserEmail} eq $EmailAddress ? $Article{CustomerUserID} : '' );
+
+            push @MultipleCustomer, {
+                Count            => $CountAux,
+                CustomerElement  => $Email->address(),
+                CustomerSelected => $CustomerSelected,
+                CustomerKey      => $CustomerKey,
+                CustomerError    => $CustomerError,
+                CustomerErrorMsg => $CustomerErrorMsg,
+                CustomerDisabled => $CustomerDisabled,
+            };
+            $AddressesList{$EmailAddress} = 1;
+            $CountFrom++;
         }
 
         # get user preferences
@@ -516,16 +569,26 @@ sub Run {
             );
         }
 
+        my %SplitTicketParam;
+
+        # in case of split a TicketID and ArticleID are always given, send the TicketID to calculate
+        # ACLs based on parent information
+        if ( $Self->{TicketID} && $Article{ArticleID} ) {
+            $SplitTicketParam{TicketID} = $Self->{TicketID};
+        }
+
         # html output
         my $Services = $Self->_GetServices(
             %GetParam,
             %ACLCompatGetParam,
+            %SplitTicketParam,
             CustomerUserID => $CustomerData{UserLogin} || '',
             QueueID        => $Self->{QueueID}         || 1,
         );
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
             %ACLCompatGetParam,
+            %SplitTicketParam,
             CustomerUserID => $CustomerData{UserLogin} || '',
             QueueID        => $Self->{QueueID}         || 1,
             Services       => $Services,
@@ -535,18 +598,21 @@ sub Run {
             NextStates => $Self->_GetNextStates(
                 %GetParam,
                 %ACLCompatGetParam,
+                %SplitTicketParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
                 QueueID        => $Self->{QueueID}         || 1,
             ),
             Priorities => $Self->_GetPriorities(
                 %GetParam,
                 %ACLCompatGetParam,
+                %SplitTicketParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
                 QueueID        => $Self->{QueueID}         || 1,
             ),
             Types => $Self->_GetTypes(
                 %GetParam,
                 %ACLCompatGetParam,
+                %SplitTicketParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
                 QueueID        => $Self->{QueueID}         || 1,
             ),
@@ -555,16 +621,19 @@ sub Run {
             Users    => $Self->_GetUsers(
                 %GetParam,
                 %ACLCompatGetParam,
+                %SplitTicketParam,
                 QueueID => $Self->{QueueID}
             ),
             ResponsibleUsers => $Self->_GetResponsibles(
                 %GetParam,
                 %ACLCompatGetParam,
+                %SplitTicketParam,
                 QueueID => $Self->{QueueID}
             ),
             To => $Self->_GetTos(
                 %GetParam,
                 %ACLCompatGetParam,
+                %SplitTicketParam,
                 CustomerUserID => $CustomerData{UserLogin} || '',
                 QueueID => $Self->{QueueID},
             ),
@@ -587,6 +656,9 @@ sub Run {
 
     # create new ticket and article
     elsif ( $Self->{Subaction} eq 'StoreNew' ) {
+
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
 
         my %Error;
         my %StateData;
