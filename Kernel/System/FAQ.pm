@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.154 2011-12-16 11:20:24 ub Exp $
+# $Id: FAQ.pm,v 1.155 2012-01-18 17:44:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.154 $) [1];
+$VERSION = qw($Revision: 1.155 $) [1];
 
 =head1 NAME
 
@@ -4909,6 +4909,18 @@ sub _FAQApprovalTicketCreate {
     my $Subject = $Self->{ConfigObject}->Get('FAQ::ApprovalTicketSubject');
     $Subject =~ s{ <OTRS_FAQ_NUMBER> }{$Param{FAQNumber}}xms;
 
+    # check if we can find existing open approval tickets for this FAQ article
+    my @TicketIDs = $Self->{TicketObject}->TicketSearch(
+        Result    => 'ARRAY',
+        Title     => $Subject,
+        StateType => 'Open',
+        UserID    => 1,
+    );
+
+    # we don't need to create another approval ticket if there is still at least one ticket open
+    # for this FAQ article
+    return 1 if @TicketIDs;
+
     # create ticket
     my $TicketID = $Self->{TicketObject}->TicketCreate(
         Title    => $Subject,
@@ -5008,6 +5020,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.154 $ $Date: 2011-12-16 11:20:24 $
+$Revision: 1.155 $ $Date: 2012-01-18 17:44:46 $
 
 =cut
