@@ -1,8 +1,8 @@
 # --
 # Survey.t - Survey tests
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.20 2011-04-20 14:57:45 mh Exp $
+# $Id: Survey.t,v 1.21 2012-01-19 15:55:23 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -508,6 +508,32 @@ That\'s it.
         );
     }
 }
+
+# added (very limited) SurveySearch tests
+
+my @IDs = $SurveyObject->SurveySearch(
+    NotificationSender => 'quality@unittest.com',
+    Limit              => 150,                      # (optional)
+    UserID             => 1,
+);
+
+$Self->True(
+    scalar @IDs,
+    "SurveySearch()",
+);
+
+my @SortedIDs = $SurveyObject->SurveySearch(
+    NotificationSender => 'quality@unittest.com',
+    OrderBy            => [ 'SurveyID', 'Title' ],    # (optional)
+    OrderByDirection   => [ 'Down', 'Up' ],           # (optional)
+    Limit              => 150,                        # (optional)
+    UserID             => 1,
+);
+
+$Self->True(
+    scalar @IDs,
+    "SurveySearch() with sort",
+);
 
 # cleanup system
 $Self->{DBObject}->Do(

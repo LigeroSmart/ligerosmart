@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Survey.pm - all survey funtions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.63 2011-12-15 15:38:10 jh Exp $
+# $Id: Survey.pm,v 1.64 2012-01-19 15:55:23 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 =head1 NAME
 
@@ -2573,6 +2573,7 @@ sub SurveySearch {
 
     # assemble the ORDER BY clause
     my @SQLOrderBy;
+    my @OrderByFields;
     my $Count = 0;
     for my $OrderBy ( @{ $Param{OrderBy} } ) {
 
@@ -2590,7 +2591,8 @@ sub SurveySearch {
         }
 
         # add SQL
-        push @SQLOrderBy, "$OrderByTable{$OrderBy} $Direction";
+        push @SQLOrderBy,    "$OrderByTable{$OrderBy} $Direction";
+        push @OrderByFields, $OrderByTable{$OrderBy};
     }
     continue {
         $Count++;
@@ -2603,8 +2605,7 @@ sub SurveySearch {
     }
 
     # sql
-    my $SQL = 'SELECT s.id '
-        . 'FROM survey s ';
+    my $SQL = 'SELECT s.id ';
 
     # extended SQL
     my $Ext = '';
@@ -2800,18 +2801,16 @@ sub SurveySearch {
         $Ext = ' WHERE ' . $Ext;
     }
 
-    # add GROUP BY
-    $Ext
-        .= ' GROUP BY s.id, s.surveynumber ';
-
     # add the ORDER BY clause
     if (@SQLOrderBy) {
         $Ext .= 'ORDER BY ';
         $Ext .= join ', ', @SQLOrderBy;
         $Ext .= ' ';
+        $SQL .= ', ' . join ', ', @OrderByFields;
     }
 
     # add extended SQL
+    $SQL .= ' FROM survey s ';
     $SQL .= $Ext;
 
     # ask database
@@ -2879,6 +2878,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.63 $ $Date: 2011-12-15 15:38:10 $
+$Revision: 1.64 $ $Date: 2012-01-19 15:55:23 $
 
 =cut
