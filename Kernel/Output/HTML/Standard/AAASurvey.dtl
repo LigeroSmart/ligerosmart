@@ -24,3 +24,4 @@ $Text{"YesNo"}
 $Text{"answered"}
 $Text{"not answered"}
 $Text{"Stats Detail"}
+$Text{"You have already answered the survey."}
