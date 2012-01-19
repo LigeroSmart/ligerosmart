@@ -1,8 +1,8 @@
 # --
 # AgentSurveyOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyOverviewSmall.dtl,v 1.4 2011-04-11 21:09:25 mb Exp $
+# $Id: AgentSurveyOverviewSmall.dtl,v 1.5 2012-01-19 16:12:32 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,67 +22,67 @@
 <!-- dtl:block:NoDataFoundMsg -->
 
     <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data" name="matrix">
-        <table id="FixedTable" class="TableSmall" summary="A generic Survey table">
+        <table id="FixedTable" class="TableSmall">
             <thead>
                 <tr>
 <!-- dtl:block:RecordNumberHeader -->
                     <th class="Number $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Number;OrderBy=$LQData{"OrderBy"}">$Text{"$Config{"Survey::Hook"}"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=Number;OrderBy=$LQData{"OrderBy"}">$Text{"$Config{"Survey::Hook"}"}</a>
                     </th>
 <!-- dtl:block:RecordNumberHeader -->
 <!-- dtl:block:RecordTitleHeader -->
                     <th class="Title $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Title;OrderBy=$LQData{"OrderBy"}">$Text{"Title"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=Title;OrderBy=$LQData{"OrderBy"}">$Text{"Title"}</a>
                     </th>
 <!-- dtl:block:RecordTitleHeader -->
 <!-- dtl:block:RecordIntroductionHeader -->
                     <th class="Introduction $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Introduction;OrderBy=$LQData{"OrderBy"}">$Text{"Introduction"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=Introduction;OrderBy=$LQData{"OrderBy"}">$Text{"Introduction"}</a>
                     </th>
 <!-- dtl:block:RecordIntroductionHeader -->
 <!-- dtl:block:RecordDescriptionHeader -->
                     <th class="Description $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Description;OrderBy=$LQData{"OrderBy"}">$Text{"Description"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=Description;OrderBy=$LQData{"OrderBy"}">$Text{"Description"}</a>
                     </th>
 <!-- dtl:block:RecordDescriptionHeader -->
 <!-- dtl:block:RecordNotificationSenderHeader -->
                     <th class="NotificationSender $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=NotificationSender;OrderBy=$LQData{"OrderBy"}">$Text{"Notification Sender"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=NotificationSender;OrderBy=$LQData{"OrderBy"}">$Text{"Notification Sender"}</a>
                     </th>
 <!-- dtl:block:RecordNotificationSenderHeader -->
 <!-- dtl:block:RecordNotificationSubjectHeader -->
                     <th class="NotificationSubject $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=NotificationSubject;OrderBy=$LQData{"OrderBy"}">$Text{"Notification Subject"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=NotificationSubject;OrderBy=$LQData{"OrderBy"}">$Text{"Notification Subject"}</a>
                     </th>
 <!-- dtl:block:RecordNotificationSubjectHeader -->
 <!-- dtl:block:RecordNotificationBodyHeader -->
                     <th class="NotificationBody $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=NotificationBody;OrderBy=$LQData{"OrderBy"}">$Text{"Notification Body"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=NotificationBody;OrderBy=$LQData{"OrderBy"}">$Text{"Notification Body"}</a>
                     </th>
 <!-- dtl:block:RecordNotificationBodyHeader -->
 <!-- dtl:block:RecordStatusHeader -->
                     <th class="Status $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Status;OrderBy=$LQData{"OrderBy"}">$Text{"Status"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=Status;OrderBy=$LQData{"OrderBy"}">$Text{"Status"}</a>
                     </th>
 <!-- dtl:block:RecordStatusHeader -->
 <!-- dtl:block:RecordCreateTimeHeader -->
                     <th class="CreateTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateTime;OrderBy=$LQData{"OrderBy"}">$Text{"Created"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=CreateTime;OrderBy=$LQData{"OrderBy"}">$Text{"Created"}</a>
                     </th>
 <!-- dtl:block:RecordCreateTimeHeader -->
 <!-- dtl:block:RecordCreateByHeader -->
                     <th class="CreateBy $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=CreateBy;OrderBy=$LQData{"OrderBy"}">$Text{"Created by"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=CreateBy;OrderBy=$LQData{"OrderBy"}">$Text{"Created by"}</a>
                     </th>
 <!-- dtl:block:RecordCreateByHeader -->
 <!-- dtl:block:RecordChangeTimeHeader -->
                     <th class="ChangeTime $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeTime;OrderBy=$LQData{"OrderBy"}">$Text{"Changed"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=ChangeTime;OrderBy=$LQData{"OrderBy"}">$Text{"Changed"}</a>
                     </th>
 <!-- dtl:block:RecordChangeTimeHeader -->
 <!-- dtl:block:RecordChangeByHeader -->
                     <th class="ChangeBy $QData{"CSS"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=ChangeBy;OrderBy=$LQData{"OrderBy"}">$Text{"Changed By"}</a>
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};SortBy=ChangeBy;OrderBy=$LQData{"OrderBy"}">$Text{"Changed By"}</a>
                     </th>
 <!-- dtl:block:RecordChangeByHeader -->
                 </tr>
@@ -118,7 +118,7 @@
 <!-- dtl:block:RecordDescription -->
 <!-- dtl:block:RecordNotificationSender -->
                     <td>
-                        <div title="$QData{"NotificationSender"}">$QData{"NotificationSender"}</div>
+                        <div>$QData{"NotificationSender"}</div>
                     </td>
 <!-- dtl:block:RecordNotificationSender -->
 <!-- dtl:block:RecordNotificationSubject -->
@@ -133,31 +133,27 @@
 <!-- dtl:block:RecordNotificationBody -->
 <!-- dtl:block:RecordStatus -->
                     <td>
-                        <div title="$Text{"$Data{"Status"}"}">$Text{"$Data{"Status"}"}</div>
+                        <div>$Text{"$Data{"Status"}"}</div>
                     </td>
 <!-- dtl:block:RecordStatus -->
 <!-- dtl:block:RecordCreateTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"CreateTime"}"}">$TimeLong{"$QData{"CreateTime"}"}</div>
+                        <div>$TimeLong{"$QData{"CreateTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordCreateTime -->
 <!-- dtl:block:RecordCreateBy -->
                     <td>
-                        <div title="$QData{"CreateUserLogin"} $QData{"CreateLeftParenthesis"}$QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}$QData{"CreateRightParenthesis"}">
-                            $QData{"CreateUserLogin","15"} $QData{"CreateLeftParenthesis"}$Quote{"$Data{"CreateUserFirstname"}", "15"} $Quote{"$Data{"CreateUserLastname"}","15"}$QData{"CreateRightParenthesis"}
-                        </div>
+                        <div>$QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}</div>
                     </td>
 <!-- dtl:block:RecordCreateBy -->
 <!-- dtl:block:RecordChangeTime -->
                     <td>
-                        <div title="$TimeLong{"$QData{"ChangeTime"}"}">$TimeLong{"$QData{"ChangeTime"}"}</div>
+                        <div>$TimeLong{"$QData{"ChangeTime"}"}</div>
                     </td>
 <!-- dtl:block:RecordChangeTime -->
 <!-- dtl:block:RecordChangeBy -->
                     <td>
-                        <div title="$QData{"ChangeUserLogin"} $QData{"ChangeLeftParenthesis"}$QData{"ChangeUserFirstname"} $QData{"ChangetUserLastname"}$QData{"ChangeRightParenthesis"}">
-                            $QData{"ChangeUserLogin","15"} $QData{"ChangeLeftParenthesis"}$Quote{"$Data{"ChangeUserFirstname"}", "15"} $Quote{"$Data{"ChangeUserLastname"}","15"}$QData{"ChangeRightParenthesis"}
-                        </div>
+                        <div>$QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"}</div>
                     </td>
 <!-- dtl:block:RecordChangeBy -->
                 </tr>

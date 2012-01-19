@@ -2,7 +2,7 @@
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.18 2012-01-19 13:10:50 mb Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.19 2012-01-19 16:12:46 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@
 <div class="MainBox AriaRoleMain LayoutFixedSidebar SidebarFirst">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1 title="$QData{"Title"}" >$Text{"$Config{"Survey::Hook"}"}$QData{"SurveyNumber"} - $QData{"Title","60"} </h1>
+        <h1>$Text{"$Config{"Survey::Hook"}"}$QData{"SurveyNumber"} - $QData{"Title"}</h1>
     </div>
 
     <div class="LayoutFixedSidebar SidebarLast">
@@ -26,18 +26,18 @@
                     <fieldset class="TableLike FixedLabelSmall">
 
                         <label>$Text{"Created"}:</label>
-                        <p class="Value">$TimeShort{"$Data{"CreateTime"}"}</p>
+                        <p class="Value">$TimeShort{"$QData{"CreateTime"}"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
-                        <p class="Value">$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}</p>
+                        <p class="Value">$QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
-                        <p class="Value" >$TimeShort{"$Data{"ChangeTime"}"}</p>
+                        <p class="Value" >$TimeShort{"$QData{"ChangeTime"}"}</p>
 
                         <label>$Text{"Changed by"}:</label>
-                        <p class="Value">$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}</p>
+                        <p class="Value">$QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Status"}:</label>
@@ -69,14 +69,14 @@
                         <a href="" class="HistoryBack">$Text{"Back"}</a>
                     </li>
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=SurveyEdit;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Edit General Info"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=SurveyEdit;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit General Info"}</a>
                     </li>
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurveyEditQuestions;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Edit Questions"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentSurveyEditQuestions;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Edit Questions"}</a>
                     </li>
 <!-- dtl:block:SurveyEditStatsDetails -->
                     <li>
-                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=Stats;SurveyID=$QData{"SurveyID"}" class="AsPopup">$Text{"Stats Details"}</a>
+                        <a href="$Env{"Baselink"}Action=AgentSurvey;Subaction=Stats;SurveyID=$LQData{"SurveyID"}" class="AsPopup">$Text{"Stats Details"}</a>
                     </li>
 <!-- dtl:block:SurveyEditStatsDetails -->
 <!-- dtl:block:SurveyStatus -->
@@ -105,7 +105,7 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Title"}:</label>
-                        <div class="Field" title="$QData{"Title"}">$QData{"Title","80"}</div>
+                        <div class="Field">$QData{"Title","80"}</div>
                         <div class="Clear"></div>
 
                         <label>$Text{"Queues"}:</label>
@@ -125,14 +125,14 @@
                 <div class="Content">
 <!-- dtl:block:BodyHTML -->
                     <div>
-                        <iframe width="100%" frameborder="0" id="IframeSurvey$Data{"SurveyField"}" onload="Survey.Agent.SurveyZoom.IframeAutoHeight($('#IframeSurvey$Data{"SurveyField"}'));" src="$Env{"Baselink"}Action=AgentSurveyZoom;Subaction=HTMLView;SurveyID=$QData{"SurveyID"};SurveyField=$QData{"SurveyField"};">
+                        <iframe width="100%" frameborder="0" id="IframeSurvey$QData{"SurveyField"}" onload="Survey.Agent.SurveyZoom.IframeAutoHeight($('#IframeSurvey$QData{"SurveyField"}'));" src="$Env{"Baselink"}Action=AgentSurveyZoom;Subaction=HTMLView;SurveyID=$QData{"SurveyID"};SurveyField=$QData{"SurveyField"};">
                         </iframe>
                     </div>
 <!-- dtl:block:BodyHTML -->
 <!-- dtl:block:BodyPlain -->
                     <fieldset>
                         <label class="Textarea">$Text{"$Data{"Label"}"}:</label>
-                        <div class="Field Textarea">$Data{"Content"}</div>
+                        <div class="Field Textarea">$QData{"Content"}</div>
                         <div class="Clear"></div>
                     </fieldset>
 <!-- dtl:block:BodyPlain -->
