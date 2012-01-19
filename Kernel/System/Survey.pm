@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.64 2012-01-19 15:55:23 mb Exp $
+# $Id: Survey.pm,v 1.65 2012-01-19 16:05:35 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 =head1 NAME
 
@@ -2806,7 +2806,9 @@ sub SurveySearch {
         $Ext .= 'ORDER BY ';
         $Ext .= join ', ', @SQLOrderBy;
         $Ext .= ' ';
-        $SQL .= ', ' . join ', ', @OrderByFields;
+        if (@OrderByFields) {
+            $SQL .= ', ' . join ', ', @OrderByFields;
+        }
     }
 
     # add extended SQL
@@ -2878,6 +2880,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2012-01-19 15:55:23 $
+$Revision: 1.65 $ $Date: 2012-01-19 16:05:35 $
 
 =cut
