@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.65 2012-01-19 16:05:35 mb Exp $
+# $Id: Survey.pm,v 1.66 2012-01-19 16:10:07 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.65 $) [1];
+$VERSION = qw($Revision: 1.66 $) [1];
 
 =head1 NAME
 
@@ -2446,24 +2446,26 @@ search in surveys
 
     my @IDs = $SurveyObject->SurveySearch(
 
-        Number              => '*134*',                                         # (optional)
-        Title               => '*some title*',                                  # (optional)
-        Introduction        => '*some introduction*',                           # (optional)
-        Description         => '*some desription*',                             # (optional)
-        NotificationSender  => '*user@domain*',                                 # (optional)
-        NotificationSubject => '*some notification subject*',                   # (optional)
-        NotificationBody    => '*some notification body*',                      # (optional)
+        Number              => '134',                                         # (optional)
+        Title               => 'some title',                                  # (optional)
+        Introduction        => 'some introduction',                           # (optional)
+        Description         => 'some description',                            # (optional)
+        NotificationSender  => 'user@domain',                                 # (optional)
+        NotificationSubject => 'some notification subject',                   # (optional)
+        NotificationBody    => 'some notification body',                      # (optional)
 
         # is searching in Number, Title, Introduction, Description, NotificationSender,
         # NotificationSubject and NotificationBody
-        What   => '*some text*',                                                # (optional)
+        What   => 'some text',                                                # (optional)
 
-        Status => '*some status*',                                              # (optional)
+        Status => 'some status',                                              # (optional)
 
-        CreateTime          => 's.create_time',
-        CreateBy            => 's.create_by',
-        ChangeTime          => 's.change_time',
-        ChangeBy            => 's.change_by',
+        CreateTimeNewerDate => '2012-01-01 12:00:00',
+        CreateTimeOlderDate => '2012-01-31 12:00:00',
+        CreateBy            => '123',            #UserID
+        ChangeTimeNewerDate => '2012-01-01 12:00:00',
+        ChangeTimeOlderDate => '2012-12-31 12:00:00',
+        ChangeBy            => '123',            #UserID
 
         OrderBy => [ 'SurveyID', 'Title' ],                                     # (optional)
         # default: [ 'SurveyID' ],
@@ -2880,6 +2882,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.65 $ $Date: 2012-01-19 16:05:35 $
+$Revision: 1.66 $ $Date: 2012-01-19 16:10:07 $
 
 =cut
