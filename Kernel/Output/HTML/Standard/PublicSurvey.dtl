@@ -1,8 +1,8 @@
 # --
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.22 2011-02-03 17:47:11 dz Exp $
+# $Id: PublicSurvey.dtl,v 1.23 2012-01-19 14:37:30 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -32,7 +32,7 @@
         <input type="hidden" name="PublicSurveyKey" value="$QData{"PublicSurveyKey"}" />
         <fieldset class="Survey">
             <div class="SurveyBlockHeader">
-                $Text{"Please answer the next questions"}
+                $Text{"Please answer these questions"}:
             </div>
 
 <!-- dtl:block:PublicQuestions -->
@@ -114,7 +114,7 @@
 <!-- dtl:block:PublicSurveyVoteData -->
 <div class="Content ARIARoleMain" id="MainBox">
     <div class="Header">
-        <h2>These are your answers:</h2>
+        <h2>$Text{"These are your answers"}:</h2>
     </div>
     <div class="SurveyBlock">
         <div class="SurveyBlockHeader">
@@ -137,7 +137,7 @@
     <div class="Clear"></div>
     <fieldset class="Survey">
         <div class="SurveyBlockHeader">
-            $Text{"These are your answers."}
+            $Text{"These are your answers"}:
         </div>
 
 <!-- dtl:block:PublicSurveyVoteQuestion -->
