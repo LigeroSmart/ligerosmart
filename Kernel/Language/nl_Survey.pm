@@ -2,7 +2,7 @@
 # Kernel/Language/nl_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_Survey.pm,v 1.7 2012-01-19 12:46:07 mb Exp $
+# $Id: nl_Survey.pm,v 1.8 2012-01-19 13:36:02 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,6 +42,7 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'beantwoord';
     $Self->{Translation}->{'not answered'} = 'niet beantwoord';
     $Self->{Translation}->{'Stats Detail'} = 'Detail';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'U heeft deze enquête al beantwoord.';
 
     # Template: AgentSurvey
     $Self->{Translation}->{'Create New Survey'} = 'Nieuwe enquête aanmaken';
