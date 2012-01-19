@@ -2,7 +2,7 @@
 # PublicSurvey.dtl - provides HTML form for PublicSurvey
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.dtl,v 1.23 2012-01-19 14:37:30 mb Exp $
+# $Id: PublicSurvey.dtl,v 1.24 2012-01-19 16:14:52 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,7 @@
 <!-- dtl:block:PublicSurvey -->
 <div class="Content ARIARoleMain" id="MainBox">
     <div class="Header">
-        <h2>$Text{"Survey"}: $Data{"Title"}</h2>
+        <h2>$Text{"Survey"}: $QData{"Title"}</h2>
     </div>
 
     <div class="SurveyBlock">
@@ -20,7 +20,7 @@
             $Text{"Introduction"}
         </div>
         <div class="Content">
-            $Data{"Introduction"}
+            $QData{"Introduction"}
         </div>
     </div>
 
@@ -39,7 +39,7 @@
             <div class="QuestionContainer">
 <!-- dtl:block:PublicAnswerYesNo -->
 
-                <div class="Question"> $Data{"Question"} </div>
+                <div class="Question"> $QData{"Question"} </div>
                 <input type="radio" id="PublicSurveyVote1$QData{"QuestionID"}Yes" name="PublicSurveyVote1[$QData{"QuestionID"}]" value="Yes" />
                 <label class="Answer" for="PublicSurveyVote1$QData{"QuestionID"}Yes">$Text{"Yes"}</label>
                 <div class="Clear"></div>
@@ -50,7 +50,7 @@
 <!-- dtl:block:PublicAnswerYesNo -->
 
 <!-- dtl:block:PublicAnswerRadio -->
-                <div class="Question"> $Data{"Question"} </div>
+                <div class="Question"> $QData{"Question"} </div>
 <!-- dtl:block:PublicAnswerRadiob -->
                 <input type="radio" id="PublicSurveyVote2$QData{"QuestionID"}$QData{"AnswerID"}" name="PublicSurveyVote2[$QData{"QuestionID"}]" value="$QData{"AnswerID"}" />
                 <label class="Answer" for="PublicSurveyVote2$QData{"QuestionID"}$QData{"AnswerID"}">$QData{"Answer"}</label>
@@ -59,7 +59,7 @@
 <!-- dtl:block:PublicAnswerRadio -->
 
 <!-- dtl:block:PublicAnswerCheckbox -->
-                <div class="Question"> $Data{"Question"} </div>
+                <div class="Question"> $QData{"Question"} </div>
 <!-- dtl:block:PublicAnswerCheckboxb -->
                 <input type="checkbox" id="PublicSurveyVote3$QData{"AnswerID"}" name="PublicSurveyVote3[$QData{"AnswerID"}]" value="Yes"/>
                 <label class="Answer" for="PublicSurveyVote3$QData{"AnswerID"}">$QData{"Answer"}</label>
@@ -68,12 +68,12 @@
 <!-- dtl:block:PublicAnswerCheckbox -->
 
 <!-- dtl:block:PublicAnswerTextarea -->
-                <div class="Question"> $Data{"Question"} </div>
+                <div class="Question"> $QData{"Question"} </div>
 <!-- dtl:block:RichText-->
                 $Include{"CustomerRichTextEditor"}
 <!-- dtl:block:RichText-->
                 <div class="RichTextAnswer$QData{"AnswerID"}">
-                    <textarea title="$Data{"Question"}" id="RichText$QData{"QuestionID"}" name="PublicSurveyVote4[$QData{"QuestionID"}]" class="RichText DontPrint" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}"></textarea>
+                    <textarea title="$QData{"Question"}" id="RichText$QData{"QuestionID"}" name="PublicSurveyVote4[$QData{"QuestionID"}]" class="RichText DontPrint" rows="15" cols="$Config{"Ticket::Frontend::TextAreaNote"}"></textarea>
                 </div>
 <!-- dtl:block:PublicAnswerTextarea -->
             </div>
@@ -121,7 +121,7 @@
             $Text{"Survey Title"}
         </div>
         <div class="Content">
-            <h2>$Text{"Survey"}: $Data{"Title"}</h2>
+            <h2>$Text{"Survey"}: $QData{"Title"}</h2>
         </div>
     </div>
 
@@ -130,7 +130,7 @@
             $Text{"Introduction"}
         </div>
         <div class="Content">
-            $Data{"Introduction"}
+            $QData{"Introduction"}
         </div>
     </div>
 
@@ -145,7 +145,7 @@
             <div class="Question">$QData{"Question"}:</div>
 <!-- dtl:block:PublicSurveyVoteAnswer -->
             <div class="Answer">
-                $Data{"Answer"}
+                $QData{"Answer"}
             </div>
             <div class="Clear"></div>
 <!-- dtl:block:PublicSurveyVoteAnswer -->
