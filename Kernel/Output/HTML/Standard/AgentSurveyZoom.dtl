@@ -1,8 +1,8 @@
 # --
 # AgentSurveyZoom.dtl - provides HTML form for AgentSurvey
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyZoom.dtl,v 1.17 2011-11-07 09:49:34 jh Exp $
+# $Id: AgentSurveyZoom.dtl,v 1.18 2012-01-19 13:10:50 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -30,27 +30,23 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
-                        <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
-                            $Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","18"})
-                        </p>
+                        <p class="Value">$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Changed"}:</label>
                         <p class="Value" >$TimeShort{"$Data{"ChangeTime"}"}</p>
 
                         <label>$Text{"Changed by"}:</label>
-                        <p class="Value" title="$Quote{"$Data{"CreateUserLogin"} ($Data{"CreateUserFirstname"} $Data{"CreateUserLastname"})"}">
-                            $Quote{"$Data{"ChangeUserLogin"} ($Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"})","18"}
-                        </p>
+                        <p class="Value">$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}</p>
                         <div class="Clear"></div>
 
                         <label>$Text{"Status"}:</label>
-                        <p class="Value" title="$Text{"$Data{"Status"}"}">$Quote{"$Data{"Status"}","18"}</p>
+                        <p class="Value">$Text{"$Data{"Status"}"}</p>
                         <div class="Clear"></div>
                     </fieldset>
 
                     <fieldset class="TableLike FixedLabelSmall">
-                        <label> $Text{"Sent requests"}:</label>
+                        <label>$Text{"Sent requests"}:</label>
                         <p class="Value">$QData{"SendRequest"}</p>
                         <div class="Clear"></div>
 
