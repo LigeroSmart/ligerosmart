@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: Survey.xml,v 1.29 2011-12-18 13:17:51 jh Exp $</CVS>
+    <CVS>$Id: Survey.xml,v 1.30 2012-01-19 14:32:44 mb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentSurvey" Required="0" Valid="1">
         <Description Translatable="1">All parameters for the Survey object in the agent interface.</Description>
         <Group>Survey</Group>
@@ -94,9 +94,9 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::ShowVoteData" Required="0" Valid="0">
-        <Description Translatable="1">Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.</Description>
+        <Description Translatable="1">Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Option SelectedID="0">
                 <Item Key="0">No</Item>
@@ -105,9 +105,9 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::SendPeriod" Required="0" Valid="1">
-        <Description Translatable="1">Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .</Description>
+        <Description Translatable="1">Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <String Regex="">300</String>
         </Setting>
@@ -115,7 +115,7 @@
     <ConfigItem Name="Survey::NotificationSender" Required="1" Valid="1">
         <Description Translatable="1">Default sender for the notification email to customers about new survey.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <String Regex="">quality@example.com</String>
         </Setting>
@@ -123,7 +123,7 @@
     <ConfigItem Name="Survey::NotificationSubject" Required="1" Valid="1">
         <Description Translatable="1">Default subject for the notification email to customers about new survey.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <String Regex="">Help us with your feedback!</String>
         </Setting>
@@ -131,13 +131,13 @@
     <ConfigItem Name="Survey::NotificationBody" Required="1" Valid="1">
         <Description Translatable="1">Default body for the notification email to customers about new survey.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <TextArea>Dear Customer,
 
-thanks for using our service. Help us to improve us and our services.
+Thanks for using our service. Help us to improve us and our services.
 
-Give us feedback what we can do:
+Please give us feedback on how to improve our services:
 
 &lt;OTRS_CONFIG_HttpType&gt;://&lt;OTRS_CONFIG_FQDN&gt;/&lt;OTRS_CONFIG_ScriptAlias&gt;public.pl?Action=PublicSurvey;PublicSurveyKey=&lt;OTRS_PublicSurveyKey&gt;
 
@@ -150,15 +150,15 @@ Your OTRS-Team
     <ConfigItem Name="Survey::SendNoSurveyRegExp" Required="0" Valid="1">
         <Description Translatable="1">If this regex matches, no customer survey will be sent.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <String Regex="">(MAILER-DAEMON|postmaster|abuse)@.+?\..+?</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Ticket::EventModulePost###99-SurveySendRequest" Required="0" Valid="1">
-        <Description Translatable="1">Ticket event module to send automatically survey email requests to customers if a ticket gets closed.</Description>
+        <Description Translatable="1">Ticket event module to send automatically survey email requests to customers if a ticket is closed.</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::SurveySendRequest</Item>
@@ -181,7 +181,7 @@ Your OTRS-Team
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::Frontend::AgentSurvey###ShowColumns" Required="1" Valid="1">
-        <Description Translatable="1">Defines the shown columns in the survey overview. This option has no effect on the position of the column.</Description>
+        <Description Translatable="1">Defines the shown columns in the survey overview. This option has no effect on the position of the columns.</Description>
         <Group>Survey</Group>
         <SubGroup>Frontend::Agent::ViewSurveyOverview</SubGroup>
         <Setting>
@@ -220,15 +220,15 @@ Your OTRS-Team
     <ConfigItem Name="Survey::SendInHoursAfterClose" Required="1" Valid="1">
         <Description Translatable="1">Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,5}$">0</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Survey::AmountOfSurveysPer30Days" Required="0" Valid="1">
-        <Description Translatable="1">Defines maximum amount of surveys that get sent to a customer per 30 days, ( 0 means no maximum, all survey requests get sent ).</Description>
+        <Description Translatable="1">Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).</Description>
         <Group>Survey</Group>
-        <SubGroup>Core</SubGroup>
+        <SubGroup>Core::Survey</SubGroup>
         <Setting>
             <String Regex="^[0-9]{1,4}$">0</String>
         </Setting>
