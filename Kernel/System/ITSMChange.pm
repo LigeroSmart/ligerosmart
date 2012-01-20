@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange.pm - all change functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.274 2011-12-01 14:42:24 ub Exp $
+# $Id: ITSMChange.pm,v 1.275 2012-01-20 17:11:26 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.274 $) [1];
+$VERSION = qw($Revision: 1.275 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1698,6 +1698,14 @@ sub ChangeSearch {
         WorkOrderReport      => 'wo2.report_plain',
     );
 
+    # map free key/text params to alias
+    my %FreeParams = (
+        ChangeFreeText    => 'cft',
+        ChangeFreeKey     => 'cfk',
+        WorkOrderFreeText => 'wft',
+        WorkOrderFreeKey  => 'wfk',
+    );
+
     # add change and workorder freetext fields to %StringParams
     ARGUMENT:
     for my $Argument ( sort keys %Param ) {
@@ -1708,18 +1716,55 @@ sub ChangeSearch {
         my $Type   = $1;
         my $Number = $4;
 
-        # set the table alias and column
-        if ( $Type eq 'ChangeFreeText' ) {
-            $StringParams{$Argument} = 'cft' . $Number . '.field_value';
+        # set the table alias and column for string parameter
+        if ( ref $Param{$Argument} eq '' ) {
+            $StringParams{$Argument} = $FreeParams{$Type} . $Number . '.field_value';
         }
-        elsif ( $Type eq 'ChangeFreeKey' ) {
-            $StringParams{$Argument} = 'cfk' . $Number . '.field_value';
+
+        # check if the given array contains only one element (with a possible wildcard)
+        elsif (
+            ref $Param{$Argument} eq 'ARRAY'
+            && @{ $Param{$Argument} }
+            && scalar @{ $Param{$Argument} } == 1
+            )
+        {
+
+            # replace $Param{$Argument} for the STRINGPARAM loop, to handle it like an string
+            $Param{$Argument} = ${ $Param{$Argument} }[0];
+
+            # set the table alias and column for string parameter
+            $StringParams{$Argument} = $FreeParams{$Type} . $Number . '.field_value';
         }
-        elsif ( $Type eq 'WorkOrderFreeText' ) {
-            $StringParams{$Argument} = 'wft' . $Number . '.field_value';
-        }
-        elsif ( $Type eq 'WorkOrderFreeKey' ) {
-            $StringParams{$Argument} = 'wfk' . $Number . '.field_value';
+
+        # add table alias and column for array parameter
+        elsif ( ref $Param{$Argument} eq 'ARRAY' && @{ $Param{$Argument} } ) {
+
+            # quote
+            for my $OneParam ( @{ $Param{$Argument} } ) {
+                $OneParam = "'" . $Self->{DBObject}->Quote($OneParam) . "'";
+            }
+
+            # create string
+            my $InString = join ', ', @{ $Param{$Argument} };
+
+            # add params to sql-where-array
+            push @SQLWhere, $FreeParams{$Type} . $Number . '.field_value' . " IN ($InString)";
+
+            # add the field id to the where clause
+            push @SQLWhere, $FreeParams{$Type} . $Number . '.field_id = ' . $Number;
+
+            if ( $Type =~ m{ \A ChangeFree }xms ) {
+
+                # the change_freetext and change_freekey tables need to be joined,
+                # when they occur in the WHERE clause
+                push @InnerJoinTablesChangeFreeText, $FreeParams{$Type} . $Number;
+            }
+            elsif ( $Type =~ m{ \A WorkOrderFree }xms ) {
+
+                # the change_wo_freetext and change_wo_freekey tables need to be joined,
+                # when they occur in the WHERE clause
+                push @InnerJoinTablesWorkOrderFreeText, $FreeParams{$Type} . $Number;
+            }
         }
     }
 
@@ -3754,6 +3799,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.274 $ $Date: 2011-12-01 14:42:24 $
+$Revision: 1.275 $ $Date: 2012-01-20 17:11:26 $
 
 =cut

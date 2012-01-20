@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.78 2011-12-16 15:24:04 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.79 2012-01-20 17:11:26 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.78 $) [1];
+$VERSION = qw($Revision: 1.79 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -189,8 +189,15 @@ sub Run {
             my $Key   = 'ChangeFreeKey' . $Number;
             my $Value = 'ChangeFreeText' . $Number;
 
-            $GetParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
-            $GetParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
+            my @KeyArray = $Self->{ParamObject}->GetArray( Param => $Key );
+            if (@KeyArray) {
+                $GetParam{$Key} = \@KeyArray;
+            }
+
+            my @ValueArray = $Self->{ParamObject}->GetArray( Param => $Value );
+            if (@ValueArray) {
+                $GetParam{$Value} = \@ValueArray;
+            }
         }
 
         # get workorder freetext params
@@ -203,8 +210,15 @@ sub Run {
             my $Key   = 'WorkOrderFreeKey' . $Number;
             my $Value = 'WorkOrderFreeText' . $Number;
 
-            $GetParam{$Key}   = $Self->{ParamObject}->GetParam( Param => $Key );
-            $GetParam{$Value} = $Self->{ParamObject}->GetParam( Param => $Value );
+            my @KeyArray = $Self->{ParamObject}->GetArray( Param => $Key );
+            if (@KeyArray) {
+                $GetParam{$Key} = \@KeyArray;
+            }
+
+            my @ValueArray = $Self->{ParamObject}->GetArray( Param => $Value );
+            if (@ValueArray) {
+                $GetParam{$Value} = \@ValueArray;
+            }
         }
     }
 
