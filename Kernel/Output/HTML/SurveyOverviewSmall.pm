@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/SurveyOverviewSmall.pm.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SurveyOverviewSmall.pm,v 1.1 2011-01-07 13:17:00 cr Exp $
+# $Id: SurveyOverviewSmall.pm,v 1.2 2012-01-20 11:59:18 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -126,13 +126,6 @@ sub Run {
                 );
 
                 next ID if !%Data;
-
-                # get user data for needed user types
-                USERTYPE:
-                for my $UserType (qw(Create Change)) {
-                    $Data{ $UserType . 'LeftParenthesis' }  = '(';
-                    $Data{ $UserType . 'RightParenthesis' } = ')';
-                }
 
                 # build record block
                 $Self->{LayoutObject}->Block(
