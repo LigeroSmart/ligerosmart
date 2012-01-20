@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentSurvey.pm - a survey module
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.49 2011-11-04 12:40:01 jh Exp $
+# $Id: AgentSurvey.pm,v 1.50 2012-01-20 13:20:27 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -547,8 +547,10 @@ sub _SurveyAddMask {
             %Param,
             QueueString        => $QueueString,
             NotificationSender => $FormElements{NotificationSender}
+                || $Param{NotificationSender}
                 || $Self->{ConfigObject}->Get('Survey::NotificationSender'),
             NotificationSubject => $FormElements{NotificationSubject}
+                || $Param{NotificationSubject}
                 || $Self->{ConfigObject}->Get('Survey::NotificationSubject'),
             %ServerError,
             %FormElements,

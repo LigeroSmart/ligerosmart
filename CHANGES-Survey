@@ -1,13 +1,16 @@
 # --
 # CHANGES - change log of the Survey module for OTRS
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.5 2011-02-16 17:34:31 dz Exp $
+# $Id: CHANGES-Survey,v 1.6 2012-01-20 13:20:27 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+2.1.beta4 - 2012-01-27
+ - 2012-01-20 Fixed Bug#8130 - Editing of General Info on Master Survey on possible.
 
 1.2.92 - 2011-02-18
  - 2011-02-16 Fixed Bug#6826 - Survey shows blank overview screen by database error.
