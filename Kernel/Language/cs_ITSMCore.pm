@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/cs_ITSMCore.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: cs_ITSMCore.pm,v 1.2 2011-03-03 18:41:54 ub Exp $
+# $Id: cs_ITSMCore.pm,v 1.3 2012-01-21 21:05:50 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,48 +17,48 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = 'Alternativní k';
+    $Self->{Translation}->{'Alternative to'} = 'AlternativnÃ­ k';
     $Self->{Translation}->{'Availability'} = 'Dostupnost';
-    $Self->{Translation}->{'Back End'} = 'Základní rozhraní/Backend';
+    $Self->{Translation}->{'Back End'} = 'ZÃ¡kladnÃ­ rozhranÃ­/Backend';
     $Self->{Translation}->{'Connected to'} = 'Spojen s';
-    $Self->{Translation}->{'Current State'} = 'Souèasný Stav';
-    $Self->{Translation}->{'Demonstration'} = 'Ukázka';
-    $Self->{Translation}->{'Depends on'} = 'Zale¾í na';
-    $Self->{Translation}->{'End User Service'} = 'Slu¾by koncovým u¾ivatelùm';
+    $Self->{Translation}->{'Current State'} = 'SouÃ¨asnÃ½ Stav';
+    $Self->{Translation}->{'Demonstration'} = 'UkÃ¡zka';
+    $Self->{Translation}->{'Depends on'} = 'ZaleÅ¸Ã­ na';
+    $Self->{Translation}->{'End User Service'} = 'SluÅ¸by koncovÃ½m uÅ¸ivatelÃ¹m';
     $Self->{Translation}->{'Errors'} = 'Chyby';
-    $Self->{Translation}->{'Front End'} = 'Zákaznické rozhraní/Frontend';
-    $Self->{Translation}->{'IT Management'} = 'Øízení IT';
+    $Self->{Translation}->{'Front End'} = 'ZÃ¡kaznickÃ© rozhranÃ­/Frontend';
+    $Self->{Translation}->{'IT Management'} = 'Ã˜Ã­zenÃ­ IT';
     $Self->{Translation}->{'IT Operational'} = 'IT Operace';
     $Self->{Translation}->{'Impact'} = 'Vliv';
     $Self->{Translation}->{'Incident State'} = 'Stav Incidentu';
     $Self->{Translation}->{'Includes'} = 'Zahrnuje';
-    $Self->{Translation}->{'Other'} = 'Dal¹í';
-    $Self->{Translation}->{'Part of'} = 'Èást z';
+    $Self->{Translation}->{'Other'} = 'DalÂ¹Ã­';
+    $Self->{Translation}->{'Part of'} = 'ÃˆÃ¡st z';
     $Self->{Translation}->{'Project'} = 'Projekt';
-    $Self->{Translation}->{'Recovery Time'} = 'Èas Obnovy';
-    $Self->{Translation}->{'Relevant to'} = 'Relevantní k';
+    $Self->{Translation}->{'Recovery Time'} = 'Ãˆas Obnovy';
+    $Self->{Translation}->{'Relevant to'} = 'RelevantnÃ­ k';
     $Self->{Translation}->{'Reporting'} = 'Reporting';
-    $Self->{Translation}->{'Required for'} = 'Po¾adovaný pro';
-    $Self->{Translation}->{'Resolution Rate'} = 'Èas Øe¹ení';
-    $Self->{Translation}->{'Response Time'} = 'Èas Odpovìdi';
-    $Self->{Translation}->{'SLA Overview'} = 'SLA Pøehled';
-    $Self->{Translation}->{'Service Overview'} = 'Pøehled Slu¾by';
-    $Self->{Translation}->{'Service-Area'} = 'Prostor Údr¾by';
-    $Self->{Translation}->{'Training'} = '©kolení';
+    $Self->{Translation}->{'Required for'} = 'PoÅ¸adovanÃ½ pro';
+    $Self->{Translation}->{'Resolution Rate'} = 'Ãˆas Ã˜eÂ¹enÃ­';
+    $Self->{Translation}->{'Response Time'} = 'Ãˆas OdpovÃ¬di';
+    $Self->{Translation}->{'SLA Overview'} = 'SLA PÃ¸ehled';
+    $Self->{Translation}->{'Service Overview'} = 'PÃ¸ehled SluÅ¸by';
+    $Self->{Translation}->{'Service-Area'} = 'Prostor ÃšdrÅ¸by';
+    $Self->{Translation}->{'Training'} = 'Â©kolenÃ­';
     $Self->{Translation}->{'Transactions'} = 'Transakce';
-    $Self->{Translation}->{'Underpinning Contract'} = 'Základní smlouva';
-    $Self->{Translation}->{'allocation'} = 'pøidìlit';
+    $Self->{Translation}->{'Underpinning Contract'} = 'ZÃ¡kladnÃ­ smlouva';
+    $Self->{Translation}->{'allocation'} = 'pÃ¸idÃ¬lit';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Kritiènost<->Vliv<->Priorita';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'KritiÃ¨nost<->Vliv<->Priorita';
     $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
     $Self->{Translation}->{'Priority allocation'} = '';
 
     # Template: AdminSLA
-    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimální èas mezi incidenty';
+    $Self->{Translation}->{'Minimum Time Between Incidents'} = 'MinimÃ¡lnÃ­ Ã¨as mezi incidenty';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = 'Kritiènost';
+    $Self->{Translation}->{'Criticality'} = 'KritiÃ¨nost';
 
     # Template: AgentITSMCustomerSearch
 
@@ -72,14 +72,14 @@ sub Data {
     # Template: AgentITSMSLAZoom
     $Self->{Translation}->{'SLA Information'} = '';
     $Self->{Translation}->{'Show or hide the content.'} = '';
-    $Self->{Translation}->{'Associated Services'} = 'Pøiøazené Slu¾by';
+    $Self->{Translation}->{'Associated Services'} = 'PÃ¸iÃ¸azenÃ© SluÅ¸by';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
     $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Souèasný Stav Incidentu';
-    $Self->{Translation}->{'Associated SLAs'} = 'Pøiøazené SLA smlouvy';
+    $Self->{Translation}->{'Current Incident State'} = 'SouÃ¨asnÃ½ Stav Incidentu';
+    $Self->{Translation}->{'Associated SLAs'} = 'PÃ¸iÃ¸azenÃ© SLA smlouvy';
 
     # Template: AgentITSMServiceZoom
     $Self->{Translation}->{'Service Information'} = '';
