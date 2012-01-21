@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/cs_GeneralCatalog.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: cs_GeneralCatalog.pm,v 1.2 2011-03-03 18:39:46 ub Exp $
+# $Id: cs_GeneralCatalog.pm,v 1.3 2012-01-21 21:04:11 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,15 +20,15 @@ sub Data {
     $Self->{Translation}->{'Functionality'} = 'Funkcionalita';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = 'Správa Hlavního Katalogu';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Pøidat Polo¾ku Katalogu';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Pøidat Tøídu Katalogu';
-    $Self->{Translation}->{'Catalog Class'} = 'Tøídy Katalogu';
+    $Self->{Translation}->{'General Catalog Management'} = 'SprÃ¡va HlavnÃ­ho Katalogu';
+    $Self->{Translation}->{'Add Catalog Item'} = 'PÃ¸idat PoloÅ¸ku Katalogu';
+    $Self->{Translation}->{'Add Catalog Class'} = 'PÃ¸idat TÃ¸Ã­du Katalogu';
+    $Self->{Translation}->{'Catalog Class'} = 'TÃ¸Ã­dy Katalogu';
 
     # SysConfig
     $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
-    $Self->{Translation}->{'General Catalog'} = 'Hlavní Katalog';
+    $Self->{Translation}->{'General Catalog'} = 'HlavnÃ­ Katalog';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
 
