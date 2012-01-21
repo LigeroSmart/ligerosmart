@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/da_Survey.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: da_Survey.pm,v 1.4 2011-11-21 12:09:24 mh Exp $
+# $Id: da_Survey.pm,v 1.5 2012-01-21 20:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,8 +23,8 @@ sub Data {
     $Self->{Translation}->{'Survey Edit Questions'} = '';
     $Self->{Translation}->{'Question Edit'} = '';
     $Self->{Translation}->{'Answer Edit'} = '';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Kan ikke sætte ny status! Der er ikke defineret nogen spørgsmål.';
-    $Self->{Translation}->{'Status changed.'} = 'Status ændret!';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Kan ikke sÃ¦tte ny status! Der er ikke defineret nogen spÃ¸rgsmÃ¥l.';
+    $Self->{Translation}->{'Status changed.'} = 'Status Ã¦ndret!';
     $Self->{Translation}->{'Thank you for your feedback.'} = 'Tak for din besvarelse.';
     $Self->{Translation}->{'The survey is finished.'} = '';
     $Self->{Translation}->{'Complete'} = '';
@@ -36,7 +36,7 @@ sub Data {
     $Self->{Translation}->{'Stats Overview'} = '';
     $Self->{Translation}->{'Survey Description'} = '';
     $Self->{Translation}->{'Survey Introduction'} = '';
-    $Self->{Translation}->{'Textarea'} = 'Tekstområde';
+    $Self->{Translation}->{'Textarea'} = 'TekstomrÃ¥de';
     $Self->{Translation}->{'Yes/No'} = '';
     $Self->{Translation}->{'YesNo'} = 'JaNej';
     $Self->{Translation}->{'answered'} = 'besvaret';
@@ -48,7 +48,7 @@ sub Data {
     $Self->{Translation}->{'Introduction'} = '';
     $Self->{Translation}->{'Internal Description'} = '';
     $Self->{Translation}->{'Edit General Info'} = '';
-    $Self->{Translation}->{'Survey#'} = 'Undersøgelse#';
+    $Self->{Translation}->{'Survey#'} = 'UndersÃ¸gelse#';
     $Self->{Translation}->{'General Info'} = '';
     $Self->{Translation}->{'Stats Overview of'} = '';
     $Self->{Translation}->{'Requests Table'} = '';
@@ -95,14 +95,14 @@ sub Data {
     $Self->{Translation}->{'No stat results.'} = '';
 
     # Template: PublicSurvey
-    $Self->{Translation}->{'Survey'} = 'Undersøgelse';
+    $Self->{Translation}->{'Survey'} = 'UndersÃ¸gelse';
     $Self->{Translation}->{'Please answer the next questions'} = '';
     $Self->{Translation}->{'Show my answers'} = '';
     $Self->{Translation}->{'Survey Title'} = '';
     $Self->{Translation}->{'These are your answers.'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = 'Et undersøgelsesmodul.';
+    $Self->{Translation}->{'A Survey Module.'} = 'Et undersÃ¸gelsesmodul.';
     $Self->{Translation}->{'A module to edit survey questions.'} = '';
     $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} = '';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = '';

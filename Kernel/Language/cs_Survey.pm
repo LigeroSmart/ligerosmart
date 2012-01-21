@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/cs_Survey.pm - the czech language for AgentSurvey
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # Copyright (C) 2010 O2BS.com, s r.o. Jakub Hanus
 # --
-# $Id: cs_Survey.pm,v 1.2 2011-11-21 12:09:24 mh Exp $
+# $Id: cs_Survey.pm,v 1.3 2012-01-21 20:56:31 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,41 +16,41 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub Data {
     my $Self = shift;
-    $Self->{Translation}->{'Survey'} = 'Prùzkum';
+    $Self->{Translation}->{'Survey'} = 'PrÃ¹zkum';
     $Self->{Translation}->{'Questions'} = 'Dotazy';
     $Self->{Translation}->{'Question'} = 'Dotaz';
-    $Self->{Translation}->{'Finish'} = 'Ukonèit';
-    $Self->{Translation}->{'finished'} = 'ukonèeno';
+    $Self->{Translation}->{'Finish'} = 'UkonÃ¨it';
+    $Self->{Translation}->{'finished'} = 'ukonÃ¨eno';
     $Self->{Translation}->{'This Survey-Key is invalid!'}
-    = 'Tento klíè je nevhodný pro prùzkum!';
+    = 'Tento klÃ­Ã¨ je nevhodnÃ½ pro prÃ¹zkum!';
     $Self->{Translation}->{'Thank you for your feedback.'}
-    = 'Dìkujeme Vám za zpìtnou vazbu';
+    = 'DÃ¬kujeme VÃ¡m za zpÃ¬tnou vazbu';
     $Self->{Translation}->{'Need to select question:'} = 'Nutno vybrat dotaz:';
-    $Self->{Translation}->{'Survey'} = 'Prùzkum,';
+    $Self->{Translation}->{'Survey'} = 'PrÃ¹zkum,';
     $Self->{Translation}->{'Can\'t set new status! No questions defined.'}
-    = 'Nelze nastavit nový stav! Nejsou definovány dotazy.';
+    = 'Nelze nastavit novÃ½ stav! Nejsou definovÃ¡ny dotazy.';
     $Self->{Translation}->{'Can\'t set new status! Questions incomplete.'}
-    = 'Nelze nastavit nový stav! Dotazy nejsou kompletní.';
-    $Self->{Translation}->{'Status changed.'} = 'Nový aktivní stav!';
-    $Self->{Translation}->{'Change Status'} = 'Zmìny stavu';
-    $Self->{Translation}->{'Sent requests'} = 'Zaslány po¾adavky';
-    $Self->{Translation}->{'Received surveys'} = 'Obdr¾eny hlasy';
-    $Self->{Translation}->{'answered'} = 'Odpovìdli';
-    $Self->{Translation}->{'not answered'} = 'Neodpovìdli';
-    $Self->{Translation}->{'Surveys'} = 'Prùzkumy';
-    $Self->{Translation}->{'Invalid'} = 'Neplatné';
-    $Self->{Translation}->{'Introduction'} = 'Úvod';
-    $Self->{Translation}->{'Internal'} = 'Interní';
+    = 'Nelze nastavit novÃ½ stav! Dotazy nejsou kompletnÃ­.';
+    $Self->{Translation}->{'Status changed.'} = 'NovÃ½ aktivnÃ­ stav!';
+    $Self->{Translation}->{'Change Status'} = 'ZmÃ¬ny stavu';
+    $Self->{Translation}->{'Sent requests'} = 'ZaslÃ¡ny poÅ¸adavky';
+    $Self->{Translation}->{'Received surveys'} = 'ObdrÅ¸eny hlasy';
+    $Self->{Translation}->{'answered'} = 'OdpovÃ¬dli';
+    $Self->{Translation}->{'not answered'} = 'NeodpovÃ¬dli';
+    $Self->{Translation}->{'Surveys'} = 'PrÃ¹zkumy';
+    $Self->{Translation}->{'Invalid'} = 'NeplatnÃ©';
+    $Self->{Translation}->{'Introduction'} = 'Ãšvod';
+    $Self->{Translation}->{'Internal'} = 'InternÃ­';
     $Self->{Translation}->{'Questions'} = 'Dotazy';
     $Self->{Translation}->{'Question'} = 'Dotaz';
-    $Self->{Translation}->{'Posible Answers'} = 'Pøípadné odpovìdy';
+    $Self->{Translation}->{'Posible Answers'} = 'PÃ¸Ã­padnÃ© odpovÃ¬dy';
     $Self->{Translation}->{'YesNo'} = 'Ano anebo Ne';
     $Self->{Translation}->{'List'} = 'seznam';
-    $Self->{Translation}->{'Textarea'} = 'textové pole';
+    $Self->{Translation}->{'Textarea'} = 'textovÃ© pole';
 
     $Self->{Translation}->{'Survey Introduction'} = '';
     $Self->{Translation}->{'Survey Description'} = '';
