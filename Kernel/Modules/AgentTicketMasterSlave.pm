@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketMasterSlave.pm - handle all master slave tasks
-# Copyright (C) 2003-2011 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.2 2011-11-02 23:58:12 te Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.33.2.4 2011/04/11 18:18:39 mp Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.3 2012-01-23 15:27:35 jp Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.33.2.5 2011/08/26 15:58:46 en Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1270,6 +1270,7 @@ sub _Mask {
         else {
             $Priority{SelectedID} = $Param{NewPriorityID};
         }
+        $Priority{SelectedID} ||= $Param{PriorityID};
         $Param{PriorityStrg} = $Self->{LayoutObject}->BuildSelection(
             Data => \%PriorityList,
             Name => 'NewPriorityID',
