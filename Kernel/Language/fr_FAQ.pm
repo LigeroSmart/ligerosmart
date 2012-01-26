@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/fr_FAQ.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: fr_FAQ.pm,v 1.19 2011-11-24 17:15:12 ub Exp $
+# $Id: fr_FAQ.pm,v 1.20 2012-01-26 16:37:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,6 +12,7 @@
 package Kernel::Language::fr_FAQ;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

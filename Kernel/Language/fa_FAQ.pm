@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/fa_FAQ.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_FAQ.pm,v 1.21 2011-08-12 21:48:22 cr Exp $
+# $Id: fa_FAQ.pm,v 1.22 2012-01-26 16:37:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,6 +12,7 @@
 package Kernel::Language::fa_FAQ;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
