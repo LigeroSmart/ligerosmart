@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQRSS.pm - public FAQ explorer
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQRSS.pm,v 1.3 2011-12-23 15:27:50 mb Exp $
+# $Id: PublicFAQRSS.pm,v 1.4 2012-01-26 19:48:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::HTMLUtils;
 use XML::RSS::SimpleGen qw();
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -92,7 +92,7 @@ sub Run {
     if ( $Type eq 'Top10' ) {
 
         my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
-            Interface => 'public',
+            Interface => $Self->{Interface}->{Name},
             Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
             UserID    => $Self->{UserID},
         );
@@ -110,7 +110,7 @@ sub Run {
             States           => $Self->{InterfaceStates},
             OrderBy          => [$Type],
             OrderByDirection => ['Down'],
-            Interface        => 'public',
+            Interface        => $Self->{Interface}->{Name},
             Limit            => 20,
             UserID           => $Self->{UserID},
         );
