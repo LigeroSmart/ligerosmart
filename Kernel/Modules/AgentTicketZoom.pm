@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.32 2012-01-13 09:56:38 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.173 2011/12/16 14:38:24 mg Exp $
+# $Id: AgentTicketZoom.pm,v 1.33 2012-01-26 17:34:42 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.174 2012/01/24 18:33:38 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -142,6 +142,15 @@ sub Run {
         UserID        => $Self->{UserID},
     );
     my %AclAction = $Self->{TicketObject}->TicketAclActionData();
+
+    # check if ACL resctictions if exist
+    if ( IsHashRefWithData( \%AclAction ) ) {
+
+        # show error screen if ACL prohibits this action
+        if ( defined $AclAction{ $Self->{Action} } && $AclAction{ $Self->{Action} } eq '0' ) {
+            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+        }
+    }
 
     # mark shown ticket as seen
     if ( $Self->{Subaction} eq 'TicketMarkAsSeen' ) {

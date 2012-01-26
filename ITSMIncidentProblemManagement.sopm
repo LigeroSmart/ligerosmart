@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.82 2012-01-13 10:15:29 ub Exp $</CVS>
+    <CVS>$Id: ITSMIncidentProblemManagement.sopm,v 1.83 2012-01-26 17:34:43 ub Exp $</CVS>
     <Name>ITSMIncidentProblemManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
-    <PackageRequired Version="3.0.94">ITSMCore</PackageRequired>
+    <PackageRequired Version="3.0.95">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -232,7 +232,7 @@
         }
 
     ]]></CodeUpgrade>
-    <CodeUpgrade Type="post" Version="3.0.94"><![CDATA[
+    <CodeUpgrade Type="post" Version="3.0.95"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUpgradeFromLowerThan_3_0_93';
@@ -338,7 +338,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.0.94</li>
+        <li>ITSMCore 3.0.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -356,7 +356,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.0.94</li>
+        <li>ITSMCore 3.0.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -374,7 +374,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.0.94</li>
+        <li>ITSMCore 3.0.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -392,7 +392,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.0.94</li>
+        <li>ITSMCore 3.0.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -410,7 +410,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.0.94</li>
+        <li>ITSMCore 3.0.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -428,7 +428,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.0.94</li>
+        <li>ITSMCore 3.0.95</li>
         </ul>
         <br/>
         ((enjoy))<br/>
