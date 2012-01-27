@@ -1,8 +1,8 @@
 # --
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.13 2010-12-16 17:31:05 ub Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.14 2012-01-27 09:43:15 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,8 +29,8 @@
                         <div class="Clear"></div>
 
                         <label>$Text{"Created by"}:</label>
-                        <p class="Value" title="$QData{"CreateUserLogin"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}"})">
-                            $QData{"CreateUserLogin","15"} ($Quote{"$Data{"CreateUserFirstname"} $Data{"CreateUserLastname"}","15"})
+                        <p class="Value">
+                            $QData{"CreateUserFirstname"} $QData{"CreateUserLastname"}
                         </p>
                         <div class="Clear"></div>
 
@@ -42,7 +42,7 @@
 
                         <label>$Text{"Last changed by"}:</label>
                         <p class="Value" title="$QData{"ChangeUserLogin"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}"})">
-                            $QData{"ChangeUserLogin","15"} ($Quote{"$Data{"ChangeUserFirstname"} $Data{"ChangeUserLastname"}","15"})
+                            $QData{"ChangeUserFirstname"} $QData{"ChangeUserLastname"}
                         </p>
                         <div class="Clear"></div>
                     </fieldset>
@@ -71,37 +71,37 @@
                 </div>
                 <div class="Content AutoHeight">
                     <fieldset class="TableLike FixedLabel">
-                        <label title="$Text{"Type"}">$Text{"Type"}: </label>
+                        <label>$Text{"Type"}: </label>
                         <div class="Field">
                             $Text{"$Data{"Type"}"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Calendar"}">$Text{"Calendar"}: </label>
+                        <label>$Text{"Calendar"}: </label>
                         <div class="Field">
                             $Text{"$Data{"CalendarName"}"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"First Response Time"}">$Text{"First Response Time"}: </label>
+                        <label>$Text{"First Response Time"}: </label>
                         <div class="Field">
                             $QData{"FirstResponseTime"} $Text{"minutes"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Update Time"}">$Text{"Update Time"}: </label>
+                        <label>$Text{"Update Time"}: </label>
                         <div class="Field">
                             $QData{"UpdateTime"} $Text{"minutes"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Solution Time"}">$Text{"Solution Time"}: </label>
+                        <label>$Text{"Solution Time"}: </label>
                         <div class="Field">
                             $QData{"SolutionTime"} $Text{"minutes"}
                         </div>
                         <div class="Clear"></div>
 
-                        <label title="$Text{"Minimum Time Between Incidents"}">$Text{"Minimum Time Between Incidents"}: </label>
+                        <label>$Text{"Minimum Time Between Incidents"}: </label>
                         <div class="Field">
                             $QData{"MinTimeBetweenIncidents"} $Text{"minutes"}
                         </div>
