@@ -2,7 +2,7 @@
 # AgentITSMSLAZoom.dtl - provides HTML form for AgentITSMSLAZoom
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMSLAZoom.dtl,v 1.14 2012-01-27 09:43:15 mb Exp $
+# $Id: AgentITSMSLAZoom.dtl,v 1.15 2012-01-27 09:59:51 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -67,7 +67,7 @@
             <div class="WidgetBox SpacingTop Expanded">
                 <div class="LightRow Header">
                     <div class="WidgetAction Toggle"><a href="#" title="$Text{"Show or hide the content."}"><span></span></a></div>
-                    <h2>$Text{"SLA"}: $Text{"$Data{"Name"}"}</h2>
+                    <h2>$Text{"SLA"}: $QData{"Name"}</h2>
                 </div>
                 <div class="Content AutoHeight">
                     <fieldset class="TableLike FixedLabel">
@@ -79,7 +79,7 @@
 
                         <label>$Text{"Calendar"}: </label>
                         <div class="Field">
-                            $Text{"$Data{"CalendarName"}"}
+                            $QData{"CalendarName"}
                         </div>
                         <div class="Clear"></div>
 
