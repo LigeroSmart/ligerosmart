@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Service.pm - all service function
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.22 2011-11-10 17:13:07 ub Exp $
+# $Id: Service.pm,v 1.23 2012-01-27 12:57:56 ub Exp $
 # $OldId: Service.pm,v 1.47 2011/06/20 08:42:09 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -26,7 +26,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -333,165 +333,12 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-
-    # get service type list
-    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Service::Type',
+    # get current incident state, calculated from related config items and child services
+    %ServiceData = $Self->_ServiceGetCurrentIncidentState(
+        ServiceData => \%ServiceData,
+        Preferences => \%Preferences,
+        UserID      => $Param{UserID},
     );
-    $ServiceData{Type} = $ServiceTypeList->{ $ServiceData{TypeID} } || '';
-
-    # get criticality list
-    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
-        Class => 'ITSM::Core::Criticality',
-    );
-    $ServiceData{Criticality} = $CriticalityList->{ $ServiceData{CriticalityID} } || '';
-
-    # set default incident state type
-    $ServiceData{CurInciStateType} = 'operational';
-
-    # get ITSM module directory
-    my $ConfigItemModule = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/ITSMConfigItem.pm';
-
-    # check if ITSMConfigurationManagement package is installed
-    if ( -e $ConfigItemModule ) {
-
-        # check if a preference setting for CurInciStateTypeFromCIs exists
-        if ( $Preferences{CurInciStateTypeFromCIs} ) {
-
-            # set default incident state type from service preferences 'CurInciStateTypeFromCIs'
-            $ServiceData{CurInciStateType} = $Preferences{CurInciStateTypeFromCIs};
-        }
-
-        # set the preferences setting for CurInciStateTypeFromCIs
-        else {
-
-            # get the incident link type
-            my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
-
-            # find all linked config items
-            my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
-                Object1   => 'Service',
-                Key1      => $Param{ServiceID},
-                Object2   => 'ITSMConfigItem',
-                State     => 'Valid',
-                Type      => $LinkType,
-                UserID    => 1,
-            );
-
-            # investigate the current incident state of each config item
-            CONFIGITEMID:
-            for my $ConfigItemID ( keys %LinkedConfigItemIDs ) {
-
-                # extract config item data
-                my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};
-
-                next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
-                next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
-
-                # check if service must be set to 'warning'
-                if ( $ConfigItemData->{CurInciStateType} eq 'warning' ) {
-                    $ServiceData{CurInciStateType} = 'warning';
-                    next CONFIGITEMID;
-                }
-
-                # check if service must be set to 'incident'
-                if ( $ConfigItemData->{CurInciStateType} eq 'incident' ) {
-                    $ServiceData{CurInciStateType} = 'incident';
-                    last CONFIGITEMID;
-                }
-            }
-
-            # update the current incident state type from CIs of the service
-            $Self->ServicePreferencesSet(
-                ServiceID => $Param{ServiceID},
-                Key       => 'CurInciStateTypeFromCIs',
-                Value     => $ServiceData{CurInciStateType},
-                UserID    => 1,
-            );
-        }
-    }
-
-    # investigate the state of all child services
-    if ( $ServiceData{CurInciStateType} eq 'operational' ) {
-
-        # create the valid string
-        my $ValidIDString = join q{, }, $Self->{ValidObject}->ValidIDsGet();
-
-        # prepare name
-        my $Name = $ServiceData{Name};
-        $Name = $Self->{DBObject}->Quote( $Name, 'Like' );
-
-        # get list of all valid childs
-        $Self->{DBObject}->Prepare(
-            SQL => "SELECT id, name FROM service "
-                . "WHERE name LIKE '" . $Name . "::%' "
-                . "AND valid_id IN (" . $ValidIDString . ")",
-        );
-
-        # find length of childs prefix
-        my $PrefixLength = length "$ServiceData{Name}::";
-
-        # fetch the result
-        my @ChildIDs;
-        ROW:
-        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-
-            # extract child part
-            my $ChildPart = substr $Row[1], $PrefixLength;
-
-            next ROW if $ChildPart =~ m{ :: }xms;
-
-            push @ChildIDs, $Row[0];
-        }
-
-        SERVICEID:
-        for my $ServiceID ( @ChildIDs ) {
-
-            # get data of child service
-            my %ChildServiceData = $Self->ServiceGet(
-                ServiceID => $ServiceID,
-                UserID    => $Param{UserID},
-            );
-
-            next SERVICEID if $ChildServiceData{CurInciStateType} eq 'operational';
-
-            $ServiceData{CurInciStateType} = 'warning';
-            last SERVICEID;
-        }
-    }
-
-    # define default incident states
-    my %DefaultInciStates = (
-        operational => 'Operational',
-        warning     => 'Warning',
-        incident    => 'Incident',
-    );
-
-    # get the incident state list of this type
-    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
-        Class         => 'ITSM::Core::IncidentState',
-        Preferences   => {
-            Functionality => $ServiceData{CurInciStateType},
-        },
-    );
-
-    my %ReverseInciStateList = reverse %{ $InciStateList };
-    $ServiceData{CurInciStateID}
-        = $ReverseInciStateList{ $DefaultInciStates{ $ServiceData{CurInciStateType} } };
-
-    # fallback if the default incident state is deactivated
-    if ( !$ServiceData{CurInciStateID} ) {
-        my @SortedInciList = sort keys %{ $InciStateList };
-        $ServiceData{CurInciStateID} = $SortedInciList[0];
-    }
-
-    # get incident state functionality
-    my $InciState = $Self->{GeneralCatalogObject}->ItemGet(
-        ItemID => $ServiceData{CurInciStateID},
-    );
-
-    $ServiceData{CurInciState}     = $InciState->{Name};
-    $ServiceData{CurInciStateType} = $InciState->{Functionality};
 # ---
 
     # merge hash
@@ -1191,6 +1038,216 @@ sub ServicePreferencesGet {
 
     return $Self->{PreferencesObject}->ServicePreferencesGet(@_);
 }
+# ---
+# ITSM
+# ---
+
+=item _ServiceGetCurrentIncidentState()
+
+Returns a hash with the original service data,
+enhanced with additional service data about the current incident state,
+based on configuration items and other services.
+
+    %ServiceData = $ServiceObject->_ServiceGetCurrentIncidentState(
+        ServiceData => \%ServiceData,
+        Preferences => \%Preferences,
+        UserID      => 1,
+    );
+
+=cut
+
+sub _ServiceGetCurrentIncidentState {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(ServiceData Preferences UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # check needed stuff
+    for my $Argument (qw(ServiceData Preferences)) {
+        if ( ref $Param{$Argument} ne 'HASH' ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "$Argument must be a hash reference!",
+            );
+            return;
+        }
+    }
+
+    # make local copies
+    my %ServiceData = %{ $Param{ServiceData} };
+    my %Preferences = %{ $Param{Preferences} };
+
+    # get service type list
+    my $ServiceTypeList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Service::Type',
+    );
+    $ServiceData{Type} = $ServiceTypeList->{ $ServiceData{TypeID} } || '';
+
+    # get criticality list
+    my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
+        Class => 'ITSM::Core::Criticality',
+    );
+    $ServiceData{Criticality} = $CriticalityList->{ $ServiceData{CriticalityID} } || '';
+
+    # set default incident state type
+    $ServiceData{CurInciStateType} = 'operational';
+
+    # get ITSM module directory
+    my $ConfigItemModule = $Self->{ConfigObject}->Get('Home') . '/Kernel/System/ITSMConfigItem.pm';
+
+    # check if ITSMConfigurationManagement package is installed
+    if ( -e $ConfigItemModule ) {
+
+        # check if a preference setting for CurInciStateTypeFromCIs exists
+        if ( $Preferences{CurInciStateTypeFromCIs} ) {
+
+            # set default incident state type from service preferences 'CurInciStateTypeFromCIs'
+            $ServiceData{CurInciStateType} = $Preferences{CurInciStateTypeFromCIs};
+        }
+
+        # set the preferences setting for CurInciStateTypeFromCIs
+        else {
+
+            # get the incident link type
+            my $LinkType = $Self->{ConfigObject}->Get('ITSM::Core::IncidentLinkType');
+
+            # find all linked config items
+            my %LinkedConfigItemIDs = $Self->{LinkObject}->LinkKeyListWithData(
+                Object1   => 'Service',
+                Key1      => $ServiceData{ServiceID},
+                Object2   => 'ITSMConfigItem',
+                State     => 'Valid',
+                Type      => $LinkType,
+                UserID    => 1,
+            );
+
+            # investigate the current incident state of each config item
+            CONFIGITEMID:
+            for my $ConfigItemID ( keys %LinkedConfigItemIDs ) {
+
+                # extract config item data
+                my $ConfigItemData = $LinkedConfigItemIDs{$ConfigItemID};
+
+                next CONFIGITEMID if $ConfigItemData->{CurDeplStateType} ne 'productive';
+                next CONFIGITEMID if $ConfigItemData->{CurInciStateType} eq 'operational';
+
+                # check if service must be set to 'warning'
+                if ( $ConfigItemData->{CurInciStateType} eq 'warning' ) {
+                    $ServiceData{CurInciStateType} = 'warning';
+                    next CONFIGITEMID;
+                }
+
+                # check if service must be set to 'incident'
+                if ( $ConfigItemData->{CurInciStateType} eq 'incident' ) {
+                    $ServiceData{CurInciStateType} = 'incident';
+                    last CONFIGITEMID;
+                }
+            }
+
+            # update the current incident state type from CIs of the service
+            $Self->ServicePreferencesSet(
+                ServiceID => $ServiceData{ServiceID},
+                Key       => 'CurInciStateTypeFromCIs',
+                Value     => $ServiceData{CurInciStateType},
+                UserID    => 1,
+            );
+        }
+    }
+
+    # investigate the state of all child services
+    if ( $ServiceData{CurInciStateType} eq 'operational' ) {
+
+        # create the valid string
+        my $ValidIDString = join q{, }, $Self->{ValidObject}->ValidIDsGet();
+
+        # prepare name
+        my $Name = $ServiceData{Name};
+        $Name = $Self->{DBObject}->Quote( $Name, 'Like' );
+
+        # get list of all valid childs
+        $Self->{DBObject}->Prepare(
+            SQL => "SELECT id, name FROM service "
+                . "WHERE name LIKE '" . $Name . "::%' "
+                . "AND valid_id IN (" . $ValidIDString . ")",
+        );
+
+        # find length of childs prefix
+        my $PrefixLength = length "$ServiceData{Name}::";
+
+        # fetch the result
+        my @ChildIDs;
+        ROW:
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
+            # extract child part
+            my $ChildPart = substr $Row[1], $PrefixLength;
+
+            next ROW if $ChildPart =~ m{ :: }xms;
+
+            push @ChildIDs, $Row[0];
+        }
+
+        SERVICEID:
+        for my $ServiceID ( @ChildIDs ) {
+
+            # get data of child service
+            my %ChildServiceData = $Self->ServiceGet(
+                ServiceID => $ServiceID,
+                UserID    => $Param{UserID},
+            );
+
+            next SERVICEID if $ChildServiceData{CurInciStateType} eq 'operational';
+
+            $ServiceData{CurInciStateType} = 'warning';
+            last SERVICEID;
+        }
+    }
+
+    # define default incident states
+    my %DefaultInciStates = (
+        operational => 'Operational',
+        warning     => 'Warning',
+        incident    => 'Incident',
+    );
+
+    # get the incident state list of this type
+    my $InciStateList = $Self->{GeneralCatalogObject}->ItemList(
+        Class         => 'ITSM::Core::IncidentState',
+        Preferences   => {
+            Functionality => $ServiceData{CurInciStateType},
+        },
+    );
+
+    my %ReverseInciStateList = reverse %{ $InciStateList };
+    $ServiceData{CurInciStateID}
+        = $ReverseInciStateList{ $DefaultInciStates{ $ServiceData{CurInciStateType} } };
+
+    # fallback if the default incident state is deactivated
+    if ( !$ServiceData{CurInciStateID} ) {
+        my @SortedInciList = sort keys %{ $InciStateList };
+        $ServiceData{CurInciStateID} = $SortedInciList[0];
+    }
+
+    # get incident state functionality
+    my $InciState = $Self->{GeneralCatalogObject}->ItemGet(
+        ItemID => $ServiceData{CurInciStateID},
+    );
+
+    $ServiceData{CurInciState}     = $InciState->{Name};
+    $ServiceData{CurInciStateType} = $InciState->{Functionality};
+
+    return %ServiceData;
+}
+
+# ---
 
 1;
 
@@ -1208,6 +1265,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2011-11-10 17:13:07 $
+$Revision: 1.23 $ $Date: 2012-01-27 12:57:56 $
 
 =cut
