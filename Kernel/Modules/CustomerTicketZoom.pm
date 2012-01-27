@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.17 2011-12-16 09:49:47 ub Exp $
-# $OldId: CustomerTicketZoom.pm,v 1.87 2011/12/12 10:52:28 mg Exp $
+# $Id: CustomerTicketZoom.pm,v 1.18 2012-01-27 15:32:37 ub Exp $
+# $OldId: CustomerTicketZoom.pm,v 1.88 2012/01/27 12:29:12 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -132,7 +132,7 @@ sub Run {
         $StripPlainBodyAsAttachment = 2;
     }
 
-    # get all article of this ticket
+    # get all articles of this ticket
     my @CustomerArticleTypes = $Self->{TicketObject}->ArticleTypeList( Type => 'Customer' );
     my @ArticleBox = $Self->{TicketObject}->ArticleContentIndex(
         TicketID                   => $Self->{TicketID},
@@ -216,7 +216,7 @@ sub Run {
                 =~ s/(^>.+|.{4,$Self->{ConfigObject}->Get('Ticket::Frontend::TextAreaNote')})(?:\s|\z)/$1\n/gm;
         }
 
-        # If is an action about attachments
+        # for attachment actions
         my $IsUpload = 0;
 
         # attachment delete

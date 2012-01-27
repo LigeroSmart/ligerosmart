@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.43 2012-01-13 09:56:38 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.227 2012/01/06 13:54:31 mg Exp $
+# $Id: AgentTicketPhone.pm,v 1.44 2012-01-27 15:32:37 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.229 2012/01/24 17:53:07 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -394,7 +394,7 @@ sub Run {
         my $CountFrom = scalar @MultipleCustomer || 1;
         my %CustomerDataFrom = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User => $Article{CustomerUserID},
-        );
+        ) if $Article{CustomerUserID};
 
         for my $Email ( Mail::Address->parse($ArticleFrom) ) {
 
@@ -577,6 +577,41 @@ sub Run {
             $SplitTicketParam{TicketID} = $Self->{TicketID};
         }
 
+        # fix to bug# 8068 Field & DynamicField preselection on TicketSplit
+        # when splitting a ticket the selected attributes must remain in the new ticket screen
+        # this information will be available in the SplitTicketParam hash
+        if ( $SplitTicketParam{TicketID} ) {
+
+            # get information from original ticket (SplitTicket)
+            my %SplitTicketData = $Self->{TicketObject}->TicketGet(
+                TicketID      => $SplitTicketParam{TicketID},
+                DynamicFields => 0,
+                UserID        => $Self->{UserID},
+            );
+
+            # set simple IDs to pass them to the mask
+            for my $SplitedParam (qw(TypeID ServiceID SLAID PriorityID)) {
+                $SplitTicketParam{$SplitedParam} = $SplitTicketData{$SplitedParam};
+            }
+
+            # set StateID as NextStateID
+            $SplitTicketParam{NextStateID} = $SplitTicketData{StateID};
+
+            # set Onwer an Responsible
+            $SplitTicketParam{UserSelected}            = $SplitTicketData{OwnerID};
+            $SplitTicketParam{ResponsibleUserSelected} = $SplitTicketData{ResponsibleID};
+
+            # set additional information needed for Owner and Responsible
+            if ( $SplitTicketData{QueueID} ) {
+                $SplitTicketParam{QueueID} = $SplitTicketData{QueueID};
+            }
+            $SplitTicketParam{AllUsers} = 1;
+
+            # set the selected queue in format ID||Name
+            $SplitTicketParam{ToSelected}
+                = $SplitTicketData{QueueID} . '||' . $SplitTicketData{Queue};
+        }
+
         # html output
         my $Services = $Self->_GetServices(
             %GetParam,
@@ -621,14 +656,14 @@ sub Run {
             Users    => $Self->_GetUsers(
                 %GetParam,
                 %ACLCompatGetParam,
+                QueueID => $Self->{QueueID},
                 %SplitTicketParam,
-                QueueID => $Self->{QueueID}
             ),
             ResponsibleUsers => $Self->_GetResponsibles(
                 %GetParam,
                 %ACLCompatGetParam,
+                QueueID => $Self->{QueueID},
                 %SplitTicketParam,
-                QueueID => $Self->{QueueID}
             ),
             To => $Self->_GetTos(
                 %GetParam,
@@ -647,6 +682,7 @@ sub Run {
             LinkTicketID => $GetParam{LinkTicketID} || '',
 
             #            %GetParam,
+            %SplitTicketParam,
             DynamicFieldHTML => \%DynamicFieldHTML,
             MultipleCustomer => \@MultipleCustomer,
         );
@@ -1546,7 +1582,7 @@ sub Run {
                     Translation  => 0,
                     Max          => 100,
                 },
-                @DynamicFieldAJAX
+                @DynamicFieldAJAX,
             ],
         );
         return $Self->{LayoutObject}->Attachment(
@@ -1747,7 +1783,61 @@ sub _GetServices {
             UserID            => 1,
         );
 
+        # get all services
+        my $ServiceList = $Self->{ServiceObject}->ServiceListGet(
+            Valid  => 0,
+            UserID => 1,
+        );
+
+        # get a service lookup table
+        my %ServiceLoockup;
+        SERVICE:
+        for my $ServiceData ( @{$ServiceList} ) {
+            next SERVICE if !$ServiceData;
+            next SERVICE if !IsHashRefWithData($ServiceData);
+            next SERVICE if !$ServiceData->{ServiceID};
+
+            $ServiceLoockup{ $ServiceData->{ServiceID} } = $ServiceData;
+        }
+
+        # to store all ready printed ServiceIDs
+        my %AddedServices;
+
         for my $ServiceKey ( sort { $OrigService{$a} cmp $OrigService{$b} } keys %OrigService ) {
+
+            # get the service parent
+            my $ServiceParentID = $ServiceLoockup{$ServiceKey}->{ParentID} || 0;
+
+            # check if direct parent is not listed as printed
+            if ( $ServiceParentID && !defined $AddedServices{$ServiceParentID} ) {
+
+                # get all parent IDs
+                my $ServiceParents = $Self->{ServiceObject}->ServiceParentsGet(
+                    ServiceID => $ServiceKey,
+                    UserID    => $Self->{UserID},
+                );
+
+                SERVICEID:
+                for my $ServiceID ( @{$ServiceParents} ) {
+                    next SERVICEID if !$ServiceID;
+                    next SERVICEID if $AddedServices{$ServiceID};
+
+                    my $ServiceParent = $ServiceLoockup{$ServiceID};
+                    next SERVICEID if !IsHashRefWithData($ServiceParent);
+
+                    # create a new register for each parent as disabled
+                    my %ParentServiceRegister = (
+                        Key      => $ServiceID,
+                        Value    => $ServiceParent->{Name},
+                        Selected => 0,
+                        Disabled => 1,
+                    );
+                    push @ServiceList, \%ParentServiceRegister;
+
+                    # set service as printed
+                    $AddedServices{$ServiceID} = 1;
+                }
+            }
 
             # set default service structure
             my %ServiceRegister = (
@@ -1765,6 +1855,9 @@ sub _GetServices {
                 $ServiceRegister{Disabled} = 1;
             }
             push @ServiceList, \%ServiceRegister;
+
+            # set service as printed
+            $AddedServices{$ServiceKey} = 1;
         }
     }
     return \@ServiceList;

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.33 2012-01-26 17:34:42 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.174 2012/01/24 18:33:38 cr Exp $
+# $Id: AgentTicketZoom.pm,v 1.34 2012-01-27 15:32:37 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.176 2012/01/27 12:59:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1658,7 +1658,7 @@ sub _ArticleItem {
                     Name => 'ArticleMenu',
                     Data => {
                         %Ticket, %Article, %AclAction,
-                        Description => 'Forward Article via Mail',
+                        Description => 'Forward article via mail',
                         Name        => 'Forward',
                         Class       => 'AsPopup PopupType_TicketAction',
                         Link =>
@@ -1831,7 +1831,7 @@ sub _ArticleItem {
             Name => 'ArticleMenu',
             Data => {
                 %Ticket, %Article, %AclAction,
-                Description => 'Split this Article',
+                Description => 'Split this article',
                 Name        => 'Split',
                 Link =>
                     'Action=AgentTicketPhone;TicketID=$Data{"TicketID"};ArticleID=$Data{"ArticleID"};LinkTicketID=$Data{"TicketID"}'
@@ -1856,7 +1856,7 @@ sub _ArticleItem {
                 Name => 'ArticleMenu',
                 Data => {
                     %Ticket, %Article, %AclAction,
-                    Description => 'Print this Article',
+                    Description => 'Print this article',
                     Name        => 'Print',
                     Class       => 'AsPopup PopupType_TicketAction',
                     Link =>

@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.22 2012-01-13 09:56:38 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.73 2012/01/12 17:44:33 cr Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.23 2012-01-27 15:32:37 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.74 2012/01/24 00:08:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -118,6 +118,26 @@ sub Run {
             WithHeader => 'yes',
         );
     }
+
+    # get ACL restrictions
+    $Self->{TicketObject}->TicketAcl(
+        Data          => '-',
+        TicketID      => $Self->{TicketID},
+        ReturnType    => 'Action',
+        ReturnSubType => '-',
+        UserID        => $Self->{UserID},
+    );
+    my %AclAction = $Self->{TicketObject}->TicketAclActionData();
+
+    # check if ACL resctictions if exist
+    if ( IsHashRefWithData( \%AclAction ) ) {
+
+        # show error screen if ACL prohibits this action
+        if ( defined $AclAction{ $Self->{Action} } && $AclAction{ $Self->{Action} } eq '0' ) {
+            return $Self->{LayoutObject}->NoPermission( WithHeader => 'yes' );
+        }
+    }
+
     my %Ticket = $Self->{TicketObject}->TicketGet(
         TicketID      => $Self->{TicketID},
         DynamicFields => 1,
@@ -1822,7 +1842,61 @@ sub _GetServices {
             UserID            => 1,
         );
 
+        # get all services
+        my $ServiceList = $Self->{ServiceObject}->ServiceListGet(
+            Valid  => 0,
+            UserID => 1,
+        );
+
+        # get a service lookup table
+        my %ServiceLoockup;
+        SERVICE:
+        for my $ServiceData ( @{$ServiceList} ) {
+            next SERVICE if !$ServiceData;
+            next SERVICE if !IsHashRefWithData($ServiceData);
+            next SERVICE if !$ServiceData->{ServiceID};
+
+            $ServiceLoockup{ $ServiceData->{ServiceID} } = $ServiceData;
+        }
+
+        # to store all ready printed ServiceIDs
+        my %AddedServices;
+
         for my $ServiceKey ( sort { $OrigService{$a} cmp $OrigService{$b} } keys %OrigService ) {
+
+            # get the service parent
+            my $ServiceParentID = $ServiceLoockup{$ServiceKey}->{ParentID} || 0;
+
+            # check if direct parent is not listed as printed
+            if ( $ServiceParentID && !defined $AddedServices{$ServiceParentID} ) {
+
+                # get all parent IDs
+                my $ServiceParents = $Self->{ServiceObject}->ServiceParentsGet(
+                    ServiceID => $ServiceKey,
+                    UserID    => $Self->{UserID},
+                );
+
+                SERVICEID:
+                for my $ServiceID ( @{$ServiceParents} ) {
+                    next SERVICEID if !$ServiceID;
+                    next SERVICEID if $AddedServices{$ServiceID};
+
+                    my $ServiceParent = $ServiceLoockup{$ServiceID};
+                    next SERVICEID if !IsHashRefWithData($ServiceParent);
+
+                    # create a new register for each parent as disabled
+                    my %ParentServiceRegister = (
+                        Key      => $ServiceID,
+                        Value    => $ServiceParent->{Name},
+                        Selected => 0,
+                        Disabled => 1,
+                    );
+                    push @ServiceList, \%ParentServiceRegister;
+
+                    # set service as printed
+                    $AddedServices{$ServiceID} = 1;
+                }
+            }
 
             # set default service structure
             my %ServiceRegister = (
@@ -1840,6 +1914,9 @@ sub _GetServices {
                 $ServiceRegister{Disabled} = 1;
             }
             push @ServiceList, \%ServiceRegister;
+
+            # set service as printed
+            $AddedServices{$ServiceKey} = 1;
         }
     }
     return \@ServiceList;
