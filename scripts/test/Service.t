@@ -1,9 +1,9 @@
 # --
 # Service.t - Service tests
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.5 2011-11-10 17:13:07 ub Exp $
-# $OldId: Service.t,v 1.16 2011/06/20 09:06:24 mb Exp $
+# $Id: Service.t,v 1.6 2012-01-27 15:14:41 ub Exp $
+# $OldId: Service.t,v 1.18 2012/01/27 13:51:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,6 +20,7 @@ use vars qw($Self);
 use Kernel::System::Service;
 use Kernel::System::User;
 use Kernel::Config;
+use Kernel::System::UnitTest::Helper;
 
 # create local objects
 my $ConfigObject  = Kernel::Config->new();
@@ -31,6 +32,15 @@ my $UserObject = Kernel::System::User->new(
     %{$Self},
     ConfigObject => $ConfigObject,
 );
+
+my $HelperObject = Kernel::System::UnitTest::Helper->new(
+    %$Self,
+    UnitTestObject => $Self,
+);
+
+my $RandomID = $HelperObject->GetRandomID();
+
+$RandomID =~ s/\-//g;
 
 # ------------------------------------------------------------ #
 # make preparations
@@ -1023,8 +1033,8 @@ my $ServiceList2ServiceID = $ServiceObject->ServiceAdd(
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+    TypeID        => 1,
+    CriticalityID => 1,
 # ---
 );
 
@@ -1108,8 +1118,8 @@ for my $ServiceName (@ServiceNames) {
 # ---
 # ITSM
 # ---
-            TypeID        => 1,
-            CriticalityID => 1,
+        TypeID        => 1,
+        CriticalityID => 1,
 # ---
     );
 
@@ -1150,6 +1160,206 @@ for my $ServiceName (@ServiceNames) {
     }
 
     $Counter2++;
+}
+
+# ------------------------------------------------------------ #
+# ServiceListGet
+# ------------------------------------------------------------ #
+
+# get the list of services
+my $ServiceList = $ServiceObject->ServiceListGet(
+    Valid  => 0,
+    UserID => 1,
+);
+
+# check if result is an array ref
+$Self->Is(
+    ref $ServiceList,
+    'ARRAY',
+    "ServiceListGet() - Is Array",
+);
+
+# check if each array item is a hash ref
+{
+    my $Counter;
+    for my $ServiceData ( @{$ServiceList} ) {
+
+        $Counter++;
+        $Self->Is(
+            ref $ServiceData,
+            'HASH',
+            "ServiceListGet[$Counter] - Is Hash",
+        );
+    }
+}
+
+# check integrity of each array element
+{
+    my $Counter;
+    for my $ServiceData ( @{$ServiceList} ) {
+
+        my %Service = $ServiceObject->ServiceGet(
+            ServiceID => $ServiceData->{ServiceID},
+            UserID    => 1,
+        );
+        $Counter++;
+        $Self->IsDeeply(
+            $ServiceData,
+            \%Service,
+            "ServiceListGet[$Counter] - Compared to ServiceGet",
+        );
+    }
+}
+
+# add services
+my @AddedParentServices;
+
+my $ServiceGrandFatherID = $ServiceObject->ServiceAdd(
+    Name     => 'UnitTestService_GF_' . $RandomID,
+    ParentID => 0,
+    ValidID  => 1,
+# ---
+# ITSM
+# ---
+    TypeID        => 1,
+    CriticalityID => 1,
+# ---
+    Comment  => 'Testing service',
+    UserID   => 1,
+);
+
+# sanity check
+$Self->True(
+    $ServiceGrandFatherID,
+    "ServiceAdd() - for ServiceGrandFather"
+);
+
+push @AddedParentServices, $ServiceGrandFatherID;
+
+my $ServiceFatherID = $ServiceObject->ServiceAdd(
+    Name     => 'UnitTestService_F_' . $RandomID,
+    ParentID => $ServiceGrandFatherID,
+    ValidID  => 1,
+# ---
+# ITSM
+# ---
+    TypeID        => 1,
+    CriticalityID => 1,
+# ---
+    Comment  => 'Testing service',
+    UserID   => 1,
+);
+
+# sanity check
+$Self->True(
+    $ServiceFatherID,
+    "ServiceAdd() - for ServiceFather"
+);
+
+push @AddedParentServices, $ServiceFatherID;
+
+my $ServiceSonID = $ServiceObject->ServiceAdd(
+    Name     => 'UnitTestService_S_' . $RandomID,
+    ParentID => $ServiceFatherID,
+    ValidID  => 1,
+# ---
+# ITSM
+# ---
+    TypeID        => 1,
+    CriticalityID => 1,
+# ---
+    Comment  => 'Testing service',
+    UserID   => 1,
+);
+
+# sanity check
+$Self->True(
+    $ServiceSonID,
+    "ServiceAdd() - for ServiceSon"
+);
+
+push @AddedParentServices, $ServiceSonID;
+
+# get the service list again
+my $NewServiceList = $ServiceObject->ServiceListGet(
+    Valid  => 0,
+    UserID => 1,
+);
+
+# compare the service lists (should be not equal since new services where added)
+$Self->IsNotDeeply(
+    $ServiceList,
+    $NewServiceList,
+    "ServiceListGet() - compared with itself after adding new services"
+);
+
+# ------------------------------------------------------------ #
+# ServiceParentsGet
+# ------------------------------------------------------------ #
+
+# get the parents for grand father
+my $ServiceParents = $ServiceObject->ServiceParentsGet(
+    ServiceID => $ServiceGrandFatherID,
+    UserID    => 1,
+);
+
+$Self->IsDeeply(
+    $ServiceParents,
+    [],
+    "ServiceParentsListGet - for ServiceGrandFather"
+);
+
+# get the parents for father
+$ServiceParents = $ServiceObject->ServiceParentsGet(
+    ServiceID => $ServiceFatherID,
+    UserID    => 1,
+);
+
+$Self->IsDeeply(
+    $ServiceParents,
+    [$ServiceGrandFatherID],
+    "ServiceParentsGet - for ServiceFather"
+);
+
+# get the parents for son
+$ServiceParents = $ServiceObject->ServiceParentsGet(
+    ServiceID => $ServiceSonID,
+    UserID    => 1,
+);
+
+$Self->IsDeeply(
+    $ServiceParents,
+    [ $ServiceGrandFatherID, $ServiceFatherID ],
+    "ServiceParentsGet - for ServiceSon"
+);
+
+# set new added services to invalid
+for my $ServiceID (@AddedParentServices) {
+    my %Service = $ServiceObject->ServiceGet(
+        ServiceID => $ServiceID,
+        UserID    => 1,
+    );
+
+    my $Success = $ServiceObject->ServiceUpdate(
+        ServiceID => $Service{ServiceID},
+        Name      => $Service{NameShort},
+        Comment   => $Service{Comment},
+        ParentID  => $Service{ParentID} || 0,
+        ValidID   => 2,
+# ---
+# ITSM
+# ---
+        TypeID        => $Service{TypeID},
+        CriticalityID => $Service{CriticalityID},
+# ---
+        UserID    => 1,
+    );
+
+    $Self->True(
+        $Success,
+        "ServiceUpdate() - Invalidate service for ServiceParentsListGet() added service "
+            . "$Service{ServiceID} - $Service{Name}"
+    );
 }
 
 1;

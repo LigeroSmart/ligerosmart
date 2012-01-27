@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.23 2012-01-27 12:57:56 ub Exp $
-# $OldId: Service.pm,v 1.47 2011/06/20 08:42:09 mb Exp $
+# $Id: Service.pm,v 1.24 2012-01-27 15:14:40 ub Exp $
+# $OldId: Service.pm,v 1.50 2012/01/13 08:16:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,6 +17,8 @@ use warnings;
 
 use Kernel::System::CheckItem;
 use Kernel::System::Valid;
+use Kernel::System::Cache;
+use Kernel::System::VariableCheck qw(:all);
 # ---
 # ITSM
 # ---
@@ -26,7 +28,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -95,6 +97,7 @@ sub new {
     }
     $Self->{CheckItemObject} = Kernel::System::CheckItem->new( %{$Self} );
     $Self->{ValidObject}     = Kernel::System::Valid->new( %{$Self} );
+    $Self->{CacheObject}     = Kernel::System::Cache->new( %{$Self} );
 # ---
 # ITSM
 # ---
@@ -109,6 +112,9 @@ sub new {
     if ( $Self->{MainObject}->Require($GeneratorModule) ) {
         $Self->{PreferencesObject} = $GeneratorModule->new(%Param);
     }
+
+    # set the cache TTL (in seconds)
+    $Self->{CacheTTL} = 3600;
 
     return $Self;
 }
@@ -194,6 +200,199 @@ sub ServiceList {
     }
 
     return %ServiceList;
+}
+
+=item ServiceListGet()
+
+return a list of services with the complete list of attributes for each service
+
+    my $ServiceList = $ServiceObject->ServiceListGet(
+        Valid  => 0,   # (optional) default 1 (0|1)
+        UserID => 1,
+    );
+
+    returns
+
+    $ServiceList = [
+        {
+            ServiceID  => 1,
+            ParentID   => 0,
+            Name       => 'MyService',
+            NameShort  => 'MyService',
+            ValidID    => 1,
+            Comment    => 'Some Comment'
+            CreateTime => '2011-02-08 15:08:00',
+            ChangeTime => '2011-06-11 17:22:00',
+            CreateBy   => 1,
+            ChangeBy   => 1,
+# ---
+# ITSM
+# ---
+            TypeID           => 16,
+            Type             => 'Backend',
+            CriticalityID    => 3,
+            Criticality      => '3 normal',
+            CurInciStateID   => 1,
+            CurInciState     => 'Operational',
+            CurInciStateType => 'operational',
+# ---
+        },
+        {
+            ServiceID  => 2,
+            ParentID   => 1,
+            Name       => 'MyService::MySubService',
+            NameShort  => 'MySubService',
+            ValidID    => 1,
+            Comment    => 'Some Comment'
+            CreateTime => '2011-02-08 15:08:00',
+            ChangeTime => '2011-06-11 17:22:00',
+            CreateBy   => 1,
+            ChangeBy   => 1,
+# ---
+# ITSM
+# ---
+            TypeID           => 16,
+            Type             => 'Backend',
+            CriticalityID    => 3,
+            Criticality      => '3 normal',
+            CurInciStateID   => 1,
+            CurInciState     => 'Operational',
+            CurInciStateType => 'operational',
+# ---
+        },
+        # ...
+    ];
+
+=cut
+
+sub ServiceListGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    if ( !$Param{UserID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => 'Need UserID!',
+        );
+        return;
+    }
+
+    # check valid param
+    if ( !defined $Param{Valid} ) {
+        $Param{Valid} = 1;
+    }
+
+    # check cached resutls
+    my $CacheKey = 'Cache::ServiceListGet::Valid::' . $Param{Valid};
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'Service',
+        Key  => $CacheKey,
+    );
+
+    # return cache if any
+    if ( defined $Cache ) {
+        return $Cache;
+    }
+
+    # create SQL query
+    my $SQL = 'SELECT id, name, valid_id, comments, create_time, create_by, change_time, change_by '
+# ---
+# ITSM
+# ---
+        . ", type_id, criticality_id "
+# ---
+        . 'FROM service';
+
+    if ( $Param{Valid} ) {
+        $SQL .= ' WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
+    }
+
+    $SQL .= ' ORDER BY name';
+
+    # ask database
+    $Self->{DBObject}->Prepare(
+        SQL => $SQL,
+    );
+
+    # fetch the result
+    my @ServiceList;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        my %ServiceData;
+        $ServiceData{ServiceID}  = $Row[0];
+        $ServiceData{Name}       = $Row[1];
+        $ServiceData{ValidID}    = $Row[2];
+        $ServiceData{Comment}    = $Row[3] || '';
+        $ServiceData{CreateTime} = $Row[4];
+        $ServiceData{CreateBy}   = $Row[5];
+        $ServiceData{ChangeTime} = $Row[6];
+        $ServiceData{ChangeBy}   = $Row[7];
+# ---
+# ITSM
+# ---
+        $ServiceData{TypeID}        = $Row[8];
+        $ServiceData{CriticalityID} = $Row[9];
+# ---
+
+        # add service data to service list
+        push @ServiceList, \%ServiceData;
+    }
+
+    for my $ServiceData (@ServiceList) {
+
+        # create short name and parentid
+        $ServiceData->{NameShort} = $ServiceData->{Name};
+        if ( $ServiceData->{Name} =~ m{ \A (.*) :: (.+?) \z }xms ) {
+            $ServiceData->{NameShort} = $2;
+
+            # lookup parent
+            my $ServiceID = $Self->ServiceLookup(
+                Name => $1,
+            );
+            $ServiceData->{ParentID} = $ServiceID;
+        }
+
+        # get service preferences
+        my %Preferences = $Self->ServicePreferencesGet(
+            ServiceID => $ServiceData->{ServiceID},
+        );
+# ---
+# ITSM
+# ---
+        #$ServiceData->{Hallo1} = 'Hallo1';
+
+        # get current incident state, calculated from related config items and child services
+        my %NewServiceData = $Self->_ServiceGetCurrentIncidentState(
+            ServiceData => $ServiceData,
+            Preferences => \%Preferences,
+            UserID      => $Param{UserID},
+        );
+        $ServiceData = \%NewServiceData;
+
+        #$ServiceData->{Hallo2} = 'Hallo2';
+# ---
+
+        # merge hash
+        if (%Preferences) {
+            %{$ServiceData} = ( %{$ServiceData}, %Preferences );
+        }
+    }
+
+# ---
+# ITSM
+# ---
+#    if (@ServiceList) {
+#
+#        # set cache
+#        $Self->{CacheObject}->Set(
+#            Type  => 'Service',
+#            Key   => $CacheKey,
+#            Value => \@ServiceList,
+#            TTL   => $Self->{CacheTTL},
+#        );
+#    }
+# ---
+
+    return \@ServiceList;
 }
 
 =item ServiceGet()
@@ -547,6 +746,10 @@ sub ServiceAdd {
     delete $Self->{ 'Cache::ServiceLookup::ID::' . $ServiceID };
     delete $Self->{ 'Cache::ServiceLookup::Name::' . $Param{FullName} };
 
+    $Self->{CacheObject}->CleanUp(
+        Type => 'Service',
+    );
+
     return $ServiceID;
 }
 
@@ -625,6 +828,10 @@ sub ServiceUpdate {
     # reset cache
     delete $Self->{ 'Cache::ServiceLookup::ID::' . $Param{ServiceID} };
     delete $Self->{ 'Cache::ServiceLookup::Name::' . $OldServiceName };
+
+    $Self->{CacheObject}->CleanUp(
+        Type => 'Service',
+    );
 
     # create full name
     $Param{FullName} = $Param{Name};
@@ -1019,6 +1226,10 @@ set service preferences
 sub ServicePreferencesSet {
     my $Self = shift;
 
+    $Self->{CacheObject}->CleanUp(
+        Type => 'Service',
+    );
+
     return $Self->{PreferencesObject}->ServicePreferencesSet(@_);
 }
 
@@ -1037,6 +1248,79 @@ sub ServicePreferencesGet {
     my $Self = shift;
 
     return $Self->{PreferencesObject}->ServicePreferencesGet(@_);
+}
+
+=item ServiceParentsGet()
+
+return an ordered list all parent service IDs for the given service from the root parent to the
+current service parent
+
+    my $ServiceParentsList = $ServiceObject->ServiceParentsGet(
+        ServiceID => 123,
+        UserID    => 1,
+    );
+
+    returns
+
+    $ServiceParentsList = [ 1, 2, ...];
+
+=cut
+
+sub ServiceParentsGet {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(UserID ServiceID)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => 'Need $Needed!',
+            );
+            return;
+        }
+    }
+
+    # get the list of services
+    my $ServiceList = $Self->ServiceListGet(
+        Valid  => 0,
+        UserID => 1,
+    );
+
+    # get a service lookup table
+    my %ServiceLoockup;
+    SERVICE:
+    for my $ServiceData ( @{$ServiceList} ) {
+        next SERVICE if !$ServiceData;
+        next SERVICE if !IsHashRefWithData($ServiceData);
+        next SERVICE if !$ServiceData->{ServiceID};
+
+        $ServiceLoockup{ $ServiceData->{ServiceID} } = $ServiceData;
+    }
+
+    # exit if ServiceID is invalid
+    return if !$ServiceLoockup{ $Param{ServiceID} };
+
+    # to store the return structure
+    my @ServiceParents;
+
+    # get the ServiceParentID from the requested service
+    my $ServiceParentID = $ServiceLoockup{ $Param{ServiceID} }->{ParentID};
+
+    # get all partents for the requested service
+    while ($ServiceParentID) {
+
+        # add service parent ID to the return structure
+        push @ServiceParents, $ServiceParentID;
+
+        # set next ServiceParentID (the parent of the current parent)
+        $ServiceParentID = $ServiceLoockup{$ServiceParentID}->{ParentID} || 0;
+
+    }
+
+    # reverse the return array to get the list ordered from old to joung (in parent context)
+    my @ReversedServiceParents = reverse @ServiceParents;
+
+    return \@ReversedServiceParents;
 }
 # ---
 # ITSM
@@ -1159,6 +1443,9 @@ sub _ServiceGetCurrentIncidentState {
                 Value     => $ServiceData{CurInciStateType},
                 UserID    => 1,
             );
+
+            # set the preferences locally
+            $Preferences{CurInciStateTypeFromCIs} = $ServiceData{CurInciStateType};
         }
     }
 
@@ -1244,9 +1531,10 @@ sub _ServiceGetCurrentIncidentState {
     $ServiceData{CurInciState}     = $InciState->{Name};
     $ServiceData{CurInciStateType} = $InciState->{Functionality};
 
+    %ServiceData = (%ServiceData, %Preferences);
+
     return %ServiceData;
 }
-
 # ---
 
 1;
@@ -1265,6 +1553,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2012-01-27 12:57:56 $
+$Revision: 1.24 $ $Date: 2012-01-27 15:14:40 $
 
 =cut
