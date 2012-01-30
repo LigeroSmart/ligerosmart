@@ -1,23 +1,29 @@
 # --
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.11 2011-06-06 19:11:25 jb Exp $
+# $Id: SystemMonitoring.pm,v 1.12 2012-01-30 16:19:21 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
+# important configuration items SystemMonitoring::SetIncidentState
+
 package Kernel::System::PostMaster::Filter::SystemMonitoring;
 
 use strict;
 use warnings;
-
 use Kernel::System::LinkObject;
-
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
+
+#the base name for dynamic fields
+use constant DynamicFieldTextPrefix => 'TicketFreeText';
+
+#use constant DynamicFieldKeyPrefix  => 'TicketFreeKey';
+#use constant DynamicFieldTimePrefix => 'TicketFreeTime';
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -43,19 +49,7 @@ sub new {
     # this requires the ITSMConfigurationManagement module to be installed
     if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
 
-        # require the general catalog module
-        if ( $Self->{MainObject}->Require('Kernel::System::GeneralCatalog') ) {
-
-            # create general catalog object
-            $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-        }
-
-        # require the config item module
-        if ( $Self->{MainObject}->Require('Kernel::System::ITSMConfigItem') ) {
-
-            # create config item object
-            $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
-        }
+        _IncidentStateNew();
     }
 
     # Default Settings
@@ -79,27 +73,59 @@ sub new {
     return $Self;
 }
 
-sub Run {
-    my ( $Self, %Param ) = @_;
+sub _IncidentStateIncident
+{
+    my $Self = shift || die "missing self";
 
-    # to store the log message
-    my $LogMessage;
+    # set the CI incident state to 'Incident'
+    $Self->_SetIncidentState(
+        Name          => $Self->{Host},
+        IncidentState => 'Incident',
+    );
 
-    # get config options, use defaults unless value specified
-    if ( $Param{JobConfig} && ref $Param{JobConfig} eq 'HASH' ) {
-        KEY:
-        for my $Key ( keys( %{ $Param{JobConfig} } ) ) {
-            next KEY if !$Self->{Config}->{$Key};
-            $Self->{Config}->{$Key} = $Param{JobConfig}->{$Key};
-        }
+}
+
+sub _IncidentStateOperational
+{
+    my $Self = shift || die "missing self";
+
+    # set the CI incident state to 'Operational'
+    $Self->_SetIncidentState(
+        Name          => $Self->{Host},
+        IncidentState => 'Operational',
+    );
+}
+
+# these are optional modules from the ITSM Kernel::System::GeneralCatalog and Kernel::System::ITSMConfigItem
+
+sub _IncidentStateNew
+{
+    my $Self = shift || die "missing self";
+
+    # require the general catalog module
+    if ( $Self->{MainObject}->Require('Kernel::System::GeneralCatalog') ) {
+
+        # create general catalog object
+        $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
     }
 
-    # check if sender is of interest
-    return 1 if !$Param{GetParam}->{From};
-    return 1 if $Param{GetParam}->{From} !~ /$Self->{Config}->{FromAddressRegExp}/i;
+    # require the config item module
+    if ( $Self->{MainObject}->Require('Kernel::System::ITSMConfigItem') ) {
+
+        # create config item object
+        $Self->{ConfigItemObject} = Kernel::System::ITSMConfigItem->new( %{$Self} );
+    }
+}
+
+sub _MailParse
+{
+    my $Self = shift || die "missing self";
+    my %Param = @_;
+
+    my $Body = $Param{GetParam}->{Subject} || die "No Param Subject";
 
     # Try to get State, Host and Service from email subject
-    my @SubjectLines = split /\n/, $Param{GetParam}->{Subject};
+    my @SubjectLines = split /\n/, $Body;
     for my $Line (@SubjectLines) {
         for (qw(State Host Service)) {
             if ( $Line =~ /$Self->{Config}->{ $_ . 'RegExp' }/ ) {
@@ -108,15 +134,7 @@ sub Run {
         }
     }
 
-    #    # Try to get State, Host and Service from email body
-    #    my @BodyLines = split /\n/, $Param{GetParam}->{Body};
-    #    for my $Line (@BodyLines) {
-    #        for (qw(State Host Service)) {
-    #            if ( $Line =~ /$Self->{Config}->{ $_ . 'RegExp' }/ ) {
-    #                $Self->{$_} = $1;
-    #            }
-    #        }
-    #    }
+    #  Dont Try to get State, Host and Service from email body, we want it from the subject alone
 
     # split the body into separate lines
     my @BodyLines = split /\n/, $Param{GetParam}->{Body};
@@ -143,6 +161,191 @@ sub Run {
             }
         }
     }
+}
+
+sub _LogMessage
+{
+    my $Self        = shift;
+    my $MessageText = shift;
+
+    # logging
+    # define log message
+    $Self->{Service} ||= "No Service";
+    $Self->{State}   ||= "No State";
+    $Self->{Host}    ||= "No Host";
+
+    my $LogMessage = $MessageText . " - "
+        . "Host: $Self->{Host}, "
+        . "State: $Self->{State}, "
+        . "Service: $Self->{Service}";
+
+    $Self->{LogObject}->Log(
+        Priority => 'notice',
+        Message  => 'SystemMonitoring Mail: ' . $LogMessage,
+    );
+}
+
+sub _TicketSearch
+{
+    my $Self = shift || die "missing self";
+
+    # Is there a ticket for this Host/Service pair?
+    my %Query = (
+        Result    => 'ARRAY',
+        Limit     => 1,
+        UserID    => 1,
+        StateType => 'Open',
+    );
+
+    for my $Type (qw(Host Service)) {
+        my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
+        my $KeyName       = DynamicFieldTextPrefix . $FreeTextField;
+        my $KeyValue      = $Self->{$Type};
+
+        #DEBUG: "Checking $KeyName for value $KeyValue";
+        $Query{$KeyName}->{Equals} = $KeyValue;
+    }
+
+    # search tickets
+    my @TicketIDs = $Self->{TicketObject}->TicketSearch(%Query);
+
+    # get the first and only ticket id
+    my $TicketID = shift @TicketIDs;
+
+    return $TicketID;
+
+}
+
+sub _TicketUpdate
+{
+    my $Self     = shift || die "missing self";
+    my $TicketID = shift || die "missing ticketid";
+    my $Param    = shift || die "missing param hashref";
+
+    # get ticket number
+    my $TicketNumber = $Self->{TicketObject}->TicketNumberLookup(
+        TicketID => $TicketID,
+        UserID   => 1,
+    );
+
+    # build subject
+    $Param->{GetParam}->{Subject} = $Self->{TicketObject}->TicketSubjectBuild(
+        TicketNumber => $TicketNumber,
+        Subject      => $Param->{GetParam}->{Subject},
+    );
+
+    # set sender type and article type
+    $Param->{GetParam}->{'X-OTRS-FollowUp-SenderType'}  = $Self->{Config}->{SenderType};
+    $Param->{GetParam}->{'X-OTRS-FollowUp-ArticleType'} = $Self->{Config}->{ArticleType};
+
+    # Set Article Free Field for State
+    my $ArticleFreeTextNumber = $Self->{Config}->{'FreeTextState'};
+    $Param->{GetParam}->{ 'X-OTRS-FollowUp-ArticleKey' . $ArticleFreeTextNumber } = 'State';
+    $Param->{GetParam}->{ 'X-OTRS-FollowUp-ArticleValue' . $ArticleFreeTextNumber }
+        = $Self->{State};
+
+    if ( $Self->{State} =~ /$Self->{Config}->{CloseTicketRegExp}/ ) {
+
+        # Close Ticket Condition -> Take Close Action
+        if ( $Self->{Config}->{CloseActionState} ne 'OLD' ) {
+            $Param->{GetParam}->{'X-OTRS-FollowUp-State'} = $Self->{Config}->{CloseActionState};
+
+            my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
+                SystemTime => $Self->{TimeObject}->SystemTime()
+                    + $Self->{Config}->{ClosePendingTime},
+            );
+            $Param->{GetParam}->{'X-OTRS-State-PendingTime'} = $TimeStamp;
+        }
+
+        # set log message
+        $Self->_LogMessage('Recovered');
+
+        # if the CI incident state should be set
+        if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
+            $Self->_IncidentStateOperational();
+        }
+    }
+    else {
+
+        # Attach note to existing ticket
+        $Self->_LogMessage('New Notice');
+    }
+
+    # link ticket with CI, this is only possible if the ticket already exists,
+    # e.g. in a subsequent email request, because we need a ticket id
+    if ( $Self->{ConfigObject}->Get('SystemMonitoring::LinkTicketWithCI') ) {
+
+        # link ticket with CI
+        $Self->_LinkTicketWithCI(
+            Name     => $Self->{Host},
+            TicketID => $TicketID,
+        );
+    }
+}
+
+sub _TicketCreate
+{
+    my $Self  = shift || die "missing self";
+    my $Param = shift || die "missing param hashref";
+
+    # Create Ticket Condition -> Create new Ticket and record Host and Service
+    for (qw(Host Service)) {
+
+        # get the freetext number from config
+        my $TicketFreeTextNumber = $Self->{Config}->{ 'FreeText' . $_ };
+
+        # see the Kernel::System::PostMaster::NewTicket  where this is read
+        $Param->{GetParam}->{ 'X-OTRS-TicketKey' . $TicketFreeTextNumber }   = $_;
+        $Param->{GetParam}->{ 'X-OTRS-TicketValue' . $TicketFreeTextNumber } = $Self->{$_};
+    }
+
+    # Set Article Free Field for State
+    my $ArticleFreeTextNumber = $Self->{Config}->{'FreeTextState'};
+    $Param->{GetParam}->{ 'X-OTRS-ArticleKey' . $ArticleFreeTextNumber }   = 'State';
+    $Param->{GetParam}->{ 'X-OTRS-ArticleValue' . $ArticleFreeTextNumber } = $Self->{State};
+
+    # set sender type and article type
+    $Param->{GetParam}->{'X-OTRS-SenderType'}  = $Self->{Config}->{SenderType};
+    $Param->{GetParam}->{'X-OTRS-ArticleType'} = $Self->{Config}->{ArticleType};
+
+    # set log message
+    $Self->_LogMessage('New Ticket');
+
+    # if the CI incident state should be set
+    if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
+        $Self->_IncidentStateIncident();
+    }
+}
+
+sub _TicketDrop
+{
+    my $Self  = shift || die "missing self";
+    my $Param = shift || die "missing param hashref";
+
+    # No existing ticket and no open condition -> drop silently
+    $Param->{GetParam}->{'X-OTRS-Ignore'} = 'yes';
+    $Self->_LogMessage('Mail Dropped, no matching ticket found, no open on this state ');
+
+}
+
+sub Run {
+
+    my ( $Self, %Param ) = @_;
+
+    # get config options, use defaults unless value specified
+    if ( $Param{JobConfig} && ref $Param{JobConfig} eq 'HASH' ) {
+        KEY:
+        for my $Key ( keys( %{ $Param{JobConfig} } ) ) {
+            next KEY if !$Self->{Config}->{$Key};
+            $Self->{Config}->{$Key} = $Param{JobConfig}->{$Key};
+        }
+    }
+
+    # check if sender is of interest
+    return 1 if !$Param{GetParam}->{From};
+    return 1 if $Param{GetParam}->{From} !~ /$Self->{Config}->{FromAddressRegExp}/i;
+
+    $Self->_MailParse(%Param);
 
     # we need State and Host to proceed
     if ( !$Self->{State} || !$Self->{Host} ) {
@@ -159,149 +362,17 @@ sub Run {
     # Check for Service
     $Self->{Service} ||= $Self->{Config}->{DefaultService};
 
-    # define log message
-    $LogMessage = " - "
-        . "Host: $Self->{Host}, "
-        . "State: $Self->{State}, "
-        . "Service: $Self->{Service}";
-
-    # Is there a ticket for this Host/Service pair?
-    my %Query = (
-        Result    => 'ARRAY',
-        Limit     => 1,
-        UserID    => 1,
-        StateType => 'Open',
-    );
-    for my $Type (qw(Host Service)) {
-        $Query{ 'TicketFreeKey' . $Self->{Config}->{ 'FreeText' . $Type } } = $Type;
-        $Query{ 'TicketFreeText' . $Self->{Config}->{ 'FreeText' . $Type } }
-            = $Self->{$Type};
-    }
-
-    # search tickets
-    my @TicketIDs = $Self->{TicketObject}->TicketSearch(%Query);
-
-    # get the first and only ticket id
-    my $TicketID = shift @TicketIDs;
+    my $TicketID = $Self->_TicketSearch();
 
     # OK, found ticket to deal with
     if ($TicketID) {
-
-        # get ticket number
-        my $TicketNumber = $Self->{TicketObject}->TicketNumberLookup(
-            TicketID => $TicketID,
-            UserID   => 1,
-        );
-
-        # build subject
-        $Param{GetParam}->{Subject} = $Self->{TicketObject}->TicketSubjectBuild(
-            TicketNumber => $TicketNumber,
-            Subject      => $Param{GetParam}->{Subject},
-        );
-
-        # set sender type and article type
-        $Param{GetParam}->{'X-OTRS-FollowUp-SenderType'}  = $Self->{Config}->{SenderType};
-        $Param{GetParam}->{'X-OTRS-FollowUp-ArticleType'} = $Self->{Config}->{ArticleType};
-
-        # Set Article Free Field for State
-        my $ArticleFreeTextNumber = $Self->{Config}->{'FreeTextState'};
-        $Param{GetParam}->{ 'X-OTRS-FollowUp-ArticleKey' . $ArticleFreeTextNumber }
-            = 'State';
-        $Param{GetParam}->{ 'X-OTRS-FollowUp-ArticleValue' . $ArticleFreeTextNumber }
-            = $Self->{State};
-
-        if ( $Self->{State} =~ /$Self->{Config}->{CloseTicketRegExp}/ ) {
-
-            # Close Ticket Condition -> Take Close Action
-            if ( $Self->{Config}->{CloseActionState} ne 'OLD' ) {
-                $Param{GetParam}->{'X-OTRS-FollowUp-State'} = $Self->{Config}->{CloseActionState};
-
-                my $TimeStamp = $Self->{TimeObject}->SystemTime2TimeStamp(
-                    SystemTime => $Self->{TimeObject}->SystemTime()
-                        + $Self->{Config}->{ClosePendingTime},
-                );
-                $Param{GetParam}->{'X-OTRS-State-PendingTime'} = $TimeStamp;
-            }
-
-            # set log message
-            $LogMessage = 'Recovered' . $LogMessage;
-
-            # if the CI incident state should be set
-            if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
-
-                # set the CI incident state to 'Operational'
-                $Self->_SetIncidentState(
-                    Name          => $Self->{Host},
-                    IncidentState => 'Operational',
-                );
-            }
-        }
-        else {
-
-            # Attach note to existing ticket
-            $LogMessage = 'New Notice' . $LogMessage;
-        }
-
-        # link ticket with CI, this is only possible if the ticket already exists,
-        # e.g. in a subsequent email request, because we need a ticket id
-        if ( $Self->{ConfigObject}->Get('SystemMonitoring::LinkTicketWithCI') ) {
-
-            # link ticket with CI
-            $Self->_LinkTicketWithCI(
-                Name     => $Self->{Host},
-                TicketID => $TicketID,
-            );
-        }
-
+        $Self->_TicketUpdate( $TicketID, \%Param );
     }
     elsif ( $Self->{State} =~ /$Self->{Config}->{NewTicketRegExp}/ ) {
-
-        # Create Ticket Condition -> Create new Ticket and record Host and Service
-        for (qw(Host Service)) {
-
-            # get the freetext number from config
-            my $TicketFreeTextNumber = $Self->{Config}->{ 'FreeText' . $_ };
-
-            $Param{GetParam}->{ 'X-OTRS-TicketKey' . $TicketFreeTextNumber }   = $_;
-            $Param{GetParam}->{ 'X-OTRS-TicketValue' . $TicketFreeTextNumber } = $Self->{$_};
-        }
-
-        # Set Article Free Field for State
-        my $ArticleFreeTextNumber = $Self->{Config}->{'FreeTextState'};
-        $Param{GetParam}->{ 'X-OTRS-ArticleKey' . $ArticleFreeTextNumber }   = 'State';
-        $Param{GetParam}->{ 'X-OTRS-ArticleValue' . $ArticleFreeTextNumber } = $Self->{State};
-
-        # set sender type and article type
-        $Param{GetParam}->{'X-OTRS-SenderType'}  = $Self->{Config}->{SenderType};
-        $Param{GetParam}->{'X-OTRS-ArticleType'} = $Self->{Config}->{ArticleType};
-
-        # set log message
-        $LogMessage = 'New Ticket' . $LogMessage;
-
-        # if the CI incident state should be set
-        if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
-
-            # set the CI incident state to 'Incident'
-            $Self->_SetIncidentState(
-                Name          => $Self->{Host},
-                IncidentState => 'Incident',
-            );
-        }
+        $Self->_TicketCreate( \%Param );
     }
     else {
-
-        # No existing ticket and no open condition -> drop silently
-        $Param{GetParam}->{'X-OTRS-Ignore'} = 'yes';
-        $LogMessage = 'Mail Dropped, no matching ticket found,'
-            . ' no open on this state ' . $LogMessage;
-    }
-
-    # logging
-    if ($LogMessage) {
-        $Self->{LogObject}->Log(
-            Priority => 'notice',
-            Message  => 'SystemMonitoring Mail: ' . $LogMessage,
-        );
+        $Self->_TicketDrop( \%Param );
     }
 
     return 1;
@@ -478,6 +549,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2011-06-06 19:11:25 $
+$Revision: 1.12 $ $Date: 2012-01-30 16:19:21 $
 
 =cut
