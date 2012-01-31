@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.87 2011-10-13 18:58:34 en Exp $
+# $Id: AgentTimeAccounting.pm,v 1.88 2012-01-31 13:54:37 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.87 $) [1];
+$VERSION = qw($Revision: 1.88 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1060,10 +1060,21 @@ sub Run {
 
             # otherwise show incomplete working days as a dropdown
             else {
+
+                # check if current day is incomplete
+                # if yes, select the current day in the dropdown
+                # otherwise select the empty element
+                my $SelectedID;
+
+                if ( $IncompleteWorkingDaysList{"$Param{Year}-$Param{Month}-$Param{Day}"} ) {
+                    $SelectedID = "$Param{Year}-$Param{Month}-$Param{Day}";
+                }
+
                 my $IncompleWorkingDaysSelect = $Self->{LayoutObject}->BuildSelection(
-                    Data       => \%IncompleteWorkingDaysList,
-                    SelectedID => "$Param{Year}-$Param{Month}-$Param{Day}",
-                    Name       => "IncompleteWorkingDaysList",
+                    Data         => \%IncompleteWorkingDaysList,
+                    SelectedID   => $SelectedID,
+                    Name         => "IncompleteWorkingDaysList",
+                    PossibleNone => 1,
                 );
 
                 $Self->{LayoutObject}->Block(

@@ -2,7 +2,7 @@
 // jquery-combobox.js - special jquery ui combobox
 // Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: jquery-combobox.js,v 1.3 2011-01-11 11:23:01 mn Exp $
+// $Id: jquery-combobox.js,v 1.4 2012-01-31 13:54:38 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -36,6 +36,7 @@
                     minLength: 0,
                     source: function(Request, Response) {
                         var Matcher = new RegExp($.ui.autocomplete.escapeRegex(Request.term), "i" );
+
                         Response($Select.children("option").map(function() {
                             var Text = $(this).text();
                             if (this.value && (!Request.term || Matcher.test(Text)))
@@ -58,6 +59,12 @@
                         UI.item.option.selected = true;
                         Self._trigger("selected", Event, {
                             item: UI.item.option
+                        });
+                    },
+                    open: function(Event, UI) {
+                        $('ul.ui-autocomplete.ui-menu').each(function () {
+                            var width = $(this).width();
+                            $(this).width(width + 30);
                         });
                     },
                     change: function(Event, UI) {
@@ -83,7 +90,7 @@
                 .addClass("ui-widget ui-widget-content ui-corner-left")
                 .after(this.options.ValidationTooltip);
 
-                $Input.data("autocomplete")._renderItem = function(UL, Item) {
+            $Input.data("autocomplete")._renderItem = function(UL, Item) {
                 return $("<li></li>")
                     .data("item.autocomplete", Item)
                     .append("<a>" + Item.label + "</a>")
