@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.12 2012-01-30 16:19:21 md Exp $
+# $Id: SystemMonitoring.pm,v 1.13 2012-01-31 09:11:15 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,13 +17,12 @@ use strict;
 use warnings;
 use Kernel::System::LinkObject;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 #the base name for dynamic fields
-use constant DynamicFieldTextPrefix => 'TicketFreeText';
 
-#use constant DynamicFieldKeyPrefix  => 'TicketFreeKey';
-#use constant DynamicFieldTimePrefix => 'TicketFreeTime';
+use constant DynamicFieldTicketTextPrefix  => 'TicketFreeText';
+use constant DynamicFieldArticleTextPrefix => 'ArticleFreeText';
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,6 +70,109 @@ sub new {
     };
 
     return $Self;
+}
+
+sub GetDynamicFieldsDefinition
+{
+    my $class  = shift;
+    my $Self   = shift;
+    my %Param  = @_;
+    my $Config = $Param{Config};
+
+    #Here is what the config looks like :
+    # ArticleType: note-report
+    # CloseActionState: closed successful
+    # ClosePendingTime: 172800
+    # CloseTicketRegExp: OK|UP
+    # DefaultService: Host
+    # FreeTextHost: 1
+    # FreeTextService: 2
+    # FreeTextState: 1
+    # FromAddressRegExp: nagios@example.com
+    # HostRegExp: \s*Host:\s+(.*)\s*
+    # Module: Kernel::System::PostMaster::Filter::SystemMonitoring
+    # NewTicketRegExp: CRITICAL|DOWN
+    # SenderType: system
+    # ServiceRegExp: \s*Service:\s+(.*)\s*
+    # StateRegExp: \s*State:\s+(\S+)
+
+    my @DynamicFields;
+
+    my $ConfigFreeTextHost = $Config->{FreeTextHost};
+
+    if ( !$ConfigFreeTextHost )
+    {
+        $ConfigFreeTextHost = 1;
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Missing CI Config FreeTextHost, using value 1!"
+        );
+    }
+    my $FieldNameHost = DynamicFieldTicketTextPrefix . $ConfigFreeTextHost;
+
+# define all dynamic fields for System Monitoring, these need to be changed as well if the config changes
+    push @DynamicFields,
+        (
+        {
+            Name       => $FieldNameHost,
+            Label      => 'SystemMonitoring HostName',
+            FieldType  => 'Text',
+            ObjectType => 'Ticket',
+            Config     => {
+                TranslatableValues => 1,
+            },
+        }
+        );
+
+    # the service --------------------------------------------
+
+    my $ConfigFreeTextService = $Config->{FreeTextService};
+    if ( !$ConfigFreeTextService )
+    {
+        $ConfigFreeTextService = 2;
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Missing CI Config FreeTextService, using value 2!"
+        );
+    }
+    my $FieldNameService = DynamicFieldTicketTextPrefix . $ConfigFreeTextService;
+    push @{ $Param{NewFields} }, (
+        {
+            Name       => $FieldNameService,
+            Label      => 'SystemMonitoring ServiceName',
+            FieldType  => 'Text',
+            ObjectType => 'Ticket',
+            Config     => {
+                TranslatableValues => 1,
+            },
+        },
+    );
+
+    # the state------------------------------------------------
+
+    my $ConfigFreeTextState = $Config->{FreeTextState};
+    if ( !$ConfigFreeTextState )
+    {
+        $ConfigFreeTextState = 1;
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Missing CI Config FreeTextState, using value 1!"
+        );
+    }
+    my $FieldNameState = DynamicFieldArticleTextPrefix . $ConfigFreeTextState;
+    push @{ $Param{NewFields} }, (
+        {
+            Name       => $FieldNameState,
+            Label      => 'SystemMonitoring StateName',
+            FieldType  => 'Text',
+            ObjectType => 'Article',
+            Config     => {
+                TranslatableValues => 1,
+            },
+        },
+    );
+
+    return 1;
 }
 
 sub _IncidentStateIncident
@@ -199,7 +301,7 @@ sub _TicketSearch
 
     for my $Type (qw(Host Service)) {
         my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
-        my $KeyName       = DynamicFieldTextPrefix . $FreeTextField;
+        my $KeyName       = DynamicFieldTicketTextPrefix . $FreeTextField;
         my $KeyValue      = $Self->{$Type};
 
         #DEBUG: "Checking $KeyName for value $KeyValue";
@@ -549,6 +651,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2012-01-30 16:19:21 $
+$Revision: 1.13 $ $Date: 2012-01-31 09:11:15 $
 
 =cut

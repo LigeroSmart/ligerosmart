@@ -2,7 +2,7 @@
 # SystemMonitoring.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.2 2012-01-30 16:10:42 md Exp $
+# $Id: SystemMonitoring.pm,v 1.3 2012-01-31 09:11:15 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,15 +17,13 @@ use warnings;
 use Kernel::Config;
 use Kernel::System::SysConfig;
 use Kernel::System::Type;
-
 use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
-#see Kernel::System::PostMaster::Filter::SystemMonitoring and make sure it is in sync
-use constant DynamicFieldTextPrefix => 'TicketFreeText';
-
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+use YAML;
+
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -134,13 +132,15 @@ sub new {
         for my $Prefix (@INC) {
             my $File = $Prefix . '/Kernel/Config/Files/' . $ZZZFile;
             next PREFIX if !-f $File;
+
             do $File;
             last PREFIX;
         }
     }
 
-    # create needed objects
-    $Self->{ConfigObject}       = Kernel::Config->new();
+    # create needed objects? again?
+    $Self->{ConfigObject} = Kernel::Config->new();
+
     $Self->{TypeObject}         = Kernel::System::Type->new( %{$Self} );
     $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
@@ -216,6 +216,15 @@ sub CodeUpgradeFromLowerThan_3_0_93 {
             Name => $DynamicFieldNew->{Name},
         );
 
+        if ( not exists( $DynamicFieldOld->{ID} ) )
+        {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "The old Field does not exist $DynamicFieldNew->{Name}, skipping."
+            );
+            next;
+        }
+
         # update the dynamic field
         my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
             ID         => $DynamicFieldOld->{ID},
@@ -256,6 +265,8 @@ creates all dynamic fields that are necessary for SystemMonitoring
 
 =cut
 
+use YAML;
+
 sub _CreateDynamicFields {
     my ( $Self, %Param ) = @_;
 
@@ -285,6 +296,7 @@ sub _CreateDynamicFields {
 
     # create dynamic fields
     DYNAMICFIELD:
+
     for my $DynamicField (@DynamicFields) {
 
         # create a new field
@@ -292,30 +304,41 @@ sub _CreateDynamicFields {
             Name => $DynamicField->{Name},
         );
 
-        if ( $OldDynamicField->{Label} eq $DynamicField->{Label} )
+        if ( defined($OldDynamicField) )
         {
-            $Self->{LogObject}->Log(
-                Priority => 'info',
-                Message  => "Field already exists Label:$DynamicField->{Label}, skipping."
-            );
-        }
-        else
-        {
-            my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
-                Name       => $DynamicField->{Name},
-                Label      => $DynamicField->{Label},
-                FieldOrder => $NextOrderNumber,
-                FieldType  => $DynamicField->{FieldType},
-                ObjectType => $DynamicField->{ObjectType},
-                Config     => $DynamicField->{Config},
-                ValidID    => $ValidID,
-                UserID     => 1,
-            );
-            next DYNAMICFIELD if !$FieldID;
+            if ( exists( $OldDynamicField->{Label} ) )
+            {
+                if (
+                    ( $OldDynamicField->{Label} eq $DynamicField->{Label} )
+                    )
+                {
+                    $Self->{LogObject}->Log(
+                        Priority => 'info',
+                        Message  => "Field already exists Label:$DynamicField->{Label}, skipping."
+                    );
+                    next;    # skip the record, it has been created already
+                }
 
-            # increase the order number
-            $NextOrderNumber++;
+            }
         }
+
+        #
+
+        my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+            Name       => $DynamicField->{Name},
+            Label      => $DynamicField->{Label},
+            FieldOrder => $NextOrderNumber,
+            FieldType  => $DynamicField->{FieldType},
+            ObjectType => $DynamicField->{ObjectType},
+            Config     => $DynamicField->{Config},
+            ValidID    => $ValidID,
+            UserID     => 1,
+        );
+        next DYNAMICFIELD if !$FieldID;
+
+        # increase the order number
+        $NextOrderNumber++;
+
     }
 
     return 1;
@@ -332,52 +355,52 @@ returns the definition for System Monitoring related dynamic fields
 sub _GetDynamicFieldsDefinition {
     my ( $Self, %Param ) = @_;
 
-    my $ConfigFreeTextHost = $Self->{Config}->{'FreeTextHost'};
-    if ( !$ConfigFreeTextHost )
+    my @AllNewFields = ();    # the fields that are filled out
+
+    # run all PreFilterModules (modify email params)
+    foreach my $Key ( 'PostMaster::PreFilterModule', 'PostMaster::PostFilterModule' )
     {
-        $ConfigFreeTextHost = 1;
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Missing CI Config FreeTextHost, using value 1!"
-        );
+        if ( ref $Self->{ConfigObject}->Get($Key) eq 'HASH' ) {
+            my %Jobs = %{ $Self->{ConfigObject}->Get($Key) };
+            for my $Job ( sort keys %Jobs ) {
+                return if !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} );
+
+                next unless $Jobs{$Job}->{Module}->can("GetDynamicFieldsDefinition");
+
+                my @NewFields;
+
+                eval {
+
+                    my $Run = $Jobs{$Job}->{Module}->GetDynamicFieldsDefinition(
+                        $Self,
+                        Param     => \%Param,
+                        Config    => $Jobs{$Job},    # the job config
+                        NewFields => \@NewFields
+                    );
+                    if ( !$Run ) {
+                        $Self->{LogObject}->Log(
+                            Priority => 'error',
+                            Message =>
+                                "Execute GetDynamicFieldsDefinition() of $Key $Jobs{$Job}->{Module} not successful!",
+                        );
+                    }
+                };
+                if ($@)
+                {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message =>
+                            "Execute GetDynamicFieldsDefinition() of $Key $Jobs{$Job}->{Module} not successful with error $@!",
+                    );
+                }
+                else
+                {
+                    push @AllNewFields, @NewFields;
+                }
+            }
+        }
     }
-
-    my $ConfigFreeTextService = $Self->{Config}->{'FreeTextService'};
-    if ( !$ConfigFreeTextService )
-    {
-        $ConfigFreeTextService = 2;
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Missing CI Config FreeTextService, using value 2!"
-        );
-    }
-
-    my $FieldNameHost    = DynamicFieldTextPrefix . $ConfigFreeTextHost;
-    my $FieldNameService = DynamicFieldTextPrefix . $ConfigFreeTextService;
-
-# define all dynamic fields for System Montitoring, these need to be changed as well if the config changes
-    my @DynamicFields = (
-        {
-            Name       => $FieldNameHost,
-            Label      => 'SystemMonitoring HostName',
-            FieldType  => 'Text',
-            ObjectType => 'Ticket',
-            Config     => {
-                TranslatableValues => 1,
-            },
-        },
-        {
-            Name       => $FieldNameService,
-            Label      => 'SystemMonitoring ServiceName',
-            FieldType  => 'Text',
-            ObjectType => 'Ticket',
-            Config     => {
-                TranslatableValues => 1,
-            },
-        },
-    );
-
-    return @DynamicFields;
+    return @AllNewFields;
 }
 
 1;
@@ -396,6 +419,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2012-01-30 16:10:42 $
+$Revision: 1.3 $ $Date: 2012-01-31 09:11:15 $
 
 =cut
