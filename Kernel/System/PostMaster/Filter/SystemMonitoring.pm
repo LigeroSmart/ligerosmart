@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.13 2012-01-31 09:11:15 md Exp $
+# $Id: SystemMonitoring.pm,v 1.14 2012-01-31 11:15:27 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 use Kernel::System::LinkObject;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 #the base name for dynamic fields
 
@@ -72,8 +72,7 @@ sub new {
     return $Self;
 }
 
-sub GetDynamicFieldsDefinition
-{
+sub GetDynamicFieldsDefinition {
     my $class  = shift;
     my $Self   = shift;
     my %Param  = @_;
@@ -100,8 +99,7 @@ sub GetDynamicFieldsDefinition
 
     my $ConfigFreeTextHost = $Config->{FreeTextHost};
 
-    if ( !$ConfigFreeTextHost )
-    {
+    if ( !$ConfigFreeTextHost ) {
         $ConfigFreeTextHost = 1;
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -111,8 +109,7 @@ sub GetDynamicFieldsDefinition
     my $FieldNameHost = DynamicFieldTicketTextPrefix . $ConfigFreeTextHost;
 
 # define all dynamic fields for System Monitoring, these need to be changed as well if the config changes
-    push @DynamicFields,
-        (
+    push @DynamicFields, (
         {
             Name       => $FieldNameHost,
             Label      => 'SystemMonitoring HostName',
@@ -122,13 +119,12 @@ sub GetDynamicFieldsDefinition
                 TranslatableValues => 1,
             },
         }
-        );
+    );
 
     # the service --------------------------------------------
 
     my $ConfigFreeTextService = $Config->{FreeTextService};
-    if ( !$ConfigFreeTextService )
-    {
+    if ( !$ConfigFreeTextService ) {
         $ConfigFreeTextService = 2;
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -151,8 +147,7 @@ sub GetDynamicFieldsDefinition
     # the state------------------------------------------------
 
     my $ConfigFreeTextState = $Config->{FreeTextState};
-    if ( !$ConfigFreeTextState )
-    {
+    if ( !$ConfigFreeTextState ) {
         $ConfigFreeTextState = 1;
         $Self->{LogObject}->Log(
             Priority => 'error',
@@ -175,8 +170,7 @@ sub GetDynamicFieldsDefinition
     return 1;
 }
 
-sub _IncidentStateIncident
-{
+sub _IncidentStateIncident {
     my $Self = shift || die "missing self";
 
     # set the CI incident state to 'Incident'
@@ -187,8 +181,7 @@ sub _IncidentStateIncident
 
 }
 
-sub _IncidentStateOperational
-{
+sub _IncidentStateOperational {
     my $Self = shift || die "missing self";
 
     # set the CI incident state to 'Operational'
@@ -200,8 +193,7 @@ sub _IncidentStateOperational
 
 # these are optional modules from the ITSM Kernel::System::GeneralCatalog and Kernel::System::ITSMConfigItem
 
-sub _IncidentStateNew
-{
+sub _IncidentStateNew {
     my $Self = shift || die "missing self";
 
     # require the general catalog module
@@ -219,8 +211,7 @@ sub _IncidentStateNew
     }
 }
 
-sub _MailParse
-{
+sub _MailParse {
     my $Self = shift || die "missing self";
     my %Param = @_;
 
@@ -265,8 +256,7 @@ sub _MailParse
     }
 }
 
-sub _LogMessage
-{
+sub _LogMessage {
     my $Self        = shift;
     my $MessageText = shift;
 
@@ -287,8 +277,7 @@ sub _LogMessage
     );
 }
 
-sub _TicketSearch
-{
+sub _TicketSearch {
     my $Self = shift || die "missing self";
 
     # Is there a ticket for this Host/Service pair?
@@ -318,8 +307,9 @@ sub _TicketSearch
 
 }
 
-sub _TicketUpdate
-{
+# the sub takes the param as a hashref not as a copy, because it is updated
+
+sub _TicketUpdate {
     my $Self     = shift || die "missing self";
     my $TicketID = shift || die "missing ticketid";
     my $Param    = shift || die "missing param hashref";
@@ -385,6 +375,8 @@ sub _TicketUpdate
     }
 }
 
+# the sub takes the param as a hashref not as a copy, because it is updated
+
 sub _TicketCreate
 {
     my $Self  = shift || die "missing self";
@@ -419,8 +411,9 @@ sub _TicketCreate
     }
 }
 
-sub _TicketDrop
-{
+# the sub takes the param as a hashref not as a copy, because it is updated
+
+sub _TicketDrop {
     my $Self  = shift || die "missing self";
     my $Param = shift || die "missing param hashref";
 
@@ -651,6 +644,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2012-01-31 09:11:15 $
+$Revision: 1.14 $ $Date: 2012-01-31 11:15:27 $
 
 =cut

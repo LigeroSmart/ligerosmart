@@ -2,7 +2,7 @@
 # SystemMonitoring.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.3 2012-01-31 09:11:15 md Exp $
+# $Id: SystemMonitoring.pm,v 1.4 2012-01-31 11:15:27 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::DynamicField;
 use vars qw(@ISA $VERSION);
 use YAML;
 
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -192,15 +192,15 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_3_0_93()
+=item CodeUpgradeFromLowerThan_2_3_1()
 
-This function is only executed if the installed module version is smaller than 3.0.93.
+This function is only executed if the installed module version is smaller than 2.3.2.
 
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_3_0_93();
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_3_1();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_3_0_93 {
+sub CodeUpgradeFromLowerThan_2_3_1 {
     my ( $Self, %Param ) = @_;
 
     # get the definition for all dynamic fields for SystemMonitoring
@@ -216,8 +216,7 @@ sub CodeUpgradeFromLowerThan_3_0_93 {
             Name => $DynamicFieldNew->{Name},
         );
 
-        if ( not exists( $DynamicFieldOld->{ID} ) )
-        {
+        if ( not exists( $DynamicFieldOld->{ID} ) ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "The old Field does not exist $DynamicFieldNew->{Name}, skipping."
@@ -304,10 +303,8 @@ sub _CreateDynamicFields {
             Name => $DynamicField->{Name},
         );
 
-        if ( defined($OldDynamicField) )
-        {
-            if ( exists( $OldDynamicField->{Label} ) )
-            {
+        if ( defined($OldDynamicField) ) {
+            if ( exists( $OldDynamicField->{Label} ) ) {
                 if (
                     ( $OldDynamicField->{Label} eq $DynamicField->{Label} )
                     )
@@ -358,7 +355,7 @@ sub _GetDynamicFieldsDefinition {
     my @AllNewFields = ();    # the fields that are filled out
 
     # run all PreFilterModules (modify email params)
-    foreach my $Key ( 'PostMaster::PreFilterModule', 'PostMaster::PostFilterModule' )
+    foreach my $Key ('PostMaster::PreFilterModule')
     {
         if ( ref $Self->{ConfigObject}->Get($Key) eq 'HASH' ) {
             my %Jobs = %{ $Self->{ConfigObject}->Get($Key) };
@@ -385,17 +382,15 @@ sub _GetDynamicFieldsDefinition {
                         );
                     }
                 };
-                if ($@)
-                {
+                if ($@) {                            # error in eval
                     $Self->{LogObject}->Log(
                         Priority => 'error',
                         Message =>
                             "Execute GetDynamicFieldsDefinition() of $Key $Jobs{$Job}->{Module} not successful with error $@!",
                     );
                 }
-                else
-                {
-                    push @AllNewFields, @NewFields;
+                else {
+                    push @AllNewFields, (@NewFields);
                 }
             }
         }
@@ -419,6 +414,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-01-31 09:11:15 $
+$Revision: 1.4 $ $Date: 2012-01-31 11:15:27 $
 
 =cut
