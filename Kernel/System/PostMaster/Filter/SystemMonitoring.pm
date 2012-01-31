@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.14 2012-01-31 11:15:27 md Exp $
+# $Id: SystemMonitoring.pm,v 1.15 2012-01-31 14:39:47 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 use Kernel::System::LinkObject;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 #the base name for dynamic fields
 
@@ -72,100 +72,80 @@ sub new {
     return $Self;
 }
 
+sub _GetDynamicFieldDefinition {
+    my $Self       = shift;
+    my $Config     = shift;
+    my $Key        = shift;    #FreeTextHost the config key
+    my $Default    = shift;    #1 the default value
+    my $Base       = shift;    # DynamicFieldTicketTextPrefix
+    my $Name       = shift;    #HostName
+    my $ObjectType = shift;    #HostName
+
+    my $ConfigFreeText = $Config->{$Key};
+
+    if ( !$ConfigFreeText ) {
+        $ConfigFreeText = $Default;
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Missing CI Config $Key, using value $Default!"
+        );
+    }
+
+    if ( $ConfigFreeText =~ /^\d+$/ ) {
+        if ( ( $ConfigFreeText < 1 ) || ( $ConfigFreeText > 16 ) ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message => "Bad value $ConfigFreeText for CI Config $Key, must be between 1 and 16!"
+            );
+            die "Bad value $ConfigFreeText for CI Config $Key!";
+        }
+    }
+    else
+    {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Bad value $ConfigFreeText for CI Config $Key, must be numeric!"
+        );
+        die "Bad value $ConfigFreeText for CI Config $Key!";
+    }
+
+    my $FieldNameHost = $Base . $ConfigFreeText;
+
+# define all dynamic fields for System Monitoring, these need to be changed as well if the config changes
+    return (
+        {
+            Name       => $FieldNameHost,
+            Label      => 'SystemMonitoring ' . $Name,
+            FieldType  => 'Text',
+            ObjectType => $ObjectType,
+            Config     => {
+                TranslatableValues => 1,
+            },
+        }
+    );
+}
+
 sub GetDynamicFieldsDefinition {
     my $class  = shift;
     my $Self   = shift;
     my %Param  = @_;
     my $Config = $Param{Config};
 
-    #Here is what the config looks like :
-    # ArticleType: note-report
-    # CloseActionState: closed successful
-    # ClosePendingTime: 172800
-    # CloseTicketRegExp: OK|UP
-    # DefaultService: Host
-    # FreeTextHost: 1
-    # FreeTextService: 2
-    # FreeTextState: 1
-    # FromAddressRegExp: nagios@example.com
-    # HostRegExp: \s*Host:\s+(.*)\s*
-    # Module: Kernel::System::PostMaster::Filter::SystemMonitoring
-    # NewTicketRegExp: CRITICAL|DOWN
-    # SenderType: system
-    # ServiceRegExp: \s*Service:\s+(.*)\s*
-    # StateRegExp: \s*State:\s+(\S+)
-
-    my @DynamicFields;
-
-    my $ConfigFreeTextHost = $Config->{FreeTextHost};
-
-    if ( !$ConfigFreeTextHost ) {
-        $ConfigFreeTextHost = 1;
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Missing CI Config FreeTextHost, using value 1!"
+    push @{ $Param{NewFields} },
+        _GetDynamicFieldDefinition(
+        $Self, $Config, "FreeTextHost", 1, DynamicFieldTicketTextPrefix,
+        "HostName", "Ticket"
         );
-    }
-    my $FieldNameHost = DynamicFieldTicketTextPrefix . $ConfigFreeTextHost;
-
-# define all dynamic fields for System Monitoring, these need to be changed as well if the config changes
-    push @DynamicFields, (
-        {
-            Name       => $FieldNameHost,
-            Label      => 'SystemMonitoring HostName',
-            FieldType  => 'Text',
-            ObjectType => 'Ticket',
-            Config     => {
-                TranslatableValues => 1,
-            },
-        }
-    );
-
-    # the service --------------------------------------------
-
-    my $ConfigFreeTextService = $Config->{FreeTextService};
-    if ( !$ConfigFreeTextService ) {
-        $ConfigFreeTextService = 2;
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Missing CI Config FreeTextService, using value 2!"
+    push @{ $Param{NewFields} },
+        _GetDynamicFieldDefinition(
+        $Self, $Config, "FreeTextService", 2,
+        DynamicFieldTicketTextPrefix, "ServiceName", "Ticket"
         );
-    }
-    my $FieldNameService = DynamicFieldTicketTextPrefix . $ConfigFreeTextService;
-    push @{ $Param{NewFields} }, (
-        {
-            Name       => $FieldNameService,
-            Label      => 'SystemMonitoring ServiceName',
-            FieldType  => 'Text',
-            ObjectType => 'Ticket',
-            Config     => {
-                TranslatableValues => 1,
-            },
-        },
-    );
-
-    # the state------------------------------------------------
-
-    my $ConfigFreeTextState = $Config->{FreeTextState};
-    if ( !$ConfigFreeTextState ) {
-        $ConfigFreeTextState = 1;
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => "Missing CI Config FreeTextState, using value 1!"
+    push @{ $Param{NewFields} },
+        _GetDynamicFieldDefinition(
+        $Self, $Config, "FreeTextState", 1,
+        DynamicFieldArticleTextPrefix, "StateName", "Article"
         );
-    }
-    my $FieldNameState = DynamicFieldArticleTextPrefix . $ConfigFreeTextState;
-    push @{ $Param{NewFields} }, (
-        {
-            Name       => $FieldNameState,
-            Label      => 'SystemMonitoring StateName',
-            FieldType  => 'Text',
-            ObjectType => 'Article',
-            Config     => {
-                TranslatableValues => 1,
-            },
-        },
-    );
 
     return 1;
 }
@@ -215,10 +195,10 @@ sub _MailParse {
     my $Self = shift || die "missing self";
     my %Param = @_;
 
-    my $Body = $Param{GetParam}->{Subject} || die "No Param Subject";
+    my $Subject = $Param{GetParam}->{Subject} || die "No Param Subject";
 
     # Try to get State, Host and Service from email subject
-    my @SubjectLines = split /\n/, $Body;
+    my @SubjectLines = split /\n/, $Subject;
     for my $Line (@SubjectLines) {
         for (qw(State Host Service)) {
             if ( $Line =~ /$Self->{Config}->{ $_ . 'RegExp' }/ ) {
@@ -230,7 +210,9 @@ sub _MailParse {
     #  Dont Try to get State, Host and Service from email body, we want it from the subject alone
 
     # split the body into separate lines
-    my @BodyLines = split /\n/, $Param{GetParam}->{Body};
+    my $Body = $Param{GetParam}->{Body} || die "Message has no Body";
+
+    my @BodyLines = split /\n/, $Body;
 
     # to remember if an element was found before
     my %AlreadyMatched;
@@ -244,7 +226,9 @@ sub _MailParse {
 
             next ELEMENT if $AlreadyMatched{$Element};
 
-            if ( $Line =~ /$Self->{Config}->{ $Element . 'RegExp' }/ ) {
+            my $Regex = $Self->{Config}->{ $Element . 'RegExp' };
+
+            if ( $Line =~ /$Regex/ ) {
 
                 # get the found element value
                 $Self->{$Element} = $1;
@@ -290,14 +274,12 @@ sub _TicketSearch {
 
     for my $Type (qw(Host Service)) {
         my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
-        my $KeyName       = DynamicFieldTicketTextPrefix . $FreeTextField;
+        my $KeyName       = "DynamicField_" . DynamicFieldTicketTextPrefix . $FreeTextField;
         my $KeyValue      = $Self->{$Type};
 
-        #DEBUG: "Checking $KeyName for value $KeyValue";
         $Query{$KeyName}->{Equals} = $KeyValue;
     }
 
-    # search tickets
     my @TicketIDs = $Self->{TicketObject}->TicketSearch(%Query);
 
     # get the first and only ticket id
@@ -644,6 +626,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2012-01-31 11:15:27 $
+$Revision: 1.15 $ $Date: 2012-01-31 14:39:47 $
 
 =cut
