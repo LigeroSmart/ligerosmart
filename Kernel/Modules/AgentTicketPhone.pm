@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.44 2012-01-27 15:32:37 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.229 2012/01/24 17:53:07 cr Exp $
+# $Id: AgentTicketPhone.pm,v 1.45 2012-02-01 11:30:59 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.230 2012/01/30 19:54:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1449,6 +1449,19 @@ sub Run {
             $TreeView = 1;
         }
 
+        my $Tos = $Self->_GetTos(
+            %GetParam,
+            %ACLCompatGetParam,
+            QueueID => $QueueID,
+        );
+
+        my $NewTos;
+
+        if ($Tos) {
+            for my $KeyTo ( keys %{$Tos} ) {
+                $NewTos->{"$KeyTo||$Tos->{$KeyTo}"} = $Tos->{$KeyTo};
+            }
+        }
         my $Users = $Self->_GetUsers(
             %GetParam,
             %ACLCompatGetParam,
@@ -1535,6 +1548,14 @@ sub Run {
 
         my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
+                {
+                    Name         => 'Dest',
+                    Data         => $NewTos,
+                    SelectedID   => $Dest,
+                    Translation  => 0,
+                    PossibleNone => 0,
+                    Max          => 100,
+                },
                 {
                     Name         => 'NewUserID',
                     Data         => $Users,
@@ -1903,6 +1924,7 @@ sub _GetTos {
         my %Tos;
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NewQueueSelectionType') eq 'Queue' ) {
             %Tos = $Self->{TicketObject}->MoveList(
+                %Param,
                 Type    => 'create',
                 Action  => $Self->{Action},
                 QueueID => $Self->{QueueID},

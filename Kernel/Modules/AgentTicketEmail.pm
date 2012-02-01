@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.37 2012-01-27 15:32:37 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.200 2012/01/06 13:27:19 mg Exp $
+# $Id: AgentTicketEmail.pm,v 1.38 2012-02-01 11:30:59 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.201 2012/01/30 19:54:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@ use Kernel::System::LinkObject;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1465,6 +1465,19 @@ sub Run {
             $TreeView = 1;
         }
 
+        my $Tos = $Self->_GetTos(
+            %GetParam,
+            %ACLCompatGetParam,
+            QueueID => $QueueID,
+        );
+
+        my $NewTos;
+
+        if ($Tos) {
+            for my $KeyTo ( keys %{$Tos} ) {
+                $NewTos->{"$KeyTo||$Tos->{$KeyTo}"} = $Tos->{$KeyTo};
+            }
+        }
         my $Signature = '';
         if ($QueueID) {
             $Signature = $Self->_GetSignature( QueueID => $QueueID );
@@ -1598,6 +1611,14 @@ sub Run {
 
         my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
+                {
+                    Name         => 'Dest',
+                    Data         => $NewTos,
+                    SelectedID   => $Dest,
+                    Translation  => 0,
+                    PossibleNone => 0,
+                    Max          => 100,
+                },
                 {
                     Name         => 'Signature',
                     Data         => $Signature,
