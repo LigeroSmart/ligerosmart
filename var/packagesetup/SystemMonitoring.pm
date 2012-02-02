@@ -2,7 +2,7 @@
 # SystemMonitoring.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.5 2012-02-02 08:38:56 md Exp $
+# $Id: SystemMonitoring.pm,v 1.6 2012-02-02 15:59:27 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::DynamicField;
 use vars qw(@ISA $VERSION);
 use YAML;
 
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -192,15 +192,15 @@ sub CodeUpgrade {
     return 1;
 }
 
-=item CodeUpgradeFromLowerThan_2_2_91()
+=item CodeUpgradeFromLowerThan_2_2_92()
 
-This function is only executed if the installed module version is smaller than 2.2.91.
+This function is only executed if the installed module version is smaller than 2.2.92.
 
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_2_91();
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_2_92();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_2_2_91 {
+sub CodeUpgradeFromLowerThan_2_2_92 {
     my ( $Self, %Param ) = @_;
 
     # get the definition for all dynamic fields for SystemMonitoring
@@ -263,8 +263,6 @@ creates all dynamic fields that are necessary for SystemMonitoring
     my $Result = $CodeObject->_CreateDynamicFields();
 
 =cut
-
-use YAML;
 
 sub _CreateDynamicFields {
     my ( $Self, %Param ) = @_;
@@ -414,6 +412,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2012-02-02 08:38:56 $
+$Revision: 1.6 $ $Date: 2012-02-02 15:59:27 $
 
 =cut

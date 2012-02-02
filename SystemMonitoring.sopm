@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.1">
-    <CVS>$Id: SystemMonitoring.sopm,v 1.20 2012-02-02 08:38:56 md Exp $</CVS>
+    <CVS>$Id: SystemMonitoring.sopm,v 1.21 2012-02-02 15:59:27 mh Exp $</CVS>
     <Name>SystemMonitoring</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -39,7 +39,6 @@
 
     </CodeUpgrade>
 
-<!-- Copy and paste from ITSMIncidentProblemManagement.sopm -->
     <CodeInstall Type="post"><![CDATA[
 
         # define function name
@@ -156,10 +155,10 @@
         }
 
     ]]></CodeUpgrade>
-    <CodeUpgrade Type="post" Version="2.2.91"><![CDATA[
+    <CodeUpgrade Type="post" Version="2.2.92"><![CDATA[
 
         # define function name
-        my $FunctionName = 'CodeUpgradeFromLowerThan_2_2_91';
+        my $FunctionName = 'CodeUpgradeFromLowerThan_2_2_92';
 
         # create the package name
         my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
