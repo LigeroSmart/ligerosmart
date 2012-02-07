@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.15 2012-01-31 14:39:47 md Exp $
+# $Id: SystemMonitoring.pm,v 1.16 2012-02-07 10:38:29 md Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use strict;
 use warnings;
 use Kernel::System::LinkObject;
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 #the base name for dynamic fields
 
@@ -48,7 +48,7 @@ sub new {
     # this requires the ITSMConfigurationManagement module to be installed
     if ( $Self->{ConfigObject}->Get('SystemMonitoring::SetIncidentState') ) {
 
-        _IncidentStateNew();
+        $Self->_IncidentStateNew();
     }
 
     # Default Settings
@@ -626,6 +626,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2012-01-31 14:39:47 $
+$Revision: 1.16 $ $Date: 2012-02-07 10:38:29 $
 
 =cut
