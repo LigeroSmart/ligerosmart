@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.23 2012-01-27 15:32:37 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.74 2012/01/24 00:08:45 cr Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.24 2012-02-07 10:25:02 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1021,7 +1021,7 @@ sub Run {
                     Data         => $Owners,
                     SelectedID   => $GetParam{NewOwnerID},
                     Translation  => 0,
-                    PossibleNone => 1,
+                    PossibleNone => 0,
                     Max          => 100,
                 },
                 {
@@ -1029,7 +1029,7 @@ sub Run {
                     Data         => $OldOwners,
                     SelectedID   => $GetParam{OldOwnerID},
                     Translation  => 0,
-                    PossibleNone => 1,
+                    PossibleNone => 0,
                     Max          => 100,
                 },
                 {
@@ -1766,7 +1766,7 @@ sub _GetOwners {
         my $GID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Param{QueueID} );
         my %MemberList = $Self->{GroupObject}->GroupMemberList(
             GroupID => $GID,
-            Type    => 'note',
+            Type    => 'owner',
             Result  => 'HASH',
             Cached  => 1,
         );
