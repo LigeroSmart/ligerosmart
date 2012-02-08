@@ -2,7 +2,7 @@
 # Kernel/Language/nl_FAQ.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_FAQ.pm,v 1.27 2012-01-26 16:37:39 mh Exp $
+# $Id: nl_FAQ.pm,v 1.28 2012-02-08 11:10:59 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -50,6 +50,8 @@ sub Data {
     $Self->{Translation}->{'FAQ language updated!'} = 'Taal bijgewerkt';
     $Self->{Translation}->{'The name is required!'} = 'De naam is verplicht.';
     $Self->{Translation}->{'This language already exists!'} = 'Deze taal bestaat al.';
+    $Self->{Translation}->{'Explorer'} = 'Overzicht';
+    $Self->{Translation}->{'Explorer'} = 'Overzicht';
 
     # Template: AgentFAQAdd
     $Self->{Translation}->{'Add FAQ Article'} = 'Artikel toevoegen';
@@ -203,8 +205,8 @@ sub Data {
     $Self->{Translation}->{'Defines the shown columns in the FAQ search. This option has no effect on the position of the column.'} = '';
     $Self->{Translation}->{'Defines where the \'Insert FAQ\' link will be displayed. Note: AgentTicketActionCommon includes AgentTicketNote, AgentTicketClose, AgentTicketFreeText, AgentTicketOwner, AgentTicketPending, AgentTicketPriority and AgentTicketResponsible.'} = '';
     $Self->{Translation}->{'Definition of FAQ item free text field.'} = '';
-    $Self->{Translation}->{'Delete this FAQ'} = '';
-    $Self->{Translation}->{'Edit this FAQ'} = '';
+    $Self->{Translation}->{'Delete this FAQ'} = 'Verwijder dit artikel';
+    $Self->{Translation}->{'Edit this FAQ'} = 'Bewerk dit artikel';
     $Self->{Translation}->{'Enable multiple languages on FAQ module.'} = '';
     $Self->{Translation}->{'Enable voting mechanism on FAQ module.'} = '';
     $Self->{Translation}->{'FAQ Journal'} = 'FAQ journaal';
@@ -217,14 +219,14 @@ sub Data {
     $Self->{Translation}->{'FAQ-Area'} = 'Knowledge Base';
     $Self->{Translation}->{'Frontend module registration for the public interface.'} = '';
     $Self->{Translation}->{'Group for the approval of FAQ articles.'} = '';
-    $Self->{Translation}->{'History of this FAQ'} = '';
+    $Self->{Translation}->{'History of this FAQ'} = 'Geschiedenis';
     $Self->{Translation}->{'Include internal fields on a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = '';
     $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = '';
     $Self->{Translation}->{'Journal'} = 'Logboek';
     $Self->{Translation}->{'Language Management'} = 'Beheer talen';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = '';
-    $Self->{Translation}->{'Link another object to this FAQ item'} = '';
+    $Self->{Translation}->{'Link another object to this FAQ item'} = 'Koppel een ander object aan dit artikel';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the customer interface.'} = '';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the public interface.'} = '';
@@ -244,7 +246,7 @@ sub Data {
     $Self->{Translation}->{'Number of shown items in the top 10 feature.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ journal overview.'} = '';
     $Self->{Translation}->{'Parameters for the pages (in which the FAQ items are shown) of the small FAQ overview.'} = '';
-    $Self->{Translation}->{'Print this FAQ'} = '';
+    $Self->{Translation}->{'Print this FAQ'} = 'Artikel afdrukken';
     $Self->{Translation}->{'Queue for the approval of FAQ articles.'} = '';
     $Self->{Translation}->{'Rates for voting. Key must be in percent.'} = '';
     $Self->{Translation}->{'Search FAQ'} = 'Zoeken in FAQ';
