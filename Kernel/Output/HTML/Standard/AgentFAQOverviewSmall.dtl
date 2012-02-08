@@ -1,8 +1,8 @@
 # --
 # AgentFAQOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.19 2011-06-16 12:35:40 mb Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.20 2012-02-08 11:07:37 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@
     </div>
 <!-- dtl:block:NoFAQFound -->
 <!-- dtl:block:RecordForm -->
-    <table id="FixedTable" class="TableSmall" summary="A generic FAQ table">
+    <table id="FixedTable" class="TableSmall" summary="$Text{"A generic FAQ table"}">
         <thead>
             <tr>
 <!-- dtl:block:RecordNumberHeader -->
@@ -83,17 +83,17 @@
 <!-- dtl:block:RecordCategory -->
 <!-- dtl:block:RecordLanguage -->
                 <td>
-                    <div title="$Text{"$Data{"Language"}"}">$Text{"$Data{"Language"}"}</div>
+                    <div>$Text{"$Data{"Language"}"}</div>
                 </td>
 <!-- dtl:block:RecordLanguage -->
 <!-- dtl:block:RecordState -->
                 <td>
-                    <div title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</div>
+                    <div>$Text{"$Data{"State"}"}</div>
                 </td>
 <!-- dtl:block:RecordState -->
 <!-- dtl:block:RecordChanged -->
                 <td>
-                    <div title="$TimeLong{"$QData{"Changed"}"}">$TimeLong{"$QData{"Changed"}"}</div>
+                    <div>$TimeShort{"$QData{"Changed"}"}</div>
                 </td>
 <!-- dtl:block:RecordChanged -->
             </tr>

@@ -1,8 +1,8 @@
 # --
 # AgentFAQAdd.dtl - provides HTML form for AgentFAQAdd
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQAdd.dtl,v 1.12 2010-12-27 16:27:10 cr Exp $
+# $Id: AgentFAQAdd.dtl,v 1.13 2012-02-08 11:05:46 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -57,7 +57,7 @@
                     </div>
                     <div class="Clear"></div>
 
-                    <label for="ValidID">$Text{"Valid"}:</label>
+                    <label for="ValidID">$Text{"Validity"}:</label>
                     <div class="Field">
                         $Data{"ValidOption"}
                     </div>
