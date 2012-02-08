@@ -1,8 +1,8 @@
 # --
 # AAAFAQ.dtl - $Text variable file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AAAFAQ.dtl,v 1.4 2011-01-24 10:37:17 ub Exp $
+# $Id: AAAFAQ.dtl,v 1.5 2012-02-08 11:11:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,6 +19,7 @@ $Text{"LatestCreatedItems"}
 $Text{"Top10Items"}
 $Text{"SubCategoryOf"}
 $Text{"No rate selected!"}
+$Text{"Explorer"}
 
 # FAQ 'states'
 $Text{"public (all)"}
