@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQRSS.pm - public FAQ explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQRSS.pm,v 1.4 2012-01-26 19:48:27 cr Exp $
+# $Id: PublicFAQRSS.pm,v 1.5 2012-02-09 18:50:01 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::HTMLUtils;
 use XML::RSS::SimpleGen qw();
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,11 +78,9 @@ sub Run {
 
     # check type
     if ( $Type !~ m{ Created | Changed | Top10 }xms ) {
-        $Self->{LogObject}->Log(
-            Priority => 'error',
-            Message  => 'Type must be either LastCreate or LastChange or Top10!',
+        return $Self->{LayoutObject}->FatalError(
+            Message => "Type must be either LastCreate or LastChange or Top10!"
         );
-        return;
     }
 
     my @ItemIDs;
@@ -91,6 +89,7 @@ sub Run {
     # get the Top10 FAQ articles
     if ( $Type eq 'Top10' ) {
 
+        # interface needs to be the interface name
         my $Top10ItemIDsRef = $Self->{FAQObject}->FAQTop10Get(
             Interface => $Self->{Interface}->{Name},
             Limit     => $Self->{ConfigObject}->Get('FAQ::Explorer::Top10::Limit') || 10,
@@ -106,11 +105,12 @@ sub Run {
     # search the FAQ articles
     else {
 
+        # interface needs to be complete interface hash
         @ItemIDs = $Self->{FAQObject}->FAQSearch(
             States           => $Self->{InterfaceStates},
             OrderBy          => [$Type],
             OrderByDirection => ['Down'],
-            Interface        => $Self->{Interface}->{Name},
+            Interface        => $Self->{Interface},
             Limit            => 20,
             UserID           => $Self->{UserID},
         );
