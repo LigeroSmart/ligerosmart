@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentMasterSlavePrepareTicket.pm - to prepare master/slave pull downs
-# Copyright (C) 2003-2011 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentMasterSlavePrepareTicket.pm,v 1.2 2011-11-02 23:32:01 te Exp $
+# $Id: AgentMasterSlavePrepareTicket.pm,v 1.3 2012-02-11 00:13:34 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::Language;
+use Kernel::System::DynamicField;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -38,7 +39,12 @@ sub new {
     $Self->{UserLanguage} = $Self->{LayoutObject}->{UserLanguage}
         || $Self->{ConfigObject}->Get('DefaultLanguage');
     $Self->{LanguageObject}
-        = Kernel::Language->new( %Param, UserLanguage => $Self->{UserLanguage} );
+        = Kernel::Language->new(
+        %Param,
+        UserLanguage => $Self->{UserLanguage}
+        );
+
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
 
     return $Self;
 }
@@ -49,22 +55,31 @@ sub PreRun {
     # do only use this in phone and email ticket
     return if ( $Self->{Action} !~ /^AgentTicket(Email|Phone)$/ );
 
-    # get master/slave ticket free field
-    my $Count = $Self->{ConfigObject}->Get('MasterTicketFreeTextField');
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlaveDynamicField');
 
     # return if no config option is used
-    return if !$Count;
+    return if !$MasterSlaveDynamicField;
 
-    # define TicketFreeText field
-    my $TicketFreeText = 'TicketFreeText' . $Count;
+    # get dynamic field config
+    my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        Name => $MasterSlaveDynamicField,
+    );
+
+    # return if no dynamic field config is retreived
+    return if !$DynamicField;
 
     # find all current open master slave tickets
     my @TicketIDs = $Self->{TicketObject}->TicketSearch(
 
         # result (required)
-        Result          => 'ARRAY',
-        $TicketFreeText => 'Master',
-        StateType       => 'Open',
+        Result => 'ARRAY',
+
+        # master slave dynamic field
+        'DynamicField_' . $MasterSlaveDynamicField => {
+            Equals => 'Master',
+        },
+        StateType => 'Open',
 
         # result limit
         Limit      => 60,
@@ -72,8 +87,9 @@ sub PreRun {
         Permission => 'ro',
     );
 
-    # set free field as shown
-    $Self->{ConfigObject}->{"Ticket::Frontend::$Self->{Action}"}->{TicketFreeText}->{$Count} = 1;
+    # set dynamic field as shown
+    $Self->{ConfigObject}->{"Ticket::Frontend::$Self->{Action}"}->{DynamicField}
+        ->{$MasterSlaveDynamicField} = 1;
 
     # get current ticket information
     my %Ticket;
@@ -82,21 +98,39 @@ sub PreRun {
         %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
     }
 
-    # set free fields
-    $Self->{ConfigObject}->{$TicketFreeText} = undef;
-    $Self->{ConfigObject}->{$TicketFreeText}->{''} = '-';
-    $Self->{ConfigObject}->{$TicketFreeText}->{Master}
-        = $Self->{LanguageObject}->Get('New Master Ticket');
+    # set dynamic field posible values
+    $DynamicField->{Config}->{PossibleValues} = {
+        Master => $Self->{LanguageObject}->Get('New Master Ticket'),
+    };
+    $DynamicField->{Config}->{DefaultValue} = '';
+    $DynamicField->{Config}->{PossibleNone} = 1;
+
     for my $TicketID (@TicketIDs) {
-        my %CurrentTicket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
+        my %CurrentTicket = $Self->{TicketObject}->TicketGet(
+            TicketID      => $TicketID,
+            DynamicFields => 1,
+        );
         next if !%CurrentTicket;
-        next if $Ticket{$TicketFreeText} eq "SlaveOf:$CurrentTicket{TicketNumber}";
+        next
+            if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq
+                "SlaveOf:$CurrentTicket{TicketNumber}";
         next if $Ticket{TicketID} eq $CurrentTicket{TicketID};
 
-        $Self->{ConfigObject}->{$TicketFreeText}->{"SlaveOf:$CurrentTicket{TicketNumber}"}
-            = $Self->{LanguageObject}->Get('Slave of Ticket#')
-            . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
+        # set dynamic field posible values
+        $DynamicField->{Config}->{PossibleValues} = {
+            "SlaveOf:$CurrentTicket{TicketNumber}" =>
+                $Self->{LanguageObject}->Get('Slave of Ticket#')
+                . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}",
+        };
     }
+
+    # set new dynamic field values
+    my $SuccessTicketField = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+        %{$DynamicField},
+        Reorder => 0,
+        ValidID => 1,
+        UserID  => $Self->{UserID},
+    );
 
     return;
 }

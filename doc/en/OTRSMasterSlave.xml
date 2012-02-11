@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- $Id: OTRSMasterSlave.xml,v 1.1 2012-02-11 00:13:34 cg Exp $ -->
+
+<book lang='en'>
+
+<bookinfo>
+
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<preface id="preface" >
+    <title>Preface</title>
+    <para>
+        This package includes the feature "OTRSMasterSlave".
+    </para>
+    <para>
+        Please contact your commercial support (support@otrs.com) if you have any queries regarding
+        this document or need further information.
+    </para>
+</preface>
+
+<chapter>
+    <title>Functionalities</title>
+    <sect1>
+        <title>MasterSlave function</title>
+        <para>
+            This module extends the master-slave module with additional functionality. In order to use it the "MasterSlave::AdvancedEnabled"
+            SysConfig option must be activated. Without this setting enabled, the module will behave as the limited MasterSlave module.
+        </para>
+        <para>
+            Next functionalities are available due to the advanced feature:
+            - Master status / remove multiple tickets
+            - Slave status / remove multiple tickets
+            - Tickets set on the Master status
+            - Tickets set in the Slave status
+            - Ticket Master/ change multiple Slave tickets
+        </para>
+        <para>
+            Additional setings are available for the advanced module, they can founded on the "Configuration" for this module.
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Prerequisites</title>
+    <sect1>
+        <title>Framework</title>
+        <para>Required OTRS Framework:</para>
+        <para>
+            $Framework
+        </para>
+    </sect1>
+    <sect1>
+        <title>Packages</title>
+        <para>The following packages are required:</para>
+        <para>
+            $PackageRequired
+        </para>
+    </sect1>
+    <sect1>
+        <title>Operating System</title>
+        <para>The following operating systems may be considered:</para>
+        <para>
+            $OS
+        </para>
+    </sect1>
+    <sect1>
+        <title>Third Party Software</title>
+        <para>Additional third party software is required:</para>
+        <para>
+            <itemizedlist>
+                <listitem><para>None</para></listitem>
+            </itemizedlist>
+        </para>
+    </sect1>
+</chapter>
+
+    <chapter>
+        <title>Installation</title>
+        <para>
+            The following instructions show how to install the package. There are basically two options.
+            Either through the Admin Interface or via the Command line.
+        </para>
+        <sect1>
+            <title>Admin Interface</title>
+            <para>
+                Use the following URL, through the Admin Interface the package can be installed, updated or removed (if necessary).
+                Please first check whether the user is in the Admin group in order to get into the Admin Interface.
+            </para>
+            <para>
+                <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                    http://localhost/otrs/index.pl?Action=AdminPackageManager
+                </ulink>
+            </para>
+            <para>
+                <emphasis>Note: </emphasis>
+                You may need to change "localhost/otrs" from the example above in order to match your current OTRS installation
+            </para>
+        </sect1>
+        <sect1>
+            <title>Command line</title>
+            <para>
+                If it's not possible to use the Admin Interface, the following Command line tool ("bin/otrs.PackageManager.pl") is to be used.
+            </para>
+            <para>
+                <screen>
+shell> $OTRS_HOME/bin/otrs.PackageManager.pl -a install -p /path/to/$Name-$Version.opm
+                </screen>
+            </para>
+            <para>
+                <emphasis>Note:</emphasis> $OTRS_HOME is the path to your current OTRS installation, i.e. /opt/otrs.
+            </para>
+        </sect1>
+    </chapter>
+
+<chapter>
+    <title>Configuration</title>
+    <sect1>
+        <title>MasterTicketFreeTextField</title>
+        <para>
+            Define free text field for master ticket feature. .
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::AdvancedEnabled</title>
+        <para>
+            Enable the advanced MasterSlave part of the feature.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::UnsetMasterSlave</title>
+        <para>
+            Enable the feature to unset the MasterSlave state of a ticket in the advanced MasterSlave mode.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::UpdateMasterSlave</title>
+        <para>
+            Enable the feature to change the MasterSlave state of a ticket in the advanced MasterSlave mode.
+        </para>
+    </sect1>
+    <sect1>
+        <title>MasterSlave::FollowUpdatedMaster</title>
+        <para>
+            Enable the feature that slave tickets follow the master ticket to a new master in the advanced MasterSlave mode.
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Contact</title>
+    <para>Persons who were involved on the implementation of the package.</para>
+    <sect1>
+        <title>OTRS AG</title>
+        <para>
+            Accounting: Rene Bakker &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+        <para>
+            Technical: Manuel Hecht &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Manifest</title>
+    <para>This manifest lists all files in the package with names and file system rights.</para>
+    <sect1>
+        <title>Filelist</title>
+        <para>
+            $Filelist
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>Changelog</title>
+    <para>
+        $ChangeLog
+    </para>
+</chapter>
+
+</book>
