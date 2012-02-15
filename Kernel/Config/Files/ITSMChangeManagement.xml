@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.264 2011-11-11 16:40:44 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.265 2012-02-15 17:10:33 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -188,6 +188,19 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeDelete" Required="0" Valid="0">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <GroupRo>itsm-change-manager</GroupRo>
+                <Description>Delete a change</Description>
+                <Title>Delete</Title>
+                <NavBarName>ITSM Change</NavBarName>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangeHistory" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -237,9 +250,9 @@
                 <Description>ITSM Change Manager Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
-            <Loader>
-                <CSS>ITSM.Agent.Default.css</CSS>
-            </Loader>
+                <Loader>
+                    <CSS>ITSM.Agent.Default.css</CSS>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -253,9 +266,9 @@
                 <Description>ITSM MyCAB Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
-            <Loader>
-                <CSS>ITSM.Agent.Default.css</CSS>
-            </Loader>
+                <Loader>
+                    <CSS>ITSM.Agent.Default.css</CSS>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -270,9 +283,9 @@
                 <Description>ITSM MyChanges Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
-            <Loader>
-                <CSS>ITSM.Agent.Default.css</CSS>
-            </Loader>
+                <Loader>
+                    <CSS>ITSM.Agent.Default.css</CSS>
+                </Loader>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -286,10 +299,10 @@
                 <Description>ITSM MyWorkorders Overview</Description>
                 <NavBarName>ITSM Change</NavBarName>
                 <Title>ITSM Change</Title>
+                <Loader>
+                    <CSS>ITSM.Agent.Default.css</CSS>
+                </Loader>
             </FrontendModuleReg>
-            <Loader>
-                <CSS>ITSM.Agent.Default.css</CSS>
-            </Loader>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentITSMChangePIR" Required="0" Valid="1">
@@ -446,6 +459,7 @@
                     <CSS>ITSM.ChangeManagement.WorkorderGraph.css</CSS>
                     <CSS>ITSM.ChangeManagement.RTEContent.css</CSS>
                     <JavaScript>ITSM.Agent.ChangeManagement.WorkorderGraph.js</JavaScript>
+                    <JavaScript>ITSM.Agent.ConfirmationDialog.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -915,6 +929,25 @@
                 <Item Key="Action">AgentITSMChangeTemplate</Item>
                 <Item Key="Link">Action=AgentITSMChangeTemplate;ChangeID=$QData{"ChangeID"}</Item>
                 <Item Key="Target">PopUp</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###100-ChangeDelete" Required="0" Valid="0">
+        <Description Translatable="1">Shows a link in the menu to delete a change in its zoom view of the agent interface.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::ITSMChangeMenuChangeDelete</Item>
+                <Item Key="Name">Delete</Item>
+                <Item Key="Description">Delete Change</Item>
+                <Item Key="Action">AgentITSMChangeDelete</Item>
+                <Item Key="Link">Action=AgentITSMChangeDelete;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMChangeDelete;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeDelete;Subaction=ChangeDelete;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="DialogTitle">$Text{"Delete"} $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -7558,6 +7591,25 @@
         <SubGroup>Frontend::Agent::ViewChangeEdit</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeDelete###Permission" Required="1" Valid="1">
+        <Description Translatable="1">Required privileges to delete changes.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeDelete</SubGroup>
+        <Setting>
+            <String Regex="^(rw|ro)$">rw</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeDelete###ChangeStates" Required="1" Valid="1">
+        <Description Translatable="1">Defines the change states that will be allowed to delete.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeDelete</SubGroup>
+        <Setting>
+            <Array>
+                <Item>requested</Item>
+                <Item>pending approval</Item>
+            </Array>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeEdit###RequestedTime" Required="1" Valid="1">

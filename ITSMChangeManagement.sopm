@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.239 2012-02-07 09:34:14 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.240 2012-02-15 17:10:34 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -35,6 +35,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCABTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeCondition.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeConditionEdit.pm"/>
+        <File Permission="644" Location="Kernel/Modules/AgentITSMChangeDelete.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeEdit.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistory.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMChangeHistoryZoom.pm"/>
@@ -66,6 +67,7 @@
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderTemplate.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentITSMWorkOrderZoom.pm"/>
         <File Permission="644" Location="Kernel/Modules/CustomerITSMChangeSchedule.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuChangeDelete.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm"/>
@@ -91,6 +93,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeCABTemplate.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeCondition.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeConditionEdit.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeEdit.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeHistory.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentITSMChangeHistoryZoom.dtl"/>

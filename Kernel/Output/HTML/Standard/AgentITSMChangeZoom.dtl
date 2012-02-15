@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeZoom.dtl - provides HTML form for AgentITSMChangeZoom
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeZoom.dtl,v 1.63 2011-11-08 07:04:07 mb Exp $
+# $Id: AgentITSMChangeZoom.dtl,v 1.64 2012-02-15 17:10:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -277,6 +277,27 @@
                     <li>
                         <a href="$Env{"Baselink"}$Data{"Link"}" id="Menu$QData{"MenuID"}" class="$QData{"MenuClass"}" title="$Text{"$Data{"Description"}"}">$Text{"$Data{"Name"}"}</a>
                     </li>
+
+<!-- dtl:block:ShowConfirmationDialog -->
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+/*global ITSM: true */
+    ITSM.Agent.ConfirmationDialog.BindConfirmationDialog({
+        ElementID:                  'Menu$Data{"MenuID"}',
+        ElementSelector:            '$Data{"ElementSelector"}',
+        DialogContentQueryString:   '$Data{"DialogContentQueryString"}',
+        ConfirmedActionQueryString: '$Data{"ConfirmedActionQueryString"}',
+        DialogTitle:                '$Data{"DialogTitle"}',
+        TranslatedText:             {
+            Yes: '$JSText{"Yes"}',
+            No:  '$JSText{"No"}',
+            Ok:  '$JSText{"Ok"}'
+        }
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
+<!-- dtl:block:ShowConfirmationDialog -->
+
 <!-- dtl:block:MenuItem -->
 <!-- dtl:block:Menu -->
                 </ul>
