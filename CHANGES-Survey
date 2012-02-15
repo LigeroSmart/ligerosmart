@@ -2,12 +2,18 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.6 2012-01-20 13:20:27 jh Exp $
+# $Id: CHANGES-Survey,v 1.7 2012-02-15 21:00:26 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+2.1.2 - 2012-??-??
+ - Added Brazilian Portuguese translation, thanks to Filipe Mordhorst!
+
+2.1.1 - 2012-02-14
+ - First stable release for OTRS 3.1.x series.
 
 2.1.beta4 - 2012-01-27
  - 2012-01-20 Fixed Bug#8130 - Editing of General Info on Master Survey on possible.
