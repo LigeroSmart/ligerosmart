@@ -2,39 +2,20 @@
 # AgentITSMChangeReset.dtl - provides HTML form for AgentITSMChangeReset
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeReset.dtl,v 1.1 2012-02-16 12:47:40 jp Exp $
+# $Id: AgentITSMChangeReset.dtl,v 1.2 2012-02-16 15:27:19 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-<div class="LayoutPopup ARIARoleMain">
-
-    <div class="Header">
-        <h1>$Text{"Reset"} $Config{"ITSMChange::Hook"}: $QData{"ChangeNumber"} &ndash; $QData{"ChangeTitle"}</h1>
-        <p>
-            <a href="#" class="CancelClosePopup">$Text{"Cancel & close window"}</a>
-        </p>
-    </div>
-
-    <div class="Content">
-
-        <div class="Content">
-            <p>
-                $Text{"By clicking 'Confirm Change Reset', the Change and all its workorders will be reset."}
-            </p>
-
-            <form action="$Env{"CGIHandle"}" method="post" name="compose" id="ChangeEditForm" enctype="multipart/form-data" class="Validate PreventMultipleSubmits">
-                <input type="hidden" name="Action"    value="$Env{"Action"}"/>
-                <input type="hidden" name="Subaction" value="Reset"/>
-                <input type="hidden" name="ChangeID"  value="$QData{"ChangeID"}"/>
-
-                <div class="Field SpacingTop">
-                    <button class="Primary" id="SubmitChangeReset" name="ChangeReset" title="$Text{"Confirm Change Reset"}" type="submit" value="$Text{"Confirm Change Reset"}">$Text{"Confirm Change Reset"}</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
+<fieldset class="TableLike W300px">
+    <label>$Text{"Title"}:</label>
+    <p class="Value">
+        $QData{"ChangeTitle"}
+    </p>
+    <div class="Clear"></div>
+</fieldset>
+<p class="SpacingTop Center">
+    $Text{"Do you really want to reset this change?"}
+</p>

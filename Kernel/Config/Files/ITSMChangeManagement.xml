@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.266 2012-02-16 12:47:41 jp Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.267 2012-02-16 15:26:15 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -370,14 +370,13 @@
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentITSMChangeReset" Required="0" Valid="1">
+    <ConfigItem Name="Frontend::Module###AgentITSMChangeReset" Required="0" Valid="0">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <GroupRo>itsm-change-builder</GroupRo>
-                <GroupRo>itsm-change-manager</GroupRo>
                 <Description>Reset a change and its workorders</Description>
                 <Title>Reset</Title>
                 <NavBarName>ITSM Change</NavBarName>
@@ -965,8 +964,8 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="ITSMChange::Frontend::MenuModule###110-Reset" Required="0" Valid="1">
-        <Description Translatable="1">Shows a link in the menu that allows the reset of a change and its workorders, in the agent interface.</Description>
+    <ConfigItem Name="ITSMChange::Frontend::MenuModule###110-ChangeReset" Required="0" Valid="0">
+        <Description Translatable="1">Shows a link in the menu to reset a change and its workorders in its zoom view of the agent interface.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ITSMChange::MenuModule</SubGroup>
         <Setting>
@@ -976,7 +975,11 @@
                 <Item Key="Description">Reset change and its workorders</Item>
                 <Item Key="Action">AgentITSMChangeReset</Item>
                 <Item Key="Link">Action=AgentITSMChangeReset;ChangeID=$QData{"ChangeID"}</Item>
-                <Item Key="Target">PopUp</Item>
+                <Item Key="Target">ConfirmationDialog</Item>
+                <Item Key="ElementSelector">#Menu$QData{"MenuID"}</Item>
+                <Item Key="DialogContentQueryString">Action=AgentITSMChangeReset;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="ConfirmedActionQueryString">Action=AgentITSMChangeReset;Subaction=Reset;ChangeID=$QData{"ChangeID"}</Item>
+                <Item Key="DialogTitle">$Text{"Reset"} $Config{"ITSMChange::Hook"} $QData{"ChangeNumber"}</Item>
             </Hash>
         </Setting>
     </ConfigItem>
@@ -7799,17 +7802,14 @@
             </Option>
         </Setting>
     </ConfigItem>
-
-
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeReset###Permission" Required="1" Valid="1">
-        <Description Translatable="1">Required privileges to create changes.</Description>
+        <Description Translatable="1">Required privileges to reset changes.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::ViewChangeReset</SubGroup>
         <Setting>
             <String Regex="^(rw|ro)$">rw</String>
         </Setting>
     </ConfigItem>
-
     <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeSchedule###Filter::ChangeStates" Required="1" Valid="1">
         <Description Translatable="1">Defines the change states that will be used as filters in the Change Schedule overview.</Description>
         <Group>ITSM Change Management</Group>

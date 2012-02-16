@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMChangeMenuGeneric.pm
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeMenuGeneric.pm,v 1.6 2009-11-23 13:30:43 bes Exp $
+# $Id: ITSMChangeMenuGeneric.pm,v 1.7 2012-02-16 15:27:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -100,6 +100,21 @@ sub Run {
             %{ $Param{Config} },
         },
     );
+
+    # check if a dialog has to be shown
+    if ( $Param{Config}->{DialogTitle} ) {
+
+        # output confirmation dialog
+        $Self->{LayoutObject}->Block(
+            Name => 'ShowConfirmationDialog',
+            Data => {
+                %Param,
+                %{ $Param{Change} },
+                %{ $Param{Config} },
+            },
+        );
+    }
+
     $Param{Counter}++;
 
     return $Param{Counter};

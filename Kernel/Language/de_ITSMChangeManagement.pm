@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.94 2012-02-16 14:19:33 ub Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.95 2012-02-16 15:26:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -394,8 +394,7 @@ sub Data {
 
     # Template: AgentITSMChangeReset
     $Self->{Translation}->{'Reset change and its workorders'} = 'Change und dessen Workorders zurücksetzen';
-    $Self->{Translation}->{'Confirm Change Reset'} = 'Rücksetzen des Changes bestätigen';
-    $Self->{Translation}->{'By clicking \'Confirm Change Reset\', the Change and all its workorders will be reset.'} = 'Klicken Sie auf \'Rücksetzen des Changes bestätigen\', um den Change und dessen Workorders zurückzusetzen.';
+    $Self->{Translation}->{'Do you really want to reset this change?'} = 'Möchten Sie diesen Change wirklich zurücksetzen?';
 
     # Template: CustomerITSMChangeOverview
 

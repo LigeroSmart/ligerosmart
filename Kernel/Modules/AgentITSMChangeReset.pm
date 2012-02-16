@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeReset.pm - the OTRS::ITSM::ChangeManagement change reset module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeReset.pm,v 1.1 2012-02-16 12:47:40 jp Exp $
+# $Id: AgentITSMChangeReset.pm,v 1.2 2012-02-16 15:26:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMStateMachine;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -158,24 +158,33 @@ sub Run {
         }
     }
 
-    # output header
-    my $Output = $Self->{LayoutObject}->Header(
-        Title => 'Reset',
-        Type  => 'Small',
-    );
+    # set the dialog type. As default, the dialog will have 2 buttons: Yes and No
+    my $DialogType = 'Confirmation';
 
-    # start template output
-    $Output .= $Self->{LayoutObject}->Output(
+    # output content
+    my $Output .= $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentITSMChangeReset',
         Data         => {
+            %Param,
             %{$Change},
         },
     );
 
-    # add footer
-    $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+    # build the returned data structure
+    my %Data = (
+        HTML       => $Output,
+        DialogType => $DialogType,
+    );
 
-    return $Output;
+    # return JSON-String because of AJAX-Mode
+    my $OutputJSON = $Self->{LayoutObject}->JSONEncode( Data => \%Data );
+
+    return $Self->{LayoutObject}->Attachment(
+        ContentType => 'application/json; charset=' . $Self->{LayoutObject}->{Charset},
+        Content     => $OutputJSON,
+        Type        => 'inline',
+        NoCache     => 1,
+    );
 }
 
 1;
