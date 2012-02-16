@@ -2,7 +2,7 @@
 # Kernel/Language/de_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMChangeManagement.pm,v 1.93 2012-02-16 12:47:40 jp Exp $
+# $Id: de_ITSMChangeManagement.pm,v 1.94 2012-02-16 14:19:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -77,6 +77,7 @@ sub Data {
     $Self->{Translation}->{'Create Change'} = 'Change erstellen';
     $Self->{Translation}->{'Create a change from this ticket!'} = 'Einen Change aus diesem Ticket erstellen!';
     $Self->{Translation}->{'Delete Workorder'} = 'Diese Workorder löschen';
+    $Self->{Translation}->{'Delete Change'} = 'Diesen Change löschen';
     $Self->{Translation}->{'Edit the change'} = 'Diesen Change bearbeiten';
     $Self->{Translation}->{'Edit the conditions of the change'} = 'Bearbeite die Bedingungen dieses Changes';
     $Self->{Translation}->{'Edit the workorder'} = 'Diese Workorder bearbeiten';
@@ -366,6 +367,9 @@ sub Data {
     $Self->{Translation}->{'Do you really want to delete this workorder?'} = 'Möchten Sie diese Workorder wirklich löschen?';
     $Self->{Translation}->{'You can not delete this Workorder. It is used in at least one Condition!'} = 'Sie können diese Workorder nicht löschen. Sie wird in mindestens einer Bedingung verwendet!';
     $Self->{Translation}->{'This Workorder is used in the following Condition(s)'} = 'Diese Workorder findet Verwendung in den folgenden Bedingung(en)';
+
+    # Template: AgentITSMChangeDelete
+    $Self->{Translation}->{'Do you really want to delete this change?'} = 'Möchten Sie diesen Change wirklich löschen?';
 
     # Template: AgentITSMWorkOrderEdit
 
