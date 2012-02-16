@@ -2,7 +2,7 @@
 # ITSMChange.dtl - provides HTML elements for work order graph
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.40 2012-02-16 15:34:58 ub Exp $
+# $Id: ITSMChange.dtl,v 1.41 2012-02-16 15:56:00 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -125,6 +125,30 @@
 <!-- dtl:block:WorkOrderAgent -->
                     <div class="Clear"></div>
 <!-- dtl:block:WorkOrderAgentBlock -->
+
+<!-- dtl:block:Instruction -->
+                    <label>$Text{"Instruction"}:</label>
+                    <p class="Value">$QData{"InstructionPlain"}</p>
+                    <div class="Clear"></div>
+<!-- dtl:block:Instruction -->
+
+<!-- dtl:block:Report -->
+                    <label>$Text{"Report"}:</label>
+                    <p class="Value">$QData{"ReportPlain"}</p>
+                    <div class="Clear"></div>
+<!-- dtl:block:Report -->
+
+<!-- dtl:block:PlannedEffort -->
+                    <label>$Text{"PlannedEffort"}:</label>
+                    <p class="Value">$QData{"PlannedEffort"}</p>
+                    <div class="Clear"></div>
+<!-- dtl:block:PlannedEffort -->
+
+<!-- dtl:block:AccountedTime -->
+                    <label>$Text{"AccountedTime"}:</label>
+                    <p class="Value">$QData{"AccountedTime"}</p>
+                    <div class="Clear"></div>
+<!-- dtl:block:AccountedTime -->
 
 <!-- dtl:block:PlannedStartTime -->
                     <label>$Text{"PlannedStartTime"}:</label>
