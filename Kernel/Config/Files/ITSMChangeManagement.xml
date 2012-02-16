@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.267 2012-02-16 15:26:15 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.268 2012-02-16 15:34:59 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -8630,6 +8630,27 @@
                 <Item Key="pir_actual_color">#87CEEB</Item>
                 <Item Key="workorder_planned_color">#006400</Item>
                 <Item Key="workorder_actual_color">#3CB371</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::Frontend::AgentITSMChangeZoom###Tooltip::WorkOrderAttributes" Required="1" Valid="1">
+        <Description Translatable="1">Defines the shown attributes of a workorder in the tooltip of the workorder graph in the change zoom.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Frontend::Agent::ViewChangeZoom</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="WorkOrderTitle">1</Item>
+                <Item Key="WorkOrderState">1</Item>
+                <Item Key="WorkOrderType">1</Item>
+                <Item Key="WorkOrderAgent">1</Item>
+                <Item Key="PlannedStartTime">1</Item>
+                <Item Key="PlannedEndTime">1</Item>
+                <Item Key="ActualStartTime">1</Item>
+                <Item Key="ActualEndTime">1</Item>
+                <Item Key="WorkOrderFreeText1">1</Item>
+                <Item Key="WorkOrderFreeText2">2</Item>
+                <Item Key="WorkOrderFreeText3">0</Item>
+                <Item Key="WorkOrderFreeText4">0</Item>
             </Hash>
         </Setting>
     </ConfigItem>

@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/LayoutITSMChange.pm - provides generic HTML output for ITSMChange
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutITSMChange.pm,v 1.61 2011-11-02 16:07:17 mb Exp $
+# $Id: LayoutITSMChange.pm,v 1.62 2012-02-16 15:34:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 =over 4
 
@@ -1196,22 +1196,71 @@ sub _ITSMChangeGetWorkOrderGraph {
         },
     );
 
-    # check the last thing: UserLogin
-    if ( $WorkOrderInformation{WorkOrderAgentUserLogin} ) {
-        $Self->Block(
-            Name => 'WorkOrderAgent',
-            Data => {
-                %WorkOrderInformation,
-            },
-        );
-    }
-    else {
-        $Self->Block(
-            Name => 'EmptyWorkOrderAgent',
-            Data => {
-                %WorkOrderInformation,
-            },
-        );
+    # get the workorder attribute names that should be shown in the tooltip
+    my %TooltipAttributes = %{ $ChangeZoomConfig->{'Tooltip::WorkOrderAttributes'} };
+    my @ShowAttributes = grep { $TooltipAttributes{$_} } keys %TooltipAttributes;
+
+    # build attribut blocks
+    if (@ShowAttributes) {
+
+        ATTRIBUTE:
+        for my $Attribute ( sort @ShowAttributes ) {
+
+            # special handling for workorder agent
+            if ( $Attribute eq 'WorkOrderAgent' ) {
+
+                $Self->Block(
+                    Name => 'WorkOrderAgentBlock',
+                    Data => {
+                        %WorkOrderInformation,
+                    },
+                );
+
+                # check the last thing: UserLogin
+                if ( $WorkOrderInformation{WorkOrderAgentUserLogin} ) {
+                    $Self->Block(
+                        Name => 'WorkOrderAgent',
+                        Data => {
+                            %WorkOrderInformation,
+                        },
+                    );
+                }
+                else {
+                    $Self->Block(
+                        Name => 'EmptyWorkOrderAgent',
+                        Data => {
+                            %WorkOrderInformation,
+                        },
+                    );
+                }
+            }
+
+            # handle workorder freetext fields
+            elsif ( $Attribute =~ m{ \A WorkOrderFreeText (\d+) }xms ) {
+
+                # only if the workorder freetext field contains something
+                next ATTRIBUTE if !$WorkOrderInformation{ 'WorkOrderFreeKey' . $1 };
+                next ATTRIBUTE if !$WorkOrderInformation{ 'WorkOrderFreeText' . $1 };
+
+                $Self->Block(
+                    Name => 'WorkOrderFreeText',
+                    Data => {
+                        WorkOrderFreeKey  => $WorkOrderInformation{ 'WorkOrderFreeKey' . $1 },
+                        WorkOrderFreeText => $WorkOrderInformation{ 'WorkOrderFreeText' . $1 },
+                    },
+                );
+            }
+
+            # all other attributes
+            else {
+                $Self->Block(
+                    Name => $Attribute,
+                    Data => {
+                        %WorkOrderInformation,
+                    },
+                );
+            }
+        }
     }
 }
 

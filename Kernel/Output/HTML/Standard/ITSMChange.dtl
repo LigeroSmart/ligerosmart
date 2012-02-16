@@ -1,8 +1,8 @@
 # --
 # ITSMChange.dtl - provides HTML elements for work order graph
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.dtl,v 1.39 2011-11-08 07:04:07 mb Exp $
+# $Id: ITSMChange.dtl,v 1.40 2012-02-16 15:34:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -88,18 +88,32 @@
             <div class="WorkorderDetails">
                 <h3>$Text{"Workorder Information"}</h3>
                 <fieldset class="TableLike">
+
+<!-- dtl:block:WorkOrderTitle -->
                     <label>$Text{"Title"}:</label>
                     <p class="Value">$QData{"WorkOrderTitle","40"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:WorkOrderTitle -->
 
+<!-- dtl:block:WorkOrderState -->
                     <label>$Text{"State"}:</label>
                     <p class="Value">$Text{"$Data{"WorkOrderState"}"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:WorkOrderState -->
 
+<!-- dtl:block:WorkOrderType -->
                     <label>$Text{"Type"}:</label>
                     <p class="Value">$Text{"$Data{"WorkOrderType"}"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:WorkOrderType -->
 
+<!-- dtl:block:WorkOrderFreeText -->
+                    <label>$Text{"$Data{"WorkOrderFreeKey"}"}:</label>
+                    <p class="Value">$Text{"$Data{"WorkOrderFreeText"}"}</p>
+                    <div class="Clear"></div>
+<!-- dtl:block:WorkOrderFreeText -->
+
+<!-- dtl:block:WorkOrderAgentBlock -->
                     <label>$Text{"WorkOrderAgent"}:</label>
 <!-- dtl:block:EmptyWorkOrderAgent -->
                     <p class="Value">-</p>
@@ -110,22 +124,32 @@
                     </p>
 <!-- dtl:block:WorkOrderAgent -->
                     <div class="Clear"></div>
+<!-- dtl:block:WorkOrderAgentBlock -->
 
+<!-- dtl:block:PlannedStartTime -->
                     <label>$Text{"PlannedStartTime"}:</label>
                     <p class="Value">$TimeLong{"$QData{"PlannedStartTime"}"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:PlannedStartTime -->
 
+<!-- dtl:block:PlannedEndTime -->
                     <label>$Text{"PlannedEndTime"}:</label>
                     <p class="Value">$TimeLong{"$QData{"PlannedEndTime"}"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:PlannedEndTime -->
 
+<!-- dtl:block:ActualStartTime -->
                     <label>$Text{"ActualStartTime"}:</label>
                     <p class="Value">$TimeLong{"$QData{"ActualStartTime"}"}$QData{"EmptyActualStartTime"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:ActualStartTime -->
 
+<!-- dtl:block:ActualEndTime -->
                     <label>$Text{"ActualEndTime"}:</label>
                     <p class="Value">$TimeLong{"$QData{"ActualEndTime"}"}$QData{"EmptyActualEndTime"}</p>
                     <div class="Clear"></div>
+<!-- dtl:block:ActualEndTime -->
+
                 </fieldset>
             </div>
         </div>
