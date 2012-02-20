@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketBulk.pm - to do bulk actions on tickets
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketBulk.pm,v 1.2 2012-02-20 04:10:06 cg Exp $
+# $Id: AgentTicketBulk.pm,v 1.3 2012-02-20 23:43:21 cg Exp $
 # $OldId: AgentTicketBulk.pm,v 1.94 2012/01/06 13:18:00 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::MasterSlave;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -246,7 +246,7 @@ sub Run {
 # MasterSlave
 # ---
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
     my $MasterSlaveAdvancedEnabled            = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
     my $MasterSlaveFollowUpdatedMaster        = $Self->{ConfigObject}->Get('MasterSlave::FollowUpdatedMaster') || 0;
     my $MasterSlaveKeepParentChildAfterUnset  = $Self->{ConfigObject}->Get('MasterSlave::KeepParentChildAfterUnset') || 0;
@@ -1008,7 +1008,7 @@ sub _Mask {
 # MasterSlave
 # ---
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
+    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
     my $MasterSlaveAdvancedEnabled = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
     if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
         my $UnsetMasterSlave          = $Self->{ConfigObject}->Get('MasterSlave::UnsetMasterSlave') || 0;

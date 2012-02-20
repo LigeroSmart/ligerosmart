@@ -2,7 +2,7 @@
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.3 2012-02-20 04:10:06 cg Exp $
+# $Id: MasterSlave.pm,v 1.4 2012-02-20 23:43:21 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -109,7 +109,7 @@ sub MasterSlave {
     my %Ticket
         = $Param{Ticket}
         ? %{ $Param{Ticket} }
-        : $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
+        : $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID}, DynamicFields => 1 );
 
     if (
         $Param{MasterSlaveDynamicFieldValue} eq 'Master'
@@ -146,15 +146,10 @@ sub MasterSlave {
             Name => $MasterSlaveDynamicFieldName,
         );
         $Self->{BackendObject}->ValueSet(
-            DynamicFieldConfig => {
-                ID         => $DynamicField->{ID},
-                Name       => $MasterSlaveDynamicFieldName,
-                ObjectType => 'Ticket',
-                FieldType  => 'Text',
-            },
-            ObjectID => $Param{TicketID},
-            Value    => 'Master',
-            UserID   => $Param{UserID},
+            DynamicFieldConfig => $DynamicField,
+            ObjectID           => $Param{TicketID},
+            Value              => 'Master',
+            UserID             => $Param{UserID},
         );
     }
     elsif (
@@ -264,15 +259,10 @@ sub MasterSlave {
             Name => $MasterSlaveDynamicFieldName,
         );
         $Self->{BackendObject}->ValueSet(
-            DynamicFieldConfig => {
-                ID         => $DynamicField->{ID},
-                Name       => $MasterSlaveDynamicFieldName,
-                ObjectType => 'Ticket',
-                FieldType  => 'Text',
-            },
-            ObjectID => $Param{TicketID},
-            Value    => $Param{MasterSlaveTicketFreeTextContent},
-            UserID   => $Param{UserID},
+            DynamicFieldConfig => $DynamicField,
+            ObjectID           => $Param{TicketID},
+            Value              => $Param{MasterSlaveTicketFreeTextContent},
+            UserID             => $Param{UserID},
         );
     }
     elsif (
@@ -280,7 +270,6 @@ sub MasterSlave {
         && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
         )
     {
-
         if (
             $Param{MasterSlaveDynamicFieldValue} eq 'UnsetMaster'
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
@@ -350,15 +339,10 @@ sub MasterSlave {
             Name => $MasterSlaveDynamicFieldName,
         );
         $Self->{BackendObject}->ValueSet(
-            DynamicFieldConfig => {
-                ID         => $DynamicField->{ID},
-                Name       => $MasterSlaveDynamicFieldName,
-                ObjectType => 'Ticket',
-                FieldType  => 'Text',
-            },
-            ObjectID => $Param{TicketID},
-            Value    => $Param{MasterSlaveTicketFreeTextContent},
-            UserID   => $Param{UserID},
+            DynamicFieldConfig => $DynamicField,
+            ObjectID           => $Param{TicketID},
+            Value              => '',
+            UserID             => $Param{UserID},
         );
     }
 
@@ -381,6 +365,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-02-20 04:10:06 $
+$Revision: 1.4 $ $Date: 2012-02-20 23:43:21 $
 
 =cut

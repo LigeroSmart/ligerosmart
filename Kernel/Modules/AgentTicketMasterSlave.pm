@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.4 2012-02-20 04:10:06 cg Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.5 2012-02-20 23:43:21 cg Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -80,6 +80,17 @@ sub new {
     if ( $Self->{Config}->{Note} ) {
         $ObjectType = [ 'Ticket', 'Article' ];
     }
+
+# ---
+# MasterSlave
+# ---
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
+    # set master-slave dynamic field
+    if ( $MasterSlaveDynamicField && $Self->{Subaction} eq 'Store' ) {
+        $Self->{Config}->{DynamicField}->{$MasterSlaveDynamicField} = 1;
+    }
+#---
 
     # get the dynamic fields for this screen
     $Self->{DynamicField} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -245,7 +256,7 @@ sub Run {
 # MasterSlave
 # ---
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField               = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
+    my $MasterSlaveDynamicField               = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
     my $MasterSlaveAdvancedEnabled            = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
     my $MasterSlaveFollowUpdatedMaster        = $Self->{ConfigObject}->Get('MasterSlave::FollowUpdatedMaster') || 0;
     my $MasterSlaveKeepParentChildAfterUnset  = $Self->{ConfigObject}->Get('MasterSlave::KeepParentChildAfterUnset') || 0;
@@ -440,7 +451,6 @@ sub Run {
                 $Error{'TimeUnitsInvalid'} = ' ServerError';
             }
         }
-
         # check expand
         if ( $GetParam{Expand} ) {
             %Error = ();
@@ -449,11 +459,17 @@ sub Run {
 
         # create html strings for all dynamic fields
         my %DynamicFieldHTML;
-
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
+
+# ---
+# MasterSlave
+# ---
+            next DYNAMICFIELD
+            if $DynamicFieldConfig->{Name} eq $Self->{ConfigObject}->Get('MasterSlave::DynamicField');
+# ---
 
             my $PossibleValuesFilter;
 
@@ -750,10 +766,10 @@ sub Run {
                 && $MasterSlaveDynamicField
                 && $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField,
             ) {
-                if ( $GetParam{$MasterSlaveDynamicField} ) {
+                if ( $DynamicFieldValues{$MasterSlaveDynamicField} ) {
                     $Self->{MasterSlaveObject}->MasterSlave(
                         MasterSlaveDynamicFieldName           => $MasterSlaveDynamicField,
-                        MasterSlaveDynamicFieldValue          => $GetParam{$MasterSlaveDynamicField},
+                        MasterSlaveDynamicFieldValue          => $DynamicFieldValues{$MasterSlaveDynamicField},
                         TicketID                              => $Self->{TicketID},
                         UserID                                => $Self->{UserID},
                         MasterSlaveFollowUpdatedMaster        => $MasterSlaveFollowUpdatedMaster,
@@ -761,7 +777,7 @@ sub Run {
                         MasterSlaveKeepParentChildAfterUpdate => $MasterSlaveKeepParentChildAfterUpdate,
                     );
                 }
-                next;
+                next DYNAMICFIELD;
             }
 # ---
 
@@ -1560,7 +1576,7 @@ sub _Mask {
 # MasterSlave
 # ---
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
+    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
     my $MasterSlaveAdvancedEnabled = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
     if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
         my $UnsetMasterSlave          = $Self->{ConfigObject}->Get('MasterSlave::UnsetMasterSlave') || 0;
@@ -1612,7 +1628,7 @@ sub _Mask {
         }
         $Param{MasterSlaveStrg} = $Self->{LayoutObject}->BuildSelection(
             Data => { '' => '-', %Data },
-            Name => $MasterSlaveDynamicField,
+            Name => 'DynamicField_' . $MasterSlaveDynamicField,
             Translation => 0,
             SelectedID  => $Param{ResponsibleID},,
         );
