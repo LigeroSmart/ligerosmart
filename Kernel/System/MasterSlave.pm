@@ -1,8 +1,8 @@
 # --
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
-# Copyright (C) 2003-2011 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.2 2011-11-02 23:32:01 te Exp $
+# $Id: MasterSlave.pm,v 1.3 2012-02-20 04:10:06 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,11 @@ use strict;
 use warnings;
 
 use Kernel::System::LinkObject;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -62,7 +64,10 @@ sub new {
         $Self->{$_} = $Param{$_} || die;
     }
 
-    $Self->{LinkObject} = Kernel::System::LinkObject->new(%Param);
+    # create extra needed objects
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     return $Self;
 }
@@ -71,8 +76,8 @@ sub new {
 
 handles all the ticket master slave tasks
     my $True = $MasterSlaveObject->MasterSlave(
-        MasterSlaveTicketFreeTextID           => '12',
-        MasterSlaveTicketFreeTextContent      => 'Master',
+        MasterSlaveDynamicFieldName           => 'MasterSlave',
+        MasterSlaveDynamicFieldValue          => 'Master',
         TicketID                              => 12345,
         UserID                                => 1,
         Ticket                                => %Ticket, # optional
@@ -88,7 +93,7 @@ sub MasterSlave {
 
     # check needed stuff
     for my $Argument (
-        qw(MasterSlaveTicketFreeTextID MasterSlaveTicketFreeTextContent TicketID UserID)
+        qw(MasterSlaveDynamicFieldName MasterSlaveDynamicFieldValue TicketID UserID)
         )
     {
         if ( !$Param{$Argument} ) {
@@ -100,24 +105,24 @@ sub MasterSlave {
         }
     }
 
-    my $MasterSlaveTicketFreeTextFieldName = 'TicketFreeText' . $Param{MasterSlaveTicketFreeTextID};
+    my $MasterSlaveDynamicFieldName = $Param{MasterSlaveDynamicFieldName};
     my %Ticket
         = $Param{Ticket}
         ? %{ $Param{Ticket} }
         : $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
 
     if (
-        $Param{MasterSlaveTicketFreeTextContent} eq 'Master'
+        $Param{MasterSlaveDynamicFieldValue} eq 'Master'
         && (
-            !$Ticket{$MasterSlaveTicketFreeTextFieldName}
-            || $Ticket{$MasterSlaveTicketFreeTextFieldName} ne 'Master'
+            !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
+            || $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } ne 'Master'
         )
         )
     {
 
         if (
-            $Ticket{$MasterSlaveTicketFreeTextFieldName}
-            && $Ticket{$MasterSlaveTicketFreeTextFieldName} =~ /^SlaveOf:(\d+)$/
+            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
             )
         {
@@ -136,20 +141,28 @@ sub MasterSlave {
             );
         }
 
-        $Self->{TicketObject}->TicketFreeTextSet(
-            Counter  => $Param{MasterSlaveTicketFreeTextID},
-            Key      => 'MasterSlave',
+        # get dynamic field config
+        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $MasterSlaveDynamicFieldName,
+        );
+        $Self->{BackendObject}->ValueSet(
+            DynamicFieldConfig => {
+                ID         => $DynamicField->{ID},
+                Name       => $MasterSlaveDynamicFieldName,
+                ObjectType => 'Ticket',
+                FieldType  => 'Text',
+            },
+            ObjectID => $Param{TicketID},
             Value    => 'Master',
-            TicketID => $Param{TicketID},
             UserID   => $Param{UserID},
         );
     }
     elsif (
-        $Param{MasterSlaveTicketFreeTextContent} =~ /^SlaveOf:(\d+)$/
+        $Param{MasterSlaveDynamicFieldValue} =~ /^SlaveOf:(\d+)$/
         && (
-            !$Ticket{$MasterSlaveTicketFreeTextFieldName}
-            || $Ticket{$MasterSlaveTicketFreeTextFieldName} ne
-            $Param{MasterSlaveTicketFreeTextContent}
+            !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
+            || $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } ne
+            $Param{MasterSlaveDynamicFieldValue}
         )
         )
     {
@@ -182,17 +195,20 @@ sub MasterSlave {
             next if !$Links{$LinkedTicketID};
 
             # just take ticket with slave attributes for action
-            my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $LinkedTicketID );
-            next if !$Ticket{$MasterSlaveTicketFreeTextFieldName};
-            next if $Ticket{$MasterSlaveTicketFreeTextFieldName} !~ /^SlaveOf:(\d+)$/;
+            my %Ticket = $Self->{TicketObject}->TicketGet(
+                TicketID      => $LinkedTicketID,
+                DynamicFields => 1,
+            );
+            next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
+            next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } !~ /^SlaveOf:(\d+)$/;
 
             # remember ticket id
             push @SlaveTicketIDs, $LinkedTicketID;
         }
 
         if (
-            $Ticket{$MasterSlaveTicketFreeTextFieldName}
-            && $Ticket{$MasterSlaveTicketFreeTextFieldName} eq 'Master'
+            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } eq 'Master'
             )
         {
             if ( $Param{MasterSlaveFollowUpdatedMaster} && @SlaveTicketIDs ) {
@@ -223,8 +239,8 @@ sub MasterSlave {
             }
         }
         elsif (
-            $Ticket{$MasterSlaveTicketFreeTextFieldName}
-            && $Ticket{$MasterSlaveTicketFreeTextFieldName} =~ /^SlaveOf:(\d+)$/
+            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
             && !$Param{MasterSlaveKeepParentChildAfterUpdate}
             )
         {
@@ -243,22 +259,30 @@ sub MasterSlave {
             );
         }
 
-        $Self->{TicketObject}->TicketFreeTextSet(
-            Counter  => $Param{MasterSlaveTicketFreeTextID},
-            Key      => 'MasterSlave',
+        # get dynamic field config
+        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $MasterSlaveDynamicFieldName,
+        );
+        $Self->{BackendObject}->ValueSet(
+            DynamicFieldConfig => {
+                ID         => $DynamicField->{ID},
+                Name       => $MasterSlaveDynamicFieldName,
+                ObjectType => 'Ticket',
+                FieldType  => 'Text',
+            },
+            ObjectID => $Param{TicketID},
             Value    => $Param{MasterSlaveTicketFreeTextContent},
-            TicketID => $Param{TicketID},
             UserID   => $Param{UserID},
         );
     }
     elsif (
-        $Param{MasterSlaveTicketFreeTextContent} =~ /^(?:UnsetMaster|UnsetSlave)$/
-        && $Ticket{$MasterSlaveTicketFreeTextFieldName}
+        $Param{MasterSlaveDynamicFieldValue} =~ /^(?:UnsetMaster|UnsetSlave)$/
+        && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
         )
     {
 
         if (
-            $Param{MasterSlaveTicketFreeTextContent} eq 'UnsetMaster'
+            $Param{MasterSlaveDynamicFieldValue} eq 'UnsetMaster'
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
             )
         {
@@ -276,9 +300,14 @@ sub MasterSlave {
                 next if !$Links{$LinkedTicketID};
 
                 # just take ticket with slave attributes for action
-                my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $LinkedTicketID );
-                next if !$Ticket{$MasterSlaveTicketFreeTextFieldName};
-                next if $Ticket{$MasterSlaveTicketFreeTextFieldName} !~ /^SlaveOf:(\d+)$/;
+                my %Ticket = $Self->{TicketObject}->TicketGet(
+                    TicketID      => $LinkedTicketID,
+                    DynamicFields => 1,
+                );
+                next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
+                next
+                    if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
+                        !~ /^SlaveOf:(\d+)$/;
 
                 # remember ticket id
                 push @SlaveTicketIDs, $LinkedTicketID;
@@ -296,9 +325,9 @@ sub MasterSlave {
             }
         }
         elsif (
-            $Param{MasterSlaveTicketFreeTextContent} eq 'UnsetSlave'
+            $Param{MasterSlaveDynamicFieldValue} eq 'UnsetSlave'
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
-            && $Ticket{$MasterSlaveTicketFreeTextFieldName} =~ /^SlaveOf:(\d+)$/
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
             )
         {
             my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
@@ -316,11 +345,19 @@ sub MasterSlave {
             );
         }
 
-        $Self->{TicketObject}->TicketFreeTextSet(
-            Counter  => $Param{MasterSlaveTicketFreeTextID},
-            Key      => '',
-            Value    => '',
-            TicketID => $Param{TicketID},
+        # get dynamic field config
+        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            Name => $MasterSlaveDynamicFieldName,
+        );
+        $Self->{BackendObject}->ValueSet(
+            DynamicFieldConfig => {
+                ID         => $DynamicField->{ID},
+                Name       => $MasterSlaveDynamicFieldName,
+                ObjectType => 'Ticket',
+                FieldType  => 'Text',
+            },
+            ObjectID => $Param{TicketID},
+            Value    => $Param{MasterSlaveTicketFreeTextContent},
             UserID   => $Param{UserID},
         );
     }
@@ -344,6 +381,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2011-11-02 23:32:01 $
+$Revision: 1.3 $ $Date: 2012-02-20 04:10:06 $
 
 =cut

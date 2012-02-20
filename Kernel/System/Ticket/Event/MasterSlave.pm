@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
-# Copyright (C) 2003-2011 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.1 2011-10-10 09:30:05 te Exp $
+# $Id: MasterSlave.pm,v 1.2 2012-02-20 04:10:06 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,9 +14,11 @@ package Kernel::System::Ticket::Event::MasterSlave;
 use strict;
 use warnings;
 use Kernel::System::LinkObject;
+use Kernel::System::DynamicField;
+use Kernel::System::DynamicFieldValue;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,6 +37,9 @@ sub new {
 
     $Self->{LinkObject} = Kernel::System::LinkObject->new(%Param);
 
+    $Self->{DynamicFieldObject}      = Kernel::System::DynamicField->new(%Param);
+    $Self->{DynamicFieldValueObject} = Kernel::System::DynamicFieldValue->new(%Param);
+
     return $Self;
 }
 
@@ -50,13 +55,21 @@ sub Run {
     }
 
     # get ticket attributes
-    my %Ticket         = $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID} );
-    my $Count          = $Self->{ConfigObject}->Get('MasterTicketFreeTextField');
-    my $TicketFreeText = 'TicketFreeText' . $Count;
+    my %Ticket = $Self->{TicketObject}->TicketGet(
+        TicketID      => $Param{TicketID},
+        DynamicFields => 1,
+    );
+
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlaveDynamicField');
 
     # link master/slave tickets
     if ( $Param{Event} eq 'TicketFreeTextUpdate' ) {
-        if ( $Ticket{$TicketFreeText} && $Ticket{$TicketFreeText} =~ /^SlaveOf:(.+?)$/ ) {
+        if (
+            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } &&
+            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.+?)$/
+            )
+        {
 
             # lookup to find ticket id
             my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
@@ -75,20 +88,26 @@ sub Run {
                 UserID       => $Param{UserID},
             );
 
-            # reset free text field
-            $Self->{TicketObject}->TicketFreeTextSet(
-                Counter  => $Count,
-                Value    => $Ticket{$TicketFreeText},
-                TicketID => $Param{TicketID},
-                UserID   => $Param{UserID},
+            # update dynamic field value for ticket
+            # get dynamic field config
+            my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+                Name => $MasterSlaveDynamicField,
+            );
+
+            $Self->{DynamicFieldValueObject}->ValueSet(
+                FieldID    => $DynamicField->{ID},
+                ObjectType => $DynamicField->{ObjectType},
+                ObjectID   => $Param{TicketID},
+                UserID     => $Param{UserID},
+                Value      => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
             );
         }
         return 1;
     }
 
     # check if it's a master/slave ticket
-    return 1 if !$Ticket{$TicketFreeText};
-    return 1 if $Ticket{$TicketFreeText} !~ /^(master|yes)$/i;
+    return 1 if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
+    return 1 if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^(master|yes)$/i;
 
     # find slaves
     my %Links = $Self->{LinkObject}->LinkKeyList(
@@ -106,8 +125,8 @@ sub Run {
 
         # just take ticket with slave attributes for action
         my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
-        next if !$Ticket{$TicketFreeText};
-        next if $Ticket{$TicketFreeText} !~ /^SlaveOf:(\d+)$/;
+        next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
+        next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^SlaveOf:(\d+)$/;
 
         # remember ticket id
         push @TicketIDs, $TicketID;

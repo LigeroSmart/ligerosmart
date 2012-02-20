@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentMasterSlavePrepareTicket.pm - to prepare master/slave pull downs
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentMasterSlavePrepareTicket.pm,v 1.3 2012-02-11 00:13:34 cg Exp $
+# $Id: AgentMasterSlavePrepareTicket.pm,v 1.4 2012-02-20 04:10:06 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Language;
 use Kernel::System::DynamicField;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -56,7 +56,7 @@ sub PreRun {
     return if ( $Self->{Action} !~ /^AgentTicket(Email|Phone)$/ );
 
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlaveDynamicField');
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
 
     # return if no config option is used
     return if !$MasterSlaveDynamicField;
@@ -111,6 +111,7 @@ sub PreRun {
             DynamicFields => 1,
         );
         next if !%CurrentTicket;
+        next if !defined $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
         next
             if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq
                 "SlaveOf:$CurrentTicket{TicketNumber}";

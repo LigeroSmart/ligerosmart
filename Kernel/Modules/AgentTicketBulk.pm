@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketBulk.pm - to do bulk actions on tickets
-# Copyright (C) 2003-2011 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketBulk.pm,v 1.1 2011-10-10 09:30:05 te Exp $
-# $OldId: AgentTicketBulk.pm,v 1.75.2.4 2011/04/11 18:18:39 mp Exp $
+# $Id: AgentTicketBulk.pm,v 1.2 2012-02-20 04:10:06 cg Exp $
+# $OldId: AgentTicketBulk.pm,v 1.94 2012/01/06 13:18:00 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,6 +18,9 @@ use warnings;
 use Kernel::System::State;
 use Kernel::System::Priority;
 use Kernel::System::LinkObject;
+use Kernel::System::Web::UploadCache;
+use Kernel::System::CustomerUser;
+use Kernel::System::TemplateGenerator;
 # ---
 # MasterSlave
 # ---
@@ -25,7 +28,7 @@ use Kernel::System::MasterSlave;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,13 +44,33 @@ sub new {
         }
     }
 
-    $Self->{StateObject}     = Kernel::System::State->new(%Param);
-    $Self->{PriorityObject}  = Kernel::System::Priority->new(%Param);
-    $Self->{LinkObject}      = Kernel::System::LinkObject->new(%Param);
-    $Self->{CheckItemObject} = Kernel::System::CheckItem->new(%Param);
-
+    $Self->{StateObject}             = Kernel::System::State->new(%Param);
+    $Self->{PriorityObject}          = Kernel::System::Priority->new(%Param);
+    $Self->{LinkObject}              = Kernel::System::LinkObject->new(%Param);
+    $Self->{CheckItemObject}         = Kernel::System::CheckItem->new(%Param);
+    $Self->{UploadCacheObject}       = Kernel::System::Web::UploadCache->new(%Param);
+    $Self->{CustomerUserObject}      = Kernel::System::CustomerUser->new(%Param);
+    $Self->{TemplateGeneratorObject} = Kernel::System::TemplateGenerator->new(
+        %Param,
+        CustomerUserObject => $Self->{CustomerUserObject},
+    );
     $Self->{Config} = $Self->{ConfigObject}->Get("Ticket::Frontend::$Self->{Action}");
 
+    # get form id for note
+    $Self->{NoteFormID} = $Self->{ParamObject}->GetParam( Param => 'NoteFormID' );
+
+    # create form id for note
+    if ( !$Self->{NoteFormID} ) {
+        $Self->{NoteFormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
+
+    # get form id for email
+    $Self->{EmailFormID} = $Self->{ParamObject}->GetParam( Param => 'EmailFormID' );
+
+    # create form id for email
+    if ( !$Self->{EmailFormID} ) {
+        $Self->{EmailFormID} = $Self->{UploadCacheObject}->FormIDCreate();
+    }
 # ---
 # MasterSlave
 # ---
@@ -67,7 +90,7 @@ sub Run {
         );
     }
 
-    # get involved tickets, filterung empty TicketIDs
+    # get involved tickets, filtering empty TicketIDs
     my @TicketIDs
         = grep {$_}
         $Self->{ParamObject}->GetArray( Param => 'TicketID' );
@@ -76,7 +99,7 @@ sub Run {
     if ( !@TicketIDs ) {
         return $Self->{LayoutObject}->ErrorScreen(
             Message => 'No TicketID is given!',
-            Comment => 'You need minimum one selected ticket!',
+            Comment => 'You need at least one selected ticket!',
         );
     }
     my $Output .= $Self->{LayoutObject}->Header(
@@ -91,10 +114,14 @@ sub Run {
     # get all parameters and check for errors
     if ( $Self->{Subaction} eq 'Do' ) {
 
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
+
         # get all parameters
         for my $Key (
             qw(OwnerID Owner ResponsibleID Responsible PriorityID Priority QueueID Queue Subject
-            Body ArticleTypeID ArticleType StateID State MergeToSelection MergeTo LinkTogether
+            Body ArticleTypeID ArticleType TypeID StateID State MergeToSelection MergeTo LinkTogether
+            EmailSubject EmailBody EmailTimeUnits
             LinkTogetherParent Unlock MergeToChecked MergeToOldestChecked TimeUnits)
             )
         {
@@ -119,12 +146,25 @@ sub Run {
 
         # check some stuff
         if (
+            $GetParam{Subject}
+            &&
             $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime')
             && $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
             && $GetParam{TimeUnits} eq ''
             )
         {
             $Error{'TimeUnitsInvalid'} = 'ServerError';
+        }
+
+        if (
+            $GetParam{EmailSubject}
+            &&
+            $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime')
+            && $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
+            && $GetParam{EmailTimeUnits} eq ''
+            )
+        {
+            $Error{'EmailTimeUnitsInvalid'} = 'ServerError';
         }
 
         # Body and Subject must both be filled in or both be empty
@@ -135,7 +175,15 @@ sub Run {
             $Error{'BodyInvalid'} = 'ServerError';
         }
 
-        # check if pending date must be validate
+        # Email Body and Email Subject must both be filled in or both be empty
+        if ( $GetParam{EmailSubject} eq '' && $GetParam{EmailBody} ne '' ) {
+            $Error{'EmailSubjectInvalid'} = 'ServerError';
+        }
+        if ( $GetParam{EmailSubject} ne '' && $GetParam{EmailBody} eq '' ) {
+            $Error{'EmailBodyInvalid'} = 'ServerError';
+        }
+
+        # check if pending date must be validated
         if ( $GetParam{StateID} || $GetParam{State} ) {
             my %StateData;
             if ( $GetParam{StateID} ) {
@@ -197,9 +245,9 @@ sub Run {
 # ---
 # MasterSlave
 # ---
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
     my $MasterSlaveAdvancedEnabled            = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
-    my $MasterSlaveCount                      = $Self->{ConfigObject}->Get('MasterTicketFreeTextField') || 0;
-    my $MasterSlaveTicketFreeText             = $MasterSlaveCount ? 'TicketFreeText' . $MasterSlaveCount : 0;
     my $MasterSlaveFollowUpdatedMaster        = $Self->{ConfigObject}->Get('MasterSlave::FollowUpdatedMaster') || 0;
     my $MasterSlaveKeepParentChildAfterUnset  = $Self->{ConfigObject}->Get('MasterSlave::KeepParentChildAfterUnset') || 0;
     my $MasterSlaveKeepParentChildAfterUpdate = $Self->{ConfigObject}->Get('MasterSlave::KeepParentChildAfterUpdate') || 0;
@@ -207,7 +255,10 @@ sub Run {
 
     TICKET_ID:
     for my $TicketID (@TicketIDs) {
-        my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
+        my %Ticket = $Self->{TicketObject}->TicketGet(
+            TicketID      => $TicketID,
+            DynamicFields => 0,
+        );
 
         # check permissions
         my $Access = $Self->{TicketObject}->TicketPermission(
@@ -316,6 +367,17 @@ sub Run {
                 );
             }
 
+            # set type
+            if ( $Self->{ConfigObject}->Get('Ticket::Type') && $Self->{Config}->{TicketType} ) {
+                if ( $GetParam{'TypeID'} ) {
+                    $Self->{TicketObject}->TicketTypeSet(
+                        TypeID   => $GetParam{'TypeID'},
+                        TicketID => $TicketID,
+                        UserID   => $Self->{UserID},
+                    );
+                }
+            }
+
             # set queue
             if ( $GetParam{'QueueID'} || $GetParam{'Queue'} ) {
                 $Self->{TicketObject}->TicketQueueSet(
@@ -323,6 +385,82 @@ sub Run {
                     Queue    => $GetParam{'Queue'},
                     TicketID => $TicketID,
                     UserID   => $Self->{UserID},
+                );
+            }
+
+            # send email
+            my $EmailArticleID;
+            if (
+                $GetParam{'EmailSubject'}
+                && $GetParam{'EmailBody'}
+                )
+            {
+                my $MimeType = 'text/plain';
+                if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+                    $MimeType = 'text/html';
+
+                    # verify html document
+                    $GetParam{'EmailBody'} = $Self->{LayoutObject}->RichTextDocumentComplete(
+                        String => $GetParam{'EmailBody'},
+                    );
+                }
+
+                # get customer email address
+                my $Customer;
+                if ( $Ticket{CustomerUserID} ) {
+                    my %Customer = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                        User => $Ticket{CustomerUserID}
+                    );
+                    if ( $Customer{UserEmail} ) {
+                        $Customer
+                            = "$Customer{UserFirstname} $Customer{UserLastname} <$Customer{UserEmail}>";
+                    }
+                }
+
+                # check if we have an address, otherwise deduct it from the articles
+                if ( !$Customer ) {
+                    my %Data = $Self->{TicketObject}->ArticleLastCustomerArticle(
+                        TicketID      => $TicketID,
+                        DynamicFields => 0,
+                    );
+
+                    # check article type and replace To with From (in case)
+                    if ( $Data{SenderType} !~ /customer/ ) {
+
+                        # replace From/To, To/From because sender is agent
+                        $Data{From} = $Data{To};
+                    }
+                    $Customer = $Data{From};
+                }
+
+                # generate sender name
+                my $From = $Self->{TemplateGeneratorObject}->Sender(
+                    QueueID => $Ticket{QueueID},
+                    UserID  => $Self->{UserID},
+                );
+
+                # generate subject
+                my $TicketNumber
+                    = $Self->{TicketObject}->TicketNumberLookup( TicketID => $TicketID );
+
+                my $EmailSubject = $Self->{TicketObject}->TicketSubjectBuild(
+                    TicketNumber => $TicketNumber,
+                    Subject => $GetParam{EmailSubject} || '',
+                );
+
+                $EmailArticleID = $Self->{TicketObject}->ArticleSend(
+                    TicketID       => $TicketID,
+                    ArticleType    => 'email-external',
+                    SenderType     => 'agent',
+                    From           => $From,
+                    To             => $Customer,
+                    Subject        => $EmailSubject,
+                    Body           => $GetParam{EmailBody},
+                    MimeType       => $MimeType,
+                    Charset        => $Self->{LayoutObject}->{UserCharset},
+                    UserID         => $Self->{UserID},
+                    HistoryType    => 'SendAnswer',
+                    HistoryComment => '%%' . $Customer,
                 );
             }
 
@@ -367,7 +505,10 @@ sub Run {
                     State    => $GetParam{'State'},
                     UserID   => $Self->{UserID},
                 );
-                my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
+                my %Ticket = $Self->{TicketObject}->TicketGet(
+                    TicketID      => $TicketID,
+                    DynamicFields => 0,
+                );
                 my %StateData = $Self->{TicketObject}->{StateObject}->StateGet(
                     ID => $Ticket{StateID},
                 );
@@ -393,8 +534,8 @@ sub Run {
                 }
             }
 
-            # time units
-            if ( $GetParam{'TimeUnits'} ) {
+            # time units for note
+            if ( $GetParam{'TimeUnits'} && $ArticleID ) {
                 if ( $Self->{ConfigObject}->Get('Ticket::Frontend::BulkAccountedTime') ) {
                     $Self->{TicketObject}->TicketAccountTime(
                         TicketID  => $TicketID,
@@ -412,6 +553,30 @@ sub Run {
                         TicketID  => $TicketID,
                         ArticleID => $ArticleID,
                         TimeUnit  => $GetParam{'TimeUnits'},
+                        UserID    => $Self->{UserID},
+                    );
+                }
+            }
+
+            # time units for email
+            if ( $GetParam{ 'EmailTimeUnits' && $EmailArticleID } ) {
+                if ( $Self->{ConfigObject}->Get('Ticket::Frontend::BulkAccountedTime') ) {
+                    $Self->{TicketObject}->TicketAccountTime(
+                        TicketID  => $TicketID,
+                        ArticleID => $EmailArticleID,
+                        TimeUnit  => $GetParam{'EmailTimeUnits'},
+                        UserID    => $Self->{UserID},
+                    );
+                }
+                elsif (
+                    !$Self->{ConfigObject}->Get('Ticket::Frontend::BulkAccountedTime')
+                    && $Counter == 1
+                    )
+                {
+                    $Self->{TicketObject}->TicketAccountTime(
+                        TicketID  => $TicketID,
+                        ArticleID => $EmailArticleID,
+                        TimeUnit  => $GetParam{'EmailTimeUnits'},
                         UserID    => $Self->{UserID},
                     );
                 }
@@ -438,7 +603,10 @@ sub Run {
                 my $TicketIDOldest;
                 my $TicketIDOldestID;
                 for my $TicketIDCheck (@TicketIDs) {
-                    my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketIDCheck );
+                    my %Ticket = $Self->{TicketObject}->TicketGet(
+                        TicketID      => $TicketIDCheck,
+                        DynamicFields => 0,
+                    );
                     if ( !defined $TicketIDOldest ) {
                         $TicketIDOldest   = $Ticket{CreateTimeUnix};
                         $TicketIDOldestID = $TicketIDCheck;
@@ -508,11 +676,11 @@ sub Run {
 # ---
 # MasterSlave
 # ---
-            if ( $MasterSlaveAdvancedEnabled && $MasterSlaveTicketFreeText ) {
-                if ( $GetParam{$MasterSlaveTicketFreeText} ) {
+            if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
+                if ( $GetParam{$MasterSlaveDynamicField} ) {
                     $Self->{MasterSlaveObject}->MasterSlave(
-                        MasterSlaveTicketFreeTextID           => $MasterSlaveCount,
-                        MasterSlaveTicketFreeTextContent      => $GetParam{$MasterSlaveTicketFreeText},
+                        MasterSlaveDynamicFieldName           => $MasterSlaveDynamicField,
+                        MasterSlaveDynamicFieldValue          => $GetParam{$MasterSlaveDynamicField},
                         TicketID                              => $TicketID,
                         UserID                                => $Self->{UserID},
                         MasterSlaveFollowUpdatedMaster        => $MasterSlaveFollowUpdatedMaster,
@@ -651,6 +819,27 @@ sub _Mask {
         }
     }
 
+    # types
+    if ( $Self->{ConfigObject}->Get('Ticket::Type') && $Self->{Config}->{TicketType} ) {
+        my %Type = $Self->{TicketObject}->TicketTypeList(
+            %Param,
+            Action => $Self->{Action},
+            UserID => $Self->{UserID},
+        );
+        $Param{TypeStrg} = $Self->{LayoutObject}->BuildSelection(
+            Data         => \%Type,
+            PossibleNone => 1,
+            Name         => 'TypeID',
+            SelectedID   => $Param{TypeID},
+            Sort         => 'AlphanumericValue',
+            Translation  => 0,
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'Type',
+            Data => {%Param},
+        );
+    }
+
     # owner list
     if ( $Self->{Config}->{Owner} ) {
         my %AllGroupsMembers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
@@ -659,7 +848,10 @@ sub _Mask {
         if ( !$Self->{ConfigObject}->Get('Ticket::ChangeOwnerToEveryone') ) {
             my %AllGroupsMembersNew;
             for my $TicketID ( @{ $Param{TicketIDs} } ) {
-                my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
+                my %Ticket = $Self->{TicketObject}->TicketGet(
+                    TicketID      => $TicketID,
+                    DynamicFields => 0,
+                );
                 my $GroupID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Ticket{QueueID} );
                 my %GroupMember = $Self->{GroupObject}->GroupMemberList(
                     GroupID => $GroupID,
@@ -686,7 +878,7 @@ sub _Mask {
         );
     }
 
-    # owner list
+    # responsible list
     if ( $Self->{ConfigObject}->Get('Ticket::Responsible') && $Self->{Config}->{Responsible} ) {
         my %AllGroupsMembers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 1 );
 
@@ -694,7 +886,10 @@ sub _Mask {
         if ( !$Self->{ConfigObject}->Get('Ticket::ChangeOwnerToEveryone') ) {
             my %AllGroupsMembersNew;
             for my $TicketID ( @{ $Param{TicketIDs} } ) {
-                my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
+                my %Ticket = $Self->{TicketObject}->TicketGet(
+                    TicketID      => $TicketID,
+                    DynamicFields => 0,
+                );
                 my $GroupID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Ticket{QueueID} );
                 my %GroupMember = $Self->{GroupObject}->GroupMemberList(
                     GroupID => $GroupID,
@@ -770,11 +965,41 @@ sub _Mask {
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
         $Param{TimeUnitsRequired} = (
             $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
-            ? 'Validate_Required'
+            ? 'Validate_DependingRequiredAND Validate_Depending_Subject'
             : ''
         );
+        $Param{TimeUnitsRequiredEmail} = (
+            $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime')
+            ? 'Validate_DependingRequiredAND Validate_Depending_EmailSubject'
+            : ''
+        );
+
+        if ( $Self->{ConfigObject}->Get('Ticket::Frontend::NeedAccountedTime') ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TimeUnitsLabelMandatory',
+                Data => { TimeUnitsRequired => $Param{TimeUnitsRequired} },
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'TimeUnitsLabelMandatoryEmail',
+                Data => { TimeUnitsRequired => $Param{TimeUnitsRequiredEmail} },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'TimeUnitsLabel',
+                Data => \%Param,
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'TimeUnitsLabelEmail',
+                Data => \%Param,
+            );
+        }
         $Self->{LayoutObject}->Block(
             Name => 'TimeUnits',
+            Data => \%Param,
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'TimeUnitsEmail',
             Data => \%Param,
         );
     }
@@ -782,14 +1007,14 @@ sub _Mask {
 # ---
 # MasterSlave
 # ---
+    # get master/slave dynamic field
+    my $MasterSlaveDynamicField   = $Self->{ConfigObject}->Get('MasterSlaveDynamicField') || '';
     my $MasterSlaveAdvancedEnabled = $Self->{ConfigObject}->Get('MasterSlave::AdvancedEnabled') || 0;
-    my $MasterSlaveCount           = $Self->{ConfigObject}->Get('MasterTicketFreeTextField') || 0;
-    if ( $MasterSlaveAdvancedEnabled && $MasterSlaveCount ) {
-        my $MasterSlaveTicketFreeText = 'TicketFreeText' . $MasterSlaveCount;
+    if ( $MasterSlaveAdvancedEnabled && $MasterSlaveDynamicField ) {
         my $UnsetMasterSlave          = $Self->{ConfigObject}->Get('MasterSlave::UnsetMasterSlave') || 0;
         my $UpdateMasterSlave         = $Self->{ConfigObject}->Get('MasterSlave::UpdateMasterSlave') || 0;
 
-        $Param{MasterSlaveTicketFreeTextCount} = $MasterSlaveTicketFreeText;
+        $Param{MasterSlaveDynamicField} = $MasterSlaveDynamicField;
 
         my %Data;
         $Data{Master} = 'New Master Ticket';
@@ -802,7 +1027,10 @@ sub _Mask {
 
                 # result (required)
                 Result                     => 'ARRAY',
-                $MasterSlaveTicketFreeText => 'Master',
+                # master slave dynamic field
+                'DynamicField_' . $MasterSlaveDynamicField => {
+                    Equals => 'Master',
+                },
                 StateType                  => 'Open',
 
                 # result limit
@@ -818,7 +1046,7 @@ sub _Mask {
         }
         $Param{MasterSlaveStrg} = $Self->{LayoutObject}->BuildSelection(
             Data => { '' => '-', %Data },
-            Name => $MasterSlaveTicketFreeText,
+            Name => $MasterSlaveDynamicField,
             Translation => 0,
             SelectedID  => $Param{ResponsibleID},
         );
@@ -849,10 +1077,14 @@ sub _Mask {
         );
     }
 
-    # add rich text editor
+    # add rich text editor for note & email
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
+            Data => \%Param,
+        );
+        $Self->{LayoutObject}->Block(
+            Name => 'RichTextEmail',
             Data => \%Param,
         );
     }
