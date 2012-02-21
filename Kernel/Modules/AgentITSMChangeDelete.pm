@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeDelete.pm - the OTRS::ITSM::ChangeManagement change delete module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeDelete.pm,v 1.1 2012-02-15 17:10:33 ub Exp $
+# $Id: AgentITSMChangeDelete.pm,v 1.2 2012-02-21 19:10:08 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -109,7 +109,7 @@ sub Run {
 
         if ($CouldDeleteChange) {
 
-            # redirect to change, when the deletion was successful
+            # redirect to change overview, when the deletion was successful
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentITSMChange",
             );
