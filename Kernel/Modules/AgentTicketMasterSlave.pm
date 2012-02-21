@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.5 2012-02-20 23:43:21 cg Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.6 2012-02-21 08:03:55 cg Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1589,15 +1589,16 @@ sub _Mask {
         );
 
         $Param{MasterSlaveDynamicField} = $MasterSlaveDynamicField;
+        my $TicketMasterSlaveDynamicFieldValue = $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } || '';
 
         my %Data;
-        if ( $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } ne 'Master' ) {
+        if ( $TicketMasterSlaveDynamicFieldValue ne 'Master' ) {
             $Data{Master} = $Self->{LanguageObject}->Get('New Master Ticket');
         }
-        if ( $UnsetMasterSlave && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq 'Master' ) {
+        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue eq 'Master' ) {
             $Data{UnsetMaster} = $Self->{LanguageObject}->Get('Unset Master Ticket');
         }
-        if ( $UnsetMasterSlave && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ m{^SlaveOf:(\d+)$}xms ) {
+        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue =~ m{^SlaveOf:(\d+)$}xms ) {
             $Data{UnsetSlave}  = $Self->{LanguageObject}->Get('Unset Slave Ticket');
         }
         if ( $UpdateMasterSlave ) {
