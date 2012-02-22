@@ -2,7 +2,7 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.10 2012-02-22 10:59:11 mb Exp $
+# $Id: de_Survey.pm,v 1.11 2012-02-22 11:45:09 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,7 +40,7 @@ sub Data {
     $Self->{Translation}->{'answered'} = 'beantwortet';
     $Self->{Translation}->{'not answered'} = 'nicht beantwortet';
     $Self->{Translation}->{'Stats Detail'} = 'Statistik Detail';
-    $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Sie haben die Umfrage schon beantwortet.';
 
     # Template: AgentSurvey
     $Self->{Translation}->{'Create New Survey'} = 'Neue Umfrage erstellen';
@@ -48,7 +48,7 @@ sub Data {
     $Self->{Translation}->{'Internal Description'} = 'Interne Beschreibung';
     $Self->{Translation}->{'Edit General Info'} = 'Allgemeine Angaben bearbeiten';
     $Self->{Translation}->{'General Info'} = 'Allgemeine Angaben';
-    $Self->{Translation}->{'Stats Overview of'} = '';
+    $Self->{Translation}->{'Stats Overview of'} = 'Statistik Übersicht von';
     $Self->{Translation}->{'Requests Table'} = 'Anfragen-Tabelle';
     $Self->{Translation}->{'Send Time'} = 'Sendezeit';
     $Self->{Translation}->{'Vote Time'} = 'Abstimmungszeit';
@@ -93,10 +93,10 @@ sub Data {
 
     # Template: PublicSurvey
     $Self->{Translation}->{'Survey'} = 'Umfrage';
-    $Self->{Translation}->{'Please answer these questions'} = '';
-    $Self->{Translation}->{'Show my answers'} = '';
-    $Self->{Translation}->{'These are your answers'} = '';
-    $Self->{Translation}->{'Survey Title'} = '';
+    $Self->{Translation}->{'Please answer these questions'} = 'Bitte beantworten Sie diese Fragen';
+    $Self->{Translation}->{'Show my answers'} = 'Zeige meine Antworten';
+    $Self->{Translation}->{'These are your answers'} = 'Dies sind Ihre Antworten';
+    $Self->{Translation}->{'Survey Title'} = 'Umfrage Titel';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Ein Umfrage-Modul';
@@ -104,7 +104,7 @@ sub Data {
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
         'Alle Parameter für das Umfrage-Modul im Agenten-Interface.';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
-        '';
+        'Anzahl an Tagen nach dem Versand eines Umfrage Mails in denen kein neues Umfrage Mail an den gleichen Kunden versendet wird. Wählen sie 0 um immer Umfrage Mails zu versenden.';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
         'Voreingestellter Text für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
@@ -114,15 +114,15 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Definiert ein Übersichts-Modul, dass eine Liste aller Umfragen anzeigt.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
-        '';
+        'Definiert die maximale Anzahl von Umfragen die ein Kunde innerhalb von 30 Tagen zugesandt bekommt. ( 0 steht für kein Maximum, alle Umfrage Mails werden versandt.)';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
         'Definiert die Anzahl an Stunden für die ein Ticket geschlossen sein muss um den Versand einer Umfrage auszulösen ( 0 bedeutet, dass Umfrage sofort nach Schließen eines Tickets versandt wird ).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
         'Definiert die  Standardhöhe eines WYSIWYG-Bereichs für die Umfrage-Detailansicht.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
-        '';
+        'Definiert die angezeigten Spalten der Umfrage Übersicht. Diese Option hat keine Auswirkung auf die Position der Spalten.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
-        '';
+        'Aktivieren oder deaktivieren die ShowVoteData screens im Public Interface, um Abstimmungs-Daten anzuzeigen, wen ein Kunde versucht, ein zweites mal abzustimmen.';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
         'Frontend-Modul-Registrierung für die Umfrage-Detailansicht im Agenten-Interface.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
@@ -137,7 +137,7 @@ sub Data {
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
-        '';
+        'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, wenn ein Ticket geschlossen wird.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
