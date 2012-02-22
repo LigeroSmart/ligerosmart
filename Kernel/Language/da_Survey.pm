@@ -2,7 +2,7 @@
 # Kernel/Language/da_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: da_Survey.pm,v 1.5 2012-01-21 20:56:31 sb Exp $
+# $Id: da_Survey.pm,v 1.6 2012-02-22 10:59:11 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,32 +29,29 @@ sub Data {
     $Self->{Translation}->{'The survey is finished.'} = '';
     $Self->{Translation}->{'Complete'} = '';
     $Self->{Translation}->{'Incomplete'} = '';
-    $Self->{Translation}->{'Checkbox'} = '';
     $Self->{Translation}->{'Checkbox (List)'} = '';
     $Self->{Translation}->{'Radio'} = '';
     $Self->{Translation}->{'Radio (List)'} = '';
     $Self->{Translation}->{'Stats Overview'} = '';
     $Self->{Translation}->{'Survey Description'} = '';
     $Self->{Translation}->{'Survey Introduction'} = '';
-    $Self->{Translation}->{'Textarea'} = 'Tekstområde';
     $Self->{Translation}->{'Yes/No'} = '';
     $Self->{Translation}->{'YesNo'} = 'JaNej';
     $Self->{Translation}->{'answered'} = 'besvaret';
     $Self->{Translation}->{'not answered'} = 'ikke besvaret';
     $Self->{Translation}->{'Stats Detail'} = '';
+    $Self->{Translation}->{'You have already answered the survey.'} = '';
 
     # Template: AgentSurvey
     $Self->{Translation}->{'Create New Survey'} = '';
     $Self->{Translation}->{'Introduction'} = '';
     $Self->{Translation}->{'Internal Description'} = '';
     $Self->{Translation}->{'Edit General Info'} = '';
-    $Self->{Translation}->{'Survey#'} = 'Undersøgelse#';
     $Self->{Translation}->{'General Info'} = '';
     $Self->{Translation}->{'Stats Overview of'} = '';
     $Self->{Translation}->{'Requests Table'} = '';
     $Self->{Translation}->{'Send Time'} = '';
     $Self->{Translation}->{'Vote Time'} = '';
-    $Self->{Translation}->{'Details'} = '';
     $Self->{Translation}->{'Survey Stat Details'} = '';
     $Self->{Translation}->{'go back to stats overview'} = '';
     $Self->{Translation}->{'Go Back'} = '';
@@ -70,7 +67,8 @@ sub Data {
     $Self->{Translation}->{'go back to questions'} = '';
     $Self->{Translation}->{'Possible Answers For'} = '';
     $Self->{Translation}->{'Add Answer'} = '';
-    $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} = '';
+    $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
+        '';
     $Self->{Translation}->{'Edit Answer'} = '';
     $Self->{Translation}->{'go back to edit question'} = '';
     $Self->{Translation}->{'Answer'} = '';
@@ -96,33 +94,56 @@ sub Data {
 
     # Template: PublicSurvey
     $Self->{Translation}->{'Survey'} = 'Undersøgelse';
-    $Self->{Translation}->{'Please answer the next questions'} = '';
+    $Self->{Translation}->{'Please answer these questions'} = '';
     $Self->{Translation}->{'Show my answers'} = '';
+    $Self->{Translation}->{'These are your answers'} = '';
     $Self->{Translation}->{'Survey Title'} = '';
-    $Self->{Translation}->{'These are your answers.'} = '';
 
     # SysConfig
     $Self->{Translation}->{'A Survey Module.'} = 'Et undersøgelsesmodul.';
     $Self->{Translation}->{'A module to edit survey questions.'} = '';
-    $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} = '';
-    $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = '';
-    $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} = '';
-    $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = '';
-    $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} = '';
-    $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} = '';
-    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = '';
-    $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} = '';
-    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} = '';
+    $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
+        '';
+    $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
+        '';
+    $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
+        '';
+    $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
+        '';
+    $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
+        '';
+    $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
+        '';
+    $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
+        '';
+    $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
+        '';
+    $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
+        '';
+    $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
+        '';
+    $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
+        '';
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = '';
-    $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} = '';
+    $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
+        '';
     $Self->{Translation}->{'Public Survey.'} = '';
     $Self->{Translation}->{'Survey Overview "Small" Limit'} = '';
     $Self->{Translation}->{'Survey Zoom Module.'} = '';
     $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = '';
-    $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} = '';
-    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} = '';
+    $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
+        '';
+    $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
+        '';
+
+    #
+    # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
+    #
+    $Self->{Translation}->{'Survey#'} = 'Undersøgelse#';
 
 }
 
