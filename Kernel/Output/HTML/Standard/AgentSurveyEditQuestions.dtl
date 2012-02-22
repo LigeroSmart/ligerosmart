@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.14 2012-01-20 12:04:55 mb Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.15 2012-02-22 08:41:56 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -37,7 +37,7 @@
                         <label class="Mandatory" for="Question"><span class="Marker">*</span> $Text{"Type the question"}:&nbsp;</label>
                         <div class="Field">
                             <input type="text" id="Question" name="Question" class="Validate_Required $QData{"QuestionErrorClass"} " size="60" />
-                            $QData{"SelectionType"}
+                            $Data{"SelectionType"}
 
                             <div id="QuestionError" class="TooltipErrorMessage">
                                 <p>$Text{"This field is required."}</p>

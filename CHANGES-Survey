@@ -2,14 +2,15 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.7 2012-02-15 21:00:26 mb Exp $
+# $Id: CHANGES-Survey,v 1.8 2012-02-22 08:41:56 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-2.1.2 - 2012-??-??
+2.1.2 - 2012-02-22
+ - 2012-02-22 Fixed bug#8238 - Unable to enter questions in Survey.
  - Added Brazilian Portuguese translation, thanks to Filipe Mordhorst!
 
 2.1.1 - 2012-02-14
