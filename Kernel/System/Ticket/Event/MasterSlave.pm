@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.3 2012-02-20 23:43:21 cg Exp $
+# $Id: MasterSlave.pm,v 1.4 2012-02-24 01:34:34 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,10 +15,10 @@ use strict;
 use warnings;
 use Kernel::System::LinkObject;
 use Kernel::System::DynamicField;
-use Kernel::System::DynamicFieldValue;
+use Kernel::System::DynamicField::Backend;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,8 +37,8 @@ sub new {
 
     $Self->{LinkObject} = Kernel::System::LinkObject->new(%Param);
 
-    $Self->{DynamicFieldObject}      = Kernel::System::DynamicField->new(%Param);
-    $Self->{DynamicFieldValueObject} = Kernel::System::DynamicFieldValue->new(%Param);
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
+    $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     return $Self;
 }
@@ -93,13 +93,11 @@ sub Run {
             my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
                 Name => $MasterSlaveDynamicField,
             );
-
-            $Self->{DynamicFieldValueObject}->ValueSet(
-                FieldID    => $DynamicField->{ID},
-                ObjectType => $DynamicField->{ObjectType},
-                ObjectID   => $Param{TicketID},
-                UserID     => $Param{UserID},
-                Value      => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
+            $Self->{BackendObject}->ValueSet(
+                DynamicFieldConfig => $DynamicField,
+                ObjectID           => $Param{TicketID},
+                Value              => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
+                UserID             => $Param{UserID},
             );
         }
         return 1;
