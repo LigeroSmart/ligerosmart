@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Changes">
-    <CVS>$Id: OTRSMasterSlave.xml,v 1.4 2012-02-20 23:43:21 cg Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.xml,v 1.5 2012-02-24 01:41:55 cg Exp $</CVS>
     <ConfigItem Name="MasterSlave::DynamicField" Required="0" Valid="1">
         <Description Translatable="1">Define dynamic field name for master ticket feature.</Description>
         <Group>Ticket</Group>
@@ -61,7 +61,7 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::System::Ticket::Event::MasterSlave</Item>
-                <Item Key="Event">(ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate|TicketFreeTextUpdate)</Item>
+                <Item Key="Event">(ArticleCreate|ArticleSend|TicketStateUpdate|TicketPriorityUpdate|TicketPendingTimeUpdate|TicketLockUpdate|TicketOwnerUpdate|TicketResponsibleUpdate|TicketDynamicFieldUpdate)</Item>
             </Hash>
         </Setting>
     </ConfigItem>
