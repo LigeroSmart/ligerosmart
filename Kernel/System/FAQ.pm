@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.155 2012-01-18 17:44:46 ub Exp $
+# $Id: FAQ.pm,v 1.156 2012-02-29 15:10:44 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.155 $) [1];
+$VERSION = qw($Revision: 1.156 $) [1];
 
 =head1 NAME
 
@@ -943,7 +943,7 @@ sub AttachmentIndex {
         SQL => 'SELECT id, filename, content_type, content_size, inlineattachment '
             . 'FROM faq_attachment '
             . 'WHERE faq_id = ? '
-            . 'ORDER BY created',
+            . 'ORDER BY filename',
         Bind  => [ \$Param{ItemID} ],
         Limit => 100,
     );
@@ -5020,6 +5020,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.155 $ $Date: 2012-01-18 17:44:46 $
+$Revision: 1.156 $ $Date: 2012-02-29 15:10:44 $
 
 =cut
