@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.276 2012-01-21 15:44:58 sb Exp $
+# $Id: ITSMChange.pm,v 1.277 2012-03-09 12:59:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.276 $) [1];
+$VERSION = qw($Revision: 1.277 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1861,7 +1861,7 @@ sub ChangeSearch {
 
         # quote
         for my $OneParam ( @{ $Param{$ArrayParam} } ) {
-            $OneParam = $DBObject->Quote($OneParam);
+            $OneParam = $DBObject->Quote( $OneParam, 'Integer' );
         }
 
         # create string
@@ -3799,6 +3799,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.276 $ $Date: 2012-01-21 15:44:58 $
+$Revision: 1.277 $ $Date: 2012-03-09 12:59:14 $
 
 =cut
