@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.79 2012-01-20 17:11:26 te Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.80 2012-03-09 13:29:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.79 $) [1];
+$VERSION = qw($Revision: 1.80 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -957,7 +957,7 @@ sub Run {
 
         # remove old profile stuff
         $Self->{SearchProfileObject}->SearchProfileDelete(
-            Base      => 'ITSMSearch',
+            Base      => 'ITSMChangeSearch',
             Name      => $Profile,
             UserLogin => $Self->{UserLogin},
         );
