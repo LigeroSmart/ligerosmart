@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.22 2011-10-08 17:55:21 cr Exp $
+# $Id: CustomerFAQSearch.pm,v 1.23 2012-03-12 16:32:24 des Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -143,6 +143,10 @@ sub Run {
                 $GetParam{$ParamName} =~ s{ \A \s+ }{}xms;
                 $GetParam{$ParamName} =~ s{ \s+ \z }{}xms;
             }
+
+            # db quote to prevent SQL injection
+            $GetParam{$ParamName} = $Self->{DBObject}->Quote( $GetParam{$ParamName} );
+
         }
 
         # get array params

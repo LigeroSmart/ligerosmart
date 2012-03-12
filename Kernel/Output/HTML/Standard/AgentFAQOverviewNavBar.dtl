@@ -1,8 +1,8 @@
 # --
 # AgentFAQOverviewNavBar.dtl - html for change overview table
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewNavBar.dtl,v 1.7 2010-12-09 13:19:29 mb Exp $
+# $Id: AgentFAQOverviewNavBar.dtl,v 1.8 2012-03-12 16:32:24 des Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,13 +40,13 @@ $Data{"DataInTheMiddle"}
 <!-- dtl:block:OverviewNavBarPageBack -->
                 <ul class="Tabs">
                     <li>
-                        <a id="$LQData{"LinkBackID"}" href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkBack"}">$Text{"Change search options"}</a>
+                        <a id="$LQData{"LinkBackID"}" href="$Env{"Baselink"}Action=$Env{"Action"};$QData{"LinkBack"}">$Text{"Change search options"}</a>
                     </li>
                 </ul>
 <!--dtl:js_on_document_complete-->
 <script type="text/javascript">//<![CDATA[
     $('#FAQSearch').bind('click', function (Event) {
-        Core.Agent.Search.OpenSearchDialog( 'AgentFAQSearch', '$QData{"Profile"}' );
+        Core.Agent.Search.OpenSearchDialog( 'AgentFAQSearch', "$QData{"Profile"}" );
         return false;
     });
 //]]></script>
@@ -106,7 +106,7 @@ $Data{"DataInTheMiddle"}
 <!-- dtl:block:OverviewNavBarViewMode -->
 <!-- dtl:block:OverviewNavBarViewModeSelected -->
                         <li class="Active">
-                            <a class="$QData{"Name"}" href="$Env{"Baselink"}Action=$Env{"Action"};Filter=$LQData{"Filter"};View=$LQData{"View"};$Data{"LinkFilter"}" title="$Text{"$Data{"Name"}"}">
+                            <a class="$QData{"Name"}" href="$Env{"Baselink"}Action=$Env{"Action"};Filter=$LQData{"Filter"};View=$LQData{"View"};$QData{"LinkFilter"}" title="$Text{"$Data{"Name"}"}">
                                 <span class="ImageMode">
                                     <span class="NameShort">$Text{"$Data{"NameShort"}"}</span>
                                     <span class="NameLong">$Text{"$Data{"Name"}"}</span>

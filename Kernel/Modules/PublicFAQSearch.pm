@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.19 2011-10-08 17:55:21 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.20 2012-03-12 16:32:24 des Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -120,6 +120,9 @@ sub Run {
             $GetParam{$ParamName} =~ s{ \s+ \z }{}xms;
         }
 
+        # db quote to prevent SQL injection
+        $GetParam{$ParamName} = $Self->{DBObject}->Quote( $GetParam{$ParamName} );
+
         # store non empty parameters on a local profile
         if ( $GetParam{$ParamName} ) {
             $Self->{Profile} .= "$ParamName=$GetParam{$ParamName};";
@@ -137,7 +140,8 @@ sub Run {
 
             # store parameters on a local profile
             for my $Element (@Array) {
-                $Self->{Profile} .= "$ParamName=$Element;";
+                $Self->{Profile}
+                    .= $ParamName . '=' . $Self->{DBObject}->Quote( $Element, 'integer' ) . ';';
             }
         }
     }

@@ -1,8 +1,8 @@
 # --
 # PublicFAQSearchResultShort.dtl - html for FAQ search results
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearchResultShort.dtl,v 1.11 2011-08-12 23:30:07 cr Exp $
+# $Id: PublicFAQSearchResultShort.dtl,v 1.12 2012-03-12 16:32:24 des Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -13,7 +13,7 @@
     <div class="ActionRow">
         <ul class="Tabs">
             <li>
-                <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"Link"}">
+                <a href="$Env{"Baselink"}Action=$Env{"Action"};$QData{"Link"}">
                     &larr; $Text{"Change search options"}
                 </a>
             </li>
@@ -28,7 +28,7 @@
             <h2>$Text{"Search Results for"}:</h2>
 <!-- dtl:block:SearchTerms -->
             <span>
-                $Data{"Attribute"}: $Data{"Value"}
+                $QData{"Attribute"}: $QData{"Value"}
 # hide remove link, functionality is not yet implemented
 #                <a title="$Text{"Remove this Search Term."}" href="$Data{"SearchValue"}">&times;</a>
             </span>
@@ -40,29 +40,29 @@
             <thead>
                 <tr>
                     <th class="FAQNumber $Data{"FAQIDSort"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=FAQID;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$QData{"Profile"}SortBy=FAQID;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Config{"FAQ::FAQHook"}
                         </a>
                     </th>
                     <th class="Title $Data{"TitleSort"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Title;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$QData{"Profile"}SortBy=Title;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Title"}
                         </a>
                     </th>
                     <th class="Category $Data{"CategorySort"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Category;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$QData{"Profile"}SortBy=Category;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Category"}
                         </a>
                     </th>
 <!-- dtl:block:HeaderLanguage -->
                     <th class="Language $Data{"LanguageSort"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$Data{"Profile"}SortBy=Language;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$QData{"Profile"}SortBy=Language;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Language"}
                         </a>
                     </th>
 <!-- dtl:block:HeaderLanguage -->
                     <th class="Changed $Data{"ChangedSort"}">
-                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;;$Data{"Profile"}SortBy=Changed;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
+                        <a href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=Search;$QData{"Profile"}SortBy=Changed;Order=$LQData{"Order"};TakeLastSearch=1;Filter=$LQData{"Filter"};Limit=$LQData{"Limit"};Type=$LQData{"Type"}">
                             $Text{"Changed"}
                         </a>
                     </th>
