@@ -1,8 +1,8 @@
 // --
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
-// Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.7 2011-04-18 10:53:53 mn Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.8 2012-03-12 06:39:08 ep Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -103,7 +103,7 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
      * @param {String} Fields of a FAQ article and or Link to the public interface in plain text
      * @param {String} Fields of a FAQ article and or Link to the public interface in HTML
      * @return nothing
-     *      Mark an article as seen in frontend and backend.
+     *      Do nothing and show an error message.
      */
     TargetNS.SetData = function (FAQTitle, FAQContent, FAQHTMLContent) {
         if ($('#Subject', parent.document).length && $('#RichText', parent.document).length) {
