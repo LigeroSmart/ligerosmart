@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.4 2012-03-22 10:42:29 mg Exp $ -->
+<!-- $Id: FAQ.xml,v 1.5 2012-03-22 10:43:39 mg Exp $ -->
 
 <book lang="en">
 
@@ -288,6 +288,5 @@ Please direct questions about the FAQ Module at:
     $ChangeLog
     </para>
 </chapter>
-
 
 </book>
