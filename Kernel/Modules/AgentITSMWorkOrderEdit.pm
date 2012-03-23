@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.51 2010-12-21 16:09:13 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.52 2012-03-23 14:30:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -200,7 +200,11 @@ sub Run {
         }
 
         # check format of planned effort, empty is allowed
-        if ( $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms ) {
+        if (
+            $GetParam{PlannedEffort}
+            && $GetParam{PlannedEffort} !~ m{ \A \d* (?: [.] \d{1,2} )? \z }xms
+            )
+        {
             $ValidationError{'PlannedEffortInvalid'} = 'ServerError';
         }
 
