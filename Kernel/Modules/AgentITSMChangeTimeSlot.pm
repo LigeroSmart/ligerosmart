@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.35 2012-01-26 17:33:26 ub Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.36 2012-03-30 08:31:50 des Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+$VERSION = qw($Revision: 1.36 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -379,9 +379,12 @@ sub _MoveWorkOrders {
     # do the updating
     UPDATEPARAMS:
     for my $UpdateParams (@CollectedUpdateParams) {
+
+        # no number calculation necessary because the workorder order doesn't change
         my $UpdateOk = $Self->{WorkOrderObject}->WorkOrderUpdate(
             %{$UpdateParams},
-            UserID => $Self->{UserID},
+            NoNumberCalc => 1,
+            UserID       => $Self->{UserID},
         );
 
         if ( !$UpdateOk ) {
