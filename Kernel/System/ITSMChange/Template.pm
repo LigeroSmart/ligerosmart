@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template.pm - all template functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Template.pm,v 1.59 2012-04-02 15:54:10 ub Exp $
+# $Id: Template.pm,v 1.60 2012-04-02 15:56:21 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::VirtualFS;
 use Data::Dumper;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1274,6 +1274,8 @@ sub _CreateTemplateElements {
     my %SiblingsInfo;
 
     # create child elements
+    # prevent new number calculation for workorders,
+    # as the original number will be used
     for my $Child ( @{$Children} ) {
         my %ChildInfo = $Self->_CreateTemplateElements(
             %Param,
@@ -1282,8 +1284,7 @@ sub _CreateTemplateElements {
             Template     => $Child,
             Parent       => $Type,
             Method       => $Method,
-            NoNumberCalc => 1
-            ,   # prevent new number calculation for workorders, as the original number will be used
+            NoNumberCalc => 1,
         );
 
         # save info for next sibling
@@ -1417,6 +1418,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2012-04-02 15:54:10 $
+$Revision: 1.60 $ $Date: 2012-04-02 15:56:21 $
 
 =cut
