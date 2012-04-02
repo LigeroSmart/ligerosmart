@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.11 2011-12-21 13:32:52 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.12 2012-04-02 15:54:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 =head1 NAME
 
@@ -343,7 +343,7 @@ sub _WorkOrderAdd {
     my $OldWorkOrderID = $Data{WorkOrderID};
 
     # these attributes are generated automatically, so don't pass them to WorkOrderAdd()
-    delete @Data{qw(WorkOrderID WorkOrderNumber CreateTime CreateBy ChangeTime ChangeBy)};
+    delete @Data{qw(WorkOrderID CreateTime CreateBy ChangeTime ChangeBy)};
     delete @Data{qw(InstructionPlain ReportPlain)};
 
     # delete all parameters whose values are 'undef'
@@ -392,8 +392,9 @@ sub _WorkOrderAdd {
     # override the change id from the template
     my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
         %Data,
-        ChangeID => $Param{ChangeID},
-        UserID   => $Param{UserID},
+        NoNumberCalc => $Param{NoNumberCalc},
+        ChangeID     => $Param{ChangeID},
+        UserID       => $Param{UserID},
     );
 
     # we need a mapping "old id" to "new id" for the conditions
@@ -620,6 +621,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.11 $ $Date: 2011-12-21 13:32:52 $
+$Revision: 1.12 $ $Date: 2012-04-02 15:54:11 $
 
 =cut
