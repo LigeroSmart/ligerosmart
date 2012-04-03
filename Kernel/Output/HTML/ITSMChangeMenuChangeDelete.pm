@@ -3,7 +3,7 @@
 # if there is a change in a configured state
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeMenuChangeDelete.pm,v 1.1 2012-02-15 17:10:33 ub Exp $
+# $Id: ITSMChangeMenuChangeDelete.pm,v 1.2 2012-04-03 17:28:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -27,7 +27,7 @@ sub new {
 
     # check needed objects
     for my $Object (
-        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject ChangeObject UserID)
+        qw(ConfigObject EncodeObject LogObject DBObject LayoutObject UserObject GroupObject ChangeObject UserID)
         )
     {
         $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
@@ -68,13 +68,27 @@ sub Run {
     }
     else {
 
-        # check permissions, based on the required privilege
-        $Access = $Self->{ChangeObject}->Permission(
-            Type     => $RequiredPriv,
-            ChangeID => $Param{Change}->{ChangeID},
-            UserID   => $Self->{UserID},
-            LogNo    => 1,
+        # get the required group for the frontend module
+        my $Group = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }
+            ->{GroupRo}->[0];
+
+        # get the group id
+        my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
+
+        # deny access, when the group is not found
+        return $Param{Counter} if !$GroupID;
+
+        # get user groups, where the user has the appropriate privilege
+        my %Groups = $Self->{GroupObject}->GroupMemberList(
+            UserID => $Self->{UserID},
+            Type   => $RequiredPriv,
+            Result => 'HASH',
         );
+
+        # grant access if the agent has the appropriate type in the appropriate group
+        if ( $Groups{$GroupID} ) {
+            $Access = 1;
+        }
     }
 
     return $Param{Counter} if !$Access;
@@ -83,7 +97,7 @@ sub Run {
     my %AllowedChangeStates = map { $_ => 1 } @{ $FrontendConfig->{ChangeStates} };
 
     # only show the delete link for changes in the allowed change states
-    return if !$AllowedChangeStates{ $Param{Change}->{ChangeState} };
+    return $Param{Counter} if !$AllowedChangeStates{ $Param{Change}->{ChangeState} };
 
     # output menu block
     $Self->{LayoutObject}->Block( Name => 'Menu' );
