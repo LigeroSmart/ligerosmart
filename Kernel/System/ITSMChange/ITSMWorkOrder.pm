@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.128 2011-12-06 10:06:00 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.129 2012-04-04 15:12:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.128 $) [1];
+$VERSION = qw($Revision: 1.129 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1556,8 +1556,9 @@ with the passed workorder id.
 After that the workorder is removed.
 
     my $Success = $WorkOrderObject->WorkOrderDelete(
-        WorkOrderID => 123,
-        UserID      => 1,
+        WorkOrderID  => 123,
+        NoNumberCalc => 1, # (optional) default 0, if 1 it prevents a recalculation of the workorder numbers
+        UserID       => 1,
     );
 
 =cut
@@ -3458,6 +3459,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.128 $ $Date: 2011-12-06 10:06:00 $
+$Revision: 1.129 $ $Date: 2012-04-04 15:12:40 $
 
 =cut

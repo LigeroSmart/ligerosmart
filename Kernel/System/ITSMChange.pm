@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.277 2012-03-09 12:59:14 ub Exp $
+# $Id: ITSMChange.pm,v 1.278 2012-04-04 15:12:40 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.277 $) [1];
+$VERSION = qw($Revision: 1.278 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -2312,8 +2312,9 @@ sub ChangeDelete {
         # delete the workorders
         for my $WorkOrderID ( @{ $ChangeData->{WorkOrderIDs} } ) {
             return if !$Self->{WorkOrderObject}->WorkOrderDelete(
-                WorkOrderID => $WorkOrderID,
-                UserID      => $Param{UserID},
+                WorkOrderID  => $WorkOrderID,
+                NoNumberCalc => 1,
+                UserID       => $Param{UserID},
             );
         }
     }
@@ -3799,6 +3800,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.277 $ $Date: 2012-03-09 12:59:14 $
+$Revision: 1.278 $ $Date: 2012-04-04 15:12:40 $
 
 =cut
