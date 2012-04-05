@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.278 2012-04-04 15:12:40 ub Exp $
+# $Id: ITSMChange.pm,v 1.279 2012-04-05 15:33:15 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.278 $) [1];
+$VERSION = qw($Revision: 1.279 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -2352,6 +2352,7 @@ sub ChangeDelete {
     $Self->EventHandler(
         Event => 'ChangeDeletePost',
         Data  => {
+            OldChangeData => $ChangeData,
             %Param,
         },
         UserID => $Param{UserID},
@@ -3800,6 +3801,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.278 $ $Date: 2012-04-04 15:12:40 $
+$Revision: 1.279 $ $Date: 2012-04-05 15:33:15 $
 
 =cut
