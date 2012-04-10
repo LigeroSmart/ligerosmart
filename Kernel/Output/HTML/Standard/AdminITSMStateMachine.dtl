@@ -1,8 +1,8 @@
 # --
 # AdminITSMStateMachine.dtl - provides HTML form for AdminITSMStateMachine
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMStateMachine.dtl,v 1.29 2011-01-24 21:20:26 ub Exp $
+# $Id: AdminITSMStateMachine.dtl,v 1.30 2012-04-10 14:45:21 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -98,7 +98,7 @@
                             <td class="Center Last">
 <!-- dtl:block:StateTransitionDeleteButton -->
                                 <a class="TrashCan" href="$Env{"Baselink"}Action=$Env{"Action"};Subaction=StateTransitionDelete;Class=$LQData{"Class"};StateID=$LQData{"StateID"};NextStateID=$LQData{"NextStateID"}">
-                                    $Text{"Delete this attachment"}
+                                    $Text{"Delete this state transition"}
                                 </a>
 <!-- dtl:block:StateTransitionDeleteButton -->
                             </td>
