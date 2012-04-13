@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ToolBarChangeManager.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarChangeManager.pm,v 1.5 2011-12-02 11:08:14 ub Exp $
+# $Id: ToolBarChangeManager.pm,v 1.6 2012-04-13 17:13:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::ITSMChange;
+use Kernel::System::Cache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -35,7 +36,11 @@ sub new {
     }
 
     # create needed objects
+    $Self->{CacheObject}  = Kernel::System::Cache->new(%Param);
     $Self->{ChangeObject} = Kernel::System::ITSMChange->new(%Param);
+
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL} = $Self->{ConfigObject}->Get('ITSMChange::ToolBar::CacheTTL') * 60;
 
     return $Self;
 }
@@ -73,15 +78,38 @@ sub Run {
     my $Count = 0;
     if ( $Config->{'Filter::ChangeStates'} && @{ $Config->{'Filter::ChangeStates'} } ) {
 
-        # count the number of viewable changes
-        $Count = $Self->{ChangeObject}->ChangeSearch(
-            ChangeManagerIDs => [ $Self->{UserID} ],
-            ChangeStates     => $Config->{'Filter::ChangeStates'},
-            Limit            => 1000,
-            Result           => 'COUNT',
-            MirrorDB         => 1,
-            UserID           => $Self->{UserID},
+        # check cache
+        my $CacheType = 'ITSMChangeManagement::ToolBarChangeManager::' . $Self->{UserID};
+        my $CacheKey = join ',', sort @{ $Config->{'Filter::ChangeStates'} };
+
+        my $Cache = $Self->{CacheObject}->Get(
+            Type => $CacheType,
+            Key  => $CacheKey,
         );
+
+        if ( defined $Cache ) {
+            $Count = $Cache;
+        }
+        else {
+
+            # count the number of viewable changes
+            $Count = $Self->{ChangeObject}->ChangeSearch(
+                ChangeManagerIDs => [ $Self->{UserID} ],
+                ChangeStates     => $Config->{'Filter::ChangeStates'},
+                Limit            => 1000,
+                Result           => 'COUNT',
+                MirrorDB         => 1,
+                UserID           => $Self->{UserID},
+            );
+
+            # set cache
+            $Self->{CacheObject}->Set(
+                Type  => $CacheType,
+                Key   => $CacheKey,
+                Value => $Count,
+                TTL   => $Self->{CacheTTL},
+            );
+        }
     }
 
     # get ToolBar object parameters

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.269 2012-02-16 15:56:01 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.270 2012-04-13 17:13:59 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -1348,6 +1348,42 @@
             </Hash>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###80-ToolBarChangeManagerCacheDelete" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::ToolBarChangeManagerCacheDelete</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###81-ToolBarMyChangesCacheDelete" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::ToolBarMyChangesCacheDelete</Item>
+                <Item Key="Event">(ChangeAddPost|ChangeUpdatePost|ChangeDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###82-ToolBarMyCABCacheDelete" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::Event::ToolBarMyCABCacheDelete</Item>
+                <Item Key="Event">(ChangeCABUpdatePost|ChangeCABDeletePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::EventModule###90-ConditionDelete" Required="0" Valid="1">
         <Description Translatable="1">ITSM event module that cleans up conditions.</Description>
         <Group>ITSM Change Management</Group>
@@ -1428,6 +1464,18 @@
             <Hash>
                 <Item Key="Module">Kernel::System::ITSMChange::Event::Condition</Item>
                 <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost)</Item>
+                <Item Key="Transaction">0</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::EventModule###80-ToolBarMyWorkOrdersCacheDelete" Required="0" Valid="1">
+        <Description Translatable="1">ITSM event module that deletes the cache for a toolbar.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::System::ITSMChange::ITSMWorkOrder::Event::ToolBarMyWorkOrdersCacheDelete</Item>
+                <Item Key="Event">(WorkOrderAddPost|WorkOrderUpdatePost|WorkOrderDeletePost)</Item>
                 <Item Key="Transaction">0</Item>
             </Hash>
         </Setting>
@@ -3881,6 +3929,14 @@
         <SubGroup>Core::Cache</SubGroup>
         <Setting>
             <String Regex="">7200</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::ToolBar::CacheTTL" Required="1" Valid="1">
+        <Description Translatable="1">Cache time in minutes for the change management toolbars. Default: 3 hours (180 minutes).</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::Cache</SubGroup>
+        <Setting>
+            <String Regex="">180</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::AddChangeLinkTicketTypes" Required="1" Valid="1">

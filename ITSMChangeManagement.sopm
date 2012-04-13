@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.243 2012-03-23 12:07:41 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.244 2012-04-13 17:13:59 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -139,6 +139,9 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryAdd.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/HistoryDelete.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Event/Notification.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarChangeManagerCacheDelete.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarMyCABCacheDelete.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Event/ToolBarMyChangesCacheDelete.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Action.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Attribute.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Expression.pm"/>
@@ -148,6 +151,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Object/ITSMWorkOrder.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMChange.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMCondition/Operator/ITSMWorkOrder.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/ToolBarMyWorkOrdersCacheDelete.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderActualTimesSet.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Event/WorkOrderNumberCalc.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/CABCheck.pm"/>
