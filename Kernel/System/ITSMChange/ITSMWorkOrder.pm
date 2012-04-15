@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.129 2012-04-04 15:12:40 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.130 2012-04-15 18:14:29 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.129 $) [1];
+$VERSION = qw($Revision: 1.130 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -54,6 +54,8 @@ create an object
     use Kernel::System::DB;
     use Kernel::System::Main;
     use Kernel::System::Time;
+    use Kernel::System::Group;
+    use Kernel::System::User;
     use Kernel::System::ITSMChange::ITSMWorkOrder;
 
     my $ConfigObject = Kernel::Config->new();
@@ -77,6 +79,21 @@ create an object
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
         LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $GroupObject = Kernel::System::Group->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        MainObject   => $MainObject,
+    );
+    my $UserObject = Kernel::System::User->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        DBObject     => $DBObject,
+        TimeObject   => $TimeObject,
         MainObject   => $MainObject,
     );
     my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new(
@@ -3459,6 +3476,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.129 $ $Date: 2012-04-04 15:12:40 $
+$Revision: 1.130 $ $Date: 2012-04-15 18:14:29 $
 
 =cut
