@@ -1,8 +1,8 @@
 # --
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.17 2011-12-09 15:41:34 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.18 2012-04-16 17:48:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 =head1 NAME
 
@@ -574,27 +574,97 @@ sub _CreateITSMDynamicFields {
     # get the definition for all dynamic fields for ITSM
     my @DynamicFields = $Self->_GetITSMDynamicFieldsDefinition();
 
-    # create dynamic fields
+    # create a dynamic fields lookup table
+    my %DynamicFieldLookup;
+    for my $DynamicField ( @{$DynamicFieldList} ) {
+        next if ref $DynamicField ne 'HASH';
+        $DynamicFieldLookup{ $DynamicField->{Name} } = $DynamicField;
+    }
+
+    # get current post master x-headers
+    my %PostMasterHeaders
+        = map { $_ => 1 } @{ $Self->{ConfigObject}->Get('PostmasterX-Header') };
+
+    my @PostMasterValuesToSet;
+
+    # create or update dynamic fields
     DYNAMICFIELD:
     for my $DynamicField (@DynamicFields) {
 
-        # create a new field
-        my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
-            Name       => $DynamicField->{Name},
-            Label      => $DynamicField->{Label},
-            FieldOrder => $NextOrderNumber,
-            FieldType  => $DynamicField->{FieldType},
-            ObjectType => $DynamicField->{ObjectType},
-            Config     => $DynamicField->{Config},
-            ValidID    => $ValidID,
-            UserID     => 1,
-        );
+        my $CreateDynamicField;
 
-        next DYNAMICFIELD if !$FieldID;
+        # check if the dynamic field already exists
+        if ( ref $DynamicFieldLookup{ $DynamicField->{Name} } ne 'HASH' ) {
+            $CreateDynamicField = 1;
+        }
 
-        # increase the order number
-        $NextOrderNumber++;
+        # if the field exists check if the type match with the needed type
+        elsif (
+            $DynamicFieldLookup{ $DynamicField->{Name} }->{FieldType}
+            ne $DynamicField->{FieldType}
+            )
+        {
+
+            # rename the field and create a new one
+            my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+                %{ $DynamicFieldLookup{ $DynamicField->{Name} } },
+                Name   => $DynamicFieldLookup{ $DynamicField->{Name} }->{Name} . 'Old',
+                UserID => 1,
+            );
+
+            $CreateDynamicField = 1;
+        }
+
+        # otherwise if the field exists and the type match, update it to the ITSM definition
+        else {
+            my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+                %{$DynamicField},
+                ID         => $DynamicFieldLookup{ $DynamicField->{Name} }->{ID},
+                FieldOrder => $DynamicFieldLookup{ $DynamicField->{Name} }->{FieldOrder},
+                ValidID    => $ValidID,
+                Reorder    => 0,
+                UserID     => 1,
+            );
+        }
+
+        # check if new field has to be created
+        if ($CreateDynamicField) {
+
+            # create a new field
+            my $FieldID = $Self->{DynamicFieldObject}->DynamicFieldAdd(
+                Name       => $DynamicField->{Name},
+                Label      => $DynamicField->{Label},
+                FieldOrder => $NextOrderNumber,
+                FieldType  => $DynamicField->{FieldType},
+                ObjectType => $DynamicField->{ObjectType},
+                Config     => $DynamicField->{Config},
+                ValidID    => $ValidID,
+                UserID     => 1,
+            );
+            next DYNAMICFIELD if !$FieldID;
+
+            # increase the order number
+            $NextOrderNumber++;
+        }
+
+        # check if x-header for the dynamic field already exists
+        if ( !$PostMasterHeaders{ 'X-OTRS-DynamicField-' . $DynamicField->{Name} } ) {
+            $PostMasterHeaders{ 'X-OTRS-DynamicField-' . $DynamicField->{Name} } = 1;
+        }
+        if ( !$PostMasterHeaders{ 'X-OTRS-FollowUp-DynamicField-' . $DynamicField->{Name} } ) {
+            $PostMasterHeaders{ 'X-OTRS-FollowUp-DynamicField-' . $DynamicField->{Name} } = 1;
+        }
     }
+
+    # revert values from hash into an array
+    @PostMasterValuesToSet = sort keys %PostMasterHeaders;
+
+    # execute the update action in sysconfig
+    my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'PostmasterX-Header',
+        Value => \@PostMasterValuesToSet,
+    );
 
     return 1;
 }
@@ -739,6 +809,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2011-12-09 15:41:34 $
+$Revision: 1.18 $ $Date: 2012-04-16 17:48:27 $
 
 =cut
