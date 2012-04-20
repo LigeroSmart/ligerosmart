@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.30 2011-05-16 15:57:53 ub Exp $
+# $Id: AgentFAQZoom.pm,v 1.31 2012-04-20 00:18:27 ep Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -573,7 +573,7 @@ sub Run {
 
         my $CancelButtonClass = 'ZoomSmallButton';
 
-        # show the "Or" block beteen the buttons and the Cancel & close window label
+        # show the "Or" block between the buttons and the Cancel & close window label
         if ($ShowOrBlock) {
             $Self->{LayoutObject}->Block(
                 Name => 'Or',
