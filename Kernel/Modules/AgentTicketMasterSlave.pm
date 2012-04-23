@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.6 2012-02-21 08:03:55 cg Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.7 2012-04-23 13:22:57 te Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1620,8 +1620,8 @@ sub _Mask {
             for my $TicketID (@TicketIDs) {
                 my %CurrentTicket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
                 next if !%CurrentTicket;
-                next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
-                next if $Ticket{TicketID} eq $CurrentTicket{TicketID};
+                next if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq "SlaveOf:$CurrentTicket{TicketNumber}";
+                next if %Ticket && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } && $Ticket{TicketID} eq $CurrentTicket{TicketID};
 
                 $Data{"SlaveOf:$CurrentTicket{TicketNumber}"}
                  = $Self->{LanguageObject}->Get('Slave of Ticket#') ."$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
@@ -1631,7 +1631,7 @@ sub _Mask {
             Data => { '' => '-', %Data },
             Name => 'DynamicField_' . $MasterSlaveDynamicField,
             Translation => 0,
-            SelectedID  => $Param{ResponsibleID},,
+            SelectedID  => $Param{ResponsibleID},
         );
         $Self->{LayoutObject}->Block(
             Name => 'MasterSlave',
