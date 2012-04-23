@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentMasterSlavePrepareTicket.pm - to prepare master/slave pull downs
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentMasterSlavePrepareTicket.pm,v 1.5 2012-02-20 23:43:21 cg Exp $
+# $Id: AgentMasterSlavePrepareTicket.pm,v 1.6 2012-04-23 10:57:28 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::Language;
 use Kernel::System::DynamicField;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -91,13 +91,6 @@ sub PreRun {
     $Self->{ConfigObject}->{"Ticket::Frontend::$Self->{Action}"}->{DynamicField}
         ->{$MasterSlaveDynamicField} = 1;
 
-    # get current ticket information
-    my %Ticket;
-    my $TicketID = $Self->{ParamObject}->GetParam( Param => 'TicketID' );
-    if ($TicketID) {
-        %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
-    }
-
     # set dynamic field posible values
     $DynamicField->{Config}->{PossibleValues} = {
         Master => $Self->{LanguageObject}->Get('New Master Ticket'),
@@ -110,19 +103,16 @@ sub PreRun {
             TicketID      => $TicketID,
             DynamicFields => 1,
         );
+
         next if !%CurrentTicket;
-        next if !defined $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
-        next
-            if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } eq
-                "SlaveOf:$CurrentTicket{TicketNumber}";
-        next if $Ticket{TicketID} eq $CurrentTicket{TicketID};
 
         # set dynamic field posible values
-        $DynamicField->{Config}->{PossibleValues} = {
-            "SlaveOf:$CurrentTicket{TicketNumber}" =>
-                $Self->{LanguageObject}->Get('Slave of Ticket#')
-                . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}",
-        };
+        $DynamicField->{Config}->{PossibleValues}{
+            "SlaveOf:$CurrentTicket{TicketNumber}"
+            }
+            =
+            $Self->{LanguageObject}->Get('Slave of Ticket#')
+            . "$CurrentTicket{TicketNumber}: $CurrentTicket{Title}";
     }
 
     # set new dynamic field values
