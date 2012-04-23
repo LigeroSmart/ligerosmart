@@ -2,7 +2,7 @@
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.4 2012-02-20 23:43:21 cg Exp $
+# $Id: MasterSlave.pm,v 1.5 2012-04-23 13:24:00 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -119,7 +119,6 @@ sub MasterSlave {
         )
         )
     {
-
         if (
             $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
             && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
@@ -261,7 +260,7 @@ sub MasterSlave {
         $Self->{BackendObject}->ValueSet(
             DynamicFieldConfig => $DynamicField,
             ObjectID           => $Param{TicketID},
-            Value              => $Param{MasterSlaveTicketFreeTextContent},
+            Value              => $Param{MasterSlaveDynamicFieldValue},
             UserID             => $Param{UserID},
         );
     }
@@ -365,6 +364,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2012-02-20 23:43:21 $
+$Revision: 1.5 $ $Date: 2012-04-23 13:24:00 $
 
 =cut
