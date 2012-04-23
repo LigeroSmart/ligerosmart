@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.5 2012-04-23 13:24:38 te Exp $
+# $Id: MasterSlave.pm,v 1.6 2012-04-23 13:45:13 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -64,7 +64,7 @@ sub Run {
     my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField');
 
     # link master/slave tickets
-    if ( $Param{Event} eq 'TicketFreeTextUpdate' ) {
+    if ( $Param{Event} eq 'TicketDynamicFieldUpdate_' . $MasterSlaveDynamicField ) {
         if (
             $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } &&
             $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.+?)$/
