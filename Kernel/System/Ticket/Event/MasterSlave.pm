@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.4 2012-02-24 01:34:34 cg Exp $
+# $Id: MasterSlave.pm,v 1.5 2012-04-23 13:24:38 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,7 +133,7 @@ sub Run {
     # no slaves
     if ( !@TicketIDs ) {
         $Self->{LogObject}->Log(
-            Priority => 'error',
+            Priority => 'notice',
             Message  => "No Slaves of ticket $Ticket{TicketID}!",
         );
         return 1;
