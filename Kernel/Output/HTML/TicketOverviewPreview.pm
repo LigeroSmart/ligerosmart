@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.18 2012-01-26 17:34:43 ub Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.69 2012/01/26 09:22:02 sb Exp $
+# $Id: TicketOverviewPreview.pm,v 1.19 2012-04-24 08:52:36 ub Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.72 2012/04/20 12:16:58 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -278,6 +278,14 @@ sub _Show {
     my %Article = %{ $ArticleBody[0] || {} };
     my $ArticleCount = scalar @ArticleBody;
 
+    # Fallback for tickets without articles: get at least basic ticket data
+    if ( !%Article ) {
+        %Article = $Self->{TicketObject}->TicketGet(
+            TicketID      => $Param{TicketID},
+            DynamicFields => 0,
+        );
+    }
+
     # user info
     my %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $Article{OwnerID},
@@ -492,40 +500,42 @@ sub _Show {
     }
 
     # run article modules
-    if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') eq 'HASH' ) {
-        my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') };
-        for my $Job ( sort keys %Jobs ) {
+    if ( $Article{ArticleID} ) {
+        if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') eq 'HASH' ) {
+            my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') };
+            for my $Job ( sort keys %Jobs ) {
 
-            # load module
-            if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                return $Self->{LayoutObject}->FatalError();
-            }
-            my $Object = $Jobs{$Job}->{Module}->new(
-                %{$Self},
-                ArticleID => $Article{ArticleID},
-                UserID    => $Self->{UserID},
-                Debug     => $Self->{Debug},
-            );
-
-            # run module
-            my @Data = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
-
-            for my $DataRef (@Data) {
-                if ( $DataRef->{Successful} ) {
-                    $DataRef->{Result} = 'Error';
+                # load module
+                if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
+                    return $Self->{LayoutObject}->FatalError();
                 }
-                else {
-                    $DataRef->{Result} = 'Success';
-                }
-
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleOption',
-                    Data => $DataRef,
+                my $Object = $Jobs{$Job}->{Module}->new(
+                    %{$Self},
+                    ArticleID => $Article{ArticleID},
+                    UserID    => $Self->{UserID},
+                    Debug     => $Self->{Debug},
                 );
-            }
 
-            # filter option
-            $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
+                # run module
+                my @Data = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
+
+                for my $DataRef (@Data) {
+                    if ( $DataRef->{Successful} ) {
+                        $DataRef->{Result} = 'Error';
+                    }
+                    else {
+                        $DataRef->{Result} = 'Success';
+                    }
+
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleOption',
+                        Data => $DataRef,
+                    );
+                }
+
+                # filter option
+                $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
+            }
         }
     }
 
@@ -850,36 +860,44 @@ sub _Show {
         }
     }
 
-    # check if a certain article type should be displayed as expanded
-    my $PreviewArticleTypeExpanded
-        = $Self->{ConfigObject}->Get('Ticket::Frontend::Overview::PreviewArticleTypeExpanded')
-        || '';
+    if (@ArticleBody) {
 
-    # if a certain article type should be shown as expanded, set the
-    # last article of this type as active
-    if ($PreviewArticleTypeExpanded) {
+        # check if a certain article type should be displayed as expanded
+        my $PreviewArticleTypeExpanded
+            = $Self->{ConfigObject}->Get('Ticket::Frontend::Overview::PreviewArticleTypeExpanded')
+            || '';
 
-        my $ClassCount = 0;
-        for my $ArticleItem (@ArticleBody) {
-            next if !$ArticleItem;
+        # if a certain article type should be shown as expanded, set the
+        # last article of this type as active
+        if ($PreviewArticleTypeExpanded) {
 
-            # check if current article type should be shown as expanded
-            if ( $ArticleItem->{ArticleType} eq $PreviewArticleTypeExpanded ) {
-                $ArticleItem->{Class} = 'Active';
-                last;
+            my $ClassCount = 0;
+            for my $ArticleItem (@ArticleBody) {
+                next if !$ArticleItem;
+
+                # check if current article type should be shown as expanded
+                if ( $ArticleItem->{ArticleType} eq $PreviewArticleTypeExpanded ) {
+                    $ArticleItem->{Class} = 'Active';
+                    last;
+                }
+
+                # otherwise display the last article in the list as expanded (default)
+                elsif ( $ClassCount == $#ArticleBody ) {
+                    $ArticleBody[0]->{Class} = 'Active';
+                }
+                $ClassCount++;
             }
-
-            # otherwise display the last article in the list as expanded (default)
-            elsif ( $ClassCount == $#ArticleBody ) {
-                $ArticleBody[0]->{Class} = 'Active';
-            }
-            $ClassCount++;
         }
-    }
 
-    # otherwise display the last article in the list as expanded (default)
-    else {
-        $ArticleBody[0]->{Class} = 'Active';
+        # otherwise display the last article in the list as expanded (default)
+        else {
+            $ArticleBody[0]->{Class} = 'Active';
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ArticlesPreviewArea',
+            Data => { %Param, %Article, %AclAction },
+        );
     }
 
     # show inline article

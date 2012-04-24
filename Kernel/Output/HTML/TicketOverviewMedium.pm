@@ -1,9 +1,9 @@
 # --
 # Kernel/Output/HTML/TicketOverviewMedium.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.13 2011-12-07 11:08:26 ub Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.52 2011/12/05 20:56:04 mb Exp $
+# $Id: TicketOverviewMedium.pm,v 1.14 2012-04-24 08:52:36 ub Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.54 2012/04/20 12:00:31 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -261,6 +261,14 @@ sub _Show {
         DynamicFields => 0,
     );
 
+    # Fallback for tickets without articles: get at least basic ticket data
+    if ( !%Article ) {
+        %Article = $Self->{TicketObject}->TicketGet(
+            TicketID      => $Param{TicketID},
+            DynamicFields => 0,
+        );
+    }
+
 # ---
 # ITSM
 # ---
@@ -472,33 +480,35 @@ sub _Show {
     }
 
     # run article modules
-    if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') eq 'HASH' ) {
-        my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') };
-        for my $Job ( sort keys %Jobs ) {
+    if ( $Article{ArticleID} ) {
+        if ( ref $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') eq 'HASH' ) {
+            my %Jobs = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::ArticlePreViewModule') };
+            for my $Job ( sort keys %Jobs ) {
 
-            # load module
-            if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
-                return $Self->{LayoutObject}->FatalError();
-            }
-            my $Object = $Jobs{$Job}->{Module}->new(
-                %{$Self},
-                ArticleID => $Article{ArticleID},
-                UserID    => $Self->{UserID},
-                Debug     => $Self->{Debug},
-            );
-
-            # run module
-            my @Data = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
-
-            for my $DataRef (@Data) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'ArticleOption',
-                    Data => $DataRef,
+                # load module
+                if ( !$Self->{MainObject}->Require( $Jobs{$Job}->{Module} ) ) {
+                    return $Self->{LayoutObject}->FatalError();
+                }
+                my $Object = $Jobs{$Job}->{Module}->new(
+                    %{$Self},
+                    ArticleID => $Article{ArticleID},
+                    UserID    => $Self->{UserID},
+                    Debug     => $Self->{Debug},
                 );
-            }
 
-            # filter option
-            $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
+                # run module
+                my @Data = $Object->Check( Article => \%Article, %Param, Config => $Jobs{$Job} );
+
+                for my $DataRef (@Data) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ArticleOption',
+                        Data => $DataRef,
+                    );
+                }
+
+                # filter option
+                $Object->Filter( Article => \%Article, %Param, Config => $Jobs{$Job} );
+            }
         }
     }
 
