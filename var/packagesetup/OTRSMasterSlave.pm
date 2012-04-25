@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.4 2012-04-25 18:30:28 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.5 2012-04-25 18:36:56 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 =head1 NAME
 
@@ -337,11 +337,11 @@ sub _MigrateMasterSlave {
     return 1 if IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} );
 
     # and check if we got a valid source for our migration
-    return 0 if !IsHashRefWithData( $Self->{DynamicFieldLookup}->{'Fretext12'} );
+    return 0 if !IsHashRefWithData( $Self->{DynamicFieldLookup}->{'TICKETFREETEXT12'} );
 
-    # now get the dynamic field config for the migrated 'Freetext12' field
+    # now get the dynamic field config for the migrated 'TICKETFREETEXT12' field
     my $FreeText12DynamicFieldData
-        = $Self->{DynamicFieldObject}->DynamicFieldGet( Name => 'Freetext12' );
+        = $Self->{DynamicFieldObject}->DynamicFieldGet( Name => 'TICKETFREETEXT12' );
 
     # return 0 if we got no valid dynamic field data
     return 0 if !IsHashRefWithData($FreeText12DynamicFieldData);
@@ -373,6 +373,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.4 $ $Date: 2012-04-25 18:30:28 $
+$Revision: 1.5 $ $Date: 2012-04-25 18:36:56 $
 
 =cut
