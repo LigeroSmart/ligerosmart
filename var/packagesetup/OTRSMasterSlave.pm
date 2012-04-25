@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.3 2012-04-25 18:16:55 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.4 2012-04-25 18:30:28 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -164,13 +164,11 @@ run the code install part
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
-    # get the repository list to check if we got (OTRS)MasterSlave installed
-    my @Repositories = $Self->{PackageObject}->RepositoryList();
-
     # if we got an installed version of MasterSlave, migrate the data
     # otherwise set the dynamic fields
-    if ( grep { $_ eq 'MasterSlave' } @Repositories ) {
+    if ( $Self->{PackageObject}->PackageIsInstalled( Name => 'MasterSlave' ) ) {
         $Self->_MigrateMasterSlave();
+        $Self->{PackageObject}->RepositoryRemove( Name => 'MasterSlave' );
     }
     else {
         $Self->_SetDynamicFields();
@@ -375,6 +373,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-04-25 18:16:55 $
+$Revision: 1.4 $ $Date: 2012-04-25 18:30:28 $
 
 =cut
