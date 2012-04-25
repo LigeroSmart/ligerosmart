@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: OTRSMasterSlave.sopm,v 1.6 2012-02-21 07:25:04 cg Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.7 2012-04-25 18:16:55 te Exp $</CVS>
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -58,7 +58,7 @@
         }
 
     ]]></CodeInstall>
-    <CodeUpgrade Type="post"><![CDATA[
+    <CodeUpgrade Type="post" Version="1.2.5"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUpgrade';

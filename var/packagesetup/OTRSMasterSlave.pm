@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.2 2012-02-21 04:54:59 cg Exp $
+# $Id: OTRSMasterSlave.pm,v 1.3 2012-04-25 18:16:55 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,9 +20,10 @@ use Kernel::System::State;
 use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
+use Kernel::System::Package;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -128,6 +129,7 @@ sub new {
     $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
     $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{PackageObject}      = Kernel::System::Package->new( %{$Self} );
 
     # get dynamic fields list
     $Self->{DynamicFieldsList} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -162,7 +164,17 @@ run the code install part
 sub CodeInstall {
     my ( $Self, %Param ) = @_;
 
-    $Self->_SetDynamicFields();
+    # get the repository list to check if we got (OTRS)MasterSlave installed
+    my @Repositories = $Self->{PackageObject}->RepositoryList();
+
+    # if we got an installed version of MasterSlave, migrate the data
+    # otherwise set the dynamic fields
+    if ( grep { $_ eq 'MasterSlave' } @Repositories ) {
+        $Self->_MigrateMasterSlave();
+    }
+    else {
+        $Self->_SetDynamicFields();
+    }
 
     return 1;
 }
@@ -178,8 +190,6 @@ run the code reinstall part
 sub CodeReinstall {
     my ( $Self, %Param ) = @_;
 
-    $Self->_SetDynamicFields();
-
     return 1;
 }
 
@@ -194,7 +204,9 @@ run the code upgrade part
 sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
-    $Self->_SetDynamicFields();
+    # upgrade/migrate only in case there is a installed
+    # version of OTRSMasterSlave version < 1.2.5
+    $Self->_MigrateMasterSlave();
 
     return 1;
 }
@@ -316,6 +328,37 @@ sub _SetDynamicFields {
     return 1;
 }
 
+sub _MigrateMasterSlave {
+    my ( $Self, %Param ) = @_;
+
+    # get dynamic field names from sysconfig
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField')
+        || 'MasterSlave';
+
+    # check if there isn't allready a dynamic field with the destinated name
+    return 1 if IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} );
+
+    # and check if we got a valid source for our migration
+    return 0 if !IsHashRefWithData( $Self->{DynamicFieldLookup}->{'Fretext12'} );
+
+    # now get the dynamic field config for the migrated 'Freetext12' field
+    my $FreeText12DynamicFieldData
+        = $Self->{DynamicFieldObject}->DynamicFieldGet( Name => 'Freetext12' );
+
+    # return 0 if we got no valid dynamic field data
+    return 0 if !IsHashRefWithData($FreeText12DynamicFieldData);
+
+    # update the name of the dynamic field to MasterSlave and store it
+    # and return the result of this function
+    $FreeText12DynamicFieldData->{Name} = 'MasterSlave';
+    return $Self->{DynamicFieldObject}->DynamicFieldUpdate(
+        %{$FreeText12DynamicFieldData},
+        ValidID => 1,
+        Reorder => 0,
+        UserID  => 1,
+    );
+}
+
 1;
 
 =back
@@ -332,6 +375,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2012-02-21 04:54:59 $
+$Revision: 1.3 $ $Date: 2012-04-25 18:16:55 $
 
 =cut
