@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.7 2012-04-26 12:27:55 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.8 2012-04-26 12:36:28 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -378,13 +378,13 @@ sub _MigrateMasterSlave {
     );
 
     # activate the DynamicField in ticket details block
-    my $KeyString       = "Ticket::Frontend::AgentTicketZoom###DynamicField";
+    my $KeyString       = "Ticket::Frontend::AgentTicketZoom";
     my $ExistingSetting = $Self->{ConfigObject}->Get($KeyString) || {};
     my %ValuesToSet     = %{ $ExistingSetting->{DynamicField} || {} };
     $ValuesToSet{MasterSlave} = 1;
     return $Self->{ConfigObject}->ConfigItemUpdate(
         Valid => 1,
-        Key   => $KeyString,
+        Key   => $KeyString . "###DynamicField",
         Value => \%ValuesToSet,
     );
 }
@@ -405,6 +405,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2012-04-26 12:27:55 $
+$Revision: 1.8 $ $Date: 2012-04-26 12:36:28 $
 
 =cut
