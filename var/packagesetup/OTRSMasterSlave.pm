@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.5 2012-04-25 18:36:56 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.6 2012-04-26 09:49:01 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -336,21 +336,42 @@ sub _MigrateMasterSlave {
     # check if there isn't allready a dynamic field with the destinated name
     return 1 if IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} );
 
-    # and check if we got a valid source for our migration
-    return 0 if !IsHashRefWithData( $Self->{DynamicFieldLookup}->{'TICKETFREETEXT12'} );
+    # get the migrated field ID by searching for possible data
+    $Self->{DBObject}->Prepare(
+        SQL => "SELECT dfv.field_id FROM dynamic_field_value dfv "
+            . "WHERE dfv.value_text LIKE 'SlaveOf:%' OR dfv.value_text = 'Master'",
+        Limit => 1,
+    );
 
-    # now get the dynamic field config for the migrated 'TICKETFREETEXT12' field
-    my $FreeText12DynamicFieldData
-        = $Self->{DynamicFieldObject}->DynamicFieldGet( Name => 'TICKETFREETEXT12' );
+    my $OldMasterSlaveDynamicFieldID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $OldMasterSlaveDynamicFieldID = $Row[0];
+    }
 
-    # return 0 if we got no valid dynamic field data
-    return 0 if !IsHashRefWithData($FreeText12DynamicFieldData);
+    # check if we found a valid ID
+    return 0 if !$OldMasterSlaveDynamicFieldID;
+
+    # try to get the dynfield data (for fieldorder etc.)
+    my $OldDynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        ID => $OldMasterSlaveDynamicFieldID,
+    );
+
+    return 0 if !IsHashRefWithData($OldDynamicField);
 
     # update the name of the dynamic field to MasterSlave and store it
     # and return the result of this function
-    $FreeText12DynamicFieldData->{Name} = 'MasterSlave';
     return $Self->{DynamicFieldObject}->DynamicFieldUpdate(
-        %{$FreeText12DynamicFieldData},
+        %{$OldDynamicField},
+        Name      => $MasterSlaveDynamicField,
+        Label     => 'Master Ticket',
+        FieldType => 'Dropdown',
+        Config    => {
+            DefaultValue   => '',
+            PossibleValues => {
+                Master => 'New Master Ticket',
+            },
+            TranslatableValues => 1,
+        },
         ValidID => 1,
         Reorder => 0,
         UserID  => 1,
@@ -373,6 +394,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2012-04-25 18:36:56 $
+$Revision: 1.6 $ $Date: 2012-04-26 09:49:01 $
 
 =cut
