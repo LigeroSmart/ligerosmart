@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.8 2012-04-26 12:36:28 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.9 2012-04-26 12:52:27 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,9 +21,10 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
+use Kernel::System::SysConfig;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -130,6 +131,7 @@ sub new {
     $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{PackageObject}      = Kernel::System::Package->new( %{$Self} );
+    $Self->{SysConfigObject}    = Kernel::System::SysConfig->new( %{$Self} );
 
     # get dynamic fields list
     $Self->{DynamicFieldsList} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -382,7 +384,7 @@ sub _MigrateMasterSlave {
     my $ExistingSetting = $Self->{ConfigObject}->Get($KeyString) || {};
     my %ValuesToSet     = %{ $ExistingSetting->{DynamicField} || {} };
     $ValuesToSet{MasterSlave} = 1;
-    return $Self->{ConfigObject}->ConfigItemUpdate(
+    return $Self->{SysConfigObject}->ConfigItemUpdate(
         Valid => 1,
         Key   => $KeyString . "###DynamicField",
         Value => \%ValuesToSet,
@@ -405,6 +407,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2012-04-26 12:36:28 $
+$Revision: 1.9 $ $Date: 2012-04-26 12:52:27 $
 
 =cut
