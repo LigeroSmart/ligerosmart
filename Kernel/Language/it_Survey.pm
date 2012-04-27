@@ -2,7 +2,7 @@
 # Kernel/Language/it_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: it_Survey.pm,v 1.1 2012-02-22 12:50:20 mb Exp $
+# $Id: it_Survey.pm,v 1.2 2012-04-27 10:18:49 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -84,6 +84,8 @@ sub Data {
         'Corpo del testo di default per la notifica via email al cliente riguardo un nuovo sondaggio.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
         'Mittente di default per la notifica via email al cliente riguardo un nuovo sondaggio.';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
+        '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         'Oggetto di default per la notifica via email al cliente riguardo un nuovo sondaggio.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =

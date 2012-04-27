@@ -2,7 +2,7 @@
 # Kernel/Language/pt_BR_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: pt_BR_Survey.pm,v 1.2 2012-02-22 10:59:11 mb Exp $
+# $Id: pt_BR_Survey.pm,v 1.3 2012-04-27 10:18:49 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -108,6 +108,8 @@ sub Data {
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
         '';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
+        '';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
         '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
         '';

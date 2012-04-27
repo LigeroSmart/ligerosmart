@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # Copyright (C) 2012 FCCN - Rui Francisco <rui.francisco@fccn.pt>
 # --
-# $Id: pt_PT_Survey.pm,v 1.1 2012-03-23 13:52:20 jh Exp $
+# $Id: pt_PT_Survey.pm,v 1.2 2012-04-27 10:18:49 jp Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,6 +81,8 @@ sub Data {
     $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} = 'Número de dias entre envio notificações por cliente, (0 significa enviar sempre)';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} = 'Corpo por omissão do email da notificação de inquérito';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} = 'Remetente por omissão do email da notificação de inquérito';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
+        '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} = 'Assunto por omissão do email da notificação de inquérito';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} = 'Define a vista pequena com a lista de inquéritos';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} = 'Define as colunas a mostrar na vista de inquéritos. Não interfere com a posição das colunas';
