@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.24 2012-01-27 15:14:40 ub Exp $
+# $Id: Service.pm,v 1.25 2012-04-30 09:33:14 ub Exp $
 # $OldId: Service.pm,v 1.50 2012/01/13 08:16:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -358,8 +358,6 @@ sub ServiceListGet {
 # ---
 # ITSM
 # ---
-        #$ServiceData->{Hallo1} = 'Hallo1';
-
         # get current incident state, calculated from related config items and child services
         my %NewServiceData = $Self->_ServiceGetCurrentIncidentState(
             ServiceData => $ServiceData,
@@ -367,8 +365,6 @@ sub ServiceListGet {
             UserID      => $Param{UserID},
         );
         $ServiceData = \%NewServiceData;
-
-        #$ServiceData->{Hallo2} = 'Hallo2';
 # ---
 
         # merge hash
@@ -1553,6 +1549,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2012-01-27 15:14:40 $
+$Revision: 1.25 $ $Date: 2012-04-30 09:33:14 $
 
 =cut
