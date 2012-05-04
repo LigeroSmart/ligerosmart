@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.13 2012-05-04 11:43:05 te Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.14 2012-05-04 11:51:23 te Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1598,7 +1598,7 @@ sub _Mask {
         if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue eq 'Master' ) {
             $Data{UnsetMaster} = $Self->{LanguageObject}->Get('Unset Master Ticket');
         }
-        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue =~ m{^SlaveOf:(\d+)$}xms ) {
+        if ( $UnsetMasterSlave && $TicketMasterSlaveDynamicFieldValue =~ m{^SlaveOf:(.*?)$}xms ) {
             $Data{UnsetSlave}  = $Self->{LanguageObject}->Get('Unset Slave Ticket');
         }
         if ( $UpdateMasterSlave ) {

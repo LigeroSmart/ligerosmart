@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.7 2012-04-24 07:10:20 te Exp $
+# $Id: MasterSlave.pm,v 1.8 2012-05-04 11:51:23 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -67,7 +67,7 @@ sub Run {
     if ( $Param{Event} eq 'TicketDynamicFieldUpdate_' . $MasterSlaveDynamicField ) {
         if (
             $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } &&
-            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.+?)$/
+            $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } =~ /^SlaveOf:(.*?)$/
             )
         {
 
@@ -127,7 +127,7 @@ sub Run {
             DynamicFields => 1,
         );
         next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicField };
-        next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^SlaveOf:(\d+)$/;
+        next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField } !~ /^SlaveOf:(.*?)$/;
 
         # remember ticket id
         push @TicketIDs, $TicketID;

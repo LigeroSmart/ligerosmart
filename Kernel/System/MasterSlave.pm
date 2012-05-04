@@ -2,7 +2,7 @@
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.5 2012-04-23 13:24:00 te Exp $
+# $Id: MasterSlave.pm,v 1.6 2012-05-04 11:51:23 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -111,6 +111,8 @@ sub MasterSlave {
         ? %{ $Param{Ticket} }
         : $Self->{TicketObject}->TicketGet( TicketID => $Param{TicketID}, DynamicFields => 1 );
 
+    # set a new master ticket
+    # check if it is already a master ticket
     if (
         $Param{MasterSlaveDynamicFieldValue} eq 'Master'
         && (
@@ -119,9 +121,12 @@ sub MasterSlave {
         )
         )
     {
+
+        # check if it was a slave ticket before and if we have to delete
+        # the old parent child link (MasterSlaveKeepParentChildAfterUnset)
         if (
             $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
-            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(.*?)$/
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
             )
         {
@@ -144,6 +149,8 @@ sub MasterSlave {
         my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
             Name => $MasterSlaveDynamicFieldName,
         );
+
+        # set new master ticket
         $Self->{BackendObject}->ValueSet(
             DynamicFieldConfig => $DynamicField,
             ObjectID           => $Param{TicketID},
@@ -151,8 +158,11 @@ sub MasterSlave {
             UserID             => $Param{UserID},
         );
     }
+
+    # set a new slave ticket
+    # check if it's already the slave of the wished master ticket
     elsif (
-        $Param{MasterSlaveDynamicFieldValue} =~ /^SlaveOf:(\d+)$/
+        $Param{MasterSlaveDynamicFieldValue} =~ /^SlaveOf:(.*?)$/
         && (
             !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
             || $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } ne
@@ -194,7 +204,7 @@ sub MasterSlave {
                 DynamicFields => 1,
             );
             next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
-            next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } !~ /^SlaveOf:(\d+)$/;
+            next if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } !~ /^SlaveOf:(.*?)$/;
 
             # remember ticket id
             push @SlaveTicketIDs, $LinkedTicketID;
@@ -234,7 +244,7 @@ sub MasterSlave {
         }
         elsif (
             $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
-            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(.*?)$/
             && !$Param{MasterSlaveKeepParentChildAfterUpdate}
             )
         {
@@ -295,7 +305,7 @@ sub MasterSlave {
                 next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
                 next
                     if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
-                        !~ /^SlaveOf:(\d+)$/;
+                        !~ /^SlaveOf:(.*?)$/;
 
                 # remember ticket id
                 push @SlaveTicketIDs, $LinkedTicketID;
@@ -315,7 +325,7 @@ sub MasterSlave {
         elsif (
             $Param{MasterSlaveDynamicFieldValue} eq 'UnsetSlave'
             && !$Param{MasterSlaveKeepParentChildAfterUnset}
-            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(\d+)$/
+            && $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName } =~ /^SlaveOf:(.*?)$/
             )
         {
             my $SourceKey = $Self->{TicketObject}->TicketIDLookup(
@@ -364,6 +374,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2012-04-23 13:24:00 $
+$Revision: 1.6 $ $Date: 2012-05-04 11:51:23 $
 
 =cut
