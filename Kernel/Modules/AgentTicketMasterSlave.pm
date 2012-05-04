@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.7 2012-04-23 13:22:57 te Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.8 2012-05-04 10:17:43 te Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -85,9 +85,9 @@ sub new {
 # MasterSlave
 # ---
     # get master/slave dynamic field
-    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || '';
+    my $MasterSlaveDynamicField = $Self->{ConfigObject}->Get('MasterSlave::DynamicField');
     # set master-slave dynamic field
-    if ( $MasterSlaveDynamicField && $Self->{Subaction} eq 'Store' ) {
+    if ( $MasterSlaveDynamicField ) {
         $Self->{Config}->{DynamicField}->{$MasterSlaveDynamicField} = 1;
     }
 #---
