@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.9 2012-05-04 11:06:31 te Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.10 2012-05-04 11:18:00 te Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -777,7 +777,15 @@ sub Run {
                         MasterSlaveKeepParentChildAfterUpdate => $MasterSlaveKeepParentChildAfterUpdate,
                     );
                 }
+                else {
+                    use Data::Dumper;
+                    print STDERR "Dumper: ". Dumper(\%DynamicFieldValues) ."\n";
+                }
                 next DYNAMICFIELD;
+            }
+            else {
+                print STDERR "TE Debug: MasterSlaveAdvancedEnabled = $MasterSlaveAdvancedEnabled\n";
+                print STDERR "TE Debug: MasterSlaveDynamicField = $MasterSlaveDynamicField\n";
             }
 # ---
 
