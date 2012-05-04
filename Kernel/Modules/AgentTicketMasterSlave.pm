@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.11 2012-05-04 11:26:38 te Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.12 2012-05-04 11:32:39 te Exp $
 # $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -769,6 +769,13 @@ print STDERR "Dumper: ". Dumper($Self->{DynamicField}) ."\n";
                 && $DynamicFieldConfig->{Name} eq $MasterSlaveDynamicField,
             ) {
                 if ( $DynamicFieldValues{$MasterSlaveDynamicField} ) {
+                print STDERR "TE Debug: MasterSlaveDynamicFieldName           => $MasterSlaveDynamicField\n";
+                print STDERR "TE Debug: MasterSlaveDynamicFieldValue          => $DynamicFieldValues{$MasterSlaveDynamicField}\n";
+                print STDERR "TE Debug: TicketID                              => $Self->{TicketID}\n";
+                print STDERR "TE Debug: UserID                                => $Self->{UserID}\n";
+                print STDERR "TE Debug: MasterSlaveFollowUpdatedMaster        => $MasterSlaveFollowUpdatedMaster\n";
+                print STDERR "TE Debug: MasterSlaveKeepParentChildAfterUnset  => $MasterSlaveKeepParentChildAfterUnset\n";
+                print STDERR "TE Debug: MasterSlaveKeepParentChildAfterUpdate => $MasterSlaveKeepParentChildAfterUpdate\n";
                     $Self->{MasterSlaveObject}->MasterSlave(
                         MasterSlaveDynamicFieldName           => $MasterSlaveDynamicField,
                         MasterSlaveDynamicFieldValue          => $DynamicFieldValues{$MasterSlaveDynamicField},
