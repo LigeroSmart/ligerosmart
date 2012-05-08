@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.20 2012-03-12 16:32:24 des Exp $
+# $Id: PublicFAQSearch.pm,v 1.21 2012-05-08 20:35:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,11 +14,12 @@ package Kernel::Modules::PublicFAQSearch;
 use strict;
 use warnings;
 
+use MIME::Base64 qw();
 use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -141,7 +142,7 @@ sub Run {
             # store parameters on a local profile
             for my $Element (@Array) {
                 $Self->{Profile}
-                    .= $ParamName . '=' . $Self->{DBObject}->Quote( $Element, 'integer' ) . ';';
+                    .= $ParamName . '=' . $Self->{DBObject}->Quote( $Element, 'Integer' ) . ';';
             }
         }
     }
@@ -347,6 +348,15 @@ sub Run {
 
         # if there are results to show
         if (@ViewableFAQIDs) {
+
+            # create back link for FAQ Zoom screen
+            my $ZoomBackLink = "Action=PublicFAQSearch;Subaction=Search;"
+                . $Self->{Profile}
+                . "SortBy=$Self->{SortBy};Order=$Self->{OrderBy};StartHit=$Self->{StartHit}";
+
+            # encode back link to Base64 for easy HTML transport
+            $ZoomBackLink = MIME::Base64::encode_base64($ZoomBackLink);
+
             for my $FAQID (@ViewableFAQIDs) {
 
                 $Counter++;
@@ -369,6 +379,7 @@ sub Run {
                         Name => 'Record',
                         Data => {
                             %FAQData,
+                            ZoomBackLink => $ZoomBackLink,
                         },
                     );
 
