@@ -2,7 +2,7 @@
 # PublicFAQSearchResultShort.dtl - html for FAQ search results
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearchResultShort.dtl,v 1.12 2012-03-12 16:32:24 des Exp $
+# $Id: PublicFAQSearchResultShort.dtl,v 1.13 2012-05-08 20:35:57 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -78,7 +78,7 @@
 <!-- dtl:block:NoDataFoundMsg -->
 <!-- dtl:block:Record -->
                 <tr title="$QData{"TicketNumber"}">
-                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"}">$Data{"Number"}</a></td>
+                    <td class="FAQNumber"><a href="$Env{"Baselink"}Action=PublicFAQZoom;ItemID=$Data{"FAQID"};ZoomBackLink=$QData{"ZoomBackLink"};">$Data{"Number"}</a></td>
                     <td class="Title">$QData{"Title","60"}</td>
                     <td class="Category">$QData{"CategoryName","60"}</td>
 <!-- dtl:block:RecordLanguage -->

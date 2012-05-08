@@ -1,8 +1,8 @@
 # --
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.21 2011-06-16 12:35:40 mb Exp $
+# $Id: PublicFAQZoom.dtl,v 1.22 2012-05-08 20:38:11 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@
 <!-- dtl:block:Back -->
     <div class="ActionRow">
         <ul class="Tabs">
-            <li><a href="$Env{"Baselink"};Action=PublicFAQExplorer;CategoryID=$QData{"CategoryID"}" class="HistoryBack">&larr; $Text{"Back"}</a></li>
+            <li><a href="$Env{"Baselink"};$QData{"ZoomBackLink"}" class="HistoryBack">&larr; $Text{"Back"}</a></li>
         </ul>
         <div class="Clear"></div>
     </div>
@@ -168,12 +168,3 @@
 
     </div>
 </div>
-
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">//<![CDATA[
-    $('ul.Tabs a.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
-    }).attr('href', '#');
-//]]></script>
-<!-- dtl:js_on_document_complete -->
