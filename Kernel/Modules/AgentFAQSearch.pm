@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.32 2012-03-12 16:32:24 des Exp $
+# $Id: AgentFAQSearch.pm,v 1.33 2012-05-08 21:13:59 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -592,6 +592,11 @@ sub Run {
                 for my $Name ( keys %PossibleColumn ) {
                     next COLUMNNAME if !$PossibleColumn{$Name};
                     push @ShowColumns, $Name;
+                }
+
+                # enforce FAQ number column since is the link MasterAction hook
+                if ( !$PossibleColumn{'Number'} ) {
+                    push @ShowColumns, 'Number';
                 }
             }
 

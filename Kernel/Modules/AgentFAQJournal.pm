@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQJournal.pm - module for FAQ journal
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournal.pm,v 1.7 2012-05-08 20:25:43 cr Exp $
+# $Id: AgentFAQJournal.pm,v 1.8 2012-05-08 21:13:59 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -75,6 +75,11 @@ sub Run {
         for my $Name ( keys %PossibleColumn ) {
             next COLUMNNAME if !$PossibleColumn{$Name};
             push @ShowColumns, $Name;
+        }
+
+        # enforce FAQ number column since is the link MasterAction hook
+        if ( !$PossibleColumn{'Number'} ) {
+            push @ShowColumns, 'Number';
         }
     }
 
