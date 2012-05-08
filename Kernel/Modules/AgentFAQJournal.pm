@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQJournal.pm - module for FAQ journal
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournal.pm,v 1.6 2012-03-12 16:32:24 des Exp $
+# $Id: AgentFAQJournal.pm,v 1.7 2012-05-08 20:25:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -183,6 +183,18 @@ sub _FAQJournalShow {
         Name       => $PageShownPreferencesKey,
         SelectedID => $PageShown,
         Data       => \%Data,
+    );
+
+    # store last overview screen (for back menu action)
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenOverview',
+        Value     => $Param{RequestedURL},
+    );
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenView',
+        Value     => $Param{RequestedURL},
     );
 
     # build navbar content

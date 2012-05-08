@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.111 2012-03-20 14:45:22 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.112 2012-05-08 20:24:49 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1041,7 +1041,7 @@ Your OTRS Notification Master
                 <Item Key="Name">Back</Item>
                 <Item Key="Description" Translatable="1">Back</Item>
                 <Item Key="Action"></Item>
-                <Item Key="Link">$Env{"LastScreenFAQ"}</Item>
+                <Item Key="Link">$Env{"LastScreenOverview"}</Item>
                 <Item Key="Target">Back</Item>
             </Hash>
         </Setting>

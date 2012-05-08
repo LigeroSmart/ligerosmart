@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.23 2012-03-12 16:32:24 des Exp $
+# $Id: CustomerFAQSearch.pm,v 1.24 2012-05-08 20:30:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -192,22 +192,28 @@ sub Run {
     # show result page
     if ( $Self->{Subaction} eq 'Search' && !$Self->{EraseTemplate} ) {
 
-        # store last screen
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreenView',
-            Value     => $Self->{RequestedURL},
-        );
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreenOverview',
-            Value     => $Self->{RequestedURL},
-        );
-
         # fill up profile name (e.g. with last-search)
         if ( !$Self->{Profile} || !$Self->{SaveProfile} ) {
             $Self->{Profile} = 'last-search';
         }
+
+        # store last overview screen
+        my $URL
+            = "Action=CustomerFAQSearch;Subaction=Search;Profile=$Self->{Profile}"
+            . ";SortBy=$Self->{SortBy};OrderBy=$Self->{OrderBy};TakeLastSearch=1"
+            . ";StartHit=$Self->{StartHit}";
+
+        # store last screen
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenView',
+            Value     => $URL,
+        );
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenOverview',
+            Value     => $URL,
+        );
 
         # save search profile (under last-search or real profile name)
         $Self->{SaveProfile} = 1;

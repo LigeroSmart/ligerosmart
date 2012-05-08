@@ -1,8 +1,8 @@
 # --
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.29 2011-08-12 21:48:23 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.30 2012-05-08 20:26:17 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -254,11 +254,6 @@
 <script type="text/javascript">//<![CDATA[
     $('ul.Actions a.AsPopup').bind('click', function (Event) {
         Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
-        return false;
-    });
-
-    $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-        history.back();
         return false;
     });
 

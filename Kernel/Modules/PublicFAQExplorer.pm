@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.8 2011-05-16 15:57:53 ub Exp $
+# $Id: PublicFAQExplorer.pm,v 1.9 2012-05-08 20:31:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -259,6 +259,14 @@ sub Run {
     my $Counter = 0;
     if (@ViewableFAQIDs) {
 
+        # create back link for FAQ Zoom screen
+        my $ZoomBackLink = "Action=PublicFAQExplorer;CategoryID=$CategoryID;"
+            . $Self->{Profile}
+            . "SortBy=$Self->{SortBy};Order=$Self->{OrderBy};StartHit=$Self->{StartHit}";
+
+        # encode back link to Base64 for easy HTML transport
+        $ZoomBackLink = MIME::Base64::encode_base64($ZoomBackLink);
+
         for my $FAQID (@ViewableFAQIDs) {
 
             $Counter++;
@@ -281,6 +289,7 @@ sub Run {
                     Name => 'Record',
                     Data => {
                         %FAQData,
+                        ZoomBackLink => $ZoomBackLink,
                     },
                 );
 

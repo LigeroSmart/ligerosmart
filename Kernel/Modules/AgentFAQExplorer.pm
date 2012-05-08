@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.15 2011-10-07 04:47:34 cr Exp $
+# $Id: AgentFAQExplorer.pm,v 1.16 2012-05-08 20:25:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -94,6 +94,22 @@ sub Run {
         SessionID => $Self->{SessionID},
         Key       => 'LastViewedCategory',
         Value     => $CategoryID,
+    );
+
+    # store last overview screen (for back menu action)
+    my $URL
+        = "Action=AgentFAQExplorer;SortBy=$Self->{SortBy}"
+        . ";CategoryID=$CategoryID;Nav=$Nav"
+        . ";OrderBy=$Self->{OrderBy};StartHit=$Self->{StartHit}";
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenOverview',
+        Value     => $URL,
+    );
+    $Self->{SessionObject}->UpdateSessionID(
+        SessionID => $Self->{SessionID},
+        Key       => 'LastScreenView',
+        Value     => $URL,
     );
 
     # try to get the category data
