@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.15 2012-05-10 11:18:18 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.16 2012-05-10 11:22:52 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 =head1 NAME
 
@@ -491,7 +491,9 @@ sub _MigrateMasterSlaveData {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message =>
-                    "Ticket $TicketID has more than one ParentTicket - couldn't determine which is the correct Master!",
+                    "Ticket $TicketID has more than one ParentTicket ("
+                    . join( ', ', @ParentTicketIDs )
+                    . ") - couldn't determine which is the correct Master!",
             );
             next OLDSLAVESTYLE;
         }
@@ -524,6 +526,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.15 $ $Date: 2012-05-10 11:18:18 $
+$Revision: 1.16 $ $Date: 2012-05-10 11:22:52 $
 
 =cut
