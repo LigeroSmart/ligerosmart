@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.12 2012-05-10 10:53:00 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.13 2012-05-10 10:57:52 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -458,7 +458,7 @@ sub _MigrateMasterSlaveData {
         $DynamicFieldData{ $Row[1] }{TicketID}       = $Row[1];
     }
 
-    if (%DynamicFieldData) {
+    if ( %DynamicFieldData && 0 ) {
         my $Success = $Self->_MigrateMasterSlaveData(
             DynamicFieldID => $Param{DynamicFieldID},
         );
@@ -507,6 +507,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2012-05-10 10:53:00 $
+$Revision: 1.13 $ $Date: 2012-05-10 10:57:52 $
 
 =cut
