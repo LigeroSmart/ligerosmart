@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.22 2012-05-10 12:56:41 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.23 2012-05-10 12:58:14 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 =head1 NAME
 
@@ -374,7 +374,6 @@ sub _MigrateOTRSMasterSlave {
             DynamicFieldID => $OldMasterSlaveDynamicFieldID,
         );
     }
-    return 1;
 
     # try to get the dynfield data (for fieldorder etc.)
     my $OldDynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
@@ -577,6 +576,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.22 $ $Date: 2012-05-10 12:56:41 $
+$Revision: 1.23 $ $Date: 2012-05-10 12:58:14 $
 
 =cut
