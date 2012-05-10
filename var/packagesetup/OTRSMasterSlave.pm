@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.19 2012-05-10 11:46:05 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.20 2012-05-10 11:51:50 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -132,7 +132,7 @@ sub new {
     $Self->{StateObject}               = Kernel::System::State->new( %{$Self} );
     $Self->{ValidObject}               = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
     $Self->{PackageObject}             = Kernel::System::Package->new( %{$Self} );
     $Self->{SysConfigObject}           = Kernel::System::SysConfig->new( %{$Self} );
     $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
@@ -493,12 +493,24 @@ sub _MigrateMasterSlaveData {
         my $TicketNumber
             = $LinkListWithData->{Ticket}{ParentChild}{Source}{ $ParentTicketIDs[0] }{TicketNumber};
 
-        $Self->{DynamicFieldBackendObject}->ValueSet(
+        my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $TicketID,
             Value              => 'SlaveOf:' . $TicketNumber,
             UserID             => 1,
         );
+
+        if ( !$Success ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Error while migrating MasterSlave DynamicField '"
+                    . $Param{DynamicFieldID}
+                    . "' for TicketID '"
+                    . $TicketID
+                    . "'!",
+            );
+            return;
+        }
     }
 
     if ( 50 == scalar keys %DynamicFieldData ) {
@@ -534,6 +546,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2012-05-10 11:46:05 $
+$Revision: 1.20 $ $Date: 2012-05-10 11:51:50 $
 
 =cut
