@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.9 2012-04-26 12:52:27 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.10 2012-05-10 10:39:48 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,9 +22,10 @@ use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 use Kernel::System::SysConfig;
+use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 =head1 NAME
 
@@ -132,6 +133,7 @@ sub new {
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{PackageObject}      = Kernel::System::Package->new( %{$Self} );
     $Self->{SysConfigObject}    = Kernel::System::SysConfig->new( %{$Self} );
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
 
     # get dynamic fields list
     $Self->{DynamicFieldsList} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -168,9 +170,16 @@ sub CodeInstall {
 
     # if we got an installed version of MasterSlave, migrate the data
     # otherwise set the dynamic fields
-    if ( $Self->{PackageObject}->PackageIsInstalled( Name => 'MasterSlave' ) ) {
-        $Self->_MigrateMasterSlave();
-        $Self->{PackageObject}->RepositoryRemove( Name => 'MasterSlave' );
+    my $MasterSlaveDynamicFieldID = $Self->_CheckMasterSlaveData();
+    if ($MasterSlaveDynamicFieldID) {
+        $Self->_MigrateOTRSMasterSlave(
+            DynamicFieldID => $MasterSlaveDynamicFieldID,
+            MasterSlave    => 1,
+        );
+        return 1;
+        if ( $Self->{PackageObject}->PackageIsInstalled( Name => 'MasterSlave' ) ) {
+            $Self->{PackageObject}->RepositoryRemove( Name => 'MasterSlave' );
+        }
     }
     else {
         $Self->_SetDynamicFields();
@@ -206,7 +215,7 @@ sub CodeUpgrade {
 
     # upgrade/migrate only in case there is a installed
     # version of OTRSMasterSlave version < 1.2.5
-    $Self->_MigrateMasterSlave();
+    $Self->_MigrateOTRSMasterSlave();
 
     return 1;
 }
@@ -328,7 +337,7 @@ sub _SetDynamicFields {
     return 1;
 }
 
-sub _MigrateMasterSlave {
+sub _MigrateOTRSMasterSlave {
     my ( $Self, %Param ) = @_;
 
     # get dynamic field names from sysconfig
@@ -338,20 +347,35 @@ sub _MigrateMasterSlave {
     # check if there isn't allready a dynamic field with the destinated name
     return 1 if IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} );
 
-    # get the migrated field ID by searching for possible data
-    $Self->{DBObject}->Prepare(
-        SQL => "SELECT dfv.field_id FROM dynamic_field_value dfv "
-            . "WHERE dfv.value_text LIKE 'SlaveOf:%' OR dfv.value_text = 'Master'",
-        Limit => 1,
-    );
-
     my $OldMasterSlaveDynamicFieldID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $OldMasterSlaveDynamicFieldID = $Row[0];
+
+    # check if we got a DynamicFieldID
+    if ( $Param{DynamicFieldID} ) {
+        $OldMasterSlaveDynamicFieldID = $Param{DynamicFieldID};
+    }
+    else {
+
+        # if not: get the migrated field ID by searching for possible data
+        $Self->{DBObject}->Prepare(
+            SQL => "SELECT dfv.field_id FROM dynamic_field_value dfv "
+                . "WHERE dfv.value_text LIKE 'SlaveOf:%' OR dfv.value_text = 'Master'",
+            Limit => 1,
+        );
+
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+            $OldMasterSlaveDynamicFieldID = $Row[0];
+        }
     }
 
     # check if we found a valid ID
     return 0 if !$OldMasterSlaveDynamicFieldID;
+
+    if ( $Param{MasterSlave} ) {
+        $Self->_MigrateMasterSlaveData(
+            DynamicFieldID => $OldMasterSlaveDynamicFieldID,
+        );
+    }
+    return 1;
 
     # try to get the dynfield data (for fieldorder etc.)
     my $OldDynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
@@ -391,6 +415,81 @@ sub _MigrateMasterSlave {
     );
 }
 
+sub _CheckMasterSlaveData {
+    my ( $Self, %Param ) = @_;
+
+    # if not: get the migrated field ID by searching for possible data
+    $Self->{DBObject}->Prepare(
+        SQL   => "SELECT dfv.field_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Slave'",
+        Limit => 1,
+    );
+
+    my $OldMasterSlaveDynamicFieldID;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $OldMasterSlaveDynamicFieldID = $Row[0];
+    }
+
+    return $OldMasterSlaveDynamicFieldID;
+}
+
+sub _MigrateMasterSlaveData {
+    my ( $Self, %Param ) = @_;
+
+    if ( !$Param{DynamicFieldID} ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Need DynamicFieldID for MasterSlave data migration!",
+        );
+        return;
+    }
+
+    # if not: get the migrated field ID by searching for possible data
+    $Self->{DBObject}->Prepare(
+        SQL =>
+            "SELECT dfv.id, dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text= 'Slave' AND dfv.field_id = '?'",
+        Bind  => [ \$Param{DynamicFieldID} ],
+        Limit => 50,
+    );
+
+    my %DynamicFieldData;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $DynamicFieldData{ $Row[1] }{DynamicFieldID} = $Row[0];
+        $DynamicFieldData{ $Row[1] }{TicketID}       = $Row[1];
+    }
+
+    if (%DynamicFieldData) {
+        my $Success = $Self->_MigrateMasterSlaveData(
+            DynamicFieldID => $Param{DynamicFieldID},
+        );
+
+        if ( !$Success ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Error while migrating MasterSlave data!",
+            );
+            return;
+        }
+    }
+
+    for my $TicketID ( keys %DynamicFieldData ) {
+
+        # get linked objects
+        my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
+            Object    => 'Ticket',
+            Key       => $TicketID,
+            State     => 'Valid',
+            Type      => 'ParentChild',
+            Direction => 'Target',
+            UserID    => 1,
+        );
+
+        use Data::Dumper;
+        print STDERR "Dumper: " . Dumper($LinkListWithData) . "\n";
+    }
+
+    return 1;
+}
+
 1;
 
 =back
@@ -407,6 +506,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2012-04-26 12:52:27 $
+$Revision: 1.10 $ $Date: 2012-05-10 10:39:48 $
 
 =cut
