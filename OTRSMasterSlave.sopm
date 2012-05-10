@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: OTRSMasterSlave.sopm,v 1.10 2012-05-10 10:47:32 te Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.11 2012-05-10 10:49:37 te Exp $</CVS>
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -23,7 +23,7 @@
         <File Permission="644" Location="Kernel/System/MasterSlave.pm"/>
         <File Permission="644" Location="var/packagesetup/OTRSMasterSlave.pm"></File>
     </Filelist>
-    <CodeInstall Type="pre"><![CDATA[
+    <CodeInstall Type="post"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeInstall';
