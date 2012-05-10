@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.18 2012-05-10 11:32:53 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.19 2012-05-10 11:46:05 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,13 +19,14 @@ use Kernel::System::SysConfig;
 use Kernel::System::State;
 use Kernel::System::Valid;
 use Kernel::System::DynamicField;
+use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -127,13 +128,14 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ConfigObject}       = Kernel::Config->new();
-    $Self->{StateObject}        = Kernel::System::State->new( %{$Self} );
-    $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
-    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
-    $Self->{PackageObject}      = Kernel::System::Package->new( %{$Self} );
-    $Self->{SysConfigObject}    = Kernel::System::SysConfig->new( %{$Self} );
-    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ConfigObject}              = Kernel::Config->new();
+    $Self->{StateObject}               = Kernel::System::State->new( %{$Self} );
+    $Self->{ValidObject}               = Kernel::System::Valid->new( %{$Self} );
+    $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField->new( %{$Self} );
+    $Self->{PackageObject}             = Kernel::System::Package->new( %{$Self} );
+    $Self->{SysConfigObject}           = Kernel::System::SysConfig->new( %{$Self} );
+    $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
 
     # get dynamic fields list
     $Self->{DynamicFieldsList} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -458,20 +460,10 @@ sub _MigrateMasterSlaveData {
         $DynamicFieldData{ $Row[1] }{TicketID}       = $Row[1];
     }
 
-    if ( %DynamicFieldData && 0 ) {
-        my $Success = $Self->_MigrateMasterSlaveData(
-            DynamicFieldID => $Param{DynamicFieldID},
-        );
-
-        if ( !$Success ) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message  => "Error while migrating MasterSlave data!",
-            );
-            return;
-        }
-    }
-
+    # try to get the dynfield data (for fieldorder etc.)
+    my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        ID => $Param{DynamicFieldID},
+    );
     OLDSLAVESTYLE:
     for my $TicketID ( keys %DynamicFieldData ) {
 
@@ -485,8 +477,7 @@ sub _MigrateMasterSlaveData {
             UserID    => 1,
         );
 
-        print STDERR "Dumper: " . Dumper($LinkListWithData) . "\n";
-        my @ParentTicketIDs = keys %{ $LinkListWithData->{ParentChild}{Source} };
+        my @ParentTicketIDs = keys %{ $LinkListWithData->{Ticket}{ParentChild}{Source} };
 
         if ($#ParentTicketIDs) {
             $Self->{LogObject}->Log(
@@ -500,11 +491,28 @@ sub _MigrateMasterSlaveData {
         }
 
         my $TicketNumber
-            = $LinkListWithData->{ParentChild}{Source}{ $ParentTicketIDs[0] }{TicketNumber};
+            = $LinkListWithData->{Ticket}{ParentChild}{Source}{ $ParentTicketIDs[0] }{TicketNumber};
 
-        print STDERR "Update TicketID $TicketID DynamicFiled to SlaveOf:$TicketNumber\n";
+        $Self->{DynamicFieldBackendObject}->ValueSet(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            ObjectID           => $TicketID,
+            Value              => 'SlaveOf:' . $TicketNumber,
+            UserID             => 1,
+        );
+    }
 
-        use Data::Dumper;
+    if ( 50 == scalar keys %DynamicFieldData ) {
+        my $Success = $Self->_MigrateMasterSlaveData(
+            DynamicFieldID => $Param{DynamicFieldID},
+        );
+
+        if ( !$Success ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Error while migrating MasterSlave data!",
+            );
+            return;
+        }
     }
 
     return 1;
@@ -526,6 +534,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2012-05-10 11:32:53 $
+$Revision: 1.19 $ $Date: 2012-05-10 11:46:05 $
 
 =cut
