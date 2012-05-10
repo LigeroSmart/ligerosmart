@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQ.pm - This module redirects to PublicFAQZoom
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQ.pm,v 1.15 2012-03-20 14:45:22 ub Exp $
+# $Id: PublicFAQ.pm,v 1.16 2012-05-10 12:17:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,9 +25,9 @@ sub new {
     bless( $Self, $Type );
 
     # check needed objects
-    for (qw(ParamObject DBObject LayoutObject LogObject ConfigObject )) {
-        if ( !$Self->{$_} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $_!" );
+    for my $Object (qw(ParamObject DBObject LayoutObject LogObject ConfigObject )) {
+        if ( !$Self->{$Object} ) {
+            $Self->{LayoutObject}->FatalError( Message => "Got no $Object!" );
         }
     }
 
