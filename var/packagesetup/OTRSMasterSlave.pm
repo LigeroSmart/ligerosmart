@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.13 2012-05-10 10:57:52 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.14 2012-05-10 11:03:18 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -476,12 +476,13 @@ sub _MigrateMasterSlaveData {
 
         # get linked objects
         my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-            Object    => 'Ticket',
-            Key       => $TicketID,
-            State     => 'Valid',
-            Type      => 'ParentChild',
-            Direction => 'Target',
-            UserID    => 1,
+            Object => 'Ticket',
+            Key    => $TicketID,
+            State  => 'Valid',
+
+            #            Type      => 'ParentChild',
+            #            Direction => 'Target',
+            UserID => 1,
         );
 
         use Data::Dumper;
@@ -507,6 +508,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2012-05-10 10:57:52 $
+$Revision: 1.14 $ $Date: 2012-05-10 11:03:18 $
 
 =cut
