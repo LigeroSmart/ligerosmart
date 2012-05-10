@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.14 2012-05-10 11:03:18 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.15 2012-05-10 11:18:18 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -472,18 +472,34 @@ sub _MigrateMasterSlaveData {
         }
     }
 
+    OLDSLAVESTYLE:
     for my $TicketID ( keys %DynamicFieldData ) {
 
         # get linked objects
         my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
-            Object => 'Ticket',
-            Key    => $TicketID,
-            State  => 'Valid',
-
-            #            Type      => 'ParentChild',
-            #            Direction => 'Target',
-            UserID => 1,
+            Object    => 'Ticket',
+            Key       => $TicketID,
+            State     => 'Valid',
+            Type      => 'ParentChild',
+            Direction => 'Source',
+            UserID    => 1,
         );
+
+        my @ParentTicketIDs = keys %{ $LinkListWithData->{ParentChild}->{Source} };
+
+        if ($#ParentTicketIDs) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message =>
+                    "Ticket $TicketID has more than one ParentTicket - couldn't determine which is the correct Master!",
+            );
+            next OLDSLAVESTYLE;
+        }
+
+        my $TicketNumber
+            = $LinkListWithData->{ParentChild}->{Source}->{ $ParentTicketIDs[0] }->{TicketNumber};
+
+        print STDERR "Update TicketID $TicketID DynamicFiled to SlaveOf:$TicketNumber\n";
 
         use Data::Dumper;
         print STDERR "Dumper: " . Dumper($LinkListWithData) . "\n";
@@ -508,6 +524,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2012-05-10 11:03:18 $
+$Revision: 1.15 $ $Date: 2012-05-10 11:18:18 $
 
 =cut
