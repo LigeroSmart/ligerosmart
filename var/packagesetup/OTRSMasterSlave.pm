@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.20 2012-05-10 11:51:50 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.21 2012-05-10 12:53:37 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,6 @@ package var::packagesetup::OTRSMasterSlave;
 use strict;
 use warnings;
 
-use Kernel::Config;
 use Kernel::System::SysConfig;
 use Kernel::System::State;
 use Kernel::System::Valid;
@@ -24,9 +23,10 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::Package;
 use Kernel::System::SysConfig;
 use Kernel::System::LinkObject;
+use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 =head1 NAME
 
@@ -128,7 +128,6 @@ sub new {
     }
 
     # create additional objects
-    $Self->{ConfigObject}              = Kernel::Config->new();
     $Self->{StateObject}               = Kernel::System::State->new( %{$Self} );
     $Self->{ValidObject}               = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
@@ -136,6 +135,7 @@ sub new {
     $Self->{PackageObject}             = Kernel::System::Package->new( %{$Self} );
     $Self->{SysConfigObject}           = Kernel::System::SysConfig->new( %{$Self} );
     $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{TicketObject}              = Kernel::System::Ticket->new( %{$Self} );
 
     # get dynamic fields list
     $Self->{DynamicFieldsList} = $Self->{DynamicFieldObject}->DynamicFieldListGet(
@@ -174,10 +174,6 @@ sub CodeInstall {
     # otherwise set the dynamic fields
     my $MasterSlaveDynamicFieldID = $Self->_CheckMasterSlaveData();
     if ($MasterSlaveDynamicFieldID) {
-
-        if ( $Self->{PackageObject}->PackageIsInstalled( Name => 'MasterSlave' ) ) {
-            $Self->{PackageObject}->RepositoryRemove( Name => 'MasterSlave' );
-        }
 
         $Self->_MigrateOTRSMasterSlave(
             DynamicFieldID => $MasterSlaveDynamicFieldID,
@@ -446,26 +442,29 @@ sub _MigrateMasterSlaveData {
         return;
     }
 
-    # if not: get the migrated field ID by searching for possible data
+    # get all the slave ticket ids we have to update
     $Self->{DBObject}->Prepare(
         SQL =>
-            "SELECT dfv.id, dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text= 'Slave' AND dfv.field_id = ?",
+            "SELECT dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text = 'Slave' AND dfv.field_id = ?",
         Bind  => [ \$Param{DynamicFieldID} ],
         Limit => 50,
     );
 
-    my %DynamicFieldData;
+    my @DynamicFieldData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $DynamicFieldData{ $Row[1] }{DynamicFieldID} = $Row[0];
-        $DynamicFieldData{ $Row[1] }{TicketID}       = $Row[1];
+        push( @DynamicFieldData, $Row[0] );
     }
 
-    # try to get the dynfield data (for fieldorder etc.)
+    # try to get the dynfield data for setting new value
     my $DynamicFieldConfig = $Self->{DynamicFieldObject}->DynamicFieldGet(
         ID => $Param{DynamicFieldID},
     );
+
+    return if !IsHashRefWithData($DynamicFieldConfig);
+
+    # loop over the ticket ids we have to update
     OLDSLAVESTYLE:
-    for my $TicketID ( keys %DynamicFieldData ) {
+    for my $TicketID (@DynamicFieldData) {
 
         # get linked objects
         my $LinkListWithData = $Self->{LinkObject}->LinkListWithData(
@@ -477,22 +476,52 @@ sub _MigrateMasterSlaveData {
             UserID    => 1,
         );
 
+        # check what tickets might be the master
         my @ParentTicketIDs = keys %{ $LinkListWithData->{Ticket}{ParentChild}{Source} };
 
+        my $TicketNumber;
+
+        # if we got more than one possible master ticket, try to determine which
+        # one is the master we are looking for
         if ($#ParentTicketIDs) {
-            $Self->{LogObject}->Log(
-                Priority => 'error',
-                Message =>
-                    "Ticket $TicketID has more than one ParentTicket ("
-                    . join( ', ', @ParentTicketIDs )
-                    . ") - couldn't determine which is the correct Master!",
+
+            $Self->{DBObject}->Prepare(
+                SQL =>
+                    "SELECT dfv.object_id FROM dynamic_field_value dfv WHERE dfv.value_text= 'Slave' AND dfv.field_id = ?"
+                    . 'AND dfv.object_id IN ('
+                    . join( ',', map { $Self->{DBObject}->Quote($_) } @ParentTicketIDs )
+                    . ')',
+                Bind  => [ \$Param{DynamicFieldID} ],
+                Limit => 1,
             );
-            next OLDSLAVESTYLE;
+
+            my @ParentTicketIDs;
+            while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+                push( @ParentTicketIDs, $Row[0] );
+            }
+
+            if ($#ParentTicketIDs) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message =>
+                        "Couldn't determine MasterTicket for TicketID $TicketID (Possible Masters: "
+                        . join ', ', @ParentTicketIDs
+                        . ")!",
+                );
+            }
+
+            $TicketNumber = $Self->{TicketObject}->TicketNumberLookup(
+                TicketID => $ParentTicketIDs[0],
+                UserID   => 1,
+            );
+        }
+        else {
+            $TicketNumber = $LinkListWithData->{Ticket}{ParentChild}{Source}{ $ParentTicketIDs[0] }
+                {TicketNumber};
         }
 
-        my $TicketNumber
-            = $LinkListWithData->{Ticket}{ParentChild}{Source}{ $ParentTicketIDs[0] }{TicketNumber};
-
+        # update the dynamic field value to valid
+        # data for OTRSMasterSlave
         my $Success = $Self->{DynamicFieldBackendObject}->ValueSet(
             DynamicFieldConfig => $DynamicFieldConfig,
             ObjectID           => $TicketID,
@@ -513,7 +542,9 @@ sub _MigrateMasterSlaveData {
         }
     }
 
-    if ( 50 == scalar keys %DynamicFieldData ) {
+    # do some recursition if we got more than 50 slave tickets in this run
+    # doing this to have a better performance
+    if ( 50 == scalar @DynamicFieldData ) {
         my $Success = $Self->_MigrateMasterSlaveData(
             DynamicFieldID => $Param{DynamicFieldID},
         );
@@ -546,6 +577,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.20 $ $Date: 2012-05-10 11:51:50 $
+$Revision: 1.21 $ $Date: 2012-05-10 12:53:37 $
 
 =cut
