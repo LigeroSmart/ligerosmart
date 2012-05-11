@@ -2,7 +2,7 @@
 # ITSMChangeManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.73 2012-05-10 13:52:14 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.74 2012-05-11 12:41:32 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@ use Kernel::System::User;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 =head1 NAME
 
@@ -2749,47 +2749,14 @@ Deletes the Change:: and WorkOrder:: notifications from systems notification tab
 sub _DeleteSystemNotifications {
     my ($Self) = @_;
 
-    # define the notification types to be deleted
-    my @NotificationTypes = qw(
-        Change::ChangeAdd
-        Change::ChangeUpdate
-        Change::ChangeCABUpdate
-        Change::ChangeCABDelete
-        Change::ChangeLinkAdd
-        Change::ChangeLinkDelete
-        Change::ChangeAttachmentAdd
-        Change::ChangeAttachmentDelete
-        Change::ChangeDelete
-        Change::ChangePlannedStartTimeReached
-        Change::ChangePlannedEndTimeReached
-        Change::ChangeActualStartTimeReached
-        Change::ChangeActualEndTimeReached
-        Change::ChangeRequestedTimeReached
-        Change::ActionExecute
-        WorkOrder::WorkOrderAdd
-        WorkOrder::WorkOrderUpdate
-        WorkOrder::WorkOrderLinkAdd
-        WorkOrder::WorkOrderLinkDelete
-        WorkOrder::WorkOrderAttachmentAdd
-        WorkOrder::WorkOrderAttachmentDelete
-        WorkOrder::WorkOrderDelete
-        WorkOrder::WorkOrderPlannedStartTimeReached
-        WorkOrder::WorkOrderPlannedEndTimeReached
-        WorkOrder::WorkOrderActualStartTimeReached
-        WorkOrder::WorkOrderActualEndTimeReached
+    # there are notification for agents and customers
+    $Self->{DBObject}->Do(
+        SQL => 'DELETE FROM notifications '
+            . 'WHERE notification_type LIKE "Agent::Change::%" '
+            . 'OR notification_type LIKE "Agent::WorkOrder::%" '
+            . 'OR notification_type LIKE "Customer::Change::%" '
+            . 'OR notification_type LIKE "Customer::WorkOrder::%"',
     );
-
-    # delete the entries
-    for my $Type (@NotificationTypes) {
-
-        # there are notification for agents and customers
-        $Self->{DBObject}->Do(
-            SQL => 'DELETE FROM notifications '
-                . "WHERE notification_language IN ('en', 'de' ) "
-                . 'AND ( notification_type = ? OR notification_type = ? )',
-            Bind => [ \"Agent::${Type}", \"Customer::${Type}", ],
-        );
-    }
 
     return 1;
 }
@@ -2812,6 +2779,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.73 $ $Date: 2012-05-10 13:52:14 $
+$Revision: 1.74 $ $Date: 2012-05-11 12:41:32 $
 
 =cut
