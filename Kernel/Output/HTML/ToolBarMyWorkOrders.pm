@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarMyWorkOrders.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarMyWorkOrders.pm,v 1.6 2012-04-13 17:13:59 ub Exp $
+# $Id: ToolBarMyWorkOrders.pm,v 1.7 2012-05-14 15:04:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Cache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,7 +79,7 @@ sub Run {
     if ( $Config->{'Filter::WorkOrderStates'} && @{ $Config->{'Filter::WorkOrderStates'} } ) {
 
         # check cache
-        my $CacheType = 'ITSMChangeManagement::ToolBarMyWorkOrders::' . $Self->{UserID};
+        my $CacheType = 'ITSMChangeManagementToolBarMyWorkOrders' . $Self->{UserID};
         my $CacheKey = join ',', sort @{ $Config->{'Filter::WorkOrderStates'} };
 
         my $Cache = $Self->{CacheObject}->Get(

@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Event/ToolBarMyCABCacheDelete.pm - ToolBarMyCABCacheDelete event module for ITSMChange
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarMyCABCacheDelete.pm,v 1.1 2012-04-13 17:13:59 ub Exp $
+# $Id: ToolBarMyCABCacheDelete.pm,v 1.2 2012-05-14 15:04:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Cache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -135,7 +135,7 @@ sub Run {
     }
 
     # set the cache type prefix
-    my $CacheTypePrefix = 'ITSMChangeManagement::ToolBarMyCAB::';
+    my $CacheTypePrefix = 'ITSMChangeManagementToolBarMyCAB';
 
     # handle update of a CAB
     if ( $Param{Event} eq 'ChangeCABUpdatePost' ) {
@@ -227,6 +227,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2012-04-13 17:13:59 $
+$Revision: 1.2 $ $Date: 2012-05-14 15:04:10 $
 
 =cut
