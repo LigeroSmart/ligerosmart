@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeEdit.pm - the OTRS::ITSM::ChangeManagement change edit module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeEdit.pm,v 1.51 2010-12-21 16:18:19 ub Exp $
+# $Id: AgentITSMChangeEdit.pm,v 1.52 2012-05-14 18:56:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMChangeCIPAllocate;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -183,6 +183,12 @@ sub Run {
                 && defined $GetParam{RequestedTimeMinute}
                 )
             {
+
+                # transform change requested time, time stamp based on user time zone
+                %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+                    %GetParam,
+                    Prefix => 'RequestedTime',
+                );
 
                 # format as timestamp, when all required time params were passed
                 $GetParam{RequestedTime} = sprintf '%04d-%02d-%02d %02d:%02d:00',

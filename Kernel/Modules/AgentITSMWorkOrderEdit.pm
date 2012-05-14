@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderEdit.pm - the OTRS::ITSM::ChangeManagement workorder edit module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderEdit.pm,v 1.52 2012-03-23 14:30:17 ub Exp $
+# $Id: AgentITSMWorkOrderEdit.pm,v 1.53 2012-05-14 18:56:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.52 $) [1];
+$VERSION = qw($Revision: 1.53 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -161,6 +161,12 @@ sub Run {
                     next TIMETYPE;
                 }
             }
+
+            # transform work order planned time, time stamp based on user time zone
+            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+                %GetParam,
+                Prefix => $TimeType,
+            );
 
             # format as timestamp
             $GetParam{$TimeType} = sprintf '%04d-%02d-%02d %02d:%02d:00',

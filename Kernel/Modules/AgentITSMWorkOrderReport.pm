@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.36 2012-03-23 14:31:40 ub Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.37 2012-05-14 18:56:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -150,6 +150,12 @@ sub Run {
                     && defined $GetParam{ $TimeType . 'Minute' }
                     )
                 {
+
+                    # transform work order actual time, time stamp based on user time zone
+                    %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+                        %GetParam,
+                        Prefix => $TimeType,
+                    );
 
                     # format as timestamp, when all required time params were passed
                     $GetParam{$TimeType} = sprintf '%04d-%02d-%02d %02d:%02d:00',

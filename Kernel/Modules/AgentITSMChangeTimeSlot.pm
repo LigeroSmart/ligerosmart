@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeTimeSlot.pm - the OTRS::ITSM::ChangeManagement move time slot module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeTimeSlot.pm,v 1.36 2012-03-30 08:31:50 des Exp $
+# $Id: AgentITSMChangeTimeSlot.pm,v 1.37 2012-05-14 18:56:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -152,6 +152,12 @@ sub Run {
         my $PlannedSystemTime;
         if ( !%ValidationErrors ) {
 
+            # transform change planned time, time stamp based on user time zone
+            %GetParam = $Self->{LayoutObject}->TransformDateSelection(
+                %GetParam,
+                Prefix => 'MoveTime',
+            );
+
             # format as timestamp
             my $PlannedTime = sprintf '%04d-%02d-%02d %02d:%02d:00',
                 $GetParam{MoveTimeYear},
@@ -214,6 +220,11 @@ sub Run {
         my $SystemTime = $Self->{TimeObject}->TimeStamp2SystemTime(
             String => $Change->{ $GetParam{MoveTimeType} },
         );
+
+        # time zone translation
+        if ( $Self->{ConfigObject}->Get('TimeZoneUser') && $Self->{UserTimeZone} ) {
+            $SystemTime = $SystemTime + ( $Self->{UserTimeZone} * 3600 );
+        }
 
         # set the parameter hash for the answers
         # the seconds are ignored
