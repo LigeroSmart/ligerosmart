@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.113 2012-05-08 21:13:59 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.114 2012-05-15 12:38:37 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -840,7 +840,7 @@ Your OTRS Notification Master
                     <Description Translatable="1">Search FAQ</Description>
                     <Name Translatable="1">Search</Name>
                     <Link>Action=AgentFAQSearch</Link>
-                    <LinkOption>onclick="Core.Agent.Search.OpenSearchDialog('AgentFAQSearch'); event.stopPropagation(); return false;"</LinkOption>
+                    <LinkOption>onclick="Core.Agent.Search.OpenSearchDialog('AgentFAQSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</LinkOption>
                     <Type></Type>
                     <Block></Block>
                     <NavBar>FAQ</NavBar>
