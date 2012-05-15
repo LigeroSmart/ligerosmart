@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.270 2012-04-13 17:13:59 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.271 2012-05-15 10:41:33 mab Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -420,7 +420,7 @@
                     <Description>Search Changes</Description>
                     <Name>Search</Name>
                     <Link>Action=AgentITSMChangeSearch</Link>
-                    <LinkOption>onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); event.stopPropagation(); return false;"</LinkOption>
+                    <LinkOption>onclick="ITSM.Agent.ChangeManagement.Search.OpenSearchDialog('AgentITSMChangeSearch'); if (event.stopPropagation) { event.stopPropagation(); } else { window.event.cancelBubble = true; } return false;"</LinkOption>
                     <NavBar>ITSM Change</NavBar>
                     <Type></Type>
                     <Block></Block>
