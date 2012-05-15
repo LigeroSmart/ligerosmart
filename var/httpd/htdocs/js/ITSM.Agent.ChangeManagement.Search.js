@@ -1,8 +1,8 @@
 // --
 // ITSM.Agent.ChangeManagemnt.Search.js - provides the special module functions for the global search
-// Copyright (C) 2001-2010 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: ITSM.Agent.ChangeManagement.Search.js,v 1.5 2010-12-20 19:59:42 cr Exp $
+// $Id: ITSM.Agent.ChangeManagement.Search.js,v 1.6 2012-05-15 13:17:47 ub Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -145,6 +145,48 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
         return true;
     };
 
+
+    /**
+     * @function
+     * @private
+     * @return 0 if no values were found, 1 if values where there
+     * @description Checks if any values were entered in the search.
+     *              If nothing at all exists, it alerts with translated:
+     *              "Please enter at least one search value or * to find anything"
+     */
+    function CheckForSearchedValues() {
+        // loop through the SearchForm labels
+        var SearchValueFlag = false;
+        $('#SearchForm label').each(function () {
+            var ElementName,
+                $Element;
+
+            // those with ID's are used for searching
+            if ( $(this).attr('id') ) {
+                    // substring "Label" (e.g. first five characters ) from the
+                    // label id, use the remaining name as name string for accessing
+                    // the form input's value
+                    ElementName = $(this).attr('id').substring(5);
+                    $Element = $('#SearchForm input[name='+ElementName+']');
+                    // If there's no input element with the selected name
+                    // find the next "select" element and use that one for checking
+                    if (!$Element.length) {
+                        $Element = $(this).next().find('select');
+                    }
+                    if ($Element.length) {
+                        if ( $Element.val() && $Element.val() !== '' ) {
+                            SearchValueFlag = true;
+                        }
+                    }
+            }
+        });
+        if (!SearchValueFlag) {
+           alert(Core.Config.Get('EmptySearchMsg'));
+        }
+        return SearchValueFlag;
+    }
+
+
     /**
      * @function
      * @private
@@ -245,7 +287,12 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 // register return key
                 $('#SearchForm').unbind('keypress.FilterInput').bind('keypress.FilterInput', function (Event) {
                     if ((Event.charCode || Event.keyCode) === 13) {
-                        $('#SearchForm').submit();
+                        if (!CheckForSearchedValues()) {
+                            return false;
+                        }
+                        else {
+                           $('#SearchForm').submit();
+                        }
                         return false;
                     }
                 });
@@ -254,13 +301,23 @@ ITSM.Agent.ChangeManagement.Search = (function (TargetNS) {
                 $('#SearchFormSubmit').bind('click', function () {
                     // Normal results mode will return HTML in the same window
                     if ($('#SearchForm #ResultForm').val() === 'Normal') {
-                        $('#SearchForm').submit();
-                        ShowWaitingDialog();
+                        if (!CheckForSearchedValues()) {
+                            return false;
+                        }
+                        else {
+                           $('#SearchForm').submit();
+                           ShowWaitingDialog();
+                        }
                     }
                     else { // Print and CSV should open in a new window, no waiting dialog
                         $('#SearchForm').attr('target', 'SearchResultPage');
-                        $('#SearchForm').submit();
-                        $('#SearchForm').attr('target', '');
+                        if (!CheckForSearchedValues()) {
+                            return false;
+                        }
+                        else {
+                           $('#SearchForm').submit();
+                           $('#SearchForm').attr('target', '');
+                        }
                     }
                     return false;
                 });
