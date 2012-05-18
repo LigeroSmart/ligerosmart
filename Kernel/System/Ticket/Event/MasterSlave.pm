@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.8 2012-05-04 11:51:23 te Exp $
+# $Id: MasterSlave.pm,v 1.9 2012-05-18 14:48:20 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -166,22 +166,29 @@ sub Run {
 
             my %TicketSlave = $Self->{TicketObject}->TicketGet( TicketID => $TicketID );
 
-            # no customer found, send no master message to customer
-            if ( !$TicketSlave{CustomerUserID} ) {
-                $Self->{TicketObject}->HistoryAdd(
-                    TicketID     => $TicketID,
-                    CreateUserID => $Param{UserID},
-                    HistoryType  => 'Misc',
-                    Name =>
-                        "MasterTicket: no customer for this ticket found, send no master message to customer.",
+            # try to get the customer data of the slave ticket
+            my %Customer;
+            if ( $TicketSlave{CustomerUserID} ) {
+                %Customer = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                    User => $TicketSlave{CustomerUserID},
                 );
-                next;
             }
 
-            # no customer email found, send no master message to customer
-            my %Customer = $Self->{CustomerUserObject}->CustomerUserDataGet(
-                User => $TicketSlave{CustomerUserID},
-            );
+            # if we can't find a valid UserEmail in CustomerData
+            # we have to get the last Article with SenderType 'customer'
+            # and get the UserEmail
+            if ( !$Customer{UserEmail} ) {
+                my @Index = $Self->{TicketObject}->ArticleGet(
+                    TicketID          => $TicketID,
+                    ArticleSenderType => ['customer'],
+                );
+
+                if (@Index) {
+                    $Customer{UserEmail} = $Index[$#Index]{From};
+                }
+            }
+
+            # if we still have no UserEmail, drop an error
             if ( !$Customer{UserEmail} ) {
                 $Self->{TicketObject}->HistoryAdd(
                     TicketID     => $TicketID,
@@ -193,7 +200,7 @@ sub Run {
                 next;
             }
 
-            # set recipient of slave ticket
+            # set the new To for ArticleSend
             $Article{To} = $Customer{UserEmail};
 
             # rebuild subject
