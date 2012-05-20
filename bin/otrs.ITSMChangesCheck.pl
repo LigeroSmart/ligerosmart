@@ -3,7 +3,7 @@
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.14 2012-05-20 11:08:06 ub Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.15 2012-05-20 11:59:26 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,8 +31,9 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
+use Getopt::Std;
 use Kernel::Config;
 use Kernel::System::Encode;
 use Kernel::System::Time;
@@ -99,10 +100,17 @@ $CommonObject{HistoryObject}   = Kernel::System::ITSMChange::History->new(%Commo
 
 my $MockedObject = OTRSMockObject->new(%CommonObject);
 
-# check args
-my $Command = shift || '--help';
-print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
-print "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+# get options
+my %Opts = ();
+getopt( 'hf', \%Opts );
+
+# show help
+if ( exists $Opts{h} ) {
+    print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
+    print "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+    print "usage: otrs.ITSMChangesCheck.pl [-f force]\n\n";
+    exit 1;
+}
 
 # if sysconfig option is disabled -> exit
 my $SysConfig = $CommonObject{ConfigObject}->Get('ITSMChange::TimeReachedNotifications');
@@ -112,15 +120,21 @@ if ( !$SysConfig->{Frequency} ) {
 
 # create pid lock
 my $PIDLockName = 'ITSMChangesCheck';
-my $Success     = $CommonObject{PIDObject}->PIDCreate(
-    Name => $PIDLockName,
-    TTL  => 60 * 60 * 2,    # 2 hours
-);
-
-if ( !$Success ) {
-    print "NOTICE: otrs.ITSMChangesCheck.pl is already running!\n";
+if ( !$Opts{f} && !$CommonObject{PIDObject}->PIDCreate( Name => $PIDLockName ) ) {
+    print
+        "NOTICE: otrs.ITSMChangesCheck.pl is already running (use '-f 1' if you want to start it forced)!\n";
     exit 1;
 }
+elsif ( $Opts{f} && !$CommonObject{PIDObject}->PIDCreate( Name => $PIDLockName ) ) {
+    print "NOTICE: otrs.ITSMChangesCheck.pl is already running but is starting again!\n";
+}
+
+# set new PID
+$CommonObject{PIDObject}->PIDCreate(
+    Name  => $PIDLockName,
+    Force => 1,
+    TTL   => 60 * 60 * 2,    # 2 hours
+);
 
 # do change/workorder reminder notification jobs
 
