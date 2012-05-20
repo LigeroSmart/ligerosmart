@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.13 2011-11-10 11:20:36 ub Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.14 2012-05-20 11:08:06 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 use Kernel::Config;
 use Kernel::System::Encode;
@@ -41,6 +41,7 @@ use Kernel::System::Main;
 use Kernel::System::DB;
 use Kernel::System::User;
 use Kernel::System::Group;
+use Kernel::System::PID;
 use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
@@ -91,6 +92,7 @@ $CommonObject{TimeObject}      = Kernel::System::Time->new(%CommonObject);
 $CommonObject{DBObject}        = Kernel::System::DB->new(%CommonObject);
 $CommonObject{UserObject}      = Kernel::System::User->new(%CommonObject);
 $CommonObject{GroupObject}     = Kernel::System::Group->new(%CommonObject);
+$CommonObject{PIDObject}       = Kernel::System::PID->new(%CommonObject);
 $CommonObject{ChangeObject}    = Kernel::System::ITSMChange->new(%CommonObject);
 $CommonObject{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new(%CommonObject);
 $CommonObject{HistoryObject}   = Kernel::System::ITSMChange::History->new(%CommonObject);
@@ -100,12 +102,24 @@ my $MockedObject = OTRSMockObject->new(%CommonObject);
 # check args
 my $Command = shift || '--help';
 print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
-print "Copyright (C) 2001-2011 OTRS AG, http://otrs.org/\n";
+print "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
 
 # if sysconfig option is disabled -> exit
 my $SysConfig = $CommonObject{ConfigObject}->Get('ITSMChange::TimeReachedNotifications');
 if ( !$SysConfig->{Frequency} ) {
     exit(0);
+}
+
+# create pid lock
+my $PIDLockName = 'ITSMChangesCheck';
+my $Success     = $CommonObject{PIDObject}->PIDCreate(
+    Name => $PIDLockName,
+    TTL  => 60 * 60 * 2,    # 2 hours
+);
+
+if ( !$Success ) {
+    print "NOTICE: otrs.ITSMChangesCheck.pl is already running!\n";
+    exit 1;
 }
 
 # do change/workorder reminder notification jobs
@@ -295,6 +309,9 @@ for my $Type (qw(StartTime EndTime)) {
         );
     }
 }
+
+# delete pid lock
+$CommonObject{PIDObject}->PIDDelete( Name => $PIDLockName );
 
 # check if a notification was already sent for the given change
 sub ChangeNotificationSent {
