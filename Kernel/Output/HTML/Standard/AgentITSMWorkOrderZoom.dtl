@@ -1,8 +1,8 @@
 # --
 # AgentITSMWorkOrderZoom.dtl - provides HTML form for AgentITSMWorkOrderZoom
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.dtl,v 1.64 2011-11-08 07:04:07 mb Exp $
+# $Id: AgentITSMWorkOrderZoom.dtl,v 1.65 2012-05-30 11:12:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -318,13 +318,28 @@
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
     $('ul.Actions a.AsPopup').bind('click', function (Event) {
-    Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
-    return false;
+        Core.UI.Popup.OpenPopup ($(this).attr('href'), 'Action');
+        return false;
     });
 
     $('ul.Actions a.HistoryBack').bind('click', function (Event) {
-        history.back();
-        return false;
+
+        // if we have a referrer we use it, so the previous page will be loaded from the server
+        // and if the referer is not the current page (AgentITSMWorkOrderZoom)
+        if (document.referrer && !document.referrer.match(/AgentITSMWorkOrderZoom/) ) {
+            window.location.href = document.referrer;
+            return false;
+        }
+        // otherwise we use the browser history to go back one page (could be from the browser cache)
+        else if (history.length > 0) {
+            history.back();
+            return false;
+        }
+        // if the page was loaded from clicking a link in an email there is no referer
+        // and then we want to follow the original link target (which is the change zoom )
+        else {
+            return true;
+        }
     });
 //]]></script>
 <!-- dtl:js_on_document_complete -->
