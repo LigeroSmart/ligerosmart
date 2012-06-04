@@ -2,8 +2,8 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.25 2012-04-30 09:33:14 ub Exp $
-# $OldId: Service.pm,v 1.50 2012/01/13 08:16:55 ub Exp $
+# $Id: Service.pm,v 1.26 2012-06-04 21:34:24 ub Exp $
+# $OldId: Service.pm,v 1.50.2.1 2012/06/04 21:29:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -316,6 +316,7 @@ sub ServiceListGet {
 
     # fetch the result
     my @ServiceList;
+    my %ServiceName2ID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %ServiceData;
         $ServiceData{ServiceID}  = $Row[0];
@@ -335,6 +336,9 @@ sub ServiceListGet {
 
         # add service data to service list
         push @ServiceList, \%ServiceData;
+
+        # build service id lookup hash
+        $ServiceName2ID{ $ServiceData{Name} } = $ServiceData{ServiceID};
     }
 
     for my $ServiceData (@ServiceList) {
@@ -342,13 +346,9 @@ sub ServiceListGet {
         # create short name and parentid
         $ServiceData->{NameShort} = $ServiceData->{Name};
         if ( $ServiceData->{Name} =~ m{ \A (.*) :: (.+?) \z }xms ) {
+            my $ParentName = $1;
             $ServiceData->{NameShort} = $2;
-
-            # lookup parent
-            my $ServiceID = $Self->ServiceLookup(
-                Name => $1,
-            );
-            $ServiceData->{ParentID} = $ServiceID;
+            $ServiceData->{ParentID}  = $ServiceName2ID{$ParentName};
         }
 
         # get service preferences
@@ -1549,6 +1549,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2012-04-30 09:33:14 $
+$Revision: 1.26 $ $Date: 2012-06-04 21:34:24 $
 
 =cut
