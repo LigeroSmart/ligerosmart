@@ -2,8 +2,8 @@
 # Kernel/Modules/AdminService.pm - admin frontend to manage services
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.pm,v 1.7 2012-06-04 22:15:06 ub Exp $
-# $OldId: AdminService.pm,v 1.35.2.1 2012/06/04 22:08:52 ub Exp $
+# $Id: AdminService.pm,v 1.8 2012-06-05 10:23:53 ub Exp $
+# $OldId: AdminService.pm,v 1.35.2.2 2012/06/05 10:22:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -237,7 +237,7 @@ sub Run {
             my %ValidList = $Self->{ValidObject}->ValidList();
 
             # sort the service list by long service name
-            @{$ServiceList} = sort { $a . '::' cmp $b . '::' } @{$ServiceList};
+            @{$ServiceList} = sort { $a->{Name} . '::' cmp $b->{Name} . '::' } @{$ServiceList};
 
             for my $ServiceData ( @{$ServiceList} ) {
 
@@ -308,6 +308,7 @@ sub _MaskNew {
         DisabledBranch => $ServiceData{Name},
         Translation    => 0,
     );
+
 # ---
 # ITSM
 # ---
@@ -330,7 +331,6 @@ sub _MaskNew {
         SelectedID => $Param{CriticalityID} || $ServiceData{CriticalityID},
     );
 # ---
-
     # get valid list
     my %ValidList        = $Self->{ValidObject}->ValidList();
     my %ValidListReverse = reverse %ValidList;
