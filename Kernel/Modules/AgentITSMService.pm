@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMService.pm - the OTRS::ITSM Service module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMService.pm,v 1.11 2010-08-24 22:33:22 dz Exp $
+# $Id: AgentITSMService.pm,v 1.12 2012-06-05 10:28:56 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,14 +47,9 @@ sub Run {
     );
 
     # get service list
-    my %ServiceList = $Self->{ServiceObject}->ServiceList(
+    my $ServiceList = $Self->{ServiceObject}->ServiceListGet(
         UserID => $Self->{UserID},
     );
-
-    # add suffix for correct sorting
-    for my $Service ( values %ServiceList ) {
-        $Service .= '::';
-    }
 
     # set incident signal
     my %InciSignals = (
@@ -63,23 +58,21 @@ sub Run {
         incident    => 'redled',
     );
 
-    if (%ServiceList) {
-        for my $ServiceID ( sort { $ServiceList{$a} cmp $ServiceList{$b} } keys %ServiceList ) {
+    if ( @{$ServiceList} ) {
 
-            # get service data
-            my %Service = $Self->{ServiceObject}->ServiceGet(
-                ServiceID => $ServiceID,
-                UserID    => $Self->{UserID},
-            );
+        # sort the service list by long service name
+        @{$ServiceList} = sort { $a->{Name} . '::' cmp $b->{Name} . '::' } @{$ServiceList};
+
+        for my $ServiceData ( @{$ServiceList} ) {
 
             # output overview row
             $Self->{LayoutObject}->Block(
                 Name => 'OverviewRow',
                 Data => {
-                    %Service,
-                    Name          => $Service{Name},
-                    CurInciSignal => $InciSignals{ $Service{CurInciStateType} },
-                    State         => $Service{CurInciStateType},
+                    %{$ServiceData},
+                    Name          => $ServiceData->{Name},
+                    CurInciSignal => $InciSignals{ $ServiceData->{CurInciStateType} },
+                    State         => $ServiceData->{CurInciStateType},
                 },
             );
         }
