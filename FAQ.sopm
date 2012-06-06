@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.118 2012-05-10 13:59:50 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.119 2012-06-06 10:41:32 ub Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -54,16 +54,18 @@
         <File Permission="644" Location="Kernel/Modules/PublicFAQRSS.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Modules/PublicFAQZoom.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/CustomerHeaderMetaFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/DashboardFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQJournalOverviewSmall.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQMenuGeneric.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/FAQOverviewSmall.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/CustomerHeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/HeaderMetaFAQSearch.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/PublicHeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LayoutFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/LinkObjectFAQ.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/OutputFilterFAQ.pm"/>
+        <File Permission="644" Location="Kernel/Output/HTML/PublicHeaderMetaFAQSearch.pm"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQAdd.dtl"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentDashboardFAQOverview.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQCategory.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQDelete.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentFAQEdit.dtl"/>
