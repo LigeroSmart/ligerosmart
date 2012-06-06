@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.59 2011-11-30 16:58:06 ub Exp $
+# $Id: ITSMCondition.pm,v 1.60 2012-06-06 16:50:57 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::ITSMChange::ITSMCondition::Expression;
 use Kernel::System::ITSMChange::ITSMCondition::Action;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -906,7 +906,7 @@ sub ConditionMatchExecute {
             last EXPRESSIONID;
         }
 
-        # condition is false at all, so return true
+        # condition is false at all, no action will be exected, we just return true
         if ( $ConditionData->{ExpressionConjunction} eq 'all' && !$ExpressionMatch ) {
             return 1;
         }
@@ -1492,6 +1492,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2011-11-30 16:58:06 $
+$Revision: 1.60 $ $Date: 2012-06-06 16:50:57 $
 
 =cut
