@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/DashboardFAQ.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: DashboardFAQ.pm,v 1.1 2012-06-06 08:27:46 mb Exp $
+# $Id: DashboardFAQ.pm,v 1.2 2012-06-06 11:32:46 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -68,7 +68,7 @@ sub Run {
 
     $Self->{LayoutObject}->FAQShowLatestNewsBox(
         FAQObject       => $Self->{FAQObject},
-        Type            => 'LastChange',
+        Type            => $Self->{Config}->{Type},
         Mode            => 'Agent',
         CategoryID      => 0,
         Interface       => $Self->{Interface},

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.116 2012-06-06 10:53:59 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.117 2012-06-06 11:32:45 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1555,7 +1555,7 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
-        <ConfigItem Name="DashboardBackend###0399-FAQ" Required="0" Valid="1">
+    <ConfigItem Name="DashboardBackend###0398-FAQ-LastChange" Required="0" Valid="1">
         <Description Translatable="1">Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTL" indicates the cache expiration period in minutes for the plugin.</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Agent::Dashboard</SubGroup>
@@ -1564,11 +1564,28 @@ Your OTRS Notification Master
                 <Item Key="Module">Kernel::Output::HTML::DashboardFAQ</Item>
                 <Item Key="Title">Latest updated FAQ articles</Item>
                 <Item Key="Description"></Item>
+                <Item Key="Type">LastChange</Item>
                 <Item Key="Block">ContentSmall</Item>
-                <Item Key="Limit">6</Item>
                 <Item Key="Group"></Item>
                 <Item Key="Default">1</Item>
-                <Item Key="CacheTTL">120</Item>
+                <Item Key="CacheTTL">60</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="DashboardBackend###0399-FAQ-LastCreate" Required="0" Valid="1">
+        <Description Translatable="1">Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTL" indicates the cache expiration period in minutes for the plugin.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::Dashboard</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::DashboardFAQ</Item>
+                <Item Key="Title">Latest created FAQ articles</Item>
+                <Item Key="Description"></Item>
+                <Item Key="Type">LastCreate</Item>
+                <Item Key="Block">ContentSmall</Item>
+                <Item Key="Group"></Item>
+                <Item Key="Default">1</Item>
+                <Item Key="CacheTTL">60</Item>
             </Hash>
         </Setting>
     </ConfigItem>
