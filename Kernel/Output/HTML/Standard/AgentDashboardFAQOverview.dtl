@@ -1,0 +1,29 @@
+# --
+# AgentDashboardFAQOverview.dtl - provides HTML for global dashboard
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# --
+# $Id: AgentDashboardFAQOverview.dtl,v 1.1 2012-06-06 08:27:46 mb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<!-- dtl:block:InfoBoxFAQMiniList -->
+<table class="DataTable">
+    <tbody>
+<!-- dtl:block:InfoBoxFAQMiniListItemRow -->
+        <tr>
+            <td>
+                <a href="$Env{"Baselink"}Action=CustomerFAQZoom;ItemID=$QData{"ItemID"}" class="AsBlock" title="$QData{"Title"} ($QData{"CategoryName"})">
+                    $QData{"Title","50"}
+                </a>
+                <span>
+                    $QData{"CategoryShortName"} $TimeShort{"$Data{"Created"}"}
+                </span>
+            </td>
+        </tr>
+<!-- dtl:block:InfoBoxFAQMiniListItemRow -->
+    </tbody>
+</table>
+<!-- dtl:block:InfoBoxFAQMiniList -->
