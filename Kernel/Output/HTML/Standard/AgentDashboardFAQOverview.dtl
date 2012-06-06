@@ -2,7 +2,7 @@
 # AgentDashboardFAQOverview.dtl - provides HTML for global dashboard
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentDashboardFAQOverview.dtl,v 1.1 2012-06-06 08:27:46 mb Exp $
+# $Id: AgentDashboardFAQOverview.dtl,v 1.2 2012-06-06 09:48:53 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@
                     $QData{"Title","50"}
                 </a>
                 <span>
-                    $QData{"CategoryShortName"} $TimeShort{"$Data{"Created"}"}
+                    $QData{"CategoryShortName"} $TimeShort{"$Data{"Changed"}"}
                 </span>
             </td>
         </tr>
