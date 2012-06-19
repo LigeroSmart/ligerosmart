@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.23 2012-05-10 12:58:14 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.24 2012-06-19 11:48:17 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 =head1 NAME
 
@@ -238,7 +238,7 @@ sub _SetDynamicFields {
 
     # get dynamic field names from sysconfig
     my $MasterSlaveDynamicField
-        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField');
+        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || 'MasterSlave';
 
     # set attributes of new dynamic fields
     my %NewDynamicFields = (
@@ -576,6 +576,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.23 $ $Date: 2012-05-10 12:58:14 $
+$Revision: 1.24 $ $Date: 2012-06-19 11:48:17 $
 
 =cut
