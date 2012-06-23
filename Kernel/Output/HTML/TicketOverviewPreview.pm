@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.19 2012-04-24 08:52:36 ub Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.72 2012/04/20 12:16:58 mg Exp $
+# $Id: TicketOverviewPreview.pm,v 1.20 2012-06-23 11:57:18 mb Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.72.2.1 2012/06/12 10:24:32 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -278,12 +278,14 @@ sub _Show {
     my %Article = %{ $ArticleBody[0] || {} };
     my $ArticleCount = scalar @ArticleBody;
 
+    my %Ticket = $Self->{TicketObject}->TicketGet(
+        TicketID      => $Param{TicketID},
+        DynamicFields => 0,
+    );
+
     # Fallback for tickets without articles: get at least basic ticket data
     if ( !%Article ) {
-        %Article = $Self->{TicketObject}->TicketGet(
-            TicketID      => $Param{TicketID},
-            DynamicFields => 0,
-        );
+        %Article = %Ticket;
     }
 
     # user info
@@ -414,15 +416,16 @@ sub _Show {
         }
     }
 
+    my $AdditionalClasses = $Param{Config}->{TicketActionsPerTicket} ? 'ShowInlineActions' : '';
+
     $Self->{LayoutObject}->Block(
         Name => 'DocumentContent',
         Data => {
             %Param,
             %Article,
             Class             => 'ArticleCount' . $ArticleCount,
-            AdditionalClasses => $Param{Config}->{TicketActionsPerTicket}
-            ? 'ShowInlineActions'
-            : '',
+            AdditionalClasses => $AdditionalClasses,
+            Created           => $Ticket{Created},              # use value from ticket, not article
         },
     );
 
@@ -564,7 +567,11 @@ sub _Show {
             if ($Access) {
                 $Self->{LayoutObject}->Block(
                     Name => 'AgentAnswerCompose',
-                    Data => { %Param, %Article, %AclAction },
+                    Data => {
+                        %Param,
+                        %Article,
+                        %AclAction
+                    },
                 );
             }
         }
