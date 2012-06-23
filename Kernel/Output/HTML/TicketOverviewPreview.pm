@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.20 2012-06-23 11:57:18 mb Exp $
+# $Id: TicketOverviewPreview.pm,v 1.21 2012-06-23 12:09:02 mb Exp $
 # $OldId: TicketOverviewPreview.pm,v 1.72.2.1 2012/06/12 10:24:32 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -22,7 +22,7 @@ use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -280,7 +280,12 @@ sub _Show {
 
     my %Ticket = $Self->{TicketObject}->TicketGet(
         TicketID      => $Param{TicketID},
-        DynamicFields => 0,
+# ---
+# ITSM
+# ---
+#        DynamicFields => 0,
+        DynamicFields => 1,
+# ---
     );
 
     # Fallback for tickets without articles: get at least basic ticket data
@@ -297,22 +302,22 @@ sub _Show {
 # ITSM
 # ---
     # lookup criticality
-    $Article{Criticality} = '-';
-    if ( $Article{DynamicField_TicketFreeText13} ) {
+    $Ticket{Criticality} = '-';
+    if ( $Ticket{DynamicField_TicketFreeText13} ) {
         # get criticality list
         my $CriticalityList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Criticality',
         );
-        $Article{Criticality} = $CriticalityList->{ $Article{DynamicField_TicketFreeText13} };
+        $Ticket{Criticality} = $CriticalityList->{ $Ticket{DynamicField_TicketFreeText13} };
     }
     # lookup impact
-    $Article{Impact} = '-';
-    if ( $Article{DynamicField_TicketFreeText14} ) {
+    $Ticket{Impact} = '-';
+    if ( $Ticket{DynamicField_TicketFreeText14} ) {
         # get impact list
         my $ImpactList = $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::Core::Impact',
         );
-        $Article{Impact} = $ImpactList->{ $Article{DynamicField_TicketFreeText14} };
+        $Ticket{Impact} = $ImpactList->{ $Ticket{DynamicField_TicketFreeText14} };
     }
 # ---
 
@@ -422,6 +427,11 @@ sub _Show {
         Name => 'DocumentContent',
         Data => {
             %Param,
+# ---
+# ITSM
+# ---
+            %Ticket,
+# ---
             %Article,
             Class             => 'ArticleCount' . $ArticleCount,
             AdditionalClasses => $AdditionalClasses,

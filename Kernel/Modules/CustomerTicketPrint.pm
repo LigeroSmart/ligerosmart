@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.pm,v 1.9 2011-12-16 09:49:47 ub Exp $
+# $Id: CustomerTicketPrint.pm,v 1.10 2012-06-23 12:09:49 mb Exp $
 # $OldId: CustomerTicketPrint.pm,v 1.48 2011/12/12 10:52:00 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -100,7 +100,12 @@ sub Run {
     # get content
     my %Ticket = $Self->{TicketObject}->TicketGet(
         TicketID      => $Self->{TicketID},
-        DynamicFields => 0,
+# ---
+# ITSM
+# ---
+#        DynamicFields => 0,
+        DynamicFields => 1,
+# ---
     );
 # ---
 # ITSM

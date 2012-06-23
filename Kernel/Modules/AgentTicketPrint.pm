@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.10 2012-01-26 17:34:42 ub Exp $
+# $Id: AgentTicketPrint.pm,v 1.11 2012-06-23 12:09:49 mb Exp $
 # $OldId: AgentTicketPrint.pm,v 1.86 2012/01/24 00:08:45 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,6 +133,11 @@ sub Run {
     # get content
     my %Ticket = $Self->{TicketObject}->TicketGet(
         TicketID => $Self->{TicketID},
+# ---
+# ITSM
+# ---
+        DynamicFields => 1,
+# ---
         UserID   => $Self->{UserID},
     );
 # ---
