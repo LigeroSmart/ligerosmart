@@ -2,7 +2,7 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.19 2012-04-24 08:52:36 ub Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.20 2012-06-23 12:11:03 mb Exp $
 # $OldId: AgentTicketOverviewPreview.dtl,v 1.77 2012/04/20 12:16:58 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -187,11 +187,11 @@
 # ---
                         <tr class="Middle">
                             <td>
-                                <label>$Text{"Criticality"}:</label>
+                                <label>$Text{"Criticality"}</label>
                                 <div title="$QData{"Criticality"}">$Text{"$Data{"Criticality"}"}</div>
                             </td>
                             <td>
-                                <label>$Text{"Impact"}:</label>
+                                <label>$Text{"Impact"}</label>
                                 <div title="$QData{"Impact"}">$Text{"$Data{"Impact"}"}</div>
                             </td>
                         </tr>
