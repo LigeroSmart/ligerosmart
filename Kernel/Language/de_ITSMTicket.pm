@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_ITSMTicket.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ITSMTicket.pm,v 1.10 2011-11-24 15:13:25 ub Exp $
+# $Id: de_ITSMTicket.pm,v 1.11 2012-06-28 21:11:08 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -42,7 +42,7 @@ sub Data {
     $Self->{Translation}->{'Decision Date'} = 'Entscheidungsdatum';
     $Self->{Translation}->{'Repair Start Time'} = 'Reparatur Startzeit';
     $Self->{Translation}->{'Recovery Start Time'} = 'Wiederherstellung Startzeit';
-    $Self->{Translation}->{'Due date'} = 'Fälligkeitsdatum';
+    $Self->{Translation}->{'Due Date'} = 'Fälligkeitsdatum';
 
     # Template: CustomerTicketPrint
 
