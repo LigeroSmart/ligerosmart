@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.18 2012-04-16 17:48:27 cr Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.19 2012-07-05 08:54:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -219,37 +219,6 @@ run the code reinstall part
 
 sub CodeReinstall {
     my ( $Self, %Param ) = @_;
-
-    # set new ticket states to valid
-    {
-        my @StateNames = (
-            'closed with workaround',
-        );
-
-        # set states to valid
-        $Self->_SetStateValid(
-            StateNames => \@StateNames,
-            Valid      => 1,
-        );
-    }
-
-    # set new ticket types to valid
-    {
-        my @TypeNames = (
-            'Incident',
-            'Incident::ServiceRequest',
-            'Incident::Disaster',
-            'Problem',
-            'Problem::KnownError',
-            'Problem::PendingRfC',
-        );
-
-        # set types to valid
-        $Self->_SetTypeValid(
-            TypeNames => \@TypeNames,
-            Valid     => 1,
-        );
-    }
 
     # install stats
     $Self->{StatsObject}->StatsInstall(
@@ -809,6 +778,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2012-04-16 17:48:27 $
+$Revision: 1.19 $ $Date: 2012-07-05 08:54:53 $
 
 =cut
