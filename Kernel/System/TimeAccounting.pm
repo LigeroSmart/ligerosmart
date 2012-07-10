@@ -1,8 +1,8 @@
 #--
 # Kernel/System/TimeAccounting.pm - all time accounting functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.55 2011-10-13 16:53:09 en Exp $
+# $Id: TimeAccounting.pm,v 1.56 2012-07-10 15:34:25 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1234,23 +1234,19 @@ returns a hash with the working units data
 sub WorkingUnitsGet {
     my ( $Self, %Param ) = @_;
 
-    for ( keys %Param ) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-
     $Param{UserID} ||= $Self->{UserID};
 
-    my $Date      = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
+    my $Date      = sprintf "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day};
     my $DateStart = $Date . " 00:00:00";
     my $DateStop  = $Date . " 23:59:59";
 
+    # ask the database
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT user_id, project_id, action_id, remark, time_start, time_end,"
-            . " period FROM time_accounting_table "
-            . " WHERE "
-            . " time_start >= '$DateStart' "
-            . " AND time_start <= '$DateStop' "
-            . " AND user_id = '$Param{UserID}' ORDER by id",
+        SQL => 'SELECT user_id, project_id, action_id, remark, time_start, time_end, period '
+            . 'FROM time_accounting_table '
+            . 'WHERE time_start >= ? AND time_start <= ? AND user_id = ? '
+            . 'ORDER by id',
+        Bind => [ \$DateStart, \$DateStop, \$Param{UserID} ],
     );
 
     my %Data = (
@@ -1258,9 +1254,10 @@ sub WorkingUnitsGet {
         Date  => $Date,
     );
 
-    # fetch Data
+    # fetch the result
     ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
         next ROW if $Row[4] !~ m{^ (.+?) \s (\d+:\d+) : (\d+) }smx;
 
         # check if it is a special working unit
@@ -1273,6 +1270,7 @@ sub WorkingUnitsGet {
 
             next ROW;
         }
+
         my $StartTime = $2;
         my $EndTime   = '';
         if ( $Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}smx ) {
@@ -1298,8 +1296,10 @@ sub WorkingUnitsGet {
         if ( $Row[1] && $Row[2] ) {
             $Data{Total} += $WorkingUnit{Period};
         }
+
         push @{ $Data{WorkingUnits} }, \%WorkingUnit;
     }
+
     return %Data;
 }
 
@@ -1331,6 +1331,7 @@ insert working units in the db
 
 sub WorkingUnitsInsert {
     my ( $Self, %Param ) = @_;
+
     for (qw(Year Month Day)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
@@ -1340,7 +1341,8 @@ sub WorkingUnitsInsert {
             return;
         }
     }
-    my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
+
+    my $Date = sprintf "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day};
 
     # add special time working units
     my %SpecialAction = (
@@ -1351,6 +1353,7 @@ sub WorkingUnitsInsert {
 
     ELEMENT:
     for my $Element (qw(LeaveDay Sick Overtime)) {
+
         next ELEMENT if !$Param{$Element};
 
         my %Unit = (
@@ -1368,6 +1371,7 @@ sub WorkingUnitsInsert {
     #insert new working units
     UNITREF:
     for my $UnitRef ( @{ $Param{WorkingUnits} } ) {
+
         my $StartTime = $Date . ' ' . $UnitRef->{StartTime};
         my $EndTime   = $Date . ' ' . $UnitRef->{EndTime};
 
@@ -1390,6 +1394,7 @@ sub WorkingUnitsInsert {
         # db insert
         return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
     }
+
     return 1;
 }
 
@@ -1418,7 +1423,8 @@ sub WorkingUnitsDelete {
             return;
         }
     }
-    my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} );
+
+    my $Date = sprintf "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day};
 
     # delete old working units
     my $SQL = "DELETE FROM time_accounting_table "
@@ -1445,7 +1451,7 @@ returns a hash with the hours dependent project and action data
 sub ProjectActionReporting {
     my ( $Self, %Param ) = @_;
 
-    my %Data     = ();
+    my %Data;
     my $IDSelect = '';
     for (qw(Year Month)) {
         $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
@@ -1496,11 +1502,13 @@ sub ProjectActionReporting {
     # add readable components
     my %Project = $Self->ProjectSettingsGet();
     my %Action  = $Self->ActionSettingsGet();
+
     for my $ProjectID ( keys %Data ) {
         $Data{$ProjectID}{Name}        = $Project{Project}{$ProjectID};
         $Data{$ProjectID}{Status}      = $Project{ProjectStatus}{$ProjectID};
         $Data{$ProjectID}{Description} = $Project{ProjectDescription}{$ProjectID};
         my $ActionsRef = $Data{$ProjectID}{Actions};
+
         for my $ActionID ( keys %{$ActionsRef} ) {
             $Data{$ProjectID}{Actions}{$ActionID}{Name} = $Action{$ActionID}{Action};
         }
@@ -1531,13 +1539,14 @@ sub ProjectTotalHours {
         return;
     }
 
-    # db select
-    my $Total = 0;
-    my $SQL   = 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?';
-    my $Bind  = [ \$Param{ProjectID} ];
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Bind => $Bind );
+    # ask the database
+    return if !$Self->{DBObject}->Prepare(
+        SQL  => 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?',
+        Bind => [ \$Param{ProjectID} ],
+    );
 
-    # fetch Data
+    # fetch the result
+    my $Total = 0;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Total = $Row[0];
     }
@@ -1598,16 +1607,21 @@ sub ProjectHistory {
     # call action data to get the readable name of the action
     my %ActionData = $Self->ActionSettingsGet();
 
-    my %ShownUsers = $Self->{UserObject}->UserList( Type => 'Long', Valid => 0 );
+    # get user list
+    my %ShownUsers = $Self->{UserObject}->UserList(
+        Type  => 'Long',
+        Valid => 0,
+    );
 
-    # db select
-    my @Data = ();
-    my $SQL  = 'SELECT id, user_id, action_id, remark, time_start, time_end, period, created '
-        . ' FROM time_accounting_table WHERE project_id = ?';
-    my $Bind = [ \$Param{ProjectID} ];
-    $Self->{DBObject}->Prepare( SQL => $SQL, Bind => $Bind );
+    # ask the database
+    $Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, user_id, action_id, remark, time_start, time_end, period, created'
+            . ' FROM time_accounting_table WHERE project_id = ?',
+        Bind => [ \$Param{ProjectID} ],
+    );
 
-    # fetch Data
+    # fetch the result
+    my @Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my $UserRef = {
             ID        => $Row[0],
@@ -1628,7 +1642,6 @@ sub ProjectHistory {
     }
 
     return @Data;
-
 }
 
 =item LastProjectsOfUser()
@@ -1644,17 +1657,19 @@ sub LastProjectsOfUser {
 
     # db select
     # I don't use distinct because of ORDER BY problems of postgre sql
-    my %Projects = ();
-    my $SQL
-        = 'SELECT project_id FROM time_accounting_table WHERE user_id = ? AND project_id <> -1 ORDER BY time_start DESC';
-    my $Bind  = [ \$Self->{UserID} ];
-    my $Limit = 40;
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL, Bind => $Bind, Limit => $Limit );
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT project_id FROM time_accounting_table '
+            . 'WHERE user_id = ? AND project_id <> -1 ORDER BY time_start DESC',
+        Bind  => [ \$Self->{UserID} ],
+        Limit => 40,
+    );
 
-    # fetch Data
+    # fetch the result
+    my %Projects;
     my $Counter = 0;
     ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
         next ROW if $Counter > 7;
         next ROW if $Projects{ $Row[0] };
 
@@ -1679,6 +1694,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.55 $ $Date: 2011-10-13 16:53:09 $
+$Revision: 1.56 $ $Date: 2012-07-10 15:34:25 $
 
 =cut

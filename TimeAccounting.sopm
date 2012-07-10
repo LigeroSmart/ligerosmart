@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.49 2011-12-27 09:36:44 mn Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.50 2012-07-10 15:34:25 mh Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -45,26 +45,26 @@
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="time_accounting_action">
-            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
             <Column Name="action" Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
+            <Column Name="status" Required="true" Type="VARCHAR" Size="15"/>
         </TableCreate>
         <TableCreate Name="time_accounting_project">
-            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
             <Column Name="project" Required="false" Type="VARCHAR" Size="250"/>
             <Column Name="description" Required="false" Type="VARCHAR" Size="500"/>
-            <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
+            <Column Name="status" Required="true" Type="VARCHAR" Size="15"/>
         </TableCreate>
         <TableCreate Name="time_accounting_table">
-            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id" Required="true"  Type="INTEGER"/>
-            <Column Name="project_id" Required="true"  Type="BIGINT"/>
-            <Column Name="action_id" Required="true"  Type="BIGINT"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id" Required="true" Type="INTEGER"/>
+            <Column Name="project_id" Required="true" Type="BIGINT"/>
+            <Column Name="action_id" Required="true" Type="BIGINT"/>
             <Column Name="remark" Required="false" Type="VARCHAR" Size="250"/>
-            <Column Name="time_start" Required="true"  Type="DATE"/>
-            <Column Name="time_end" Required="true"  Type="DATE"/>
+            <Column Name="time_start" Required="true" Type="DATE"/>
+            <Column Name="time_end" Required="true" Type="DATE"/>
             <Column Name="period" Required="false" Type="DECIMAL" Size="10,3"/>
-            <Column Name="created" Required="true"  Type="DATE"/>
+            <Column Name="created" Required="true" Type="DATE"/>
             <Index Name="time_accounting_table_user_id">
                 <IndexColumn Name="user_id"/>
             </Index>
@@ -81,15 +81,15 @@
             </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user_period">
-            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id" Required="true"  Type="INTEGER"/>
-            <Column Name="preference_period" Required="true"  Type="INTEGER"/>
-            <Column Name="date_start" Required="true"  Type="DATE"/>
-            <Column Name="date_end" Required="true"  Type="DATE"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id" Required="true" Type="INTEGER"/>
+            <Column Name="preference_period" Required="true" Type="INTEGER"/>
+            <Column Name="date_start" Required="true" Type="DATE"/>
+            <Column Name="date_end" Required="true" Type="DATE"/>
             <Column Name="weekly_hours" Required="false" Type="DECIMAL" Size="10,2"/>
             <Column Name="leave_days" Required="false" Type="DECIMAL" Size="10,2"/>
             <Column Name="overtime" Required="false" Type="DECIMAL" Size="10,2"/>
-            <Column Name="status" Required="true"  Type="VARCHAR" Size="15"/>
+            <Column Name="status" Required="true" Type="VARCHAR" Size="15"/>
             <Index Name="time_accounting_user_period_user_status_date_start_end">
                 <IndexColumn Name="status"/>
                 <IndexColumn Name="date_start"/>
@@ -97,9 +97,9 @@
             </Index>
         </TableCreate>
         <TableCreate Name="time_accounting_user">
-            <Column Name="id" Required="true"  Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
-            <Column Name="user_id" Required="true"  Type="INTEGER"/>
-            <Column Name="description" Required="true"  Type="VARCHAR" Size="1020"/>
+            <Column Name="id" Required="true" Type="BIGINT" PrimaryKey="true" AutoIncrement="true"/>
+            <Column Name="user_id" Required="true" Type="INTEGER"/>
+            <Column Name="description" Required="true" Type="VARCHAR" Size="1020"/>
             <Column Name="show_overtime" Required="false" Type="INTEGER"/>
             <Column Name="create_project" Required="false" Type="INTEGER"/>
             <Column Name="calendar" Required="false" Type="INTEGER"/>
@@ -112,7 +112,13 @@
         <TableAlter Name="time_accounting_user" Version="1.2.2">
             <ColumnAdd Name="calendar" Required="false" Type="INTEGER"/>
         </TableAlter>
-        <TableAlter Name="time_accounting_table" Version="1.4.2">
+        <TableAlter Name="time_accounting_table" Version="2.1.2">
+            <IndexDrop Name="time_accounting_table_user_id"/>
+            <IndexDrop Name="time_accounting_table_project_action_period_time_start_end"/>
+            <IndexDrop Name="time_accounting_table_user_id_time_start"/>
+            <IndexCreate Name="time_accounting_table_user_id">
+                <IndexColumn Name="user_id"/>
+            </IndexCreate>
             <IndexCreate Name="time_accounting_table_project_action_period_time_start_end">
                 <IndexColumn Name="project_id"/>
                 <IndexColumn Name="action_id"/>
@@ -125,12 +131,14 @@
                 <IndexColumn Name="time_start"/>
             </IndexCreate>
         </TableAlter>
-        <TableAlter Name="time_accounting_user" Version="1.4.2">
+        <TableAlter Name="time_accounting_user" Version="2.1.2">
+            <IndexDrop Name="time_accounting_user_user_id"/>
             <IndexCreate Name="time_accounting_user_user_id">
                 <IndexColumn Name="user_id"/>
             </IndexCreate>
         </TableAlter>
-        <TableAlter Name="time_accounting_user_period" Version="1.4.2">
+        <TableAlter Name="time_accounting_user_period" Version="2.1.2">
+            <IndexDrop Name="time_accounting_user_period_user_status_date_start_end"/>
             <IndexCreate Name="time_accounting_user_period_user_status_date_start_end">
                 <IndexColumn Name="status"/>
                 <IndexColumn Name="date_start"/>
