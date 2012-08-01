@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminService.pm - admin frontend to manage services
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.pm,v 1.8 2012-06-05 10:23:53 ub Exp $
+# $Id: AdminService.pm,v 1.9 2012-08-01 10:26:25 ub Exp $
 # $OldId: AdminService.pm,v 1.35.2.2 2012/06/05 10:22:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -250,7 +250,6 @@ sub Run {
                     },
                 );
             }
-
         }
 
         # otherwise a no data found msg is displayed
