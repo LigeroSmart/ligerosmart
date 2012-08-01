@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.119 2012-06-06 10:41:32 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.120 2012-08-01 06:54:58 cg Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
-    <Framework>3.1.x</Framework>
+    <Framework>3.2.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -127,6 +127,14 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/SmallDarkGradient.png"/>
         <File Permission="644" Location="var/packagesetup/FAQ.pm"/>
         <File Permission="644" Location="var/stats/FAQ-FAQAccess.xml"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicCategoryList.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/LanguageList.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm"/>
+        <File Permission="644" Location="Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm"/>
+        <File Permission="644" Location="scripts/webservices/FAQConnector.yaml"/>
+        <File Permission="644" Location="scripts/test/GenericInterface/FAQConnector.t"/>
+        <File Permission="644" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.bin"/>
+        <File Permission="644" Location="scripts/test/sample/GenericInterface/FAQ/GI-FAQ-Test-utf8-1.txt"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="faq_language">

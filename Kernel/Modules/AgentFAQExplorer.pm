@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.17 2012-05-08 21:13:59 cr Exp $
+# $Id: AgentFAQExplorer.pm,v 1.18 2012-08-01 06:54:58 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -84,6 +84,23 @@ sub Run {
     # check for non numeric CategoryID
     if ( $CategoryID !~ /\d+/ ) {
         $CategoryID = 0;
+    }
+
+    # get category by name
+    my $Category = $Self->{ParamObject}->GetParam( Param => 'Category' ) || '';
+
+    # try to get the Category ID from category name if no Category ID
+    if ( $Category && !$CategoryID ) {
+
+        # get the category tree
+        my $CategoryTree = $Self->{FAQObject}->CategoryTreeList(
+            UserID => $Self->{UserID},
+        );
+
+        # reverse the has for easy lookup
+        my %ReverseCategoryTree = reverse %{$CategoryTree};
+
+        $CategoryID = $ReverseCategoryTree{$Category} || 0;
     }
 
     # get navigation bar option

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.5 2012-03-22 10:43:39 mg Exp $ -->
+<!-- $Id: FAQ.xml,v 1.6 2012-08-01 06:54:58 cg Exp $ -->
 
 <book lang="en">
 
@@ -87,6 +87,10 @@
     <sect1>
         <title>OpenSearch format</title>
         <para>The FAQ Module supports Open Search format (enabling quick searches directly from the browser).</para>
+    </sect1>
+    <sect1>
+        <title>FAQ connector for public interface</title>
+        <para>Allow you to use the functions for FAQ public interface via SOAP.</para>
     </sect1>
 </chapter>
 
@@ -266,6 +270,63 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
     <sect1>
         <title>More Configuration Options</title>
     <para>There is a group &quot;FAQ&quot; in the Admin area of the SysConfig. Here you can find various configuration options for the FAQ module; most of them are self-explaining.</para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <title>FAQ connector</title>
+    <sect1>
+        <title>Linking to FAQ categories</title>
+            <para>
+                Extension for FAQ explorer that can be used on all FAQ interfaces (internal, external and public).
+                With this extension you will be able to create links to categories using the
+                category name (Full Name) instead of the category ID.
+            </para>
+            <para>
+                <emphasis>Note:</emphasis>
+                Category ID is still available if needed.
+            </para>
+    </sect1>
+    <sect1>
+        <title>SOAP Interface for Public FAQ Data</title>
+        <para>
+            This package provides a SOAP API for accessing the public FAQ data
+            for reading. It has the following operations:
+        </para>
+        <sect2>
+            <title>List all FAQ languages</title>
+            <para>
+                This operation allows you to ask the FAQ module for the current languages available on the system.
+                The operation will return a list of languages including the ID and Name for each language.
+            </para>
+        </sect2>
+        <sect2>
+            <title>List all public FAQ categories</title>
+            <para>
+                Using this operation you can retrieve all categories with public state on the FAQ module.
+                You are going to get it as a list of categories including ID and Name for each category.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Search for public FAQs</title>
+            <para>
+                This operation will let you perform a search on the FAQ module for
+                public articles, it will return a list of IDs for matched FAQ articles.
+            </para>
+        </sect2>
+        <sect2>
+            <title>Retrieve public FAQ entries</title>
+            <para>
+                You can use this operation to easily obtain one or more FAQ articles.
+                You will receive one main data container per each FAQ article, inside each
+                main container you will found one or more containers,the first one
+                contain all data for the FAQ article and the rest, all the attachment files.
+            </para>
+            <para>
+                Please see the chapter "Configuration" below for how to activate the SOAP API on your system,
+                and the chapter "SOAP API Reference" for details on using the SOAP API.
+            </para>
+        </sect2>
     </sect1>
 </chapter>
 
