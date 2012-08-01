@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.21 2012-06-23 12:09:02 mb Exp $
+# $Id: TicketOverviewPreview.pm,v 1.22 2012-08-01 12:12:20 ub Exp $
 # $OldId: TicketOverviewPreview.pm,v 1.72.2.1 2012/06/12 10:24:32 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -22,7 +22,7 @@ use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -577,11 +577,7 @@ sub _Show {
             if ($Access) {
                 $Self->{LayoutObject}->Block(
                     Name => 'AgentAnswerCompose',
-                    Data => {
-                        %Param,
-                        %Article,
-                        %AclAction
-                    },
+                    Data => { %Param, %Article, %AclAction },
                 );
             }
         }
@@ -1113,7 +1109,11 @@ sub _Show {
     # create & return output
     my $Output = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentTicketOverviewPreview',
-        Data => { %Param, %Article, %AclAction },
+        Data         => {
+            %Param,
+            %Article,
+            %AclAction,
+        },
     );
     return \$Output;
 }

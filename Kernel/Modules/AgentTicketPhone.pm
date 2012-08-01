@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.47 2012-04-24 08:52:20 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.236 2012/03/26 23:18:09 mh Exp $
+# $Id: AgentTicketPhone.pm,v 1.48 2012-08-01 12:11:43 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.236.2.7 2012/06/22 17:34:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,16 +25,16 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 use Mail::Address;
-use Kernel::System::Service;
 # ---
 # ITSM
 # ---
+use Kernel::System::Service;
 use Kernel::System::GeneralCatalog;
 use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.47 $) [1];
+$VERSION = qw($Revision: 1.48 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -62,10 +62,10 @@ sub new {
     $Self->{HTMLUtilsObject}    = Kernel::System::HTMLUtils->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
 # ---
 # ITSM
 # ---
+    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
     $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
     $Self->{CIPAllocateObject}    = Kernel::System::ITSMCIPAllocate->new(%Param);
 # ---
@@ -133,7 +133,7 @@ sub Run {
 
             if ($CustomerElement) {
 
-                my $CountAux         = $Count;
+                my $CountAux         = $CustomerCounter++;
                 my $CustomerError    = '';
                 my $CustomerErrorMsg = 'CustomerGenericServerErrorMsg';
                 my $CustomerDisabled = '';
@@ -709,9 +709,6 @@ sub Run {
     # create new ticket and article
     elsif ( $Self->{Subaction} eq 'StoreNew' ) {
 
-        # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
-
         my %Error;
         my %StateData;
         if ( $GetParam{NextStateID} ) {
@@ -1038,17 +1035,8 @@ sub Run {
                 QueueID        => $NewQueueID   || 1,
             );
 
-            my $SelectedService;
-            SERVICE:
-            for my $Service ( @{$Services} ) {
-                next SERVICE if !$Service->{Key} eq $GetParam{ServiceID};
-
-                $SelectedService = $Service->{Key};
-                last SERVICE;
-            }
-
             # reset previous ServiceID to reset SLA-List if no service is selected
-            if ( !$GetParam{ServiceID} || !$SelectedService ) {
+            if ( !$GetParam{ServiceID} || !$Services->{ $GetParam{ServiceID} } ) {
                 $GetParam{ServiceID} = '';
             }
 
@@ -1122,6 +1110,9 @@ sub Run {
             $Output .= $Self->{LayoutObject}->Footer();
             return $Output;
         }
+
+        # challenge token check for write action
+        $Self->{LayoutObject}->ChallengeTokenCheck();
 
         # create new ticket, do db insert
         my $TicketID = $Self->{TicketObject}->TicketCreate(
@@ -1570,6 +1561,7 @@ sub Run {
                     SelectedID   => $Dest,
                     Translation  => 0,
                     PossibleNone => 0,
+                    TreeView     => $TreeView,
                     Max          => 100,
                 },
                 {
@@ -1682,12 +1674,12 @@ sub _GetUsers {
         %ShownUsers = %AllGroupsMembers;
     }
 
-    # show all users who are rw in the queue group
+    # show all users who are owner or rw in the queue group
     elsif ( $Param{QueueID} ) {
         my $GID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Param{QueueID} );
         my %MemberList = $Self->{GroupObject}->GroupMemberList(
             GroupID => $GID,
-            Type    => 'rw',
+            Type    => 'owner',
             Result  => 'HASH',
         );
         for my $KeyMember ( keys %MemberList ) {
@@ -1742,12 +1734,12 @@ sub _GetResponsibles {
         %ShownUsers = %AllGroupsMembers;
     }
 
-    # show all users who are rw in the queue group
+    # show all users who are responsible or rw in the queue group
     elsif ( $Param{QueueID} ) {
         my $GID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Param{QueueID} );
         my %MemberList = $Self->{GroupObject}->GroupMemberList(
             GroupID => $GID,
-            Type    => 'rw',
+            Type    => 'responsible',
             Result  => 'HASH',
         );
         for my $KeyMember ( keys %MemberList ) {
@@ -1806,111 +1798,27 @@ sub _GetServices {
 
     # get service
     my %Service;
-    my @ServiceList;
-    if ( ( $Param{QueueID} || $Param{TicketID} ) && $Param{CustomerUserID} ) {
+
+    # check needed
+    return \%Service if !$Param{QueueID} && !$Param{TicketID};
+
+    # get options for default services for unknown customers
+    my $DefaultServiceUnknownCustomer
+        = $Self->{ConfigObject}->Get('Ticket::Service::Default::UnknownCustomer');
+
+    # get service list
+    if ( $Param{CustomerUserID} || $DefaultServiceUnknownCustomer ) {
         %Service = $Self->{TicketObject}->TicketServiceList(
             %Param,
             Action => $Self->{Action},
             UserID => $Self->{UserID},
         );
-
-        my %OrigService = $Self->{ServiceObject}->CustomerUserServiceMemberList(
-            Result            => 'HASH',
-            CustomerUserLogin => $Param{CustomerUserID},
-            UserID            => 1,
-        );
-
-        # get all services
-        my $ServiceList = $Self->{ServiceObject}->ServiceListGet(
-            Valid  => 0,
-            UserID => 1,
-        );
-
-        # get a service lookup table
-        my %ServiceLoockup;
-        SERVICE:
-        for my $ServiceData ( @{$ServiceList} ) {
-            next SERVICE if !$ServiceData;
-            next SERVICE if !IsHashRefWithData($ServiceData);
-            next SERVICE if !$ServiceData->{ServiceID};
-
-            $ServiceLoockup{ $ServiceData->{ServiceID} } = $ServiceData;
-        }
-
-        # to store already printed ServiceIDs
-        my %AddedServices;
-
-        for my $ServiceKey ( sort { $OrigService{$a} cmp $OrigService{$b} } keys %OrigService ) {
-
-            # get the service parent
-            my $ServiceParentID = $ServiceLoockup{$ServiceKey}->{ParentID} || 0;
-
-            # check if direct parent is not listed as printed
-            if ( $ServiceParentID && !defined $AddedServices{$ServiceParentID} ) {
-
-                # get all parent IDs
-                my $ServiceParents = $Self->{ServiceObject}->ServiceParentsGet(
-                    ServiceID => $ServiceKey,
-                    UserID    => $Self->{UserID},
-                );
-
-                SERVICEID:
-                for my $ServiceID ( @{$ServiceParents} ) {
-                    next SERVICEID if !$ServiceID;
-                    next SERVICEID if $AddedServices{$ServiceID};
-
-                    my $ServiceParent = $ServiceLoockup{$ServiceID};
-                    next SERVICEID if !IsHashRefWithData($ServiceParent);
-
-                    # create a new register for each parent as disabled
-                    my %ParentServiceRegister = (
-                        Key      => $ServiceID,
-                        Value    => $ServiceParent->{Name},
-                        Selected => 0,
-                        Disabled => 1,
-                    );
-                    push @ServiceList, \%ParentServiceRegister;
-
-                    # set service as printed
-                    $AddedServices{$ServiceID} = 1;
-                }
-            }
-
-            # set default service structure
-            my %ServiceRegister = (
-                Key   => $ServiceKey,
-                Value => $OrigService{$ServiceKey},
-            );
-
-            # check if service is selected
-            if ( $Param{ServiceID} && $Param{ServiceID} eq $ServiceKey ) {
-                $ServiceRegister{Selected} = 1;
-            }
-
-            # check if service is disabled
-            if ( !$Service{$ServiceKey} ) {
-                $ServiceRegister{Disabled} = 1;
-            }
-            push @ServiceList, \%ServiceRegister;
-
-            # set service as printed
-            $AddedServices{$ServiceKey} = 1;
-        }
     }
-    return \@ServiceList;
+    return \%Service;
 }
 
 sub _GetSLAs {
     my ( $Self, %Param ) = @_;
-
-    # convert service ArrayHashRef to hashref
-    my %Services;
-    SERVICE:
-    for my $Service ( @{ $Param{Services} } ) {
-        next SERVICE if !$Service;
-        $Services{ $Service->{Key} } = $Service->{Value};
-    }
-    $Param{Services} = \%Services;
 
     # get sla
     my %SLA;
@@ -2182,8 +2090,10 @@ sub _MaskPhoneNew {
             Data         => $Param{Services},
             Name         => 'ServiceID',
             Class        => $Param{Errors}->{ServiceInvalid} || ' ',
+            SelectedID   => $Param{ServiceID},
             PossibleNone => 1,
             TreeView     => $TreeView,
+            Sort         => 'TreeView',
             Translation  => 0,
             Max          => 200,
         );
