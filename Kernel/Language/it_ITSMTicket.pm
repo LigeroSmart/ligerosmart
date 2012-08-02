@@ -2,7 +2,7 @@
 # Kernel/Language/it_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: it_ITSMTicket.pm,v 1.8 2012-06-28 21:11:08 mb Exp $
+# $Id: it_ITSMTicket.pm,v 1.9 2012-08-02 09:27:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -38,11 +38,11 @@ sub Data {
     # Template: AgentTicketPrint
 
     # Template: AgentTicketZoom
-    $Self->{Translation}->{'Decision Result'} = 'Risultato della Risoluzione';
-    $Self->{Translation}->{'Decision Date'} = 'Data di Risoluzione';
+    $Self->{Translation}->{'Decision Result'} = 'Risultato della Approvazione';
+    $Self->{Translation}->{'Decision Date'} = 'Data di Approvazione';
     $Self->{Translation}->{'Repair Start Time'} = 'Data iniziale di riparazione';
     $Self->{Translation}->{'Recovery Start Time'} = 'Data iniziale di recupero';
-    $Self->{Translation}->{'Due Date'} = 'Data di scadenza';
+    $Self->{Translation}->{'Due date'} = 'Data di scadenza';
 
     # Template: CustomerTicketPrint
 
@@ -56,7 +56,7 @@ sub Data {
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Change the ITSM fields!'} = 'Cambia i campi ITSM!';
-    $Self->{Translation}->{'Decision'} = 'Risoluzione';
+    $Self->{Translation}->{'Decision'} = 'Approvazione';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines the default body of a note in the additional ITSM field screen of the agent interface.'} = '';
@@ -111,7 +111,7 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Aggiungi una Risoluzione al Ticket';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Aggiungi una Approvazione al Ticket';
     $Self->{Translation}->{'Reason'} = 'Motivo';
     $Self->{Translation}->{'Review Required'} = 'Richiesta Revisione';
     $Self->{Translation}->{'closed with workaround'} = 'chiuso con soluzione tampone (workaround)';
