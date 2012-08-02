@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.6 2012-08-01 06:54:58 cg Exp $ -->
+<!-- $Id: FAQ.xml,v 1.7 2012-08-02 13:23:35 mg Exp $ -->
 
 <book lang="en">
 
@@ -275,18 +275,6 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
 
 <chapter>
     <title>FAQ connector</title>
-    <sect1>
-        <title>Linking to FAQ categories</title>
-            <para>
-                Extension for FAQ explorer that can be used on all FAQ interfaces (internal, external and public).
-                With this extension you will be able to create links to categories using the
-                category name (Full Name) instead of the category ID.
-            </para>
-            <para>
-                <emphasis>Note:</emphasis>
-                Category ID is still available if needed.
-            </para>
-    </sect1>
     <sect1>
         <title>SOAP Interface for Public FAQ Data</title>
         <para>
