@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.7 2012-08-02 13:23:35 mg Exp $ -->
+<!-- $Id: FAQ.xml,v 1.8 2012-08-09 03:34:23 cg Exp $ -->
 
 <book lang="en">
 
@@ -311,12 +311,474 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
                 contain all data for the FAQ article and the rest, all the attachment files.
             </para>
             <para>
-                Please see the chapter "Configuration" below for how to activate the SOAP API on your system,
+                Please see the chapter "FAQ connector configuration" below for how to activate the SOAP API on your system,
                 and the chapter "SOAP API Reference" for details on using the SOAP API.
             </para>
         </sect2>
     </sect1>
 </chapter>
+
+    <chapter>
+        <title>FAQ connector configuration</title>
+        <sect1>
+            <para>
+                In order to use the web service and the operations included on this package, you should
+                first of all install the web service on your system, using the Command line or taking advance of
+                the Graphical User Interface (Admin Interface). Please note that the old configuration for rpc.pl
+                is not relevant for the GenericInterface and therefore not needed.
+            </para>
+            <para>
+                The following is an example of how to use Command line to install the web service on the system using the provided YAML file (.yaml)
+                included on this package.
+            </para>
+            <para>
+                <screen>
+shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a write -n RRZEGIFAQConnector -f $OTRS_HOME/scripts/webservices/RRZEGIFAQConnector.yaml
+                </screen>
+            </para>
+            <para>
+                Also you can install the web service importing the mentioned YAML file via web interface on the
+                next URL using the 'Import web service' button on the left side bar.
+            </para>
+            <para>
+                <ulink url="http://localhost/otrs/index.pl?Action=AdminGenericInterfaceWebservice;Subaction=Add">
+                    http://localhost/otrs/index.pl?Action=AdminGenericInterfaceWebservice;Subaction=Add
+                </ulink>
+            </para>
+            <para>
+                The content of the YAML file is shown below.
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+---
+Debugger:
+  DebugThreshold: debug
+  TestMode: 0
+Description: ''
+Provider:
+  Operation:
+    PublicCategoryList:
+      Description: List all public FAQ categories (with tree information)
+      Type: FAQ::PublicCategoryList
+    LanguageList:
+      Description: List  all availables languages
+      Type: FAQ::LanguageList
+    PublicFAQSearch:
+      Description: Search for public FAQs
+      Type: FAQ::PublicFAQSearch
+    PublicFAQGet:
+      Description: Retrieve public FAQ entries
+      Type: FAQ::PublicFAQGet
+  Transport:
+    Config:
+      Encoding: UTF-8
+      Endpoint: ''
+      MaxLength: 10000000
+      NameSpace: faq_interface
+      SOAPAction: ''
+    Type: HTTP::SOAP
+RemoteSystem: ''
+                    ]]>
+                </screen>
+            </para>
+            <para>
+                In order to use the web service you need to use an new interface in OTRS.
+                As for agents you use index.pl and for customers you use customer.pl, for web services you use <emphasis>nph-genericinterface.pl</emphasis>.
+            </para>
+            <para>
+                The default and suggested name for this web service is RRZEGIFAQConnector.
+                Since the name of the web service can be changed is very important that you write
+                down the current name of your web service and update it in all locations that access this web service.
+            </para>
+            <para>
+                When a web service is installed on the system it always has an associated ID number.
+                You can call the web service by name or by ID number.
+                To get the list of <emphasis>valid</emphasis> web services and they corresponding ID number you can use the following command:
+            </para>
+            <para>
+                <screen>
+shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a list
+                </screen>
+            </para>
+            <para>
+                For this speific web service, using the default configuration you can call it as follows:
+            </para>
+            <para>
+                <ulink url="http://localhost/otrs/nph-genericinterface.pl/Webservice/RRZEGIFAQConnector">
+                    http://localhost/otrs/nph-genericinterface.pl/Webservice/RRZEGIFAQConnector
+                </ulink>
+                (by name, recommended) or
+                <ulink url="http://localhost/otrs/nph-genericinterface.pl/WebserviceID/1">
+                    http://localhost/otrs/nph-genericinterface.pl/WebserviceID/1
+                </ulink>
+                (by ID).
+            </para>
+            <para>
+                <emphasis>Note:</emphasis> both web service name and ID from the example above could be different in your current environment.
+            </para>
+        </sect1>
+    </chapter>
+
+    <chapter>
+        <title>New ways to create links</title>
+        <sect1>
+            <title>Create links using the category name</title>
+            <para>
+                To be able to use this feature just replace the CategoryID parameter with Category parameter.
+                Category parameter is the full category path, each sub category is separated by "::".
+                Imagine the following category tree:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+GrandParent
+    Parent
+        Son
+                    ]]>
+                </screen>
+            </para>
+            <para>
+                To create a link to the "Son" category we need to specify the following path:
+                Category=GrandParent::Parent::Son.
+            </para>
+            <para>
+                See the link examples below
+            </para>
+            <para>
+                from:
+                <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;CategoryID=1">
+                    http://localhost/otrs/index.pl?Action=AdminFAQExplorer;CategoryID=1
+                </ulink>
+            </para>
+            <para>
+                to:
+                <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=Misc">
+                    http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=Misc
+                </ulink>
+            </para>
+            <para>
+                Other Examples:
+            </para>
+            <para>
+                <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=My%20Category">
+                    http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=My%20Category
+                </ulink>
+            </para>
+            <para>
+                <ulink url="http://localhost/otrs/index.pl?Action=CustomerFAQExplorer;Category=GranParent::Parent::Son">
+                    http://localhost/otrs/index.pl?Action=CustomerFAQExplorer;Category=GrandParent::Parent::Son
+                </ulink>
+            </para>
+            <para>
+                <ulink url="http://localhost/otrs/index.pl?Action=PublicFAQExplorer;Category=My%20Category::SubCategory">
+                    http://localhost/otrs/index.pl?Action=PublicFAQExplorer;Category=My%20Category::Subcategory
+                </ulink>
+            </para>
+        </sect1>
+    </chapter>
+
+    <chapter>
+        <title>How to use the SOAP API</title>
+        <sect1>
+            <title>List all FAQ languages</title>
+            <para>
+                For this operation is not necessary to send any special parameter to the server, you just need to
+                request the web service directly indicating the "LanguageList" operation on your soap call.
+                The operation will return a list of languages including ID and the Name for each language on the system.
+            </para>
+            <para>
+                Please see the SOAP call example below:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:examples:faq">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:LanguageList soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+   </soapenv:Body>
+</soapenv:Envelope>
+                    ]]>
+                </screen>
+            </para>
+            <para>
+                Example Response:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soap:Envelope soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:namesp1="faq_interface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <namesp1:LanguageListResponse>
+         <Language>
+            <ID>1</ID>
+            <Name>en</Name>
+         </Language>
+         <Language>
+            <ID>2</ID>
+            <Name>de</Name>
+         </Language>
+         <Language>
+            <ID>3</ID>
+            <Name>es</Name>
+         </Language>
+      </namesp1:LanguageListResponse>
+   </soap:Body>
+</soap:Envelope>
+                    ]]>
+                </screen>
+            </para>
+        </sect1>
+        <sect1>
+            <title>List all public FAQ categories</title>
+            <para>
+                For this operation is also not necessary any special parameter, just the simple SOAP call for
+                requesting the web service with the operation name 'PublicCategoryList' as a response
+                you will receive a list of categories including the ID and the Name (long format) for each category.
+            </para>
+            <para>
+                Please see the SOAP call example below:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:examples:faq">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:PublicCategoryList soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+   </soapenv:Body>
+</soapenv:Envelope>
+                    ]]>
+                </screen>
+            </para>
+            <para>
+                Example Response:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soap:Envelope soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:namesp1="faq_interface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <namesp1:PublicCategoryListResponse>
+         <Category>
+            <ID>2</ID>
+            <Name>Pulbic</Name>
+         </Category>
+         <Category>
+            <ID>5</ID>
+            <Name>Public::SubCategory A</Name>
+         </Category>
+         <Category>
+            <ID>8</ID>
+            <Name>Public::SubCategory B</Name>
+         </Category>
+      </namesp1:PublicCategoryListResponse>
+   </soap:Body>
+</soap:Envelope>
+                    ]]>
+                </screen>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Search for public FAQs</title>
+            <para>
+                For this operation you can specify the following optional parameters:
+                Name, Title, What (full text search), Keyword, LanguageIDs and CategoryIDs to narrow the search results.
+                You may also specify the order of the results by the following parameters:
+                OrderBy and OrderByDirection.
+            </para>
+            <para>
+                Do a SOAP call for requesting the web service with the operation name 'PublicFAQSearch' as a response
+                you will receive a list of FAQ article IDs.
+            </para>
+            <para>
+                <emphasis>Note: </emphasis>
+                The full article can be retrieved for each ID by using 'PublicFAQGet' operation separately.
+            </para>
+            <para>
+                Please see the SOAP call example below:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:examples:faq">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:PublicFAQSearch soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+        <Number>*134*</Number>                      <!-- Optional -->
+        <Title>*some title*</Title>                 <!-- Optional -->
+        <What>*some text*</What>                    <!-- Optional -->
+        <Keyword>*webserver*</Keyword/>             <!-- Optional -->
+        <LanguageIDs>1</LanguageIDs>                <!-- Optional -->
+        <CategoryIDs>2</CategoryIDs>                <!-- Optional -->
+        <OrderBy>FAQID</OrderBy>                    <!-- Optional -->
+        <OrderByDirection>Up</OrderByDirection>     <!-- Optional (Down | Up) -->
+      </urn:PublicFAQSearch>
+   </soapenv:Body>
+</soapenv:Envelope>
+                    ]]>
+                </screen>
+            </para>
+            <para>
+                Example Response:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soap:Envelope soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:namesp1="faq_interface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <namesp1:PublicFAQSearchResponse>
+         <ID>20</ID>
+         <ID>19</ID>
+         <ID>18</ID>
+         <ID>17</ID>
+         <ID>16</ID>
+         <ID>15</ID>
+         <ID>14</ID>
+         <ID>13</ID>
+         <ID>11</ID>
+         <ID>6</ID>
+         <ID>5</ID>
+      </namesp1:PublicFAQSearchResponse>
+   </soap:Body>
+</soap:Envelope>
+                    ]]>
+                </screen>
+            </para>
+        </sect1>
+        <sect1>
+            <title>Retrieve public FAQ entries</title>
+            <para>
+                To be able to get one or more FAQ entries, you should send the ItemID(s) as a parameter for the FAQ entry you want to get.
+                You will receive the entire FAQ record with all attachments included if any. Note that attachments will be transferred
+                as base64-encoded strings.
+            </para>
+            <para>
+                Please see the SOAP call example below:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:examples:faq">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:PublicFAQGet soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+        <ItemID>6,7</ItemID>
+      </urn:PublicFAQGet>
+   </soapenv:Body>
+</soapenv:Envelope>
+                    ]]>
+                </screen>
+            </para>
+            <para>
+                Example Response:
+            </para>
+            <para>
+                <screen>
+                    <![CDATA[
+<soap:Envelope soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:namesp1="faq_interface"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <namesp1:PublicFAQGetResponse>
+          <Item>
+             <Article>
+                <ID>6</ID>
+                <ItemID>6</ItemID>
+                <FAQID>6</FAQID>
+                <Number>10006</Number>
+                <CategoryID>2</CategoryID>
+                <CategoryName>Public</CategoryName>
+                <CategoryShortName>Public</CategoryShortName>
+                <LanguageID>1</LanguageID>
+                <Language>en</Language>
+                <Title>Public2</Title>
+                <Field1>The Symptoms</Field1>
+                <Field2>The Problem</Field2>
+                <Field3>The Solution</Field3>
+                <Field4/>
+                <Field5/>
+                <Field6>The Comments</Field6>
+                <Approved>1</Approved>
+                <Keywords>Keyword1 Keyword2 Keyword3</Keywords>
+                <Votes>1</Votes>
+                <VoteResult>75.00</VoteResult>
+                <StateID>3</StateID>
+                <State>public (all)</State>
+                <StateTypeID>3</StateTypeID>
+                <StateTypeName>public</StateTypeName>
+                <Created>2010-11-02 08:06:43</Created>
+                <CreatedBy>1</CreatedBy>
+                <Changed>2010-11-02 08:06:43</Changed>
+                <ChangedBy>1</ChangedBy>
+                <Name>1288706803-91.878184450707</Name>
+             </Article>
+             <Attachment>
+                <Content>...==</Content>
+                <ContentType>text/plain</ContentType>
+                <Filename>Details.txt</Filename>
+                <Filesize>296</Filesize>
+             </Attachment>
+             <Attachment>
+                <Content>...==</Content>
+                <ContentType>text/plain</ContentType>
+                <Filename>Text.bin</Filename>
+                <Filesize>980</Filesize>
+             </Attachment>
+          </Item>
+          <Item>
+             <Article>
+                <ID>7</ID>
+                <ItemID>7</ItemID>
+                <FAQID>7</FAQID>
+                <Number>10006</Number>
+                <CategoryID>2</CategoryID>
+                <CategoryName>Public</CategoryName>
+                <CategoryShortName>Public</CategoryShortName>
+                <LanguageID>1</LanguageID>
+                <Language>en</Language>
+                <Title>Public777</Title>
+                <Field1>The Symptoms</Field1>
+                <Field2>The Problem</Field2>
+                <Field3>The Solution</Field3>
+                <Field4/>
+                <Field5/>
+                <Field6>The Comments</Field6>
+                <Approved>1</Approved>
+                <Keywords>Keyword1 Keyword2 Keyword3</Keywords>
+                <Votes>1</Votes>
+                <VoteResult>75.00</VoteResult>
+                <StateID>3</StateID>
+                <State>public (all)</State>
+                <StateTypeID>3</StateTypeID>
+                <StateTypeName>public</StateTypeName>
+                <Created>2010-16-03 02:06:43</Created>
+                <CreatedBy>1</CreatedBy>
+                <Changed>2010-11-02 02:06:43</Changed>
+                <ChangedBy>1</ChangedBy>
+                <Name>1288706803-91.878184450707</Name>
+             </Article>
+          </Item>
+      </namesp1:PublicFAQGetResponse>
+   </soap:Body>
+</soap:Envelope>
+                    ]]>
+                </screen>
+            </para>
+        </sect1>
+    </chapter>
+
 
 <chapter>
     <title>Contact</title>
