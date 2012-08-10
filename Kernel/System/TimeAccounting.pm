@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.56 2012-07-10 15:34:25 mh Exp $
+# $Id: TimeAccounting.pm,v 1.57 2012-08-10 11:59:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1599,7 +1599,8 @@ sub ProjectHistory {
     # check needed param
     if ( !$Param{ProjectID} ) {
         $Self->{LogObject}->Log(
-            Priority => 'error', Message => 'ProjectActionReporting: Need ProjectID!'
+            Priority => 'error',
+            Message  => 'ProjectActionReporting: Need ProjectID!',
         );
         return;
     }
@@ -1616,7 +1617,7 @@ sub ProjectHistory {
     # ask the database
     $Self->{DBObject}->Prepare(
         SQL => 'SELECT id, user_id, action_id, remark, time_start, time_end, period, created'
-            . ' FROM time_accounting_table WHERE project_id = ?',
+            . ' FROM time_accounting_table WHERE project_id = ? ORDER BY time_start',
         Bind => [ \$Param{ProjectID} ],
     );
 
@@ -1694,6 +1695,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.56 $ $Date: 2012-07-10 15:34:25 $
+$Revision: 1.57 $ $Date: 2012-08-10 11:59:00 $
 
 =cut
