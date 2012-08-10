@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.57 2012-08-10 11:59:00 mh Exp $
+# $Id: TimeAccounting.pm,v 1.58 2012-08-10 12:30:18 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1496,7 +1496,7 @@ sub ProjectActionReporting {
     # fetch Data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         next if !$Row[2];
-        $Data{ $Row[0] }{Actions}{ $Row[1] }{PerMonth} += $Row[2];
+        $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{PerMonth} += $Row[2];
     }
 
     # add readable components
@@ -1504,13 +1504,15 @@ sub ProjectActionReporting {
     my %Action  = $Self->ActionSettingsGet();
 
     for my $ProjectID ( keys %Data ) {
-        $Data{$ProjectID}{Name}        = $Project{Project}{$ProjectID};
-        $Data{$ProjectID}{Status}      = $Project{ProjectStatus}{$ProjectID};
-        $Data{$ProjectID}{Description} = $Project{ProjectDescription}{$ProjectID};
-        my $ActionsRef = $Data{$ProjectID}{Actions};
+
+        $Data{$ProjectID}->{Name}        = $Project{Project}->{$ProjectID} || '';
+        $Data{$ProjectID}->{Status}      = $Project{ProjectStatus}->{$ProjectID};
+        $Data{$ProjectID}->{Description} = $Project{ProjectDescription}->{$ProjectID};
+
+        my $ActionsRef = $Data{$ProjectID}->{Actions};
 
         for my $ActionID ( keys %{$ActionsRef} ) {
-            $Data{$ProjectID}{Actions}{$ActionID}{Name} = $Action{$ActionID}{Action};
+            $Data{$ProjectID}->{Actions}->{$ActionID}->{Name} = $Action{$ActionID}->{Action} || '';
         }
     }
 
@@ -1695,6 +1697,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.57 $ $Date: 2012-08-10 11:59:00 $
+$Revision: 1.58 $ $Date: 2012-08-10 12:30:18 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.88 2012-01-31 13:54:37 mn Exp $
+# $Id: AgentTimeAccounting.pm,v 1.89 2012-08-10 12:30:18 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.88 $) [1];
+$VERSION = qw($Revision: 1.89 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1833,10 +1833,9 @@ sub Run {
         );
 
         # REMARK:merge this projectreporting list with the list in overview
-
         PROJECTID:
         for my $ProjectID (
-            sort { $ProjectData{$a}{Name} cmp $ProjectData{$b}{Name} }
+            sort { $ProjectData{$a}->{Name} cmp $ProjectData{$b}->{Name} }
             keys %ProjectData
             )
         {
@@ -1852,7 +1851,7 @@ sub Run {
             next PROJECTID if $Param{ProjectStatusShow} eq 'all' && $Param{Status};
 
             for my $ActionID (
-                sort { $ActionsRef->{$a}{Name} cmp $ActionsRef->{$b}{Name} }
+                sort { $ActionsRef->{$a}->{Name} cmp $ActionsRef->{$b}->{Name} }
                 keys %{$ActionsRef}
                 )
             {
