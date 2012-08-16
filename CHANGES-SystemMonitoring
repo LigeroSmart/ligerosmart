@@ -2,12 +2,19 @@
 # CHANGES - change log of the SystemMonitoring module for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-SystemMonitoring,v 1.3 2012-01-25 10:30:55 mn Exp $
+# $Id: CHANGES-SystemMonitoring,v 1.4 2012-08-16 15:29:40 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+2.3.3 2012-08-21
+ - 2012-05-22 Fixed bug# 8501 - SystemMonitoring does not send acknowledge to Nagios.
+    Thanks to Bjoern Petersen for the fix.
+
+2.3.2 2012-02-21
+ - Fixed issue with linking event tickets to CI's.
 
 2.3.1 2012-01-25
  - Initial release for OTRS 3.1.
