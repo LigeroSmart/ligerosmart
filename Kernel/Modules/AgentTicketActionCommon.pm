@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.30 2012-08-01 12:11:15 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.81.2.6 2012/06/29 21:07:15 cr Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.31 2012-08-16 13:52:21 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.81.2.7 2012/08/15 09:55:11 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1331,12 +1331,12 @@ sub _Mask {
         # get old owner
         my @OldUserInfo = $Self->{TicketObject}->TicketOwnerList( TicketID => $Self->{TicketID} );
         $Param{OwnerStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%ShownUsers,
-            SelectedID => $Param{NewOwnerID},
-            Name       => 'NewOwnerID',
-            Class      => $Param{NewOwnerInvalid} || ' ',
-            Size       => 1,
-
+            Data         => \%ShownUsers,
+            SelectedID   => $Param{NewOwnerID},
+            Name         => 'NewOwnerID',
+            Class        => $Param{NewOwnerInvalid} || ' ',
+            Size         => 1,
+            PossibleNone => 1,
         );
         my %UserHash;
         if (@OldUserInfo) {
@@ -1347,9 +1347,6 @@ sub _Mask {
                     . "$User->{UserFirstname} ($User->{UserLogin})";
                 $Counter++;
             }
-        }
-        if ( !%UserHash ) {
-            $UserHash{''} = '-';
         }
         my $OldOwnerSelectedID = '';
         if ( $Param{OldOwnerID} ) {
@@ -1365,7 +1362,7 @@ sub _Mask {
             SelectedID => $OldOwnerSelectedID,
             Name       => 'OldOwnerID',
             Class      => $Param{OldOwnerInvalid} || ' ',
-
+            PossibleNone => 1,
         );
         if ( $Param{NewOwnerType} && $Param{NewOwnerType} eq 'Old' ) {
             $Param{'NewOwnerType::Old'} = 'checked = "checked"';
