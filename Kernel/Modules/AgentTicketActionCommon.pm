@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.31 2012-08-16 13:52:21 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.32 2012-08-20 14:10:53 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.81.2.7 2012/08/15 09:55:11 te Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1358,10 +1358,10 @@ sub _Mask {
 
         # build string
         $Param{OldOwnerStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%UserHash,
-            SelectedID => $OldOwnerSelectedID,
-            Name       => 'OldOwnerID',
-            Class      => $Param{OldOwnerInvalid} || ' ',
+            Data         => \%UserHash,
+            SelectedID   => $OldOwnerSelectedID,
+            Name         => 'OldOwnerID',
+            Class        => $Param{OldOwnerInvalid} || ' ',
             PossibleNone => 1,
         );
         if ( $Param{NewOwnerType} && $Param{NewOwnerType} eq 'Old' ) {
