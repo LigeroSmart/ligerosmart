@@ -1,9 +1,8 @@
 # --
 # Kernel/Language/pl_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: pl_Survey.pm,v 1.4 2012-04-27 10:18:49 jp Exp $
+# $Id: pl_Survey.pm,v 1.5 2012-08-21 12:33:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,16 +17,16 @@ sub Data {
     my $Self = shift;
 
     # Template: AAASurvey
-    $Self->{Translation}->{'- Change Status -'} = '';
-    $Self->{Translation}->{'Add New Survey'} = '';
+    $Self->{Translation}->{'- Change Status -'} = 'Zmień status';
+    $Self->{Translation}->{'Add New Survey'} = 'Dodaj nową ankietę';
     $Self->{Translation}->{'Survey Edit'} = 'Edycja ankiety';
-    $Self->{Translation}->{'Survey Edit Questions'} = 'Edycja pytañ ankiety';
-    $Self->{Translation}->{'Question Edit'} = '';
-    $Self->{Translation}->{'Answer Edit'} = '';
-    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = '';
-    $Self->{Translation}->{'Status changed.'} = '';
-    $Self->{Translation}->{'Thank you for your feedback.'} = '';
-    $Self->{Translation}->{'The survey is finished.'} = '';
+    $Self->{Translation}->{'Survey Edit Questions'} = 'Edycja pytań ankiety';
+    $Self->{Translation}->{'Question Edit'} = 'Edycja pytań';
+    $Self->{Translation}->{'Answer Edit'} = 'Edycja odpowiedzi';
+    $Self->{Translation}->{'Can\'t set new status! No questions defined.'} = 'Nie można zmienić statusu! Brak zdefiniowanych pytań.';
+    $Self->{Translation}->{'Status changed.'} = 'Status zmieniony.';
+    $Self->{Translation}->{'Thank you for your feedback.'} = 'Dziękujęmy za wypełnienie ankiety.';
+    $Self->{Translation}->{'The survey is finished.'} = 'Ankieta zakończona.';
     $Self->{Translation}->{'Complete'} = 'Kompletne';
     $Self->{Translation}->{'Incomplete'} = 'Niekompletne';
     $Self->{Translation}->{'Checkbox (List)'} = '';
@@ -35,89 +34,88 @@ sub Data {
     $Self->{Translation}->{'Radio (List)'} = '';
     $Self->{Translation}->{'Stats Overview'} = 'Statystyka';
     $Self->{Translation}->{'Survey Description'} = 'Opis ankiety';
-    $Self->{Translation}->{'Survey Introduction'} = 'Wstêp ankiety';
-    $Self->{Translation}->{'Yes/No'} = '';
-    $Self->{Translation}->{'YesNo'} = '';
-    $Self->{Translation}->{'answered'} = '';
-    $Self->{Translation}->{'not answered'} = '';
-    $Self->{Translation}->{'Stats Detail'} = '';
-    $Self->{Translation}->{'You have already answered the survey.'} = '';
+    $Self->{Translation}->{'Survey Introduction'} = 'Wstęp ankiety';
+    $Self->{Translation}->{'Yes/No'} = 'Tak/Nie';
+    $Self->{Translation}->{'YesNo'} = 'TakNie';
+    $Self->{Translation}->{'answered'} = 'odpowiedziano';
+    $Self->{Translation}->{'not answered'} = 'nie odpowiedziano';
+    $Self->{Translation}->{'Stats Detail'} = 'Szczegóły statusu';
+    $Self->{Translation}->{'You have already answered the survey.'} = 'Już odpowiedziałeś na tę ankietę.';
 
     # Template: AgentSurvey
-    $Self->{Translation}->{'Create New Survey'} = 'Utwórz now± ankietê';
+    $Self->{Translation}->{'Create New Survey'} = 'Utwórz nową ankietę';
     $Self->{Translation}->{'Introduction'} = 'Wprowadzenie';
-    $Self->{Translation}->{'Internal Description'} = 'Wewnêtrzny opis';
+    $Self->{Translation}->{'Internal Description'} = 'Wewnętrzny opis';
     $Self->{Translation}->{'Edit General Info'} = 'Edytuj informacje ogólne';
     $Self->{Translation}->{'General Info'} = 'Informacje ogólne';
     $Self->{Translation}->{'Stats Overview of'} = '';
-    $Self->{Translation}->{'Requests Table'} = 'Tabela ¿±dañ';
-    $Self->{Translation}->{'Send Time'} = 'Czas wys³ania';
-    $Self->{Translation}->{'Vote Time'} = 'Czas g³osowania';
-    $Self->{Translation}->{'Survey Stat Details'} = 'Szczegó³y statystyki';
-    $Self->{Translation}->{'go back to stats overview'} = 'Wstecz do przegl±du statystyki';
+    $Self->{Translation}->{'Requests Table'} = 'Tabela żądań';
+    $Self->{Translation}->{'Send Time'} = 'Czas wysłania';
+    $Self->{Translation}->{'Vote Time'} = 'Czas głosowania';
+    $Self->{Translation}->{'Survey Stat Details'} = 'Szczegóły statystyki';
+    $Self->{Translation}->{'go back to stats overview'} = 'Wstecz do przeglądu statystyki';
     $Self->{Translation}->{'Go Back'} = 'Wstecz';
 
     # Template: AgentSurveyEditQuestions
     $Self->{Translation}->{'Edit Questions'} = 'Edytuj pytania';
     $Self->{Translation}->{'Add Question'} = 'Dodaj pytanie';
-    $Self->{Translation}->{'Type the question'} = 'WprowadŒ pytanie';
+    $Self->{Translation}->{'Type the question'} = 'Wprowadź pytanie';
     $Self->{Translation}->{'Survey Questions'} = 'Pytania ankiety';
     $Self->{Translation}->{'Question'} = 'Pytanie';
-    $Self->{Translation}->{'No questions saved for this survey.'} = 'Brak pytañ zapisanych w tej ankiecie.';
+    $Self->{Translation}->{'No questions saved for this survey.'} = 'Brak pytań zapisanych w tej ankiecie.';
     $Self->{Translation}->{'Edit Question'} = 'Edytuj pytanie';
-    $Self->{Translation}->{'go back to questions'} = 'powrót do pytañ';
-    $Self->{Translation}->{'Possible Answers For'} = 'Mo¿liwe odpowiedzi do';
-    $Self->{Translation}->{'Add Answer'} = 'Dodaj odpowiedŒ';
+    $Self->{Translation}->{'go back to questions'} = 'powrót do pytań';
+    $Self->{Translation}->{'Possible Answers For'} = 'Możliwe odpowiedzi do';
+    $Self->{Translation}->{'Add Answer'} = 'Dodaj odpowiedź';
     $Self->{Translation}->{'This doesn\'t have several answers, a textarea will be displayed.'} =
-        'Nie posiada wielu odpowiedzi, bêdzie wy¶wietlane pole tekstowe.';
-    $Self->{Translation}->{'Edit Answer'} = 'Edytuj odpowiedŒ';
+        'Nie posiada wielu odpowiedzi, będzie wyświetlane pole tekstowe.';
+    $Self->{Translation}->{'Edit Answer'} = 'Edytuj odpowiedź';
     $Self->{Translation}->{'go back to edit question'} = 'powrót do edycji pytania';
 
     # Template: AgentSurveyOverviewNavBar
     $Self->{Translation}->{'Context Settings'} = 'Ustawienia kontekstowe';
-    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maks. liczba wy¶wietlanych ankiet na stronê';
+    $Self->{Translation}->{'Max. shown Surveys per page'} = 'Maks. liczba wyświetlanych ankiet na stronę';
 
     # Template: AgentSurveyOverviewSmall
     $Self->{Translation}->{'Notification Sender'} = 'Nadawca powiadomienia';
     $Self->{Translation}->{'Notification Subject'} = 'Temat powiadomienia';
-    $Self->{Translation}->{'Notification Body'} = 'Tre¶æ powiadomienia';
+    $Self->{Translation}->{'Notification Body'} = 'Treść powiadomienia';
     $Self->{Translation}->{'Changed By'} = 'Zmienione przez';
 
     # Template: AgentSurveyZoom
     $Self->{Translation}->{'Survey Information'} = 'Informacje o ankiecie';
-    $Self->{Translation}->{'Sent requests'} = 'Wys³ane ¿±dania';
+    $Self->{Translation}->{'Sent requests'} = 'Wysłane żądania';
     $Self->{Translation}->{'Received surveys'} = 'Otrzymane ankiety';
-    $Self->{Translation}->{'Stats Details'} = 'Szczegó³y statystyk';
-    $Self->{Translation}->{'Survey Details'} = 'Szczegó³y ankiety';
+    $Self->{Translation}->{'Stats Details'} = 'Szczegóły statystyk';
+    $Self->{Translation}->{'Survey Details'} = 'Szczegóły ankiety';
     $Self->{Translation}->{'Survey Results Graph'} = 'Wykres wyników ankiety';
     $Self->{Translation}->{'No stat results.'} = 'Brak wyników ankiety.';
 
     # Template: PublicSurvey
     $Self->{Translation}->{'Survey'} = 'Ankieta';
-    $Self->{Translation}->{'Please answer these questions'} = '';
-    $Self->{Translation}->{'Show my answers'} = '';
-    $Self->{Translation}->{'These are your answers'} = '';
-    $Self->{Translation}->{'Survey Title'} = '';
+    $Self->{Translation}->{'Please answer these questions'} = 'Proszę odpowiedzieć na te pytania';
+    $Self->{Translation}->{'Show my answers'} = 'Pokaż moje odpowiedzi';
+    $Self->{Translation}->{'These are your answers'} = 'Oto Twoje odpowiedzi';
+    $Self->{Translation}->{'Survey Title'} = 'Tytuł ankiety';
 
     # SysConfig
-    $Self->{Translation}->{'A Survey Module.'} = 'Modu³ ankiet.';
-    $Self->{Translation}->{'A module to edit survey questions.'} = 'Ein Modul, um Umfragen zu bearbeiten';
+    $Self->{Translation}->{'A Survey Module.'} = 'Moduł ankiet.';
+    $Self->{Translation}->{'A module to edit survey questions.'} = 'Moduł do edycji pytań ankiet';
     $Self->{Translation}->{'All parameters for the Survey object in the agent interface.'} =
-        'Alle Parameter für das Umfrage-Modul im Agenten-Interface.';
+        'Wszystkie parametry dla ankiet w interfejsie agenta.';
     $Self->{Translation}->{'Amount of days after sending a survey mail in which no new survey requests are sent to the same customer. Selecting 0 will always send the survey mail.'} =
-        '';
+        'Liczba dni po których nastąpi wysłanie żądania wypełnienia ankiety. Wprowadzenie "0" spowoduje wysłanie e-maila zawsze.';
     $Self->{Translation}->{'Default body for the notification email to customers about new survey.'} =
-        'Voreingestellter Text für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
+        'Domyślna budowa informacji dl użytkownika odnośnie nowej ankiety.';
     $Self->{Translation}->{'Default sender for the notification email to customers about new survey.'} =
-        'Voreingestellter Absender für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
-    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} =
-        '';
+        'Domyślny nadawca informacji o nowej ankiecie.';
+    $Self->{Translation}->{'Surveys will not be sent to the configured email addresses.'} = '';
     $Self->{Translation}->{'Default subject for the notification email to customers about new survey.'} =
-        'Voreingestellter Betreff für Benachrichtigungs-Mails an den Kunden über neue Umfragen.';
+        'Domyślny temat informacji o nowej ankiete.';
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
-        'Definiert ein Übersichts-Modul, dass eine Liste aller Umfragen anzeigt.';
+        'Defniuje moduł przeglądu wyświetlania list ankiet.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
-        '';
+        'Definiuje maksymalną liczbę ankiet wysyłaniu do Klienta w ciągu 30 dni. ("0" oznacza brak ograniczenia, wszystkie żądania będą wysyłane).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
         '';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
@@ -133,19 +131,19 @@ sub Data {
     $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Wenn dieser reguläre Ausdruck zutrifft, wird keine Umfrage an den Kunden gesendet.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
         'Parameter für die Seiten der Umfrage-Übersicht.';
-    $Self->{Translation}->{'Public Survey.'} = 'Öffentliche Umfrage.';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Umfrage-Übersicht Limit';
-    $Self->{Translation}->{'Survey Zoom Module.'} = 'Modul Umfrage-Detailansicht';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Umfrage-Limit pro Seite in der Umfrage-Übersicht';
+    $Self->{Translation}->{'Public Survey.'} = 'Ankieta publiczna.';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Przegląd ankiety "Mały limit"';
+    $Self->{Translation}->{'Survey Zoom Module.'} = 'Podgląd ankiety.';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Limit ilośc ankiet w przeglądzie "Małym"';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
-        'Die eindeutige Bezeichnung für eine Umfrage, z. B. Survey# oder MySurvey#. Standard ist Survey#.';
+        'Identyfikacja dla ankiety, np. Survey#, MySurvey#. Domyślnie: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
-        '';
+        'Zdarzenie zgłoszenia wysyła automatycznie e-maila z prośbą o wypełnienie ankiety po zamknięciu zgłoszenia.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Change Status'} = 'Zmieñ status';
+    $Self->{Translation}->{'Change Status'} = 'Zmień status';
     $Self->{Translation}->{'Changed Time'} = 'Czas zmiany';
     $Self->{Translation}->{'Created By'} = 'Utworzone przez';
     $Self->{Translation}->{'Created Time'} = 'Czas utworzenia';
