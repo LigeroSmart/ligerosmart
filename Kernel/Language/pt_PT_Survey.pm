@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # Copyright (C) 2012 FCCN - Rui Francisco <rui.francisco@fccn.pt>
 # --
-# $Id: pt_PT_Survey.pm,v 1.2 2012-04-27 10:18:49 jp Exp $
+# $Id: pt_PT_Survey.pm,v 1.3 2012-08-21 12:49:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -12,7 +12,10 @@
 
 package Kernel::Language::pt_PT_Survey;
 
+use utf8;
+
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

@@ -2,7 +2,7 @@
 # Kernel/Language/nl_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_Survey.pm,v 1.10 2012-04-27 10:18:49 jp Exp $
+# $Id: nl_Survey.pm,v 1.11 2012-08-21 12:49:40 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,10 @@
 
 package Kernel::Language::nl_Survey;
 
+use utf8;
+
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;

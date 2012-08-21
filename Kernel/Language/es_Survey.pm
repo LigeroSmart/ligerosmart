@@ -2,7 +2,7 @@
 # Kernel/Language/es_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: es_Survey.pm,v 1.7 2012-04-27 10:18:49 jp Exp $
+# $Id: es_Survey.pm,v 1.8 2012-08-21 12:49:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -11,7 +11,10 @@
 
 package Kernel::Language::es_Survey;
 
+use utf8;
+
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
