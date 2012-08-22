@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.59 2012-08-22 13:04:53 mh Exp $
+# $Id: TimeAccounting.pm,v 1.60 2012-08-22 22:10:06 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.59 $) [1];
+$VERSION = qw($Revision: 1.60 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -145,8 +145,10 @@ sub UserCurrentPeriodGet {
     # build date string for given params
     my $Date = sprintf( "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day} ) . ' 00:00:00';
 
-    return %{ $Self->{'Cache::UserCurrentPeriodGet'}->{$Date} }
-        if $Self->{'Cache::UserCurrentPeriodGet'}->{$Date};
+    # check cache
+    if ( $Self->{'Cache::UserCurrentPeriodGet'}{$Date} ) {
+        return %{ $Self->{'Cache::UserCurrentPeriodGet'}{$Date} };
+    }
 
     # db select
     return if !$Self->{DBObject}->Prepare(
@@ -158,7 +160,7 @@ sub UserCurrentPeriodGet {
         Bind => [ \$Date, \$Date, \1, ],
     );
 
-    # fetch Data
+    # fetch the data
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my $UserRef = {
@@ -177,7 +179,7 @@ sub UserCurrentPeriodGet {
     return if !%Data;
 
     # store user data in cache
-    $Self->{'Cache::UserCurrentPeriodGet'}->{$Date} = \%Data;
+    $Self->{'Cache::UserCurrentPeriodGet'}{$Date} = \%Data;
 
     return %Data;
 }
@@ -224,10 +226,11 @@ sub UserReporting {
     my $DayEnd            = $Param{Day};
 
     my %Data;
-    USERID:
-    for my $UserID ( sort keys %UserCurrentPeriod ) {
 
-        if ( $UserCurrentPeriod{$UserID}->{DateStart} =~ m{ \A (\d{4})-(\d{2})-(\d{2}) }smx ) {
+    USERID:
+    for my $UserID ( keys %UserCurrentPeriod ) {
+
+        if ( $UserCurrentPeriod{$UserID}{DateStart} =~ m{ \A (\d{4})-(\d{2})-(\d{2}) }xms ) {
             $YearStart  = $1;
             $MonthStart = $2;
             $DayStart   = $3;
@@ -238,7 +241,7 @@ sub UserReporting {
             $Self->{LogObject}->Log(
                 Priority => 'notice',
                 Message  => 'UserReporting: Invalid start date for user '
-                    . "$UserID: $UserCurrentPeriod{$UserID}->{DateStart}"
+                    . "$UserID: $UserCurrentPeriod{$UserID}{DateStart}",
             );
 
             next USERID;
@@ -320,8 +323,8 @@ sub UserReporting {
                         )
                     {
                         $CurrentUserData{TargetStateTotal}
-                            += $UserCurrentPeriod{$UserID}->{WeeklyHours} / 5;
-                        $TargetState = $UserCurrentPeriod{$UserID}->{WeeklyHours} / 5;
+                            += $UserCurrentPeriod{$UserID}{WeeklyHours} / 5;
+                        $TargetState = $UserCurrentPeriod{$UserID}{WeeklyHours} / 5;
                     }
 
                     if ( $Month == $MonthEnd && $Year == $YearEnd ) {
@@ -336,13 +339,13 @@ sub UserReporting {
 
         $CurrentUserData{Overtime} = $CurrentUserData{WorkingHours} - $CurrentUserData{TargetState};
         $CurrentUserData{OvertimeTotal}
-            = $UserCurrentPeriod{$UserID}->{Overtime}
+            = $UserCurrentPeriod{$UserID}{Overtime}
             + $CurrentUserData{WorkingHoursTotal}
             - $CurrentUserData{TargetStateTotal};
         $CurrentUserData{OvertimeUntil}
             = $CurrentUserData{OvertimeTotal} - $CurrentUserData{Overtime};
         $CurrentUserData{LeaveDayRemaining}
-            = $UserCurrentPeriod{$UserID}->{LeaveDays} - $CurrentUserData{LeaveDayTotal};
+            = $UserCurrentPeriod{$UserID}{LeaveDays} - $CurrentUserData{LeaveDayTotal};
 
         $Data{$UserID} = \%CurrentUserData;
     }
@@ -379,9 +382,9 @@ sub ProjectSettingsGet {
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my $ID = $Row[0];
-        $Data{Project}->{$ID}            = $Row[1];
-        $Data{ProjectDescription}->{$ID} = $Row[2];
-        $Data{ProjectStatus}->{$ID}      = $Row[3];
+        $Data{Project}{$ID}            = $Row[1];
+        $Data{ProjectDescription}{$ID} = $Row[2];
+        $Data{ProjectStatus}{$ID}      = $Row[3];
     }
 
     return %Data;
@@ -567,8 +570,8 @@ sub ActionSettingsGet {
     # fetch the data
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{ $Row[0] }->{Action}       = $Row[1];
-        $Data{ $Row[0] }->{ActionStatus} = $Row[2];
+        $Data{ $Row[0] }{Action}       = $Row[1];
+        $Data{ $Row[0] }{ActionStatus} = $Row[2];
     }
 
     return %Data;
@@ -705,14 +708,16 @@ sub ActionSettingsUpdate {
         }
     }
 
-    # update settings
-    return $Self->{DBObject}->Do(
+    # sql
+    return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE time_accounting_action SET action = ?, status = ?'
             . ' WHERE id = ?',
         Bind => [
             \$Param{Action}, \$Param{ActionStatus}, \$Param{ActionID}
         ],
     );
+
+    return 1;
 }
 
 =item UserList()
@@ -735,11 +740,11 @@ sub UserList {
     # fetch the data
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{ $Row[0] }->{UserID}        = $Row[0];
-        $Data{ $Row[0] }->{Description}   = $Row[1];
-        $Data{ $Row[0] }->{ShowOvertime}  = $Row[2];
-        $Data{ $Row[0] }->{CreateProject} = $Row[3];
-        $Data{ $Row[0] }->{Calendar}      = $Row[4];
+        $Data{ $Row[0] }{UserID}        = $Row[0];
+        $Data{ $Row[0] }{Description}   = $Row[1];
+        $Data{ $Row[0] }{ShowOvertime}  = $Row[2];
+        $Data{ $Row[0] }{CreateProject} = $Row[3];
+        $Data{ $Row[0] }{Calendar}      = $Row[4];
     }
 
     return %Data;
@@ -808,14 +813,14 @@ sub UserSettingsGet {
     # fetch the data
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{ $Row[0] }->{ $Row[1] }->{UserID}      = $Row[0];
-        $Data{ $Row[0] }->{ $Row[1] }->{Period}      = $Row[1];
-        $Data{ $Row[0] }->{ $Row[1] }->{DateStart}   = substr $Row[2], 0, 10;
-        $Data{ $Row[0] }->{ $Row[1] }->{DateEnd}     = substr $Row[3], 0, 10;
-        $Data{ $Row[0] }->{ $Row[1] }->{WeeklyHours} = $Row[4];
-        $Data{ $Row[0] }->{ $Row[1] }->{LeaveDays}   = $Row[5];
-        $Data{ $Row[0] }->{ $Row[1] }->{Overtime}    = $Row[6];
-        $Data{ $Row[0] }->{ $Row[1] }->{UserStatus}  = $Row[7];
+        $Data{ $Row[0] }{ $Row[1] }{UserID}      = $Row[0];
+        $Data{ $Row[0] }{ $Row[1] }{Period}      = $Row[1];
+        $Data{ $Row[0] }{ $Row[1] }{DateStart}   = substr( $Row[2], 0, 10 );
+        $Data{ $Row[0] }{ $Row[1] }{DateEnd}     = substr( $Row[3], 0, 10 );
+        $Data{ $Row[0] }{ $Row[1] }{WeeklyHours} = $Row[4];
+        $Data{ $Row[0] }{ $Row[1] }{LeaveDays}   = $Row[5];
+        $Data{ $Row[0] }{ $Row[1] }{Overtime}    = $Row[6];
+        $Data{ $Row[0] }{ $Row[1] }{UserStatus}  = $Row[7];
     }
 
     return %Data;
@@ -843,21 +848,20 @@ sub SingleUserSettingsGet {
         SQL =>
             'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status '
             . 'FROM time_accounting_user_period WHERE user_id = ?',
-        Bind  => [ \$Param{UserID} ],
-        Limit => 1,
+        Bind => [ \$Param{UserID} ],
     );
 
     # fetch the data
     my %UserData;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $UserData{ $Row[1] }->{UserID}      = $Row[0];
-        $UserData{ $Row[1] }->{Period}      = $Row[1];
-        $UserData{ $Row[1] }->{DateStart}   = substr $Row[2], 0, 10;
-        $UserData{ $Row[1] }->{DateEnd}     = substr $Row[3], 0, 10;
-        $UserData{ $Row[1] }->{WeeklyHours} = $Row[4];
-        $UserData{ $Row[1] }->{LeaveDays}   = $Row[5];
-        $UserData{ $Row[1] }->{Overtime}    = $Row[6];
-        $UserData{ $Row[1] }->{UserStatus}  = $Row[7];
+        $UserData{ $Row[1] }{UserID}      = $Row[0];
+        $UserData{ $Row[1] }{Period}      = $Row[1];
+        $UserData{ $Row[1] }{DateStart}   = substr( $Row[2], 0, 10 );
+        $UserData{ $Row[1] }{DateEnd}     = substr( $Row[3], 0, 10 );
+        $UserData{ $Row[1] }{WeeklyHours} = $Row[4];
+        $UserData{ $Row[1] }{LeaveDays}   = $Row[5];
+        $UserData{ $Row[1] }{Overtime}    = $Row[6];
+        $UserData{ $Row[1] }{UserStatus}  = $Row[7];
     }
 
     return %UserData;
@@ -887,11 +891,9 @@ sub UserLastPeriodNumberGet {
         Bind => [ \$Param{UserID} ],
     );
 
-    # fetch Data
-    my $LastPeriodNumber = 0;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $LastPeriodNumber = $Row[0] || 0;
-    }
+    # fetch the data
+    my @Row = $Self->{DBObject}->FetchrowArray();
+    my $LastPeriodNumber = $Row[0] || 0;
 
     return $LastPeriodNumber;
 }
@@ -1007,7 +1009,7 @@ sub UserSettingsUpdate {
 
     my $UserID = $Param{UserID};
 
-    if ( !defined $Param{Period}->{1}->{DateStart} && !defined $Param{Period}->{1}->{DateEnd} ) {
+    if ( !defined $Param{Period}->{1}{DateStart} && !defined $Param{Period}->{1}{DateEnd} ) {
         return $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "UserSettingUpdate: No data for user id $UserID!"
@@ -1048,9 +1050,9 @@ sub UserSettingsUpdate {
             . "WHERE user_id = ? AND preference_period = ?";
 
         my $Bind = [
-            \$Param{Period}->{$Period}->{LeaveDays},   \$Param{Period}->{$Period}->{DateStart},
-            \$Param{Period}->{$Period}->{DateEnd},     \$Param{Period}->{$Period}->{Overtime},
-            \$Param{Period}->{$Period}->{WeeklyHours}, \$Param{Period}->{$Period}->{UserStatus},
+            \$Param{Period}->{$Period}{LeaveDays},   \$Param{Period}->{$Period}{DateStart},
+            \$Param{Period}->{$Period}{DateEnd},     \$Param{Period}->{$Period}{Overtime},
+            \$Param{Period}->{$Period}{WeeklyHours}, \$Param{Period}->{$Period}{UserStatus},
             \$UserID, \$Period,
         ];
 
@@ -1096,7 +1098,7 @@ sub WorkingUnitsCompletnessCheck {
     # fetch the data
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         if ( $Row[0] =~ /^(\d+)-(\d+)-(\d+)/ ) {
-            $CompleteWorkingDays{$1}->{$2}->{$3} = 1;
+            $CompleteWorkingDays{$1}{$2}{$3} = 1;
         }
     }
 
@@ -1114,7 +1116,7 @@ sub WorkingUnitsCompletnessCheck {
     my $MonthEnd    = $Month;
     my $DayEnd      = $Day;
 
-    if ( $UserCurrentPeriod{$UserID}->{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
+    if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
         $YearStart  = $1;
         $MonthStart = $2;
         $DayStart   = $3;
@@ -1132,7 +1134,7 @@ sub WorkingUnitsCompletnessCheck {
             my $DayStartPoint = $Year == $YearStart && $Month == $MonthStart ? $DayStart : 1;
             my $DayEndPoint = $Year == $YearEnd
                 && $Month == $MonthEnd ? $DayEnd : Days_in_Month( $Year, $Month );
-            my $MonthString = sprintf "%02d", $Month;
+            my $MonthString = sprintf( "%02d", $Month );
 
             for my $Day ( $DayStartPoint .. $DayEndPoint ) {
 
@@ -1143,7 +1145,7 @@ sub WorkingUnitsCompletnessCheck {
                     Calendar => $Calendar || '',
                 );
 
-                my $Date = sprintf "%04d-%02d-%02d", $Year, $Month, $Day;
+                my $Date = sprintf( "%04d-%02d-%02d", $Year, $Month, $Day );
                 my $DayStartTime
                     = $Self->{TimeObject}->TimeStamp2SystemTime( String => $Date . ' 00:00:00' );
                 my $DayStopTime
@@ -1163,7 +1165,7 @@ sub WorkingUnitsCompletnessCheck {
                     Calendar  => $Calendar || '',
                 ) || '0';
 
-                my $DayString = sprintf "%02d", $Day;
+                my $DayString = sprintf( "%02d", $Day );
 
                 if ( $ThisDayWorkingTime && !$VacationCheck ) {
                     $WorkingDays++;
@@ -1171,10 +1173,10 @@ sub WorkingUnitsCompletnessCheck {
                 if (
                     $ThisDayWorkingTime
                     && !$VacationCheck
-                    && !$CompleteWorkingDays{$Year}->{$MonthString}->{$DayString}
+                    && !$CompleteWorkingDays{$Year}{$MonthString}{$DayString}
                     )
                 {
-                    $Data{Incomplete}->{$Year}->{$MonthString}->{$DayString} = $WorkingDays;
+                    $Data{Incomplete}{$Year}{$MonthString}{$DayString} = $WorkingDays;
                 }
             }
         }
@@ -1185,17 +1187,20 @@ sub WorkingUnitsCompletnessCheck {
         = $Self->{ConfigObject}->Get('TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning')
         || '3';
     for my $Year ( keys %{ $Data{Incomplete} } ) {
-        for my $Month ( keys %{ $Data{Incomplete}->{$Year} } ) {
-            for my $Day ( keys %{ $Data{Incomplete}->{$Year}->{$Month} } ) {
+
+        for my $Month ( keys %{ $Data{Incomplete}{$Year} } ) {
+
+            for my $Day ( keys %{ $Data{Incomplete}{$Year}{$Month} } ) {
+
                 if (
-                    $Data{Incomplete}->{$Year}->{$Month}->{$Day}
+                    $Data{Incomplete}{$Year}{$Month}{$Day}
                     < $WorkingDays - $MaxIntervallOfIncompleteDays
                     )
                 {
                     $Data{EnforceInsert} = 1;
                 }
                 elsif (
-                    $Data{Incomplete}->{$Year}->{$Month}->{$Day}
+                    $Data{Incomplete}{$Year}{$Month}{$Day}
                     < $WorkingDays - $MaxIntervallOfIncompleteDaysBeforeWarning
                     )
                 {
@@ -1248,7 +1253,7 @@ sub WorkingUnitsGet {
     ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
-        next ROW if $Row[4] !~ m{^ (.+?) \s (\d+:\d+) : (\d+) }smx;
+        next ROW if $Row[4] !~ m{^ (.+?) \s (\d+:\d+) : (\d+) }xms;
 
         # check if it is a special working unit
         if ( $Row[1] == -1 ) {
@@ -1263,7 +1268,7 @@ sub WorkingUnitsGet {
 
         my $StartTime = $2;
         my $EndTime   = '';
-        if ( $Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}smx ) {
+        if ( $Row[5] =~ m{^(.+?)\s(\d+:\d+):(\d+)}xms ) {
             $EndTime = $2;
 
             # replace 23:59:59 with 24:00
@@ -1358,7 +1363,7 @@ sub WorkingUnitsInsert {
         push @{ $Param{WorkingUnits} }, \%Unit;
     }
 
-    #insert new working units
+    # insert new working units
     UNITREF:
     for my $UnitRef ( @{ $Param{WorkingUnits} } ) {
 
@@ -1371,14 +1376,13 @@ sub WorkingUnitsInsert {
         $UnitRef->{Period}    ||= 0;
 
         # build sql
-        my $SQL
-            = "INSERT INTO time_accounting_table "
+        my $SQL = "INSERT INTO time_accounting_table "
             . "(user_id, project_id, action_id, remark,"
             . " time_start, time_end, period, created )"
             . " VALUES  ( ?, ?, ?, ?, ?, ?, ?, current_timestamp)";
         my $Bind = [
             \$Self->{UserID}, \$UnitRef->{ProjectID}, \$UnitRef->{ActionID},
-            \$UnitRef->{Remark}, \$StartTime, \$EndTime, \$UnitRef->{Period}
+            \$UnitRef->{Remark}, \$StartTime, \$EndTime, \$UnitRef->{Period},
         ];
 
         # db insert
@@ -1460,7 +1464,7 @@ sub ProjectActionReporting {
 
     # hours per month
     my $DaysInMonth = Days_in_Month( $Param{Year}, $Param{Month} );
-    my $DateString = $Param{Year} . '-' . sprintf "%02d", $Param{Month};
+    my $DateString = $Param{Year} . "-" . sprintf( "%02d", $Param{Month} );
 
     my $SQL_Query_TimeStart = "time_start <= '$DateString-$DaysInMonth 23:59:59'$IDSelect";
 
@@ -1472,13 +1476,11 @@ sub ProjectActionReporting {
 
     # fetch the data
     my %Data;
-    ROW:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
-        next ROW if !$Row[2];
+        next if !$Row[2];
 
-        $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{Total} ||= 0;
-        $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{Total} += $Row[2];
+        $Data{ $Row[0] }{Actions}{ $Row[1] }{Total} += $Row[2];
     }
 
     $Self->{DBObject}->Prepare(
@@ -1493,7 +1495,6 @@ sub ProjectActionReporting {
 
         next if !$Row[2];
 
-        $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{PerMonth} ||= 0;
         $Data{ $Row[0] }->{Actions}->{ $Row[1] }->{PerMonth} += $Row[2];
     }
 
@@ -1541,9 +1542,8 @@ sub ProjectTotalHours {
 
     # ask the database
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?',
-        Bind  => [ \$Param{ProjectID} ],
-        Limit => 1,
+        SQL  => 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?',
+        Bind => [ \$Param{ProjectID} ],
     );
 
     # fetch the result
@@ -1631,7 +1631,7 @@ sub ProjectHistory {
             UserID    => $Row[1],
             User      => $ShownUsers{ $Row[1] },
             ActionID  => $Row[2],
-            Action    => $ActionData{ $Row[2] }->{Action},
+            Action    => $ActionData{ $Row[2] }{Action},
             Remark    => $Row[3] || '',
             TimeStart => $Row[4],
             TimeEnd   => $Row[5],
@@ -1697,6 +1697,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.59 $ $Date: 2012-08-22 13:04:53 $
+$Revision: 1.60 $ $Date: 2012-08-22 22:10:06 $
 
 =cut
