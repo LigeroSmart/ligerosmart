@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMWorkOrderAdd.pm - the OTRS::ITSM::ChangeManagement workorder add module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderAdd.pm,v 1.67 2012-05-14 18:56:36 cr Exp $
+# $Id: AgentITSMWorkOrderAdd.pm,v 1.68 2012-08-29 09:38:36 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -219,7 +219,7 @@ sub Run {
         }
         elsif (
             ( $SystemTime{PlannedStartTime} && $SystemTime{PlannedEndTime} )
-            && ( $SystemTime{PlannedEndTime} < $SystemTime{PlannedStartTime} )
+            && ( $SystemTime{PlannedEndTime} <= $SystemTime{PlannedStartTime} )
             )
         {
             $ValidationError{PlannedStartTimeInvalid}   = 'ServerError';
