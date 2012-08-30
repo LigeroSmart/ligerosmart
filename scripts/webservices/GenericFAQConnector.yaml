@@ -6,12 +6,12 @@ Description: ''
 FrameworkVersion: 3.2.x CVS
 Provider:
   Operation:
-    PublicCategoryList:
-      Description: List all public FAQ categories (with tree information)
-      Type: FAQ::PublicCategoryList
     LanguageList:
       Description: List  all availables languages
       Type: FAQ::LanguageList
+    PublicCategoryList:
+      Description: List all public FAQ categories (with tree information)
+      Type: FAQ::PublicCategoryList
     PublicFAQSearch:
       Description: Search for public FAQs
       Type: FAQ::PublicFAQSearch
@@ -23,7 +23,7 @@ Provider:
       Encoding: UTF-8
       Endpoint: ''
       MaxLength: 10000000
-      NameSpace: faq_interface
+      NameSpace: http://www.otrs.org/FAQConnector/
       SOAPAction: ''
     Type: HTTP::SOAP
 RemoteSystem: ''
