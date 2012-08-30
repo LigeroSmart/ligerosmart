@@ -2,7 +2,7 @@
 # Kernel/GenericInterface/Operation/FAQ/PublicFAQSearch.pm - GenericInterface FAQ PublicFAQSearch operation backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.1 2012-08-01 06:54:58 cg Exp $
+# $Id: PublicFAQSearch.pm,v 1.2 2012-08-30 22:45:51 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -117,7 +117,7 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
         Success      => 1,                                # 0 or 1
         ErrorMessage => '',                               # In case of an error
         Data         => {                                 # result data payload after Operation
-            ID => (
+            ID => [
                 32,
                 13,
                 12,
@@ -126,7 +126,7 @@ perform PublicFAQSearch Operation. This will return a list of public FAQ entries
                 5,
                 4,
                 1,
-            ),
+            ],
         },
     };
 
@@ -231,6 +231,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2012-08-01 06:54:58 $
+$Revision: 1.2 $ $Date: 2012-08-30 22:45:51 $
 
 =cut
