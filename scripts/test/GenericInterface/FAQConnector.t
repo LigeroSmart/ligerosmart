@@ -2,7 +2,7 @@
 # FAQConnector.t - GenericInterface transport interface tests for FAQConnector backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQConnector.t,v 1.1 2012-08-01 06:54:58 cg Exp $
+# $Id: FAQConnector.t,v 1.2 2012-08-30 19:57:01 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -53,8 +53,9 @@ for my $Key ( keys %States ) {
     }
 }
 
-$Self->True(
+$Self->IsNot(
     $PublicStateID,
+    undef,
     "Search for public StateID",
 );
 
@@ -123,6 +124,7 @@ my $FAQIDOne = $FAQObject->FAQAdd(
     Field1     => 'Problem...',
     Field2     => 'Solution...',
     UserID     => $UserID,
+    Approved   => 1,
 );
 
 $Self->True(
@@ -139,6 +141,7 @@ my $FAQIDTwo = $FAQObject->FAQAdd(
     Field1     => 'Problem Description 1...',
     Field2     => 'Solution not found1...',
     UserID     => $UserID,
+    Approved   => 1,
 );
 
 $Self->True(
@@ -155,6 +158,7 @@ my $FAQIDThree = $FAQObject->FAQAdd(
     Field1     => 'Look for me on the search',
     Field2     => 'Solution not found1...',
     UserID     => $UserID,
+    Approved   => 1,
 );
 
 $Self->True(
@@ -195,6 +199,7 @@ my $FAQIDFour = $FAQObject->FAQAdd(
     Field1     => 'Problem Description 1...',
     Field2     => 'Solution not found1...',
     UserID     => 1,
+    Approved   => 1,
 );
 
 $Self->True(
