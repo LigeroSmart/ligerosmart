@@ -2,7 +2,7 @@
 # Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm - GenericInterface FAQ PublicFAQGet operation backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQGet.pm,v 1.1 2012-08-01 06:54:58 cg Exp $
+# $Id: PublicFAQGet.pm,v 1.2 2012-08-30 22:47:02 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -84,7 +84,7 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
 
     my $Result = $OperationObject->Run(
         Data => {
-            ItemID = 32,33;
+            ItemID = '32,33';
         },
     );
 
@@ -92,41 +92,39 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
         Success      => 1,                                # 0 or 1
         ErrorMessage => '',                               # In case of an error
         Data         => {                                 # result data payload after Operation
-            Article => [
+            ItemID => [
                 {
-                    FAQ => {
-                        ID                => 32,
-                        ItemID            => 32,
-                        FAQID             => 32,
-                        Number            => 100032,
-                        CategoryID        => '2',
-                        CategoryName     => 'CategoryA::CategoryB',
-                        CategoryShortName => 'CategoryB',
-                        LanguageID        => 1,
-                        Language          => 'en',
-                        Title             => 'Article Title',
-                        Field1            => 'The Symptoms',
-                        Field2            => 'The Problem',
-                        Field3            => 'The Solution',
-                        Field4            => undef,                          # Not active by default
-                        Field5            => undef,                          # Not active by default
-                        Field6            => 'Comments',
-                        Approved          => 1,                              # or 0
-                        Keywords          => 'KeyWord1 KeyWord2',
-                        Votes             => 0,                              # number of votes
-                        VoteResult        => '0.00',                         # a number between 0.00 and 100.00
-                        StateID           => 1,
-                        State             => 'internal (agent)',             # or 'external (customer)' or
-                                                                             # 'public (all)'
-                        StateTypeID       => 1,
-                        StateTypeName     => 'internal',                     # or 'external' or 'public'
-                        CreatedBy         => 1,
-                        Changed          => '2011-01-05 21:53:50',
-                        ChangedBy         => '1',
-                        Created           => '2011-01-05 21:53:50',
-                        Name              => '1294286030-31.1697297104732',  # FAQ Article name or
-                                                                             # systemtime + '-' + random number
-                    },
+                    ID                => 32,
+                    ItemID            => 32,
+                    FAQID             => 32,
+                    Number            => 100032,
+                    CategoryID        => '2',
+                    CategoryName     => 'CategoryA::CategoryB',
+                    CategoryShortName => 'CategoryB',
+                    LanguageID        => 1,
+                    Language          => 'en',
+                    Title             => 'Article Title',
+                    Field1            => 'The Symptoms',
+                    Field2            => 'The Problem',
+                    Field3            => 'The Solution',
+                    Field4            => undef,                          # Not active by default
+                    Field5            => undef,                          # Not active by default
+                    Field6            => 'Comments',
+                    Approved          => 1,                              # or 0
+                    Keywords          => 'KeyWord1 KeyWord2',
+                    Votes             => 0,                              # number of votes
+                    VoteResult        => '0.00',                         # a number between 0.00 and 100.00
+                    StateID           => 1,
+                    State             => 'internal (agent)',             # or 'external (customer)' or
+                                                                         # 'public (all)'
+                    StateTypeID       => 1,
+                    StateTypeName     => 'internal',                     # or 'external' or 'public'
+                    CreatedBy         => 1,
+                    Changed          => '2011-01-05 21:53:50',
+                    ChangedBy         => '1',
+                    Created           => '2011-01-05 21:53:50',
+                    Name              => '1294286030-31.1697297104732',  # FAQ Article name or
+                                                                         # systemtime + '-' + random number
                     Attachment => {
                         {
                             Filesize    => '540286',                # file size in bytes
@@ -143,40 +141,39 @@ perform PublicFAQGet Operation. This will return a Public FAQ entry.
                     },
                 },
                 {
-                    FAQ => {
-                        ID                => 33,
-                        ItemID            => 33,
-                        FAQID             => 33,
-                        Number            => 100033,
-                        CategoryID        => '3',
-                        CategoryName     => 'CategoryD::CategoryE',
-                        CategoryShortName => 'CategoryE',
-                        LanguageID        => 1,
-                        Language          => 'en',
-                        Title             => 'Article Title',
-                        Field1            => 'The Symptoms',
-                        Field2            => 'The Problem',
-                        Field3            => 'The Solution',
-                        Field4            => undef,                          # Not active by default
-                        Field5            => undef,                          # Not active by default
-                        Field6            => 'Comments',
-                        Approved          => 1,                              # or 0
-                        Keywords          => 'KeyWord1 KeyWord2',
-                        Votes             => 0,                              # number of votes
-                        VoteResult        => '0.00',                         # a number between 0.00 and 100.00
-                        StateID           => 1,
-                        State             => 'internal (agent)',             # or 'external (customer)' or
-                                                                             # 'public (all)'
-                        StateTypeID       => 1,
-                        StateTypeName     => 'internal',                     # or 'external' or 'public'
-                        CreatedBy         => 1,
-                        Changed          => '2011-01-05 21:53:50',
-                        ChangedBy         => '1',
-                        Created           => '2011-01-05 21:53:50',
-                        Name              => '1294286030-31.1697297104732',  # FAQ Article name or
-                                                                             # systemtime + '-' + random number
-                    },
+                    ID                => 33,
+                    ItemID            => 33,
+                    FAQID             => 33,
+                    Number            => 100033,
+                    CategoryID        => '3',
+                    CategoryName     => 'CategoryD::CategoryE',
+                    CategoryShortName => 'CategoryE',
+                    LanguageID        => 1,
+                    Language          => 'en',
+                    Title             => 'Article Title',
+                    Field1            => 'The Symptoms',
+                    Field2            => 'The Problem',
+                    Field3            => 'The Solution',
+                    Field4            => undef,                          # Not active by default
+                    Field5            => undef,                          # Not active by default
+                    Field6            => 'Comments',
+                    Approved          => 1,                              # or 0
+                    Keywords          => 'KeyWord1 KeyWord2',
+                    Votes             => 0,                              # number of votes
+                    VoteResult        => '0.00',                         # a number between 0.00 and 100.00
+                    StateID           => 1,
+                    State             => 'internal (agent)',             # or 'external (customer)' or
+                                                                         # 'public (all)'
+                    StateTypeID       => 1,
+                    StateTypeName     => 'internal',                     # or 'external' or 'public'
+                    CreatedBy         => 1,
+                    Changed          => '2011-01-05 21:53:50',
+                    ChangedBy         => '1',
+                    Created           => '2011-01-05 21:53:50',
+                    Name              => '1294286030-31.1697297104732',  # FAQ Article name or
+                                                                         # systemtime + '-' + random number
                 },
+                # ...
             ],
         },
     };
@@ -190,7 +187,7 @@ sub Run {
 
         return $Self->{CommonObject}->ReturnError(
             ErrorCode    => 'PublicFAQGet.MissingParameter',
-            ErrorMessage => "TicketGet: Got not ItemID!",
+            ErrorMessage => "PublicFAQGet: Got not ItemID!",
         );
     }
 
@@ -222,8 +219,8 @@ sub Run {
                 . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
             return $Self->{CommonObject}->ReturnError(
-                ErrorCode    => 'TicketGet.NotValidFAQID',
-                ErrorMessage => "TicketGet: $ErrorMessage",
+                ErrorCode    => 'PublicFAQGet.NotValidFAQID',
+                ErrorMessage => "PublicFAQGet: $ErrorMessage",
             );
 
         }
@@ -254,11 +251,11 @@ sub Run {
             }
 
             # set FAQ entry data
-            $Article->{Attachment} = \@Attachments;
+            $FAQEntry{Attachment} = \@Attachments;
         }
 
         # add
-        push @Item, $Article;
+        push @Item, \%FAQEntry;
     }    # finish main loop
 
     if ( !scalar @Item ) {
@@ -266,13 +263,13 @@ sub Run {
             . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
         return $Self->{CommonObject}->ReturnError(
-            ErrorCode    => 'TicketGet.NotTicketData',
-            ErrorMessage => "TicketGet: $ErrorMessage",
+            ErrorCode    => 'PublicFAQGet.NotFAQData',
+            ErrorMessage => "PublicFAQGet: $ErrorMessage",
         );
 
     }
 
-    $ReturnData->{Data}->{FAQGet} = \@Item;
+    $ReturnData->{Data}->{FAQItem} = \@Item;
 
     # return result
     return $ReturnData;
@@ -294,6 +291,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2012-08-01 06:54:58 $
+$Revision: 1.2 $ $Date: 2012-08-30 22:47:02 $
 
 =cut
