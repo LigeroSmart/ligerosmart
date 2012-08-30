@@ -2,7 +2,7 @@
 # FAQConnector.t - GenericInterface transport interface tests for FAQConnector backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQConnector.t,v 1.2 2012-08-30 19:57:01 cr Exp $
+# $Id: FAQConnector.t,v 1.3 2012-08-30 22:47:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -484,17 +484,17 @@ my @Tests = (
         ExpectedReturnRemoteData => {
             Success => 1,
             Data    => {
-                FAQGet => {
-                    Article => \%FAQFour,
+                FAQItem => {
+                    %FAQFour,
                 },
             },
         },
         ExpectedReturnLocalData => {
             Success => 1,
             Data    => {
-                FAQGet => [
+                FAQItem => [
                     {
-                        Article => \%FAQFour,
+                        %FAQFour,
                     }
                 ],
             },
@@ -512,7 +512,7 @@ my @Tests = (
             Data => {
                 Error => {
                     ErrorCode    => 'PublicFAQGet.MissingParameter',
-                    ErrorMessage => 'TicketGet: Got not ItemID!'
+                    ErrorMessage => 'PublicFAQGet: Got not ItemID!'
                     }
             },
             Success => 1
@@ -522,7 +522,7 @@ my @Tests = (
             Data => {
                 Error => {
                     ErrorCode    => 'PublicFAQGet.MissingParameter',
-                    ErrorMessage => 'TicketGet: Got not ItemID!'
+                    ErrorMessage => 'PublicFAQGet: Got not ItemID!'
                     }
             },
             Success => 1
@@ -540,9 +540,9 @@ my @Tests = (
         ExpectedReturnRemoteData => {
             Data => {
                 Error => {
-                    ErrorCode => 'TicketGet.NotValidFAQID',
+                    ErrorCode => 'PublicFAQGet.NotValidFAQID',
                     ErrorMessage =>
-                        'TicketGet: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()'
+                        'PublicFAQGet: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()'
                     }
             },
             Success => 1
@@ -551,9 +551,9 @@ my @Tests = (
         ExpectedReturnLocalData => {
             Data => {
                 Error => {
-                    ErrorCode => 'TicketGet.NotValidFAQID',
+                    ErrorCode => 'PublicFAQGet.NotValidFAQID',
                     ErrorMessage =>
-                        'TicketGet: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()'
+                        'PublicFAQGet: Could not get FAQ data in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()'
                     }
             },
             Success => 1
@@ -571,23 +571,19 @@ my @Tests = (
         ExpectedReturnRemoteData => {
             Success => 1,
             Data    => {
-                FAQGet => {
+                FAQItem => {
+                    %FAQThree,
                     Attachment => \@AttachmentsThree,
-                    Article    => {
-                        %FAQThree,
-                    },
                 },
             },
         },
         ExpectedReturnLocalData => {
             Success => 1,
             Data    => {
-                FAQGet => [
+                FAQItem => [
                     {
+                        %FAQThree,
                         Attachment => \@AttachmentsThree,
-                        Article    => {
-                            %FAQThree,
-                        },
                     },
                 ],
             },
@@ -660,16 +656,16 @@ my @Tests = (
         ExpectedReturnRemoteData => {
             Success => 1,
             Data    => {
-                FAQGet => [
+                FAQItem => [
                     {
-                        Article => \%FAQOne,
+                        %FAQOne,
                     },
                     {
-                        Article => \%FAQTwo,
+                        %FAQTwo,
                     },
                     {
+                        %FAQThree,
                         Attachment => \@AttachmentsThree,
-                        Article    => \%FAQThree,
                     },
                 ],
             },
@@ -729,11 +725,11 @@ for my $Test (@Tests) {
     # from SOAP call are a little bit different
     if ( $Test->{Operation} eq 'PublicFAQGet' ) {
 
-        if ( ref $LocalResult->{Data}->{FAQGet} eq 'ARRAY' ) {
-            for my $FAQGet ( @{ $LocalResult->{Data}->{FAQGet} } ) {
-                for my $Key ( keys %{ $FAQGet->{Article} } ) {
-                    if ( !$FAQGet->{Article}->{$Key} ) {
-                        $FAQGet->{Article}->{$Key} = '';
+        if ( ref $LocalResult->{Data}->{FAQItem} eq 'ARRAY' ) {
+            for my $FAQItem ( @{ $LocalResult->{Data}->{FAQItem} } ) {
+                for my $Key ( keys %{$FAQItem} ) {
+                    if ( !$FAQItem->{$Key} ) {
+                        $FAQItem->{$Key} = '';
                     }
                 }
             }
@@ -790,18 +786,18 @@ for my $Test (@Tests) {
     # from SOAP call are a little bit different
     if ( $Test->{Operation} eq 'PublicFAQGet' && $Test->{SuccessRequest} ) {
 
-        if ( ref $RequesterResult->{Data}->{FAQGet} eq 'HASH' ) {
-            for my $Key ( keys %{ $RequesterResult->{Data}->{FAQGet}->{Article} } ) {
-                if ( !$RequesterResult->{Data}->{FAQGet}->{Article}->{$Key} ) {
-                    $RequesterResult->{Data}->{FAQGet}->{Article}->{$Key} = '';
+        if ( ref $RequesterResult->{Data}->{FAQItem} eq 'HASH' ) {
+            for my $Key ( keys %{ $RequesterResult->{Data}->{FAQItem} } ) {
+                if ( !$RequesterResult->{Data}->{FAQItem}->{$Key} ) {
+                    $RequesterResult->{Data}->{FAQItem}->{$Key} = '';
                 }
             }
         }
-        elsif ( ref $RequesterResult->{Data}->{FAQGet} eq 'ARRAY' ) {
-            for my $FAQGet ( @{ $RequesterResult->{Data}->{FAQGet} } ) {
-                for my $Key ( keys %{ $FAQGet->{Article} } ) {
-                    if ( !$FAQGet->{Article}->{$Key} ) {
-                        $FAQGet->{Article}->{$Key} = '';
+        elsif ( ref $RequesterResult->{Data}->{FAQItem} eq 'ARRAY' ) {
+            for my $FAQItem ( @{ $RequesterResult->{Data}->{FAQItem} } ) {
+                for my $Key ( keys %{$FAQItem} ) {
+                    if ( !$FAQItem->{$Key} ) {
+                        $FAQItem->{$Key} = '';
                     }
                 }
             }
