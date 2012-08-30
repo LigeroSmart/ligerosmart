@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.9 2012-08-30 22:44:46 cr Exp $ -->
+<!-- $Id: FAQ.xml,v 1.10 2012-08-30 23:02:21 cr Exp $ -->
 
 <book lang="en">
 
@@ -283,35 +283,40 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
         <sect2>
             <title>LanguageList</title>
             <para>
-                This operation allows you to ask the FAQ module for the current FAQ languages available in the system.
-                The operation will return a list of languages including the ID and Name for each language.
+                This operation returns the list of all FAQ languages available in the system.
+                The response of this operation is a list of languages including the ID and Name for
+                each language.
             </para>
         </sect2>
         <sect2>
             <title>PublicCategoryList</title>
             <para>
-                Using this operation you can retrieve all categories that contain a public FAQ item (as well as the category ancestors) on the FAQ module.
-                You are going to get it as a list of categories including ID and Name for each category.
+                This operation is used to get the system FAQ categories that have at least one
+                public FAQ item, as a consequence also the category ancestors are also listed even
+                if they don't have any public FAQ item. The output of this operation is a list of
+                categories including ID and Name for each category.
             </para>
         </sect2>
         <sect2>
             <title>PublicFAQSearch</title>
             <para>
-                This operation will let you perform a search on the FAQ module for
-                public articles, it will return a list of IDs for matched FAQ items.
+                By using this operation is possible to perform a FAQ search for the public FAQ items
+                using the same search parameters as in the public web interface. It will return a
+                list of IDs for matched FAQ items.
             </para>
         </sect2>
         <sect2>
             <title>PublicFAQGet</title>
             <para>
-                You can use this operation to easily obtain one or more FAQ items.
-                You will receive one main data container per each FAQ item, inside each
-                main container you will get the FAQ data including attachments represented as
-                sub-containers.
+                This operation can be used to easily obtain one or more FAQ items. The response will
+                one or more main containers called 'FAQItem' that has all the FAQ item information,
+                including attachments, each attachment is represented by an 'Attachment'
+                sub-containers and they could be more than one.
             </para>
             <para>
-                Please see the chapter "Generic Interface FAQ connector configuration" below for how to activate this feature,
-                as well as chapter "Generic Interface FAQ connector API Reference" for details on using the above functions.
+                Please see the chapter "Generic Interface FAQ connector configuration" below for how
+                to activate this feature, as well as chapter "Generic Interface FAQ connector API
+                Reference" for details on using the above functions.
             </para>
         </sect2>
     </sect1>
