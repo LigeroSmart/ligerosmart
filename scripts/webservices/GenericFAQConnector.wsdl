@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="GenericFAQConnector" targetNamespace="http://www.example.org/GenericFAQConnector/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.example.org/GenericFAQConnector/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/GenericFAQConnector/">
+    <xsd:element name="LanguageList">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element
+                    name="in"
+                    type="xsd:string">
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="LanguageListResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element
+                    name="out"
+                    type="xsd:string">
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element><xsd:complexType name="OTRS_FAQ_LangugeList"></xsd:complexType>
+    <xsd:complexType name="OTRS_FAQ_LanguageListResponse">
+        <xsd:sequence>
+            <xsd:element
+                name="Language"
+                type="tns:OTRS_FAQ_Languge" minOccurs="1" maxOccurs="unbounded">
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+        
+    <xsd:complexType name="OTRS_FAQ_Languge">
+        <xsd:sequence>
+            <xsd:element
+                name="ID"
+                type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+            </xsd:element>
+            <xsd:element
+                name="Name"
+                type="xsd:string" minOccurs="1" maxOccurs="1">
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+            <xsd:complexType name="OTRS_FAQ_PublicCategoryList"></xsd:complexType>
+            <xsd:complexType name="OTRS_FAQ_PublicCategoryListResponse">
+                <xsd:sequence>
+                    <xsd:element
+                        name="Category"
+                        type="tns:OTRS_FAQCategory" minOccurs="1" maxOccurs="unbounded">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="OTRS_FAQCategory">
+                <xsd:sequence>
+                    <xsd:element
+                        name="ID"
+                        type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Name"
+                        type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="OTRS_FAQ_PublicFAQSearch">
+                <xsd:sequence>
+                    <xsd:element
+                        name="Number"
+                        type="xsd:long" minOccurs="0" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Title"
+                        type="xsd:string" minOccurs="0" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="What"
+                        type="xsd:string" minOccurs="0" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Keyword"
+                        type="xsd:string" minOccurs="0" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="LanguageIDs"
+                        type="xsd:positiveInteger"
+                        minOccurs="0"
+                        maxOccurs="unbounded">
+                    </xsd:element>
+                    <xsd:element
+                        name="CategoryIDs"
+                        type="xsd:positiveInteger"
+                        minOccurs="0"
+                        maxOccurs="unbounded">
+                    </xsd:element>
+                    <xsd:element
+                        name="SortBy"
+                        type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+                    </xsd:element>
+                    <xsd:element
+                        name="OrderBy"
+                        type="xsd:string" minOccurs="0" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="OprderByDirection"
+                        type="xsd:string" minOccurs="0" maxOccurs="1">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="OTRS_FAQ_PublicFAQSearchResponse">
+                <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xsd:element
+                        name="ID"
+                        type="xsd:positiveInteger" minOccurs="0" maxOccurs="unbounded">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="OTRS_FAQ_PublicFAQGet">
+                <xsd:sequence minOccurs="1" maxOccurs="1">
+                    <xsd:element
+                        name="ItemID"
+                        type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="OTRS_FAQ_PublicFAQGetResponse">
+                <xsd:sequence>
+                    <xsd:element
+                        name="FAQItem"
+                        type="tns:OTRS_FAQ_FAQItem" minOccurs="0" maxOccurs="unbounded">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        
+            <xsd:complexType name="OTRS_FAQ_FAQItem">
+                <xsd:sequence>
+                    <xsd:element name="Approved" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="CategoryID" type="xsd:int" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="CategoryName" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="CategoryShortName" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Changed" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="ChangedBy" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Created" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="CreatedBy" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="FAQID" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Field1" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Field2" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Field3" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Field4" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Field5" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Field6" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="ID" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="ItemID"
+                        type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Keywords" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Language" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="LanguageID" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Number"
+                        type="xsd:long" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="State" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="StateID" type="xsd:int" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="StateTypeID" type="xsd:int" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Title"
+                        type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="VoteResult" type="xsd:float" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Votes"
+                        type="xsd:positiveInteger" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="StateTypeName"
+                        type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element name="Attachment" type="tns:OTRS_FAQ_Attachment" minOccurs="0" maxOccurs="unbounded">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        
+            <xsd:complexType name="OTRS_FAQ_Attachment">
+                <xsd:sequence>
+                    <xsd:element name="Filename" type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Filesize"
+                        type="xsd:long" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="ContentType"
+                        type="xsd:string" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                    <xsd:element
+                        name="Content"
+                        type="xsd:base64Binary" minOccurs="1" maxOccurs="1">
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema></wsdl:types>
+    <wsdl:message name="LanguageListRequest">
+        <wsdl:part
+            name="LanguageList"
+            type="tns:OTRS_FAQ_LangugeList">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="LanguageListResponse">
+        <wsdl:part
+            name="LanguageListResponse"
+            type="tns:OTRS_FAQ_LanguageListResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PublicCategoryListRequest">
+        <wsdl:part
+            name="PublicCategoryList"
+            type="tns:OTRS_FAQ_PublicCategoryList">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PublicCategoryListResponse">
+        <wsdl:part
+            name="PublicCategoryListResponse"
+            type="tns:OTRS_FAQ_PublicCategoryListResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PublicFAQSearchRequest">
+        <wsdl:part
+            name="PublicFAQSearch"
+            type="tns:OTRS_FAQ_PublicFAQSearch">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PublicFAQSearchResponse">
+        <wsdl:part
+            name="PublicFAQSearchResponse"
+            type="tns:OTRS_FAQ_PublicFAQSearchResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PublicFAQGetRequest">
+        <wsdl:part
+            name="PublicFAQGet"
+            type="tns:OTRS_FAQ_PublicFAQGet">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PublicFAQGetResponse">
+        <wsdl:part
+            name="PublicFAQGetResponse"
+            type="tns:OTRS_FAQ_PublicFAQGetResponse">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="GenericFAQConnector_Interface">
+        <wsdl:operation name="LanguageList">
+            <wsdl:input message="tns:LanguageListRequest"></wsdl:input>
+            <wsdl:output message="tns:LanguageListResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PublicCategoryList">
+            <wsdl:input message="tns:PublicCategoryListRequest"></wsdl:input>
+            <wsdl:output message="tns:PublicCategoryListResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PublicFAQSearch">
+            <wsdl:input message="tns:PublicFAQSearchRequest"></wsdl:input>
+            <wsdl:output message="tns:PublicFAQSearchResponse"></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PublicFAQGet">
+            <wsdl:input message="tns:PublicFAQGetRequest"></wsdl:input>
+            <wsdl:output message="tns:PublicFAQGetResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding
+        name="GenericFAQConnector_Service"
+        type="tns:GenericFAQConnector_Interface">
+        <soap:binding
+            style="document"
+            transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="LanguageList">
+            <soap:operation
+                soapAction="http://www.example.org/GenericFAQConnector/LanguageList" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PublicCategoryList">
+            <soap:operation
+                soapAction="http://www.example.org/GenericFAQConnector/PublicCategoryList" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PublicFAQSearch">
+            <soap:operation
+                soapAction="http://www.example.org/GenericFAQConnector/PublicFAQSearch" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PublicFAQGet">
+            <soap:operation
+                soapAction="http://www.example.org/GenericFAQConnector/PublicFAQGet" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="GenericFAQConnector">
+        <wsdl:port name="GenericFAQConnector_endPoint" binding="tns:GenericFAQConnector_Service">
+            <soap:address location="http://localhost/otrs/nph-genericinterface.pl/Webservice/GenericFAQConnector" />
+        </wsdl:port>
+    </wsdl:service></wsdl:definitions>
