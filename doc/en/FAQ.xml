@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.10 2012-08-30 23:02:21 cr Exp $ -->
+<!-- $Id: FAQ.xml,v 1.11 2012-08-31 15:13:17 cr Exp $ -->
 
 <book lang="en">
 
@@ -322,40 +322,41 @@ shell&gt; bin/opm.pl -a install -p /path/to/$Name-$Version.opm
     </sect1>
 </chapter>
 
-    <chapter>
-        <title>Generic Interface FAQ connector configuration</title>
-        <sect1>
-            <title>Web Service configuration</title>
-            <para>
-                In order to use the web service and the operations included on this package, you should
-                first of all install the web service on your system, using the Command line or taking advance of
-                the Graphical User Interface (Admin Interface). Please note that the old configuration for rpc.pl
-                is not relevant for the Generic Interface and therefore not needed.
-            </para>
-            <para>
-                The following is an example of how to use Command line to install the web service on the system using the provided YAML file (.yaml)
-                included on this package.
-            </para>
-            <para>
-                <screen>
+<chapter>
+    <title>Generic Interface FAQ connector configuration</title>
+    <sect1>
+        <title>Web Service configuration</title>
+        <para>
+            In order to use the web service and the operations included on this package, you should
+            first of all install the web service on your system, using the Command line or taking
+            advantage of the Graphical User Interface (Admin Interface). Please note that the old
+            configuration for rpc.pl is not relevant for the Generic Interface and therefore not
+            needed.
+        </para>
+        <para>
+            The following is an example of how to use Command line to install the web service in
+            the system using the provided YAML file (.yaml) included on this package.
+        </para>
+        <para>
+            <screen>
 shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a write -n GenericInterfaceFAQConnector -f $OTRS_HOME/scripts/webservices/GenericInterfaceFAQConnector.yaml
-                </screen>
-            </para>
-            <para>
-                Also you can install the web service importing the mentioned YAML file via web interface on the
-                next URL using the 'Import web service' button on the left side bar.
-            </para>
-            <para>
-                <ulink url="http://localhost/otrs/index.pl?Action=AdminGenericInterfaceWebservice;Subaction=Add">
-                    http://localhost/otrs/index.pl?Action=AdminGenericInterfaceWebservice;Subaction=Add
-                </ulink>
-            </para>
-            <para>
-                The content of the YAML file is shown below.
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+            </screen>
+        </para>
+        <para>
+            Also you can install the web service importing the mentioned YAML file via web
+            interface in the next URL using the 'Import web service' button on the left side bar.
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminGenericInterfaceWebservice;Subaction=Add">
+                http://localhost/otrs/index.pl?Action=AdminGenericInterfaceWebservice;Subaction=Add
+            </ulink>
+        </para>
+        <para>
+            The content of the YAML file is shown below.
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
 ---
 Debugger:
   DebugThreshold: debug
@@ -384,138 +385,149 @@ Provider:
       SOAPAction: ''
     Type: HTTP::SOAP
 RemoteSystem: ''
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                In order to use the web service you need to use an new interface in OTRS.
-                As for agents you use index.pl and for customers you use customer.pl, for web services you use <emphasis>nph-genericinterface.pl</emphasis>.
-            </para>
-            <para>
-                The default and suggested name for this web service is GenericFAQConnector.
-                Since the name of the web service can be changed is very important that you write
-                down the current name of your web service and update it in all locations that access to it.
-            </para>
-            <para>
-                When a web service is installed on the system it always has an associated ID number.
-                You can call the web service by name or by ID number.
-                To get the list of <emphasis>valid</emphasis> web services and they corresponding ID number you can use the following command:
-            </para>
-            <para>
-                <screen>
+                ]]>
+            </screen>
+        </para>
+        <para>
+            In order to use the web service you need to use an new interface in OTRS.
+            As for agents you use index.pl and for customers you use customer.pl, for web
+            services you use <emphasis>nph-genericinterface.pl</emphasis>.
+        </para>
+        <para>
+            The default and suggested name for this web service is GenericFAQConnector.
+            Since the name of the web service can be changed is very important that you write
+            down the current name of your web service and update it in all locations that access
+            to it.
+        </para>
+        <para>
+            When a web service is installed on the system it always has an associated ID number.
+            You can call the web service by name or by ID number. To get the list of
+            <emphasis>valid</emphasis> web services and they corresponding ID number you can
+            use the following command:
+        </para>
+        <para>
+            <screen>
 shell> $OTRS_HOME/bin/otrs.WebserviceConfig.pl -a list
-                </screen>
-            </para>
-            <para>
-                For this specific web service, using the default configuration you can call it as follows:
-            </para>
-            <para>
-                <ulink url="http://localhost/otrs/nph-genericinterface.pl/Webservice/GenericFAQConnector">
-                    http://localhost/otrs/nph-genericinterface.pl/Webservice/GenericFAQConnector
-                </ulink>
-                (by name, recommended) or
-                <ulink url="http://localhost/otrs/nph-genericinterface.pl/WebserviceID/1">
-                    http://localhost/otrs/nph-genericinterface.pl/WebserviceID/1
-                </ulink>
-                (by ID).
-            </para>
-            <para>
-                <emphasis>Note:</emphasis> both web service name and ID from the example above could be different in your current environment.
-            </para>
-        </sect1>
-    </chapter>
+            </screen>
+        </para>
+        <para>
+            For this specific web service, using the default configuration you can call it as
+            follows:
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/nph-genericinterface.pl/Webservice/GenericFAQConnector">
+                http://localhost/otrs/nph-genericinterface.pl/Webservice/GenericFAQConnector
+            </ulink>
+            (by name, recommended) or
+            <ulink url="http://localhost/otrs/nph-genericinterface.pl/WebserviceID/1">
+                http://localhost/otrs/nph-genericinterface.pl/WebserviceID/1
+            </ulink>
+            (by ID).
+        </para>
+        <para>
+            <emphasis>Note:</emphasis> both web service name and ID from the example above could
+            be different in your current environment.
+        </para>
+    </sect1>
+</chapter>
 
-    <chapter>
-        <title>New ways to create links</title>
-        <sect1>
-            <title>Create links using the category name</title>
-            <para>
-                To be able to use this feature just replace the CategoryID parameter with Category parameter.
-                Category parameter is the full category path, each sub category is separated by "::".
-                Imagine the following category tree:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+<chapter>
+    <title>New ways to create links</title>
+    <sect1>
+        <title>Create links using the category name</title>
+        <para>
+            It is now possible to refer to FAQ items by creating a link for web browser using the
+            category name instead of just the category ID
+        </para>
+        <para>
+            To be able to use this feature just replace the CategoryID parameter with Category
+            parameter in your current links. Category parameter is the full category path, each
+            sub-category is separated by "::" (which is also called the "Category Long Name").
+            Imagine the following category tree:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
 GrandParent
     Parent
         Son
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                To create a link to the "Son" category we need to specify the following path:
-                Category=GrandParent::Parent::Son.
-            </para>
-            <para>
-                See the link examples below
-            </para>
-            <para>
-                from:
-                <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;CategoryID=1">
+                ]]>
+            </screen>
+        </para>
+        <para>
+            To create a link to the "Son" category we need to specify the following path:
+            Category=GrandParent::Parent::Son.
+        </para>
+        <para>
+            See the link examples below:
+        </para>
+        <para>
+            from:
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;CategoryID=1">
                     http://localhost/otrs/index.pl?Action=AdminFAQExplorer;CategoryID=1
-                </ulink>
-            </para>
-            <para>
-                to:
-                <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=Misc">
-                    http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=Misc
-                </ulink>
-            </para>
-            <para>
-                Other Examples:
-            </para>
-            <para>
-                <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=My%20Category">
-                    http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=My%20Category
-                </ulink>
-            </para>
-            <para>
-                <ulink url="http://localhost/otrs/index.pl?Action=CustomerFAQExplorer;Category=GranParent::Parent::Son">
-                    http://localhost/otrs/index.pl?Action=CustomerFAQExplorer;Category=GrandParent::Parent::Son
-                </ulink>
-            </para>
-            <para>
-                <ulink url="http://localhost/otrs/index.pl?Action=PublicFAQExplorer;Category=My%20Category::SubCategory">
-                    http://localhost/otrs/index.pl?Action=PublicFAQExplorer;Category=My%20Category::Subcategory
-                </ulink>
-            </para>
-        </sect1>
-    </chapter>
+            </ulink>
+        </para>
+        <para>
+            to:
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=Misc">
+                http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=Misc
+            </ulink>
+        </para>
+        <para>
+            Other Examples:
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=My%20Category">
+                http://localhost/otrs/index.pl?Action=AdminFAQExplorer;Category=My%20Category
+            </ulink>
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=CustomerFAQExplorer;Category=GranParent::Parent::Son">
+                http://localhost/otrs/index.pl?Action=CustomerFAQExplorer;Category=GrandParent::Parent::Son
+            </ulink>
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=PublicFAQExplorer;Category=My%20Category::SubCategory">
+                http://localhost/otrs/index.pl?Action=PublicFAQExplorer;Category=My%20Category::Subcategory
+            </ulink>
+        </para>
+    </sect1>
+</chapter>
 
-    <chapter>
-        <title>Generic Interface FAQ connector API</title>
+<chapter>
+    <title>Generic Interface FAQ connector API</title>
+    <para>
+        For the following examples uses SOAP XML data structures since HTTP::SOAP is the default
+        transport for Generic Interface Operations and can be used with otrs.SOAPRequest.pl.
+    </para>
+    <para>
+        otrs.SOAPRequest.pl is a simple Perl script to test the OTRS Generic Interface, the code
+        can be found in the OTRS administration manual.
+    </para>
+    <sect1>
+        <title>LanguageList</title>
         <para>
-            For the following examples uses SOAP XML data structures since HTTP::SOAP is the default
-            transport for Generic Interface Operations and can be used with otrs.SOAPRequest.pl.
+            For this operation is not necessary to send any special parameter to the server, you
+            just need to request the web service directly indicating the "LanguageList" operation.
+            The operation will return a list of languages including ID and the Name for each
+            language on the system.
         </para>
         <para>
-            otrs.SOAPRequest.pl is a simple Perl script to test the OTRS Generic Interface, the code
-            can be found in the OTRS administration manual.
+            Request format:
         </para>
-        <sect1>
-            <title>LanguageList</title>
-            <para>
-                For this operation is not necessary to send any special parameter to the server, you just need to
-                request the web service directly indicating the "LanguageList" operation.
-                The operation will return a list of languages including ID and the Name for each language on the system.
-            </para>
-            <para>
-                Request format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+        <para>
+            <screen>
+                <![CDATA[
         <LanguageList/>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <LanguageListResponse>
          <!--1 or more repetitions:-->
          <Language>
@@ -523,15 +535,15 @@ GrandParent
             <Name>?</Name>
          </Language>
       </LanguageListResponse>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response example:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response example:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <LanguageListResponse>
          <Language>
             <ID>1</ID>
@@ -546,33 +558,34 @@ GrandParent
             <Name>es</Name>
          </Language>
       </LanguageListResponse>
-                    ]]>
-                </screen>
-            </para>
-        </sect1>
-        <sect1>
-            <title>PubliCcategoryList</title>
-            <para>
-                For this operation is also not necessary any special parameter, just the simple call for
-                requesting the web service with the operation name 'PublicCategoryList' as a response
-                you will receive a list of categories including the ID and the Name (long format) for each category.
-            </para>
-            <para>
-                Request format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+    </sect1>
+    <sect1>
+        <title>PubliCcategoryList</title>
+        <para>
+            For this operation is also not necessary any special parameter, just the simple call for
+            requesting the web service with the operation name 'PublicCategoryList' as a response
+            you will receive a list of categories including the ID and the Name (long format) for
+            each category.
+        </para>
+        <para>
+            Request format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
         <PublicCategoryList/>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
      <PublicCategoryListResponse>
          <!--1 or more repetitions:-->
          <Category>
@@ -580,15 +593,15 @@ GrandParent
             <Name>?</Name>
          </Category>
       </PublicCategoryListResponse>
-                     ]]>
-                </screen>
-            </para>
-            <para>
-                Response example:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                 ]]>
+            </screen>
+        </para>
+        <para>
+            Response example:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicCategoryListResponse>
          <Category>
             <ID>2</ID>
@@ -603,48 +616,48 @@ GrandParent
             <Name>Public::SubCategory B</Name>
          </Category>
       </PublicCategoryListResponse>
-                    ]]>
-                </screen>
-            </para>
-        </sect1>
-        <sect1>
-            <title>PublicFAQGet</title>
-            <para>
-                To be able to get one or more FAQ entries, you should send the ItemID(s) as a parameter for the FAQ entry you want to get.
-                You will receive the entire FAQ record with all attachments included if any. Note that attachments will be transferred
-                as base64-encoded strings.
-            </para>
-            <para>
-                Request format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+    </sect1>
+    <sect1>
+        <title>PublicFAQGet</title>
+        <para>
+            To be able to get one or more FAQ entries, you should send the ItemID(s) as a parameter
+            for the FAQ entry you want to get. You will receive the entire FAQ record with all
+            attachments included if any. Note that attachments will be transferred as base64-encoded
+            strings.
+        </para>
+        <para>
+            Request format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQGet>
          <ItemID>?</ItemID>
       </PublicFAQGet>
-
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Request example:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Request example:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQGet>
         <ItemID>6,7</ItemID>
       </PublicFAQGet>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQGetResponse>
          <!--Zero or more repetitions:-->
          <FAQItem>
@@ -686,15 +699,15 @@ GrandParent
             </Attachment>
          </FAQItem>
       </PublicFAQGetResponse>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response example:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response example:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQGetResponse>
           <FAQItem>
             <ID>6</ID>
@@ -771,32 +784,33 @@ GrandParent
             <Name>1288706803-91.878184450707</Name>
           </FAQItem>
       </PublicFAQGetResponse>
-                    ]]>
-                </screen>
-            </para>
-        </sect1>
-        <sect1>
-            <title>PublicFAQSearch</title>
-            <para>
-                For this operation you can specify the following optional parameters:
-                Name, Title, What (full text search), Keyword, LanguageIDs and CategoryIDs to narrow the search results.
-                You may also specify the order of the results by the following parameters:
-                OrderBy and OrderByDirection.
-            </para>
-            <para>
-                Do a function call for requesting the web service with the operation name 'PublicFAQSearch' as a response
-                you will receive a list of FAQ item IDs.
-            </para>
-            <para>
-                <emphasis>Note: </emphasis>
-                The full FAQ item data can be retrieved for each ID by using 'PublicFAQGet' operation separately.
-            </para>
-            <para>
-                Request format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+    </sect1>
+    <sect1>
+        <title>PublicFAQSearch</title>
+        <para>
+            For this operation you can specify the following optional parameters: Name, Title, What
+            (full text search), Keyword, LanguageIDs and CategoryIDs to narrow the search results.
+            You may also specify the order of the results by the following parameters: OrderBy and
+            OrderByDirection.
+        </para>
+        <para>
+            Send a request to the web service with the operation name 'PublicFAQSearch' as a
+            response you will receive a list of FAQ item IDs.
+        </para>
+        <para>
+            <emphasis>Note: </emphasis>
+            The full FAQ item data can be retrieved for each ID by using 'PublicFAQGet' operation
+            separately.
+        </para>
+        <para>
+            Request format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQSearch>
          <!--Optional:-->
          <Number>?</Number>
@@ -817,15 +831,15 @@ GrandParent
          <!--Optional:-->
          <OprderByDirection>?</OprderByDirection>
       </PublicFAQSearch>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Request example:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Request example:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
      <PublicFAQSearch>
         <Number>*134*</Number>
         <Title>*some title*</Title>
@@ -836,28 +850,28 @@ GrandParent
         <OrderBy>FAQID</OrderBy>
         <OrderByDirection>Up</OrderByDirection>
       </PublicFAQSearch>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response format:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response format:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQSearchResponse>
          <!--Zero or more repetitions:-->
          <ID>?</ID>
       </PublicFAQSearchResponse>
-                    ]]>
-                </screen>
-            </para>
-            <para>
-                Response example:
-            </para>
-            <para>
-                <screen>
-                    <![CDATA[
+                ]]>
+            </screen>
+        </para>
+        <para>
+            Response example:
+        </para>
+        <para>
+            <screen>
+                <![CDATA[
       <PublicFAQSearchResponse>
          <ID>20</ID>
          <ID>19</ID>
@@ -871,11 +885,11 @@ GrandParent
          <ID>6</ID>
          <ID>5</ID>
       </PublicFAQSearchResponse>
-                    ]]>
-                </screen>
-            </para>
-        </sect1>
-    </chapter>
+                ]]>
+            </screen>
+        </para>
+    </sect1>
+</chapter>
 
 <chapter>
     <title>Contact</title>
