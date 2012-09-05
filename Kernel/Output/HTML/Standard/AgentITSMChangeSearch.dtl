@@ -1,8 +1,8 @@
 # --
 # AgentITSMChangeSearch.dtl - provides HTML form for AgentITSMChangeSearch
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.dtl,v 1.49 2011-02-22 13:15:38 cr Exp $
+# $Id: AgentITSMChangeSearch.dtl,v 1.50 2012-09-05 03:08:15 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -220,7 +220,7 @@ $Include{"AgentITSMUserSearch"}
 <script type="text/javascript">//<![CDATA[
     window.setTimeout(function (){
 <!-- dtl:block:SearchAJAXShow -->
-        ITSM.Agent.ChangeManagement.Search.SearchAttributeAdd('$QData{"Attribute"}');
+        ITSM.Agent.ChangeManagement.Search.SearchAttributeAdd("$QData{"Attribute"}");
 <!-- dtl:block:SearchAJAXShow -->
         ITSM.Agent.ChangeManagement.Search.AdditionalAttributeSelectionRebuild();
     }, 0);
