@@ -1,8 +1,8 @@
 # --
 # AgentTimeAccountingSetting.dtl - provides HTML form for time accounting settings
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccountingSetting.dtl,v 1.33 2011-01-31 23:33:54 en Exp $
+# $Id: AgentTimeAccountingSetting.dtl,v 1.34 2012-09-10 10:31:24 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -436,6 +436,14 @@
                     <input type="hidden" name="UserID" value="$QData{"UserID"}" />
 
                     <fieldset class="TableLike">
+                        <label for="Name">$Text{"Name"}:</label>
+                        <div class="Value">$QData{"UserFirstname"} $QData{"UserLastname"}</div>
+                        <div class="Clear"></div>
+
+                        <label for="Name">$Text{"Username"}:</label>
+                        <div class="Value">$QData{"UserLogin"}</div>
+                        <div class="Clear"></div>
+
                         <label for="Description">$Text{"Comments"}:</label>
                         <div class="Field">
                             <textarea rows="1" name="Description" id="Description" cols="40">$Data{"Description"}</textarea>
