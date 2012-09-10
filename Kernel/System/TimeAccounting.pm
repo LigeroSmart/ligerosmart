@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.61 2012-09-10 09:08:42 mb Exp $
+# $Id: TimeAccounting.pm,v 1.62 2012-09-10 09:48:51 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.61 $) [1];
+$VERSION = qw($Revision: 1.62 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -1081,7 +1081,6 @@ sub WorkingUnitsCompletnessCheck {
     );
 
     my $UserID = $Param{UserID} || $Self->{UserID};
-    warn "userid is $UserID";
 
     # TODO: Search only in the CurrentUserPeriod
     # TODO: Search only working units where action_id and project_id is true
@@ -1111,8 +1110,6 @@ sub WorkingUnitsCompletnessCheck {
     my $YearEnd     = $Year;
     my $MonthEnd    = $Month;
     my $DayEnd      = $Day;
-    use Data::Dumper;
-    warn Dumper( \%UserCurrentPeriod );
 
     if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
         $YearStart  = $1;
@@ -1699,6 +1696,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.61 $ $Date: 2012-09-10 09:08:42 $
+$Revision: 1.62 $ $Date: 2012-09-10 09:48:51 $
 
 =cut
