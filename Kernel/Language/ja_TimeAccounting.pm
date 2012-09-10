@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # Copyright (C) 2011/12/08 Kaoru Hayama TIS Inc.
 # --
-# $Id: ja_TimeAccounting.pm,v 1.2 2012-08-21 12:49:59 mh Exp $
+# $Id: ja_TimeAccounting.pm,v 1.3 2012-09-10 10:30:18 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -95,7 +95,7 @@ sub Data {
     $Self->{Translation}->{'Overtime leave'} = '代休';
     $Self->{Translation}->{'Vacation'} = '休暇';
     $Self->{Translation}->{'Sick leave'} = '病欠';
-    $Self->{Translation}->{'LeaveDay Remaining'} = '休日残日数';
+    $Self->{Translation}->{'Vacation remaining'} = '休日残日数';
     $Self->{Translation}->{'Project reports'} = 'プロジェクト・レポート';
 
     # Template: AgentTimeAccountingSetting

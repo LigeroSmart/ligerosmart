@@ -2,7 +2,7 @@
 # Kernel/Language/hu_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: hu_TimeAccounting.pm,v 1.2 2012-08-21 12:49:59 mh Exp $
+# $Id: hu_TimeAccounting.pm,v 1.3 2012-09-10 10:30:18 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -94,7 +94,7 @@ sub Data {
     $Self->{Translation}->{'Overtime leave'} = 'Túlóra letöltés';
     $Self->{Translation}->{'Vacation'} = 'Szabadság';
     $Self->{Translation}->{'Sick leave'} = 'Betegszabadság';
-    $Self->{Translation}->{'LeaveDay Remaining'} = 'Hátralévõ távollét';
+    $Self->{Translation}->{'Vacation remaining'} = 'Hátralévõ távollét';
     $Self->{Translation}->{'Project reports'} = 'Projekt kimutatások';
 
     # Template: AgentTimeAccountingSetting

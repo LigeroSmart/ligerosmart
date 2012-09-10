@@ -2,7 +2,7 @@
 # Kernel/Language/de_TimeAccounting.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_TimeAccounting.pm,v 1.10 2012-08-21 12:49:59 mh Exp $
+# $Id: de_TimeAccounting.pm,v 1.11 2012-09-10 10:30:18 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -94,7 +94,7 @@ sub Data {
     $Self->{Translation}->{'Overtime leave'} = 'Überstunden';
     $Self->{Translation}->{'Vacation'} = 'Urlaub';
     $Self->{Translation}->{'Sick leave'} = 'Erkrankt';
-    $Self->{Translation}->{'LeaveDay Remaining'} = 'Verbleibende Urlaubstage';
+    $Self->{Translation}->{'Vacation remaining'} = 'Verbleibende Urlaubstage';
     $Self->{Translation}->{'Project reports'} = 'Projektberichte';
 
     # Template: AgentTimeAccountingSetting
