@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.60 2012-08-22 22:10:06 mh Exp $
+# $Id: TimeAccounting.pm,v 1.61 2012-09-10 09:08:42 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,19 +15,19 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
-=head1 NAME#
+=head1 NAME
 
-Kernel::System::TimeAccounting - timeaccounting lib
+Kernel::System::TimeAccounting - time accounting lib
 
 =head1 SYNOPSIS
 
-All timeaccounting functions
+All time accounting functions
 
-=head1 PUBLIC INTERFACE#
+=head1 PUBLIC INTERFACE
 
 =over 4
 
@@ -211,7 +211,7 @@ sub UserReporting {
         }
     }
 
-    # check valide date values
+    # check valid date values
     return if !check_date( $Param{Year}, $Param{Month}, $Param{Day} || 1 );
 
     # get days of month if not provided
@@ -667,22 +667,19 @@ inserts a new action in the db
 sub ActionSettingsInsert {
     my ( $Self, %Param ) = @_;
 
-    # db quote
-    for ( keys %Param ) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-    }
-
     $Param{Action} ||= $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionName') || '';
     if ( $Param{ActionStatus} ne '0' && $Param{ActionStatus} ne '1' ) {
         $Param{ActionStatus} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultActionStatus');
     }
 
-    # build sql
-    my $SQL = "INSERT INTO time_accounting_action (action, status)"
-        . " VALUES ('$Param{Action}' , '$Param{ActionStatus}')";
-
     # db insert
-    return $Self->{DBObject}->Do( SQL => $SQL );
+    return if !$Self->{DBObject}->Do(
+        SQL => 'INSERT INTO time_accounting_action (action, status) '
+            . 'VALUES (?, ?)',
+        Bind => [ \$Param{Action}, \$Param{ActionStatus}, ],
+    );
+
+    return 1;
 }
 
 =item ActionSettingsUpdate()
@@ -755,7 +752,7 @@ sub UserList {
 returns a hash with the user data of one user
 
     my %UserData = $TimeAccountingObject->UserGet(
-        UserID => 15,  #
+        UserID => 15,
     );
 
 =cut
@@ -928,27 +925,33 @@ sub UserSettingsInsert {
         || 'Put your description here.';
 
     # db quote
-    for ( keys %Param ) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} );
-        if ( !defined( $Param{$_} ) ) {
-            $Param{$_} = '';
+    for my $Parameter ( keys %Param ) {
+        $Param{$Parameter} = $Self->{DBObject}->Quote( $Param{$Parameter} );
+        if ( !defined( $Param{$Parameter} ) ) {
+            $Param{$Parameter} = '';
         }
     }
 
-    # build sql
-    my $SQL
-        = "INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end,"
-        . " weekly_hours, leave_days, overtime, status)"
-        . " VALUES"
-        . " ('$Param{UserID}', '$Param{Period}', '$Param{DateStart} 00:00:00', '$Param{DateEnd} 00:00:00',"
-        . " '$Param{WeeklyHours}', '$Param{LeaveDays}', '$Param{Overtime}', '$Param{UserStatus}')";
+    $Param{DateStart} .= ' 00:00:00';
+    $Param{DateEnd}   .= ' 00:00:00';
 
     # db insert
-    return if !$Self->{DBObject}->Do( SQL => $SQL );
+    return if !$Self->{DBObject}->Do(
+        SQL =>
+            'INSERT INTO time_accounting_user_period (user_id, preference_period, date_start, date_end,'
+            . ' weekly_hours, leave_days, overtime, status)'
+            . ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        Bind => [
+            \$Param{UserID},      \$Param{Period},    \$Param{DateStart}, \$Param{DateEnd},
+            \$Param{WeeklyHours}, \$Param{LeaveDays}, \$Param{Overtime},  \$Param{UserStatus},
+        ],
+    );
 
-    # build sql
+    # select userid
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT user_id FROM time_accounting_user WHERE user_id = '$Param{UserID}'",
+        SQL   => 'SELECT user_id FROM time_accounting_user WHERE user_id = ?',
+        Bind  => [ \$Param{UserID}, ],
+        Limit => 1,
     );
 
     # fetch the data
@@ -958,12 +961,13 @@ sub UserSettingsInsert {
     }
 
     if ( !defined $UserID ) {
-        $SQL = "INSERT INTO time_accounting_user (user_id, description)"
-            . " VALUES"
-            . " ('$Param{UserID}', '$Param{Description}')";
 
         # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL );
+        return if !$Self->{DBObject}->Do(
+            SQL => 'INSERT INTO time_accounting_user (user_id, description)'
+                . ' VALUES (?, ?)',
+            Bind => [ \$Param{UserID}, \$Param{Description}, ],
+        );
     }
 
     return 1;
@@ -1021,43 +1025,34 @@ sub UserSettingsUpdate {
     $Param{CreateProject} ||= 0;
     $Param{Calendar}      ||= 0;
 
-    # build sql
-    my $SQL
-        = "UPDATE time_accounting_user "
-        . "SET description = ?, show_overtime = ?, create_project = ?, calendar = ? "
-        . "WHERE user_id = ?";
-
-    my $Bind = [
-        \$Param{Description}, \$Param{ShowOvertime},
-        \$Param{CreateProject}, \$Param{Calendar}, \$Param{UserID}
-    ];
-
     # db insert
     return if !$Self->{DBObject}->Do(
-        SQL  => $SQL,
-        Bind => $Bind,
+        SQL => 'UPDATE time_accounting_user '
+            . ' SET description = ?, show_overtime = ?, create_project = ?, calendar = ?'
+            . ' WHERE user_id = ?',
+        Bind => [
+            \$Param{Description}, \$Param{ShowOvertime},
+            \$Param{CreateProject}, \$Param{Calendar}, \$Param{UserID}
+        ],
     );
 
     # update all periods
     for my $Period ( keys %{ $Param{Period} } ) {
 
-        # build sql
-        my $SQL
-            = "UPDATE time_accounting_user_period "
-            . "SET leave_days = ?, date_start = ?"
-            . ", date_end = ?, overtime = ?"
-            . ", weekly_hours = ?, status = ? "
-            . "WHERE user_id = ? AND preference_period = ?";
-
-        my $Bind = [
-            \$Param{Period}->{$Period}{LeaveDays},   \$Param{Period}->{$Period}{DateStart},
-            \$Param{Period}->{$Period}{DateEnd},     \$Param{Period}->{$Period}{Overtime},
-            \$Param{Period}->{$Period}{WeeklyHours}, \$Param{Period}->{$Period}{UserStatus},
-            \$UserID, \$Period,
-        ];
-
         # db insert
-        return if !$Self->{DBObject}->Do( SQL => $SQL, Bind => $Bind );
+        return if !$Self->{DBObject}->Do(
+            SQL => "UPDATE time_accounting_user_period "
+                . "SET leave_days = ?, date_start = ?"
+                . ", date_end = ?, overtime = ?"
+                . ", weekly_hours = ?, status = ? "
+                . "WHERE user_id = ? AND preference_period = ?",
+            Bind => [
+                \$Param{Period}->{$Period}{LeaveDays},   \$Param{Period}->{$Period}{DateStart},
+                \$Param{Period}->{$Period}{DateEnd},     \$Param{Period}->{$Period}{Overtime},
+                \$Param{Period}->{$Period}{WeeklyHours}, \$Param{Period}->{$Period}{UserStatus},
+                \$UserID, \$Period,
+                ]
+        );
     }
 
     return 1;
@@ -1086,6 +1081,7 @@ sub WorkingUnitsCompletnessCheck {
     );
 
     my $UserID = $Param{UserID} || $Self->{UserID};
+    warn "userid is $UserID";
 
     # TODO: Search only in the CurrentUserPeriod
     # TODO: Search only working units where action_id and project_id is true
@@ -1115,6 +1111,8 @@ sub WorkingUnitsCompletnessCheck {
     my $YearEnd     = $Year;
     my $MonthEnd    = $Month;
     my $DayEnd      = $Day;
+    use Data::Dumper;
+    warn Dumper( \%UserCurrentPeriod );
 
     if ( $UserCurrentPeriod{$UserID}{DateStart} =~ /^(\d+)-(\d+)-(\d+)/ ) {
         $YearStart  = $1;
@@ -1394,7 +1392,7 @@ sub WorkingUnitsInsert {
 
 =item WorkingUnitsDelete()
 
-delets working units in the db
+deletes working units in the db
 
     $TimeAccountingObject->WorkingUnitsDelete(
         Year  => '2005',
@@ -1408,7 +1406,6 @@ sub WorkingUnitsDelete {
     my ( $Self, %Param ) = @_;
 
     for (qw(Year Month Day)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
@@ -1418,15 +1415,17 @@ sub WorkingUnitsDelete {
         }
     }
 
-    my $Date = sprintf "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day};
+    my $Date      = sprintf "%04d-%02d-%02d", $Param{Year}, $Param{Month}, $Param{Day};
+    my $StartTime = $Date . ' 00:00:00';
+    my $EndTime   = $Date . ' 23:59:59';
 
-    # delete old working units
-    my $SQL = "DELETE FROM time_accounting_table "
-        . "WHERE time_start <= '$Date 23:59:59'"
-        . " AND time_start >= '$Date 00:00:00' "
-        . " AND user_id = '$Self->{UserID}'";
-
-    return if !$Self->{DBObject}->Do( SQL => $SQL );
+    return if !$Self->{DBObject}->Do(
+        SQL => 'DELETE FROM time_accounting_table'
+            . ' WHERE time_start >= ?'
+            . ' AND time_start <= ?'
+            . ' AND user_id = ?',
+        Bind => [ \$StartTime, \$EndTime, \$Self->{UserID}, ],
+    );
     return 1;
 }
 
@@ -1437,7 +1436,7 @@ returns a hash with the hours dependent project and action data
     my %ProjectData = $TimeAccountingObject->ProjectActionReporting(
         Year  => 2005,
         Month => 7,
-        UserID => 123, # optional; no UserID means 'of all user'
+        UserID => 123, # optional; no UserID means 'of all users'
     );
 
 =cut
@@ -1445,12 +1444,12 @@ returns a hash with the hours dependent project and action data
 sub ProjectActionReporting {
     my ( $Self, %Param ) = @_;
 
-    for (qw(Year Month)) {
-        $Param{$_} = $Self->{DBObject}->Quote( $Param{$_} ) || '';
-        if ( !$Param{$_} ) {
+    for my $Parameter (qw(Year Month)) {
+        $Param{$Parameter} = $Self->{DBObject}->Quote( $Param{$Parameter} ) || '';
+        if ( !$Param{$Parameter} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "ProjectActionReporting: Need $_!"
+                Message  => "ProjectActionReporting: Need $Parameter!"
             );
             return;
         }
@@ -1466,12 +1465,12 @@ sub ProjectActionReporting {
     my $DaysInMonth = Days_in_Month( $Param{Year}, $Param{Month} );
     my $DateString = $Param{Year} . "-" . sprintf( "%02d", $Param{Month} );
 
-    my $SQL_Query_TimeStart = "time_start <= '$DateString-$DaysInMonth 23:59:59'$IDSelect";
+    my $SQLQueryTimeStart = "time_start <= '$DateString-$DaysInMonth 23:59:59'$IDSelect";
 
     # total hours
     $Self->{DBObject}->Prepare(
         SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
-            . " WHERE project_id != -1 AND $SQL_Query_TimeStart",
+            . " WHERE project_id != -1 AND $SQLQueryTimeStart",
     );
 
     # fetch the data
@@ -1487,7 +1486,7 @@ sub ProjectActionReporting {
         SQL => "SELECT project_id, action_id, period FROM time_accounting_table"
             . " WHERE project_id != -1 "
             . " AND time_start >= '$DateString-01 00:00:00' "
-            . " AND $SQL_Query_TimeStart",
+            . " AND $SQLQueryTimeStart",
     );
 
     # fetch the data
@@ -1542,8 +1541,9 @@ sub ProjectTotalHours {
 
     # ask the database
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?',
-        Bind => [ \$Param{ProjectID} ],
+        SQL   => 'SELECT SUM(period) FROM time_accounting_table WHERE project_id = ?',
+        Bind  => [ \$Param{ProjectID} ],
+        Limit => 1,
     );
 
     # fetch the result
@@ -1563,7 +1563,9 @@ returns an array with all WorkingUnits related to a project
         ProjectID  => 15,
     );
 
-e.g. @ProjectHistoryArray = (
+This would return
+
+    @ProjectHistoryArray = (
         {
             ID        => 999,
             UserID    => 15,
@@ -1697,6 +1699,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2012-08-22 22:10:06 $
+$Revision: 1.61 $ $Date: 2012-09-10 09:08:42 $
 
 =cut
