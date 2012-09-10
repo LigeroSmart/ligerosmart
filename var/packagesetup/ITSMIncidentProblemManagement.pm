@@ -2,7 +2,7 @@
 # ITSMIncidentProblemManagement.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMIncidentProblemManagement.pm,v 1.19 2012-07-05 08:54:53 ub Exp $
+# $Id: ITSMIncidentProblemManagement.pm,v 1.20 2012-09-10 07:33:57 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 =head1 NAME
 
@@ -550,12 +550,6 @@ sub _CreateITSMDynamicFields {
         $DynamicFieldLookup{ $DynamicField->{Name} } = $DynamicField;
     }
 
-    # get current post master x-headers
-    my %PostMasterHeaders
-        = map { $_ => 1 } @{ $Self->{ConfigObject}->Get('PostmasterX-Header') };
-
-    my @PostMasterValuesToSet;
-
     # create or update dynamic fields
     DYNAMICFIELD:
     for my $DynamicField (@DynamicFields) {
@@ -616,24 +610,7 @@ sub _CreateITSMDynamicFields {
             $NextOrderNumber++;
         }
 
-        # check if x-header for the dynamic field already exists
-        if ( !$PostMasterHeaders{ 'X-OTRS-DynamicField-' . $DynamicField->{Name} } ) {
-            $PostMasterHeaders{ 'X-OTRS-DynamicField-' . $DynamicField->{Name} } = 1;
-        }
-        if ( !$PostMasterHeaders{ 'X-OTRS-FollowUp-DynamicField-' . $DynamicField->{Name} } ) {
-            $PostMasterHeaders{ 'X-OTRS-FollowUp-DynamicField-' . $DynamicField->{Name} } = 1;
-        }
     }
-
-    # revert values from hash into an array
-    @PostMasterValuesToSet = sort keys %PostMasterHeaders;
-
-    # execute the update action in sysconfig
-    my $Success = $Self->{SysConfigObject}->ConfigItemUpdate(
-        Valid => 1,
-        Key   => 'PostmasterX-Header',
-        Value => \@PostMasterValuesToSet,
-    );
 
     return 1;
 }
@@ -778,6 +755,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/gpl-2.0.txt>.
 
 =head1 VERSION
 
-$Revision: 1.19 $ $Date: 2012-07-05 08:54:53 $
+$Revision: 1.20 $ $Date: 2012-09-10 07:33:57 $
 
 =cut
