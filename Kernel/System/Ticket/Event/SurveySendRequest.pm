@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Ticket/Event/SurveySendRequest.pm - send survey requests
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SurveySendRequest.pm,v 1.14 2010-05-21 12:49:52 mh Exp $
+# $Id: SurveySendRequest.pm,v 1.15 2012-09-18 07:31:28 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -51,6 +51,11 @@ sub Run {
             return;
         }
     }
+
+    # loop Protection, RequestSend calls HistoryAdd
+    # so we can't listen on HistoryAdd Events in order to
+    # prevent deep recursion
+    return 1 if $Param{Event} eq 'HistoryAdd';
 
     # get ticket data
     my %Ticket = $Self->{TicketObject}->TicketGet(
