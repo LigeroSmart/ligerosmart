@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMServiceZoom.pm - the OTRS::ITSM Service zoom module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMServiceZoom.pm,v 1.8 2010-08-23 16:15:50 dz Exp $
+# $Id: AgentITSMServiceZoom.pm,v 1.9 2012-09-20 09:56:03 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Service;
 use Kernel::System::SLA;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -57,8 +57,9 @@ sub Run {
 
     # get service
     my %Service = $Self->{ServiceObject}->ServiceGet(
-        ServiceID => $ServiceID,
-        UserID    => $Self->{UserID},
+        ServiceID     => $ServiceID,
+        IncidentState => 1,
+        UserID        => $Self->{UserID},
     );
     if ( !$Service{ServiceID} ) {
         return $Self->{LayoutObject}->ErrorScreen(
@@ -118,7 +119,7 @@ sub Run {
 
         for my $SLAID ( sort { $SLAList{$a} cmp $SLAList{$b} } keys %SLAList ) {
 
-            # get service data
+            # get sla data
             my %SLA = $Self->{SLAObject}->SLAGet(
                 SLAID  => $SLAID,
                 UserID => $Self->{UserID},

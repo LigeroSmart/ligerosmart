@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.27 2012-08-01 10:26:25 ub Exp $
+# $Id: Service.pm,v 1.28 2012-09-20 09:56:04 mb Exp $
 # $OldId: Service.pm,v 1.50.2.2 2012/06/04 22:00:55 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -413,9 +413,15 @@ Return
     $ServiceData{Type}
     $ServiceData{CriticalityID}
     $ServiceData{Criticality}
-    $ServiceData{CurInciStateID}
-    $ServiceData{CurInciState}
-    $ServiceData{CurInciStateType}
+    $ServiceData{CurInciStateID}    # Only if IncidentState is 1
+    $ServiceData{CurInciState}      # Only if IncidentState is 1
+    $ServiceData{CurInciStateType}  # Only if IncidentState is 1
+
+    my %ServiceData = $ServiceObject->ServiceGet(
+        ServiceID     => 123,
+        IncidentState => 1, # Optional, returns CurInciState etc.
+        UserID        => 1,
+    );
 # ---
 
     my %ServiceData = $ServiceObject->ServiceGet(
@@ -528,12 +534,14 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-    # get current incident state, calculated from related config items and child services
-    %ServiceData = $Self->_ServiceGetCurrentIncidentState(
-        ServiceData => \%ServiceData,
-        Preferences => \%Preferences,
-        UserID      => $Param{UserID},
-    );
+    if (defined $Param{IncidentState} && $Param{IncidentState} ) {
+        # get current incident state, calculated from related config items and child services
+        %ServiceData = $Self->_ServiceGetCurrentIncidentState(
+            ServiceData => \%ServiceData,
+            Preferences => \%Preferences,
+            UserID      => $Param{UserID},
+        );
+    }
 # ---
 
     # merge hash
@@ -1504,8 +1512,9 @@ sub _ServiceGetCurrentIncidentState {
 
             # get data of child service
             my %ChildServiceData = $Self->ServiceGet(
-                ServiceID => $ServiceID,
-                UserID    => $Param{UserID},
+                ServiceID     => $ServiceID,
+                UserID        => $Param{UserID},
+                IncidentState => 1,
             );
 
             next SERVICEID if $ChildServiceData{CurInciStateType} eq 'operational';
@@ -1570,6 +1579,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2012-08-01 10:26:25 $
+$Revision: 1.28 $ $Date: 2012-09-20 09:56:04 $
 
 =cut
