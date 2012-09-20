@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.28 2012-09-20 09:56:04 mb Exp $
+# $Id: Service.pm,v 1.29 2012-09-20 10:05:46 mb Exp $
 # $OldId: Service.pm,v 1.50.2.2 2012/06/04 22:00:55 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 =head1 NAME
 
@@ -534,7 +534,7 @@ sub ServiceGet {
 # ---
 # ITSM
 # ---
-    if (defined $Param{IncidentState} && $Param{IncidentState} ) {
+    if ( $Param{IncidentState} ) {
         # get current incident state, calculated from related config items and child services
         %ServiceData = $Self->_ServiceGetCurrentIncidentState(
             ServiceData => \%ServiceData,
@@ -1579,6 +1579,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.28 $ $Date: 2012-09-20 09:56:04 $
+$Revision: 1.29 $ $Date: 2012-09-20 10:05:46 $
 
 =cut
