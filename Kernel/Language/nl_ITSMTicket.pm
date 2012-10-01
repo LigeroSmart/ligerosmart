@@ -2,7 +2,7 @@
 # Kernel/Language/nl_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ITSMTicket.pm,v 1.8 2012-06-28 21:11:08 mb Exp $
+# $Id: nl_ITSMTicket.pm,v 1.9 2012-10-01 14:19:48 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,9 +29,6 @@ sub Data {
     $Self->{Translation}->{'Link ticket'} = '';
 
     # Template: AgentTicketOverviewMedium
-
-    # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
 
     # Template: AgentTicketPhone
 
