@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminITSMCIPAllocate.pm - admin frontend of criticality, impact and priority
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminITSMCIPAllocate.pm,v 1.13 2010-12-22 08:41:45 ub Exp $
+# $Id: AdminITSMCIPAllocate.pm,v 1.14 2012-10-01 14:21:14 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::Priority;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -115,8 +115,10 @@ sub Run {
         );
 
         my $AllocateMatrix;
-        $AllocateMatrix->[0]->[0]->{ObjectType} = 'Impact \ Criticality';
-        $AllocateMatrix->[0]->[0]->{Class}      = 'HeaderColumnDescription';
+        $AllocateMatrix->[0]->[0]->{ObjectType} =
+            $Self->{LayoutObject}->{LanguageObject}->Get('Impact') . ' / '
+            . $Self->{LayoutObject}->{LanguageObject}->Get('Criticality');
+        $AllocateMatrix->[0]->[0]->{Class} = 'HeaderColumnDescription';
 
         # generate table description (Impact)
         my $Counter1 = 1;
