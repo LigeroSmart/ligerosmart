@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/nl_GeneralCatalog.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_GeneralCatalog.pm,v 1.6 2011-03-03 18:39:46 ub Exp $
+# $Id: nl_GeneralCatalog.pm,v 1.7 2012-10-01 14:18:09 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,15 +20,15 @@ sub Data {
     $Self->{Translation}->{'Functionality'} = 'Functionaliteit';
 
     # Template: AdminGeneralCatalog
-    $Self->{Translation}->{'General Catalog Management'} = 'General Catalog Beheer';
-    $Self->{Translation}->{'Add Catalog Item'} = 'Catalog Item toevoegen';
-    $Self->{Translation}->{'Add Catalog Class'} = 'Catalog Klasse toevoegen';
-    $Self->{Translation}->{'Catalog Class'} = 'Catalog Klasse';
+    $Self->{Translation}->{'General Catalog Management'} = 'Catalogus Beheer';
+    $Self->{Translation}->{'Add Catalog Item'} = 'Catalogus-item toevoegen';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Catalogus-klasse toevoegen';
+    $Self->{Translation}->{'Catalog Class'} = 'Catalogus klasse';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Aanmaken en beheren van items in de catalogus.';
     $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
-    $Self->{Translation}->{'General Catalog'} = 'General Catalog';
+    $Self->{Translation}->{'General Catalog'} = 'Catalogus';
     $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
     $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
 
