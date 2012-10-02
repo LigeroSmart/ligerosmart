@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.42 2012-08-01 12:11:27 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.206.2.6 2012/06/22 17:34:04 cr Exp $
+# $Id: AgentTicketEmail.pm,v 1.43 2012-10-02 11:05:54 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.206.2.7 2012/09/26 21:32:50 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@ use Kernel::System::LinkObject;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -149,7 +149,12 @@ sub Run {
 
             if ($CustomerElement) {
 
-                $GetParam{To} .= $CustomerElement . ',';
+                if ( $GetParam{To} ) {
+                    $GetParam{To} .= ', ' . $CustomerElement;
+                }
+                else {
+                    $GetParam{To} = $CustomerElement;
+                }
 
                 my $CustomerErrorMsg = 'CustomerGenericServerErrorMsg';
                 my $CustomerError    = '';
@@ -214,7 +219,13 @@ sub Run {
                 my $CountAuxCc         = $CustomerCounterCc++;
 
                 if ( !$IsUpload ) {
-                    $GetParam{Cc} .= $CustomerElementCc . ',';
+
+                    if ( $GetParam{Cc} ) {
+                        $GetParam{Cc} .= ', ' . $CustomerElementCc;
+                    }
+                    else {
+                        $GetParam{Cc} = $CustomerElementCc;
+                    }
 
                     # check email address
                     for my $Email ( Mail::Address->parse($CustomerElementCc) ) {
@@ -272,7 +283,13 @@ sub Run {
                 my $CustomerErrorMsgBcc = 'CustomerGenericServerErrorMsg';
                 my $CustomerErrorBcc    = '';
                 if ( !$IsUpload ) {
-                    $GetParam{Bcc} .= $CustomerElementBcc . ',';
+
+                    if ( $GetParam{Bcc} ) {
+                        $GetParam{Bcc} .= ', ' . $CustomerElementBcc;
+                    }
+                    else {
+                        $GetParam{Bcc} = $CustomerElementBcc;
+                    }
 
                     # check email address
                     for my $Email ( Mail::Address->parse($CustomerElementBcc) ) {
