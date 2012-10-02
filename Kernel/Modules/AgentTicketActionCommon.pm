@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.32 2012-08-20 14:10:53 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.81.2.7 2012/08/15 09:55:11 te Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.33 2012-10-02 11:02:03 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.81.2.9 2012/09/24 09:28:05 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1038,7 +1038,7 @@ sub Run {
                     Data         => $Owners,
                     SelectedID   => $GetParam{NewOwnerID},
                     Translation  => 0,
-                    PossibleNone => 0,
+                    PossibleNone => 1,
                     Max          => 100,
                 },
                 {
@@ -1046,7 +1046,7 @@ sub Run {
                     Data         => $OldOwners,
                     SelectedID   => $GetParam{OldOwnerID},
                     Translation  => 0,
-                    PossibleNone => 0,
+                    PossibleNone => 1,
                     Max          => 100,
                 },
                 {
@@ -1058,11 +1058,12 @@ sub Run {
                     Max          => 100,
                 },
                 {
-                    Name        => 'NewStateID',
-                    Data        => $NextStates,
-                    SelectedID  => $GetParam{NewStateID},
-                    Translation => 1,
-                    Max         => 100,
+                    Name         => 'NewStateID',
+                    Data         => $NextStates,
+                    SelectedID   => $GetParam{NewStateID},
+                    Translation  => 1,
+                    PossibleNone => $Self->{Config}->{StateDefault} ? 0 : 1,
+                    Max          => 100,
                 },
                 {
                     Name         => 'NewPriorityID',
@@ -1419,9 +1420,6 @@ sub _Mask {
             TicketID => $Self->{TicketID},
             UserID   => $Self->{UserID},
         );
-        if ( !$Self->{Config}->{StateDefault} ) {
-            $StateList{''} = '-';
-        }
         if ( !$Param{NewStateID} ) {
             if ( $Self->{Config}->{StateDefault} ) {
                 $State{SelectedValue} = $Self->{Config}->{StateDefault};
@@ -1433,8 +1431,9 @@ sub _Mask {
 
         # build next states string
         $Param{StateStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => \%StateList,
-            Name => 'NewStateID',
+            Data         => \%StateList,
+            Name         => 'NewStateID',
+            PossibleNone => $Self->{Config}->{StateDefault} ? 0 : 1,
             %State,
         );
         $Self->{LayoutObject}->Block(
@@ -1828,9 +1827,6 @@ sub _GetOldOwners {
         continue {
             $Counter++;
         }
-    }
-    if ( !%UserHash ) {
-        $UserHash{''} = '-';
     }
 
     # workflow
