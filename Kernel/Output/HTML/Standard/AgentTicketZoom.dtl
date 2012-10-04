@@ -2,7 +2,7 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.49 2012-08-20 14:11:21 ub Exp $
+# $Id: AgentTicketZoom.dtl,v 1.50 2012-10-04 14:41:07 ub Exp $
 # $OldId: AgentTicketZoom.dtl,v 1.207.2.4 2012/08/17 08:52:41 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -133,12 +133,16 @@
 
 <!-- dtl:block:Service -->
                         <label>$Text{"Service"}:</label>
-                        <p class="Value" title="$QData{"Service"}">$QData{"Service","18"}</p>
+                        <p class="Value" title="$QData{"Service"}">
+                            <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"};">$QData{"Service","18"}</a>
+                        </p>
                         <div class="Clear"></div>
 <!-- dtl:block:Service -->
 <!-- dtl:block:SLA -->
                         <label>$Text{"Service Level Agreement"}:</label>
-                        <p class="Value" title="$QData{"SLA"}">$QData{"SLA","18"}</p>
+                        <p class="Value" title="$QData{"SLA"}">
+                            <a href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"};">$QData{"SLA","18"}</a>
+                        </p>
                         <div class="Clear"></div>
 <!-- dtl:block:SLA -->
                     </fieldset>
