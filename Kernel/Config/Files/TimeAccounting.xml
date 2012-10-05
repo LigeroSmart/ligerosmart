@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TimeAccounting.xml,v 1.30 2012-09-26 11:44:17 mb Exp $</CVS>
+    <CVS>$Id: TimeAccounting.xml,v 1.31 2012-10-05 13:03:29 mb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentTimeAccounting" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>TimeAccounting</Group>
@@ -15,7 +15,6 @@
                 <NavBar>
                     <Description Translatable="1">Time accounting.</Description>
                     <Name>Time Accounting</Name>
-                    <Image>time_accounting.png</Image>
                     <Link>Action=AgentTimeAccounting;Subaction=Edit</Link>
                     <NavBar>TimeAccounting</NavBar>
                     <Type>Menu</Type>
@@ -27,7 +26,6 @@
                 <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Overview</Description>
                     <Name>Overview</Name>
-                    <Image>overview.png</Image>
                     <Link>Action=AgentTimeAccounting;Subaction=Overview</Link>
                     <Type></Type>
                     <Block></Block>
@@ -39,7 +37,6 @@
                 <GroupRo>time_accounting</GroupRo>
                     <Description Translatable="1">Edit time record</Description>
                     <Name>Edit</Name>
-                    <Image>new.png</Image>
                     <Link>Action=AgentTimeAccounting;Subaction=Edit</Link>
                     <Type></Type>
                     <Block></Block>
@@ -51,7 +48,6 @@
                 <Group>time_accounting</Group>
                     <Description Translatable="1">Project time reporting</Description>
                     <Name>Reporting</Name>
-                    <Image>reporting.png</Image>
                     <Link>Action=AgentTimeAccounting;Subaction=Reporting</Link>
                     <Type></Type>
                     <Block></Block>
@@ -63,7 +59,6 @@
                     <Group>time_accounting</Group>
                     <Description Translatable="1">Edit time accounting settings</Description>
                     <Name>Settings</Name>
-                    <Image>module_setting.png</Image>
                     <Link>Action=AgentTimeAccounting;Subaction=Setting</Link>
                     <Type></Type>
                     <Block></Block>
