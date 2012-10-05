@@ -2,7 +2,7 @@
 # AgentTicketZoom.dtl - provides HTML for AgentTicketZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.dtl,v 1.51 2012-10-04 14:56:36 ub Exp $
+# $Id: AgentTicketZoom.dtl,v 1.52 2012-10-05 09:56:14 ub Exp $
 # $OldId: AgentTicketZoom.dtl,v 1.207.2.4 2012/08/17 08:52:41 mg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -138,7 +138,7 @@
 # ---
 #                        <p class="Value" title="$QData{"Service"}">$QData{"Service","18"}</p>
                         <p class="Value" title="$QData{"Service"}">
-                            <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"};">$QData{"Service","18"}</a>
+                            <a href="$Env{"Baselink"}Action=AgentITSMServiceZoom;ServiceID=$LQData{"ServiceID"};" target="_blank">$QData{"Service","18"}</a>
                         </p>
 # ---
                         <div class="Clear"></div>
@@ -150,7 +150,7 @@
 # ---
 #                        <p class="Value" title="$QData{"SLA"}">$QData{"SLA","18"}</p>
                         <p class="Value" title="$QData{"SLA"}">
-                            <a href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"};">$QData{"SLA","18"}</a>
+                            <a href="$Env{"Baselink"}Action=AgentITSMSLAZoom;SLAID=$LQData{"SLAID"};" target="_blank">$QData{"SLA","18"}</a>
                         </p>
 # ---
                         <div class="Clear"></div>
