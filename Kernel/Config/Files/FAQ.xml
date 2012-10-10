@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.119 2012-08-08 21:40:27 cg Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.120 2012-10-10 10:40:26 mh Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -489,14 +489,24 @@ Your OTRS Notification Master
                 <NavBarName>FAQ</NavBarName>
                 <Title></Title>
                 <NavBar>
-                    <Description>FAQ-Area</Description>
+                    <Description>FAQ</Description>
                     <Name>FAQ</Name>
                     <Link>Action=CustomerFAQExplorer</Link>
-                    <Type></Type>
+                    <Type>Menu</Type>
                     <Block></Block>
-                    <NavBar></NavBar>
+                    <NavBar>FAQ</NavBar>
+                    <AccessKey></AccessKey>
+                    <Prio>700</Prio>
+                </NavBar>
+                <NavBar>
+                    <Description>FAQ Explorer</Description>
+                    <Name>FAQ Explorer</Name>
+                    <Link>Action=CustomerFAQExplorer</Link>
+                    <Type>Submenu</Type>
+                    <Block></Block>
+                    <NavBar>FAQ</NavBar>
                     <AccessKey>f</AccessKey>
-                    <Prio>400</Prio>
+                    <Prio>710</Prio>
                 </NavBar>
                 <Loader>
                     <CSS>FAQ.Customer.Detail.css</CSS>
@@ -1150,15 +1160,15 @@ Your OTRS Notification Master
                 <NavBarName>FAQ</NavBarName>
                 <Title>Search FAQ</Title>
                 <NavBar>
-                    <Description Translatable="1">FAQ-Area</Description>
-                    <Name Translatable="1">Search FAQ</Name>
+                    <Description Translatable="1">Search</Description>
+                    <Name Translatable="1">Search</Name>
                     <Block></Block>
-                    <Type></Type>
-                    <NavBar></NavBar>
+                    <Type>Submenu</Type>
+                    <NavBar>FAQ</NavBar>
                     <Link>Action=CustomerFAQSearch</Link>
                     <LinkOption></LinkOption>
                     <AccessKey></AccessKey>
-                    <Prio>600</Prio>
+                    <Prio>780</Prio>
                 </NavBar>
                 <Loader>
                 </Loader>
