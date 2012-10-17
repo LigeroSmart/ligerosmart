@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/pl_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_Survey.pm,v 1.6 2012-08-21 12:49:40 mh Exp $
+# $Id: pl_Survey.pm,v 1.7 2012-10-17 11:51:39 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -51,7 +52,7 @@ sub Data {
     $Self->{Translation}->{'Internal Description'} = 'Wewnętrzny opis';
     $Self->{Translation}->{'Edit General Info'} = 'Edytuj informacje ogólne';
     $Self->{Translation}->{'General Info'} = 'Informacje ogólne';
-    $Self->{Translation}->{'Stats Overview of'} = '';
+    $Self->{Translation}->{'Stats Overview of'} = 'Przegląd statystyki';
     $Self->{Translation}->{'Requests Table'} = 'Tabela żądań';
     $Self->{Translation}->{'Send Time'} = 'Czas wysłania';
     $Self->{Translation}->{'Vote Time'} = 'Czas głosowania';
@@ -118,26 +119,26 @@ sub Data {
     $Self->{Translation}->{'Defines an overview module to show the small view of a survey list.'} =
         'Defniuje moduł przeglądu wyświetlania list ankiet.';
     $Self->{Translation}->{'Defines maximum amount of surveys that get sent to a customer per 30 days. ( 0 means no maximum, all survey requests will be sent).'} =
-        'Definiuje maksymalną liczbę ankiet wysyłaniu do Klienta w ciągu 30 dni. ("0" oznacza brak ograniczenia, wszystkie żądania będą wysyłane).';
+        'Definiuje maksymalną liczbę ankiet wysyłaniu do Klienta w ciągu 30 dni. (0 oznacza brak ograniczenia, wszystkie żądania będą wysyłane).';
     $Self->{Translation}->{'Defines the amount in hours a ticket has to be closed to trigger the sending of a survey, ( 0 means send immediately after close ).'} =
-        '';
+        'Ustala liczbę godzin które muszą minąć od zamknięcia zgłoszenia do wysłania ankiety (0 oznacza bezzwłoczną wysyłkę przy zamykaniu zgłoszenia).';
     $Self->{Translation}->{'Defines the default height for Richtext views for SurveyZoom elements.'} =
-        'Definiert die  Standardhöhe eines WYSIWYG-Bereichs für die Umfrage-Detailansicht.';
+        'Definiuje domyślną wysokość widoków Richtext dla elementów SurveyZoom.';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the columns.'} =
-        '';
+        'Definiuje widoczne kolumny w przeglądzie ankiet. Ta opcja nie wpływa na pozycję kolumn.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen in the public interface to show data of a specific survey result when the customer tries to answer a survey the second time.'} =
-        '';
+        'Włącz lub wyłącz ekran ShowVoteData w interfejsie publicznym aby pokazać wyniki ankiety gdy klient próbuje odpowiedzieć na akietę drugi raz.';
     $Self->{Translation}->{'Frontend module registration for survey zoom in the agent interface.'} =
-        'Frontend-Modul-Registrierung für die Umfrage-Detailansicht im Agenten-Interface.';
+        'Moduł frontend rejestrujący podgląd ankiet w panelu agenta.';
     $Self->{Translation}->{'Frontend module registration for the PublicSurvey object in the public Survey area.'} =
-        'Frontend-Modul-Registrierung für die öffentliche Umfrage-Übersicht.';
-    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Wenn dieser reguläre Ausdruck zutrifft, wird keine Umfrage an den Kunden gesendet.';
+        'Moduł frontend rejestrujący obiekt PublicSurvey w obszarze publicznym ankiety.';
+    $Self->{Translation}->{'If this regex matches, no customer survey will be sent.'} = 'Gdy to wyrażenie regularne jest spełnione, nie zostanie wysłana żadna ankieta do klienta.';
     $Self->{Translation}->{'Parameters for the pages (in which the surveys are shown) of the small survey overview.'} =
-        'Parameter für die Seiten der Umfrage-Übersicht.';
+        'Parametry dla stron (na których pokazywane są ankiety) dla małego przeglądu ankiet.';
     $Self->{Translation}->{'Public Survey.'} = 'Ankieta publiczna.';
-    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Przegląd ankiety "Mały limit"';
+    $Self->{Translation}->{'Survey Overview "Small" Limit'} = 'Limit "małego" przeglądu ankiet';
     $Self->{Translation}->{'Survey Zoom Module.'} = 'Podgląd ankiety.';
-    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Limit ilośc ankiet w przeglądzie "Małym"';
+    $Self->{Translation}->{'Survey limit per page for Survey Overview "Small"'} = 'Limit ilości ankiet w "małym" przeglądzie';
     $Self->{Translation}->{'The identifier for a survey, e.g. Survey#, MySurvey#. The default is Survey#.'} =
         'Identyfikacja dla ankiety, np. Survey#, MySurvey#. Domyślnie: Survey#.';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket is closed.'} =
@@ -151,17 +152,17 @@ sub Data {
     $Self->{Translation}->{'Created By'} = 'Utworzone przez';
     $Self->{Translation}->{'Created Time'} = 'Czas utworzenia';
     $Self->{Translation}->{'Days starting from the latest customer survey email between no customer survey email is sent, ( 0 means Always send it ) .'} =
-        'Anzahl Tage, von der letzten Umfrage-E-Mail an den Kunden, in der keine weitere Umfrage-Email an den Kunden versendet wird (0 bedeutet, dass die E-Mail immer versendet wird).';
+        'Liczba dni bez wysyłania żądań wypełnienia ankiety do klienta, począwszy od ostatniej takiej wysyłki do tego klienta (0 oznacza wysyłanie za każdym razem).';
     $Self->{Translation}->{'Defines the shown columns in the survey overview. This option has no effect on the position of the column.'} =
-        'Definiert die angezeigten Spalten in der Umfrage-Übersicht. Die Einstellung hat keinen Effekt auf die angezeigte Reihenfolge der Spalten.';
+        'Definiuje widoczne kolumny w przeglądzie ankiet. Ta opcja nie wpływa na pozycję kolumn.';
     $Self->{Translation}->{'Enable or disable the ShowVoteData screen on public interface to show data of an specific votation when customer tries to answer a survey by second time.'} =
-        'Aktivieren oder deaktivieren des ShowVoteData screens im Public Interface, um Abstimmungs-Daten anzuzeigen, wenn ein Kunde versucht ein zweites mal abzustimmen.';
+        'Włącz lub wyłącz ekran ShowVoteData w interfejsie publicznym aby pokazać wyniki ankiety gdy klient próbuje odpowiedzieć na akietę drugi raz.';
     $Self->{Translation}->{'Please answer the next questions'} = 'Prosimy, odpowiedz na nastêpne pytania';
     $Self->{Translation}->{'Status changed'} = 'Status zmieniony';
     $Self->{Translation}->{'Survey#'} = 'Ankieta#';
     $Self->{Translation}->{'This field is required'} = 'To pole jest wymagane';
     $Self->{Translation}->{'Ticket event module to send automatically survey email requests to customers if a ticket gets closed.'} =
-        'Ticket-Event-Modul, um automatisch Umfrage-E-Mails an Kunden zu senden, when ein Ticket geschlossen wird.';
+        'Moduł zdarzeniowy zgłoszenia do automatycznego wysyłania żądań e-mail wypełnienia ankiety do klientów, przy zamknięciu zgłoszenia.';
 
 }
 
