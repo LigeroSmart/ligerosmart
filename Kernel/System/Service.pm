@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.32 2012-10-17 12:34:27 ub Exp $
+# $Id: Service.pm,v 1.33 2012-10-18 10:06:11 ub Exp $
 # $OldId: Service.pm,v 1.50.2.3 2012/09/21 08:14:10 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::Time;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -480,7 +480,8 @@ sub ServiceGet {
 # ITSM
 # ---
     # add the IncidentState parameter to the cache key
-    $CacheKey .= '::IncidentState::' . $Param{IncidentState} || 0;
+    $Param{IncidentState} ||= 0;
+    $CacheKey .= '::IncidentState::' . $Param{IncidentState};
 # ---
     my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
     return %{$Cache} if $Cache;
@@ -1585,6 +1586,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2012-10-17 12:34:27 $
+$Revision: 1.33 $ $Date: 2012-10-18 10:06:11 $
 
 =cut
