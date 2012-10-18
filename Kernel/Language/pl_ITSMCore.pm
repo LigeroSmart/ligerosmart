@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/pl_ITSMCore.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_ITSMCore.pm,v 1.16 2011-11-24 15:32:25 ub Exp $
+# $Id: pl_ITSMCore.pm,v 1.17 2012-10-18 17:11:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,73 +18,73 @@ sub Data {
     my $Self = shift;
 
     # Template: AAAITSMCore
-    $Self->{Translation}->{'Alternative to'} = '';
+    $Self->{Translation}->{'Alternative to'} = 'Alternatywa dla';
     $Self->{Translation}->{'Availability'} = 'Dostępność';
-    $Self->{Translation}->{'Back End'} = '';
+    $Self->{Translation}->{'Back End'} = 'Backend';
     $Self->{Translation}->{'Connected to'} = 'Podłączone do';
     $Self->{Translation}->{'Current State'} = 'Aktualny stan';
     $Self->{Translation}->{'Demonstration'} = 'Demonstracja';
     $Self->{Translation}->{'Depends on'} = 'Zależne od';
-    $Self->{Translation}->{'End User Service'} = '';
+    $Self->{Translation}->{'End User Service'} = 'Usługa użytkownika końcowego';
     $Self->{Translation}->{'Errors'} = 'Błędy';
-    $Self->{Translation}->{'Front End'} = '';
-    $Self->{Translation}->{'IT Management'} = '';
-    $Self->{Translation}->{'IT Operational'} = '';
-    $Self->{Translation}->{'Impact'} = '';
+    $Self->{Translation}->{'Front End'} = 'Frontend';
+    $Self->{Translation}->{'IT Management'} = 'IT zarządzanie';
+    $Self->{Translation}->{'IT Operational'} = 'IT operacyjne';
+    $Self->{Translation}->{'Impact'} = 'Wpływ';
     $Self->{Translation}->{'Incident State'} = 'Stan zdarzenia';
     $Self->{Translation}->{'Includes'} = 'Zawiera';
     $Self->{Translation}->{'Other'} = 'Inne';
-    $Self->{Translation}->{'Part of'} = '';
+    $Self->{Translation}->{'Part of'} = 'Część';
     $Self->{Translation}->{'Project'} = 'Projekt';
     $Self->{Translation}->{'Recovery Time'} = 'Czas odzyskania';
-    $Self->{Translation}->{'Relevant to'} = '';
+    $Self->{Translation}->{'Relevant to'} = 'Odpowiednie do';
     $Self->{Translation}->{'Reporting'} = 'Raportowanie';
     $Self->{Translation}->{'Required for'} = 'Potrzebne do';
     $Self->{Translation}->{'Resolution Rate'} = 'Czas rozwiązania';
     $Self->{Translation}->{'Response Time'} = 'Czas odpowiedzi';
-    $Self->{Translation}->{'SLA Overview'} = '';
-    $Self->{Translation}->{'Service Overview'} = '';
+    $Self->{Translation}->{'SLA Overview'} = 'Przegląd SLA';
+    $Self->{Translation}->{'Service Overview'} = 'Przegląd usługi';
     $Self->{Translation}->{'Service-Area'} = 'Sekcja serwisowa';
     $Self->{Translation}->{'Training'} = 'Trening';
     $Self->{Translation}->{'Transactions'} = 'Transakcje';
     $Self->{Translation}->{'Underpinning Contract'} = '';
-    $Self->{Translation}->{'allocation'} = '';
+    $Self->{Translation}->{'allocation'} = 'alokacja';
 
     # Template: AdminITSMCIPAllocate
-    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = '';
-    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = '';
-    $Self->{Translation}->{'Priority allocation'} = '';
+    $Self->{Translation}->{'Criticality <-> Impact <-> Priority'} = 'Krytyczność <-> Wpływ <-> Priorytet';
+    $Self->{Translation}->{'Manage the priority result of combinating Criticality <-> Impact.'} = 'Zarządzanie wartością priorytetu dla kombinacji Krytyczność <-> Wpływ.';
+    $Self->{Translation}->{'Priority allocation'} = 'Alokacja priorytetu';
 
     # Template: AdminSLA
     $Self->{Translation}->{'Minimum Time Between Incidents'} = 'Minimalny czas między zdarzeniami';
 
     # Template: AdminService
-    $Self->{Translation}->{'Criticality'} = '';
+    $Self->{Translation}->{'Criticality'} = 'Krytyczność';
 
     # Template: AgentITSMCustomerSearch
 
     # Template: AgentITSMSLA
 
     # Template: AgentITSMSLAPrint
-    $Self->{Translation}->{'SLA-Info'} = '';
-    $Self->{Translation}->{'Last changed'} = '';
-    $Self->{Translation}->{'Last changed by'} = '';
+    $Self->{Translation}->{'SLA-Info'} = 'SLA-Info';
+    $Self->{Translation}->{'Last changed'} = 'Ostatnia zmiana';
+    $Self->{Translation}->{'Last changed by'} = 'Ostatnio zmienione przez';
 
     # Template: AgentITSMSLAZoom
-    $Self->{Translation}->{'SLA Information'} = '';
-    $Self->{Translation}->{'Show or hide the content.'} = '';
+    $Self->{Translation}->{'SLA Information'} = 'Informacje SLA';
+    $Self->{Translation}->{'Show or hide the content.'} = 'Pokaż ukrytą zawartość.';
     $Self->{Translation}->{'Associated Services'} = 'Połączone usługi';
 
     # Template: AgentITSMService
 
     # Template: AgentITSMServicePrint
-    $Self->{Translation}->{'Service-Info'} = '';
-    $Self->{Translation}->{'Current Incident State'} = 'Aktualny stan zdarzenia';
+    $Self->{Translation}->{'Service-Info'} = 'Usługa-Info';
+    $Self->{Translation}->{'Current Incident State'} = 'Aktualny stan';
     $Self->{Translation}->{'Associated SLAs'} = 'Połączone SLA';
 
     # Template: AgentITSMServiceZoom
-    $Self->{Translation}->{'Service Information'} = '';
-    $Self->{Translation}->{'Current incident state'} = '';
+    $Self->{Translation}->{'Service Information'} = 'Informacje o usłudze';
+    $Self->{Translation}->{'Current incident state'} = 'Aktualny stan';
 
     # SysConfig
     $Self->{Translation}->{'Frontend module registration for the AdminITSMCIPAllocate configuration in the admin area.'} = '';
@@ -93,7 +94,7 @@ sub Data {
     $Self->{Translation}->{'Frontend module registration for the AgentITSMService object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServicePrint object in the agent interface.'} = '';
     $Self->{Translation}->{'Frontend module registration for the AgentITSMServiceZoom object in the agent interface.'} = '';
-    $Self->{Translation}->{'Manage priority matrix.'} = '';
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Zarządzaj macierzą priorytetów.';
     $Self->{Translation}->{'Module to show back link in service menu.'} = '';
     $Self->{Translation}->{'Module to show back link in sla menu.'} = '';
     $Self->{Translation}->{'Module to show print link in service menu.'} = '';
@@ -129,7 +130,13 @@ sub Data {
     $Self->{Translation}->{'This setting defines the link type \'DependsOn\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
     $Self->{Translation}->{'This setting defines the link type \'Includes\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
     $Self->{Translation}->{'This setting defines the link type \'RelevantTo\'. If the source name and the target name contain the same value, the resulting link is a non-directional one. If the values are different, the resulting link is a directional link.'} = '';
-    $Self->{Translation}->{'Width of ITSM textareas.'} = '';
+    $Self->{Translation}->{'Width of ITSM textareas.'} = 'Szerokość obszarów tekstowych ITSM.';
+
+    #
+    # IB mods
+    #
+    $Self->{Translation}->{'Manage priority matrix.'} = 'Zarządzaj macierzą priorytetów.';
+    $Self->{Translation}->{'Admin of the CIP matrix.'} = 'Administracja macierzą KWP.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
