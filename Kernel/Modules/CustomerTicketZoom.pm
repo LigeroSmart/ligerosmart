@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.19 2012-06-23 12:13:03 mb Exp $
+# $Id: CustomerTicketZoom.pm,v 1.20 2012-10-18 16:34:09 ub Exp $
 # $OldId: CustomerTicketZoom.pm,v 1.88 2012/01/27 12:29:12 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.19 $) [1];
+$VERSION = qw($Revision: 1.20 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,7 +121,12 @@ sub Run {
     # get ticket data
     my %Ticket = $Self->{TicketObject}->TicketGet(
         TicketID      => $Self->{TicketID},
-        DynamicFields => 0,
+# ---
+# ITSM
+# ---
+#        DynamicFields => 0,
+        DynamicFields => 1,
+# ---
     );
 
     # strip html and ascii attachments of content
