@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/pl_GeneralCatalog.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_GeneralCatalog.pm,v 1.9 2011-11-24 15:22:10 ub Exp $
+# $Id: pl_GeneralCatalog.pm,v 1.10 2012-10-18 17:12:14 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,19 +23,23 @@ sub Data {
     # Template: AdminGeneralCatalog
     $Self->{Translation}->{'General Catalog Management'} = 'Zarządzanie katalogiem głównym';
     $Self->{Translation}->{'Add Catalog Item'} = 'Dodaj element katalogu';
-    $Self->{Translation}->{'Add Catalog Class'} = '';
-    $Self->{Translation}->{'Catalog Class'} = '';
+    $Self->{Translation}->{'Add Catalog Class'} = 'Dodaj klasę katalogu';
+    $Self->{Translation}->{'Catalog Class'} = 'Klasa katalogu';
 
     # SysConfig
-    $Self->{Translation}->{'Create and manage the General Catalog.'} = '';
-    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = '';
+    $Self->{Translation}->{'Create and manage the General Catalog.'} = 'Utwórz i zarządzaj katalogiem głównym.';
+    $Self->{Translation}->{'Frontend module registration for the AdminGeneralCatalog configuration in the admin area.'} = 'Rejestracja modułu frontend do konfiguracji modułu AdminGeneralCatalog w panelu administratora.';
     $Self->{Translation}->{'General Catalog'} = 'Katalog główny';
-    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = '';
-    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = '';
+    $Self->{Translation}->{'Parameters for the example comment 2 of the general catalog attributes.'} = 'Parametry do przykładowego komentarza 2 atrybutów katalogu generalnego.';
+    $Self->{Translation}->{'Parameters for the example permission groups of the general catalog attributes.'} = 'Parametry dla przykładowych grup uprawnień atrybutów katalogu głównego.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'A Catalog Class should have a Name!'} = 'Klasa katalogu powinna mieć nazwę!';
+    $Self->{Translation}->{'A Catalog Class should have a description!'} = 'Klasa katalogu powinna mieć opis!';
+    $Self->{Translation}->{'Catalog Class is required.'} = 'Klasa katalogu jest wymagana.';
+    $Self->{Translation}->{'Name is required.'} = 'Nazwa jest wymagana.';
 
 }
 
