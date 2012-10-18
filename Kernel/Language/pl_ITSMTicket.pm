@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/pl_ITSMTicket.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_ITSMTicket.pm,v 1.13 2012-06-28 21:11:08 mb Exp $
+# $Id: pl_ITSMTicket.pm,v 1.14 2012-10-18 17:12:20 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,21 +18,21 @@ sub Data {
     my $Self = shift;
 
     # Template: AgentTicketActionCommon
-    $Self->{Translation}->{'Change Decision of Ticket'} = '';
-    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Zmień pola ITSM dla biletu';
-    $Self->{Translation}->{'Impact'} = '';
+    $Self->{Translation}->{'Change Decision of Ticket'} = 'Zmień decyzję w zgłoszeniu';
+    $Self->{Translation}->{'Change ITSM fields of ticket'} = 'Zmień dodatkowe pola zgłoszenia';
+    $Self->{Translation}->{'Impact'} = 'Wpływ';
 
     # Template: AgentTicketAddtlITSMField
 
     # Template: AgentTicketDecision
 
     # Template: AgentTicketEmail
-    $Self->{Translation}->{'Link ticket'} = '';
+    $Self->{Translation}->{'Link ticket'} = 'Połącz zgłoszenie';
 
     # Template: AgentTicketOverviewMedium
 
     # Template: AgentTicketOverviewPreview
-    $Self->{Translation}->{'Criticality'} = '';
+    $Self->{Translation}->{'Criticality'} = 'Krytyczność';
 
     # Template: AgentTicketPhone
 
@@ -49,13 +50,13 @@ sub Data {
     # Template: CustomerTicketZoom
 
     # SysConfig
-    $Self->{Translation}->{'Add a decision!'} = '';
-    $Self->{Translation}->{'Additional ITSM Fields'} = 'Dodatkowe pola ITSM';
-    $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = '';
-    $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = '';
+    $Self->{Translation}->{'Add a decision!'} = 'Dodaj decyzję!';
+    $Self->{Translation}->{'Additional ITSM Fields'} = 'Dodatkowe pola';
+    $Self->{Translation}->{'Allows adding notes in the additional ITSM field screen of the agent interface.'} = 'Pozwala na dodawanie notatek na ekranie z dodatkowymi polami ITSM w panelu agenta.';
+    $Self->{Translation}->{'Allows adding notes in the decision screen of the agent interface.'} = 'Pozwala na dodawanie notatek na ekranie decyzji w panelu agenta.';
     $Self->{Translation}->{'Article free text options shown in the additional ITSM field screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
     $Self->{Translation}->{'Article free text options shown in the decision screen of the agent interface. Possible settings: 0 = Disabled, 1 = Enabled, 2 = Enabled and required.'} = '';
-    $Self->{Translation}->{'Change the ITSM fields!'} = '';
+    $Self->{Translation}->{'Change the ITSM fields!'} = 'Zmień dodatkowe pola';
     $Self->{Translation}->{'Decision'} = 'Decyzja';
     $Self->{Translation}->{'Defines if a ticket lock is required in the additional ITSM field screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
     $Self->{Translation}->{'Defines if a ticket lock is required in the decision screen of the agent interface (if the ticket isn\'t locked yet, the ticket gets locked and the current agent will be set automatically as its owner).'} = '';
@@ -111,9 +112,10 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
-    $Self->{Translation}->{'Add decision to ticket'} = 'Dodaj decyzje do biletu';
+    $Self->{Translation}->{'Add decision to ticket'} = 'Dodaj decyzję do zgłoszenia';
     $Self->{Translation}->{'Reason'} = 'Powód';
-    $Self->{Translation}->{'closed with workaround'} = 'Rozwiązane z obejściem';
+    $Self->{Translation}->{'closed with workaround'} = 'rozwiązane z obejściem';
+    $Self->{Translation}->{'Review Required'} = 'Wymagany przegląd';
 
 }
 
