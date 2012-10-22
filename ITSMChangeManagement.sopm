@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.248 2012-10-18 17:12:02 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.249 2012-10-22 21:46:47 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
-    <PackageRequired Version="3.1.5">ITSMCore</PackageRequired>
+    <PackageRequired Version="3.1.7">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -3272,7 +3272,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.1.5</li>
+        <li>ITSMCore 3.1.7</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3290,7 +3290,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.1.5</li>
+        <li>ITSMCore 3.1.7</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3307,7 +3307,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.1.5</li>
+        <li>ITSMCore 3.1.7</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3372,7 +3372,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.1.5</li>
+        <li>ITSMCore 3.1.7</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3390,7 +3390,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.1.5</li>
+        <li>ITSMCore 3.1.7</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3408,7 +3408,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.1.5</li>
+        <li>ITSMCore 3.1.7</li>
         </ul>
         <br/>
         ((enjoy))<br/>
