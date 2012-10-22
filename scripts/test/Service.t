@@ -2,7 +2,7 @@
 # Service.t - Service tests
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.7 2012-10-02 08:33:17 mb Exp $
+# $Id: Service.t,v 1.8 2012-10-22 21:23:59 ub Exp $
 # $OldId: Service.t,v 1.18 2012/01/27 13:51:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1199,8 +1199,8 @@ $Self->Is(
     for my $ServiceData ( @{$ServiceList} ) {
 
         my %Service = $ServiceObject->ServiceGet(
-            ServiceID     => $ServiceData->{ServiceID},
-            UserID        => 1,
+            ServiceID => $ServiceData->{ServiceID},
+            UserID    => 1,
 # ---
 # ITSM
 # ---
