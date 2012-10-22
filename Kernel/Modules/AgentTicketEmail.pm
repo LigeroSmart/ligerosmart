@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.43 2012-10-02 11:05:54 ub Exp $
-# $OldId: AgentTicketEmail.pm,v 1.206.2.7 2012/09/26 21:32:50 mh Exp $
+# $Id: AgentTicketEmail.pm,v 1.44 2012-10-22 21:24:52 ub Exp $
+# $OldId: AgentTicketEmail.pm,v 1.206.2.8 2012/10/17 20:20:40 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -36,7 +36,7 @@ use Kernel::System::LinkObject;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -711,6 +711,10 @@ sub Run {
         my ( $NewQueueID, $From ) = split( /\|\|/, $Dest );
         if ( !$NewQueueID ) {
             $GetParam{OwnerAll} = 1;
+        }
+        else {
+            my %Queue = $Self->{QueueObject}->GetSystemAddress( QueueID => $NewQueueID );
+            $GetParam{From} = $Queue{Email};
         }
 
         # get sender queue from
