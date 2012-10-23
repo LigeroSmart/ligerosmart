@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.279 2012-04-05 15:33:15 ub Exp $
+# $Id: ITSMChange.pm,v 1.280 2012-10-23 13:01:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.279 $) [1];
+$VERSION = qw($Revision: 1.280 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -3284,10 +3284,10 @@ These string parameters have length constraints:
     Parameter           | max. length
     --------------------+-----------------
     ChangeTitle         |  250 characters
-    Description         | 3800 characters
-    DescriptionPlain    | 3800 characters
-    Justification       | 3800 characters
-    JustificationPlain  | 3800 characters
+    Description         | 1800000 characters
+    DescriptionPlain    | 1800000 characters
+    Justification       | 1800000 characters
+    JustificationPlain  | 1800000 characters
     ChangeFreeKeyXX     |  250 characters
     ChangeFreeTextXX    |  250 characters
 
@@ -3350,10 +3350,10 @@ sub _CheckChangeParams {
             || $Argument eq 'JustificationPlain'
             )
         {
-            if ( length( $Param{$Argument} ) > 3800 ) {
+            if ( length( $Param{$Argument} ) > 1800000 ) {
                 $Self->{LogObject}->Log(
                     Priority => 'error',
-                    Message  => "The parameter '$Argument' must be shorter than 3800 characters!",
+                    Message => "The parameter '$Argument' must be shorter than 1800000 characters!",
                 );
                 return;
             }
@@ -3801,6 +3801,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.279 $ $Date: 2012-04-05 15:33:15 $
+$Revision: 1.280 $ $Date: 2012-10-23 13:01:17 $
 
 =cut

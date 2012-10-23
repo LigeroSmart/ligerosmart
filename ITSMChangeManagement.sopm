@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.249 2012-10-22 21:46:47 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.250 2012-10-23 13:01:17 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -205,10 +205,10 @@
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
             <Column Name="change_number" Required="true" Size="100" Type="VARCHAR"/>
             <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="description" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="description_plain" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="justification" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="justification_plain" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="description" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="description_plain" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="justification" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="justification_plain" Required="false" Size="1800000" Type="VARCHAR"/>
             <Column Name="change_state_id" Required="true" Type="INTEGER"/>
             <Column Name="change_manager_id" Required="false" Type="INTEGER"/>
             <Column Name="change_builder_id" Required="true" Type="INTEGER"/>
@@ -271,10 +271,10 @@
             <Column Name="change_id" Required="true" Type="BIGINT"/>
             <Column Name="workorder_number" Required="true" Type="INTEGER"/>
             <Column Name="title" Required="false" Size="250" Type="VARCHAR"/>
-            <Column Name="instruction" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="instruction_plain" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="report" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="report_plain" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="instruction" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="instruction_plain" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="report" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="report_plain" Required="false" Size="1800000" Type="VARCHAR"/>
             <Column Name="workorder_state_id" Required="true" Type="INTEGER"/>
             <Column Name="workorder_type_id" Required="true" Type="INTEGER"/>
             <Column Name="workorder_agent_id" Required="false" Type="INTEGER"/>
@@ -379,8 +379,8 @@
             <Column Name="change_id" Required="true" Type="BIGINT"/>
             <Column Name="workorder_id" Required="false" Type="BIGINT"/>
             <Column Name="type_id" Required="true" Type="INTEGER"/>
-            <Column Name="content_new" Required="false" Size="3800" Type="VARCHAR"/>
-            <Column Name="content_old" Required="false" Size="3800" Type="VARCHAR"/>
+            <Column Name="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
+            <Column Name="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
             <Column Name="fieldname" Required="false" Size="250" Type="VARCHAR"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -2954,6 +2954,22 @@
         <TableAlter Name="change_workorder" Version="3.0.1">
             <IndexDrop Name="change_workorder_instruction_plain"/>
             <IndexDrop Name="change_workorder_report_plain"/>
+        </TableAlter>
+        <TableAlter Name="change_item" Version="3.1.7">
+            <ColumnChange NameOld="description" NameNew="description" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="description_plain" NameNew="description_plain" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="justification" NameNew="justification" Required="false" Size="1800000" Type="VARCHAR" />
+            <ColumnChange NameOld="justification_plain" NameNew="justification_plain" Required="false" Size="1800000" Type="VARCHAR" />
+        </TableAlter>
+        <TableAlter Name="change_workorder" Version="3.1.7">
+            <ColumnChange NameOld="instruction" NameNew="instruction" Required="false" Size="1800000" Type="VARCHAR"/>
+            <ColumnChange NameOld="instruction_plain" NameNew="instruction_plain" Required="false" Size="1800000" Type="VARCHAR"/>
+            <ColumnChange NameOld="report" NameNew="report" Required="false" Size="1800000" Type="VARCHAR"/>
+            <ColumnChange NameOld="report_plain" NameNew="report_plain" Required="false" Size="1800000" Type="VARCHAR"/>
+        </TableAlter>
+        <TableAlter Name="change_history" Version="3.1.7">
+            <ColumnChange NameOld="content_new" NameNew="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
+            <ColumnChange NameOld="content_old" NameNew="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
