@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-1" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMService.xml,v 1.19 2011-05-17 10:09:02 mb Exp $</CVS>
+    <CVS>$Id: ITSMService.xml,v 1.20 2012-10-24 08:22:56 mb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentITSMService" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the AgentITSMService object in the agent interface.</Description>
         <Group>ITSM Core</Group>
