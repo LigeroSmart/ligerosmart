@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/History.pm - all change and workorder history functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: History.pm,v 1.32 2011-12-07 17:29:40 ub Exp $
+# $Id: History.pm,v 1.33 2012-10-24 11:27:59 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CacheInternal;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.32 $) [1];
+$VERSION = qw($Revision: 1.33 $) [1];
 
 =head1 NAME
 
@@ -256,7 +256,7 @@ sub HistoryAddMultiple {
     };
 
     # get the database type
-    my $DBType = $Self->{DBObject}->{'DB::Type'};
+    my $DBType = $Self->{DBObject}->GetDatabaseFunction('Type');
 
     # make multiline inserts for defined databases
     if ( $DatabaseSQL{$DBType} ) {
@@ -1154,6 +1154,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.32 $ $Date: 2011-12-07 17:29:40 $
+$Revision: 1.33 $ $Date: 2012-10-24 11:27:59 $
 
 =cut
