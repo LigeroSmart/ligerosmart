@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.39 2012-10-25 13:53:11 mab Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.40 2012-10-25 14:07:42 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -97,7 +97,7 @@
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ExpressionID"}-ObjectID', ['$Data{"IDName"}-$Data{"ExpressionID"}-Selector', '$Data{"IDName"}-$Data{"ExpressionID"}-AttributeID', '$Data{"IDName"}-$Data{"ExpressionID"}-OperatorID']);
-        $(this).blur().parent().next('td').find('select').focus();
+        $(this).parent().next('td').find('select').focus();
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -128,7 +128,7 @@
         FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
         URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ExpressionID-$QData{"ExpressionID"}-CompareValue-Div;ElementChanged=$Data{"IDName"}-$QData{"ExpressionID"}-AttributeID';
         Core.AJAX.ContentUpdate($('#ExpressionID-$QData{"ExpressionID"}-CompareValue-Div'), URLString, function () {});
-        $(this).blur().parent().next('td').find('select').focus();
+        $(this).parent().next('td').find('select').focus();
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -196,7 +196,7 @@
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ActionID"}-ObjectID', ['$Data{"IDName"}-$Data{"ActionID"}-Selector', '$Data{"IDName"}-$Data{"ActionID"}-AttributeID', '$Data{"IDName"}-$Data{"ActionID"}-OperatorID']);
-        $(this).blur().parent().next('td').find('select').focus();
+        $(this).parent().next('td').find('select').focus();
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -207,7 +207,7 @@
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ActionID"}-Selector', ['$Data{"IDName"}-$Data{"ActionID"}-AttributeID', '$Data{"IDName"}-$Data{"ActionID"}-OperatorID']);
-        $(this).blur().parent().next('td').find('select').focus();
+        $(this).parent().next('td').find('select').focus();
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
@@ -226,7 +226,7 @@
         FormSerialized = Core.AJAX.SerializeForm($('#NewCondition'), NotSerialize);
         URLString = '$Env{"Baselink"}' + FormSerialized + 'Subaction=AJAXContentUpdate;UpdateDivName=ActionID-$QData{"ActionID"}-ActionValue-Div;ElementChanged=ActionID-$QData{"ActionID"}-AttributeID';
         Core.AJAX.ContentUpdate($('#ActionID-$QData{"ActionID"}-ActionValue-Div'), URLString, function () {});
-        $(this).blur().parent().next('td').find('select').focus();
+        $(this).parent().next('td').find('select').focus();
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
