@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.25 2012-10-26 20:00:00 cr Exp $
+# $Id: CustomerFAQSearch.pm,v 1.26 2012-10-26 23:42:49 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -271,7 +271,7 @@ sub Run {
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
                     ItemID     => $FAQID,
-                    ItemFields => 1,
+                    ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
@@ -362,7 +362,7 @@ sub Run {
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
                     ItemID     => $FAQID,
-                    ItemFields => 1,
+                    ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
@@ -427,7 +427,7 @@ sub Run {
                     # get FAQ data details
                     my %FAQData = $Self->{FAQObject}->FAQGet(
                         ItemID     => $FAQID,
-                        ItemFields => 1,
+                        ItemFields => 0,
                         UserID     => $Self->{UserID},
                     );
 

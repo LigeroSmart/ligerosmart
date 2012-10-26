@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQLanguage.pm - the faq language management module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.pm,v 1.15 2012-10-26 19:57:52 cr Exp $
+# $Id: AgentFAQLanguage.pm,v 1.16 2012-10-26 23:42:49 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -370,7 +370,7 @@ sub Run {
                 # get faq article
                 my %FAQData = $Self->{FAQObject}->FAQGet(
                     ItemID     => $ItemID,
-                    ItemFields => 1,
+                    ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 

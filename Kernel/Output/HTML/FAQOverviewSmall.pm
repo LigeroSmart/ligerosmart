@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/FAQOverviewSmall.pm.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQOverviewSmall.pm,v 1.14 2012-10-26 20:01:56 cr Exp $
+# $Id: FAQOverviewSmall.pm,v 1.15 2012-10-26 23:42:49 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -146,7 +146,7 @@ sub Run {
                 # get FAQ data
                 my %FAQ = $Self->{FAQObject}->FAQGet(
                     ItemID     => $ID,
-                    ItemFields => 1,
+                    ItemFields => 0,
                     UserID     => $Self->{UserID},
                 );
 
