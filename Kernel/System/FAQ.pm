@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.157 2012-03-12 16:32:24 des Exp $
+# $Id: FAQ.pm,v 1.158 2012-10-26 19:52:23 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.157 $) [1];
+$VERSION = qw($Revision: 1.158 $) [1];
 
 =head1 NAME
 
@@ -113,16 +113,58 @@ sub new {
     # get default options
     $Self->{Voting} = $Self->{ConfigObject}->Get('FAQ::Voting');
 
+    # get the cache TTL (in seconds)
+    $Self->{CacheTTL}
+        = int( $Self->{ConfigObject}->Get('FAQ::CacheTTL') || 60 * 60 * 24 * 2 );
+
     return $Self;
 }
 
 =item FAQGet()
 
-get an faq
+get an faq item
 
     my %FAQ = $FAQObject->FAQGet(
-        ItemID => 123,
-        UserID => 1,
+        ItemID     => 123,
+        ItemFields => 0,        # Optional, default 0. To include the item field cotnent for this
+                                #   FAQ item on the return structure.
+        UserID     => 1,
+    );
+
+Returns:
+
+    %FAQ = (
+        ID                => 32,
+        ItemID            => 32,
+        FAQID             => 32,
+        Number            => 100032,
+        CategoryID        => '2',
+        CategoryName'     => 'CategoryA::CategoryB',
+        CategoryShortName => 'CategoryB',
+        LanguageID        => 1,
+        Language          => 'en',
+        Title             => 'Article Title',
+        Approved          => 1,                              # or 0
+        Keywords          => 'KeyWord1 KeyWord2',
+        Votes             => 0,                              # number of votes
+        VoteResult        => '0.00',                         # a number between 0.00 and 100.00
+        StateID           => 1,
+        State             => 'internal (agent)',             # or 'external (customer)' or
+                                                             # 'public (all)'
+        StateTypeID       => 1,
+        StateTypeName     => 'internal',                     # or 'external' or 'public'
+        CreatedBy         => 1,
+        Changed'          => '2011-01-05 21:53:50',
+        ChangedBy         => '1',
+        Created           => '2011-01-05 21:53:50',
+        Name              => '1294286030-31.1697297104732',  # FAQ Article name or
+                                                             # systemtime + '-' + random number
+    );
+
+    my %FAQ = $FAQObject->FAQGet(
+        ItemID     => 123,
+        ItemFields => 1,
+        UserID     => 1,
     );
 
 Returns:
@@ -182,6 +224,122 @@ sub FAQGet {
         }
     }
 
+    # check cache
+    my $FetchItemFields = $Param{ItemFields} ? 1 : 0;
+
+    my $CacheKey = 'FAQGet::ItemID::' . $Param{ItemID} . '::ItemFields::' . $FetchItemFields;
+    my $Cache    = $Self->{CacheObject}->Get(
+        Type => 'FAQ',
+        Key  => $CacheKey,
+    );
+
+    my %Data;
+
+    # set %Data from cache if any
+    if ( ref $Cache eq 'HASH' ) {
+        %Data = %{$Cache};
+    }
+
+    # otherwise get %Data from the DB
+    else {
+        return if !$Self->{DBObject}->Prepare(
+            SQL => '
+                SELECT i.f_name, i.f_language_id, i.f_subject, i.created, i.created_by, i.changed,
+                    i.changed_by, i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords,
+                    i.approved,i.f_number, st.id, st.name
+                FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l
+                WHERE i.state_id = s.id
+                    AND s.type_id = st.id
+                    AND i.category_id = c.id
+                    AND i.f_language_id = l.id
+                    AND i.id = ?',
+            Bind => [ \$Param{ItemID} ],
+        );
+
+        while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
+            %Data = (
+
+                # var for old versions
+                ID    => $Param{ItemID},
+                FAQID => $Param{ItemID},
+
+                # get data attributes
+                ItemID        => $Param{ItemID},
+                Name          => $Row[0],
+                LanguageID    => $Row[1],
+                Title         => $Row[2],
+                Created       => $Row[3],
+                CreatedBy     => $Row[4],
+                Changed       => $Row[5],
+                ChangedBy     => $Row[6],
+                CategoryID    => $Row[7],
+                StateID       => $Row[8],
+                CategoryName  => $Row[9],
+                State         => $Row[10],
+                Language      => $Row[11],
+                Keywords      => $Row[12],
+                Approved      => $Row[13],
+                Number        => $Row[14],
+                StateTypeID   => $Row[15],
+                StateTypeName => $Row[16],
+            );
+        }
+
+        # check error
+        if ( !%Data ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "No such ItemID $Param{ItemID}!",
+            );
+            return;
+        }
+
+        # check if FAQ item fields are required
+        if ($FetchItemFields) {
+            for my $FieldNumber ( 1 .. 6 ) {
+
+                # set field name
+                my $Field = "Field$FieldNumber";
+
+                # get each field content
+                $Data{$Field} = $Self->ItemFieldGet(
+                    %Param,
+                    Field => $Field,
+                );
+            }
+        }
+
+        # update number
+        if ( !$Data{Number} ) {
+            my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
+            return if !$Self->{DBObject}->Do(
+                SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
+                Bind => [ \$Number, \$Data{ItemID} ],
+            );
+            $Data{Number} = $Number;
+        }
+
+        # get all category long names
+        my $CategoryTree = $Self->CategoryTreeList(
+            UserID => $Param{UserID},
+        );
+
+        # save the category short name
+        $Data{CategoryShortName} = $Data{CategoryName};
+
+        # get the category long name
+        $Data{CategoryName} = $CategoryTree->{ $Data{CategoryID} };
+
+        # cache result
+        $Self->{CacheObject}->Set(
+            Type  => 'FAQ',
+            Key   => $CacheKey,
+            Value => \%Data,
+            TTL   => $Self->{CacheTTL},
+        );
+    }
+
     # get vote data for this FAQ item
     my $VoteData;
     if ( $Self->{Voting} ) {
@@ -198,92 +356,94 @@ sub FAQGet {
     # format the vote result
     my $VoteResult = sprintf( "%0." . $DecimalPlaces . "f", $VoteData->{Result} || 0 );
 
-    return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT i.f_name, i.f_language_id, i.f_subject, '
-            . 'i.f_field1, i.f_field2, i.f_field3, '
-            . 'i.f_field4, i.f_field5, i.f_field6, '
-            . 'i.created, i.created_by, i.changed, i.changed_by, '
-            . 'i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords, i.approved, '
-            . 'i.f_number, st.id, st.name '
-            . 'FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l '
-            . 'WHERE i.state_id = s.id '
-            . 'AND s.type_id = st.id '
-            . 'AND i.category_id = c.id '
-            . 'AND i.f_language_id = l.id '
-            . 'AND i.id = ?',
-        Bind => [ \$Param{ItemID} ],
-    );
+    # add voting information to FAQ item
+    $Data{VoteResult} = $VoteResult;
+    $Data{Votes} = $VoteData->{Votes} || 0;
 
-    my %Data;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    return %Data;
+}
 
-        %Data = (
+sub ItemFieldGet() {
+    my ( $Self, %Param ) = @_;
 
-            # var for old versions
-            ID    => $Param{ItemID},
-            FAQID => $Param{ItemID},
-
-            # get data attributes
-            ItemID        => $Param{ItemID},
-            Name          => $Row[0],
-            LanguageID    => $Row[1],
-            Title         => $Row[2],
-            Field1        => $Row[3],
-            Field2        => $Row[4],
-            Field3        => $Row[5],
-            Field4        => $Row[6],
-            Field5        => $Row[7],
-            Field6        => $Row[8],
-            Created       => $Row[9],
-            CreatedBy     => $Row[10],
-            Changed       => $Row[11],
-            ChangedBy     => $Row[12],
-            CategoryID    => $Row[13],
-            StateID       => $Row[14],
-            CategoryName  => $Row[15],
-            State         => $Row[16],
-            Language      => $Row[17],
-            Keywords      => $Row[18],
-            Approved      => $Row[19],
-            Number        => $Row[20],
-            StateTypeID   => $Row[21],
-            StateTypeName => $Row[22],
-            VoteResult    => $VoteResult,
-            Votes         => $VoteData->{Votes} || 0,
-        );
+    # check needed stuff
+    for my $Argument (qw(UserID ItemID Field)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
     }
 
-    # check error
-    if ( !%Data ) {
+    # check for valid field name
+    if ( $Param{Field} !~ m{\A Field [1-6] \z}msxi ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
-            Message  => "No such ItemID $Param{ItemID}!",
+            Message  => "Field '$Param{Field}' is invalid!",
         );
         return;
     }
 
-    # update number
-    if ( !$Data{Number} ) {
-        my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
-        return if !$Self->{DBObject}->Do(
-            SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
-            Bind => [ \$Number, \$Data{ItemID} ],
-        );
-        $Data{Number} = $Number;
-    }
+    # check cache
+    my $CacheKey = 'ItemFieldGet::ItemID::' . $Param{ItemID};
 
-    # get all category long names
-    my $CategoryTree = $Self->CategoryTreeList(
-        UserID => $Param{UserID},
+    my $Cache = $Self->{CacheObject}->Get(
+        Type => 'FAQ',
+        Key  => $CacheKey,
     );
 
-    # save the category short name
-    $Data{CategoryShortName} = $Data{CategoryName};
+    # check if a cache entry exists for the given Field
+    if ( ref $Cache eq 'HASH' && exists $Cache->{ $Param{Field} } ) {
+        return $Cache->{ $Param{Field} };
+    }
 
-    # get the category long name
-    $Data{CategoryName} = $CategoryTree->{ $Data{CategoryID} };
+    # create a field lookup table
+    my %FieldLookup = (
+        Field1 => 'f_field1',
+        Field2 => 'f_field2',
+        Field3 => 'f_field3',
+        Field4 => 'f_field4',
+        Field5 => 'f_field5',
+        Field6 => 'f_field6',
+    );
 
-    return %Data;
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT ' . $FieldLookup{ $Param{Field} } . '
+            FROM faq_item
+            WHERE id = ?',
+        Bind  => [ \$Param{ItemID} ],
+        Limit => 1,
+    );
+
+    my $Field;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+        $Field = $Row[0] || '';
+    }
+
+    if ( ref $Cache eq 'HASH' ) {
+
+        # Cache file for ItemID already exists, add field data.
+        $Cache->{ $Param{Field} } = $Field;
+    }
+    else {
+
+        # Create new cache file.
+        $Cache = {
+            $Param{Field} => $Field,
+        };
+    }
+
+    # set cache
+    $Self->{CacheObject}->Set(
+        Type  => 'FAQ',
+        Key   => $CacheKey,
+        Value => $Cache,
+        TTL   => $Self->{CacheTTL},
+    );
+
+    return $Field;
 }
 
 =item ItemVoteDataGet()
@@ -581,8 +741,9 @@ sub FAQUpdate {
 
         # get faq data
         my %FAQData = $Self->FAQGet(
-            ItemID => $Param{ItemID},
-            UserID => $Param{UserID},
+            ItemID     => $Param{ItemID},
+            ItemFields => 0,
+            UserID     => $Param{UserID},
         );
 
         # get the faq name
@@ -611,6 +772,9 @@ sub FAQUpdate {
             \$Param{ItemID},
         ],
     );
+
+    # delete cache
+    $Self->_DeleteFromFAQCache(%Param);
 
     # update approval
     if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') && !$Param{ApprovalOff} ) {
@@ -645,6 +809,9 @@ sub FAQUpdate {
             );
             return;
         }
+
+        # delete cache
+        $Self->_DeleteFromFAQCache(%Param);
     }
 
     # check if history entry should be added
@@ -1340,6 +1507,9 @@ sub FAQDelete {
         SQL  => 'DELETE FROM faq_item WHERE id = ?',
         Bind => [ \$Param{ItemID} ],
     );
+
+    # delete cache
+    $Self->_DeleteFromFAQCache(%Param);
 
     return 1;
 }
@@ -4696,8 +4866,9 @@ sub FAQInlineAttachmentURLUpdate {
 
     # get faq data
     my %FAQData = $Self->FAQGet(
-        ItemID => $Param{ItemID},
-        UserID => $Param{UserID},
+        ItemID     => $Param{ItemID},
+        ItemFields => 1,
+        UserID     => $Param{UserID},
     );
 
     # picture url in upload cache
@@ -4853,8 +5024,9 @@ sub _FAQApprovalUpdate {
 
         # get faq data
         my %FAQData = $Self->FAQGet(
-            ItemID => $Param{ItemID},
-            UserID => $Param{UserID},
+            ItemID     => $Param{ItemID},
+            ItemFields => 0,
+            UserID     => $Param{UserID},
         );
 
         # create new approval ticket
@@ -5007,6 +5179,37 @@ sub _FAQApprovalTicketCreate {
     return;
 }
 
+#
+# Deletes all needed FAQ item cache entries for a given FAQ ItemID.
+#
+sub _DeleteFromFAQCache {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Needed (qw(ItemID)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed!" );
+            return;
+        }
+    }
+
+    # Clear FAQGet cache
+    $Self->{CacheObject}->Delete(
+        Type => 'FAQ',
+        Key  => 'FAQGet::ItemID::' . $Param{ItemID} . '::ItemFields::1',
+    );
+    $Self->{CacheObject}->Delete(
+        Type => 'FAQ',
+        Key  => 'FAQGet::ItemID::' . $Param{ItemID} . '::ItemFields::0',
+    );
+
+    # Clear ItemFeldGet cache
+    $Self->{CacheObject}->Delete(
+        Type => 'FAQ',
+        Key  => 'ItemFieldGet::ItemID::' . $Param{ItemID},
+    );
+}
+
 1;
 
 =end Internal:
@@ -5025,6 +5228,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.157 $ $Date: 2012-03-12 16:32:24 $
+$Revision: 1.158 $ $Date: 2012-10-26 19:52:23 $
 
 =cut
