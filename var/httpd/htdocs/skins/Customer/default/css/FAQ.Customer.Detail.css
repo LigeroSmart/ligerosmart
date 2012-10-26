@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -57,10 +57,17 @@
     margin-top: 2px;
 }
 
-.RateStarText {
-    text-indent:5px;
-    float: left;
+.RTL .RateStar {
+    float: right;
+}
 
+.RateStarText {
+    margin-left: 6px;
+}
+
+.RTL .RateStarText {
+    margin-left: 0px;
+    margin-right: 6px;
 }
 
 .RateLabelBefore {
@@ -81,6 +88,10 @@
     float: left;
 }
 
+.RTL .RatingLabel {
+    float: right;
+}
+ 
 .SpacingTop {
     margin-top: 13px;
 }
@@ -128,32 +139,14 @@
     width: 28px;
 }
 
-.Details .FAQLabel {
-    width: 85px;
-    margin: 0 3px;
-    color: #AAA;
-    display: inline-block;
-    text-align: right;
-}
-.RTL .Details .FAQLabel {
-    text-align: left;
-}
-
-
-.Details .Attachments .FAQLabel {
-    background: url(../img/paper-clip.png) no-repeat right;
-    text-indent: -9999px;
-    text-align:left;
-
-}
-.RTL .Details .Attachments .FAQLabel {
-    background-position: left;
-    text-indent: -9999px;
-    text-align:right;
-}
-
+.DownloadAttachment a,
 .Keyword a {
-    color: #000;
+    color: #FF9922;
+}
+
+.DownloadAttachment a:hover,
+. Keyword a:hover {
+    color: #FF7722;
 }
 
 }

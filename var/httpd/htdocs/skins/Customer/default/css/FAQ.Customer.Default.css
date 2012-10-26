@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -173,14 +173,23 @@ ul.FAQMiniList span {
     padding: 4px 8px 4px;
     color: #6A6A6A;
     background: #A7AAAA url("../img/GradientSmall.png") repeat-x 0 0;
-    border-bottom: 1px solid #D6D6D6;
-    text-shadow: 0 1px 0 #FFF;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #E9E9E9 #E9E9E9 #DDDDDD;
+    border-image: none;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 0 2px #EEEEEE;
     position: relative;
     margin-top: 10px;
     margin-bottom: 10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+}
+
+.FAQPathCategory.FAQZoom {
+    margin-right: 5px;
 }
 
 .FAQPathCategory h3 {
