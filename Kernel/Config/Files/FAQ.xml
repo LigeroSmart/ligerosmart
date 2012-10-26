@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.122 2012-10-26 20:05:08 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.123 2012-10-26 23:11:00 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1147,6 +1147,7 @@ Your OTRS Notification Master
                 <Loader>
                     <CSS>FAQ.Customer.Detail.css</CSS>
                     <CSS>FAQ.Customer.Default.css</CSS>
+                    <CSS>FAQ.FAQZoom.css</CSS>
                     <JavaScript>FAQ.Customer.FAQZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
@@ -1322,6 +1323,7 @@ Your OTRS Notification Master
                 <Loader>
                     <CSS>FAQ.Customer.Default.css</CSS>
                     <CSS>FAQ.Customer.Detail.css</CSS>
+                    <CSS>FAQ.FAQZoom.css</CSS>
                     <JavaScript>FAQ.Customer.FAQZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
