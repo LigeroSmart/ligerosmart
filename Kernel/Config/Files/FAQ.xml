@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.121 2012-10-24 08:28:31 mb Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.122 2012-10-26 20:05:08 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1035,6 +1035,7 @@ Your OTRS Notification Master
                     <CSS>FAQ.Widget.css</CSS>
                     <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
                     <JavaScript>FAQ.Agent.TicketCompose.js</JavaScript>
+                    <JavaScript>FAQ.Agent.FAQZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1146,6 +1147,7 @@ Your OTRS Notification Master
                 <Loader>
                     <CSS>FAQ.Customer.Detail.css</CSS>
                     <CSS>FAQ.Customer.Default.css</CSS>
+                    <JavaScript>FAQ.Customer.FAQZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1320,6 +1322,7 @@ Your OTRS Notification Master
                 <Loader>
                     <CSS>FAQ.Customer.Default.css</CSS>
                     <CSS>FAQ.Customer.Detail.css</CSS>
+                    <JavaScript>FAQ.Customer.FAQZoom.js</JavaScript>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1565,6 +1568,14 @@ Your OTRS Notification Master
             </Option>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::CacheTTL" Required="1" Valid="1">
+        <Description Translatable="1">Enable voting mechanism on FAQ module.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core</SubGroup>
+        <Setting>
+            <String Regex="">172800</String> <!-- default 172,800 (60 * 60 * 24 * 2) -->
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="DashboardBackend###0398-FAQ-LastChange" Required="0" Valid="1">
         <Description Translatable="1">Defines the parameters for the dashboard backend. "Limit" defines the number of entries displayed by default. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually. "CacheTTL" indicates the cache expiration period in minutes for the plugin.</Description>
         <Group>FAQ</Group>
@@ -1646,6 +1657,38 @@ Your OTRS Notification Master
                 <Item Key="Controller">FAQ</Item>
                 <Item Key="ConfigDialog">AdminGenericInterfaceOperationDefault</Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentHTMLFieldHeightDefault" Required="1" Valid="1">
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,4}$">100</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::AgentHTMLFieldHeightMax" Required="1" Valid="1">
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,5}$">2500</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerHTMLFieldHeightDefault" Required="1" Valid="1">
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,4}$">100</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="FAQ::Frontend::CustomerHTMLFieldHeightMax" Required="1" Valid="1">
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
+        <Setting>
+            <String Regex="^[0-9]{1,5}$">2500</String>
         </Setting>
     </ConfigItem>
 </otrs_config>
