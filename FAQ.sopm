@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.122 2012-10-26 20:07:58 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.123 2012-10-26 23:13:01 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -122,6 +122,7 @@
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Customer.Detail.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.Widget.IE7.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/FAQ.FAQZoom.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-checked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-button-unchecked.png"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/img/rate-indicator.png"/>
