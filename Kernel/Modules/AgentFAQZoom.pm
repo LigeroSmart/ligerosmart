@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.31 2012-04-20 00:18:27 ep Exp $
+# $Id: AgentFAQZoom.pm,v 1.32 2012-10-26 20:06:30 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.31 $) [1];
+$VERSION = qw($Revision: 1.32 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -90,8 +90,9 @@ sub Run {
 
     # get FAQ item data
     my %FAQData = $Self->{FAQObject}->FAQGet(
-        ItemID => $GetParam{ItemID},
-        UserID => $Self->{UserID},
+        ItemID     => $GetParam{ItemID},
+        ItemFields => 1,
+        UserID     => $Self->{UserID},
     );
     if ( !%FAQData ) {
         return $Self->{LayoutObject}->ErrorScreen();
@@ -108,6 +109,60 @@ sub Run {
         return $Self->{LayoutObject}->NoPermission(
             Message    => 'You have no permission for this category!',
             WithHeader => 'yes',
+        );
+    }
+
+    # ---------------------------------------------------------- #
+    # HTMLView Subaction
+    # ---------------------------------------------------------- #
+    if ( $Self->{Subaction} eq 'HTMLView' ) {
+
+        # get params
+        my $Field = $Self->{ParamObject}->GetParam( Param => "Field" );
+
+        # needed params
+        for my $Needed (qw( ItemID Field )) {
+            if ( !$Needed ) {
+                $Self->{LogObject}->Log(
+                    Message  => "Needed Param: $Needed!",
+                    Priority => 'error',
+                );
+                return;
+            }
+        }
+
+        # get the Field content
+        my $FieldContent = $Self->{FAQObject}->ItemFieldGet(
+            ItemID => $GetParam{ItemID},
+            Field  => $Field,
+            UserID => $Self->{UserID},
+        );
+
+        # rewrite handle and action, take care of old style before FAQ 2.0.x
+        $FieldContent =~ s{
+            Action=AgentFAQ [&](amp;)? Subaction=Download [&](amp;)?
+        }{Action=AgentFAQZoom;Subaction=DownloadAttachment;}gxms;
+
+        # build base url for inline images
+        my $SessionID = '';
+        if ( $Self->{SessionID} && !$Self->{SessionIDCookie} ) {
+            $SessionID = ';' . $Self->{SessionName} . '=' . $Self->{SessionID};
+            $FieldContent =~ s{
+                (Action=AgentFAQZoom;Subaction=DownloadAttachment;ItemID=\d+;FileID=\d+)
+            }{$1$SessionID}gmsx;
+        }
+
+        # add needed HTML headers
+        $FieldContent = $Self->{LayoutObject}->{HTMLUtilsObject}->DocumentComplete(
+            String  => $FieldContent,
+            Charset => 'utf-8',
+        );
+
+        # return complete HTML as an attachment
+        return $Self->{LayoutObject}->Attachment(
+            Type        => 'inline',
+            ContentType => 'text/html',
+            Content     => $FieldContent,
         );
     }
 
@@ -230,8 +285,9 @@ sub Run {
 
                 # refresh FAQ item data
                 %FAQData = $Self->{FAQObject}->FAQGet(
-                    ItemID => $GetParam{ItemID},
-                    UserID => $Self->{UserID},
+                    ItemID     => $GetParam{ItemID},
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
                 if ( !%FAQData ) {
                     return $Self->{LayoutObject}->ErrorScreen();
@@ -250,7 +306,7 @@ sub Run {
         }
     }
 
-    # prepare fields data
+    # prepare fields data (Still needed for PlainText)
     FIELD:
     for my $Field (qw(Field1 Field2 Field3 Field4 Field5 Field6)) {
         next FIELD if !$FAQData{$Field};

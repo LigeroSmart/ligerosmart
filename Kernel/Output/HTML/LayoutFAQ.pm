@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.51 2012-02-08 11:05:22 mb Exp $
+# $Id: LayoutFAQ.pm,v 1.52 2012-10-26 20:07:14 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -433,12 +433,31 @@ sub FAQContentShow {
         $Self->Block(
             Name => 'FAQContent',
             Data => {
+                ItemID    => $Param{FAQData}->{ItemID},
                 Field     => $Field,
                 Caption   => $Caption,
                 StateName => $StateTypeData->{Name},
                 Content   => $Content,
             },
         );
+
+        if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
+            $Self->Block(
+                Name => 'FAQContentHTML',
+                Data => {
+                    ItemID => $Param{FAQData}->{ItemID},
+                    Field  => $Field,
+                },
+            );
+        }
+        else {
+            $Self->Block(
+                Name => 'FAQContentPlain',
+                Data => {
+                    Content => $Content,
+                },
+            );
+        }
 
         # store the field to return all FAQ Body
         if ( $Param{ReturnContent} && $Content ) {
@@ -778,8 +797,9 @@ sub FAQShowLatestNewsBox {
 
                 # get FAQ data
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    ItemID => $ItemID,
-                    UserID => $Param{UserID},
+                    ItemID     => $ItemID,
+                    ItemFields => 1,
+                    UserID     => $Param{UserID},
                 );
 
                 # show the article row
@@ -925,8 +945,9 @@ sub FAQShowTop10 {
 
                 # get FAQ data
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    ItemID => $Top10Item->{ItemID},
-                    UserID => $Param{UserID},
+                    ItemID     => $Top10Item->{ItemID},
+                    ItemFields => 1,
+                    UserID     => $Param{UserID},
                 );
 
                 # show the article row
