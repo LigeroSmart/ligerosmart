@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.11 2012-08-01 06:54:58 cg Exp $
+# $Id: PublicFAQExplorer.pm,v 1.12 2012-10-26 20:00:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use MIME::Base64 qw();
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -298,8 +298,9 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 # add blocks to template

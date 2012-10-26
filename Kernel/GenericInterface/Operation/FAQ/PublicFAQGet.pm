@@ -2,7 +2,7 @@
 # Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm - GenericInterface FAQ PublicFAQGet operation backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQGet.pm,v 1.2 2012-08-30 22:47:02 cr Exp $
+# $Id: PublicFAQGet.pm,v 1.3 2012-10-26 19:54:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -204,8 +204,9 @@ sub Run {
 
         # get the FAQ entry
         my %FAQEntry = $Self->{FAQObject}->FAQGet(
-            ItemID => $ItemID,
-            UserID => $Self->{UserID},
+            ItemID     => $ItemID,
+            ItemFields => 1,
+            UserID     => $Self->{UserID},
         );
 
         if (
@@ -291,6 +292,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2012-08-30 22:47:02 $
+$Revision: 1.3 $ $Date: 2012-10-26 19:54:50 $
 
 =cut

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQExplorer.pm - customer FAQ explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQExplorer.pm,v 1.12 2012-08-01 06:54:58 cg Exp $
+# $Id: CustomerFAQExplorer.pm,v 1.13 2012-10-26 19:59:10 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -265,8 +265,9 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 # add blocks to template

@@ -1,8 +1,8 @@
 # --
 # FAQ.pm - code to excecute during package installation
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.18 2011-05-24 11:33:27 ub Exp $
+# $Id: FAQ.pm,v 1.19 2012-10-26 19:54:25 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 =head1 NAME
 
@@ -388,8 +388,9 @@ sub _ConvertNewlines {
 
         # get FAQ data
         my %FAQ = $Self->{FAQObject}->FAQGet(
-            ItemID => $ItemID,
-            UserID => 1,
+            ItemID     => $ItemID,
+            ItemFields => 1,
+            UserID     => 1,
         );
 
         # get FAQ article fields 1-6
@@ -709,6 +710,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2011-05-24 11:33:27 $
+$Revision: 1.19 $ $Date: 2012-10-26 19:54:25 $
 
 =cut

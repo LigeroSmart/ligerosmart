@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.33 2012-05-08 21:13:59 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.34 2012-10-26 19:58:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -238,8 +238,9 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 my $Changed = $Self->{LayoutObject}->Output(
@@ -331,8 +332,9 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 # create PDFObject

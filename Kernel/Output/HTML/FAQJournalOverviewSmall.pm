@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/FAQJournalOverviewSmall.pm.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQJournalOverviewSmall.pm,v 1.1 2010-11-22 22:58:56 cr Exp $
+# $Id: FAQJournalOverviewSmall.pm,v 1.2 2012-10-26 20:01:37 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -106,8 +106,9 @@ sub Run {
 
                 # get FAQ data for corruption check
                 my %FAQ = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $JournalEntry->{ItemID},
-                    UserID => $Self->{UserID},
+                    ItemID     => $JournalEntry->{ItemID},
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 next ID if !%FAQ;

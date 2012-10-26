@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQRSS.pm - public FAQ explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQRSS.pm,v 1.5 2012-02-09 18:50:01 cr Exp $
+# $Id: PublicFAQRSS.pm,v 1.6 2012-10-26 20:00:54 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::HTMLUtils;
 use XML::RSS::SimpleGen qw();
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -133,8 +133,9 @@ sub Run {
     for my $ItemID (@ItemIDs) {
 
         my %ItemData = $Self->{FAQObject}->FAQGet(
-            ItemID => $ItemID,
-            UserID => $Self->{UserID},
+            ItemID     => $ItemID,
+            ItemFields => 1,
+            UserID     => $Self->{UserID},
         );
 
         # build a preview of the first two fields

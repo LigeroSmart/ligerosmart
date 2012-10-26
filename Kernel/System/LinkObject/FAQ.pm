@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.17 2012-01-26 16:37:39 mh Exp $
+# $Id: FAQ.pm,v 1.18 2012-10-26 19:55:58 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,8 +80,9 @@ sub LinkListWithData {
 
                 # get faq data
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Param{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Param{UserID},
                 );
 
                 # remove id from hash if no faq data was found
@@ -140,8 +141,9 @@ sub ObjectDescriptionGet {
 
     # get faq
     my %FAQ = $Self->{FAQObject}->FAQGet(
-        FAQID  => $Param{Key},
-        UserID => $Param{UserID},
+        ItemID     => $Param{Key},
+        ItemFields => 1,
+        UserID     => $Param{UserID},
     );
 
     return if !%FAQ;
@@ -224,8 +226,9 @@ sub ObjectSearch {
 
         # get FAQ data
         my %FAQData = $Self->{FAQObject}->FAQGet(
-            FAQID  => $FAQID,
-            UserID => $Param{UserID},
+            ItemID     => $FAQID,
+            ItemFields => 1,
+            UserID     => $Param{UserID},
         );
 
         next FAQID if !%FAQData;

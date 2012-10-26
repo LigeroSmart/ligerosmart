@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQSearch.pm - public FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.pm,v 1.21 2012-05-08 20:35:33 cr Exp $
+# $Id: PublicFAQSearch.pm,v 1.22 2012-10-26 20:01:11 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::FAQ;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -207,8 +207,9 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 # format the change time
@@ -296,8 +297,9 @@ sub Run {
 
                 # get FAQ data details
                 my %FAQData = $Self->{FAQObject}->FAQGet(
-                    FAQID  => $FAQID,
-                    UserID => $Self->{UserID},
+                    ItemID     => $FAQID,
+                    ItemFields => 1,
+                    UserID     => $Self->{UserID},
                 );
 
                 # add table block
@@ -370,8 +372,9 @@ sub Run {
 
                     # get FAQ data details
                     my %FAQData = $Self->{FAQObject}->FAQGet(
-                        FAQID  => $FAQID,
-                        UserID => $Self->{UserID},
+                        ItemID     => $FAQID,
+                        ItemFields => 1,
+                        UserID     => $Self->{UserID},
                     );
 
                     # add blocks to template

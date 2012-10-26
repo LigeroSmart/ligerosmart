@@ -2,7 +2,7 @@
 # Kernel/System/Stats/Static/FAQAccess.pm.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQAccess.pm,v 1.7 2012-01-26 16:37:39 mh Exp $
+# $Id: FAQAccess.pm,v 1.8 2012-10-26 19:56:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use Date::Pcalc qw(Days_in_Month);
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -164,8 +164,9 @@ sub Run {
 
         # get faq data
         my %FAQData = $Self->{FAQObject}->FAQGet(
-            ItemID => $ItemIDRef->{ItemID},
-            UserID => $Self->{UserID},
+            ItemID     => $ItemIDRef->{ItemID},
+            ItemFields => 1,
+            UserID     => $Self->{UserID},
         );
 
         # get vote data

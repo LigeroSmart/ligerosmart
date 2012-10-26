@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.17 2011-05-16 15:57:53 ub Exp $
+# $Id: AgentFAQEdit.pm,v 1.18 2012-10-26 19:57:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -96,8 +96,9 @@ sub Run {
 
     # get FAQ item data
     my %FAQData = $Self->{FAQObject}->FAQGet(
-        ItemID => $GetParam{ItemID},
-        UserID => $Self->{UserID},
+        ItemID     => $GetParam{ItemID},
+        ItemFields => 1,
+        UserID     => $Self->{UserID},
     );
 
     # check error

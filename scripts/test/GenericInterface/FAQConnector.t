@@ -2,7 +2,7 @@
 # FAQConnector.t - GenericInterface transport interface tests for FAQConnector backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQConnector.t,v 1.3 2012-08-30 22:47:47 cr Exp $
+# $Id: FAQConnector.t,v 1.4 2012-10-26 19:53:47 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -223,8 +223,9 @@ for my $Key ( keys %Languages ) {
 
 # get FAQ
 my %FAQOne = $FAQObject->FAQGet(
-    ItemID => $FAQIDOne,
-    UserID => $UserID,
+    ItemID     => $FAQIDOne,
+    ItemFields => 1,
+    UserID     => $UserID,
 );
 foreach my $Key ( keys %FAQOne ) {
     if ( !$FAQOne{$Key} ) {
@@ -233,8 +234,9 @@ foreach my $Key ( keys %FAQOne ) {
 }
 
 my %FAQTwo = $FAQObject->FAQGet(
-    ItemID => $FAQIDTwo,
-    UserID => $UserID,
+    ItemID     => $FAQIDTwo,
+    ItemFields => 1,
+    UserID     => $UserID,
 );
 foreach my $Key ( keys %FAQTwo ) {
     if ( !$FAQTwo{$Key} ) {
@@ -243,8 +245,9 @@ foreach my $Key ( keys %FAQTwo ) {
 }
 
 my %FAQThree = $FAQObject->FAQGet(
-    ItemID => $FAQIDThree,
-    UserID => $UserID,
+    ItemID     => $FAQIDThree,
+    ItemFields => 1,
+    UserID     => $UserID,
 );
 foreach my $Key ( keys %FAQThree ) {
     if ( !$FAQThree{$Key} ) {
@@ -272,8 +275,9 @@ for my $Attachment (@Index) {
 }
 
 my %FAQFour = $FAQObject->FAQGet(
-    ItemID => $FAQIDFour,
-    UserID => $UserID,
+    ItemID     => $FAQIDFour,
+    ItemFields => 1,
+    UserID     => $UserID,
 );
 foreach my $Key ( keys %FAQFour ) {
     if ( !$FAQFour{$Key} ) {

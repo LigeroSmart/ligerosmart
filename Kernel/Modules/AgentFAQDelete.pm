@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQDelete.pm - the  delete module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQDelete.pm,v 1.1 2010-11-24 22:00:58 cr Exp $
+# $Id: AgentFAQDelete.pm,v 1.2 2012-10-26 19:57:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,8 +71,9 @@ sub Run {
 
     # get FAQ item data
     my %FAQData = $Self->{FAQObject}->FAQGet(
-        ItemID => $GetParam{ItemID},
-        UserID => $Self->{UserID},
+        ItemID     => $GetParam{ItemID},
+        ItemFields => 1,
+        UserID     => $Self->{UserID},
     );
     if ( !%FAQData ) {
         return $Self->{LayoutObject}->ErrorScreen();
