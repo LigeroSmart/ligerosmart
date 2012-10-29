@@ -2,7 +2,7 @@
 # Kernel/Language/es_FAQ.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: es_FAQ.pm,v 1.33 2012-10-29 17:46:19 cr Exp $
+# $Id: es_FAQ.pm,v 1.34 2012-10-29 17:54:52 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -273,11 +273,11 @@ sub Data {
     $Self->{Translation}->{'This setting defines that a \'FAQ\' object can be linked with other \'Ticket\' objects using the \'ParentChild\' link type.'} = 'Este ajuste define que un objeto \'FAQ\' puede vincularse con otros objetos \'Ticket\' utilizando el tipo de vínculo \'ParentChild\'.';
     $Self->{Translation}->{'Ticket body for approval of FAQ article.'} = 'Cuepo del Ticket para aprobación de artículos FAQ.';
     $Self->{Translation}->{'Ticket subject for approval of FAQ article.'} = 'Asunto del Ticket para aprobación de artículos FAQ.';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} = '';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} = '';
-    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} = '';
-    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} = '';
-    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = '';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.'} = 'Fija la altura por defecto (en pixeles) de los campos HTML "inline" en AgentFAQZoom.';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.'} = 'Fija la altura por máxima (en pixeles) de los campos HTML "inline" en AgentFAQZoom.';
+    $Self->{Translation}->{'Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} = 'Fija la altura por defecto (en pixeles) de los campos HTML "inline" en CustomerFAQZoom (y PublicFAQZoom).';
+    $Self->{Translation}->{'Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).'} = 'Fija la altura por máxima (en pixeles) de los campos HTML "inline" en CustomerFAQZoom (y PublicFAQZoom).';
+    $Self->{Translation}->{'Cache Time To Leave for FAQ items.'} = 'Periodo de vida del Cache para los artículos de FAQ.';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
