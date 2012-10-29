@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.12 2012-04-02 15:54:11 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.13 2012-10-29 18:40:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 =head1 NAME
 
@@ -371,8 +371,8 @@ sub _WorkOrderAdd {
         for my $Suffix (qw(Start End)) {
             if ( $Data{"Planned${Suffix}Time"} ) {
 
-                # get difference if not already calculated
-                if ( !$Difference && $Param{NewTimeInEpoche} ) {
+                # get difference if not already calculated (allow zero difference)
+                if ( !defined $Difference && $Param{NewTimeInEpoche} ) {
                     $Difference = $Self->_GetTimeDifference(
                         CurrentTime     => $Data{"Planned${Suffix}Time"},
                         NewTimeInEpoche => $Param{NewTimeInEpoche},
@@ -467,8 +467,9 @@ sub _MoveTime {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
+    # need to check for defined, because 0 is allowed for Difference
     for my $Argument (qw(CurrentTime Difference)) {
-        if ( !$Param{$Argument} ) {
+        if ( !defined $Param{$Argument} ) {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "Need $Argument!",
@@ -621,6 +622,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.12 $ $Date: 2012-04-02 15:54:11 $
+$Revision: 1.13 $ $Date: 2012-10-29 18:40:55 $
 
 =cut
