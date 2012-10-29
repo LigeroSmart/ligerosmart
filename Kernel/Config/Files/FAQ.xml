@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.123 2012-10-26 23:11:00 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.124 2012-10-29 17:45:27 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1571,7 +1571,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::CacheTTL" Required="1" Valid="1">
-        <Description Translatable="1">Enable voting mechanism on FAQ module.</Description>
+        <Description Translatable="1">Cache Time To Leave for FAQ items.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
@@ -1678,7 +1678,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerHTMLFieldHeightDefault" Required="1" Valid="1">
-        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Description Translatable="1">Set the default height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
         <Setting>
@@ -1686,7 +1686,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::CustomerHTMLFieldHeightMax" Required="1" Valid="1">
-        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in AgentFAQZoom.</Description>
+        <Description Translatable="1">Set the maximum height (in pixels) of inline HTML fields in CustomerFAQZoom (and PublicFAQZoom).</Description>
         <Group>FAQ</Group>
         <SubGroup>Frontend::Customer::FAQ::ViewZoom</SubGroup>
         <Setting>
