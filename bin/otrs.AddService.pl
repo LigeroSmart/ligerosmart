@@ -3,8 +3,8 @@
 # bin/otrs.AddService.pl - add new Services
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.AddService.pl,v 1.2 2012-10-29 08:49:10 mb Exp $
-# $OldId: otrs.AddService.pl,v 1.4 2012/10/29 08:40:41 mb Exp $
+# $Id: otrs.AddService.pl,v 1.3 2012-10-29 09:23:46 ub Exp $
+# $OldId: otrs.AddService.pl,v 1.1.2.4 2012/10/29 09:19:06 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -32,7 +32,7 @@ use lib dirname($RealBin) . '/Kernel/cpan-lib';
 use lib dirname($RealBin) . '/Custom';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Getopt::Std;
 
@@ -42,12 +42,10 @@ use Kernel::System::Log;
 use Kernel::System::DB;
 use Kernel::System::Main;
 use Kernel::System::Service;
-
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
-
 # ---
 
 my %Param;
@@ -57,24 +55,20 @@ my $NoOptions = $ARGV[0] ? 0 : 1;
 
 # get options
 my %Opts;
-
 # ---
 # ITSM
 # ---
 #getopts( 'hn:p:c:', \%Opts );
 getopts( 'hn:p:c:C:t:', \%Opts );
-
 # ---
 
 if ( $Opts{h} || $NoOptions ) {
     print STDERR "Usage: $FindBin::Script -n <Name> -p <Parent> -c <Comment>\n";
-
-    # ---
-    # ITSM
-    # ---
+# ---
+# ITSM
+# ---
     print STDERR "-C Criticality -t <Type>\n";
-
-    # ---
+# ---
     exit;
 }
 
@@ -91,7 +85,6 @@ $CommonObject{LogObject}
 $CommonObject{MainObject}    = Kernel::System::Main->new(%CommonObject);
 $CommonObject{DBObject}      = Kernel::System::DB->new(%CommonObject);
 $CommonObject{ServiceObject} = Kernel::System::Service->new(%CommonObject);
-
 # ---
 # ITSM
 # ---
@@ -126,10 +119,10 @@ if ( $Reverse{$ServiceName} ) {
     print STDERR "ERROR: Can't add Service: Service '$ServiceName' already exists!\n";
     exit 1;
 }
-
 # ---
 # ITSM
 # ---
+
 # get criticality list
 my $CriticalityList = $CommonObject{CatalogObject}->ItemList(
     Class => 'ITSM::Core::Criticality',
