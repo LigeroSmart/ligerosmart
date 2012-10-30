@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.13 2012-10-29 18:40:55 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.14 2012-10-30 14:26:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 =head1 NAME
 
@@ -363,19 +363,42 @@ sub _WorkOrderAdd {
         }
     }
 
-    # move time slot for workorder if
+    # move time slot for workorder if neccessary
     my $Difference = $Param{TimeDifference};
     if ( $Difference || $Param{NewTimeInEpoche} ) {
 
         # calc new values for start and end time
         for my $Suffix (qw(Start End)) {
+
             if ( $Data{"Planned${Suffix}Time"} ) {
 
                 # get difference if not already calculated (allow zero difference)
                 if ( !defined $Difference && $Param{NewTimeInEpoche} ) {
+
+                    # time needs to be corrected if the move time type is the planned end time
+                    my $WorkOrderLengthInSeconds = 0;
+                    if ( $Param{MoveTimeType} eq 'PlannedEndTime' ) {
+
+                       # calculate the old planned start time into epoch seconds (from the template)
+                        my $OldPlannedStartTimeInSeconds
+                            = $Self->{TimeObject}->TimeStamp2SystemTime(
+                            String => $Data{PlannedStartTime},
+                            );
+
+                        # calculate the old planned end time into epoch seconds (from the template)
+                        my $OldPlannedEndTimeInSeconds = $Self->{TimeObject}->TimeStamp2SystemTime(
+                            String => $Data{PlannedEndTime},
+                        );
+
+                        # the time length of the workorder in seconds
+                        $WorkOrderLengthInSeconds
+                            = $OldPlannedEndTimeInSeconds - $OldPlannedStartTimeInSeconds;
+                    }
+
+                    # calculate the time difference
                     $Difference = $Self->_GetTimeDifference(
                         CurrentTime     => $Data{"Planned${Suffix}Time"},
-                        NewTimeInEpoche => $Param{NewTimeInEpoche},
+                        NewTimeInEpoche => $Param{NewTimeInEpoche} - $WorkOrderLengthInSeconds,
                     );
                 }
 
@@ -386,7 +409,6 @@ sub _WorkOrderAdd {
                 );
             }
         }
-
     }
 
     # override the change id from the template
@@ -622,6 +644,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.13 $ $Date: 2012-10-29 18:40:55 $
+$Revision: 1.14 $ $Date: 2012-10-30 14:26:31 $
 
 =cut
