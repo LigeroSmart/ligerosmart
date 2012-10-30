@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/Template/ITSMWorkOrder.pm - all template functions for workorders
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.14 2012-10-30 14:26:31 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.15 2012-10-30 14:28:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::Valid;
 use Data::Dumper;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -379,13 +379,13 @@ sub _WorkOrderAdd {
                     my $WorkOrderLengthInSeconds = 0;
                     if ( $Param{MoveTimeType} eq 'PlannedEndTime' ) {
 
-                       # calculate the old planned start time into epoch seconds (from the template)
+                        # calculate the old planned start time into epoch seconds
                         my $OldPlannedStartTimeInSeconds
                             = $Self->{TimeObject}->TimeStamp2SystemTime(
                             String => $Data{PlannedStartTime},
                             );
 
-                        # calculate the old planned end time into epoch seconds (from the template)
+                        # calculate the old planned end time into epoch seconds
                         my $OldPlannedEndTimeInSeconds = $Self->{TimeObject}->TimeStamp2SystemTime(
                             String => $Data{PlannedEndTime},
                         );
@@ -644,6 +644,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2012-10-30 14:26:31 $
+$Revision: 1.15 $ $Date: 2012-10-30 14:28:34 $
 
 =cut
