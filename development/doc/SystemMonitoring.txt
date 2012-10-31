@@ -1,0 +1,8 @@
+# $Id: SystemMonitoring.txt,v 1.1 2012-10-31 17:18:38 cg Exp $
+
+Basic mail interface to System Monitoring Suites. Also provides deeper integration to Nagios (Acknowledge on lock and Checkscript).
+
+In order to correct check its functionality, if you want to use it together with SupportDB, this last one should be
+correctly installed, this means the Archive::Tar module should be installed for the correct functionallity of SupportDB package.
+
+The mentioned module can come from Support package or directly from CPAN.
