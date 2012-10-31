@@ -1,8 +1,8 @@
 # --
 # AgentFAQLanguage.dtl - provides HTML from for AgentFAQLaaguage
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQLanguage.dtl,v 1.15 2011-02-10 14:47:34 cr Exp $
+# $Id: AgentFAQLanguage.dtl,v 1.16 2012-10-31 23:33:21 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -124,39 +124,43 @@
 <!-- dtl:block:OverviewResult -->
 
 <!-- dtl:block:OverviewUpdate -->
-            <div class="Header">
+            <div class="ContentColumn">
+                <div class="WidgetSimple">
+                    <div class="Header">
 <!-- dtl:block:HeaderAdd -->
-                <h2>$Text{"Add Language"}</h2>
+                        <h2>$Text{"Add Language"}</h2>
 <!-- dtl:block:HeaderAdd -->
 <!-- dtl:block:HeaderEdit -->
-                <h2>$Text{"Edit Language"}</h2>
+                        <h2>$Text{"Edit Language"}</h2>
 <!-- dtl:block:HeaderEdit -->
-            </div>
-            <div class="Content">
-                <form action="$Env{"CGIHandle"}" method="post" class="Validate">
-                    <input type="hidden" name="Action" value="$Env{"Action"}"/>
-                    <input type="hidden" name="Subaction" value="$LQData{"Action"}Action"/>
-                    <input type="hidden" name="LanguageID" value="$QData{"LanguageID"}"/>
-                    <fieldset class="TableLike">
-                        <label class="Mandatory" for="Name"><span class="Marker">*</span> $Text{"Name"}:</label>
-                        <div class="Field">
-                            <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"NameServerError"}" maxlength="50"/>
-                            <div id="NameError" class="TooltipErrorMessage">
-                                <p>$Text{"This field is required."}</p>
-                            </div>
-                            <div id="NameServerError" class="TooltipErrorMessage">
-                                <p>$Text{"$Data{"NameServerErrorMessage"}"}</p>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="Content">
+                        <form action="$Env{"CGIHandle"}" method="post" class="Validate">
+                            <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                            <input type="hidden" name="Subaction" value="$LQData{"Action"}Action"/>
+                            <input type="hidden" name="LanguageID" value="$QData{"LanguageID"}"/>
+                            <fieldset class="TableLike">
+                                <label class="Mandatory" for="Name"><span class="Marker">*</span> $Text{"Name"}:</label>
+                                <div class="Field">
+                                    <input type="text" name="Name" id="Name" value="$QData{"Name"}" class="W50pc Validate_Required $QData{"NameServerError"}" maxlength="50"/>
+                                    <div id="NameError" class="TooltipErrorMessage">
+                                        <p>$Text{"This field is required."}</p>
+                                    </div>
+                                    <div id="NameServerError" class="TooltipErrorMessage">
+                                        <p>$Text{"$Data{"NameServerErrorMessage"}"}</p>
+                                    </div>
+                                </div>
 
-                        <div class="Field SpacingTop">
-                            <button class="Primary" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
-                            $Text{"or"}
-                            <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"}</a>
-                        </div>
-                        <div class="Clear"></div>
-                    </fieldset>
-                </form>
+                                <div class="Field SpacingTop">
+                                    <button class="Primary" type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button>
+                                    $Text{"or"}
+                                    <a href="$Env{"Baselink"}Action=$Env{"Action"}">$Text{"Cancel"}</a>
+                                </div>
+                                <div class="Clear"></div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
 <!-- dtl:block:OverviewUpdate -->
         </div>
