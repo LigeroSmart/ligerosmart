@@ -1,8 +1,8 @@
 # --
 # AgentFAQJournalOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournalOverviewSmall.dtl,v 1.5 2011-04-05 12:57:19 cr Exp $
+# $Id: AgentFAQJournalOverviewSmall.dtl,v 1.6 2012-11-01 15:38:54 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,8 +41,8 @@
                 </th>
 <!-- dtl:block:RecordCategoryHeader -->
 <!-- dtl:block:RecordNameHeader -->
-                <th class="Name">
-                    <span>$Text{"Name"}</span>
+                <th class="Action">
+                    <span>$Text{"Action"}</span>
                 </th>
 <!-- dtl:block:RecordNameHeader -->
 <!-- dtl:block:RecordTimeHeader -->
