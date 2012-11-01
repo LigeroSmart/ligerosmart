@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for CustomerFAQZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.27 2012-10-26 23:11:31 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.28 2012-11-01 13:13:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -50,12 +50,12 @@
         </div>
         <div class="Clear"></div>
         <ul id="Messages">
+<!-- dtl:block:AttachmentHeader -->
             <li class="Customer Visible">
                 <div class="MessageHeader">
                     <h3>$Text{"Attachments"}:</h3>
                     <div class="Clear"></div>
                 </div>
-<!-- dtl:block:AttachmentHeader -->
                 <div class="Attachments">
                     <div class="Label">$Text{"Attachment"}:</div>
                     <div>
@@ -70,8 +70,8 @@
 <!-- dtl:block:AttachmentRow -->
                     </div>
                 </div>
-<!-- dtl:block:AttachmentHeader -->
             </li>
+<!-- dtl:block:AttachmentHeader -->
 <!-- dtl:block:FAQContent -->
             <li class="Customer Visible">
                 <div class="MessageHeader">
