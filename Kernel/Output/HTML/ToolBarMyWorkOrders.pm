@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarMyWorkOrders.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarMyWorkOrders.pm,v 1.7 2012-05-14 15:04:10 ub Exp $
+# $Id: ToolBarMyWorkOrders.pm,v 1.8 2012-11-01 15:23:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::Cache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,9 +78,17 @@ sub Run {
     my $Count = 0;
     if ( $Config->{'Filter::WorkOrderStates'} && @{ $Config->{'Filter::WorkOrderStates'} } ) {
 
+        # remove empty workorder states
+        my @WorkOrderStates;
+        WORKORDERSTATE:
+        for my $WorkOrderState ( @{ $Config->{'Filter::WorkOrderStates'} } ) {
+            next WORKORDERSTATE if !$WorkOrderState;
+            push @WorkOrderStates, $WorkOrderState;
+        }
+
         # check cache
         my $CacheType = 'ITSMChangeManagementToolBarMyWorkOrders' . $Self->{UserID};
-        my $CacheKey = join ',', sort @{ $Config->{'Filter::WorkOrderStates'} };
+        my $CacheKey = join ',', sort @WorkOrderStates;
 
         my $Cache = $Self->{CacheObject}->Get(
             Type => $CacheType,
@@ -95,7 +103,7 @@ sub Run {
             # count the number of viewable workorders
             $Count = $Self->{WorkOrderObject}->WorkOrderSearch(
                 WorkOrderAgentIDs => [ $Self->{UserID} ],
-                WorkOrderStates   => $Config->{'Filter::WorkOrderStates'},
+                WorkOrderStates   => \@WorkOrderStates,
                 Limit             => 1000,
                 Result            => 'COUNT',
                 MirrorDB          => 1,
@@ -130,6 +138,7 @@ sub Run {
             AccessKey   => '',
         };
     }
+
     return %Return;
 }
 

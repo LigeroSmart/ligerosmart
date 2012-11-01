@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/ToolBarMyChanges.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarMyChanges.pm,v 1.7 2012-05-14 15:04:10 ub Exp $
+# $Id: ToolBarMyChanges.pm,v 1.8 2012-11-01 15:23:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::Cache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,11 +78,18 @@ sub Run {
     my $Count = 0;
     if ( $Config->{'Filter::ChangeStates'} && @{ $Config->{'Filter::ChangeStates'} } ) {
 
+        # remove empty change states
+        my @ChangeStates;
+        CHANGESTATE:
+        for my $ChangeState ( @{ $Config->{'Filter::ChangeStates'} } ) {
+            next CHANGESTATE if !$ChangeState;
+            push @ChangeStates, $ChangeState;
+        }
+
         # check cache
         my $CacheType = 'ITSMChangeManagementToolBarMyChanges' . $Self->{UserID};
-        my $CacheKey = join ',', sort @{ $Config->{'Filter::ChangeStates'} };
-
-        my $Cache = $Self->{CacheObject}->Get(
+        my $CacheKey  = join ',', sort @ChangeStates;
+        my $Cache     = $Self->{CacheObject}->Get(
             Type => $CacheType,
             Key  => $CacheKey,
         );
@@ -95,7 +102,7 @@ sub Run {
             # count the number of viewable changes
             $Count = $Self->{ChangeObject}->ChangeSearch(
                 ChangeBuilderIDs => [ $Self->{UserID} ],
-                ChangeStates     => $Config->{'Filter::ChangeStates'},
+                ChangeStates     => \@ChangeStates,
                 Limit            => 1000,
                 Result           => 'COUNT',
                 MirrorDB         => 1,
@@ -130,6 +137,7 @@ sub Run {
             AccessKey   => '',
         };
     }
+
     return %Return;
 }
 
