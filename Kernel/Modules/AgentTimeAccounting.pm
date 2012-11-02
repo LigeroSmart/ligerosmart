@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.89 2012-08-10 12:30:18 mh Exp $
+# $Id: AgentTimeAccounting.pm,v 1.90 2012-11-02 18:48:12 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.89 $) [1];
+$VERSION = qw($Revision: 1.90 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -2495,6 +2495,12 @@ sub Run {
         my $NewUserID = $Self->{ParamObject}->GetParam( Param => 'NewUserID' )
             || $Self->{ParamObject}->GetParam( Param => 'UserID' )
             || '';
+        if ( !$NewUserID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'The UserID is not valid!'
+            );
+        }
+
         my $NewTimePeriod = $Self->{ParamObject}->GetParam( Param => 'NewTimePeriod' );
 
         my $LastPeriodNumber = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
@@ -2561,6 +2567,11 @@ sub Run {
     # ---------------------------------------------------------- #
     elsif ( $Self->{Subaction} eq 'EditUser' ) {
         my $ID = $Self->{ParamObject}->GetParam( Param => 'UserID' ) || '';
+        if ( !$ID ) {
+            return $Self->{LayoutObject}->ErrorScreen(
+                Message => 'The UserID is not valid!'
+            );
+        }
 
         my $NewTimePeriod = $Self->{ParamObject}->GetParam( Param => 'NewTimePeriod' );
         my $LastPeriodNumber = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
@@ -3052,12 +3063,12 @@ sub _SettingOverview {
         }
 
         if (%ShownUsers) {
-            $ShownUsers{''} = '';
             my $NewUserOption = $Self->{LayoutObject}->BuildSelection(
-                Data        => \%ShownUsers,
-                SelectedID  => '',
-                Name        => 'NewUserID',
-                Translation => 0,
+                Data         => \%ShownUsers,
+                SelectedID   => '',
+                Name         => 'NewUserID',
+                Translation  => 0,
+                PossibleNone => 0,
             );
             $Self->{LayoutObject}->Block(
                 Name => 'ActionAddUser',
