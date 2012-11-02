@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Notification.pm - lib for notifications in change management
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Notification.pm,v 1.49 2011-12-16 12:12:53 ub Exp $
+# $Id: Notification.pm,v 1.50 2012-11-02 09:11:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::Valid;
 use Kernel::Language;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1234,6 +1234,27 @@ sub _NotificationReplaceMacros {
             }
         }
 
+        # get change builder and change manager
+        USER:
+        for my $User (qw(ChangeBuilder ChangeManager)) {
+
+            my $Attribute = $User . 'ID';
+
+            # only if an agent is set for this attribute
+            next USER if !$ChangeData{$Attribute};
+
+            # get user data
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $ChangeData{$Attribute},
+                Valid  => 1,
+            );
+
+            next USER if !%UserData;
+
+            # build user attribute
+            $ChangeData{$User} = "$UserData{UserFirstname} $UserData{UserLastname}";
+        }
+
         # replace it
         KEY:
         for my $Key ( keys %ChangeData ) {
@@ -1257,6 +1278,21 @@ sub _NotificationReplaceMacros {
                 $WorkOrderData{$Key} = $Self->{HTMLUtilsObject}->ToHTML(
                     String => $WorkOrderData{$Key},
                 );
+            }
+        }
+
+        # get workorder agent
+        if ( $WorkOrderData{WorkOrderAgentID} ) {
+
+            # get user data
+            my %UserData = $Self->{UserObject}->GetUserData(
+                UserID => $WorkOrderData{WorkOrderAgentID},
+                Valid  => 1,
+            );
+
+            # build workorder agent attribute
+            if (%UserData) {
+                $WorkOrderData{WorkOrderAgent} = "$UserData{UserFirstname} $UserData{UserLastname}";
             }
         }
 
@@ -1534,6 +1570,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.49 $ $Date: 2011-12-16 12:12:53 $
+$Revision: 1.50 $ $Date: 2012-11-02 09:11:11 $
 
 =cut
