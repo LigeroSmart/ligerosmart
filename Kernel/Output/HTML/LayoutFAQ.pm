@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.53 2012-11-05 19:42:41 cr Exp $
+# $Id: LayoutFAQ.pm,v 1.54 2012-11-07 22:43:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -442,19 +442,11 @@ sub FAQContentShow {
         );
 
         if ( $Self->{ConfigObject}->Get('FAQ::Item::HTML') ) {
-
-            # get the field number 1 to 6 from "Fieldx", read 1 char after 5 (Field) has 5 chars
-            my $FieldNumber = int substr $Field, 5, 1;
-
-            # set timeout base as 500 for Field1 and add 50 to each other field
-            my $TimeOut = 500 + ( $FieldNumber - 1 ) * 50;
-
             $Self->Block(
                 Name => 'FAQContentHTML',
                 Data => {
-                    ItemID  => $Param{FAQData}->{ItemID},
-                    Field   => $Field,
-                    Timeout => $TimeOut,
+                    ItemID => $Param{FAQData}->{ItemID},
+                    Field  => $Field,
                 },
             );
         }

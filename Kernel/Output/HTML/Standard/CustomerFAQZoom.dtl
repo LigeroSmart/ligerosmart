@@ -2,7 +2,7 @@
 # CustomerFAQZoom.dtl - provides HTML for CustomerFAQZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.dtl,v 1.29 2012-11-05 19:42:41 cr Exp $
+# $Id: CustomerFAQZoom.dtl,v 1.30 2012-11-07 22:43:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -83,7 +83,7 @@
 # execute JS asynchronously. Otherwise it could happen before our API was loaded
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
-                    <iframe sandbox="allow-same-origin" security="restricted" width="100%" frameborder="0" id="IframeFAQ$QData{"Field"}" onload="window.setTimeout( function (){ if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); } }, $QData{"Timeout"});" src="$Env{"Baselink"}Action=CustomerFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
+                    <iframe sandbox="allow-same-origin" security="restricted" width="100%" frameborder="0" id="IframeFAQ$QData{"Field"}" onload="window.setTimeout( function (){ if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); } }, 500);" src="$Env{"Baselink"}Action=CustomerFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
                 </div>
 <!-- dtl:block:FAQContentHTML -->
 <!-- dtl:block:FAQContentPlain -->
