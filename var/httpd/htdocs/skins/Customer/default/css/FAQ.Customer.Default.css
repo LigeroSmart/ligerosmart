@@ -1,6 +1,6 @@
 /**
  * @project     OTRS (http://www.otrs.org) - Agent Frontend
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  * @copyright   OTRS AG
  * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
  */
@@ -194,6 +194,11 @@ ul.FAQMiniList span {
 
 .FAQPathCategory h3 {
     font-weight: bold;
+}
+
+iframe {
+    width: 100%;
+    frameborder: 0;
 }
 
 }
