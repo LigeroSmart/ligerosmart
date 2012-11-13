@@ -2,7 +2,7 @@
 # PublicFAQZoom.dtl - provides HTML for PublicFAQZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.dtl,v 1.27 2012-11-07 22:43:03 cr Exp $
+# $Id: PublicFAQZoom.dtl,v 1.28 2012-11-13 22:27:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -80,12 +80,22 @@
                 </div>
 <!-- dtl:block:FAQContentHTML -->
                 <div>
-# execute JS asynchronously. Otherwise it could happen before our API was loaded
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
-                    <iframe sandbox="allow-same-origin" security="restricted" width="100%" frameborder="0" id="IframeFAQ$QData{"Field"}" onload="window.setTimeout( function (){ if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); } }, 500);" src="$Env{"Baselink"}Action=PublicFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};"></iframe>
+                    <iframe sandbox="allow-same-origin" security="restricted" id="IframeFAQ$QData{"Field"}" onload="if (typeof FAQ === 'object' && typeof FAQ.Customer === 'object' && typeof FAQ.Customer.FAQZoom === 'object') { FAQ.Customer.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); };" src="#" data-src="$Env{"Baselink"}Action=PublicFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};"></iframe>
                 </div>
 <!-- dtl:block:FAQContentHTML -->
+<!-- dtl:js_on_document_complete -->
+<script type="text/javascript">//<![CDATA[
+    Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightDefault', parseInt("$Config{"FAQ::Frontend::CustomerHTMLFieldHeightDefault"}" || 0, 10));
+    Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightMax', parseInt("$Config{"FAQ::Frontend::CustomerHTMLFieldHeightMax"}" || 0, 10));
+
+    // copy data-src attribute to src attribute for all iframes to correclty display its content after JS is fully loaded
+    $('iframe').each(function(){
+        $(this).attr("src", $(this).attr("data-src") );
+    });
+//]]></script>
+<!-- dtl:js_on_document_complete -->
 <!-- dtl:block:FAQContentPlain -->
                 <div class="ArticleFAQContent">
                     <div class="message">
@@ -183,10 +193,3 @@
 
     </div>
 </div>
-
-<!-- dtl:js_on_document_complete -->
-<script type="text/javascript">
-    Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightDefault', parseInt("$Config{"FAQ::Frontend::CustomerHTMLFieldHeightDefault"}" || 0, 10));
-    Core.Config.Set('FAQ::Frontend::CustomerHTMLFieldHeightMax', parseInt("$Config{"FAQ::Frontend::CustomerHTMLFieldHeightMax"}" || 0, 10));
-</script>
-<!-- dtl:js_on_document_complete -->
