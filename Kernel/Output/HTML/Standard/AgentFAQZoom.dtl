@@ -2,7 +2,7 @@
 # AgentFAQZoom.dtl - provides HTML for AgentFAQZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.dtl,v 1.34 2012-11-13 22:27:33 cr Exp $
+# $Id: AgentFAQZoom.dtl,v 1.35 2012-11-13 22:34:34 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -196,7 +196,7 @@
                         <div>
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
-                            <iframe sandbox="allow-same-origin" security="restricted" id="IframeFAQ$QData{"Field"}" onload="if (typeof FAQ === 'object' && typeof FAQ.Agent === 'object' && typeof FAQ.Agent.FAQZoom === 'object') { FAQ.Agent.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); };" src="#" data-src="$Env{"Baselink"}Action=AgentFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
+                            <iframe sandbox="allow-same-origin" security="restricted" class="FAQField" id="IframeFAQ$QData{"Field"}" onload="if (typeof FAQ === 'object' && typeof FAQ.Agent === 'object' && typeof FAQ.Agent.FAQZoom === 'object') { FAQ.Agent.FAQZoom.IframeAutoHeight($('#IframeFAQ$QData{"Field"}')); };" src="#" data-src="$Env{"Baselink"}Action=AgentFAQZoom;Subaction=HTMLView;ItemID=$QData{"ItemID"};Field=$QData{"Field"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
                         </div>
 <!-- dtl:block:FAQContentHTML -->
 <!-- dtl:js_on_document_complete -->
