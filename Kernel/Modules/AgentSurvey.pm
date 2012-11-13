@@ -2,11 +2,11 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.50 2012-01-20 13:20:27 jh Exp $
+# $Id: AgentSurvey.pm,v 1.51 2012-11-13 16:11:17 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Modules::AgentSurvey;
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.50 $) [1];
+$VERSION = qw($Revision: 1.51 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -66,8 +66,9 @@ sub Run {
             'Yes'
             )
         {
-            return $Self->{LayoutObject}
-                ->Redirect( OP => "Action=AgentSurvey" );
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentSurvey"
+            );
         }
 
         my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $SurveyID );
@@ -432,7 +433,7 @@ sub Run {
 
         # get the column names that should be shown
         COLUMNNAME:
-        for my $Name ( keys %PossibleColumn ) {
+        for my $Name ( sort keys %PossibleColumn ) {
             next COLUMNNAME if !$PossibleColumn{$Name};
             push @ShowColumns, $Name;
         }
@@ -578,7 +579,7 @@ sub _SurveyAddMask {
     }
 
     # convert required elements to RTE
-    for my $SurveyField ( keys %SurveyElements ) {
+    for my $SurveyField ( sort keys %SurveyElements ) {
         next if !$SurveyElements{$SurveyField};
 
         # clean html
@@ -626,7 +627,7 @@ sub _SurveyAddMask {
         );
     }
 
-    for my $Item ( keys %ServerError ) {
+    for my $Item ( sort keys %ServerError ) {
         $Self->{LayoutObject}->Block(
             Name => $Block . 'GenericServerError',
             Data => {

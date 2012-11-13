@@ -2,11 +2,11 @@
 # Kernel/Language/ru_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_Survey.pm,v 1.6 2012-08-21 12:49:40 mh Exp $
+# $Id: ru_Survey.pm,v 1.7 2012-11-13 16:12:14 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Language::ru_Survey;

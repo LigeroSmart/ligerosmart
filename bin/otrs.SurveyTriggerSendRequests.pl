@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.SurveyTriggerSendRequests.pl - trigger sending delayed survey requests
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.1 2011-12-15 15:37:29 jh Exp $
+# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.2 2012-11-13 16:16:17 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -17,8 +17,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-# or see http://www.gnu.org/licenses/agpl.txt.
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+# or see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 use strict;
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . "/Kernel/cpan-lib";
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 use Kernel::Config;
 use Kernel::System::SysConfig;
@@ -72,7 +72,7 @@ if (
     print STDERR "4. Wait the necessary amount of hours you've configured\n";
     print STDERR "5. You can do a dry run to get a list of surveys that would be sent (-d)\n";
     print STDERR "6. If you're fine with it, activate var/cron/generic_agent_survey.dist\n";
-    print STDERR "Copyright (C) 2001-2011 OTRS AG, http://otrs.com/\n";
+    print STDERR "Copyright (C) 2001-2012 OTRS AG, http://otrs.com/\n";
     exit;
 }
 
@@ -127,7 +127,7 @@ my $Now = $CommonObject{TimeObject}->SystemTime();
 
 SURVEYREQUEST:
 for my $Line (@Rows) {
-    for my $Val qw(ID TicketID CreateTime) {
+    for my $Val (qw(ID TicketID CreateTime)) {
         if ( !$Line->{$Val} ) {
             if ( $opts{v} ) {
                 print "$Val missing in service_request row.\n";

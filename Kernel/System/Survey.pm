@@ -2,11 +2,11 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.67 2012-04-27 10:18:49 jp Exp $
+# $Id: Survey.pm,v 1.68 2012-11-13 16:10:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::System::Survey;
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.67 $) [1];
+$VERSION = qw($Revision: 1.68 $) [1];
 
 =head1 NAME
 
@@ -1872,7 +1872,7 @@ sub RequestSend {
         return if !$Found;
     }
 
-    for my $Data ( keys %Ticket ) {
+    for my $Data ( sort keys %Ticket ) {
         if ( defined $Ticket{$Data} ) {
             $Subject =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
             $Body    =~ s/<OTRS_TICKET_$Data>/$Ticket{$Data}/gi;
@@ -1908,7 +1908,7 @@ sub RequestSend {
         );
 
         # replace customer stuff with tags
-        for my $Data ( keys %CustomerUser ) {
+        for my $Data ( sort keys %CustomerUser ) {
             next if !$CustomerUser{$Data};
 
             $Subject =~ s/<OTRS_CUSTOMER_DATA_$Data>/$CustomerUser{$Data}/gi;
@@ -2788,7 +2788,7 @@ sub SurveySearch {
 
     # check and add time params to WHERE
     TIMEPARAM:
-    for my $TimeParam ( keys %TimeParams ) {
+    for my $TimeParam ( sort keys %TimeParams ) {
 
         next TIMEPARAM if !$Param{$TimeParam};
 
@@ -2895,6 +2895,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.67 $ $Date: 2012-04-27 10:18:49 $
+$Revision: 1.68 $ $Date: 2012-11-13 16:10:58 $
 
 =cut
