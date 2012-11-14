@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.193 2012-10-23 13:01:17 ub Exp $
+# $Id: ITSMChange.t,v 1.194 2012-11-14 13:26:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -213,7 +213,7 @@ my %ChangeStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Change::State',
         ) || {}
-    };
+};
 my %ChangeStateName2ID   = reverse %ChangeStateID2Name;
 my @SortedChangeStateIDs = sort keys %ChangeStateID2Name;
 
@@ -374,7 +374,7 @@ my %ChangeCategoryID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Category',
         ) || {}
-    };
+};
 my %ChangeCategoryName2ID   = reverse %ChangeCategoryID2Name;
 my @SortedChangeCategoryIDs = sort keys %ChangeCategoryID2Name;
 
@@ -383,7 +383,7 @@ my %ChangeImpactID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Impact',
         ) || {}
-    };
+};
 my %ChangeImpactName2ID   = reverse %ChangeImpactID2Name;
 my @SortedChangeImpactIDs = sort keys %ChangeImpactID2Name;
 
@@ -392,7 +392,7 @@ my %ChangePriorityID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::Priority',
         ) || {}
-    };
+};
 my %ChangePriorityName2ID   = reverse %ChangePriorityID2Name;
 my @SortedChangePriorityIDs = sort keys %ChangePriorityID2Name;
 
@@ -484,7 +484,7 @@ my $TestCountMisc = $TestCount;
 my $UniqueSignature = sprintf 'UnitTest-ITSMChange-%06d_%010d',
     int( rand 1_000_000 ),
     time();
-my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-%%NoWildcards%%_%06d_%010d',
+my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-NoWildcards-%06d_%010d',
     int( rand 1_000_000 ),
     time();
 
@@ -3103,7 +3103,7 @@ my @ChangeSearchTests = (
     {
         Description => 'Justification',
         SearchData  => {
-            Justification => 'J' x 1799999 . "\n",
+            Justification => 'JJ' . '%' . "\n",
         },
         ResultData => {
             TestExistence => 1,
@@ -3334,7 +3334,7 @@ my @ChangeSearchTests = (
         Description => 'UsingWildcards => 0, ChangeTitle',
         SearchData  => {
             UsingWildcards => 0,
-            ChangeTitle    => 'UnitTest-ITSMChange-%NoWildcards%',
+            ChangeTitle    => 'UnitTest-ITSMChange-NoWildcards-',
         },
         ResultData => {
             TestCount => 1,
@@ -3347,7 +3347,7 @@ my @ChangeSearchTests = (
         Description => 'UsingWildcards => 0, Description',
         SearchData  => {
             UsingWildcards => 0,
-            Description    => 'UnitTest-ITSMChange-%NoWildcards%',
+            Description    => 'UnitTest-ITSMChange-NoWildcards-',
         },
         ResultData => {
             TestCount => 1,
@@ -5276,7 +5276,7 @@ my %WorkOrderStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
-    };
+};
 my %WorkOrderStateName2ID = reverse %WorkOrderStateID2Name;
 
 my @WOStateTests = (
