@@ -2,7 +2,7 @@
 # ITSMWorkOrder.t - workorder tests
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.t,v 1.131 2012-10-23 13:01:17 ub Exp $
+# $Id: ITSMWorkOrder.t,v 1.132 2012-11-14 14:50:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -192,7 +192,7 @@ my %WorkOrderStateID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::State',
         ) || {}
-    };
+};
 my %WorkOrderStateName2ID   = reverse %WorkOrderStateID2Name;
 my @SortedWorkOrderStateIDs = sort keys %WorkOrderStateID2Name;
 
@@ -288,7 +288,7 @@ my %WorkOrderTypeID2Name = %{
     $Self->{GeneralCatalogObject}->ItemList(
         Class => 'ITSM::ChangeManagement::WorkOrder::Type',
         ) || {}
-    };
+};
 my %WorkOrderTypeName2ID = reverse %WorkOrderTypeID2Name;
 my @SortedTypeIDs        = sort keys %WorkOrderTypeID2Name;
 
@@ -366,7 +366,7 @@ my $TestCountMisc = $TestCount;
 # An unique indentifier, so that data from different test runs
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
-my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%06d_%010d',
+my $UniqueSignature = sprintf 'UnitTest-ITSMChange::ITSMWorkOrder-%06d-%010d',
     int( rand 1_000_000 ),
     time();
 
