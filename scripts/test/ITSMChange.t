@@ -2,7 +2,7 @@
 # ITSMChange.t - change tests
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.194 2012-11-14 13:26:55 ub Exp $
+# $Id: ITSMChange.t,v 1.195 2012-11-14 14:07:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -481,10 +481,10 @@ my $TestCountMisc = $TestCount;
 # An unique indentifier, so that data from different test runs
 # won't be mixed up. The string is formated to a constant length,
 # as the conversion to plain text with ToAscii() depends on the string length.
-my $UniqueSignature = sprintf 'UnitTest-ITSMChange-%06d_%010d',
+my $UniqueSignature = sprintf 'UnitTest-ITSMChange-%06d-%010d',
     int( rand 1_000_000 ),
     time();
-my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-NoWildcards-%06d_%010d',
+my $NoWildcardsTestTitle = sprintf 'UnitTest-ITSMChange-NoWildcards-%06d-%010d',
     int( rand 1_000_000 ),
     time();
 
