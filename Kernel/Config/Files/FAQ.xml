@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.124 2012-10-29 17:45:27 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.125 2012-11-14 02:15:27 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -474,7 +474,6 @@ Your OTRS Notification Master
                 </NavBar>
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
-                    <CSS>FAQ.Agent.Default.css</CSS>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -759,7 +758,6 @@ Your OTRS Notification Master
                 </NavBar>
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
-                    <CSS>FAQ.Agent.Default.css</CSS>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -776,7 +774,6 @@ Your OTRS Notification Master
                 <NavBarName>FAQ</NavBarName>
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
-                    <CSS>FAQ.Agent.Default.css</CSS>
                 </Loader>
             </FrontendModuleReg>
         </Setting>
@@ -1031,7 +1028,6 @@ Your OTRS Notification Master
                 <NavBarName>FAQ</NavBarName>
                 <Loader>
                     <CSS>FAQ.Agent.Detail.css</CSS>
-                    <CSS>FAQ.Agent.Default.css</CSS>
                     <CSS>FAQ.Widget.css</CSS>
                     <JavaScript>FAQ.Agent.ConfirmationDialog.js</JavaScript>
                     <JavaScript>FAQ.Agent.TicketCompose.js</JavaScript>
