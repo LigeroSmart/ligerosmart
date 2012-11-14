@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.280 2012-10-23 13:01:17 ub Exp $
+# $Id: ITSMChange.pm,v 1.281 2012-11-14 15:31:22 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.280 $) [1];
+$VERSION = qw($Revision: 1.281 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -144,6 +144,10 @@ sub new {
             %{$Self},
         },
     );
+
+    # get database type
+    $Self->{DBType} = $Self->{DBObject}->{'DB::Type'} || '';
+    $Self->{DBType} = lc $Self->{DBType};
 
     return $Self;
 }
@@ -1780,8 +1784,19 @@ sub ChangeSearch {
         # quote
         $Param{$StringParam} = $DBObject->Quote( $Param{$StringParam} );
 
+        # check if a CLOB field is used in oracle
+        # Fix/Workaround for ORA-00932: inconsistent datatypes: expected - got CLOB
+        my $UsingWildcardsForSpecialFields;
+        if (
+            $Self->{DBType} eq 'oracle'
+            && ( $StringParam eq 'Description' || $StringParam eq 'Justification' )
+            )
+        {
+            $UsingWildcardsForSpecialFields = 1;
+        }
+
         # wildcards are used
-        if ( $Param{UsingWildcards} ) {
+        if ( $Param{UsingWildcards} || $UsingWildcardsForSpecialFields ) {
 
             # get like escape string needed for some databases (e.g. oracle)
             my $LikeEscapeString = $DBObject->GetDatabaseFunction('LikeEscapeString');
@@ -2408,7 +2423,7 @@ sub ChangeStateLookup {
         $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::Change::State',
             )
-        };
+    };
 
     # check the state hash
     if ( !%StateID2Name ) {
@@ -2669,7 +2684,7 @@ sub ChangeCIPLookup {
         $Self->{GeneralCatalogObject}->ItemList(
             Class => 'ITSM::ChangeManagement::' . $Param{Type},
             ) || {}
-        };
+    };
 
     if ( $Param{ID} ) {
         return $ChangeCIP{ $Param{ID} };
@@ -3801,6 +3816,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.280 $ $Date: 2012-10-23 13:01:17 $
+$Revision: 1.281 $ $Date: 2012-11-14 15:31:22 $
 
 =cut
