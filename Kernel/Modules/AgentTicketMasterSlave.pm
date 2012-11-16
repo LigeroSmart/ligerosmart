@@ -2,17 +2,21 @@
 # Kernel/Modules/AgentTicketMasterSlave.pm - common file for several modules
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketMasterSlave.pm,v 1.14 2012-05-04 11:51:23 te Exp $
-# $OldId: AgentTicketMasterSlave.pm,v 1.75 2012/02/03 18:23:12 cr Exp $
+# $Id: AgentTicketMasterSlave.pm,v 1.15 2012-11-16 21:44:32 cr Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.101 2012/11/15 20:55:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 # ---
 # MasterSlave
 # ---
+# this module uses AgentTicketActionCommon as a base, for easy update and framework compatibility
+# special markers has been set along the file to easy spot the differences introduced by
+# OTRSMasterSlave package
+# package Kernel::Modules::AgentTicketActionCommon;
 package Kernel::Modules::AgentTicketMasterSlave;
 # ---
 
@@ -24,7 +28,6 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
-use Kernel::System::Service;
 # ---
 # MasterSlave
 # ---
@@ -52,7 +55,6 @@ sub new {
     $Self->{UploadCacheObject}  = Kernel::System::Web::UploadCache->new(%Param);
     $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new(%Param);
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
-    $Self->{ServiceObject}      = Kernel::System::Service->new(%Param);
 
     # get form id
     $Self->{FormID} = $Self->{ParamObject}->GetParam( Param => 'FormID' );
@@ -243,7 +245,7 @@ sub Run {
     my %GetParam;
     for my $Key (
         qw(
-        NewStateID NewPriorityID TimeUnits ArticleTypeID Title Body Subject
+        NewStateID NewPriorityID TimeUnits ArticleTypeID Title Body Subject NewQueueID
         Year Month Day Hour Minute NewOwnerID NewOwnerType OldOwnerID NewResponsibleID
         TypeID ServiceID SLAID Expand
         )
@@ -283,12 +285,12 @@ sub Run {
     # convert dynamic field values into a structure for ACLs
     my %DynamicFieldACLParameters;
     DYNAMICFIELD:
-    for my $DynamcField ( keys %DynamicFieldValues ) {
-        next DYNAMICFIELD if !$DynamcField;
-        next DYNAMICFIELD if !$DynamicFieldValues{$DynamcField};
+    for my $DynamicField ( sort keys %DynamicFieldValues ) {
+        next DYNAMICFIELD if !$DynamicField;
+        next DYNAMICFIELD if !$DynamicFieldValues{$DynamicField};
 
-        $DynamicFieldACLParameters{ 'DynamicField_' . $DynamcField }
-            = $DynamicFieldValues{$DynamcField};
+        $DynamicFieldACLParameters{ 'DynamicField_' . $DynamicField }
+            = $DynamicFieldValues{$DynamicField};
     }
     $GetParam{DynamicField} = \%DynamicFieldACLParameters;
 
@@ -313,6 +315,7 @@ sub Run {
     }
 
     if ( $Self->{Subaction} eq 'Store' ) {
+
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
@@ -451,6 +454,7 @@ sub Run {
                 $Error{'TimeUnitsInvalid'} = ' ServerError';
             }
         }
+
         # check expand
         if ( $GetParam{Expand} ) {
             %Error = ();
@@ -459,6 +463,7 @@ sub Run {
 
         # create html strings for all dynamic fields
         my %DynamicFieldHTML;
+
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
@@ -476,6 +481,10 @@ sub Run {
             # check if field has PossibleValues property in its configuration
             if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
 
+                # convert possible values key => value to key => key for ACLs usign a Hash slice
+                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                @AclData{ keys %AclData } = keys %AclData;
+
                 # set possible values filter from ACLs
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
@@ -483,12 +492,16 @@ sub Run {
                     TicketID      => $Self->{TicketID},
                     ReturnType    => 'Ticket',
                     ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
+                    Data          => \%AclData,
                     UserID        => $Self->{UserID},
                 );
                 if ($ACL) {
                     my %Filter = $Self->{TicketObject}->TicketAclData();
-                    $PossibleValuesFilter = \%Filter;
+
+                    # convert Filer key => key back to key => value using map
+                    %{$PossibleValuesFilter}
+                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        keys %Filter;
                 }
             }
 
@@ -646,7 +659,7 @@ sub Run {
         }
 
         # set new responsible
-        if ( $Self->{Config}->{Responsible} ) {
+        if ( $Self->{ConfigObject}->Get('Ticket::Responsible') && $Self->{Config}->{Responsible} ) {
             if ( $GetParam{NewResponsibleID} ) {
                 my $BodyText = $Self->{LayoutObject}->RichText2Ascii(
                     String => $GetParam{Body} || '',
@@ -665,9 +678,45 @@ sub Run {
             }
         }
 
+        # move ticket to a new queue, but only if the queue was changed
+        if (
+            $Self->{Config}->{Queue}
+            && $GetParam{NewQueueID}
+            && $GetParam{NewQueueID} ne $Ticket{QueueID}
+            )
+        {
+
+            # move ticket (send notification if no new owner is selected)
+            my $BodyAsText = '';
+            if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+                $BodyAsText = $Self->{LayoutObject}->RichText2Ascii(
+                    String => $GetParam{Body} || 0,
+                );
+            }
+            else {
+                $BodyAsText = $GetParam{Body} || 0;
+            }
+            my $Move = $Self->{TicketObject}->TicketQueueSet(
+                QueueID            => $GetParam{NewQueueID},
+                UserID             => $Self->{UserID},
+                TicketID           => $Self->{TicketID},
+                SendNoNotification => $GetParam{NewUserID},
+                Comment            => $BodyAsText,
+            );
+            if ( !$Move ) {
+                return $Self->{LayoutObject}->ErrorScreen();
+            }
+        }
+
         # add note
         my $ArticleID = '';
         if ( $Self->{Config}->{Note} ) {
+
+            # if there is no ArticleTypeID, use the default value
+            if ( !defined $GetParam{ArticleTypeID} ) {
+                $GetParam{ArticleType} = $Self->{Config}->{ArticleTypeDefault};
+            }
+
             my $MimeType = 'text/plain';
             if ( $Self->{LayoutObject}->{BrowserRichText} ) {
                 $MimeType = 'text/html';
@@ -752,6 +801,7 @@ sub Run {
             # remove pre submited attachments
             $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
         }
+
         # set dynamic fields
         # cycle trough the activated Dynamic Fields for this screen
         DYNAMICFIELD:
@@ -851,19 +901,31 @@ sub Run {
     }
     elsif ( $Self->{Subaction} eq 'AJAXUpdate' ) {
         my %Ticket = $Self->{TicketObject}->TicketGet( TicketID => $Self->{TicketID} );
-        my $CustomerUser = $GetParam{SelectedCustomerUser} || $Ticket{CustomerUserID};
-        my $ServiceID    = $GetParam{ServiceID}            || $Ticket{ServiceID};
-        my $QueueID      = $Ticket{QueueID};
+        my $CustomerUser = $Ticket{CustomerUserID};
+
+        my $ServiceID;
+
+        # get service value from param if field is visible in the screen
+        if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Self->{Config}->{Service} ) {
+            $ServiceID = $GetParam{ServiceID} || '';
+        }
+
+        # otherwise use ticket service value since it can't be changed
+        elsif ( $Self->{ConfigObject}->Get('Ticket::Service') ) {
+            $ServiceID = $Ticket{ServiceID} || '';
+        }
+
+        my $QueueID = $GetParam{NewQueueID} || $Ticket{QueueID};
 
         # convert dynamic field values into a structure for ACLs
         my %DynamicFieldACLParameters;
         DYNAMICFIELD:
-        for my $DynamcField ( keys %DynamicFieldValues ) {
-            next DYNAMICFIELD if !$DynamcField;
-            next DYNAMICFIELD if !$DynamicFieldValues{$DynamcField};
+        for my $DynamicField ( sort keys %DynamicFieldValues ) {
+            next DYNAMICFIELD if !$DynamicField;
+            next DYNAMICFIELD if !$DynamicFieldValues{$DynamicField};
 
-            $DynamicFieldACLParameters{ 'DynamicField_' . $DynamcField }
-                = $DynamicFieldValues{$DynamcField};
+            $DynamicFieldACLParameters{ 'DynamicField_' . $DynamicField }
+                = $DynamicFieldValues{$DynamicField};
         }
 
         # get list type
@@ -895,6 +957,11 @@ sub Run {
             CustomerUserID => $CustomerUser,
             QueueID        => $QueueID,
         );
+
+        # reset previous ServiceID to reset SLA-List if no service is selected
+        if ( !defined $ServiceID || !$Services->{$ServiceID} ) {
+            $ServiceID = '';
+        }
         my $SLAs = $Self->_GetSLAs(
             %GetParam,
             CustomerUserID => $CustomerUser,
@@ -904,10 +971,10 @@ sub Run {
         my $NextStates = $Self->_GetNextStates(
             %GetParam,
             CustomerUserID => $CustomerUser || '',
-            QueueID        => $QueueID      || 1,
+            QueueID => $QueueID,
         );
 
-        # update Dynamc Fields Possible Values via AJAX
+        # update Dynamic Fields Possible Values via AJAX
         my @DynamicFieldAJAX;
 
         # cycle trough the activated Dynamic Fields for this screen
@@ -924,19 +991,25 @@ sub Run {
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
+            # convert possible values key => value to key => key for ACLs usign a Hash slice
+            my %AclData = %{$PossibleValues};
+            @AclData{ keys %AclData } = keys %AclData;
+
             # set possible values filter from ACLs
             my $ACL = $Self->{TicketObject}->TicketAcl(
                 %GetParam,
                 Action        => $Self->{Action},
-                QueueID       => $QueueID || 0,
+                QueueID       => $QueueID,
                 ReturnType    => 'Ticket',
                 ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                Data          => $PossibleValues,
+                Data          => \%AclData,
                 UserID        => $Self->{UserID},
             );
             if ($ACL) {
                 my %Filter = $Self->{TicketObject}->TicketAclData();
-                $PossibleValues = \%Filter;
+
+                # convert Filer key => key back to key => value using map
+                %{$PossibleValues} = map { $_ => $PossibleValues->{$_} } keys %Filter;
             }
 
             # add dynamic field to the list of fields to update
@@ -951,6 +1024,7 @@ sub Run {
                 }
             );
         }
+
         my $JSON = $Self->{LayoutObject}->BuildSelectionJSON(
             [
 
@@ -959,7 +1033,7 @@ sub Run {
                     Data         => $Owners,
                     SelectedID   => $GetParam{NewOwnerID},
                     Translation  => 0,
-                    PossibleNone => 0,
+                    PossibleNone => 1,
                     Max          => 100,
                 },
                 {
@@ -967,7 +1041,7 @@ sub Run {
                     Data         => $OldOwners,
                     SelectedID   => $GetParam{OldOwnerID},
                     Translation  => 0,
-                    PossibleNone => 0,
+                    PossibleNone => 1,
                     Max          => 100,
                 },
                 {
@@ -979,18 +1053,20 @@ sub Run {
                     Max          => 100,
                 },
                 {
-                    Name        => 'NewStateID',
-                    Data        => $NextStates,
-                    SelectedID  => $GetParam{NewStateID},
-                    Translation => 1,
-                    Max         => 100,
+                    Name         => 'NewStateID',
+                    Data         => $NextStates,
+                    SelectedID   => $GetParam{NewStateID},
+                    Translation  => 1,
+                    PossibleNone => $Self->{Config}->{StateDefault} ? 0 : 1,
+                    Max          => 100,
                 },
                 {
-                    Name        => 'NewPriorityID',
-                    Data        => $Priorities,
-                    SelectedID  => $GetParam{NewPriorityID},
-                    Translation => 1,
-                    Max         => 100,
+                    Name         => 'NewPriorityID',
+                    Data         => $Priorities,
+                    SelectedID   => $GetParam{NewPriorityID},
+                    PossibleNone => 0,
+                    Translation  => 1,
+                    Max          => 100,
                 },
                 {
                     Name         => 'ServiceID',
@@ -1053,6 +1129,10 @@ sub Run {
             # check if field has PossibleValues property in its configuration
             if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
 
+                # convert possible values key => value to key => key for ACLs usign a Hash slice
+                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                @AclData{ keys %AclData } = keys %AclData;
+
                 # set possible values filter from ACLs
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
@@ -1060,12 +1140,16 @@ sub Run {
                     TicketID      => $Self->{TicketID},
                     ReturnType    => 'Ticket',
                     ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
+                    Data          => \%AclData,
                     UserID        => $Self->{UserID},
                 );
                 if ($ACL) {
                     my %Filter = $Self->{TicketObject}->TicketAclData();
-                    $PossibleValuesFilter = \%Filter;
+
+                    # convert Filer key => key back to key => value using map
+                    %{$PossibleValuesFilter}
+                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        keys %Filter;
                 }
             }
 
@@ -1165,7 +1249,7 @@ sub _Mask {
             Data  => \%Type,
             Name  => 'TypeID',
             SelectedID   => $Param{TypeID},
-            PossibleNone => 1,
+            PossibleNone => 0,
             Sort         => 'AlphanumericValue',
             Translation  => 0,
         );
@@ -1178,22 +1262,26 @@ sub _Mask {
     # services
     if ( $Self->{ConfigObject}->Get('Ticket::Service') && $Self->{Config}->{Service} ) {
 
-        # my %Service;
-        my $Services;
-        if ( $Ticket{CustomerUserID} ) {
-            $Services = $Self->_GetServices(
-                %Param,
-                Action         => $Self->{Action},
-                CustomerUserID => $Ticket{CustomerUserID},
-                UserID         => $Self->{UserID},
-            );
+        my $Services = $Self->_GetServices(
+            %Param,
+            Action         => $Self->{Action},
+            CustomerUserID => $Ticket{CustomerUserID},
+            UserID         => $Self->{UserID},
+        );
+
+        # reset previous ServiceID to reset SLA-List if no service is selected
+        if ( !$Param{ServiceID} || !$Services->{ $Param{ServiceID} } ) {
+            $Param{ServiceID} = '';
         }
+
         $Param{ServiceStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data  => $Services              || [],
-            Name  => 'ServiceID',
-            Class => $Param{ServiceInvalid} || ' ',
+            Data         => $Services,
+            Name         => 'ServiceID',
+            SelectedID   => $Param{ServiceID},
+            Class        => $Param{ServiceInvalid} || ' ',
             PossibleNone => 1,
             TreeView     => $TreeView,
+            Sort         => 'TreeView',
             Translation  => 0,
             Max          => 200,
         );
@@ -1220,6 +1308,33 @@ sub _Mask {
             Data => {%Param},
         );
     }
+
+    if ( $Self->{Config}->{Queue} ) {
+
+        # fetch all queues
+        my %MoveQueues = $Self->{TicketObject}->TicketMoveList(
+            TicketID => $Self->{TicketID},
+            UserID   => $Self->{UserID},
+            Action   => $Self->{Action},
+            Type     => 'move_into',
+        );
+
+        $Param{QueuesStrg} = $Self->{LayoutObject}->BuildSelection(
+            Data         => \%MoveQueues,
+            Name         => 'NewQueueID',
+            SelectedID   => $Param{NewQueueID},
+            PossibleNone => 0,
+            TreeView     => 1,
+            Sort         => 'TreeView',
+            Translation  => 0,
+        );
+
+        $Self->{LayoutObject}->Block(
+            Name => 'Queue',
+            Data => {%Param},
+        );
+    }
+
     if ( $Self->{Config}->{Owner} ) {
 
         # get user of own groups
@@ -1239,7 +1354,7 @@ sub _Mask {
                 Result  => 'HASH',
                 Cached  => 1,
             );
-            for my $UserID ( keys %MemberList ) {
+            for my $UserID ( sort keys %MemberList ) {
                 $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
             }
         }
@@ -1247,12 +1362,12 @@ sub _Mask {
         # get old owner
         my @OldUserInfo = $Self->{TicketObject}->TicketOwnerList( TicketID => $Self->{TicketID} );
         $Param{OwnerStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%ShownUsers,
-            SelectedID => $Param{NewOwnerID},
-            Name       => 'NewOwnerID',
-            Class      => $Param{NewOwnerInvalid} || ' ',
-            Size       => 10,
-
+            Data         => \%ShownUsers,
+            SelectedID   => $Param{NewOwnerID},
+            Name         => 'NewOwnerID',
+            Class        => $Param{NewOwnerInvalid} || ' ',
+            Size         => 1,
+            PossibleNone => 1,
         );
         my %UserHash;
         if (@OldUserInfo) {
@@ -1264,9 +1379,7 @@ sub _Mask {
                 $Counter++;
             }
         }
-        if ( !%UserHash ) {
-            $UserHash{''} = '-';
-        }
+
         my $OldOwnerSelectedID = '';
         if ( $Param{OldOwnerID} ) {
             $OldOwnerSelectedID = $Param{OldOwnerID};
@@ -1277,11 +1390,11 @@ sub _Mask {
 
         # build string
         $Param{OldOwnerStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%UserHash,
-            SelectedID => $OldOwnerSelectedID,
-            Name       => 'OldOwnerID',
-            Class      => $Param{OldOwnerInvalid} || ' ',
-
+            Data         => \%UserHash,
+            SelectedID   => $OldOwnerSelectedID,
+            Name         => 'OldOwnerID',
+            Class        => $Param{OldOwnerInvalid} || ' ',
+            PossibleNone => 1,
         );
         if ( $Param{NewOwnerType} && $Param{NewOwnerType} eq 'Old' ) {
             $Param{'NewOwnerType::Old'} = 'checked = "checked"';
@@ -1295,7 +1408,7 @@ sub _Mask {
             Data => \%Param,
         );
     }
-    if ( $Self->{Config}->{Responsible} ) {
+    if ( $Self->{ConfigObject}->Get('Ticket::Responsible') && $Self->{Config}->{Responsible} ) {
 
         # get user of own groups
         my %ShownUsers;
@@ -1314,17 +1427,18 @@ sub _Mask {
                 Result  => 'HASH',
                 Cached  => 1,
             );
-            for my $UserID ( keys %MemberList ) {
+            for my $UserID ( sort keys %MemberList ) {
                 $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
             }
         }
 
         # get responsible
         $Param{ResponsibleStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data       => \%ShownUsers,
-            SelectedID => $Param{NewResponsibleID} || $Ticket{ResponsibleID},
-            Name       => 'NewResponsibleID',
-            Size       => 10,
+            Data         => \%ShownUsers,
+            SelectedID   => $Param{NewResponsibleID} || $Ticket{ResponsibleID},
+            Name         => 'NewResponsibleID',
+            PossibleNone => 1,
+            Size         => 1,
         );
         $Self->{LayoutObject}->Block(
             Name => 'Responsible',
@@ -1338,9 +1452,6 @@ sub _Mask {
             TicketID => $Self->{TicketID},
             UserID   => $Self->{UserID},
         );
-        if ( !$Self->{Config}->{StateDefault} ) {
-            $StateList{''} = '-';
-        }
         if ( !$Param{NewStateID} ) {
             if ( $Self->{Config}->{StateDefault} ) {
                 $State{SelectedValue} = $Self->{Config}->{StateDefault};
@@ -1349,12 +1460,12 @@ sub _Mask {
         else {
             $State{SelectedID} = $Param{NewStateID};
         }
-        $State{SelectedID} ||= $Param{StateID};
 
         # build next states string
         $Param{StateStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => \%StateList,
-            Name => 'NewStateID',
+            Data         => \%StateList,
+            Name         => 'NewStateID',
+            PossibleNone => $Self->{Config}->{StateDefault} ? 0 : 1,
             %State,
         );
         $Self->{LayoutObject}->Block(
@@ -1431,6 +1542,11 @@ sub _Mask {
 
         # add rich text editor
         if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+
+            # use height/width defined for this screen
+            $Param{RichTextHeight} = $Self->{Config}->{RichTextHeight} || 0;
+            $Param{RichTextWidth}  = $Self->{Config}->{RichTextWidth}  || 0;
+
             $Self->{LayoutObject}->Block(
                 Name => 'RichText',
                 Data => \%Param,
@@ -1451,15 +1567,17 @@ sub _Mask {
                 Result  => 'HASH',
                 Cached  => 1,
             );
-            for my $UserID ( keys %MemberList ) {
+            for my $UserID ( sort keys %MemberList ) {
                 $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
             }
+            my $InformAgentSize = $Self->{ConfigObject}->Get('Ticket::Frontend::InformAgentMaxSize')
+                || 3;
             $Param{OptionStrg} = $Self->{LayoutObject}->BuildSelection(
                 Data       => \%ShownUsers,
                 SelectedID => $Self->{InformUserID},
                 Name       => 'InformUserID',
                 Multiple   => 1,
-                Size       => 3,
+                Size       => $InformAgentSize,
             );
             $Self->{LayoutObject}->Block(
                 Name => 'InformAgent',
@@ -1489,12 +1607,14 @@ sub _Mask {
                 $Counter++;
             }
 
+            my $InvolvedAgentSize
+                = $Self->{ConfigObject}->Get('Ticket::Frontend::InvolvedAgentMaxSize') || 3;
             $Param{InvolvedAgentStrg} = $Self->{LayoutObject}->BuildSelection(
                 Data       => \%UserHash,
                 SelectedID => $Self->{InvolvedUserID},
                 Name       => 'InvolvedUserID',
                 Multiple   => 1,
-                Size       => 3,
+                Size       => $InvolvedAgentSize,
             );
             $Self->{LayoutObject}->Block(
                 Name => 'InvolvedAgent',
@@ -1534,22 +1654,25 @@ sub _Mask {
         }
 
         # get possible notes
-        my %DefaultNoteTypes = %{ $Self->{Config}->{ArticleTypes} };
-        my %NoteTypes = $Self->{TicketObject}->ArticleTypeList( Result => 'HASH' );
-        for my $KeyNoteType ( keys %NoteTypes ) {
-            if ( !$DefaultNoteTypes{ $NoteTypes{$KeyNoteType} } ) {
-                delete $NoteTypes{$KeyNoteType};
+        if ( $Self->{Config}->{ArticleTypes} ) {
+            my %DefaultNoteTypes = %{ $Self->{Config}->{ArticleTypes} };
+            my %NoteTypes = $Self->{TicketObject}->ArticleTypeList( Result => 'HASH' );
+            for my $KeyNoteType ( sort keys %NoteTypes ) {
+                if ( !$DefaultNoteTypes{ $NoteTypes{$KeyNoteType} } ) {
+                    delete $NoteTypes{$KeyNoteType};
+                }
             }
+
+            $Param{ArticleTypeStrg} = $Self->{LayoutObject}->BuildSelection(
+                Data => \%NoteTypes,
+                Name => 'ArticleTypeID',
+                %ArticleType,
+            );
+            $Self->{LayoutObject}->Block(
+                Name => 'ArticleType',
+                Data => \%Param,
+            );
         }
-        $Param{ArticleTypeStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => \%NoteTypes,
-            Name => 'ArticleTypeID',
-            %ArticleType,
-        );
-        $Self->{LayoutObject}->Block(
-            Name => 'ArticleType',
-            Data => \%Param,
-        );
 
         # show time accounting box
         if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
@@ -1700,14 +1823,16 @@ sub _GetResponsible {
         Valid => 1,
     );
     if ( $Param{QueueID} && !$Param{AllUsers} ) {
-        my $GID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Param{QueueID} );
+        my $GID = $Self->{QueueObject}->GetQueueGroupID(
+            QueueID => $Param{NewQueueID} || $Param{QueueID}
+        );
         my %MemberList = $Self->{GroupObject}->GroupMemberList(
             GroupID => $GID,
-            Type    => 'note',
+            Type    => 'responsible',
             Result  => 'HASH',
             Cached  => 1,
         );
-        for my $UserID ( keys %MemberList ) {
+        for my $UserID ( sort keys %MemberList ) {
             $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
         }
     }
@@ -1734,14 +1859,16 @@ sub _GetOwners {
         Valid => 1,
     );
     if ( $Param{QueueID} && !$Param{AllUsers} ) {
-        my $GID = $Self->{QueueObject}->GetQueueGroupID( QueueID => $Param{QueueID} );
+        my $GID = $Self->{QueueObject}->GetQueueGroupID(
+            QueueID => $Param{NewQueueID} || $Param{QueueID}
+        );
         my %MemberList = $Self->{GroupObject}->GroupMemberList(
             GroupID => $GID,
             Type    => 'owner',
             Result  => 'HASH',
             Cached  => 1,
         );
-        for my $UserID ( keys %MemberList ) {
+        for my $UserID ( sort keys %MemberList ) {
             $ShownUsers{$UserID} = $AllGroupsMembers{$UserID};
         }
     }
@@ -1778,9 +1905,6 @@ sub _GetOldOwners {
             $Counter++;
         }
     }
-    if ( !%UserHash ) {
-        $UserHash{''} = '-';
-    }
 
     # workflow
     my $ACL = $Self->{TicketObject}->TicketAcl(
@@ -1798,112 +1922,31 @@ sub _GetOldOwners {
 
 sub _GetServices {
     my ( $Self, %Param ) = @_;
+
+    # get service
     my %Service;
-    my @ServiceList;
-    if ( $Param{CustomerUserID} ) {
+
+    # get options for default services for unknown customers
+    my $DefaultServiceUnknownCustomer
+        = $Self->{ConfigObject}->Get('Ticket::Service::Default::UnknownCustomer');
+
+    # get service list
+    if (
+        ( defined $Param{CustomerUserID} && $Param{CustomerUserID} )
+        || $DefaultServiceUnknownCustomer
+        )
+    {
         %Service = $Self->{TicketObject}->TicketServiceList(
             %Param,
             Action => $Self->{Action},
             UserID => $Self->{UserID},
         );
-
-        my %OrigService = $Self->{ServiceObject}->CustomerUserServiceMemberList(
-            Result            => 'HASH',
-            CustomerUserLogin => $Param{CustomerUserID},
-            UserID            => 1,
-        );
-
-        # get all services
-        my $ServiceList = $Self->{ServiceObject}->ServiceListGet(
-            Valid  => 0,
-            UserID => 1,
-        );
-
-        # get a service lookup table
-        my %ServiceLoockup;
-        SERVICE:
-        for my $ServiceData ( @{$ServiceList} ) {
-            next SERVICE if !$ServiceData;
-            next SERVICE if !IsHashRefWithData($ServiceData);
-            next SERVICE if !$ServiceData->{ServiceID};
-
-            $ServiceLoockup{ $ServiceData->{ServiceID} } = $ServiceData;
-        }
-
-        # to store all ready printed ServiceIDs
-        my %AddedServices;
-
-        for my $ServiceKey ( sort { $OrigService{$a} cmp $OrigService{$b} } keys %OrigService ) {
-
-            # get the service parent
-            my $ServiceParentID = $ServiceLoockup{$ServiceKey}->{ParentID} || 0;
-
-            # check if direct parent is not listed as printed
-            if ( $ServiceParentID && !defined $AddedServices{$ServiceParentID} ) {
-
-                # get all parent IDs
-                my $ServiceParents = $Self->{ServiceObject}->ServiceParentsGet(
-                    ServiceID => $ServiceKey,
-                    UserID    => $Self->{UserID},
-                );
-
-                SERVICEID:
-                for my $ServiceID ( @{$ServiceParents} ) {
-                    next SERVICEID if !$ServiceID;
-                    next SERVICEID if $AddedServices{$ServiceID};
-
-                    my $ServiceParent = $ServiceLoockup{$ServiceID};
-                    next SERVICEID if !IsHashRefWithData($ServiceParent);
-
-                    # create a new register for each parent as disabled
-                    my %ParentServiceRegister = (
-                        Key      => $ServiceID,
-                        Value    => $ServiceParent->{Name},
-                        Selected => 0,
-                        Disabled => 1,
-                    );
-                    push @ServiceList, \%ParentServiceRegister;
-
-                    # set service as printed
-                    $AddedServices{$ServiceID} = 1;
-                }
-            }
-
-            # set default service structure
-            my %ServiceRegister = (
-                Key   => $ServiceKey,
-                Value => $OrigService{$ServiceKey},
-            );
-
-            # check if service is selected
-            if ( $Param{ServiceID} && $Param{ServiceID} eq $ServiceKey ) {
-                $ServiceRegister{Selected} = 1;
-            }
-
-            # check if service is disabled
-            if ( !$Service{$ServiceKey} ) {
-                $ServiceRegister{Disabled} = 1;
-            }
-            push @ServiceList, \%ServiceRegister;
-
-            # set service as printed
-            $AddedServices{$ServiceKey} = 1;
-        }
     }
-    return \@ServiceList;
+    return \%Service;
 }
 
 sub _GetSLAs {
     my ( $Self, %Param ) = @_;
-
-    # convert service ArrayHashRef to hashref
-    my %Services;
-    SERVICE:
-    for my $Service ( @{ $Param{Services} } ) {
-        next SERVICE if !$Service;
-        $Services{ $Service->{Key} } = $Service->{Value};
-    }
-    $Param{Services} = \%Services;
 
     my %SLA;
     if ( $Param{ServiceID} ) {
