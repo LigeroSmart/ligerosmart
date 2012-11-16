@@ -2,12 +2,12 @@
 # Kernel/Modules/AgentTicketBulk.pm - to do bulk actions on tickets
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: AgentTicketBulk.pm,v 1.4 2012-04-16 11:55:23 te Exp $
-# $OldId: AgentTicketBulk.pm,v 1.94 2012/01/06 13:18:00 mg Exp $
+# $Id: AgentTicketBulk.pm,v 1.5 2012-11-16 21:07:59 cr Exp $
+# $OldId: AgentTicketBulk.pm,v 1.99 2012/11/15 20:55:13 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Modules::AgentTicketBulk;
@@ -28,7 +28,7 @@ use Kernel::System::MasterSlave;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -342,7 +342,8 @@ sub Run {
 
             # set responsible
             if (
-                $Self->{Config}->{Responsible}
+                $Self->{ConfigObject}->Get('Ticket::Responsible')
+                && $Self->{Config}->{Responsible}
                 && ( $GetParam{'ResponsibleID'} || $GetParam{'Responsible'} )
                 )
             {
@@ -721,7 +722,7 @@ sub _Mask {
 
     # prepare errors!
     if ( $Param{Errors} ) {
-        for my $KeyError ( keys %{ $Param{Errors} } ) {
+        for my $KeyError ( sort keys %{ $Param{Errors} } ) {
             $Param{$KeyError}
                 = $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$KeyError} );
         }
@@ -747,7 +748,7 @@ sub _Mask {
     # build ArticleTypeID string
     my %DefaultNoteTypes = %{ $Self->{Config}->{ArticleTypes} };
     my %NoteTypes = $Self->{TicketObject}->ArticleTypeList( Result => 'HASH' );
-    for my $KeyNoteType ( keys %NoteTypes ) {
+    for my $KeyNoteType ( sort keys %NoteTypes ) {
         if ( !$DefaultNoteTypes{ $NoteTypes{$KeyNoteType} } ) {
             delete $NoteTypes{$KeyNoteType};
         }
@@ -868,10 +869,11 @@ sub _Mask {
             }
         }
         $Param{OwnerStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data => { '' => '-', %AllGroupsMembers },
-            Name => 'OwnerID',
-            Translation => 0,
-            SelectedID  => $Param{OwnerID},
+            Data         => \%AllGroupsMembers,
+            Name         => 'OwnerID',
+            Translation  => 0,
+            SelectedID   => $Param{OwnerID},
+            PossibleNone => 1,
         );
         $Self->{LayoutObject}->Block(
             Name => 'Owner',
@@ -1080,6 +1082,11 @@ sub _Mask {
 
     # add rich text editor for note & email
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+
+        # use height/width defined for this screen
+        $Param{RichTextHeight} = $Self->{Config}->{RichTextHeight} || 0;
+        $Param{RichTextWidth}  = $Self->{Config}->{RichTextWidth}  || 0;
+
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
             Data => \%Param,
