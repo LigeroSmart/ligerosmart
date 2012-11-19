@@ -1,12 +1,12 @@
 # --
 # PublicFAQSearch.dtl - provides HTML form for PublicFAQSearch.pm
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQSearch.dtl,v 1.7 2010-12-27 16:49:19 cr Exp $
+# $Id: PublicFAQSearch.dtl,v 1.8 2012-11-19 14:52:00 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 <!-- dtl:block:Search -->

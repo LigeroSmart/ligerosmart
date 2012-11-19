@@ -2,11 +2,11 @@
 # Kernel/Modules/AgentFAQSearchSmall.pm - module for FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchSmall.pm,v 1.5 2012-09-11 15:14:30 ub Exp $
+# $Id: AgentFAQSearchSmall.pm,v 1.6 2012-11-19 14:44:36 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
 package Kernel::Modules::AgentFAQSearchSmall;
@@ -18,7 +18,7 @@ use Kernel::System::FAQ;
 use Kernel::System::SearchProfile;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
