@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.33 2012-11-19 14:44:36 mh Exp $
+# $Id: AgentFAQZoom.pm,v 1.34 2012-11-19 20:33:37 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.33 $) [1];
+$VERSION = qw($Revision: 1.34 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -333,13 +333,13 @@ sub Run {
     my %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $FAQData{CreatedBy}
     );
-    $Param{CreatedByLogin} = $UserInfo{UserLogin};
+    $Param{CreatedByUser} = "$UserInfo{UserFirstname} $UserInfo{UserLastname}";
 
     # get user info (ChangedBy)
     %UserInfo = $Self->{UserObject}->GetUserData(
         UserID => $FAQData{ChangedBy}
     );
-    $Param{ChangedByLogin} = $UserInfo{UserLogin};
+    $Param{ChangedByUser} = "$UserInfo{UserFirstname} $UserInfo{UserLastname}";
 
     # set voting results
     $Param{VotingResultColor} = $Self->{LayoutObject}->GetFAQItemVotingRateColor(
