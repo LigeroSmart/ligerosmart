@@ -3,7 +3,7 @@
 # if there is a change in a configured state
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeMenuChangeDelete.pm,v 1.2 2012-04-03 17:28:35 ub Exp $
+# $Id: ITSMChangeMenuChangeDelete.pm,v 1.3 2012-11-20 17:09:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,6 +71,9 @@ sub Run {
         # get the required group for the frontend module
         my $Group = $Self->{ConfigObject}->Get('Frontend::Module')->{ $Param{Config}->{Action} }
             ->{GroupRo}->[0];
+
+        # deny access, when the group is not found
+        return $Param{Counter} if !$Group;
 
         # get the group id
         my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
