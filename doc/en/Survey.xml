@@ -1,0 +1,564 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!-- $Id: Survey.xml,v 1.2 2012-11-20 15:53:55 jh Exp $ -->
+
+<book lang='en'>
+
+<!-- ************************************** Head *********************************************** -->
+
+<bookinfo>
+<title>$Name</title>
+<edition>$Description Version $Version</edition>
+
+<copyright>
+<year>$YearStamp</year>
+<holder>$Vendor, $URL</holder>
+</copyright>
+
+<date>$DateStamp</date>
+
+<legalnotice>
+    <para>$License</para>
+    <para>This work is copyrighted by $Vendor, Norsk-Data-Str. 1, 61352 Bad Homburg, Germany.</para>
+    <para>Build Date: $DateStamp</para>
+</legalnotice>
+
+</bookinfo>
+
+<!-- ************************************ Customer part ****************************************** -->
+
+<preface id="preface" >
+    <!-- ********** -->
+    <!-- 1. Preface -->
+    <!-- ********** -->
+    <title>Preface</title>
+    <!--
+         A short overview for this modul clearly explained to customers!!!
+         e.g. Provides an additional button to also insert FAQ richtext incl. inlines + attachments into tickets.
+    -->
+    <para>
+        Adds the functionality to create Surveys that customers of closed tickets are invited to take part.
+    </para>
+    <para>
+        Shows graphical statistics of completed Surveys.
+    </para>
+</preface>
+
+<chapter>
+    <!-- *************** -->
+    <!-- 2. Feature List -->
+    <!-- *************** -->
+    <title>Feature List</title>
+    <!--
+        List of all functions declared at the functional level
+         -   minimum in 4 sentences
+         -   customer-specific
+         -   possible screenshots
+         -   no OTRS terminology like TicketEventModul, PreApplicationModul
+    -->
+    <para>This Module enables you to create new Surveys,
+        add questions to a created Survey, set a Survey live in order to send
+        requests, modify existing Surveys to a certain extent,
+        and view statistics of submitted Survey answers as well as the answers
+        themselves.
+    </para>
+</chapter>
+<chapter>
+    <!-- ******************** -->
+    <!-- 3. System Reqirement -->
+    <!-- ******************** -->
+    <title>System Requirement</title>
+    <sect1>
+        <title>Framework</title>
+        <para>The following OTRS framework is required:</para>
+        <para>
+        $Framework
+        </para>
+    </sect1>
+    <sect1>
+        <title>Packages</title>
+        <para>The following package are required:</para>
+        <para>
+        $PackageRequired
+        </para>
+    </sect1>
+    <sect1>
+        <title>Operating System</title>
+        <para>This package requires one of the following operating systems:</para>
+        <para>
+        $OS
+        </para>
+    </sect1>
+    <sect1>
+        <title>Third Party Software</title>
+        <para>This third party software is required to use this package:</para>
+        <para>
+            <itemizedlist>
+                <listitem><para>None.</para></listitem>
+            </itemizedlist>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <!-- *************** -->
+    <!-- 4. Installation -->
+    <!-- *************** -->
+    <title>Installation</title>
+    <para>The following instructions explain how to install the package.</para>
+    <sect1>
+        <title>Admin Interface</title>
+        <para>
+            Please use the following URL to install the package utilizing the admin
+            interface (please note that you need to be in the admin group).
+        </para>
+        <para>
+            <ulink url="http://localhost/otrs/index.pl?Action=AdminPackageManager">
+                http://localhost/otrs/index.pl?Action=AdminPackageManager
+            </ulink>
+        </para>
+    </sect1>
+    <sect1>
+        <title>Command Line</title>
+        <para>
+            Whenever you cannot use the Admin Interface for whatever reason,
+            you may use the following command line tool (&quot;bin/otrs.PackageManager.pl&quot;)
+            instead.
+        </para>
+        <para>
+        <screen>
+            shell> bin/otrs.PackageManager.pl  -a install -p /path/to/$Name-$Version.opm
+        </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <!-- **************** -->
+    <!-- 5. Configuration -->
+    <!-- **************** -->
+    <title>Configuration</title>
+    <para>
+        The following list of configuration options can be changed for this package.
+    </para>
+    <!--
+        List of all added, modified or removed config options in the package.
+        e.g.: Frontend::Module###AgentTicketWorkflow Group: Ticket, Subgroup: Frontend::Agent::ModuleRegistration)
+        Description text must be identical with sysconfig description and clearly explained to customers.
+    -->
+    <sect1>
+        <title>Survey::ShowVoteData</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            Shows vote results to customers if set to Yes.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::SendPeriod</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            Avoids spamming customers with Survey requests.
+            The number given here is the amount of days,
+            a customer won't get a second Survey request
+            after having received a request. In this
+            time periode tickets for this customer
+            can be closed without triggering new
+            Survey requests.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::NotificationSender</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            The sender adress that is proposed
+            on creation of new Surveys.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::NotificationRecipientBlacklist</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            Mailadresses that will never get Survey requests.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::NotificationSubject</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            The NotificationSubject that is proposed
+            on creation of new Surveys.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::NotificationBody</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            The NotificationBody that is proposed
+            on creation of new Surveys.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::SendNoSurveyRegExp</title>
+        <para>Group: Survey, Subgroup: Core</para>
+        <para>
+            If this regex matches, no customer Survey will be sent.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey::Frontend::AgentSurvey###ShowColumns</title>
+        <para>Group: Survey, Subgroup: Frontend::Agent::SurveyOverview</para>
+        <para>
+            Defines the shown columns in the Survey overview.
+            This option has no effect on the position of the column.
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <!-- ******** -->
+    <!-- 6. Usage -->
+    <!-- ******** -->
+    <title>Usage</title>
+    <!--
+        Create for every "possible" use case a step by step list clearly explained to customers. Screenshots desirable-
+        e.g.
+        1.  Choose new phone ticket frontend ?
+        2.  Fillup required data (subject)
+        3.  Submit the data (have a look at screenshot)
+        ...
+    -->
+    <sect1>
+        <title>Create new Survey</title>
+        <para>
+            This feature lets OTRS users create new Survey by selecting the menu "SURVEY"
+            and choosing "New".
+        </para>
+        <para>
+            New Surveys require a title, an introduction text, a sender mailaddress, a mail subject,
+            a mail body and an internal description of the Survey.
+        </para>
+        <para>
+            Additionally the new Survey can be created for just some queues.
+            If none are selected, it will be valid for every Queue.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Add Questions</title>
+        <para>
+            As soon as a new Survey is created, the user can add questions to this Survey by clicking
+            "Edit Questions" in the displayed Survey.
+        </para>
+        <para>
+            A new window will pop up. In there the user can add questions.
+        </para>
+        <para>
+            Four types of quesions are selectable. These are:
+        </para>
+        <para>
+            "YesNo" questions a user can answer by selecting "Yes" or "No" of a drop down select.
+        </para>
+        <para>
+            "Radio (List)" questions a user can answer by selecting exactly one and just one of the possible answers.
+        </para>
+        <para>
+            "Checkbox (List)" questions a user can answer by selecting none to all listed answers.
+        </para>
+        <para>
+            "Textarea" questions a user can write answers by typing regular text.
+        </para>
+        <para>
+            For each answer type the OTRS user can choose
+            if he wants a customer to be required to answer this question or if a customer can ignore the question.
+        </para>
+        <para>
+            As soon as questions of type "Radio (List)" or "Checkbox (List)" got added,
+            the question will be shown in the "Survey Questions"-List.
+            By clicking on the question the user can add answers,
+            change the answer order by clicking the "UP" or "DOWN" icon,
+            or delete the answer by clicking the "DELETE" icon.
+        </para>
+        <para>
+            Questions of type "Radio (List)" or "Checkbox (List)"
+            need to have at least two answers to be valid.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Start sending Survey requests</title>
+        <para>
+            When the OTRS user has finished adding or modifying questions and possible answers,
+            he can leave the "Edit Questions" area by clicking "Close window".
+        </para>
+        <para>
+            Back on the Survey detail page the user can select "Master" from the
+            "- Change Status -" select.
+        </para>
+        <para>
+            As soon as the Survey has the state "Master" the Survey is set live.
+        </para>
+        <para>
+            Only one Survey can have the state "Master".
+        </para>
+        <para>
+            If a Ticket got closed, the customer gets an E-Mail invitation to fill the Survey
+            by clicking a link inside the invitation E-Mail.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Survey Results Graph</title>
+        <para>
+            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a
+            a Survey that customers already submitted and scrolling down,
+            you can see the "Survey Results Graph".
+        </para>
+        <para>
+            This displays the statistically summarizeable questions (e.g. YesNo, Radio and Checkbox).
+        </para>
+        <para>
+            As soon as the Survey has the state "Master" the Survey is set live.
+        </para>
+        <para>
+            Questions where answers were configured as "required" will have
+            one vote for each customer submitted Survey.
+        </para>
+        <para>
+            Questions where answers were not configured as "required"
+            are optional for the customer. This means that for example 200 customers submitted
+            the Survey but in the statistic in total only 10 or 20 answers may occur, if
+            customers did not select any of the Radio (List), YesNo or checkbox answers
+            or haven't put anything in a textarea answer.
+        </para>
+        <para>
+            Statistics for required Checkbox (List) questions will have at least one
+            checked value for every submitted Survey but due to it's nature of beeing
+            multiple clickable there may be more answers than the total amount of submitted
+            Surveys. Examlpe: 200 Surveys submitted by customers, 350 answers on one
+            Checkbox (List) question.
+        </para>
+        <para>
+            Statistics for not required questions may have
+            less votes than the total amount of submitted Surveys (answer is optional).
+        </para>
+    </sect1>
+    <sect1>
+        <title>Stats Details</title>
+        <para>
+            By selecting "SURVEY" from the menu, choosing "Overview", clicking on a
+            Survey that customers already submitted and choosing "Stats Details"
+            you can see a list containing the time the Survey invitation was sent to the customer,
+            the time the customer submitted his filled Survey, the Ticket (clickable)
+            and a magnifying glass that shows the selected votes for this customer.
+        </para>
+        <para>
+            In there you can find the answers the customer chose or typed in question by question.
+        </para>
+        <para>
+            Especially Textarea answers are of interest in here.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Modifying Survey</title>
+        <para>
+            As soon as a Survey had the Status "Master" the possible modifications are limited.
+            So please make sure to have especially the amount of questions as well as
+            the amount of answers correctly configured before changing it's status
+            to Master.
+        </para>
+        <para>
+            WARNING: In a Survey of type "Master" you can not add or delete questions any more.
+        </para>
+        <para>
+            In a Survey of type Master you can change the general info
+            (e.g. Title, Introduction, Sender,...), the question text,
+            the answer text, as well as the order of the answers.
+        </para>
+        <para>
+            You can change the "Answer Required" part of a question too,
+            but this may just make sense as long as there are no
+            submitted customer Surveys.
+        </para>
+        <para>
+            Changing a "Answer Required" Question to answer not required
+            makes the answer optional, so the statistic for this question may
+            not have an answer for each submitted customer Survey
+            any more.
+        </para>
+        <para>
+            Changing a "Answer not Required" Question to answer required
+            will require future Survey customers to give a vote for
+            this question, but will not add votes for already submitted
+            Surveys. So statistics will render rather usless too.
+        </para>
+    </sect1>
+</chapter>
+
+<!-- ***************************************** Technical part ************************************ -->
+
+<chapter>
+    <!-- ********************************* -->
+    <!-- 7. Technical Implematation Detail -->
+    <!-- ********************************* -->
+    <title>Technical Implementation Details</title>
+    <!--
+        Describe the technical structure of the module and the technical functioning out of a developer's perspective.
+            -   Which module layers are used where/as?
+            -   What are the technical features of it?
+        You can split the technical part into a customer part shown in the doku
+        and a hidden part shown in the code.
+    -->
+    <para>
+        This module adds the following database tables:
+        survey,
+        survey_answer,
+        survey_question,
+        survey_queue,
+        survey_request,
+        survey_vote.
+    </para>
+    <para>
+        The survey table holds the general information of a survey.
+    </para>
+    <para>
+        The survey_answer holds the answers for a survey questions.
+    </para>
+    <para>
+        The survey_question holds all question related information as well as if an answer is required or not.
+    </para>
+    <para>
+        The survey_queue table holds a record for each queue a survey is added.
+    </para>
+    <para>
+        The survey_queue table holds a record for each queue a survey is added.
+    </para>
+    <para>
+        The survey_request table holds a record for each request sent to a customer,
+        as well as the time, a customer has submitted the survey he was invited to.
+    </para>
+    <para>
+        The survey_vote table holds a reference to the corresponding request and question
+        as well as the chosen answers.
+    </para>
+    <!--
+            OK, so far for the users and now for the developers underneath us:
+            Functionality:
+            3 Main Parts:
+        1. Extension for Ticket.pm's TicketAcl sub (Kernel/System/Ticket/OTRSTIcketMaskExtensions.pm):
+            Here the ObjectVariable "TicketAclFormData" gets populated after an ACL check, holding the 1 and 0 configs as configured in the ACL rule that was triggered.
+        2. Custom/Kernel/Modules/AgentTicket ActionCommon/Email/Phone/PhoneCommon .pm
+            In every .pm where we do the acl checks on dynamic fields, fetch Ticket.pm's new "TicketAclFormData" result and render dynamic field's HTML.
+            For Invisible DynamicFields, they get rendered too but as empty div's.
+        3. var/httpd/htdocs/js/Core.AJAX.OTRSTIcketMaskExtensions.js
+            Here the main work happens. After changing Ajax updateable fields,
+            the Perl backend gets called, returns a list of to be displayed dynamicfields as well as their html code.
+            A loop through the DynamicFields populates the empty divs that should get shown by newly triggered ACL rules
+            as well as now to be hidden DynamicFields's divs content gets deleted.
+
+            1 small side Part:
+        To get emptyDiv's we need the Kernel/Output/HTML/OutputFilterPreOTRSTicketMaskExtensions.pm to regex in the following new dtl block:
+        dtl:block:ContentDynamicField
+        inside the standard otrs 3.1 block:
+        dtl:block:DynamicField
+
+        this way the Custom/kernel/Module/Agent....pm's can render the dtl:block:ContentDynamicField only if they concerning DynamicField
+        should be visible.
+
+            Big thx to:
+            - Martin Gruner for thinking through the whole thing with me
+            - Carlos Rodriguez for the implementation of the huge framework side necessities to make this module possible
+        -->
+</chapter>
+
+<chapter>
+    <!-- *********** -->
+    <!-- 8. Filelist -->
+    <!-- *********** -->
+    <title>Filelist</title>
+    <!-- Standard text. Don't change this -->
+    <para>This list shows all included files and the referring permissions.</para>
+    <para>
+       $Filelist
+    </para>
+</chapter>
+
+<chapter>
+    <!-- ******* -->
+    <!-- 9. Test -->
+    <!-- ******* -->
+    <title>Tests</title>
+    <para>This module has been tested on the current state of the art in quality.</para>
+    <sect1>
+        <title>Testcases</title>
+        <para>
+            <!-- Reference to point 6.x and document the results -->
+            To tests this package please follow the examples described in the Usage section, all the
+            tests cases should return the expected results defined at the beginning of each example.
+        </para>
+    </sect1>
+    <sect1>
+        <title>Unitest</title>
+        <!-- If core files included in this package, there must be covered by unit tests and will be tested.
+             If the packet contains no "core files", this point 9.2 can be removed.
+        -->
+        <para>
+            To ensure the quality of the module, several so-called unit tests were created, to test
+            the functionalities of this module. These unit tests can be run via command line.
+        </para>
+        <para>
+            ATTENTION: Please never run unit tests on a productive system, since the added test
+            data to the system will no longer be removed. Always use a test system.
+        </para>
+        <para>
+            Run the package specific unit tests
+        </para>
+        <para>
+            To run only the unit test which will be delivered with this package, use the following
+            command on the command line:
+        </para>
+        <para>
+            <screen>
+                shell> perl bin/otrs.UnitTest.pl -n DynamicTicketTemplate
+            </screen>
+        </para>
+        <para>
+            Run all available unit tests
+        </para>
+        <para>
+            To run all available unit tests, use the following command on the command line:
+        </para>
+        <para>
+            <screen>
+                shell> perl bin/otrs.UnitTest.pl
+            </screen>
+        </para>
+    </sect1>
+</chapter>
+
+<chapter>
+    <!-- ************* -->
+    <!-- 10. Changelog -->
+    <!-- ************* -->
+    <title>ChangeLog</title>
+    <para>
+    $ChangeLog
+    </para>
+</chapter>
+
+<chapter>
+    <!-- *********** -->
+    <!-- 11. Contact -->
+    <!-- *********** -->
+    <title>Contacts</title>
+    <para>People who are involved in this implementation.</para>
+    <sect1>
+        <title>OTRS AG</title>
+        <para>
+            Accounting: xxxx xxxxx &lt;sales@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+        <para>
+            Technical: xxxxxxxxx xxxxxxxxx &lt;dev-support@otrs.com&gt;, Phone +49 (0)6172 681988 0
+        </para>
+    </sect1>
+</chapter>
+
+
+</book>

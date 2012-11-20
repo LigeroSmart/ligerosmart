@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.26 2012-11-13 16:11:17 mh Exp $
+# $Id: PublicSurvey.pm,v 1.27 2012-11-20 15:51:17 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,6 +47,15 @@ sub Run {
 
     my $Output;
 
+    # ---
+    # AnswerRequired
+    # ---
+    my %Answers;
+    my %Errors;
+    my @QuestionList;
+
+    # ---
+
     # ------------------------------------------------------------ #
     # public survey vote
     # ------------------------------------------------------------ #
@@ -54,43 +63,147 @@ sub Run {
         my $PublicSurveyKey = $Self->{ParamObject}->GetParam( Param => 'PublicSurveyKey' );
         my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
         if ( $Survey{SurveyID} ) {
-            my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+            @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+
+  # ---
+  # AnswerRequired
+  # ---
+  #            for my $Question (@QuestionList) {
+  #                if ( $Question->{Type} eq 'YesNo' ) {
+  #                    my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(
+  #                        Param => "PublicSurveyVote1[$Question->{QuestionID}]"
+  #                    );
+  #                    $Self->{SurveyObject}->PublicAnswerSave(
+  #                        PublicSurveyKey => $PublicSurveyKey,
+  #                        QuestionID      => $Question->{QuestionID},
+  #                        VoteValue       => $PublicSurveyVote1,
+  #                    );
+  #                }
+  #                elsif ( $Question->{Type} eq 'Radio' ) {
+  #                    my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(
+  #                        Param => "PublicSurveyVote2[$Question->{QuestionID}]"
+  #                    );
+  #                    $Self->{SurveyObject}->PublicAnswerSave(
+  #                        PublicSurveyKey => $PublicSurveyKey,
+  #                        QuestionID      => $Question->{QuestionID},
+  #                        VoteValue       => $PublicSurveyVote2,
+  #                    );
+  #                }
+  #                elsif ( $Question->{Type} eq 'Checkbox' ) {
+  #                    my @AnswerList = $Self->{SurveyObject}->AnswerList(
+  #                        QuestionID => $Question->{QuestionID}
+  #                    );
+  #                    for my $Answer (@AnswerList) {
+  #                        my $PublicSurveyVote3 = $Self->{ParamObject}->GetParam(
+  #                            Param => "PublicSurveyVote3[$Answer->{AnswerID}]"
+  #                        );
+  #                        if ( $PublicSurveyVote3 && $PublicSurveyVote3 eq 'Yes' ) {
+  #                            $Self->{SurveyObject}->PublicAnswerSave(
+  #                                PublicSurveyKey => $PublicSurveyKey,
+  #                                QuestionID      => $Question->{QuestionID},
+  #                                VoteValue       => $Answer->{AnswerID},
+  #                            );
+  #                        }
+  #                    }
+  #                }
+  #                elsif ( $Question->{Type} eq 'Textarea' ) {
+  #                    my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(
+  #                        Param => "PublicSurveyVote4[$Question->{QuestionID}]"
+  #                    );
+  #
+  #                    # check if rich text is enabled
+  #                    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+  #                        $PublicSurveyVote4
+  #                            = ( length $PublicSurveyVote4 )
+  #                            ? "\$html/text\$ $PublicSurveyVote4"
+  #                            : '';
+  #                    }
+  #
+  #                    $Self->{SurveyObject}->PublicAnswerSave(
+  #                        PublicSurveyKey => $PublicSurveyKey,
+  #                        QuestionID      => $Question->{QuestionID},
+  #                        VoteValue       => $PublicSurveyVote4,
+  #                    );
+  #                }
+  #            }
+  #            $Self->{SurveyObject}->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
+  #        }
+  #        $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
+  #
+  #        # print the main table.
+  #        $Self->{LayoutObject}->Block(
+  #            Name => 'PublicSurveyMessage',
+  #            Data => {
+  #                MessageType   => 'Survey Information',
+  #                MessageHeader => 'Thank you for your feedback.',
+  #                Message       => 'The survey is finished.',
+  #            },
+  #        );
+  #
+  #        $Output .= $Self->{LayoutObject}->Output(
+  #            TemplateFile => 'PublicSurvey',
+  #            Data         => {%Param},
+  #        );
+  #        $Output .= $Self->{LayoutObject}->CustomerFooter();
+  #        return $Output;
+
             for my $Question (@QuestionList) {
                 if ( $Question->{Type} eq 'YesNo' ) {
                     my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(
                         Param => "PublicSurveyVote1[$Question->{QuestionID}]"
                     );
-                    $Self->{SurveyObject}->PublicAnswerSave(
-                        PublicSurveyKey => $PublicSurveyKey,
-                        QuestionID      => $Question->{QuestionID},
-                        VoteValue       => $PublicSurveyVote1,
-                    );
+
+                    if (
+                        $Question->{AnswerRequired}
+                        &&
+                        ( !$PublicSurveyVote1 || !length $PublicSurveyVote1 )
+                        )
+                    {
+                        $Errors{ $Question->{QuestionID} }{'Answer required'} = 1;
+                    }
+
+                    $Answers{ $Question->{QuestionID} } = $PublicSurveyVote1;
                 }
                 elsif ( $Question->{Type} eq 'Radio' ) {
                     my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(
                         Param => "PublicSurveyVote2[$Question->{QuestionID}]"
                     );
-                    $Self->{SurveyObject}->PublicAnswerSave(
-                        PublicSurveyKey => $PublicSurveyKey,
-                        QuestionID      => $Question->{QuestionID},
-                        VoteValue       => $PublicSurveyVote2,
-                    );
+
+                    if (
+                        $Question->{AnswerRequired}
+                        && ( !$PublicSurveyVote2 || !length $PublicSurveyVote2 )
+                        )
+                    {
+                        $Errors{ $Question->{QuestionID} }{'Answer required'} = 1;
+                    }
+
+                    $Answers{ $Question->{QuestionID} } = $PublicSurveyVote2;
                 }
                 elsif ( $Question->{Type} eq 'Checkbox' ) {
                     my @AnswerList = $Self->{SurveyObject}->AnswerList(
                         QuestionID => $Question->{QuestionID}
                     );
+
                     for my $Answer (@AnswerList) {
                         my $PublicSurveyVote3 = $Self->{ParamObject}->GetParam(
                             Param => "PublicSurveyVote3[$Answer->{AnswerID}]"
                         );
                         if ( $PublicSurveyVote3 && $PublicSurveyVote3 eq 'Yes' ) {
-                            $Self->{SurveyObject}->PublicAnswerSave(
-                                PublicSurveyKey => $PublicSurveyKey,
-                                QuestionID      => $Question->{QuestionID},
-                                VoteValue       => $Answer->{AnswerID},
-                            );
+                            push @{ $Answers{ $Question->{QuestionID} } }, $Answer->{AnswerID};
                         }
+                    }
+                    if (
+                        $Question->{AnswerRequired}
+                        && (
+                            !defined $Answers{ $Question->{QuestionID} }
+                            || (
+                                ref $Answers{ $Question->{QuestionID} } ne 'ARRAY'
+                                && !@{ $Answers{ $Question->{QuestionID} } }
+                            )
+                        )
+                        )
+                    {
+                        $Errors{ $Question->{QuestionID} }{'Answer required'} = 1;
                     }
                 }
                 elsif ( $Question->{Type} eq 'Textarea' ) {
@@ -105,34 +218,86 @@ sub Run {
                             ? "\$html/text\$ $PublicSurveyVote4"
                             : '';
                     }
-
-                    $Self->{SurveyObject}->PublicAnswerSave(
-                        PublicSurveyKey => $PublicSurveyKey,
-                        QuestionID      => $Question->{QuestionID},
-                        VoteValue       => $PublicSurveyVote4,
-                    );
+                    if (
+                        $Question->{AnswerRequired}
+                        &&
+                        ( !$PublicSurveyVote4 || !length $PublicSurveyVote4 )
+                        )
+                    {
+                        $Errors{ $Question->{QuestionID} }{'Answer required'} = 1;
+                    }
+                    $Answers{ $Question->{QuestionID} } = $PublicSurveyVote4;
                 }
             }
-            $Self->{SurveyObject}->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
+
+            # If we didn't have errors, just save the answers
+            if ( !scalar keys %Errors ) {
+                for my $Question (@QuestionList) {
+                    if ( $Question->{Type} eq 'YesNo' ) {
+                        $Self->{SurveyObject}->PublicAnswerSave(
+                            PublicSurveyKey => $PublicSurveyKey,
+                            QuestionID      => $Question->{QuestionID},
+                            VoteValue       => $Answers{ $Question->{QuestionID} },
+                        );
+                    }
+                    elsif ( $Question->{Type} eq 'Radio' ) {
+                        $Self->{SurveyObject}->PublicAnswerSave(
+                            PublicSurveyKey => $PublicSurveyKey,
+                            QuestionID      => $Question->{QuestionID},
+                            VoteValue       => $Answers{ $Question->{QuestionID} },
+                        );
+                    }
+                    elsif ( $Question->{Type} eq 'Checkbox' ) {
+                        my @AnswerList = $Self->{SurveyObject}->AnswerList(
+                            QuestionID => $Question->{QuestionID}
+                        );
+                        if (
+                            $Answers{ $Question->{QuestionID} }
+                            && ref $Answers{ $Question->{QuestionID} } eq 'ARRAY'
+                            && @{ $Answers{ $Question->{QuestionID} } }
+                            )
+                        {
+                            for my $Answer ( @{ $Answers{ $Question->{QuestionID} } } ) {
+                                $Self->{SurveyObject}->PublicAnswerSave(
+                                    PublicSurveyKey => $PublicSurveyKey,
+                                    QuestionID      => $Question->{QuestionID},
+                                    VoteValue       => $Answer,
+                                );
+                            }
+                        }
+                    }
+                    elsif ( $Question->{Type} eq 'Textarea' ) {
+                        $Self->{SurveyObject}->PublicAnswerSave(
+                            PublicSurveyKey => $PublicSurveyKey,
+                            QuestionID      => $Question->{QuestionID},
+                            VoteValue       => $Answers{ $Question->{QuestionID} },
+                        );
+                    }
+                }
+                $Self->{SurveyObject}
+                    ->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
+                $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
+
+                # print the main table.
+                $Self->{LayoutObject}->Block(
+                    Name => 'PublicSurveyMessage',
+                    Data => {
+                        MessageType   => 'Survey Information',
+                        MessageHeader => 'Thank you for your feedback.',
+                        Message       => 'The survey is finished.',
+                    },
+                );
+
+                $Output .= $Self->{LayoutObject}->Output(
+                    TemplateFile => 'PublicSurvey',
+                    Data         => {%Param},
+                );
+                $Output .= $Self->{LayoutObject}->CustomerFooter();
+                return $Output;
+            }
         }
-        $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
 
-        # print the main table.
-        $Self->{LayoutObject}->Block(
-            Name => 'PublicSurveyMessage',
-            Data => {
-                MessageType   => 'Survey Information',
-                MessageHeader => 'Thank you for your feedback.',
-                Message       => 'The survey is finished.',
-            },
-        );
-
-        $Output .= $Self->{LayoutObject}->Output(
-            TemplateFile => 'PublicSurvey',
-            Data         => {%Param},
-        );
-        $Output .= $Self->{LayoutObject}->CustomerFooter();
-        return $Output;
+        # ---
     }
 
     # ------------------------------------------------------------ #
@@ -241,11 +406,29 @@ sub Run {
                 $Class = 'Textarea';
             }
 
+            # ---
+            # AnswerRequired
+            # ---
+            my $RequiredText = '';
+            if ( $Question->{AnswerRequired} ) {
+                $Class .= ' Mandatory';
+                $RequiredText = '* ';
+            }
+
+            # ---
+
             $Self->{LayoutObject}->Block(
                 Name => 'PublicSurveyVoteQuestion',
                 Data => {
                     %{$Question},
                     Class => $Class,
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    RequiredText => $RequiredText,
+
+                    # ---
                 },
             );
             my @Answers;
@@ -356,49 +539,253 @@ sub Run {
             Data => {%Survey},
         );
 
-        my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+   # ---
+   # AnswerRequired
+   # ---
+   #        my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+   # If we had errors, @QuestionList is already filled, so let's save a SQL query
+        if ( !@QuestionList ) {
+            @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
+        }
+
+        # ---
         for my $Question (@QuestionList) {
+
             $Self->{LayoutObject}->Block( Name => 'PublicQuestions' );
+
+            # ---
+            # AnswerRequired
+            # ---
+            my $Class        = '';
+            my $RequiredText = '';
+            my $ErrorText;
+            if ( $Question->{AnswerRequired} ) {
+                $Class .= 'Mandatory';
+                $RequiredText = '* ';
+
+            }
+            if (
+                $Errors{ $Question->{QuestionID} }
+                && ref $Errors{ $Question->{QuestionID} } eq 'HASH'
+                )
+            {
+
+                # %Errors holds a key for each QuestionID that had errors.
+                # The value is a hashref who's keys are the ErrorType
+                # The value is set to 1
+                # Reason for this is, that the value may be used to display
+                # a more specific Error Message containing text question specific error messages
+                # or similar. So a type specific error message treatment would be possible here.
+
+                # At the time of creation the only error type was 'Answer required'.
+                # So a data structure looks like this:
+                # %Errors = (
+                #   1 => {
+                #        'Answer required' => 1,
+                #   },
+                #   2 => {
+                #        'Answer required' => 1,
+                #    },
+                # );
+
+             # Later on a Datastructure like the following would be possible:
+             # %Errors = (
+             #   1 => {
+             #        'Invalid text' => 'Your Text did not contain the Order number',
+             #   },
+             #   2 => {
+             #        'Answer required' => 1,
+             #    },
+             # );
+             # As soon as this is needed, the following $ErrorText stringbuilding has to be changed.
+
+                # The stringbuilding works at the moment this way:
+                # 1. Go through all keys of the %{ $Errors{ $Question->{QuestionID} } } hash
+                # 2. Do a translation for each key (inside the "map {}"-clause)
+                # 3. join the resulting Array by putting "</p>\n</p>" in between the Arraykeys
+                # 4. add '<p>' at the beginning and '</p>' at the end.
+
+                $ErrorText = '<p>'
+                    . (
+                    join "</p>\n<p>",
+                    map { $Self->{LayoutObject}->{LanguageObject}->Get($_) }
+                        keys %{ $Errors{ $Question->{QuestionID} } }
+                    )
+                    . '</p>';
+
+                $ErrorText = <<END;
+                <div class="TooltipError">
+                <div class="Tooltip TongueLeft">
+                    <div class="Tongue" ></div>
+                    <div class="Content" role="tooltip" style="word-wrap: break-word;">
+                            $ErrorText
+                    </div>
+                </div>
+                </div>
+END
+                $Class .= ' Error';
+            }
+
+            # ---
             if ( $Question->{Type} eq 'YesNo' ) {
+
+                # ---
+                # AnswerRequired
+                # ---
+                my %Selected = (
+                    YesSelected => ( $Answers{ $Question->{QuestionID} } eq 'Yes' )
+                    ? 'checked="checked"'
+                    : '',
+                    NoSelected => ( $Answers{ $Question->{QuestionID} } eq 'No' )
+                    ? 'checked="checked"'
+                    : '',
+                );
+
+                # ---
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerYesNo',
-                    Data => $Question,
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    #                    Data => $Question,
+                    Data => {
+                        %{$Question},
+                        %Selected,
+                        ErrorText => $ErrorText || '',
+                        Class => $Class,
+                        RequiredText => $RequiredText,
+                        }
+
+                        # ---
                 );
             }
             elsif ( $Question->{Type} eq 'Radio' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerRadio',
-                    Data => $Question,
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    #                    Data => $Question,
+                    Data => {
+                        %{$Question},
+                        ErrorText => $ErrorText || '',
+                        Class => $Class,
+                        RequiredText => $RequiredText,
+                        }
+
+                        # ---
                 );
                 my @AnswerList = $Self->{SurveyObject}->AnswerList(
                     QuestionID => $Question->{QuestionID},
                 );
                 for my $Answer (@AnswerList) {
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    my $Selected = '';
+                    if ( $Answers{ $Question->{QuestionID} } eq $Answer->{AnswerID} ) {
+                        $Selected = 'checked="checked"';
+                    }
+
+                    # ---
                     $Self->{LayoutObject}->Block(
                         Name => 'PublicAnswerRadiob',
-                        Data => $Answer,
+
+                        # ---
+                        # AnswerRequired
+                        # ---
+                        #                        Data => $Answer,
+                        Data => {
+                            %{$Answer},
+                            AnswerSelected => $Selected,
+                        },
+
+                        # ---
                     );
                 }
             }
             elsif ( $Question->{Type} eq 'Checkbox' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerCheckbox',
-                    Data => $Question,
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    #                    Data => $Question,
+                    Data => {
+                        %{$Question},
+                        ErrorText => $ErrorText || '',
+                        Class => $Class,
+                        RequiredText => $RequiredText,
+                        }
+
+                        # ---
                 );
                 my @AnswerList = $Self->{SurveyObject}->AnswerList(
                     QuestionID => $Question->{QuestionID},
                 );
                 for my $Answer (@AnswerList) {
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    my $Selected = '';
+                    if (
+                        defined $Answers{ $Question->{QuestionID} }
+                        && ref $Answers{ $Question->{QuestionID} } eq 'ARRAY'
+                        && @{ $Answers{ $Question->{QuestionID} } }
+                        && scalar grep { $_ eq $Answer->{AnswerID} }
+                        @{ $Answers{ $Question->{QuestionID} } }
+                        )
+                    {
+                        $Selected = 'checked="checked"';
+                    }
+
+                    # ---
                     $Self->{LayoutObject}->Block(
                         Name => 'PublicAnswerCheckboxb',
-                        Data => $Answer,
+
+                        # ---
+                        # AnswerRequired
+                        # ---
+                        #                        Data => $Answer,
+                        Data => {
+                            %{$Answer},
+                            AnswerSelected => $Selected,
+                        },
+
+                        # ---
                     );
                 }
             }
             elsif ( $Question->{Type} eq 'Textarea' ) {
+
+                # ---
+                # AnswerRequired
+                # ---
+                my $Value = $Answers{ $Question->{QuestionID} } || '';
+                $Value =~ s/^\$html\/text\$\s//;
+
+                # ---
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerTextarea',
-                    Data => $Question,
+
+                    # ---
+                    # AnswerRequired
+                    # ---
+                    #                    Data => $Question,
+                    Data => {
+                        %{$Question},
+                        ErrorText => $ErrorText || '',
+                        Class => $Class,
+                        RequiredText => $RequiredText,
+                        Value        => $Value,
+                        }
+
+                        # ---
                 );
 
                 # check if rich text is enabled

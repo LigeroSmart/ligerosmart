@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurveyEditQuestions.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.pm,v 1.10 2012-11-13 16:11:17 mh Exp $
+# $Id: AgentSurveyEditQuestions.pm,v 1.11 2012-11-20 15:50:55 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Survey;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -53,6 +53,19 @@ sub Run {
         my $Question = $Self->{ParamObject}->GetParam( Param => "Question" );
         my $Type     = $Self->{ParamObject}->GetParam( Param => "Type" );
 
+        # ---
+        # AnswerRequired
+        # ---
+        my $AnswerRequired = $Self->{ParamObject}->GetParam( Param => 'AnswerRequired' );
+        if ( $AnswerRequired && $AnswerRequired eq 'No' ) {
+            $AnswerRequired = 0;
+        }
+        else {
+            $AnswerRequired = 1;
+        }
+
+        # ---
+
         # check if survey exists
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
@@ -68,7 +81,14 @@ sub Run {
                 SurveyID => $SurveyID,
                 Question => $Question,
                 Type     => $Type,
-                UserID   => $Self->{UserID},
+
+                # ---
+                # AnswerRequired
+                # ---
+                AnswerRequired => $AnswerRequired,
+
+                # ---
+                UserID => $Self->{UserID},
             );
             $Self->{SurveyObject}->QuestionSort( SurveyID => $SurveyID );
         }
@@ -206,6 +226,19 @@ sub Run {
         my $SurveyID   = $Self->{ParamObject}->GetParam( Param => 'SurveyID' );
         my $Question   = $Self->{ParamObject}->GetParam( Param => 'Question' );
 
+        # ---
+        # AnswerRequired
+        # ---
+        my $AnswerRequired = $Self->{ParamObject}->GetParam( Param => 'AnswerRequired' );
+        if ( $AnswerRequired && $AnswerRequired eq 'No' ) {
+            $AnswerRequired = 0;
+        }
+        else {
+            $AnswerRequired = 1;
+        }
+
+        # ---
+
         # check if survey and question exists
         if (
             $Self->{SurveyObject}->ElementExists( ElementID => $SurveyID, Element => 'Survey' ) ne
@@ -225,7 +258,14 @@ sub Run {
                 QuestionID => $QuestionID,
                 SurveyID   => $SurveyID,
                 Question   => $Question,
-                UserID     => $Self->{UserID},
+
+                # ---
+                # AnswerRequired
+                # ---
+                AnswerRequired => $AnswerRequired,
+
+                # ---
+                UserID => $Self->{UserID},
             );
 
             return $Self->_MaskQuestionEdit(
@@ -541,6 +581,31 @@ sub _MaskQuestionOverview {
             Translation   => 1,
         );
 
+        # ---
+        # AnswerRequired
+        # ---
+        $ArrayHashRef = [
+            {
+                Key      => 'Yes',
+                Value    => 'Yes',
+                Selected => 1,
+            },
+            {
+                Key   => 'No',
+                Value => 'No',
+            }
+        ];
+
+        my $AnswerRequiredSelect = $Self->{LayoutObject}->BuildSelection(
+            Data          => $ArrayHashRef,
+            Name          => 'AnswerRequired',
+            ID            => 'AnswerRequired',
+            SelectedValue => 'Yes',
+            Translation   => 1,
+        );
+
+        # ---
+
         my $QuestionErrorClass = '';
         if ( $ServerError{Question} ) {
             $QuestionErrorClass = 'ServerError';
@@ -549,8 +614,15 @@ sub _MaskQuestionOverview {
         $Self->{LayoutObject}->Block(
             Name => 'SurveyAddQuestion',
             Data => {
-                SurveyID           => $Param{SurveyID},
-                SelectionType      => $SelectionType,
+                SurveyID      => $Param{SurveyID},
+                SelectionType => $SelectionType,
+
+                # ---
+                # AnswerRequired
+                # ---
+                AnswerRequiredSelect => $AnswerRequiredSelect,
+
+                # ---
                 QuestionErrorClass => $QuestionErrorClass,
             },
         );
@@ -665,10 +737,48 @@ sub _MaskQuestionEdit {
     my %Survey = $Self->{SurveyObject}->SurveyGet( SurveyID => $Param{SurveyID} );
     my %Question = $Self->{SurveyObject}->QuestionGet( QuestionID => $Param{QuestionID} );
 
+    # ---
+    # AnswerRequired
+    # ---
+    my $ArrayHashRef = [
+        {
+            Key   => 'Yes',
+            Value => 'Yes',
+        },
+        {
+            Key   => 'No',
+            Value => 'No',
+        }
+    ];
+
+    if ( $Question{AnswerRequired} ) {
+        $ArrayHashRef->[0]{Selected} = 1;
+    }
+    else {
+        $ArrayHashRef->[1]{Selected} = 1;
+    }
+
+    my $AnswerRequiredSelect = $Self->{LayoutObject}->BuildSelection(
+        Data          => $ArrayHashRef,
+        Name          => 'AnswerRequired',
+        ID            => 'AnswerRequired',
+        SelectedValue => 'Yes',
+        Translation   => 1,
+    );
+
+    # ---
+
     # print the main body
     $Self->{LayoutObject}->Block(
         Name => 'QuestionEdit',
         Data => {
+
+            # ---
+            # AnswerRequired
+            # ---
+            AnswerRequiredSelect => $AnswerRequiredSelect,
+
+            # ---
             %Question,
             %ServerError,
         },

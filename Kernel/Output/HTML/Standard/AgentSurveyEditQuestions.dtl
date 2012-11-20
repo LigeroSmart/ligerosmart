@@ -2,7 +2,7 @@
 # AgentSurveyEditQuestions.dtl - provides HTML form for AgentSurvey
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurveyEditQuestions.dtl,v 1.16 2012-11-13 16:14:16 mh Exp $
+# $Id: AgentSurveyEditQuestions.dtl,v 1.17 2012-11-20 15:52:07 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -48,7 +48,14 @@
                             </div>
 
                         </div>
-
+# ---
+# AnswerRequired
+# ---
+                        <label for="AnswerRequired"> $Text{"Answer required"}:&nbsp;</label>
+                        <div class="Field">
+                            $Data{"AnswerRequiredSelect"}
+                        </div>
+# ---
                         <div class="Field">
                             <button type="submit" value="$Text{"Add"}">$Text{"Add"}</button>
                         </div>
@@ -219,6 +226,16 @@
                             <div id="QuestionServerError" class="TooltipErrorMessage">
                                 <p>$Text{"This field is required."}</p>
                             </div>
+# ---
+# AnswerRequired
+# ---
+                        </div>
+                        <label for="AnswerRequired"> $Text{"Answer required"}:&nbsp;</label>
+                        <div class="Field">
+                            $Data{"AnswerRequiredSelect"}
+                        </div>
+                        <div class ="Field">
+# ---
 
                             <button type="submit" value="$Text{"Save"}">$Text{"Save"}</button>
                         </div>

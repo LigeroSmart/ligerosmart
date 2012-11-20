@@ -2,7 +2,7 @@
 # Kernel/System/Survey.pm - all survey funtions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.68 2012-11-13 16:10:58 mh Exp $
+# $Id: Survey.pm,v 1.69 2012-11-20 15:53:16 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.68 $) [1];
+$VERSION = qw($Revision: 1.69 $) [1];
 
 =head1 NAME
 
@@ -589,10 +589,19 @@ sub QuestionList {
     $Param{SurveyID} = $Self->{DBObject}->Quote( $Param{SurveyID}, 'Integer' );
 
     # get all questions of a survey
+    # ---
+    # AnswerRequired
+    # ---
+    #    $Self->{DBObject}->Prepare(
+    #        SQL => "SELECT id, survey_id, question, question_type "
+    #            . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position",
+    #    );
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, survey_id, question, question_type "
+        SQL => "SELECT id, survey_id, question, question_type, answer_required"
             . " FROM survey_question WHERE survey_id = $Param{SurveyID} ORDER BY position",
     );
+
+    # ---
 
     # fetch the result
     my @List;
@@ -602,6 +611,13 @@ sub QuestionList {
         $Data{SurveyID}   = $Row[1];
         $Data{Question}   = $Row[2];
         $Data{Type}       = $Row[3];
+
+        # ---
+        # AnswerReqruired
+        # ---
+        $Data{AnswerRequired} = $Row[4];
+
+        # ---
 
         push @List, \%Data;
     }
@@ -617,6 +633,11 @@ to add a new question to a survey
         UserID => 1,
         SurveyID => 10,
         Question => 'The Question',
+# ---
+# AnswerRequired
+# ---
+        AnswerRequired => 1, # or
+# ---
         Type => 'Radio',
     );
 
@@ -647,17 +668,45 @@ sub QuestionAdd {
     return if !$Param{Question};
 
     # insert a new question
+    # ---
+    # AnswerRequired
+    # ---
+    #    return $Self->{DBObject}->Do(
+    #        SQL => "INSERT INTO survey_question (survey_id, question, question_type, "
+    #            . "position, create_time, create_by, change_time, change_by) VALUES ("
+    #            . "$Param{SurveyID}, "
+    #            . "'$Param{Question}', "
+    #            . "'$Param{Type}', 255, "
+    #            . "current_timestamp, "
+    #            . "$Param{UserID}, "
+    #            . "current_timestamp, "
+    #            . "$Param{UserID})",
+    #    );
+    # if we didn't get an Answer Parameter (e.g. just undefined)
+    # or it was something else than 0 or 1
+    # we assume it's a required answer
+    if (
+        !defined $Param{AnswerRequired}
+        ||
+        ( $Param{AnswerRequired} ne '0' && $Param{AnswerRequired} ne '1' )
+        )
+    {
+        $Param{AnswerRequired} = 1;
+    }
     return $Self->{DBObject}->Do(
         SQL => "INSERT INTO survey_question (survey_id, question, question_type, "
-            . "position, create_time, create_by, change_time, change_by) VALUES ("
+            . "position, answer_required, create_time, create_by, change_time, change_by) VALUES ("
             . "$Param{SurveyID}, "
             . "'$Param{Question}', "
             . "'$Param{Type}', 255, "
+            . "'$Param{AnswerRequired}',"
             . "current_timestamp, "
             . "$Param{UserID}, "
             . "current_timestamp, "
             . "$Param{UserID})",
     );
+
+    # ---
 }
 
 =item QuestionDelete()
@@ -932,26 +981,55 @@ sub QuestionGet {
     $Param{QuestionID} = $Self->{DBObject}->Quote( $Param{QuestionID}, 'Integer' );
 
     # get question
+    # ---
+    # AnswerRequired
+    # ---
+    #    $Self->{DBObject}->Prepare(
+    #        SQL => "SELECT id, survey_id, question, question_type, position, "
+    #            . "create_time, create_by, change_time, change_by "
+    #            . "FROM survey_question WHERE id = $Param{QuestionID}",
+    #        Limit => 1,
+    #    );
     $Self->{DBObject}->Prepare(
-        SQL => "SELECT id, survey_id, question, question_type, position, "
+        SQL => "SELECT id, survey_id, question, question_type, position, answer_required, "
             . "create_time, create_by, change_time, change_by "
             . "FROM survey_question WHERE id = $Param{QuestionID}",
         Limit => 1,
     );
 
+    # ---
+
     # fetch the result
     my %Data;
+
+    # ---
+    # AnswerRequired
+    # ---
+    #    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    #        $Data{QuestionID} = $Row[0];
+    #        $Data{SurveyID}   = $Row[1];
+    #        $Data{Question}   = $Row[2];
+    #        $Data{Type}       = $Row[3];
+    #        $Data{Position}   = $Row[4];
+    #        $Data{CreateTime} = $Row[5];
+    #        $Data{CreateBy}   = $Row[6];
+    #        $Data{ChangeTime} = $Row[7];
+    #        $Data{ChangeBy}   = $Row[8];
+    #    }
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
-        $Data{QuestionID} = $Row[0];
-        $Data{SurveyID}   = $Row[1];
-        $Data{Question}   = $Row[2];
-        $Data{Type}       = $Row[3];
-        $Data{Position}   = $Row[4];
-        $Data{CreateTime} = $Row[5];
-        $Data{CreateBy}   = $Row[6];
-        $Data{ChangeTime} = $Row[7];
-        $Data{ChangeBy}   = $Row[8];
+        $Data{QuestionID}     = $Row[0];
+        $Data{SurveyID}       = $Row[1];
+        $Data{Question}       = $Row[2];
+        $Data{Type}           = $Row[3];
+        $Data{Position}       = $Row[4];
+        $Data{AnswerRequired} = $Row[5];
+        $Data{CreateTime}     = $Row[6];
+        $Data{CreateBy}       = $Row[7];
+        $Data{ChangeTime}     = $Row[8];
+        $Data{ChangeBy}       = $Row[9];
     }
+
+    # ---
 
     return %Data;
 }
@@ -964,6 +1042,11 @@ to update an existing question
         UserID => 1,
         QuestionID => 4,
         SurveyID => 3,
+# ---
+# AnswerRequired
+# ---
+        AnswerRequired => '1', # or '0'
+# ---
         Question => 'The Question',
     );
 
@@ -983,6 +1066,20 @@ sub QuestionSave {
         }
     }
 
+    # ---
+    # AnswerRequired
+    # ---
+    my $AnswerRequired = 1;
+    if (
+        defined $Param{AnswerRequired}
+        && ( $Param{AnswerRequired} eq '1' || $Param{AnswerRequired} eq '0' )
+        )
+    {
+        $AnswerRequired = $Param{AnswerRequired};
+    }
+
+    # ---
+
     # quote
     for my $Argument (qw(Question)) {
         $Param{$Argument} = $Self->{DBObject}->Quote( $Param{$Argument} );
@@ -995,6 +1092,13 @@ sub QuestionSave {
     return $Self->{DBObject}->Do(
         SQL => "UPDATE survey_question SET "
             . "question = '$Param{Question}', "
+
+            # ---
+            # AnswerRequired
+            # ---
+            . "answer_required = $AnswerRequired, "
+
+            # ---
             . "change_time = current_timestamp, "
             . "change_by = $Param{UserID} "
             . "WHERE id = $Param{QuestionID} "
@@ -2895,6 +2999,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.68 $ $Date: 2012-11-13 16:10:58 $
+$Revision: 1.69 $ $Date: 2012-11-20 15:53:16 $
 
 =cut

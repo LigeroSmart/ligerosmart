@@ -2,14 +2,19 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.13 2012-11-13 16:16:17 mh Exp $
+# $Id: CHANGES-Survey,v 1.14 2012-11-20 15:49:24 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 # --
 
-2.1.4 - 2012-??-??
+# ---
+# AnswerRequired
+# ---
+2.1.4 - 2012-10-24
+ - Added possibility to require answers on survey questions.
+# ---
  - Updated Polish translation, thanks to Pawel @ IB!
 
 2.1.3 - 2012-03-23
@@ -25,9 +30,6 @@
 
 2.1.beta4 - 2012-01-27
  - 2012-01-20 Fixed Bug#8130 - Editing of General Info on Master Survey on possible.
-
-2.0.5 - ?
- - 2012-04-27 Added configurable email address blacklist to which surveys won't be sent.
 
 1.2.92 - 2011-02-18
  - 2011-02-16 Fixed Bug#6826 - Survey shows blank overview screen by database error.

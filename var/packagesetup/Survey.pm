@@ -1,8 +1,8 @@
 # --
 # Survey.pm - code to excecute during package installation
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.1 2011-12-15 15:43:52 jh Exp $
+# $Id: Survey.pm,v 1.2 2012-11-20 15:55:02 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 =head1 NAME
 
@@ -196,6 +196,79 @@ sub CodeUpgradeFromLowerThan_2_0_92 {
     return 1;
 }
 
+# ---
+# AnswerRequired
+# ---
+
+=item CodeUpgradeFromLowerThan_2_1_4()
+
+This function is only executed if the installed module version is smaller than 2.1.4.
+
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_1_4();
+
+=cut
+
+sub CodeUpgradeFromLowerThan_2_1_4 {
+    my ( $Self, %Param ) = @_;
+
+    # set all survey_question records
+    # that don't have answer_required set to something
+    # to 0
+    $Self->_Prefill_AnswerRequiredFromSurveyQuestion_2_0_5();
+
+    return 1;
+}
+
+=item _Prefill_AnswerRequiredFromSurveyQuestion_2_1_4()
+
+Inserts 0 into all answer_required records of table suvey_question
+where there is no entry present.
+
+    my $Success = $PackageSetup->_Prefill_AnswerRequiredFromSurveyQuestion_2_1_4();
+
+=cut
+
+sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_4 {
+    my ($Self) = @_;
+
+    return if !$Self->{DBObject}->Prepare(
+        SQL => 'SELECT id, answer_required '
+            . 'FROM survey_question',
+        Limit => 0,
+    );
+    my @IdsToUpdate;
+    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+
+        # if we had an id
+        # but no answer_required or answer_required isn't 0 or 1
+        # collect the ID in @IdsToUpdate
+        if (
+            defined $Row[0]
+            && length $Row[0]
+            && (
+                !defined $Row[1]
+                || ( $Row[1] ne '0' && $Row[1] ne '1' )
+            )
+            )
+        {
+            push @IdsToUpdate, $Row[0];
+        }
+    }
+
+    for my $QuestionID (@IdsToUpdate) {
+        $Self->{DBObject}->Do(
+            SQL =>
+                'UPDATE survey_question SET answer_required = 0 WHERE id = ?',
+            Bind => [
+                \$QuestionID,
+            ],
+        );
+    }
+    return 1;
+}
+
+# ---
+
 1;
 
 =back
@@ -212,6 +285,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2011-12-15 15:43:52 $
+$Revision: 1.2 $ $Date: 2012-11-20 15:55:02 $
 
 =cut
