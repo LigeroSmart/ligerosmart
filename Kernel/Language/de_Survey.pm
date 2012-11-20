@@ -2,11 +2,11 @@
 # Kernel/Language/de_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_Survey.pm,v 1.15 2012-11-20 15:49:54 jh Exp $
+# $Id: de_Survey.pm,v 1.16 2012-11-20 19:11:39 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::de_Survey;

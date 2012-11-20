@@ -2,11 +2,11 @@
 # Kernel/Output/HTML/LayoutSurvey.pm - provides generic HTML output for Survey
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutSurvey.pm,v 1.3 2012-11-13 16:13:02 mh Exp $
+# $Id: LayoutSurvey.pm,v 1.4 2012-11-20 19:12:11 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Output::HTML::LayoutSurvey;
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =over 4
 
@@ -333,6 +333,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-11-13 16:13:02 $
+$Revision: 1.4 $ $Date: 2012-11-20 19:12:11 $
 
 =cut

@@ -2,11 +2,11 @@
 # Kernel/Language/it_Survey.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: it_Survey.pm,v 1.4 2012-11-13 16:12:14 mh Exp $
+# $Id: it_Survey.pm,v 1.5 2012-11-20 19:11:42 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::it_Survey;
