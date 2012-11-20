@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: Survey.sopm,v 1.58 2012-11-20 16:02:06 jh Exp $</CVS>
+    <CVS>$Id: Survey.sopm,v 1.59 2012-11-20 16:15:14 jh Exp $</CVS>
     <Name>Survey</Name>
     <Version>0.0.0</Version>
     <Framework>3.1.x</Framework>
@@ -165,7 +165,7 @@
             <ColumnAdd Name="create_time" Required="false" Type="DATE"/>
         </TableAlter>
 <!-- # AnswerRequired -->
-        <TableAlter Name="survey_question" Version="2.1.4">
+        <TableAlter Name="survey_question" Version="2.1.5">
             <ColumnAdd Name="answer_required" Required="false" Type="SMALLINT"/>
         </TableAlter>
 <!-- # AnswerRequired -->
@@ -179,7 +179,7 @@
         <TableDrop Name="survey_vote"/>
     </DatabaseUninstall>
 <!-- # AnswerRequired -->
-    <CodeUpgrade Type="post" Version="2.1.4.2"><![CDATA[
+    <CodeUpgrade Type="post" Version="2.1.4.3"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUpgradeFromLowerThan_2_1_5';
