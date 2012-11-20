@@ -2,7 +2,7 @@
 # Survey.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.2 2012-11-20 15:55:02 jh Exp $
+# $Id: Survey.pm,v 1.3 2012-11-20 16:02:25 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 =head1 NAME
 
@@ -200,35 +200,35 @@ sub CodeUpgradeFromLowerThan_2_0_92 {
 # AnswerRequired
 # ---
 
-=item CodeUpgradeFromLowerThan_2_1_4()
+=item CodeUpgradeFromLowerThan_2_1_5()
 
-This function is only executed if the installed module version is smaller than 2.1.4.
+This function is only executed if the installed module version is smaller than 2.1.5.
 
-my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_1_4();
+my $Result = $CodeObject->CodeUpgradeFromLowerThan_2_1_5();
 
 =cut
 
-sub CodeUpgradeFromLowerThan_2_1_4 {
+sub CodeUpgradeFromLowerThan_2_1_5 {
     my ( $Self, %Param ) = @_;
 
     # set all survey_question records
     # that don't have answer_required set to something
     # to 0
-    $Self->_Prefill_AnswerRequiredFromSurveyQuestion_2_0_5();
+    $Self->_Prefill_AnswerRequiredFromSurveyQuestion_2_1_5();
 
     return 1;
 }
 
-=item _Prefill_AnswerRequiredFromSurveyQuestion_2_1_4()
+=item _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5()
 
 Inserts 0 into all answer_required records of table suvey_question
 where there is no entry present.
 
-    my $Success = $PackageSetup->_Prefill_AnswerRequiredFromSurveyQuestion_2_1_4();
+    my $Success = $PackageSetup->_Prefill_AnswerRequiredFromSurveyQuestion_2_1_5();
 
 =cut
 
-sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_4 {
+sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {
     my ($Self) = @_;
 
     return if !$Self->{DBObject}->Prepare(
@@ -285,6 +285,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2012-11-20 15:55:02 $
+$Revision: 1.3 $ $Date: 2012-11-20 16:02:25 $
 
 =cut
