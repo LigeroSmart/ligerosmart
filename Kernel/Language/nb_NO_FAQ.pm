@@ -2,11 +2,11 @@
 # Kernel/Language/nb_NO_FAQ.pm - translation file
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nb_NO_FAQ.pm,v 1.9 2012-11-19 14:55:28 mh Exp $
+# $Id: nb_NO_FAQ.pm,v 1.10 2012-11-20 13:09:22 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::nb_NO_FAQ;

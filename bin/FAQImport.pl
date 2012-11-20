@@ -3,7 +3,7 @@
 # FAQImport.pl - FAQ import script
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQImport.pl,v 1.8 2012-11-19 14:57:14 mh Exp $
+# $Id: FAQImport.pl,v 1.9 2012-11-20 13:10:04 mh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-# or see L<http://www.gnu.org/licenses/agpl.txt>.
+# or see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 use strict;
@@ -41,7 +41,7 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 # get options
 my %Opts;
@@ -235,6 +235,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2012-11-19 14:57:14 $
+$Revision: 1.9 $ $Date: 2012-11-20 13:10:04 $
 
 =cut

@@ -2,11 +2,11 @@
 # CustomerFAQSearchResultPrint.dtl - html for printing FAQ search results
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearchResultPrint.dtl,v 1.4 2012-11-19 14:48:40 mh Exp $
+# $Id: CustomerFAQSearchResultPrint.dtl,v 1.5 2012-11-20 13:08:05 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 <!-- start form -->
