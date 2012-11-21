@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.273 2012-10-24 08:25:01 mb Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.274 2012-11-21 10:19:33 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -1180,11 +1180,11 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###QueryDelay" Required="1" Valid="1">
-        <Description Translatable="1">Delay time between autocomplete queries.</Description>
+        <Description Translatable="1">Delay time between autocomplete queries in milliseconds.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CustomerSearch</SubGroup>
         <Setting>
-            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">0.1</String>
+            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">100</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CustomerSearchAutoComplete###TypeAhead" Required="1" Valid="1">
@@ -1237,11 +1237,11 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###QueryDelay" Required="1" Valid="1">
-        <Description Translatable="1">Delay time between autocomplete queries.</Description>
+        <Description Translatable="1">Delay time between autocomplete queries in milliseconds.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::UserSearch</SubGroup>
         <Setting>
-            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">0.1</String>
+            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">100</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::UserSearchAutoComplete###TypeAhead" Required="1" Valid="1">
@@ -1294,11 +1294,11 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###QueryDelay" Required="1" Valid="1">
-        <Description Translatable="1">Delay time between autocomplete queries.</Description>
+        <Description Translatable="1">Delay time between autocomplete queries in milliseconds.</Description>
         <Group>ITSM Change Management</Group>
         <SubGroup>Frontend::Agent::CABMemberSearch</SubGroup>
         <Setting>
-            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">0.1</String>
+            <String Regex="^(0\.[1-9]+)|([1-9](\.[0-9]+)?)$">100</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMChange::Frontend::CABMemberSearchAutoComplete###TypeAhead" Required="1" Valid="1">

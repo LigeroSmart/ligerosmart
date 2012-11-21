@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.80 2012-03-09 13:29:06 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.81 2012-11-21 10:19:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.80 $) [1];
+$VERSION = qw($Revision: 1.81 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1481,7 +1481,7 @@ sub _MaskForm {
         Data => {
             active              => $CustomerAutoCompleteConfig->{Active},
             minQueryLength      => $CustomerAutoCompleteConfig->{MinQueryLength} || 2,
-            queryDelay          => $CustomerAutoCompleteConfig->{QueryDelay} || 0.1,
+            queryDelay          => $CustomerAutoCompleteConfig->{QueryDelay} || 100,
             typeAhead           => $CustomerAutoCompleteConfig->{TypeAhead} || 'false',
             maxResultsDisplayed => $CustomerAutoCompleteConfig->{MaxResultsDisplayed} || 20,
             dynamicWidth        => $CustomerAutoCompleteConfig->{DynamicWidth} || 1,
@@ -1501,7 +1501,7 @@ sub _MaskForm {
         Data => {
             active              => $UserAutoCompleteConfig->{Active},
             minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength} || 2,
-            queryDelay          => $UserAutoCompleteConfig->{QueryDelay} || 0.1,
+            queryDelay          => $UserAutoCompleteConfig->{QueryDelay} || 100,
             typeAhead           => $UserAutoCompleteConfig->{TypeAhead} || 'false',
             maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
             dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth} || 1,

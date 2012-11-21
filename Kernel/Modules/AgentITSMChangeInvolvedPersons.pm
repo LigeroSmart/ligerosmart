@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.43 2010-12-22 20:50:36 dz Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.44 2012-11-21 10:19:33 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -397,7 +397,7 @@ sub Run {
         Name => 'UserSearchAutoComplete',
         Data => {
             minQueryLength      => $UserAutoCompleteConfig->{MinQueryLength}      || 2,
-            queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 0.1,
+            queryDelay          => $UserAutoCompleteConfig->{QueryDelay}          || 100,
             maxResultsDisplayed => $UserAutoCompleteConfig->{MaxResultsDisplayed} || 20,
             dynamicWidth        => $UserAutoCompleteConfig->{DynamicWidth}        || 'false',
         },
@@ -462,7 +462,7 @@ sub Run {
         Name => 'CABMemberSearchAutoComplete',
         Data => {
             minQueryLength      => $CABMemberAutoCompleteConfig->{MinQueryLength}      || 2,
-            queryDelay          => $CABMemberAutoCompleteConfig->{QueryDelay}          || 0.1,
+            queryDelay          => $CABMemberAutoCompleteConfig->{QueryDelay}          || 100,
             typeAhead           => $CABMemberAutoCompleteConfig->{TypeAhead}           || 'false',
             maxResultsDisplayed => $CABMemberAutoCompleteConfig->{MaxResultsDisplayed} || 20,
             dynamicWidth        => $CABMemberAutoCompleteConfig->{DynamicWidth}        || 1,
