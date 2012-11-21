@@ -1,9 +1,9 @@
 # --
 # SLA.t - SLA tests
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.t,v 1.5 2010-11-04 14:06:53 ub Exp $
-# $OldId: SLA.t,v 1.12 2010/10/29 22:16:59 en Exp $
+# $Id: SLA.t,v 1.6 2012-11-21 20:35:48 ub Exp $
+# $OldId: SLA.t,v 1.15 2012/11/20 16:07:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -878,7 +878,7 @@ for my $Item ( @{$ItemData} ) {
         $Data::Dumper::Indent = 0;
 
         # check sla data after creation of the sla
-        for my $SLAAttribute ( keys %{ $Item->{AddGet} } ) {
+        for my $SLAAttribute ( sort keys %{ $Item->{AddGet} } ) {
 
             # dump the given attribute
             if ( ref $SLAGet{$SLAAttribute} ) {
@@ -937,7 +937,7 @@ for my $Item ( @{$ItemData} ) {
         );
 
         # check sla data after update
-        for my $SLAAttribute ( keys %{ $Item->{UpdateGet} } ) {
+        for my $SLAAttribute ( sort keys %{ $Item->{UpdateGet} } ) {
 
             # dump the given attribute
             if ( ref $SLAGet2{$SLAAttribute} ) {
@@ -993,7 +993,7 @@ my %SLAList1 = $SLAObject->SLAList(
 my %SLAList1Org = %SLAListOriginal;
 
 SERVICEID:
-for my $SLAID ( keys %SLAList1Org ) {
+for my $SLAID ( sort keys %SLAList1Org ) {
 
     if ( $SLAList1{$SLAID} && $SLAList1Org{$SLAID} eq $SLAList1{$SLAID} ) {
         delete $SLAList1{$SLAID};

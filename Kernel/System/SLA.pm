@@ -1,9 +1,9 @@
 # --
 # Kernel/System/SLA.pm - all sla function
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.8 2011-11-10 17:13:07 ub Exp $
-# $OldId: SLA.pm,v 1.40 2011/06/17 08:14:12 mb Exp $
+# $Id: SLA.pm,v 1.9 2012-11-21 20:35:48 ub Exp $
+# $OldId: SLA.pm,v 1.43 2012/11/20 15:37:41 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -793,6 +793,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2011-11-10 17:13:07 $
+$Revision: 1.9 $ $Date: 2012-11-21 20:35:48 $
 
 =cut
