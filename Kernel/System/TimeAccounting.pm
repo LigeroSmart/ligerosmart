@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.62 2012-09-10 09:48:51 mb Exp $
+# $Id: TimeAccounting.pm,v 1.63 2012-11-21 14:53:53 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.62 $) [1];
+$VERSION = qw($Revision: 1.63 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -877,7 +877,7 @@ sub UserLastPeriodNumberGet {
 
     # check needed stuff
     if ( !$Param{UserID} ) {
-        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need ID!' );
+        $Self->{LogObject}->Log( Priority => 'error', Message => 'Need UserID!' );
         return;
     }
 
@@ -909,8 +909,20 @@ insert new user data in the db
 sub UserSettingsInsert {
     my ( $Self, %Param ) = @_;
 
-    # delete cache
-    delete $Self->{'Cache::UserCurrentPeriodGet'};
+    # check needed stuff
+    for my $Needed (qw (UserID Period)) {
+        if ( !$Param{$Needed} ) {
+            $Self->{LogObject}->Log( Priority => 'error', Message => "Need $Needed" );
+            return;
+        }
+    }
+
+    # check if user exists
+    if ( !$Self->{UserObject}->UserLookup( UserID => $Param{UserID} ) ) {
+        $Self->{LogObject}
+            ->Log( Priority => 'error', Message => "UserID $Param{UserID} does not exist!" );
+        return;
+    }
 
     $Param{WeeklyHours} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserWeeklyHours')
         || '40';
@@ -924,16 +936,11 @@ sub UserSettingsInsert {
     $Param{Description} = $Self->{ConfigObject}->Get('TimeAccounting::DefaultUserDescription')
         || 'Put your description here.';
 
-    # db quote
-    for my $Parameter ( keys %Param ) {
-        $Param{$Parameter} = $Self->{DBObject}->Quote( $Param{$Parameter} );
-        if ( !defined( $Param{$Parameter} ) ) {
-            $Param{$Parameter} = '';
-        }
-    }
-
     $Param{DateStart} .= ' 00:00:00';
     $Param{DateEnd}   .= ' 00:00:00';
+
+    # delete cache
+    delete $Self->{'Cache::UserCurrentPeriodGet'};
 
     # db insert
     return if !$Self->{DBObject}->Do(
@@ -1696,6 +1703,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.62 $ $Date: 2012-09-10 09:48:51 $
+$Revision: 1.63 $ $Date: 2012-11-21 14:53:53 $
 
 =cut
