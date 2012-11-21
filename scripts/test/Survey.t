@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.23 2012-11-20 19:12:46 mh Exp $
+# $Id: Survey.t,v 1.24 2012-11-21 08:33:25 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -86,9 +86,10 @@ my @List = $SurveyObject->QuestionList(
 for my $Question (@List) {
     for ( 1 .. 3 ) {
         $SurveyObject->AnswerAdd(
-            UserID     => 1,
-            QuestionID => $Question->{QuestionID},
-            Answer     => 'The Answer',
+            UserID         => 1,
+            QuestionID     => $Question->{QuestionID},
+            Answer         => 'The Answer',
+            AnswerRequired => 1,
         );
     }
 }
