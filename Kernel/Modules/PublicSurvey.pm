@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.29 2012-11-21 10:59:54 jh Exp $
+# $Id: PublicSurvey.pm,v 1.30 2012-11-21 14:42:09 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -521,10 +521,16 @@ END
             if ( $Question->{Type} eq 'YesNo' ) {
 
                 my %Selected = (
-                    YesSelected => ( $Answers{ $Question->{QuestionID} } eq 'Yes' )
+                    YesSelected => (
+                        defined $Answers{ $Question->{QuestionID} }
+                            && $Answers{ $Question->{QuestionID} } eq 'Yes'
+                        )
                     ? 'checked="checked"'
                     : '',
-                    NoSelected => ( $Answers{ $Question->{QuestionID} } eq 'No' )
+                    NoSelected => (
+                        defined $Answers{ $Question->{QuestionID} }
+                            && $Answers{ $Question->{QuestionID} } eq 'No'
+                        )
                     ? 'checked="checked"'
                     : '',
                 );
@@ -556,7 +562,11 @@ END
                 for my $Answer (@AnswerList) {
 
                     my $Selected = '';
-                    if ( $Answers{ $Question->{QuestionID} } eq $Answer->{AnswerID} ) {
+                    if (
+                        defined $Answers{ $Question->{QuestionID} }
+                        && $Answers{ $Question->{QuestionID} } eq $Answer->{AnswerID}
+                        )
+                    {
                         $Selected = 'checked="checked"';
                     }
                     $Self->{LayoutObject}->Block(
