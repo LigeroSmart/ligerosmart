@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.14 2012-04-24 08:52:36 ub Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.54 2012/04/20 12:00:31 mg Exp $
+# $Id: TicketOverviewMedium.pm,v 1.15 2012-11-21 20:46:18 ub Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.56 2012/11/20 15:04:54 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

@@ -1,9 +1,9 @@
 # --
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.18 2011-12-07 11:08:26 ub Exp $
-# $OldId: AgentTicketOverviewMedium.dtl,v 1.70 2011/12/05 20:56:03 mb Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.19 2012-11-21 20:46:18 ub Exp $
+# $OldId: AgentTicketOverviewMedium.dtl,v 1.73 2012/11/20 15:21:44 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,7 +81,9 @@
 <!-- dtl:js_on_document_complete -->
 <!-- dtl:block:InlineActionRow -->
 <!-- dtl:block:Bulk -->
-            <input class="Checkbox AutocompleteOff" type="checkbox" name="TicketID" value="$QData{"TicketID"}" />
+            <div class="Checkbox">
+                <input class="Checkbox AutocompleteOff" type="checkbox" name="TicketID" value="$QData{"TicketID"}" />
+            </div>
 <!-- dtl:block:Bulk -->
 <!-- dtl:block:Meta -->
 <!-- dtl:block:MetaIcon -->
@@ -342,6 +344,7 @@
 <!-- dtl:block:DocumentReadyStart -->
 <script type="text/javascript">//<![CDATA[
     Core.UI.StaticTableControl($('#OverviewControl'));
+    Core.UI.InitCheckboxSelection($('div.Checkbox'));
     $('.MasterAction').bind('click', function (Event) {
         var $MasterActionLink = $(this).find('.MasterActionLink');
         // only act if the link was not clicked directly

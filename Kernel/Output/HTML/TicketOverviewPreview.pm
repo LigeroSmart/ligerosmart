@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.22 2012-08-01 12:12:20 ub Exp $
-# $OldId: TicketOverviewPreview.pm,v 1.72.2.1 2012/06/12 10:24:32 mg Exp $
+# $Id: TicketOverviewPreview.pm,v 1.23 2012-11-21 20:46:18 ub Exp $
+# $OldId: TicketOverviewPreview.pm,v 1.75 2012/11/20 15:05:04 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.22 $) [1];
+$VERSION = qw($Revision: 1.23 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

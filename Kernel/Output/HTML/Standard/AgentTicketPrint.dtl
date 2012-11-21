@@ -2,8 +2,8 @@
 # AgentTicketPrint.dtl - provides HTML print view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.dtl,v 1.7 2012-01-13 09:56:49 ub Exp $
-# $OldId: AgentTicketPrint.dtl,v 1.35 2012/01/11 17:34:07 jh Exp $
+# $Id: AgentTicketPrint.dtl,v 1.8 2012-11-21 20:46:18 ub Exp $
+# $OldId: AgentTicketPrint.dtl,v 1.38 2012/11/20 15:22:59 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -101,14 +101,18 @@
                                 <td class="contentkey">$Text{"Created"}:</td>
                                 <td class="contentvalue">$TimeLong{"$Data{"Created"}"}</td>
                             </tr>
+<!-- dtl:block:AccountedTime -->
                             <tr>
                                 <td class="contentkey">$Text{"Accounted time"}:</td>
                                 <td class="contentvalue">$QData{"TicketTimeUnits"}</td>
                             </tr>
+<!-- dtl:block:AccountedTime -->
+<!-- dtl:block:PendingUntil -->
                             <tr>
                                 <td class="contentkey">$Text{"Pending till"}:</td>
                                 <td class="contentvalue">$QData{"PendingUntil"}</td>
                             </tr>
+<!-- dtl:block:PendingUntil -->
 <!-- dtl:block:FirstResponseTime -->
                             <tr>
                                 <td class="contentkey">$Text{"First Response Time"}:</td>

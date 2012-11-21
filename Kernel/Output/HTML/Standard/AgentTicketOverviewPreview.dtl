@@ -2,8 +2,8 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.20 2012-06-23 12:11:03 mb Exp $
-# $OldId: AgentTicketOverviewPreview.dtl,v 1.77 2012/04/20 12:16:58 mg Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.21 2012-11-21 20:46:18 ub Exp $
+# $OldId: AgentTicketOverviewPreview.dtl,v 1.81 2012/11/20 15:21:58 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,7 +81,9 @@
 <!-- dtl:js_on_document_complete -->
 <!-- dtl:block:InlineActionRow -->
 <!-- dtl:block:Bulk -->
-            <input class="Checkbox AutocompleteOff" type="checkbox" name="TicketID" value="$QData{"TicketID"}" />
+            <div class="Checkbox">
+                <input class="Checkbox AutocompleteOff" type="checkbox" name="TicketID" value="$QData{"TicketID"}" />
+            </div>
 <!-- dtl:block:Bulk -->
 <!-- dtl:block:Meta -->
 <!-- dtl:block:MetaIcon -->
@@ -115,7 +117,7 @@
                                 <label>$Text{"Created"}</label>$TimeLong{"$Data{"Created"}"}
                             </td>
                             <td>
-                                <label>$Text{"State"}</label><div title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}","26"}</div>
+                                <label>$Text{"State"}</label><div title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</div>
                             </td>
                         </tr>
 <!-- dtl:block:Service -->
@@ -135,7 +137,7 @@
                                 <label>$Text{"Owner"}</label><div title="$QData{"UserFirstname"} $QData{"UserLastname"} ($QData{"Owner"})">$QData{"UserFirstname","15"} $QData{"UserLastname","15"}</div>
                             </td>
                             <td>
-                                <label>$Text{"Lock"}</label><div title="$Text{"$Data{"Lock"}"}">$Text{"$Data{"Lock"}","26"}</div>
+                                <label>$Text{"Lock"}</label><div title="$Text{"$Data{"Lock"}"}">$Text{"$Data{"Lock"}"}</div>
                             </td>
                         </tr>
                         <tr class="Middle">
@@ -367,6 +369,7 @@ $Data{"Body"}
 <!-- dtl:block:DocumentReadyStart -->
 <script type="text/javascript">//<![CDATA[
     Core.UI.StaticTableControl($('#OverviewControl'));
+    Core.UI.InitCheckboxSelection($('div.Checkbox'));
     $('.MasterAction').bind('click', function (Event) {
         var $MasterActionLink = $(this).find('.MasterActionLink');
         // only act if the link was not clicked directly
