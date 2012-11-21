@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.250 2012-10-23 13:01:17 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.251 2012-11-21 20:05:25 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
-    <Framework>3.1.x</Framework>
-    <PackageRequired Version="3.1.7">ITSMCore</PackageRequired>
+    <Framework>3.2.x</Framework>
+    <PackageRequired Version="3.1.91">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -2955,19 +2955,19 @@
             <IndexDrop Name="change_workorder_instruction_plain"/>
             <IndexDrop Name="change_workorder_report_plain"/>
         </TableAlter>
-        <TableAlter Name="change_item" Version="3.1.7">
+        <TableAlter Name="change_item" Version="3.1.91">
             <ColumnChange NameOld="description" NameNew="description" Required="false" Size="1800000" Type="VARCHAR" />
             <ColumnChange NameOld="description_plain" NameNew="description_plain" Required="false" Size="1800000" Type="VARCHAR" />
             <ColumnChange NameOld="justification" NameNew="justification" Required="false" Size="1800000" Type="VARCHAR" />
             <ColumnChange NameOld="justification_plain" NameNew="justification_plain" Required="false" Size="1800000" Type="VARCHAR" />
         </TableAlter>
-        <TableAlter Name="change_workorder" Version="3.1.7">
+        <TableAlter Name="change_workorder" Version="3.1.91">
             <ColumnChange NameOld="instruction" NameNew="instruction" Required="false" Size="1800000" Type="VARCHAR"/>
             <ColumnChange NameOld="instruction_plain" NameNew="instruction_plain" Required="false" Size="1800000" Type="VARCHAR"/>
             <ColumnChange NameOld="report" NameNew="report" Required="false" Size="1800000" Type="VARCHAR"/>
             <ColumnChange NameOld="report_plain" NameNew="report_plain" Required="false" Size="1800000" Type="VARCHAR"/>
         </TableAlter>
-        <TableAlter Name="change_history" Version="3.1.7">
+        <TableAlter Name="change_history" Version="3.1.91">
             <ColumnChange NameOld="content_new" NameNew="content_new" Required="false" Size="1800000" Type="VARCHAR"/>
             <ColumnChange NameOld="content_old" NameNew="content_old" Required="false" Size="1800000" Type="VARCHAR"/>
         </TableAlter>
@@ -3288,7 +3288,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.1.7</li>
+        <li>ITSMCore 3.1.91</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3306,7 +3306,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.1.7</li>
+        <li>ITSMCore 3.1.91</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3323,7 +3323,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.1.7</li>
+        <li>ITSMCore 3.1.91</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3388,7 +3388,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.1.7</li>
+        <li>ITSMCore 3.1.91</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3406,7 +3406,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.1.7</li>
+        <li>ITSMCore 3.1.91</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -3424,7 +3424,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.1.7</li>
+        <li>ITSMCore 3.1.91</li>
         </ul>
         <br/>
         ((enjoy))<br/>
