@@ -2,22 +2,17 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.16 2012-11-20 19:11:35 mh Exp $
+# $Id: CHANGES-Survey,v 1.17 2012-11-21 10:59:53 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-# ---
-# AnswerRequired
-# ---
 2.1.5 - 2012-11-27
  - Added possibility to require answers on survey questions.
 
 2.1.4 - 2012-09-18
- - Updated Polish translation, thanks to Piotr Augustyniak!
-# ---
  - Updated Polish translation, thanks to Pawel @ IB!
 
 2.1.3 - 2012-03-23

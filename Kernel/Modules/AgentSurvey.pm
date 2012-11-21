@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentSurvey.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentSurvey.pm,v 1.53 2012-11-20 19:11:52 mh Exp $
+# $Id: AgentSurvey.pm,v 1.54 2012-11-21 10:59:53 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.53 $) [1];
+$VERSION = qw($Revision: 1.54 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -324,29 +324,18 @@ sub Run {
                 $Class = 'Textarea';
             }
 
-            # ---
-            # AnswerRequired
-            # ---
             my $RequiredText = '';
             if ( $Question->{AnswerRequired} ) {
                 $Class .= ' Mandatory';
                 $RequiredText = '* ';
             }
 
-            # ---
-
             $Self->{LayoutObject}->Block(
                 Name => 'StatsDetailQuestion',
                 Data => {
                     %{$Question},
-                    Class => $Class,
-
-                    # ---
-                    # AnswerRequired
-                    # ---
+                    Class        => $Class,
                     RequiredText => $RequiredText,
-
-                    # ---
                 },
             );
             my @Answers;

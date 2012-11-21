@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.28 2012-11-20 19:12:09 mh Exp $
+# $Id: PublicSurvey.pm,v 1.29 2012-11-21 10:59:54 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,14 +47,9 @@ sub Run {
 
     my $Output;
 
-    # ---
-    # AnswerRequired
-    # ---
     my %Answers;
     my %Errors;
     my @QuestionList;
-
-    # ---
 
     # ------------------------------------------------------------ #
     # public survey vote
@@ -64,88 +59,6 @@ sub Run {
         my %Survey = $Self->{SurveyObject}->PublicSurveyGet( PublicSurveyKey => $PublicSurveyKey );
         if ( $Survey{SurveyID} ) {
             @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
-
-  # ---
-  # AnswerRequired
-  # ---
-  #            for my $Question (@QuestionList) {
-  #                if ( $Question->{Type} eq 'YesNo' ) {
-  #                    my $PublicSurveyVote1 = $Self->{ParamObject}->GetParam(
-  #                        Param => "PublicSurveyVote1[$Question->{QuestionID}]"
-  #                    );
-  #                    $Self->{SurveyObject}->PublicAnswerSave(
-  #                        PublicSurveyKey => $PublicSurveyKey,
-  #                        QuestionID      => $Question->{QuestionID},
-  #                        VoteValue       => $PublicSurveyVote1,
-  #                    );
-  #                }
-  #                elsif ( $Question->{Type} eq 'Radio' ) {
-  #                    my $PublicSurveyVote2 = $Self->{ParamObject}->GetParam(
-  #                        Param => "PublicSurveyVote2[$Question->{QuestionID}]"
-  #                    );
-  #                    $Self->{SurveyObject}->PublicAnswerSave(
-  #                        PublicSurveyKey => $PublicSurveyKey,
-  #                        QuestionID      => $Question->{QuestionID},
-  #                        VoteValue       => $PublicSurveyVote2,
-  #                    );
-  #                }
-  #                elsif ( $Question->{Type} eq 'Checkbox' ) {
-  #                    my @AnswerList = $Self->{SurveyObject}->AnswerList(
-  #                        QuestionID => $Question->{QuestionID}
-  #                    );
-  #                    for my $Answer (@AnswerList) {
-  #                        my $PublicSurveyVote3 = $Self->{ParamObject}->GetParam(
-  #                            Param => "PublicSurveyVote3[$Answer->{AnswerID}]"
-  #                        );
-  #                        if ( $PublicSurveyVote3 && $PublicSurveyVote3 eq 'Yes' ) {
-  #                            $Self->{SurveyObject}->PublicAnswerSave(
-  #                                PublicSurveyKey => $PublicSurveyKey,
-  #                                QuestionID      => $Question->{QuestionID},
-  #                                VoteValue       => $Answer->{AnswerID},
-  #                            );
-  #                        }
-  #                    }
-  #                }
-  #                elsif ( $Question->{Type} eq 'Textarea' ) {
-  #                    my $PublicSurveyVote4 = $Self->{ParamObject}->GetParam(
-  #                        Param => "PublicSurveyVote4[$Question->{QuestionID}]"
-  #                    );
-  #
-  #                    # check if rich text is enabled
-  #                    if ( $Self->{LayoutObject}->{BrowserRichText} ) {
-  #                        $PublicSurveyVote4
-  #                            = ( length $PublicSurveyVote4 )
-  #                            ? "\$html/text\$ $PublicSurveyVote4"
-  #                            : '';
-  #                    }
-  #
-  #                    $Self->{SurveyObject}->PublicAnswerSave(
-  #                        PublicSurveyKey => $PublicSurveyKey,
-  #                        QuestionID      => $Question->{QuestionID},
-  #                        VoteValue       => $PublicSurveyVote4,
-  #                    );
-  #                }
-  #            }
-  #            $Self->{SurveyObject}->PublicSurveyInvalidSet( PublicSurveyKey => $PublicSurveyKey );
-  #        }
-  #        $Output = $Self->{LayoutObject}->CustomerHeader( Title => 'Survey' );
-  #
-  #        # print the main table.
-  #        $Self->{LayoutObject}->Block(
-  #            Name => 'PublicSurveyMessage',
-  #            Data => {
-  #                MessageType   => 'Survey Information',
-  #                MessageHeader => 'Thank you for your feedback.',
-  #                Message       => 'The survey is finished.',
-  #            },
-  #        );
-  #
-  #        $Output .= $Self->{LayoutObject}->Output(
-  #            TemplateFile => 'PublicSurvey',
-  #            Data         => {%Param},
-  #        );
-  #        $Output .= $Self->{LayoutObject}->CustomerFooter();
-  #        return $Output;
 
             for my $Question (@QuestionList) {
                 if ( $Question->{Type} eq 'YesNo' ) {
@@ -296,8 +209,6 @@ sub Run {
                 return $Output;
             }
         }
-
-        # ---
     }
 
     # ------------------------------------------------------------ #
@@ -406,29 +317,18 @@ sub Run {
                 $Class = 'Textarea';
             }
 
-            # ---
-            # AnswerRequired
-            # ---
             my $RequiredText = '';
             if ( $Question->{AnswerRequired} ) {
                 $Class .= ' Mandatory';
                 $RequiredText = '* ';
             }
 
-            # ---
-
             $Self->{LayoutObject}->Block(
                 Name => 'PublicSurveyVoteQuestion',
                 Data => {
                     %{$Question},
-                    Class => $Class,
-
-                    # ---
-                    # AnswerRequired
-                    # ---
+                    Class        => $Class,
                     RequiredText => $RequiredText,
-
-                    # ---
                 },
             );
             my @Answers;
@@ -539,23 +439,15 @@ sub Run {
             Data => {%Survey},
         );
 
-   # ---
-   # AnswerRequired
-   # ---
-   #        my @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
-   # If we had errors, @QuestionList is already filled, so let's save a SQL query
+        # If we had errors, @QuestionList is already filled, so let's save a SQL query
         if ( !@QuestionList ) {
             @QuestionList = $Self->{SurveyObject}->QuestionList( SurveyID => $Survey{SurveyID} );
         }
 
-        # ---
         for my $Question (@QuestionList) {
 
             $Self->{LayoutObject}->Block( Name => 'PublicQuestions' );
 
-            # ---
-            # AnswerRequired
-            # ---
             my $Class        = '';
             my $RequiredText = '';
             my $ErrorText;
@@ -626,12 +518,8 @@ END
                 $Class .= ' Error';
             }
 
-            # ---
             if ( $Question->{Type} eq 'YesNo' ) {
 
-                # ---
-                # AnswerRequired
-                # ---
                 my %Selected = (
                     YesSelected => ( $Answers{ $Question->{QuestionID} } eq 'Yes' )
                     ? 'checked="checked"'
@@ -641,14 +529,8 @@ END
                     : '',
                 );
 
-                # ---
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerYesNo',
-
-                    # ---
-                    # AnswerRequired
-                    # ---
-                    #                    Data => $Question,
                     Data => {
                         %{$Question},
                         %Selected,
@@ -656,82 +538,50 @@ END
                         Class => $Class,
                         RequiredText => $RequiredText,
                         }
-
-                        # ---
                 );
             }
             elsif ( $Question->{Type} eq 'Radio' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerRadio',
-
-                    # ---
-                    # AnswerRequired
-                    # ---
-                    #                    Data => $Question,
                     Data => {
                         %{$Question},
                         ErrorText => $ErrorText || '',
                         Class => $Class,
                         RequiredText => $RequiredText,
                         }
-
-                        # ---
                 );
                 my @AnswerList = $Self->{SurveyObject}->AnswerList(
                     QuestionID => $Question->{QuestionID},
                 );
                 for my $Answer (@AnswerList) {
 
-                    # ---
-                    # AnswerRequired
-                    # ---
                     my $Selected = '';
                     if ( $Answers{ $Question->{QuestionID} } eq $Answer->{AnswerID} ) {
                         $Selected = 'checked="checked"';
                     }
-
-                    # ---
                     $Self->{LayoutObject}->Block(
                         Name => 'PublicAnswerRadiob',
-
-                        # ---
-                        # AnswerRequired
-                        # ---
-                        #                        Data => $Answer,
                         Data => {
                             %{$Answer},
                             AnswerSelected => $Selected,
                         },
-
-                        # ---
                     );
                 }
             }
             elsif ( $Question->{Type} eq 'Checkbox' ) {
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerCheckbox',
-
-                    # ---
-                    # AnswerRequired
-                    # ---
-                    #                    Data => $Question,
                     Data => {
                         %{$Question},
                         ErrorText => $ErrorText || '',
                         Class => $Class,
                         RequiredText => $RequiredText,
                         }
-
-                        # ---
                 );
                 my @AnswerList = $Self->{SurveyObject}->AnswerList(
                     QuestionID => $Question->{QuestionID},
                 );
                 for my $Answer (@AnswerList) {
-
-                    # ---
-                    # AnswerRequired
-                    # ---
                     my $Selected = '';
                     if (
                         defined $Answers{ $Question->{QuestionID} }
@@ -743,40 +593,20 @@ END
                     {
                         $Selected = 'checked="checked"';
                     }
-
-                    # ---
                     $Self->{LayoutObject}->Block(
                         Name => 'PublicAnswerCheckboxb',
-
-                        # ---
-                        # AnswerRequired
-                        # ---
-                        #                        Data => $Answer,
                         Data => {
                             %{$Answer},
                             AnswerSelected => $Selected,
                         },
-
-                        # ---
                     );
                 }
             }
             elsif ( $Question->{Type} eq 'Textarea' ) {
-
-                # ---
-                # AnswerRequired
-                # ---
                 my $Value = $Answers{ $Question->{QuestionID} } || '';
                 $Value =~ s/^\$html\/text\$\s//;
-
-                # ---
                 $Self->{LayoutObject}->Block(
                     Name => 'PublicAnswerTextarea',
-
-                    # ---
-                    # AnswerRequired
-                    # ---
-                    #                    Data => $Question,
                     Data => {
                         %{$Question},
                         ErrorText => $ErrorText || '',
@@ -784,8 +614,6 @@ END
                         RequiredText => $RequiredText,
                         Value        => $Value,
                         }
-
-                        # ---
                 );
 
                 # check if rich text is enabled

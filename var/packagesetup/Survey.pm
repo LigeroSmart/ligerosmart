@@ -2,7 +2,7 @@
 # Survey.pm - code to excecute during package installation
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.3 2012-11-20 16:02:25 jh Exp $
+# $Id: Survey.pm,v 1.4 2012-11-21 10:59:54 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 =head1 NAME
 
@@ -196,10 +196,6 @@ sub CodeUpgradeFromLowerThan_2_0_92 {
     return 1;
 }
 
-# ---
-# AnswerRequired
-# ---
-
 =item CodeUpgradeFromLowerThan_2_1_5()
 
 This function is only executed if the installed module version is smaller than 2.1.5.
@@ -267,8 +263,6 @@ sub _Prefill_AnswerRequiredFromSurveyQuestion_2_1_5 {
     return 1;
 }
 
-# ---
-
 1;
 
 =back
@@ -285,6 +279,6 @@ did not receive this file, see http://www.gnu.org/licenses/gpl-2.0.txt.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-11-20 16:02:25 $
+$Revision: 1.4 $ $Date: 2012-11-21 10:59:54 $
 
 =cut
