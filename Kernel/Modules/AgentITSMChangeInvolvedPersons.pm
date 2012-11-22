@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentITSMChangeInvolvedPersons.pm - the OTRS::ITSM::ChangeManagement change involved persons module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.44 2012-11-21 10:19:33 ub Exp $
+# $Id: AgentITSMChangeInvolvedPersons.pm,v 1.45 2012-11-22 16:01:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.44 $) [1];
+$VERSION = qw($Revision: 1.45 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -681,6 +681,11 @@ sub _IsNewCABMemberOk {
         my %CustomerUser = $Self->{CustomerUserObject}->CustomerSearch(
             UserLogin => $Param{NewCABMemberSelected},
         );
+
+        # remove spaces at the end of the string
+        for my $Value ( sort values %CustomerUser ) {
+            $Value =~ s{ \s* \z }{}xms;
+        }
 
         if ( scalar( keys %CustomerUser ) == 1 ) {
 
