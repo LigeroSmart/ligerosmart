@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: OTRSMasterSlave.sopm,v 1.11 2012-05-10 10:49:37 te Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.12 2012-11-22 04:29:48 cr Exp $</CVS>
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
-    <Framework>3.1.x</Framework>
+    <Framework>3.2.x</Framework>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -14,6 +14,8 @@
         <File Permission="644" Location="doc/en/OTRSMasterSlave.xml"/>
         <File Permission="644" Location="Kernel/Config/Files/OTRSMasterSlave.xml"/>
         <File Permission="644" Location="Kernel/Language/de_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_OTRSMasterSlave.pm"/>
+        <File Permission="644" Location="Kernel/Language/es_MX_OTRSMasterSlave.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentMasterSlavePrepareTicket.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketBulk.pm"/>
         <File Permission="644" Location="Kernel/Modules/AgentTicketMasterSlave.pm"/>
@@ -59,6 +61,52 @@
 
     ]]></CodeInstall>
     <CodeUpgrade Type="post" Version="1.2.5"><![CDATA[
+
+        # define function name
+        my $FunctionName = 'CodeUpgrade125';
+
+        # create the package name
+        my $CodeModule = 'var::packagesetup::' . $Param{Structure}->{Name}->{Content};
+
+        # The code module has just recently been copied to it's location in the file system.
+        # In a persistent Perl environment an old version of the module might still be loaded,
+        # as watchdogs like Apache2::Reload haven't had a chance to reload it.
+        # So we need to make sure that the new version is being loaded.
+        # Kernel::System::Main::Require() checks the relative file path, so we need to remove that from %INC.
+        # This is only needed in persistent Perl environment, but does no harm in a CGI environment.
+        my $CodeModulePath = $CodeModule;
+        $CodeModulePath =~ s/::/\//g;
+        $CodeModulePath .= '.pm';
+        delete $INC{$CodeModulePath};
+
+        # load the module
+        if ( $Self->{MainObject}->Require($CodeModule) ) {
+
+            # create new instance
+            my $CodeObject = $CodeModule->new( %{$Self} );
+
+            if ($CodeObject) {
+
+                # start methode
+                if ( !$CodeObject->$FunctionName(%{$Self}) ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not call method $FunctionName() on $CodeModule.pm."
+                    );
+                }
+            }
+
+            # error handling
+            else {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not call method new() on $CodeModule.pm."
+                );
+            }
+        }
+
+    ]]></CodeUpgrade>
+    <CodeUpgrade Type="post"><![CDATA[
 
         # define function name
         my $FunctionName = 'CodeUpgrade';
@@ -174,4 +222,86 @@
         }
 
     ]]></CodeUninstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to install the OTRS package OTRSMasterSlave.<br/>
+        <br/>
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        Make sure your database accepts packages over 5 MB in size. A MySQL database for example accepts packages up to 1 MB by default. In this case, the value for max_allowed_packet must be increased. The recommended maximum size accepted is 20 MB.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroInstall Type="pre" Title="Install Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; a punto de instalar el paquete OTRSMasterSlave de OTRS.<br/>
+        <br/>
+        <br/>
+        <strong>ATENCI&Oacute;N</strong>
+        <br/>
+        <br/>
+        Por favor aseg&uacute;rese que su base de datos acepte paquetes de m&aacute;s de 5 MB de tama&ntilde;o. Por ejemplo una base de datos de MySQL acepta paquetes de m&aacute;s de 1 MB predefinido. En este caso la configuraci&oacute;n max_allowed_packet debe ser incrementada. El tama&ntilde;o recomendado es 20 MB.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroInstall>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>WELCOME</strong>
+        <br/>
+        <br/>
+        You are about to upgrade the OTRS package OTRSMasterSlave.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUpgrade Type="pre" Title="Upgrade Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>BIENVENIDO</strong>
+        <br/>
+        <br/>
+        Usted est&aacute; apunto de actualizar el paquete OTRSMasterSlave de OTRS.<br/>
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUpgrade>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="en"><![CDATA[
+        <br/>
+        <strong>ATTENTION</strong>
+        <br/>
+        <br/>
+        If you uninstall this package, all ticket Master Slave relations that were created during
+        the use of this package be deleted.
+        All data from these relations will be irrevocably lost!
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
+    <IntroUninstall Type="pre" Title="Uninstallation Information" Lang="es"><![CDATA[
+        <br/>
+        <strong>ATENCI&Oacute;N</strong>
+        <br/>
+        <br/>
+        Si usted desinstala este paquete, todas relaciones de tickets Master Slave creadas durante
+        el uso de este paquete ser&aacute;n borradas.
+        &iexcl;Todos los datos de esas relaciones se perder&aacute;n irrevocablemente!.
+        <br/>
+        <br/>
+        ((enjoy))<br/>
+        <br/>
+    ]]></IntroUninstall>
 </otrs_package>
