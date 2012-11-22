@@ -2,8 +2,8 @@
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.23 2012-08-20 14:11:21 ub Exp $
-# $OldId: CustomerTicketZoom.dtl,v 1.116.2.2 2012/08/17 08:52:41 mg Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.24 2012-11-22 13:07:46 ub Exp $
+# $OldId: CustomerTicketZoom.dtl,v 1.132 2012/11/20 15:25:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,68 +27,22 @@
                 $QData{"Title","65"}
                 <span class="TicketHook">$QData{"TicketNumber"}</span>
             </h2>
-            <ul id="Metadata">
-<!-- dtl:block:Type -->
-                <li><span class="Key">$Text{"Type"}:</span> <span title="$QData{"Type"}">$QData{"Type","18"}</span></li>
-<!-- dtl:block:Type -->
-<!-- dtl:block:Service -->
-                <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Text{"$Data{"Service"}","18"}</span></li>
-<!-- dtl:block:Service -->
-<!-- dtl:block:SLA -->
-                <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Text{"$Data{"SLA"}","18"}</span></li>
-<!-- dtl:block:SLA -->
-# ---
-# ITSM
-# ---
-                <li><span class="Key">$Text{"Criticality"}:</span> <span title="$Text{"$Data{"Criticality"}"}">$Quote{"$Text{"$Data{"Criticality"}"}","18"}</span></li>
-                <li><span class="Key">$Text{"Impact"}:</span> <span title="$Text{"$Data{"Impact"}"}">$Quote{"$Text{"$Data{"Impact"}"}","18"}</span></li>
-# ---
-<!-- dtl:block:State -->
-                <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}","18"}</span></li>
-<!-- dtl:block:State -->
-<!-- dtl:block:Priority -->
-                <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}","18"}</span></li>
-<!-- dtl:block:Priority -->
-<!-- dtl:block:Queue -->
-                <li><span class="Key">$Text{"Queue"}:</span> <span title="$QData{"Queue"}">$QData{"Queue","18"}</span></li>
-<!-- dtl:block:Queue -->
-<!-- dtl:block:Owner -->
-                <li><span class="Key">$Text{"Owner"}:</span> <span title="$QData{"Owner"}">$QData{"Owner"}</span></li>
-<!-- dtl:block:Owner -->
-<!-- dtl:block:Responsible -->
-                <li><span class="Key">$Text{"Responsible"}:</span> <span title="$QData{"Responsible"}">$QData{"Responsible"}</span></li>
-<!-- dtl:block:Responsible -->
-
-# show ticket dynamic fields
-<!-- dtl:block:TicketDynamicField -->
-                <li>
-                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
-                    <span title="$QData{"Title"}">$Data{"Value"}</span>
-                </li>
-<!-- dtl:block:TicketDynamicField -->
-# example of how to use fixed dynamic field blocks for customizations
-# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
-# field names
-#<!-- dtl:block:TicketDynamicField_Field1 -->
-#                <li>
-#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
-#                    <span title="$QData{"Title1"}">$Data{"Value"}</span>
-#                </li>
-#<!-- dtl:block:TicketDynamicField_Field1 -->
-#<!-- dtl:block:TicketDynamicField_Field2 -->
-#                <li>
-#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
-#                    <span title="$QData{"Title2"}">$Data{"Value"}</span>
-#                </li>
-#<!-- dtl:block:TicketDynamicField_Field2 -->
+            <ul id="TicketOptions">
 
 <!-- dtl:block:Print -->
                 <li><a href="$Env{"Baselink"}Action=CustomerTicketPrint;TicketID=$LQData{"TicketID"}" class="Print AsPopup" title="$Text{"Print"}">$Text{"Print"}</a></li>
 <!-- dtl:block:Print -->
+
+<!-- dtl:block:Expand -->
+                <li>
+                    <a href="$Env{"Baselink"}Action=CustomerTicketZoom;TicketID=$LQData{"TicketID"};ZoomExpand=$LQData{"ZoomExpand"}" class="ZoomExpand$Data{"ExpandOption"}" title="$Text{"Show $Data{"ExpandText"} article$Data{"ExpandPlural"}"}">$Text{"Show $Data{"ExpandText"} article$Data{"ExpandPlural"}"}</a>
+                    <input type="hidden" name="ZoomExpand" id="ZoomExpand" value="$QData{"ZoomExpand"}" />
+                </li>
+<!-- dtl:block:Expand -->
             </ul>
             <div class="Clear"></div>
         </div>
-        <form action="$Env{"CGIHandle"}#FollowUp" method="post" enctype="multipart/form-data" name="compose" class="Validate PreventMultipleSubmits">
+        <form action="$Env{"CGIHandle"}#FollowUp" method="post" enctype="multipart/form-data" name="compose" id="ReplyCustomerTicket" class="Validate PreventMultipleSubmits">
             <input type="hidden" name="Action" value="CustomerTicketZoom" />
             <input type="hidden" name="Subaction" value="Store" />
             <input type="hidden" name="TicketID" value="$QData{"TicketID"}" />
@@ -179,7 +133,7 @@
 <!-- dtl:block:BodyHTMLLoad -->
 # Use the HTML5 sandbox attribute to prevent plugins and scripts from being executed in the browser.
 # Use IE's (non-standard) security attribute to achieve something similar in older IE browsers. Append session info to URL because IE will not send cookies.
-                            <iframe sandbox="allow-same-origin" security="restricted" title="about:blank" frameborder="0" id="VisibleFrame" src="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
+                            <iframe sandbox="allow-same-origin" security="restricted" title="about:blank" frameborder="0" id="VisibleFrame" class="VisibleFrame" src="$Env{"Baselink"}Action=CustomerTicketAttachment;Subaction=HTMLView;ArticleID=$QData{"ArticleID"};FileID=$QData{"AttachmentIDOfHTMLBody"};$QEnv{"SessionName"}=$QEnv{"SessionID"}"></iframe>
 <!-- dtl:block:BodyHTMLLoad -->
 <!-- dtl:block:BodyHTMLPlaceholder -->
 #                           <!-- Here we need to append the session info if cookies are disabled, because the layout object cannot automatically do that here, like in the other iframe (only for src attribute). -->
@@ -190,6 +144,98 @@
                 </li>
 <!-- dtl:block:Article -->
             </ul> <!-- /Messages -->
+<!-- dtl:block:NoArticles -->
+            <ul id="NoArticles">
+                <li>
+                    $Text{"This item has no articles yet."}
+                </li>
+            </ul>
+<!-- dtl:block:NoArticles -->
+            <div id="ZoomSidebar">
+                <ul id="Metadata">
+                    <li class="Header">
+                        <div class="MessageHeader">
+                            <h3>$Text{"Information"}</h3>
+                            <div class="Clear"></div>
+                        </div>
+                    </li>
+
+<!-- dtl:block:Type -->
+                    <li><span class="Key">$Text{"Type"}:</span> <span title="$QData{"Type"}">$QData{"Type","18"}</span></li>
+<!-- dtl:block:Type -->
+<!-- dtl:block:Service -->
+                    <li><span class="Key">$Text{"Service"}:</span> <span title="$Text{"$Data{"Service"}"}">$Text{"$Data{"Service"}"}</span></li>
+<!-- dtl:block:Service -->
+<!-- dtl:block:SLA -->
+                    <li><span class="Key">$Text{"SLA"}:</span> <span title="$Text{"$Data{"SLA"}"}">$Text{"$Data{"SLA"}"}</span></li>
+<!-- dtl:block:SLA -->
+# ---
+# ITSM
+# ---
+                    <li><span class="Key">$Text{"Criticality"}:</span> <span title="$Text{"$Data{"Criticality"}"}">$Text{"$Data{"Criticality"}"}</span></li>
+                    <li><span class="Key">$Text{"Impact"}:</span> <span title="$Text{"$Data{"Impact"}"}">$Text{"$Data{"Impact"}"}</span></li>
+# ---
+<!-- dtl:block:State -->
+                    <li><span class="Key">$Text{"State"}:</span> <span title="$Text{"$Data{"State"}"}">$Text{"$Data{"State"}"}</span></li>
+<!-- dtl:block:State -->
+<!-- dtl:block:Priority -->
+                    <li><span class="Key">$Text{"Priority"}:</span> <span title="$Text{"$Data{"Priority"}"}">$Text{"$Data{"Priority"}"}</span></li>
+<!-- dtl:block:Priority -->
+<!-- dtl:block:Queue -->
+                    <li><span class="Key">$Text{"Queue"}:</span> <span title="$QData{"Queue"}">$QData{"Queue","18"}</span></li>
+<!-- dtl:block:Queue -->
+<!-- dtl:block:Owner -->
+                    <li><span class="Key">$Text{"Owner"}:</span> <span title="$QData{"Owner"}">$QData{"Owner"}</span></li>
+<!-- dtl:block:Owner -->
+<!-- dtl:block:Responsible -->
+                    <li><span class="Key">$Text{"Responsible"}:</span> <span title="$QData{"Responsible"}">$QData{"Responsible"}</span></li>
+<!-- dtl:block:Responsible -->
+<!-- dtl:block:ProcessData -->
+                    <li><span class="Key">$Text{"Process"}:</span> <span title="$QData{"Process"}">$QData{"Process"}</span></li>
+                    <li><span class="Key">$Text{"Activity"}:</span> <span title="$QData{"Activity"}">$QData{"Activity"}</span></li>
+<!-- dtl:block:ProcessData -->
+
+# show ticket dynamic fields
+<!-- dtl:block:TicketDynamicField -->
+                    <li>
+                        <span class="Key">$Text{"$Data{"Label"}"}:</span>
+                        <span title="$QData{"Title"}">$Data{"Value"}</span>
+                    </li>
+<!-- dtl:block:TicketDynamicField -->
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:TicketDynamicField_Field1 -->
+#                <li>
+#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                    <span title="$QData{"Title1"}">$Data{"Value"}</span>
+#                </li>
+#<!-- dtl:block:TicketDynamicField_Field1 -->
+#<!-- dtl:block:TicketDynamicField_Field2 -->
+#                <li>
+#                    <span class="Key">$Text{"$Data{"Label"}"}:</span>
+#                    <span title="$QData{"Title2"}">$Data{"Value"}</span>
+#                </li>
+#<!-- dtl:block:TicketDynamicField_Field2 -->
+
+                </ul>
+<!-- dtl:block:NextActivities -->
+                <ul id="Activities">
+                    <li class="Header">
+                        <div class="MessageHeader">
+                            <h3>$Text{"Next Steps"}</h3>
+                            <div class="Clear"></div>
+                        </div>
+                    </li>
+<!-- dtl:block:ActivityDialog -->
+                    <li><a title="$QData{"Name"}" class="AsPopup PopupType_TicketAction" href="$Env{"Baselink"}Action=CustomerTicketProcess;Subaction=DisplayActivityDialog;TicketID=$QData{"TicketID"};ProcessEntityID=$QData{"ProcessEntityID"};ActivityDialogEntityID=$QData{"ActivityDialogEntityID"}">$QData{"Name"}</a></li>
+<!-- dtl:block:ActivityDialog -->
+<!-- dtl:block:NoActivityDialog -->
+                    <li>$Text{"There are no further steps in this process"}</li>
+<!-- dtl:block:NoActivityDialog -->
+                </ul>
+<!-- dtl:block:NextActivities -->
+            </div>
 <!-- dtl:block:FollowUp -->
             <div id="FollowUp" class="$QData{"FollowUpVisible"}">
                 <div id="Messenger">
@@ -242,12 +288,59 @@
                         <div>
                             <label for="StateID">$Text{"Next state"}:</label> $Data{"NextStatesStrg"}
                         </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#StateID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#ReplyCustomerTicket'), 'AJAXUpdate', 'StateID', [ 'PriorityID', 'TicketID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:FollowUpState -->
 <!-- dtl:block:FollowUpPriority -->
                         <div>
                             <label for="PriorityID">$Text{"Priority"}:</label> $Data{"PriorityStrg"}
                         </div>
+<!--dtl:js_on_document_complete-->
+<script type="text/javascript">//<![CDATA[
+    $('#PriorityID').bind('change', function (Event) {
+        Core.AJAX.FormUpdate($('#ReplyCustomerTicket'), 'AJAXUpdate', 'PriorityID', [ 'StateID', 'TicketID', $Data{"DynamicFieldNamesStrg"} ]);
+    });
+//]]></script>
+<!--dtl:js_on_document_complete-->
 <!-- dtl:block:FollowUpPriority -->
+
+<!-- dtl:block:FollowUpDynamicField -->
+                        <div class="Row Row_DynamicField_$QData{"Name"}">
+                            $Data{"Label"}
+                            <div class="Field">
+                                $Data{"Field"}
+                            </div>
+                            <div class="Clear"></div>
+                        </div>
+<!-- dtl:block:FollowUpDynamicField -->
+
+# example of how to use fixed dynamic field blocks for customizations
+# Note: Field1 and Field2 are the names of the fields and had to be replaced with the actual
+# field names
+#<!-- dtl:block:FollowUpDynamicField_Field1 -->
+#                <div class="Row Row_DynamicField_$QData{"Name"}">
+#                    $Data{"Label"}
+#                    <div class="Field">
+#                        $Data{"Field"}
+#                    </div>
+#                    <div class="Clear"></div>
+#                </div>
+#<!-- dtl:block:FollowUpDynamicField_Field1 -->
+#<!-- dtl:block:FollowUpDynamicField_Field2 -->
+#                <div class="Row Row_DynamicField_$QData{"Name"}">
+#                    $Data{"Label"}
+#                    <div class="Field">
+#                        $Data{"Field"}
+#                    </div>
+#                    <div class="Clear"></div>
+#                </div>
+#<!-- dtl:block:FollowUpDynamicField_Field2 -->
+
                     </fieldset>
                     <div class="ActionRow">
                         <button type="submit" value="$Text{"Submit"}">$Text{"Submit"}</button> $Text{"or"} <a id="CloseButton" href="">$Text{"Cancel"}</a>
@@ -256,7 +349,9 @@
                 <a id="ReplyButton" class="DontPrint" href="">$Text{"Reply"}</a>
             </div>
 <!-- dtl:block:FollowUp -->
+            <div class="Clear"></div>
         </form>
+
     </div>
 </div>
 <!-- dtl:js_on_document_complete -->
