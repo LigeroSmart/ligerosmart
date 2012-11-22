@@ -2,8 +2,8 @@
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.pm,v 1.10 2012-06-23 12:09:49 mb Exp $
-# $OldId: CustomerTicketPrint.pm,v 1.48 2011/12/12 10:52:00 mg Exp $
+# $Id: CustomerTicketPrint.pm,v 1.11 2012-11-22 13:50:27 ub Exp $
+# $OldId: CustomerTicketPrint.pm,v 1.52 2012/11/20 14:54:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -730,7 +730,7 @@ sub _PDFOutputArticles {
             %AtmIndex = %{ $Article{Atms} };
         }
         my $Attachments;
-        for my $FileID ( keys %AtmIndex ) {
+        for my $FileID ( sort keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $Attachments .= $File{Filename} . ' (' . $File{Filesize} . ")\n";
         }
@@ -1053,14 +1053,13 @@ sub _HTMLMask {
             %AtmIndex = %{ $Article{Atms} };
         }
         $Param{'Article::ATM'} = '';
-        for my $FileID ( keys %AtmIndex ) {
+        for my $FileID ( sort keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $File{Filename} = $Self->{LayoutObject}->Ascii2Html( Text => $File{Filename} );
             $Param{'Article::ATM'}
-                .= '<a href="$Env{"CGIHandle"}/$QData{"Filename"}?Action=CustomerTicketAttachment&'
+                .= '<a href="$Env{"Baselink"}Action=CustomerTicketAttachment;'
                 . "ArticleID=$Article{ArticleID};FileID=$FileID\" target=\"attachment\" "
-                . "onmouseover=\"window.status='\$Text{\"Download\"}: $File{Filename}';"
-                . ' return true;" onmouseout="window.status=\'\';">'
+                . "title=\"\$Text{\"Download\"}: $File{Filename}\">"
                 . "$File{Filename}</a> $File{Filesize}<br/>";
         }
 

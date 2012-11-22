@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.36 2012-08-01 12:11:59 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.177.2.1 2012/06/26 07:48:26 mg Exp $
+# $Id: AgentTicketZoom.pm,v 1.37 2012-11-22 13:50:27 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.194 2012/11/20 14:52:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,20 +16,26 @@ use strict;
 use warnings;
 
 use Kernel::System::CustomerUser;
-use Kernel::System::LinkObject;
-use Kernel::System::EmailParser;
-use Kernel::System::SystemAddress;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
-use Kernel::System::VariableCheck qw(:all);
+use Kernel::System::EmailParser;
+use Kernel::System::LinkObject;
+use Kernel::System::ProcessManagement::Activity;
+use Kernel::System::ProcessManagement::ActivityDialog;
+use Kernel::System::ProcessManagement::Process;
+use Kernel::System::ProcessManagement::Transition;
+use Kernel::System::ProcessManagement::TransitionAction;
+use Kernel::System::SystemAddress;
 # ---
 # ITSM
 # ---
 use Kernel::System::GeneralCatalog;
 # ---
 
+use Kernel::System::VariableCheck qw(:all);
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.36 $) [1];
+$VERSION = qw($Revision: 1.37 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -92,13 +98,33 @@ sub new {
     $Self->{BackendObject}      = Kernel::System::DynamicField::Backend->new(%Param);
 
     # get dynamic field config for frontend module
-    $Self->{DynamicFieldFilter}
-        = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketZoom")->{DynamicField};
-# ---
-# ITSM
-# ---
-    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
-# ---
+    $Self->{DynamicFieldFilter} = {
+        %{ $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketZoom")->{DynamicField} || {} },
+        %{
+            $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketZoom")
+                ->{ProcessWidgetDynamicField}
+                || {}
+        },
+    };
+
+    # create additional objects for process management
+    $Self->{ActivityObject} = Kernel::System::ProcessManagement::Activity->new(%Param);
+    $Self->{ActivityDialogObject}
+        = Kernel::System::ProcessManagement::ActivityDialog->new(%Param);
+
+    $Self->{TransitionObject} = Kernel::System::ProcessManagement::Transition->new(%Param);
+    $Self->{TransitionActionObject}
+        = Kernel::System::ProcessManagement::TransitionAction->new(%Param);
+
+    $Self->{ProcessObject} = Kernel::System::ProcessManagement::Process->new(
+        %Param,
+        ActivityObject         => $Self->{ActivityObject},
+        TransitionObject       => $Self->{TransitionObject},
+        TransitionActionObject => $Self->{TransitionActionObject},
+    );
+
+    # get zoom settings depending on ticket type
+    $Self->{DisplaySettings} = $Self->{ConfigObject}->Get("Ticket::Frontend::AgentTicketZoom");
 
     return $Self;
 }
@@ -154,7 +180,12 @@ sub Run {
 
     # mark shown ticket as seen
     if ( $Self->{Subaction} eq 'TicketMarkAsSeen' ) {
-        my $Success = $Self->_TicketItemSeen( TicketID => $Self->{TicketID} );
+        my $Success = 1;
+
+        # always show archived tickets as seen
+        if ( $Ticket{ArchiveFlag} ne 'y' ) {
+            $Success = $Self->_TicketItemSeen( TicketID => $Self->{TicketID} );
+        }
 
         return $Self->{LayoutObject}->Attachment(
             ContentType => 'text/html',
@@ -166,7 +197,12 @@ sub Run {
 
     # mark shown article as seen
     if ( $Self->{Subaction} eq 'MarkAsSeen' ) {
-        my $Success = $Self->_ArticleItemSeen( ArticleID => $Self->{ArticleID} );
+        my $Success = 1;
+
+        # always show archived tickets as seen
+        if ( $Ticket{ArchiveFlag} ne 'y' ) {
+            $Success = $Self->_ArticleItemSeen( ArticleID => $Self->{ArticleID} );
+        }
 
         return $Self->{LayoutObject}->Attachment(
             ContentType => 'text/html',
@@ -443,6 +479,11 @@ sub MaskAgentZoom {
         $Article->{Count} = $Count;
     }
 
+    my %ArticleFlags = $Self->{TicketObject}->ArticleFlagsOfTicketGet(
+        TicketID => $Ticket{TicketID},
+        UserID   => $Self->{UserID},
+    );
+
     # get selected or last customer article
     my $ArticleID;
     if ( $Self->{ArticleID} ) {
@@ -457,14 +498,9 @@ sub MaskAgentZoom {
             # ignore system sender type
             next ARTICLE
                 if $Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
-                    && $Article->{SenderType} eq 'system';
+                && $Article->{SenderType} eq 'system';
 
-            # get article flags
-            my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
-                ArticleID => $Article->{ArticleID},
-                UserID    => $Self->{UserID},
-            );
-            next ARTICLE if $ArticleFlag{Seen};
+            next ARTICLE if $ArticleFlags{ $Article->{ArticleID} }->{Seen};
             $ArticleID = $Article->{ArticleID};
             last ARTICLE;
         }
@@ -573,13 +609,33 @@ sub MaskAgentZoom {
         @ArticleBoxShown = reverse @ArticleBoxShown;
     }
 
-    # show article tree
-    $Param{ArticleTree} = $Self->_ArticleTree(
-        Ticket          => \%Ticket,
-        ArticleID       => $ArticleID,
-        ArticleMaxLimit => $ArticleMaxLimit,
-        ArticleBox      => \@ArticleBox,
+    # set display options
+    $Param{WidgetTitle} = 'Ticket Information';
+    $Param{Hook} = $Self->{ConfigObject}->Get('Ticket::Hook') || 'Ticket#';
+
+    # check if ticket is normal or process ticket
+    my $IsProcessTicket = $Self->{TicketObject}->TicketCheckForProcessType(
+        'TicketID' => $Self->{TicketID}
     );
+
+    # overwrite display options for process ticket
+    if ($IsProcessTicket) {
+        $Param{WidgetTitle} = $Self->{DisplaySettings}->{ProcessDisplay}->{WidgetTitle};
+        $Param{Hook} = $Self->{DisplaySettings}->{ProcessDisplay}->{Hook} || 'Process#';
+    }
+
+    # only show article tree if articles are present
+    if (@ArticleBox) {
+
+        # show article tree
+        $Param{ArticleTree} = $Self->_ArticleTree(
+            Ticket          => \%Ticket,
+            ArticleFlags    => \%ArticleFlags,
+            ArticleID       => $ArticleID,
+            ArticleMaxLimit => $ArticleMaxLimit,
+            ArticleBox      => \@ArticleBox,
+        );
+    }
 
     # show articles items
     $Param{ArticleItems} = '';
@@ -608,7 +664,8 @@ sub MaskAgentZoom {
         );
     }
 
-    if ( $Self->{ZoomExpand} ) {
+    # always show archived tickets as seen
+    if ( $Self->{ZoomExpand} && $Ticket{ArchiveFlag} ne 'y' ) {
         $Self->{LayoutObject}->Block(
             Name => 'TicketItemMarkAsSeen',
             Data => { TicketID => $Ticket{TicketID} },
@@ -705,6 +762,13 @@ sub MaskAgentZoom {
         $Self->{LayoutObject}->Block(
             Name => 'CreatedBy',
             Data => {%Ticket},
+        );
+    }
+
+    if ( $Ticket{ArchiveFlag} eq 'y' ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'ArchiveFlag',
+            Data => { %Ticket, %AclAction },
         );
     }
 
@@ -868,6 +932,165 @@ sub MaskAgentZoom {
         );
     }
 
+    # show no articles block if ticket does not contain articles
+    if ( !@ArticleBox ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'HintNoArticles',
+        );
+    }
+
+    # show process widget  and activity dialogs on process tickets
+    if ($IsProcessTicket) {
+
+        # get the DF where the ProcessEntityID is stored
+        my $ProcessEntityIDField = 'DynamicField_'
+            . $Self->{ConfigObject}->Get("Process::DynamicFieldProcessManagementProcessID");
+
+        # get the DF where the AtivityEntityID is stored
+        my $ActivityEntityIDField = 'DynamicField_'
+            . $Self->{ConfigObject}->Get("Process::DynamicFieldProcessManagementActivityID");
+
+        my $ProcessData = $Self->{ProcessObject}->ProcessGet(
+            ProcessEntityID => $Ticket{$ProcessEntityIDField},
+        );
+        my $ActivityData = $Self->{ActivityObject}->ActivityGet(
+            Interface        => 'AgentInterface',
+            ActivityEntityID => $Ticket{$ActivityEntityIDField},
+        );
+
+        # output process information in the sidebar
+        $Self->{LayoutObject}->Block(
+            Name => 'ProcessData',
+            Data => {
+                Process  => $ProcessData->{Name}  || '',
+                Activity => $ActivityData->{Name} || '',
+            },
+        );
+
+        # output the process widget the the main screen
+        $Self->{LayoutObject}->Block(
+            Name => 'ProcessWidget',
+            Data => {
+                WidgetTitle => $Param{WidgetTitle},
+            },
+        );
+
+        # get next activity dialogs
+        my $NextActivityDialogs;
+        if ( $Ticket{$ActivityEntityIDField} ) {
+            $NextActivityDialogs = $ActivityData;
+        }
+
+        if ( IsHashRefWithData($NextActivityDialogs) ) {
+
+            # we don't need the whole Activity config,
+            # just the Activity Dialogs of the current Activity
+            if ( IsHashRefWithData( $NextActivityDialogs->{ActivityDialog} ) ) {
+                %{$NextActivityDialogs} = %{ $NextActivityDialogs->{ActivityDialog} };
+            }
+            else {
+                $NextActivityDialogs = {};
+            }
+
+            # ACL Check is done in the initial "Run" statement
+            # so here we can just pick the possibly reduced Activity Dialogs
+            # map and sort reformat the $NextActivityDialogs hash from it's initial form e.g.:
+            # 1 => 'AD1',
+            # 2 => 'AD3',
+            # 3 => 'AD2',
+            # to a regular array in correct order:
+            # ('AD1', 'AD3', 'AD2')
+
+            my @TmpActivityDialogList
+                = map { $NextActivityDialogs->{$_} } sort keys %{$NextActivityDialogs};
+
+            # we have to check if the current user has the needed permissions to view the
+            # different activity dialogs, so we loop over every activity dialog and check if there
+            # is a permission configured. If there is a permission configured we check this
+            # and display/hide the activity dialog link
+            my %PermissionRights;
+            my @PermissionActivityDialogList;
+            ACTIVITYDIALOGPERMISSION:
+            for my $CurrentActivityDialogEntityID (@TmpActivityDialogList) {
+                my $CurrentActivityDialog
+                    = $Self->{ActivityDialogObject}->ActivityDialogGet(
+                    Interface              => 'AgentInterface',
+                    ActivityDialogEntityID => $CurrentActivityDialogEntityID
+                    );
+
+                # create an interface lookuplist
+                my %InterfaceLookup = map { $_ => 1 } @{ $CurrentActivityDialog->{Interface} };
+
+                next ACTIVITYDIALOGPERMISSION if !$InterfaceLookup{AgentInterface};
+
+                if ( $CurrentActivityDialog->{Permission} ) {
+
+                    # performanceboost/cache
+                    if ( !defined $PermissionRights{ $CurrentActivityDialog->{Permission} } ) {
+                        $PermissionRights{ $CurrentActivityDialog->{Permission} }
+                            = $Self->{TicketObject}->TicketPermission(
+                            Type     => $CurrentActivityDialog->{Permission},
+                            TicketID => $Ticket{TicketID},
+                            UserID   => $Self->{UserID},
+                            );
+                    }
+
+                    next ACTIVITYDIALOGPERMISSION
+                        if !$PermissionRights{ $CurrentActivityDialog->{Permission} };
+                }
+
+                push @PermissionActivityDialogList, $CurrentActivityDialogEntityID;
+            }
+
+            my @PossibleActivityDialogs;
+            if (@PermissionActivityDialogList) {
+                @PossibleActivityDialogs
+                    = $Self->{TicketObject}->TicketAclActivityDialogData(
+                    ActivityDialogs => \@PermissionActivityDialogList
+                    );
+            }
+
+            # reformat the @PossibleActivityDialogs that is of the structure:
+            # @PossibleActivityDialogs = ('AD1', 'AD3', 'AD4', 'AD2');
+            # to get the same structure as in the %NextActivityDialogs
+            # e.g.:
+            # 1 => 'AD1',
+            # 2 => 'AD3',
+            %{$NextActivityDialogs}
+                = map { $_ => $PossibleActivityDialogs[ $_ - 1 ] }
+                1 .. scalar @PossibleActivityDialogs;
+
+            $Self->{LayoutObject}->Block(
+                Name => 'NextActivityDialogs',
+            );
+
+            if ( IsHashRefWithData($NextActivityDialogs) ) {
+                for my $NextActivityDialogKey ( sort keys %{$NextActivityDialogs} ) {
+                    my $ActivityDialogData = $Self->{ActivityDialogObject}->ActivityDialogGet(
+                        Interface              => 'AgentInterface',
+                        ActivityDialogEntityID => $NextActivityDialogs->{$NextActivityDialogKey},
+                    );
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ActivityDialog',
+                        Data => {
+                            ActivityDialogEntityID
+                                => $NextActivityDialogs->{$NextActivityDialogKey},
+                            Name            => $ActivityDialogData->{Name},
+                            ProcessEntityID => $Ticket{$ProcessEntityIDField},
+                            TicketID        => $Ticket{TicketID},
+                        },
+                    );
+                }
+            }
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'NoActivityDialogs',
+                    Data => {},
+                );
+            }
+        }
+    }
+
     # get the dynamic fields for ticket object
     my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldListGet(
         Valid       => 1,
@@ -879,6 +1102,9 @@ sub MaskAgentZoom {
 # ---
     my @IndividualDynamicFields;
 # ---
+
+    # to store dynamic fields to be displayed in the process widget and in the sidebar
+    my ( @FieldsWidget, @FieldsSidebar );
 
     # cycle trough the activated Dynamic Fields for ticket object
     DYNAMICFIELD:
@@ -897,41 +1123,52 @@ sub MaskAgentZoom {
 # ---
 
         # get print string for this dynamic field
+        # do not use ValueMaxChars here otherwise values will be trimmed also in Process Widget
         my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            ValueMaxChars      => 25,
             LayoutObject       => $Self->{LayoutObject},
         );
 
-        my $Label = $DynamicFieldConfig->{Label};
+        # use translation here to be able to reduce the character length in the template
+        my $Label = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} );
 
-        $Self->{LayoutObject}->Block(
-            Name => 'TicketDynamicField',
-            Data => {
-                Label => $Label,
-            },
-        );
-
-        if ( $ValueStrg->{Link} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketDynamicFieldLink',
-                Data => {
-                    Value                       => $ValueStrg->{Value},
-                    Title                       => $ValueStrg->{Title},
-                    Link                        => $ValueStrg->{Link},
-                    $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
-                },
-            );
+        if (
+            $IsProcessTicket &&
+            $Self->{DisplaySettings}->{ProcessWidgetDynamicField}->{ $DynamicFieldConfig->{Name} }
+            )
+        {
+            push @FieldsWidget, {
+                Name  => $DynamicFieldConfig->{Name},
+                Title => $ValueStrg->{Title},
+                Value => $ValueStrg->{Value},
+                ValueKey
+                    => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                Label                       => $Label,
+                Link                        => $ValueStrg->{Link},
+                $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+            };
         }
-        else {
-            $Self->{LayoutObject}->Block(
-                Name => 'TicketDynamicFieldPlain',
-                Data => {
-                    Value => $ValueStrg->{Value},
-                    Title => $ValueStrg->{Title},
-                },
-            );
+
+        if (
+            $Self->{DisplaySettings}->{DynamicField}->{ $DynamicFieldConfig->{Name} }
+            )
+        {
+            my $TrimmedValue = $ValueStrg->{Value};
+
+            # trim the value so it can fit better in the sidebar
+            if ( length $ValueStrg->{Value} > 18 ) {
+                $TrimmedValue = substr( $ValueStrg->{Value}, 0, 18 ) . '...';
+            }
+
+            push @FieldsSidebar, {
+                Name                        => $DynamicFieldConfig->{Name},
+                Title                       => $ValueStrg->{Title},
+                Value                       => $TrimmedValue,
+                Label                       => $Label,
+                Link                        => $ValueStrg->{Link},
+                $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
+            };
         }
 
         # example of dynamic fields order customization
@@ -997,6 +1234,171 @@ sub MaskAgentZoom {
         }
     }
 # ---
+
+    if ($IsProcessTicket) {
+
+        # output dynamic fields registered for a group in the process widget
+        my @FieldsInAGroup;
+        for my $GroupName (
+            sort keys %{ $Self->{DisplaySettings}->{ProcessWidgetDynamicFieldGroups} }
+            )
+        {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'ProcessWidgetDynamicFieldGroups',
+            );
+
+            my $GroupFieldsString
+                = $Self->{DisplaySettings}->{ProcessWidgetDynamicFieldGroups}->{$GroupName};
+
+            $GroupFieldsString =~ s{\s}{}xmsg;
+            my @GroupFields = split( ',', $GroupFieldsString );
+
+            if ( $#GroupFields + 1 ) {
+
+                my $ShowGroupTitle = 0;
+                for my $Field (@FieldsWidget) {
+
+                    if ( grep { $_ eq $Field->{Name} } @GroupFields ) {
+
+                        $ShowGroupTitle = 1;
+                        $Self->{LayoutObject}->Block(
+                            Name => 'ProcessWidgetDynamicField',
+                            Data => {
+                                Label => $Field->{Label},
+                                Name  => $Field->{Name},
+                            },
+                        );
+
+                        $Self->{LayoutObject}->Block(
+                            Name => 'ProcessWidgetDynamicFieldValueOverlayTrigger',
+                        );
+
+                        if ( $Field->{Link} ) {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'ProcessWidgetDynamicFieldLink',
+                                Data => {
+                                    Value          => $Field->{Value},
+                                    Title          => $Field->{Title},
+                                    Link           => $Field->{Link},
+                                    $Field->{Name} => $Field->{Title},
+                                },
+                            );
+                        }
+                        else {
+                            $Self->{LayoutObject}->Block(
+                                Name => 'ProcessWidgetDynamicFieldPlain',
+                                Data => {
+                                    Value => $Field->{Value},
+                                    Title => $Field->{Title},
+                                },
+                            );
+                        }
+                        push @FieldsInAGroup, $Field->{Name};
+                    }
+                }
+
+                if ($ShowGroupTitle) {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'ProcessWidgetDynamicFieldGroupSeparator',
+                        Data => {
+                            Name => $GroupName,
+                        },
+                    );
+                }
+            }
+        }
+
+        # output dynamic fields not registered in a group in the process widget
+        my @RemainingFieldsWidget;
+        for my $Field (@FieldsWidget) {
+
+            if ( !grep { $_ eq $Field->{Name} } @FieldsInAGroup ) {
+                push @RemainingFieldsWidget, $Field;
+            }
+        }
+
+        $Self->{LayoutObject}->Block(
+            Name => 'ProcessWidgetDynamicFieldGroups',
+        );
+
+        if ( $#RemainingFieldsWidget + 1 ) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'ProcessWidgetDynamicFieldGroupSeparator',
+                Data => {
+                    Name => $Self->{LayoutObject}->{LanguageObject}->Get('Fields with no group'),
+                },
+            );
+        }
+        for my $Field (@RemainingFieldsWidget) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'ProcessWidgetDynamicField',
+                Data => {
+                    Label => $Field->{Label},
+                    Name  => $Field->{Name},
+                },
+            );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'ProcessWidgetDynamicFieldValueOverlayTrigger',
+            );
+
+            if ( $Field->{Link} ) {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ProcessWidgetDynamicFieldLink',
+                    Data => {
+                        Value          => $Field->{Value},
+                        Title          => $Field->{Title},
+                        Link           => $Field->{Link},
+                        $Field->{Name} => $Field->{Title},
+                    },
+                );
+            }
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ProcessWidgetDynamicFieldPlain',
+                    Data => {
+                        Value => $Field->{Value},
+                        Title => $Field->{Title},
+                    },
+                );
+            }
+        }
+    }
+
+    # output dynamic fields in the sidebar
+    for my $Field (@FieldsSidebar) {
+
+        $Self->{LayoutObject}->Block(
+            Name => 'TicketDynamicField',
+            Data => {
+                Label => $Field->{Label},
+            },
+        );
+
+        if ( $Field->{Link} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketDynamicFieldLink',
+                Data => {
+                    Value          => $Field->{Value},
+                    Title          => $Field->{Title},
+                    Link           => $Field->{Link},
+                    $Field->{Name} => $Field->{Title},
+                },
+            );
+        }
+        else {
+            $Self->{LayoutObject}->Block(
+                Name => 'TicketDynamicFieldPlain',
+                Data => {
+                    Value => $Field->{Value},
+                    Title => $Field->{Title},
+                },
+            );
+        }
+    }
 
     # customer info string
     if ( $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerInfoZoom') ) {
@@ -1106,16 +1508,10 @@ sub MaskAgentZoom {
         # ignore system sender type
         next ARTICLE
             if $Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
-                && $Article->{SenderType} eq 'system';
-
-        # get article flags
-        my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
-            ArticleID => $Article->{ArticleID},
-            UserID    => $Self->{UserID},
-        );
+            && $Article->{SenderType} eq 'system';
 
         # last if article was not shown
-        if ( !$ArticleFlag{Seen} ) {
+        if ( !$ArticleFlags{ $Article->{ArticleID} }->{Seen} ) {
             $ArticleAllSeen = 0;
             last ARTICLE;
         }
@@ -1148,6 +1544,7 @@ sub _ArticleTree {
     my ( $Self, %Param ) = @_;
 
     my %Ticket          = %{ $Param{Ticket} };
+    my %ArticleFlags    = %{ $Param{ArticleFlags} };
     my @ArticleBox      = @{ $Param{ArticleBox} };
     my $ArticleMaxLimit = $Param{ArticleMaxLimit};
     my $ArticleID       = $Param{ArticleID};
@@ -1237,17 +1634,13 @@ sub _ArticleTree {
         }
 
         # show article flags
-        my $Class       = '';
-        my $ClassRow    = '';
-        my $NewArticle  = 0;
-        my %ArticleFlag = $Self->{TicketObject}->ArticleFlagGet(
-            ArticleID => $Article{ArticleID},
-            UserID    => $Self->{UserID},
-        );
+        my $Class      = '';
+        my $ClassRow   = '';
+        my $NewArticle = 0;
 
         # ignore system sender types
         if (
-            !$ArticleFlag{Seen}
+            !$ArticleFlags{ $Article{ArticleID} }->{Seen}
             && (
                 !$Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
                 || $Self->{ConfigObject}->Get('Ticket::NewArticleIgnoreSystemSender')
@@ -1258,8 +1651,12 @@ sub _ArticleTree {
             $NewArticle = 1;
 
             # show ticket flags
-            $Class    .= ' UnreadArticles';
-            $ClassRow .= ' UnreadArticles';
+
+            # always show archived tickets as seen
+            if ( $Ticket{ArchiveFlag} ne 'y' ) {
+                $Class    .= ' UnreadArticles';
+                $ClassRow .= ' UnreadArticles';
+            }
 
             # just show ticket flags if agent belongs to the ticket
             my $ShowMeta;
@@ -1311,7 +1708,8 @@ sub _ArticleTree {
             },
         );
 
-        if ($NewArticle) {
+        # always show archived tickets as seen
+        if ( $NewArticle && $Ticket{ArchiveFlag} ne 'y' ) {
             $Self->{LayoutObject}->Block(
                 Name => 'TreeItemNewArticle',
                 Data => {
@@ -1379,7 +1777,7 @@ sub _ArticleTree {
                     },
                 );
 
-                if ( keys %{ $Article{Atms} } > 1 ) {
+                if ( scalar keys %{ $Article{Atms} } > 1 ) {
                     $Self->{LayoutObject}->Block(
                         Name => 'TreeItemAttachmentIconMultiple',
                         Data => {
@@ -1480,21 +1878,25 @@ sub _ArticleItem {
         );
     }
 
-    # mark shown article as seen
-    if ( $Param{Type} eq 'OnLoad' ) {
-        $Self->_ArticleItemSeen( ArticleID => $Article{ArticleID} );
-    }
-    else {
-        if (
-            !$Self->{ZoomExpand}
-            && defined $Param{ActualArticleID}
-            && $Param{ActualArticleID} == $Article{ArticleID}
-            )
-        {
-            $Self->{LayoutObject}->Block(
-                Name => 'ArticleItemMarkAsSeen',
-                Data => { %Param, %Article, %AclAction },
-            );
+    # always show archived tickets as seen
+    if ( $Ticket{ArchiveFlag} ne 'y' ) {
+
+        # mark shown article as seen
+        if ( $Param{Type} eq 'OnLoad' ) {
+            $Self->_ArticleItemSeen( ArticleID => $Article{ArticleID} );
+        }
+        else {
+            if (
+                !$Self->{ZoomExpand}
+                && defined $Param{ActualArticleID}
+                && $Param{ActualArticleID} == $Article{ArticleID}
+                )
+            {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ArticleItemMarkAsSeen',
+                    Data => { %Param, %Article, %AclAction },
+                );
+            }
         }
     }
 

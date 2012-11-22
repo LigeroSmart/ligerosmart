@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.11 2012-06-23 12:09:49 mb Exp $
-# $OldId: AgentTicketPrint.pm,v 1.86 2012/01/24 00:08:45 cr Exp $
+# $Id: AgentTicketPrint.pm,v 1.12 2012-11-22 13:50:27 ub Exp $
+# $OldId: AgentTicketPrint.pm,v 1.91 2012/11/20 14:51:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -187,9 +187,12 @@ sub Run {
         @ArticleBox = reverse(@ArticleBox);
     }
 
-    $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(
-        TicketID => $Ticket{TicketID},
-    );
+    # show total accounted time if feature is active:
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
+        $Ticket{TicketTimeUnits} = $Self->{TicketObject}->TicketAccountedTimeGet(
+            TicketID => $Ticket{TicketID},
+        );
+    }
 
     # user info
     my %UserInfo = $Self->{UserObject}->GetUserData(
@@ -228,9 +231,6 @@ sub Run {
             Age   => $Ticket{UntilTime},
             Space => ' ',
         );
-    }
-    else {
-        $Ticket{PendingUntil} = '-';
     }
 
     # generate pdf output
@@ -555,15 +555,24 @@ sub _PDFOutputTicketInfos {
                 Data     => \%Ticket,
             ),
         },
-        {
+    ];
+
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
+        my $Row = {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Accounted time') . ':',
             Value => $Ticket{TicketTimeUnits},
-        },
-        {
+        };
+        push( @{$TableRight}, $Row );
+    }
+
+    # only show pending until unless it is really pending
+    if ( $Ticket{PendingUntil} ) {
+        my $Row = {
             Key   => $Self->{LayoutObject}->{LanguageObject}->Get('Pending till') . ':',
             Value => $Ticket{PendingUntil},
-        },
-    ];
+        };
+        push( @{$TableRight}, $Row );
+    }
 
     # add first response time row
     if ( defined( $Ticket{FirstResponseTime} ) ) {
@@ -1001,14 +1010,17 @@ sub _PDFOutputArticles {
             %AtmIndex = %{ $Article{Atms} };
         }
         my $Attachments;
-        for my $FileID ( keys %AtmIndex ) {
+        for my $FileID ( sort keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $Attachments .= $File{Filename} . ' (' . $File{Filesize} . ")\n";
         }
 
-        $Article{'Accounted time'} = $Self->{TicketObject}->ArticleAccountedTimeGet(
-            ArticleID => $Article{ArticleID},
-        );
+        # show total accounted time if feature is active:
+        if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
+            $Article{'Accounted time'} = $Self->{TicketObject}->ArticleAccountedTimeGet(
+                ArticleID => $Article{ArticleID},
+            );
+        }
 
         # generate article info table
         my %TableParam1;
@@ -1212,6 +1224,22 @@ sub _HTMLMask {
         );
     }
 
+    # output accounted time
+    if ( $Self->{ConfigObject}->Get('Ticket::Frontend::AccountTime') ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'AccountedTime',
+            Data => {%Param},
+        );
+    }
+
+    # output pending date
+    if ( $Param{PendingUntil} ) {
+        $Self->{LayoutObject}->Block(
+            Name => 'PendingUntil',
+            Data => {%Param},
+        );
+    }
+
     # output first response time
     if ( defined( $Param{FirstResponseTime} ) ) {
         $Self->{LayoutObject}->Block(
@@ -1301,14 +1329,13 @@ sub _HTMLMask {
             %AtmIndex = %{ $Article{Atms} };
         }
         $Param{'Article::ATM'} = '';
-        for my $FileID ( keys %AtmIndex ) {
+        for my $FileID ( sort keys %AtmIndex ) {
             my %File = %{ $AtmIndex{$FileID} };
             $File{Filename} = $Self->{LayoutObject}->Ascii2Html( Text => $File{Filename} );
             $Param{'Article::ATM'}
-                .= '<a href="$Env{"CGIHandle"}/$QData{"Filename"}?Action=AgentTicketAttachment&'
+                .= '<a href="$Env{"Baselink"}Action=AgentTicketAttachment;'
                 . "ArticleID=$Article{ArticleID};FileID=$FileID\" target=\"attachment\" "
-                . "onmouseover=\"window.status='\$Text{\"Download\"}: $File{Filename}';"
-                . ' return true;" onmouseout="window.status=\'\';">'
+                . "title=\"\$Text{\"Download\"}: $File{Filename}\">"
                 . "$File{Filename}</a> $File{Filesize}<br/>";
         }
 

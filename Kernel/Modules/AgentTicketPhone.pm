@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.49 2012-10-22 21:24:53 ub Exp $
-# $OldId: AgentTicketPhone.pm,v 1.236.2.8 2012/10/11 20:02:41 cr Exp $
+# $Id: AgentTicketPhone.pm,v 1.50 2012-11-22 13:50:27 ub Exp $
+# $OldId: AgentTicketPhone.pm,v 1.249 2012/11/20 14:50:19 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.49 $) [1];
+$VERSION = qw($Revision: 1.50 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -216,7 +216,7 @@ sub Run {
     # convert dynamic field values into a structure for ACLs
     my %DynamicFieldACLParameters;
     DYNAMICFIELD:
-    for my $DynamicField ( keys %DynamicFieldValues ) {
+    for my $DynamicField ( sort keys %DynamicFieldValues ) {
         next DYNAMICFIELD if !$DynamicField;
         next DYNAMICFIELD if !$DynamicFieldValues{$DynamicField};
 
@@ -523,7 +523,7 @@ sub Run {
             $SplitTicketParam{ToSelected}
                 = $SplitTicketData{QueueID} . '||' . $SplitTicketData{Queue};
 
-            for my $Key ( keys %SplitTicketData ) {
+            for my $Key ( sort keys %SplitTicketData ) {
                 if ( $Key =~ /DynamicField\_(.*)/ ) {
                     $SplitTicketParam{DynamicField}{$1} = $SplitTicketData{$Key};
                     delete $SplitTicketParam{$Key};
@@ -541,6 +541,10 @@ sub Run {
             # check if field has PossibleValues property in its configuration
             if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
 
+                # convert possible values key => value to key => key for ACLs usign a Hash slice
+                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                @AclData{ keys %AclData } = keys %AclData;
+
                 # set possible values filter from ACLs
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
@@ -549,12 +553,16 @@ sub Run {
                     Action        => $Self->{Action},
                     ReturnType    => 'Ticket',
                     ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
+                    Data          => \%AclData,
                     UserID        => $Self->{UserID},
                 );
                 if ($ACL) {
                     my %Filter = $Self->{TicketObject}->TicketAclData();
-                    $PossibleValuesFilter = \%Filter;
+
+                    # convert Filer key => key back to key => value using map
+                    %{$PossibleValuesFilter}
+                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        keys %Filter;
                 }
             }
 
@@ -836,18 +844,26 @@ sub Run {
             # check if field has PossibleValues property in its configuration
             if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
 
+                # convert possible values key => value to key => key for ACLs usign a Hash slice
+                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                @AclData{ keys %AclData } = keys %AclData;
+
                 # set possible values filter from ACLs
                 my $ACL = $Self->{TicketObject}->TicketAcl(
                     %GetParam,
                     Action        => $Self->{Action},
                     ReturnType    => 'Ticket',
                     ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data          => $DynamicFieldConfig->{Config}->{PossibleValues},
+                    Data          => \%AclData,
                     UserID        => $Self->{UserID},
                 );
                 if ($ACL) {
                     my %Filter = $Self->{TicketObject}->TicketAclData();
-                    $PossibleValuesFilter = \%Filter;
+
+                    # convert Filer key => key back to key => value using map
+                    %{$PossibleValuesFilter}
+                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        keys %Filter;
                 }
             }
 
@@ -906,7 +922,7 @@ sub Run {
             # check if just one customer user exists
             # if just one, fillup CustomerUserID and CustomerID
             $Param{CustomerUserListCount} = 0;
-            for my $KeyCustomerUser ( keys %CustomerUserList ) {
+            for my $KeyCustomerUser ( sort keys %CustomerUserList ) {
                 $Param{CustomerUserListCount}++;
                 $Param{CustomerUserListLast}     = $CustomerUserList{$KeyCustomerUser};
                 $Param{CustomerUserListLastUser} = $KeyCustomerUser;
@@ -949,7 +965,7 @@ sub Run {
             my %CustomerUserList = $Self->{CustomerUserObject}->CustomerSearch(
                 UserLogin => $CustomerUser,
             );
-            for my $KeyCustomerUser ( keys %CustomerUserList ) {
+            for my $KeyCustomerUser ( sort keys %CustomerUserList ) {
                 $GetParam{From} = $CustomerUserList{$KeyCustomerUser};
             }
             if ( $CustomerUserData{UserCustomerID} ) {
@@ -1476,7 +1492,7 @@ sub Run {
         my $NewTos;
 
         if ($Tos) {
-            for my $KeyTo ( keys %{$Tos} ) {
+            for my $KeyTo ( sort keys %{$Tos} ) {
                 $NewTos->{"$KeyTo||$Tos->{$KeyTo}"} = $Tos->{$KeyTo};
             }
         }
@@ -1535,6 +1551,10 @@ sub Run {
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
+            # convert possible values key => value to key => key for ACLs usign a Hash slice
+            my %AclData = %{$PossibleValues};
+            @AclData{ keys %AclData } = keys %AclData;
+
             # set possible values filter from ACLs
             my $ACL = $Self->{TicketObject}->TicketAcl(
                 %GetParam,
@@ -1543,12 +1563,14 @@ sub Run {
                 QueueID       => $QueueID || 0,
                 ReturnType    => 'Ticket',
                 ReturnSubType => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                Data          => $PossibleValues,
+                Data          => \%AclData,
                 UserID        => $Self->{UserID},
             );
             if ($ACL) {
                 my %Filter = $Self->{TicketObject}->TicketAclData();
-                $PossibleValues = \%Filter;
+
+                # convert Filer key => key back to key => value using map
+                %{$PossibleValues} = map { $_ => $PossibleValues->{$_} } keys %Filter;
             }
 
             # add dynamic field to the list of fields to update
@@ -1667,7 +1689,7 @@ sub _GetUsers {
     # just show only users with selected custom queue
     if ( $Param{QueueID} && !$Param{AllUsers} ) {
         my @UserIDs = $Self->{TicketObject}->GetSubscribedUserIDsByQueueID(%Param);
-        for my $KeyGroupMember ( keys %AllGroupsMembers ) {
+        for my $KeyGroupMember ( sort keys %AllGroupsMembers ) {
             my $Hit = 0;
             for my $UID (@UserIDs) {
                 if ( $UID eq $KeyGroupMember ) {
@@ -1693,7 +1715,7 @@ sub _GetUsers {
             Type    => 'owner',
             Result  => 'HASH',
         );
-        for my $KeyMember ( keys %MemberList ) {
+        for my $KeyMember ( sort keys %MemberList ) {
             if ( $AllGroupsMembers{$KeyMember} ) {
                 $ShownUsers{$KeyMember} = $AllGroupsMembers{$KeyMember};
             }
@@ -1727,7 +1749,7 @@ sub _GetResponsibles {
     # just show only users with selected custom queue
     if ( $Param{QueueID} && !$Param{AllUsers} ) {
         my @UserIDs = $Self->{TicketObject}->GetSubscribedUserIDsByQueueID(%Param);
-        for my $KeyGroupMember ( keys %AllGroupsMembers ) {
+        for my $KeyGroupMember ( sort keys %AllGroupsMembers ) {
             my $Hit = 0;
             for my $UID (@UserIDs) {
                 if ( $UID eq $KeyGroupMember ) {
@@ -1753,7 +1775,7 @@ sub _GetResponsibles {
             Type    => 'responsible',
             Result  => 'HASH',
         );
-        for my $KeyMember ( keys %MemberList ) {
+        for my $KeyMember ( sort keys %MemberList ) {
             if ( $AllGroupsMembers{$KeyMember} ) {
                 $ShownUsers{$KeyMember} = $AllGroupsMembers{$KeyMember};
             }
@@ -1883,7 +1905,7 @@ sub _GetTos {
         );
 
         # build selection string
-        for my $QueueID ( keys %Tos ) {
+        for my $QueueID ( sort keys %Tos ) {
             my %QueueData = $Self->{QueueObject}->QueueGet( ID => $QueueID );
 
             # permission check, can we create new tickets in queue
@@ -1954,7 +1976,7 @@ sub _MaskPhoneNew {
     # build to string
     my %NewTo;
     if ( $Param{To} ) {
-        for my $KeyTo ( keys %{ $Param{To} } ) {
+        for my $KeyTo ( sort keys %{ $Param{To} } ) {
             $NewTo{"$KeyTo||$Param{To}->{$KeyTo}"} = $Param{To}->{$KeyTo};
         }
     }
@@ -1993,7 +2015,7 @@ sub _MaskPhoneNew {
 
     # prepare errors!
     if ( $Param{Errors} ) {
-        for my $KeyError ( keys %{ $Param{Errors} } ) {
+        for my $KeyError ( sort keys %{ $Param{Errors} } ) {
             $Param{$KeyError}
                 = '* ' . $Self->{LayoutObject}->Ascii2Html( Text => $Param{Errors}->{$KeyError} );
         }
@@ -2340,6 +2362,11 @@ sub _MaskPhoneNew {
 
     # add rich text editor
     if ( $Self->{LayoutObject}->{BrowserRichText} ) {
+
+        # use height/width defined for this screen
+        $Param{RichTextHeight} = $Self->{Config}->{RichTextHeight} || 0;
+        $Param{RichTextWidth}  = $Self->{Config}->{RichTextWidth}  || 0;
+
         $Self->{LayoutObject}->Block(
             Name => 'RichText',
             Data => \%Param,
