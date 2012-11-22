@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.24 2012-06-19 11:48:17 te Exp $
+# $Id: OTRSMasterSlave.pm,v 1.25 2012-11-22 04:32:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 =head1 NAME
 
@@ -212,6 +212,22 @@ run the code upgrade part
 sub CodeUpgrade {
     my ( $Self, %Param ) = @_;
 
+    $Self->_SetDynamicFields();
+
+    return 1;
+}
+
+=item CodeUpgrade125()
+
+run the code upgrade part for versions prior to 1.2.5
+
+    my $Result = $CodeObject->CodeUpgrade125();
+
+=cut
+
+sub CodeUpgrade125 {
+    my ( $Self, %Param ) = @_;
+
     # upgrade/migrate only in case there is a installed
     # version of OTRSMasterSlave version < 1.2.5
     $Self->_MigrateOTRSMasterSlave();
@@ -229,6 +245,8 @@ run the code uninstall part
 
 sub CodeUninstall {
     my ( $Self, %Param ) = @_;
+
+    $Self->_RemoveDynamicFields();
 
     return 1;
 }
@@ -254,6 +272,7 @@ sub _SetDynamicFields {
                 },
                 TranslatableValues => 1,
             },
+            InternalField => 1,
         },
     );
 
@@ -279,20 +298,26 @@ sub _SetDynamicFields {
             # get the dynamic field configuration
             my $DynamicFieldConfig = $Self->{DynamicFieldLookup}->{$NewFieldName};
 
-            # if dynamic field exists make sure is valid
-            if ( $DynamicFieldConfig->{ValidID} ne '1' ) {
+            # if dynamic field exists make sure is valid and internal
+            if (
+                $DynamicFieldConfig->{ValidID} ne '1'
+                || $DynamicFieldConfig->{InternalField} ne '1'
+                )
+            {
 
                 my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
                     %{$DynamicFieldConfig},
-                    ValidID => 1,
-                    Reorder => 0,
-                    UserID  => 1,
+                    ValidID       => 1,
+                    Reorder       => 0,
+                    InternalField => 1,
+                    UserID        => 1,
+
                 );
 
                 if ( !$Success ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
-                        Message  => "Could not set dynamic field '$NewFieldName' to valid!",
+                        Message  => "Could not update dynamic field '$NewFieldName'!",
                     );
                 }
             }
@@ -396,9 +421,10 @@ sub _MigrateOTRSMasterSlave {
             },
             TranslatableValues => 1,
         },
-        ValidID => 1,
-        Reorder => 0,
-        UserID  => 1,
+        ValidID       => 1,
+        Reorder       => 0,
+        InternalField => 1,
+        UserID        => 1,
     );
 
     # activate the DynamicField in ticket details block
@@ -560,6 +586,51 @@ sub _MigrateMasterSlaveData {
     return 1;
 }
 
+sub _RemoveDynamicFields {
+    my ( $Self, %Param ) = @_;
+
+    # get dynamic field names from sysconfig
+    my $MasterSlaveDynamicField
+        = $Self->{ConfigObject}->Get('MasterSlave::DynamicField') || 'MasterSlave';
+
+    # check if dynamic field already exists
+    if ( IsHashRefWithData( $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField} ) ) {
+
+        # get the field ID
+        my $DynamicFieldID = $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField}->{ID};
+
+        my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
+            ID      => $DynamicFieldID,
+            UserID  => 1,
+            Reorder => 1,
+        );
+
+        if ( !$Success ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Could not delete dynamic field '$MasterSlaveDynamicField'!",
+            );
+        }
+    }
+
+    # disable dynamic field for ticket zoom
+    # get old configuration
+    my $WindowConfig = $Self->{ConfigObject}->Get('Ticket::Frontend::AgentTicketZoom');
+    my %DynamicFields = %{ $WindowConfig->{DynamicField} || {} };
+
+    if ( defined $DynamicFields{$MasterSlaveDynamicField} ) {
+        $DynamicFields{$MasterSlaveDynamicField} = 0;
+    }
+
+    $Self->{SysConfigObject}->ConfigItemUpdate(
+        Valid => 1,
+        Key   => 'Ticket::Frontend::AgentTicketZoom###DynamicField',
+        Value => \%DynamicFields,
+    );
+
+    return 1;
+}
+
 1;
 
 =back
@@ -576,6 +647,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.24 $ $Date: 2012-06-19 11:48:17 $
+$Revision: 1.25 $ $Date: 2012-11-22 04:32:33 $
 
 =cut
