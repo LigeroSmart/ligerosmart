@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.24 2012-11-21 08:33:25 jh Exp $
+# $Id: Survey.t,v 1.25 2012-11-22 13:11:27 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -376,9 +376,10 @@ Content-Type: text/html; charset=\"utf-8\"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<html><head><meta http-equiv=3D\"Content-Type\" content=3D\"text/html; charset=
-=3Dutf-8\"/></head><body style=3D\"font-family:Geneva,Helvetica,Arial,sans-se=
-rif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</body></html>=
+<!DOCTYPE html><html><head><meta http-equiv=3D\"Content-Type\" content=3D\"tex=
+t/html; charset=3Dutf-8\"/></head><body style=3D\"font-family:Geneva,Helvetic=
+a,Arial,sans-serif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</=
+body></html>=
 
 ------------=_MESSAGEID--
 ";
@@ -452,7 +453,7 @@ express your feelings in our survey.</span><br />
 <br />
 danielz,</span><br />',
         Output =>
-            '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;"><em>This is the introduction to this survey, if you want to answer it you have to<br />
+            '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;"><em>This is the introduction to this survey, if you want to answer it you have to<br />
 read this first, please let us tell you thanks for the opportunity to interact<br />
 with you.</em><br />
 <ul>
@@ -485,7 +486,7 @@ That's it.
 -dz
 ",
         Output =>
-            '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">This is an internal description example:
+            '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">This is an internal description example:
 
  - One
  - Two
