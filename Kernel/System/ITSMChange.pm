@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.281 2012-11-14 15:31:22 ub Exp $
+# $Id: ITSMChange.pm,v 1.282 2012-11-22 07:56:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.281 $) [1];
+$VERSION = qw($Revision: 1.282 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1786,17 +1786,17 @@ sub ChangeSearch {
 
         # check if a CLOB field is used in oracle
         # Fix/Workaround for ORA-00932: inconsistent datatypes: expected - got CLOB
-        my $UsingWildcardsForSpecialFields;
+        my $ForceLikeSearchForSpecialFields;
         if (
             $Self->{DBType} eq 'oracle'
             && ( $StringParam eq 'Description' || $StringParam eq 'Justification' )
             )
         {
-            $UsingWildcardsForSpecialFields = 1;
+            $ForceLikeSearchForSpecialFields = 1;
         }
 
-        # wildcards are used
-        if ( $Param{UsingWildcards} || $UsingWildcardsForSpecialFields ) {
+        # wildcards are used (or LIKE search is forced for some special fields on oracle)
+        if ( $Param{UsingWildcards} || $ForceLikeSearchForSpecialFields ) {
 
             # get like escape string needed for some databases (e.g. oracle)
             my $LikeEscapeString = $DBObject->GetDatabaseFunction('LikeEscapeString');
@@ -3816,6 +3816,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.281 $ $Date: 2012-11-14 15:31:22 $
+$Revision: 1.282 $ $Date: 2012-11-22 07:56:11 $
 
 =cut

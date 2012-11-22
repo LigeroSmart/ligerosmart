@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.132 2012-11-14 15:32:47 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.133 2012-11-22 07:56:11 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.132 $) [1];
+$VERSION = qw($Revision: 1.133 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1341,7 +1341,7 @@ sub WorkOrderSearch {
 
         # check if a CLOB field is used in oracle
         # Fix/Workaround for ORA-00932: inconsistent datatypes: expected - got CLOB
-        my $UsingWildcardsForSpecialFields;
+        my $ForceLikeSearchForSpecialFields;
         if (
             $Self->{DBType} eq 'oracle'
             && (
@@ -1352,11 +1352,11 @@ sub WorkOrderSearch {
             )
             )
         {
-            my $UsingWildcardsForSpecialFields = 1;
+            my $ForceLikeSearchForSpecialFields = 1;
         }
 
-        # wildcards are used
-        if ( $Param{UsingWildcards} || $UsingWildcardsForSpecialFields ) {
+        # wildcards are used (or LIKE search is forced for some special fields on oracle)
+        if ( $Param{UsingWildcards} || $ForceLikeSearchForSpecialFields ) {
 
             # get like escape string needed for some databases (e.g. oracle)
             my $LikeEscapeString = $DBObject->GetDatabaseFunction('LikeEscapeString');
@@ -3496,6 +3496,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.132 $ $Date: 2012-11-14 15:32:47 $
+$Revision: 1.133 $ $Date: 2012-11-22 07:56:11 $
 
 =cut
