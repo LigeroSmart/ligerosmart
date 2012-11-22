@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.37 2012-11-22 13:50:27 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.38 2012-11-22 15:24:43 ub Exp $
 # $OldId: AgentTicketZoom.pm,v 1.194 2012/11/20 14:52:48 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -35,7 +35,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -106,6 +106,11 @@ sub new {
                 || {}
         },
     };
+# ---
+# ITSM
+# ---
+    $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new(%Param);
+# ---
 
     # create additional objects for process management
     $Self->{ActivityObject} = Kernel::System::ProcessManagement::Activity->new(%Param);
