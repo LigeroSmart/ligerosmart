@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/Condition.pm - a event module to match conditions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: Condition.pm,v 1.7 2010-10-28 12:31:07 ub Exp $
+# $Id: Condition.pm,v 1.8 2012-11-22 08:47:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -228,7 +228,7 @@ sub Run {
             if ( $Field eq 'AccountedTime' ) {
 
                 # we do not track if accounted time was empty or zero
-                next FIELD if !$Param{AccountedTime};
+                next FIELD if !$Param{Data}->{AccountedTime};
 
                 # remember changed field name
                 push @AttributesChanged, $Field;
@@ -354,6 +354,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2010-10-28 12:31:07 $
+$Revision: 1.8 $ $Date: 2012-11-22 08:47:47 $
 
 =cut

@@ -3,7 +3,7 @@
 # event module for ITSMWorkOrder
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: WorkOrderNumberCalc.pm,v 1.16 2012-10-22 20:51:28 ub Exp $
+# $Id: WorkOrderNumberCalc.pm,v 1.17 2012-11-22 08:47:47 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 =head1 NAME
 
@@ -153,7 +153,7 @@ sub Run {
         # recalculate WorkOrder numbers
         # the ChangeID is in the OldWorkOrderData so we do not need to make a WorkOrderGet() here
         return if !$Self->_WorkOrderNumberCalc(
-            ChangeID => $Param{OldWorkOrderData}->{ChangeID},
+            ChangeID => $Param{Data}->{OldWorkOrderData}->{ChangeID},
             UserID   => $Param{UserID},
         );
     }
@@ -287,6 +287,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2012-10-22 20:51:28 $
+$Revision: 1.17 $ $Date: 2012-11-22 08:47:47 $
 
 =cut
