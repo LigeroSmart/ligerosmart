@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/MasterSlave.pm - master slave ticket
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.9 2012-05-18 14:48:20 te Exp $
+# $Id: MasterSlave.pm,v 1.10 2012-11-22 00:06:36 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.10 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -47,16 +47,20 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(TicketID Event Config)) {
+    for (qw(Data Event Config)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
     }
+    if ( !$Param{Data}->{TicketID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => "Need Data->{TicketID}!" );
+        return;
+    }
 
     # get ticket attributes
     my %Ticket = $Self->{TicketObject}->TicketGet(
-        TicketID      => $Param{TicketID},
+        TicketID      => $Param{Data}->{TicketID},
         DynamicFields => 1,
     );
 
@@ -82,7 +86,7 @@ sub Run {
                 SourceObject => 'Ticket',
                 SourceKey    => $SourceKey,
                 TargetObject => 'Ticket',
-                TargetKey    => $Param{TicketID},
+                TargetKey    => $Param{Data}->{TicketID},
                 Type         => 'ParentChild',
                 State        => 'Valid',
                 UserID       => $Param{UserID},
@@ -95,7 +99,7 @@ sub Run {
             );
             $Self->{BackendObject}->ValueSet(
                 DynamicFieldConfig => $DynamicField,
-                ObjectID           => $Param{TicketID},
+                ObjectID           => $Param{Data}->{TicketID},
                 Value              => $Ticket{ 'DynamicField_' . $MasterSlaveDynamicField },
                 UserID             => $Param{UserID},
             );
@@ -110,11 +114,11 @@ sub Run {
     # find slaves
     my %Links = $Self->{LinkObject}->LinkKeyList(
         Object1   => 'Ticket',
-        Key1      => $Param{TicketID},
+        Key1      => $Param{Data}->{TicketID},
         Object2   => 'Ticket',
         State     => 'Valid',
-        Type      => 'ParentChild',      # (optional)
-        Direction => 'Target',           # (optional) default Both (Source|Target|Both)
+        Type      => 'ParentChild',              # (optional)
+        Direction => 'Target',                   # (optional) default Both (Source|Target|Both)
         UserID    => $Param{UserID},
     );
     my @TicketIDs;
@@ -144,13 +148,13 @@ sub Run {
 
     # auto response action
     if ( $Param{Event} eq 'ArticleSend' ) {
-        my @Index = $Self->{TicketObject}->ArticleIndex( TicketID => $Param{TicketID} );
+        my @Index = $Self->{TicketObject}->ArticleIndex( TicketID => $Param{Data}->{TicketID} );
         return 1 if !@Index;
         my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Index[$#Index] );
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => 'MasterTicketAction: ArticleSend',
@@ -230,13 +234,13 @@ sub Run {
 
     # article create
     elsif ( $Param{Event} eq 'ArticleCreate' ) {
-        my @Index = $Self->{TicketObject}->ArticleIndex( TicketID => $Param{TicketID} );
+        my @Index = $Self->{TicketObject}->ArticleIndex( TicketID => $Param{Data}->{TicketID} );
         return 1 if !@Index;
         my %Article = $Self->{TicketObject}->ArticleGet( ArticleID => $Index[$#Index] );
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: ArticleCreate",
@@ -277,7 +281,7 @@ sub Run {
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: TicketStateUpdate",
@@ -306,7 +310,7 @@ sub Run {
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: TicketPendingTimeUpdate",
@@ -343,7 +347,7 @@ sub Run {
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: TicketPriorityUpdate",
@@ -372,7 +376,7 @@ sub Run {
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: TicketOwnerUpdate",
@@ -402,7 +406,7 @@ sub Run {
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: TicketResponsibleUpdate",
@@ -432,7 +436,7 @@ sub Run {
 
         # mark ticket to prevent a loop
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             CreateUserID => $Param{UserID},
             HistoryType  => 'Misc',
             Name         => "MasterTicketAction: TicketLockUpdate",
