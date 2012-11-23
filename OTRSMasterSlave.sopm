@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: OTRSMasterSlave.sopm,v 1.13 2012-11-23 02:35:09 cr Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.14 2012-11-23 02:38:38 cr Exp $</CVS>
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -296,7 +296,7 @@
         <strong>ATENCI&Oacute;N</strong>
         <br/>
         <br/>
-        Si usted desinstala este paquete, los v&iacute;nculos te tickets PadreHijo
+        Si usted desinstala este paquete, los v&iacute;nculos de tickets PadreHijo
         permanecer&aacute;n, pero todas relaciones de tickets Master Slave creadas durante
         el uso de este paquete ser&aacute;n borradas.
         &iexcl;Todos los datos de esas relaciones se perder&aacute;n irrevocablemente!.
