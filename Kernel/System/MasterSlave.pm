@@ -2,7 +2,7 @@
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.6 2012-05-04 11:51:23 te Exp $
+# $Id: MasterSlave.pm,v 1.7 2012-11-23 13:35:06 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 =head1 NAME
 
@@ -39,8 +39,19 @@ All functions to handle ticket master slave tasks ...
 
 create an object
 
+    use Kernel::Config;
+    use Kernel::System::Encode;
+    use Kernel::System::Log;
     use Kernel::System::LinkObject;
 
+    my $ConfigObject = Kernel::Config->new();
+    my $EncodeObject = Kernel::System::Encode->new(
+        ConfigObject => $ConfigObject,
+    );
+    my $LogObject = Kernel::System::Log->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+    );
     my $LinkObject = Kernel::System::LinkObject->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
@@ -195,7 +206,7 @@ sub MasterSlave {
             UserID    => $Param{UserID},
         );
         my @SlaveTicketIDs;
-        for my $LinkedTicketID ( keys %Links ) {
+        for my $LinkedTicketID ( sort keys %Links ) {
             next if !$Links{$LinkedTicketID};
 
             # just take ticket with slave attributes for action
@@ -294,7 +305,7 @@ sub MasterSlave {
                 UserID    => $Param{UserID},
             );
             my @SlaveTicketIDs;
-            for my $LinkedTicketID ( keys %Links ) {
+            for my $LinkedTicketID ( sort keys %Links ) {
                 next if !$Links{$LinkedTicketID};
 
                 # just take ticket with slave attributes for action
@@ -305,7 +316,7 @@ sub MasterSlave {
                 next if !$Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName };
                 next
                     if $Ticket{ 'DynamicField_' . $MasterSlaveDynamicFieldName }
-                        !~ /^SlaveOf:(.*?)$/;
+                    !~ /^SlaveOf:(.*?)$/;
 
                 # remember ticket id
                 push @SlaveTicketIDs, $LinkedTicketID;
@@ -374,6 +385,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.6 $ $Date: 2012-05-04 11:51:23 $
+$Revision: 1.7 $ $Date: 2012-11-23 13:35:06 $
 
 =cut
