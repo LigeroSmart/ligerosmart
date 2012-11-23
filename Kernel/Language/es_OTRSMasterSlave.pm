@@ -2,16 +2,17 @@
 # Kernel/Language/es_OTRSMasterSlave.pm - translation file
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: es_OTRSMasterSlave.pm,v 1.1 2012-11-22 03:53:41 cr Exp $
+# $Id: es_OTRSMasterSlave.pm,v 1.2 2012-11-23 13:34:35 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
-# did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
 package Kernel::Language::es_OTRSMasterSlave;
 
 use strict;
+use warnings;
 
 sub Data {
     my $Self = shift;
