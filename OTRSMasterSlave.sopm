@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: OTRSMasterSlave.sopm,v 1.12 2012-11-22 04:29:48 cr Exp $</CVS>
+    <CVS>$Id: OTRSMasterSlave.sopm,v 1.13 2012-11-23 02:35:09 cr Exp $</CVS>
     <Name>OTRSMasterSlave</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -283,8 +283,8 @@
         <strong>ATTENTION</strong>
         <br/>
         <br/>
-        If you uninstall this package, all ticket Master Slave relations that were created during
-        the use of this package be deleted.
+        If you uninstall this package, ParentChild ticket links will remain, but all ticket Master
+        Slave relations that were created during the use of this package be deleted.
         All data from these relations will be irrevocably lost!
         <br/>
         <br/>
@@ -296,7 +296,8 @@
         <strong>ATENCI&Oacute;N</strong>
         <br/>
         <br/>
-        Si usted desinstala este paquete, todas relaciones de tickets Master Slave creadas durante
+        Si usted desinstala este paquete, los v&iacute;nculos te tickets PadreHijo
+        permanecer&aacute;n, pero todas relaciones de tickets Master Slave creadas durante
         el uso de este paquete ser&aacute;n borradas.
         &iexcl;Todos los datos de esas relaciones se perder&aacute;n irrevocablemente!.
         <br/>
