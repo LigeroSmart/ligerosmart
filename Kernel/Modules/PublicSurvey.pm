@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicSurvey.pm - a survey module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicSurvey.pm,v 1.30 2012-11-21 14:42:09 jh Exp $
+# $Id: PublicSurvey.pm,v 1.31 2012-11-23 13:36:19 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::Survey;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.30 $) [1];
+$VERSION = qw($Revision: 1.31 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -291,13 +291,13 @@ sub Run {
         # clean html
         if ( $Survey{Introduction} ) {
             $Survey{Introduction} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
-            $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
-                Text           => $Survey{Introduction},
-                HTMLResultMode => 1,
-            );
-            if ($1) {
-                $Survey{Introduction} =
-                    $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
+
+            my $HTMLContent = $1;
+            if ( !$HTMLContent ) {
+                $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
+                    Text           => $Survey{Introduction},
+                    HTMLResultMode => 1,
+                );
             }
         }
 
@@ -425,14 +425,11 @@ sub Run {
         # clean html and proccess introduction text
         $Survey{Introduction} =~ s{\A\$html\/text\$\s(.*)}{$1}xms;
         my $HTMLContent = $1;
-        $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
-            Text           => $Survey{Introduction},
-            HTMLResultMode => 1,
-        );
-
-        if ($HTMLContent) {
-            $Survey{Introduction}
-                = $Self->{HTMLUtilsObject}->ToAscii( String => $Survey{Introduction} );
+        if ( !$HTMLContent ) {
+            $Survey{Introduction} = $Self->{LayoutObject}->Ascii2Html(
+                Text           => $Survey{Introduction},
+                HTMLResultMode => 1,
+            );
         }
         $Self->{LayoutObject}->Block(
             Name => 'PublicSurvey',
