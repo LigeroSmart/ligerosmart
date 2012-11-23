@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.25 2012-11-22 04:32:33 cr Exp $
+# $Id: OTRSMasterSlave.pm,v 1.26 2012-11-23 02:11:44 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 =head1 NAME
 
@@ -299,11 +299,7 @@ sub _SetDynamicFields {
             my $DynamicFieldConfig = $Self->{DynamicFieldLookup}->{$NewFieldName};
 
             # if dynamic field exists make sure is valid and internal
-            if (
-                $DynamicFieldConfig->{ValidID} ne '1'
-                || $DynamicFieldConfig->{InternalField} ne '1'
-                )
-            {
+            if ( $DynamicFieldConfig->{ValidID} ne '1' ) {
 
                 my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
                     %{$DynamicFieldConfig},
@@ -320,6 +316,29 @@ sub _SetDynamicFields {
                         Message  => "Could not update dynamic field '$NewFieldName'!",
                     );
                 }
+            }
+            if ( $DynamicFieldConfig->{InternalField} ne '1' ) {
+
+                # update InternalField value manually since API does not support
+                # internal_field update
+                my $Success = $Self->{DBObject}->Do(
+                    SQL => '
+                        UPDATE dynamic_field
+                        SET internal_field = 1
+                        WHERE id = ?',
+                    Bind => [ \$DynamicFieldConfig->{ID} ],
+                );
+                if ( !$Success ) {
+                    $Self->{LogObject}->Log(
+                        Priority => 'error',
+                        Message  => "Could not set dynamic field '$NewFieldName' as internal!",
+                    );
+                }
+
+                # clean dynamic field cache
+                $Self->{DynamicFieldObject}->{CacheObject}->CleanUp(
+                    Type => 'DynamicField',
+                );
             }
         }
 
@@ -421,10 +440,29 @@ sub _MigrateOTRSMasterSlave {
             },
             TranslatableValues => 1,
         },
-        ValidID       => 1,
-        Reorder       => 0,
-        InternalField => 1,
-        UserID        => 1,
+        ValidID => 1,
+        Reorder => 0,
+        UserID  => 1,
+    );
+
+    # update InternalField value manually since API does not support internal_field update
+    my $Success = $Self->{DBObject}->Do(
+        SQL => '
+            UPDATE dynamic_field
+            SET internal_field = 1
+            WHERE id = ?',
+        Bind => [ \$OldMasterSlaveDynamicFieldID->{ID} ],
+    );
+    if ( !$Success ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "Could not set dynamic field '$MasterSlaveDynamicField' as internal!",
+        );
+    }
+
+    # clean dynamic field cache
+    $Self->{DynamicFieldObject}->{CacheObject}->CleanUp(
+        Type => 'DynamicField',
     );
 
     # activate the DynamicField in ticket details block
@@ -647,6 +685,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.25 $ $Date: 2012-11-22 04:32:33 $
+$Revision: 1.26 $ $Date: 2012-11-23 02:11:44 $
 
 =cut
