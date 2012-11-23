@@ -2,7 +2,7 @@
 # Kernel/System/Ticket/Event/NagiosAcknowledge.pm - acknowlege nagios tickets
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: NagiosAcknowledge.pm,v 1.12 2012-05-22 08:30:40 mb Exp $
+# $Id: NagiosAcknowledge.pm,v 1.13 2012-11-23 15:28:00 cg Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use LWP::UserAgent;
 use URI::Escape qw();
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -45,11 +45,16 @@ sub Run {
     my ( $Self, %Param ) = @_;
 
     # check needed stuff
-    for (qw(TicketID Event Config)) {
+    for (qw(Data Event Config)) {
         if ( !$Param{$_} ) {
             $Self->{LogObject}->Log( Priority => 'error', Message => "Need $_!" );
             return;
         }
+    }
+
+    if ( !$Param{Data}->{TicketID} ) {
+        $Self->{LogObject}->Log( Priority => 'error', Message => "Need Data->{TicketID}!" );
+        return;
     }
 
     # check if acknowledge is active
@@ -58,7 +63,7 @@ sub Run {
 
     # check if it's a Nagios related ticket
     my %Ticket = $Self->{TicketObject}->TicketGet(
-        TicketID      => $Param{TicketID},
+        TicketID      => $Param{Data}->{TicketID},
         DynamicFields => 1,
     );
     if ( !$Ticket{ $Self->{Fhost} } ) {
@@ -98,7 +103,7 @@ sub Run {
 
     if ($Return) {
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             HistoryType  => 'Misc',
             Name         => "Sent Acknowledge to Nagios ($Type).",
             CreateUserID => $Param{UserID},
@@ -107,7 +112,7 @@ sub Run {
     }
     else {
         $Self->{TicketObject}->HistoryAdd(
-            TicketID     => $Param{TicketID},
+            TicketID     => $Param{Data}->{TicketID},
             HistoryType  => 'Misc',
             Name         => "Was not able to send Acknowledge to Nagios ($Type)!",
             CreateUserID => $Param{UserID},
