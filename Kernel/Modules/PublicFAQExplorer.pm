@@ -2,7 +2,7 @@
 # Kernel/Modules/PublicFAQExplorer.pm - public FAQ explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.pm,v 1.15 2012-11-20 13:03:38 mh Exp $
+# $Id: PublicFAQExplorer.pm,v 1.16 2012-11-23 00:15:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use MIME::Base64 qw();
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.15 $) [1];
+$VERSION = qw($Revision: 1.16 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -279,7 +279,6 @@ sub Run {
 
         # create back link for FAQ Zoom screen
         my $ZoomBackLink = "Action=PublicFAQExplorer;CategoryID=$CategoryID;"
-            . $Self->{Profile}
             . "SortBy=$Self->{SortBy};Order=$Self->{OrderBy};StartHit=$Self->{StartHit}";
 
         # encode back link to Base64 for easy HTML transport
