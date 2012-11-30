@@ -2,7 +2,7 @@
 # Kernel/System/ImportExport.pm - all import and export functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ImportExport.pm,v 1.43 2012-11-30 13:43:55 ub Exp $
+# $Id: ImportExport.pm,v 1.44 2012-11-30 17:22:43 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::CheckItem;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 =head1 NAME
 
@@ -2228,7 +2228,7 @@ sub Import {
         if ( !$ID ) {
 
             # count DuplicateName entries as errors
-            if ( $RetCode =~ m{ \A DuplicateName }xms ) {
+            if ( $RetCode && $RetCode =~ m{ \A DuplicateName }xms ) {
                 $Result{RetCode}->{$RetCode}++;
             }
             $Result{Failed}++;
@@ -2331,6 +2331,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.43 $ $Date: 2012-11-30 13:43:55 $
+$Revision: 1.44 $ $Date: 2012-11-30 17:22:43 $
 
 =cut
