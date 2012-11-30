@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.63 2012-11-21 14:53:53 mb Exp $
+# $Id: TimeAccounting.pm,v 1.64 2012-11-30 13:32:58 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.63 $) [1];
+$VERSION = qw($Revision: 1.64 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -791,9 +791,47 @@ sub UserGet {
 
 =item UserSettingsGet()
 
-returns a hash with the user period data
+returns a hash with the complete user period data for all users
 
     my %UserData = $TimeAccountingObject->UserSettingsGet();
+
+returns:
+    %UserData = (
+        3 => {
+            1 => {
+                DateEnd     => "2012-12-31",
+                DateStart   => "2012-10-01",
+                LeaveDays   => "23.00",
+                Overtime    => "0.00",
+                Period      => 1,
+                UserID      => 3,
+                UserStatus  => 1,
+                WeeklyHours => "40.00",
+            },
+            2 => {
+                DateEnd     => "2013-12-31",
+                DateStart   => "2013-01-01",
+                LeaveDays   => "23.00",
+                Overtime    => "0.00",
+                Period      => 2,
+                UserID      => 3,
+                UserStatus  => 1,
+                WeeklyHours => "32.00",
+            },
+        },
+        4 => {
+            1 => {
+                DateEnd     => "2013-12-31",
+                DateStart   => "2012-01-01",
+                LeaveDays   => "23.00",
+                Overtime    => "0.00",
+                Period      => 1,
+                UserID      => 4,
+                UserStatus  => 1,
+                WeeklyHours => "40.00",
+            },
+        },
+    };
 
 =cut
 
@@ -803,8 +841,8 @@ sub UserSettingsGet {
     # db select
     $Self->{DBObject}->Prepare(
         SQL =>
-            'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status '
-            . 'FROM time_accounting_user_period',
+            'SELECT user_id, preference_period, date_start, date_end, weekly_hours, leave_days, overtime, status
+                FROM time_accounting_user_period'
     );
 
     # fetch the data
@@ -1703,6 +1741,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.63 $ $Date: 2012-11-21 14:53:53 $
+$Revision: 1.64 $ $Date: 2012-11-30 13:32:58 $
 
 =cut
