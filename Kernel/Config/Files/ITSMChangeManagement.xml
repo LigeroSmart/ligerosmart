@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.274 2012-11-21 10:19:33 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.275 2012-11-30 01:29:19 sb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -9522,6 +9522,56 @@
                 <Item>ITSM.Agent.UserSearch.js</Item>
                 <Item>ITSM.Agent.CABMemberSearch.js</Item>
             </Array>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="GenericInterface::Invoker::Event###ITSMChange" Required="0" Valid="1">
+        <Description Translatable="1">Event list to be displayed on GUI to trigger generic interface invokers.</Description>
+        <Group>ITSMChangeManagement</Group>
+        <SubGroup>GenericInterface::Invoker</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="ChangeAddPre">1</Item>
+                <Item Key="ChangeAddPost">1</Item>
+                <Item Key="ChangeUpdatePre">1</Item>
+                <Item Key="ChangeUpdatePost">1</Item>
+                <Item Key="ChangeCABUpdatePre">1</Item>
+                <Item Key="ChangeCABUpdatePost">1</Item>
+                <Item Key="ChangeCABDeletePre">1</Item>
+                <Item Key="ChangeCABDeletePost">1</Item>
+                <Item Key="ChangeDeletePre">1</Item>
+                <Item Key="ChangeDeletePost">1</Item>
+                <Item Key="ChangeAttachmentAddPost">1</Item>
+                <Item Key="ChangeAttachmentDeletePost">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="GenericInterface::Invoker::Event###ITSMWorkOrder" Required="0" Valid="1">
+        <Description Translatable="1">Event list to be displayed on GUI to trigger generic interface invokers.</Description>
+        <Group>ITSMChangeManagement</Group>
+        <SubGroup>GenericInterface::Invoker</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="WorkOrderAddPre">1</Item>
+                <Item Key="WorkOrderAddPost">1</Item>
+                <Item Key="WorkOrderUpdatePre">1</Item>
+                <Item Key="WorkOrderUpdatePost">1</Item>
+                <Item Key="WorkOrderDeletePre">1</Item>
+                <Item Key="WorkOrderDeletePost">1</Item>
+                <Item Key="WorkOrderAttachmentAddPost">1</Item>
+                <Item Key="WorkOrderAttachmentDeletePost">1</Item>
+            </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMChange::EventModule###1000-GenericInterface" Required="0" Valid="1">
+        <Description Translatable="1">Performs the configured action for each event (as an Invoker) for each configured Webservice.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange::Event</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="Module">Kernel::GenericInterface::Event::Handler</Item>
+                <Item Key="Transaction">1</Item>
+                <Item Key="Event">.*</Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>

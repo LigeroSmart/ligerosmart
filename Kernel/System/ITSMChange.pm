@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.282 2012-11-22 07:56:11 ub Exp $
+# $Id: ITSMChange.pm,v 1.283 2012-11-30 01:29:19 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.282 $) [1];
+$VERSION = qw($Revision: 1.283 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -3151,6 +3151,15 @@ sub ChangeGetConfiguredFreeTextFields {
     return @ConfiguredChangeFreeTextFields;
 }
 
+sub DESTROY {
+    my $Self = shift;
+
+    # execute all transaction events
+    $Self->EventHandlerTransaction();
+
+    return 1;
+}
+
 =begin Internal:
 
 =item _CheckChangeStateIDs()
@@ -3816,6 +3825,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.282 $ $Date: 2012-11-22 07:56:11 $
+$Revision: 1.283 $ $Date: 2012-11-30 01:29:19 $
 
 =cut

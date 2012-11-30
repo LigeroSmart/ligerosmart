@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.133 2012-11-22 07:56:11 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.134 2012-11-30 01:29:19 sb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.133 $) [1];
+$VERSION = qw($Revision: 1.134 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -2783,6 +2783,15 @@ sub WorkOrderGetConfiguredFreeTextFields {
     return @ConfiguredWorkOrderFreeTextFields;
 }
 
+sub DESTROY {
+    my $Self = shift;
+
+    # execute all transaction events
+    $Self->EventHandlerTransaction();
+
+    return 1;
+}
+
 =begin Internal:
 
 =item _CheckWorkOrderTypeIDs()
@@ -3496,6 +3505,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.133 $ $Date: 2012-11-22 07:56:11 $
+$Revision: 1.134 $ $Date: 2012-11-30 01:29:19 $
 
 =cut
