@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminImportExport.pm - admin frontend of import export module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.pm,v 1.26 2010-10-20 19:26:04 dz Exp $
+# $Id: AdminImportExport.pm,v 1.27 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ImportExport;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -743,7 +743,7 @@ sub Run {
         }
 
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",
+            OP => "Action=$Self->{Action};Subaction=$Subaction;TemplateID=$TemplateID",
         );
     }
 
@@ -915,7 +915,7 @@ sub Run {
             );
 
             return $Self->{LayoutObject}->Redirect(
-                OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",
+                OP => "Action=$Self->{Action};Subaction=$Subaction;TemplateID=$TemplateID",
             );
         }
 
@@ -948,7 +948,7 @@ sub Run {
         );
 
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=$Subaction&TemplateID=$TemplateID",
+            OP => "Action=$Self->{Action};Subaction=$Subaction;TemplateID=$TemplateID",
         );
     }
 
@@ -1101,10 +1101,71 @@ sub Run {
             return;
         }
 
-        return $Self->{LayoutObject}->Redirect(
-            OP =>
-                "Action=$Self->{Action}&Subaction=Overview&TemplateID=$TemplateData->{TemplateID}",
+        # output header and navbar
+        my $Output = $Self->{LayoutObject}->Header();
+        $Output .= $Self->{LayoutObject}->NavigationBar();
+
+        # output import results
+        $Self->{LayoutObject}->Block(
+            Name => 'ImportResult',
+            Data => {
+                %{$Result},
+            },
         );
+
+        # get all return codes and collect the duplicate names
+        my @DuplicateNames;
+        RETURNCODE:
+        for my $RetCode ( sort keys %{ $Result->{RetCode} } ) {
+
+            # just get the duplicate name
+            if ( $RetCode =~ m{ \A DuplicateName \s+ (.+) }xms ) {
+                push @DuplicateNames, $1;
+            }
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'ImportResultReturnCode',
+                    Data => {
+                        ReturnCodeName  => $RetCode,
+                        ReturnCodeCount => $Result->{RetCode}->{$RetCode},
+                    },
+                );
+            }
+        }
+
+        # output duplicate names if neccessary
+        if (@DuplicateNames) {
+
+            my $DuplicateNamesString = join ', ', @DuplicateNames;
+
+            $Self->{LayoutObject}->Block(
+                Name => 'ImportResultDuplicateNames',
+                Data => {
+                    DuplicateNames => $DuplicateNamesString,
+                },
+            );
+        }
+
+        # output last processed line mumber of import file
+        if ( $Result->{Failed} ) {
+            $Self->{LayoutObject}->Block(
+                Name => 'ImportResultLastLineNumber',
+                Data => {
+                    LastLineNumber => $Result->{Counter},
+                },
+            );
+        }
+
+        # start output
+        $Output .= $Self->{LayoutObject}->Output(
+            TemplateFile => 'AdminImportExport',
+            Data         => {
+                %Param,
+            },
+        );
+
+        $Output .= $Self->{LayoutObject}->Footer();
+        return $Output;
     }
 
     # ------------------------------------------------------------ #
@@ -1176,7 +1237,7 @@ sub Run {
             Name => 'Overview',
             Data => {
                 %Param,
-                }
+            },
         );
 
         $Self->{LayoutObject}->Block( Name => 'ActionList' );

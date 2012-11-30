@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/de_ImportExport.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: de_ImportExport.pm,v 1.28 2011-11-24 15:42:26 ub Exp $
+# $Id: de_ImportExport.pm,v 1.29 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Semicolon (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = 'Mit Spaltenüberschriften';
+    $Self->{Translation}->{'Import summary for'} = 'Import-Bericht für';
+    $Self->{Translation}->{'Imported records'} = 'Importierte Datensätze';
+    $Self->{Translation}->{'Exported records'} = 'Exportierte Datensätze';
+    $Self->{Translation}->{'Records'} = 'Datensätze';
+    $Self->{Translation}->{'Skipped'} = 'Übersprungen';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export-Verwaltung';
@@ -48,9 +53,15 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Export per Suche einschränken';
     $Self->{Translation}->{'Import information'} = 'Import-Informationen';
     $Self->{Translation}->{'Source File'} = 'Quell-Datei';
+    $Self->{Translation}->{'Success'} = 'Erfolgreich';
+    $Self->{Translation}->{'Failed'} = 'Nicht erfolgreich';
+    $Self->{Translation}->{'Duplicate names'} = 'Doppelte Namen';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Zuletzt verarbeitete Zeile der Import-Datei';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'Format-Backend Modul-Registration des Import/Export Moduls.';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        'Format-Backend Modul-Registration des Import/Export Moduls.';
     $Self->{Translation}->{'Import and export object information.'} = 'Impotieren und Exportieren von Objekt-Informationen.';
     $Self->{Translation}->{'Import/Export'} = 'Import/Export';
 

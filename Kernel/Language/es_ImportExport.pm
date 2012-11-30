@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/es_ImportExport.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: es_ImportExport.pm,v 1.15 2011-11-24 15:42:26 ub Exp $
+# $Id: es_ImportExport.pm,v 1.16 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Punto y Coma (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulador (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Imported records'} = '';
+    $Self->{Translation}->{'Exported records'} = '';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Gestión de Importación/Exportación';
@@ -48,9 +53,15 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Restringir exportación por búsqueda';
     $Self->{Translation}->{'Import information'} = 'Importar información';
     $Self->{Translation}->{'Source File'} = 'Archivo origen';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
+    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'Registro de módulo de formato backend para el módulo import/export.';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        'Registro de módulo de formato backend para el módulo import/export.';
     $Self->{Translation}->{'Import and export object information.'} = 'Importar y exportar información de objetos.';
     $Self->{Translation}->{'Import/Export'} = 'Importar/Exportar';
 
@@ -60,7 +71,8 @@ sub Data {
     $Self->{Translation}->{'Class is required!'} = '¡Debe especificar Clase!';
     $Self->{Translation}->{'Column Separator is required!'} = '¡Debe especificar Separador de Columna!';
     $Self->{Translation}->{'Comma (,)'} = 'Coma (,)';
-    $Self->{Translation}->{'Create a template in order to can import and export object information.'} = 'Agregue una plantilla nueva para poder importar y exportar.';
+    $Self->{Translation}->{'Create a template in order to can import and export object information.'} =
+        'Agregue una plantilla nueva para poder importar y exportar.';
     $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Los campos vacíos indican que los valores actuales se mantienen';
     $Self->{Translation}->{'Go back'} = 'Regresar';
 

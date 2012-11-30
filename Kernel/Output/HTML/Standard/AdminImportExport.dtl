@@ -1,8 +1,8 @@
 # --
 # AdminImportExport.dtl - provides HTML form for AdminImportExport
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminImportExport.dtl,v 1.28 2011-01-25 17:07:16 ub Exp $
+# $Id: AdminImportExport.dtl,v 1.29 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -499,3 +499,57 @@
 </div>
 
 <!-- dtl:block:Overview -->
+
+<!-- dtl:block:ImportResult -->
+<div class="MainBox AriaRoleMain">
+    <div class="W50pc SpacingTopLarge SpacingBottomLarge CenterBox">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>$Text{"Import summary for"} $QData{"Object"}</h2>
+            </div>
+            <div class="Content">
+
+                <form action="$Env{"CGIHandle"}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="Action" value="$Env{"Action"}"/>
+                    <input type="hidden" name="Subaction" value="Overview"/>
+
+                    <fieldset class="TableLike">
+                        <label>$Text{"Records"}:</label>
+                        <div class="Value">$QData{"Counter"}</div>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Success"}:</label>
+                        <div class="Value">
+                            $QData{"Success"}
+<!-- dtl:block:ImportResultReturnCode -->
+                            ($Text{"$Data{"ReturnCodeName"}"}: $QData{"ReturnCodeCount"})
+<!-- dtl:block:ImportResultReturnCode -->
+                        </div>
+                        <div class="Clear"></div>
+
+                        <label>$Text{"Failed"}:</label>
+                        <div class="Value">$QData{"Failed"}</div>
+                        <div class="Clear"></div>
+
+<!-- dtl:block:ImportResultDuplicateNames -->
+                        <label>$Text{"Duplicate names"}:</label>
+                        <div class="Value">$QData{"DuplicateNames"}</div>
+                        <div class="Clear"></div>
+<!-- dtl:block:ImportResultDuplicateNames -->
+
+<!-- dtl:block:ImportResultLastLineNumber -->
+                        <label>$Text{"Last processed line number of import file"}:</label>
+                        <div class="Value">$QData{"LastLineNumber"}</div>
+                        <div class="Clear"></div>
+<!-- dtl:block:ImportResultLastLineNumber -->
+                    </fieldset>
+
+                    <p class="Center SpacingTopSmall">
+                        <button type="submit" name="Ok" value="$Text{"Ok"}">$Text{"Ok"}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- dtl:block:ImportResult -->

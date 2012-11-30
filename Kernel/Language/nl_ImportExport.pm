@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/nl_ImportExport.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nl_ImportExport.pm,v 1.9 2011-05-05 09:36:13 ub Exp $
+# $Id: nl_ImportExport.pm,v 1.10 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Puntkomma (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tab';
     $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Imported records'} = '';
+    $Self->{Translation}->{'Exported records'} = '';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Import/Export beheer';
@@ -48,9 +53,15 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Beperk export tot zoekopdracht';
     $Self->{Translation}->{'Import information'} = 'Import-informatie';
     $Self->{Translation}->{'Source File'} = 'Bronbestand';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
+    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        '';
     $Self->{Translation}->{'Import and export object information.'} = 'Import en export objectinformatie';
     $Self->{Translation}->{'Import/Export'} = 'Import/Export';
 
@@ -59,7 +70,8 @@ sub Data {
     #
     $Self->{Translation}->{'Class is required!'} = 'Klasse is verplicht.';
     $Self->{Translation}->{'Column Separator is required!'} = 'Scheidingsteken is verplicht';
-    $Self->{Translation}->{'Create a template in order to can import and export object information.'} = 'Maak een template aan om objecten te importeren of exporteren.';
+    $Self->{Translation}->{'Create a template in order to can import and export object information.'} =
+        'Maak een template aan om objecten te importeren of exporteren.';
     $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Bij lege velden wordt de huidige waarde behouden';
 
 }

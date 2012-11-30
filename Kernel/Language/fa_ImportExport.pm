@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/fa_ImportExport.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: fa_ImportExport.pm,v 1.8 2011-05-05 09:36:13 ub Exp $
+# $Id: fa_ImportExport.pm,v 1.9 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'سمی کالن (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'جدول ساز (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Imported records'} = '';
+    $Self->{Translation}->{'Exported records'} = '';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'مدیریت ورود/صدور';
@@ -48,16 +53,22 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'محدودسازی عملیات صدور به ازای جستجو';
     $Self->{Translation}->{'Import information'} = 'ورود اطلاعات';
     $Self->{Translation}->{'Source File'} = 'فایل منبع';
-    $Self->{Translation}->{'Template List'} = 'فهرست قالب‌ها';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
+    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'قالب‌بندی ثبت ماژول برای ماژول ورود/صدور';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        'قالب‌بندی ثبت ماژول برای ماژول ورود/صدور';
     $Self->{Translation}->{'Import and export object information.'} = 'ورود و صدور اطلاعات آبجکت';
     $Self->{Translation}->{'Import/Export'} = 'ورود/صدور';
 
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'Template List'} = 'فهرست قالب‌ها';
 
 }
 

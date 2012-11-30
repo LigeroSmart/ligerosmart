@@ -1,8 +1,8 @@
 # --
 # Kernel/Language/ru_ImportExport.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ru_ImportExport.pm,v 1.9 2011-11-24 15:42:26 ub Exp $
+# $Id: ru_ImportExport.pm,v 1.10 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,6 +26,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Точка с запятой (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Табуляция (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Imported records'} = '';
+    $Self->{Translation}->{'Exported records'} = '';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Управление Импортом/Экспортом';
@@ -48,9 +53,15 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ограничить экспорт поиском';
     $Self->{Translation}->{'Import information'} = 'Информация импорта';
     $Self->{Translation}->{'Source File'} = 'Исходный файл';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
+    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = '';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        '';
     $Self->{Translation}->{'Import and export object information.'} = '';
     $Self->{Translation}->{'Import/Export'} = 'Импорт/Экспорт';
 

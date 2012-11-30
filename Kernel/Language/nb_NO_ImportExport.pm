@@ -1,9 +1,8 @@
 # --
 # Kernel/Language/nb_NO_ImportExport.pm - translation file
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
-# Copyright (C) 2011 Translated by Eirik Wulff <eirik at epledoktor.no>
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: nb_NO_ImportExport.pm,v 1.3 2011-11-24 15:42:26 ub Exp $
+# $Id: nb_NO_ImportExport.pm,v 1.4 2012-11-30 13:43:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,18 +26,21 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Semikolon (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = '';
+    $Self->{Translation}->{'Import summary for'} = '';
+    $Self->{Translation}->{'Imported records'} = '';
+    $Self->{Translation}->{'Exported records'} = '';
+    $Self->{Translation}->{'Records'} = '';
+    $Self->{Translation}->{'Skipped'} = '';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Administrasjon av Import/Eksport';
     $Self->{Translation}->{'Add template'} = 'Legg til mal';
-    $Self->{Translation}->{'Note'} = 'Notis';
     $Self->{Translation}->{'Create a template to import and export object information.'} = 'Opprett en mal for å eksportere og importere informasjon';
     $Self->{Translation}->{'Start Import'} = 'Start import';
     $Self->{Translation}->{'Start Export'} = 'Start eksport';
     $Self->{Translation}->{'Delete Template'} = 'Slett mal';
     $Self->{Translation}->{'Step'} = 'Steg';
     $Self->{Translation}->{'Edit common information'} = 'Endre fellesinformasjon';
-    $Self->{Translation}->{'Name is required!'} = 'Navn er påkrevd!';
     $Self->{Translation}->{'Object is required!'} = 'Objekt er påkrevd!';
     $Self->{Translation}->{'Format is required!'} = 'Format er påkrevd!';
     $Self->{Translation}->{'Edit object information'} = 'Endre objektet';
@@ -51,9 +53,15 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Begrens eksport per søk';
     $Self->{Translation}->{'Import information'} = 'Import-informasjon';
     $Self->{Translation}->{'Source File'} = 'Kildefil';
+    $Self->{Translation}->{'Success'} = '';
+    $Self->{Translation}->{'Failed'} = '';
+    $Self->{Translation}->{'Duplicate names'} = '';
+    $Self->{Translation}->{'Last processed line number of import file'} = '';
+    $Self->{Translation}->{'Ok'} = '';
 
     # SysConfig
-    $Self->{Translation}->{'Format backend module registration for the import/export module.'} = 'Baksidemodul-registrering for formatet til import/eksport-modulen';
+    $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
+        'Baksidemodul-registrering for formatet til import/eksport-modulen';
     $Self->{Translation}->{'Import and export object information.'} = 'Informasjon for import- og eksport-objekt';
     $Self->{Translation}->{'Import/Export'} = 'Import/Eksport';
 
