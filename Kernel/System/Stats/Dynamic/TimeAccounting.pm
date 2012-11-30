@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/TimeAccounting.pm - all advice functions
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.2 2011-03-11 09:11:06 mab Exp $
+# $Id: TimeAccounting.pm,v 1.3 2012-11-30 15:56:52 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.2 $) [1];
+$VERSION = qw($Revision: 1.3 $) [1];
 
 use Kernel::System::TimeAccounting;
 use Date::Pcalc qw( Add_Delta_Days Add_Delta_YMD );
@@ -67,7 +67,7 @@ sub GetObjectAttributes {
     my %ActionListSource = $Self->{TimeAccountingObject}->ActionSettingsGet();
     my %ActionList;
 
-    for my $Action ( keys %ActionListSource ) {
+    for my $Action ( sort keys %ActionListSource ) {
         $ActionList{$Action} = $ActionListSource{$Action}->{Action};
     }
 

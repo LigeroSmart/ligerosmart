@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTimeAccounting.pm - time accounting module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTimeAccounting.pm,v 1.90 2012-11-02 18:48:12 cr Exp $
+# $Id: AgentTimeAccounting.pm,v 1.91 2012-11-30 15:56:50 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Date::Pcalc qw(Today Days_in_Month Day_of_Week Add_Delta_YMD check_date);
 use Time::Local;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.90 $) [1];
+$VERSION = qw($Revision: 1.91 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -167,8 +167,9 @@ sub Run {
             my %PeriodData;
 
             my %UserData
-                = $Self->{TimeAccountingObject}
-                ->SingleUserSettingsGet( UserID => $GetParam{UserID} );
+                = $Self->{TimeAccountingObject}->SingleUserSettingsGet(
+                UserID => $GetParam{UserID}
+                );
 
             # get parameters for all registered periods
             while ( $UserData{$Period} ) {
@@ -339,7 +340,7 @@ sub Run {
 
             # if more than one check box was checked it is a server error
             if ( scalar keys %CheckboxCheck > 1 ) {
-                for my $Checkbox ( keys %CheckboxCheck ) {
+                for my $Checkbox ( sort keys %CheckboxCheck ) {
                     $Errors{ $Checkbox . 'Invalid' } = 'ServerError';
                 }
             }
@@ -493,15 +494,15 @@ sub Run {
                             $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
                             push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
                                 if !
-                                    grep( /^StartTimeRepeatedHourServerError$/,
-                                        @StartTimeServerErrorBlock );
+                                grep( /^StartTimeRepeatedHourServerError$/,
+                                @StartTimeServerErrorBlock );
                         }
                         else {
                             $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
                             push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
                                 if !
-                                    grep( /^EndTimeRepeatedHourServerError$/,
-                                        @EndTimeServerErrorBlock );
+                                grep( /^EndTimeRepeatedHourServerError$/,
+                                @EndTimeServerErrorBlock );
                         }
                     }
 
@@ -509,16 +510,16 @@ sub Run {
                         $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
                         push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
                             if !
-                                grep( /^StartTimeRepeatedHourServerError$/,
-                                    @StartTimeServerErrorBlock );
+                            grep( /^StartTimeRepeatedHourServerError$/,
+                            @StartTimeServerErrorBlock );
                     }
 
                     if ( $EndTimes[$Position] == $EndTimes[$ID] ) {
                         $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
                         push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
                             if !
-                                grep( /^EndTimeRepeatedHourServerError$/,
-                                    @EndTimeServerErrorBlock );
+                            grep( /^EndTimeRepeatedHourServerError$/,
+                            @EndTimeServerErrorBlock );
                     }
 
                     if (
@@ -529,8 +530,8 @@ sub Run {
                         $Errors{$ErrorIndex}{StartTimeInvalid} = 'ServerError';
                         push @StartTimeServerErrorBlock, 'StartTimeRepeatedHourServerError'
                             if !
-                                grep( /^StartTimeRepeatedHourServerError$/,
-                                    @StartTimeServerErrorBlock );
+                            grep( /^StartTimeRepeatedHourServerError$/,
+                            @StartTimeServerErrorBlock );
                     }
 
                     if (
@@ -541,8 +542,8 @@ sub Run {
                         $Errors{$ErrorIndex}{EndTimeInvalid} = 'ServerError';
                         push @EndTimeServerErrorBlock, 'EndTimeRepeatedHourServerError'
                             if !
-                                grep( /^EndTimeRepeatedHourServerError$/,
-                                    @EndTimeServerErrorBlock );
+                            grep( /^EndTimeRepeatedHourServerError$/,
+                            @EndTimeServerErrorBlock );
                     }
                 }
 
@@ -699,7 +700,7 @@ sub Run {
         # generate a JavaScript Array which will be output to the template
         my @ActionIDs = sort { $ActionList{$a} cmp $ActionList{$b} } keys %ActionList;
         my @JSActions;
-        foreach my $ActionID (@ActionIDs) {
+        for my $ActionID (@ActionIDs) {
             push @JSActions, "['$ActionID', '$ActionList{$ActionID}']";
         }
         $Param{JSActionList} = '[' . ( join ', ', @JSActions ) . ']';
@@ -707,7 +708,7 @@ sub Run {
         my $ActionListConstraints
             = $Self->{ConfigObject}->Get('TimeAccounting::ActionListConstraints');
         my @JSActionListConstraints;
-        for my $ProjectNameRegExp ( keys %{$ActionListConstraints} ) {
+        for my $ProjectNameRegExp ( sort keys %{$ActionListConstraints} ) {
             my $ActionNameRegExp = $ActionListConstraints->{$ProjectNameRegExp};
             s{(['"\\])}{\\$1}smxg for ( $ProjectNameRegExp, $ActionNameRegExp );
             push @JSActionListConstraints, "['$ProjectNameRegExp', '$ActionNameRegExp']";
@@ -1042,7 +1043,7 @@ sub Run {
                     Name => 'IncompleteWorkingDaysMassEntry',
                 );
 
-                foreach my $WorkingDays ( sort keys %IncompleteWorkingDaysList ) {
+                for my $WorkingDays ( sort keys %IncompleteWorkingDaysList ) {
                     my ( $Year, $Month, $Day )
                         = split( /-/, $IncompleteWorkingDaysList{$WorkingDays} );
                     $Self->{LayoutObject}->Block(
@@ -1175,8 +1176,9 @@ sub Run {
             );
         }
         elsif ( $Param{Notification} eq 'Successful' ) {
-            $Output .= $Self->{LayoutObject}
-                ->Notify( Info => 'Successfully inserted entries for several dates!', );
+            $Output .= $Self->{LayoutObject}->Notify(
+                Info => 'Successfully inserted entries for several dates!',
+            );
         }
 
         # show notification if wrong date was selected
@@ -1949,7 +1951,7 @@ sub Run {
         my %ProjectTime = ();
 
         # Only one function should be enough
-        for my $UserID ( keys %ShownUsers ) {
+        for my $UserID ( sort keys %ShownUsers ) {
 
             # Overview per project and action
             # REMARK: This is the wrong function to get this information
@@ -1960,7 +1962,7 @@ sub Run {
             );
             if ( $ProjectData{ $Param{ProjectID} } ) {
                 my $ActionsRef = $ProjectData{ $Param{ProjectID} }{Actions};
-                for my $ActionID ( keys %{$ActionsRef} ) {
+                for my $ActionID ( sort keys %{$ActionsRef} ) {
                     $ProjectTime{$ActionID}{$UserID}{Hours} = $ActionsRef->{$ActionID}{Total};
                 }
             }
@@ -1979,7 +1981,7 @@ sub Run {
 
         # better solution for sort actions necessary
         my %NewAction = ();
-        for my $ActionID ( keys %ProjectTime ) {
+        for my $ActionID ( sort keys %ProjectTime ) {
             $NewAction{$ActionID} = $Action{$ActionID}{Action};
         }
         %Action = %NewAction;
@@ -2526,7 +2528,7 @@ sub Run {
                 Type   => 'ro',
                 Result => 'HASH',
             );
-            for my $GroupKey ( keys %Groups ) {
+            for my $GroupKey ( sort keys %Groups ) {
                 if ( $Groups{$GroupKey} eq 'time_accounting' && !$GroupData{$GroupKey} ) {
 
                     $Self->{GroupObject}->GroupMemberAdd(
@@ -2642,7 +2644,7 @@ sub Run {
         my $InsertError = 0;
 
         # save entries in the db
-        foreach my $Date (@Dates) {
+        for my $Date (@Dates) {
 
             my ( $Year, $Month, $Day ) = split /[-]/, $Date;
 
@@ -2739,7 +2741,7 @@ sub _FirstUserRedirect {
         Type   => 'rw',
         Result => 'HASH',
     );
-    for my $GroupKey ( keys %GroupList ) {
+    for my $GroupKey ( sort keys %GroupList ) {
         if ( $GroupList{$GroupKey} eq 'time_accounting' ) {
             return $Self->{LayoutObject}->Redirect(
                 OP => "Action=AgentTimeAccounting;" . "Subaction=Setting"
@@ -2760,7 +2762,7 @@ sub _ActionList {
 
     # get action settings
     ACTIONID:
-    for my $ActionID ( keys %Action ) {
+    for my $ActionID ( sort keys %Action ) {
         next ACTIONID if !$Action{$ActionID}{ActionStatus};
         next ACTIONID if !$Action{$ActionID}{Action};
         $ActionList{$ActionID} = $Action{$ActionID}{Action};
@@ -2789,12 +2791,12 @@ sub _ActionListConstraints {
 
             # loop over actions to find matches for configured project
             # and action regexp pairs
-            for my $ActionID ( keys %{ $Param{ActionList} } ) {
+            for my $ActionID ( sort keys %{ $Param{ActionList} } ) {
 
                 my $ActionName = $Param{ActionList}->{$ActionID};
 
                 REGEXP:
-                for my $ProjectNameRegExp ( keys %{ $Param{ActionListConstraints} } ) {
+                for my $ProjectNameRegExp ( sort keys %{ $Param{ActionListConstraints} } ) {
                     my $ActionNameRegExp = $Param{ActionListConstraints}->{$ProjectNameRegExp};
                     if (
                         $ProjectName   =~ m{$ProjectNameRegExp}smx
@@ -2811,7 +2813,7 @@ sub _ActionListConstraints {
 
     # all available actions will be added if no action was added above (possible misconfiguration)
     if ( !keys %List ) {
-        for my $ActionID ( keys %{ $Param{ActionList} } ) {
+        for my $ActionID ( sort keys %{ $Param{ActionList} } ) {
             my $ActionName = $Param{ActionList}->{$ActionID};
             $List{$ActionID} = $ActionName;
         }
@@ -2896,8 +2898,7 @@ sub _ProjectList {
     return \@List;
 }
 
-sub _ProjectListConstraints
-{
+sub _ProjectListConstraints {
     my ( $Self, %Param ) = @_;
 
     my @List;
@@ -2917,7 +2918,7 @@ sub _ProjectListConstraints
 
         # get project list constraints
         my %ProjectRegex;
-        for my $ProjectRegex ( keys %{$ProjectListConstraints} ) {
+        for my $ProjectRegex ( sort keys %{$ProjectListConstraints} ) {
             for my $ProjectGroup ( split /,\s*/, $ProjectListConstraints->{$ProjectRegex} ) {
                 if ( $Groups{$ProjectGroup} ) {
                     $ProjectRegex{$ProjectRegex} = 1;
@@ -2975,7 +2976,7 @@ sub _Project2RemarkRegExp {
 
     my $Project2RemarkRegExp = $Self->{ConfigObject}->Get('TimeAccounting::Project2RemarkRegExp');
 
-    for my $ProjectID ( keys %{ $ProjectData{Project} } ) {
+    for my $ProjectID ( sort keys %{ $ProjectData{Project} } ) {
         if ( $ProjectData{Project}{$ProjectID} =~ m{$Project2RemarkRegExp}smx ) {
             push @Projects2Remark, $ProjectID;
         }
@@ -3363,8 +3364,9 @@ sub _UserSettingsEdit {
         # show user data
         if (%User) {
             my $LastPeriodNumber
-                = $Self->{TimeAccountingObject}
-                ->UserLastPeriodNumberGet( UserID => $Param{UserID} );
+                = $Self->{TimeAccountingObject}->UserLastPeriodNumberGet(
+                UserID => $Param{UserID}
+                );
 
             for ( my $Period = 1; $Period <= $LastPeriodNumber; $Period++ ) {
                 my %PeriodParam = ();

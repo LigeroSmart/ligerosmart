@@ -2,7 +2,7 @@
 # Kernel/System/TimeAccounting.pm - all time accounting functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: TimeAccounting.pm,v 1.64 2012-11-30 13:32:58 mb Exp $
+# $Id: TimeAccounting.pm,v 1.65 2012-11-30 15:56:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.64 $) [1];
+$VERSION = qw($Revision: 1.65 $) [1];
 
 use Date::Pcalc qw(Today Days_in_Month Day_of_Week check_date);
 
@@ -228,7 +228,7 @@ sub UserReporting {
     my %Data;
 
     USERID:
-    for my $UserID ( keys %UserCurrentPeriod ) {
+    for my $UserID ( sort keys %UserCurrentPeriod ) {
 
         if ( $UserCurrentPeriod{$UserID}{DateStart} =~ m{ \A (\d{4})-(\d{2})-(\d{2}) }xms ) {
             $YearStart  = $1;
@@ -957,8 +957,10 @@ sub UserSettingsInsert {
 
     # check if user exists
     if ( !$Self->{UserObject}->UserLookup( UserID => $Param{UserID} ) ) {
-        $Self->{LogObject}
-            ->Log( Priority => 'error', Message => "UserID $Param{UserID} does not exist!" );
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "UserID $Param{UserID} does not exist!"
+        );
         return;
     }
 
@@ -1082,7 +1084,7 @@ sub UserSettingsUpdate {
     );
 
     # update all periods
-    for my $Period ( keys %{ $Param{Period} } ) {
+    for my $Period ( sort keys %{ $Param{Period} } ) {
 
         # db insert
         return if !$Self->{DBObject}->Do(
@@ -1226,11 +1228,11 @@ sub WorkingUnitsCompletnessCheck {
     my $MaxIntervallOfIncompleteDaysBeforeWarning
         = $Self->{ConfigObject}->Get('TimeAccounting::MaxIntervalOfIncompleteDaysBeforeWarning')
         || '3';
-    for my $Year ( keys %{ $Data{Incomplete} } ) {
+    for my $Year ( sort keys %{ $Data{Incomplete} } ) {
 
-        for my $Month ( keys %{ $Data{Incomplete}{$Year} } ) {
+        for my $Month ( sort keys %{ $Data{Incomplete}{$Year} } ) {
 
-            for my $Day ( keys %{ $Data{Incomplete}{$Year}{$Month} } ) {
+            for my $Day ( sort keys %{ $Data{Incomplete}{$Year}{$Month} } ) {
 
                 if (
                     $Data{Incomplete}{$Year}{$Month}{$Day}
@@ -1741,6 +1743,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.64 $ $Date: 2012-11-30 13:32:58 $
+$Revision: 1.65 $ $Date: 2012-11-30 15:56:51 $
 
 =cut
