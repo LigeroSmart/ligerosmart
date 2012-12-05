@@ -2,7 +2,7 @@
 # AgentITSMChangeConditionEdit.dtl - provides HTML form for AgentITSMChangeConditionEdit
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeConditionEdit.dtl,v 1.40 2012-10-25 14:07:42 mab Exp $
+# $Id: AgentITSMChangeConditionEdit.dtl,v 1.41 2012-12-05 10:33:20 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -109,6 +109,7 @@
 <script type="text/javascript">//<![CDATA[
     $('#$QData{"ObjectOptionName"}').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewCondition'), 'AJAXUpdate', '$Data{"IDName"}-$Data{"ExpressionID"}-Selector', ['$Data{"IDName"}-$Data{"ExpressionID"}-AttributeID', '$Data{"IDName"}-$Data{"ExpressionID"}-OperatorID']);
+        $(this).parent().next('td').find('select').focus();
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
