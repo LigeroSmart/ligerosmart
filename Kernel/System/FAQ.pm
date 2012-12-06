@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.162 2012-12-06 12:50:10 mh Exp $
+# $Id: FAQ.pm,v 1.163 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.162 $) [1];
+$VERSION = qw($Revision: 1.163 $) [1];
 
 =head1 NAME
 
@@ -3703,7 +3703,7 @@ sub FAQSearch {
     if ( $Param{States} && ref $Param{States} eq 'HASH' && %{ $Param{States} } ) {
 
         # integer quote the state ids
-        for my $StateTypeID ( keys %{ $Param{States} } ) {
+        for my $StateTypeID ( sort keys %{ $Param{States} } ) {
             $StateTypeID = $Self->{DBObject}->Quote( $StateTypeID, 'Integer' );
         }
 
@@ -4024,13 +4024,13 @@ sub GetUserCategoriesLongNames {
 
     # get the long names of the categories where user has rights
     PARENTID:
-    for my $ParentID ( keys %{$UserCategories} ) {
+    for my $ParentID ( sort keys %{$UserCategories} ) {
 
         next PARENTID if !$UserCategories->{$ParentID};
         next PARENTID if ref $UserCategories->{$ParentID} ne 'HASH';
         next PARENTID if !%{ $UserCategories->{$ParentID} };
 
-        for my $CategoryID ( keys %{ $UserCategories->{$ParentID} } ) {
+        for my $CategoryID ( sort keys %{ $UserCategories->{$ParentID} } ) {
             $UserCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
         }
     }
@@ -4159,8 +4159,8 @@ sub GetCustomerCategoriesLongNames {
 
     # extract category ids
     my %AllCategoryIDs;
-    for my $ParentID ( keys %{$CustomerCategories} ) {
-        for my $CategoryID ( keys %{ $CustomerCategories->{$ParentID} } ) {
+    for my $ParentID ( sort keys %{$CustomerCategories} ) {
+        for my $CategoryID ( sort keys %{ $CustomerCategories->{$ParentID} } ) {
             $AllCategoryIDs{$CategoryID} = 1;
         }
     }
@@ -4199,13 +4199,13 @@ sub GetCustomerCategoriesLongNames {
 
     # get the long names of the categories where user has rights
     PARENTID:
-    for my $ParentID ( keys %{$CustomerCategories} ) {
+    for my $ParentID ( sort keys %{$CustomerCategories} ) {
 
         next PARENTID if !$CustomerCategories->{$ParentID};
         next PARENTID if ref $CustomerCategories->{$ParentID} ne 'HASH';
         next PARENTID if !%{ $CustomerCategories->{$ParentID} };
 
-        for my $CategoryID ( keys %{ $CustomerCategories->{$ParentID} } ) {
+        for my $CategoryID ( sort keys %{ $CustomerCategories->{$ParentID} } ) {
             $CustomerCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
         }
     }
@@ -4252,8 +4252,8 @@ sub GetPublicCategoriesLongNames {
 
     # extract category ids
     my %AllCategoryIDs;
-    for my $ParentID ( keys %{$PublicCategories} ) {
-        for my $CategoryID ( keys %{ $PublicCategories->{$ParentID} } ) {
+    for my $ParentID ( sort keys %{$PublicCategories} ) {
+        for my $CategoryID ( sort keys %{ $PublicCategories->{$ParentID} } ) {
             $AllCategoryIDs{$CategoryID} = 1;
         }
     }
@@ -4291,13 +4291,13 @@ sub GetPublicCategoriesLongNames {
 
     # get the long names of the categories where user has rights
     PARENTID:
-    for my $ParentID ( keys %{$PublicCategories} ) {
+    for my $ParentID ( sort keys %{$PublicCategories} ) {
 
         next PARENTID if !$PublicCategories->{$ParentID};
         next PARENTID if ref $PublicCategories->{$ParentID} ne 'HASH';
         next PARENTID if !%{ $PublicCategories->{$ParentID} };
 
-        for my $CategoryID ( keys %{ $PublicCategories->{$ParentID} } ) {
+        for my $CategoryID ( sort keys %{ $PublicCategories->{$ParentID} } ) {
             $PublicCategoriesLongNames{$CategoryID} = $CategoryTree->{$CategoryID};
         }
     }
@@ -4340,9 +4340,9 @@ sub CheckCategoryUserPermission {
     );
 
     for my $Permission (qw(rw ro)) {
-        for my $ParentID ( keys %{$UserCategories} ) {
+        for my $ParentID ( sort keys %{$UserCategories} ) {
             my $Categories = $UserCategories->{$ParentID};
-            for my $CategoryID ( keys %{$Categories} ) {
+            for my $CategoryID ( sort keys %{$Categories} ) {
                 if ( $CategoryID == $Param{CategoryID} ) {
                     return $Permission;
                 }
@@ -4389,9 +4389,9 @@ sub CheckCategoryCustomerPermission {
             Type         => 'ro',
             UserID       => $Param{UserID},
         );
-        for my $ParentID ( keys %{$CustomerCategories} ) {
+        for my $ParentID ( sort keys %{$CustomerCategories} ) {
             my $Categories = $CustomerCategories->{$ParentID};
-            for my $CategoryID ( keys %{$Categories} ) {
+            for my $CategoryID ( sort keys %{$Categories} ) {
                 if ( $CategoryID == $Param{CategoryID} ) {
                     return $Permission;
                 }
@@ -4994,14 +4994,14 @@ sub _UserCategories {
         my %SubCategories;
 
         CATEGORYID:
-        for my $CategoryID ( keys %{ $Param{Categories}->{$ParentID} } ) {
+        for my $CategoryID ( sort keys %{ $Param{Categories}->{$ParentID} } ) {
 
             # check category groups
             next CATEGORYID if !defined $Param{CategoryGroups}->{$CategoryID};
 
             # check user groups
             GROUPID:
-            for my $GroupID ( keys %{ $Param{CategoryGroups}->{$CategoryID} } ) {
+            for my $GroupID ( sort keys %{ $Param{CategoryGroups}->{$CategoryID} } ) {
 
                 next GROUPID if !defined $Param{UserGroups}->{$GroupID};
 
@@ -5278,6 +5278,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.162 $ $Date: 2012-12-06 12:50:10 $
+$Revision: 1.163 $ $Date: 2012-12-06 21:34:28 $
 
 =cut

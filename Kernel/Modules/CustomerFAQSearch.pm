@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerFAQSearch.pm - customer FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQSearch.pm,v 1.28 2012-11-20 13:04:14 mh Exp $
+# $Id: CustomerFAQSearch.pm,v 1.29 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.28 $) [1];
+$VERSION = qw($Revision: 1.29 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -229,7 +229,7 @@ sub Run {
             );
 
             # insert new profile params
-            for my $ParamName ( keys %GetParam ) {
+            for my $ParamName ( sort keys %GetParam ) {
                 if ( $GetParam{$ParamName} ) {
                     $Self->{SearchProfileObject}->SearchProfileAdd(
                         Base      => 'CustomerFAQSearch',
@@ -485,7 +485,7 @@ sub Run {
         );
 
         # print each attribute in search results area.
-        for my $Attribute ( keys %AttributeMap ) {
+        for my $Attribute ( sort keys %AttributeMap ) {
 
             # check if the attribute was defined by the user
             if ( $GetParam{$Attribute} ) {

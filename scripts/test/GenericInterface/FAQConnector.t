@@ -2,7 +2,7 @@
 # FAQConnector.t - GenericInterface transport interface tests for FAQConnector backend
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQConnector.t,v 1.6 2012-11-20 13:10:04 mh Exp $
+# $Id: FAQConnector.t,v 1.7 2012-12-06 21:34:29 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -47,7 +47,7 @@ my %States = $FAQObject->StateList(
     UserID => $UserID,
 );
 my $PublicStateID;
-for my $Key ( keys %States ) {
+for my $Key ( sort keys %States ) {
     if ( $States{$Key} =~ /^public.*/ ) {
         $PublicStateID = $Key;
     }
@@ -213,7 +213,7 @@ my %Languages = $FAQObject->LanguageList(
 );
 
 my @LanguageList;
-for my $Key ( keys %Languages ) {
+for my $Key ( sort keys %Languages ) {
     my %Language = (
         ID   => $Key,
         Name => $Languages{$Key},
@@ -731,7 +731,7 @@ for my $Test (@Tests) {
 
         if ( ref $LocalResult->{Data}->{FAQItem} eq 'ARRAY' ) {
             for my $FAQItem ( @{ $LocalResult->{Data}->{FAQItem} } ) {
-                for my $Key ( keys %{$FAQItem} ) {
+                for my $Key ( sort keys %{$FAQItem} ) {
                     if ( !$FAQItem->{$Key} ) {
                         $FAQItem->{$Key} = '';
                     }
@@ -791,7 +791,7 @@ for my $Test (@Tests) {
     if ( $Test->{Operation} eq 'PublicFAQGet' && $Test->{SuccessRequest} ) {
 
         if ( ref $RequesterResult->{Data}->{FAQItem} eq 'HASH' ) {
-            for my $Key ( keys %{ $RequesterResult->{Data}->{FAQItem} } ) {
+            for my $Key ( sort keys %{ $RequesterResult->{Data}->{FAQItem} } ) {
                 if ( !$RequesterResult->{Data}->{FAQItem}->{$Key} ) {
                     $RequesterResult->{Data}->{FAQItem}->{$Key} = '';
                 }
@@ -799,7 +799,7 @@ for my $Test (@Tests) {
         }
         elsif ( ref $RequesterResult->{Data}->{FAQItem} eq 'ARRAY' ) {
             for my $FAQItem ( @{ $RequesterResult->{Data}->{FAQItem} } ) {
-                for my $Key ( keys %{$FAQItem} ) {
+                for my $Key ( sort keys %{$FAQItem} ) {
                     if ( !$FAQItem->{$Key} ) {
                         $FAQItem->{$Key} = '';
                     }

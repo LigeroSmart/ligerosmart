@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.37 2012-11-20 13:05:09 mh Exp $
+# $Id: AgentFAQSearch.pm,v 1.38 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -197,7 +197,7 @@ sub Run {
             );
 
             # insert new profile params
-            for my $Key ( keys %GetParam ) {
+            for my $Key ( sort keys %GetParam ) {
                 if ( $GetParam{$Key} ) {
                     $Self->{SearchProfileObject}->SearchProfileAdd(
                         Base      => 'FAQSearch',
@@ -591,7 +591,7 @@ sub Run {
 
                 # get the column names that should be shown
                 COLUMNNAME:
-                for my $Name ( keys %PossibleColumn ) {
+                for my $Name ( sort keys %PossibleColumn ) {
                     next COLUMNNAME if !$PossibleColumn{$Name};
                     push @ShowColumns, $Name;
                 }

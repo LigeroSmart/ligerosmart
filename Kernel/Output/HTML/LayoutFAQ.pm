@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LayoutFAQ.pm - provides generic agent HTML output
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LayoutFAQ.pm,v 1.56 2012-11-20 13:06:56 mh Exp $
+# $Id: LayoutFAQ.pm,v 1.57 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 sub GetFAQItemVotingRateColor {
     my ( $Self, %Param ) = @_;
@@ -229,7 +229,7 @@ sub FAQListShow {
     }
 
     # loop over configured backends
-    for my $Backend ( keys %{$Backends} ) {
+    for my $Backend ( sort keys %{$Backends} ) {
 
         # build navbar view mode
         $Env->{LayoutObject}->Block(

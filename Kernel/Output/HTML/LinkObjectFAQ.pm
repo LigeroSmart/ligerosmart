@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/LinkObjectFAQ.pm - layout backend module
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: LinkObjectFAQ.pm,v 1.14 2012-11-20 13:06:56 mh Exp $
+# $Id: LinkObjectFAQ.pm,v 1.15 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::Output::HTML::Layout;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.14 $) [1];
+$VERSION = qw($Revision: 1.15 $) [1];
 
 =head1 NAME
 
@@ -163,17 +163,17 @@ sub TableCreateComplex {
 
     # convert the list
     my %LinkList;
-    for my $LinkType ( keys %{ $Param{ObjectLinkListWithData} } ) {
+    for my $LinkType ( sort keys %{ $Param{ObjectLinkListWithData} } ) {
 
         # extract link type List
         my $LinkTypeList = $Param{ObjectLinkListWithData}->{$LinkType};
 
-        for my $Direction ( keys %{$LinkTypeList} ) {
+        for my $Direction ( sort keys %{$LinkTypeList} ) {
 
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
 
-            for my $FAQID ( keys %{$DirectionList} ) {
+            for my $FAQID ( sort keys %{$DirectionList} ) {
 
                 $LinkList{$FAQID}->{Data} = $DirectionList->{$FAQID};
             }
@@ -295,12 +295,12 @@ sub TableCreateSimple {
 
     my $FAQHook = $Self->{ConfigObject}->Get('FAQ::FAQHook');
     my %LinkOutputData;
-    for my $LinkType ( keys %{ $Param{ObjectLinkListWithData} } ) {
+    for my $LinkType ( sort keys %{ $Param{ObjectLinkListWithData} } ) {
 
         # extract link type List
         my $LinkTypeList = $Param{ObjectLinkListWithData}->{$LinkType};
 
-        for my $Direction ( keys %{$LinkTypeList} ) {
+        for my $Direction ( sort keys %{$LinkTypeList} ) {
 
             # extract direction list
             my $DirectionList = $Param{ObjectLinkListWithData}->{$LinkType}->{$Direction};
@@ -523,6 +523,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.14 $ $Date: 2012-11-20 13:06:56 $
+$Revision: 1.15 $ $Date: 2012-12-06 21:34:28 $
 
 =cut

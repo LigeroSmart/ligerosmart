@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQJournal.pm - module for FAQ journal
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQJournal.pm,v 1.10 2012-11-20 13:05:09 mh Exp $
+# $Id: AgentFAQJournal.pm,v 1.11 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -72,7 +72,7 @@ sub Run {
 
         # get the column names that should be shown
         COLUMNNAME:
-        for my $Name ( keys %PossibleColumn ) {
+        for my $Name ( sort keys %PossibleColumn ) {
             next COLUMNNAME if !$PossibleColumn{$Name};
             push @ShowColumns, $Name;
         }
@@ -209,7 +209,7 @@ sub _FAQJournalShow {
     );
 
     # loop over configured backends
-    for my $Backend ( keys %{$Backends} ) {
+    for my $Backend ( sort keys %{$Backends} ) {
 
         # build navbar view mode
         $Self->{LayoutObject}->Block(

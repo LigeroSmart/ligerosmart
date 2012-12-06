@@ -2,7 +2,7 @@
 # Kernel/System/LinkObject/FAQ.pm - to link faq objects
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.20 2012-11-20 13:06:08 mh Exp $
+# $Id: FAQ.pm,v 1.21 2012-12-06 21:34:28 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -71,12 +71,12 @@ sub LinkListWithData {
         return;
     }
 
-    for my $LinkType ( keys %{ $Param{LinkList} } ) {
+    for my $LinkType ( sort keys %{ $Param{LinkList} } ) {
 
-        for my $Direction ( keys %{ $Param{LinkList}->{$LinkType} } ) {
+        for my $Direction ( sort keys %{ $Param{LinkList}->{$LinkType} } ) {
 
             FAQID:
-            for my $FAQID ( keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
+            for my $FAQID ( sort keys %{ $Param{LinkList}->{$LinkType}->{$Direction} } ) {
 
                 # get faq data
                 my %FAQData = $Self->{FAQObject}->FAQGet(
