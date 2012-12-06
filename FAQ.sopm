@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.123 2012-10-26 23:13:01 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.124 2012-12-06 10:09:26 mh Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -176,6 +176,9 @@
             <Unique Name="faq_state_name">
                 <UniqueColumn Name="name"/>
             </Unique>
+            <Index Name="faq_state_type_id">
+                <IndexColumn Name="type_id"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="faq_category">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -187,6 +190,15 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
+            <Index Name="faq_category_parent_id">
+                <IndexColumn Name="parent_id"/>
+            </Index>
+            <Index Name="faq_category_name">
+                <IndexColumn Name="name"/>
+            </Index>
+            <Index Name="faq_category_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </Index>
         </TableCreate>
         <Insert Table="faq_category">
             <Data Key="name" Type="Quote">Misc</Data>
@@ -206,6 +218,9 @@
             <Column Name="created_by" Required="false" Type="INTEGER"/>
             <Column Name="changed" Required="false" Type="DATE"/>
             <Column Name="changed_by" Required="false" Type="INTEGER"/>
+            <Index Name="faq_category_group_category_id">
+                <IndexColumn Name="category_id"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="faq_item">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -227,6 +242,15 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
+            <Index Name="faq_item_state_id">
+                <IndexColumn Name="state_id"/>
+            </Index>
+            <Index Name="faq_item_category_id">
+                <IndexColumn Name="category_id"/>
+            </Index>
+            <Index Name="faq_item_f_keywords">
+                <IndexColumn Name="f_keywords"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="faq_history">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="INTEGER"/>
@@ -236,6 +260,9 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
+            <Index Name="faq_history_item_id">
+                <IndexColumn Name="item_id"/>
+            </Index>
         </TableCreate>
         <Insert Table="faq_history">
             <Data Key="name" Type="Quote">Created</Data>
@@ -257,7 +284,7 @@
             <Column Name="created_by" Required="true" Type="INTEGER"/>
             <Column Name="changed" Required="true" Type="DATE"/>
             <Column Name="changed_by" Required="true" Type="INTEGER"/>
-            <Index Name="faq_id">
+            <Index Name="faq_attachment_faq_id">
                 <IndexColumn Name="faq_id"/>
             </Index>
         </TableCreate>
@@ -269,6 +296,9 @@
             <Column Name="ip" Required="false" Size="50" Type="VARCHAR"/>
             <Column Name="rate" Required="true" Type="INTEGER"/>
             <Column Name="created" Required="false" Type="DATE"/>
+            <Index Name="faq_voting">
+                <IndexColumn Name="item_id"/>
+            </Index>
         </TableCreate>
         <TableCreate Name="faq_log">
             <Column Name="id" Required="true" PrimaryKey="true" AutoIncrement="true" Type="BIGINT"/>
@@ -277,7 +307,7 @@
             <Column Name="ip" Required="false" Size="200" Type="VARCHAR"/>
             <Column Name="user_agent" Required="false" Size="200" Type="VARCHAR"/>
             <Column Name="created" Required="true" Type="DATE"/>
-            <Index Name="item_id">
+            <Index Name="faq_log_item_id">
                 <IndexColumn Name="item_id"/>
             </Index>
         </TableCreate>
@@ -318,6 +348,60 @@
             <ColumnDrop Name="free_value3"/>
             <ColumnDrop Name="free_key4"/>
             <ColumnDrop Name="free_value4"/>
+        </TableAlter>
+        <TableAlter Name="faq_state" Version="2.1.92">
+            <IndexCreate Name="faq_state_type_id">
+                <IndexColumn Name="type_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_category" Version="2.1.92">
+            <IndexCreate Name="faq_category_parent_id">
+                <IndexColumn Name="parent_id"/>
+            </IndexCreate>
+            <IndexCreate Name="faq_category_name">
+                <IndexColumn Name="name"/>
+            </IndexCreate>
+            <IndexCreate Name="faq_category_valid_id">
+                <IndexColumn Name="valid_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_category_group" Version="2.1.92">
+            <IndexCreate Name="faq_category_group_category_id">
+                <IndexColumn Name="category_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_item" Version="2.1.92">
+            <IndexCreate Name="faq_item_state_id">
+                <IndexColumn Name="state_id"/>
+            </IndexCreate>
+            <IndexCreate Name="faq_item_category_id">
+                <IndexColumn Name="category_id"/>
+            </IndexCreate>
+            <IndexCreate Name="faq_item_f_keywords">
+                <IndexColumn Name="f_keywords"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_history" Version="2.1.92">
+            <IndexCreate Name="faq_history_item_id">
+                <IndexColumn Name="item_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_attachment" Version="2.1.92">
+            <IndexDrop Name="faq_id"/>
+            <IndexCreate Name="faq_attachment_faq_id">
+                <IndexColumn Name="faq_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_voting" Version="2.1.92">
+            <IndexCreate Name="faq_voting">
+                <IndexColumn Name="item_id"/>
+            </IndexCreate>
+        </TableAlter>
+        <TableAlter Name="faq_log" Version="2.1.92">
+            <IndexDrop Name="item_id"/>
+            <IndexCreate Name="faq_log_item_id">
+                <IndexColumn Name="item_id"/>
+            </IndexCreate>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="pre">
