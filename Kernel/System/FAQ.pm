@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.161 2012-11-20 13:06:08 mh Exp $
+# $Id: FAQ.pm,v 1.162 2012-12-06 12:50:10 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::Ticket;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.161 $) [1];
+$VERSION = qw($Revision: 1.162 $) [1];
 
 =head1 NAME
 
@@ -233,15 +233,15 @@ sub FAQGet {
         Key  => $CacheKey,
     );
 
-    my %Data;
-
     # set %Data from cache if any
+    my %Data;
     if ( ref $Cache eq 'HASH' ) {
         %Data = %{$Cache};
     }
 
     # otherwise get %Data from the DB
     else {
+
         return if !$Self->{DBObject}->Prepare(
             SQL => '
                 SELECT i.f_name, i.f_language_id, i.f_subject, i.created, i.created_by, i.changed,
@@ -253,7 +253,8 @@ sub FAQGet {
                     AND i.category_id = c.id
                     AND i.f_language_id = l.id
                     AND i.id = ?',
-            Bind => [ \$Param{ItemID} ],
+            Bind  => [ \$Param{ItemID} ],
+            Limit => 1,
         );
 
         while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -297,6 +298,7 @@ sub FAQGet {
 
         # check if FAQ item fields are required
         if ($FetchItemFields) {
+
             for my $FieldNumber ( 1 .. 6 ) {
 
                 # set field name
@@ -312,11 +314,14 @@ sub FAQGet {
 
         # update number
         if ( !$Data{Number} ) {
+
             my $Number = $Self->{ConfigObject}->Get('SystemID') . '00' . $Data{ItemID};
+
             return if !$Self->{DBObject}->Do(
                 SQL => 'UPDATE faq_item SET f_number = ? WHERE id = ?',
                 Bind => [ \$Number, \$Data{ItemID} ],
             );
+
             $Data{Number} = $Number;
         }
 
@@ -492,6 +497,8 @@ sub ItemVoteDataGet {
         Bind  => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
+
+    # fetch the result
     my %Data;
     if ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Data{Votes}  = $Row[0];
@@ -653,7 +660,9 @@ sub FAQAdd {
             \$Param{Title},
             \$Param{Keywords},
         ],
+        Limit => 1,
     );
+
     my $ID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $ID = $Row[0];
@@ -1114,7 +1123,8 @@ sub AttachmentIndex {
         Bind  => [ \$Param{ItemID} ],
         Limit => 100,
     );
-    my @Index = ();
+
+    my @Index;
     ATTACHMENT:
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
@@ -1152,6 +1162,7 @@ sub AttachmentIndex {
             Inline      => $Inline,
         };
     }
+
     return @Index;
 }
 
@@ -1215,6 +1226,7 @@ sub FAQCount {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Count = $Row[0];
     }
+
     return $Count;
 }
 
@@ -1334,7 +1346,11 @@ sub VoteGet {
     }
     $SQL .= $Ext;
 
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => 1,
+    );
+
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
@@ -1348,7 +1364,6 @@ sub VoteGet {
     }
 
     return if !%Data;
-
     return \%Data;
 }
 
@@ -1389,10 +1404,12 @@ sub VoteSearch {
         Bind  => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
+
     my @VoteIDs;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @VoteIDs, $Row[0];
     }
+
     return \@VoteIDs;
 }
 
@@ -1600,6 +1617,7 @@ sub FAQHistoryGet {
         SQL  => 'SELECT name, created, created_by FROM faq_history WHERE item_id = ?',
         Bind => [ \$Param{ItemID} ],
     );
+
     my @Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %Record = (
@@ -1609,6 +1627,7 @@ sub FAQHistoryGet {
         );
         push @Data, \%Record;
     }
+
     return \@Data;
 }
 
@@ -1715,6 +1734,7 @@ sub HistoryGet {
         SQL   => $SQL,
         Limit => 200,
     );
+
     my @Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         my %Record = (
@@ -1728,6 +1748,7 @@ sub HistoryGet {
         );
         push @Data, \%Record;
     }
+
     return \@Data;
 }
 
@@ -1979,9 +2000,11 @@ sub CategoryGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = ?',
-        Bind => [ \$Param{CategoryID} ],
+        SQL   => 'SELECT id, parent_id, name, comments, valid_id FROM faq_category WHERE id = ?',
+        Bind  => [ \$Param{CategoryID} ],
+        Limit => 1,
     );
+
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
@@ -2075,7 +2098,7 @@ sub CategorySubCategoryIDList {
         );
     }
 
-    my @SubCategoryIDs     = ();
+    my @SubCategoryIDs;
     my @TempSubCategoryIDs = keys %{ $Categories->{ $Param{ParentID} } };
     SUBCATEGORYID:
     while (@TempSubCategoryIDs) {
@@ -2162,9 +2185,11 @@ sub CategoryAdd {
 
     # get new category id
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT id FROM faq_category WHERE name = ?',
-        Bind => [ \$Param{Name} ],
+        SQL   => 'SELECT id FROM faq_category WHERE name = ?',
+        Bind  => [ \$Param{Name} ],
+        Limit => 1,
     );
+
     my $CategoryID;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $CategoryID = $Row[0];
@@ -2311,7 +2336,10 @@ sub CategoryDuplicateCheck {
     }
 
     # prepare sql statement
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => 1,
+    );
 
     # fetch the result
     my $Exists;
@@ -2387,6 +2415,7 @@ sub CategoryCount {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Count = $Row[0];
     }
+
     return $Count;
 }
 
@@ -2527,10 +2556,12 @@ sub CategoryGroupGet {
         SQL  => 'SELECT group_id FROM faq_category_group WHERE category_id = ?',
         Bind => [ \$Param{CategoryID} ],
     );
+
     my @Groups;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @Groups, $Row[0];
     }
+
     return \@Groups;
 }
 
@@ -2592,6 +2623,7 @@ sub CategoryGroupGetAll {
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT group_id, category_id FROM faq_category_group',
     );
+
     my %Groups;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $Groups{ $Row[1] }->{ $Row[0] } = 1;
@@ -2690,6 +2722,7 @@ sub KeywordList {
     return if !$Self->{DBObject}->Prepare(
         SQL => 'SELECT f_keywords FROM faq_item',
     );
+
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
 
@@ -2803,10 +2836,12 @@ sub StateList {
 
     # sql
     return if !$Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_state' );
+
     my %List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         $List{ $Row[0] } = $Row[1];
     }
+
     return %List;
 }
 
@@ -2923,9 +2958,11 @@ sub StateGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT id, name FROM faq_state WHERE id = ?',
-        Bind => [ \$Param{StateID} ],
+        SQL   => 'SELECT id, name FROM faq_state WHERE id = ?',
+        Bind  => [ \$Param{StateID} ],
+        Limit => 1,
     );
+
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
@@ -2934,6 +2971,7 @@ sub StateGet {
             Comment => $Row[2],
         );
     }
+
     return %Data;
 }
 
@@ -2994,6 +3032,7 @@ sub StateTypeGet {
         SQL  => $SQL,
         Bind => \@Bind,
     );
+
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
@@ -3138,7 +3177,10 @@ sub LanguageDuplicateCheck {
     }
 
     # prepare sql statement
-    return if !$Self->{DBObject}->Prepare( SQL => $SQL );
+    return if !$Self->{DBObject}->Prepare(
+        SQL   => $SQL,
+        Limit => 1,
+    );
 
     # fetch the result
     my $Exists;
@@ -3220,9 +3262,11 @@ sub LanguageGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL  => 'SELECT id, name FROM faq_language WHERE id = ?',
-        Bind => [ \$Param{LanguageID} ],
+        SQL   => 'SELECT id, name FROM faq_language WHERE id = ?',
+        Bind  => [ \$Param{LanguageID} ],
+        Limit => 1,
     );
+
     my %Data;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         %Data = (
@@ -3230,6 +3274,7 @@ sub LanguageGet {
             Name       => $Row[1],
         );
     }
+
     return %Data;
 }
 
@@ -3736,6 +3781,7 @@ sub FAQSearch {
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
         push @List, $Row[0];
     }
+
     return @List;
 }
 
@@ -3781,7 +3827,7 @@ sub FAQPathListGet {
         return;
     }
 
-    my @CategoryList   = ();
+    my @CategoryList;
     my $TempCategoryID = $Param{CategoryID};
     while ($TempCategoryID) {
         my %Data = $Self->CategoryGet(
@@ -3793,7 +3839,8 @@ sub FAQPathListGet {
         }
         $TempCategoryID = $Data{ParentID};
     }
-    @CategoryList = reverse(@CategoryList);
+
+    @CategoryList = reverse @CategoryList;
 
     return \@CategoryList;
 
@@ -3903,7 +3950,7 @@ sub GetUserCategories {
     my $CategoryGroups = $Self->CategoryGroupGetAll(
         UserID => $Param{UserID},
     );
-    my %UserGroups = ();
+    my %UserGroups;
     if ( !$Self->{Cache}->{GetUserCategories}->{GroupMemberList} ) {
         %UserGroups = $Self->{GroupObject}->GroupMemberList(
             UserID => $Param{UserID},
@@ -4111,7 +4158,7 @@ sub GetCustomerCategoriesLongNames {
     );
 
     # extract category ids
-    my %AllCategoryIDs = ();
+    my %AllCategoryIDs;
     for my $ParentID ( keys %{$CustomerCategories} ) {
         for my $CategoryID ( keys %{ $CustomerCategories->{$ParentID} } ) {
             $AllCategoryIDs{$CategoryID} = 1;
@@ -4119,7 +4166,7 @@ sub GetCustomerCategoriesLongNames {
     }
 
     # get all customer category ids
-    my @CustomerCategoryIDs = ();
+    my @CustomerCategoryIDs;
     for my $CategoryID ( 0, keys %AllCategoryIDs ) {
         push @CustomerCategoryIDs, @{
             $Self->CustomerCategorySearch(
@@ -4204,7 +4251,7 @@ sub GetPublicCategoriesLongNames {
     my $PublicCategories = $Self->CategoryList( UserID => $Param{UserID} );
 
     # extract category ids
-    my %AllCategoryIDs = ();
+    my %AllCategoryIDs;
     for my $ParentID ( keys %{$PublicCategories} ) {
         for my $CategoryID ( keys %{ $PublicCategories->{$ParentID} } ) {
             $AllCategoryIDs{$CategoryID} = 1;
@@ -4212,7 +4259,7 @@ sub GetPublicCategoriesLongNames {
     }
 
     # get all public category ids
-    my @PublicCategoryIDs = ();
+    my @PublicCategoryIDs;
     for my $CategoryID ( 0, keys %AllCategoryIDs ) {
         push @PublicCategoryIDs, @{
             $Self->PublicCategorySearch(
@@ -4291,6 +4338,7 @@ sub CheckCategoryUserPermission {
         Type   => 'ro',
         UserID => $Param{UserID},
     );
+
     for my $Permission (qw(rw ro)) {
         for my $ParentID ( keys %{$UserCategories} ) {
             my $Categories = $UserCategories->{$ParentID};
@@ -4301,6 +4349,7 @@ sub CheckCategoryUserPermission {
             }
         }
     }
+
     return '';
 }
 
@@ -4349,6 +4398,7 @@ sub CheckCategoryCustomerPermission {
             }
         }
     }
+
     return '';
 }
 
@@ -4442,11 +4492,11 @@ sub CustomerCategorySearch {
         UserID       => $Param{UserID},
     );
 
-    my %Category           = %{ $Categories->{ $Param{ParentID} } };
-    my @CategoryIDs        = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
-    my @AllowedCategoryIDs = ();
+    my %Category = %{ $Categories->{ $Param{ParentID} } };
+    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
 
-    my %Articles = ();
+    my @AllowedCategoryIDs;
+    my %Articles;
 
     # check cache
     my $CacheKey = 'CustomerCategorySearch::Articles';
@@ -4542,9 +4592,9 @@ sub PublicCategorySearch {
 
     return [] if !$CategoryListCategories->{ $Param{ParentID} };
 
-    my %Category           = %{ $CategoryListCategories->{ $Param{ParentID} } };
-    my @CategoryIDs        = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
-    my @AllowedCategoryIDs = ();
+    my %Category = %{ $CategoryListCategories->{ $Param{ParentID} } };
+    my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
+    my @AllowedCategoryIDs;
 
     for my $CategoryID (@CategoryIDs) {
 
@@ -4936,12 +4986,12 @@ sub _UserCategories {
         }
     }
 
-    my %UserCategories = ();
+    my %UserCategories;
 
     PARENTID:
     for my $ParentID ( sort { $a <=> $b } keys %{ $Param{Categories} } ) {
 
-        my %SubCategories = ();
+        my %SubCategories;
 
         CATEGORYID:
         for my $CategoryID ( keys %{ $Param{Categories}->{$ParentID} } ) {
@@ -5228,6 +5278,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.161 $ $Date: 2012-11-20 13:06:08 $
+$Revision: 1.162 $ $Date: 2012-12-06 12:50:10 $
 
 =cut
