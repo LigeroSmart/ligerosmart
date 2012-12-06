@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarIncompleteWorkingDays.pm,v 1.3 2011-01-20 13:27:39 mn Exp $
+# $Id: ToolBarIncompleteWorkingDays.pm,v 1.4 2012-12-06 08:44:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::TimeAccounting;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -48,6 +48,9 @@ sub Run {
     my $Subaction = 'Edit';
     my $Group     = 'time_accounting';
 
+    # do not show icon if frontend module is not registered
+    return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
+
     # get the group id
     my $GroupID = $Self->{GroupObject}->GroupLookup( Group => $Group );
 
@@ -77,41 +80,57 @@ sub Run {
     # deny access, if user has no valid period
     return if !$UserCurrentPeriod{ $Self->{UserID} };
 
-    # do not show icon if frontend module is not registered
-    return if !$Self->{ConfigObject}->Get('Frontend::Module')->{$Action};
-
     # get the number of incomplete working days
     my $Count                 = 0;
     my %IncompleteWorkingDays = $Self->{TimeAccountingObject}->WorkingUnitsCompletnessCheck();
 
+    YEARID:
     for my $YearID ( sort keys %{ $IncompleteWorkingDays{Incomplete} } ) {
-        for my $MonthID ( sort keys %{ $IncompleteWorkingDays{Incomplete}{$YearID} } ) {
-            for my $DayID (
-                sort keys %{ $IncompleteWorkingDays{Incomplete}{$YearID}{$MonthID} }
-                )
-            {
-                $Count++;
-            }
+
+        next YEARID if !$YearID;
+        next YEARID if !$IncompleteWorkingDays{Incomplete}{$YearID};
+        next YEARID if ref $IncompleteWorkingDays{Incomplete}{$YearID} ne 'HASH';
+
+        # extract year
+        my %Year = %{ $IncompleteWorkingDays{Incomplete}{$YearID} };
+
+        MONTH:
+        for my $MonthID ( sort keys %Year ) {
+
+            next MONTH if !$MonthID;
+            next MONTH if !$Year{$MonthID};
+            next MONTH if ref $Year{$MonthID} ne 'HASH';
+
+            # extract month
+            my %Month = $Year{$MonthID};
+
+            $Count += scalar keys %Month;
         }
+    }
+
+    # remove current day because it makes no sense to show the current day as incompleted
+    if ( $Count > 0 ) {
+        $Count--;
     }
 
     # get ToolBar object parameters
     my $Class = $Param{Config}->{CssClass};
     my $Text  = $Self->{LayoutObject}->{LanguageObject}->Get('Incomplete working days');
+    my $URL   = $Self->{LayoutObject}->{Baselink};
 
-    # set ToolBar object
-    my $URL = $Self->{LayoutObject}->{Baselink};
-    my %Return;
-    if ($Count) {
-        $Return{'1000810'} = {
+    return () if !$Count;
+
+    my %Return = (
+        1000810 => {
             Block       => 'ToolBarItem',
             Description => $Text,
             Count       => $Count,
             Class       => $Class,
             Link        => $URL . 'Action=' . $Action . ';Subaction=' . $Subaction,
             AccessKey   => '',
-        };
-    }
+            }
+    );
+
     return %Return;
 }
 
