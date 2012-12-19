@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQExplorer.pm - show the faq explorer
 # Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQExplorer.pm,v 1.21 2012-12-06 21:34:28 cr Exp $
+# $Id: AgentFAQExplorer.pm,v 1.22 2012-12-19 14:44:06 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.21 $) [1];
+$VERSION = qw($Revision: 1.22 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -114,20 +114,24 @@ sub Run {
     );
 
     # store last overview screen (for back menu action)
-    my $URL
-        = "Action=AgentFAQExplorer;SortBy=$Self->{SortBy}"
-        . ";CategoryID=$CategoryID;Nav=$Nav"
-        . ";OrderBy=$Self->{OrderBy};StartHit=$Self->{StartHit}";
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key       => 'LastScreenOverview',
-        Value     => $URL,
-    );
-    $Self->{SessionObject}->UpdateSessionID(
-        SessionID => $Self->{SessionID},
-        Key       => 'LastScreenView',
-        Value     => $URL,
-    );
+    # but only if the FAQ explorer is not shown as overlay
+    if ( !$Nav || $Nav ne 'None' ) {
+
+        my $URL
+            = "Action=AgentFAQExplorer;SortBy=$Self->{SortBy}"
+            . ";CategoryID=$CategoryID;Nav=$Nav"
+            . ";OrderBy=$Self->{OrderBy};StartHit=$Self->{StartHit}";
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenOverview',
+            Value     => $URL,
+        );
+        $Self->{SessionObject}->UpdateSessionID(
+            SessionID => $Self->{SessionID},
+            Key       => 'LastScreenView',
+            Value     => $URL,
+        );
+    }
 
     # try to get the category data
     my %CategoryData;
