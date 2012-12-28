@@ -2,7 +2,7 @@
 # OTRSMasterSlave.pm - code to excecute during package installation
 # Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.26 2012-11-23 02:11:44 cr Exp $
+# $Id: OTRSMasterSlave.pm,v 1.27 2012-12-28 17:18:25 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 =head1 NAME
 
@@ -298,22 +298,20 @@ sub _SetDynamicFields {
             # get the dynamic field configuration
             my $DynamicFieldConfig = $Self->{DynamicFieldLookup}->{$NewFieldName};
 
-            # if dynamic field exists make sure is valid and internal
+            # if dynamic field exists make sure is valid
             if ( $DynamicFieldConfig->{ValidID} ne '1' ) {
 
                 my $Success = $Self->{DynamicFieldObject}->DynamicFieldUpdate(
                     %{$DynamicFieldConfig},
-                    ValidID       => 1,
-                    Reorder       => 0,
-                    InternalField => 1,
-                    UserID        => 1,
-
+                    ValidID => 1,
+                    Reorder => 0,
+                    UserID  => 1,
                 );
 
                 if ( !$Success ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
-                        Message  => "Could not update dynamic field '$NewFieldName'!",
+                        Message  => "Could not set dynamic field '$NewFieldName' to valid!",
                     );
                 }
             }
@@ -685,6 +683,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.26 $ $Date: 2012-11-23 02:11:44 $
+$Revision: 1.27 $ $Date: 2012-12-28 17:18:25 $
 
 =cut
