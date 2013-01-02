@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.126 2013-01-02 11:13:01 ub Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.127 2013-01-02 21:59:31 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -10,7 +10,7 @@
     <Description Lang="en">The FAQ/knowledge base.</Description>
     <Description Lang="de">Die FAQ-/Wissensdatenbank.</Description>
     <Filelist>
-        <File Permission="755" Location="bin/FAQImport.pl"/>
+        <File Permission="755" Location="bin/otrs.FAQImport.pl"/>
         <File Permission="755" Location="bin/cgi-bin/faq.pl"/>
         <File Permission="755" Location="bin/fcgi-bin/faq.fpl"/>
         <File Permission="644" Location="doc/faq-database.png"/>
