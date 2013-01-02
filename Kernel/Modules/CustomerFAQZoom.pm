@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerFAQZoom.pm - to get a closer view
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerFAQZoom.pm,v 1.24 2012-11-20 13:04:14 mh Exp $
+# $Id: CustomerFAQZoom.pm,v 1.25 2013-01-02 11:08:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,10 @@ use strict;
 use warnings;
 
 use Kernel::System::FAQ;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -37,7 +38,8 @@ sub new {
     }
 
     # create needed objects
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
+    $Self->{FAQObject}   = Kernel::System::FAQ->new(%Param);
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
@@ -82,6 +84,10 @@ sub Run {
         return $Self->{LayoutObject}->CustomerFatalError();
     }
 
+    # get the valid ids
+    my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+    my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
+
     # check user permission
     my $Permission = $Self->{FAQObject}->CheckCategoryCustomerPermission(
         CustomerUser => $Self->{UserLogin},
@@ -93,6 +99,7 @@ sub Run {
     if (
         !$Permission
         || !$FAQData{Approved}
+        || !$ValidIDLookup{ $FAQData{ValidID} }
         || !$Self->{InterfaceStates}->{ $FAQData{StateTypeID} }
         )
     {

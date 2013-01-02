@@ -1,8 +1,8 @@
 # --
 # AgentFAQOverviewSmall.dtl - html for change overview table
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQOverviewSmall.dtl,v 1.22 2012-11-20 13:07:25 mh Exp $
+# $Id: AgentFAQOverviewSmall.dtl,v 1.23 2013-01-02 11:12:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -50,6 +50,11 @@
                     <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=State;OrderBy=$LQData{"OrderBy"}">$Text{"State"}</a>
                 </th>
 <!-- dtl:block:RecordStateHeader -->
+<!-- dtl:block:RecordValidHeader -->
+                <th class="State $QData{"CSS"}">
+                    <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Valid;OrderBy=$LQData{"OrderBy"}">$Text{"Validity"}</a>
+                </th>
+<!-- dtl:block:RecordValidHeader -->
 <!-- dtl:block:RecordChangedHeader -->
                 <th class="Changed $QData{"CSS"}">
                     <a href="$Env{"Baselink"}Action=$Env{"Action"};$Data{"LinkSort"};SortBy=Changed;OrderBy=$LQData{"OrderBy"}">$Text{"Changed"}</a>
@@ -91,6 +96,11 @@
                     <div>$Text{"$Data{"State"}"}</div>
                 </td>
 <!-- dtl:block:RecordState -->
+<!-- dtl:block:RecordValid -->
+                <td>
+                    <div>$Text{"$Data{"Valid"}"}</div>
+                </td>
+<!-- dtl:block:RecordValid -->
 <!-- dtl:block:RecordChanged -->
                 <td>
                     <div>$TimeShort{"$QData{"Changed"}"}</div>

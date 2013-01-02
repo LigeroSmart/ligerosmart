@@ -1,8 +1,8 @@
 # --
 # Kernel/System/FAQ.pm - all faq functions
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.163 2012-12-06 21:34:28 cr Exp $
+# $Id: FAQ.pm,v 1.164 2013-01-02 11:08:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,10 +21,11 @@ use Kernel::System::Group;
 use Kernel::System::CustomerGroup;
 use Kernel::System::LinkObject;
 use Kernel::System::Ticket;
+use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.163 $) [1];
+$VERSION = qw($Revision: 1.164 $) [1];
 
 =head1 NAME
 
@@ -105,6 +106,7 @@ sub new {
     $Self->{UserObject}          = Kernel::System::User->new( %{$Self} );
     $Self->{TicketObject}        = Kernel::System::Ticket->new( %{$Self} );
     $Self->{LinkObject}          = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{ValidObject}         = Kernel::System::Valid->new( %{$Self} );
     $Self->{UploadCacheObject}   = Kernel::System::Web::UploadCache->new( %{$Self} );
 
     # get like escape string needed for some databases (e.g. oracle)
@@ -145,6 +147,8 @@ Returns:
         Language          => 'en',
         Title             => 'Article Title',
         Approved          => 1,                              # or 0
+        ValidID           => 1,
+        Valid             => 'valid',
         Keywords          => 'KeyWord1 KeyWord2',
         Votes             => 0,                              # number of votes
         VoteResult        => '0.00',                         # a number between 0.00 and 100.00
@@ -187,6 +191,8 @@ Returns:
         Field5            => undef,                          # Not active by default
         Field6            => 'Comments',
         Approved          => 1,                              # or 0
+        ValidID           => 1,
+        Valid             => 'valid',
         Keywords          => 'KeyWord1 KeyWord2',
         Votes             => 0,                              # number of votes
         VoteResult        => '0.00',                         # a number between 0.00 and 100.00
@@ -246,7 +252,7 @@ sub FAQGet {
             SQL => '
                 SELECT i.f_name, i.f_language_id, i.f_subject, i.created, i.created_by, i.changed,
                     i.changed_by, i.category_id, i.state_id, c.name, s.name, l.name, i.f_keywords,
-                    i.approved,i.f_number, st.id, st.name
+                    i.approved, i.valid_id, i.f_number, st.id, st.name
                 FROM faq_item i, faq_category c, faq_state s, faq_state_type st, faq_language l
                 WHERE i.state_id = s.id
                     AND s.type_id = st.id
@@ -281,9 +287,10 @@ sub FAQGet {
                 Language      => $Row[11],
                 Keywords      => $Row[12],
                 Approved      => $Row[13],
-                Number        => $Row[14],
-                StateTypeID   => $Row[15],
-                StateTypeName => $Row[16],
+                ValidID       => $Row[14],
+                Number        => $Row[15],
+                StateTypeID   => $Row[16],
+                StateTypeName => $Row[17],
             );
         }
 
@@ -336,6 +343,10 @@ sub FAQGet {
         # get the category long name
         $Data{CategoryName} = $CategoryTree->{ $Data{CategoryID} };
 
+        # get valid list
+        my %ValidList = $Self->{ValidObject}->ValidList();
+        $Data{Valid} = $ValidList{ $Data{ValidID} };
+
         # cache result
         $Self->{CacheObject}->Set(
             Type  => 'FAQ',
@@ -383,7 +394,7 @@ sub ItemFieldGet() {
     }
 
     # check for valid field name
-    if ( $Param{Field} !~ m{\A Field [1-6] \z}msxi ) {
+    if ( $Param{Field} !~ m{ \A Field [1-6] \z }msxi ) {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "Field '$Param{Field}' is invalid!",
@@ -534,6 +545,7 @@ add an article
         Field5     => 'Field5...',      # (optional)
         Field6     => 'Comment...',     # (optional)
         Approved   => 1,                # (optional)
+        ValidID    => 1,
         UserID     => 1,
     );
 
@@ -555,6 +567,15 @@ sub FAQAdd {
             );
             return;
         }
+    }
+
+    # set default value for ValidID
+    if ( !defined $Param{ValidID} ) {
+
+        # get the valid ids
+        my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+
+        $Param{ValidID} = $ValidIDs[0];
     }
 
     # check name
@@ -595,20 +616,21 @@ sub FAQAdd {
     return if !$Self->{DBObject}->Do(
         SQL => 'INSERT INTO faq_item '
             . '(f_number, f_name, f_language_id, f_subject, '
-            . 'category_id, state_id, f_keywords, approved, '
+            . 'category_id, state_id, f_keywords, approved, valid_id, '
             . 'f_field1, f_field2, f_field3, f_field4, f_field5, f_field6, '
             . 'created, created_by, changed, changed_by)'
             . 'VALUES ('
             . '?, ?, ?, ?, '
-            . '?, ?, ?, ?, '
+            . '?, ?, ?, ?, ?, '
             . '?, ?, ?, ?, ?, ?, '
             . 'current_timestamp, ?, current_timestamp, ?)',
         Bind => [
             \$Param{Number},     \$Param{Name},    \$Param{LanguageID}, \$Param{Title},
             \$Param{CategoryID}, \$Param{StateID}, \$Param{Keywords},   \$Param{Approved},
-            \$Param{Field1},     \$Param{Field2},  \$Param{Field3},
-            \$Param{Field4},     \$Param{Field5},  \$Param{Field6},
-            \$Param{UserID},     \$Param{UserID},
+            \$Param{ValidID},
+            \$Param{Field1}, \$Param{Field2}, \$Param{Field3},
+            \$Param{Field4}, \$Param{Field5}, \$Param{Field6},
+            \$Param{UserID}, \$Param{UserID},
         ],
     );
 
@@ -620,6 +642,7 @@ sub FAQAdd {
         . 'AND category_id = ? '
         . 'AND state_id = ? '
         . 'AND approved = ? '
+        . 'AND valid_id = ? '
         . 'AND created_by = ? '
         . 'AND changed_by = ? ';
 
@@ -655,6 +678,7 @@ sub FAQAdd {
             \$Param{CategoryID},
             \$Param{StateID},
             \$Param{Approved},
+            \$Param{ValidID},
             \$Param{UserID},
             \$Param{UserID},
             \$Param{Title},
@@ -718,6 +742,7 @@ update an article
         StateID     => 1,
         LanguageID  => 1,
         Approved    => 1,
+        ValidID     => 1,
         Title       => 'Some Text',
         Field1      => 'Problem...',
         Field2      => 'Solution...',
@@ -745,25 +770,28 @@ sub FAQUpdate {
         }
     }
 
-    # check name
+    # get faq data
+    my %FAQData = $Self->FAQGet(
+        ItemID     => $Param{ItemID},
+        ItemFields => 0,
+        UserID     => $Param{UserID},
+    );
+
+    # if no name was given use old name from FAQ
     if ( !$Param{Name} ) {
-
-        # get faq data
-        my %FAQData = $Self->FAQGet(
-            ItemID     => $Param{ItemID},
-            ItemFields => 0,
-            UserID     => $Param{UserID},
-        );
-
-        # get the faq name
         $Param{Name} = $FAQData{Name};
+    }
+
+    # set default value for ValidID
+    if ( !defined $Param{ValidID} ) {
+        $Param{ValidID} = $FAQData{ValidID};
     }
 
     return if !$Self->{DBObject}->Do(
         SQL => 'UPDATE faq_item SET '
             . 'f_name = ?, f_language_id = ?, '
             . 'f_subject = ?, category_id = ?, '
-            . 'state_id = ?, f_keywords = ?, '
+            . 'state_id = ?, f_keywords = ?, valid_id = ?, '
             . 'f_field1 = ?, f_field2 = ?, '
             . 'f_field3 = ?, f_field4 = ?, '
             . 'f_field5 = ?, f_field6 = ?, '
@@ -773,7 +801,7 @@ sub FAQUpdate {
         Bind => [
             \$Param{Name},    \$Param{LanguageID},
             \$Param{Title},   \$Param{CategoryID},
-            \$Param{StateID}, \$Param{Keywords},
+            \$Param{StateID}, \$Param{Keywords}, \$Param{ValidID},
             \$Param{Field1},  \$Param{Field2},
             \$Param{Field3},  \$Param{Field4},
             \$Param{Field5},  \$Param{Field6},
@@ -1168,7 +1196,7 @@ sub AttachmentIndex {
 
 =item FAQCount()
 
-count the number of articles for a defined category
+Count the number of articles for a defined category. Only valid FAQ articles will be counted.
 
     my $ArticleCount = $FAQObject->FAQCount(
         CategoryIDs  => [1,2,3,4],
@@ -1199,9 +1227,13 @@ sub FAQCount {
     # build category id string
     my $CategoryIDString = join ', ', @{ $Param{CategoryIDs} };
 
+    # build valid id string
+    my $ValidIDsString = join ', ', $Self->{ValidObject}->ValidIDsGet();
+
     my $SQL = 'SELECT COUNT(*) '
         . 'FROM faq_item i, faq_state s '
         . "WHERE i.category_id IN ($CategoryIDString) "
+        . "AND i.valid_id IN ($ValidIDsString) "
         . 'AND i.state_id = s.id';
 
     # count only approved articles
@@ -1800,9 +1832,11 @@ sub CategoryList {
     }
 
     # build sql
-    my $SQL = 'SELECT id, parent_id, name FROM faq_category ';
+    my $SQL = 'SELECT id, parent_id, name FROM faq_category';
     if ($Valid) {
-        $SQL .= 'WHERE valid_id = 1';
+
+        # get the valid ids
+        $SQL .= ' WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
     }
 
     # prepare sql statement
@@ -1855,7 +1889,11 @@ sub CategorySearch {
     }
 
     # sql
-    my $SQL = "SELECT id FROM faq_category WHERE valid_id = 1 ";
+    my $SQL = 'SELECT id'
+        . ' FROM faq_category'
+        . ' WHERE valid_id IN ('
+        . join ', ', $Self->{ValidObject}->ValidIDsGet()
+        . ')';
     my $Ext = '';
 
     # search for name
@@ -2387,7 +2425,11 @@ sub CategoryCount {
     }
 
     # build SQL
-    my $SQL = 'SELECT COUNT(*) FROM faq_category WHERE valid_id = 1';
+    my $SQL = 'SELECT COUNT(*)'
+        . ' FROM faq_category'
+        . ' WHERE valid_id IN ('
+        . join ', ', $Self->{ValidObject}->ValidIDsGet()
+        . ')';
 
     # parent ids are given
     if ( defined $Param{ParentIDs} ) {
@@ -2467,7 +2509,7 @@ sub CategoryTreeList {
 
     # add where clause for valid categories
     if ($Valid) {
-        $SQL .= ' WHERE valid_id = 1';
+        $SQL .= ' WHERE valid_id IN (' . join ', ', $Self->{ValidObject}->ValidIDsGet() . ')';
     }
 
     # prepare sql
@@ -3412,10 +3454,11 @@ search in FAQ articles
         },
         LanguageIDs => [ 4, 5, 6 ],                                   # (optional)
         CategoryIDs => [ 7, 8, 9 ],                                   # (optional)
+        ValidIDs    => [ 1, 2, 3 ],                                   # (optional) (default 1)
 
         OrderBy => [ 'FAQID', 'Title' ],                              # (optional)
         # default: [ 'FAQID' ],
-        # (FAQID, Number, Title, Language, Category, Created,
+        # (FAQID, Number, Title, Language, Category, Valid, Created,
         # Changed, State, Votes, Result)
 
         # Additional information for OrderBy:
@@ -3491,6 +3534,7 @@ sub FAQSearch {
         Title    => 'i.f_subject',
         Language => 'i.f_language_id',
         Category => 'i.category_id',
+        Valid    => 'i.valid_id',
         Created  => 'i.created',
         Changed  => 'i.changed',
 
@@ -3697,6 +3741,32 @@ sub FAQSearch {
             $Ext .= ' AND';
         }
         $Ext .= ' i.category_id IN (' . $InString . ')';
+    }
+
+    # set default value for ValidIDs (only search for valid FAQs)
+    if ( !defined $Param{ValidIDs} ) {
+
+        # get the valid ids
+        my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+
+        $Param{ValidIDs} = \@ValidIDs;
+    }
+
+    # search for ValidIDs
+    if ( $Param{ValidIDs} && ref $Param{ValidIDs} eq 'ARRAY' && @{ $Param{ValidIDs} } ) {
+
+        # integer quote the ValidIDs
+        for my $ValidID ( @{ $Param{ValidIDs} } ) {
+            $ValidID = $Self->{DBObject}->Quote( $ValidID, 'Integer' );
+        }
+
+        # create string
+        my $InString = join ', ', @{ $Param{ValidIDs} };
+
+        if ($Ext) {
+            $Ext .= ' AND';
+        }
+        $Ext .= ' i.valid_id IN (' . $InString . ')';
     }
 
     # search for states
@@ -4505,12 +4575,16 @@ sub CustomerCategorySearch {
     }
     else {
 
+        # build valid id string
+        my $ValidIDsString = join ', ', $Self->{ValidObject}->ValidIDsGet();
+
         my $SQL = 'SELECT faq_item.id, faq_item.category_id '
             . 'FROM faq_item, faq_state_type, faq_state '
             . 'WHERE faq_state.id = faq_item.state_id '
             . 'AND faq_state.type_id = faq_state_type.id '
             . "AND faq_state_type.name != 'internal' "
-            . 'AND approved = 1';
+            . "AND faq_item.valid_id IN ($ValidIDsString) "
+            . 'AND faq_item.approved = 1';
 
         return if !$Self->{DBObject}->Prepare(
             SQL => $SQL,
@@ -4596,6 +4670,9 @@ sub PublicCategorySearch {
     my @CategoryIDs = sort { $Category{$a} cmp $Category{$b} } ( keys %Category );
     my @AllowedCategoryIDs;
 
+    # build valid id string
+    my $ValidIDsString = join ', ', $Self->{ValidObject}->ValidIDsGet();
+
     for my $CategoryID (@CategoryIDs) {
 
         # get all subcategory ids for this category
@@ -4615,10 +4692,11 @@ sub PublicCategorySearch {
         my $SQL = 'SELECT faq_item.id '
             . 'FROM faq_item, faq_state_type, faq_state '
             . 'WHERE faq_item.category_id = ? '
+            . "AND faq_item.valid_id IN ($ValidIDsString) "
             . 'AND faq_state.id = faq_item.state_id '
             . 'AND faq_state.type_id = faq_state_type.id '
             . "AND faq_state_type.name = 'public' "
-            . 'AND approved = 1';
+            . 'AND faq_item.approved = 1';
 
         ID:
         for my $ID (@IDs) {
@@ -4723,7 +4801,7 @@ sub FAQLogAdd {
 
 =item FAQTop10Get()
 
-returns an array with the top 10 faq article ids
+Returns an array with the top 10 faq article ids.
 
     my $Top10IDsRef = $FAQObject->FAQTop10Get(
         Interface   => 'public',
@@ -4803,12 +4881,16 @@ sub FAQTop10Get {
         }
     }
 
+    # build valid id string
+    my $ValidIDsString = join ', ', $Self->{ValidObject}->ValidIDsGet();
+
     # prepare SQL
     my @Bind;
     my $SQL = 'SELECT item_id, count(item_id) as itemcount, faq_state_type.name, approved '
         . 'FROM faq_log, faq_item, faq_state, faq_state_type '
         . 'WHERE faq_log.item_id = faq_item.id '
         . 'AND faq_item.state_id = faq_state.id '
+        . "AND faq_item.valid_id IN ($ValidIDsString) "
         . 'AND faq_state.type_id = faq_state_type.id ';
 
     # filter just categories with at least ro permission
@@ -4828,7 +4910,7 @@ sub FAQTop10Get {
     if ( ( $Param{Interface} eq 'public' ) || ( $Param{Interface} eq 'external' ) ) {
 
         # only show approved articles
-        $SQL .= 'AND approved = 1 ';
+        $SQL .= 'AND faq_item.approved = 1 ';
 
         # only show the public articles
         $SQL .= "AND ( ( faq_state_type.name = 'public' ) ";
@@ -5006,7 +5088,7 @@ sub _UserCategories {
                 next GROUPID if !defined $Param{UserGroups}->{$GroupID};
 
                 # add category
-                $SubCategories{$CategoryID} = $Param{Categories}->{$ParentID}{$CategoryID};
+                $SubCategories{$CategoryID} = $Param{Categories}->{$ParentID}->{$CategoryID};
 
                 # add empty hash if category has no subcategories
                 if ( !$UserCategories{$CategoryID} ) {
@@ -5278,6 +5360,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.163 $ $Date: 2012-12-06 21:34:28 $
+$Revision: 1.164 $ $Date: 2013-01-02 11:08:30 $
 
 =cut

@@ -1,8 +1,8 @@
 # --
 # AgentFAQSearchSmall.dtl - provides HTML form for CustomerFAQSearch.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearchSmall.dtl,v 1.4 2012-11-20 13:07:25 mh Exp $
+# $Id: AgentFAQSearchSmall.dtl,v 1.5 2013-01-02 11:12:48 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -95,6 +95,13 @@
                 <label for="CategoryIDs">$Text{"Category"}:</label>
                 <div class="Field">
                     $Data{"CategoriesStrg"}
+                </div>
+                <div class='Clear'></div>
+
+                <div class='SpacingTopSmall Clear'></div>
+                <label for="ValidIDs">$Text{"Validity"}:</label>
+                <div class="Field">
+                    $Data{"ValidSelectionString"}
                 </div>
                 <div class='Clear'></div>
             </fieldset>

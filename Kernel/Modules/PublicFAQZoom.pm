@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/PublicFAQZoom.pm - to get a closer view
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQZoom.pm,v 1.16 2012-11-20 13:03:38 mh Exp $
+# $Id: PublicFAQZoom.pm,v 1.17 2013-01-02 11:08:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,9 +16,10 @@ use warnings;
 
 use MIME::Base64 qw();
 use Kernel::System::FAQ;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -41,7 +42,8 @@ sub new {
     $Self->{UserID} = 1;
 
     # create needed objects
-    $Self->{FAQObject} = Kernel::System::FAQ->new(%Param);
+    $Self->{FAQObject}   = Kernel::System::FAQ->new(%Param);
+    $Self->{ValidObject} = Kernel::System::Valid->new(%Param);
 
     # get config of frontend module
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
@@ -91,9 +93,14 @@ sub Run {
         return $Self->{LayoutObject}->CustomerFatalError();
     }
 
+    # get the valid ids
+    my @ValidIDs = $Self->{ValidObject}->ValidIDsGet();
+    my %ValidIDLookup = map { $_ => 1 } @ValidIDs;
+
     # permission check
     if (
         !$FAQData{Approved}
+        || !$ValidIDLookup{ $FAQData{ValidID} }
         || !$Self->{InterfaceStates}->{ $FAQData{StateTypeID} }
         )
     {

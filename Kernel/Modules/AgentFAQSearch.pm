@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.38 2012-12-06 21:34:28 cr Exp $
+# $Id: AgentFAQSearch.pm,v 1.39 2013-01-02 11:08:02 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,9 +17,10 @@ use warnings;
 use Kernel::System::FAQ;
 use Kernel::System::SearchProfile;
 use Kernel::System::CSV;
+use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -42,6 +43,7 @@ sub new {
     $Self->{FAQObject}           = Kernel::System::FAQ->new(%Param);
     $Self->{SearchProfileObject} = Kernel::System::SearchProfile->new(%Param);
     $Self->{CSVObject}           = Kernel::System::CSV->new(%Param);
+    $Self->{ValidObject}         = Kernel::System::Valid->new(%Param);
 
     # get config for frontend
     $Self->{Config} = $Self->{ConfigObject}->Get("FAQ::Frontend::$Self->{Action}");
@@ -147,7 +149,7 @@ sub Run {
         }
 
         # get array search params
-        for my $SearchParam (qw( CategoryIDs LanguageIDs )) {
+        for my $SearchParam (qw(CategoryIDs LanguageIDs ValidIDs)) {
             my @Array = $Self->{ParamObject}->GetArray( Param => $SearchParam );
             if (@Array) {
                 $GetParam{$SearchParam} = \@Array;
@@ -746,9 +748,13 @@ sub _MaskForm {
             Key   => 'CategoryIDs',
             Value => 'Category',
         },
+        {
+            Key   => 'ValidIDs',
+            Value => 'Validity',
+        },
     );
 
-    # dropdown menu for 'attibutes'
+    # dropdown menu for 'attributes'
     $Param{AttributesStrg} = $Self->{LayoutObject}->BuildSelection(
         Data     => \@Attributes,
         Name     => 'Attribute',
@@ -780,11 +786,24 @@ sub _MaskForm {
         UserID => $Self->{UserID},
     );
 
-    # build the catogory selection
+    # build the category selection
     $Param{CategoriesSelectionString} = $Self->{LayoutObject}->BuildSelection(
         Data        => $UserCategoriesLongNames,
         Name        => 'CategoryIDs',
         SelectedIDs => $GetParam{CategoryIDs} || [],
+        Size        => 5,
+        Translation => 0,
+        Multiple    => 1,
+    );
+
+    # get valid list
+    my %ValidList = $Self->{ValidObject}->ValidList();
+
+    # build the valid selection
+    $Param{ValidSelectionString} = $Self->{LayoutObject}->BuildSelection(
+        Data        => \%ValidList,
+        Name        => 'ValidIDs',
+        SelectedIDs => $GetParam{ValidIDs} || [],
         Size        => 5,
         Translation => 0,
         Multiple    => 1,
