@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
-# FAQImport.pl - FAQ import script
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# otrs.FAQImport.pl - FAQ import script
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQImport.pl,v 1.9 2012-11-20 13:10:04 mh Exp $
+# $Id: otrs.FAQImport.pl,v 1.1 2013-01-02 21:58:45 cr Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -41,7 +41,7 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.9 $) [1];
+$VERSION = qw($Revision: 1.1 $) [1];
 
 # get options
 my %Opts;
@@ -49,14 +49,14 @@ getopt( 'hisq', \%Opts );
 
 if ( exists $Opts{h} ) {
     print STDOUT "\n";
-    print STDOUT "FAQImport.pl <Revision $VERSION> - a FAQ import tool\n";
-    print STDOUT "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+    print STDOUT "otrs.FAQImport.pl <Revision $VERSION> - a FAQ import tool\n";
+    print STDOUT "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
     print STDOUT "   usage: \n";
-    print STDOUT "      FAQImport.pl -i <ImportFile> [-s <separator>] [-q <quote>]\n";
+    print STDOUT "      otrs.FAQImport.pl -i <ImportFile> [-s <separator>] [-q <quote>]\n";
     print STDOUT "\n";
     print STDOUT "   examples:\n";
-    print STDOUT "       FAQImport.pl -i faq.csv\n";
-    print STDOUT "       FAQImport.pl -i faq.csv -s '|' -q '\"' \n";
+    print STDOUT "       otrs.FAQImport.pl -i faq.csv\n";
+    print STDOUT "       otrs.FAQImport.pl -i faq.csv -s '|' -q '\"' \n";
     print STDOUT "\n";
     print STDOUT "   Format of the CSV file:\n";
     print STDOUT '       "title";"category";"language";"statetype";';
@@ -235,6 +235,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.9 $ $Date: 2012-11-20 13:10:04 $
+$Revision: 1.1 $ $Date: 2013-01-02 21:58:45 $
 
 =cut
