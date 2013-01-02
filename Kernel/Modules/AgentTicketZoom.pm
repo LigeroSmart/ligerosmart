@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.38 2012-11-22 15:24:43 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.194 2012/11/20 14:52:48 mh Exp $
+# $Id: AgentTicketZoom.pm,v 1.39 2013-01-02 14:18:40 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.195 2013/01/02 13:02:29 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1764,7 +1764,7 @@ sub _ArticleTree {
         my $Type = $Self->{ConfigObject}->Get('AttachmentDownloadType') || 'attachment';
 
         # if attachment will be forced to download, don't open a new download window!
-        my $Target = '';
+        my $Target = 'target="AttachmentWindow" ';
         if ( $Type =~ /inline/i ) {
             $Target = 'target="attachment" ';
         }
