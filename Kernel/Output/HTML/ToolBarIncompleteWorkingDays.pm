@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ToolBarIncompleteWorkingDays.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ToolBarIncompleteWorkingDays.pm,v 1.4 2012-12-06 08:44:49 mh Exp $
+# $Id: ToolBarIncompleteWorkingDays.pm,v 1.5 2013-01-03 22:53:33 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::TimeAccounting;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -102,7 +102,7 @@ sub Run {
             next MONTH if ref $Year{$MonthID} ne 'HASH';
 
             # extract month
-            my %Month = $Year{$MonthID};
+            my %Month = %{ $Year{$MonthID} };
 
             $Count += scalar keys %Month;
         }
