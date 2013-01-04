@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQSearch.pm - module for FAQ search
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQSearch.pm,v 1.40 2013-01-04 12:26:22 ub Exp $
+# $Id: AgentFAQSearch.pm,v 1.41 2013-01-04 12:34:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::CSV;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -223,6 +223,7 @@ sub Run {
         my @AllValidIDs = keys %ValidList;
 
         # perform FAQ search
+        # default search on all valid ids, this can be overwritten by %GetParam
         my @ViewableFAQIDs = $Self->{FAQObject}->FAQSearch(
             OrderBy             => [ $Self->{SortBy} ],
             OrderByDirection    => [ $Self->{OrderBy} ],
@@ -232,8 +233,7 @@ sub Run {
             Interface           => $Self->{Interface},
             ContentSearchPrefix => '*',
             ContentSearchSuffix => '*',
-            ValidIDs            => \@AllValidIDs
-            ,    # default search on all valid ids, this can be overwritten by %GetParam
+            ValidIDs            => \@AllValidIDs,
             %GetParam,
         );
 
