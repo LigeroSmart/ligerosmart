@@ -1,9 +1,9 @@
 # --
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.34 2012-11-22 13:50:27 ub Exp $
-# $OldId: AgentTicketActionCommon.pm,v 1.102 2012/11/20 14:47:30 mh Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.35 2013-01-11 09:46:30 ub Exp $
+# $OldId: AgentTicketActionCommon.pm,v 1.103 2013/01/10 11:48:52 mb Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -1375,14 +1375,16 @@ sub _Mask {
             Type     => 'move_into',
         );
 
-        $Param{QueuesStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data         => \%MoveQueues,
-            Name         => 'NewQueueID',
-            SelectedID   => $Param{NewQueueID},
-            PossibleNone => 0,
-            TreeView     => 1,
-            Sort         => 'TreeView',
-            Translation  => 0,
+        # set move queues
+        $Param{QueuesStrg} = $Self->{LayoutObject}->AgentQueueListOption(
+            Data => { %MoveQueues, '' => '-' },
+            Multiple       => 0,
+            Size           => 0,
+            Class          => 'NewQueueID',
+            Name           => 'NewQueueID',
+            SelectedID     => $Param{NewQueueID},
+            CurrentQueueID => $Param{QueueID},
+            OnChangeSubmit => 0,
         );
 
         $Self->{LayoutObject}->Block(
