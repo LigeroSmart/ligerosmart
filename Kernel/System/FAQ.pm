@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.164 2013-01-02 11:08:30 ub Exp $
+# $Id: FAQ.pm,v 1.165 2013-01-12 03:35:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.164 $) [1];
+$VERSION = qw($Revision: 1.165 $) [1];
 
 =head1 NAME
 
@@ -2977,9 +2977,9 @@ get a state as hash
 Returns:
 
     %State = (
-        StateID => 1,
-        Name    => 'internal (agent)',
-        Comment => undef,
+        StateID  => 1,
+        Name     => 'internal (agent)',
+        TypeID   => 1,
     );
 
 =cut
@@ -3000,7 +3000,7 @@ sub StateGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id, name FROM faq_state WHERE id = ?',
+        SQL   => 'SELECT id, name, type_id FROM faq_state WHERE id = ?',
         Bind  => [ \$Param{StateID} ],
         Limit => 1,
     );
@@ -3010,7 +3010,7 @@ sub StateGet {
         %Data = (
             StateID => $Row[0],
             Name    => $Row[1],
-            Comment => $Row[2],
+            TypeID  => $Row[2],
         );
     }
 
@@ -5360,6 +5360,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.164 $ $Date: 2013-01-02 11:08:30 $
+$Revision: 1.165 $ $Date: 2013-01-12 03:35:03 $
 
 =cut

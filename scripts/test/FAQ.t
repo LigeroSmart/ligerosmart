@@ -1,8 +1,8 @@
 # --
 # FAQ.t - FAQ tests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.20 2012-11-20 13:10:04 mh Exp $
+# $Id: FAQ.t,v 1.21 2013-01-12 03:35:03 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -793,4 +793,41 @@ $Self->Is(
     "Cache for FAQ With ItemFields After FAQDelete(): Complete cache",
 );
 
+# -------------------------
+# FAQ State tests
+# -------------------------
+my %States = $FAQObject->StateList(
+    UserID => 1,
+);
+
+$Self->IsNot(
+    scalar keys %States,
+    0,
+    "StateList() number of elements should not be 0"
+);
+
+for my $StateID ( sort keys %States ) {
+    my %State = $FAQObject->StateGet(
+        StateID => $StateID,
+        UserID  => 1,
+    );
+
+    $Self->IsNot(
+        $State{StateID},
+        undef,
+        "StateGet() StateID for StateID: '$StateID' should not be undef"
+    );
+    $Self->IsNot(
+        $State{Name},
+        undef,
+        "StateGet() Name for StateID:    '$StateID' should not be undef"
+    );
+    $Self->IsNot(
+        $State{TypeID},
+        undef,
+        "StateGet() TypeID for StateID:  '$StateID' should not be undef"
+    );
+}
+
+# -------------------------
 1;
