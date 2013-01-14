@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: TimeAccounting.sopm,v 1.54 2013-01-03 22:52:30 cr Exp $</CVS>
+    <CVS>$Id: TimeAccounting.sopm,v 1.55 2013-01-14 18:32:38 cr Exp $</CVS>
     <Name>TimeAccounting</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -168,7 +168,7 @@
 
             if ($CodeObject) {
 
-                # start methode
+                # start method
                 if ( !$CodeObject->$FunctionName(%{$Self}) ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
@@ -203,7 +203,7 @@
 
             if ($CodeObject) {
 
-                # start methode
+                # start method
                 if ( !$CodeObject->$FunctionName(%{$Self}) ) {
                     $Self->{LogObject}->Log(
                         Priority => 'error',
