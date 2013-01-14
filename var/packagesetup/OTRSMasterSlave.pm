@@ -1,8 +1,8 @@
 # --
 # OTRSMasterSlave.pm - code to excecute during package installation
-# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
 # --
-# $Id: OTRSMasterSlave.pm,v 1.27 2012-12-28 17:18:25 cr Exp $
+# $Id: OTRSMasterSlave.pm,v 1.28 2013-01-14 21:19:20 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,19 +14,19 @@ package var::packagesetup::OTRSMasterSlave;
 use strict;
 use warnings;
 
-use Kernel::System::SysConfig;
-use Kernel::System::State;
-use Kernel::System::Valid;
 use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
-use Kernel::System::VariableCheck qw(:all);
-use Kernel::System::Package;
-use Kernel::System::SysConfig;
+use Kernel::System::DynamicFieldValue;
 use Kernel::System::LinkObject;
+use Kernel::System::Package;
+use Kernel::System::State;
+use Kernel::System::SysConfig;
 use Kernel::System::Ticket;
+use Kernel::System::Valid;
+use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.27 $) [1];
+$VERSION = qw($Revision: 1.28 $) [1];
 
 =head1 NAME
 
@@ -132,6 +132,7 @@ sub new {
     $Self->{ValidObject}               = Kernel::System::Valid->new( %{$Self} );
     $Self->{DynamicFieldObject}        = Kernel::System::DynamicField->new( %{$Self} );
     $Self->{DynamicFieldBackendObject} = Kernel::System::DynamicField::Backend->new( %{$Self} );
+    $Self->{DynamicFieldValueObject}   = Kernel::System::DynamicFieldValue->new( %{$Self} );
     $Self->{PackageObject}             = Kernel::System::Package->new( %{$Self} );
     $Self->{SysConfigObject}           = Kernel::System::SysConfig->new( %{$Self} );
     $Self->{LinkObject}                = Kernel::System::LinkObject->new( %{$Self} );
@@ -635,16 +636,32 @@ sub _RemoveDynamicFields {
         # get the field ID
         my $DynamicFieldID = $Self->{DynamicFieldLookup}->{$MasterSlaveDynamicField}->{ID};
 
-        my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
-            ID      => $DynamicFieldID,
+        # delete all field values
+        my $ValuesDeleteSuccess = $Self->{DynamicFieldValueObject}->AllValuesDelete(
+            FieldID => $DynamicFieldID,
             UserID  => 1,
-            Reorder => 1,
         );
 
-        if ( !$Success ) {
+        if ($ValuesDeleteSuccess) {
+
+            # delete field
+            my $Success = $Self->{DynamicFieldObject}->DynamicFieldDelete(
+                ID      => $DynamicFieldID,
+                UserID  => 1,
+                Reorder => 1,
+            );
+
+            if ( !$Success ) {
+                $Self->{LogObject}->Log(
+                    Priority => 'error',
+                    Message  => "Could not delete dynamic field '$MasterSlaveDynamicField'!",
+                );
+            }
+        }
+        else {
             $Self->{LogObject}->Log(
                 Priority => 'error',
-                Message  => "Could not delete dynamic field '$MasterSlaveDynamicField'!",
+                Message  => "Could not delete values for dynamic field '$MasterSlaveDynamicField'!",
             );
         }
     }
@@ -683,6 +700,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.27 $ $Date: 2012-12-28 17:18:25 $
+$Revision: 1.28 $ $Date: 2013-01-14 21:19:20 $
 
 =cut
