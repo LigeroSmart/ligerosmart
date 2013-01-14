@@ -2,7 +2,7 @@
 # FAQ.t - FAQ tests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.t,v 1.21 2013-01-12 03:35:03 cr Exp $
+# $Id: FAQ.t,v 1.22 2013-01-14 13:14:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -762,37 +762,6 @@ $Self->Is(
     "Cache for FAQ With ItemFields After FAQGet(): Complete cache ref",
 );
 
-# clean the system
-$FAQDelete = $FAQObject->FAQDelete(
-    ItemID => $FAQID,
-    UserID => 1,
-);
-
-$Self->True(
-    $FAQDelete,
-    "FAQDelete() for ItemFieldGet: with True",
-);
-
-# check that cache is clean
-$Cache = $FAQObject->{CacheObject}->Get(
-    Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
-);
-$Self->Is(
-    $Cache,
-    undef,
-    "Cache for FAQ No ItemFields After FAQDelete(): Complete cache",
-);
-$Cache = $FAQObject->{CacheObject}->Get(
-    Type => 'FAQ',
-    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
-);
-$Self->Is(
-    $Cache,
-    undef,
-    "Cache for FAQ With ItemFields After FAQDelete(): Complete cache",
-);
-
 # -------------------------
 # FAQ State tests
 # -------------------------
@@ -830,4 +799,36 @@ for my $StateID ( sort keys %States ) {
 }
 
 # -------------------------
+
+# clean the system
+$FAQDelete = $FAQObject->FAQDelete(
+    ItemID => $FAQID,
+    UserID => 1,
+);
+
+$Self->True(
+    $FAQDelete,
+    "FAQDelete() for ItemFieldGet: with True",
+);
+
+# check that cache is clean
+$Cache = $FAQObject->{CacheObject}->Get(
+    Type => 'FAQ',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::0',
+);
+$Self->Is(
+    $Cache,
+    undef,
+    "Cache for FAQ No ItemFields After FAQDelete(): Complete cache",
+);
+$Cache = $FAQObject->{CacheObject}->Get(
+    Type => 'FAQ',
+    Key  => 'FAQGet::ItemID::' . $FAQID . '::ItemFields::1',
+);
+$Self->Is(
+    $Cache,
+    undef,
+    "Cache for FAQ With ItemFields After FAQDelete(): Complete cache",
+);
+
 1;
