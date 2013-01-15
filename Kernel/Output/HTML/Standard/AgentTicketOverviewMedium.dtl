@@ -1,9 +1,9 @@
 # --
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.19 2012-11-21 20:46:18 ub Exp $
-# $OldId: AgentTicketOverviewMedium.dtl,v 1.73 2012/11/20 15:21:44 mh Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.20 2013-01-15 18:03:58 ub Exp $
+# $OldId: AgentTicketOverviewMedium.dtl,v 1.74 2013/01/11 12:35:19 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,7 +14,7 @@
 <!-- dtl:block:DocumentActionRowBulk -->
     <li class="Bulk">
         <span>
-            <input type="checkbox" class="AutocompleteOff" title="$Text{"Select all"}" id="SelectAllTickets" />
+            <input type="checkbox" title="$Text{"Select all"}" id="SelectAllTickets" autocomplete="off" />
             <label class="InvisibleText" for="SelectAllTickets">$Text{"Select all"}</label>
         </span>
     </li>
@@ -82,7 +82,7 @@
 <!-- dtl:block:InlineActionRow -->
 <!-- dtl:block:Bulk -->
             <div class="Checkbox">
-                <input class="Checkbox AutocompleteOff" type="checkbox" name="TicketID" value="$QData{"TicketID"}" />
+                <input class="Checkbox" type="checkbox" name="TicketID" value="$QData{"TicketID"}" autocomplete="off" />
             </div>
 <!-- dtl:block:Bulk -->
 <!-- dtl:block:Meta -->
