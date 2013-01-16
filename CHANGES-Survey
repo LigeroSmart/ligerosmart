@@ -2,12 +2,15 @@
 # CHANGES - change log of the Survey module for OTRS
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CHANGES-Survey,v 1.20 2013-01-03 18:58:19 jh Exp $
+# $Id: CHANGES-Survey,v 1.21 2013-01-16 12:41:39 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
+
+2.1.93 - 2012-01-18
+- Release candidate 1.
 
 2.1.92 - 2012-01-04
 - Code cleanup.
