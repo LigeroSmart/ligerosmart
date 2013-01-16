@@ -2,8 +2,8 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.40 2013-01-15 18:03:58 ub Exp $
-# $OldId: AgentTicketZoom.pm,v 1.197 2013/01/11 23:50:23 cr Exp $
+# $Id: AgentTicketZoom.pm,v 1.41 2013-01-16 12:08:44 ub Exp $
+# $OldId: AgentTicketZoom.pm,v 1.198 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -35,7 +35,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.40 $) [1];
+$VERSION = qw($Revision: 1.41 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -124,6 +124,7 @@ sub new {
     $Self->{ProcessObject} = Kernel::System::ProcessManagement::Process->new(
         %Param,
         ActivityObject         => $Self->{ActivityObject},
+        ActivityDialogObject   => $Self->{ActivityDialogObject},
         TransitionObject       => $Self->{TransitionObject},
         TransitionActionObject => $Self->{TransitionActionObject},
     );
