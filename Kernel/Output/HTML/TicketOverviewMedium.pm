@@ -2,8 +2,8 @@
 # Kernel/Output/HTML/TicketOverviewMedium.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewMedium.pm,v 1.16 2013-01-16 12:08:44 ub Exp $
-# $OldId: TicketOverviewMedium.pm,v 1.57 2013/01/16 02:48:10 cr Exp $
+# $Id: TicketOverviewMedium.pm,v 1.17 2013-01-23 14:57:00 ub Exp $
+# $OldId: TicketOverviewMedium.pm,v 1.58 2013/01/17 12:29:39 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,7 +26,7 @@ use Kernel::System::VariableCheck qw(:all);
 use Kernel::System::GeneralCatalog;
 # ---
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -272,10 +272,7 @@ sub _Show {
                 'This ticket has no title or subject'
             );
         }
-        my %Address = $Self->{QueueObject}->GetSystemAddress( QueueID => $Article{QueueID} );
-        $Article{Subject}      = $Article{Title};
-        $Article{From}         = '$Address{RealName} <$Address{Email}>';
-        $Article{FromRealname} = $Address{RealName};
+        $Article{Subject} = $Article{Title};
     }
 
 # ---
