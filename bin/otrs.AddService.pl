@@ -1,10 +1,10 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 # --
 # bin/otrs.AddService.pl - add new Services
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.AddService.pl,v 1.4 2012-11-21 20:35:48 ub Exp $
-# $OldId: otrs.AddService.pl,v 1.6 2012/11/20 16:02:47 mh Exp $
+# $Id: otrs.AddService.pl,v 1.5 2013-01-23 14:57:07 ub Exp $
+# $OldId: otrs.AddService.pl,v 1.7 2013/01/22 10:14:09 mg Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -32,7 +32,7 @@ use lib dirname($RealBin) . '/Kernel/cpan-lib';
 use lib dirname($RealBin) . '/Custom';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 use Getopt::Std;
 
