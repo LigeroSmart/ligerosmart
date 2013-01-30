@@ -1,8 +1,8 @@
 # --
 # Kernel/System/MasterSlave.pm - to handle ticket master slave tasks
-# Copyright (C) 2003-2012 OTRS AG, http://otrs.com/
+# Copyright (C) 2003-2013 OTRS AG, http://otrs.com/
 # --
-# $Id: MasterSlave.pm,v 1.7 2012-11-23 13:35:06 cr Exp $
+# $Id: MasterSlave.pm,v 1.8 2013-01-30 15:31:50 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::DynamicField::Backend;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 =head1 NAME
 
@@ -42,7 +42,11 @@ create an object
     use Kernel::Config;
     use Kernel::System::Encode;
     use Kernel::System::Log;
-    use Kernel::System::LinkObject;
+    use Kernel::System::Time;
+    use Kernel::System::Main;
+    use Kernel::System::DB;
+    use Kernel::System::Ticket;
+    use Kernel::System::MasterSlaveObject;
 
     my $ConfigObject = Kernel::Config->new();
     my $EncodeObject = Kernel::System::Encode->new(
@@ -52,13 +56,36 @@ create an object
         ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
     );
-    my $LinkObject = Kernel::System::LinkObject->new(
+    my $TimeObject = Kernel::System::Time->new(
         ConfigObject => $ConfigObject,
         LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        TimeObject   => $TimeObject,
-        MainObject   => $MainObject,
+    );
+    my $MainObject = Kernel::System::Main->new(
+        ConfigObject => $ConfigObject,
         EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+    );
+    my $DBObject = Kernel::System::DB->new(
+        ConfigObject => $ConfigObject,
+        EncodeObject => $EncodeObject,
+        LogObject    => $LogObject,
+        MainObject   => $MainObject,
+    );
+    my $TicketObject = Kernel::System::Ticket->new(
+        ConfigObject       => $ConfigObject,
+        LogObject          => $LogObject,
+        DBObject           => $DBObject,
+        MainObject         => $MainObject,
+        TimeObject         => $TimeObject,
+        EncodeObject       => $EncodeObject,
+        GroupObject        => $GroupObject,        # if given
+        CustomerUserObject => $CustomerUserObject, # if given
+        QueueObject        => $QueueObject,        # if given
+    );
+
+    my $MasterSlaveObject = Kernel::System::MasterSlaveObject->new(
+        LogObject    => $LogObject,
+        TicketObject => $TicketObject
     );
 
 =cut
@@ -385,6 +412,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.7 $ $Date: 2012-11-23 13:35:06 $
+$Revision: 1.8 $ $Date: 2013-01-30 15:31:50 $
 
 =cut
