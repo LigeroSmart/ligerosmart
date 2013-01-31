@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMChangeManagementHistory.pm - all advice functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagementHistory.pm,v 1.6 2010-10-28 12:31:07 ub Exp $
+# $Id: ITSMChangeManagementHistory.pm,v 1.7 2013-01-31 13:24:53 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::History;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -167,12 +167,12 @@ sub ImportWrapper {
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
+                    my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
                         ChangeState => $ID->{Content},
                         Cache       => 1,
                     );
-                    if ($StateID) {
-                        $ID->{Content} = $StateID;
+                    if ($ChangeStateID) {
+                        $ID->{Content} = $ChangeStateID;
                     }
                     else {
                         $Self->{LogObject}->Log(
