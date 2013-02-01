@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Stats/Dynamic/ITSMChangeManagement.pm - all advice functions
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeManagement.pm,v 1.13 2010-10-28 12:31:07 ub Exp $
+# $Id: ITSMChangeManagement.pm,v 1.14 2013-02-01 08:22:17 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -85,7 +85,7 @@ sub GetObjectAttributes {
             UseAsXvalue      => 1,
             UseAsValueSeries => 1,
             UseAsRestriction => 1,
-            Element          => 'StateIDs',
+            Element          => 'ChangeStateIDs',
             Block            => 'MultiSelectField',
             Values           => \%ChangeStateList,
         },
@@ -139,14 +139,16 @@ sub GetObjectAttributes {
 sub GetStatElement {
     my ( $Self, %Param ) = @_;
 
-    # search tickets
-    return $Self->{ChangeObject}->ChangeSearch(
+    # search changes
+    my $Count = $Self->{ChangeObject}->ChangeSearch(
         UserID     => 1,
         Result     => 'COUNT',
         Permission => 'ro',
         Limit      => 100_000_000,
         %Param,
     );
+
+    return $Count;
 }
 
 sub ExportWrapper {
@@ -163,7 +165,7 @@ sub ExportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'StateIDs' ) {
+            if ( $ElementName eq 'ChangeStateIDs' ) {
                 my $StateList = $Self->{ChangeObject}->ChangePossibleStatesGet( UserID => 1 );
                 ID:
                 for my $ID ( @{$Values} ) {
@@ -219,17 +221,17 @@ sub ImportWrapper {
             my $ElementName = $Element->{Element};
             my $Values      = $Element->{SelectedValues};
 
-            if ( $ElementName eq 'StateIDs' ) {
+            if ( $ElementName eq 'ChangeStateIDs' ) {
                 ID:
                 for my $ID ( @{$Values} ) {
                     next ID if !$ID;
 
-                    my $StateID = $Self->{ChangeObject}->ChangeStateLookup(
+                    my $ChangeStateID = $Self->{ChangeObject}->ChangeStateLookup(
                         ChangeState => $ID->{Content},
                         Cache       => 1,
                     );
-                    if ($StateID) {
-                        $ID->{Content} = $StateID;
+                    if ($ChangeStateID) {
+                        $ID->{Content} = $ChangeStateID;
                     }
                     else {
                         $Self->{LogObject}->Log(
