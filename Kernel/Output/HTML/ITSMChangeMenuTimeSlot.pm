@@ -1,9 +1,9 @@
 # --
 # Kernel/Output/HTML/ITSMChangeMenuTimeSlot.pm - Menu module with check
 # whether there are workorders and whether the change has not started yet
-# Copyright (C) 2003-2009 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeMenuTimeSlot.pm,v 1.1 2009-12-30 13:49:23 bes Exp $
+# $Id: ITSMChangeMenuTimeSlot.pm,v 1.2 2013-02-05 20:24:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -16,7 +16,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -77,6 +77,7 @@ sub Run {
         # check permissions, based on the required privilege
         $Access = $Self->{ChangeObject}->Permission(
             Type     => $RequiredPriv,
+            Action   => $Param{Config}->{Action},
             ChangeID => $Param{Change}->{ChangeID},
             UserID   => $Self->{UserID},
             LogNo    => 1,

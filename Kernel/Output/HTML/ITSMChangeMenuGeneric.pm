@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMChangeMenuGeneric.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeMenuGeneric.pm,v 1.7 2012-02-16 15:27:08 ub Exp $
+# $Id: ITSMChangeMenuGeneric.pm,v 1.8 2013-02-05 20:24:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -75,6 +75,7 @@ sub Run {
         # check permissions, based on the required privilege
         $Access = $Self->{ChangeObject}->Permission(
             Type     => $RequiredPriv,
+            Action   => $Param{Config}->{Action},
             ChangeID => $Param{Change}->{ChangeID},
             UserID   => $Self->{UserID},
             LogNo    => 1,

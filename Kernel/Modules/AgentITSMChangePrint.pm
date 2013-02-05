@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangePrint.pm - the OTRS::ITSM::ChangeManagement change print module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangePrint.pm,v 1.43 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangePrint.pm,v 1.44 2013-02-05 20:23:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::PDF;
 use Kernel::System::CustomerUser;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -78,6 +78,7 @@ sub Run {
         # check permission on the workorder
         my $Access = $Self->{WorkOrderObject}->Permission(
             Type        => $Self->{Config}->{Permission},
+            Action      => $Self->{Action},
             WorkOrderID => $WorkOrderID,
             UserID      => $Self->{UserID},
         );
@@ -133,6 +134,7 @@ sub Run {
         # check permission on the change
         my $Access = $Self->{ChangeObject}->Permission(
             Type     => $Self->{Config}->{Permission},
+            Action   => $Self->{Action},
             ChangeID => $ChangeID,
             UserID   => $Self->{UserID},
         );
@@ -1374,7 +1376,7 @@ sub _OutputWorkOrderOverview {
             @Data{
                 qw( WorkOrderNumber WorkOrderTitle WorkOrderState
                     PlannedStartTime PlannedEndTime ActualStartTime ActualEndTime )
-                } = @{$WorkOrder};
+            } = @{$WorkOrder};
 
             $Self->{LayoutObject}->Block(
                 Name => 'WorkOrderRow',

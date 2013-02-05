@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange.pm - all change functions
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.283 2012-11-30 01:29:19 sb Exp $
+# $Id: ITSMChange.pm,v 1.284 2013-02-05 20:25:51 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.283 $) [1];
+$VERSION = qw($Revision: 1.284 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -2711,7 +2711,8 @@ This is useful when the method is used for checking whether a link or an action 
 
     my $Access = $ChangeObject->Permission(
         UserID             => 123,
-        Type               => 'ro',   # 'ro' and 'rw' are supported
+        Type               => 'ro',                         # 'ro' and 'rw' are supported
+        Action             => 'AgentITSMChangeEdit',        # optional
         ChangeID           => 3333,   # optional, do not pass for 'ChangeAdd'
         PermissionRegistry => 'ITSMChange::Permission',
                                       # optional with default 'ITSMChange::Permission'
@@ -3825,6 +3826,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.283 $ $Date: 2012-11-30 01:29:19 $
+$Revision: 1.284 $ $Date: 2013-02-05 20:25:51 $
 
 =cut

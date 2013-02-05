@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeMyCAB.pm - the OTRS::ITSM::ChangeManagement MyCAB overview module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeMyCAB.pm,v 1.5 2010-10-28 12:56:32 ub Exp $
+# $Id: AgentITSMChangeMyCAB.pm,v 1.6 2013-02-05 20:23:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::ITSMChange;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -55,6 +55,7 @@ sub Run {
     # check permissions
     my $Access = $Self->{ChangeObject}->Permission(
         Type   => $Self->{Config}->{Permission},
+        Action => $Self->{Action},
         UserID => $Self->{UserID},
     );
 

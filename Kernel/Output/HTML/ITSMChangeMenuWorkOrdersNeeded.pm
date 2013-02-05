@@ -1,8 +1,8 @@
 # --
 # Kernel/Output/HTML/ITSMChangeMenuWorkOrdersNeeded.pm - Menu with check whether there are workorders
-# Copyright (C) 2003-2010 OTRS AG, http://otrs.com/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.7 2010-03-19 10:13:16 bes Exp $
+# $Id: ITSMChangeMenuWorkOrdersNeeded.pm,v 1.8 2013-02-05 20:24:55 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.7 $) [1];
+$VERSION = qw($Revision: 1.8 $) [1];
 
 # As of 2010-03-19 this module is unused.
 # But it is kept in the distribution, as it provides useful functionality for future use.
@@ -76,6 +76,7 @@ sub Run {
         # check permissions, based on the required privilege
         $Access = $Self->{ChangeObject}->Permission(
             Type     => $RequiredPriv,
+            Action   => $Param{Config}->{Action},
             ChangeID => $Param{Change}->{ChangeID},
             UserID   => $Self->{UserID},
             LogNo    => 1,

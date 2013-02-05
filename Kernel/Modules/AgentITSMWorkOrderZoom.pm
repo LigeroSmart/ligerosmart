@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMWorkOrderZoom.pm - the OTRS::ITSM::ChangeManagement workorder zoom module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderZoom.pm,v 1.51 2010-12-20 14:30:38 ub Exp $
+# $Id: AgentITSMWorkOrderZoom.pm,v 1.52 2013-02-05 20:23:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::LinkObject;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.51 $) [1];
+$VERSION = qw($Revision: 1.52 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -66,6 +66,7 @@ sub Run {
     # check permissions
     my $Access = $Self->{WorkOrderObject}->Permission(
         Type        => $Self->{Config}->{Permission},
+        Action      => $Self->{Action},
         WorkOrderID => $WorkOrderID,
         UserID      => $Self->{UserID},
     );

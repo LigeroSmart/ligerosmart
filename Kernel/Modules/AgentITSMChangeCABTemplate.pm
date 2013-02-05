@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeCABTemplate.pm - the OTRS::ITSM::ChangeManagement add CAB template module
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeCABTemplate.pm,v 1.6 2010-12-21 19:41:39 dz Exp $
+# $Id: AgentITSMChangeCABTemplate.pm,v 1.7 2013-02-05 20:23:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::ITSMChange::Template;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -66,6 +66,7 @@ sub Run {
     # check permissions
     my $Access = $Self->{ChangeObject}->Permission(
         Type     => $Self->{Config}->{Permission},
+        Action   => $Self->{Action},
         ChangeID => $ChangeID,
         UserID   => $Self->{UserID},
     );
