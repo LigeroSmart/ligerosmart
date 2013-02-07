@@ -1,8 +1,8 @@
 // --
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
-// Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+// Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.8 2012-03-12 06:39:08 ep Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.9 2013-02-07 14:07:58 mn Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -59,16 +59,25 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             });
         }
 
-        var InstanceName = $Element.attr('id');
+        // See bug#9116:
+        // In Chrome sometimes the click event is triggered before the focus event
+        // we prevent that by checking EditorGotFocus first
+
+        var InstanceName = $Element.attr('id'),
+            EditorGotFocus = false;
         // Register RTE events for saving the cursor position
         if (typeof CKEDITOR !== 'undefined' && CKEDITOR && CKEDITOR.instances.RichText) {
             // Get last cursor position and save it (on focus we come back to this position)
             CKEDITOR.instances[InstanceName].on('contentDom', function() {
                 CKEDITOR.instances[InstanceName].document.on('click', function () {
-                    $('#' + InstanceName).data('RTECursor', CKEDITOR.instances[InstanceName].getSelection().getRanges());
+                    if (EditorGotFocus) {
+                        $('#' + InstanceName).data('RTECursor', CKEDITOR.instances[InstanceName].getSelection().getRanges());
+                    }
                 });
                 CKEDITOR.instances[InstanceName].document.on('keyup', function () {
-                    $('#' + InstanceName).data('RTECursor', CKEDITOR.instances[InstanceName].getSelection().getRanges());
+                    if (EditorGotFocus) {
+                        $('#' + InstanceName).data('RTECursor', CKEDITOR.instances[InstanceName].getSelection().getRanges());
+                    }
                 });
             });
 
@@ -77,6 +86,9 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
                 // if a saved cursor position exists, set this position now
                 var RTECursorRange = $('#' + InstanceName).data('RTECursor'),
                     Selection;
+
+                EditorGotFocus = true;
+
                 if (RTECursorRange) {
                     Selection = new CKEDITOR.dom.selection(CKEDITOR.instances[InstanceName].document);
                     Selection.selectRanges(RTECursorRange);
