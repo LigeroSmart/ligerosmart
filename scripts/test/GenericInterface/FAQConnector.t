@@ -1,8 +1,8 @@
 # --
 # FAQConnector.t - GenericInterface transport interface tests for FAQConnector backend
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQConnector.t,v 1.7 2012-12-06 21:34:29 cr Exp $
+# $Id: FAQConnector.t,v 1.8 2013-03-05 00:29:27 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -309,8 +309,18 @@ $Self->Is(
 );
 
 my $WebserviceID = $WebserviceObject->WebserviceAdd(
-    Name    => $WebserviceName,
-    Config  => {},
+    Name   => $WebserviceName,
+    Config => {
+        Debugger => {
+            DebugThreshold => 'debug',
+            TestMode       => 1,
+        },
+        Provider => {
+            Transport => {
+                Type => 'HTTP::SOAP',
+            },
+        },
+    },
     ValidID => 1,
     UserID  => 1,
 );
