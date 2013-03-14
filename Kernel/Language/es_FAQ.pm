@@ -3,7 +3,7 @@
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # Copyright (C) 2013 Enrique Matías Sánchez <quique@unizar.es>
 # --
-# $Id: es_FAQ.pm,v 1.37 2013-02-27 17:46:27 cr Exp $
+# $Id: es_FAQ.pm,v 1.38 2013-03-14 23:21:54 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -80,8 +80,8 @@ sub Data {
 
     # Template: AgentFAQExplorer
     $Self->{Translation}->{'FAQ Explorer'} = 'Explorador FAQ';
-    $Self->{Translation}->{'Quick Search'} = 'Búsqueda rápida';
-    $Self->{Translation}->{'Advanced Search'} = 'Búsqueda avanzada';
+    $Self->{Translation}->{'Quick Search'} = 'Búsqueda Rápida';
+    $Self->{Translation}->{'Advanced Search'} = 'Búsqueda Avanzada';
     $Self->{Translation}->{'Subcategories'} = 'Subcategorías';
     $Self->{Translation}->{'FAQ Articles'} = 'Artículos FAQ';
     $Self->{Translation}->{'No subcategories found.'} = 'No se encontraron subcategorías.';
@@ -89,21 +89,21 @@ sub Data {
     # Template: AgentFAQHistory
 
     # Template: AgentFAQJournalOverviewSmall
-    $Self->{Translation}->{'No FAQ Journal data found.'} = 'No se encontraron datos en la bitácora FAQ';
+    $Self->{Translation}->{'No FAQ Journal data found.'} = 'No se encontraron datos en la Bitácora FAQ';
 
     # Template: AgentFAQLanguage
-    $Self->{Translation}->{'FAQ Language Management'} = 'Gestión de idiomas de FAQ';
+    $Self->{Translation}->{'FAQ Language Management'} = 'Gestión de Idiomas de FAQ';
     $Self->{Translation}->{'Use this feature if you want to work with multiple languges.'} = 'Utilice esta funcionalidad si desea trabajar con múltiples idiomas.';
-    $Self->{Translation}->{'Add language'} = 'Añadir idioma';
-    $Self->{Translation}->{'Delete Language'} = 'Borrar idioma';
-    $Self->{Translation}->{'Add Language'} = 'Añadir idioma';
+    $Self->{Translation}->{'Add language'} = 'Añadir Idioma';
+    $Self->{Translation}->{'Delete Language'} = 'Borrar Idioma';
+    $Self->{Translation}->{'Add Language'} = 'Añadir Idioma';
     $Self->{Translation}->{'Edit Language'} = 'Editar Idioma';
     $Self->{Translation}->{'Do you really want to delete this language?'} = '¿Seguro que desea borrar este idioma?';
     $Self->{Translation}->{'You can not delete this language. It is used in at least one FAQ article!'} = 'No puede borrar este idioma. Está siendo usado por al menos un artículo FAQ';
     $Self->{Translation}->{'This language is used in the following FAQ Article(s)'} = 'Este idioma esta siendo usado por los siguientes Artículos FAQ';
 
     # Template: AgentFAQOverviewNavBar
-    $Self->{Translation}->{'Context Settings'} = 'Ajustes de contexto';
+    $Self->{Translation}->{'Context Settings'} = 'Ajustes de Contexto';
     $Self->{Translation}->{'FAQ articles per page'} = 'Artículos FAQ por página';
 
     # Template: AgentFAQOverviewSmall
@@ -132,15 +132,15 @@ sub Data {
     $Self->{Translation}->{'out of 5'} = 'de 5';
     $Self->{Translation}->{'No votes found!'} = '¡No se encontró ningún voto!';
     $Self->{Translation}->{'No votes found! Be the first one to rate this FAQ article.'} = 'No se encontró ningún voto. Sea el primero en valorar este artículo FAQ';
-    $Self->{Translation}->{'Download Attachment'} = 'Descargar adjunto';
+    $Self->{Translation}->{'Download Attachment'} = 'Descargar Adjunto';
     $Self->{Translation}->{'How helpful was this article? Please give us your rating and help to improve the FAQ Database. Thank You!'} = '¿Cómo de útil fue este artículo? Por favor, dénos su puntuación y ayude a mejorar la base de datos de FAQ. Gracias.';
     $Self->{Translation}->{'not helpful'} = 'poco útil';
     $Self->{Translation}->{'very helpful'} = 'muy útil';
 
     # Template: AgentFAQZoomSmall
-    $Self->{Translation}->{'Insert FAQ Text'} = 'Insertar texto de la FAQ';
-    $Self->{Translation}->{'Insert FAQ Link'} = 'Insertar enlace a la FAQ';
-    $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Insertar texto y enlace a la FAQ';
+    $Self->{Translation}->{'Insert FAQ Text'} = 'Insertar Texto de la FAQ';
+    $Self->{Translation}->{'Insert FAQ Link'} = 'Insertar Enlace a la FAQ';
+    $Self->{Translation}->{'Insert FAQ Text & Link'} = 'Insertar texto y Enlace a la FAQ';
 
     # Template: CustomerFAQExplorer
     $Self->{Translation}->{'No FAQ articles found.'} = 'No se encontraron artículos FAQ';
@@ -178,7 +178,7 @@ sub Data {
     # SysConfig
     $Self->{Translation}->{'A filter for HTML output to add links behind a defined string. The element Image allows two input kinds. First the name of an image (e.g. faq.png). In this case the OTRS image path will be used. The second possibility is to insert the link to the image.'} = 'Filtro para el HTML resultante para añadir enlaces a una cadena determinada. El elemento Imagen contempla dos tipos de registros. El primero es el nombre de una imagen (por ejemplo faq.png). En este caso se utilizará la ruta de imágenes de OTRS. La segunda posibilidad es insertar el enlace a la imagen..';
     $Self->{Translation}->{'CSS color for the voting result.'} = 'Color CSS para el resultado de la votación.';
-    $Self->{Translation}->{'Category Management'} = 'Gestión de las categorías';
+    $Self->{Translation}->{'Category Management'} = 'Gestión de las Categorías';
     $Self->{Translation}->{'Decimal places of the voting result.'} = 'Número de decimales para el resultado de la votación';
     $Self->{Translation}->{'Default category name.'} = 'Nombre predeterminado de la categoría';
     $Self->{Translation}->{'Default language for FAQ articles on single language mode.'} = 'Idioma por omisión para los artículos FAQ en modo idioma único';
@@ -224,7 +224,7 @@ sub Data {
     $Self->{Translation}->{'Include the name of each field in a FAQ based Ticket.'} = 'Incluir el nombre de cada campo en los tickets basados en un artículo FAQ';
     $Self->{Translation}->{'Interfaces where the quicksearch should be shown.'} = 'Interfaces en las que se debe mostrar la busqueda rápida.';
     $Self->{Translation}->{'Journal'} = 'Bitácora';
-    $Self->{Translation}->{'Language Management'} = 'Gestión de idiomas';
+    $Self->{Translation}->{'Language Management'} = 'Gestión de Idiomas';
     $Self->{Translation}->{'Languagekey which is defined in the language file *_FAQ.pm.'} = 'Clave de idioma definida en el fichero de idioma *_FAQ.pm.';
     $Self->{Translation}->{'Link another object to this FAQ item'} = 'Enlazar otro objecto a este artículo FAQ';
     $Self->{Translation}->{'Maximum number of FAQ articles to be displayed in the FAQ Explorer result of the agent interface.'} = 'Número máximo de artículos FAQ a mostrar en los resultados del explorador FAQ de la interfaz del agente.';
