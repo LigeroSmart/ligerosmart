@@ -1,8 +1,8 @@
 # --
 # SLA.t - SLA tests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.t,v 1.6 2012-11-21 20:35:48 ub Exp $
+# $Id: SLA.t,v 1.7 2013-03-19 16:44:24 ub Exp $
 # $OldId: SLA.t,v 1.15 2012/11/20 16:07:37 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -882,12 +882,13 @@ for my $Item ( @{$ItemData} ) {
 
             # dump the given attribute
             if ( ref $SLAGet{$SLAAttribute} ) {
-                $SLAGet{$SLAAttribute} = Data::Dumper::Dumper( $SLAGet{$SLAAttribute} );
+                $SLAGet{$SLAAttribute}
+                    = Data::Dumper::Dumper( $SLAGet{$SLAAttribute} );    ## no critic
             }
 
             # dump the reference string
             if ( ref $Item->{AddGet}->{$SLAAttribute} ) {
-                $Item->{AddGet}->{$SLAAttribute} = Data::Dumper::Dumper(
+                $Item->{AddGet}->{$SLAAttribute} = Data::Dumper::Dumper(    ## no critic
                     $Item->{AddGet}->{$SLAAttribute},
                 );
             }
@@ -941,12 +942,13 @@ for my $Item ( @{$ItemData} ) {
 
             # dump the given attribute
             if ( ref $SLAGet2{$SLAAttribute} ) {
-                $SLAGet2{$SLAAttribute} = Data::Dumper::Dumper( $SLAGet2{$SLAAttribute} );
+                $SLAGet2{$SLAAttribute}
+                    = Data::Dumper::Dumper( $SLAGet2{$SLAAttribute} );    ## no critic
             }
 
             # dump the reference string
             if ( ref $Item->{UpdateGet}->{$SLAAttribute} ) {
-                $Item->{UpdateGet}->{$SLAAttribute} = Data::Dumper::Dumper(
+                $Item->{UpdateGet}->{$SLAAttribute} = Data::Dumper::Dumper(    ## no critic
                     $Item->{UpdateGet}->{$SLAAttribute},
                 );
             }
