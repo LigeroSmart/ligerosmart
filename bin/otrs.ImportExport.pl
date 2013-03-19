@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # otrs.ImportExport.pl - import/export script
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ImportExport.pl,v 1.3 2012-11-20 19:09:39 mh Exp $
+# $Id: otrs.ImportExport.pl,v 1.4 2013-03-19 16:12:49 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -38,7 +38,19 @@ use Kernel::System::Log;
 use Kernel::System::Main;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
+
+# create common objects
+my %CommonObject;
+$CommonObject{ConfigObject} = Kernel::Config->new();
+$CommonObject{LogObject}    = Kernel::System::Log->new(
+    LogPrefix => 'OTRS-ImportExport',
+    %CommonObject,
+);
+$CommonObject{EncodeObject}       = Kernel::System::Encode->new(%CommonObject);
+$CommonObject{MainObject}         = Kernel::System::Main->new(%CommonObject);
+$CommonObject{DBObject}           = Kernel::System::DB->new(%CommonObject);
+$CommonObject{ImportExportObject} = Kernel::System::ImportExport->new(%CommonObject);
 
 # get options
 my %Opts;
@@ -47,7 +59,7 @@ getopts( 'hn:a:i:o:', \%Opts );
 if ( $Opts{h} ) {
 
     print STDOUT "otrs.ImportExport.pl <Revision $VERSION> - an import/export tool\n";
-    print STDOUT "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+    print STDOUT "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
     print STDOUT "\n";
     print STDOUT "usage: otrs.ImportExport.pl -n <TemplateNumber> -a import|export ";
     print STDOUT "[-i <SourceFile>] [-o <DestinationFile>]\n";
@@ -79,18 +91,6 @@ if ( lc $Opts{a} ne 'import' && lc $Opts{a} ne 'export' ) {
     print STDERR "ERROR: Invalid action\n";
     exit 1;
 }
-
-# create common objects
-my %CommonObject;
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix => 'OTRS-ImportExport',
-    %CommonObject,
-);
-$CommonObject{EncodeObject}       = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{MainObject}         = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}           = Kernel::System::DB->new(%CommonObject);
-$CommonObject{ImportExportObject} = Kernel::System::ImportExport->new(%CommonObject);
 
 # get template data
 my $TemplateData = $CommonObject{ImportExportObject}->TemplateGet(
@@ -200,6 +200,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.3 $ $Date: 2012-11-20 19:09:39 $
+$Revision: 1.4 $ $Date: 2013-03-19 16:12:49 $
 
 =cut
