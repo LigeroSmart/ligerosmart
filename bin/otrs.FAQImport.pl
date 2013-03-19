@@ -3,7 +3,7 @@
 # otrs.FAQImport.pl - FAQ import script
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.FAQImport.pl,v 1.1 2013-01-02 21:58:45 cr Exp $
+# $Id: otrs.FAQImport.pl,v 1.2 2013-03-19 15:34:04 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -41,7 +41,23 @@ use Kernel::System::Group;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION $RealBin);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
+
+# create common objects
+my %CommonObject;
+$CommonObject{UserID}       = 1;
+$CommonObject{ConfigObject} = Kernel::Config->new();
+$CommonObject{LogObject}    = Kernel::System::Log->new(
+    LogPrefix => 'OTRS-FAQImport',
+    %CommonObject,
+);
+$CommonObject{CSVObject}    = Kernel::System::CSV->new(%CommonObject);
+$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
+$CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
+$CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
+$CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
+$CommonObject{GroupObject}  = Kernel::System::Group->new(%CommonObject);
+$CommonObject{FAQObject}    = Kernel::System::FAQ->new(%CommonObject);
 
 # get options
 my %Opts;
@@ -70,22 +86,6 @@ if ( !$Opts{i} ) {
     print STDERR "ERROR: Need -i <ImportFile>\n";
     exit 1;
 }
-
-# create common objects
-my %CommonObject;
-$CommonObject{UserID}       = 1;
-$CommonObject{ConfigObject} = Kernel::Config->new();
-$CommonObject{LogObject}    = Kernel::System::Log->new(
-    LogPrefix => 'OTRS-FAQImport',
-    %CommonObject,
-);
-$CommonObject{CSVObject}    = Kernel::System::CSV->new(%CommonObject);
-$CommonObject{EncodeObject} = Kernel::System::Encode->new(%CommonObject);
-$CommonObject{MainObject}   = Kernel::System::Main->new(%CommonObject);
-$CommonObject{DBObject}     = Kernel::System::DB->new(%CommonObject);
-$CommonObject{TimeObject}   = Kernel::System::Time->new(%CommonObject);
-$CommonObject{GroupObject}  = Kernel::System::Group->new(%CommonObject);
-$CommonObject{FAQObject}    = Kernel::System::FAQ->new(%CommonObject);
 
 print STDOUT "Read File $Opts{i}.\n";
 
@@ -235,6 +235,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2013-01-02 21:58:45 $
+$Revision: 1.2 $ $Date: 2013-03-19 15:34:04 $
 
 =cut
