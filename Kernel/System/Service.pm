@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Service.pm - all service function
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.35 2012-11-21 20:35:48 ub Exp $
+# $Id: Service.pm,v 1.36 2013-03-21 11:46:39 ub Exp $
 # $OldId: Service.pm,v 1.60 2012/11/20 15:38:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -27,8 +27,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Time;
 # ---
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.35 $) [1];
+use vars qw(@ISA);
 
 =head1 NAME
 
@@ -1584,9 +1583,5 @@ the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =cut
-
-=head1 VERSION
-
-$Revision: 1.35 $ $Date: 2012-11-21 20:35:48 $
 
 =cut

@@ -3,7 +3,7 @@
 # bin/otrs.AddService.pl - add new Services
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.AddService.pl,v 1.6 2013-03-19 16:26:12 ub Exp $
+# $Id: otrs.AddService.pl,v 1.7 2013-03-21 11:46:40 ub Exp $
 # $OldId: otrs.AddService.pl,v 1.7 2013/01/22 10:14:09 mg Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
@@ -32,7 +32,7 @@ use lib dirname($RealBin) . '/Kernel/cpan-lib';
 use lib dirname($RealBin) . '/Custom';
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.6 $) [1];
+$VERSION = qw($Revision: 1.7 $) [1];
 
 use Getopt::Std;
 
@@ -59,6 +59,7 @@ $CommonObject{LogObject}
 $CommonObject{MainObject}    = Kernel::System::Main->new(%CommonObject);
 $CommonObject{DBObject}      = Kernel::System::DB->new(%CommonObject);
 $CommonObject{ServiceObject} = Kernel::System::Service->new(%CommonObject);
+
 # ---
 # ITSM
 # ---

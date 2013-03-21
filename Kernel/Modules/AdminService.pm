@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminService.pm - admin frontend to manage services
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.pm,v 1.10 2012-11-21 20:35:48 ub Exp $
+# $Id: AdminService.pm,v 1.11 2013-03-21 11:46:40 ub Exp $
 # $OldId: AdminService.pm,v 1.39 2012/11/20 14:44:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
