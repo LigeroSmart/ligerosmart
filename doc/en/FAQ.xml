@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: FAQ.xml,v 1.13 2013-03-19 14:25:52 cr Exp $ -->
+<!-- $Id: FAQ.xml,v 1.14 2013-03-22 16:19:43 ub Exp $ -->
 
 <book lang="en">
 
@@ -213,7 +213,7 @@
         <title>Command line</title>
         <para>
             Whenever you cannot use the Admin Interface for whatever reason, you may use the
-            following command line tool (&quot;bin/opm.pl&quot;) instead.
+            following command line tool (&quot;bin/otrs.PackageManager.pl&quot;) instead.
         </para>
         <para>
         <screen>
