@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/Service.pm - to link service objects
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.10 2010-12-14 11:08:56 ub Exp $
+# $Id: Service.pm,v 1.11 2013-03-23 14:18:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,7 +17,7 @@ use warnings;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -80,8 +80,9 @@ sub LinkListWithData {
 
                 # get service data
                 my %ServiceData = $Self->{ServiceObject}->ServiceGet(
-                    ServiceID => $ServiceID,
-                    UserID    => $Param{UserID},
+                    ServiceID     => $ServiceID,
+                    IncidentState => 1,
+                    UserID        => $Param{UserID},
                 );
 
                 # remove id from hash if no service data was found
@@ -140,8 +141,9 @@ sub ObjectDescriptionGet {
 
     # get service
     my %Service = $Self->{ServiceObject}->ServiceGet(
-        ServiceID => $Param{Key},
-        UserID    => 1,
+        ServiceID     => $Param{Key},
+        IncidentState => 0,
+        UserID        => 1,
     );
 
     return if !%Service;
@@ -212,8 +214,9 @@ sub ObjectSearch {
 
         # get service data
         my %ServiceData = $Self->{ServiceObject}->ServiceGet(
-            ServiceID => $ServiceID,
-            UserID    => $Param{UserID},
+            ServiceID     => $ServiceID,
+            IncidentState => 1,
+            UserID        => $Param{UserID},
         );
 
         next SERVICEID if !%ServiceData;
