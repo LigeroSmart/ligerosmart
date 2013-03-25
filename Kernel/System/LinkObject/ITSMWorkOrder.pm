@@ -1,8 +1,8 @@
 # --
 # Kernel/System/LinkObject/ITSMWorkOrder.pm - to link workorder objects
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.17 2011-11-10 11:20:35 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.18 2013-03-25 18:59:23 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -124,6 +124,45 @@ sub LinkListWithData {
     }
 
     return 1;
+}
+
+=item ObjectPermission()
+
+checks read permission for a given object and UserID.
+
+    $Permission = $LinkObject->ObjectPermission(
+        Object  => 'ITSMWorkOrder',
+        Key     => 123,
+        UserID  => 1,
+    );
+
+=cut
+
+sub ObjectPermission {
+    my ( $Self, %Param ) = @_;
+
+    # check needed stuff
+    for my $Argument (qw(Object Key UserID)) {
+        if ( !$Param{$Argument} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "Need $Argument!",
+            );
+            return;
+        }
+    }
+
+    # get config of workorder zoom frontend module
+    $Self->{Config} = $Self->{ConfigObject}->Get('ITSMWorkOrder::Frontend::AgentITSMWorkOrderZoom');
+
+    # check permissions
+    my $Access = $Self->{WorkOrderObject}->Permission(
+        Type        => $Self->{Config}->{Permission},
+        WorkOrderID => $Param{Key},
+        UserID      => $Param{UserID},
+    );
+
+    return $Access;
 }
 
 =item ObjectDescriptionGet()
