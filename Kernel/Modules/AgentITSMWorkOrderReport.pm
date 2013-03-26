@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS::ITSM::ChangeManagement workorder report module
+# Kernel/Modules/AgentITSMWorkOrderReport.pm - the OTRS ITSM ChangeManagement workorder report module
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderReport.pm,v 1.38 2013-02-05 20:23:10 ub Exp $
+# $Id: AgentITSMWorkOrderReport.pm,v 1.39 2013-03-26 14:35:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange;
 use Kernel::System::ITSMChange::ITSMWorkOrder;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.38 $) [1];
+$VERSION = qw($Revision: 1.39 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;

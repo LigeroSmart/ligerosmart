@@ -1,8 +1,8 @@
 # --
-# Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS::ITSM::ChangeManagement workorder history module
+# Kernel/Modules/AgentITSMWorkOrderHistory.pm - the OTRS ITSM ChangeManagement workorder history module
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMWorkOrderHistory.pm,v 1.24 2013-02-05 20:23:10 ub Exp $
+# $Id: AgentITSMWorkOrderHistory.pm,v 1.25 2013-03-26 14:35:31 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::System::ITSMChange::History;
 use Kernel::System::HTMLUtils;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
