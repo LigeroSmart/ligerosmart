@@ -1,8 +1,8 @@
 # --
-# Kernel/System/SLA.pm - all sla function
+# Kernel/System/SLA.pm - all sla functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SLA.pm,v 1.10 2013-03-21 11:46:39 ub Exp $
+# $Id: SLA.pm,v 1.11 2013-03-26 14:14:12 ub Exp $
 # $OldId: SLA.pm,v 1.43 2012/11/20 15:37:41 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -23,8 +23,7 @@ use Kernel::System::Valid;
 use Kernel::System::GeneralCatalog;
 # ---
 
-use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+use vars qw(@ISA);
 
 =head1 NAME
 
@@ -788,7 +787,5 @@ This software is part of the OTRS project (L<http://otrs.org/>).
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
 
 =cut
