@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.12 2012-11-22 13:50:27 ub Exp $
+# $Id: AgentTicketPrint.pm,v 1.13 2013-03-26 14:14:00 ub Exp $
 # $OldId: AgentTicketPrint.pm,v 1.91 2012/11/20 14:51:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.12 $) [1];
+$VERSION = qw($Revision: 1.13 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -99,7 +99,7 @@ sub Run {
     );
     my %AclAction = $Self->{TicketObject}->TicketAclActionData();
 
-    # check if ACL resctictions if exist
+    # check if ACL restrictions exist
     if ( IsHashRefWithData( \%AclAction ) ) {
 
         # show error screen if ACL prohibits this action
@@ -212,11 +212,6 @@ sub Run {
     if ( $Ticket{CustomerUserID} ) {
         %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
             User => $Ticket{CustomerUserID},
-        );
-    }
-    elsif ( $Ticket{CustomerID} ) {
-        %CustomerData = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            CustomerID => $Ticket{CustomerID},
         );
     }
 

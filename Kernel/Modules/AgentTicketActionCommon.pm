@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.36 2013-01-30 14:05:10 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.37 2013-03-26 14:14:00 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.105 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -129,7 +129,7 @@ sub Run {
     );
     my %AclAction = $Self->{TicketObject}->TicketAclActionData();
 
-    # check if ACL resctictions if exist
+    # check if ACL restrictions exist
     if ( IsHashRefWithData( \%AclAction ) ) {
 
         # show error screen if ACL prohibits this action
@@ -858,12 +858,12 @@ sub Run {
                 );
             }
 
-            # remove pre submited attachments
+            # remove pre submitted attachments
             $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
         }
 
         # set dynamic fields
-        # cycle trough the activated Dynamic Fields for this screen
+        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -931,7 +931,7 @@ sub Run {
                 );
             }
 
-            # set pending time on pendig state
+            # set pending time on pending state
             elsif ( $StateData{TypeName} =~ /^pending/i ) {
 
                 # set pending time
@@ -1047,7 +1047,7 @@ sub Run {
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
-            # convert possible values key => value to key => key for ACLs usign a Hash slice
+            # convert possible values key => value to key => key for ACLs using a Hash slice
             my %AclData = %{$PossibleValues};
             @AclData{ keys %AclData } = keys %AclData;
 
@@ -1213,7 +1213,7 @@ sub Run {
             my $Value;
 
             # only get values for Ticket fields (all screens based on AgentTickeActionCommon
-            # generates a new article, then article fields will be always empty at the beginign)
+            # generates a new article, then article fields will be always empty at the beginning)
             if ( $DynamicFieldConfig->{ObjectType} eq 'Ticket' ) {
 
                 # get value stored on the database from Ticket
@@ -1305,7 +1305,7 @@ sub _Mask {
             Data  => \%Type,
             Name  => 'TypeID',
             SelectedID   => $Param{TypeID},
-            PossibleNone => 0,
+            PossibleNone => 1,
             Sort         => 'AlphanumericValue',
             Translation  => 0,
         );
@@ -2006,7 +2006,7 @@ sub _GetFieldsToUpdate {
 
     my @UpdatableFields;
 
-    # set the fields that can be updatable via AJAXUpdate
+    # set the fields that can be updateable via AJAXUpdate
     if ( !$Param{OnlyDynamicFields} ) {
         @UpdatableFields
             = qw(
@@ -2015,7 +2015,7 @@ sub _GetFieldsToUpdate {
         );
     }
 
-    # cycle trough the activated Dynamic Fields for this screen
+    # cycle through the activated Dynamic Fields for this screen
     DYNAMICFIELD:
     for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
         next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);

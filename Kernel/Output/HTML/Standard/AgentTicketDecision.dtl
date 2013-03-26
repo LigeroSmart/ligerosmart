@@ -1,8 +1,8 @@
 # --
 # AgentTicketDecision.dtl - provides HTML form for decision mask
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketDecision.dtl,v 1.7 2012-11-21 20:46:18 ub Exp $
+# $Id: AgentTicketDecision.dtl,v 1.8 2013-03-26 14:14:00 ub Exp $
 # $OldId: AgentTicketNote.dtl,v 1.51 2012/11/20 15:21:38 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

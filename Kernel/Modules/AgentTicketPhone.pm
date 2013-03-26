@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.54 2013-02-08 11:27:42 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.55 2013-03-26 14:14:00 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.251 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.54 $) [1];
+$VERSION = qw($Revision: 1.55 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -400,9 +400,12 @@ sub Run {
         # multiple addresses list
         # check email address
         my $CountFrom = scalar @MultipleCustomer || 1;
-        my %CustomerDataFrom = $Self->{CustomerUserObject}->CustomerUserDataGet(
-            User => $Article{CustomerUserID},
-        ) if $Article{CustomerUserID};
+        my %CustomerDataFrom;
+        if ( $Article{CustomerUserID} ) {
+            %CustomerDataFrom = $Self->{CustomerUserObject}->CustomerUserDataGet(
+                User => $Article{CustomerUserID},
+            );
+        }
 
         for my $Email ( Mail::Address->parse($ArticleFrom) ) {
 

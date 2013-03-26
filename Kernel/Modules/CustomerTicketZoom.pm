@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.23 2013-01-16 12:08:44 ub Exp $
+# $Id: CustomerTicketZoom.pm,v 1.24 2013-03-26 14:14:00 ub Exp $
 # $OldId: CustomerTicketZoom.pm,v 1.108 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -33,7 +33,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.23 $) [1];
+$VERSION = qw($Revision: 1.24 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -121,7 +121,7 @@ sub Run {
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
         $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
             TicketNumber => $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ),
-            UserID => $Self->{UserID},
+            UserID       => $Self->{UserID},
         );
     }
 
@@ -532,13 +532,13 @@ sub Run {
             return $Output;
         }
 
-        # unlock ticket if agent is on vacation
+        # unlock ticket if agent is on vacation or invalid
         my $LockAction;
         if ( $Ticket{OwnerID} ) {
             my %User = $Self->{AgentUserObject}->GetUserData(
                 UserID => $Ticket{OwnerID},
             );
-            if ( %User && $User{OutOfOffice} && $User{OutOfOfficeMessage} ) {
+            if ( %User && ( $User{OutOfOfficeMessage} || $User{ValidID} ne '1' ) ) {
                 $LockAction = 'unlock';
             }
         }
@@ -1019,7 +1019,12 @@ sub _Mask {
 
             # we don't need the whole Activity config,
             # just the Activity Dialogs of the current Activity
-            %{$NextActivityDialogs} = %{ $NextActivityDialogs->{ActivityDialog} };
+            if ( IsHashRefWithData( $NextActivityDialogs->{ActivityDialog} ) ) {
+                %{$NextActivityDialogs} = %{ $NextActivityDialogs->{ActivityDialog} };
+            }
+            else {
+                $NextActivityDialogs = {};
+            }
 
             # ACL Check is done in the initial "Run" statement
             # so here we can just pick the possibly reduced Activity Dialogs
@@ -1177,8 +1182,8 @@ sub _Mask {
     }
 
     # Expand option
-    my $ExpandOption = ( $Self->{ZoomExpand} ? 'One' : 'All' );
-    my $ExpandPlural = ( $ExpandOption eq 'All' ? 's' : '' );
+    my $ExpandOption = ( $Self->{ZoomExpand}    ? 'One' : 'All' );
+    my $ExpandPlural = ( $ExpandOption eq 'All' ? 's'   : '' );
     $Self->{LayoutObject}->Block(
         Name => 'Expand',
         Data => {
@@ -1443,6 +1448,14 @@ sub _Mask {
                 ContentType => "$Article{MimeType}; charset=$Article{Charset}",
                 Content     => $Article{Body},
             );
+        }
+    }
+
+    # fallback to ticket info if there is no article
+    if ( !IsHashRefWithData( \%Article ) ) {
+        %Article = %Param;
+        if ( !$Article{StateID} ) {
+            $Article{StateID} = $Param{TicketStateID}
         }
     }
 

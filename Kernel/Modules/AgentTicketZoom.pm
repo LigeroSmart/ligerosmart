@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.41 2013-01-16 12:08:44 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.42 2013-03-26 14:14:00 ub Exp $
 # $OldId: AgentTicketZoom.pm,v 1.198 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -35,7 +35,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.41 $) [1];
+$VERSION = qw($Revision: 1.42 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -79,7 +79,7 @@ sub new {
     # strip html and ascii attachments of content
     $Self->{StripPlainBodyAsAttachment} = 1;
 
-    # check if rich text is enabled, if not only stip ascii attachments
+    # check if rich text is enabled, if not only strip ascii attachments
     if ( !$Self->{RichText} ) {
         $Self->{StripPlainBodyAsAttachment} = 2;
     }
@@ -88,7 +88,7 @@ sub new {
     if ( !$Self->{TicketID} && $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ) ) {
         $Self->{TicketID} = $Self->{TicketObject}->TicketIDLookup(
             TicketNumber => $Self->{ParamObject}->GetParam( Param => 'TicketNumber' ),
-            UserID => $Self->{UserID},
+            UserID       => $Self->{UserID},
         );
     }
     $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new(%Param);
@@ -175,7 +175,7 @@ sub Run {
     );
     my %AclAction = $Self->{TicketObject}->TicketAclActionData();
 
-    # check if ACL resctictions if exist
+    # check if ACL restrictions exist
     if ( IsHashRefWithData( \%AclAction ) ) {
 
         # show error screen if ACL prohibits this action
@@ -1127,14 +1127,6 @@ sub MaskAgentZoom {
         }
 # ---
 
-        # get print string for this dynamic field
-        # do not use ValueMaxChars here otherwise values will be trimmed also in Process Widget
-        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
-            DynamicFieldConfig => $DynamicFieldConfig,
-            Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
-            LayoutObject       => $Self->{LayoutObject},
-        );
-
         # use translation here to be able to reduce the character length in the template
         my $Label = $Self->{LayoutObject}->{LanguageObject}->Get( $DynamicFieldConfig->{Label} );
 
@@ -1143,6 +1135,13 @@ sub MaskAgentZoom {
             $Self->{DisplaySettings}->{ProcessWidgetDynamicField}->{ $DynamicFieldConfig->{Name} }
             )
         {
+            my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+                LayoutObject       => $Self->{LayoutObject},
+                # no ValueMaxChars here, enough space available
+            );
+
             push @FieldsWidget, {
                 Name  => $DynamicFieldConfig->{Name},
                 Title => $ValueStrg->{Title},
@@ -1155,21 +1154,21 @@ sub MaskAgentZoom {
             };
         }
 
+        my $ValueStrg = $Self->{BackendObject}->DisplayValueRender(
+            DynamicFieldConfig => $DynamicFieldConfig,
+            Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
+            LayoutObject       => $Self->{LayoutObject},
+            ValueMaxChars      => 18, # limit for sidebar display
+        );
+
         if (
             $Self->{DisplaySettings}->{DynamicField}->{ $DynamicFieldConfig->{Name} }
             )
         {
-            my $TrimmedValue = $ValueStrg->{Value};
-
-            # trim the value so it can fit better in the sidebar
-            if ( length $ValueStrg->{Value} > 18 ) {
-                $TrimmedValue = substr( $ValueStrg->{Value}, 0, 18 ) . '...';
-            }
-
             push @FieldsSidebar, {
                 Name                        => $DynamicFieldConfig->{Name},
                 Title                       => $ValueStrg->{Title},
-                Value                       => $TrimmedValue,
+                Value                       => $ValueStrg->{Value},
                 Label                       => $Label,
                 Link                        => $ValueStrg->{Link},
                 $DynamicFieldConfig->{Name} => $ValueStrg->{Title},
@@ -1283,6 +1282,7 @@ sub MaskAgentZoom {
                             $Self->{LayoutObject}->Block(
                                 Name => 'ProcessWidgetDynamicFieldLink',
                                 Data => {
+                                    %Ticket,
                                     Value          => $Field->{Value},
                                     Title          => $Field->{Title},
                                     Link           => $Field->{Link},
@@ -1354,6 +1354,7 @@ sub MaskAgentZoom {
                 $Self->{LayoutObject}->Block(
                     Name => 'ProcessWidgetDynamicFieldLink',
                     Data => {
+                        %Ticket,
                         Value          => $Field->{Value},
                         Title          => $Field->{Title},
                         Link           => $Field->{Link},
@@ -1387,6 +1388,7 @@ sub MaskAgentZoom {
             $Self->{LayoutObject}->Block(
                 Name => 'TicketDynamicFieldLink',
                 Data => {
+                    %Ticket,
                     Value          => $Field->{Value},
                     Title          => $Field->{Title},
                     Link           => $Field->{Link},
@@ -2292,6 +2294,7 @@ sub _ArticleItem {
             $Self->{LayoutObject}->Block(
                 Name => 'ArticleDynamicFieldLink',
                 Data => {
+                    %Ticket,
                     Value                       => $ValueStrg->{Value},
                     Title                       => $ValueStrg->{Title},
                     Link                        => $ValueStrg->{Link},
