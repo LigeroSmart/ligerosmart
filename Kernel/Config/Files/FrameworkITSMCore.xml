@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: FrameworkITSMCore.xml,v 1.86 2013-03-26 14:23:00 ub Exp $</CVS>
+    <CVS>$Id: FrameworkITSMCore.xml,v 1.87 2013-03-26 14:35:41 ub Exp $</CVS>
     <CVS>$OldId: Framework.xml,v 1.416.2.4 2011/03/03 15:26:06 ub Exp $</CVS>
     <ConfigItem Name="ProductName" Required="1" Valid="1" ConfigLevel="200">
         <Description Translatable="1">Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.</Description>
         <Group>Framework</Group>
         <SubGroup>Core</SubGroup>
         <Setting>
-            <String Regex="">OTRS::ITSM 3.2.3</String>
+            <String Regex="">OTRS ITSM 3.2.3</String>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="LinkObject::ViewMode" Required="1" Valid="1">
@@ -27,7 +27,7 @@
         <SubGroup>Core::Package</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages32/">[--OTRS::ITSM 3.2 Master--] http://ftp.otrs.org/</Item>
+                <Item Key="http://ftp.otrs.org/pub/otrs/itsm/packages32/">[--OTRS ITSM 3.2 Master--] http://ftp.otrs.org/</Item>
             </Hash>
         </Setting>
     </ConfigItem>
