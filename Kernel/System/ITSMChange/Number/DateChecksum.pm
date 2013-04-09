@@ -1,8 +1,8 @@
 # --
 # ITSMChange/Number/DateChecksum.pm - a date based change number generator
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: DateChecksum.pm,v 1.1 2010-06-29 12:41:36 sb Exp $
+# $Id: DateChecksum.pm,v 1.2 2013-04-09 12:56:10 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -29,7 +29,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1 $) [1];
+$VERSION = qw($Revision: 1.2 $) [1];
 
 sub ChangeNumberCreate {
     my ( $Self, %Param ) = @_;
@@ -53,11 +53,15 @@ sub ChangeNumberCreate {
         # read count
         my $Count      = 0;
         my $LastModify = '';
+
+        # try to read existing counter from file
         if ( -f $CounterLog ) {
+
             my $ContentSCALARRef = $Self->{MainObject}->FileRead(
                 Location => $CounterLog,
             );
             if ( $ContentSCALARRef && ${$ContentSCALARRef} ) {
+
                 ( $Count, $LastModify ) = split( /;/, ${$ContentSCALARRef} );
 
                 # just debug
@@ -88,13 +92,13 @@ sub ChangeNumberCreate {
             Location => $CounterLog,
             Content  => \$Content,
         );
-        if ($Write) {
-            if ( $Self->{Debug} > 0 ) {
-                $Self->{LogObject}->Log(
-                    Priority => 'debug',
-                    Message  => "Write counter: $Count",
-                );
-            }
+
+        # log debug message
+        if ( $Write && $Self->{Debug} ) {
+            $Self->{LogObject}->Log(
+                Priority => 'debug',
+                Message  => "Write counter: $Count",
+            );
         }
 
         # pad change number with leading '0' to length 5
@@ -162,6 +166,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2010-06-29 12:41:36 $
+$Revision: 1.2 $ $Date: 2013-04-09 12:56:10 $
 
 =cut
