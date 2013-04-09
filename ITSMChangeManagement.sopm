@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMChangeManagement.sopm,v 1.258 2013-03-26 14:35:31 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.sopm,v 1.259 2013-04-09 16:59:05 ub Exp $</CVS>
     <Name>ITSMChangeManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
@@ -161,6 +161,7 @@
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/EmptyAgentCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/ListAgentCheck.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/ITSMWorkOrder/Permission/WorkOrderAgentCheck.pm"/>
+        <File Permission="644" Location="Kernel/System/ITSMChange/Number/AutoIncrement.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Number/Date.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Number/DateChecksum.pm"/>
         <File Permission="644" Location="Kernel/System/ITSMChange/Permission/CABCheck.pm"/>
