@@ -2,7 +2,7 @@
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.25 2013-03-26 14:14:00 ub Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.26 2013-04-17 12:28:08 ub Exp $
 # $OldId: CustomerTicketZoom.dtl,v 1.132 2012/11/20 15:25:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -232,7 +232,7 @@
                     <li><a title="$QData{"Name"}" class="AsPopup PopupType_TicketAction" href="$Env{"Baselink"}Action=CustomerTicketProcess;Subaction=DisplayActivityDialog;TicketID=$QData{"TicketID"};ProcessEntityID=$QData{"ProcessEntityID"};ActivityDialogEntityID=$QData{"ActivityDialogEntityID"}">$QData{"Name"}</a></li>
 <!-- dtl:block:ActivityDialog -->
 <!-- dtl:block:NoActivityDialog -->
-                    <li>$Text{"There are no further steps in this process"}</li>
+                    <li>$Text{"There are no dialogs available at this point in the process."}</li>
 <!-- dtl:block:NoActivityDialog -->
                 </ul>
 <!-- dtl:block:NextActivities -->

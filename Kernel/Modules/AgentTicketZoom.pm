@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.42 2013-03-26 14:14:00 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.43 2013-04-17 12:28:09 ub Exp $
 # $OldId: AgentTicketZoom.pm,v 1.198 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -35,7 +35,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.42 $) [1];
+$VERSION = qw($Revision: 1.43 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1139,6 +1139,7 @@ sub MaskAgentZoom {
                 DynamicFieldConfig => $DynamicFieldConfig,
                 Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
                 LayoutObject       => $Self->{LayoutObject},
+
                 # no ValueMaxChars here, enough space available
             );
 
@@ -1158,7 +1159,7 @@ sub MaskAgentZoom {
             DynamicFieldConfig => $DynamicFieldConfig,
             Value              => $Ticket{ 'DynamicField_' . $DynamicFieldConfig->{Name} },
             LayoutObject       => $Self->{LayoutObject},
-            ValueMaxChars      => 18, # limit for sidebar display
+            ValueMaxChars => 18,    # limit for sidebar display
         );
 
         if (
@@ -1283,6 +1284,9 @@ sub MaskAgentZoom {
                                 Name => 'ProcessWidgetDynamicFieldLink',
                                 Data => {
                                     %Ticket,
+
+                                    # alias for ticket title, Title will be overwritten
+                                    TicketTitle    => $Ticket{Title},
                                     Value          => $Field->{Value},
                                     Title          => $Field->{Title},
                                     Link           => $Field->{Link},
@@ -1355,6 +1359,9 @@ sub MaskAgentZoom {
                     Name => 'ProcessWidgetDynamicFieldLink',
                     Data => {
                         %Ticket,
+
+                        # alias for ticket title, Title will be overwritten
+                        TicketTitle    => $Ticket{Title},
                         Value          => $Field->{Value},
                         Title          => $Field->{Title},
                         Link           => $Field->{Link},
@@ -1389,6 +1396,9 @@ sub MaskAgentZoom {
                 Name => 'TicketDynamicFieldLink',
                 Data => {
                     %Ticket,
+
+                    # alias for ticket title, Title will be overwritten
+                    TicketTitle    => $Ticket{Title},
                     Value          => $Field->{Value},
                     Title          => $Field->{Title},
                     Link           => $Field->{Link},
@@ -2295,6 +2305,9 @@ sub _ArticleItem {
                 Name => 'ArticleDynamicFieldLink',
                 Data => {
                     %Ticket,
+
+                    # alias for ticket title, Title will be overwritten
+                    TicketTitle                 => $Ticket{Title},
                     Value                       => $ValueStrg->{Value},
                     Title                       => $ValueStrg->{Title},
                     Link                        => $ValueStrg->{Link},
@@ -2330,6 +2343,10 @@ sub _ArticleItem {
             $Self->{LayoutObject}->Block(
                 Name => 'ArticleDynamicField' . $DynamicFieldConfig->{Name} . 'Link',
                 Data => {
+                    %Ticket,
+
+                    # alias for ticket title, Title will be overwritten
+                    TicketTitle                 => $Ticket{Title},
                     Value                       => $ValueStrg->{Value},
                     Title                       => $ValueStrg->{Title},
                     Link                        => $ValueStrg->{Link},
