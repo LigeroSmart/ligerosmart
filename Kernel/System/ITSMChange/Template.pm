@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Template.pm - all template functions
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Template.pm,v 1.60 2012-04-02 15:56:21 ub Exp $
+# $Id: Template.pm,v 1.61 2013-04-22 20:31:34 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::VirtualFS;
 use Data::Dumper;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1271,6 +1271,8 @@ sub _CreateTemplateElements {
         Method => $Method,
     );
 
+    return if !%ParentReturn;
+
     my %SiblingsInfo;
 
     # create child elements
@@ -1418,6 +1420,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2012-04-02 15:56:21 $
+$Revision: 1.61 $ $Date: 2013-04-22 20:31:34 $
 
 =cut
