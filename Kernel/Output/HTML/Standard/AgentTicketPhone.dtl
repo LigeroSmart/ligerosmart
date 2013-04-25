@@ -2,7 +2,7 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.37 2013-02-11 11:25:28 ub Exp $
+# $Id: AgentTicketPhone.dtl,v 1.38 2013-04-25 14:35:12 ub Exp $
 # $OldId: AgentTicketPhone.dtl,v 1.154 2013/02/06 12:20:30 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -187,7 +187,7 @@ $Include{"AgentCustomerSearch"}
 <script type="text/javascript">//<![CDATA[
     $('#ServiceID').bind('change', function (Event) {
         Core.AJAX.FormUpdate($('#NewPhoneTicket'), 'AJAXUpdate', 'ServiceID', ['TypeID', 'Dest', 'NewUserID', 'NewResponsibleID', 'NextStateID', 'PriorityID', 'SLAID', 'SignKeyID', 'CryptKeyID', $Data{"DynamicFieldNamesStrg"}, 'To', 'Cc', 'Bcc']);
-    });
+    }).trigger('change');
 //]]></script>
 <!--dtl:js_on_document_complete-->
                     </div>
