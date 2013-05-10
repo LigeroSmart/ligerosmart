@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.55 2013-03-26 14:14:00 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.56 2013-05-10 10:24:17 mg Exp $
 # $OldId: AgentTicketPhone.pm,v 1.251 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.55 $) [1];
+$VERSION = qw($Revision: 1.56 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -339,6 +339,20 @@ sub Run {
         my %CustomerData;
         my $ArticleFrom = '';
         if ( $GetParam{ArticleID} ) {
+
+            my $Access = $Self->{TicketObject}->TicketPermission(
+                Type     => 'ro',
+                TicketID => $Self->{TicketID},
+                UserID   => $Self->{UserID}
+            );
+
+            if ( !$Access ) {
+                return $Self->{LayoutObject}->NoPermission(
+                    Message    => "You need ro permission!",
+                    WithHeader => 'yes',
+                );
+            }
+
             %Article = $Self->{TicketObject}->ArticleGet(
                 ArticleID     => $GetParam{ArticleID},
                 DynamicFields => 0,
@@ -1363,6 +1377,18 @@ sub Run {
             && $Self->{Config}->{SplitLinkType}->{Direction}
             )
         {
+            my $Access = $Self->{TicketObject}->TicketPermission(
+                Type     => 'ro',
+                TicketID => $GetParam{LinkTicketID},
+                UserID   => $Self->{UserID}
+            );
+
+            if ( !$Access ) {
+                return $Self->{LayoutObject}->NoPermission(
+                    Message    => "You need ro permission!",
+                    WithHeader => 'yes',
+                );
+            }
 
             my $SourceKey = $GetParam{LinkTicketID};
             my $TargetKey = $TicketID;
