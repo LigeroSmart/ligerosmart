@@ -1,8 +1,8 @@
 # --
 # Kernel/GenericInterface/Operation/FAQ/PublicFAQGet.pm - GenericInterface FAQ PublicFAQGet operation backend
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQGet.pm,v 1.5 2012-11-20 13:09:20 mh Exp $
+# $Id: PublicFAQGet.pm,v 1.6 2013-05-12 14:14:19 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -20,7 +20,7 @@ use Kernel::GenericInterface::Operation::Common;
 use Kernel::System::VariableCheck qw(IsArrayRefWithData IsHashRefWithData IsStringWithData);
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.5 $) [1];
+$VERSION = qw($Revision: 1.6 $) [1];
 
 =head1 NAME
 
@@ -187,7 +187,7 @@ sub Run {
 
         return $Self->{CommonObject}->ReturnError(
             ErrorCode    => 'PublicFAQGet.MissingParameter',
-            ErrorMessage => "PublicFAQGet: Got not ItemID!",
+            ErrorMessage => "PublicFAQGet: Got no ItemID!",
         );
     }
 
@@ -209,12 +209,7 @@ sub Run {
             UserID     => $Self->{UserID},
         );
 
-        if (
-            !IsHashRefWithData( \%FAQEntry )
-            || !$FAQEntry{Approved}
-            || !$Self->{InterfaceStates}->{ $FAQEntry{StateTypeID} }
-            )
-        {
+        if ( !IsHashRefWithData( \%FAQEntry ) ) {
 
             $ErrorMessage = 'Could not get FAQ data'
                 . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
@@ -223,7 +218,22 @@ sub Run {
                 ErrorCode    => 'PublicFAQGet.NotValidFAQID',
                 ErrorMessage => "PublicFAQGet: $ErrorMessage",
             );
+        }
 
+        # check permissions
+        my $ApprovalSuccess = 1;
+        if ( $Self->{ConfigObject}->Get('FAQ::ApprovalRequired') ) {
+            $ApprovalSuccess = $FAQEntry{Approved};
+        }
+        if ( !$ApprovalSuccess || !$Self->{InterfaceStates}->{ $FAQEntry{StateTypeID} } ) {
+
+            $ErrorMessage = 'Could not get FAQ data'
+                . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
+
+            return $Self->{CommonObject}->ReturnError(
+                ErrorCode    => 'PublicFAQGet.AccessDenied',
+                ErrorMessage => "PublicFAQGet: $ErrorMessage",
+            );
         }
 
         # set FAQ entry data
@@ -264,7 +274,7 @@ sub Run {
             . ' in Kernel::GenericInterface::Operation::FAQ::PublicFAQGet::Run()';
 
         return $Self->{CommonObject}->ReturnError(
-            ErrorCode    => 'PublicFAQGet.NotFAQData',
+            ErrorCode    => 'PublicFAQGet.NoFAQData',
             ErrorMessage => "PublicFAQGet: $ErrorMessage",
         );
 
@@ -292,6 +302,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.5 $ $Date: 2012-11-20 13:09:20 $
+$Revision: 1.6 $ $Date: 2013-05-12 14:14:19 $
 
 =cut
