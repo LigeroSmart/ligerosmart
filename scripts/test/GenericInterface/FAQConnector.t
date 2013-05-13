@@ -2,7 +2,7 @@
 # FAQConnector.t - GenericInterface transport interface tests for FAQConnector backend
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQConnector.t,v 1.8 2013-03-05 00:29:27 cr Exp $
+# $Id: FAQConnector.t,v 1.9 2013-05-13 01:50:43 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -32,6 +32,8 @@ my $HelperObject = Kernel::System::UnitTest::Helper->new(
     %{$Self},
     UnitTestObject => $Self,
 );
+
+my $RandomID = $HelperObject->GetRandomID();
 
 # set webservice name
 my $WebserviceName = '-Test-' . $HelperObject->GetRandomID();
@@ -116,7 +118,7 @@ $Self->True(
 );
 
 my $FAQIDOne = $FAQObject->FAQAdd(
-    Title      => 'Title FAQ One' . $WebserviceName,
+    Title      => 'Title FAQ ' . $RandomID . 'One' . $WebserviceName,
     CategoryID => $CategoryIDOne,
     StateID    => $PublicStateID,
     LanguageID => 1,
@@ -133,7 +135,7 @@ $Self->True(
 );
 
 my $FAQIDTwo = $FAQObject->FAQAdd(
-    Title      => 'Title FAQ Two' . $WebserviceName,
+    Title      => 'Title FAQ ' . $RandomID . ' Two' . $WebserviceName,
     CategoryID => $CategoryIDThree,
     StateID    => $PublicStateID,
     LanguageID => 1,
@@ -155,7 +157,7 @@ my $FAQIDThree = $FAQObject->FAQAdd(
     StateID    => $PublicStateID,
     LanguageID => 1,
     Keywords   => '',
-    Field1     => 'Look for me on the search',
+    Field1     => 'Look for me ' . $RandomID . ' on the search',
     Field2     => 'Solution not found1...',
     UserID     => $UserID,
     Approved   => 1,
@@ -191,7 +193,7 @@ for my $File (qw(bin txt)) {
 }
 
 my $FAQIDFour = $FAQObject->FAQAdd(
-    Title      => 'Title FAQ Языковые Four' . $WebserviceName,
+    Title      => 'Title FAQ ' . $RandomID . ' Языковые Four' . $WebserviceName,
     CategoryID => $CategoryIDFour,
     StateID    => $PublicStateID,
     LanguageID => 1,
@@ -459,7 +461,7 @@ my @Tests = (
         Name           => 'Test 3',
         SuccessRequest => '1',
         RequestData    => {
-            Title   => 'Title FAQ',
+            Title   => 'Title FAQ ' . $RandomID,
             OrderBy => 'FAQID',
         },
         ExpectedReturnRemoteData => {
@@ -478,7 +480,7 @@ my @Tests = (
         Name           => 'Test 4',
         SuccessRequest => '1',
         RequestData    => {
-            What    => 'Look for me',
+            What    => 'Look for me ' . $RandomID,
             OrderBy => 'FAQID',
         },
         ExpectedReturnRemoteData => {
@@ -526,7 +528,7 @@ my @Tests = (
             Data => {
                 Error => {
                     ErrorCode    => 'PublicFAQGet.MissingParameter',
-                    ErrorMessage => 'PublicFAQGet: Got not ItemID!'
+                    ErrorMessage => 'PublicFAQGet: Got no ItemID!'
                     }
             },
             Success => 1
@@ -536,7 +538,7 @@ my @Tests = (
             Data => {
                 Error => {
                     ErrorCode    => 'PublicFAQGet.MissingParameter',
-                    ErrorMessage => 'PublicFAQGet: Got not ItemID!'
+                    ErrorMessage => 'PublicFAQGet: Got no ItemID!'
                     }
             },
             Success => 1
