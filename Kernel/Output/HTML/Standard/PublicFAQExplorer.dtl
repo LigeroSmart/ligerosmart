@@ -1,8 +1,8 @@
 # --
 # PublicFAQExplorer.dtl.dtl - provides HTML for PublicFAQExplorer.pm
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: PublicFAQExplorer.dtl,v 1.13 2012-11-20 13:08:26 mh Exp $
+# $Id: PublicFAQExplorer.dtl,v 1.14 2013-05-20 15:09:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -219,6 +219,11 @@
 
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">
-    Core.Customer.ClickableRow();
+// make whole FAQ Item row clickable, but not the headers, can't use Core.Customer.ClickableRow()
+// since it uses "table tr" as selector, see bug#9329
+$("tbody tr").click(function(){
+    window.location.href = $("a", this).attr("href");
+    return false;
+});
 </script>
 <!-- dtl:js_on_document_complete -->
