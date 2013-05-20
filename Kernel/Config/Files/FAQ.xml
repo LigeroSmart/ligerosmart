@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.126 2013-01-02 11:07:32 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.127 2013-05-20 23:33:01 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -231,17 +231,6 @@
         <SubGroup>Core</SubGroup>
         <Setting>
             <String>internal (agent)</String>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="FAQ::WYSIWYGEditor" Required="1" Valid="1">
-        <Description Translatable="1">Show WYSIWYG editor in agent interface.</Description>
-        <Group>FAQ</Group>
-        <SubGroup>Frontend::Agent</SubGroup>
-        <Setting>
-            <Option SelectedID="1">
-                <Item Key="0">No</Item>
-                <Item Key="1">Yes</Item>
-            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::ApprovalRequired" Required="1" Valid="1">
