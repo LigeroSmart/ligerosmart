@@ -2,7 +2,7 @@
 # Kernel/System/FAQ.pm - all faq functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: FAQ.pm,v 1.165 2013-01-12 03:35:03 cr Exp $
+# $Id: FAQ.pm,v 1.166 2013-05-20 18:13:25 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::Valid;
 use Kernel::System::Web::UploadCache;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.165 $) [1];
+$VERSION = qw($Revision: 1.166 $) [1];
 
 =head1 NAME
 
@@ -5297,7 +5297,7 @@ sub _FAQApprovalTicketCreate {
             SenderType  => 'system',
             Subject     => $Subject,
             Body        => $Body,
-            ContentType => "text/plain; charset=$Self->{ConfigObject}->Get('DefaultCharset')",
+            ContentType => 'text/plain; charset=utf-8',
             UserID      => 1,
             HistoryType => 'SystemRequest',
             HistoryComment =>
@@ -5360,6 +5360,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.165 $ $Date: 2013-01-12 03:35:03 $
+$Revision: 1.166 $ $Date: 2013-05-20 18:13:25 $
 
 =cut
