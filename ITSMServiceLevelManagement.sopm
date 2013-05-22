@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.77 2013-04-17 12:33:05 ub Exp $</CVS>
+    <CVS>$Id: ITSMServiceLevelManagement.sopm,v 1.78 2013-05-22 06:12:23 mh Exp $</CVS>
     <Name>ITSMServiceLevelManagement</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
-    <PackageRequired Version="3.2.4">ITSMCore</PackageRequired>
+    <PackageRequired Version="3.2.5">ITSMCore</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -223,7 +223,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.2.4</li>
+        <li>ITSMCore 3.2.5</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -241,7 +241,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.2.4</li>
+        <li>ITSMCore 3.2.5</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -259,7 +259,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.2.4</li>
+        <li>ITSMCore 3.2.5</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -316,7 +316,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>ITSMCore 3.2.4</li>
+        <li>ITSMCore 3.2.5</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -334,7 +334,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>ITSMCore 3.2.4</li>
+        <li>ITSMCore 3.2.5</li>
         </ul>
         <br/>
         ((enjoy))<br/>
@@ -352,7 +352,7 @@
         <br/>
         <strong>PAQUETES OTRS REQUERIDOS</strong>
         <ul>
-        <li>ITSMCore 3.2.4</li>
+        <li>ITSMCore 3.2.5</li>
         </ul>
         <br/>
         ((enjoy))<br/>
