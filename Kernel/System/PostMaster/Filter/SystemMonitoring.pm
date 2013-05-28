@@ -1,8 +1,8 @@
 # --
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.16 2012-02-07 10:38:29 md Exp $
+# $Id: SystemMonitoring.pm,v 1.17 2013-05-28 09:34:35 rs Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,9 +15,13 @@ package Kernel::System::PostMaster::Filter::SystemMonitoring;
 
 use strict;
 use warnings;
+
 use Kernel::System::LinkObject;
+use Kernel::System::DynamicField;
+use Kernel::System::VariableCheck qw(:all);
+
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 #the base name for dynamic fields
 
@@ -42,7 +46,8 @@ sub new {
     }
 
     # create additional objects
-    $Self->{LinkObject} = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{LinkObject}         = Kernel::System::LinkObject->new( %{$Self} );
+    $Self->{DynamicFieldObject} = Kernel::System::DynamicField->new( %{$Self} );
 
     # check if CI incident state should be set automatically
     # this requires the ITSMConfigurationManagement module to be installed
@@ -280,10 +285,63 @@ sub _TicketSearch {
         $Query{$KeyName}->{Equals} = $KeyValue;
     }
 
+    # Check if dynamic fields really exists.
+    # If dynamic fields don't exists, TicketSearch will return all tickets
+    # and then the new article/ticket could take wrong place.
+    # The lesser of the three evils is to create a new ticket
+    # instead of defacing existing tickets or dropping it.
+    # This behaviour will come true if the dynamic fields
+    # are named like TicketFreeTextHost. Its also bad.
+    my $Errors = 0;
+    for my $Type (qw(Host Service)) {
+        my $FreeTextField = $Self->{Config}->{ 'FreeText' . $Type };
+
+        my $DynamicField = $Self->{DynamicFieldObject}->DynamicFieldGet(
+            'Name' => DynamicFieldTicketTextPrefix . $FreeTextField,
+        );
+
+        if ( !IsHashRefWithData($DynamicField) || $FreeTextField !~ m{\d+}xms ) {
+            $Self->{LogObject}->Log(
+                Priority => 'error',
+                Message  => "DynamicField "
+                    . DynamicFieldTicketTextPrefix
+                    . $FreeTextField
+                    . " does not exists or missnamed."
+                    . " The configuration is based on freetext fields, so the number of the freetext field is expected"
+                    . " (wrong value for key " . DynamicFieldTicketTextPrefix . $Type . " is set).",
+            );
+            $Errors = 1;
+        }
+    }
+
+    my $ArticleFreeTextField = $Self->{Config}->{'FreeTextState'};
+    my $DynamicFieldArticle  = $Self->{DynamicFieldObject}->DynamicFieldGet(
+        'Name' => DynamicFieldArticleTextPrefix . $ArticleFreeTextField,
+    );
+
+    if ( !IsHashRefWithData($DynamicFieldArticle) || $ArticleFreeTextField !~ m{\d+}xms ) {
+        $Self->{LogObject}->Log(
+            Priority => 'error',
+            Message  => "DynamicField "
+                . DynamicFieldArticleTextPrefix
+                . $ArticleFreeTextField
+                . " does not exists or missnamed."
+                . " The configuration is based on freetext fields, so the number of the freetext field is expected"
+                . " (wrong value for key "
+                . DynamicFieldArticleTextPrefix
+                . $ArticleFreeTextField
+                . " is set).",
+        );
+        $Errors = 1;
+    }
+
     my @TicketIDs = $Self->{TicketObject}->TicketSearch(%Query);
 
     # get the first and only ticket id
-    my $TicketID = shift @TicketIDs;
+    my $TicketID = ();
+    if ( !$Errors ) {
+        $TicketID = shift @TicketIDs;
+    }
 
     return $TicketID;
 
@@ -626,6 +684,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.16 $ $Date: 2012-02-07 10:38:29 $
+$Revision: 1.17 $ $Date: 2013-05-28 09:34:35 $
 
 =cut
