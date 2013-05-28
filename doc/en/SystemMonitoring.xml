@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: SystemMonitoring.xml,v 1.5 2013-05-28 09:47:58 rs Exp $ -->
+<!-- $Id: SystemMonitoring.xml,v 1.6 2013-05-28 09:49:36 rs Exp $ -->
 <book lang="en">
     <bookinfo>
         <title>$Name</title>
@@ -209,7 +209,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
             <para>
                 A dynamic field (type ticket) to store the affected host.
                 The field name have to be named like free text fields (TicketFreeTextField[1..16]) because of downward compatibility.
-                For example: TicketFreeTextField1.
+                For example: '1' for TicketFreeTextField1.
             </para>
             <para>Default: '1'</para>
         </sect1>
@@ -231,7 +231,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
             <para>
                 A dynamic field (type ticket) to store the service.
                 The field name have to be named like free text fields (TicketFreeTextField[1..16]) because of downward compatibility.
-                For example: TicketFreeTextField2.
+                For example: '2' for TicketFreeTextField2.
             </para>
             <para>Default: '2'</para>
         </sect1>
@@ -240,7 +240,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
             <para>
                 A dynamic field (type article) to store the state.
                 The field name have to be named like free text fields (ArticleFreeTextField[1..16]) because of downward compatibility.
-                For example: ArticleFreeTextField1.
+                For example: '1' for ArticleFreeTextField1.
             </para>
             <para>Default: '1'</para>
         </sect1>
