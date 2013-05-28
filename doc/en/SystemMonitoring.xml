@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
-<!-- $Id: SystemMonitoring.xml,v 1.4 2013-05-28 09:34:35 rs Exp $ -->
+<!-- $Id: SystemMonitoring.xml,v 1.5 2013-05-28 09:47:58 rs Exp $ -->
 <book lang="en">
     <bookinfo>
         <title>$Name</title>
@@ -145,7 +145,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
         <sect1>
             <title>Creation of dynamic fields</title>
             <para>
-                A requirement to get a working module is to create the dynamic fields
+                A requirement to get a working module is to use existing dynamic fields
                 for the defined values of FreeTextHost, FreeTextService and FreeTextState.
             </para>
         </sect1>
@@ -242,7 +242,7 @@ shell> bin/opm.pl -a install -p /path/to/$Name-$Version.opm
                 The field name have to be named like free text fields (ArticleFreeTextField[1..16]) because of downward compatibility.
                 For example: ArticleFreeTextField1.
             </para>
-            <para>Default: '2'</para>
+            <para>Default: '1'</para>
         </sect1>
         <sect1>
             <title>SenderType</title>
