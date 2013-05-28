@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.17 2013-05-28 09:34:35 rs Exp $
+# $Id: SystemMonitoring.pm,v 1.18 2013-05-28 12:01:02 rs Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.17 $) [1];
+$VERSION = qw($Revision: 1.18 $) [1];
 
 #the base name for dynamic fields
 
@@ -338,8 +338,8 @@ sub _TicketSearch {
     my @TicketIDs = $Self->{TicketObject}->TicketSearch(%Query);
 
     # get the first and only ticket id
-    my $TicketID = ();
-    if ( !$Errors ) {
+    my $TicketID;
+    if ( !$Errors && @TicketIDs ) {
         $TicketID = shift @TicketIDs;
     }
 
@@ -684,6 +684,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.17 $ $Date: 2013-05-28 09:34:35 $
+$Revision: 1.18 $ $Date: 2013-05-28 12:01:02 $
 
 =cut
