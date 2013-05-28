@@ -2,7 +2,7 @@
 # Kernel/System/PostMaster/Filter/SystemMonitoring.pm - Basic System Monitoring Interface
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: SystemMonitoring.pm,v 1.18 2013-05-28 12:01:02 rs Exp $
+# $Id: SystemMonitoring.pm,v 1.19 2013-05-28 12:10:59 rs Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -21,7 +21,7 @@ use Kernel::System::DynamicField;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.18 $) [1];
+$VERSION = qw($Revision: 1.19 $) [1];
 
 #the base name for dynamic fields
 
@@ -308,7 +308,7 @@ sub _TicketSearch {
                     . $FreeTextField
                     . " does not exists or missnamed."
                     . " The configuration is based on freetext fields, so the number of the freetext field is expected"
-                    . " (wrong value for key " . DynamicFieldTicketTextPrefix . $Type . " is set).",
+                    . " (wrong value for key FreeText" . $Type . " is set).",
             );
             $Errors = 1;
         }
@@ -327,10 +327,7 @@ sub _TicketSearch {
                 . $ArticleFreeTextField
                 . " does not exists or missnamed."
                 . " The configuration is based on freetext fields, so the number of the freetext field is expected"
-                . " (wrong value for key "
-                . DynamicFieldArticleTextPrefix
-                . $ArticleFreeTextField
-                . " is set).",
+                . " (wrong value for key FreeTextState is set).",
         );
         $Errors = 1;
     }
@@ -684,6 +681,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.18 $ $Date: 2013-05-28 12:01:02 $
+$Revision: 1.19 $ $Date: 2013-05-28 12:10:59 $
 
 =cut
