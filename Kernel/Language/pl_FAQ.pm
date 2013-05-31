@@ -1,9 +1,9 @@
 # --
 # Kernel/Language/pl_FAQ.pm - translation file
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_FAQ.pm,v 1.27 2012-11-20 13:09:22 mh Exp $
+# $Id: pl_FAQ.pm,v 1.28 2013-05-31 09:26:25 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
