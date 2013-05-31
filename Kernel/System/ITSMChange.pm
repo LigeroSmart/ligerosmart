@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange.pm - all change functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.pm,v 1.284 2013-02-05 20:25:51 ub Exp $
+# $Id: ITSMChange.pm,v 1.285 2013-05-31 13:59:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -27,7 +27,7 @@ use Kernel::System::VirtualFS;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.284 $) [1];
+$VERSION = qw($Revision: 1.285 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -2512,12 +2512,22 @@ sub ChangePossibleStatesGet {
             UserID     => $Param{UserID},
         );
 
-        # set as default state current state and all possible end states
-        my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
-            StateID => $Change->{ChangeStateID},
-            Class   => 'ITSM::ChangeManagement::Change::State',
-        ) || [];
-        my @NextStateIDs = sort ( @{$EndStateIDsRef}, $Change->{ChangeStateID} );
+        # set as default state current change state
+        my @NextStateIDs = ( $Change->{ChangeStateID} );
+
+        # check if reachable change end states should be allowed for locked change states
+        my $ChangeEndStatesAllowed
+            = $Self->{ConfigObject}->Get('ITSMChange::StateLock::AllowEndStates');
+
+        if ($ChangeEndStatesAllowed) {
+
+            # set as default state current state and all possible end states
+            my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+                StateID => $Change->{ChangeStateID},
+                Class   => 'ITSM::ChangeManagement::Change::State',
+            ) || [];
+            @NextStateIDs = sort ( @{$EndStateIDsRef}, $Change->{ChangeStateID} );
+        }
 
         # get possible next states if no state lock
         if ( !$StateLock ) {
@@ -3826,6 +3836,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.284 $ $Date: 2013-02-05 20:25:51 $
+$Revision: 1.285 $ $Date: 2013-05-31 13:59:30 $
 
 =cut

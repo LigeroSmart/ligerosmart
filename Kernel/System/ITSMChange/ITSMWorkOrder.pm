@@ -2,7 +2,7 @@
 # Kernel/System/ITSMChange/ITSMWorkOrder.pm - all workorder functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMWorkOrder.pm,v 1.135 2013-02-05 20:25:51 ub Exp $
+# $Id: ITSMWorkOrder.pm,v 1.136 2013-05-31 13:59:30 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -24,7 +24,7 @@ use Kernel::System::HTMLUtils;
 use Kernel::System::Cache;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.135 $) [1];
+$VERSION = qw($Revision: 1.136 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -1972,12 +1972,22 @@ sub WorkOrderPossibleStatesGet {
             UserID     => $Param{UserID},
         );
 
-        # set as default state current state and all possible end states
-        my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
-            StateID => $WorkOrder->{WorkOrderStateID},
-            Class   => 'ITSM::ChangeManagement::WorkOrder::State',
-        ) || [];
-        my @NextStateIDs = sort ( @{$EndStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
+        # set as default state current workorder state
+        my @NextStateIDs = ( $WorkOrder->{WorkOrderStateID} );
+
+        # check if reachable workorder end states should be allowed for locked workorder states
+        my $WorkOrderEndStatesAllowed
+            = $Self->{ConfigObject}->Get('ITSMWorkOrder::StateLock::AllowEndStates');
+
+        if ($WorkOrderEndStatesAllowed) {
+
+            # set as default state current state and all possible end states
+            my $EndStateIDsRef = $Self->{StateMachineObject}->StateTransitionGetEndStates(
+                StateID => $WorkOrder->{WorkOrderStateID},
+                Class   => 'ITSM::ChangeManagement::WorkOrder::State',
+            ) || [];
+            @NextStateIDs = sort ( @{$EndStateIDsRef}, $WorkOrder->{WorkOrderStateID} );
+        }
 
         # get possible next states if no state lock
         if ( !$StateLock ) {
@@ -3506,6 +3516,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.135 $ $Date: 2013-02-05 20:25:51 $
+$Revision: 1.136 $ $Date: 2013-05-31 13:59:30 $
 
 =cut

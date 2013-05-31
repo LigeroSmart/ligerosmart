@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.276 2013-04-09 16:59:04 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.277 2013-05-31 13:59:29 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -3977,6 +3977,17 @@
             <String Regex="">Change#</String>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="ITSMChange::StateLock::AllowEndStates" Required="1" Valid="1">
+        <Description Translatable="1">Defines if reachable (as defined by the state machine) change end states should be allowed if a change is in a locked state.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMChange</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="ITSMChange::State::Signal" Required="1" Valid="1">
         <Description Translatable="1">Defines the signals for each ITSMChange state.</Description>
         <Group>ITSM Change Management</Group>
@@ -7418,6 +7429,17 @@
         <SubGroup>Core::ITSMWorkOrder</SubGroup>
         <Setting>
             <String Regex="">Workorder#</String>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ITSMWorkOrder::StateLock::AllowEndStates" Required="1" Valid="1">
+        <Description Translatable="1">Defines if reachable (as defined by the state machine) workorder end states should be allowed if a workorder is in a locked state.</Description>
+        <Group>ITSM Change Management</Group>
+        <SubGroup>Core::ITSMWorkOrder</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">No</Item>
+                <Item Key="1">Yes</Item>
+            </Option>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ITSMWorkOrder::State::Signal" Required="1" Valid="1">
