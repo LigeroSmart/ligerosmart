@@ -2,7 +2,7 @@
 # Kernel/Language/pl_ITSMChangeManagement.pm - translation file
 # Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_ITSMChangeManagement.pm,v 1.2 2012-10-18 17:12:02 ub Exp $
+# $Id: pl_ITSMChangeManagement.pm,v 1.3 2013-05-31 09:27:04 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -39,6 +39,7 @@ sub Data {
     $Self->{Translation}->{'CABCustomers'} = 'CAB Klienci';
     $Self->{Translation}->{'Change Overview'} = 'Przegląd zmiany';
     $Self->{Translation}->{'Change Schedule'} = 'Harmonogram zmiany';
+    $Self->{Translation}->{'Schedule'} = 'Harmonogram';
     $Self->{Translation}->{'Change involved persons of the change'} = 'Zmień osoby zaangażowane w zmianę';
     $Self->{Translation}->{'ChangeHistory::ActionAdd'} = '%s: %s';
     $Self->{Translation}->{'ChangeHistory::ActionAddID'} = 'Nowa akcja (ID=%s)';
@@ -81,6 +82,22 @@ sub Data {
     $Self->{Translation}->{'Edit the conditions of the change'} = 'Edytuj warunki w zmianie';
     $Self->{Translation}->{'Edit the workorder'} = 'Edytuj zadanie';
     $Self->{Translation}->{'Expression'} = 'Wyrażenie';
+    $Self->{Translation}->{'Run Search'} = 'Szukaj';
+    $Self->{Translation}->{'Change Number'} = 'Numer zmiany';
+    $Self->{Translation}->{'Change Title'} = 'Tytuł zmiany';
+    $Self->{Translation}->{'Change Description'} = 'Opis zmiany';
+    $Self->{Translation}->{'Change Justification'} = 'Uzasadnienie zmiany';
+    $Self->{Translation}->{'Change Priority'} = 'Priorytet zmiany';
+    $Self->{Translation}->{'Change Category'} = 'Kategoria zmiany';
+    $Self->{Translation}->{'Change Impact'} = 'Wpływ zmiany';
+    $Self->{Translation}->{'Change State'} = 'Stan zmiany';
+    $Self->{Translation}->{'WorkOrder Instruction'} = 'Instrukcja zadania';
+    $Self->{Translation}->{'WorkOrder Report'} = 'Raport zadania';
+    $Self->{Translation}->{'WorkOrder State'} = 'Stan zadania';
+    $Self->{Translation}->{'WorkOrder Agent'} = 'Agent zadania';
+    $Self->{Translation}->{'Work Order Title'} = 'Tytuł zadania';
+    $Self->{Translation}->{'CAB Agent'} = 'CAB agent';
+    $Self->{Translation}->{'CAB Customer'} = 'CAB klient';
     $Self->{Translation}->{'Full-Text Search in Change and Workorder'} = 'Wyszukiwanie pełnotekstowe w zmianie i zadaniach';
     $Self->{Translation}->{'ITSMCondition'} = 'Warunek';
     $Self->{Translation}->{'ITSMWorkOrder'} = 'Zadanie';
@@ -93,6 +110,7 @@ sub Data {
     $Self->{Translation}->{'No XXX settings'} = 'Brak ustawień \'%s\'';
     $Self->{Translation}->{'PIR (Post Implementation Review)'} = 'PIR (Post Implementation Review)';
     $Self->{Translation}->{'PSA (Projected Service Availability)'} = 'PSA (Projected Service Availability)';
+    $Self->{Translation}->{'Projected Service Availability'} = 'PSA';
     $Self->{Translation}->{'Please select first a catalog class!'} = 'Zaznacz najpierw proszę klasę z katalogu!';
     $Self->{Translation}->{'Print the change'} = 'Wydrukuj zmianę';
     $Self->{Translation}->{'Print the workorder'} = 'Wydrukuj zadanie';
@@ -170,6 +188,7 @@ sub Data {
 
     # Template: AdminITSMChangeCIPAllocate
     $Self->{Translation}->{'Category <-> Impact <-> Priority'} = 'Kategoria <-> Wpływ <-> Priorytet';
+    $Self->{Translation}->{'Impact \ Category'} = 'Wpływ \ Kategoria';
     $Self->{Translation}->{'Manage the priority result of combinating Category <-> Impact.'} = 'Zarządzanie priorytetem dla kombinacji Kategoria <-> Wpływ.';
     $Self->{Translation}->{'Priority allocation'} = 'Alokacja priorytetu';
 
@@ -293,7 +312,6 @@ sub Data {
     $Self->{Translation}->{'CABCustomer'} = 'CAB Klient';
     $Self->{Translation}->{'Instruction'} = 'Instrukcja';
     $Self->{Translation}->{'Report'} = 'Raport';
-    $Self->{Translation}->{'Change Category'} = 'Zmień kategorię';
     $Self->{Translation}->{'(before/after)'} = '(przed/po)';
     $Self->{Translation}->{'(between)'} = '(pomiędzy)';
 
