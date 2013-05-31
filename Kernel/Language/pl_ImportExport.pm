@@ -1,8 +1,9 @@
 # --
 # Kernel/Language/pl_ImportExport.pm - translation file
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
+# Copyright (C) 2011-2012 Informatyka Boguslawski sp. z o.o. sp.k., http://www.ib.pl/
 # --
-# $Id: pl_ImportExport.pm,v 1.13 2012-11-30 13:43:55 ub Exp $
+# $Id: pl_ImportExport.pm,v 1.14 2013-05-31 09:26:52 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -26,11 +27,11 @@ sub Data {
     $Self->{Translation}->{'Semicolon (;)'} = 'Średnik (;)';
     $Self->{Translation}->{'Tabulator (TAB)'} = 'Tabulator (TAB)';
     $Self->{Translation}->{'Include Column Headers'} = 'Umieść nagłówki kolumn';
-    $Self->{Translation}->{'Import summary for'} = '';
-    $Self->{Translation}->{'Imported records'} = '';
-    $Self->{Translation}->{'Exported records'} = '';
-    $Self->{Translation}->{'Records'} = '';
-    $Self->{Translation}->{'Skipped'} = '';
+    $Self->{Translation}->{'Import summary for'} = 'Podsumowanie importu dla';
+    $Self->{Translation}->{'Imported records'} = 'Zaimportowane rekordy';
+    $Self->{Translation}->{'Exported records'} = 'Wyeksportowane rekordy';
+    $Self->{Translation}->{'Records'} = 'Rekordy';
+    $Self->{Translation}->{'Skipped'} = 'Pominięte';
 
     # Template: AdminImportExport
     $Self->{Translation}->{'Import/Export Management'} = 'Zarządzanie Importem/Exportem';
@@ -53,11 +54,11 @@ sub Data {
     $Self->{Translation}->{'Restrict export per search'} = 'Ogranicz eksport przez wyszukanie';
     $Self->{Translation}->{'Import information'} = 'Importuj informacje';
     $Self->{Translation}->{'Source File'} = 'Plik źródłowy';
-    $Self->{Translation}->{'Success'} = '';
-    $Self->{Translation}->{'Failed'} = '';
-    $Self->{Translation}->{'Duplicate names'} = '';
-    $Self->{Translation}->{'Last processed line number of import file'} = '';
-    $Self->{Translation}->{'Ok'} = '';
+    $Self->{Translation}->{'Success'} = 'Powodzenie';
+    $Self->{Translation}->{'Failed'} = 'Niepowodzenie';
+    $Self->{Translation}->{'Duplicate names'} = 'Duplikaty nazw';
+    $Self->{Translation}->{'Last processed line number of import file'} = 'Nr ostaniej przetworzonej linii pliku importowego';
+    $Self->{Translation}->{'Ok'} = 'Ok';
 
     # SysConfig
     $Self->{Translation}->{'Format backend module registration for the import/export module.'} =
@@ -68,12 +69,16 @@ sub Data {
     #
     # OBSOLETE ENTRIES FOR REFERENCE, DO NOT TRANSLATE!
     #
+    $Self->{Translation}->{'Template List'} = 'Lista szablonów';
     $Self->{Translation}->{'Class'} = 'Klasa';
     $Self->{Translation}->{'Config Item'} = 'CI';
     $Self->{Translation}->{'Element required, please insert data'} = 'Element wymagany, podaj wartość';
     $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Puste pola oznaczają zachowanie bieżącej wartości';
     $Self->{Translation}->{'Maximum number of one element'} = 'Maksymalna liczba wystąpień pojedynczego elementu';
-    $Self->{Translation}->{'Template List'} = 'Lista szablonów';
+    $Self->{Translation}->{'Empty fields indicate that the current values are kept'} = 'Puste pola oznaczają zachowanie bieżącej wartości';
+    $Self->{Translation}->{'Element required, please insert data'} = 'Element wymagany, podaj wartość';
+    $Self->{Translation}->{'Config Item'} = 'CI';
+    $Self->{Translation}->{'Delete Template'} = 'Usuń szablon';
 
 }
 
