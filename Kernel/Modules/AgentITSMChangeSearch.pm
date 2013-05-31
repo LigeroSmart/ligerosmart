@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentITSMChangeSearch.pm - module for change search
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentITSMChangeSearch.pm,v 1.81 2012-11-21 10:19:33 ub Exp $
+# $Id: AgentITSMChangeSearch.pm,v 1.82 2013-05-31 08:32:58 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -23,7 +23,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::Service;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.81 $) [1];
+$VERSION = qw($Revision: 1.82 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -1254,10 +1254,12 @@ sub _MaskForm {
 
     # Get a complete list of users
     # for the selection 'ChangeBuilder', 'ChangeManager' and 'created by user'.
+    # It is important to also search for invalid agents, as we want to find
+    # these changes too.
     # Out of office nice might be appended to the values.
     my %Users = $Self->{UserObject}->UserList(
         Type  => 'Long',
-        Valid => 1,
+        Valid => 0,
     );
 
     # dropdown menu for 'created by users'
