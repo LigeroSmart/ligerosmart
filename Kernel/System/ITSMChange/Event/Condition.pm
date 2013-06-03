@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/Event/Condition.pm - a event module to match conditions
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Condition.pm,v 1.8 2012-11-22 08:47:47 ub Exp $
+# $Id: Condition.pm,v 1.9 2013-06-03 08:55:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::ITSMChange::ITSMWorkOrder;
 use Kernel::System::ITSMChange::ITSMCondition;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.8 $) [1];
+$VERSION = qw($Revision: 1.9 $) [1];
 
 =head1 NAME
 
@@ -263,6 +263,7 @@ sub Run {
     my $Success = $Self->{ConditionObject}->ConditionMatchExecuteAll(
         ChangeID          => $ChangeID,
         AttributesChanged => { $Object => \@AttributesChanged },
+        Event             => $Param{Event},
         UserID            => $Param{UserID},
     );
 
@@ -271,7 +272,7 @@ sub Run {
         $Self->{LogObject}->Log(
             Priority => 'error',
             Message  => "ConditionMatchExecuteAll could not be "
-                . "executed successfully for event '$Param{Event}'!"
+                . "executed successfully for event '$Param{Event}' on ChangeID '$ChangeID'!"
         );
         return;
     }
@@ -354,6 +355,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.8 $ $Date: 2012-11-22 08:47:47 $
+$Revision: 1.9 $ $Date: 2013-06-03 08:55:24 $
 
 =cut

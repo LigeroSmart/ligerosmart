@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ITSMChange/ITSMCondition.pm - all condition functions
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.pm,v 1.60 2012-06-06 16:50:57 ub Exp $
+# $Id: ITSMCondition.pm,v 1.61 2013-06-03 08:55:24 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -25,7 +25,7 @@ use Kernel::System::ITSMChange::ITSMCondition::Expression;
 use Kernel::System::ITSMChange::ITSMCondition::Action;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.60 $) [1];
+$VERSION = qw($Revision: 1.61 $) [1];
 
 @ISA = (
     'Kernel::System::EventHandler',
@@ -747,6 +747,7 @@ The optional parameter 'AttributesChanged' is passed on to ConditionMatchExecute
     my $Success = $ConditionObject->ConditionMatchExecuteAll(
         ChangeID          => 123,
         AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription] },  # (optional)
+        Event             => 'ChangeUpdate',                                       # (optional)
         UserID            => 1,
     );
 
@@ -787,6 +788,7 @@ sub ConditionMatchExecuteAll {
         my $Success = $Self->ConditionMatchExecute(
             ConditionID       => $ConditionID,
             AttributesChanged => $Param{AttributesChanged},
+            Event             => $Param{Event},
             UserID            => $Param{UserID},
         );
 
@@ -816,6 +818,7 @@ then, for obvious reasons, the shortcut is not used.
     my $Success = $ConditionObject->ConditionMatchExecute(
         ConditionID       => 123,
         AttributesChanged => { ITSMChange => [ ChangeTitle, ChangeDescription] },  # (optional)
+        Event             => 'ChangeUpdate',                                       # (optional)
         UserID            => 1,
     );
 
@@ -943,7 +946,8 @@ sub ConditionMatchExecute {
             $Self->{LogObject}->Log(
                 Priority => 'error',
                 Message  => "ActionID '$ActionID' could not be executed successfully "
-                    . "for ConditionID '$Param{ConditionID}'.",
+                    . "for ConditionID '$Param{ConditionID}' (Condition name: '$ConditionData->{Name}') "
+                    . "on ChangeID '$ConditionData->{ChangeID}' for event '$Param{Event}'.",
             );
         }
     }
@@ -1492,6 +1496,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.60 $ $Date: 2012-06-06 16:50:57 $
+$Revision: 1.61 $ $Date: 2013-06-03 08:55:24 $
 
 =cut
