@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminGeneralCatalog.pm - admin frontend of general catalog management
-# Copyright (C) 2001-2010 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminGeneralCatalog.pm,v 1.26 2010-10-19 14:58:02 cg Exp $
+# $Id: AdminGeneralCatalog.pm,v 1.27 2013-06-05 10:58:29 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.26 $) [1];
+$VERSION = qw($Revision: 1.27 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -49,18 +49,9 @@ sub Run {
         my $Class = $Self->{ParamObject}->GetParam( Param => "Class" ) || '';
 
         # check needed class
-        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" ) if !$Class;
-
-        # get catalog class list
-        my $ClassList       = $Self->{GeneralCatalogObject}->ClassList();
-        my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Name         => 'Class',
-            Data         => $ClassList,
-            Class        => 'W100pc',
-            SelectedID   => $Class,
-            PossibleNone => 1,
-            Translation  => 0,
-        );
+        if ( !$Class ) {
+            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        }
 
         # output overview
         $Self->{LayoutObject}->Block(
@@ -87,8 +78,9 @@ sub Run {
         );
 
         # check item list
-        return $Self->{LayoutObject}->ErrorScreen()
-            if !$ItemIDList || !%{$ItemIDList};
+        if ( !$ItemIDList || !%{$ItemIDList} ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
 
         for my $ItemID ( sort { $ItemIDList->{$a} cmp $ItemIDList->{$b} } keys %{$ItemIDList} ) {
 
@@ -112,13 +104,8 @@ sub Run {
             Name => 'ActionAddItem',
             Data => {
                 %Param,
-                ClassOptionStrg => $ClassOptionStrg,
+                Class => $Class,
             },
-        );
-
-        # ActionAddClass
-        $Self->{LayoutObject}->Block(
-            Name => 'ActionAddClass',
         );
 
         # ActionOverview
@@ -150,15 +137,20 @@ sub Run {
 
         # get params
         $ItemData{ItemID} = $Self->{ParamObject}->GetParam( Param => "ItemID" );
+
+        # add a new catalog item
         if ( $ItemData{ItemID} eq 'NEW' ) {
 
             # get class
             $ItemData{Class} = $Self->{ParamObject}->GetParam( Param => "Class" );
 
             # redirect to overview
-            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
-                if !$ItemData{Class};
+            if ( !$ItemData{Class} ) {
+                return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+            }
         }
+
+        # edit an existing catalog item
         else {
 
             # get item data
@@ -167,29 +159,19 @@ sub Run {
             );
 
             # check item data
-            return $Self->{LayoutObject}->ErrorScreen()
-                if !$ItemDataRef;
+            if ( !$ItemDataRef ) {
+                return $Self->{LayoutObject}->ErrorScreen();
+            }
 
             %ItemData = %{$ItemDataRef};
         }
-
-        # generate ClassOptionStrg
-        my $ClassList       = $Self->{GeneralCatalogObject}->ClassList();
-        my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Name         => 'Class',
-            Data         => $ClassList,
-            SelectedID   => $ItemData{Class},
-            Class        => 'W100pc',
-            PossibleNone => 1,
-            Translation  => 0,
-        );
 
         # output overview
         $Self->{LayoutObject}->Block(
             Name => 'Overview',
             Data => {
                 %Param,
-                ClassOptionStrg => $ClassOptionStrg,
+                Class => $ItemData{Class},
             },
         );
 
@@ -221,8 +203,10 @@ sub Run {
         for my $Item ( sort keys %Preferences ) {
 
             # skip items that don't belong to the class
-            next if $Preferences{$Item}->{Class}
-                    && $Preferences{$Item}->{Class} ne $ItemData{Class};
+            if ( $Preferences{$Item}->{Class} && $Preferences{$Item}->{Class} ne $ItemData{Class} )
+            {
+                next ITEM;
+            }
 
             # find output module
             my $Module = $Preferences{$Item}->{Module}
@@ -274,15 +258,6 @@ sub Run {
                     Class => $ItemData{Class},
                 },
             );
-
-            # ActionOverview
-            $Self->{LayoutObject}->Block(
-                Name => 'ActionAddItem',
-                Data => {
-                    %Param,
-                    ClassOptionStrg => $ClassOptionStrg,
-                },
-            );
         }
         else {
 
@@ -292,11 +267,6 @@ sub Run {
                 Data => {
                     Class => $ItemData{Class},
                 },
-            );
-
-            # ActionAddClass
-            $Self->{LayoutObject}->Block(
-                Name => 'ActionAddClass',
             );
         }
 
@@ -333,8 +303,9 @@ sub Run {
         }
 
         # check class
-        return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" )
-            if $ItemData{Class} eq 'NEW';
+        if ( $ItemData{Class} eq 'NEW' ) {
+            return $Self->{LayoutObject}->Redirect( OP => "Action=$Self->{Action}" );
+        }
 
         # save to database
         my $Success;
@@ -395,11 +366,13 @@ sub Run {
             }
         }
 
-        return $Self->{LayoutObject}->ErrorScreen() if !$Success;
+        if ( !$Success ) {
+            return $Self->{LayoutObject}->ErrorScreen();
+        }
 
         # redirect to overview class list
         return $Self->{LayoutObject}->Redirect(
-            OP => "Action=$Self->{Action}&Subaction=ItemList&Class=$ItemData{Class}"
+            OP => "Action=$Self->{Action};Subaction=ItemList;Class=$ItemData{Class}"
         );
     }
 
@@ -407,16 +380,6 @@ sub Run {
     # overview
     # ------------------------------------------------------------ #
     else {
-
-        # get catalog class list
-        my $ClassList       = $Self->{GeneralCatalogObject}->ClassList();
-        my $ClassOptionStrg = $Self->{LayoutObject}->BuildSelection(
-            Name         => 'Class',
-            Data         => $ClassList,
-            Class        => 'W100pc',
-            PossibleNone => 1,
-            Translation  => 0,
-        );
 
         # output overview
         $Self->{LayoutObject}->Block(
@@ -432,6 +395,9 @@ sub Run {
             },
         );
 
+        # get catalog class list
+        my $ClassList = $Self->{GeneralCatalogObject}->ClassList();
+
         for my $Class ( @{$ClassList} ) {
 
             # output overview class list
@@ -442,15 +408,6 @@ sub Run {
                 },
             );
         }
-
-        # ActionOverview
-        $Self->{LayoutObject}->Block(
-            Name => 'ActionAddItem',
-            Data => {
-                %Param,
-                ClassOptionStrg => $ClassOptionStrg,
-            },
-        );
 
         # ActionAddClass
         $Self->{LayoutObject}->Block(
