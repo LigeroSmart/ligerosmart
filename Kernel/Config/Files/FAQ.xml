@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.127 2013-05-20 23:33:01 cr Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.128 2013-06-06 11:03:35 ub Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1052,7 +1052,7 @@ Your OTRS Notification Master
                 <Item Key="Name">Edit</Item>
                 <Item Key="Description" Translatable="1">Edit this FAQ</Item>
                 <Item Key="Action">AgentFAQEdit</Item>
-                <Item Key="Link">Action=AgentFAQEdit;ItemID=$QData{"ItemID"}</Item>
+                <Item Key="Link">Action=AgentFAQEdit;ItemID=$QData{"ItemID"};ScreenType=Popup</Item>
                 <Item Key="Target">PopUp</Item>
             </Hash>
         </Setting>

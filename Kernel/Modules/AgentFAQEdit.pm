@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AgentFAQEdit.pm - agent frontend to edit faq articles
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQEdit.pm,v 1.20 2012-11-20 13:05:09 mh Exp $
+# $Id: AgentFAQEdit.pm,v 1.21 2013-06-06 11:03:35 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -19,7 +19,7 @@ use Kernel::System::Web::UploadCache;
 use Kernel::System::Valid;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.20 $) [1];
+$VERSION = qw($Revision: 1.21 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -50,6 +50,9 @@ sub new {
     if ( !$Self->{FormID} ) {
         $Self->{FormID} = $Self->{UploadCacheObject}->FormIDCreate();
     }
+
+    # get screen type
+    $Self->{ScreenType} = $Self->{ParamObject}->GetParam( Param => 'ScreenType' ) || '';
 
     # set default interface settings
     $Self->{Interface} = $Self->{FAQObject}->StateTypeGet(
@@ -125,8 +128,36 @@ sub Run {
     # ------------------------------------------------------------ #
     if ( !$Self->{Subaction} ) {
 
-        # header
-        my $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+        my $Output;
+
+        # show a popup screen
+        if ( $Self->{ScreenType} eq 'Popup' ) {
+
+            # show the small popup screen header
+            $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'StartSmall',
+                Data => {
+                    %FAQData,
+                },
+            );
+        }
+
+        # show a normal window
+        else {
+
+            # show the normal screen header with navigation bar
+            $Output = $Self->{LayoutObject}->Header();
+            $Output .= $Self->{LayoutObject}->NavigationBar();
+
+            $Self->{LayoutObject}->Block(
+                Name => 'StartNormal',
+                Data => {
+                    %FAQData,
+                },
+            );
+        }
 
         # get all existing attachments (without inline attachments)
         my @ExistingAttachments = $Self->{FAQObject}->AttachmentIndex(
@@ -179,11 +210,32 @@ sub Run {
         $Output .= $Self->_MaskNew(
             %FAQData,
             Attachments => \@Attachments,
+            ScreenType  => $Self->{ScreenType},
             FormID      => $Self->{FormID},
         );
 
-        # footer
-        $Output .= $Self->{LayoutObject}->Footer();
+        # show a popup screen footer
+        if ( $Self->{ScreenType} eq 'Popup' ) {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'EndSmall',
+                Data => {},
+            );
+
+            $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
+        }
+
+        # show a normal footer
+        else {
+
+            $Self->{LayoutObject}->Block(
+                Name => 'EndNormal',
+                Data => {},
+            );
+
+            $Output .= $Self->{LayoutObject}->Footer();
+        }
 
         return $Output;
     }
@@ -196,8 +248,36 @@ sub Run {
         # challenge token check for write action
         $Self->{LayoutObject}->ChallengeTokenCheck();
 
-        # header
-        my $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+        my $Output;
+
+        # show a popup screen
+        if ( $Self->{ScreenType} eq 'Popup' ) {
+
+            # show the small popup screen header
+            $Output = $Self->{LayoutObject}->Header( Type => 'Small' );
+
+            $Self->{LayoutObject}->Block(
+                Name => 'StartSmall',
+                Data => {
+                    %FAQData,
+                },
+            );
+        }
+
+        # show a normal window
+        else {
+
+            # show the normal screen header with navigation bar
+            $Output = $Self->{LayoutObject}->Header();
+            $Output .= $Self->{LayoutObject}->NavigationBar();
+
+            $Self->{LayoutObject}->Block(
+                Name => 'StartNormal',
+                Data => {
+                    %FAQData,
+                },
+            );
+        }
 
         # check required parameters
         my %Error;
@@ -268,11 +348,32 @@ sub Run {
                 Attachments => \@Attachments,
                 %GetParam,
                 %Error,
-                FormID => $Self->{FormID},
+                ScreenType => $Self->{ScreenType},
+                FormID     => $Self->{FormID},
             );
 
-            # footer
-            $Output .= $Self->{LayoutObject}->Footer();
+            # show a popup screen footer
+            if ( $Self->{ScreenType} eq 'Popup' ) {
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'EndSmall',
+                    Data => {},
+                );
+
+                $Output .= $Self->{LayoutObject}->Footer( Type => 'Small' );
+
+            }
+
+            # show a normal footer
+            else {
+
+                $Self->{LayoutObject}->Block(
+                    Name => 'EndNormal',
+                    Data => {},
+                );
+
+                $Output .= $Self->{LayoutObject}->Footer();
+            }
 
             return $Output;
         }
@@ -427,10 +528,17 @@ sub Run {
         # delete the upload cache
         $Self->{UploadCacheObject}->FormIDRemove( FormID => $Self->{FormID} );
 
-        # reload the parent window and close popup
-        return $Self->{LayoutObject}->PopupClose(
-            URL => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
-        );
+        # check if there if we need to close a popup screen or not
+        if ( $Self->{ScreenType} eq 'Popup' ) {
+            return $Self->{LayoutObject}->PopupClose(
+                URL => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
+            );
+        }
+        else {
+            return $Self->{LayoutObject}->Redirect(
+                OP => "Action=AgentFAQZoom;ItemID=$GetParam{ItemID}",
+            );
+        }
     }
 }
 
