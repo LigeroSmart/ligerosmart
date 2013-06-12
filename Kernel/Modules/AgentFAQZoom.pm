@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentFAQZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoom.pm,v 1.37 2013-04-25 02:27:04 cr Exp $
+# $Id: AgentFAQZoom.pm,v 1.38 2013-06-12 18:12:57 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,7 +18,7 @@ use Kernel::System::LinkObject;
 use Kernel::System::FAQ;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.37 $) [1];
+$VERSION = qw($Revision: 1.38 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -599,10 +599,23 @@ sub Run {
 
         # show "Insert Text" button
         if ( $TicketComposeConfig->{ShowInsertTextButton} ) {
-            $Self->{LayoutObject}->Block(
-                Name => 'InsertText',
-                Data => {},
-            );
+            if (
+                defined $TicketComposeConfig->{InsertMethod}
+                && $TicketComposeConfig->{InsertMethod} eq 'Full'
+                )
+            {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InsertFull',
+                    Data => {},
+                );
+            }
+            else {
+                $Self->{LayoutObject}->Block(
+                    Name => 'InsertText',
+                    Data => {},
+                );
+            }
+
             $ShowOrBlock = 1;
         }
 
@@ -631,10 +644,22 @@ sub Run {
 
             # show "Insert Text and Link" button
             if ( $TicketComposeConfig->{ShowInsertTextAndLinkButton} ) {
-                $Self->{LayoutObject}->Block(
-                    Name => 'InsertBoth',
-                    Data => {},
-                );
+                if (
+                    defined $TicketComposeConfig->{InsertMethod}
+                    && $TicketComposeConfig->{InsertMethod} eq 'Full'
+                    )
+                {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'InsertFullAndLink',
+                        Data => {},
+                    );
+                }
+                else {
+                    $Self->{LayoutObject}->Block(
+                        Name => 'InsertTextAndLink',
+                        Data => {},
+                    );
+                }
                 $ShowOrBlock = 1
             }
         }

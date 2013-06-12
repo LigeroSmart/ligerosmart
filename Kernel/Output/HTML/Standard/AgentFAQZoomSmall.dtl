@@ -2,7 +2,7 @@
 # AgentFAQZoomSmall.dtl - provides HTML small for AgentFAQZoom.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentFAQZoomSmall.dtl,v 1.16 2013-03-02 19:44:09 mb Exp $
+# $Id: AgentFAQZoomSmall.dtl,v 1.17 2013-06-12 18:12:57 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -154,6 +154,7 @@
         </div>
         <div class="Clear"></div>
     </div>
+    <input id="FAQID" type="hidden" name="FAQID" value="$QData{"ID"}">
     <input id="FAQTitle" type="hidden" name="Title" value="$QData{"Title"}">
     <input id="FAQBody" type="hidden" name="Body" value="$QData{"FullBody"}">
     <input id="FAQPublicLink" type="hidden" name="Link"  value="$Data{"Publiclink"}">
@@ -165,13 +166,21 @@
     <button id="InsertText" class="Primary ZoomSmallButton">$Text{"Insert FAQ Text"}</button>
 <!-- dtl:block:InsertText -->
 
+<!-- dtl:block:InsertFull -->
+    <button id="InsertFull" class="Primary ZoomSmallButton">$Text{"Insert Full FAQ"}</button>
+<!-- dtl:block:InsertFull -->
+
 <!-- dtl:block:InsertLink -->
     <button id="InsertLink" class="Primary ZoomSmallButton">$Text{"Insert FAQ Link"}</button>
 <!-- dtl:block:InsertLink -->
 
-<!-- dtl:block:InsertBoth -->
-    <button id="InsertBoth" class="Primary ZoomSmallButton">$Text{"Insert FAQ Text & Link"}</button>
-<!-- dtl:block:InsertBoth -->
+<!-- dtl:block:InsertTextAndLink -->
+    <button id="InsertTextAndLink" class="Primary ZoomSmallButton">$Text{"Insert FAQ Text & Link"}</button>
+<!-- dtl:block:InsertTextAndLink -->
+
+<!-- dtl:block:InsertFullAndLink -->
+    <button id="InsertFullAndLink" class="Primary ZoomSmallButton">$Text{"Insert Full FAQ & Link"}</button>
+<!-- dtl:block:InsertFullAndLink -->
 
 <!-- dtl:block:Or -->
     $Text{"or"}
@@ -189,27 +198,38 @@ $('#Cancel').bind('click', function (event) {
 });
 
 $('#InsertText').bind('click', function (event) {
-    var FAQTitle = $('#FAQTitle').val(),
-        FAQContent = $('#FAQBody').val(),
-        FAQHTMLContent = FAQContent;
+    var InsertText = 1,
+        InsertLink = 0;
 
-    FAQ.Agent.TicketCompose.SetData(FAQTitle, FAQContent, FAQHTMLContent);
+    FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
 });
 
 $('#InsertLink').bind('click', function (event) {
-    var FAQTitle = $('#FAQTitle').val(),
-        FAQContent = $('#FAQPublicLink').val(),
-        FAQHTMLContent = '<a href="' + $('#FAQPublicLink').val() + '">' + $('#FAQTitle').val() + '</a>';
+    var InsertText = 0,
+        InsertLink = 1;
 
-    FAQ.Agent.TicketCompose.SetData(FAQTitle, FAQContent, FAQHTMLContent);
+    FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
 });
 
-$('#InsertBoth').bind('click', function (event) {
-    var FAQTitle = $('#FAQTitle').val(),
-        FAQContent = $('#FAQBody').val() + "\n" + $('#FAQPublicLink').val(),
-        FAQHTMLContent = $('#FAQBody').val() + '<br/>' + '<a href="' + $('#FAQPublicLink').val() + '">' + $('#FAQTitle').val() + '</a>';
+$('#InsertTextAndLink').bind('click', function (event) {
+    var InsertText = 1,
+        InsertLink = 1;
 
-    FAQ.Agent.TicketCompose.SetData(FAQTitle, FAQContent, FAQHTMLContent);
+    FAQ.Agent.TicketCompose.SetText(InsertText, InsertLink);
+});
+
+$('#InsertFull').bind('click', function (event) {
+    var InsertText = 1,
+        InsertLink = 0;
+
+    FAQ.Agent.TicketCompose.SetFullFAQ(InsertText, InsertLink);
+});
+
+$('#InsertFullAndLink').bind('click', function (event) {
+    var InsertText = 1,
+        InsertLink = 1;
+
+    FAQ.Agent.TicketCompose.SetFullFAQ(InsertText, InsertLink);
 });
 //]]></script>
 <!--dtl:js_on_document_complete-->

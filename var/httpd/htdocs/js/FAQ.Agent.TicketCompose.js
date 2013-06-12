@@ -2,7 +2,7 @@
 // FAQ.Agent.TicketCompose.js - provides the special module functions for AgentFAQZoom
 // Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
 // --
-// $Id: FAQ.Agent.TicketCompose.js,v 1.9 2013-02-07 14:07:58 mn Exp $
+// $Id: FAQ.Agent.TicketCompose.js,v 1.10 2013-06-12 18:12:57 cr Exp $
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (AGPL). If you
@@ -108,7 +108,6 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
         }
     };
 
-
     /**
      * @function
      * @param {String} Title of a FAQ article to be returned into ticket Subject
@@ -117,7 +116,7 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
      * @return nothing
      *      Do nothing and show an error message.
      */
-    TargetNS.SetData = function (FAQTitle, FAQContent, FAQHTMLContent) {
+    function SetData (FAQTitle, FAQContent, FAQHTMLContent) {
         if ($('#Subject', parent.document).length && $('#RichText', parent.document).length) {
             var $ParentSubject = $('#Subject', parent.document),
                 $ParentBody = $('#RichText', parent.document),
@@ -188,7 +187,87 @@ FAQ.Agent.TicketCompose = (function (TargetNS) {
             parent.Core.UI.Dialog.CloseDialog($('.Dialog', parent.document));
             return;
         }
+    }
+
+    /**
+     * @function
+     * @param {Boolean} Setting to add FAQ item text or not
+     * @param {Boolean} Setting to add FAQ item link or not
+     * @return nothing
+     */
+    TargetNS.SetText = function (InsertText, InsertLink) {
+        var FAQTitle = $('#FAQTitle').val(),
+        FAQContent = '',
+        FAQHTMLContent = '',
+        FAQLink;
+
+        if ( InsertText === 1 ) {
+            FAQContent = $('#FAQBody').val();
+            FAQHTMLContent = FAQContent;
+        }
+        else {
+            FAQContent = '';
+            FAQHTMLContent = FAQContent;
+        }
+
+        if (InsertLink === 1 ) {
+            FAQLink = $('#FAQPublicLink').val();
+            FAQContent = FAQContent + '\n' + FAQLink;
+            FAQHTMLContent = FAQHTMLContent + '<br/>' + '<a href="' + FAQLink + '">' + FAQTitle + '</a>';
+        }
+
+        SetData (FAQTitle, FAQContent, FAQHTMLContent);
     };
 
+    /**
+     * @function
+     * @param {Boolean} Setting to add FAQ item text or not
+     * @param {Boolean} Setting to add FAQ item link or not
+     * @return nothing
+     */
+    TargetNS.SetFullFAQ = function (InsertText, InsertLink) {
+
+        // get the FAQ richtext and trigger attachment processing
+        parent.Core.AJAX.FunctionCall(
+            parent.Core.Config.Get('Baselink'),
+            {
+                Action: 'AgentFAQRichText',
+                FAQID: $('input[name=FAQID]').val(),
+                FormID: parent.$('input[name=FormID]').val()
+            },
+            function (Response) {
+                var FAQTitle = Response.FAQTitle,
+                    FAQContent = '',
+                    FAQHTMLContent = '',
+                    FAQLink;
+
+                if ( InsertText === 1 ) {
+                    FAQContent = Response.FAQContent;
+                    FAQHTMLContent = Response.FAQHTMLContent;
+                }
+
+
+                if (InsertLink === 1 ) {
+                    FAQLink = $('#FAQPublicLink').val();
+                    FAQContent = FAQContent + '\n' + FAQLink;
+                    FAQHTMLContent = FAQHTMLContent + '<br/><br/>' + '<a href="' + FAQLink + '">' + FAQTitle + '</a>';
+                }
+
+                // sync the attachment list with the attachments in the UploadCache
+                // 1st: delete the current attachment list
+                $('#FileUpload', parent.document).parent().siblings('li').remove();
+
+                // 2nd: add all files based on the metadata returned in Response
+                $(Response.TicketAttachments).each(function(index) {
+                    $('#FileUpload', parent.document).before(
+                        '<li>' + this.Filename + ' (' + this.Filesize + ')<button type="submit" id="AttachmentDelete' + this.FileID + '" name="AttachmentDelete' + this.FileID + '" value="Delete" class="SpacingLeft">' + Response.Localization.Delete + '</button></li>'
+                    );
+                });
+
+                SetData (FAQTitle, FAQContent, FAQHTMLContent);
+            },
+            'json'
+        );
+    };
     return TargetNS;
 }(FAQ.Agent.TicketCompose || {}));

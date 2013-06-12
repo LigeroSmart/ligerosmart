@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: FAQ.xml,v 1.128 2013-06-06 11:03:35 ub Exp $</CVS>
+    <CVS>$Id: FAQ.xml,v 1.129 2013-06-12 18:12:57 cr Exp $</CVS>
     <ConfigItem Name="FAQ::Agent::StateTypes" Required="1" Valid="1">
         <Description Translatable="1">List of state types which can be used in the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1027,6 +1027,19 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+   <ConfigItem Name="Frontend::Module###AgentFAQRichText" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Group>faq</Group>
+                <GroupRo>faq</GroupRo>
+                <Description>FAQ AJAX Responder for Richtext</Description>
+                <Title>FAQ AJAX Responder</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="FAQ::Frontend::MenuModule###000-Back" Required="0" Valid="1">
         <Description Translatable="1">Shows a link in the menu to go back in the FAQ zoom view of the agent interface.</Description>
         <Group>FAQ</Group>
@@ -1453,6 +1466,17 @@ Your OTRS Notification Master
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
+    <ConfigItem Name="FAQ::TicketCompose###InsertMethod" Required="1" Valid="1">
+        <Description Translatable="1">Defines the information to be inserted in a FAQ based Ticket. "Full FAQ" includes text, attachments and inline images.</Description>
+        <Group>FAQ</Group>
+        <SubGroup>Core::TicketCompose</SubGroup>
+        <Setting>
+            <Option SelectedID="Full">
+                <Item Key="Full">Full FAQ</Item>
+                <Item Key="Text">Text Only</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
     <ConfigItem Name="FAQ::TicketCompose###IncludeInternal" Required="1" Valid="1">
         <Description Translatable="1">Include internal fields on a FAQ based Ticket.</Description>
         <Group>FAQ</Group>
@@ -1476,7 +1500,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextButton" Required="1" Valid="1">
-        <Description Translatable="1">Show "Insert FAQ Text" Button in AgentFAQZoomSmall.</Description>
+        <Description Translatable="1">Show "Insert FAQ Text" / "Insert Full FAQ" Button in AgentFAQZoomSmall.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
@@ -1498,7 +1522,7 @@ Your OTRS Notification Master
         </Setting>
     </ConfigItem>
     <ConfigItem Name="FAQ::TicketCompose###ShowInsertTextAndLinkButton" Required="1" Valid="1">
-        <Description Translatable="1">Show "Insert FAQ Text &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
+        <Description Translatable="1">Show "Insert FAQ Text &amp; Link" / "Insert Full FAQ &amp; Link" Button in AgentFAQZoomSmall for public FAQ Articles.</Description>
         <Group>FAQ</Group>
         <SubGroup>Core::TicketCompose</SubGroup>
         <Setting>
