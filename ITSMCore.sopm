@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: ITSMCore.sopm,v 1.165 2013-05-22 06:10:40 mh Exp $</CVS>
+    <CVS>$Id: ITSMCore.sopm,v 1.166 2013-06-13 14:20:28 ub Exp $</CVS>
     <Name>ITSMCore</Name>
     <Version>0.0.0</Version>
     <Framework>3.2.x</Framework>
-    <PackageRequired Version="3.2.5">GeneralCatalog</PackageRequired>
+    <PackageRequired Version="3.2.6">GeneralCatalog</PackageRequired>
     <Vendor>OTRS AG</Vendor>
     <URL>http://otrs.org/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -559,7 +559,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>GeneralCatalog 3.2.5</li>
+        <li>GeneralCatalog 3.2.6</li>
         </ul>
         <br/>
         <strong>ATTENTION</strong>
@@ -583,7 +583,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>GeneralCatalog 3.2.5</li>
+        <li>GeneralCatalog 3.2.6</li>
         </ul>
         <br/>
         <strong>ACHTUNG</strong>
@@ -607,7 +607,7 @@
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
         <ul>
-        <li>GeneralCatalog 3.2.5</li>
+        <li>GeneralCatalog 3.2.6</li>
         </ul>
         <br/>
         <strong>ATENCIÓN</strong>
@@ -679,7 +679,7 @@
         <br/>
         <strong>REQUIRED OTRS PACKAGES</strong>
         <ul>
-        <li>GeneralCatalog 3.2.5</li>
+        <li>GeneralCatalog 3.2.6</li>
         </ul>
         <br/>
         </strong>ATTENTION</strong>
@@ -703,7 +703,7 @@
         <br/>
         <strong>BENÖTIGTE OTRS-PAKETE</strong>
         <ul>
-        <li>GeneralCatalog 3.2.5</li>
+        <li>GeneralCatalog 3.2.6</li>
         </ul>
         <br/>
         <strong>ACHTUNG</strong>
@@ -727,7 +727,7 @@
         <br/>
         <strong>PAQUETES REQUERIDOS</strong>
         <ul>
-        <li>GeneralCatalog 3.2.5</li>
+        <li>GeneralCatalog 3.2.6</li>
         </ul>
         <br/>
         <strong>ATENCIÓN</strong>
