@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.37 2013-03-26 14:14:00 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.38 2013-06-13 08:48:10 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.105 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -192,8 +192,8 @@ sub Run {
                     Value => $Ticket{Number},
                 );
                 $Output .= $Self->{LayoutObject}->Warning(
-                    Message => 'Sorry, you need to be the ticket owner to perform this action.',
-                    Comment => 'Please change the owner first.',
+                    Message => $Self->{LayoutObject}->{LanguageObject}->Get('Sorry, you need to be the ticket owner to perform this action.'),
+                    Comment => $Self->{LayoutObject}->{LanguageObject}->Get('Please change the owner first.'),
                 );
                 $Output .= $Self->{LayoutObject}->Footer(
                     Type => 'Small',
@@ -1847,7 +1847,14 @@ sub _GetResponsible {
         Type  => 'Long',
         Valid => 1,
     );
-    if ( $Param{QueueID} && !$Param{AllUsers} ) {
+
+    # show all users
+    if ( $Self->{ConfigObject}->Get('Ticket::ChangeOwnerToEveryone') ) {
+        %ShownUsers = %AllGroupsMembers;
+    }
+
+    # show only users with responsible or rw pemissions in the queue
+    elsif ( $Param{QueueID} && !$Param{AllUsers} ) {
         my $GID = $Self->{QueueObject}->GetQueueGroupID(
             QueueID => $Param{NewQueueID} || $Param{QueueID}
         );
@@ -1883,7 +1890,14 @@ sub _GetOwners {
         Type  => 'Long',
         Valid => 1,
     );
-    if ( $Param{QueueID} && !$Param{AllUsers} ) {
+
+    # show all users
+    if ( $Self->{ConfigObject}->Get('Ticket::ChangeOwnerToEveryone') ) {
+        %ShownUsers = %AllGroupsMembers;
+    }
+
+    # show only users with owner or rw pemissions in the queue
+    elsif ( $Param{QueueID} && !$Param{AllUsers} ) {
         my $GID = $Self->{QueueObject}->GetQueueGroupID(
             QueueID => $Param{NewQueueID} || $Param{QueueID}
         );

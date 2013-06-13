@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.56 2013-05-10 10:24:17 mg Exp $
+# $Id: AgentTicketPhone.pm,v 1.57 2013-06-13 08:48:10 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.251 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.56 $) [1];
+$VERSION = qw($Revision: 1.57 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -447,8 +447,10 @@ sub Run {
                 $CountAux         = $CountFrom . 'Error';
             }
 
-            my $CustomerKey
-                = ( $CustomerDataFrom{UserEmail} eq $EmailAddress ? $Article{CustomerUserID} : '' );
+            my $CustomerKey = '';
+            if ( defined $CustomerDataFrom{UserEmail} && $CustomerDataFrom{UserEmail} eq $EmailAddress ) {
+                $CustomerKey = $Article{CustomerUserID};
+            }
 
             push @MultipleCustomer, {
                 Count            => $CountAux,

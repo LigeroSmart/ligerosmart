@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/CustomerTicketPrint.pm - print layout for customer interface
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketPrint.pm,v 1.11 2012-11-22 13:50:27 ub Exp $
+# $Id: CustomerTicketPrint.pm,v 1.12 2013-06-13 08:48:10 ub Exp $
 # $OldId: CustomerTicketPrint.pm,v 1.52 2012/11/20 14:54:03 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -327,7 +327,7 @@ sub _PDFOutputTicketInfos {
     my %Page   = %{ $Param{PageData} };
 
     # create left table
-    my $TableLeft;
+    my $TableLeft = [];
 
     # add ticket data, respecting AttributesView configuration
 # ---

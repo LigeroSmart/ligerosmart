@@ -2,7 +2,7 @@
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.26 2013-04-17 12:28:08 ub Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.27 2013-06-13 08:48:10 ub Exp $
 # $OldId: CustomerTicketZoom.dtl,v 1.132 2012/11/20 15:25:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -186,10 +186,10 @@
                     <li><span class="Key">$Text{"Queue"}:</span> <span title="$QData{"Queue"}">$QData{"Queue","18"}</span></li>
 <!-- dtl:block:Queue -->
 <!-- dtl:block:Owner -->
-                    <li><span class="Key">$Text{"Owner"}:</span> <span title="$QData{"Owner"}">$QData{"Owner"}</span></li>
+                    <li><span class="Key">$Text{"Owner"}:</span> $QData{"OwnerName"}</li>
 <!-- dtl:block:Owner -->
 <!-- dtl:block:Responsible -->
-                    <li><span class="Key">$Text{"Responsible"}:</span> <span title="$QData{"Responsible"}">$QData{"Responsible"}</span></li>
+                    <li><span class="Key">$Text{"Responsible"}:</span> $QData{"ResponsibleName"}</li>
 <!-- dtl:block:Responsible -->
 <!-- dtl:block:ProcessData -->
                     <li><span class="Key">$Text{"Process"}:</span> <span title="$QData{"Process"}">$QData{"Process"}</span></li>

@@ -2,7 +2,7 @@
 # Kernel/Modules/CustomerTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.pm,v 1.24 2013-03-26 14:14:00 ub Exp $
+# $Id: CustomerTicketZoom.pm,v 1.25 2013-06-13 08:48:10 ub Exp $
 # $OldId: CustomerTicketZoom.pm,v 1.108 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -33,7 +33,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.24 $) [1];
+$VERSION = qw($Revision: 1.25 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -946,9 +946,12 @@ sub _Mask {
 
     # ticket owner
     if ( $Self->{Config}->{AttributesView}->{Owner} ) {
+        my $OwnerName = $Self->{AgentUserObject}->UserName(
+            UserID => $Param{OwnerID},
+        );
         $Self->{LayoutObject}->Block(
             Name => 'Owner',
-            Data => \%Param,
+            Data => { OwnerName => $OwnerName },
         );
     }
 
@@ -959,9 +962,12 @@ sub _Mask {
         $Self->{Config}->{AttributesView}->{Responsible}
         )
     {
+        my $ResponsibleName = $Self->{AgentUserObject}->UserName(
+            UserID => $Param{ResponsibleID},
+        );
         $Self->{LayoutObject}->Block(
             Name => 'Responsible',
-            Data => \%Param,
+            Data => { ResponsibleName => $ResponsibleName },
         );
     }
 
