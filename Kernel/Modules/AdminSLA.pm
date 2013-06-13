@@ -1,8 +1,8 @@
 # --
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminSLA.pm,v 1.10 2012-11-21 20:35:48 ub Exp $
+# $Id: AdminSLA.pm,v 1.11 2013-06-13 08:47:57 ub Exp $
 # $OldId: AdminSLA.pm,v 1.38 2012/11/20 14:44:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.10 $) [1];
+$VERSION = qw($Revision: 1.11 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -349,7 +349,7 @@ sub _MaskNew {
 
     # get service list
     my %ServiceList = $Self->{ServiceObject}->ServiceList(
-        Valid  => 0,
+        Valid  => 1,
         UserID => $Self->{UserID},
     );
 

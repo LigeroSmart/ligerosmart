@@ -2,7 +2,7 @@
 # Kernel/System/Service.pm - all service function
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.pm,v 1.37 2013-03-23 14:12:44 ub Exp $
+# $Id: Service.pm,v 1.38 2013-06-13 08:47:57 ub Exp $
 # $OldId: Service.pm,v 1.60 2012/11/20 15:38:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -151,7 +151,7 @@ sub ServiceList {
     # read cache
     my $CacheKey = 'ServiceList::' . $Param{Valid};
     my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
-    return %{$Cache} if $Cache;
+    return %{$Cache} if ref $Cache eq 'HASH';
 
     # ask database
     $Self->{DBObject}->Prepare(
@@ -482,7 +482,7 @@ sub ServiceGet {
     $CacheKey .= '::IncidentState::' . $Param{IncidentState};
 # ---
     my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
-    return %{$Cache} if $Cache;
+    return %{$Cache} if ref $Cache eq 'HASH';
 
     # get service from db
     $Self->{DBObject}->Prepare(
@@ -1110,10 +1110,10 @@ sub CustomerUserServiceMemberList {
     # check cache
     my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
     if ( $Param{Result} eq 'HASH' ) {
-        return %{$Cache} if $Cache;
+        return %{$Cache} if ref $Cache eq 'HASH';
     }
     else {
-        return @{$Cache} if $Cache;
+        return @{$Cache} if ref $Cache eq 'ARRAY';
     }
 
     # db quote
@@ -1308,7 +1308,7 @@ sub ServiceParentsGet {
     # read cache
     my $CacheKey = 'ServiceParentsGet::' . $Param{ServiceID};
     my $Cache = $Self->{CacheInternalObject}->Get( Key => $CacheKey );
-    return %{$Cache} if $Cache;
+    return $Cache if ref $Cache;
 
     # get the list of services
     my $ServiceList = $Self->ServiceListGet(

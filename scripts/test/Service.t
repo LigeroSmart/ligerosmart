@@ -1,8 +1,8 @@
 # --
 # Service.t - Service tests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Service.t,v 1.9 2012-11-21 20:35:48 ub Exp $
+# $Id: Service.t,v 1.10 2013-06-13 08:47:57 ub Exp $
 # $OldId: Service.t,v 1.21 2012/11/20 16:07:51 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -1314,6 +1314,17 @@ $Self->IsDeeply(
     "ServiceParentsListGet - for ServiceGrandFather"
 );
 
+$ServiceParents = $ServiceObject->ServiceParentsGet(
+    ServiceID => $ServiceGrandFatherID,
+    UserID    => 1,
+);
+
+$Self->IsDeeply(
+    $ServiceParents,
+    [],
+    "ServiceParentsListGet - for ServiceGrandFather (cached)"
+);
+
 # get the parents for father
 $ServiceParents = $ServiceObject->ServiceParentsGet(
     ServiceID => $ServiceFatherID,
@@ -1326,6 +1337,17 @@ $Self->IsDeeply(
     "ServiceParentsGet - for ServiceFather"
 );
 
+$ServiceParents = $ServiceObject->ServiceParentsGet(
+    ServiceID => $ServiceFatherID,
+    UserID    => 1,
+);
+
+$Self->IsDeeply(
+    $ServiceParents,
+    [$ServiceGrandFatherID],
+    "ServiceParentsGet - for ServiceFather (cached)"
+);
+
 # get the parents for son
 $ServiceParents = $ServiceObject->ServiceParentsGet(
     ServiceID => $ServiceSonID,
@@ -1336,6 +1358,17 @@ $Self->IsDeeply(
     $ServiceParents,
     [ $ServiceGrandFatherID, $ServiceFatherID ],
     "ServiceParentsGet - for ServiceSon"
+);
+
+$ServiceParents = $ServiceObject->ServiceParentsGet(
+    ServiceID => $ServiceSonID,
+    UserID    => 1,
+);
+
+$Self->IsDeeply(
+    $ServiceParents,
+    [ $ServiceGrandFatherID, $ServiceFatherID ],
+    "ServiceParentsGet - for ServiceSon (cached)"
 );
 
 # set new added services to invalid
