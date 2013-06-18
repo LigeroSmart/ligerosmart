@@ -2,7 +2,7 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.20 2013-01-15 18:03:58 ub Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.21 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketOverviewMedium.dtl,v 1.74 2013/01/11 12:35:19 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -12,19 +12,22 @@
 <!-- dtl:block:DocumentActionRow -->
 <ul class="Actions">
 <!-- dtl:block:DocumentActionRowBulk -->
-    <li class="Bulk">
+    <li class="AlwaysPresent">
         <span>
             <input type="checkbox" title="$Text{"Select all"}" id="SelectAllTickets" autocomplete="off" />
             <label class="InvisibleText" for="SelectAllTickets">$Text{"Select all"}</label>
         </span>
     </li>
-    <li id="BulkAction" class="Bulk Inactive $QData{"CSS"}">
+    <li id="BulkAction" class="AlwaysPresent Inactive $QData{"CSS"}">
         <a href="#">$Text{"$Data{"Name"}"}</a>
     </li>
 <!-- dtl:block:DocumentActionRowBulk -->
 <!-- dtl:block:DocumentActionRowItem -->
-    <li class="$QData{"CSS"}"><a href="#">$Text{"$Data{"Name"}"}</a></li>
+    <li><a class="$QData{"Class"}" href="$QData{"Link"}" title="$QData{"Description"}">$QData{"Name"}</a></li>
 <!-- dtl:block:DocumentActionRowItem -->
+<!-- dtl:block:DocumentActionRowHTML -->
+    $Data{"HTML"}
+<!-- dtl:block:DocumentActionRowHTML -->
 </ul>
 <!-- dtl:block:DocumentActionRow -->
 
@@ -49,7 +52,7 @@
 <!-- dtl:block:InlineActionRow -->
             <ul class="Actions InlineActions">
 <!-- dtl:block:InlineActionRowItem -->
-                <li><a class="$QData{"Class"}" href="$QData{"Link"}" title="$QData{"Description"}">$QData{"Name"}</a></li>
+                <li><a id="$QData{"ID"}" class="$QData{"Class"}" href="$QData{"Link"}" title="$QData{"Description"}">$QData{"Name"}</a></li>
 <!-- dtl:block:InlineActionRowItem -->
 <!-- dtl:block:InlineActionRowItemHTML -->
                 $Data{"HTML"}
@@ -288,8 +291,6 @@
                 </tbody>
             </table>
 <!-- dtl:block:DynamicFieldTable -->
-
-            <div class="Shadow"></div>
         </div>
     </li>
 
@@ -327,7 +328,7 @@
     </form>
 <!-- dtl:js_on_document_complete -->
 <script type="text/javascript">//<![CDATA[
-    $('select[name=DestQueueID]').live('change', function (Event) {
+    $('.OverviewActions').on('change', 'select[name=DestQueueID]', function (Event) {
         $(this).closest('form').submit();
     });
 //]]></script>

@@ -2,7 +2,7 @@
 # Kernel/Output/HTML/TicketOverviewPreview.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: TicketOverviewPreview.pm,v 1.25 2013-01-23 14:57:00 ub Exp $
+# $Id: TicketOverviewPreview.pm,v 1.26 2013-06-18 14:30:03 ub Exp $
 # $OldId: TicketOverviewPreview.pm,v 1.77 2013/01/17 12:29:39 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -22,7 +22,7 @@ use Kernel::System::DynamicField::Backend;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.25 $) [1];
+$VERSION = qw($Revision: 1.26 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -33,7 +33,7 @@ sub new {
 
     # get needed objects
     for (
-        qw(ConfigObject LogObject DBObject LayoutObject UserID UserObject GroupObject TicketObject MainObject QueueObject)
+        qw(ConfigObject LogObject DBObject EncodeObject LayoutObject UserID UserObject GroupObject TicketObject MainObject QueueObject)
         )
     {
         $Self->{$_} = $Param{$_} || die "Got no $_!";
@@ -100,6 +100,80 @@ sub ActionRow {
                 Name => 'Bulk',
             },
         );
+    }
+
+    # run ticket overview document item menu modules
+    if (
+        $Param{Config}->{OverviewMenuModules}
+        && ref $Self->{ConfigObject}->Get('Ticket::Frontend::OverviewMenuModule') eq 'HASH'
+    ) {
+
+        my %Menus = %{ $Self->{ConfigObject}->Get('Ticket::Frontend::OverviewMenuModule') };
+        MENUMODULE:
+        for my $Menu ( sort keys %Menus ) {
+
+            next MENUMODULE if !IsHashRefWithData($Menus{$Menu});
+            next MENUMODULE if ( $Menus{$Menu}->{View} && $Menus{$Menu}->{View} ne $Param{View} );
+
+            # load module
+            if ( !$Self->{MainObject}->Require( $Menus{$Menu}->{Module} ) ) {
+                return $Self->{LayoutObject}->FatalError();
+            }
+            my $Object = $Menus{$Menu}->{Module}->new( %{$Self} );
+
+            # run module
+            my $Item = $Object->Run(
+                %Param,
+                Config => $Menus{$Menu},
+            );
+            next MENUMODULE if !IsHashRefWithData($Item);
+
+            if ( $Item->{Block} eq 'DocumentActionRowItem' ) {
+
+                # add session id if needed
+                if ( !$Self->{LayoutObject}->{SessionIDCookie} && $Item->{Link} ) {
+                    $Item->{Link}
+                        .= ';'
+                        . $Self->{LayoutObject}->{SessionName} . '='
+                        . $Self->{LayoutObject}->{SessionID};
+                }
+
+                # create id
+                $Item->{ID} = $Item->{Name};
+                $Item->{ID} =~ s/(\s|&|;)//ig;
+
+                my $Link = $Item->{Link};
+                if ( $Item->{Target} ) {
+                    $Link = '#';
+                }
+
+                my $Class = '';
+                if ( $Item->{PopupType} ) {
+                    $Class = 'AsPopup PopupType_' . $Item->{PopupType};
+                }
+
+                $Self->{LayoutObject}->Block(
+                    Name => $Item->{Block},
+                    Data => {
+                        ID          => $Item->{ID},
+                        Name        => $Self->{LayoutObject}->{LanguageObject}->Get( $Item->{Name} ),
+                        Link        => $Self->{LayoutObject}->{Baselink} . $Item->{Link},
+                        Description => $Item->{Description},
+                        Block       => $Item->{Block},
+                        Class       => $Class,
+                    },
+                );
+            }
+            elsif ( $Item->{Block} eq 'DocumentActionRowHTML' ) {
+
+                next MENUMODULE if !$Item->{HTML};
+
+                $Self->{LayoutObject}->Block(
+                    Name => $Item->{Block},
+                    Data => $Item,
+                );
+            }
+        }
     }
 
     # init for table control

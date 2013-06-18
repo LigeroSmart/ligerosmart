@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketActionCommon.pm - common file for several modules
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketActionCommon.pm,v 1.38 2013-06-13 08:48:10 ub Exp $
+# $Id: AgentTicketActionCommon.pm,v 1.39 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketActionCommon.pm,v 1.105 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -192,8 +192,10 @@ sub Run {
                     Value => $Ticket{Number},
                 );
                 $Output .= $Self->{LayoutObject}->Warning(
-                    Message => $Self->{LayoutObject}->{LanguageObject}->Get('Sorry, you need to be the ticket owner to perform this action.'),
-                    Comment => $Self->{LayoutObject}->{LanguageObject}->Get('Please change the owner first.'),
+                    Message => $Self->{LayoutObject}->{LanguageObject}
+                        ->Get('Sorry, you need to be the ticket owner to perform this action.'),
+                    Comment => $Self->{LayoutObject}->{LanguageObject}
+                        ->Get('Please change the owner first.'),
                 );
                 $Output .= $Self->{LayoutObject}->Footer(
                     Type => 'Small',
@@ -412,8 +414,7 @@ sub Run {
             %Error                   = ();
             $Error{AttachmentUpload} = 1;
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
+                Param => 'FileUpload',
             );
             $Self->{UploadCacheObject}->FormIDAddFile(
                 FormID => $Self->{FormID},
@@ -538,11 +539,16 @@ sub Run {
 
             my $PossibleValuesFilter;
 
+            # get PossibleValues
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
+
             # check if field has PossibleValues property in its configuration
-            if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+            if ( IsHashRefWithData( $PossibleValues ) ) {
 
                 # convert possible values key => value to key => key for ACLs usign a Hash slice
-                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                my %AclData = %{ $PossibleValues };
                 @AclData{ keys %AclData } = keys %AclData;
 
                 # set possible values filter from ACLs
@@ -560,7 +566,7 @@ sub Run {
 
                     # convert Filer key => key back to key => value using map
                     %{$PossibleValuesFilter}
-                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        = map { $_ => $PossibleValues->{$_} }
                         keys %Filter;
                 }
             }
@@ -787,7 +793,7 @@ sub Run {
                 );
             }
 
-            my $From = "$Self->{UserFirstname} $Self->{UserLastname} <$Self->{UserEmail}>";
+            my $From = "\"$Self->{UserFirstname} $Self->{UserLastname}\" <$Self->{UserEmail}>";
             my @NotifyUserIDs = ( @{ $Self->{InformUserID} }, @{ $Self->{InvolvedUserID} } );
             $ArticleID = $Self->{TicketObject}->ArticleCreate(
                 TicketID                        => $Self->{TicketID},
@@ -823,8 +829,7 @@ sub Run {
 
             # get submit attachment
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'String',
+                Param => 'FileUpload',
             );
             if (%UploadStuff) {
                 push @Attachments, \%UploadStuff;
@@ -1043,7 +1048,7 @@ sub Run {
                 );
             next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'Ticket';
 
-            my $PossibleValues = $Self->{BackendObject}->AJAXPossibleValuesGet(
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
@@ -1068,12 +1073,18 @@ sub Run {
                 %{$PossibleValues} = map { $_ => $PossibleValues->{$_} } keys %Filter;
             }
 
+            my $DataValues = $Self->{BackendObject}->BuildSelectionDataGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                PossibleValues     => $PossibleValues,
+                Value              => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
+            ) || $PossibleValues;
+
             # add dynamic field to the list of fields to update
             push(
                 @DynamicFieldAJAX,
                 {
                     Name        => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data        => $PossibleValues,
+                    Data        => $DataValues,
                     SelectedID  => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
                     Translation => $DynamicFieldConfig->{Config}->{TranslatableValues} || 0,
                     Max         => 100,
@@ -1182,11 +1193,16 @@ sub Run {
 
             my $PossibleValuesFilter;
 
+            # get PossibleValues
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
+
             # check if field has PossibleValues property in its configuration
-            if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+            if ( IsHashRefWithData( $PossibleValues ) ) {
 
                 # convert possible values key => value to key => key for ACLs usign a Hash slice
-                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                my %AclData = %{ $PossibleValues };
                 @AclData{ keys %AclData } = keys %AclData;
 
                 # set possible values filter from ACLs
@@ -1204,7 +1220,7 @@ sub Run {
 
                     # convert Filer key => key back to key => value using map
                     %{$PossibleValuesFilter}
-                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        = map { $_ => $PossibleValues->{$_} }
                         keys %Filter;
                 }
             }
@@ -1383,6 +1399,7 @@ sub _Mask {
             Class          => 'NewQueueID',
             Name           => 'NewQueueID',
             SelectedID     => $Param{NewQueueID},
+            TreeView       => $TreeView,
             CurrentQueueID => $Param{QueueID},
             OnChangeSubmit => 0,
         );
@@ -1427,13 +1444,20 @@ sub _Mask {
             Size         => 1,
             PossibleNone => 1,
         );
-        my %UserHash;
+        my @OldOwners;
+        my %SeenOldOwner;
         if (@OldUserInfo) {
             my $Counter = 1;
             for my $User ( reverse @OldUserInfo ) {
-                next if $UserHash{ $User->{UserID} };
-                $UserHash{ $User->{UserID} } = "$Counter: $User->{UserLastname} "
-                    . "$User->{UserFirstname} ($User->{UserLogin})";
+
+                # skip if old owner is already in the list
+                next if $SeenOldOwner{ $User->{UserID} };
+                $SeenOldOwner{ $User->{UserID} } = 1;
+                push @OldOwners, {
+                    Key   => $User->{UserID},
+                    Value => "$Counter: $User->{UserLastname} "
+                        . "$User->{UserFirstname} ($User->{UserLogin})"
+                };
                 $Counter++;
             }
         }
@@ -1448,12 +1472,13 @@ sub _Mask {
 
         # build string
         $Param{OldOwnerStrg} = $Self->{LayoutObject}->BuildSelection(
-            Data         => \%UserHash,
+            Data         => \@OldOwners,
             SelectedID   => $OldOwnerSelectedID,
             Name         => 'OldOwnerID',
             Class        => $Param{OldOwnerInvalid} || ' ',
             PossibleNone => 1,
         );
+
         if ( $Param{NewOwnerType} && $Param{NewOwnerType} eq 'Old' ) {
             $Param{'NewOwnerType::Old'} = 'checked = "checked"';
         }
@@ -1650,25 +1675,27 @@ sub _Mask {
                 TicketID => $Self->{TicketID},
             );
 
-            my %UserHash;
+            my @InvolvedAgents;
+            my %SeenInvolvedAgents;
             my $Counter = 1;
 
             USER:
             for my $User ( reverse @UserIDs ) {
 
-                next USER if $UserHash{ $User->{UserID} };
+                next USER if $SeenInvolvedAgents{ $User->{UserID} };
 
-                $UserHash{ $User->{UserID} }
-                    = "$Counter: $User->{UserLastname} $User->{UserFirstname} ($User->{UserLogin})";
-            }
-            continue {
+                push @InvolvedAgents, {
+                    Key => $User->{UserID},
+                    Value =>
+                        "$Counter: $User->{UserLastname} $User->{UserFirstname} ($User->{UserLogin})"
+                };
                 $Counter++;
             }
 
             my $InvolvedAgentSize
                 = $Self->{ConfigObject}->Get('Ticket::Frontend::InvolvedAgentMaxSize') || 3;
             $Param{InvolvedAgentStrg} = $Self->{LayoutObject}->BuildSelection(
-                Data       => \%UserHash,
+                Data       => \@InvolvedAgents,
                 SelectedID => $Self->{InvolvedUserID},
                 Name       => 'InvolvedUserID',
                 Multiple   => 1,

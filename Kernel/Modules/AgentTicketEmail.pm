@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketEmail.pm - to compose initial email to customer
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketEmail.pm,v 1.48 2013-03-26 14:14:00 ub Exp $
+# $Id: AgentTicketEmail.pm,v 1.49 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketEmail.pm,v 1.220 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -36,7 +36,7 @@ use Kernel::System::LinkObject;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.48 $) [1];
+$VERSION = qw($Revision: 1.49 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -518,11 +518,16 @@ sub Run {
 
                 my $PossibleValuesFilter;
 
+                # get PossibleValues
+                my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                    DynamicFieldConfig => $DynamicFieldConfig,
+                );
+
                 # check if field has PossibleValues property in its configuration
-                if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+                if ( IsHashRefWithData( $PossibleValues ) ) {
 
                     # convert possible values key => value to key => key for ACLs usign a Hash slice
-                    my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                    my %AclData = %{ $PossibleValues };
                     @AclData{ keys %AclData } = keys %AclData;
 
                     # set possible values filter from ACLs
@@ -540,7 +545,7 @@ sub Run {
 
                         # convert Filer key => key back to key => value using map
                         %{$PossibleValuesFilter}
-                            = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                            = map { $_ => $PossibleValues->{$_} }
                             keys %Filter;
                     }
                 }
@@ -787,8 +792,7 @@ sub Run {
             %Error                   = ();
             $Error{AttachmentUpload} = 1;
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
+                Param => 'FileUpload',
             );
             $Self->{UploadCacheObject}->FormIDAddFile(
                 FormID => $Self->{FormID},
@@ -806,11 +810,16 @@ sub Run {
 
             my $PossibleValuesFilter;
 
+            # get PossibleValues
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
+
             # check if field has PossibleValues property in its configuration
-            if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+            if ( IsHashRefWithData( $PossibleValues ) ) {
 
                 # convert possible values key => value to key => key for ACLs usign a Hash slice
-                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+                my %AclData = %{ $PossibleValues };
                 @AclData{ keys %AclData } = keys %AclData;
 
                 # set possible values filter from ACLs
@@ -828,7 +837,7 @@ sub Run {
 
                     # convert Filer key => key back to key => value using map
                     %{$PossibleValuesFilter}
-                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        = map { $_ => $PossibleValues->{$_} }
                         keys %Filter;
                 }
             }
@@ -1233,8 +1242,7 @@ sub Run {
 
         # get submit attachment
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => 'FileUpload',
-            Source => 'String',
+            Param => 'FileUpload',
         );
         if (%UploadStuff) {
             push @Attachments, \%UploadStuff;
@@ -1567,7 +1575,7 @@ sub Run {
                 );
             next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'Ticket';
 
-            my $PossibleValues = $Self->{BackendObject}->AJAXPossibleValuesGet(
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
@@ -1594,12 +1602,18 @@ sub Run {
                 %{$PossibleValues} = map { $_ => $PossibleValues->{$_} } keys %Filter;
             }
 
+            my $DataValues = $Self->{BackendObject}->BuildSelectionDataGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                PossibleValues     => $PossibleValues,
+                Value              => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
+            ) || $PossibleValues;
+
             # add dynamic field to the list of fields to update
             push(
                 @DynamicFieldAJAX,
                 {
                     Name        => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data        => $PossibleValues,
+                    Data        => $DataValues,
                     SelectedID  => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
                     Translation => $DynamicFieldConfig->{Config}->{TranslatableValues} || 0,
                     Max         => 100,
@@ -2087,6 +2101,7 @@ sub _MaskEmailNew {
             Size           => 0,
             Class          => 'Validate_Required' . ( $Param{Errors}->{DestinationInvalid} || ' ' ),
             Name           => 'Dest',
+            TreeView   => $TreeView,
             SelectedID     => $Param{FromSelected},
             OnChangeSubmit => 0,
         );
@@ -2096,6 +2111,7 @@ sub _MaskEmailNew {
             Data       => \%NewTo,
             Class      => 'Validate_Required' . $Param{Errors}->{DestinationInvalid} || ' ',
             Name       => 'Dest',
+            TreeView   => $TreeView,
             SelectedID => $Param{FromSelected},
         );
     }

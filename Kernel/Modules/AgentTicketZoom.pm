@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketZoom.pm - to get a closer view
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketZoom.pm,v 1.43 2013-04-17 12:28:09 ub Exp $
+# $Id: AgentTicketZoom.pm,v 1.44 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketZoom.pm,v 1.198 2013/01/15 18:36:41 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -35,7 +35,7 @@ use Kernel::System::GeneralCatalog;
 use Kernel::System::VariableCheck qw(:all);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.43 $) [1];
+$VERSION = qw($Revision: 1.44 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -241,12 +241,16 @@ sub Run {
             QueueID => $Ticket{QueueID},
         );
 
-        my $Content = $Self->_ArticleItem(
+        $Self->_ArticleItem(
             Ticket            => \%Ticket,
             Article           => \%Article,
             AclAction         => \%AclAction,
             StandardResponses => \%StandardResponses,
             Type              => 'OnLoad',
+        );
+        my $Content = $Self->{LayoutObject}->Output(
+            TemplateFile => 'AgentTicketZoom',
+            Data => {%Ticket, %Article, %AclAction},
         );
         if ( !$Content ) {
             $Self->{LayoutObject}->FatalError(
@@ -329,15 +333,6 @@ sub Run {
             Content     => $JSON,
             Type        => 'inline',
             NoCache     => 1,
-        );
-    }
-
-    # store last screen
-    if ( $Self->{Subaction} ne 'ShowHTMLeMail' ) {
-        $Self->{SessionObject}->UpdateSessionID(
-            SessionID => $Self->{SessionID},
-            Key       => 'LastScreenView',
-            Value     => $Self->{RequestedURL},
         );
     }
 
@@ -659,7 +654,7 @@ sub MaskAgentZoom {
             }
         }
 
-        $Param{ArticleItems} .= $Self->_ArticleItem(
+        $Self->_ArticleItem(
             Ticket            => \%Ticket,
             Article           => \%Article,
             AclAction         => \%AclAction,
@@ -668,6 +663,10 @@ sub MaskAgentZoom {
             Type              => 'Static',
         );
     }
+    $Param{ArticleItems} .= $Self->{LayoutObject}->Output(
+        TemplateFile => 'AgentTicketZoom',
+        Data => {%Ticket, %AclAction},
+    );
 
     # always show archived tickets as seen
     if ( $Self->{ZoomExpand} && $Ticket{ArchiveFlag} ne 'y' ) {
@@ -2520,10 +2519,7 @@ sub _ArticleItem {
         $Article{Body} = $Article{BodyPlain};
     }
 
-    # return output
-    return $Self->{LayoutObject}->Output(
-        TemplateFile => 'AgentTicketZoom',
-        Data => { %Param, %Ticket, %AclAction },
-    );
+    return 1;
 }
+
 1;

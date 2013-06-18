@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPhone.pm - to handle phone calls
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.pm,v 1.57 2013-06-13 08:48:10 ub Exp $
+# $Id: AgentTicketPhone.pm,v 1.58 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketPhone.pm,v 1.251 2013/01/30 00:00:42 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -34,7 +34,7 @@ use Kernel::System::ITSMCIPAllocate;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.57 $) [1];
+$VERSION = qw($Revision: 1.58 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -528,7 +528,7 @@ sub Run {
             # set StateID as NextStateID
             $SplitTicketParam{NextStateID} = $SplitTicketData{StateID};
 
-            # set Onwer an Responsible
+            # set Owner and Responsible
             $SplitTicketParam{UserSelected}            = $SplitTicketData{OwnerID};
             $SplitTicketParam{ResponsibleUserSelected} = $SplitTicketData{ResponsibleID};
 
@@ -550,18 +550,23 @@ sub Run {
             }
         }
 
-        # cycle trough the activated Dynamic Fields for this screen
+        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             my $PossibleValuesFilter;
 
-            # check if field has PossibleValues property in its configuration
-            if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+            # get PossibleValues
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
 
-                # convert possible values key => value to key => key for ACLs usign a Hash slice
-                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+            # check if field has PossibleValues property in its configuration
+            if ( IsHashRefWithData( $PossibleValues ) ) {
+
+                # convert possible values key => value to key => key for ACLs using a Hash slice
+                my %AclData = %{ $PossibleValues };
                 @AclData{ keys %AclData } = keys %AclData;
 
                 # set possible values filter from ACLs
@@ -580,7 +585,7 @@ sub Run {
 
                     # convert Filer key => key back to key => value using map
                     %{$PossibleValuesFilter}
-                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        = map { $_ => $PossibleValues->{$_} }
                         keys %Filter;
                 }
             }
@@ -592,7 +597,7 @@ sub Run {
             # from DB this cases
             if ( $Self->{TicketID} && $Article{ArticleID} ) {
 
-            # select TicketID or ArticleID go get the value depending on dynamic field configuration
+            # select TicketID or ArticleID to get the value depending on dynamic field configuration
                 my $ObjectID
                     = $DynamicFieldConfig->{ObjectType} eq 'Ticket'
                     ? $Self->{TicketID}
@@ -606,7 +611,7 @@ sub Run {
             }
 
             # otherwise (on a new ticket). Check if the user has a user specific default value for
-            # the dynamic field, otherwise will use Dynamc Field default value
+            # the dynamic field, otherwise will use Dynamic Field default value
             else {
 
                 # override the value from user preferences if is set
@@ -818,8 +823,7 @@ sub Run {
             %Error                   = ();
             $Error{AttachmentUpload} = 1;
             my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-                Param  => 'FileUpload',
-                Source => 'string',
+                Param => 'FileUpload',
             );
             $Self->{UploadCacheObject}->FormIDAddFile(
                 FormID => $Self->{FormID},
@@ -853,18 +857,23 @@ sub Run {
         # create html strings for all dynamic fields
         my %DynamicFieldHTML;
 
-        # cycle trough the activated Dynamic Fields for this screen
+        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
 
             my $PossibleValuesFilter;
 
-            # check if field has PossibleValues property in its configuration
-            if ( IsHashRefWithData( $DynamicFieldConfig->{Config}->{PossibleValues} ) ) {
+            # get PossibleValues
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+            );
 
-                # convert possible values key => value to key => key for ACLs usign a Hash slice
-                my %AclData = %{ $DynamicFieldConfig->{Config}->{PossibleValues} };
+            # check if field has PossibleValues property in its configuration
+            if ( IsHashRefWithData( $PossibleValues ) ) {
+
+                # convert possible values key => value to key => key for ACLs using a Hash slice
+                my %AclData = %{ $PossibleValues };
                 @AclData{ keys %AclData } = keys %AclData;
 
                 # set possible values filter from ACLs
@@ -881,7 +890,7 @@ sub Run {
 
                     # convert Filer key => key back to key => value using map
                     %{$PossibleValuesFilter}
-                        = map { $_ => $DynamicFieldConfig->{Config}->{PossibleValues}->{$_} }
+                        = map { $_ => $PossibleValues->{$_} }
                         keys %Filter;
                 }
             }
@@ -967,7 +976,7 @@ sub Run {
                 }
             }
 
-            # if more the one customer user exists, show list
+            # if more than one customer user exist, show list
             # and clean CustomerUserID and CustomerID
             else {
 
@@ -1185,7 +1194,7 @@ sub Run {
         );
 
         # set ticket dynamic fields
-        # cycle trough the activated Dynamic Fields for this screen
+        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1226,8 +1235,7 @@ sub Run {
 
         # get submit attachment
         my %UploadStuff = $Self->{ParamObject}->GetUploadAll(
-            Param  => 'FileUpload',
-            Source => 'String',
+            Param => 'FileUpload',
         );
         if (%UploadStuff) {
             push @AttachmentData, \%UploadStuff;
@@ -1299,7 +1307,7 @@ sub Run {
         }
 
         # set article dynamic fields
-        # cycle trough the activated Dynamic Fields for this screen
+        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1412,7 +1420,7 @@ sub Run {
             );
         }
 
-        # should i set an unlock?
+        # closed tickets get unlocked
         if ( $StateData{TypeName} =~ /^close/i ) {
 
             # set lock
@@ -1575,7 +1583,7 @@ sub Run {
         # update Dynamic Fields Possible Values via AJAX
         my @DynamicFieldAJAX;
 
-        # cycle trough the activated Dynamic Fields for this screen
+        # cycle through the activated Dynamic Fields for this screen
         DYNAMICFIELD:
         for my $DynamicFieldConfig ( @{ $Self->{DynamicField} } ) {
             next DYNAMICFIELD if !IsHashRefWithData($DynamicFieldConfig);
@@ -1585,11 +1593,11 @@ sub Run {
                 );
             next DYNAMICFIELD if $DynamicFieldConfig->{ObjectType} ne 'Ticket';
 
-            my $PossibleValues = $Self->{BackendObject}->AJAXPossibleValuesGet(
+            my $PossibleValues = $Self->{BackendObject}->PossibleValuesGet(
                 DynamicFieldConfig => $DynamicFieldConfig,
             );
 
-            # convert possible values key => value to key => key for ACLs usign a Hash slice
+            # convert possible values key => value to key => key for ACLs using a Hash slice
             my %AclData = %{$PossibleValues};
             @AclData{ keys %AclData } = keys %AclData;
 
@@ -1611,12 +1619,18 @@ sub Run {
                 %{$PossibleValues} = map { $_ => $PossibleValues->{$_} } keys %Filter;
             }
 
+            my $DataValues = $Self->{BackendObject}->BuildSelectionDataGet(
+                DynamicFieldConfig => $DynamicFieldConfig,
+                PossibleValues     => $PossibleValues,
+                Value              => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
+            ) || $PossibleValues;
+
             # add dynamic field to the list of fields to update
             push(
                 @DynamicFieldAJAX,
                 {
                     Name        => 'DynamicField_' . $DynamicFieldConfig->{Name},
-                    Data        => $PossibleValues,
+                    Data        => $DataValues,
                     SelectedID  => $DynamicFieldValues{ $DynamicFieldConfig->{Name} },
                     Translation => $DynamicFieldConfig->{Config}->{TranslatableValues} || 0,
                     Max         => 100,
@@ -2032,6 +2046,7 @@ sub _MaskPhoneNew {
             Multiple       => 0,
             Size           => 0,
             Name           => 'Dest',
+            TreeView       => $TreeView,
             SelectedID     => $Param{ToSelected},
             OnChangeSubmit => 0,
         );
@@ -2041,6 +2056,7 @@ sub _MaskPhoneNew {
             Class       => 'Validate_Required',
             Data        => \%NewTo,
             Name        => 'Dest',
+            TreeView    => $TreeView,
             SelectedID  => $Param{ToSelected},
             Translation => 0,
         );

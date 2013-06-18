@@ -2,7 +2,7 @@
 # Kernel/Modules/AgentTicketPrint.pm - print layout for agent interface
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPrint.pm,v 1.13 2013-03-26 14:14:00 ub Exp $
+# $Id: AgentTicketPrint.pm,v 1.14 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketPrint.pm,v 1.91 2012/11/20 14:51:07 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -28,7 +28,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.13 $) [1];
+$VERSION = qw($Revision: 1.14 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -171,14 +171,13 @@ sub Run {
 
     # check if only one article need printed
     if ($ArticleID) {
-        my @NewArticleBox;
+
+        ARTICLE:
         for my $Article (@ArticleBox) {
             if ( $Article->{ArticleID} == $ArticleID ) {
-                @NewArticleBox = ($Article);
+                @ArticleBox = ($Article);
+                last ARTICLE;
             }
-        }
-        if (@NewArticleBox) {
-            @ArticleBox = @NewArticleBox;
         }
     }
 

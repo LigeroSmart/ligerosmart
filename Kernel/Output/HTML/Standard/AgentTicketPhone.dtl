@@ -2,7 +2,7 @@
 # AgentTicketPhone.dtl - provides HTML form for phone
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketPhone.dtl,v 1.39 2013-06-13 08:14:53 ub Exp $
+# $Id: AgentTicketPhone.dtl,v 1.40 2013-06-18 14:30:03 ub Exp $
 # $OldId: AgentTicketPhone.dtl,v 1.154 2013/02/06 12:20:30 mab Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -74,21 +74,31 @@ $Include{"AgentCustomerSearch"}
                     <div class="Clear"></div>
 <!-- dtl:block:TicketType -->
 
+                    <label for="FromCustomer" class="Mandatory"><span class="Marker">*</span>$Text{"From customer"}:</label>
+                    <div class="Field">
+                        <input id="FromCustomer" type="text" name="FromCustomer" value="" class="CustomerAutoComplete W75pc $QData{"FromInvalid"}" autocomplete="off" />
+                        <div id="FromCustomerServerError" class="TooltipErrorMessage">
+<!-- dtl:block:FromServerErrorMsg -->
+                            <p>$Text{"Please include at least one customer for the ticket."}</p>
+<!-- dtl:block:FromServerErrorMsg -->
+                        </div>
+                    </div>
+                    <div class="Clear"></div>
 
                     <div class="Field $QData{"CustomerHiddenContainer"}">
                         <div class="CustomerTicketTemplateFromCustomer SpacingTopSmall Hidden">
-                            <input name="CustomerSelected" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value=""/>
+                            <input name="CustomerSelected" title="$Text{"Select this customer as the main customer."}" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value=""/>
                             <input name="CustomerKey" id="CustomerKey" class="CustomerKey" type="hidden" value=""/>
-                            <input class="CustomerTicketText W75pc" name="CustomerTicketText" id="CustomerTicketText" type="text" value="" readonly="readonly" />
+                            <input class="CustomerTicketText Radio" title="$Text{"From customer"}" name="CustomerTicketText" id="CustomerTicketText" type="text" value="" readonly="readonly" />
                             <button type="button" id="RemoveCustomerTicket" class="Remove CustomerTicketRemove" value="$Text{"Remove Ticket Customer"}">$Text{"Remove Ticket Customer"}</button>
                         </div>
 
                         <div id="TicketCustomerContentFromCustomer" class="CustomerContainer">
 <!-- dtl:block:MultipleCustomer -->
                             <div class="SpacingTopSmall ">
-                                <input name="CustomerSelected" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value="$QData{"Count"}" $QData{"CustomerSelected"}  $QData{"CustomerDisabled"} />
+                                <input name="CustomerSelected" title="$Text{"Select this customer as the main customer."}" id="CustomerSelected" class="CustomerTicketRadio" type="radio" value="$QData{"Count"}" $QData{"CustomerSelected"}  $QData{"CustomerDisabled"} />
                                 <input name="CustomerKey_$QData{"Count"}" id="CustomerKey_$QData{"Count"}" class="CustomerKey" type="hidden" value="$QData{"CustomerKey"}"/>
-                                <input class="CustomerTicketText W75pc $QData{"CustomerError"}" name="CustomerTicketText_$Data{"Count"}" id="CustomerTicketText_$Data{"Count"}" type="text" value="$QData{"CustomerElement"}" readonly="readonly" />
+                                <input class="CustomerTicketText $QData{"CustomerError"}" title="$Text{"From customer"}" name="CustomerTicketText_$Data{"Count"}" id="CustomerTicketText_$Data{"Count"}" type="text" value="$QData{"CustomerElement"}" readonly="readonly" />
                                 <button type="button" id="RemoveCustomerTicket_$Data{"Count"}" class="Remove CustomerTicketRemove" value="$Text{"Remove Ticket Customer"}">$Text{"Remove Ticket Customer"}</button>
 
 <!-- dtl:block:CustomerErrorExplantion -->
@@ -143,17 +153,6 @@ $Include{"AgentCustomerSearch"}
     });
 //]]></script>
 <!--dtl:js_on_document_complete-->
-
-                    <label for="FromCustomer" class="Mandatory"><span class="Marker">*</span>$Text{"From customer"}:</label>
-                    <div class="Field">
-                        <input id="FromCustomer" type="text" name="FromCustomer" value="" class="CustomerAutoComplete W75pc $QData{"FromInvalid"}" autocomplete="off" />
-                        <div id="FromCustomerServerError" class="TooltipErrorMessage">
-<!-- dtl:block:FromServerErrorMsg -->
-                            <p>$Text{"Please include at least one customer for the ticket."}</p>
-<!-- dtl:block:FromServerErrorMsg -->
-                        </div>
-                    </div>
-                    <div class="Clear"></div>
 
 <!-- dtl:block:FromExternalCustomer -->
 <!--dtl:js_on_document_complete-->
