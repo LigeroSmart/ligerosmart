@@ -1,8 +1,8 @@
 # --
 # Kernel/System/Survey.pm - all survey funtions
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.pm,v 1.73 2012-11-22 14:22:11 jh Exp $
+# $Id: Survey.pm,v 1.74 2013-06-24 15:08:56 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -22,7 +22,7 @@ use Kernel::System::Ticket;
 use Mail::Address;
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.73 $) [1];
+$VERSION = qw($Revision: 1.74 $) [1];
 
 =head1 NAME
 
@@ -1851,9 +1851,15 @@ sub RequestSend {
     }
 
     # create PublicSurveyKey
-    my $md5 = Digest::MD5->new();
-    $md5->add( $Self->{TimeObject}->SystemTime() . int( rand(999999999) ) );
-    my $PublicSurveyKey = $md5->hexdigest;
+    my $PublicSurveyKey;
+    if ( !$Param{PublicSurveyKey} ) {
+        my $md5 = Digest::MD5->new();
+        $md5->add( $Self->{TimeObject}->SystemTime() . int( rand(999999999) ) );
+        $PublicSurveyKey = $md5->hexdigest;
+    }
+    else {
+        $PublicSurveyKey = $Param{PublicSurveyKey};
+    }
 
     # find master survey
     $Self->{DBObject}->Prepare(
@@ -2922,6 +2928,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.73 $ $Date: 2012-11-22 14:22:11 $
+$Revision: 1.74 $ $Date: 2013-06-24 15:08:56 $
 
 =cut

@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.SurveyTriggerSendRequests.pl - trigger sending delayed survey requests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.3 2012-11-20 19:12:44 mh Exp $
+# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.4 2013-06-24 15:08:56 jh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . "/Kernel/cpan-lib";
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.3 $) [1];
+$VERSION = qw($Revision: 1.4 $) [1];
 
 use Kernel::Config;
 use Kernel::System::SysConfig;
@@ -72,7 +72,7 @@ if (
     print STDERR "4. Wait the necessary amount of hours you've configured\n";
     print STDERR "5. You can do a dry run to get a list of surveys that would be sent (-d)\n";
     print STDERR "6. If you're fine with it, activate var/cron/generic_agent_survey.dist\n";
-    print STDERR "Copyright (C) 2001-2012 OTRS AG, http://otrs.com/\n";
+    print STDERR "Copyright (C) 2001-2013 OTRS AG, http://otrs.com/\n";
     exit;
 }
 
@@ -108,7 +108,7 @@ if ( !$SendInHoursAfterClose ) {
 
 # Find survey_requests that haven't been sent yet
 $CommonObject{DBObject}->Prepare(
-    SQL => "SELECT id, ticket_id, create_time FROM survey_request WHERE "
+    SQL => "SELECT id, ticket_id, create_time, public_survey_key FROM survey_request WHERE "
         . "(send_time IS NULL OR send_time = '0000-00-00 00:00:00') ORDER BY create_time DESC",
 );
 
@@ -116,9 +116,10 @@ $CommonObject{DBObject}->Prepare(
 my @Rows;
 while ( my @Row = $CommonObject{DBObject}->FetchrowArray() ) {
     push @Rows, {
-        ID         => $Row[0],
-        TicketID   => $Row[1],
-        CreateTime => $Row[2],
+        ID              => $Row[0],
+        TicketID        => $Row[1],
+        CreateTime      => $Row[2],
+        PublicSurveyKey => $Row[3],
     };
 }
 
@@ -158,6 +159,7 @@ for my $Line (@Rows) {
             TriggerSendRequests => 1,
             SurveyRequestID     => $Line->{ID},
             TicketID            => $Line->{TicketID},
+            PublicSurveyKey     => $Line->{PublicSurveyKey},
         );
     }
 }
