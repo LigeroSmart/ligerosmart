@@ -3,7 +3,7 @@
 # bin/otrs.SurveyTriggerSendRequests.pl - trigger sending delayed survey requests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.4 2013-06-24 15:08:56 jh Exp $
+# $Id: otrs.SurveyTriggerSendRequests.pl,v 1.5 2013-06-25 11:43:40 jh Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . "/Kernel/cpan-lib";
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 use Kernel::Config;
 use Kernel::System::SysConfig;
@@ -109,7 +109,7 @@ if ( !$SendInHoursAfterClose ) {
 # Find survey_requests that haven't been sent yet
 $CommonObject{DBObject}->Prepare(
     SQL => "SELECT id, ticket_id, create_time, public_survey_key FROM survey_request WHERE "
-        . "(send_time IS NULL OR send_time = '0000-00-00 00:00:00') ORDER BY create_time DESC",
+        . "send_time IS NULL ORDER BY create_time DESC",
 );
 
 # fetch the result
