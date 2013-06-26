@@ -1,8 +1,8 @@
 # --
 # Kernel/System/ImportExport/FormatBackend/CSV.pm - import/export backend for CSV
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CSV.pm,v 1.29 2011-05-05 09:20:45 ub Exp $
+# $Id: CSV.pm,v 1.30 2013-06-26 14:22:03 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -15,7 +15,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.29 $) [1];
+$VERSION = qw($Revision: 1.30 $) [1];
 
 =head1 NAME
 
@@ -315,7 +315,13 @@ sub ImportDataGet {
     # parse the content
     my $LineCount = 1;
     my @ImportData;
-    while ( my $Column = $ParseObject->getline($FH) ) {
+
+    # it is important to use this syntax "while ( !eof($FH) )"
+    # as the CPAN module Text::CSV_XS might show errors if the
+    # getline call is within the while test
+    # have a look at http://bugs.otrs.org/show_bug.cgi?id=9270
+    while ( !eof($FH) ) {
+        my $Column = $ParseObject->getline($FH);
         push @ImportData, $Column;
         $LineCount++;
     }
@@ -477,6 +483,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.29 $ $Date: 2011-05-05 09:20:45 $
+$Revision: 1.30 $ $Date: 2013-06-26 14:22:03 $
 
 =cut
