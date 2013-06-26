@@ -1,8 +1,8 @@
 # --
 # Survey.t - Survey tests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.25 2012-11-22 13:11:27 jh Exp $
+# $Id: Survey.t,v 1.26 2013-06-26 13:29:56 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -61,7 +61,8 @@ my %SurveyData = (
     Description         => 'The internal description of the survey',
     NotificationSender  => 'quality@unittest.com',
     NotificationSubject => 'Help us with your feedback! ÄÖÜ',
-    NotificationBody    => 'Dear customer... äöü',
+    NotificationBody =>
+        'Dear customer... äöü http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=<OTRS_PublicSurveyKey>',
 );
 my $SurveyID = $SurveyObject->SurveyNew(
     UserID => 1,
@@ -362,33 +363,42 @@ for my $Test (@Tests) {
         );
 
         # define mail body
-        my $Mailbody1 = "This is a multi-part message in MIME format...
+        my $Mailbody1 = <<'END';
+This is a multi-part message in MIME format...
 
 ------------=_MESSAGEID
-Content-Type: text/plain; charset=\"utf-8\"
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Dear customer... =C3=A4=C3=B6=C3=BC=
+Dear customer... =C3=A4=C3=B6=C3=BC
+[1]http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID
+
+[1] http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID
 
 ------------=_MESSAGEID
-Content-Type: text/html; charset=\"utf-8\"
+Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<!DOCTYPE html><html><head><meta http-equiv=3D\"Content-Type\" content=3D\"tex=
-t/html; charset=3Dutf-8\"/></head><body style=3D\"font-family:Geneva,Helvetic=
-a,Arial,sans-serif; font-size: 12px;\">Dear customer... =C3=A4=C3=B6=C3=BC</=
-body></html>=
-
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">Dear customer... =C3=A4=C3=B6=C3=BC <a href="http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID" title="http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID">http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID</a></body></html>
 ------------=_MESSAGEID--
-";
+END
 
         # copy mail body
         my $Mailbody2 = ${$BodyRef};
 
         # prepare mail body
         $Mailbody2 =~ s{ \d{8,12} - \d{3,6} - \d{1,3} }{MESSAGEID}xmsg;
+
+        # replace mailquoted "=3D" with original "="
+        $Mailbody2 =~ s{\=3D}{=}xmsg;
+
+        # remove trailing "=" linebreaks
+        $Mailbody2 =~ s{\=\n}{}xmsg;
+
+        # replace variable hex MD5 KeyID with "PublicSurveyKeyID"
+        $Mailbody2 =~ s{(PublicSurveyKey\=)[0-9a-f]+}{$1PublicSurveyKeyID}xmsg;
 
         $Self->Is(
             $Mailbody2,
