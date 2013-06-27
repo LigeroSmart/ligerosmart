@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.26 2013-06-26 13:29:56 jh Exp $
+# $Id: Survey.t,v 1.27 2013-06-27 07:50:48 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
