@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.ITSMChangeDelete.pl - to delete changes
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangeDelete.pl,v 1.4 2012-11-20 19:03:01 mh Exp $
+# $Id: otrs.ITSMChangeDelete.pl,v 1.5 2013-06-27 21:25:42 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -30,7 +30,7 @@ use FindBin qw($RealBin);
 use lib dirname($RealBin);
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.4 $) [1];
+$VERSION = qw($Revision: 1.5 $) [1];
 
 use Getopt::Long;
 use Kernel::Config;
@@ -61,7 +61,7 @@ $CommonObject{ChangeObject} = Kernel::System::ITSMChange->new(%CommonObject);
 
 print "otrs.ITSMChangeDelete.pl <Revision $VERSION> - ";
 print "delete changes (all or by number).\n";
-print "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+print "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
 
 my $Help          = '';
 my $All           = '';
@@ -94,7 +94,7 @@ if ($All) {
 
             # delete changes
             print "Deleting all changes...\n";
-            DeleteChanges( ChangesIDs => \@ChangesIDs );
+            DeleteChanges( %CommonObject, ChangesIDs => \@ChangesIDs );
         }
         else {
             exit 1;
@@ -128,7 +128,7 @@ elsif (@ChangeNumbers) {
     # delete changes (if any valid number was given)
     if (@ChangesIDs) {
         print "Deleting specified changes...\n";
-        DeleteChanges( ChangesIDs => \@ChangesIDs );
+        DeleteChanges( %CommonObject, ChangesIDs => \@ChangesIDs );
     }
 }
 
@@ -147,12 +147,12 @@ else {
 sub DeleteChanges {
 
     # get parameters
-    my (%Param) = @_;
+    my (%CommonObject) = @_;
 
     my $DeletedChanges = 0;
 
     # delete specified changes
-    for my $ChangeID ( @{ $Param{ChangesIDs} } ) {
+    for my $ChangeID ( @{ $CommonObject{ChangesIDs} } ) {
         my $True = $CommonObject{ChangeObject}->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
