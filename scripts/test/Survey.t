@@ -2,7 +2,7 @@
 # Survey.t - Survey tests
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Survey.t,v 1.27 2013-06-27 07:50:48 jh Exp $
+# $Id: Survey.t,v 1.28 2013-06-27 09:28:02 jh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,7 +62,7 @@ my %SurveyData = (
     NotificationSender  => 'quality@unittest.com',
     NotificationSubject => 'Help us with your feedback! ÄÖÜ',
     NotificationBody =>
-        'Dear customer... äöü http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=<OTRS_PublicSurveyKey>',
+        'Dear customer... äöü',
 );
 my $SurveyID = $SurveyObject->SurveyNew(
     UserID => 1,
@@ -371,17 +371,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Dear customer... =C3=A4=C3=B6=C3=BC
-[1]http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID
-
-[1] http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID
+Dear customer... =C3=A4=C3=B6=C3=BC=
 
 ------------=_MESSAGEID
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">Dear customer... =C3=A4=C3=B6=C3=BC <a href="http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID" title="http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID">http://localhost/otrs/public.pl?Action=PublicSurvey;PublicSurveyKey=PublicSurveyKeyID</a></body></html>
+<!DOCTYPE html><html><head><meta http-equiv=3D"Content-Type" content=3D"tex=
+t/html; charset=3Dutf-8"/></head><body style=3D"font-family:Geneva,Helvetic=
+a,Arial,sans-serif; font-size: 12px;">Dear customer... =C3=A4=C3=B6=C3=BC</=
+body></html>=
+
 ------------=_MESSAGEID--
 END
 
@@ -390,15 +391,6 @@ END
 
         # prepare mail body
         $Mailbody2 =~ s{ \d{8,12} - \d{3,6} - \d{1,3} }{MESSAGEID}xmsg;
-
-        # replace mailquoted "=3D" with original "="
-        $Mailbody2 =~ s{\=3D}{=}xmsg;
-
-        # remove trailing "=" linebreaks
-        $Mailbody2 =~ s{\=\n}{}xmsg;
-
-        # replace variable hex MD5 KeyID with "PublicSurveyKeyID"
-        $Mailbody2 =~ s{(PublicSurveyKey\=)[0-9a-f]+}{$1PublicSurveyKeyID}xmsg;
 
         $Self->Is(
             $Mailbody2,
