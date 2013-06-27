@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 # --
 # bin/otrs.ITSMChangesCheck.pl - check itsm changes
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: otrs.ITSMChangesCheck.pl,v 1.16 2012-11-20 19:03:03 mh Exp $
+# $Id: otrs.ITSMChangesCheck.pl,v 1.17 2013-06-27 21:12:53 ub Exp $
 # --
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU AFFERO General Public License as published by
@@ -31,7 +31,7 @@ use lib dirname($RealBin);
 use lib dirname($RealBin) . '/Kernel/cpan-lib';
 
 use vars qw(@ISA $VERSION);
-$VERSION = qw($Revision: 1.16 $) [1];
+$VERSION = qw($Revision: 1.17 $) [1];
 
 use Getopt::Std;
 use Kernel::Config;
@@ -107,7 +107,7 @@ getopt( 'hf', \%Opts );
 # show help
 if ( exists $Opts{h} ) {
     print "otrs.ITSMChangesCheck.pl <Revision $VERSION> - check itsm changes\n";
-    print "Copyright (C) 2001-2012 OTRS AG, http://otrs.org/\n";
+    print "Copyright (C) 2001-2013 OTRS AG, http://otrs.org/\n";
     print "usage: otrs.ITSMChangesCheck.pl [-f force]\n\n";
     exit 1;
 }
@@ -166,11 +166,17 @@ for my $Type (qw(StartTime EndTime)) {
         next CHANGEID if $Change->{"Actual$Type"};
 
         my $LastNotificationSentDate = ChangeNotificationSent(
+            %CommonObject,
             ChangeID => $ChangeID,
             Type     => "Planned${Type}",
         );
 
-        next CHANGEID if SentWithinPeriod($LastNotificationSentDate);
+        my $AlreadySentWithinPeriod = SentWithinPeriod(
+            %CommonObject,
+            LastNotificationSentDate => $LastNotificationSentDate,
+        );
+
+        next CHANGEID if $AlreadySentWithinPeriod;
 
         # trigger ChangePlannedStartTimeReachedPost-Event
         $MockedObject->EventHandler(
@@ -199,6 +205,7 @@ for my $Type (qw(StartTime EndTime)) {
         );
 
         my $LastNotificationSentDate = ChangeNotificationSent(
+            %CommonObject,
             ChangeID => $ChangeID,
             Type     => "Actual${Type}",
         );
@@ -233,6 +240,7 @@ for my $ChangeID ( @{$RequestedTimeChangeIDs} ) {
     );
 
     my $LastNotificationSentDate = ChangeNotificationSent(
+        %CommonObject,
         ChangeID => $ChangeID,
         Type     => "RequestedTime",
     );
@@ -272,11 +280,17 @@ for my $Type (qw(StartTime EndTime)) {
         next WORKORDERID if $WorkOrder->{"Actual$Type"};
 
         my $LastNotificationSentDate = WorkOrderNotificationSent(
+            %CommonObject,
             WorkOrderID => $WorkOrderID,
             Type        => "Planned${Type}",
         );
 
-        next WORKORDERID if SentWithinPeriod($LastNotificationSentDate);
+        my $AlreadySentWithinPeriod = SentWithinPeriod(
+            %CommonObject,
+            LastNotificationSentDate => $LastNotificationSentDate,
+        );
+
+        next WORKORDERID if $AlreadySentWithinPeriod;
 
         # trigger WorkOrderPlannedStartTimeReachedPost-Event
         $MockedObject->EventHandler(
@@ -306,6 +320,7 @@ for my $Type (qw(StartTime EndTime)) {
         );
 
         my $LastNotificationSentDate = WorkOrderNotificationSent(
+            %CommonObject,
             WorkOrderID => $WorkOrderID,
             Type        => "Actual${Type}",
         );
@@ -329,23 +344,23 @@ $CommonObject{PIDObject}->PIDDelete( Name => $PIDLockName );
 
 # check if a notification was already sent for the given change
 sub ChangeNotificationSent {
-    my (%Param) = @_;
+    my (%CommonObject) = @_;
 
     # check needed stuff
     for my $Needed (qw(ChangeID Type)) {
-        return if !$Param{$Needed};
+        return if !$CommonObject{$Needed};
     }
 
     # get history entries
     my $History = $CommonObject{HistoryObject}->ChangeHistoryGet(
-        ChangeID => $Param{ChangeID},
+        ChangeID => $CommonObject{ChangeID},
         UserID   => 1,
     );
 
     # search for notifications sent earlier
     for my $HistoryEntry ( reverse @{$History} ) {
         if (
-            $HistoryEntry->{HistoryType} eq 'Change' . $Param{Type} . 'Reached'
+            $HistoryEntry->{HistoryType} eq 'Change' . $CommonObject{Type} . 'Reached'
             && $HistoryEntry->{ContentNew} =~ m{ Notification \s Sent $ }xms
             )
         {
@@ -358,23 +373,23 @@ sub ChangeNotificationSent {
 
 # check if a notification was already sent for the given workorder
 sub WorkOrderNotificationSent {
-    my (%Param) = @_;
+    my (%CommonObject) = @_;
 
     # check needed stuff
     for my $Needed (qw(WorkOrderID Type)) {
-        return if !$Param{$Needed};
+        return if !$CommonObject{$Needed};
     }
 
     # get history entries
     my $History = $CommonObject{HistoryObject}->WorkOrderHistoryGet(
-        WorkOrderID => $Param{WorkOrderID},
+        WorkOrderID => $CommonObject{WorkOrderID},
         UserID      => 1,
     );
 
     # search for notifications sent earlier
     for my $HistoryEntry ( reverse @{$History} ) {
         if (
-            $HistoryEntry->{HistoryType} eq 'WorkOrder' . $Param{Type} . 'Reached'
+            $HistoryEntry->{HistoryType} eq 'WorkOrder' . $CommonObject{Type} . 'Reached'
             && $HistoryEntry->{ContentNew} =~ m{ Notification \s Sent }xms
             )
         {
@@ -386,9 +401,10 @@ sub WorkOrderNotificationSent {
 }
 
 sub SentWithinPeriod {
-    my $LastNotificationSentDate = shift;
 
-    return if !$LastNotificationSentDate;
+    my (%CommonObject) = @_;
+
+    return if !$CommonObject{LastNotificationSentDate};
 
     # get SysConfig option
     my $Config = $CommonObject{ConfigObject}->Get('ITSMChange::TimeReachedNotifications');
@@ -398,7 +414,7 @@ sub SentWithinPeriod {
 
     # get epoche seconds of send time
     my $SentEpoche = $CommonObject{TimeObject}->TimeStamp2SystemTime(
-        String => $LastNotificationSentDate,
+        String => $CommonObject{LastNotificationSentDate},
     );
 
     # calc diff
