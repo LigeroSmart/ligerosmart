@@ -1,8 +1,8 @@
 # --
 # ITSMChange.t - change tests
-# Copyright (C) 2001-2012 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMChange.t,v 1.195 2012-11-14 14:07:29 ub Exp $
+# $Id: ITSMChange.t,v 1.196 2013-06-28 14:39:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -40,19 +40,22 @@ $Self->{GroupObject}          = Kernel::System::Group->new( %{$Self} );
 $Self->{CustomerUserObject}   = Kernel::System::CustomerUser->new( %{$Self} );
 $Self->{ValidObject}          = Kernel::System::Valid->new( %{$Self} );
 $Self->{GeneralCatalogObject} = Kernel::System::GeneralCatalog->new( %{$Self} );
-$Self->{ChangeObject}         = Kernel::System::ITSMChange->new( %{$Self} );
 $Self->{CIPAllocateObject}    = Kernel::System::ITSMChange::ITSMChangeCIPAllocate->new( %{$Self} );
-$Self->{WorkOrderObject}      = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{HistoryObject}        = Kernel::System::ITSMChange::History->new( %{$Self} );
 $Self->{CacheObject}          = Kernel::System::Cache->new( %{$Self} );
 
+# create change and workorder objects as local variables to prevent error messages
+# about missing LogObject during event transaction mode in object destruction.
+my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+my $ChangeObject    = Kernel::System::ITSMChange->new( %{$Self} );
+
 # test if change object was created successfully
 $Self->True(
-    $Self->{ChangeObject},
+    $ChangeObject,
     "Test " . $TestCount++ . ' - construction of change object',
 );
 $Self->Is(
-    ref $Self->{ChangeObject},
+    ref $ChangeObject,
     'Kernel::System::ITSMChange',
     "Test " . $TestCount++ . ' - class of change object',
 );
@@ -184,7 +187,7 @@ my @ObjectMethods = qw(
 # check if subs are available
 for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
-        $Self->{ChangeObject}->can($ObjectMethod),
+        $ChangeObject->can($ObjectMethod),
         "Test " . $TestCount++ . " - check 'can $ObjectMethod'",
     );
 }
@@ -233,7 +236,7 @@ for my $DefaultChangeState (@DefaultChangeStates) {
 for my $State (@DefaultChangeStates) {
 
     # look up the state name
-    my $LookedUpStateID = $Self->{ChangeObject}->ChangeStateLookup(
+    my $LookedUpStateID = $ChangeObject->ChangeStateLookup(
         ChangeState => $State,
     );
 
@@ -244,7 +247,7 @@ for my $State (@DefaultChangeStates) {
     );
 
     # do the reverse lookup
-    my $LookedUpState = $Self->{ChangeObject}->ChangeStateLookup(
+    my $LookedUpState = $ChangeObject->ChangeStateLookup(
         ChangeStateID => $LookedUpStateID,
     );
 
@@ -256,14 +259,14 @@ for my $State (@DefaultChangeStates) {
 }
 
 # now some param checks for ChangeStateLookup
-my $LookupOk = $Self->{ChangeObject}->ChangeStateLookup();
+my $LookupOk = $ChangeObject->ChangeStateLookup();
 
 $Self->False(
     $LookupOk,
     'No params passed to ChangeStateLookup()',
 );
 
-$LookupOk = $Self->{ChangeObject}->ChangeStateLookup(
+$LookupOk = $ChangeObject->ChangeStateLookup(
     ChangeState   => 'approved',
     ChangeStateID => 2,
 );
@@ -273,7 +276,7 @@ $Self->False(
     'Exclusive params passed to ChangeStateLookup()',
 );
 
-$LookupOk = $Self->{ChangeObject}->ChangeStateLookup(
+$LookupOk = $ChangeObject->ChangeStateLookup(
     State => 'approved',
 );
 
@@ -282,7 +285,7 @@ $Self->False(
     "Incorrect param 'State' passed to ChangeStateLookup()",
 );
 
-$LookupOk = $Self->{ChangeObject}->ChangeStateLookup(
+$LookupOk = $ChangeObject->ChangeStateLookup(
     StateID => 2,
 );
 
@@ -405,7 +408,7 @@ for my $CIPValue (@CIPValues) {
         "Test " . $TestCount++ . " - check category '$CIPValue' (general catalog)"
     );
 
-    my $CategoryID = $Self->{ChangeObject}->ChangeCIPLookup(
+    my $CategoryID = $ChangeObject->ChangeCIPLookup(
         Type => 'Category',
         CIP  => $CIPValue,
     );
@@ -420,7 +423,7 @@ for my $CIPValue (@CIPValues) {
         "Test " . $TestCount++ . " - check impact '$CIPValue' (general catalog)"
     );
 
-    my $ImpactID = $Self->{ChangeObject}->ChangeCIPLookup(
+    my $ImpactID = $ChangeObject->ChangeCIPLookup(
         Type => 'Impact',
         CIP  => $CIPValue,
     );
@@ -435,7 +438,7 @@ for my $CIPValue (@CIPValues) {
         "Test " . $TestCount++ . " - check priority '$CIPValue' (general catalog)"
     );
 
-    my $PriorityID = $Self->{ChangeObject}->ChangeCIPLookup(
+    my $PriorityID = $ChangeObject->ChangeCIPLookup(
         Type => 'Priority',
         CIP  => $CIPValue,
     );
@@ -2498,7 +2501,7 @@ for my $Test (@ChangeTests) {
     if ( $SourceData->{ChangeAdd} ) {
 
         # add the change
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} }
         );
 
@@ -2558,7 +2561,7 @@ for my $Test (@ChangeTests) {
     if ( exists $SourceData->{ChangeUpdate} ) {
 
         # update the change
-        my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+        my $ChangeUpdateSuccess = $ChangeObject->ChangeUpdate(
             ChangeID => $ChangeID,
             %{ $SourceData->{ChangeUpdate} },
         );
@@ -2590,7 +2593,7 @@ for my $Test (@ChangeTests) {
     }    # end if ChangeUpdate
 
     if ( $SourceData->{ChangeCABUpdate} && $ChangeID ) {
-        my $CABUpdateSuccess = $Self->{ChangeObject}->ChangeCABUpdate(
+        my $CABUpdateSuccess = $ChangeObject->ChangeCABUpdate(
             %{ $SourceData->{ChangeCABUpdate} },
             ChangeID => $ChangeID,
             UserID   => 1,
@@ -2621,7 +2624,7 @@ for my $Test (@ChangeTests) {
 
             # test void context
             $Self->False(
-                $Self->{ChangeObject}->ChangeCABDelete() || 0,
+                $ChangeObject->ChangeCABDelete() || 0,
                 "Test $TestCount: |- ChangeCABDelete",
             );
 
@@ -2631,7 +2634,7 @@ for my $Test (@ChangeTests) {
             );
             for my $FailTest (@DeleteTests) {
                 $Self->False(
-                    $Self->{ChangeObject}->ChangeCABDelete( %{$FailTest} ) || 0,
+                    $ChangeObject->ChangeCABDelete( %{$FailTest} ) || 0,
                     "Test $TestCount: |- ChangeCABDelete",
                 );
             }
@@ -2640,7 +2643,7 @@ for my $Test (@ChangeTests) {
 
             # Delete with all params
             $Self->True(
-                $Self->{ChangeObject}->ChangeCABDelete(%CABDeleteParams),
+                $ChangeObject->ChangeCABDelete(%CABDeleteParams),
                 "Test $TestCount: |- ChangeCABDelete",
             );
         }
@@ -2648,7 +2651,7 @@ for my $Test (@ChangeTests) {
 
     # add a workorder
     if ( $SourceData->{WorkOrderAdd} ) {
-        my $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        my $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
             ChangeID => $ChangeID,
         );
@@ -2664,7 +2667,7 @@ for my $Test (@ChangeTests) {
 
         my $ChangeGetReferenceData = $ReferenceData->{ChangeGet};
 
-        my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+        my $ChangeData = $ChangeObject->ChangeGet(
             ChangeID => $ChangeID,
             UserID   => 1,
         );
@@ -2717,7 +2720,7 @@ for my $Test (@ChangeTests) {
     }    # end if 'ChangeGet'
 
     if ( $ReferenceData->{ChangeCABGet} ) {
-        my $CABData = $Self->{ChangeObject}->ChangeCABGet(
+        my $CABData = $ChangeObject->ChangeCABGet(
             %{ $ReferenceData->{ChangeCABGet} },
             UserID   => 1,
             ChangeID => $ChangeID,
@@ -2806,7 +2809,7 @@ continue {
 {
 
     # add a new change with CABCustomer $CustomerUserIDs[2]
-    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+    my $ChangeID = $ChangeObject->ChangeAdd(
         ChangeTitle     => 'ABC',
         Description     => 'DEF',
         Justification   => 'XYZ',
@@ -2827,7 +2830,7 @@ continue {
     );
 
     # search for the change ids
-    my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+    my $ChangeIDs = $ChangeObject->ChangeSearch(
         CABCustomers     => [ $CustomerUserIDs[2] ],
         OrderByDirection => ['Up'],
         OrderBy          => ['ChangeNumber'],
@@ -2860,7 +2863,7 @@ continue {
     );
 
     # delete the Change
-    my $DeleteSuccess = $Self->{ChangeObject}->ChangeDelete(
+    my $DeleteSuccess = $ChangeObject->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -2883,12 +2886,12 @@ continue {
 my ($ChangeLookupTestChangeID) = @{ $Label2ChangeIDs{ChangeLookupTest} || [] };
 
 if ($ChangeLookupTestChangeID) {
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeLookupTestChangeID,
         UserID   => 1,
     );
 
-    my $ChangeID = $Self->{ChangeObject}->ChangeLookup(
+    my $ChangeID = $ChangeObject->ChangeLookup(
         ChangeNumber => $ChangeData->{ChangeNumber},
     );
 
@@ -2899,7 +2902,7 @@ if ($ChangeLookupTestChangeID) {
             . $ChangeData->{ChangeNumber} . ' successful.',
     );
 
-    my $ChangeNumber = $Self->{ChangeObject}->ChangeLookup(
+    my $ChangeNumber = $ChangeObject->ChangeLookup(
         ChangeID => $ChangeLookupTestChangeID,
     );
 
@@ -2912,21 +2915,21 @@ if ($ChangeLookupTestChangeID) {
     );
 
     # now some param checks for ChangeLookup()
-    my $LookupOk = $Self->{ChangeObject}->ChangeLookup( UserID => 1 );
+    my $LookupOk = $ChangeObject->ChangeLookup( UserID => 1 );
 
     $Self->False(
         $LookupOk,
         'Only an unused param passed to ChangeLookup()',
     );
 
-    $LookupOk = $Self->{ChangeObject}->ChangeLookup();
+    $LookupOk = $ChangeObject->ChangeLookup();
 
     $Self->False(
         $LookupOk,
         'No param passed to ChangeLookup()',
     );
 
-    $LookupOk = $Self->{ChangeObject}->ChangeLookup(
+    $LookupOk = $ChangeObject->ChangeLookup(
         ChangeID     => $ChangeLookupTestChangeID,
         ChangeNumber => $ChangeData->{ChangeNumber},
         UserID       => 1,
@@ -2941,7 +2944,7 @@ if ($ChangeLookupTestChangeID) {
 # test if ChangeList returns at least as many changes as we created
 # we cannot test for a specific number as these tests can be run in existing environments
 # where other changes already exist
-my $ChangeList = $Self->{ChangeObject}->ChangeList( UserID => 1 ) || [];
+my $ChangeList = $ChangeObject->ChangeList( UserID => 1 ) || [];
 my %ChangeListMap = map { $_ => 1 } @{$ChangeList};
 
 # check whether the created changes were found by ChangeList()
@@ -3888,7 +3891,7 @@ my ($SearchTestChangeID) = @{ $Label2ChangeIDs{SearchTest} };
 my $NrOfGeneralSearchTests = scalar @ChangeSearchTests;
 
 if ($SearchTestChangeID) {
-    my $SearchTestChange = $Self->{ChangeObject}->ChangeGet(
+    my $SearchTestChange = $ChangeObject->ChangeGet(
         ChangeID => $SearchTestChangeID,
         UserID   => 1,
     );
@@ -4117,14 +4120,14 @@ for my $Test (@ChangeSearchTests) {
     );
 
     # get a ref to an array of found ids
-    my $ChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+    my $ChangeIDs = $ChangeObject->ChangeSearch(
         %{ $Test->{SearchData} },
         Result => 'ARRAY',
         UserID => 1,
     );
 
     # get a count of found ids
-    my $CountChangeIDs = $Self->{ChangeObject}->ChangeSearch(
+    my $CountChangeIDs = $ChangeObject->ChangeSearch(
         %{ $Test->{SearchData} },
         Result => 'COUNT',
         UserID => 1,
@@ -4209,7 +4212,7 @@ my @OrderBySearchTestChangeIDs = @{ $Label2ChangeIDs{OrderBySearchTest} };
 my @OrderBySearchTestChanges;
 
 for my $ChangeIDForOrderByTests (@OrderBySearchTestChangeIDs) {
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeIDForOrderByTests,
         UserID   => 1,
     );
@@ -4263,7 +4266,7 @@ for my $OrderByColumn (@OrderByColumns) {
     # dump the reference attribute
     my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
 
-    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResult = $ChangeObject->ChangeSearch(
         ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Up'],
@@ -4299,7 +4302,7 @@ for my $OrderByColumn (@OrderByColumns) {
     # dump the reference attribute
     my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
 
-    my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultDown = $ChangeObject->ChangeSearch(
         ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy     => [$OrderByColumn],
         UserID      => 1,
@@ -4315,7 +4318,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
-    my $SearchResultSideways = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultSideways = $ChangeObject->ChangeSearch(
         ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [$OrderByColumn],
         OrderByDirection => ['Sideways'],
@@ -4333,7 +4336,7 @@ for my $OrderByColumn (@OrderByColumns) {
 {
 
     # check for 'OrderBy' with non-existent column
-    my $SearchResultFooBarColumn = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultFooBarColumn = $ChangeObject->ChangeSearch(
         ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy     => ['FooBar'],
         UserID      => 1,
@@ -4346,7 +4349,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # check for 'OrderBy' with non-existent column
-    my $SearchResultFooBarColumnDirection = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultFooBarColumnDirection = $ChangeObject->ChangeSearch(
         ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => ['FooBar'],
         OrderByDirection => ['FooBar'],
@@ -4360,7 +4363,7 @@ for my $OrderByColumn (@OrderByColumns) {
     );
 
     # check for 'OrderBy' with non-existent column
-    my $SearchResultFooBarDoubleColumn = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultFooBarDoubleColumn = $ChangeObject->ChangeSearch(
         ChangeTitle => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy     => [ 'ChangeID', 'ChangeID' ],
         UserID      => 1,
@@ -4383,7 +4386,7 @@ SetTimes(
 
 my @ChangesForSecondOrderByTests;
 for my $ChangeIDForSecondOrderByTests (@OrderBySearchTestChangeIDs) {
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeIDForSecondOrderByTests,
         UserID   => 1,
     );
@@ -4408,7 +4411,7 @@ for my $ChangeIDForSecondOrderByTests (@OrderBySearchTestChangeIDs) {
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Useqq  = 1;
 
-    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResult = $ChangeObject->ChangeSearch(
         ChangeTitle      => 'OrderByChange - Title - ' . $UniqueSignature,
         OrderBy          => [ 'CreateTime', 'ChangeID' ],
         OrderByDirection => [ 'Up', 'Up' ],
@@ -4861,7 +4864,7 @@ for my $Test (@TimeSearchTests) {
     );
 
     if ( $SourceData->{ChangeAdd} ) {
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} },
         );
 
@@ -4877,7 +4880,7 @@ for my $Test (@TimeSearchTests) {
     }
 
     if ( $SourceData->{WorkOrderAdd} ) {
-        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
             ChangeID => $ChangeID,
         );
@@ -4892,7 +4895,7 @@ for my $Test (@TimeSearchTests) {
 
     my $SearchResult;
     if ( $SourceData->{ChangeSearch} ) {
-        $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        $SearchResult = $ChangeObject->ChangeSearch(
             %{ $SourceData->{ChangeSearch} },
         );
 
@@ -4949,7 +4952,7 @@ my @OrderByCIPChangeIDs = @{ $Label2ChangeIDs{OrderByCIPTests} };
 my @OrderByCIPChanges;
 
 for my $ChangeIDForOrderByCIPTests (@OrderByCIPChangeIDs) {
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeIDForOrderByCIPTests,
         UserID   => 1,
     );
@@ -4980,7 +4983,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     # dump the reference attribute
     my $ReferenceList = Data::Dumper::Dumper( \@SortedIDs );
 
-    my $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResult = $ChangeObject->ChangeSearch(
         ChangeTitle      => '%CIP%' . $UniqueSignature,
         OrderBy          => [$CIPColumn],
         OrderByDirection => ['Up'],
@@ -5007,7 +5010,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     # dump the reference attribute
     my $ReferenceListDown = Data::Dumper::Dumper( \@SortedIDsDown );
 
-    my $SearchResultDown = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultDown = $ChangeObject->ChangeSearch(
         ChangeTitle => '%CIP%' . $UniqueSignature,
         OrderBy     => [$CIPColumn],
         UserID      => 1,
@@ -5023,7 +5026,7 @@ for my $CIPColumn (@OrderByCIPColumns) {
     );
 
     # check if ITSMChange.pm handles non-existent OrderByDirection criteria correct
-    my $SearchResultSideways = $Self->{ChangeObject}->ChangeSearch(
+    my $SearchResultSideways = $ChangeObject->ChangeSearch(
         ChangeTitle      => '%CIP%' . $UniqueSignature,
         OrderBy          => [$CIPColumn],
         OrderByDirection => ['Sideways'],
@@ -5176,7 +5179,7 @@ for my $Test (@WOStringAndAgentSearchTests) {
     );
 
     if ( $SourceData->{ChangeAdd} ) {
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} },
         );
 
@@ -5192,7 +5195,7 @@ for my $Test (@WOStringAndAgentSearchTests) {
     }
 
     if ( $SourceData->{WorkOrderAdd} ) {
-        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
             ChangeID => $ChangeID,
         );
@@ -5207,7 +5210,7 @@ for my $Test (@WOStringAndAgentSearchTests) {
 
     my $SearchResult;
     if ( $SourceData->{ChangeSearch} ) {
-        $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        $SearchResult = $ChangeObject->ChangeSearch(
             %{ $SourceData->{ChangeSearch} },
         );
 
@@ -5257,7 +5260,7 @@ for my $Test (@WOStringAndAgentSearchTests) {
 
 # each of the changes should have one workorder
 for my $ChangeID (@WOSTChangeIDs) {
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -5361,7 +5364,7 @@ for my $WorkOrderStateTest (@WOStateTests) {
     );
 
     if ( $SourceData->{ChangeAdd} ) {
-        $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+        $ChangeID = $ChangeObject->ChangeAdd(
             %{ $SourceData->{ChangeAdd} },
         );
 
@@ -5378,7 +5381,7 @@ for my $WorkOrderStateTest (@WOStateTests) {
     }
 
     if ( $SourceData->{WorkOrderAdd} ) {
-        $WorkOrderID = $Self->{WorkOrderObject}->WorkOrderAdd(
+        $WorkOrderID = $WorkOrderObject->WorkOrderAdd(
             %{ $SourceData->{WorkOrderAdd} },
             ChangeID => $ChangeID,
         );
@@ -5393,7 +5396,7 @@ for my $WorkOrderStateTest (@WOStateTests) {
 
     my $SearchResult;
     if ( $SourceData->{ChangeSearch} ) {
-        $SearchResult = $Self->{ChangeObject}->ChangeSearch(
+        $SearchResult = $ChangeObject->ChangeSearch(
             %{ $SourceData->{ChangeSearch} },
         );
 
@@ -5431,7 +5434,7 @@ for my $WorkOrderStateTest (@WOStateTests) {
 
 # each of the changes should have one workorder
 for my $ChangeID (@WOStateTestChangeIDs) {
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -5716,8 +5719,8 @@ for my $Test (@PermissionTests) {
         for my $UserIndex ( sort keys %{ $ReferenceData->{Permissions} } ) {
             my $Privs = $ReferenceData->{Permissions}->{$UserIndex};
             for my $Type ( keys %{$Privs} ) {
-                $Self->{ChangeObject}->{Debug} = 10;
-                my $Access = $Self->{ChangeObject}->Permission(
+                $ChangeObject->{Debug} = 10;
+                my $Access = $ChangeObject->Permission(
                     Type     => $Type,
                     ChangeID => $PermissionTestChangeID,
                     UserID   => $UserIDs[$UserIndex],
@@ -5751,7 +5754,7 @@ continue {
 my ($PossibleStatesTestChangeID) = @{ $Label2ChangeIDs{PossibleStatesTest} };
 
 # When no ChangeID is given ChangePossibleStatesGet() returns a list of all states.
-my $PossibleStates = $Self->{ChangeObject}->ChangePossibleStatesGet(
+my $PossibleStates = $ChangeObject->ChangePossibleStatesGet(
 
     #    ChangeID => $PossibleStatesTestChangeID,
     UserID => 1,
@@ -5825,12 +5828,12 @@ my @PossibleStatesForInProgress = (
 # Test logic starts...
 
 # Create a change object...
-my $ChangeIDForChangePossibleStateGet = $Self->{ChangeObject}->ChangeAdd(
+my $ChangeIDForChangePossibleStateGet = $ChangeObject->ChangeAdd(
     UserID => 1,
 );
 
 # Get posssible states...
-my $PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+my $PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
 );
@@ -5845,7 +5848,7 @@ _TestPossibleStates(
 );
 
 # Change the state
-my $ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+my $ChangeUpdateSuccess = $ChangeObject->ChangeUpdate(
     ChangeID    => $ChangeIDForChangePossibleStateGet,
     ChangeState => 'pending approval',
     UserID      => 1,
@@ -5859,7 +5862,7 @@ $Self->True(
 );
 
 # Get posssible states...
-$PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+$PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
 );
@@ -5872,7 +5875,7 @@ _TestPossibleStates(
 );
 
 # Change the state
-$ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+$ChangeUpdateSuccess = $ChangeObject->ChangeUpdate(
     ChangeID    => $ChangeIDForChangePossibleStateGet,
     ChangeState => 'approved',
     UserID      => 1,
@@ -5886,7 +5889,7 @@ $Self->True(
 );
 
 # Get posssible states...
-$PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+$PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
 );
@@ -5899,7 +5902,7 @@ _TestPossibleStates(
 );
 
 # Change the state
-$ChangeUpdateSuccess = $Self->{ChangeObject}->ChangeUpdate(
+$ChangeUpdateSuccess = $ChangeObject->ChangeUpdate(
     ChangeID    => $ChangeIDForChangePossibleStateGet,
     ChangeState => 'in progress',
     UserID      => 1,
@@ -5913,7 +5916,7 @@ $Self->True(
 );
 
 # Get posssible states...
-$PossibleStatesUsingChangeID = $Self->{ChangeObject}->ChangePossibleStatesGet(
+$PossibleStatesUsingChangeID = $ChangeObject->ChangePossibleStatesGet(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
 );
@@ -5926,7 +5929,7 @@ _TestPossibleStates(
 );
 
 # Delete the Change
-$Self->{ChangeObject}->ChangeDelete(
+$ChangeObject->ChangeDelete(
     ChangeID => $ChangeIDForChangePossibleStateGet,
     UserID   => 1,
 );
@@ -6042,7 +6045,7 @@ $Self->True(
 # CIP lookup tests
 # ------------------------------------------------------------ #
 
-$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $ChangeObject->ChangeCIPLookup(
     CIP  => '1 very high',
     Type => 'non-existent',
 );
@@ -6052,7 +6055,7 @@ $Self->False(
     'Invalid type passed to ChangeCIPLookup()',
 );
 
-$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $ChangeObject->ChangeCIPLookup(
     CIP => '1 very high',
 );
 
@@ -6061,7 +6064,7 @@ $Self->False(
     'Parameter Type not passed to ChangeCIPLookup()',
 );
 
-$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $ChangeObject->ChangeCIPLookup(
     Type => 'Priority',
 );
 
@@ -6070,7 +6073,7 @@ $Self->False(
     'Parameter ID or CIP not passed to ChangeCIPLookup()',
 );
 
-$LookupOk = $Self->{ChangeObject}->ChangeCIPLookup(
+$LookupOk = $ChangeObject->ChangeCIPLookup(
     Type => 'Priority',
     CIP  => '1 very high',
     ID   => 123,
@@ -6085,7 +6088,7 @@ $Self->False(
 # ChangePossibleCIPGet() tests
 # ------------------------------------------------------------ #
 
-my $PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet(
+my $PossibleCIPGetOk = $ChangeObject->ChangePossibleCIPGet(
     Type   => 'non-existent',
     UserID => 1,
 );
@@ -6095,7 +6098,7 @@ $Self->False(
     'Invalid type passed to ChangePossibleCIPGet()',
 );
 
-$PossibleCIPGetOk = $Self->{ChangeObject}->ChangePossibleCIPGet(
+$PossibleCIPGetOk = $ChangeObject->ChangePossibleCIPGet(
     UserID => 1,
 );
 
@@ -6107,7 +6110,7 @@ $Self->False(
 # The possible values are the same for all three types.
 my $PossibleCIPReference = join ', ', @CIPValues;
 for my $Type (qw(Category Impact Priority)) {
-    my $PossibleCIPs = $Self->{ChangeObject}->ChangePossibleCIPGet(
+    my $PossibleCIPs = $ChangeObject->ChangePossibleCIPGet(
         Type   => $Type,
         UserID => 1,
     );
@@ -6132,7 +6135,7 @@ for my $Type (qw(Category Impact Priority)) {
 my ($AttachmentTestChangeID) = @{ $Label2ChangeIDs{Attachment} };
 
 # verify that initialy no attachment exists
-my @AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+my @AttachmentList = $ChangeObject->ChangeAttachmentList(
     ChangeID => $AttachmentTestChangeID,
 );
 
@@ -6160,7 +6163,7 @@ for my $TestFile (@TestFileList) {
 
     $FileCount++;
 
-    my $AddOk = $Self->{ChangeObject}->ChangeAttachmentAdd(
+    my $AddOk = $ChangeObject->ChangeAttachmentAdd(
         %{$TestFile},
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
@@ -6170,7 +6173,7 @@ for my $TestFile (@TestFileList) {
         "Attachment $FileCount: attachment added",
     );
 
-    my @AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+    my @AttachmentList = $ChangeObject->ChangeAttachmentList(
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
@@ -6188,7 +6191,7 @@ for my $TestFile (@TestFileList) {
     );
 
     # get the attachment
-    my $Attachment = $Self->{ChangeObject}->ChangeAttachmentGet(
+    my $Attachment = $ChangeObject->ChangeAttachmentGet(
         ChangeID => $AttachmentTestChangeID,
         Filename => $TestFile->{Filename},
     );
@@ -6207,7 +6210,7 @@ for my $TestFile (@TestFileList) {
     }
 
     # check existence of attachment
-    my $AttachmentExists = $Self->{ChangeObject}->ChangeAttachmentExists(
+    my $AttachmentExists = $ChangeObject->ChangeAttachmentExists(
         ChangeID => $AttachmentTestChangeID,
         Filename => $TestFile->{Filename},
         UserID   => 1,
@@ -6226,7 +6229,7 @@ for my $TestFile (@TestFileList) {
 
     $FileCount++;
 
-    my $DeleteOk = $Self->{ChangeObject}->ChangeAttachmentDelete(
+    my $DeleteOk = $ChangeObject->ChangeAttachmentDelete(
         ChangeID => $AttachmentTestChangeID,
         Filename => $TestFile->{Filename},
         UserID   => 1,
@@ -6236,7 +6239,7 @@ for my $TestFile (@TestFileList) {
         "Attachment $FileCount: attachment deleted",
     );
 
-    my @AttachmentList = $Self->{ChangeObject}->ChangeAttachmentList(
+    my @AttachmentList = $ChangeObject->ChangeAttachmentList(
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
     );
@@ -6247,7 +6250,7 @@ for my $TestFile (@TestFileList) {
         "Attachment $FileCount: number of attachments after deletion",
     );
 
-    my $AttachmentExists = $Self->{ChangeObject}->ChangeAttachmentExists(
+    my $AttachmentExists = $ChangeObject->ChangeAttachmentExists(
         Filename => $TestFile->{Filename},
         ChangeID => $AttachmentTestChangeID,
         UserID   => 1,
@@ -6272,7 +6275,7 @@ for my $TestFile (@TestFileList) {
     );
 
     # add a new test change
-    my $ChangeID = $Self->{ChangeObject}->ChangeAdd(
+    my $ChangeID = $ChangeObject->ChangeAdd(
         %OldValues,
         UserID => 1,
     );
@@ -6288,7 +6291,7 @@ for my $TestFile (@TestFileList) {
     );
 
     # update the change
-    my $Success = $Self->{ChangeObject}->ChangeUpdate(
+    my $Success = $ChangeObject->ChangeUpdate(
         %NewValues,
         ChangeID => $ChangeID,
         UserID   => 1,
@@ -6363,7 +6366,7 @@ $Self->{ConfigObject}->Set(
 my $DeleteTestCount = 1;
 for my $ChangeID ( keys %TestedChangeID ) {
 
-    my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
+    my $DeleteOk = $ChangeObject->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -6373,7 +6376,7 @@ for my $ChangeID ( keys %TestedChangeID ) {
     );
 
     # double check if change is really deleted
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
         Cache    => 0,

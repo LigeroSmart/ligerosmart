@@ -1,8 +1,8 @@
 # --
 # ITSMTemplate.t - change tests
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMTemplate.t,v 1.9 2011-03-04 14:27:48 ub Exp $
+# $Id: ITSMTemplate.t,v 1.10 2013-06-28 14:39:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -41,23 +41,26 @@ my $TestCount = 1;
 # create common objects
 $Self->{UserObject}         = Kernel::System::User->new( %{$Self} );
 $Self->{GroupObject}        = Kernel::System::Group->new( %{$Self} );
-$Self->{ChangeObject}       = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{ConditionObject}    = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
 $Self->{CustomerUserObject} = Kernel::System::CustomerUser->new( %{$Self} );
-$Self->{WorkOrderObject}    = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
-$Self->{TemplateObject}     = Kernel::System::ITSMChange::Template->new( %{$Self} );
 $Self->{ValidObject}        = Kernel::System::Valid->new( %{$Self} );
+
+# create some objects as local variables to prevent error messages
+# about missing LogObject during event transaction mode in object destruction.
+my $ChangeObject    = Kernel::System::ITSMChange->new( %{$Self} );
+my $ConditionObject = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
+my $TemplateObject  = Kernel::System::ITSMChange::Template->new( %{$Self} );
 
 # create local objects that don't clobber $Self
 my $HTMLUtilsObject = Kernel::System::HTMLUtils->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
-    $Self->{TemplateObject},
+    $TemplateObject,
     "Test " . $TestCount++ . ' - construction of template object',
 );
 $Self->Is(
-    ref $Self->{TemplateObject},
+    ref $TemplateObject,
     'Kernel::System::ITSMChange::Template',
     "Test " . $TestCount++ . ' - class of template object',
 );
@@ -116,7 +119,7 @@ my @ObjectMethods = qw(
 # check if subs are available
 for my $ObjectMethod (@ObjectMethods) {
     $Self->True(
-        $Self->{TemplateObject}->can($ObjectMethod),
+        $TemplateObject->can($ObjectMethod),
         "Test " . $TestCount++ . " - check 'can $ObjectMethod'",
     );
 }
@@ -137,7 +140,7 @@ my @DefaultTypes = qw(
 for my $Type (@DefaultTypes) {
 
     # look up the state name
-    my $LookedUpTypeID = $Self->{TemplateObject}->TemplateTypeLookup(
+    my $LookedUpTypeID = $TemplateObject->TemplateTypeLookup(
         TemplateType => $Type,
     );
 
@@ -147,7 +150,7 @@ for my $Type (@DefaultTypes) {
     );
 
     # do the reverse lookup
-    my $LookedUpType = $Self->{TemplateObject}->TemplateTypeLookup(
+    my $LookedUpType = $TemplateObject->TemplateTypeLookup(
         TemplateTypeID => $LookedUpTypeID,
     );
 
@@ -159,14 +162,14 @@ for my $Type (@DefaultTypes) {
 }
 
 # now some param checks for ChangeStateLookup
-my $LookupOk = $Self->{TemplateObject}->TemplateTypeLookup();
+my $LookupOk = $TemplateObject->TemplateTypeLookup();
 
 $Self->False(
     $LookupOk,
     'No params passed to TemplateTypeLookup()',
 );
 
-$LookupOk = $Self->{TemplateObject}->TemplateTypeLookup(
+$LookupOk = $TemplateObject->TemplateTypeLookup(
     TemplateType   => 'approved',
     TemplateTypeID => 2,
 );
@@ -176,7 +179,7 @@ $Self->False(
     'Exclusive params passed to TemplateTypeLookup()',
 );
 
-$LookupOk = $Self->{TemplateObject}->TemplateTypeLookup(
+$LookupOk = $TemplateObject->TemplateTypeLookup(
     TemplateTypes => 'ITSMAnything',
 );
 
@@ -268,7 +271,7 @@ my %ChangeDefinitions = (
 my %CreatedChangeID;
 
 for my $ChangeName ( keys %ChangeDefinitions ) {
-    $CreatedChangeID{$ChangeName} = $Self->{ChangeObject}->ChangeAdd(
+    $CreatedChangeID{$ChangeName} = $ChangeObject->ChangeAdd(
         %{ $ChangeDefinitions{$ChangeName} },
         UserID => 1,
     );
@@ -287,7 +290,7 @@ for my $ChangeName ( keys %CreatedChangeID ) {
         "Test $TestCount: ChangeAdd() - $ChangeID created ($ChangeName)",
     );
 
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $CreatedChangeID{$ChangeName},
         UserID   => 1,
     );
@@ -337,7 +340,7 @@ my %CreatedWorkOrderID;
 for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
 
     # add workorder
-    $CreatedWorkOrderID{$WorkOrderName} = $Self->{WorkOrderObject}->WorkOrderAdd(
+    $CreatedWorkOrderID{$WorkOrderName} = $WorkOrderObject->WorkOrderAdd(
         %{ $WorkOrderDefinitions{$WorkOrderName} },
         UserID => 1,
     );
@@ -345,7 +348,7 @@ for my $WorkOrderName ( keys %WorkOrderDefinitions ) {
     my $WorkOrderID = $CreatedWorkOrderID{$WorkOrderName};
 
     # get workorder
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
@@ -441,7 +444,7 @@ my %CreatedConditionID;
 CONDITIONNAME:
 for my $ConditionName ( keys %ConditionDefinitions ) {
     my $ConditionData = $ConditionDefinitions{$ConditionName}->{ConditionAdd};
-    my $ConditionID   = $Self->{ConditionObject}->ConditionAdd(
+    my $ConditionID   = $ConditionObject->ConditionAdd(
         %{$ConditionData},
     );
 
@@ -533,7 +536,7 @@ for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
 
     # create simple change template
     $TemplateDefinitions{$TemplateDefinitionName}->{Content} =
-        $Self->{TemplateObject}->TemplateSerialize(
+        $TemplateObject->TemplateSerialize(
         %{ $TemplateDefinitions{$TemplateDefinitionName} },
         TemplateType => $TemplateDefinitions{$TemplateDefinitionName}->{Type},
         );
@@ -545,7 +548,7 @@ for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
     );
 
     # add template
-    $TestedTemplateID{$TemplateDefinitionName} = $Self->{TemplateObject}->TemplateAdd(
+    $TestedTemplateID{$TemplateDefinitionName} = $TemplateObject->TemplateAdd(
         %{ $TemplateDefinitions{$TemplateDefinitionName} },
         TemplateType => $TemplateDefinitions{$TemplateDefinitionName}->{Type},
     );
@@ -559,7 +562,7 @@ for my $TemplateDefinitionName ( keys %TemplateDefinitions ) {
     );
 
     # get created template
-    my $Template = $Self->{TemplateObject}->TemplateGet(
+    my $Template = $TemplateObject->TemplateGet(
         TemplateID => $TemplateID,
         UserID     => 1,
     );
@@ -588,7 +591,7 @@ for my $ChangeTemplateName ( keys %CreatedChangeID ) {
     next CHANGETEMPLATENAME if !$TemplateID;
 
     # deserialize template
-    my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
+    my $ChangeID = $TemplateObject->TemplateDeSerialize(
         TemplateID => $TemplateID,
         UserID     => 1,
     );
@@ -600,7 +603,7 @@ for my $ChangeTemplateName ( keys %CreatedChangeID ) {
     );
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -660,7 +663,7 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
     next WORKORDERTEMPLATENAME if !$TemplateID;
 
     # deserialize template
-    my $WorkOrderID = $Self->{TemplateObject}->TemplateDeSerialize(
+    my $WorkOrderID = $TemplateObject->TemplateDeSerialize(
         TemplateID => $TemplateID,
         ChangeID   => $CreatedChangeID{TargetChange},
         UserID     => 1,
@@ -673,7 +676,7 @@ for my $WorkOrderTemplateName ( keys %CreatedWorkOrderID ) {
     );
 
     # get workorder data
-    my $WorkOrder = $Self->{WorkOrderObject}->WorkOrderGet(
+    my $WorkOrder = $WorkOrderObject->WorkOrderGet(
         WorkOrderID => $WorkOrderID,
         UserID      => 1,
     );
@@ -722,7 +725,7 @@ for my $ConditionTemplateName ( keys %CreatedConditionID ) {
     next CONDITIONTEMPLATENAME if !$TemplateID;
 
     # deserialize template
-    my $ConditionID = $Self->{TemplateObject}->TemplateDeSerialize(
+    my $ConditionID = $TemplateObject->TemplateDeSerialize(
         TemplateID => $TemplateID,
         ChangeID   => $CreatedChangeID{TargetChange},
         UserID     => 1,
@@ -749,7 +752,7 @@ for my $CABTemplateName (@CABTemplateNames) {
     next CABTEMPLATENAME if !$TemplateID;
 
     # deserialize template
-    my $ChangeID = $Self->{TemplateObject}->TemplateDeSerialize(
+    my $ChangeID = $TemplateObject->TemplateDeSerialize(
         TemplateID => $TemplateID,
         UserID     => 1,
         ChangeID   => $CreatedChangeID{TargetChange},
@@ -762,13 +765,13 @@ for my $CABTemplateName (@CABTemplateNames) {
     );
 
     # get change data
-    my $Change = $Self->{ChangeObject}->ChangeGet(
+    my $Change = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
 
     # get original change
-    my $OrigChange = $Self->{ChangeObject}->ChangeGet(
+    my $OrigChange = $ChangeObject->ChangeGet(
         ChangeID => $CreatedChangeID{BaseChange},
         UserID   => 1,
     );
@@ -801,7 +804,7 @@ for my $CABTemplateName (@CABTemplateNames) {
 # ------------------------------------------------------------ #
 
 # test TemplateList()
-my $ChangeTemplateList = $Self->{TemplateObject}->TemplateList(
+my $ChangeTemplateList = $TemplateObject->TemplateList(
     TemplateType => 'ITSMChange',
     UserID       => 1,
 );
@@ -825,7 +828,7 @@ my @WorkOrderTemplateNames = grep {
     $TemplateDefinitions{$_}->{Type} eq 'ITSMWorkOrder'
 } keys %TestedTemplateID;
 
-my $WorkOrderTemplateList = $Self->{TemplateObject}->TemplateList(
+my $WorkOrderTemplateList = $TemplateObject->TemplateList(
     TemplateType => 'ITSMWorkOrder',
     UserID       => 1,
 );
@@ -845,7 +848,7 @@ my @ConditionTemplateNames = grep {
     $TemplateDefinitions{$_}->{Type} eq 'ITSMCondition'
 } keys %TestedTemplateID;
 
-my $ConditionTemplateList = $Self->{TemplateObject}->TemplateList(
+my $ConditionTemplateList = $TemplateObject->TemplateList(
     TemplateType => 'ITSMCondition',
     UserID       => 1,
 );
@@ -861,7 +864,7 @@ for my $ConditionTemplateName (@ConditionTemplateNames) {
     $TestCount++;
 }
 
-my $CABTemplateList = $Self->{TemplateObject}->TemplateList(
+my $CABTemplateList = $TemplateObject->TemplateList(
     TemplateType => 'CAB',
     UserID       => 1,
 );
@@ -896,7 +899,7 @@ $Self->{ConfigObject}->Set(
 for my $TemplateName ( keys %TestedTemplateID ) {
     my $TemplateID = $TestedTemplateID{$TemplateName};
 
-    my $DeleteOk = $Self->{TemplateObject}->TemplateDelete(
+    my $DeleteOk = $TemplateObject->TemplateDelete(
         TemplateID => $TemplateID,
         UserID     => 1,
     );
@@ -906,7 +909,7 @@ for my $TemplateName ( keys %TestedTemplateID ) {
     );
 
     # double check if change is really deleted
-    my $TemplateData = $Self->{TemplateObject}->TemplateGet(
+    my $TemplateData = $TemplateObject->TemplateGet(
         TemplateID => $TemplateID,
         UserID     => 1,
     );
@@ -922,7 +925,7 @@ continue {
 
 # delete the test changes
 for my $ChangeID ( @ChangeIDs, values %CreatedChangeID ) {
-    my $DeleteOk = $Self->{ChangeObject}->ChangeDelete(
+    my $DeleteOk = $ChangeObject->ChangeDelete(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -932,7 +935,7 @@ for my $ChangeID ( @ChangeIDs, values %CreatedChangeID ) {
     );
 
     # double check if change is really deleted
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
@@ -980,14 +983,14 @@ sub _ActionAdd {
 
             # store gathered information in hash for adding
             $ActionAdd{$ActionAddValue}
-                = $Self->{ConditionObject}->$FieldValue(
+                = $ConditionObject->$FieldValue(
                 %{ $ActionData->{$ActionAddValue}->{$FieldValue} },
                 );
         }
     }
 
     # add action
-    my $ActionID = $Self->{ConditionObject}->ActionAdd(
+    my $ActionID = $ConditionObject->ActionAdd(
         %ActionAdd,
         ConditionID => $ConditionID,
     ) || 0;
@@ -1001,7 +1004,7 @@ sub _ActionAdd {
     return if !$ActionID;
 
     # check the added action
-    my $ActionGet = $Self->{ConditionObject}->ActionGet(
+    my $ActionGet = $ConditionObject->ActionGet(
         ActionID => $ActionID,
         UserID   => $ActionAdd{UserID},
     );
@@ -1039,7 +1042,7 @@ sub _ExpressionAdd {
 
         # ommit static field if it is not set
         next STATICFIELD if !exists $ExpressionAddSourceData{$StaticField}
-                || !defined $ExpressionAddSourceData{$StaticField};
+            || !defined $ExpressionAddSourceData{$StaticField};
 
         # safe data
         $ExpressionAddData{$StaticField} = $ExpressionAddSourceData{$StaticField};
@@ -1056,14 +1059,14 @@ sub _ExpressionAdd {
 
             # store gathered information in hash for adding
             $ExpressionAddData{$ExpressionAddValue} =
-                $Self->{ConditionObject}->$FieldValue(
+                $ConditionObject->$FieldValue(
                 %{ $ExpressionAddSourceData{$ExpressionAddValue}->{$FieldValue} },
                 );
         }
     }
 
     # add expression
-    my $ExpressionID = $Self->{ConditionObject}->ExpressionAdd(
+    my $ExpressionID = $ConditionObject->ExpressionAdd(
         %ExpressionAddData,
         ConditionID => $ConditionID,
     ) || 0;
@@ -1076,7 +1079,7 @@ sub _ExpressionAdd {
     next CREATEDATA if !$ExpressionID;
 
     # check the added expression
-    my $ExpressionGetData = $Self->{ConditionObject}->ExpressionGet(
+    my $ExpressionGetData = $ConditionObject->ExpressionGet(
         ExpressionID => $ExpressionID,
         UserID       => $ExpressionAddData{UserID},
     );

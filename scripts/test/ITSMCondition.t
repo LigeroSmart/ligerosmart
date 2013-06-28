@@ -1,8 +1,8 @@
 # --
 # ITSMCondition.t - Condition tests
-# Copyright (C) 2001-2011 OTRS AG, http://otrs.org/
+# Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: ITSMCondition.t,v 1.61 2011-03-04 12:08:07 ub Exp $
+# $Id: ITSMCondition.t,v 1.62 2013-06-28 14:39:16 ub Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -32,19 +32,22 @@ my $TestCount = 1;
 # create common objects
 $Self->{UserObject}      = Kernel::System::User->new( %{$Self} );
 $Self->{GroupObject}     = Kernel::System::Group->new( %{$Self} );
-$Self->{ChangeObject}    = Kernel::System::ITSMChange->new( %{$Self} );
-$Self->{WorkOrderObject} = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 $Self->{ConditionObject} = Kernel::System::ITSMChange::ITSMCondition->new( %{$Self} );
+
+# create change and workorder objects as local variables to prevent error messages
+# about missing LogObject during event transaction mode in object destruction.
+my $ChangeObject    = Kernel::System::ITSMChange->new( %{$Self} );
+my $WorkOrderObject = Kernel::System::ITSMChange::ITSMWorkOrder->new( %{$Self} );
 
 # test if change object was created successfully
 $Self->True(
-    $Self->{ChangeObject},
+    $ChangeObject,
     'Test ' . $TestCount++ . ' - construction of change object',
 );
 
 # test if workorder object was created successfully
 $Self->True(
-    $Self->{WorkOrderObject},
+    $WorkOrderObject,
     'Test ' . $TestCount++ . ' - construction of workorder object',
 );
 
@@ -125,7 +128,7 @@ my @ChangeTitles;
 CREATECHANGE:
 for my $CreateChange ( 0 .. 9 ) {
     my $ChangeTitle = 'UnitTestChange' . $CreateChange;
-    my $ChangeID    = $Self->{ChangeObject}->ChangeAdd(
+    my $ChangeID    = $ChangeObject->ChangeAdd(
         ChangeTitle => $ChangeTitle,
         UserID      => 1,
     );
@@ -149,7 +152,7 @@ my @WorkOrderTitles;
 CREATEWORKORDER:
 for my $CreateWorkOrder ( 0 .. ( ( 3 * ( scalar @ChangeIDs ) ) - 1 ) ) {
     my $WorkOrderTitle = 'UnitTestWO' . $CreateWorkOrder;
-    my $WorkOrderID    = $Self->{WorkOrderObject}->WorkOrderAdd(
+    my $WorkOrderID    = $WorkOrderObject->WorkOrderAdd(
         ChangeID => $ChangeIDs[ ( $CreateWorkOrder % scalar @ChangeIDs ) ],
         WorkOrderTitle   => $WorkOrderTitle,
         PlannedStartTime => $Self->{TimeObject}->CurrentTimestamp(),
@@ -1622,7 +1625,7 @@ for my $ExpressionTest (@ExpressionTests) {
 
                 # ommit static field if it is not set
                 next STATICFIELD if !exists $ExpressionAddSourceData{$StaticField}
-                        || !defined $ExpressionAddSourceData{$StaticField};
+                    || !defined $ExpressionAddSourceData{$StaticField};
 
                 # safe data
                 $ExpressionAddData{$StaticField} = $ExpressionAddSourceData{$StaticField};
@@ -2154,13 +2157,13 @@ for my $ActionCounter ( 0 .. ( ( scalar @ActionTests ) - 1 ) ) {
     # get object data
     my $ObjectData;
     if ( $ObjectName eq 'ITSMChange' ) {
-        $ObjectData = $Self->{ChangeObject}->ChangeGet(
+        $ObjectData = $ChangeObject->ChangeGet(
             ChangeID => $Action->{Selector},
             UserID   => 1,
         );
     }
     elsif ( $ObjectName eq 'ITSMWorkOrder' ) {
-        $ObjectData = $Self->{WorkOrderObject}->WorkOrderGet(
+        $ObjectData = $WorkOrderObject->WorkOrderGet(
             WorkOrderID => $Action->{Selector},
             UserID      => 1,
         );
@@ -2266,7 +2269,7 @@ for my $ConditionID (@ConditionIDs) {
 # delete created changes
 for my $ChangeID (@ChangeIDs) {
     $Self->True(
-        $Self->{ChangeObject}->ChangeDelete(
+        $ChangeObject->ChangeDelete(
             ChangeID => $ChangeID,
             UserID   => 1,
         ),
@@ -2274,7 +2277,7 @@ for my $ChangeID (@ChangeIDs) {
     );
 
     # double check if change is really deleted
-    my $ChangeData = $Self->{ChangeObject}->ChangeGet(
+    my $ChangeData = $ChangeObject->ChangeGet(
         ChangeID => $ChangeID,
         UserID   => 1,
     );
