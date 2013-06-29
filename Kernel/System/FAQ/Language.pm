@@ -2,7 +2,7 @@
 # Kernel/System/FAQ/Language.pm - faq language functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Language.pm,v 1.1 2013-06-29 15:42:22 cr Exp $
+# $Id: Language.pm,v 1.2 2013-06-29 15:48:26 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -33,7 +33,7 @@ All faq language functions.
 add a language
 
     my $Success = $FAQObject->LanguageAdd(
-        Name   => 'Some Category',
+        Name   => 'Some Lanaguage',
         UserID => 1,
     );
 
@@ -109,7 +109,7 @@ check a language
 
     my $Exists = $FAQObject->LanguageDuplicateCheck(
         Name       => 'Some Name',
-        LanguageID => 1, # for update
+        LanguageID => 1,        # for update
         UserID     => 1,
     );
 
@@ -161,7 +161,7 @@ sub LanguageDuplicateCheck {
 
 =item LanguageGet()
 
-get a language as hash
+get a language details as a hash
 
     my %Language = $FAQObject->LanguageGet(
         LanguageID => 1,
@@ -211,7 +211,7 @@ sub LanguageGet {
 
 =item LanguageList()
 
-get the language list as hash
+get the language list as a hash
 
     my %Languages = $FAQObject->LanguageList(
         UserID => 1,
@@ -385,6 +385,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2013-06-29 15:42:22 $
+$Revision: 1.2 $ $Date: 2013-06-29 15:48:26 $
 
 =cut
