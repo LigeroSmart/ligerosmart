@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
-    <CVS>$Id: FAQ.sopm,v 1.132 2013-06-13 16:17:48 cr Exp $</CVS>
+    <CVS>$Id: FAQ.sopm,v 1.133 2013-06-29 15:44:33 cr Exp $</CVS>
     <Name>FAQ</Name>
     <Version>0.0.0</Version>
     <Framework>3.3.x</Framework>
@@ -103,6 +103,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultPrint.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQSearchResultShort.dtl"/>
         <File Permission="644" Location="Kernel/Output/HTML/Standard/PublicFAQZoom.dtl"/>
+        <File Permission="644" Location="Kernel/System/FAQ/Language.pm"/>
         <File Permission="644" Location="Kernel/System/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/LinkObject/FAQ.pm"/>
         <File Permission="644" Location="Kernel/System/Stats/Static/FAQAccess.pm"/>
