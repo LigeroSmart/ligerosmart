@@ -2,7 +2,7 @@
 # Kernel/System/FAQ/Language.pm - faq language functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Language.pm,v 1.2 2013-06-29 15:48:26 cr Exp $
+# $Id: Language.pm,v 1.3 2013-06-29 19:54:22 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -58,7 +58,9 @@ sub LanguageAdd {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL  => 'INSERT INTO faq_language (name) VALUES (?)',
+        SQL => '
+            INSERT INTO faq_language (name)
+            VALUES (?)',
         Bind => [ \$Param{Name} ],
     );
 
@@ -96,7 +98,9 @@ sub LanguageDelete {
 
     # delete the language
     return if !$Self->{DBObject}->Do(
-        SQL  => 'DELETE FROM faq_language WHERE id = ? ',
+        SQL => '
+            DELETE FROM faq_language
+            WHERE id = ?',
         Bind => [ \$Param{LanguageID} ],
     );
 
@@ -136,12 +140,15 @@ sub LanguageDuplicateCheck {
     $Param{LanguageID} = $Self->{DBObject}->Quote( $Param{LanguageID}, 'Integer' );
 
     # build sql
-    my $SQL = 'SELECT id FROM faq_language WHERE ';
+    my $SQL = '
+        SELECT id
+        FROM faq_language
+        WHERE';
     if ( defined $Param{Name} ) {
-        $SQL .= "name = '$Param{Name}' ";
+        $SQL .= " name = '$Param{Name}'";
     }
     if ( defined $Param{LanguageID} ) {
-        $SQL .= "AND id != '$Param{LanguageID}' ";
+        $SQL .= " AND id != '$Param{LanguageID}'";
     }
 
     # prepare sql statement
@@ -193,7 +200,10 @@ sub LanguageGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id, name FROM faq_language WHERE id = ?',
+        SQL => '
+            SELECT id, name
+            FROM faq_language
+            WHERE id = ?',
         Bind  => [ \$Param{LanguageID} ],
         Limit => 1,
     );
@@ -241,7 +251,9 @@ sub LanguageList {
 
     # build sql
     return if !$Self->{DBObject}->Prepare(
-        SQL => 'SELECT id, name FROM faq_language',
+        SQL => '
+            SELECT id, name
+            FROM faq_language',
     );
 
     # fetch the result
@@ -308,14 +320,20 @@ sub LanguageLookup {
     # prepare SQL statements
     if ( $Param{LanguageID} ) {
         return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT name FROM faq_language WHERE id = ?',
+            SQL => '
+                SELECT name
+                FROM faq_language
+                WHERE id = ?',
             Bind  => [ \$Param{LanguageID} ],
             Limit => 1,
         );
     }
     elsif ( $Param{Name} ) {
         return if !$Self->{DBObject}->Prepare(
-            SQL   => 'SELECT id FROM faq_language WHERE name = ?',
+            SQL => '
+                SELECT id
+                FROM faq_language
+                WHERE name = ?',
             Bind  => [ \$Param{Name} ],
             Limit => 1,
         );
@@ -362,7 +380,10 @@ sub LanguageUpdate {
 
     # build sql
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_language SET name = ? WHERE id = ?',
+        SQL => '
+            UPDATE faq_language
+            SET name = ?
+            WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{LanguageID} ],
     );
 
@@ -385,6 +406,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2013-06-29 15:48:26 $
+$Revision: 1.3 $ $Date: 2013-06-29 19:54:22 $
 
 =cut
