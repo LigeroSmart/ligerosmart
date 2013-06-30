@@ -2,7 +2,7 @@
 # Kernel/System/FAQ/State.pm - faq state functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: State.pm,v 1.2 2013-06-30 00:36:56 cr Exp $
+# $Id: State.pm,v 1.3 2013-06-30 00:45:04 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -59,7 +59,9 @@ sub StateAdd {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => 'INSERT INTO faq_state (name, type_id) VALUES ( ?, ? )',
+        SQL => '
+            INSERT INTO faq_state (name, type_id)
+            VALUES ( ?, ? )',
         Bind => [ \$Param{Name}, \$Param{TypeID} ],
     );
 
@@ -101,7 +103,10 @@ sub StateGet {
 
     # sql
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id, name, type_id FROM faq_state WHERE id = ?',
+        SQL => '
+            SELECT id, name, type_id
+            FROM faq_state
+            WHERE id = ?',
         Bind  => [ \$Param{StateID} ],
         Limit => 1,
     );
@@ -149,7 +154,11 @@ sub StateList {
     }
 
     # sql
-    return if !$Self->{DBObject}->Prepare( SQL => 'SELECT id, name FROM faq_state' );
+    return if !$Self->{DBObject}->Prepare(
+        SQL => '
+            SELECT id, name
+            FROM faq_state'
+    );
 
     my %List;
     while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
@@ -192,7 +201,10 @@ sub StateUpdate {
 
     # sql
     return if !$Self->{DBObject}->Do(
-        SQL => 'UPDATE faq_state SET name = ?, type_id = ?, WHERE id = ?',
+        SQL => '
+            UPDATE faq_state
+            SET name = ?, type_id = ?,
+            WHERE id = ?',
         Bind => [ \$Param{Name}, \$Param{TypeID}, \$Param{StateID} ],
     );
 
@@ -236,16 +248,19 @@ sub StateTypeGet {
         return;
     }
 
-    my $SQL = 'SELECT id, name FROM faq_state_type WHERE ';
+    my $SQL = '
+        SELECT id, name
+        FROM faq_state_type
+        WHERE';
     my @Bind;
     my $CacheKey = 'StateTypeGet::';
     if ( defined $Param{StateID} ) {
-        $SQL .= 'id = ?';
+        $SQL .= ' id = ?';
         push @Bind, \$Param{StateID};
         $CacheKey .= 'ID::' . $Param{StateID};
     }
     elsif ( defined $Param{Name} ) {
-        $SQL .= 'name = ?';
+        $SQL .= ' name = ?';
         push @Bind, \$Param{Name};
         $CacheKey .= 'Name::' . $Param{Name};
     }
@@ -313,7 +328,9 @@ sub StateTypeList {
     }
 
     # build SQL
-    my $SQL = 'SELECT id, name FROM faq_state_type';
+    my $SQL = '
+        SELECT id, name
+        FROM faq_state_type';
 
     # types are given
     if ( $Param{Types} ) {
@@ -360,6 +377,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.2 $ $Date: 2013-06-30 00:36:56 $
+$Revision: 1.3 $ $Date: 2013-06-30 00:45:04 $
 
 =cut
