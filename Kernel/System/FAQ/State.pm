@@ -2,7 +2,7 @@
 # Kernel/System/FAQ/State.pm - faq state functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: State.pm,v 1.1 2013-06-30 00:33:41 cr Exp $
+# $Id: State.pm,v 1.2 2013-06-30 00:36:56 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -204,7 +204,13 @@ sub StateUpdate {
 get a state as hashref
 
     my $StateTypeHashRef = $FAQObject->StateTypeGet(
-        StateID => 1, # or
+        StateID => 1,
+        UserID  => 1,
+    );
+
+Or
+
+    my $StateTypeHashRef = $FAQObject->StateTypeGet(
         Name    => 'internal',
         UserID  => 1,
     );
@@ -354,6 +360,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2013-06-30 00:33:41 $
+$Revision: 1.2 $ $Date: 2013-06-30 00:36:56 $
 
 =cut
