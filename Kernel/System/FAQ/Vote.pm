@@ -2,7 +2,7 @@
 # Kernel/System/FAQ/Vote.pm - faq vote functions
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: Vote.pm,v 1.1 2013-06-30 00:58:12 cr Exp $
+# $Id: Vote.pm,v 1.2 2013-06-30 01:15:46 cr Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -62,8 +62,9 @@ sub VoteAdd {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL => 'INSERT INTO faq_voting (created_by, item_id, ip, interface, rate, created )'
-            . ' VALUES ( ?, ?, ?, ?, ?, current_timestamp )',
+        SQL => '
+            INSERT INTO faq_voting (created_by, item_id, ip, interface, rate, created )
+            VALUES ( ?, ?, ?, ?, ?, current_timestamp )',
         Bind => [
             \$Param{CreatedBy}, \$Param{ItemID}, \$Param{IP}, \$Param{Interface},
             \$Param{Rate},
@@ -110,7 +111,9 @@ sub VoteDelete {
     }
 
     return if !$Self->{DBObject}->Do(
-        SQL  => 'DELETE FROM faq_voting WHERE id = ?',
+        SQL => '
+            DELETE FROM faq_voting
+            WHERE id = ?',
         Bind => [ \$Param{VoteID} ],
     );
 
@@ -163,21 +166,30 @@ sub VoteGet {
     $Param{ItemID} = $Self->{DBObject}->Quote( $Param{ItemID}, 'Integer' );
 
     my $Ext = "";
-    my $SQL = " SELECT created_by, item_id, interface, ip, created, rate FROM faq_voting WHERE";
+    my $SQL = '
+        SELECT created_by, item_id, interface, ip, created, rate
+        FROM faq_voting
+        WHERE';
 
     # public
     if ( $Param{Interface} eq '3' ) {
-        $Ext .= " ip = '$Param{IP}' AND item_id = $Param{ItemID}";
+        $Ext .= "
+            ip = '$Param{IP}'
+            AND item_id = $Param{ItemID}";
     }
 
     # customer
     elsif ( $Param{Interface} eq '2' ) {
-        $Ext .= " created_by = '$Param{CreateBy}' AND item_id = $Param{ItemID}";
+        $Ext .= "
+            created_by = '$Param{CreateBy}'
+            AND item_id = $Param{ItemID}";
     }
 
     # internal
     elsif ( $Param{Interface} eq '1' ) {
-        $Ext .= " created_by = '$Param{CreateBy}' AND item_id = $Param{ItemID}";
+        $Ext .= "
+            created_by = '$Param{CreateBy}'
+            AND item_id = $Param{ItemID}";
     }
     $SQL .= $Ext;
 
@@ -235,8 +247,11 @@ sub VoteSearch {
     }
 
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT id FROM faq_voting WHERE item_id = ?',
-        Bind  => [ \$Param{ItemID} ],
+        SQL => '
+            SELECT id
+            FROM faq_voting
+            WHERE item_id = ?',
+        Bind => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
 
@@ -290,8 +305,11 @@ sub ItemVoteDataGet {
 
     # get vote from db
     return if !$Self->{DBObject}->Prepare(
-        SQL   => 'SELECT count(*), avg(rate) FROM faq_voting WHERE item_id = ?',
-        Bind  => [ \$Param{ItemID} ],
+        SQL => '
+            SELECT count(*), avg(rate)
+            FROM faq_voting
+            WHERE item_id = ?',
+        Bind => [ \$Param{ItemID} ],
         Limit => $Param{Limit} || 500,
     );
 
@@ -329,6 +347,6 @@ did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
 
 =head1 VERSION
 
-$Revision: 1.1 $ $Date: 2013-06-30 00:58:12 $
+$Revision: 1.2 $ $Date: 2013-06-30 01:15:46 $
 
 =cut
