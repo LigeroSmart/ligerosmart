@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminService.pm - admin frontend to manage services
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminService.pm,v 1.11 2013-03-21 11:46:40 ub Exp $
+# $Id: AdminService.pm,v 1.12 2013-07-09 17:29:42 ub Exp $
 # $OldId: AdminService.pm,v 1.39 2012/11/20 14:44:43 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -24,7 +24,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -295,6 +295,9 @@ sub _MaskNew {
     $Self->{LayoutObject}->Block( Name => 'ActionList' );
     $Self->{LayoutObject}->Block( Name => 'ActionOverview' );
 
+    # get list type
+    my $ListType = $Self->{ConfigObject}->Get('Ticket::Frontend::ListType');
+
     # generate ParentOptionStrg
     my %ServiceList = $Self->{ServiceObject}->ServiceList(
         Valid  => 0,
@@ -305,6 +308,7 @@ sub _MaskNew {
         Name           => 'ParentID',
         SelectedID     => $Param{ParentID} || $ServiceData{ParentID},
         PossibleNone   => 1,
+        TreeView       => ($ListType eq 'tree') ? 1 : 0,
         DisabledBranch => $ServiceData{Name},
         Translation    => 0,
     );

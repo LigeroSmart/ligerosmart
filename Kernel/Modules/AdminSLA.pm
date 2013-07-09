@@ -2,7 +2,7 @@
 # Kernel/Modules/AdminSLA.pm - admin frontend to manage slas
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AdminSLA.pm,v 1.11 2013-06-13 08:47:57 ub Exp $
+# $Id: AdminSLA.pm,v 1.12 2013-07-09 17:29:42 ub Exp $
 # $OldId: AdminSLA.pm,v 1.38 2012/11/20 14:44:02 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -25,7 +25,7 @@ use Kernel::System::GeneralCatalog;
 # ---
 
 use vars qw($VERSION);
-$VERSION = qw($Revision: 1.11 $) [1];
+$VERSION = qw($Revision: 1.12 $) [1];
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -246,8 +246,9 @@ sub Run {
 
         # get service list
         my %ServiceList = $Self->{ServiceObject}->ServiceList(
-            Valid  => 0,
-            UserID => $Self->{UserID},
+            Valid        => 0,
+            KeepChildren => 1,
+            UserID       => $Self->{UserID},
         );
 
         # get valid list
@@ -347,10 +348,14 @@ sub _MaskNew {
         $SLAData{ServiceID} = $Self->{ParamObject}->GetParam( Param => 'ServiceID' );
     }
 
+    # get list type
+    my $ListType = $Self->{ConfigObject}->Get('Ticket::Frontend::ListType');
+
     # get service list
     my %ServiceList = $Self->{ServiceObject}->ServiceList(
-        Valid  => 1,
-        UserID => $Self->{UserID},
+        Valid        => 1,
+        KeepChildren => 1,
+        UserID       => $Self->{UserID},
     );
 
     # generate ServiceOptionStrg
@@ -361,6 +366,7 @@ sub _MaskNew {
         Multiple    => 1,
         Size        => 5,
         Translation => 0,
+        TreeView    => ($ListType eq 'tree') ? 1 : 0,
         Max         => 200,
     );
 # ---
