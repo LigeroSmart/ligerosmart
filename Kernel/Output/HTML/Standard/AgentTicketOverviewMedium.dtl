@@ -2,7 +2,7 @@
 # AgentTicketOverviewMedium.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewMedium.dtl,v 1.21 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketOverviewMedium.dtl,v 1.22 2013-07-09 17:27:45 ub Exp $
 # $OldId: AgentTicketOverviewMedium.dtl,v 1.74 2013/01/11 12:35:19 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -344,7 +344,6 @@
 <!-- dtl:block:DocumentReadyActionRowAdd -->
 <!-- dtl:block:DocumentReadyStart -->
 <script type="text/javascript">//<![CDATA[
-    Core.UI.StaticTableControl($('#OverviewControl'));
     Core.UI.InitCheckboxSelection($('div.Checkbox'));
     $('.MasterAction').bind('click', function (Event) {
         var $MasterActionLink = $(this).find('.MasterActionLink');

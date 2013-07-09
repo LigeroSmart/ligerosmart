@@ -2,7 +2,7 @@
 # CustomerTicketZoom.dtl - provides HTML TicketZoom for CustomerTicketZoom.pm
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: CustomerTicketZoom.dtl,v 1.27 2013-06-13 08:48:10 ub Exp $
+# $Id: CustomerTicketZoom.dtl,v 1.28 2013-07-09 17:27:45 ub Exp $
 # $OldId: CustomerTicketZoom.dtl,v 1.132 2012/11/20 15:25:49 mh Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -240,7 +240,7 @@
 <!-- dtl:block:FollowUp -->
             <div id="FollowUp" class="$QData{"FollowUpVisible"}">
                 <div id="Messenger">
-                    <input class="DontPrint" type="text" name="Subject" id="Subject" value="$QData{"Subject"}" />
+                    <input class="DontPrint" type="text" name="Subject" id="Subject" title="$Text{"Subject"}" value="$QData{"Subject"}" />
 <!-- dtl:block:RichText-->
                     $Include{"CustomerRichTextEditor"}
 <!-- dtl:block:RichText-->

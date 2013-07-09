@@ -2,7 +2,7 @@
 # AgentTicketOverviewPreview.dtl - provides HTML Ticket Overview
 # Copyright (C) 2001-2013 OTRS AG, http://otrs.org/
 # --
-# $Id: AgentTicketOverviewPreview.dtl,v 1.23 2013-06-18 14:30:03 ub Exp $
+# $Id: AgentTicketOverviewPreview.dtl,v 1.24 2013-07-09 17:27:45 ub Exp $
 # $OldId: AgentTicketOverviewPreview.dtl,v 1.82 2013/01/11 12:35:18 mn Exp $
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -367,10 +367,15 @@ $Data{"Body"}
 <!-- dtl:block:DocumentReadyActionRowAdd -->
 <!-- dtl:block:DocumentReadyStart -->
 <script type="text/javascript">//<![CDATA[
-    Core.UI.StaticTableControl($('#OverviewControl'));
     Core.UI.InitCheckboxSelection($('div.Checkbox'));
     $('.MasterAction').bind('click', function (Event) {
         var $MasterActionLink = $(this).find('.MasterActionLink');
+
+        // if the user is trying to select text from an article, MasterAction should not be executed
+        if (typeof Event.target === 'object' && ($(Event.target).hasClass('ArticleBody') || $(Event.target).hasClass('ActionRow'))) {
+            return false;
+        }
+
         // only act if the link was not clicked directly
         if (Event.target !== $MasterActionLink.get(0)) {
             window.location = $MasterActionLink.attr('href');
