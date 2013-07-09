@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Config">
-    <CVS>$Id: ITSMChangeManagement.xml,v 1.277 2013-05-31 13:59:29 ub Exp $</CVS>
+    <CVS>$Id: ITSMChangeManagement.xml,v 1.278 2013-07-09 10:55:01 ub Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AdminITSMChangeCIPAllocate" Required="0" Valid="1">
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ITSM Change Management</Group>
@@ -9339,7 +9339,7 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="1">
+    <ConfigItem Name="Ticket::Acl::Module###200-Ticket::Acl::Module" Required="0" Valid="0">
         <Description Translatable="1">This ACL module restricts the usuage of the ticket types that are defined in the sysconfig option 'ITSMChange::AddChangeLinkTicketTypes', to users of the groups as defined in "ITSMChange::RestrictTicketTypes::Groups".</Description>
         <Group>Ticket</Group>
         <SubGroup>Core::TicketACL</SubGroup>
