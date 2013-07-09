@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: TicketITSMTicket.xml,v 1.23 2012-10-24 08:50:23 ub Exp $</CVS>
+    <CVS>$Id: TicketITSMTicket.xml,v 1.24 2013-07-09 10:51:01 ub Exp $</CVS>
     <CVS>$OldId: Ticket.xml,v 1.490 2011/11/07 16:52:00 cr Exp $</CVS>
     <ConfigItem Name="Ticket::Type" Required="1" Valid="1">
         <Description Translatable="1">Allows defining new types for ticket (if ticket type feature is enabled).</Description>
@@ -95,21 +95,6 @@
             </Hash>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Module###AgentTicketFreeText" Required="0" Valid="0">
-        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
-        <Setting>
-            <FrontendModuleReg>
-                <Description>Ticket FreeText</Description>
-                <Title>Free Fields</Title>
-                <NavBarName>Ticket</NavBarName>
-                <Loader>
-                    <JavaScript>Core.Agent.TicketAction.js</JavaScript>
-                </Loader>
-            </FrontendModuleReg>
-        </Setting>
-    </ConfigItem>
     <ConfigItem Name="Ticket::Frontend::AgentTicketPriority###TicketType" Required="0" Valid="1">
         <Description Translatable="1">Sets the ticket type in the ticket priority screen of a zoomed ticket in the agent interface (Ticket::Type needs to be activated).</Description>
         <Group>Ticket</Group>
@@ -130,22 +115,6 @@
                 <Item Key="0">No</Item>
                 <Item Key="1">Yes</Item>
             </Option>
-        </Setting>
-    </ConfigItem>
-    <ConfigItem Name="Ticket::Frontend::MenuModule###310-FreeText" Required="0" Valid="0">
-        <Description Translatable="1">Shows a link in the menu to add a free text field in the ticket zoom view of the agent interface.</Description>
-        <Group>Ticket</Group>
-        <SubGroup>Frontend::Agent::Ticket::MenuModule</SubGroup>
-        <Setting>
-            <Hash>
-                <Item Key="Module">Kernel::Output::HTML::TicketMenuGeneric</Item>
-                <Item Key="Name">Free Fields</Item>
-                <Item Key="Description" Translatable="1">Change the ticket free fields!</Item>
-                <Item Key="Action">AgentTicketFreeText</Item>
-                <Item Key="Link">Action=AgentTicketFreeText;TicketID=$QData{"TicketID"}</Item>
-                <Item Key="Target"></Item>
-                <Item Key="PopupType">TicketAction</Item>
-            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>
